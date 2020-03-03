@@ -132,6 +132,14 @@ RACK PARTS
 	icon = 'icons/obj/table_round.dmi'
 	furniture_type = /obj/table/round/auto
 
+/obj/item/furniture_parts/table/folding
+	name = "folded folding table"
+	desc = "A collapsed table that can be deployed quickly."
+	icon = 'icons/obj/table_round.dmi'
+	furniture_type = /obj/table/folding
+	furniture_name = "folding table"
+	build_duration = 15
+
 /* ---------- Glass Table Parts ---------- */
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"
