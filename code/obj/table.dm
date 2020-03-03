@@ -219,13 +219,21 @@
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
-				if (!G.affecting.hasStatus("weakened"))
-					G.affecting.changeStatus("weakened", 3 SECONDS)
-					G.affecting.force_laydown_standup()
-				src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
+				if (src.type == /obj/table/folding)
+					if (!G.affecting.hasStatus("weakened"))
+						G.affecting.changeStatus("weakened", 5 SECONDS)
+						G.affecting.force_laydown_standup()
+					src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src], collapsing it instantly!</b></span>")
+					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+					deconstruct()
+				else
+					if (!G.affecting.hasStatus("weakened"))
+						G.affecting.changeStatus("weakened", 3 SECONDS)
+						G.affecting.force_laydown_standup()
+					src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
+					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+					if (src.material)
+						src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 			else
 				if (!G.affecting.hasStatus("weakened"))
 					G.affecting.changeStatus("weakened", 2 SECONDS)
@@ -265,7 +273,7 @@
 				return
 
 		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
-			actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
+			actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE, (src.type == /obj/table/folding)?15:null), user)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
@@ -286,9 +294,9 @@
 	attack_hand(mob/user as mob)
 		if (user.is_hulk())
 			user.visible_message("<span style='color:red'>[user] destroys the table!</span>")
-			deconstruct()
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			deconstruct()
 			src.set_density(0)
 			qdel(src)
 		if (ishuman(user))
@@ -399,6 +407,35 @@
 
 	auto
 		auto = 1
+
+/obj/table/folding
+	name = "folding table"
+	desc = "A table with a plastic top designed for quick assembly and toolless disassembly."
+	icon = 'icons/obj/table_round.dmi'
+	parts_type = /obj/item/furniture_parts/table/folding
+
+	attack_hand(mob/user as mob)
+		if (user.is_hulk())
+			user.visible_message("<span style='color:red'>[user] collapses the [src] in one slam!</span>")
+			playsound(src.loc, "sound/items/Generic_Hit_Heavy_1.ogg", 50, 1)
+			deconstruct()
+			src.set_density(0)
+			qdel(src)
+		else if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+				slaps += 1
+				src.visible_message("<span style='color:red'><b>[H] slams their palms against [src]!</b></span>")
+				if (slaps > 2 && prob(50))
+					src.visible_message("<span style='color:red'><b>The [src] collapses!</b></span>")
+					deconstruct()
+				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				for (var/mob/N in AIviewers(usr, null))
+					if (N.client)
+						shake_camera(N, 4, 1, 0.5)
+		else
+			actions.start(new /datum/action/bar/icon/table_tool_interact(src, null, TABLE_DISASSEMBLE, 15), user)
+		return
 
 /* ======================================== */
 /* ---------------------------------------- */
@@ -833,18 +870,19 @@
 			duration = duration_i
 		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") && (the_table.type != /obj/table/folding))
 				duration = round(duration / 2)
 
 	onUpdate()
 		..()
-		if (the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1)
+		if (the_table == null || ((the_tool) == null && (the_table.type != /obj/table/folding)) || owner == null || get_dist(owner, the_table) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
 		if (istype(source) && the_tool != source.equipped())
-			interrupt(INTERRUPT_ALWAYS)
-			return
+			if (the_table.type != /obj/table/folding)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)
 			if (the_table.desk_drawer.locked)
 				boutput(owner, "<span style='color:red'>You can't disassemble [the_table] when its drawer is locked!</span>")
@@ -870,7 +908,10 @@
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
+				if (the_table.type == /obj/table/folding)
+					playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+				else
+					playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
 				playsound(get_turf(the_table), "sound/items/Welder.ogg", 50, 1)
