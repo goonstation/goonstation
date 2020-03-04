@@ -273,7 +273,10 @@
 				return
 
 		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
-			actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE, (src.type == /obj/table/folding)?15:null), user)
+			if (src.type != /obj/table/folding)
+				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
+			else
+				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
@@ -433,8 +436,10 @@
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
 						shake_camera(N, 4, 1, 0.5)
-		else
-			actions.start(new /datum/action/bar/icon/table_tool_interact(src, null, TABLE_DISASSEMBLE, 15), user)
+			else
+				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
+		else if (issilicon(user))
+			actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
 /* ======================================== */
@@ -949,3 +954,46 @@
 					the_table.desk_drawer.locked = 0
 				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
 		owner.visible_message("<span style='color:blue'>[owner] [verbens] [the_table].</span>")
+
+/datum/action/bar/icon/fold_folding_table
+	id = "fold_folding_table"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 15
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/table/the_table
+	var/obj/item/the_tool
+
+	New(var/obj/table/tabl, var/obj/item/tool)
+		..()
+		if (tabl)
+			the_table = tabl
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+
+	onUpdate()
+		..()
+		if (the_table == null || owner == null || get_dist(owner, the_table) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (the_tool)
+			playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
+		else
+			playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+		owner.visible_message("<span style='color:blue'>[owner] begins disassembling [the_table].</span>")
+
+	onEnd()
+		..()
+		playsound(get_turf(the_table), "sound/items/Deconstruct.ogg", 50, 1)
+		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_table].</span>")
+		the_table.deconstruct()
