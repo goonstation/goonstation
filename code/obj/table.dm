@@ -219,7 +219,7 @@
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
-				if (src.type == /obj/table/folding)
+				if (istype(src, /obj/table/folding))
 					if (!G.affecting.hasStatus("weakened"))
 						G.affecting.changeStatus("weakened", 5 SECONDS)
 						G.affecting.force_laydown_standup()
@@ -273,7 +273,7 @@
 				return
 
 		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
-			if (src.type != /obj/table/folding)
+			if (!istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 			else
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
@@ -438,8 +438,6 @@
 						shake_camera(N, 4, 1, 0.5)
 			else
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
-		else if (issilicon(user))
-			actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
 /* ======================================== */
@@ -875,17 +873,17 @@
 			duration = duration_i
 		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") && (the_table.type != /obj/table/folding))
+			if (H.traitHolder.hasTrait("carpenter") && (!istype(the_table, /obj/table/folding)))
 				duration = round(duration / 2)
 
 	onUpdate()
 		..()
-		if (the_table == null || ((the_tool) == null && (the_table.type != /obj/table/folding)) || owner == null || get_dist(owner, the_table) > 1)
+		if (the_table == null || ((the_tool) == null && (!istype(the_table, /obj/table/folding))) || owner == null || get_dist(owner, the_table) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
 		if (istype(source) && the_tool != source.equipped())
-			if (the_table.type != /obj/table/folding)
+			if (!istype(the_table, /obj/table/folding))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)
@@ -913,7 +911,7 @@
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbing = "disassembling"
-				if (the_table.type == /obj/table/folding)
+				if (istype(the_table, /obj/table/folding))
 					playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
 				else
 					playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
