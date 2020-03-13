@@ -135,7 +135,7 @@ RACK PARTS
 /obj/item/furniture_parts/table/folding
 	name = "folded folding table"
 	desc = "A collapsed table that can be deployed quickly."
-	icon = 'icons/obj/table_round.dmi'
+	icon = 'icons/obj/table_folding.dmi'
 	furniture_type = /obj/table/folding
 	furniture_name = "folding table"
 	build_duration = 15

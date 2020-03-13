@@ -413,8 +413,8 @@
 
 /obj/table/folding
 	name = "folding table"
-	desc = "A table with a plastic top designed for quick assembly and toolless disassembly."
-	icon = 'icons/obj/table_round.dmi'
+	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
+	icon = 'icons/obj/table_folding.dmi'
 	parts_type = /obj/item/furniture_parts/table/folding
 
 	attack_hand(mob/user as mob)
