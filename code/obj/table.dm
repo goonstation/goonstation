@@ -873,19 +873,18 @@
 			duration = duration_i
 		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter") && (!istype(the_table, /obj/table/folding)))
+			if (H.traitHolder.hasTrait("carpenter"))
 				duration = round(duration / 2)
 
 	onUpdate()
 		..()
-		if (the_table == null || ((the_tool) == null && (!istype(the_table, /obj/table/folding))) || owner == null || get_dist(owner, the_table) > 1)
+		if (the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
 		if (istype(source) && the_tool != source.equipped())
-			if (!istype(the_table, /obj/table/folding))
-				interrupt(INTERRUPT_ALWAYS)
-				return
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)
 			if (the_table.desk_drawer.locked)
 				boutput(owner, "<span style='color:red'>You can't disassemble [the_table] when its drawer is locked!</span>")
@@ -911,10 +910,7 @@
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbing = "disassembling"
-				if (istype(the_table, /obj/table/folding))
-					playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
-				else
-					playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
+				playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
 				playsound(get_turf(the_table), "sound/items/Welder.ogg", 50, 1)
