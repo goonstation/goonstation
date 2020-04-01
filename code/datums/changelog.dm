@@ -115,7 +115,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 									html += "rd, "
 								else
 									html += "th, "
-						else if("1")
+						if("1")
 							html += "[date1][date2]th, "
 						else
 							html += date1

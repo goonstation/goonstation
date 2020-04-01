@@ -64,7 +64,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 					else
 						M.vars[X] = base.vars[X]
 		return M
-	return null
 
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
@@ -389,7 +388,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			return "Rubber"
 		else
 			return "Unknown"
-	return
 
 //Simply returns a string for a given quality. Used as prefix for objects.
 /proc/getQualityName(var/quality)
@@ -442,7 +440,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			return "perfect"
 		else
 			return "odd"
-	return
 
 //Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/M)

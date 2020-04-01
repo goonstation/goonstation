@@ -456,7 +456,6 @@
 		else
 			ch_window.Unsubscribe(usr.client)
 			return
-		return
 
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)

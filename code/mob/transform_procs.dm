@@ -69,8 +69,6 @@
 
 		return respawned
 
-	return
-
 /mob/living/carbon/human/proc/monkeyize()
 	if (src.transforming || !src.bioHolder)
 		return

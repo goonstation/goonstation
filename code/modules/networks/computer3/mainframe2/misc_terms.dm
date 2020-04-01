@@ -1807,8 +1807,6 @@
 		else
 			return attack_hand(user)
 
-		return
-
 	attack_hand(mob/user as mob)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
