@@ -1,2 +1,7 @@
 [langserver]
 dreamchecker = true
+
+[diagnostics]
+no_typehint_implicit_new = "off"
+field_access_static_type = "off"
+proc_call_static_type = "off"
