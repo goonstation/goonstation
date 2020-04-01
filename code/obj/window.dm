@@ -681,7 +681,7 @@
 		var/builtdir = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
-			if (T && T.type in connects_to)
+			if (T && (T.type in connects_to))
 				builtdir |= dir
 			else if (islist(connects_to) && connects_to.len)
 				for (var/i=1, i <= connects_to.len, i++)

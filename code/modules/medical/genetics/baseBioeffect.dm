@@ -133,7 +133,6 @@ var/const/effectTypeFood = 4
 				return BE
 			else
 				return null
-		return null
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null

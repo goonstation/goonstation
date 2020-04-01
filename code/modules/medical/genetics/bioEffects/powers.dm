@@ -907,6 +907,12 @@
 
 		sleep(30)
 		if (can_act(owner))
+			if(owner.reagents.has_reagent("anti_fart"))
+				owner.visible_message("<span style=\"color:red\"><b>[owner.name]</b> swells up. That can't be good.</span>")
+				boutput(owner, "<span style=\"color:red\"><b>Oh god.</b></span>")
+				indigestion_gib()
+				return 1
+
 			owner.visible_message("<span style=\"color:red\"><b>[owner.name]</b>[fart_string]</span>")
 			while (sound_repeat > 0)
 				sound_repeat--
@@ -945,6 +951,33 @@
 			return 1
 
 		return
+
+	proc/indigestion_gib()
+		owner.emote("faint")
+		owner.setStatus("weakened", 20 SECONDS)
+		owner.make_jittery(50)
+		sleep(1 SECOND)
+		owner.emote("scream")
+		playsound(owner.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
+		owner.TakeDamage("chest", 25, 0, 0, DAMAGE_BLUNT)
+		owner.make_jittery(250)
+		sleep(1 SECOND)
+		owner.emote("scream")
+		playsound(owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+		owner.TakeDamage("chest", 25, 0, 0, DAMAGE_BLUNT)
+		owner.make_jittery(500)
+
+		var/scream_time = 2
+		var/scream_decrement = 0.25
+
+		while(scream_time > 0)
+			playsound(owner.loc, pick("sound/impact_sounds/Flesh_Break_1.ogg","sound/impact_sounds/Flesh_Tear_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg"), 100, 1)
+			owner.emote("scream")
+			sleep(scream_time SECONDS)
+			scream_time -= scream_decrement
+		owner.buttgib()
+		return
+
 
 /datum/bioEffect/power/superfart/griff
 	name = "Very-High-Pressure Intestines"

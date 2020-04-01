@@ -422,14 +422,12 @@
 		return 1
 	else
 		return 0
-	return
 
 /mob/proc/abiotic()
 	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || src.back || src.wear_mask)
 		return 1
 	else
 		return 0
-	return
 
 /datum/data/function/proc/reset()
 	return
