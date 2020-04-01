@@ -51,6 +51,28 @@
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
 
+		jen // ^^ no i made my own because i am epic
+			name = "maintenance catwalk"
+			icon_state = "catwalk_jen"
+			desc = "This looks marginally more safe than the ones outside, at least..."
+			var/turf/my_turf = null
+
+			New()
+				..()
+				my_turf = get_turf_loc(src)
+
+			attack_hand(obj/M, mob/user)
+				return 0
+
+			attackby(obj/item/W, mob/user)
+				if (issnippingtool(W))
+					..()
+				else
+					my_turf.attackby(user.equipped(), user)
+
+			reagent_act(var/reagent_id,var/volume)
+				..()
+
 	onMaterialChanged()
 		..()
 		if (istype(src.material))

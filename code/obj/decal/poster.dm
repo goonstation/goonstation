@@ -634,6 +634,11 @@
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
+		
+		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
+			name = "\proper fuck"
+			desc = "No... it can't be... the original?! This is a vintage!!"
+			icon_state = "fuckI"
 
 		fuck2
 			name = "\proper fuck II"

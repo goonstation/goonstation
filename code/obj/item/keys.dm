@@ -28,6 +28,11 @@
 	desc = "An old key of iron."
 	var/last_use = 0
 
+/obj/item/device/key/chompskey
+	name = "chomps key"
+	desc = "It's gnot what you were expecting..."
+	icon_state = "chompskey"
+
 var/list/rkey_adjectives = list("burning", "searing","alien","old", "ancient","ethereal", "shining", "secret", "hidden", "dull", "prismatic", "crystaline", "eldritch", "strange", "odd", "buzzing", "mysterious", "great", "rusted", "broken", "glowing", "floating", "mystical", "magic")
 var/list/rkey_nouns = list("dragon", "master", "wizard's", "yendor's", "solarium", "automaton's", "bee's", "shitty bill's", "captain's", "jones'", "void", "ghost", "skeleton")
 var/list/rkey_materials = list("bronze","crystal", "metal", "iron", "mauxite", "pharosium", "char", "molitz", "cobryl", "cytine", "uqill", "bohrum", "claretine", "erebite", "cerenkite", "plasmastone", "syreline", "gold", "silver", "copper", "titanium", "unobtanium")
