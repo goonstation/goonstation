@@ -218,6 +218,28 @@ datum
 			transparency = 128
 			viscosity = 0.8
 
+var/first_triggered = 0
+	first
+			name = "First"
+			id = "first"
+			description = "A type of substance produced by the adrenal glands when you're first place."
+			fluid_r = 1
+			fluid_g = 1
+			fluid_b = 1
+			transparency = 255
+			value = 1 // what the fuck does this even do
+			viscosity = 0.4
+
+			on_add()
+				if(istype(holder) && istype(holder.my_atom, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = holder.my_atom
+					if(!first_triggered)
+						H.say(";FIRST!")
+					else
+						boutput(H, "You weren't first...")
+				return
+
+
 		aranesp
 			name = "aranesp"
 			id = "aranesp"
