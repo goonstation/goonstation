@@ -1,3 +1,4 @@
+var/first_triggered = 0
 //Contains exotic or special reagents.
 datum
 	reagent
@@ -218,7 +219,6 @@ datum
 			transparency = 128
 			viscosity = 0.8
 
-var/first_triggered = 0
 	first
 			name = "First"
 			id = "first"
@@ -235,6 +235,7 @@ var/first_triggered = 0
 					var/mob/living/carbon/human/H = holder.my_atom
 					if(!first_triggered)
 						H.say(";FIRST!")
+						first_triggered = 1
 					else
 						boutput(H, "You weren't first...")
 				return
