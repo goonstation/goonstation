@@ -21,7 +21,8 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
+	/obj/item/toy/gooncode)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	user.machine = src
@@ -945,3 +946,40 @@ var/list/figure_patreon_rarity = list(\
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 
 
+/obj/item/toy/gooncode
+	name = "Gooncode floppy disk"
+	desc = "The prized, sought after spaghetti and pooballs code. The only known cure to apiphobia. Makes coders exclaim \"Wow! I can't believe I spent ten years on this!\""
+	icon = 'icons/obj/plushies.dmi' // didn't know where to put this
+	icon_state = "gooncode"
+	flags = SUPPRESSATTACK
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 3
+	rand_pos = 1
+	var/cooldown = 0
+	var/stationfirst = "go"
+	var/stationlast = "on"
+	var/prfirst = "very"
+	var/prmiddle = "smelly"
+	var/prlast = "farts"
+
+/obj/item/toy/gooncode/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/pda2))
+		if(cooldown > world.time)
+			return
+		else
+			stationfirst = pick("tee", "bee", "fart", "yoo", "poo", "gee", "ma", "honk", "badmin")
+			stationlast = pick("gee", "bee", "butt", "goo", "pee", "se", "cho", "clown", "bus")
+			prfirst = pick("high", "cool", "beloved", "crappy", "interesting", "worthless", "random", "horribly coded", "butt")
+			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt")
+			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts")
+			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
+			user.visible_message("<span style=\"color:red\"><B>[user] uploads the Gooncode to their PDA.</B></span>")
+			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span style='color:#605b59'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
+			cooldown = world.time + 40
+			return
+	return ..()
+
+/obj/item/toy/gooncode/attack()
+	return

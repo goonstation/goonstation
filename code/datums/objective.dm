@@ -138,7 +138,8 @@ proc/create_fluff(var/datum/mind/target)
 #ifdef MAP_OVERRIDE_MANTA
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill")
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill",
+		"much coveted Gooncode")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -168,6 +169,8 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/mdlicense
 			if("Head of Personnel\'s First Bill")
 				steal_target = /obj/item/firstbill
+			if("much coveted Gooncode")
+				steal_target = /obj/item/toy/gooncode
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
