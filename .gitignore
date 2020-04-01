@@ -9,9 +9,7 @@
 *.log
 /adventure
 
-# ignore config
-config/config.txt
-config/admins.txt
+# ignore build files
 _stdlib/__build.dm
 z_build_opts.dm
 
