@@ -8,17 +8,14 @@ datum/pump_ui
  	// Increments for the + and - buttons
 	var/incr_sm
 	var/incr_lg
+
  // These need to be overridden in the children
 datum/pump_ui/proc/set_value(value_to_set)
-	CRASH("Non-overridden proc in datum/pump_ui")
 datum/pump_ui/proc/toggle_power()
-	CRASH("Non-overridden proc in datum/pump_ui")
 datum/pump_ui/proc/is_on()
-	CRASH("Non-overridden proc in datum/pump_ui")
 datum/pump_ui/proc/get_value()
-	CRASH("Non-overridden proc in datum/pump_ui")
 datum/pump_ui/proc/get_atom()
-	CRASH("Non-overridden proc in datum/pump_ui")
+
  // Checks user validity
 datum/pump_ui/proc/validate_user(mob/user as mob)
 	return !(user.stat || user.restrained())
@@ -40,7 +37,8 @@ datum/pump_ui/Topic(href, href_list)
  // Displays the UI
 datum/pump_ui/proc/show_ui(mob/user)
 	if (user.client.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(get_atom(), user, list("title" = src.pump_name, "content" = render()))
+		user.client.tooltipHolder.showClickTip(get_atom(), list("title" = src.pump_name, "content" = render()))
+
  // Generates the HTML
 datum/pump_ui/proc/render()
 	return {"

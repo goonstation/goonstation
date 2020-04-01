@@ -118,10 +118,9 @@ obj/machinery/atmospherics/binary/volume_pump
 			SPAWN_DBG(0.5 SECONDS) broadcast_status()
 		update_icon()
 
-obj/machinery/atmospherics/binary/volume_pump/attackby(obj/weapon as obj, mob/user as mob)
+obj/machinery/atmospherics/binary/volume_pump/attack_hand(mob/user as mob)
 	..()
-	if(istype(weapon, /obj/item/device/multitool))
-		ui.show_ui(user)
+	ui.show_ui(user)
 
 datum/pump_ui/volume_pump_ui
 	value_name = "Flow Rate"

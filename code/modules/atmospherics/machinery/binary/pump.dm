@@ -140,10 +140,9 @@ obj/machinery/atmospherics/binary/pump
 
 		update_icon()
 
-obj/machinery/atmospherics/binary/pump/attackby(var/obj/W as obj, var/mob/user as mob)
+obj/machinery/atmospherics/binary/pump/attack_hand(var/mob/user as mob)
 	..()
-	if(istype(W, /obj/item/device/multitool))
-		ui.show_ui(user)
+	ui.show_ui(user)
 
 datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"
