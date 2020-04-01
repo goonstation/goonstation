@@ -233,7 +233,6 @@ var/turf_spawn_edge_limit = 5
 			return "perfect"
 		else
 			return "strange"
-	return
 
 /proc/getGemQualityName(var/quality)
 	switch(quality)
@@ -277,4 +276,3 @@ var/turf_spawn_edge_limit = 5
 			return "perfect"
 		else
 			return "strange"
-	return

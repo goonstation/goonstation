@@ -56,7 +56,6 @@
 		return 1
 	else
 		return 0
-	return
 
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))

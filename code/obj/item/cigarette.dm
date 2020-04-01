@@ -82,7 +82,6 @@
 			return
 		else
 			return ..()
-		return
 
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)

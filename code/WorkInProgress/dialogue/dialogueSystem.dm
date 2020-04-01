@@ -24,7 +24,6 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 			return curr[flag]
 		else
 			return null
-	return null
 
 /datum/dialogueMaster
 	var/datum/dialogueNode/start = null //The node the dialogue starts at.
@@ -104,7 +103,6 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 				return curr[flag]
 			else
 				return null
-		return null
 
 	proc/setFlagGlobal(var/client/C, var/flag="", var/value=null)
 		return setGlobalFlag(C, flag, value)

@@ -58,7 +58,6 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 
 					if (!(fullPath in src.allowedProcs))
 						CRASH("EHJAX: Attempt to call disallowed proc: [strip_html(fullPath)] by user: [C && C.key ? C.key : usr]")
-						return
 
 					var/params[] = new()
 					for (var/key in href_list)
