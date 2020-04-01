@@ -144,6 +144,22 @@
 		..()
 
 
+//big standing lamps
+/obj/machinery/light/blamp
+	name = "big lamp"
+	icon = 'icons/obj/lighting.dmi'
+	desc = "A tall and thin lamp that rests comfortably on the floor."
+	anchored = 1
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	fitting = "bulb"
+	light_name = "light bulb"
+	brightness = 1.4
+	var/state
+	var/lampshaded = 1
+	icon_state = "blamp1-off"
+	wallmounted = 0
+
 //regular light bulbs
 /obj/machinery/light/small
 	icon_state = "bulb1"

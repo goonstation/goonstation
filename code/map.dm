@@ -500,6 +500,8 @@ var/global/list/mapNames = list(
 	manta
 		icon_state = "shuttle_escape-manta"
 		filler_turf = "/turf/space/fluid/manta"
+	donut3
+		icon_state = "shuttle_escape-donut3"
 
 /area/shuttle/escape/station
 	#ifdef UNDERWATER_MAP
