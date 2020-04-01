@@ -182,6 +182,27 @@
 
 		SPAWN_DBG(0.5 SECONDS) M:implode()
 
+/client/proc/cmd_admin_buttgib(mob/M as mob in world)
+	set category = null
+	set name = "Butt Gib"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (!ishuman(M))
+		boutput(src, "<span style=\"color:red\">Only humans can be buttgibbed.</span>")
+		return
+
+	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing("admin", usr, M, "has buttgibbed %target%")
+			logTheThing("diary", usr, M, "has buttgibbed %target%", "admin")
+			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
+
+		SPAWN_DBG(0.5 SECONDS) M:buttgib()
+
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
 	set category = null
 	set name = "Cluwne Gib"

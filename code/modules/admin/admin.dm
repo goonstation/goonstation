@@ -932,6 +932,14 @@ var/global/noir = 0
 			else
 				alert("You need to be at least a Primary Admin to gib a dude.")
 
+		if ("buttgib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_buttgib(M)
+			else
+				alert("You need to be at least a Primary Admin to buttgib a dude.")
+
 		if ("partygib")
 			if( src.level >= LEVEL_PA )
 				var/mob/M = locate(href_list["target"])
