@@ -955,9 +955,6 @@
 	proc/indigestion_gib()
 		owner.emote("faint")
 		owner.setStatus("weakened", 20 SECONDS)
-		//owner.lying = 1
-		//owner.resting = 1
-		//owner.canmove = 0
 		owner.make_jittery(50)
 		sleep(1 SECOND)
 		owner.emote("scream")
