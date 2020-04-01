@@ -489,7 +489,7 @@ var/ZSUBTRACT = 0
 				playsound(src.linked_pad.loc, "sound/weapons/flashbang.ogg", 50, 1)
 				for(var/mob/N in viewers(src.linked_pad, null))
 					if(get_dist(N, src.linked_pad) <= 6)
-						N.flash(30)
+						N.flash(3 SECONDS)
 						N.weakened = max(N.weakened, 5)
 					if(N.client) shake_camera(N, 6, 4)
 				return
