@@ -43,6 +43,7 @@ var/datum/preMapLoad/preMapLoad = new
 
 //Secret Code Handling
 #include "+secret\__secret.dme"
+#include "code\__secret.dm"
 
 // BEGIN_INCLUDE
 #include "code\area.dm"
@@ -1580,7 +1581,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "maps\config\map.dm"
 // END_INCLUDE
 
-#if SECRETS_ENABLED == 1
+#ifdef SECRETS_ENABLED
 #include "+secret\_secretAfter.dme"
 #endif
 

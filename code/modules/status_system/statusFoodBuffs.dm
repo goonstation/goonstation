@@ -299,8 +299,6 @@
 		range = 6
 
 	proc/cast()
-		if (..())
-			return 1
 
 		var/turf/T = get_step(owner,owner.dir)
 		T = get_step(T,owner.dir)

@@ -146,15 +146,15 @@ var/global/the_automaton = null
 		switch (keycount)
 			if (2)
 				for (var/mob/M in range(5))
-					M.flash(30)
+					M.flash(3 SECONDS)
 				random_events.force_event("Solar Flare","Solarium Event (2 keys)")
 			if (4)
 				for (var/mob/M in range(5))
-					M.flash(30)
+					M.flash(3 SECONDS)
 				random_events.force_event("Radiation Storm","Solarium Event (4 keys)")
 			if (6)
 				for (var/mob/M in range(5))
-					M.flash(30)
+					M.flash(3 SECONDS)
 				random_events.force_event("Solar Flare","Solarium Event (6 keys)")
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -253,7 +253,7 @@ var/global/the_automaton = null
 				src.visible_message("<span style=\"color:red\"><b>[src]</b> makes a curious sign in the air. Huh.</span>")
 
 				for (var/mob/M in range(5))
-					M.flash(30)
+					M.flash(3 SECONDS)
 
 				//var/obj/overlay/the_sun = locate("the_sun")
 				//if (istype(the_sun))
@@ -311,7 +311,7 @@ var/global/the_automaton = null
 		else if (istype(W, /obj/item/alchemy/stone))
 			src.visible_message("<span style=\"color:red\">[src] studies [W] intently. It looks impressed, but hands [W] back. Perhaps it's not the right time for this yet?</span>")
 
-		#if SECRETS_ENABLED == 1
+		#ifdef SECRETS_ENABLED
 		else if (istype(W, /obj/item/onyxphoto))
 			if (!W:used)
 				src.visible_message("<span style=\"color:blue\"><b>[src]</b> studies [W] intently, then hands it back after a short pause.</span>")
@@ -477,7 +477,7 @@ var/global/the_automaton = null
 		for(var/mob/living/carbon/human/H in mobs)
 			animate_float(H, 5, 10)
 			SPAWN_DBG(1 SECOND)
-				H.flash(30)
+				H.flash(3 SECONDS)
 				shake_camera(H, 210, 2)
 			SPAWN_DBG(rand(10,70))
 				H.emote("scream")

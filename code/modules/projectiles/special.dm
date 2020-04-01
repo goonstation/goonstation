@@ -733,3 +733,54 @@
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+
+
+/datum/projectile/special/spreader/quadwasp
+	name = "4 space wasp eggs"
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon_state = "critter_egg"
+	brightness = 0
+	sname = "4 space wasp eggs"
+	shot_sound = null
+	shot_number = 1
+	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	power = 60
+	cost = 40
+	ks_ratio = 1.0
+	dissipation_rate = 70
+	dissipation_delay = 0
+	window_pass = 0
+	spread_projectile_type = /datum/projectile/laser/wasp
+	pellets_to_fire = 4
+	var/spread_angle = 60
+	var/current_angle = 0
+	var/angle_adjust_per_pellet = 0
+	var/initial_angle_offset_mult = 0
+
+
+	proc/throw_egg(var/turf/T)
+		if (T)
+			var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = new(T)
+			W.throw_impact(T)
+
+	on_launch(var/obj/projectile/P)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
+		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
+		..()
+
+	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
+		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
+		FC.rotateDirection(current_angle)
+		FC.launch()
+		current_angle += angle_adjust_per_pellet
+
+	on_pointblank(var/obj/projectile/O, var/mob/target)
+		if (!O)
+			return
+		if (!target)
+			return
+		var/turf/T = get_turf(target)
+		if(T)
+			for(var/i=0, i < 4, i++)
+				throw_egg(T)
+		return

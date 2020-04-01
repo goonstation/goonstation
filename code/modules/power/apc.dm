@@ -409,7 +409,6 @@ var/zapLimiter = 0
 					return
 				else
 					return
-			return
 
 		else if (iswrenchingtool(W))
 			switch (src.repair_status)

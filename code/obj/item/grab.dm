@@ -32,7 +32,7 @@
 			I.UpdateOverlays(ima, "grab", 0, 1)
 
 	proc/post_item_setup()//after grab is done being made with item
-		..()
+		return
 
 	disposing()
 		if (isitem(src.loc))

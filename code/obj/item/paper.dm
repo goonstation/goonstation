@@ -207,7 +207,7 @@
 		if (istype(usr.equipped(), /obj/item/stamp))
 			var/obj/item/stamp/S = usr.equipped()
 			. = href_list["form"]
-			if (S && . in form_startpoints)
+			if (S && (. in form_startpoints))
 				switch(input(usr, "Stamp \the [src] with [S.name]?", "[src.name]", "No") in list("Yes", "No"))
 					if ("No")
 						return

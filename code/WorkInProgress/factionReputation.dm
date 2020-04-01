@@ -152,7 +152,6 @@
 			if(-5) return "Despised"
 			if(-INFINITY to -6) return "Scorned"
 			else return "UNKNOWN"
-		return
 
 	proc/get_modifiers(var/client = null)
 		//Stub. TBI

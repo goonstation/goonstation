@@ -140,9 +140,8 @@ obj/machinery/atmospherics/binary/pump
 
 		update_icon()
 
-obj/machinery/atmospherics/binary/pump/attackby(var/obj/W as obj, var/mob/user as mob)
-	..()
-	if(istype(W, /obj/item/device/multitool))
+obj/machinery/atmospherics/binary/pump/attackby(obj/item/W as obj, mob/user as mob)
+	if(ispulsingtool(W))
 		ui.show_ui(user)
 
 datum/pump_ui/basic_pump_ui

@@ -53,7 +53,7 @@
 					O.visible_message("<span style=\"color:red\"><b>[O]</b> envelops [user] in a golden light!</span>")
 					playsound(user, "sound/weapons/flashbang.ogg", 50, 1)
 					for(var/mob/N in viewers(user, null))
-						N.flash(30)
+						N.flash(3 SECONDS)
 						if(N.client)
 							shake_camera(N, 6, 4)
 					user.desc = "A statue of someone very wealthy"

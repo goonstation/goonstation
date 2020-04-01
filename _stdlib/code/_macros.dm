@@ -161,7 +161,7 @@ var/list/global_spawn_dbg = list()
 // returns time left on the cooldown with id ID, and if it was 0 it sets it to DELAY
 #define ON_COOLDOWN(COOLDOWN_OWNER, ID, DELAY) (max(COOLDOWN_OWNER.cooldowns[ID] - TIME, 0) || (COOLDOWN_OWNER.cooldowns[ID] = TIME + DELAY) && 0)
 // the same thing but uses src as the cooldown owner and generates the ID based on the current proc's / verb's path
-#define PROC_ON_COOLDOWN(DELAY) ON_COOLDOWN(src, "[....]", DELAY)	
+#define PROC_ON_COOLDOWN(DELAY) ON_COOLDOWN(src, "[....]", DELAY)
 /* Example use:
 /mob/verb/spam_chat()
 	if(PROC_ON_COOLDOWN(1 MINUTE))

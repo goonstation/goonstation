@@ -13,7 +13,7 @@
 
 	New(turf/loc)
 		..()
-		#if SECRETS_ENABLED == 1
+		#ifdef SECRETS_ENABLED
 		new spawn_path(loc)
 		#endif
 		qdel(src)

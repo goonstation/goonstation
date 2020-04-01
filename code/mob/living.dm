@@ -939,7 +939,7 @@
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
 			(istype(M, /mob/zoldorf)) || \
-			(isintangible(M) && M in hearers(src)) || \
+			(isintangible(M) && (M in hearers(src))) || \
 			( \
 				(!isturf(src.loc) && src.loc == M.loc) && \
 				!(M in heard_a) && \

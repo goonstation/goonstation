@@ -271,6 +271,8 @@ mob/new_player
 		if (JOB.requires_whitelist)
 			if (!NT.Find(src.ckey))
 				return 0
+		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
+			return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1
 		return 0

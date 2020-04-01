@@ -165,7 +165,7 @@
 			return
 		if (ismob(owner))
 			var/mob/M = owner
-			if (!A in M.equipped_list())
+			if (!(A in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		A.reprogram(O,owner)

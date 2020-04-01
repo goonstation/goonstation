@@ -16,7 +16,7 @@ var/list/bible_contents = list()
 	New()
 		..()
 		START_TRACKING
-		#if SECRETS_ENABLED
+		#ifdef SECRETS_ENABLED
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
 		ritualComponent.autoActive = 1
 		#endif

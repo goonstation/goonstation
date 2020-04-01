@@ -232,12 +232,20 @@
 		else if (src.butt_op_stage < 5)
 			return_thing += src.butt_op_stage
 
-	if (!zone || zone in list("l_arm","r_arm","l_leg","r_leg"))
+	if (zone in list("l_arm","r_arm","l_leg","r_leg"))
 		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
 		if (istype(surgery_limb))
 			return_thing += surgery_limb.remove_stage
 		else if (!surgery_limb)
 			return_thing ++
+
+	if(!zone)
+		for(var/actual_zone in list("l_arm","r_arm","l_leg","r_leg"))
+			var/obj/item/parts/surgery_limb = src.limbs.vars[actual_zone]
+			if (istype(surgery_limb))
+				return_thing += surgery_limb.remove_stage
+			else if (!surgery_limb)
+				return_thing ++
 
 	//DEBUG_MESSAGE("get_surgery_status for [src] returning [return_thing]")
 	return return_thing

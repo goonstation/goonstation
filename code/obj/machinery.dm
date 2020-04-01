@@ -131,7 +131,7 @@
 		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			if (!usr)
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
-			else if (x in list(usr.x - 1, usr.x, usr.x + 1) && y in list(usr.y - 1, usr.y, usr.y + 1) && z == usr.z && isturf(loc))
+			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
 				message_coders("[type]/Topic(): is in range of usr, but in_range failed - [name] at [showCoords(x, y, z) ]")
 			//boutput(usr, "<span style='color:red'>You must be near the machine to do this!</span>")
 			return 1
