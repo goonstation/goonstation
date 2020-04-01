@@ -52,6 +52,7 @@ var/global/datum/apiHandler/apiHandler
 		set background = 1
 		if (!enabled || !route)
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]")
+			return
 
 		var/req = "[config.goonhub_api_endpoint]/[route]/?[query ? "[list2params(query)]&" : ""]" //Necessary
 		req += "[forceResponse ? "bypass=1&" : ""]" //Force a response RIGHT NOW y/n
@@ -98,6 +99,6 @@ var/global/datum/apiHandler/apiHandler
 
 				src.apiError("API Error: JSON decode error during [safeReq]")
 
-			return data 
+			return data
 
 		return 1
