@@ -1989,6 +1989,8 @@ datum
 							otherReagents = TRUE
 					if(!otherReagents)
 						// we ate them all, time to die
+						if(holder.gnesisstasis)
+							return
 						holder.remove_reagent(id, conversion_rate)
 
 			// let's put more teeth into this.

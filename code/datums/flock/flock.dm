@@ -46,7 +46,7 @@
 	for(var/name in src.enemies)
 		var/list/enemy_stats = src.enemies[name]
 		var/mob/living/M = enemy_stats["mob"]
-		if(istype(M)) // fix runtime: Cannot read null.name 
+		if(istype(M)) // fix runtime: Cannot read null.name	
 			var/list/enemy = list()
 			enemy["name"] = M.name
 			enemy["area"] = enemy_stats["last_seen"]
@@ -228,10 +228,13 @@
 	if(istype(D, /obj/flock_structure/egg))
 		src.units |= D	
 
+	if(istype(D, /obj/flock_structure/rift))
+		src.units |= D
+
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D))
 		src.units -= D
-		
+
 		// update the flock control panel
 		var/list/update = list()
 		update["update"] = "remove"

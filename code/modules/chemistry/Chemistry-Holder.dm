@@ -59,6 +59,8 @@ datum
 
 		var/postfoam = 0 //attempt at killing infinite foam
 
+		var/gnesisstasis = 0//used for pausing gnesis for stuff
+
 		New(maximum=100)
 			maximum_volume = maximum
 

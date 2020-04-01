@@ -49,8 +49,8 @@
 /////////////////////////////////////////
 
 /datum/targetable/flockmindAbility/spawnEgg
-	name = "Spawn Egg"
-	desc = "Spawn an egg where you are, and from there, begin."
+	name = "Spawn Rift"
+	desc = "Spawn an rift where you are, and from there, begin."
 	icon_state = "spawn_egg"
 	targeted = 0
 	cooldown = 0

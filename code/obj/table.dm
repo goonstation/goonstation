@@ -1,10 +1,3 @@
-
-#define TABLE_DISASSEMBLE 0
-#define TABLE_WEAKEN 1
-#define TABLE_STRENGTHEN 2
-#define TABLE_ADJUST 3
-#define TABLE_LOCKPICK 4
-
 /obj/table
 	name = "table"
 	desc = "A metal table strong enough to support a substantial amount of weight, but easily made portable by unsecuring the bolts with a wrench."
@@ -278,6 +271,7 @@
 			return
 
 		else if (istype(W) && src.place_on(W, user, params))
+			message_admins("[W] is W. in table.dm")
 			return
 
 		else
@@ -842,7 +836,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && the_tool != source.equipped())
+		if (istype(source) && the_tool != source.equipped() && !istype(the_tool, /datum/limb/flock_converter))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)

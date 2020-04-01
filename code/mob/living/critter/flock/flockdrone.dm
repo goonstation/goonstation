@@ -708,10 +708,10 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target))
-		target = get_turf(target)
+//	if(!isturf(target))
+//		target = get_turf(target) //breaks stuff like deconning with harm. a tad more annoying to hit the turfs but a small price to pay for ~~salvation~~ deconning stuff
 
-	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
+	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='text-red'>Something about this structure prevents it from being assimilated.</span>")
 	else if(isfeathertile(target))
 		if(istype(target, /turf/simulated/floor/feather))
@@ -736,10 +736,19 @@
 				boutput(user, "<span class='text-blue'>It's already been repurposed. Can't improve on perfection. (Use the disarm intent to construct a barricade.)</span>")
 		else
 			boutput(user, "<span class='text-blue'>It's already been repurposed. Can't improve on perfection.</span>")
-	else if(user.resources < 20)
+	else if(user.resources < 20 && istype(target, /turf))
 		boutput(user, "<span class='text-red'>Not enough resources to convert (you need 20).</span>")
 	else
-		actions.start(new/datum/action/bar/flock_convert(target), user)
+		if(istype(target, /turf))
+			actions.start(new/datum/action/bar/flock_convert(target), user)
+	if(user.a_intent == INTENT_HARM)
+		if(istype(target, /obj/table/flock))
+			actions.start(new /datum/action/bar/icon/table_tool_interact(target, src, TABLE_DISASSEMBLE), user)
+		else if
+
+		else
+			..()
+
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
@@ -778,6 +787,21 @@
 		boutput(user, "<span class='text-red'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
+
+ //FUCK - moonlol
+/datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
+	if(!target || !user)
+		return
+	if(user.floorrunning)
+		return
+	if(istype(target, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/f = target
+		if(isdead(f))
+			actions.start(new/datum/action/bar/icon/butcher_living_critter(f), user)
+		else
+			boutput(user, "<span class='text-red'>You can't butcher a living flockdrone!</span>")
+	else
+		..()
 
 /////////////////////////////////////////////////////////////////////////////////
 

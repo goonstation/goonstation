@@ -135,3 +135,12 @@
 				"sound/effects/radio_sweep1.ogg", "sound/effects/radio_sweep2.ogg", "sound/effects/radio_sweep3.ogg", "sound/effects/radio_sweep4.ogg", "sound/effects/radio_sweep5.ogg")
 			M.playsound_local(get_turf(M), pick(sounds), 20, 1)
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
+
+/obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Computational core"
+ 		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description

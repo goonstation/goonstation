@@ -25,6 +25,7 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("flockdrone_fluid", 50)
+	R.gnesisstasis = 1
 
 ////////////////
 // FLOCKBURGER
@@ -70,6 +71,17 @@
 	current_projectile = new/datum/projectile/energy_bolt/flockdrone
 	projectiles = list(current_projectile)
 	..()
+
+/obj/item/gun/energy/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Incapacitor"
+		special_desc += "<br><span class='bold'>Energy:</span> [src.cell.charge]"
+		special_desc += "<br><span class='bold'>Max Energy:</span> [src.cell.max_charge]"
+ 		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description
 
 ////////////
 // FLOCKPOD

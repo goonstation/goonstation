@@ -14,7 +14,7 @@
 /mob/living/intangible/flock/flockmind/New()
 	..()
 
-	src.abilityHolder = new /datum/abilityHolder/flockmind(src)	
+	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 	src.last_time = world.timeofday
 
 	src.flock = new /datum/flock()
@@ -32,7 +32,7 @@
     special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]"
     special_desc += "<br><span class='bold'>Resources:</span> [src.flock.total_resources()]"
     special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%"
-    special_desc += "<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS"    
+    special_desc += "<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS"
     special_desc += "<br>###=-</span></span>"
     return special_desc
   else
@@ -51,7 +51,7 @@
 
 /mob/living/intangible/flock/flockmind/Login()
 	..()
-	abilityHolder.updateButtons()			
+	abilityHolder.updateButtons()
 
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -61,7 +61,8 @@
 
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
-		new /obj/flock_structure/egg(get_turf(src), src.flock)
+		var/obj/flock_structure/rift/r = new(get_turf(src), src.flock)
+		r.mainflock = src.flock
 		playsound(get_turf(src), "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
 	else
 		boutput(src, "<span class='text-red'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
@@ -70,10 +71,10 @@
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAllAbilities()
 
-/mob/living/intangible/flock/flockmind/proc/addAllAbilities()	
+/mob/living/intangible/flock/flockmind/proc/addAllAbilities()
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
-	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)	
+	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)
 	src.addAbility(/datum/targetable/flockmindAbility/splitDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/healDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/doorsOpen)

@@ -29,6 +29,7 @@
 		iced.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		occupant = iced
 		processing_items |= src
+		src.reagents.gnesisstasis = 1
 
 	proc/getHumanPiece(var/mob/living/carbon/human/H)
 		// prefer inventory items before limbs, and limbs before organs
@@ -155,5 +156,17 @@
 		if(occupant)
 			occupant.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		..()
+
+
+/obj/icecube/flockdrone/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Matter Reprocessor"
+		special_desc += "<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]"
+		special_desc += "<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]"
+ 		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description
 
 
