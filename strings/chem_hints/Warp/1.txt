@@ -1,1 +1,0 @@
-Style is everything. Warp makes a little teleport flash when it sends you back to where you came from. It's not actually required for it to work, but who the heck wouldnt want it? Anyway be sure to add a sparkly chemical to produce the flash!
