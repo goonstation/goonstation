@@ -4,17 +4,11 @@
 	name = "Clue scroll"
 	desc = "A scroll containing a hint for a secret chemical recipe."
 	var/hint_text = "heck, someone forgot to put a hint in this scroll! Call 1-800-IMCODER"
-	var/chem_name
+	var/chem_name = "1-800-CODER"
 	var/has_been_read = 0
 
 	get_desc()
 		return " [chem_name] is carefully written on the outside of the scroll in fancy writing."
-
-	New()
-		..()
-		#ifdef SECRETS_ENABLED
-		chem_name = pick(chem_hint_info)
-		#endif
 
 	attack_self(var/mob/U)
 		if(has_been_read)
