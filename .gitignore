@@ -1,0 +1,32 @@
+# DM build/intermediate files
+*.dmb
+*.rsc
+*.int
+*.lk
+
+# runtime generated files
+/data/*
+*.log
+/adventure
+
+# ignore config
+config/config.txt
+config/admins.txt
+_stdlib/__build.dm
+z_build_opts.dm
+
+# Pre-processor related
+node_modules
+.tmp
+.sass-cache
+Build System.dm
+
+# Editor Files
+*.sublime-project
+*.sublime-workspace
+*.vscode
+*.idea
+
+#Misc
+Thumbs.db
+goonstation/unversioned/

@@ -1,0 +1,49 @@
+/datum/targetable/changeling/mimic_voice
+	name = "Mimic Voice"
+	desc = "Sound like someone else!"
+	icon_state = "mimicvoice"
+	cooldown = 0
+	targeted = 0
+	target_anything = 0
+	human_only = 1
+	can_use_in_container = 1
+	interrupt_action_bars = 0
+	var/last_mimiced_name = ""
+	cast(atom/target)
+		if (..())
+			return 1
+		var/mimic_name = html_encode(input("Choose a name to mimic:","Mimic Target.",last_mimiced_name) as null|text)
+
+		if (!mimic_name)
+			return 1
+		last_mimiced_name = mimic_name //A little qol, probably.
+
+		var/mimic_message = html_encode(input("Choose something to say:","Mimic Message.","") as null|text)
+
+		if (!mimic_message)
+			return 1
+
+		var/mob/living/carbon/human/H = 0
+		if (ishuman(holder.owner))
+			H = holder.owner
+
+
+		if (H && H.ears && istype (H.ears,/obj/item/device/radio/headset))
+			var/obj/item/device/radio/headset/headset = H.ears
+			if (headset.bicon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
+				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in list("head","sec","eng","sci","med","qm","civ","cap","rd","md","ce","hop","hos","clown")
+				if (radio_override)
+					headset.bicon_override = radio_override
+
+		logTheThing("say", holder.owner, mimic_name, "[mimic_message] (<b>Mimicing (%target%)</b>)")
+		var/original_name = holder.owner.real_name
+		holder.owner.real_name = copytext(mimic_name, 1, 32)
+		holder.owner.say(mimic_message)
+		holder.owner.real_name = original_name
+
+		if (H && H.ears && istype (H.ears,/obj/item/device/radio/headset))
+			var/obj/item/device/radio/headset/headset = H.ears
+			if (headset.bicon_override)
+				headset.bicon_override = initial(headset.bicon_override)
+
+		return 0

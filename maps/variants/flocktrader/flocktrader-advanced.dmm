@@ -1,0 +1,99 @@
+"aa" = (/turf/space,/area)
+"ab" = (/turf/simulated/shuttle/wall/flock{icon_state = "shuttle-wall"; dir = 9},/area)
+"ac" = (/turf/simulated/shuttle/wall/flock{icon_state = "shuttle-wall"; dir = 9},/area/flock_trader)
+"ad" = (/turf/simulated/shuttle/wall/flock,/area/flock_trader)
+"ae" = (/turf/space,/turf/simulated/shuttle/wall/cockpit/flock{icon_state = "shuttle-nose"; dir = 8},/area)
+"ag" = (/obj/decal/fakeobjects/flock/wing{icon_state = "wing"; dir = 5},/turf/space,/area)
+"ah" = (/obj/wingrille_spawn/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ai" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 8},/obj/wingrille_spawn/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aj" = (/obj/decal/fakeobjects/flock/wing{icon_state = "wing"; dir = 6},/turf/space,/area)
+"ak" = (/turf/simulated/shuttle/wall/flock{icon_state = "shuttle-wall"; dir = 5},/area/flock_trader)
+"al" = (/obj/flock_screen,/turf/simulated/shuttle/wall/flock,/area/flock_trader)
+"am" = (/obj/wingrille_spawn/flock,/obj/machinery/light/flock{icon_state = "flock1"; dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"an" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 4},/obj/stool/chair/comfy/flock{icon_state = "chair_flock"; dir = 8},/mob/living/critter/flock/drone{dir = 8; dormant = 1; icon_state = "drone"},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ao" = (/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ap" = (/obj/table/flock/auto,/obj/machinery/light/flock{icon_state = "flock1"; dir = 1; pixel_y = 9},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aq" = (/obj/item/furniture_parts/flock_chair,/obj/table/flock/auto,/obj/machinery/light/flock{icon_state = "flock1"; dir = 1; pixel_y = 9},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ar" = (/turf/simulated/shuttle/wall/flock{icon_state = "shuttle-wall"; dir = 5},/area)
+"as" = (/obj/stool/chair/comfy/flock,/obj/machinery/light/flock{icon_state = "flock1"; dir = 1; pixel_y = 9},/mob/living/critter/flock/drone{dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"at" = (/obj/table/flock/auto,/obj/map/light/cyan,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"au" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 1; pixel_y = 9},/turf/simulated/floor/shuttlebay/flock{icon_state = "shuttle-bay"; dir = 9},/area/flock_trader)
+"av" = (/obj/lattice/flock,/turf/space,/area)
+"aw" = (/obj/machinery/door/feather/friendly{icon_state = "door1"; dir = 4},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ax" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 4},/obj/table/flock/auto,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"ay" = (/obj/map/light/cyan,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"az" = (/mob/living/critter/flock/drone{dormant = 1},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aA" = (/obj/npc/trader/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aB" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 4},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aC" = (/obj/flock_reclaimer,/obj/map/light/cyan,/obj/machinery/light/flock{icon_state = "flock1"; dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aD" = (/obj/table/flock/auto,/obj/machinery/light/flock{icon_state = "flock1"; dir = 1; pixel_y = 9},/obj/item/device/flockblocker,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aE" = (/obj/decal/fakeobjects/flock/antenna{icon_state = "antenna"; dir = 8},/turf/space,/area)
+"aF" = (/obj/decal/fakeobjects/flock/antenna/end{icon_state = "antenna-end"; dir = 4},/turf/space,/area)
+"aG" = (/obj/decal/fakeobjects/flock/wing/destroyed{icon_state = "wing-destroyed"; dir = 9},/turf/space,/area)
+"aH" = (/obj/decal/fakeobjects/flock/wing{icon_state = "wing"; dir = 8},/turf/space,/area)
+"aI" = (/obj/decal/fakeobjects/flock/antenna/end{icon_state = "antenna-end"; dir = 1},/turf/space,/area)
+"aJ" = (/obj/decal/fakeobjects/flock/antenna,/turf/space,/area)
+"aK" = (/obj/machinery/door/feather/trader{icon_state = "door1"; dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aL" = (/obj/decal/fakeobjects/flock/wing/broken{icon_state = "wing-broken"; dir = 5},/turf/space,/area)
+"aM" = (/obj/decal/fakeobjects/flock/telepad,/obj/map/light/cyan,/obj/marker/supplymarker,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aN" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aO" = (/obj/table/flock/auto,/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aQ" = (/obj/item/furniture_parts/table/flock,/obj/table/flock/auto,/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aR" = (/obj/machinery/light/flock,/obj/table/flock/auto,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aS" = (/obj/machinery/light/flock,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aT" = (/obj/lattice/flock,/obj/machinery/light/flock{icon_state = "flock1"; dir = 1},/turf/space,/area)
+"aU" = (/turf/simulated/shuttle/wall/flock{icon_state = "shuttle-wall"; dir = 10},/area/flock_trader)
+"aV" = (/obj/machinery/door/feather/friendly,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aW" = (/obj/stool/chair/comfy/flock{icon_state = "chair_flock"; dir = 4},/obj/machinery/light/flock{icon_state = "flock1"; dir = 8},/mob/living/critter/flock/drone{dir = 4; dormant = 1; icon_state = "drone"},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aX" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 4},/obj/machinery/light/flock{icon_state = "flock1"; dir = 8},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aY" = (/obj/stool/chair/comfy/flock{icon_state = "chair_flock"; dir = 8},/obj/machinery/light/flock{icon_state = "flock1"; dir = 4},/mob/living/critter/flock/drone{dir = 8; dormant = 1; icon_state = "drone"},/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"aZ" = (/turf/simulated/shuttle/wall/flock{icon_state = "shuttle-wall"; dir = 6},/area/flock_trader)
+"ba" = (/obj/decal/fakeobjects/flock/wing/destroyed{icon_state = "wing-destroyed"; dir = 6},/turf/space,/area)
+"bb" = (/obj/decal/cleanable/flockdrone_debris/fluid,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"bc" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 4},/obj/decal/cleanable/flockdrone_debris/fluid,/turf/simulated/floor/shuttle/flock,/area/flock_trader)
+"bd" = (/obj/decal/fakeobjects/flock/antenna/broken{icon_state = "antenna-broken-2"; dir = 1},/turf/space,/area)
+"be" = (/obj/decal/fakeobjects/flock/antenna/broken{icon_state = "antenna-broken-2"; dir = 4},/turf/space,/area)
+"bf" = (/obj/decal/fakeobjects/flock/antenna/broken{icon_state = "atenna-broken-1"},/turf/space,/area)
+"bg" = (/obj/machinery/light/flock{icon_state = "flock1"; dir = 1; pixel_y = 9},/turf/simulated/floor/shuttlebay/flock{icon_state = "shuttle-bay"; dir = 5},/area/flock_trader)
+"bh" = (/turf/simulated/floor/shuttlebay/flock{icon_state = "shuttle-bay"; dir = 8},/area/flock_trader)
+"bi" = (/turf/simulated/floor/shuttlebay/flock/middle,/area/flock_trader)
+"bj" = (/turf/simulated/floor/shuttlebay/flock/middle,/area)
+"bk" = (/obj/machinery/light/flock,/turf/simulated/floor/shuttlebay/flock{icon_state = "shuttle-bay"; dir = 10},/area/flock_trader)
+"bl" = (/obj/machinery/light/flock,/turf/simulated/floor/shuttlebay/flock{icon_state = "shuttle-bay"; dir = 6},/area/flock_trader)
+"bm" = (/obj/decal/fakeobjects/flock/antenna{icon_state = "antenna"; dir = 8},/obj/lattice/flock,/turf/space,/area)
+"bn" = (/obj/decal/fakeobjects/flock/antenna/end{icon_state = "antenna-end"; dir = 4},/obj/lattice/flock,/turf/space,/area)
+"bo" = (/obj/decal/fakeobjects/flock/antenna/broken{icon_state = "antenna-broken-2"; dir = 4},/obj/lattice/flock,/turf/space,/area)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaJaaaIaabdaaaaaaacaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaagaaaaaaaaaJaaaJbdaJaaaaabadaGaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaagaaaaacadahahahadadadadadadahadadaraaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaLaaaaaaacadadadadahahahadadadadadaiahahahadakaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaacadadadadadadaladadahadadadadadadamadadahanadaEaFaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaacadapaqaDapadapatatapahasasasasasasahaxadadadadaEbeaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaadayazaAazaBadaCaoaoaoahahahahahahahahbbahaubgadbmbmbmbnaaaaaaaaaaaa
+aaaaaaaaaaaeadayaoaoaoaoaKaoaoaoaoaoaoaoaoaoaoahaoaoawbhbibibjbjbjavaaaaaaaaaaaa
+aaaaaaaaaaaaadayaoaMaobcadaNaoaobbaoaoaoaoaoaoawaoaoahbkbladbmboavavaaaaaaaaaaaa
+aaaaaaaaaaaaaUadaOaOaOaQadaRaOaOaRaOaOaSaoaSaSahaoaxadadadadaEaEbeaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaUadadadadadadadadadadadadaVadadadamadadahanadaEaFaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaabfaUadadadadadadaWahaXahaYadaiahahahadaZaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaUadadadadadaVadadadadahadadaZaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaajaaaaaaaaaaaaaaaaaaavavaTaoaTavavaaaaaUadaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaavavbbavavaaaaaaaaaUaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaajaaaaaaaaavavavaaaaaaaaaaaaaHaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
+

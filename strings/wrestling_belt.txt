@@ -1,0 +1,5 @@
+kick@=spin@,tiger@,jump@,hurricane@,tornado@,roundhouse@,crescent@,drop@,flip@,scissor@,spiral@,sweep
+strike@=heart-punches@,neck-chops@,karate-chops@,uppercuts@,palm-strikes@,elbow-strikes@,headbutts
+slam@=piledrives@,powerbombs@,bodyslams@,gorilla-presses@,bulldogs
+throw@=irish-whips@,throws@,hurls@,tosses@,hammer-throws
+drop@=elbow-drops@,leg-drops@,knee-drops@,butt-drops@,chop-drops

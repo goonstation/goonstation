@@ -1,0 +1,24 @@
+.dialogueButton {
+  background-color: #325080;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 20%/50%;
+  width: 50%;
+  height: 2em;
+}
+
+.dialogueButton:hover {
+  background-color: #829ac2;
+}
+
+.centerimg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

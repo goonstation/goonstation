@@ -1,0 +1,1211 @@
+// living
+
+/mob/living
+	var/spell_soulguard = 0
+
+	// this is a read only variable. do not set it directly.
+	// use set_burning or update_burning instead.
+	// the value means how on fire is the mob, from 0 to 100
+
+	var/datum/hud/vision/vision
+
+	//AI Vars
+
+	var/ai_busy = 0
+	var/ai_laststep = 0
+	var/ai_state = 0
+	var/ai_threatened = 0
+	var/ai_movedelay = 6
+	var/ai_lastaction = 0
+	var/ai_actiondelay = 10
+	var/ai_pounced = 0
+	var/ai_attacked = 0
+	var/ai_frustration = 0
+	var/ai_throw = 0
+	var/ai_attackadmins = 1
+	var/ai_attacknpc = 1
+	var/ai_suicidal = 0 //Will it attack itself?
+	var/ai_active = 0
+
+	var/blood_id = null
+
+	var/mob/living/ai_target = null
+	var/list/mob/living/ai_target_old = list()
+	var/is_npc = 0
+
+	var/move_laying = null
+	var/list/mob/dead/target_observer/observers = list()
+	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
+	var/image/static_image = null
+	var/static_type_override = null
+	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
+	var/in_point_mode = 0
+	var/butt_op_stage = 0.0 // sigh
+	var/dna_to_absorb = 10
+
+	var/canspeak = 1
+
+	var/datum/organHolder/organHolder = 0 //Not all living mobs will use organholder. Instantiate on New() if you want one.
+
+	var/list/stomach_process = list() //digesting foods
+	var/list/skin_process = list() //digesting patches
+
+	var/sound_burp = 'sound/voice/burp.ogg'
+	var/sound_scream = 'sound/voice/screams/robot_scream.ogg' // for silicon mobs
+	//var/sound_scream = 'sound/voice/screams/male_scream.ogg'
+	//var/sound_femalescream = 'sound/voice/screams/female_scream.ogg'
+	var/sound_flip1 = 'sound/machines/whistlealert.ogg' // for silicon mobs
+	var/sound_flip2 = 'sound/machines/whistlebeep.ogg' // for silicon mobs
+	var/sound_fart = 'sound/voice/farts/poo2.ogg'
+	var/sound_snap = 'sound/impact_sounds/Generic_Snap_1.ogg'
+	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
+	var/sound_gasp = 'sound/voice/gasps/gasp.ogg'
+	var/voice_type = 0
+	var/last_voice_sound = 0
+	var/speechbubble_enabled = 1
+	var/speechpopupstyle = null
+
+	var/caneat = 1
+	var/candrink = 1
+
+	var/emote_lock = 0
+
+	var/canbegrabbed = 1
+	var/grabresistmessage = null //Format: target.visible_message("<span style=\"color:red\"><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
+
+//#ifdef MAP_OVERRIDE_DESTINY
+	var/hibernating = 0 // if they're stored in the cryotron, Life() gets skipped
+//#endif
+
+	var/throws_can_hit_me = 1
+
+	var/obj/chat_maptext_holder/chat_text = new
+	var/last_heard_name = null
+	var/last_chat_color = null
+
+/mob/living/New()
+	vision = new()
+	src.attach_hud(vision)
+	src.vis_contents += src.chat_text
+	..()
+	SPAWN_DBG(0)
+		src.get_static_image()
+		sleep_bubble.appearance_flags = RESET_TRANSFORM
+
+/mob/living/flash(duration)
+	vision.flash(duration)
+
+/mob/living/disposing()
+	ai_target = null
+	ai_target_old.len = 0
+	move_laying = null
+	
+	qdel(chat_text)
+	chat_text = null
+
+	for (var/atom in stomach_process)
+		var/atom/A = atom
+		qdel(A)
+	for (var/atom in skin_process)
+		var/atom/A = atom
+		qdel(A)
+	stomach_process = null
+	skin_process = null
+
+	for(var/mob/dead/target_observer/TO in observers)
+		observers -= TO
+		TO.ghostize()
+
+	for(var/mob/dead/aieye/E in src.contents)
+		E.cancel_camera()
+
+	observers.len = 0
+	if (src.static_image)
+		mob_static_icons.Remove(src.static_image)
+		src.static_image = null
+	..()
+
+/mob/living/death(gibbed)
+	if (src.key) statlog_death(src,gibbed)
+	if (src.client && (ticker.round_elapsed_ticks >= 12000))
+		var/num_players = 0
+		for(var/mob/players in mobs)
+			if (players.client && !isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players)) num_players++
+			LAGCHECK(LAG_HIGH)
+
+		if (num_players <= 5 && master_mode != "battle_royale")
+			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
+				emergency_shuttle.incall()
+				boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
+				boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+				boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				world << csound("sound/misc/shuttle_enroute.ogg")
+
+	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
+		src.deathConfetti()
+
+	var/youdied = "You have died!"
+	if (prob(1))
+		if (gibbed)
+			youdied = pick("Cleanup on aisle 5", "What a mess...", "Nice and creamy", "Salsa con [src.real_name]", "Someone get the janitor!", "Gib and let gib", "Rest In Pieces")
+		else
+			youdied = pick("Congratulations on your recent death!", "Welp, so much for that.", "You are dead. Not big surprise.", "You are no longer alive.", "haha you died loser.", "R.I.P. [src.real_name]", "well, shit.", "Better luck next time.", "MISSING: Life, 100 credit reward")
+
+	boutput(src, {"
+	<div style="border: 3px solid red; padding: 3px;">
+		<div style="background: black; padding: 0.1em; color: #f33; text-align: center; font-size: 150%; font-weight: bold;">
+			[youdied]
+		</div>
+		<div style=" text-align: center;">
+			[!gibbed ? {"
+				<a href="byond://winset?command=Ghost" style="display: inline-block; font-size: 130%; font-weight: bold;">Become a Ghost</a>
+				<br><em style="color: #666; font-size: 75%;">You can also use the "<a href="byond://winset?command=Ghost" style="font-family: 'Consolas', monospace;">Ghost</a>" command to observe.</em><br><br>
+			"} : ""]
+		<strong>You may be revived if someone clones you.</strong>
+		<br>Otherwise, you'll have to wait for the next round.
+		<br>
+		<br>There's still plenty to do, even while dead!
+		<br><strong><a href='byond://winset?command=Afterlife-Bar'>Visit the Afterlife Bar</a> &bull; <a href='byond://winset?command=Enter-VR'>Enter Virtual Reality</a>
+			<br><a href='byond://winset?command=Enter-Ghostdrone-Queue'>Become a Ghost Drone</a> &bull; <a href='byond://winset?command=Respawn-as-Animal'>Become a Critter</a></strong>
+		</div>
+	</div>
+		"})
+
+	return ..(gibbed)
+
+/mob/living/Login()
+	..()
+	if(!isdead(src))
+		respawn_controller.unsubscribeRespawnee(src.ckey)
+
+/mob/living/Life(datum/controller/process/mobs/parent)
+//#ifdef MAP_OVERRIDE_DESTINY
+	if (hibernating)
+		if (istype(src.loc, /obj/cryotron))
+			if (!stat)
+				setunconscious(src)
+			return 1
+		else
+			hibernating = 0
+//#endif
+	if (..(parent))
+		return 1
+	return
+
+/mob/living/update_camera()
+	for (var/mob/dead/target_observer/observer in observers)
+		if (observer.client)
+			src.apply_camera(observer.client)
+	..()
+
+/mob/living/attach_hud(datum/hud/hud)
+	for (var/mob/dead/target_observer/observer in observers)
+		observer.attach_hud(hud)
+	return ..()
+
+/mob/living/detach_hud(datum/hud/hud)
+	if (observers.len) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
+		for (var/mob/dead/target_observer/observer in observers)
+			observer.detach_hud(hud)
+	return ..()
+
+/mob/living/projCanHit(datum/projectile/P)
+	if (!src.lying || (src:lying && prob(P.hit_ground_chance))) return 1
+	return 0
+
+/mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
+	target.attack_hand(src, params, location, control, origParams)
+
+/mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
+	.= 0
+	var/datum/limb/L = src.equipped_limb()
+	if (L)
+		.= L.attack_range(target,src,params)
+		if (.)
+			src.lastattacked = src
+
+/mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
+	var/usingInner = 0
+	if (W.useInnerItem && W.contents.len > 0)
+		var/obj/item/held = W.holding
+		if (!held)
+			held = pick(W.contents)
+		if (held && !istype(held, /obj/ability_button))
+			W = held
+			usingInner = 1
+
+	if (reach)
+		target.attackby(W, src, params)
+	if (W && (equipped() == W || usingInner))
+		var/pixelable = isturf(target)
+		if (!pixelable)
+			if (istype(target, /atom/movable) && isturf(target:loc))
+				pixelable = 1
+		if (pixelable)
+			if (!W.pixelaction(target, params, src, reach))
+				if (W)
+					W.afterattack(target, src, reach, params)
+		else if (!pixelable && W)
+			W.afterattack(target, src, reach, params)
+
+/mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+		var/obj/item/W = src.equipped()
+		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
+			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
+	return
+
+/* nothing currently uses needOnMouseMove, so im commenting this out.
+/mob/living/onMouseMove(object,location,control,params)
+	var/obj/item/W = src.equipped()
+	if(W.needOnMouseMove)
+		if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+			if (W && istype(W))
+				W.onMouseMove(object,location,control,params)
+	return
+*/
+/mob/living/onMouseDown(object,location,control,params)
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+		var/obj/item/W = src.equipped()
+		if (W && istype(W))
+			W.onMouseDown(object,location,control,params)
+	return
+
+/mob/living/onMouseUp(object,location,control,params)
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+		var/obj/item/W = src.equipped()
+		if (W && istype(W))
+			W.onMouseUp(object,location,control,params)
+	return
+
+/mob/living/hotkey(name)
+	switch (name)
+		if ("togglepoint")
+			src.toggle_point_mode()
+		if ("say_radio")
+			src.say_radio()
+		else
+			return ..()
+
+//gross are we tg or something with all of these /s
+// i'd like to hear your suggestion for better searching for procs!!! - cirr
+/mob/living/Click(location,control,params)
+	if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		var/mob/dead/observer/O = usr
+		O.insert_observer(src)
+
+	else return ..()
+
+/mob/living/click(atom/target, params, location, control)
+	. = ..()
+	if (. == 100)
+		return 100
+
+	if (params["middle"])
+		src.swap_hand()
+		return
+
+	if (location != "map")
+//#ifdef MAP_OVERRIDE_DESTINY
+		if (src.hibernating && istype(src.loc, /obj/cryotron))
+			var/obj/cryotron/cryo = src.loc
+			if (cryo.exit_prompt(src))
+				return
+//#endif
+
+		if (src.client && src.client.check_key(KEY_EXAMINE))
+			target.examine() // in theory, usr should be us, this is shit though
+			return
+
+		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+			src.point(target)
+			if (src.in_point_mode)
+				src.toggle_point_mode()
+			return
+
+	if (src.restrained())
+		if (src.handcuffed)
+			boutput(src, "<span style=\"color:red\">You are handcuffed! Use Resist to attempt removal.</span>")
+		return
+
+	if (!src.stat && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+		if (target != src && ishuman(src))
+			var/mob/living/carbon/human/S = src
+			if (S.sims)
+				var/mult = S.sims.getMoodActionMultiplier()
+				if (mult < 0.5)
+					if (prob((0.5 - mult) * 200))
+						boutput(src, pick("<span style=\"color:red\">You're not in the mood to attack that.</span>", "<span style=\"color:red\">You don't feel like doing that.</span>"))
+						return
+
+
+		var/obj/item/equipped = src.equipped()
+		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/grace_penalty = 0
+		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
+			var/time_left = src.next_click - world.time
+			// since we're essentially encouraging players to click as soon as they possibly can, and how clicking strongly depends on lag, having a strong cutoff feels like bullshit
+			// the grace window gives people a small amount of leeway without increasing the overall click rate by much
+			if (time_left > CLICK_GRACE_WINDOW || (equipped && (equipped.flags & EXTRADELAY))) // also let's not enable this for guns.
+				return time_left
+			else
+				grace_penalty = time_left
+
+		if (target == equipped)
+			equipped.attack_self(src, params, location, control)
+		else if (params["ctrl"])
+			var/atom/movable/movable = target
+			if (istype(movable))
+				movable.pull()
+
+				if (mob_flags & AT_GUNPOINT)
+					for(var/obj/item/grab/gunpoint/G in grabbed_by)
+						G.shoot()
+
+				.= 0
+				return
+		else
+			var/reach = can_reach(src, target)
+
+			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
+				if (use_delay)
+					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
+
+				if (src.invisibility > 0 && get_dist(src, target) > 0) // dont want to check for a cloaker every click if we're not invisible
+					for (var/obj/item/cloaking_device/I in src)
+						if (I.active)
+							I.deactivate(src)
+							src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+
+				if (equipped)
+					weapon_attack(target, equipped, reach, params)
+				else
+					hand_attack(target, params, location, control)
+
+				//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
+				if ((lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
+					src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
+					src.lastattacked = null
+
+			else if (!equipped)
+				hand_range_attack(target, params, location, control)
+
+				if (lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay)
+					src.next_click = world.time + src.combat_click_delay
+					src.lastattacked = null
+
+		//Don't think I need the above, this should work here.
+		if (istype(src.loc, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/ship = src.loc
+			if (ship.sensors)
+				if (ship.sensors.active)
+					var/obj/machinery/vehicle/target_pod = target
+					if (src.loc != target_pod && istype(target_pod))
+						ship.sensors.end_tracking()
+						ship.sensors.quick_obtain_target(target_pod)
+				else
+					if (istype(target, /obj/machinery/vehicle))
+						boutput(src, "<span style=\"color:red\">Sensors are inactive, unable to target craft!</span>")
+
+
+		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
+			src.next_click += grace_penalty
+
+/mob/living/update_cursor()
+	..()
+	if (src.client)
+		if (src.in_point_mode || src.client.check_key(KEY_POINT))
+			src.set_cursor('icons/cursors/point.dmi')
+			return
+
+		if (src.client.check_key(KEY_EXAMINE))
+			src.set_cursor('icons/cursors/examine.dmi')
+			return
+
+		if (src.client.check_key(KEY_PULL))
+			src.set_cursor('icons/cursors/pull.dmi')
+			return
+
+	//src.set_cursor(null)
+
+/mob/living/key_down(key)
+	if (key == "alt" || key == "ctrl" || key == "shift")
+		update_cursor()
+
+/mob/living/key_up(key)
+	if (key == "alt" || key == "ctrl" || key == "shift")
+		update_cursor()
+
+/mob/living/proc/toggle_point_mode(var/force_off = 0)
+	if (force_off)
+		src.in_point_mode = 0
+		src.update_cursor()
+		return
+	src.in_point_mode = !(src.in_point_mode)
+	src.update_cursor()
+
+/mob/living/verb/point(var/atom/target as mob|obj|turf in oview())
+	set name = "Point"
+	if (!isturf(src.loc) || usr.stat || usr.restrained())
+		return
+
+	if (isghostcritter(src))
+		return
+
+	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
+		src.show_text("You are completely paralysed and can't point!", "red")
+		return
+
+	if (istype(target, /obj/decal/point))
+		return
+
+	var/obj/item/gun/G = src.equipped()
+	if(!istype(G) || !ismob(target))
+		src.visible_message("<span style='color:#605b59'><b>[src]</b> points to [target].</span>")
+	else
+		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+
+	var/obj/decal/point/P = new(get_turf(target))
+	P.pixel_x = target.pixel_x
+	P.pixel_y = target.pixel_y
+	P.color = src.bioHolder.mobAppearance.customization_first_color
+	src = null // required to make sure its deleted
+	SPAWN_DBG (20)
+		P.invisibility = 101
+		qdel(P)
+
+/mob/living/proc/set_burning(var/new_value)
+	setStatus("burning", new_value*10)
+	return
+
+/mob/living/proc/update_burning(var/change)
+	changeStatus("burning", change*10)
+	return
+
+/mob/living/proc/update_burning_icon(var/force_remove = 0)
+	return
+
+/mob/living/proc/get_equipped_ore_scoop()
+	return null
+
+/mob/living/proc/talk_into_equipment(var/mode, var/messages, var/param, var/lang_id)
+	switch (mode)
+		if ("headset")
+			if (src.ears)
+				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+
+		if ("secure headset")
+			if (src.ears)
+				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+
+		if ("right hand")
+			if (src.r_hand)
+				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
+			else
+				src.emote("handpuppet")
+
+		if ("left hand")
+			if (src.l_hand)
+				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
+			else
+				src.emote("handpuppet")
+
+/mob/living/say(var/message)
+	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
+
+	if (!message)
+		return
+
+	if (reverse_mode) message = reverse_text(message)
+
+	logTheThing("diary", src, null, ": [message]", "say")
+
+#ifdef DATALOGGER
+	// Jewel's attempted fix for: null.ScanText()
+	if (game_stats)
+		game_stats.ScanText(message)
+#endif
+
+	if (src.client && src.client.ismuted())
+		boutput(src, "You are currently muted and may not speak.")
+		return
+
+	if(!src.canspeak)
+		boutput(src, "<span style=\"color:red\">You can not speak!</span>")
+		return
+
+	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
+		boutput(src, "<span style=\"color:red\">You are completely paralysed and can't speak!</span>")
+		return
+
+	if (isdead(src))
+		if (dd_hasprefix(message, "*")) // no dead emote spam
+			return
+		return src.say_dead(message)
+
+	if(src.z == 2 && istype(get_area(src),/area/afterlife)) //check zlevel before doing istype
+		if (dd_hasprefix(message, ":d"))
+			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
+			return src.say_dead(message)
+
+	// wtf?
+	if (src.stat)
+		return
+
+	// emotes
+	if (dd_hasprefix(message, "*") && !src.stat)
+		return src.emote(copytext(message, 2),1)
+
+	// Mute disability
+	if (src.bioHolder && src.bioHolder.HasEffect("mute"))
+		boutput(src, "<span style=\"color:red\">You seem to be unable to speak.</span>")
+		return
+
+	if (src.wear_mask && src.wear_mask.is_muzzle)
+		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
+		return
+
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		// If theres no oxygen
+		if (H.oxyloss > 10 || H.losebreath >= 4) // Perfluorodecalin cap - normal life() depletion - buffer.
+			H.whisper(message)
+			return
+
+	//Pod coloseum is broken - disable this unnecessary istype
+	/*
+	if (istype(loc, /obj/machinery/colosseum_putt))
+		var/obj/machinery/colosseum_putt/C = loc
+		logTheThing("say", src, null, "<i>broadcasted between Colosseum Putts:</i> \"[message]\"")
+		C.broadcast(message)
+		return
+	*/
+
+	var/italics = 0
+	var/forced_language = null
+	var/message_range = null
+	var/message_mode = null
+	var/secure_headset_mode = null
+	var/skip_open_mics_in_range = 0 // For any radios or intercoms that happen to be in range.
+
+	if (prob(50) && src.get_brain_damage() >= 60)
+		if (ishuman(src))
+			message_mode = "headset"
+	// Special message handling
+	else if (copytext(message, 1, 2) == ";")
+		message_mode = "headset"
+		message = copytext(message, 2)
+
+	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
+		switch (lowertext( copytext(message,2,4) ))
+			if ("rh")
+				message_mode = "right hand"
+				message = copytext(message, 4)
+
+			if ("lh")
+				message_mode = "left hand"
+				message = copytext(message, 4)
+
+		/*else if (copytext(message, 1, 3) == ":w")
+			message_mode = "whisper"
+			message = copytext(message, 3)*/
+
+			if ("in")
+				message_mode = "intercom"
+				message = copytext(message, 4)
+
+			else
+				// AI radios. See further down in this proc (Convair880).
+				if (isAI(src))
+					switch (lowertext(copytext(message, 2, 3))) // One vs. two letter prefix.
+						if ("1")
+							message_mode = "internal 1"
+							message = copytext(message, 3)
+
+						if ("2")
+							message_mode = "internal 2"
+							message = copytext(message, 3)
+
+						if ("3")
+							message_mode = "monitor"
+							var/end = 3
+							if (!lowertext(copytext(message,3,4) == " "))
+								end = 4
+								secure_headset_mode = lowertext(copytext(message,3,end)) //why did i do this to the players
+							message = copytext(message, end)
+
+						else
+							message = copytext(message, 3)
+
+				else
+					if (ishuman(src) || iscritter(src) || isrobot(src)) // this is shit
+						message_mode = "secure headset"
+						secure_headset_mode = lowertext(copytext(message,2,3))
+					message = copytext(message, 3)
+
+	forced_language = get_special_language(secure_headset_mode)
+
+	message = trim(message)
+
+	if (!message)
+		return
+
+
+	if (src.voice_type && world.time > last_voice_sound + 8)
+		var/VT = voice_type
+		var/ending = copytext(message, length(message))
+
+		switch (message_mode)
+			if ("headset", "secure headset", "right hand", "left hand", "intercom")
+				VT = "radio"
+				ending = 0
+
+		if (ending == "?")
+			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
+			speech_bubble.icon_state = "?"
+		else if (ending == "!")
+			playsound(src, sounds_speak["[VT]!"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
+			speech_bubble.icon_state = "!"
+		else
+			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
+			speech_bubble.icon_state = "speech"
+
+		last_voice_sound = world.time
+	else
+		speech_bubble.icon_state = "speech"
+
+	if (text2num(message)) //mbc : check mob.dmi for the icons
+		var/n = round(text2num(message),1)
+		if ((n >= 0 && n <= 20) || n == 420)
+			speech_bubble.icon_state = "[n]"
+
+	if (src.stuttering)
+		message = stutter(message)
+
+	if (src.get_brain_damage() >= 60)
+		message = replacetext(message, "is ", "am ")
+		message = replacetext(message, "are ", "am ")
+		message = replacetext(message, "i ", "me ")
+		message = replacetext(message, "have ", "am ")
+		message = replacetext(message, "youre ", "your ")
+		message = replacetext(message, "you're ", "your ")
+		message = replacetext(message, "attack ", "kill ")
+		message = replacetext(message, "hurt", " kill")
+		message = replacetext(message, "acquire ", "get ")
+		message = replacetext(message, "attempt ", "try ")
+		message = replacetext(message, "attention ", "help ")
+		message = replacetext(message, "attempt ", "try ")
+		message = replacetext(message, "grief", "grife")
+		message = replacetext(message, "her ", "she ")
+		message = replacetext(message, "him ", "he ")
+		message = replacetext(message, "heal", "fix")
+		message = replacetext(message, "repair ", "fix")
+		message = replacetext(message, "heal ", "fix")
+		message = replacetext(message, "space", "spess")
+		message = replacetext(message, "clown", "honky man")
+		message = replacetext(message, "cluwne", "bad honky man")
+		message = replacetext(message, "traitor", "bad guy")
+		message = replacetext(message, "spy", "bad guy")
+		message = replacetext(message, "operative", "bad guy")
+		message = replacetext(message, "nukie", "bad guy")
+		message = replacetext(message, "vampire", "bad guy")
+		message = replacetext(message, "wrestler", "bad guy")
+		message = replacetext(message, "alien", "allen")
+		message = replacetext(message, "changeling", "alien")
+		message = replacetext(message, "pain", "hurt")
+		message = replacetext(message, "damage", "hurt")
+		message = replacetext(message, "they", "them")
+
+		if (prob(20))
+			if(prob(25))
+				message = uppertext(message)
+				message = "[message][stutter(pick("!", "!!", "!!!"))]"
+			if(!src.stuttering && prob(8))
+				message = stutter(message)
+
+	UpdateOverlays(speech_bubble, "speech_bubble")
+	SPAWN_DBG(1.5 SECONDS)
+		UpdateOverlays(null, "speech_bubble")
+
+	//Blobchat handling
+	if (src.mob_flags & SPEECH_BLOB)
+		message = html_encode(src.say_quote(message))
+		var/rendered = "<span class='game blobsay'>"
+		rendered += "<span class='prefix'>BLOB:</span> "
+		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
+		rendered += "<span class='message'>[message]</span>"
+		rendered += "</span>"
+
+		for (var/mob/M in mobs)
+			if (istype(M, /mob/new_player))
+				continue
+
+			if (M.client && (isblob(M) || (M.client.holder && M.client.deadchat && !M.client.player_mode)))
+				var/thisR = rendered
+				if ((M.mob_flags & MOB_HEARS_ALL || M.client.holder) && src.mind)
+					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
+				M.show_message(thisR, 2)
+
+		return
+
+	//Overmind handling - Cirr
+	// this code duplication is pretty bad. todo: fix the code duplication, hopefully
+	if (src.mob_flags & SPEECH_INTRUDER)
+		var/scrambledMessage = src.say_quote(stutter(say_superdrunk(message)))
+		message = src.say_quote(message)
+		var/rendered = "<span class='game astralsay'>"
+		rendered += "<span class='prefix'>ASTRAL:</span> "
+		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
+		rendered += "<span class='message'>[message]</span>"
+		rendered += "</span>"
+
+		for (var/mob/M in mobs)
+			if (istype(M, /mob/new_player))
+				continue
+
+			if (M.client)
+				if((istype(M, /mob/living/intangible/intruder) || M.client.holder))
+					var/thisR = rendered
+					if (M.client.holder && src.mind)
+						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
+					boutput(M, thisR)
+				else
+					if(prob(30))
+						boutput(M, "<em>A strange, unnatural voice enters your mind... [scrambledMessage]</em>")
+					else if(prob(20))
+						var/description = "[pick("chimes", "croaks", "shines", "whispers", "sings", "echoes")] "
+						description += "[pick("strangely", "hollowly", "incomprehensibly", "menacingly", "peacefully", "softly")]"
+						boutput(M, "<em>A strange, unnatural voice [description].</em>")
+
+		return
+
+
+
+	var/list/messages = process_language(message, forced_language)
+	var/lang_id = get_language_id(forced_language)
+
+	// Do they have a phone?
+	var/obj/item/equipped_talk_thing = src.equipped()
+	if(equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode)
+		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
+	switch (message_mode)
+		if ("headset", "secure headset", "right hand", "left hand")
+			talk_into_equipment(message_mode, messages, secure_headset_mode, lang_id)
+			message_range = 1
+			italics = 1
+
+		//Might put this back if people are used to the old system.
+		/*if ("whisper")
+			message_range = 1
+			italics = 1*/
+
+		// Added shortcuts for the AI mainframe radios. All the relevant vars are already defined here, and
+		// I didn't want to have to reinvent the wheel in silicon.dm (Convair880).
+		if ("internal 1", "internal 2", "monitor")
+			var/mob/living/silicon/ai/A
+			var/obj/item/device/radio/R1
+			var/obj/item/device/radio/R2
+			var/obj/item/device/radio/R3
+
+			if (isAI(src))
+				A = src
+			else if (issilicon(src))
+				var/mob/living/silicon/S = src
+				if (S.dependent && S.mainframe && isAI(S.mainframe)) // AI-controlled robot.
+					A = S.mainframe
+
+			if (A && isAI(A))
+				if (A.radio1 && istype(A.radio1, /obj/item/device/radio/))
+					R1 = A.radio1
+				if (A.radio2 && istype(A.radio2, /obj/item/device/radio/))
+					R2 = A.radio2
+				if (A.radio3 && istype(A.radio3, /obj/item/device/radio/))
+					R3 = A.radio3
+
+			switch (message_mode)
+				if ("internal 1")
+					if (R1 && !(A.stat || A.getStatusDuration("stunned")|| A.getStatusDuration("weakened"))) // Mainframe may be stunned when the shell isn't.
+						R1.talk_into(src, messages, null, A.name, lang_id)
+						italics = 1
+						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
+						//DEBUG_MESSAGE("AI radio #1 triggered. Message: [message]")
+					else
+						src.show_text("Mainframe radio inoperable or unavailable.", "red")
+				if ("internal 2")
+					if (R2 && !(A.stat || A.getStatusDuration("stunned") || A.getStatusDuration("weakened")))
+						R2.talk_into(src, messages, null, A.name, lang_id)
+						italics = 1
+						skip_open_mics_in_range = 1
+						//DEBUG_MESSAGE("AI radio #2 triggered. Message: [message]")
+					else
+						src.show_text("Mainframe radio inoperable or unavailable.", "red")
+				if ("monitor")
+					if (R3 && !(A.stat || A.getStatusDuration("stunned") || A.getStatusDuration("weakened")))
+						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
+						italics = 1
+						skip_open_mics_in_range = 1
+						//DEBUG_MESSAGE("AI radio #3 triggered. Message: [message]")
+					else
+						src.show_text("Mainframe radio inoperable or unavailable.", "red")
+
+		if ("intercom")
+			for (var/obj/item/device/radio/intercom/I in view(1, null))
+				I.talk_into(src, messages, null, src.real_name, lang_id)
+			for (var/obj/colosseum_radio/M in hearers(1, src))
+				M.hear_talk(src, messages, real_name, lang_id)
+
+			message_range = 1
+			italics = 1
+
+	var/heardname = src.real_name
+
+	if (!skip_open_mics_in_range)
+		src.send_hear_talks(message_range, messages, heardname, lang_id)
+
+	var/list/listening = list()
+	var/list/olocs = list()
+	var/thickness = 0
+	if (isturf(loc))
+		listening = all_hearers(message_range, src)
+	else
+		olocs = obj_loc_chain(src)
+		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
+			for (var/atom/movable/AM in olocs)
+				thickness += AM.soundproofing
+			listening = all_hearers(message_range, olocs[olocs.len])
+
+
+	listening -= src
+	listening += src
+
+
+	var/list/heard_a = list() // understood us
+	var/list/heard_b = list() // didn't understand us
+
+	for (var/mob/M in listening)
+		if (M.say_understands(src, forced_language))
+			heard_a += M
+		else
+			heard_b += M
+
+	var/list/processed = list()
+
+	var/image/chat_maptext/chat_text = null
+	if (!message_range && speechpopups)
+		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
+		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
+			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
+		/*
+		var/turf/T = get_turf(src)
+		for(var/i = 0; i < 3; i++) T = get_step(T, WEST)
+		for(var/i = 0; i < 7; i++)
+			for(var/mob/living/M in T)
+				for(var/image/chat_maptext/I in M.chat_text.lines)
+					I.bump_up()
+			T = get_step(T, EAST)
+		*/
+		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle)
+		chat_text.measure(src.client)
+		for(var/image/chat_maptext/I in src.chat_text.lines)
+			if(I != chat_text)
+				I.bump_up(chat_text.measured_height)
+
+	var/rendered = null
+	if (length(heard_a))
+		processed = saylist(messages[1], heard_a, olocs, thickness, italics, processed, assoc_maptext = chat_text)
+
+	if (length(heard_b))
+		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
+
+	message = src.say_quote(messages[1])
+	if (italics)
+		message = "<i>[message]</i>"
+
+	rendered = "<span class='game say'>[src.get_heard_name()] <span class='message'>[message]</span></span>"
+	if(src.mob_flags & SPEECH_REVERSE)
+		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
+
+	var/viewrange = 0
+	for (var/client/C)
+		var/mob/M = C.mob
+
+		if (!M || M.z == 2 && istype(M, /mob/new_player))
+			continue
+
+		//Hello welcome to the world's most awful if
+		if (( \
+			M.mob_flags & MOB_HEARS_ALL || \
+			(iswraith(M) && !M.density) || \
+			(istype(M, /mob/zoldorf)) || \
+			(isintangible(M) && M in hearers(src)) || \
+			( \
+				(!isturf(src.loc) && src.loc == M.loc) && \
+				!(M in heard_a) && \
+				!istype(M, /mob/dead/target_observer) && \
+				M != src \
+			) \
+		))
+
+			var/thisR = rendered
+			if (src.mind && M.client.chatOutput && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
+
+			if (isobserver(M)) //if a ghooooost (dead) (and online)
+				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
+				if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+					//if (M in range(M.client.view, src))
+					if (get_dist(M,src) <= viewrange)
+						M.show_message(thisR, 2, assoc_maptext = chat_text)
+				else
+					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (get_dist(M,src) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
+					else
+						M.show_message(thisR, 2, assoc_maptext = chat_text)
+			else if(istype(M, /mob/zoldorf))
+				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
+				if (get_dist(M,src) <= viewrange)
+					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == 10))
+						M.show_message(thisR, 2, assoc_maptext = chat_text)
+				else
+					M.show_message(thisR, 2, assoc_maptext = chat_text)
+			else
+				M.show_message(thisR, 2, assoc_maptext = chat_text)
+
+// helper proooocs
+
+/mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
+	for (var/thing in all_view(message_range, src))
+		var/atom/A = thing
+		A.hear_talk(src,messages,heardname,lang_id)
+
+/mob/proc/get_heard_name()
+	return "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
+
+
+/mob/proc/move_callback_trigger(var/obj/move_laying, var/turf/NewLoc, var/oldloc, direct)
+	if (move_laying)
+		if((direct & (NORTH|SOUTH)) && (direct & (EAST|WEST)))//MBC : work around the diagonal bug that we don't understand : if((direct & (NORTH|SOUTH)) && (direct & (EAST|WEST)))
+			for (var/d in cardinal)
+				if (direct & d)
+					var/nloc = get_step(oldloc, d)
+					move_laying.move_callback(src, oldloc, nloc)
+					oldloc = nloc
+		else
+			move_laying.move_callback(src, oldloc, NewLoc)
+
+/mob/living/Move(var/turf/NewLoc, direct)
+	var/oldloc = loc
+	. = ..()
+	if (isturf(oldloc) && isturf(loc) && move_laying)
+		var/list/equippedlist = src.equipped_list()
+		if (equippedlist && equippedlist.len)
+			var/move_callback_happened = 0
+			for (var/I in equippedlist)
+				if (I == move_laying)
+					move_callback_trigger(move_laying, NewLoc, oldloc, direct)
+					move_callback_happened = 1
+				else if (islist(move_laying))
+					for (var/M in move_laying)
+						if (I == M)
+							move_callback_trigger(M, NewLoc, oldloc, direct)
+							move_callback_happened = 1
+			if (!move_callback_happened)
+				move_laying = null
+		else
+			move_laying = null
+
+/mob/living/change_misstep_chance(var/amount)
+	if (..())
+		return
+
+	src.misstep_chance = max(0,min(misstep_chance + amount,100))
+	return
+
+/mob/living/proc/get_static_image()
+	if (src.disposed)
+		return
+	if (!islist(default_mob_static_icons))
+		return
+	if (src.static_image)
+		mob_static_icons.Remove(src.static_image)
+	var/checkpath = src.static_type_override ? src.static_type_override : src.type
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (istype(H.mutantrace) && H.mutantrace.icon_override_static)
+			checkpath = H.mutantrace.type
+	if (ispath(checkpath))
+		var/generate_static = 1
+		if (default_mob_static_icons.Find(checkpath))
+			if (istype(default_mob_static_icons[checkpath], /image))
+				src.static_image = image(default_mob_static_icons[checkpath])
+				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
+				DEBUG_MESSAGE(bicon(default_mob_static_icons[checkpath]) + "<br>\ref[default_mob_static_icons[checkpath]]")
+				src.static_image.override = 1
+				src.static_image.loc = src
+				src.static_image.plane = PLANE_LIGHTING
+				mob_static_icons.Add(src.static_image)
+				generate_static = 0
+		if (generate_static)
+			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if (H.mutantrace)
+					src.static_image = getTexturedImage(icon(H.mutantrace.icon, H.mutantrace.icon_state), "static", ICON_OVERLAY)
+			else
+				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
+			if (src.static_image)
+				default_mob_static_icons[checkpath] = image(src.static_image)
+				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
+				DEBUG_MESSAGE(bicon(default_mob_static_icons[checkpath]) + "<br>\ref[default_mob_static_icons[checkpath]]")
+				src.static_image.override = 1
+				src.static_image.loc = src
+				src.static_image.plane = PLANE_LIGHTING
+				mob_static_icons.Add(src.static_image)
+		return src.static_image
+
+/proc/check_static_defaults()
+	if (!islist(default_mob_static_icons))
+		DEBUG_MESSAGE("default_mob_static_icons is not a list")
+		return
+	for (var/Type in default_mob_static_icons)
+		var/image/i = default_mob_static_icons[Type]
+		if (i)
+			DEBUG_MESSAGE(bicon(i) + "\ref[i][Type]")
+
+var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.dmi', "body_m")
+
+
+/mob/living/verb/give_item()
+	set name = "Give Item"
+	set src in view(1)
+	set category = "Local"
+
+	SPAWN_DBG (7) //secret spawn delay, so you can't spam this during combat for a free "stun"
+		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
+			var/mob/living/L = usr
+			L.give_to(src)
+
+/mob/living/proc/give_to(var/mob/living/M)
+	if (!M) return
+
+#ifdef TWITCH_BOT_ALLOWED
+	if (IS_TWITCH_CONTROLLED(M))
+		return
+#endif
+
+
+	var/message = null
+
+	var/obj/item/thing = src.equipped()
+	if (!thing)
+		if (src.l_hand)
+			thing = src.l_hand
+		else if (src.r_hand)
+			thing = src.r_hand
+
+	if (thing)
+		if (alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes")
+			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
+				return
+			src.u_equip(thing)
+			if (src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50))
+				message = "<B>[src]</B> tries to hand [thing] to [M], but [src] drops it!"
+				thing.set_loc(src.loc)
+			else if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(50))
+				message = "<B>[src]</B> tries to hand [thing] to [M], but [M] drops it!"
+				thing.set_loc(M.loc)
+			else if (M.put_in_hand(thing))
+				message = "<B>[src]</B> hands [thing] to [M]."
+			else
+				src.put_in_hand_or_drop(thing)
+				message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+		else
+			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
+
+	src.visible_message("<span style=\"color:#888888\">[message]</span>")
+
+/mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
+	var/mod = 1
+	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+		var/atom/movable/M = src.pulling
+		// hi grayshift sorry grayshift
+		if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+			if(pull_slowing)
+				mod *= max(M.p_class, 1)
+			else
+				if(istype(M,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+					mod *= max(M.p_class, 1)
+				// else, ignore p_class*/
+				else if (ishuman(src))
+					if(ishuman(M))
+						// if they're not on help intent and also not standing, THEN we might deign to use the p_class
+						var/mob/living/carbon/human/H = M
+						if(istype(H) && H.intent != INTENT_HELP && H.lying)
+							mod *= max(H.p_class, 1)
+					else if(istype(M, /obj/storage))
+						// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
+						var/contains_unwilling_mobs = 0
+						var/obj/storage/S = M
+						for(var/mob/B in M.contents)
+							if(B.intent != INTENT_HELP && B.lying)
+								contains_unwilling_mobs = 1
+								break
+						if(contains_unwilling_mobs)
+							mod *= max(S.p_class, 1)
+	return mod
+
+//Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
+/mob/living/proc/resist()
+	if (src.last_resist > world.time)
+		return
+	src.last_resist = world.time + 20
+
+	if (src.getStatusDuration("burning"))
+		if (!actions.hasAction(src, "fire_roll"))
+			src.last_resist = world.time + 25
+			actions.start(new/datum/action/fire_roll(), src)
+		else
+			return
+
+	var/turf/T = get_turf(src)
+	if (T.active_liquid)
+		T.active_liquid.HasEntered(src, T)
+		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
+
+	if (!src.stat && !src.restrained())
+		if (src.canmove)
+			for (var/obj/item/grab/G in src.grabbed_by)
+				G.do_resist()
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		else
+			for (var/obj/item/grab/G in src.grabbed_by)
+				if (G.stunned_targets_can_break())
+					G.do_resist()
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+
+		if (!src.grabbed_by || !src.grabbed_by.len)
+			if (src.buckled)
+				src.buckled.attack_hand(src)
+				src.force_laydown_standup() //safety because buckle code is a mess
+				if (src.targeting_spell == src.chair_flip_ability) //fuCKKK
+					src.targeting_spell = null
+					src.update_cursor()
+			else
+				if (!src.getStatusDuration("burning"))
+					for (var/mob/O in AIviewers(src, null))
+						O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+	return 0
+/mob/living/set_loc(var/newloc as turf|mob|obj in world)
+	var/atom/oldloc = src.loc
+	. = ..()
+	if(src && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text.vis_locs.len)
+			src.chat_text.vis_locs[1].vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A.vis_contents += src.chat_text

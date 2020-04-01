@@ -1,0 +1,33 @@
+"a" = (/turf/variableTurf/wall,/area/noGenerate)
+"b" = (/obj/item/device/light/candle/small,/turf/variableTurf/floor,/area/noGenerate)
+"c" = (/turf/variableTurf/floor,/area/noGenerate)
+"d" = (/obj/item/material_piece/koshmarite,/turf/variableTurf/floor,/area/noGenerate)
+"e" = (/obj/item/skull,/turf/variableTurf/floor,/area/noGenerate)
+"f" = (/turf/variableTurf/clear,/area/noGenerate)
+"g" = (/obj/item/organ/spleen,/turf/variableTurf/floor,/area/noGenerate)
+"h" = (/obj/item/handcuffs,/turf/variableTurf/floor,/area/noGenerate)
+"i" = (/obj/item/brick,/turf/variableTurf/floor,/area/noGenerate)
+"j" = (/obj/item/dagger,/turf/variableTurf/floor,/area/noGenerate)
+"k" = (/obj/tombstone{desc = "Here lies The Right Honorable Gentleman."},/turf/variableTurf/floor,/area/noGenerate)
+"l" = (/obj/item/device/light/candle,/obj/decal/lightshaft,/turf/variableTurf/floor,/area/noGenerate)
+"m" = (/obj/item/material_piece/bone,/turf/variableTurf/floor,/area/noGenerate)
+"n" = (/obj/tombstone{desc = "Here lies The Left Honorable Gentleman."},/turf/variableTurf/floor,/area/noGenerate)
+"o" = (/obj/item/material_piece/gold,/turf/variableTurf/floor,/area/noGenerate)
+"p" = (/obj/decal/cleanable/paper,/turf/variableTurf/floor,/area/noGenerate)
+"q" = (/obj/tombstone{desc = "Here lies a silly man, with a silly plan."},/turf/variableTurf/floor,/area/noGenerate)
+"r" = (/turf/variableTurf/wall,/area/allowGenerate)
+"s" = (/turf/variableTurf/clear,/area/allowGenerate)
+"t" = (/obj/item/mining_mod/conc,/turf/variableTurf/floor,/area/noGenerate)
+
+(1,1,1) = {"
+aaafffaaaaars
+aaaaaaaaaaaar
+faabcdaaegcaa
+aacacjcccaaaa
+aacckelccacaa
+aaamcccaccbaa
+sahcnaqcoaaaf
+saabcpicetaaf
+faaaaaaaaaass
+sfaaaaffaasss
+"}

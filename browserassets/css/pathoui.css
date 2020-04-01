@@ -1,0 +1,426 @@
+* {
+	font-family:Consolas,monospace;
+}
+body {
+	background-color:#222;
+}
+
+div {
+	border-top: 2px solid #555;
+	border-left: 2px solid #555;
+	border-right: 2px solid #111;
+	border-bottom: 2px solid #111;
+}
+
+.noborder {
+	border:none;
+}
+
+.narrowborder {
+	border: 1px solid black;
+	display: inline-block;
+}
+
+.noborder > * {
+	margin-top:auto;
+	margin-bottom:auto;
+}
+
+.extrapad {
+	padding-left:15px;
+}
+.extramargin {
+	margin-top:3px;
+}
+/*DNA Load-Save components*/
+.dna-slot {
+	display:inline-block;
+	width:650px;
+	height:110px;
+	padding-left:5px;
+	background-color:#444;
+}
+
+.slot-holder {
+	overflow:auto;
+	margin-right:10px;
+	height:350px;
+	width:660px;
+}
+
+/*Manipulator components*/
+#manipHolder {
+	display:block;
+	width:650px;
+	height:80%;
+	margin:auto;
+	border:none;
+}
+
+/*Analyzer components*/
+.analysis-buffer {
+	/*padding:3px;*/
+	height:60px;
+	width:300px;
+	display:inline-block;
+}
+
+#analyzerHolder {
+	display:block;
+	width:800px;
+	height:80%;
+	vertical-align:top;
+}
+.prediction-holder {
+	width:600px;
+	background-color:#AAA;
+}
+#analyzeComponents {
+	height:150px;
+	width:350px;
+	overflow:auto;
+	display:inline-block;
+	vertical-align:top;
+	padding-top:2px;
+}
+#analyzeResults {
+	padding-top:2px;
+	width:400px;
+	height:170px;
+	display:inline-block;
+}
+/*Splicer components*/
+
+	/*Part 1 */
+#spliceButtons {
+	height:338px;
+	width:125px;
+	float:right;
+}
+
+#spliceButtons .annunciator {
+	margin-left:10px;
+}
+#spliceButtons .button {
+	margin-left:5px;
+}
+#spliceSlots {
+	display:inline-block;
+}
+.splice-selection {
+	vertical-align:top;
+	height:350px;
+	width:800px;
+}
+
+	/* Part 2 */
+.splice-sequence {
+	background-color:#444;
+	width:600px;
+}
+
+.splice-controls {
+	width:600px;
+	margin-top:3px;
+	margin-bottom:3px;
+}
+
+.dragging * {
+	cursor:ew-resize !important;
+}
+
+.left-ptr,
+.right-ptr,
+.sequence {
+	display:inline-block;
+	margin:0 3px;
+	position:relative;
+}
+
+.sequence {
+	cursor:pointer;
+}
+
+.left-ptr,
+.right-ptr {
+	cursor:ew-resize;
+	color:red;
+}
+
+.left-ptr:before {
+	content:"\25BA";
+}
+.right-ptr:before {
+	content:"\25C4";
+}
+
+.splice-selected {
+	color:#F00;
+}
+
+#spliceData {
+	display:inline-block;
+}
+
+#spliceFinalButtons {
+	height:338px;
+	width:150px;
+	float:right;
+}
+
+/********************
+	UI COMPONENTS
+*********************/
+
+/*Text fields*/
+
+.text-field {
+	display:inline-block;
+	height:25px;
+	padding-left:20px;
+	width:200px;
+	vertical-align:middle;
+	background-color:#111;
+	color:#0D0;
+}
+
+.tf-c-red {
+		color:#e00;
+}
+
+.tf-long {
+	width:95%;
+	height:45px;
+	overflow-x:scroll;
+	overflow-y:hidden;
+	white-space:nowrap;
+}
+
+.tf-med-long {
+	width:75px;
+	height:25px;
+	text-align:center;
+	margin:1px;
+	padding:3px;
+	font-weight:bold;
+	cursor:default;
+}
+
+.tf-med-narrow {
+	width:27px;
+	height:25px;
+	text-align:center;
+	margin:1px;
+	padding:3px;
+	font-weight:bold;
+	cursor:default;
+}
+
+.tf-med {
+	width:100px;
+}
+
+.tf-enarrow {
+	width:30px;
+	height:25px;
+	padding:3px;
+	text-align:center;
+}
+
+.tf-narrow {
+	width:35px;
+	height:25px;
+	padding:3px;
+	text-align:center;
+}
+/*Annunciators*/
+.annunciator {
+	display:inline-block;
+	text-align:center;
+	vertical-align:middle;
+	margin:1px;
+	padding:3px;
+	width:75px;
+	height:25px;
+	font-weight:bold;
+	cursor:default;
+}
+
+
+
+.a-green {
+	color:#050;
+	background-color:#010;
+}
+.a-green-on {
+	color:#090;
+	background-color:#0E0;
+}
+
+.a-red {
+	color:#500;
+	background-color:#100;
+}
+.a-red-on{
+	color:#900;
+	background-color:#E00;
+}
+
+.a-yellow {
+	background-color:#252205;
+	color:151203;
+}
+
+.a-yellow-on {
+	background-color:#FAF320;
+	color:#737012;
+}
+
+#annSynch {
+	float:right;
+	margin-top:15px;
+	margin-left:auto;
+	margin-right:20px;
+}
+
+/*buttons*/
+.button {
+	display:inline-block;
+	text-align:center;
+	vertical-align:middle;
+	margin:2px;
+	padding:3px;
+	width:100px;
+	height:50px;
+	font-weight:bold;
+	background-color:#DDD;
+	color:#111;
+
+	font-family: sans-serif;
+
+	border-top: 3px solid #555;
+	border-left: 3px solid #555;
+	border-right: 3px solid #111;
+	border-bottom: 3px solid #111;
+
+	cursor:pointer;
+}
+
+.btn-vlong {
+	width:200px;
+}
+.btn-long {
+	width:150px;
+}
+.btn-med {
+	height:25px;
+}
+.btn-small {
+	height:25px;
+	width:70px;
+}
+.btn-tinyish {
+	height:25px;
+	width:35px;
+	margin:1px;
+}
+
+.btn-tiny {
+	height:25px;
+	width:25px;
+}
+.button-enabled {
+	background-color:#EEE;
+}
+.button-disabled {
+	/*background-color:#900;*/
+	background-color:#777;
+	color:#333;
+	cursor:not-allowed;
+}
+.button-selected {
+	color:#333;
+	border-top: 3px solid #111;
+	border-left: 3px solid #111;
+	border-right: 3px solid #555;
+	border-bottom: 3px solid #555;
+	background-color:#AAA;
+}
+
+.button-holder {
+	background-color:#AAA;
+}
+/* labels */
+.label {
+	width:100px;
+	display:inline-block;
+}
+.lb-med {
+	width:150px;
+}
+
+.lb-long {
+	width:200px;
+}
+
+.lb-elong {
+	width:300px;
+}
+
+.lb-vlong {
+	width:400px;
+}
+.lb-slong {
+	width:500px;
+}
+
+.block {
+	display:block;
+}
+/*************************
+Content containers
+***************************/
+.mainContent {
+	background-color:#DDD;
+	width:850px;
+	height:auto;
+	margin:auto;
+	vertical-align:middle;
+	border-top: 4px solid #555;
+	border-left: 4px solid #555;
+	border-right: 4px solid #111;
+	border-bottom: 4px solid #111;
+}
+
+#loadedPathogen {
+	width:auto;
+	display:block;
+	height:155px;
+	padding-left:20px;
+	padding-top:10px;
+	background-color:#BBB;
+}
+
+
+.dataDisplay {
+	width:auto;
+	display:block;
+	height:500px;
+	overflow:hidden;
+}
+
+.dataPage {
+	width:100%;
+	display:block;
+	height:100%;
+	border:none;
+	padding-left:25px;
+}
+#mainMenu {
+	width:auto;
+	display:block;
+	height:75px;
+	bottom:0px;
+	padding:10px;
+	background-color:#BBB;
+}

@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+	<title>Material Recombobulator</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="stylesheet" type="text/css" href="{{resource("css/style.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{resource("css/jquery-ui/jquery-ui.min.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{resource("css/jquery-ui/jquery-ui.theme.min.css")}}">
+	<style type="text/css">
+		body {
+			background-color: #eeeeee;
+			padding: 5px;
+			margin: 0;
+		}
+		#cont {
+			display: none;
+			font-size: 10px;
+		}
+		#cont .actions {
+			z-index: 200;
+			position: absolute;
+			top: 12px;
+			right: 10px; 
+			width: 60px;
+		}
+		#tabs-4 {
+			padding: 0; 
+			margin: 0; 
+			border: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="loading"></div>
+	<div id="cont">
+		<div class="actions">
+			<button id="btteject">Eject Material</button>
+			<button id="bttclose">Close</button>
+		</div>
+		<div id="dialog" title="Information"></div>
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Overview</a></li>
+				<li><a href="#tabs-2">View Material</a></li>
+				<li><a href="#tabs-3">Modify Material</a></li>
+				<li><a href="#tabs-4">Research</a></li>
+			</ul>
+			<div id="tabs-1"></div>
+			<div id="tabs-2"></div>
+			<div id="tabs-3"></div>
+			<div id="tabs-4"></div>
+			<div id="tabs-5"></div>
+		</div>
+	</div>
+
+	<script src="{{resource("js/jquery.min.js")}}"></script>
+	<script src="{{resource("js/jquery-migrate.js")}}"></script>
+	<script src="{{resource("js/jquery-ui.min.js")}}"></script>
+	<script src="{{resource("js/jquery.placeholder.js")}}"></script>
+	<script type="text/javascript">
+		var tabs;
+		var ref;
+
+		var setRef = function setRef(theRef) {
+        	ref = theRef;
+    	};
+
+   		function callByond(action, data)
+		{
+	        var newLoc = '?src=' + ref + ';jscall=' + action + ';' + data.join(';');
+	        window.location = newLoc;
+		}
+
+		function setHtmlId(element, data)
+		{
+			$(element).html(data);
+		}
+
+		function showDialog(text)
+		{
+			setHtmlId("#dialog", text);
+			$( "#dialog" ).dialog( "open" );
+		}
+
+		$(function(){
+			setTimeout(function() {
+				$("#loading").hide();
+				$("#cont").show( "slide", {}, 500);
+			}, 1000);
+
+			$( "#btteject" ).button({
+				icons: {
+					primary: "ui-icon-arrowreturnthick-1-s"
+				},
+				text: false
+			});
+
+			$( "#btteject" ).click(function() {
+				callByond("ejectMaterial", []);
+				//callByond("closeWindow", []);
+			});
+
+			$( "#bttclose" ).button({
+				icons: {
+					primary: "ui-icon-closethick"
+				},
+				text: false
+			});
+
+			$( "#bttclose" ).click(function() {
+				callByond("closeWindow", []);
+			});
+
+			$( "#dialog" ).dialog({autoOpen: false, modal: true});
+				
+			tabs = $( "#tabs" ).tabs({
+				activate: function( event, ui )
+				{
+					callByond("loadTab", ["newTab=" + ui.newTab.text()]);
+				},
+				create: function( event, ui )
+				{
+					callByond("loadTab", ["newTab=" + ui.tab.text()]);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

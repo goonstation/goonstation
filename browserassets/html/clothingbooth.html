@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
+		<link rel="stylesheet" type="text/css" href="{{resource("css/clothingbooth.css")}}">
+		<script>json = !!BOOTH_LIST!!;</script>
+		<script>srcRef = "!!SRC_REF!!";</script>
+		<script src="{{resource("js/clothingbooth.js")}}"></script>
+	</head>
+	<body>
+		<div class="row">
+			<div class="column scrollable categories">
+			</div>
+			<div class="column two">
+				<img class="preview" id="image" src="previewimage.png">
+				<img class="preview" id="image_overlay" src="" style="position:absolute">
+			</div>
+		</div>
+		<div class="items scrollable">
+		</div>
+	</body>
+</html>

@@ -1,0 +1,120 @@
+// mining related critters
+
+/obj/critter/rockworm
+	name = "rock worm"
+	desc = "Tough lithovoric worms."
+	icon_state = "rockworm"
+	density = 0
+	health = 80
+	aggressive = 1
+	defensive = 0
+	wanderer = 1
+	opensdoors = 0
+	atkcarbon = 0
+	atksilicon = 0
+	firevuln = 0.1
+	brutevuln = 1
+	angertext = "hisses at"
+	butcherable = 1
+	var/eaten = 0
+
+	seek_target()
+		src.anchored = 0
+		for (var/obj/item/raw_material/C in view(src.seekrange,src))
+			if (src.target)
+				src.task = "chasing"
+				break
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			src.attack = 1
+			if (src.attack)
+				src.target = C
+				src.oldtarget_name = C.name
+				src.visible_message("<span style=\"color:red\"><b>[src]</b> sees [C.name]!</span>")
+				src.task = "chasing"
+				break
+			else
+				continue
+
+	CritterAttack(mob/M)
+		src.attacking = 1
+
+		if(istype(M, /obj/item/raw_material/))
+			src.visible_message("<span style=\"color:red\"><b>[src]</b> hungrily eats [src.target]!</span>")
+			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+			pool(src.target)
+			src.eaten++
+			src.target = null
+			src.task = "thinking"
+
+		src.attacking = 0
+		return
+
+	CritterDeath()
+		if (!alive) return
+		src.alive = 0
+		src.target = null
+		src.task = "dead"
+		set_density(0)
+		src.icon_state = "rockworm-dead"
+		walk_to(src,0)
+		if (eaten >= 10)
+			src.visible_message("<b>[src]</b> vomits something up and dies!")
+		else
+			src.visible_message("<b>[src]</b> dies!")
+		var/countstones = 0
+		while (src.eaten)
+			countstones++
+			if (countstones == 10)
+				var/pickgem = rand(1,3)
+				var/obj/item/created = 0
+				switch(pickgem)
+					if(1) unpool(/obj/item/raw_material/gemstone)
+					if(2) unpool(/obj/item/raw_material/uqill)
+					if(3) unpool(/obj/item/raw_material/fibrilith)
+				created.set_loc(src.loc)
+				countstones = 0
+			src.eaten--
+
+/obj/critter/rockworm/gary
+	name = "Gary the rockworm"
+
+/obj/critter/fermid
+	name = "fermid"
+	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
+	icon_state = "fermid"
+	density = 1
+	health = 25
+	aggressive = 1
+	defensive = 1
+	wanderer = 1
+	opensdoors = 0
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 0.1
+	brutevuln = 1
+	angertext = "viciously clacks its mandibles at"
+	butcherable = 1
+	chase_text = "dives on"
+	atk_text = "bites"
+	atk_brute_amt = 3
+	crit_brute_amt = 5
+	crit_text = "grabs and stings"
+	crit_chance = 10
+
+	CritterAttack(mob/M)
+		..()
+
+	CritAttack(mob/M)
+		..()
+		if (M.reagents)
+			M.reagents.add_reagent("haloperidol", 10)
+			M.reagents.add_reagent("atropine", 10)
+
+	ChaseAttack(mob/M)
+		if (prob(20))
+			..()
+			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
+			M.changeStatus("weakened", 3 SECONDS)
+			M.changeStatus("stunned", 2 SECONDS)
+			random_brute_damage(M, rand(2,5),1)
+		else src.visible_message("<span style=\"color:red\"><B>[src]</B> dives at [M], but misses!</span>")

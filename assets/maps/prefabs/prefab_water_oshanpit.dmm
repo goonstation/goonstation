@@ -1,0 +1,18 @@
+"a" = (/turf/variableTurf/clear,/area)
+"b" = (/turf/variableTurf/clear,/area/noGenerate)
+"c" = (/turf/variableTurf/wall,/area)
+"d" = (/obj/decal/lightshaft,/turf/variableTurf/clear,/area/trench_landing)
+"e" = (/turf/variableTurf/wall,/area/noGenerate)
+"f" = (/turf/variableTurf/clear,/area/trench_landing)
+"g" = (/turf/variableTurf/floor,/area/noGenerate)
+
+(1,1,1) = {"
+accccaaa
+aeeeebba
+abbbbbea
+abbdfeea
+abbffgec
+abbbgggc
+abbgeeec
+aaaaccca
+"}

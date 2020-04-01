@@ -1,0 +1,11 @@
+"a" = (/turf/dmm_suite/clear_turf,/area)
+"b" = (/turf/variableTurf/floor,/area)
+"c" = (/obj/critter/rockworm,/turf/variableTurf/floor,/area)
+
+(1,1,1) = {"
+aabaa
+accca
+bcccb
+accca
+aabaa
+"}

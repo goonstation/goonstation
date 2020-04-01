@@ -1,0 +1,72 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/variableTurf/wall,/area/noGenerate)
+"c" = (/turf/simulated/wall{desc = "Upon closer inspection, you see that this is a cleverly painted wall."; icon = 'icons/misc/worlds.dmi'; icon_state = "grass"; name = "tall grass"},/area/station/owlery)
+"d" = (/obj/machinery/portableowl/attached{name = "A Pretty Owl"},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"e" = (/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"f" = (/obj/shrub{icon_state = "shrub"; dir = 8},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"g" = (/obj/shrub{icon_state = "shrub"; dir = 6},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"h" = (/obj/shrub{icon_state = "shrub"; dir = 4},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"i" = (/turf/variableTurf/clear,/area/noGenerate)
+"j" = (/obj/machinery/portableowl/attached{name = "The Sexiest Owl"},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"k" = (/obj/item/device/radio/beacon,/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"l" = (/obj/machinery/camera{c_tag = "autotag"; dir = 10; icon_state = "camera"; name = "autoname - SS13"; pixel_x = 0; tag = ""},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"m" = (/obj/shrub,/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"n" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/station/owlery)
+"o" = (/obj/shrub{icon_state = "shrub"; dir = 1},/obj/machinery/camera{c_tag = "autotag"; dir = 10; icon_state = "camera"; name = "autoname - SS13"; pixel_x = 0; tag = ""},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"p" = (/obj/tree1{desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"q" = (/obj/machinery/light/small{dir = 4; pixel_x = 12},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"r" = (/turf/simulated/wall{desc = "Upon closer inspection, you see that this is a cleverly painted wall."; icon = 'icons/misc/worlds.dmi'; icon_state = "grass"; name = "tall grass"},/area/station/habitat)
+"s" = (/obj/machinery/light{dir = 4; icon_state = "tube1"; layer = 9.1; pixel_x = 10},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"t" = (/obj/machinery/light/small{dir = 8; pixel_x = -12},/turf/simulated/floor/shuttlebay,/area/station/owlery)
+"u" = (/turf/simulated/floor/shuttlebay,/area/station/owlery)
+"v" = (/obj/machinery/light/small{dir = 1; pixel_y = 21},/turf/simulated/floor/shuttlebay,/area/station/owlery)
+"w" = (/obj/table/auto,/obj/item/clothing/under/gimmick/owl,/obj/item/clothing/mask/owl_mask,/obj/item/clothing/mask/owl_mask,/obj/item/clothing/mask/owl_mask,/obj/item/clothing/under/gimmick/owl,/obj/item/clothing/under/gimmick/owl,/obj/item/clothing/mask/owl_mask,/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"x" = (/obj/machinery/portableowl/attached{name = "an Owl with a chip out of his beak"},/turf/simulated/floor/grass/leafy,/area/station/owlery)
+"y" = (/obj/shrub{icon_state = "shrub"; dir = 8},/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"z" = (/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"A" = (/obj/shrub,/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"B" = (/obj/critter/parrot/random,/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"C" = (/obj/overlay{anchored = 1; icon = 'icons/misc/beach2.dmi'; icon_state = "palm1"; layer = 10; name = "palm tree"},/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"D" = (/obj/machinery/firealarm{dir = 4; pixel_x = 26; pixel_y = 1},/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"E" = (/obj/machinery/portable_atmospherics/canister/air/large,/obj/machinery/light/small{dir = 8; pixel_x = -12},/turf/simulated/floor,/area/station/owlery)
+"F" = (/obj/machinery/camera{c_tag = "autotag"; dir = 4; icon_state = "camera"; name = "autoname - SS13"; pixel_x = -10; tag = ""},/obj/machinery/door_control/podbay{id = "habitat_bay"; pixel_x = -24},/turf/simulated/floor/shuttlebay,/area/station/owlery)
+"G" = (/obj/machinery/light/small{dir = 4; pixel_x = 12},/turf/simulated/floor/shuttlebay,/area/station/owlery)
+"H" = (/obj/machinery/door/firedoor/pyro{icon_state = "fdoor0"; dir = 4},/obj/machinery/door/airlock/pyro{dir = 4; icon_state = "generic_closed"; name = "Habitat Dome"},/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"I" = (/obj/item/device/radio/beacon,/turf/simulated/floor,/area/station/owlery)
+"J" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor,/area/station/owlery)
+"K" = (/turf/simulated/floor/caution/corner/ne{dir = 1},/area/station/owlery)
+"L" = (/obj/overlay{anchored = 1; icon = 'icons/misc/beach2.dmi'; icon_state = "palm2"; layer = 10; name = "palm tree"},/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"M" = (/obj/rack,/obj/item/clothing/suit/space/emerg,/obj/item/clothing/head/emerg,/obj/item/clothing/mask/breath,/obj/item/tank/air,/obj/item/storage/toolbox/mechanical,/obj/item/storage/belt/utility,/obj/item/crowbar,/obj/machinery/light/small{dir = 8; pixel_x = -12},/obj/machinery/camera{c_tag = "autotag"; dir = 1; icon_state = "camera"; name = "autoname - SS13"},/turf/simulated/floor,/area/station/owlery)
+"N" = (/obj/machinery/light/small{dir = 8; pixel_x = -12},/turf/simulated/floor/caution/east,/area/station/owlery)
+"O" = (/obj/machinery/camera{c_tag = "autotag"; dir = 10; icon_state = "camera"; name = "autoname - SS13"; pixel_x = 0; tag = ""},/turf/simulated/floor/engine{icon = 'icons/misc/beach.dmi'; icon_state = "sand"; name = "sand"},/area/station/habitat)
+"P" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor,/area/station/owlery)
+"Q" = (/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{id = "habitat_bay"; name = "pod bay (habitat)"},/turf/simulated/floor/shuttlebay,/area/station/owlery)
+"R" = (/obj/machinery/r_door_control/podbay{id = "habitat_bay"},/turf/simulated/wall/auto/reinforced/supernorn,/area/station/owlery)
+"S" = (/turf/variableTurf/floor,/area/station/owlery)
+"T" = (/obj/machinery/light/small{dir = 1; pixel_y = 21},/turf/variableTurf/floor,/area/station/owlery)
+"U" = (/turf/simulated/floor/engine{density = 1; icon = 'icons/misc/beach2.dmi'; icon_state = "sandwater"; name = "water simulation tile"; RL_LumB = 0; RL_LumG = 0; RL_LumR = 0},/area/station/habitat)
+"V" = (/turf/simulated/wall/r_wall{icon = 'icons/misc/beach.dmi'; icon_state = "water"; name = "holo-projection wall"; RL_LumB = 0; RL_LumG = 0; RL_LumR = 0},/area/station/habitat)
+"W" = (/turf/simulated/floor/engine{density = 1; icon = 'icons/misc/beach.dmi'; icon_state = "water"; name = "water simulation tile"; RL_LumB = 0; RL_LumG = 0; RL_LumR = 0},/area/station/habitat)
+
+(1,1,1) = {"
+aaaaaaaaabbbbaaaaaaaaaaaa
+aaaabbbbbbbbbbbaaaaaaaaaa
+aabbbbcccccccbbbbaaaaaaaa
+aabbcccdeefecccbbbbbaaaaa
+abbccegeeeeeehccbbbbbbaaa
+abbcjekeeelmeeecbbnnnnnaa
+bbccoeepeqrrrrsrrbntuvnna
+bbrrrwxerrryzzzArnnuuuuni
+bbrArrrrrzzzzBCDrEnFuuGni
+bbrzzBzzCzBzzzzzHIJKuuuni
+bbrzLzzzzzyzzzzyrMnNuuGni
+bbrOzzyzBzzzLzBOrnnPnQQRi
+bbrrzzzzzzzzzzzrrbbSTSSii
+bbbrUUUUUUUUUUUrbbbbSSiii
+abbVVWWWWWWWWWVVbbbbbiiii
+aabbVVVWWWWWVVVbbbbbbiiia
+aaabbbVVVVVVVbbbbbbbiiiaa
+aaaaabbbbbbbbbbbbbbaaaaaa
+aaaaaabbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbaaaaaaaaaa
+"}

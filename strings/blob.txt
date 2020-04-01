@@ -1,0 +1,10 @@
+adj2@=kinda@,a little bit@,really@,rather@,very@,pretty@,sorta
+act2@=grody@,stupid@,dumb@,gross@,useless@,tacky@,ineffective@,awkward@,futile@,heinous
+adj1_help@=tenderly@,gently@,lovingly@,politely@,warmly
+act1_help@=pets@,hugs@,nuzzles@,strokes@,kisses
+adj1_disarm@=rudely@,angrily@,scornfully@,grumpily@,spitefully
+act1_disarm@=prods@,shoves@,pushes@,stares at@,menaces
+adj1_grab@=rashly@,recklessly@,grumpily@,angrily@,strongly
+act1_grab@=fondles@,feels@,wrestles@,pulls on@,bodyslams
+adj1_harm@=violently@,brutally@,viciously@,cruelly@,forcefully
+act1_harm@=punches@,kicks@,stomps@,bites@,headbutts
