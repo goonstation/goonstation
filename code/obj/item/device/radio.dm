@@ -674,7 +674,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	//..()
 	if (usr.stat || usr.restrained())
 		return
-	if (src in usr || (src.master && src.master in usr) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (src in usr || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
 		usr.machine = src
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -726,7 +726,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 			M.show_message("<span style=\"color:red\"><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if(M.mind in ticker.mode:revolutionaries && !M.mind in ticker.mode:head_revolutionaries && prob(20))
+				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
 
 #ifdef USE_STAMINA_DISORIENT

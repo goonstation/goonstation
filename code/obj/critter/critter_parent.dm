@@ -452,7 +452,6 @@
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-		return
 
 	meteorhit()
 		src.health -= 150 // no more instakill
@@ -929,7 +928,6 @@
 				return "mystical"
 			else
 				return "odd"
-		return
 
 	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 		if(target == start)

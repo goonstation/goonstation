@@ -139,7 +139,7 @@
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
-	if (can_use_detonator || (src in usr) || (src.master && src.master in usr) || in_range(src, usr) && istype(src.loc, /turf))
+	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_range(src, usr) && istype(src.loc, /turf))
 		usr.machine = src
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])

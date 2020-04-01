@@ -118,9 +118,8 @@ obj/machinery/atmospherics/binary/volume_pump
 			SPAWN_DBG(0.5 SECONDS) broadcast_status()
 		update_icon()
 
-obj/machinery/atmospherics/binary/volume_pump/attackby(obj/weapon as obj, mob/user as mob)
-	..()
-	if(istype(weapon, /obj/item/device/multitool))
+obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
+	if(ispulsingtool(W))
 		ui.show_ui(user)
 
 datum/pump_ui/volume_pump_ui

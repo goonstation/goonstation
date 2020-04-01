@@ -217,7 +217,7 @@ obj
 				var/B = min(55, max(0, temperature - 100 / 550))
 				H.update_burning(B)
 
-		proc/process(turf/simulated/list/possible_spread)
+		proc/process(list/turf/simulated/possible_spread)
 			if(just_spawned)
 				just_spawned = 0
 				return 0

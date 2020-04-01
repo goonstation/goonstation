@@ -1444,7 +1444,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-	current_projectile = new/datum/projectile/laser/quadwasp
+	current_projectile = new/datum/projectile/special/spreader/quadwasp
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
@@ -1452,6 +1452,6 @@
 	module_research = list("science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10, "hydroponics" = 10) //deprecated in current code
 
 	New()
-		current_projectile = new/datum/projectile/laser/quadwasp
+		current_projectile = new/datum/projectile/special/spreader/quadwasp
 		projectiles = list(current_projectile)
 		..()

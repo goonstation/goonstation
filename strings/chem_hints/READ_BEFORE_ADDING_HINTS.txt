@@ -1,2 +1,0 @@
-number the files from 1-<num_hints>
-Once the hint is added update the hint number lists in chemistry_hints.dm

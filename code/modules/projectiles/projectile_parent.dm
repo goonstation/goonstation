@@ -125,8 +125,9 @@
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
 			for (var/obj/O in A)
 				O.bullet_act(src)
-			if ((istype(A, /turf/simulated/wall) || istype(A, /turf/simulated/shuttle/wall)) && !goes_through_walls)
-				if (proj_data && proj_data.icon_turf_hit && !istype(A, /turf/simulated/shuttle/wall))
+			var/turf/T = A
+			if (T.density && !goes_through_walls)
+				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
 						W.forensic_impacts += src.forensic_ID

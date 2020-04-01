@@ -657,9 +657,9 @@
 		if (ishuman(activator)){
 			var/mob/living/carbon/human/H = activator
 			var/obj/item/gun/kinetic/gunmod
-			if (H.l_hand && H.l_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle))
+			if (H.l_hand && (H.l_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
 				gunmod = H.l_hand
-			else if (H.r_hand && H.r_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle))
+			else if (H.r_hand && (H.r_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
 				gunmod = H.r_hand
 			if (!gunmod) return
 			gunmod.name = "Golden [gunmod.name]"

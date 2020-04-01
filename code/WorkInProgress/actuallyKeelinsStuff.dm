@@ -3410,7 +3410,7 @@ var/list/lag_list = new/list()
 
 	proc/hear_once(var/mob/M)
 		if(broken) return
-		if(!M in spooky)
+		if(!(M in spooky))
 			spooky += M
 			spooky[M] = 1
 		else

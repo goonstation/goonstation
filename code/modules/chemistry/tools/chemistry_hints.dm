@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		#if SECRETS_ENABLED == 1
+		#ifdef SECRETS_ENABLED
 		chem_name = pick(chem_hint_info)
 		#endif
 

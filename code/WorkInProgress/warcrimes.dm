@@ -366,7 +366,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 			SPAWN_DBG(1 SECOND)
 				say("One of them [pick(JOHN_people)] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
-		#if SECRETS_ENABLED
+		#ifdef SECRETS_ENABLED
 		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")

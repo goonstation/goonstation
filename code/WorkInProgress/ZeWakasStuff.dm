@@ -3,7 +3,7 @@
  * 90 101 87 97 107 97 39 115  83 116 117 102 102
  */
 
-//foo
+//foo 2
 
 //everything here is wip, this can also be ascertained by the location of this file
 
@@ -220,33 +220,5 @@
 	desc = "Oh wow, you finally found the end of the rainbow."
 	icon_state = "rainbow"
 
-/obj/greek/rockwall/strange //th3*vqoE
-	name = "strange rocky cliff"
-	desc = "The cliff has a pictogram of a clock pointed to 4 on it, along with an inscription that says: Tsam... inam... inaz... anga... lewa. It looks like there is a empty space below it."
-	anchored = 1
-	density = 1
-	opacity = 1
-	var/activated = 0
 
-	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/pen))
-			var/obj/item/pen/P = W
-			if (!user || P.in_use || isghostdrone(user) || src.activated)
-				return
-			P.in_use = 1
-			var/T = input(user, "What is the time for?") as text
-			if (!T)
-				P.in_use = 0
-				return
-			T = copytext(html_encode(T), 1, MAX_MESSAGE_LEN)
-			if (T == ("Africa" || "africa"))
-				boutput(user, "<span style=\"color:red\">When you get down get up, eh eh!</span>")
-				src.opacity = 0
-				src.set_density(0)
-				src.alpha = 125
-				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-				smoke.set_up(3, 0, src.loc)
-				smoke.start()
-				src.activated = 1
-			P.in_use = 0
-			return
+//th3*vqoE

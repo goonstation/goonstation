@@ -4,7 +4,7 @@
 // Note: Vox files are excluded from this to save on rsc size
 
 var/global/list/soundCache = list(
-	"icons/emag_fail_sound.ogg" = 'icons/emag_fail_sound.ogg',\
+ 	"icons/emag_fail_sound.ogg" = 'icons/emag_fail_sound.ogg',\
  	"sound/ambience/dojo/dojoambi.ogg" = 'sound/ambience/dojo/dojoambi.ogg',\
  	"sound/ambience/industrial/AncientPowerPlant_Creaking1.ogg" = 'sound/ambience/industrial/AncientPowerPlant_Creaking1.ogg',\
  	"sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg" = 'sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg',\
@@ -248,6 +248,7 @@ var/global/list/soundCache = list(
  	"sound/effects/radio_sweep3.ogg" = 'sound/effects/radio_sweep3.ogg',\
  	"sound/effects/radio_sweep4.ogg" = 'sound/effects/radio_sweep4.ogg',\
  	"sound/effects/radio_sweep5.ogg" = 'sound/effects/radio_sweep5.ogg',\
+ 	"sound/effects/ritual.ogg" = 'sound/effects/ritual.ogg',\
  	"sound/effects/sawhit.ogg" = 'sound/effects/sawhit.ogg',\
  	"sound/effects/sbfail1.ogg" = 'sound/effects/sbfail1.ogg',\
  	"sound/effects/sbfail2.ogg" = 'sound/effects/sbfail2.ogg',\
@@ -1065,8 +1066,15 @@ var/global/list/soundCache = list(
  	"sound/voice/death_2.ogg" = 'sound/voice/death_2.ogg',\
  	"sound/voice/femvox.ogg" = 'sound/voice/femvox.ogg',\
  	"sound/voice/guard_halt.ogg" = 'sound/voice/guard_halt.ogg',\
+ 	"sound/voice/hagg_vorbis.ogg" = 'sound/voice/hagg_vorbis.ogg',\
  	"sound/voice/heavenly.ogg" = 'sound/voice/heavenly.ogg',\
  	"sound/voice/heavenly3.ogg" = 'sound/voice/heavenly3.ogg',\
+ 	"sound/voice/hogg_vorbis.ogg" = 'sound/voice/hogg_vorbis.ogg',\
+ 	"sound/voice/hogg_vorbis_screams.ogg" = 'sound/voice/hogg_vorbis_screams.ogg',\
+ 	"sound/voice/hogg_vorbis_the.ogg" = 'sound/voice/hogg_vorbis_the.ogg',\
+ 	"sound/voice/hogg_with_scream.ogg" = 'sound/voice/hogg_with_scream.ogg',\
+ 	"sound/voice/hoooagh.ogg" = 'sound/voice/hoooagh.ogg',\
+ 	"sound/voice/hoooagh2.ogg" = 'sound/voice/hoooagh2.ogg',\
  	"sound/voice/horse.ogg" = 'sound/voice/horse.ogg',\
  	"sound/voice/killme.ogg" = 'sound/voice/killme.ogg',\
  	"sound/voice/mapvote_bill.ogg" = 'sound/voice/mapvote_bill.ogg',\
@@ -1399,4 +1407,5 @@ var/global/list/soundCache = list(
  	"sound/weapons/energy/laser_alastor.ogg" = 'sound/weapons/energy/laser_alastor.ogg',\
  	"sound/weapons/energy/LightningCannon.ogg" = 'sound/weapons/energy/LightningCannon.ogg',\
  	"sound/weapons/energy/LightningCannonImpact.ogg" = 'sound/weapons/energy/LightningCannonImpact.ogg',\
+
 "NONE" = null)

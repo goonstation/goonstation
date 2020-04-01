@@ -311,7 +311,7 @@ var/global/the_automaton = null
 		else if (istype(W, /obj/item/alchemy/stone))
 			src.visible_message("<span style=\"color:red\">[src] studies [W] intently. It looks impressed, but hands [W] back. Perhaps it's not the right time for this yet?</span>")
 
-		#if SECRETS_ENABLED == 1
+		#ifdef SECRETS_ENABLED
 		else if (istype(W, /obj/item/onyxphoto))
 			if (!W:used)
 				src.visible_message("<span style=\"color:blue\"><b>[src]</b> studies [W] intently, then hands it back after a short pause.</span>")

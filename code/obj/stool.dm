@@ -1377,7 +1377,7 @@
 				H.changeStatus("stunned", 10 SECONDS)
 
 			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if (H.mind in ticker.mode:revolutionaries && !H.mind in ticker.mode:head_revolutionaries && prob(66))
+				if ((H.mind in ticker.mode:revolutionaries) && !(H.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(H.mind)
 
 		A.updateicon()

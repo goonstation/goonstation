@@ -217,7 +217,7 @@ var/global/list/falloff_cache = list()
 	return S
 
 /proc/generate_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1)
-	if (narrator_mode && soundin in list("punch", "swing_hit", "shatter", "explosion"))
+	if (narrator_mode && (soundin in list("punch", "swing_hit", "shatter", "explosion")))
 		switch(soundin)
 			if ("shatter") soundin = 'sound/vox/break.ogg'
 			if ("explosion") soundin = list('sound/vox/explosion.ogg', 'sound/vox/explode.ogg')
