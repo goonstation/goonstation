@@ -56,7 +56,7 @@ var/global
 
 	//obj/hud/main_hud1 = null
 
-	list/by_type = list()
+	list/list/by_type = list()
 
 	obj/screen/renderSourceHolder
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
