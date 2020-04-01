@@ -613,7 +613,6 @@
 			last_upgrades = master.upgrades.Copy()
 
 	proc/handle_event(var/event, var/sender)
-		. = ..(event, sender)
 		if (event == "icon_updated") // this is only ever emitted by atoms
 			var/atom/senderAtom = sender
 			if (senderAtom.loc != master.module) // An equipped tool has changed its icon; refresh module display

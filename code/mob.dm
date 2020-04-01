@@ -1055,8 +1055,6 @@
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
-	return ..(gibbed)
-
 /mob/proc/restrained()
 	if (src.handcuffed)
 		return 1

@@ -580,7 +580,6 @@
 	if (usr && istype(usr, /mob/dead/observer))
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
-	..()
 
 
 
@@ -716,7 +715,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	else
 		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
-		
+
 		if(!src || !src.mind || !src.client)
 			return // prevent double-spawning etc.
 
