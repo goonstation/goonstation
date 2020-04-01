@@ -118,7 +118,7 @@ obj/machinery/atmospherics/binary/volume_pump
 			SPAWN_DBG(0.5 SECONDS) broadcast_status()
 		update_icon()
 
-obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W as obj, mob/user as mob)
+obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		ui.show_ui(user)
 

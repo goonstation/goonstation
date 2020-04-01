@@ -59,7 +59,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			if(network2)
 				network2.update = 1
 
-obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/W as obj, mob/user as mob)
+obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		ui.show_ui(user)
 
