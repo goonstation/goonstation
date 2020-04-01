@@ -587,7 +587,7 @@
 			SM.depletion_rate = initial(SM.depletion_rate) * mult
 
 	proc/set_global_sims_var(var/datum/simsMotive/M, var/var_name, var/new_value) //Change one value on every simsHolder
-		if(!var_name in M.vars)
+		if(!(var_name in M.vars))
 			logTheThing("debug", null, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
 			return
 		for(var/datum/simsMotive/SM in simsMotives)

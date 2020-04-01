@@ -25,7 +25,6 @@
 			return T.greeting
 		else
 			return "Yes?"
-		return
 
 /datum/dialogueNode/traderWho
 	nodeImage = "generic.png"

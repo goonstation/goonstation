@@ -58,7 +58,6 @@
 	proc/process()
 		if (world.time > spawn_time + wait)
 			spawnit()
-		..()
 
 	proc/spawnit()
 		if(!(locate(/obj/racing_powerupbox) in src.loc))
@@ -165,7 +164,6 @@
 	proc/process()
 		if (world.time > spawn_time + 4500)
 			qdel(src)
-		..()
 
 	HasEntered(atom/A)
 		if(istype(A,/obj/racing_clowncar))

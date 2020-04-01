@@ -597,7 +597,6 @@
 				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transfrom"])
 				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
 					return
-					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
 				if (!howmuch)
 					return

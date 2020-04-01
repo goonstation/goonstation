@@ -122,7 +122,6 @@
 
 		if (3) // Spell-specific stuff.
 			src.say("SCYAR NILA [uppertext(A)]")
-			..()
 
 			src.visible_message("<span style=\"color:red\"><b>[src] begins to fade away!</b></span>")
 			animate_teleport_wiz(src)

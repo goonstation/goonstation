@@ -399,7 +399,7 @@
 		else if (href_list["group_dispense"])
 			doing_a_thing = 1
 			var/datum/reagent_group/group = locate(href_list["group_dispense"])
-			if(istype(group) && current_account && group in current_account.groups)
+			if(istype(group) && current_account && (group in current_account.groups))
 				for (var/reagent in group.reagents)
 					if ((reagent in dispensable_reagents))
 						var/amt = 10
@@ -456,7 +456,6 @@
 		else
 			ch_window.Unsubscribe(usr.client)
 			return
-		return
 
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)

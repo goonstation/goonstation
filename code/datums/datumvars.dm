@@ -498,7 +498,7 @@
 
 	//Let's prevent people from promoting themselves, yes?
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
-	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && D.type in locked_type )))
+	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, "<span style=\"color:red\">You're not allowed to edit [D.type] for security reasons!</span>")
 		logTheThing("admin", usr, null, "tried to varedit [D.type] but was denied!")
 		logTheThing("diary", usr, null, "tried to varedit [D.type] but was denied!", "admin")

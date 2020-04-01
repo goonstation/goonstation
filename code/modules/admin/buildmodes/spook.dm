@@ -27,7 +27,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			update_button_text("[activeType]: [activeSpook]")
 
 	click_left(atom/object)
-		if(activeSpook && activeType && (istype( object, activeType ) || (object.spookTypes && activeSpook in object.spook_getspooks())))
+		if(activeSpook && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
 			object.spook_act( activeSpook, spookData )
 
 /obj/machinery/light/spookTypes = "Break;Set Color"//list("Break", "Set Color")

@@ -458,8 +458,6 @@
 				//boutput(world, "couldn't link")
 				return 0
 
-			return 0
-
 /obj/item/peripheral/network/powernet_card/terminal
 	name = "Terminal card"
 	desc = "A networking/printing combo card designed to fit into a computer casing."
@@ -636,8 +634,6 @@
 					newsignal.transmission_method = TRANSMISSION_WIRE
 					src.wired_link.post_signal(src, newsignal)
 					return 0
-
-				return 1
 
 			if ("mode_free")
 				src.mode = 0
@@ -840,8 +836,6 @@
 		else
 			return 0
 
-		return 0
-
 /obj/item/peripheral/printer
 	name = "Printer module"
 	desc = "A small printer designed to fit into a computer casing."
@@ -911,8 +905,6 @@
 
 		else
 			return "Valid command: \"vend\" to vend prize."
-
-		return 1
 
 	attack_self(mob/user as mob)
 		if( (last_vend + 400) < world.time)

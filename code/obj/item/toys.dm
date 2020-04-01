@@ -171,7 +171,7 @@
 	name = "super cool penguin plush toy"
 	icon_state = "penguin_cool"
 
-/obj/item/toy/plush/small/orca 
+/obj/item/toy/plush/small/orca
 	name = "Lilac the orca"
 	icon_state = "orca"
 
@@ -920,7 +920,7 @@ var/list/figure_patreon_rarity = list(\
 /obj/item/toy/judge_block/attack()
 	return
 
-/obj/item/toy/diploma 
+/obj/item/toy/diploma
 	name = "diploma"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "diploma"
@@ -935,3 +935,13 @@ var/list/figure_patreon_rarity = list(\
 /obj/item/toy/diploma/New()
 	..()
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
+
+/obj/item/toy/diploma/attack(mob/M as mob, mob/user as mob)
+	if (isliving(user))
+		var/mob/living/L = user
+		if (L.mind && L.mind.assigned_role == "Clown")
+			L.visible_message("<span style=\"color:red\"><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
+			playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+
+

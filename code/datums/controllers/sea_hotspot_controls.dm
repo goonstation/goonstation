@@ -861,7 +861,6 @@
 		..()
 
 	proc/update_icon()
-		..() //<-- doesn't do anything
 		icon_state = "stomper[on]"
 
 	attack_hand(var/mob/living/carbon/human/user as mob)

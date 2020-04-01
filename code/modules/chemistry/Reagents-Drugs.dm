@@ -1063,8 +1063,7 @@ datum
 datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 	var/temp = 3000
 	var/range = 1
-	if (..())
-		return 1
+
 	var/turf/T = get_step(M,M.dir)
 	T = get_step(T,M.dir)
 	var/list/affected_turfs = getline(M, T)

@@ -110,7 +110,6 @@
 			iced.last_cubed = world.time
 
 		src.health *= (rand(10,20)/10)
-		return
 
 		processing_items.Add(src)
 

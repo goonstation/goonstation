@@ -148,9 +148,6 @@ var/global/list/playersSeen = list()
 		details += "(This is a permanent ban)"
 		return details
 
-	return 0 //Should never occur
-
-
 /proc/addBan(data)
 	set background = 1
 

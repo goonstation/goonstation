@@ -41,7 +41,6 @@
 			if (!http || !http["CONTENT"])
 				Z_LOG_ERROR("Resource/Grab", "[path] - failed to get from CDN")
 				CRASH("CDN DEBUG: No file found for path: [path]")
-				return ""
 			file = file2text(http["CONTENT"])
 		else //No CDN, grab from local directory
 			Z_LOG_DEBUG("Resource/Grab", "[path] - locally loaded, parsing")
