@@ -1257,7 +1257,6 @@
 			return src.l_hand
 		else
 			return src.r_hand
-		return
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
 	. = list()
@@ -1487,7 +1486,6 @@
 		return (!mover.density || !src.density || src.lying)
 	else
 		return (!mover.density || !src.density || src.lying)
-	return
 
 /mob/proc/update_inhands()
 
@@ -1982,6 +1980,63 @@
 			qdel(floorcluwne)
 			qdel(src)
 
+/mob/proc/buttgib(give_medal)
+	if (isobserver(src)) return
+#ifdef DATALOGGER
+	game_stats.Increment("violence")
+#endif
+	logTheThing("combat", src, null, "is butt-gibbed at [log_loc(src)].")
+	src.death(1)
+	var/atom/movable/overlay/gibs/animation = null
+	src.transforming = 1
+	src.canmove = 0
+	src.icon = null
+	src.invisibility = 101
+
+	var/bdna = null
+	var/btype = null
+	var/datum/organHolder/organHolder = null
+
+	if (ishuman(src))
+		var/mob/living/carbon/human_src = src
+		if (src.bioHolder)
+			bdna = src.bioHolder.Uid
+			btype = src.bioHolder.bloodType
+		if (human_src.organHolder)
+			organHolder = human_src.organHolder
+
+		animation = new(src.loc)
+		animation.master = src
+		flick("gibbed", animation)
+
+	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
+		var/mob/dead/observer/newmob = ghostize()
+		newmob.corpse = null
+
+	var/list/virus = src.ailments
+	var/list/ejectables = list_ejectables()
+
+	for(var/i = 0, i < 16, i++)
+		if(organHolder)
+			ejectables.Add(new /obj/item/clothing/head/butt(src.loc, organHolder))
+		else
+			ejectables.Add(new /obj/item/clothing/head/butt/synth)
+
+	if (bdna && btype)
+		gibs(src.loc, virus, ejectables, bdna, btype)
+	else
+		gibs(src.loc, virus, ejectables)
+
+	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1)
+	var/turf/src_turf = get_turf(src)
+	if(src_turf)
+		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
+		for(var/mob/living/L in range(src_turf, 6))
+			shake_camera(L, 10, 5)
+
+	if (animation)
+		animation.delaydispose()
+	qdel(src)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).

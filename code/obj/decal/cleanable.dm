@@ -46,7 +46,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	setup(var/L,var/list/viral_list)
 		..()
-
 		src.real_name = src.name
 
 		if (viral_list && viral_list.len > 0)
@@ -63,10 +62,13 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if (src.stain)
 				src.Stain()
 
-			if (istype(src.loc, /turf/simulated/floor))
-				var/turf/simulated/T = src.loc
+			if(istype(src.loc, /turf))
+				var/turf/T = src.loc
 				T.messy++
 				last_turf = T
+
+			if (istype(src.loc, /turf/simulated/floor))
+				var/turf/simulated/T = src.loc
 				T.cleanable_fluid_react()
 
 	disposing()
@@ -361,8 +363,9 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			var/mob/M = AM
 			M.set_clothing_icon_dirty()
 
-	disposing(var/obj/decal/bloodtrace/B)
-		if (!B)
+	disposing()
+		var/obj/decal/bloodtrace/B = locate() in src
+		if (!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			diseases = list()
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA // okay so we shouldn't check to see if B has DNA/type because it's brand new and it does not, duh
@@ -431,11 +434,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	disposing()
 		diseases = list()
-		var/obj/decal/bloodtrace/B = new /obj/decal/bloodtrace(src.loc)
-		B.blood_DNA = src.blood_DNA
-		B.blood_type = src.blood_type
-		B.icon = src.icon
-		B.icon_state = src.icon_state
+		var/obj/decal/bloodtrace/B = locate() in src
+		if(!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
+			B = new /obj/decal/bloodtrace(src.loc)
+			B.blood_DNA = src.blood_DNA
+			B.blood_type = src.blood_type
+			B.icon = src.icon
+			B.icon_state = src.icon_state
 		var/image/working_image
 		//for (var/i = src.blood_volume, i > 0, i--)
 		for (var/i in src.overlay_refs)

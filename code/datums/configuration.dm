@@ -40,6 +40,10 @@
 	var/allow_ai = 1					// allow ai job
 	var/respawn = 1
 
+	// Goonhub Parser
+	var/goonhub_parser_url = "localhost"
+	var/goonhub_parser_key = "foo"
+
 	// MySQL
 	var/sql_enabled = 0
 	var/sql_hostname = "localhost"
@@ -288,6 +292,11 @@
 				config.ircbot_api = trim(value)
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
+
+			if ("goonhub_parser_url")
+				config.goonhub_parser_url = trim(value)
+			if ("goonhub_parser_key")
+				config.goonhub_parser_key = trim(value)
 
 			if ("ticklag")
 				world.tick_lag = text2num(value)

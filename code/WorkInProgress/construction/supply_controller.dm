@@ -652,7 +652,7 @@
 		return 0
 
 	Topic(href, href_list)
-		if (!usr in range(1))
+		if (!(usr in range(1)))
 			return
 		if (!ticker)
 			return

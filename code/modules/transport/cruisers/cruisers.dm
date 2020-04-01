@@ -450,7 +450,6 @@
 	proc/hasPower()
 		if(power_used_last > power_produced_last || health <= 0) return 0
 		else return 1
-		return
 
 	proc/damageArmor(var/amount, var/type = D_SPECIAL, var/use_resistance = 1)
 		if(health <= 0) return //BEEP BOOP

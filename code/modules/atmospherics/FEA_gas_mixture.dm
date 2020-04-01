@@ -639,7 +639,7 @@ What are the archived variables for?
 
 	if(sharer.trace_gases && sharer.trace_gases.len)
 		for(var/datum/gas/trace_gas in sharer.trace_gases)
-			if(trace_types_considered && trace_gas.type in trace_types_considered) continue
+			if(trace_types_considered && (trace_gas.type in trace_types_considered)) continue
 			else
 				var/datum/gas/corresponding
 				var/delta = 0

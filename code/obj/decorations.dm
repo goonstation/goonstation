@@ -447,7 +447,7 @@
 
 	New()
 		..()
-		if (!src.name || src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch"))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
+		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
 		SPAWN_DBG(0.5 SECONDS)
 			src.locate_blinds()

@@ -1,4 +1,11 @@
 ﻿
+(t)tue apr 1 20
+(u)Flaborized, SimianC, and Flourish
+(*)<a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14229">Apply to be a clown 2day!</a>
+(u)Tarmunora
+(*)Add a recipe for plasmaglass in the arc smelter (plasmastone and glass)
+(u)RichardGere
+(*)Added simethicone + superfart gibbing.
 (t)mon mar 31 20
 (u)ZeWaka
 (*)Reorganized Centcom a bunch.
