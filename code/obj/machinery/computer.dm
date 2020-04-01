@@ -15,6 +15,11 @@
 	icon_state = "console00"
 */
 
+/obj/machinery/computer/attack_hand(mob/user as mob)
+	if(!user.literate)
+		boutput(user, "<span style=\"color:red\">You don't know how to read or write, operating a computer isn't going to work!</span>")
+		return 1
+
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	desc = "A computer that accepts modules, and uploads the commands to the AI."
