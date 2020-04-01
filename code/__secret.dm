@@ -2,10 +2,10 @@
 #ifndef SECRETS_ENABLED
 
 //Enables placeholder objects
-#include "../code/_placeholder.dm"
+#include "_placeholder.dm"
 
 //Future Expansion
-#include "../code/_publicVersion.dm"
+#include "_publicVersion.dm"
 
 #endif
 
