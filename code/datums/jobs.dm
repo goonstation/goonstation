@@ -836,8 +836,9 @@
 			M.see_invisible = 15
 
 /datum/job/civilian/staff_assistant
-	name = "Clown College Student"
+	name = "Staff Assistant"
 	wages = 10
+	limit = 0
 	no_jobban_from_this_job = 1
 	low_priority_job = 1
 	cant_allocate_unwanted = 1
@@ -848,6 +849,11 @@
 		..()
 		src.access = get_access("Staff Assistant")
 		return
+
+	/datum/job/civilian/staff_assistant/clown_college_student
+		name = "Clown College Student"
+		limit = -1
+		slot_jump = /obj/item/clothing/under/color/grey
 
 /datum/job/civilian/clown
 	name = "Clown"
