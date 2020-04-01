@@ -59,9 +59,9 @@ obj/machinery/atmospherics/binary/passive_gate
 			if(network2)
 				network2.update = 1
 
-obj/machinery/atmospherics/binary/passive_gate/attack_hand(mob/user as mob)
-	..()
-	ui.show_ui(user)
+obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/W as obj, mob/user as mob)
+	if(ispulsingtool(W))
+		ui.show_ui(user)
 
 datum/pump_ui/passive_gate_ui
 	value_name = "Release Pressure"
