@@ -533,7 +533,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/ex_act(severity)
 	..() // Logs.
-	src.flash(30)
+	src.flash(3 SECONDS)
 
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss
@@ -1614,7 +1614,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/newMessage = scrubbed_input(usr, "Enter a message!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
-	if(!newEmotion in L) //Ffff
+	if(!(newEmotion in L)) //Ffff
 		return
 
 	if (newEmotion)

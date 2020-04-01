@@ -139,7 +139,7 @@ var/global/derelict_mode = 0
 			world << sound('sound/machines/lavamoon_plantalarm.ogg')
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
-					H.flash(30)
+					H.flash(3 SECONDS)
 					shake_camera(H, 210, 2)
 					SPAWN_DBG(rand(1,10))
 						H.bodytemperature = 1000

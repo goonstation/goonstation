@@ -291,7 +291,7 @@ that cannot be itched
 		if (M.stat > 1)
 			user.unlock_medal("He's dead, Jim", 1)
 		return
-	
+
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /obj/machinery/clonepod))
 			var/obj/machinery/clonepod/P = A
@@ -511,8 +511,6 @@ that cannot be itched
 		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 		user.u_equip(W)
 		qdel(W)
-		return
-	return ..()
 
 
 ///////////////////////////////////////////////// Prisoner scanner ////////////////////////////////////

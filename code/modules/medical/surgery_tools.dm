@@ -250,7 +250,7 @@ CONTAINS:
 				H.lastgasp()
 			return
 
-		if (!ishuman(M) || !(user.zone_sel && user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head")))
+		if (!ishuman(M) || !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
 			return ..()
 
 		var/mob/living/carbon/human/H = M

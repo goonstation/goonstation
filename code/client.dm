@@ -784,7 +784,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Private message to [target] (IRC)")) as null|text
-			if(!(src.holder && src.holder.rank in list("Host", "Coder")))
+			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
@@ -816,7 +816,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
-			if(!(src.holder && src.holder.rank in list("Host", "Coder")))
+			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
@@ -853,7 +853,7 @@ var/global/curr_day = null
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
 					M = whois_ckey_to_mob_reference(href_list["target"])
-				if (!(src.holder && src.holder.rank in list("Host", "Coder")))
+				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 					t = strip_html(t,500)
 				if (!( t ))
 					return

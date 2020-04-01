@@ -923,7 +923,7 @@
 						db.known_sequences[s] = 1
 						db.certainty += 5 * (100 - db.certainty) / 100
 						db.certainty = min(db.certainty, 100)
-						if(!s in db.transient_sequences)
+						if(!(s in db.transient_sequences))
 							db.transient_sequences[s] = "UNK"
 
 					boutput(usr, "<span style=\"color:blue\">The DNA sequence is assembled by the manipulator.</span>")

@@ -850,7 +850,7 @@
 		src.access = get_access("Staff Assistant")
 		return
 
-	/datum/job/civilian/staff_assistant/clown_college_student
+/datum/job/civilian/staff_assistant/clown_college_student
 		name = "Clown College Student"
 		limit = -1
 		slot_jump = /obj/item/clothing/under/color/grey

@@ -290,4 +290,3 @@
 			return text2num(view)
 		else
 			return view
-	return null

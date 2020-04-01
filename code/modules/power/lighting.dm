@@ -141,7 +141,6 @@
 						break
 				T = null
 
-		..()
 
 
 //regular light bulbs

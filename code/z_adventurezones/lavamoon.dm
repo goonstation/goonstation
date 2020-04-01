@@ -839,7 +839,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		adjustedArea.irradiated = adjustedArea.radiation_level
 
 		for(var/mob/N in adjustedArea)
-			N.flash(30)
+			N.flash(3 SECONDS)
 
 			SPAWN_DBG(0)
 				shake_camera(N, 210, 2)

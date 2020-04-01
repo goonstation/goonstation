@@ -215,7 +215,6 @@
 		..()
 
 	proc/process()
-		..()
 		update_cloak_status()
 
 	proc/update_cloak_status()

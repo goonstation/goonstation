@@ -390,11 +390,9 @@ datum/light
 
 		apply_to(turf/T)
 			CRASH("Default apply_to called, did you mean to create a /datum/light/point and not a /datum/light?")
-			return
 
 		apply_internal(generation, r, g, b) // per light type
 			CRASH("Default apply_internal called, did you mean to create a /datum/light/point and not a /datum/light?")
-			return
 
 	point
 		apply_to(turf/T)

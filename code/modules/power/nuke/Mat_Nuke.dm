@@ -174,4 +174,3 @@ datum
 					else
 						M.vars[X] = base.vars[X]
 		return M
-	return null

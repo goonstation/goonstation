@@ -378,8 +378,6 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				else
 					return ESIG_IOERR
 
-				return ESIG_GENERIC
-
 			if (DWAINE_COMMAND_UINPUT) //Alternate path for user input
 				. = ckey(data["term"])
 				if (. in src.users)
@@ -817,8 +815,6 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 			else
 				return ESIG_BADCOMMAND
-
-		return ESIG_SUCCESS
 
 	process()
 		if (..())

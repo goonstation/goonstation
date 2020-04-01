@@ -77,7 +77,7 @@
 	if(derelict_mode) // ready up some effects and noises
 		SPAWN_DBG(0.2 SECONDS)
 			for(var/mob/living/carbon/human/H in mobs)
-				H.flash(30)
+				H.flash(3 SECONDS)
 
 		SPAWN_DBG(10 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')

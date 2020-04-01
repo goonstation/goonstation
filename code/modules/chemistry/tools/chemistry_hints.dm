@@ -4,17 +4,11 @@
 	name = "Clue scroll"
 	desc = "A scroll containing a hint for a secret chemical recipe."
 	var/hint_text = "heck, someone forgot to put a hint in this scroll! Call 1-800-IMCODER"
-	var/chem_name
+	var/chem_name = "1-800-CODER"
 	var/has_been_read = 0
 
 	get_desc()
 		return " [chem_name] is carefully written on the outside of the scroll in fancy writing."
-
-	New()
-		..()
-		#ifdef SECRETS_ENABLED
-		chem_name = pick(chem_hint_info)
-		#endif
 
 	attack_self(var/mob/U)
 		if(has_been_read)
@@ -39,7 +33,7 @@
 				user.emote("scream")
 				SPAWN_DBG(1 SECOND)
 					boutput(user,"The horrible secrets of the scroll burn your eyes before you can read them!</span>")
-					user.flash(30)
+					user.flash(3 SECONDS)
 					user.organHolder.get_organ("left_eye").combust()
 					user.organHolder.get_organ("right_eye").combust()
 					user.organHolder.drop_organ("left_eye")

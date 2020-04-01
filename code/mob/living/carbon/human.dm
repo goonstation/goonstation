@@ -2968,7 +2968,7 @@
 /mob/living/carbon/human/proc/lose_limb(var/limb)
 	if (!src.limbs)
 		return
-	if(!limb in list("l_arm","r_arm","l_leg","r_leg")) return
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
 
 	//not exactly elegant, but fuck it, src.vars[limb].remove() didn't want to work :effort:
 	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.remove()
@@ -2979,7 +2979,7 @@
 /mob/living/carbon/human/proc/sever_limb(var/limb)
 	if (!src.limbs)
 		return
-	if(!limb in list("l_arm","r_arm","l_leg","r_leg")) return
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
 
 	//not exactly elegant, but fuck it, src.vars[limb].sever() didn't want to work :effort:
 	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.sever()
@@ -2990,7 +2990,7 @@
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)
 		return
-	if(!limb in list("l_arm","r_arm","l_leg","r_leg")) return
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
 
 	if(limb == "l_arm" && src.limbs.l_arm) return 1
 	else if(limb == "r_arm" && src.limbs.r_arm) return 1
@@ -3235,13 +3235,13 @@
 
 /mob/living/carbon/human/proc/activate_chest_item_on_attack(mob/living/carbon/human/M) // Let's only have humans do this, ok?
 	// If attacker is targeting the chest and a chest item exists, activate it.
-	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && src.chest_item in src.contents)
+	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		src.chest_item.attack_self(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
-	if(!(src.chest_item && src.chest_item in src.contents))
+	if(!(src.chest_item && (src.chest_item in src.contents)))
 		return
 	// Determine if the container is like a beaker/glass or is an artifact. We're looking for something that's got an
 	// open top to it. With stuff like pills/patches it would consume the reagents but not the item itself!
@@ -3255,7 +3255,7 @@
 	return
 
 /mob/living/carbon/human/proc/chest_item_attack_self_on_fart()
-	if(!(src.chest_item && src.chest_item in src.contents))
+	if(!(src.chest_item && (src.chest_item in src.contents)))
 		return
 	src.show_text("You grunt and squeeze <B>[src.chest_item]</B> in your chest.")
 	src.chest_item.attack_self(src) // Activate the item

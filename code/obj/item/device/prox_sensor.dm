@@ -108,7 +108,7 @@
 /obj/item/device/prox_sensor/attack_self(mob/user as mob)
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((src in user) || (src.master && src.master in user) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
+	if ((src in user) || (src.master && (src.master in user)) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
 		user.machine = src
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60

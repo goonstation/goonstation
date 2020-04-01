@@ -792,7 +792,7 @@ Code:
 			if(src.charges <= 0)
 				return
 			var/target_id = href_list["detonate"]
-			if(!target_id in src.pdas)
+			if(!(target_id in src.pdas))
 				return
 			var/datum/signal/signal = get_free_signal()
 			signal.data["command"] = "text_message"

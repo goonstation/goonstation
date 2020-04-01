@@ -33,7 +33,7 @@
 		if (..())
 			return
 		for(var/mob/N in viewers(O, null))
-			N.flash(30)
+			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 4)
 				O.visible_message("<span style=\"color:red\"><b>With a blinding light [O] vanishes, releasing the curse that was locked inside it.</b></span>")
