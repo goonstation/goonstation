@@ -7,14 +7,13 @@
     * Normally, items shouldn't be in ¾, but drawn in a flat projection.
     * Large handheld item sprites should be shown side on, see tool and gun sprites for examples of this. 
 * Keep colour palettes simple, and where possible sample existing colour palettes to create consistency within departments.
-    * Hue shift your shadows and highlights. Tutorial [here](https://i.imgur.com/fsTkpWQ.gif). Example:
-    ![](http://i.imgur.com/9iGrBo9.png) <- Bad
-    ![](http://i.imgur.com/gB8u1zp.png) <- Good
-    
-    * Do not use straight black for outlining. Instead, use a darkened version of the colour at the edge of the sprite. Example:  
-    ![](https://i.imgur.com/eUL0qTx.png)
-    
-    * If you just shrink a jpeg and submit that, you're fired. ![](https://wiki.ss13.co/images/a/af/FoodPancakes.png)
+* Hue shift your shadows and highlights. Tutorial [here](https://i.imgur.com/fsTkpWQ.gif). Example:
+    ![](http://i.imgur.com/9iGrBo9.png) <-- Bad
+    ![](http://i.imgur.com/gB8u1zp.png) <-- Good
+* Do not use straight black for outlining. Instead, use a darkened version of the colour at the edge of the sprite. Example:
+
+![](https://i.imgur.com/eUL0qTx.png)
+* If you just shrink a jpeg and submit that, you're fired. ![](https://wiki.ss13.co/images/a/af/FoodPancakes.png)
 * Unique in hand sprites are encouraged for every new item, this is especially true for items that need to be visually identified in combat. :lower_left_paintbrush: 
 * Referencing popular culture is allowed, but try to be subtle about it. Commonly available content should be original. :cake: 
 * Icon states should generally be centered on the middle of the canvas. 
