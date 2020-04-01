@@ -142,7 +142,7 @@
 				else
 					boutput(user, "<span style=\"color:red\">It isn't deployed, and you don't know how to deploy it anyway.</span>")
 			else
-				if (istype(NUKEMODE, /datum/game_mode/nuclear) && user.mind in NUKEMODE.syndicates)
+				if (istype(NUKEMODE, /datum/game_mode/nuclear) && (user.mind in NUKEMODE.syndicates))
 					boutput(user, "<span style=\"color:blue\">You don't need to do anything else with the bomb.</span>")
 				else
 					user.visible_message("<span style=\"color:red\"><b>[user]</b> kicks [src] uselessly!</span>")

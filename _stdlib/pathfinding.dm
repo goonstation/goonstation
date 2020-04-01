@@ -26,7 +26,7 @@
 
 //#define DEBUG_ASTAR
 
-/proc/cirrAstar(turf/start, turf/goal, var/min_dist=0, proc/adjacent, proc/heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
+/proc/cirrAstar(turf/start, turf/goal, var/min_dist=0, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
 	#ifdef DEBUG_ASTAR
 	clearAstarViz()
 	#endif

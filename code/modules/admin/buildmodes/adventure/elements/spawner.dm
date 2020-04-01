@@ -40,7 +40,7 @@
 		else if (pa.Find("right"))
 			var/vname = input("Which variable?", "Which variable?", "health") in list("aggressive", "atkcarbon", "atksilicon", "health", "opensdoors", "wanderer")
 			var/vvalue = input("Set [vname] to ", "Setting variable", 0) as num
-			if (!vname in cvars)
+			if (!(vname in cvars))
 				cvars += vname
 			cvars[vname] = vvalue
 

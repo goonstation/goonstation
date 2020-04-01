@@ -39,7 +39,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	for(var/mob/dead/observer/O in mobs)
 		if(O && N.is_authorised(O))
 			// check if this is blacklisted for the round
-			if(O.ckey && O.ckey in notifications_blacklist)
+			if(O.ckey && (O.ckey in notifications_blacklist))
 				var/list/blacklist = notifications_blacklist[O.ckey]
 				if("[N.type]" in blacklist)
 					continue // no notification for this guy

@@ -427,7 +427,7 @@
 	if (src.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
 		var/datum/game_mode/revolution/R = ticker.mode
 
-		if (src.mind in R.revolutionaries || src.mind in R.head_revolutionaries)
+		if ((src.mind in R.revolutionaries) || (src.mind in R.head_revolutionaries))
 			var/found = 0
 			for (var/datum/mind/M in R.head_revolutionaries)
 				if (M.current && ishuman(M.current))

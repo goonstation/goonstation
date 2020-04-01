@@ -1525,7 +1525,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if("prime")
 						if(!timing)
 							src.timing = 1
-							if(!src in processing_items)
+							if(!(src in processing_items))
 								processing_items.Add(src)
 							src.icon_state = "portgen2"
 

@@ -1780,7 +1780,7 @@
 
 					if(arrest_target)
 
-						if(!arrest_target in view(7,master) && !master.moving)
+						if(!(arrest_target in view(7,master)) && !master.moving)
 							//qdel(master.mover)
 							master.frustration += 2
 							if (master.mover)
@@ -2334,7 +2334,7 @@
 					handle_arrest_function() //So we don't have to wait for the next process. LIVES ARE ON THE LINE HERE!
 					return
 
-				if(!protected in view(7,master) && !master.moving)
+				if(!(protected in view(7,master)) && !master.moving)
 					//qdel(master.mover)
 					master.frustration++
 					if (master.mover)
