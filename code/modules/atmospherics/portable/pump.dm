@@ -77,7 +77,7 @@
 
 /obj/machinery/portable_atmospherics/pump/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
-		var/canamt = W:contents.len
+		var/canamt = W.contents.len
 		if (canamt >= W:capacity) boutput(user, "<span style=\"color:red\">Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span style=\"color:red\">\The [src] is attached!</span>")
 		else

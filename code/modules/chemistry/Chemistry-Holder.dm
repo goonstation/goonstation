@@ -31,7 +31,7 @@ proc/chemhood_check(mob/living/carbon/human/H)
 
 datum
 	reagents
-		var/list/reagent_list = new/list()
+		var/list/datum/reagent/reagent_list = new/list()
 		var/maximum_volume = 100
 		var/atom/my_atom = null
 		var/last_basic_explosion = 0
@@ -932,6 +932,7 @@ datum
 		// taking into account concentration and transparency
 
 		proc/get_average_color()
+			RETURN_TYPE(/datum/color)
 			var/datum/color/average = new(0,0,0,0)
 			var/total_weight = 0
 
