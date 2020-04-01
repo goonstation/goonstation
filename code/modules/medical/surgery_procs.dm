@@ -232,7 +232,7 @@
 		else if (src.butt_op_stage < 5)
 			return_thing += src.butt_op_stage
 
-	if (!zone || zone in list("l_arm","r_arm","l_leg","r_leg"))
+	if (!zone || (zone in list("l_arm","r_arm","l_leg","r_leg")))
 		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
 		if (istype(surgery_limb))
 			return_thing += surgery_limb.remove_stage

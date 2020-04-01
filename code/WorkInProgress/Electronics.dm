@@ -168,7 +168,7 @@
 			else if(secured == 2)
 				boutput(user, "<span style=\"color:red\">You deploy the [src]!</span>")
 				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([showCoords(src.x, src.y, src.z)])")
-				if (!istype(user.loc,/turf) && store_type in typesof(/obj/critter))
+				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
 				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
@@ -824,7 +824,7 @@
 			return
 		if (ismob(owner))
 			var/mob/M = owner
-			if (!D in M.equipped_list())
+			if (!(D in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		D.finish_decon(O,owner)

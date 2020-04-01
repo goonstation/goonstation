@@ -178,7 +178,7 @@ datum/pipe_network
 						corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
 		return 1
 
-proc/equalize_gases(datum/gas_mixture/list/gases)
+proc/equalize_gases(list/datum/gas_mixture/gases)
 	//Perfectly equalize all gases members instantly
 
 	//Calculate totals from individual components

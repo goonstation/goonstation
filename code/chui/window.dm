@@ -273,7 +273,7 @@ chui/window
 			return
 		var/action = href_list[ "_cact" ]
 		if( !isnull( action ) )
-			if( action == "section" && !isnull( href_list[ "section" ] ) && href_list[ "section" ] in sections )
+			if( action == "section" && !isnull( href_list[ "section" ] ) && (href_list[ "section" ] in sections) )
 				if( !hascall( src, href_list[ "section" ] + "Section" ) )
 					boutput( src, "<span style='color: #f00'>Call 1-800 CODER.</span>" )
 					throw EXCEPTION( "1-800 Coder: you allowed a section that doesn't exist!!! RAAHHHH" )

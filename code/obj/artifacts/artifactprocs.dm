@@ -49,7 +49,7 @@
 	for (var/datum/artifact/A in artifact_controls.artifact_types)
 		if (A.rarity_class != rarityroll)
 			continue
-		if (istext(forceartitype) && !forceartitype in A.validtypes)
+		if (istext(forceartitype) && !(forceartitype in A.validtypes))
 			continue
 		selection_pool += A
 

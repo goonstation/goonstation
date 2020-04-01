@@ -1614,7 +1614,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/newMessage = scrubbed_input(usr, "Enter a message!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
-	if(!newEmotion in L) //Ffff
+	if(!(newEmotion in L)) //Ffff
 		return
 
 	if (newEmotion)
