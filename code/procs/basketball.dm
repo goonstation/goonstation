@@ -360,7 +360,7 @@
 			if(prob(15))
 				world << sound('sound/effects/thunder.ogg', volume = 80)
 				for(var/mob/N in mobs)
-					N.flash(30)
+					N.flash(3 SECONDS)
 			sleep(5)
 	sleep(300)
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)

@@ -533,7 +533,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/ex_act(severity)
 	..() // Logs.
-	src.flash(30)
+	src.flash(3 SECONDS)
 
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss

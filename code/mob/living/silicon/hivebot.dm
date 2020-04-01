@@ -442,7 +442,7 @@
 
 /mob/living/silicon/hivebot/ex_act(severity)
 	..() // Logs.
-	src.flash(30)
+	src.flash(3 SECONDS)
 
 	if (isdead(src) && src.client)
 		src.gib(1)

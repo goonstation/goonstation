@@ -312,7 +312,7 @@ proc/timeywimey(var/time)
 
 	for(var/mob/living/L in positions)
 		if (!L) continue
-		L.flash(30)
+		L.flash(3 SECONDS)
 		boutput(L, "<span style=\"color:red\"><B>You suddenly feel yourself pulled violently back in time!</B></span>")
 		L.set_loc(positions[L])
 		L.changeStatus("stunned", 6 SECONDS)

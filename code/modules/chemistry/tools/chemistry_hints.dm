@@ -39,7 +39,7 @@
 				user.emote("scream")
 				SPAWN_DBG(1 SECOND)
 					boutput(user,"The horrible secrets of the scroll burn your eyes before you can read them!</span>")
-					user.flash(30)
+					user.flash(3 SECONDS)
 					user.organHolder.get_organ("left_eye").combust()
 					user.organHolder.get_organ("right_eye").combust()
 					user.organHolder.drop_organ("left_eye")

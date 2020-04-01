@@ -63,7 +63,7 @@
 		for(var/obj/I in O.contents)
 			I.set_loc(O.loc)
 		for(var/mob/N in viewers(O, null))
-			N.flash(30)
+			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 4)
 		O.visible_message("<span style=\"color:red\"><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
