@@ -312,8 +312,6 @@ var/list/electiles = list()
 		src.underlays += compImage
 
 		src.filters += filter(type="layer", render_source="*portaltrg")
-		..()
-		return
 
 	New()
 		SPAWN_DBG(50) setup()
@@ -1863,7 +1861,7 @@ var/list/electiles = list()
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
