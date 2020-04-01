@@ -3,3 +3,5 @@
 #Most of the time, you'll want to make yourself a Coder.
 #To do so, type your BYOND key with no spaces or capitals, a dash with spaces on both side, then the rank you want.
 #For example, the key "ZeWaka" would be given Coder rank like this: zewaka - Coder
+
+elanoots - Coder
