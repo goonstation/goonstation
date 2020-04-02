@@ -215,7 +215,7 @@ proc/generate_crew_photo(var/background_icon, var/background_icon_state, var/lis
 	return photo
 
 proc/split_into_photo_rows(var/list/datum/mind/chars, var/max_per_row)
-	var/list/arrangement = list()
+	var/list/list/arrangement = list()
 	var/list/L = list()
 	arrangement[++arrangement.len] = L
 	var/row = 1

@@ -5,7 +5,7 @@
 	var/space_color = "#ff4646"
 	var/list/area/safe_areas = list()
 	var/list/safe_area_names = list()
-	var/list/safe_locations = list()
+	var/list/area/safe_locations = list()
 	var/activations = 0
 
 	New()

@@ -11,7 +11,7 @@
 	var/temperature_archived
 	var/obj/overlay/O1 = null
 	var/mob/occupant = null
-	var/beaker = null
+	var/obj/item/beaker = null
 	var/next_trans = 0
 	var/show_beaker_contents = 0
 
@@ -227,7 +227,7 @@
 			if (src.beaker == null)
 				boutput(user, "<span style=\"color:red\">There is no beaker in [src] for you to inject reagents.</span>")
 				return
-			if (src.beaker:reagents.total_volume == src.beaker:reagents.maximum_volume)
+			if (src.beaker.reagents.total_volume == src.beaker.reagents.maximum_volume)
 				boutput(user, "<span style=\"color:red\">The beaker in [src] is full.</span>")
 				return
 			var/transferred = G.reagents.trans_to(src.beaker, 5)
@@ -341,8 +341,8 @@
 			src.go_out()
 			return
 		if(beaker && (next_trans == 0))
-			beaker:reagents.trans_to(occupant, 1, 10)
-			beaker:reagents.reaction(occupant)
+			beaker.reagents.trans_to(occupant, 1, 10)
+			beaker.reagents.reaction(occupant)
 		next_trans++
 		if(next_trans == 10)
 			next_trans = 0

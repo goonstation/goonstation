@@ -1,5 +1,9 @@
 ﻿
 (t)tue apr 1 20
+(u)mbc
+(*)New tile-fling special attack for crowbars.
+(*)Fixed bug where an item with a material property could have its throwforce weakened below its base value.
+(*)Improved the damage of basic special attacks to match their direct-click power levels (they still can't crit, that should be the main drawback)
 (u)Flaborized, SimianC, and Flourish
 (*)<a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14229">Apply to be a clown 2day!</a>
 (u)Tarmunora

@@ -152,6 +152,7 @@
 
 	//loops through organ_list.  returns a list of names of all missing organs instead, but I'm tired
 	proc/get_missing_organs()
+		RETURN_TYPE(/list)
 		var/list/organs = list()
 		// if (islist(organ_list))
 		for (var/i in organ_list)
@@ -311,6 +312,7 @@
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
+		RETURN_TYPE(/obj/item)
 		if (!organ)
 			return 0
 		var/obj/item/return_organ = organ_list[organ]

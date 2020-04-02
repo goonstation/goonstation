@@ -64,14 +64,14 @@ var/list/global_spawn_dbg = list()
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == "spy_thief")
 
 // Why the separate mask check? NPCs don't use assigned_role and we still wanna play the cluwne-specific sound effects.
-#define iscluwne(x) (istype(x, /mob/living/carbon/human) && ((x:mind && x:mind.assigned_role && x:mind:assigned_role == "Cluwne") || istype(x:wear_mask, /obj/item/clothing/mask/cursedclown_hat)))
+#define iscluwne(x) ((x?.mind?.assigned_role == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
 #define ishorse(x) (istype(x, /mob/living/carbon/human) && ((x:mind && x:mind.assigned_role && x:mind:assigned_role == "Horse") || istype(x:wear_mask, /obj/item/clothing/mask/horse_mask/cursed)))
 #define isdiabolical(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:diabolical == 1)
 #define iswelder(x) istype(x, /mob/living/carbon/human/welder)
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 
-#define ishellbanned(x) istype(x, /mob) && x:client && x:client.hellbanned
+#define ishellbanned(x) x?.client?.hellbanned
 
 #ifdef UNDERWATER_MAP
 #define isrestrictedz(z) ((z) == 2 || (z) == 3  || (z) == 4)

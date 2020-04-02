@@ -2489,7 +2489,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			..()
 
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
-	icon_state = "sushi_roll_custom"
+	icon_state = "sushiroll"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
@@ -2506,7 +2506,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type//src.type(get_turf(src))
 				S.cut = 1
 				S.amount = 1
-				S.icon_state = "chopped_sushi_roll"
+				S.icon_state = "chopped_sushiroll"
 				S.quality = src.quality
 				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
 				S.pixel_x = rand(-6, 6)

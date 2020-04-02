@@ -272,7 +272,8 @@
 			M.visible_message("<span style=\"color:red\">[M] has been implanted by [user].</span>", "<span style=\"color:red\">You have been implanted by [user].</span>")
 
 			if(ishuman(M))
-				M:implant.Add(new_imp)
+				var/mob/living/carbon/human/H = M
+				H.implant.Add(new_imp)
 
 			new_imp.set_loc(M)
 			new_imp.implanted = 1

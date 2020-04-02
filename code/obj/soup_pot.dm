@@ -205,7 +205,7 @@
 		var/datum/reagent/most = null
 		var/datum/reagent/moster = null
 		var/datum/reagent/mostest = null
-		var/chems = pot.reagents.reagent_list
+		var/list/datum/reagent/chems = pot.reagents.reagent_list
 		for(var/id in chems)
 			var/datum/reagent/current_reagent = chems[id]
 			if(mostest)
