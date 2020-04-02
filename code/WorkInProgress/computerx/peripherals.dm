@@ -586,6 +586,8 @@
 				prize.name = "decloaking device"
 				prize.desc = "A device for removing cloaks. Made in Space-Taiwan."
 				prize:det_time = 5
+			if(8)
+				prize = new
 
 
 /obj/item/peripheralx/card_scanner

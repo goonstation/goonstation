@@ -21,8 +21,7 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
-	/obj/item/toy/gooncode)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	user.machine = src
