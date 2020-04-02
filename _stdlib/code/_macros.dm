@@ -150,8 +150,8 @@ var/list/global_spawn_dbg = list()
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
 // to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
-#define START_TRACKING do { var/_type = text2path(replacetext("[.disposing]", "/disposing", "")); if(!by_type[_type]) { by_type[_type] = list(src) } else { by_type[_type].Add(src) } } while (FALSE)
-#define STOP_TRACKING do { var/_type = text2path(replacetext("[.disposing]", "/disposing", "")); by_type[_type].Remove(src) } while (FALSE)
+#define START_TRACKING do { if(!by_type[type]) { by_type[type] = list(src) } else { by_type[type].Add(src) } } while (FALSE)
+#define STOP_TRACKING do { by_type[type].Remove(src) } while (FALSE)
 
 // replacement for world.timeofday that shouldn't break around midnight, please use this
 #define TIME ((world.timeofday - server_start_time + 24 HOURS) % (24 HOURS))
