@@ -708,8 +708,8 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-//	if(!isturf(target))
-//		target = get_turf(target) //breaks stuff like deconning with harm. a tad more annoying to hit the turfs but a small price to pay for ~~salvation~~ deconning stuff
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock)))
+		target = get_turf(target) //breaks stuff like deconning with harm. a tad more annoying to hit the turfs but a small price to pay for ~~salvation~~ deconning stuff
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='text-red'>Something about this structure prevents it from being assimilated.</span>")
@@ -743,9 +743,11 @@
 			actions.start(new/datum/action/bar/flock_convert(target), user)
 	if(user.a_intent == INTENT_HARM)
 		if(istype(target, /obj/table/flock))
-			actions.start(new /datum/action/bar/icon/table_tool_interact(target, src, TABLE_DISASSEMBLE), user)
-		else if
-
+			var/obj/item/wrench/w //god this is jank - moonlol
+			actions.start(new /datum/action/bar/icon/table_tool_interact(target, w, TABLE_DISASSEMBLE), user)
+		else if(istype(target, /obj/storage/closet/flock))
+			//soap
+			actions.start(new /datum/action/bar/flock_locker_decon(target), user)
 		else
 			..()
 

@@ -832,11 +832,11 @@
 
 	onUpdate()
 		..()
-		if (the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1)
+		if ((the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1) && !istype(owner, /mob/living/critter/flock/drone))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && the_tool != source.equipped() && !istype(the_tool, /datum/limb/flock_converter))
+		if (istype(source) && the_tool != source.equipped() && !istype(owner, /mob/living/critter/flock/drone))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)
