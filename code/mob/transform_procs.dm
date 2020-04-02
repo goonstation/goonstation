@@ -562,7 +562,7 @@
 	set category = "Ghost"
 
 	var/obj/machinery/ghost_catcher/catcher = null
-	if(by_type[/obj/machinery/ghost_catcher] && by_type[/obj/machinery/ghost_catcher].len)
+	if(length(by_type[/obj/machinery/ghost_catcher]))
 		catcher = by_type[/obj/machinery/ghost_catcher][1]
 
 	if (catcher)

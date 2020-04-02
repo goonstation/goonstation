@@ -590,15 +590,19 @@ obj/item/contract/mummy
 		if(!..())
 			return 0
 		var/list/limbs = list("l_arm","r_arm","l_leg","r_leg","head","chest")
-		for (var/target in limbs)
-			if (!user:bandaged.Find(target))
-				user:bandaged += target
-				user.update_body()
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for (var/target in limbs)
+				if (!H.bandaged.Find(target))
+					H.bandaged += target
+					H.update_body()
 		if(user.reagents)
 			user.reagents.add_reagent("formaldehyde", 300) //embalming fluid for mummies
 		if((prob(10)) || (src.limiteduse == 1))
 			boutput(user, "<span style=\"color:blue\">Wow, that contract did a really thorough job of mummifying you! It removed your organs and everything!</span>")
-			user:organHolder.drop_organ("all")
+			if(isliving(user))
+				var/mob/living/L = user
+				L.organHolder.drop_organ("all")
 		if (src.limiteduse == 1)
 			src.used++
 			SPAWN_DBG(0)

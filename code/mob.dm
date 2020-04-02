@@ -1246,6 +1246,7 @@
 		src.set_clothing_icon_dirty()
 
 /mob/proc/equipped()
+	RETURN_TYPE(/obj/item)
 	if (issilicon(src))
 		if (ishivebot(src)||isrobot(src))
 			if (src:module_active)

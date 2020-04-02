@@ -880,17 +880,17 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (istype(perp.r_hand))
 				threatcount += perp.r_hand.contraband
 
-			if (istype(perp:belt))
-				threatcount += perp:belt.contraband * 0.5
+			if (istype(perp.belt))
+				threatcount += perp.belt.contraband * 0.5
 
-			if (istype(perp:wear_suit))
-				threatcount += perp:wear_suit.contraband
+			if (istype(perp.wear_suit))
+				threatcount += perp.wear_suit.contraband
 
 			if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 				threatcount += 5
 
 	//Agent cards lower threatlevel when normal idchecking is off.
-			if((istype(perp:wear_id, /obj/item/card/id/syndicate)) && src.idcheck)
+			if((istype(perp.wear_id, /obj/item/card/id/syndicate)) && src.idcheck)
 				threatcount -= 2
 
 		if (src.check_records)

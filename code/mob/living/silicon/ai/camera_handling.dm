@@ -83,7 +83,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/creatures = get_mobs_trackable_by_AI()
+	var/list/mob/creatures = get_mobs_trackable_by_AI()
 	creatures.Remove(SORT)
 	var/list/candidates = list()
 

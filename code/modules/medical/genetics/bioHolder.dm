@@ -8,10 +8,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /proc/addBio()
 	var/mob/M = input(usr, "Select Mob:") as mob in world
-	if(!M) return
+	if(!istype(M)) return
 	//if(hasvar(M, "bioHolder"))
 	var/id = input(usr, "Effect ID:")
-	M:bioHolder.AddEffect(id)
+	M.bioHolder.AddEffect(id)
 	return
 
 /datum/appearanceHolder
