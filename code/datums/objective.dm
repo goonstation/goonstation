@@ -174,7 +174,7 @@ proc/create_fluff(var/datum/mind/target)
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt")
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -196,6 +196,8 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 			if("aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/ceshielded
+			if("much coveted Gooncode")
+				steal_target = /obj/item/toy/gooncode
 #endif
 
 		explanation_text = "Steal the [target_name]."

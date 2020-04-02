@@ -587,7 +587,7 @@
 				prize.desc = "A device for removing cloaks. Made in Space-Taiwan."
 				prize:det_time = 5
 			if(8)
-				prize = new /obj/item/toy/gooncode
+				prize = new /obj/item/toy/gooncode(prize_location)
 				prize.name = "Gooncode floppy disk"
 				prize.desc = "They're really just handing these out now, huh?"
 
