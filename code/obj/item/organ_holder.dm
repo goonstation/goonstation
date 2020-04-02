@@ -1099,6 +1099,7 @@
 	return 0
 
 /mob/living/carbon/human/proc/get_organ(var/organ)
+	RETURN_TYPE(/obj/item)
 	if (!src.organHolder || !organ)
 		return 0
 	return src.organHolder.get_organ(organ)

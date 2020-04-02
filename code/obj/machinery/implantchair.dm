@@ -55,7 +55,8 @@
 
 	logTheThing("combat", M, "has implanted %target% with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
 	if(ishuman(M))
-		M:implant.Add(src.imp)
+		var/mob/living/carbon/human/H = M
+		H.implant.Add(src.imp)
 
 	src.imp.set_loc(M)
 	src.imp.owner = M

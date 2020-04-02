@@ -71,15 +71,16 @@
 				else
 					H.vision.set_scan(0)
 
-	equipped(var/mob/user, var/slot)
-		if (slot == "eyes")
-			if (on)
-				user:vision.set_scan(1)
-		return
+	equipped(var/mob/living/user, var/slot)
+		if(!isliving(user))
+			return
+		if (slot == "eyes" && on)
+			user.vision.set_scan(1)
 
-	unequipped(var/mob/user)
-		user:vision.set_scan(0)
-		return
+	unequipped(var/mob/living/user)
+		if(!isliving(user))
+			return
+		user.vision.set_scan(0)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
@@ -249,13 +250,17 @@
 		..()
 		setProperty("disorient_resist_eye", 15)
 
-	equipped(var/mob/user, var/slot)
+	equipped(var/mob/living/user, var/slot)
+		if(!isliving(user))
+			return
 		if (slot == "eyes")
-			user:vision.set_scan(1)
+			user.vision.set_scan(1)
 		return
 
-	unequipped(var/mob/user)
-		user:vision.set_scan(0)
+	unequipped(var/mob/living/user)
+		if(!isliving(user))
+			return
+		user.vision.set_scan(0)
 		return
 
 /obj/item/clothing/glasses/eyepatch

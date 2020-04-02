@@ -952,7 +952,7 @@
 	vis_flags = VIS_INHERIT_ID
 
 /datum/abilityHolder/composite
-	var/list/holders = list()
+	var/list/datum/abilityHolder/holders = list()
 	rendered = 1
 	topBarRendered = 1
 

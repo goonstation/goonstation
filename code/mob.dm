@@ -2165,7 +2165,7 @@
 
 		OL = sortList(OL)
 
-		selection
+		selection:
 		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
 		if (!IP || !output_target || !ismob(output_target))

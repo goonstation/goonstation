@@ -456,7 +456,7 @@
 		pod1.mindwipe = text2num(href_list["set_mindwipe"])
 
 	// considered harmful
-	BailOutOfCloningAttempt
+	BailOutOfCloningAttempt:
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()

@@ -1745,7 +1745,7 @@
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 
-	showmessage
+	showmessage:
 	if (message)
 		logTheThing("say", src, null, "EMOTE: [message]")
 		act = lowertext(act)

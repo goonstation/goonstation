@@ -94,20 +94,6 @@
 
 	use_power(10, ENVIRON)
 
-	return
-
-	//mbc : nah not anymore
-	if (idle_count <= 0)
-		if (src.detecting)
-			var/turf/T = get_turf(src)
-			var/obj/fluid/F = T.active_liquid
-			if (F)
-				if (F.last_depth_level >= 4)
-					src.alarm()
-	else
-		idle_count--
-
-
 
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))
