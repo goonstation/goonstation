@@ -392,8 +392,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			else
 				S = new /obj/storage/crate
 				M.set_loc(S)
-			buy_thing(S)
-			return 1
+			return buy_thing(S)
 
 	critter_respawn
 		name = "Alt Ghost Critter"
