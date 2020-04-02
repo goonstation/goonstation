@@ -84,7 +84,7 @@
 
 	var/adwnum = 0
 	var/rendered = ""
-	rendered += "<b>Remember: even if there are no admins ingame, your adminhelps will still be sent to our IRC channel. Current Admins:</b><br>"
+	rendered += "<b>Remember: even if there are no admins ingame, your adminhelps will still be sent to our Discord channel. Current Admins:</b><br>"
 
 	for (var/client/C in clients)
 		if (C && C.mob && C.holder && !C.player_mode)
