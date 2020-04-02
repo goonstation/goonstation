@@ -124,7 +124,7 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 
 ### Step 3: Testing your code :game_die:
 
-The easiest way to test your changes is to press F5. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens.
+The easiest way to test your changes is to press **F5**. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press **Ctrl + F5** instead.
 
 :::warning
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
@@ -283,15 +283,6 @@ A good way to avoid merge conflicts in your PRs is to do this whole process befo
 
 **Staged files:** Files marked to get commited.
 
-*[repo]: Repository - contains all Goonstation code and etc.
-*[fork]: Your personal copy of the repo.
-*[remote]: A repo that is not your local one.
-*[commit]: A change to the repo that is submitted by someone.
-*[diff]: Difference before and after a commit is made.
-*[PR]: Pull Request - The changes you request to the upstream.
-*[origin]: Your fork of the Goonstation repo
-*[upstream]: The master Goonstation repo at https://github.com/goonstation/goonstation
-
 ### VS Code Tips :juggling: 
 
 You can press the Ticked / Unticked button in the bottom right corner to add / remove the current file from goonstation.dme (the file which says which files are actually included in the compilation process).
@@ -345,6 +336,15 @@ git pull upstream master
 git checkout my-feature-branch
 git rebase master
 ```
+
+*[repo]: Repository - contains all Goonstation code and etc.
+*[fork]: Your personal copy of the repo.
+*[remote]: A repo that is not your local one.
+*[commit]: A change to the repo that is submitted by someone.
+*[diff]: Difference before and after a commit is made.
+*[PR]: Pull Request - The changes you request to the upstream.
+*[origin]: Your fork of the Goonstation repo
+*[upstream]: The master Goonstation repo at https://github.com/goonstation/goonstation
 
 ### Credits :clapper: 
 
