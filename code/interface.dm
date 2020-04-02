@@ -14,6 +14,12 @@
 				src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
 				src.changes = 1
 
+		bug_report()
+			set category = "Commands"
+			set name = "Report a Bug"
+			set desc = "Report a bug on GitHub in your browser (you'll need a GitHub account)"
+			src << link("https://github.com/goonstation/goonstation/issues")
+
 		wiki()
 			set category = "Commands"
 			set name = "Wiki"
