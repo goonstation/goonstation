@@ -935,10 +935,10 @@ MATERIAL
 	icon_state = "tile"
 	w_class = 3.0
 	m_amt = 937.5
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	force = 6.0
-	throwforce = 7.0
+	throwforce = 5.0
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 25

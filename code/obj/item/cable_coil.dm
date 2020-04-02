@@ -15,7 +15,7 @@
 	var/namemod = null
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "coil"
-	throwforce = 10
+	throwforce = 2
 	w_class = 1.0
 	throw_speed = 2
 	throw_range = 5
