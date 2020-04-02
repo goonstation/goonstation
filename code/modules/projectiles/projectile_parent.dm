@@ -387,9 +387,9 @@
 		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.dissipation_delay)
+		if (src.dissipation_ticker > src.proj_data.dissipation_delay || src.dissipation_ticker > src.proj_data.max_range)
 			src.power -= src.proj_data.dissipation_rate
-			if (src.power <= 0)
+			if (src.power <= 0 || src.dissipation_ticker > src.proj_data.max_range)
 				proj_data.on_max_range_die(src)
 				die()
 				return
@@ -507,6 +507,7 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
+		max_range = 500          // How far can this projectile go if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power
 		dissipation_ticker = 0   // Tracks how many tiles we moved
@@ -596,22 +597,7 @@ datum/projectile
 				impact_image_effect("T", hit)
 				if (isliving(hit))
 					var/mob/living/L = hit
-
-
-
-#ifdef USE_STAMINA_DISORIENT
-					L.do_disorient(min(80 + (power),max(60,power*4)), weakened = power*2, stunned = power*2, disorient = min(power, 80), remove_stamina_below_zero = 0)
-					L.emote("twitch_v")
-#else
-					L.changeStatus("slowed", power)
-					L.change_misstep_chance(5)
-					L.emote("twitch_v")
-					if (L.getStatusDuration("slowed") > power)
-						L.changeStatus("stunned", power)
-					if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-						L.changeStatus("weakened", power)
-#endif
-
+					stun_bullet_hit(O,L)
 			return
 		tick(var/obj/projectile/O)
 			return
@@ -933,14 +919,19 @@ datum/projectile/snowball
 	P.yo = yo
 	return P
 
-/proc/stun_bullet_hit(var/obj/projectile/P, var/mob/living/M)
-	if (ishuman(M) && !isdead(M))
-		var/mob/living/carbon/human/H = M
-		H.changeStatus("stunned", max(H.getStatusDuration("stunned"), P.power*2.5))
-	else if (isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		R.changeStatus("stunned", max(R.getStatusDuration("stunned"), 50))
-	M.force_laydown_standup()
+/proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
+#ifdef USE_STAMINA_DISORIENT
+	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
+	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
+#else
+	L.changeStatus("slowed", O.power)
+	L.change_misstep_chance(5)
+	L.emote("twitch_v")
+	if (L.getStatusDuration("slowed") > O.power)
+		L.changeStatus("stunned", O.power)
+	if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
+		L.changeStatus("weakened", O.power)
+#endif
 
 /proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)

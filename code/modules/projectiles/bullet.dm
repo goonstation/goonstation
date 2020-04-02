@@ -278,9 +278,6 @@ toxic - poisons
 				H.changeStatus("stunned", power)
 		return*/
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		stun_bullet_hit(P, M)
-		impact_image_effect("T", M)
 
 /datum/projectile/bullet/derringer
 	name = "bullet"

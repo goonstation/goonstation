@@ -7,9 +7,11 @@
 //How much ammo this costs
 	cost = 15
 //How fast the power goes away
-	dissipation_rate = 2
+	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 2
+//how many tiles (not quite tiles) the projectile can go regardless of falloff
+	max_range = 12
 //Kill/Stun ratio
 	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
@@ -41,9 +43,6 @@ toxic - poisons
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		stun_bullet_hit(P, M)
 
 
 //Any special things when it hits shit?
@@ -178,16 +177,17 @@ toxic - poisons
 	disruption = 0
 
 //Any special things when it hits shit?
-	on_hit(atom/hit)
+	on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
 		if (isliving(hit))
 			var/mob/living/L = hit
 			L.apply_sonic_stun(1.5, 0, 25, 10, 0, rand(1, 3), stamina_damage = 80)
 			impact_image_effect("T", hit)
 		return
 
+ //purposefully keeping (some of) the pointblank double-dip,
+ //because a staffie with a vuvu won't always have the option to follow up with a baton and cuffs, and this helps keep a guy down
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.apply_sonic_stun(3, 0, 25, 20, 0, rand(2, 4), stamina_damage = 80)
-		stun_bullet_hit(P, M)
 		impact_image_effect("T", M)
 
 //////////// Ghost Hunting for Halloween
