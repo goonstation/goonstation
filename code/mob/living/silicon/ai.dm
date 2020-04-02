@@ -1275,9 +1275,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	return
 
 /mob/living/silicon/ai/say_understands(var/other)
-	if (ishuman(other)
+	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace || !H.mutantrace.exclusive_language))
+		if(!H.mutantrace || !H.mutantrace.exclusive_language)
 			return 1
 	if (isrobot(other))
 		return 1

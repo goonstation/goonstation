@@ -1671,9 +1671,9 @@
 
 	say_understands(var/other)
 		if (isAI(other)) return 1
-		if (ishuman(other)
+		if (ishuman(other))
 			var/mob/living/carbon/human/H = other
-			if(!H.mutantrace || !H.mutantrace.exclusive_language))
+			if(!H.mutantrace || !H.mutantrace.exclusive_language)
 				return 1
 		if (ishivebot(other)) return 1
 		return ..()
