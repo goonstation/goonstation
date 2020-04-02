@@ -1317,23 +1317,6 @@ var/list/electiles = list()
 	doAttack(var/mob/user, var/atom/target, var/atom/exclude = null)
 		return //nah
 
-		var/direction = getAttackDir(user, target)
-		var/list/attacked = list()
-		if(exclude) attacked.Add(exclude)
-
-		for(var/turf/T in getAffectedTiles(user,target,direction) )
-			for(var/atom/A in T)
-				if(A in attacked) continue
-				if((ismob(A) || A.density || istype(A, /obj/critter)) && !istype(A, /obj/table))
-					A.attackby(src, user)
-					if(istype(A, /obj/blob) && prob(10))
-						user.visible_message("<span style=\"color:red\"><B>[src] gets stuck in [A]!</B></span>")
-						user.drop_item()
-						src.set_loc(A.loc)
-						break
-		showEffect(user,target,direction)
-		return
-
 	attack_self(mob/user as mob)
 		if (istype(user.loc, /obj/vehicle/segway))
 			var/obj/vehicle/segway/S = user.loc

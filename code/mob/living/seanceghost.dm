@@ -114,9 +114,6 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		else
-			return
-
 		logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
 
 		if (src.client && src.client.ismuted())

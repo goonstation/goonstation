@@ -1158,14 +1158,6 @@
 
 /mob/living/critter/small_animal/proc/eye_istype(var/obj/item/I)
 	return 0
-	if (!src.organHolder || !I)
-		return 0
-	if (!src.organHolder.left_eye && !src.organHolder.right_eye)
-		return 0
-	if (istype(src.organHolder.left_eye, I) || istype(src.organHolder.right_eye, I))
-		return 1
-	else
-		return 0
 
 /mob/living/critter/small_animal/proc/organ_istype(var/organ, var/organ_type)
 	if (!src.organHolder || !organ || !organ_type)

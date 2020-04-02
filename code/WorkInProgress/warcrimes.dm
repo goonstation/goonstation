@@ -816,8 +816,6 @@ Urs' Hauntdog critter
 				if (src.emote_check(voluntary, 50))
 					var/turf/T = get_turf(src)
 					return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
-					var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
-					playsound(T, hogg, 60, 1)
 		return null
 
 	specific_emote_type(var/act)
