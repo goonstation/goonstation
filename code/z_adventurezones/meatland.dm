@@ -499,7 +499,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	ChaseAttack(mob/M)
 		. = target_missing_limb(M)
-		if (. == "r_arm" || . == "l_arm" && ishuman(M))
+		if ((. == "r_arm" || . == "l_arm") && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			src.visible_message("<span style=\"color:red\"><b>[src] latches onto [M]'s stump!!</b></span>")
 			boutput(M, "<span style=\"color:red\">OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
