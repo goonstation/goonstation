@@ -453,8 +453,8 @@
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "wavegun"
-	item_state = "wavegun"
+	icon_state = "wavegun100"
+	item_state = "wave"
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
@@ -463,17 +463,30 @@
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/wavegun
-		projectiles = list(current_projectile,new/datum/projectile/wavegun/burst,new/datum/projectile/wavegun/paralyze)
+		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
 		..()
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
+	// Flaborized has made even more wavegun sprites!
 	update_icon()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "wavegun[ratio]"
-			return
+			ratio = round(ratio, 0.25) * 100	
+			if(current_projectile.type == /datum/projectile/wavegun)
+				src.icon_state = "wavegun[ratio]"
+				item_state = "wave"
+			else if (current_projectile.type == /datum/projectile/wavegun/transverse)
+				src.icon_state = "wavegun_green[ratio]"
+				item_state = "wave-g"
+			else
+				src.icon_state = "wavegun_emp[ratio]"
+				item_state = "wave-emp"
+
+	attack_self(mob/user as mob)
+		..()
+		update_icon()
+		user.update_inhands()
 
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
