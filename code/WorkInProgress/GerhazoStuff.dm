@@ -50,7 +50,7 @@
 			deflecting_sword = src.r_hand
 		else if(istype(src.l_hand, /obj/item/sword))
 			deflecting_sword = src.l_hand
-			
+
 		if(deflecting_sword)
 			if(deflecting_sword.active == 0)  // turn the sword on if it's off
 				deflecting_sword.attack_self(src)
@@ -114,14 +114,14 @@
 		if (!isturf(owner.holder.owner.loc))
 			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)
@@ -181,7 +181,7 @@
 		if (..())
 			return 1
 
-		
+
 		if(!istype(holder.owner, /mob/living/carbon/human/cyalume_knight))
 			boutput(holder.owner, "<span style=\"color:red\">You aren't a true cyalume knight to be able to recall your sword!</span>")
 			return 1
@@ -331,7 +331,7 @@
 		M.visible_message("<span style=\"color:red\"><b>[M] starts to release a storm of lightning from his hands!</b></span>")
 
 		actions.start(new/datum/action/bar/icon/force_lightning_action(M,holder,target_turf,src,lightning_targets), M)
-		
+
 /datum/action/bar/icon/force_lightning_action // UNLIMITED POWER
 	duration = 5
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -343,7 +343,7 @@
 	var/turf/HH
 	var/datum/targetable/cyalume_knight/force_lightning/lightningability
 	var/list/lightning_targets
-	
+
 
 	New(user,knightabilityholder,targetturf,lightningabil,potentiallightningtargets)
 		M = user
@@ -425,7 +425,7 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		
+
 		var/mob/living/mob_target = target
 
 		var/original_pixel_y = mob_target.pixel_y
@@ -445,7 +445,7 @@
 		mob_target.losebreath += 10
 
 		actions.start(new/datum/action/bar/icon/force_choke_action(M,holder,mob_target,src,original_pixel_y), M)
-		
+
 
 /datum/action/bar/icon/force_choke_action
 	duration = 50
@@ -458,7 +458,7 @@
 	var/mob/living/HH
 	var/datum/targetable/cyalume_knight/force_choke/chokeability
 	var/original_pixel_y
-	
+
 
 	New(user,knightabilityholder,targetmob,chokeabil,potentiallightningtargets,origpixely)
 		M = user
@@ -487,7 +487,7 @@
 		if(M == null || chokeability == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		
+
 		if(HH.losebreath < 8)
 			HH.losebreath += 5
 			HH.visible_message("<span style=\"color:red\"><b>[HH] is grasping their neck desperately trying to breathe in!</b></span>", "<span style=\"color:red\"><b>Something is constricting your throat, you cannot breathe!</b></span>")
@@ -527,7 +527,7 @@
 		M.visible_message("<span style=\"color:red\"><b>[M] stands still, focused in meditation!</b></span>", "<span style=\"color:red\"><b>You begin meditation.</b></span>")
 
 		actions.start(new/datum/action/bar/icon/force_heal_action(M,holder,src), M)
-		
+
 /datum/action/bar/icon/force_heal_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -537,7 +537,7 @@
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/cyalume_knight/H
 	var/datum/targetable/cyalume_knight/force_choke/healability
-	
+
 	New(user,knightabilityholder,healabil)
 		M = user
 		H = knightabilityholder
@@ -563,7 +563,7 @@
 		if(M == null || healability == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		
+
 		if (M.get_burn_damage() > 0 || M.get_toxin_damage() > 0 || M.get_brute_damage() > 0 || M.get_oxygen_deprivation() > 0 || M.losebreath > 0)
 			M.HealDamage("All", 15, 15)
 			M.take_toxin_damage(-15)
