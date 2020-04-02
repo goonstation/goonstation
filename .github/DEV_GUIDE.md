@@ -7,7 +7,6 @@
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
 
 Visual Studio Code is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VS Code useful.
-<!---Needs factchecking from an actual coder ^--->
 
 Visit https://code.visualstudio.com/ to download the appropriate installation for your operating system. Then, run the installer.
 
@@ -29,8 +28,7 @@ Now, let's combine your repository and VS Code!
 
 First, we're going to need to download git, which can be found on [this page](https://git-scm.com/downloads). Install as normal, though I'd recommend not using vim as the default git editor. 
 
-Git is what will let you make and merge branches of code, complete with VS Code integration to make the process easy.
-<!---Needs factchecking from an actual coder ^--->
+Git is what will let you synchronize your code with others, make your own branches and merging them with other people's code, complete with VS Code integration to make the process easy.
 
 Now, go back to VS Code and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
 
@@ -129,7 +127,7 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 The easiest way to test your changes is to press F5. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens.
 
 :::warning
-If you are on the latest beta version of BYOND the debugger might be somewhat unstable and not work properly.
+If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
 :::
 
 Alternative solution is to press ctrl+shift+B and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
@@ -234,7 +232,7 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
 
 If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
 
-1. Switch to your feature branch (as above)
+1. Checkout your feature branch (as above)
 2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command
     ![](https://i.imgur.com/LbH8XB9.png)
 3. Choose the master branch
@@ -257,7 +255,7 @@ A good way to avoid merge conflicts in your PRs is to do this whole process befo
 
 ### Terminology :open_book: 
 
-**VS Code:** Short for Visual Studio Code. The text editor we are using for editing our code in this guide.
+**VS Code / VSC:** Short for Visual Studio Code. The text editor we are using for editing our code in this guide.
 
 **Git:** The version control system we are using. It lets many people synchronize their versions of a codebase, review and merge each others' changes.
 
@@ -320,7 +318,7 @@ Press **Ctrl+P** and start typing the name of a file you want to open, then hit 
 
 ### Using Command Line git
 
-Sometimes it might be useful to type in git commands directly. To do that press **ctrl + \`** to open PowerShell in VS Code. (Or **ctrl + shift + \`** to make a new PowerShell window.)
+Sometimes it might be useful to type in git commands directly. To do that press **ctrl + \`** to open PowerShell in VS Code. (Or **ctrl + shift + \`** to make a new PowerShell window.) Though this might depend on your operating system and default shell configuration.
 
 Cloning your repository: `git clone https://github.com/YOURNAME/goonstation`
 
