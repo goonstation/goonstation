@@ -739,6 +739,3 @@
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
-
-
-
