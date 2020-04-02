@@ -28,9 +28,12 @@
 
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
-		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) || istype(O, /obj/lpt_laser) )
+		if (O == null)
+			return 0
+			logTheThing("debug", src, O, "Target is null! CanPass failed.")
+		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if(air_group || (height==0)) 
+		if(air_group || (height==0))
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
 			return 0
@@ -48,12 +51,12 @@
 			return 0
 		else
 			return 1
-/* 	
+/*
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
 		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
 			return 1
 			world.log << "CanPass: [O.name] Is nodense / tablepass! Pass!"
-		if(air_group || (height==0)) 
+		if(air_group || (height==0))
 			return 1
 			world.log << "CanPass: [O.name] Is air/height0! Pass!"
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
@@ -149,4 +152,4 @@
 			var/obj/item/ammo/bullets/rod/R = new(target)
 			R.amount = 4
 			qdel(target)
-			WELDER.use_fuel(1) 
+			WELDER.use_fuel(1)
