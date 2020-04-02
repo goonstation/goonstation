@@ -730,13 +730,15 @@
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 
+	on_hit(atom/A, angle, obj/projectile/P)
+		if(isliving(A))
+			stun_bullet_hit(P,A)
+
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
-	on_hit(atom/A, angle, obj/projectile/P)
-		if(isliving(A))
-			stun_bullet_hit(P,A)
+
 
