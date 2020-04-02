@@ -263,6 +263,10 @@ toxic - poisons
 	name = "stun bullet"
 	power = 20
 	ks_ratio = 0.0
+//How fast the power goes away
+	dissipation_rate = 5
+//How many tiles till it starts to lose power
+	dissipation_delay = 6
 	damage_type = D_ENERGY // FUCK YOU.
 	hit_type = null
 	icon_turf_hit = null // stun bullets shouldn't actually enter walls should they?
