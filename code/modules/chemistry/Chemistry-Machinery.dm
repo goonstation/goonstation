@@ -373,19 +373,19 @@
 			usr.Browse(dat, "window=chem_master;size=575x400;title=Chemmaster 3000")
 			return
 		else if (href_list["isolate"])
-			beaker:reagents.isolate_reagent(href_list["isolate"])
+			beaker.reagents.isolate_reagent(href_list["isolate"])
 			src.updateUsrDialog()
 			return
 		else if (href_list["remove"])
-			beaker:reagents.del_reagent(href_list["remove"])
+			beaker.reagents.del_reagent(href_list["remove"])
 			src.updateUsrDialog()
 			return
 		else if (href_list["remove5"])
-			beaker:reagents.remove_reagent(href_list["remove5"], 5)
+			beaker.reagents.remove_reagent(href_list["remove5"], 5)
 			src.updateUsrDialog()
 			return
 		else if (href_list["remove1"])
-			beaker:reagents.remove_reagent(href_list["remove1"], 1)
+			beaker.reagents.remove_reagent(href_list["remove1"], 1)
 			src.updateUsrDialog()
 			return
 		else if (href_list["main"])

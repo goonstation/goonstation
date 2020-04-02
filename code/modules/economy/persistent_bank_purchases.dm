@@ -23,11 +23,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_fjallraven,\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
+	new /datum/bank_purchaseable/nt_backpack,\
 	new /datum/bank_purchaseable/lizard,\
 	new /datum/bank_purchaseable/skeleton,\
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
+	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/lunchbox,\
 
 	new /datum/bank_purchaseable/critter_respawn,\
@@ -35,9 +37,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/fruithat,\
 	new /datum/bank_purchaseable/hoodie,\
+	new /datum/bank_purchaseable/pride_o_matic,\
 	new /datum/bank_purchaseable/fake_waldo,\
 	new /datum/bank_purchaseable/moustache,\
 	new /datum/bank_purchaseable/gold_that,\
+	new /datum/bank_purchaseable/dancin_shoes,\
 
 	new /datum/bank_purchaseable/alohamaton)
 
@@ -350,7 +354,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
-	corpse 
+	corpse
 		name = "Corpse"
 		cost = 15000
 
@@ -359,23 +363,37 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			boutput(M, "<span style='color:blue'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
-	space_diner 
+	space_diner
 		name = "Space Diner Patron"
 		cost = 5000
 
 		Create(var/mob/living/M)
-			var/list/turfs = get_area_turfs(/area/diner/dining, 1)
-			if (!turfs.len)
-				return 0
-			var/turf/T = pick(turfs)
-			if (!T)
+			var/list/start
+			for(var/turf/T in get_area_turfs(/area/diner/dining, 1))
+				start = T
+				break
+			if (!start)
 				return 0
 			if (istype(M.loc, /obj/storage)) // for stowaways
 				var/obj/storage/S = M.loc
-				S.set_loc(T)
+				S.set_loc(start)
 			else
-				M.set_loc(T) 
+				M.set_loc(start)
 			return 1
+
+	mail_order
+		name = "Mail Order"
+		cost = 5000
+
+		Create(var/mob/living/M)
+			var/obj/storage/S
+			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
+				S = M.loc
+			else
+				S = new /obj/storage/crate(get_turf(M))
+				M.set_loc(S)
+				buy_thing(S)
+				return 1
 
 	critter_respawn
 		name = "Alt Ghost Critter"
@@ -432,6 +450,19 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
+	nt_backpack
+		name = "NT Backpack"
+		cost = 600
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					H.back.name = "\improper NT backpack"
+					H.back.icon_state = "NTbackpack"
+					return 1
+				return 0
+
 	lunchbox
 		name = "Lunchbox"
 		cost = 600
@@ -459,6 +490,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		cost = 1500
 		path = /obj/item/clothing/suit/hoodie/random
 
+	pride_o_matic
+		name = "Pride-O-Matic Jumpsuit"
+		cost = 1200
+		path = /obj/item/clothing/under/pride/special
+
 	fake_waldo
 		name = "Stripe Outfit"
 		cost = 1400
@@ -473,6 +509,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Golden Top Hat"
 		cost = 900
 		path = /obj/item/clothing/head/that/gold
+
+	dancin_shoes
+		name = "Dancin Shoes"
+		cost = 2000
+		path = /obj/item/clothing/shoes/heels/dancin
 
 	////////////////////////
 	//CYBORG PURCHASEABLES//
