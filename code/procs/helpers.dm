@@ -1402,8 +1402,8 @@ var/list/blend_types = list(
 "Subtract/3" = BLEND_SUBTRACT,
 "Multipy/4" = BLEND_MULTIPLY)
 
-var/hex_regex	= regex(@"^[0-9a-f]+$", "i")
-var/color_regex = regex(@"^#[0-9a-f]{6}$", "i")
+var/hex_regex	= regex("^\[0-9a-f]+$", "i")
+var/color_regex = regex("^#\[0-9a-f]{6}$", "i")
 
 var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
 

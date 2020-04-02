@@ -64,7 +64,7 @@ dmm_suite
 		// Store quoted portions of text in text_strings, and replaces them with an index to that list.
 		var gridText = copytext(dmm_text, startGridPos)
 		var /list/gridLevels = list()
-		var /regex/grid = regex(@(##)\{"\n((?:\l*\n)*)"\}##, "g")
+		var /regex/grid = regex({"\\n((?:\\l*\\n)*)"\\\""}, "g")
 		while(grid.Find(gridText))
 			gridLevels.Add(copytext(grid.group[1], 1, -1)) // Strip last \n
 		// Create all Atoms at map location, from model key

@@ -32,7 +32,7 @@ datum
 		var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
 
 
-		proc/operator<(var/datum/chemical_reaction/reaction)
+		proc/operator(var/datum/chemical_reaction/reaction)
 			return priority > reaction.priority
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
