@@ -45,22 +45,22 @@
 			new new_item(src.loc)
 
 	snacks
-			name = "random snack spawner"
-			min_amt2spawn = 1
-			max_amt2spawn = 1
-			items2spawn = list(/obj/item/reagent_containers/food/snacks/candy,
-			/obj/item/reagent_containers/food/snacks/candy/chocolate,
-			/obj/item/reagent_containers/food/snacks/candy/nougat,
-			/obj/item/reagent_containers/food/snacks/candy/butterscotch,
-			/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
-			/obj/item/reagent_containers/food/snacks/sandwich/meat_m,
-			/obj/item/reagent_containers/food/snacks/sandwich/meat_s,
-			/obj/item/reagent_containers/food/snacks/sandwich/pb,
-			/obj/item/reagent_containers/food/snacks/sandwich/pbh,
-			/obj/item/reagent_containers/food/snacks/sandwich/cheese,
-			/obj/item/reagent_containers/food/snacks/cookie,
-			/obj/item/reagent_containers/food/snacks/cookie/oatmeal,
-			)
+		name = "random snack spawner"
+		min_amt2spawn = 1
+		max_amt2spawn = 1
+		items2spawn = list(/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/reagent_containers/food/snacks/candy/chocolate,
+		/obj/item/reagent_containers/food/snacks/candy/nougat,
+		/obj/item/reagent_containers/food/snacks/candy/butterscotch,
+		/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
+		/obj/item/reagent_containers/food/snacks/sandwich/meat_m,
+		/obj/item/reagent_containers/food/snacks/sandwich/meat_s,
+		/obj/item/reagent_containers/food/snacks/sandwich/pb,
+		/obj/item/reagent_containers/food/snacks/sandwich/pbh,
+		/obj/item/reagent_containers/food/snacks/sandwich/cheese,
+		/obj/item/reagent_containers/food/snacks/cookie,
+		/obj/item/reagent_containers/food/snacks/cookie/oatmeal,
+		)
 
 /obj/random_item_spawner/tools
 	name = "random tool spawner"
