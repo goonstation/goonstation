@@ -109,6 +109,7 @@ Old-school style: If you want to use DreamMaker instead, go ahead and edit your 
 Here's the changes I'm making for the purpose of this guide:
 
 * I added a new hat sprite to icons/obj/clothing/item_hats.dmi
+
 ![](https://i.imgur.com/tCmU12l.png)
 
 * I added the following code to code/obj/item/clothing/hats.dm
@@ -130,7 +131,7 @@ The easiest way to test your changes is to press **F5**. This compiles your code
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
 :::
 
-Alternative solution is to press ctrl+shift+B and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
+Alternative solution is to press `ctrl+shift+B` and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
 
 <!--- TODO: Troubleshooting for non-existing task? --->
 
@@ -236,15 +237,22 @@ If you've done everything correctly this should finish without any problems and 
 2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command
     ![](https://i.imgur.com/LbH8XB9.png)
 3. Choose the master branch
+
     ![](https://i.imgur.com/iBoUlGv.png)
 4. It might happen that merge conflicts appear (someone else modified the same code as you in the meantime and you need to decide which version to keep). Those should be listed in the sidebar:
+
     ![](https://i.imgur.com/RRKUiUN.png)
+    
     For each merge conflict you get several options along with a comparison of your changes and the changes that happened on the upstream.
+    
     ![](https://i.imgur.com/Rb7RLjD.png)
+    
     Choose whichever option is most fitting or do manual changes if the changes are more complex.
 5. After resolving all the conflicts in a file stage that file:
+
     ![](https://i.imgur.com/U8nXwcp.png)
 6. When all files are staged hit the Commit button.
+
     ![](https://i.imgur.com/RK5fNDR.png)
 
 Now your feature branch is up to date with master, yay!
