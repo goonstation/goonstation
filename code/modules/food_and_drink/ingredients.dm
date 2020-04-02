@@ -48,22 +48,22 @@
 	desc = "A slab of meat from a fish."
 	icon_state = "fillet_pink"
 	amount = 1
-	food_color = "#FF6699"
+	food_color = "#F4B4BC"
 	real_name = "fish"
 	salmon
 		name = "salmon fillet"
 		icon_state = "fillet_orange"
-		food_color = "#FF9900"
+		food_color = "#F29866"
 		real_name = "salmon"
 	white
 		name = "white fish fillet"
 		icon_state = "fillet_white"
-		food_color = "#FFFFFF"
+		food_color = "#FFECB7"
 		real_name = "white fish"
 	small
 		name = "small fish fillet"
 		icon_state = "fillet_small"
-		food_color = "#FFFFFF"
+		food_color = "#FFECB7"
 		real_name = "small fish"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat

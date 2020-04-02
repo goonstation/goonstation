@@ -887,11 +887,14 @@ TRAYS
 						var/image/rolltopping = new /image('icons/obj/kitchen.dmi',"roll_topping-[i]")
 						switch(i)
 							if(1)
-								rolltopping.color = topping1.food_color
+								if(topping1)
+									rolltopping.color = topping1.food_color
 							if(2)
-								rolltopping.color = topping2.food_color
+								if(topping2)
+									rolltopping.color = topping2.food_color
 							if(3)
-								rolltopping.color = topping3.food_color
+								if(topping3)
+									rolltopping.color = topping3.food_color
 						src.UpdateOverlays(rolltopping,"roll_topping-[i]")
 					src.rolling = 0
 			else if(src.rolling == 0) //and out pops a sushi roll!
