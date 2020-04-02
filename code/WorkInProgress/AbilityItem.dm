@@ -804,27 +804,3 @@
 			src.last_use_time = world.time
 			sleep(src.cooldown)
 			src.on_cooldown()
-
-/obj/item/space_thing/ability_thing //testing, debug, please remove
-	name = "ability_thing"
-	abilities = list(/obj/ability_button/testing)
-	ability_buttons = list()
-
-	New()
-		..()
-
-	attack_self(mob/user as mob)
-		if (src.ability_buttons.len)
-			var/obj/ability_button/AB = ability_buttons[1]
-			AB.the_mob = user
-
-/obj/ability_button/testing
-	name = "testing"
-	icon_state = "jeton"
-	targeted = 1
-
-	execute_ability(var/atom/target)
-		if (target == src)
-			return
-		boutput(src.the_mob, "[target] fuck")
-		..()
