@@ -1408,6 +1408,7 @@
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"
 	desc = "A hotdog inside a fried cornmeal shell.  On a stick."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "corndog"
 	amount = 3
 	heal_amt = 4
@@ -1457,6 +1458,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
 	desc = "A plain hotdog."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog"
 	amount = 3
 	heal_amt = 2
@@ -1637,6 +1639,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog_half
 	name = "half hotdog"
 	desc = "A hot dog chopped in half!"
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog"
 	amount = 1
 	heal_amt = 1
@@ -1686,6 +1689,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog_chunk
 	name = "chunk of hotdog"
 	desc = "A hot dog chopped in half!"
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog_chunk"
 	amount = 1
 	heal_amt = 1
@@ -1695,6 +1699,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog_octo
 	name = "hotdog octopus"
 	desc = "A hot dog chopped into the shape of an octopus! How cute!"
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog_octo"
 	amount = 1
 	heal_amt = 1
