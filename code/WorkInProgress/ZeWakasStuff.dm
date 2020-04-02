@@ -3,7 +3,7 @@
  * 90 101 87 97 107 97 39 115  83 116 117 102 102
  */
 
-//foo 2
+//foo 2: electric bargaloo
 
 //everything here is wip, this can also be ascertained by the location of this file
 
