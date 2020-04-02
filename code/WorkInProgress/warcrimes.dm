@@ -814,7 +814,6 @@ Urs' Hauntdog critter
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					var/turf/T = get_turf(src)
 					return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
 		return null
 
