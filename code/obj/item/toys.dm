@@ -946,9 +946,10 @@ var/list/figure_patreon_rarity = list(\
 
 
 /obj/item/toy/gooncode
-	name = "Gooncode floppy disk"
-	desc = "The prized, sought after spaghetti and pooballs code. The only known cure to apiphobia. Makes coders exclaim \"Wow! I can't believe I spent ten years on this!\""
-	icon = 'icons/obj/plushies.dmi' // didn't know where to put this
+	name = "gooncode hard disk drive"
+	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \
+	The most stealable thing in the universe."
+	icon = 'icons/obj/cloning.dmi' // sprite is an altered harddisk
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3
@@ -968,11 +969,11 @@ var/list/figure_patreon_rarity = list(\
 		if(cooldown > world.time)
 			return
 		else
-			stationfirst = pick("tee", "bee", "fart", "yoo", "poo", "gee", "ma", "honk", "badmin")
-			stationlast = pick("gee", "bee", "butt", "goo", "pee", "se", "cho", "clown", "bus")
-			prfirst = pick("high", "cool", "beloved", "crappy", "interesting", "worthless", "random", "horribly coded", "butt")
-			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt")
-			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts")
+			stationfirst = pick("tee", "bee", "fart", "yoo", "poo", "gee", "ma", "honk", "badmin", "terry", "rubber", "fruity", "war", "de")
+			stationlast = pick("gee", "bee", "butt", "goo", "pee", "se", "cho", "clown", "bus", "bugger", "frugal", "illegal", "crime", "row")
+			prfirst = pick("high", "cool", "beloved", "crappy", "interesting", "worthless", "random", "horribly coded", "butt", "low", "extremely", "soul", "outdated")
+			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt", "energetic", "diarrhea inducing", "confusing", "magical", "relative pathed", "stealing", "ridiculous")
+			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
 			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
 			user.visible_message("<span style=\"color:red\"><B>[user] uploads the Gooncode to their PDA.</B></span>")
 			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span style='color:#605b59'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
