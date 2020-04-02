@@ -287,7 +287,7 @@
 /turf/space/fluid/warp_z5/realwarp
 	New()
 		..()
-		if (locate(src.x,src.y+1,src.z).type != /turf/space/fluid/warp_z5/realwarp)
+		if (get_turf(locate(src.x,src.y+1,src.z)).type != /turf/space/fluid/warp_z5/realwarp)
 			icon_state = "pit_wall"
 
 		var/turf/space/fluid/under = locate(src.x,src.y-1,src.z)

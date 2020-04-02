@@ -213,32 +213,32 @@
 		if (istype(perp.r_hand))
 			threatcount += perp.r_hand.contraband
 
-		if (istype(perp:wear_suit))
-			threatcount += perp:wear_suit.contraband
+		if (istype(perp.wear_suit))
+			threatcount += perp.wear_suit.contraband
 
-		if (istype(perp:belt))
-			threatcount += perp:belt.contraband * 0.5
-			for( var/obj/item/item in perp:belt.contents )
+		if (istype(perp.belt))
+			threatcount += perp.belt.contraband * 0.5
+			for( var/obj/item/item in perp.belt.contents )
 				threatcount += item.contraband * 0.5
 
-		if (istype(perp:l_store))
-			threatcount += perp:l_store.contraband * 0.5
+		if (istype(perp.l_store))
+			threatcount += perp.l_store.contraband * 0.5
 
-		if (istype(perp:r_store))
-			threatcount += perp:r_store.contraband * 0.5
+		if (istype(perp.r_store))
+			threatcount += perp.r_store.contraband * 0.5
 
-		if (istype(perp:back))
-			for( var/obj/item/item in perp:back.contents )
+		if (istype(perp.back))
+			for( var/obj/item/item in perp.back.contents )
 				threatcount += item.contraband * 0.5
 
 //Agent cards lower threatlevel when normal idchecking is off.
-		if((istype(perp:wear_id, /obj/item/card/id/syndicate)))
+		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
 			threatcount -= 2
 
 		if (src.check_records)
 			for (var/datum/data/record/E in data_core.general)
 				var/perpname = perp.name
-				if (perp:wear_id && perp:wear_id:registered)
+				if (perp?.wear_id:registered)
 					perpname = perp.wear_id:registered
 				if (E.fields["name"] == perpname)
 					for (var/datum/data/record/R in data_core.security)

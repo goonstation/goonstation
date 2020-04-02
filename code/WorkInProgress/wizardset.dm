@@ -837,9 +837,6 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	proc/set_effect()
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
-		if (isturf(loc))
-			if (loc:effect_overlay)
-				effect_overlay.color = loc:effect_overlay.color
 
 	proc/set_dir(var/D)
 		dir = D
@@ -875,9 +872,6 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 		set_effect()
 			effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase/directional(loc)
-			if (isturf(loc))
-				if (loc:effect_overlay)
-					effect_overlay.color = loc:effect_overlay.color
 
 		full
 			icon_state = "bookcase_full_wall"
