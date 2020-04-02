@@ -35,8 +35,8 @@
 
 /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	name = "ketchup"
-	desc = "PureÃ©d tomatoes as a sauce."
-	icon_state = "sachet-ketchup"
+	desc = "Pureéd tomatoes as a sauce."
+	icon_state = "ketchup"
 	initial_volume = 30
 	initial_reagents = list("ketchup"=20)
 
@@ -48,40 +48,40 @@
 /obj/item/reagent_containers/food/snacks/condiment/mayo
 	name = "mayonnaise"
 	desc = "The subject of many a tiresome innuendo."
-	icon_state = "mayonnaise" //why the fuck was this icon state called cookie
+	icon_state = "cookie_light"
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	name = "hot sauce"
 	desc = "Dangerously spicy!"
-	icon_state = "sachet-hot"
+	icon_state = "hot_sauce"
 	initial_volume = 100
 	initial_reagents = "capsaicin"
 
 /obj/item/reagent_containers/food/snacks/condiment/coldsauce
 	name = "cold sauce"
 	desc = "This isn't very hot at all!"
-	icon_state = "sachet-cold"
+	icon_state = "cold_sauce"
 	initial_volume = 100
 	initial_reagents = "cryostylane"
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce/ghostchilisauce
 	name = "incredibly hot sauce"
 	desc = "Extraordinarily spicy!"
-	icon_state = "sachet-hot"
+	icon_state = "hot_sauce"
 	initial_volume = 100
 	initial_reagents = list("capsaicin"=50,"ghostchilijuice"=50)
 
 /obj/item/reagent_containers/food/snacks/condiment/syndisauce
 	name = "syndicate sauce"
 	desc = "Traitorous tang."
-	icon_state = "sachet-cold"
+	icon_state = "cold_sauce"
 	initial_volume = 100
 	initial_reagents = list("amanitin"=50)
 
 /obj/item/reagent_containers/food/snacks/condiment/cream
 	name = "cream"
 	desc = "Not related to any kind of crop."
-	icon_state = "cream" //ITS NOT A GODDAMN COOKIE
+	icon_state = "cookie_light"
 	food_color = "#F8F8F8"
 
 /obj/item/reagent_containers/food/snacks/condiment/custard
