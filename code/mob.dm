@@ -1055,8 +1055,6 @@
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
-	return ..(gibbed)
-
 /mob/proc/restrained()
 	if (src.handcuffed)
 		return 1
@@ -1257,7 +1255,6 @@
 			return src.l_hand
 		else
 			return src.r_hand
-		return
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
 	. = list()
@@ -1487,7 +1484,6 @@
 		return (!mover.density || !src.density || src.lying)
 	else
 		return (!mover.density || !src.density || src.lying)
-	return
 
 /mob/proc/update_inhands()
 

@@ -66,8 +66,6 @@
 		return
 
 	proc/openTrade(var/mob/user, var/windowName = "trader", var/windowSize = "400x700")
-		if(..())
-			return
 		if(angry)
 			boutput(user, "<span style=\"color:red\">[src] is angry and won't trade with anyone right now.</span>")
 			return
@@ -409,7 +407,7 @@
 			for(var/obj/O in shopping_cart)
 				O.set_loc(A)
 			shopping_cart = new/list()
-		else 
+		else
 			new custom(A)
 
 	////////////////////////////////////////////////////
@@ -1079,7 +1077,7 @@
 		src.visible_message("<span style=\"color:red\"><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
 		src.spawncrate(/obj/vehicle/clowncar)
 		src.honk = 1
-	else 
+	else
 		..()
 
 // Clack!

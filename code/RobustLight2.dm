@@ -24,13 +24,19 @@ proc/get_moving_lights_stats()
 		DLL, DLL, DLL, 1 \
 		) ; \
 	if (src.RL_NeedsAdditive || src.E.RL_NeedsAdditive || src.N.RL_NeedsAdditive || src.NE.RL_NeedsAdditive) { \
+		if(!src.RL_AddOverlay) { \
+			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting) ; \
+			src.RL_AddOverlay.set_loc(src) ; \
+			src.RL_AddOverlay.plane = PLANE_SELFILLUM ; \
+			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
+		} \
 		src.RL_AddOverlay.color = list( \
 			src.RL_AddLumR, src.RL_AddLumG, src.RL_AddLumB, 0, \
 			src.E.RL_AddLumR, src.E.RL_AddLumG, src.E.RL_AddLumB, 0, \
 			src.N.RL_AddLumR, src.N.RL_AddLumG, src.N.RL_AddLumB, 0, \
 			src.NE.RL_AddLumR, src.NE.RL_AddLumG, src.NE.RL_AddLumB, 0, \
 			0, 0, 0, 1) ; \
-	} else { src.RL_AddOverlay.color = "#000000" } \
+	} else { if(src.RL_AddOverlay) { pool(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
 	} while(false)
 
 #define RL_APPLY_LIGHT(src, lx, ly, brightness, height2, r, g, b) do { \
@@ -384,11 +390,9 @@ datum/light
 
 		apply_to(turf/T)
 			CRASH("Default apply_to called, did you mean to create a /datum/light/point and not a /datum/light?")
-			return
 
 		apply_internal(generation, r, g, b) // per light type
 			CRASH("Default apply_internal called, did you mean to create a /datum/light/point and not a /datum/light?")
-			return
 
 	point
 		apply_to(turf/T)
@@ -645,28 +649,43 @@ turf
 		RL_Reset()
 			// TODO
 			//for fucks sake tobba - ZeWaka
-		
+
 		RL_Init()
-			if (!src.RL_MulOverlay && !fullbright && !loc:force_fullbright)
-				var/obj/overlay/tile_effect/overlay = unpool(/obj/overlay/tile_effect/lighting)
-				overlay.set_loc(src)
-				overlay.plane = PLANE_LIGHTING
-				overlay.icon_state = src.RL_OverlayState
-				overlay.color = "#000000"
-				src.RL_MulOverlay = overlay
-			if (!src.RL_AddOverlay && !fullbright && !loc:force_fullbright)
-				var/obj/overlay/tile_effect/overlay = unpool(/obj/overlay/tile_effect/lighting)
-				overlay.set_loc(src)
-				overlay.plane = PLANE_SELFILLUM
-				overlay.icon_state = src.RL_OverlayState
-				overlay.color = "#000000"
-				src.RL_AddOverlay = overlay
+			if (!fullbright && !loc:force_fullbright)
+				if(!src.RL_MulOverlay)
+					var/obj/overlay/tile_effect/overlay = null
+					for(var/obj/overlay/tile_effect/lighting/existing_overlay in src)
+						if(existing_overlay.plane == PLANE_LIGHTING)
+							overlay = existing_overlay
+							break
+					if(!overlay)
+						overlay = unpool(/obj/overlay/tile_effect/lighting)
+					overlay.set_loc(src)
+					overlay.plane = PLANE_LIGHTING
+					overlay.icon_state = src.RL_OverlayState
+					src.RL_MulOverlay = overlay
+				if (!src.RL_AddOverlay)
+					var/obj/overlay/tile_effect/overlay = null
+					for(var/obj/overlay/tile_effect/lighting/existing_overlay in src)
+						if(existing_overlay.plane == PLANE_SELFILLUM)
+							overlay = existing_overlay
+							break
+					if(overlay)
+						overlay.set_loc(src)
+						overlay.plane = PLANE_SELFILLUM
+						overlay.icon_state = src.RL_OverlayState
+						src.RL_AddOverlay = overlay
+			else
+				if(src.RL_MulOverlay)
+					pool(src.RL_MulOverlay)
+				if(src.RL_AddOverlay)
+					pool(src.RL_AddOverlay)
 			src.N = get_step(src, NORTH) || src
 			src.S = get_step(src, SOUTH) || src
 			src.W = get_step(src, WEST) || src
 			src.E = get_step(src, EAST) || src
 			src.NE = get_step(src, NORTHEAST) || src
- 
+
 atom
 	var
 		RL_Attached = null
@@ -700,7 +719,7 @@ atom
 					var/datum/light/light = L
 					if (light.enabled)
 						affected |= light.strip(++RL_Generation)
-				
+
 				var/turf/OL = src.loc
 				if(istype(OL)) --OL.opaque_atom_count
 				var/turf/NL = target

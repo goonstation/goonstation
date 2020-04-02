@@ -232,6 +232,11 @@
 						<a href='[playeropt_link(M, "toggle_dj")]'>Toggle DJ</a> &bull;
 						[M.client.ismuted() ? "<a href='[playeropt_link(M, "mute")]'>Unmute</a>" : {"
 						Mute <a href='[playeropt_link(M, "mute")]'>Perm</a>/<a href='[playeropt_link(M, "tempmute")]'>Temp</a>
+						"}] &bull;
+						[M.has_medal("Unlike the director, I went to college") ? {"
+								<a href='[playeropt_link(M, "revokeclown")]'>Revoke Clown College Diploma	</a>
+							"} : {"
+								<a href='[playeropt_link(M, "grantclown")]'>Grant Clown College Diploma</a>
 						"}]
 					</div>
 
@@ -343,11 +348,6 @@
 								<a href='[playeropt_link(M, "revokecontributor")]'>Revoke Contributor Medal</a>
 							"} : {"
 								<a href='[playeropt_link(M, "grantcontributor")]'>Grant Contributor Medal</a>
-							"}] &bull;
-							[M.has_medal("Unlike the director, I went to college") ? {"
-								<a href='[playeropt_link(M, "revokeclown")]'>Revoke Clown College Diploma	</a>
-							"} : {"
-								<a href='[playeropt_link(M, "grantclown")]'>Grant Clown College Diploma</a>
 							"}]
 						"} : ""]
 					</div>

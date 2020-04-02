@@ -1114,7 +1114,7 @@
 	food_effects = list("food_energized")
 
 	heal(var/mob/M)
-		if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective"))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2

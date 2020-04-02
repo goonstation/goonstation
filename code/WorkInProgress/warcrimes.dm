@@ -1,5 +1,5 @@
-// ITS WARC TIME BAYBEE 
-
+// ITS WARC TIME BAYBEE
+// f
 // Moved these from BBSSS.dm to here because they're global and don't really give that much away (should they be global?)
 var/johnbill_shuttle_fartnasium_active = 0
 var/fartcount = 0
@@ -701,6 +701,42 @@ obj/item/paper/tug/warehouse
 			<br><b>Total Charge:</b>
 			<br>Big Yank's Stash N Dash"}
 
+/obj/item/paper/horizon/HTSL
+	name = "crumpled note"
+	interesting = "The carbon dating of the cellulose within the paper is not consistent."
+	info = {"NSS Horizon Technical Service Log
+			<br>Commission date 22 June 2047
+			<br>Printing Shakedown Notes:
+			<br>
+			<br>With regards to the Horizon-class Hypercarrier, the following concerns were identified and addressed:
+			<br>
+			<br>Concern: Due to budgetary concerns, \[REDACTED] and mitigation efforts resulting unusual thermal flux, drastically increasing the odds of a runaway thermal \[REDACTED]
+			<br>
+			<br>Remedy: The NSS Horizon will not house critical Nanotrasen staff.
+			<br>
+			<br>Concern: Thermal cladding is both grossly insufficient and visibly in very poor repair, further exacerbating \[REDACTED] into a runaway thermal event, of possible \[REDACTED] and further collateral damage.
+			<br>
+			<br>Remedy: Cladding repainted; damaged cladding is no longer visible and will not affect employee morale
+			<br>
+			<br>Concern: Artificial Intelligence Core grossly insufficient for intra-\[REDACTED] navigation, sublight control necessary for all course changes.
+			<br>
+			<br>Remedy: A.I.C. relegated to door control and entertainment services.
+			<br
+			><br>Concern: Hull integrity tests inconclusive, all data lost when hull-mounted sensors were lost in testing breach. See personnel logs for subsequent staff rotation.
+			<br>
+			<br>No remedy suggested.
+			<br>
+			<br><span style='font-family: Dancing Script, cursive;'>You'd think they would have made this file easier to access, at least to the assholes refitting it. Stranded for six years, moored by failing engines, we've made do, but there's not much more we can do here. I've converted most of the Horizon Project bolt-ons to more civil amenities, got the port engine running well enough to keep life support on, but nearly everyone left here is either a grifter or a prisonner.
+			<br>Never would have signed up for that mission if I knew what they were actually trying to do. Assholes.
+			<br>
+			<br>Got a call this morning that NT wants to recomission this heap of shit, as a research outpost. I spend six fucking years sending distress calls, and by 1800 hours, there's going to be a shuttle full of bright-faced convicts ready to make the Kuiper Belt teem with greed again. I'm sorry, but its a step too far. I won't be here to greet them.
+			<br>
+			<br>February 3rd, 2053</span>"}
+
+/obj/item/paper/horizon/eggs
+	name = "eggs"
+	desc = "eggs"
+	info = "legs"
 
 /turf/simulated/wall/r_wall/afterbar
 	name = "wall"
@@ -795,3 +831,4 @@ Urs' Hauntdog critter
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
+

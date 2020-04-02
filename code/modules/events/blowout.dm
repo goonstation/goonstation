@@ -10,7 +10,7 @@
 		var/actualtime = timetoreach * 10 + timetoreachsec
 
 		for (var/mob/N in mobs) // why N?  why not M?
-			N.flash(30)
+			N.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 		siren.repeat = 1
 		siren.channel = 5
@@ -48,7 +48,7 @@
 		siren.volume = 50
 
 		for (var/mob/N in mobs)
-			N.flash(30)
+			N.flash(3 SECONDS)
 
 #ifndef UNDERWATER_MAP
 		for (var/turf/space/S in world)
@@ -100,7 +100,7 @@
 				break
 #endif
 		for (var/mob/N in mobs)
-			N.flash(30)
+			N.flash(3 SECONDS)
 
 		sleep(rand(25 SECONDS,50 SECONDS))
 

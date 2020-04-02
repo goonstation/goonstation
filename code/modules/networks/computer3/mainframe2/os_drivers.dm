@@ -1043,8 +1043,6 @@
 					else
 						return ESIG_USR1
 
-				return ESIG_SUCCESS
-
 			if ("deauth")
 				var/datum/computer/file/record/usdat = file
 				if (!istype(usdat))

@@ -275,7 +275,7 @@
 	if (src.nodamage) return
 	// there used to be mining radiation check here which increases severity by one
 	// this needs to be derived from material properties instead and is disabled for now
-	src.flash(30)
+	src.flash(3 SECONDS)
 
 	if (isdead(src) && src.client)
 		SPAWN_DBG(1 DECI SECOND)

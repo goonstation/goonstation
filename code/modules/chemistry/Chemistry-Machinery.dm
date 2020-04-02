@@ -569,8 +569,6 @@
 			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
 			return
 
-		return
-
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)
 

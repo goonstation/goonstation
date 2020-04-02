@@ -1670,7 +1670,7 @@
 					H = src
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
 					src.show_text("You can't do that without arms!")
-				else if((src.mind && src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain")) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					karma_update(4, "SIN", src)
 					if(locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
