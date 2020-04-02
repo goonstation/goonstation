@@ -103,7 +103,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/atmosporter))
-		var/canamt = W:contents.len
+		var/canamt = W.contents.len
 		if (canamt >= W:capacity) boutput(user, "<span style=\"color:red\">Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span style=\"color:red\">\The [src] is attached!</span>")
 		else

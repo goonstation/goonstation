@@ -1246,6 +1246,7 @@
 		src.set_clothing_icon_dirty()
 
 /mob/proc/equipped()
+	RETURN_TYPE(/obj/item)
 	if (issilicon(src))
 		if (ishivebot(src)||isrobot(src))
 			if (src:module_active)
@@ -2164,7 +2165,7 @@
 
 		OL = sortList(OL)
 
-		selection
+		selection:
 		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
 		if (!IP || !output_target || !ismob(output_target))

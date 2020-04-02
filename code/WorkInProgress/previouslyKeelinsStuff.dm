@@ -436,7 +436,7 @@ var/reverse_mode = 0
 								if (2)
 									boutput(user, "<span style=\"color:red\">The relic explodes in a bright flash, blinding you!</span>")
 									user.flash(60)
-									user:bioHolder.AddEffect("blind")
+									user.bioHolder.AddEffect("blind")
 									qdel(src)
 								if (3)
 									boutput(user, "<span style=\"color:red\">The relic explodes violently!</span>")

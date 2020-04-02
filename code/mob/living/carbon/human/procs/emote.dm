@@ -911,7 +911,10 @@
 				m_type = 2
 
 			if ("dance", "boogie")
-				if (src.emote_check(voluntary, 50))
+				var/cooldown = 50 // I'm sorry but this is the best I can do with this janky system
+				if (istype(src.shoes, /obj/item/clothing/shoes/heels/dancin))
+					cooldown = 15
+				if (src.emote_check(voluntary, cooldown))
 					if (src.restrained()) // check this first for convenience
 						message = "<B>[src]</B> twitches feebly in time to music only they can hear."
 					else
@@ -1742,7 +1745,7 @@
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 
-	showmessage
+	showmessage:
 	if (message)
 		logTheThing("say", src, null, "EMOTE: [message]")
 		act = lowertext(act)

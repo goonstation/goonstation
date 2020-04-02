@@ -490,8 +490,8 @@ var/list/depth_levels = list(2,50,100,200)
 			LAGCHECK(LAG_HIGH)
 
 	//hey this isn't being called at all right now. Moved its blood spread shit up into spread() so we don't call this function that basically does nothing
-	proc/flow_towards(var/obj/list/Flist, var/push_stuff = 1)
-		if (!Flist || !Flist.len) return
+	proc/flow_towards(var/list/obj/Flist, var/push_stuff = 1)
+		if (!length(Flist)) return
 		if (!src.group || !src.group.reagents) return
 
 		var/push_class = 0

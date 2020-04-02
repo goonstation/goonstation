@@ -195,7 +195,7 @@ proc/generate_crew_photo(var/background_icon, var/background_icon_state, var/lis
 	photo.Scale(icon_side_size * 32,icon_side_size * 32)
 
 	// Separate the chars into rows
-	var/list/icon/photo_rows = split_into_photo_rows(chars,chars_per_line)
+	var/list/list/icon/photo_rows = split_into_photo_rows(chars,chars_per_line)
 	// Tile the background
 	for(var/i = 0, i < icon_side_size, i++)
 		for(var/j = 0, j < icon_side_size, j++)
@@ -215,7 +215,7 @@ proc/generate_crew_photo(var/background_icon, var/background_icon_state, var/lis
 	return photo
 
 proc/split_into_photo_rows(var/list/datum/mind/chars, var/max_per_row)
-	var/list/arrangement = list()
+	var/list/list/arrangement = list()
 	var/list/L = list()
 	arrangement[++arrangement.len] = L
 	var/row = 1

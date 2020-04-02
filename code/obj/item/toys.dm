@@ -945,3 +945,41 @@ var/list/figure_patreon_rarity = list(\
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 
 
+/obj/item/toy/gooncode
+	name = "gooncode hard disk drive"
+	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \
+	The most stealable thing in the universe."
+	icon = 'icons/obj/cloning.dmi' // sprite is an altered harddisk
+	icon_state = "gooncode"
+	flags = SUPPRESSATTACK
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 3
+	rand_pos = 1
+	var/cooldown = 0
+	var/stationfirst = "go"
+	var/stationlast = "on"
+	var/prfirst = "very"
+	var/prmiddle = "smelly"
+	var/prlast = "farts"
+
+/obj/item/toy/gooncode/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/pda2))
+		if(cooldown > world.time)
+			return
+		else
+			stationfirst = pick("tee", "bee", "fart", "yoo", "poo", "gee", "ma", "honk", "badmin", "terry", "rubber", "fruity", "war", "de")
+			stationlast = pick("gee", "bee", "butt", "goo", "pee", "se", "cho", "clown", "bus", "bugger", "frugal", "illegal", "crime", "row")
+			prfirst = pick("high", "cool", "beloved", "crappy", "interesting", "worthless", "random", "horribly coded", "butt", "low", "extremely", "soul", "outdated")
+			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt", "energetic", "diarrhea inducing", "confusing", "magical", "relative pathed", "stealing", "ridiculous")
+			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
+			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
+			user.visible_message("<span style=\"color:red\"><B>[user] uploads the Gooncode to their PDA.</B></span>")
+			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span style='color:#605b59'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
+			cooldown = world.time + 40
+			return
+	return ..()
+
+/obj/item/toy/gooncode/attack()
+	return

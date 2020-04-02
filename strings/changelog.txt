@@ -1,12 +1,21 @@
 ﻿
-(t)tue apr 1 20
+(t)thu apr 02 20
+(u)Flourish
+(*)Added some spacebux rewards as suggested in one of our monthly contests - Mail Order, NT Backpack, Pride-O-Matic Jumpsuit, and Dancin Shoes.
+(u)ManlyDwarf
+(*)Added a new traitor objective to steal Gooncode.
+(t)wed apr 01 20
+(u)mbc
+(*)New tile-fling special attack for crowbars.
+(*)Fixed bug where an item with a material property could have its throwforce weakened below its base value.
+(*)Improved the damage of basic special attacks to match their direct-click power levels (they still can't crit, that should be the main drawback)
 (u)Flaborized, SimianC, and Flourish
 (*)<a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14229">Apply to be a clown 2day!</a>
 (u)Tarmunora
 (*)Add a recipe for plasmaglass in the arc smelter (plasmastone and glass)
 (u)RichardGere
 (*)Added simethicone + superfart gibbing.
-(t)mon mar 31 20
+(t)tue mar 31 20
 (u)ZeWaka
 (*)Reorganized Centcom a bunch.
 (u)Gannets

@@ -1215,6 +1215,7 @@
 	anchored = 1
 
 	attack_hand(mob/user as mob)
+		/*
 		if(1) return//todo remove
 		if(istype(user.abilityHolder, /datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/C = user.abilityHolder
@@ -1222,7 +1223,7 @@
 			C.addAbility(/datum/targetable/cruiser/cancel_camera)
 			user.client.view = 11
 			var/area/ship_interior/I = get_area(src)
-			user.set_eye(I.ship)
+			user.set_eye(I.ship)*/
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod

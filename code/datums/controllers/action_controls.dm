@@ -902,9 +902,9 @@ var/datum/action_controller/actions
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
 				// only allow it if more than double that power remains to keep it from bottoming out
-				if (owner:cell.charge >= hpm_cost * 2)
+				if (UNLINT(owner:cell.charge >= hpm_cost * 2)) // i dont have the sanity to fix this
 					duration /= 3
-					owner:cell.use(hpm_cost)
+					UNLINT(owner:cell.use(hpm_cost))
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()

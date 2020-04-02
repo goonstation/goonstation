@@ -1,5 +1,5 @@
-// ITS WARC TIME BAYBEE 
-
+// ITS WARC TIME BAYBEE
+// f
 // Moved these from BBSSS.dm to here because they're global and don't really give that much away (should they be global?)
 var/johnbill_shuttle_fartnasium_active = 0
 var/fartcount = 0
@@ -91,6 +91,10 @@ area/owlery/owleryhall/john_talk = list("Oh dang, That's me! Wait... Oh dang guy
 area/owlery/owleryhall/gangzone/john_talk = list("I don't likesa the looksa these Italians, brud","That's some tough lookin boids- We cool?","Oughta grill a couple of these types. Grill em well done.")
 area/diner/dining/john_talk = list("This place smells a lot like my bro.","This was a good spot to park the bus.","Y'all got a grill in here?","Could do a lot of crimes back there. Probably will.")
 area/diner/bathroom/john_talk = list("I haven't been here in a foggy second!", "I wonder what the fungus on the walls here tastes like... wanna juice it?", "I always wondered what happened to this toilet.")
+area/diner/motel/john_talk = list("Ain't much to look at, but we got the hull for this section pretty cheap!","Uh, don't bother with room 3- it's a little uh... rough.","Mmmm Mmm still smells like salvage.")
+area/diner/motel/observatory/john_talk = list("What a goddamn view.","Never thought I'd have a place like this.")
+area/diner/motel/pool/john_talk = list("Hey brungo, got any water? Like ten to twenty tonnes, eh?","It's a shame I can't swim, on account of the pirate's code.","I've seen this place in a video.")
+area/diner/motel/chemstorage/john_talk = list("Good a time as any to learn chemistry, I guess.","Think I can sell any of this juice?")
 area/lower_arctic/lower/john_talk = list("I ain't a fan of wendibros, they steal my meat.","Chilly eh?")
 area/moon/museum/west/john_talk = list("Got lost here once. More than once. Every time.","You got a map, beardo?","Can we go home yet?")
 area/jones/bar/john_talk = list("When the heck am I gonna get some service here, I'm parched!","What do I gotta start purrin' to get a drink here?","What's the holdup, catscratch? Let's get this party started!")
@@ -701,6 +705,42 @@ obj/item/paper/tug/warehouse
 			<br><b>Total Charge:</b>
 			<br>Big Yank's Stash N Dash"}
 
+/obj/item/paper/horizon/HTSL
+	name = "crumpled note"
+	interesting = "The carbon dating of the cellulose within the paper is not consistent."
+	info = {"NSS Horizon Technical Service Log
+			<br>Commission date 22 June 2047
+			<br>Printing Shakedown Notes:
+			<br>
+			<br>With regards to the Horizon-class Hypercarrier, the following concerns were identified and addressed:
+			<br>
+			<br>Concern: Due to budgetary concerns, \[REDACTED] and mitigation efforts resulting unusual thermal flux, drastically increasing the odds of a runaway thermal \[REDACTED]
+			<br>
+			<br>Remedy: The NSS Horizon will not house critical Nanotrasen staff.
+			<br>
+			<br>Concern: Thermal cladding is both grossly insufficient and visibly in very poor repair, further exacerbating \[REDACTED] into a runaway thermal event, of possible \[REDACTED] and further collateral damage.
+			<br>
+			<br>Remedy: Cladding repainted; damaged cladding is no longer visible and will not affect employee morale
+			<br>
+			<br>Concern: Artificial Intelligence Core grossly insufficient for intra-\[REDACTED] navigation, sublight control necessary for all course changes.
+			<br>
+			<br>Remedy: A.I.C. relegated to door control and entertainment services.
+			<br
+			><br>Concern: Hull integrity tests inconclusive, all data lost when hull-mounted sensors were lost in testing breach. See personnel logs for subsequent staff rotation.
+			<br>
+			<br>No remedy suggested.
+			<br>
+			<br><span style='font-family: Dancing Script, cursive;'>You'd think they would have made this file easier to access, at least to the assholes refitting it. Stranded for six years, moored by failing engines, we've made do, but there's not much more we can do here. I've converted most of the Horizon Project bolt-ons to more civil amenities, got the port engine running well enough to keep life support on, but nearly everyone left here is either a grifter or a prisonner.
+			<br>Never would have signed up for that mission if I knew what they were actually trying to do. Assholes.
+			<br>
+			<br>Got a call this morning that NT wants to recomission this heap of shit, as a research outpost. I spend six fucking years sending distress calls, and by 1800 hours, there's going to be a shuttle full of bright-faced convicts ready to make the Kuiper Belt teem with greed again. I'm sorry, but its a step too far. I won't be here to greet them.
+			<br>
+			<br>February 3rd, 2053</span>"}
+
+/obj/item/paper/horizon/eggs
+	name = "eggs"
+	desc = "eggs"
+	info = "legs"
 
 /turf/simulated/wall/r_wall/afterbar
 	name = "wall"
@@ -771,13 +811,11 @@ Urs' Hauntdog critter
 	name_the_meat = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					var/turf/T = get_turf(src)
-					return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
-					var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
-					playsound(T, hogg, 60, 1)
+		if(act == "scream" && src.emote_check(voluntary, 50))
+			var/turf/T = get_turf(src)
+			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
+			playsound(T, hogg, 60, 1)
+			return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -795,3 +833,4 @@ Urs' Hauntdog critter
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
+

@@ -152,6 +152,7 @@
 
 	//loops through organ_list.  returns a list of names of all missing organs instead, but I'm tired
 	proc/get_missing_organs()
+		RETURN_TYPE(/list)
 		var/list/organs = list()
 		// if (islist(organ_list))
 		for (var/i in organ_list)
@@ -311,6 +312,7 @@
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
+		RETURN_TYPE(/obj/item)
 		if (!organ)
 			return 0
 		var/obj/item/return_organ = organ_list[organ]
@@ -1097,6 +1099,7 @@
 	return 0
 
 /mob/living/carbon/human/proc/get_organ(var/organ)
+	RETURN_TYPE(/obj/item)
 	if (!src.organHolder || !organ)
 		return 0
 	return src.organHolder.get_organ(organ)
@@ -1155,14 +1158,6 @@
 
 /mob/living/critter/small_animal/proc/eye_istype(var/obj/item/I)
 	return 0
-	if (!src.organHolder || !I)
-		return 0
-	if (!src.organHolder.left_eye && !src.organHolder.right_eye)
-		return 0
-	if (istype(src.organHolder.left_eye, I) || istype(src.organHolder.right_eye, I))
-		return 1
-	else
-		return 0
 
 /mob/living/critter/small_animal/proc/organ_istype(var/organ, var/organ_type)
 	if (!src.organHolder || !organ || !organ_type)

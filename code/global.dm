@@ -60,7 +60,7 @@ var/global
 
 	obj/screen/renderSourceHolder
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
-	list/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
@@ -592,7 +592,7 @@ var/global
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null
 
-	list/powernets = null
+	list/datum/powernet/powernets = null
 
 	Debug = 0	// global debug switch
 	Debug2 = 0
@@ -696,7 +696,7 @@ var/global
 	camnet_needs_rebuild = 0 //Also what it says on the tin.
 	list/obj/machinery/camera/dirty_cameras = list() //Cameras that should be rebuilt
 
-	list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
+	list/list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
 	list/datum/particleSystem/mechanic/camera_path_list = list() //List of particlesystems that the connection display proc creates. I dunno where else to put it. :(
 	camera_network_reciprocity = 1 //If camera connections reciprocate one another or if the path is calculated separately for each camera
 	list/datum/ai_camera_tracker/tracking_list = list()
