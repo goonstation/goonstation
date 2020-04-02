@@ -1296,6 +1296,15 @@ area/station/communications
 	name = "Asylum Shuttle"
 	icon_state = "asylum_shuttle"
 
+	medbay
+		icon_state = "shuttle1"
+	
+	pathology
+		icon_state = "shuttle2"
+	
+	observation
+		icon_state = "shuttle3"
+
 /area/station/security/quarters
 	name = "Security Officer Quarters"
 	icon_state = "officer_quarters"

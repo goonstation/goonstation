@@ -18,7 +18,7 @@ var/global/list/mapNames = list(
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
-	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1), 
+	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
 	"Linemap" = 		list("id" = "LINEMAP", 		"settings" = "linemap",			"playerPickable" = ASS_JAM),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
 	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = ASS_JAM),
@@ -117,6 +117,15 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
+
+/datum/map_settings/donut3
+	name = "DONUT3"
+	airlock_style = "pyro"
+	escape_centcom = /area/shuttle/escape/centcom/donut3
+	escape_transit = /area/shuttle/escape/transit/donut3
+	escape_station = /area/shuttle/escape/station/donut3
+	escape_dir = NORTH
+	auto_windows = 1
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -489,6 +498,8 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
@@ -510,6 +521,8 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
@@ -526,6 +539,9 @@ var/global/list/mapNames = list(
 	donut2
 		icon_state = "shuttle_escape-dnt2"
 		warp_dir = WEST
+	donut3
+		icon_state = "shuttle_escape-dnt3"
+		warp_dir = NORTH
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
