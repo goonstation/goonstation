@@ -42,8 +42,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\_z_material_properties.dm"
 
 //Secret Code Handling
-#include "+secret\__secret.dme"
-#include "code\__secret.dm"
+/* #include "+secret\__secret.dme"
+#include "code\__secret.dm" */ // no
 
 // BEGIN_INCLUDE
 #include "_stdlib\__build.dm"
