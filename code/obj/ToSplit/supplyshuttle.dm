@@ -429,7 +429,6 @@ var/crate_firing = 0
 
 		SPAWN_DBG(2 SECONDS)
 			O.throw_at(target, 100, 1)
-			return 1
 
 /proc/buy_from_trader(var/datum/trader/the_trader)
 	//could be multiple possible spawn turfs
