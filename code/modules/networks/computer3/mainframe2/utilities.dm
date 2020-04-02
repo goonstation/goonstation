@@ -1414,4 +1414,4 @@
 	initialize(var/initparams)
 		message_user(read_user_field("curpath"))
 		mainframe_prog_exit
-	return
+	
