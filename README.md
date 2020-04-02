@@ -2,7 +2,9 @@
 
 ![contains resentment](https://forthebadge.com/images/badges/built-with-resentment.svg)![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
 
-[![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=master)](https://travis-ci.com/goonstation/goonstation)
+Master Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=master)](https://travis-ci.com/goonstation/goonstation)
+
+Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=develop)](https://travis-ci.com/goonstation/goonstation)
 
 **Website:** [goonhub.com](https://goonhub.com)
 
