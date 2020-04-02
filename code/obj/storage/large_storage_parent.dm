@@ -171,7 +171,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W:contents.len
+			var/amt = W.contents.len
 			if (amt)
 				user.visible_message("<span style='color:blue'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0

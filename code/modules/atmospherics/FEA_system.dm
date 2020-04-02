@@ -178,7 +178,9 @@ datum
 			setup(datum/controller/process/air_system/controller)
 				set_controller(controller)
 
-				if(SKIP_FEA_SETUP) return
+				#if SKIP_FEA_SETUP == 1
+				return
+				#else
 
 				boutput(world, "<span style=\"color:red\">Processing Geometry...</span>")
 
@@ -197,6 +199,7 @@ datum
 					S.update_air_properties()
 */
 				boutput(world, "<span style=\"color:red\">Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
+				#endif
 
 			assemble_group_turf(turf/simulated/base)
 				set waitfor = 0

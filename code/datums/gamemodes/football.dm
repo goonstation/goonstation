@@ -4,7 +4,7 @@
 
 
 var/global/list/football_spawns = list("join" = list(), "blue" = list(), "red" = list(), "bluefield" = list(), "redfield" = list(), "football" = list())
-var/global/list/datum/mind/football_players = list("blue" = list(), "red" = list())
+var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" = list())
 
 #define FOOTBALL_PREGAME 1
 #define FOOTBALL_INGAME 2

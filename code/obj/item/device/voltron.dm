@@ -63,7 +63,7 @@
 		return ..()
 
 	proc/check()
-		if(1) return
+		/*if(1) return
 		while (!disposed)
 
 			for(var/obj/item/I in src)
@@ -77,7 +77,7 @@
 
 			the_user.client.images += cableimgs
 
-			sleep(10)
+			sleep(10)*/
 
 /obj/item/device/voltron
 	name = "Voltron"

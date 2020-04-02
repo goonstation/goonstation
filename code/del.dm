@@ -1,6 +1,6 @@
 var/datum/dynamicQueue/delete_queue = new /datum/dynamicQueue(100) //List of items that want to be deleted
 
-var/datum/list/delete_queue_2[DELQUEUE_SIZE][0]
+var/list/datum/delete_queue_2[DELQUEUE_SIZE][0]
 var/datum/delqueue_pos = 1
 
 // hi i fucked up this file p bad. if it ends up being as bad as

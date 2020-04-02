@@ -1638,10 +1638,7 @@
 	onclose(user, "reactorstats")
 
 /obj/machinery/power/reactor_stats/attackby(obj/item/W as obj, mob/user as mob)
-	if(0)
-		// XXX handle etc
-	else
-		src.attack_hand(user)
+	src.attack_hand(user)
 
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)
 	return attack_hand(user)

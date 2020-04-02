@@ -157,7 +157,7 @@ var/door_id = "qm_dock"
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+			transmit_connection.post_signal(null, pdaSignal)
 		return
 
 	var/amount = 1
@@ -229,7 +229,7 @@ var/door_id = "qm_dock"
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+			transmit_connection.post_signal(null, pdaSignal)
 		//////////
 	else
 		wagesystem.shipping_budget += duckets
@@ -239,7 +239,7 @@ var/door_id = "qm_dock"
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+			transmit_connection.post_signal(null, pdaSignal)
 			//////////
 
 
@@ -315,7 +315,7 @@ var/door_id = "qm_dock"
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Deal with \"[the_trader.name]\" concluded. Net Profit: [duckets] credits. Splitting half of profits with [scan.registered].")
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+				transmit_connection.post_signal(null, pdaSignal)
 			//////////
 		else
 			wagesystem.shipping_budget += duckets
@@ -325,7 +325,7 @@ var/door_id = "qm_dock"
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Deal with \"[the_trader.name]\" concluded. Net Profit: [duckets] credits.")
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+				transmit_connection.post_signal(null, pdaSignal)
 
 
 
@@ -415,7 +415,7 @@ var/crate_firing = 0
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [O.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(src, pdaSignal)
+		transmit_connection.post_signal(null, pdaSignal)
 
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == door_id)
@@ -511,7 +511,7 @@ var/crate_firing = 0
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Deal with \"[the_trader.name]\" concluded. Total Cost: [total_price] credits")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(src, pdaSignal)
+		transmit_connection.post_signal(null, pdaSignal)
 
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == door_id)

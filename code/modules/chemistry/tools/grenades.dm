@@ -71,7 +71,7 @@
 			var/obj/item/assembly/chem_bomb/R = new /obj/item/assembly/chem_bomb( user )
 			R.attacher = key_name(user)
 
-			switch(S:part1.type)
+			switch(UNLINT(S:part1.type))
 				if (/obj/item/device/timer)
 					R.desc = "A very intricate igniter and timer assembly mounted to a chem grenade."
 					R.name = "Timer/Igniter/Chem Grenade Assembly"
@@ -84,12 +84,12 @@
 
 			R.triggering_device = S:part1
 			R.c_state(0)
-			S:part1.set_loc(R)
-			S:part1.master = R
+			UNLINT(S:part1.set_loc(R))
+			UNLINT(S:part1.master = R)
 			R.igniter = S:part2
 			R.igniter.status = 1
-			S:part2.set_loc(R)
-			S:part2.master = R
+			UNLINT(S:part2.set_loc(R))
+			UNLINT(S:part2.master = R)
 			S.layer = initial(S.layer)
 			user.u_equip(S)
 			user.put_in_hand_or_drop(R)

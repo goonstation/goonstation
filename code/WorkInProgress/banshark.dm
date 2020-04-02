@@ -159,7 +159,7 @@
 	anchored = 0
 	var/mob/sharktarget2 = null
 	var/sharkspeed = 1
-	var/caller = null
+	var/mob/caller = null
 
 	New()
 		SPAWN_DBG(0) process()
@@ -198,7 +198,7 @@
 			if(sharktarget2 && sharktarget2.client)
 				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed %target%")
 				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed %target%", "admin")
-				message_admins("<span style=\"color:blue\">[caller:client.ckey] has sharkgibbed [sharktarget2.ckey].</span>")
+				message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")
 				sharktarget2.gib()
 			sleep(5)
 			playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)

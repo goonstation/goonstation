@@ -887,11 +887,14 @@ TRAYS
 						var/image/rolltopping = new /image('icons/obj/kitchen.dmi',"roll_topping-[i]")
 						switch(i)
 							if(1)
-								rolltopping.color = topping1.food_color
+								if(topping1)
+									rolltopping.color = topping1.food_color
 							if(2)
-								rolltopping.color = topping2.food_color
+								if(topping2)
+									rolltopping.color = topping2.food_color
 							if(3)
-								rolltopping.color = topping3.food_color
+								if(topping3)
+									rolltopping.color = topping3.food_color
 						src.UpdateOverlays(rolltopping,"roll_topping-[i]")
 					src.rolling = 0
 			else if(src.rolling == 0) //and out pops a sushi roll!
@@ -903,7 +906,7 @@ TRAYS
 				var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 				var/skip
 				if(src.swedish) //setting actual overrides for sushi roll
-					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"fisk"),"fisk")
+					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"fisk"),"fisk")
 					skip = "ALL"
 				else if(src.fish) //fish overlays (there's two states, one for if the fish is the only ingredient, and one if there's other ingredients)
 					var/fishflag
@@ -924,30 +927,30 @@ TRAYS
 							switch(fishflag) //using the icon state of the fish fillet to modify the color of the fish overlay
 								if("fillet_white")
 									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-s"),"f1")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-s"),"f1")
 									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-m"),"f1")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-m"),"f1")
 								if("fillet_small")
 									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-s"),"f1")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-s"),"f1")
 									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-m"),"f1")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-m"),"f1")
 								if("fillet_orange")
 									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f2-s"),"f2")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f2-s"),"f2")
 									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f2-m"),"f2")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f2-m"),"f2")
 								if("fillet_pink")
 									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f3-s"),"f3")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f3-s"),"f3")
 									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f3-m"),"f3")
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f3-m"),"f3")
 							break
 				if(skip != "ALL") //in case of swedish fisk, that is the only overlay rendered, so everything else is skipped
 					var/toppingoverlay = 0
 					if(topping1 && (skip != 1)) //its not the best way to do this, but im not sure if theres a decent way of dynamically referencing variables without a bunch of weird string conversions
 						toppingoverlay++
-						var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"topping-[toppingoverlay]")
+						var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
 						if(topping1.food_color)
 							overlay.color = topping1.food_color
 						for(var/b=1,b<=topping1.food_effects.len,b++)
@@ -958,7 +961,7 @@ TRAYS
 						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
 					if(topping2 && (skip != 2))
 						toppingoverlay++
-						var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"topping-[toppingoverlay]")
+						var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
 						if(topping2.food_color)
 							overlay.color = topping2.food_color
 						for(var/b=1,b<=topping2.food_effects.len,b++)
@@ -969,7 +972,7 @@ TRAYS
 						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
 					if(topping3 && (skip != 3))
 						toppingoverlay++
-						var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"topping-[toppingoverlay]")
+						var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
 						if(topping3.food_color)
 							overlay.color = topping3.food_color
 						for(var/b=1,b<=topping3.food_effects.len,b++)

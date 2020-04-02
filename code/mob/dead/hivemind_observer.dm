@@ -110,18 +110,18 @@
 		return 1
 
 /mob/dead/target_observer/hivemind_observer/proc/regain_control()
-	set usr = src
 	set name = "Retake Control"
 	set category = "Changeling"
+	usr = src
 
 	if(hivemind_owner && hivemind_owner.master == src)
 		if(hivemind_owner.return_control_to_master())
 			qdel(src)
 
 /mob/dead/target_observer/hivemind_observer/verb/exit_hivemind()
-	set usr = src
 	set name = "Exit Hivemind"
 	set category = "Special Verbs"
+	usr = src
 
 	if(can_exit_hivemind && hivemind_owner && hivemind_owner.master != src)
 		hivemind_owner.hivemind -= src

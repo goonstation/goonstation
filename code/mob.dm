@@ -12,7 +12,8 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	var/datum/targetable/targeting_spell = null
+
+	var/targeting_ability = null
 
 	var/last_move_trigger = 0
 
@@ -307,6 +308,9 @@
 
 	if (src.abilityHolder)
 		src.abilityHolder.disposing()
+
+	if (src.targeting_ability)
+		src.targeting_ability = null
 
 	if (zone_sel)
 		if (zone_sel.master == src)
@@ -713,7 +717,7 @@
 		src.client.mouse_pointer_icon = cursor
 
 /mob/proc/update_cursor()
-	if (src.targeting_spell)
+	if (src.targeting_ability)
 		if(client)
 			src.set_cursor(cursors_selection[client.preferences.target_cursor])
 			return
@@ -1065,54 +1069,79 @@
 /mob/proc/click(atom/target, params)
 	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
 
-	if (src.targeting_spell)
-		var/datum/targetable/S = src.targeting_spell
+	if (src.targeting_ability)
+		if (istype(src.targeting_ability, /datum/targetable))
+			var/datum/targetable/S = src.targeting_ability
+			src.targeting_ability = null
+			update_cursor()
 
-		src.targeting_spell = null
-		update_cursor()
+			if (!S.target_anything && !ismob(target))
+				src.show_text("You have to target a person.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.check_range && (get_dist(src, target) > S.max_range))
+				src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
+				src.show_text("It would have no effect on this target.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.castcheck(src))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				S.handleCast(target)
+				if(S)
+					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
+						if(src)
+							src.targeting_ability = S
+							src.update_cursor()
+			return 100
 
-		if (!S.target_anything && !ismob(target))
-			src.show_text("You have to target a person.", "red")
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
+		else if (istype(src.targeting_ability, /obj/ability_button))
+			var/obj/ability_button/B = src.targeting_ability
+
+			if (!B.target_anything && !ismob(target) && !istype(target, B))
+				src.show_text("You have to target a person.", "red")
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (!isturf(target.loc) && !isturf(target) && !istype(target, B))
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (!B.ability_allowed())
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (istype(target, B))
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				B.execute_ability(target)
+				src.targeting_ability = null
+				src.update_cursor()
 			return 100
-		if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (S.check_range && (get_dist(src, target) > S.max_range))
-			src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
-			src.show_text("It would have no effect on this target.", "red")
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (!S.castcheck(src))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
-			S.handleCast(target)
-			if(S)
-				if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
-					if(src)
-						src.targeting_spell = S
-						src.update_cursor()
-		return 100
 
 	if (abilityHolder)
 		if (abilityHolder.topBarRendered)
@@ -2165,7 +2194,7 @@
 
 		OL = sortList(OL)
 
-		selection
+		selection:
 		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
 		if (!IP || !output_target || !ismob(output_target))
