@@ -1,9 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-source dependencies.sh
+source buildByond.conf
 
-if [ -d "$HOME/BYOND/byond/bin" ] && grep -Fxq "${BYOND_MAJOR}.${BYOND_MINOR}" $HOME/BYOND/version.txt;
+if [ -d "$HOME/BYOND/byond/bin" ] && grep -Fxq "${BYOND_MAJOR_VERSION}.${BYOND_MINOR_VERSION}" $HOME/BYOND/version.txt;
 then
   echo "Using cached directory."
 else
@@ -11,11 +11,11 @@ else
   rm -rf "$HOME/BYOND"
   mkdir -p "$HOME/BYOND"
   cd "$HOME/BYOND"
-  curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
+  curl "http://www.byond.com/download/build/${BYOND_MAJOR_VERSION}/${BYOND_MAJOR_VERSION}.${BYOND_MINOR_VERSION}_byond_linux.zip" -o byond.zip
   unzip byond.zip
   rm byond.zip
   cd byond
   make here
-  echo "$BYOND_MAJOR.$BYOND_MINOR" > "$HOME/BYOND/version.txt"
+  echo "$BYOND_MAJOR_VERSION.$BYOND_MINOR_VERSION" > "$HOME/BYOND/version.txt"
   cd ~/
 fi
