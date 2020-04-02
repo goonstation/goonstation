@@ -816,7 +816,7 @@
 					recursive = 1
 				if (findtext(options, "s"))
 					no_messages = 0
-				if (findtext(options, "p"))
+				if (findtext(options, "h"))
 					plain = 1
 				initlist.Cut(1,2)
 				if (initlist.len < 2)
