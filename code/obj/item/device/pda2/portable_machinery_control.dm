@@ -105,8 +105,8 @@
 
 			else
 				for (var/obj/O in src.machinerylist )
-					if (O == src.our_machinery)
-						. += "<A href='byond://?src=\ref[src];op=control;machinery=\ref[src.our_machinery]'>[src.our_machinery] at [get_area(src.our_machinery)]</A><BR>"
+					if (istype(O, src.our_machinery))
+						. += "<A href='byond://?src=\ref[src];op=control;machinery=\ref[O]'>[O] at [get_area(O)]</A><BR>"
 
 			. += "<BR><A href='byond://?src=\ref[src];op=scanmachinery'>Scan for linkable machinery</A><BR>"
 
