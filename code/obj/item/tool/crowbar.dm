@@ -22,6 +22,11 @@
 	rand_pos = 1
 	custom_suicide = 1
 
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/tile_fling)
+
+
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0

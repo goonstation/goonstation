@@ -1429,6 +1429,58 @@
 			return
 
 
+	tile_fling
+		cooldown = 0
+		staminaCost = 0
+		moveDelay = 0
+		moveDelayDuration = 0
+		damageMult = 1
+
+		image = "simple"
+		name = "Tile Fling"
+		desc = "If available, fling a floor tile from the ground in front of you. Otherwise attacks in direction. No crits."
+
+		onAdd()
+			if(master)
+				overrideStaminaDamage = master.stamina_damage * 1
+			return
+
+		pixelaction(atom/target, params, mob/user, reach)
+			if(!isturf(target.loc) && !isturf(target)) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/direction = get_dir_pixel(user, target, params)
+				var/turf/turf = get_step(master, direction)
+
+				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				S.setup(turf)
+
+				var/hit = 0
+				for(var/atom/A in turf)
+					if(isTarget(A))
+						A.attackby(master, user, params, 1)
+						hit = 1
+						break
+
+				afterUse(user)
+
+				if (!hit)
+					if (istype(turf,/turf/simulated/floor))
+						var/turf/simulated/floor/F = turf
+						var/obj/item/tile = F.pry_tile(master, user, params)
+						if (tile)
+							hit = 1
+							user.visible_message("<span style='color:red'><b>[user] flings a tile from [turf] into the air!</b></span>")
+							logTheThing("combat", user, "fling throws a floor tile ([F]) from [turf].")
+
+							user.lastattacked = user //apply combat click delay
+							tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
+
+				if (!hit)
+					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+			return
+
 /obj/itemspecialeffect
 	name = ""
 	desc = ""
