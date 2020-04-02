@@ -87,14 +87,14 @@ Returns:
 
 	 //Have to move it around due to internal canvas size or something. sigh.
 	if(mode == LINEMODE_STRETCH)
-		var/matrix/M = matrix().Scale(scale,1).Translate(-(dist/2),0).Turn(angle).Translate(src_off_x,src_off_y)
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-(dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
 		var/image/I = image(null,source)
 		I.appearance_flags = KEEP_APART  //Required for some odd reason.
 		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line), transform=M)
 		if(render_source_cap != null)
-			var/matrix/M2 = matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y)
+			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = matrix().Turn(-angle).Translate((dist),0).Turn(angle)
+		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
@@ -103,22 +103,22 @@ Returns:
 			var/fullSized = round(scale)
 			var/remainder = scale - fullSized
 			for(var/i=0,i<fullSized,i++)
-				var/matrix/M = matrix().Translate((i*iconWidth) + (iconWidth / 2) - dist,0).Turn(angle).Translate(src_off_x,src_off_y)
+				var/matrix/M = UNLINT(matrix().Translate((i*iconWidth) + (iconWidth / 2) - dist,0).Turn(angle).Translate(src_off_x,src_off_y))
 				composite.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line), transform=M)
-			var/matrix/M = matrix().Scale(remainder,1).Translate(fullSized*iconWidth + ((iconWidth / 2)*remainder) - dist,0).Turn(angle).Translate(src_off_x,src_off_y)
+			var/matrix/M = UNLINT(matrix().Scale(remainder,1).Translate(fullSized*iconWidth + ((iconWidth / 2)*remainder) - dist,0).Turn(angle).Translate(src_off_x,src_off_y))
 			composite.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line), transform=M)
 			if(render_source_cap != null)
-				var/matrix/M2 = matrix().Translate((fullSized*iconWidth) + (iconWidth / 2) - dist - (iconWidth - (iconWidth * remainder)),0).Turn(angle).Translate(src_off_x,src_off_y)
+				var/matrix/M2 = UNLINT(matrix().Translate((fullSized*iconWidth) + (iconWidth / 2) - dist - (iconWidth - (iconWidth * remainder)),0).Turn(angle).Translate(src_off_x,src_off_y))
 				composite.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-			composite.transform = matrix().Turn(-angle).Translate((dist),0).Turn(angle)
+			composite.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
 		else
 			var/remainder = scale
-			var/matrix/M = matrix().Scale(remainder,1).Translate((iconWidth / 2) * remainder - dist,0).Turn(angle).Translate(src_off_x,src_off_y)
+			var/matrix/M = UNLINT(matrix().Scale(remainder,1).Translate((iconWidth / 2) * remainder - dist,0).Turn(angle).Translate(src_off_x,src_off_y))
 			composite.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line), transform=M)
 			if(render_source_cap != null)
-				var/matrix/M2 = matrix().Translate((iconWidth / 2) - dist - (iconWidth - (iconWidth * remainder)),0).Turn(angle).Translate(src_off_x,src_off_y)
+				var/matrix/M2 = UNLINT(matrix().Translate((iconWidth / 2) - dist - (iconWidth - (iconWidth * remainder)),0).Turn(angle).Translate(src_off_x,src_off_y))
 				composite.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-			composite.transform = matrix().Turn(-angle).Translate((dist),0).Turn(angle)
+			composite.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
 		result.lineImage = composite
 	return result
 
