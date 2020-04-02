@@ -235,13 +235,13 @@
 		name = "iron cookie"
 		desc = "A cookie made out of iron. You could probably use this as a coaster or something."
 		heal_amt = 0
-		icon_state = "cookie_metal"
+		icon_state = "cookie-metal"
 		food_effects = list("food_hp_up")
 
 	chocolate_chip
 		name = "chocolate-chip cookie"
 		desc = "Invented during the Great Depression, this chocolate-laced cookie was a key element of FDR's New Deal policies."
-		icon_state = "cookie_chips"
+		icon_state = "cookie-chips"
 		heal_amt = 2
 		initial_volume = 15
 		initial_reagents = list("chocolate"=10)
@@ -249,13 +249,13 @@
 	oatmeal
 		name = "oatmeal cookie"
 		desc = "This cookie has been designed specifically to evoke memories of one's grandparents."
-		icon_state = "cookie_medium"
+		icon_state = "cookie-medium"
 		heal_amt = 2
 
 	bacon
 		name = "bacon cookie"
 		desc = "A cookie made out of bacon. Is this intended to be savory or a sweet candied bacon sort of thing? Whatever it is, it's pretty dumb."
-		icon_state = "cookie_bacon"
+		icon_state = "cookie-bacon"
 		initial_volume = 50
 		initial_reagents = list("porktonium"=25)
 		food_effects = list("food_sweaty")
@@ -263,12 +263,12 @@
 	jaffa
 		name = "jaffa cake"
 		desc = "Legally a cake, this edible consists of precision layers of chocolate, sponge cake, and orange jelly."
-		icon_state = "cookie_jaffa"
+		icon_state = "cookie-jaffa"
 
 	spooky
 		name = "spookie"
 		desc = "Two ounces of pure terror."
-		icon_state = "cookie_spooky"
+		icon_state = "cookie-spooky"
 		frosted = 1
 		initial_volume = 25
 		initial_reagents = list("ectoplasm"=10)
@@ -276,7 +276,7 @@
 	butter
 		name = "butter cookie"
 		desc = "Little bite-sized heart attacks." //no kidding
-		icon_state = "cookie_butter"
+		icon_state = "cookie-butter"
 		frosted = 1
 		initial_volume = 25
 		initial_reagents = list("butter"=10)
@@ -285,7 +285,7 @@
 	name = "sugar moon pie"
 	desc = "A confection consisting of a creamy filling sandwiched between two cookies."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "moonpie_sugar"
+	icon_state = "moonpie-sugar"
 	amount = 1
 	heal_amt = 6
 	var/frosted = 0
@@ -312,28 +312,28 @@
 	metal
 		name = "iron moon pie"
 		desc = "Definitely not food.  Not even a good coaster anymore, what with all the cream."
-		icon_state = "moonpie_metal"
+		icon_state = "moonpie-metal"
 		heal_amt = 0
 		food_effects = list("food_hp_up_big")
 
 	chocolate_chip
 		name = "chocolate-chip moon pie"
 		desc = "The confection commonly credited with winning the Korean, Gulf, and Unfolder wars."
-		icon_state = "moonpie_chips"
+		icon_state = "moonpie-chips"
 		heal_amt = 7
 		food_effects = list("food_refreshed_big")
 
 	oatmeal
 		name = "oatmeal moon pie"
 		desc = "The official pie of the moon.  This one.  This specific sandwich cookie right here."
-		icon_state = "moonpie_oatmeal"
+		icon_state = "moonpie-oatmeal"
 		heal_amt = 7
 		food_effects = list("food_refreshed_big")
 
 	bacon
 		name = "bacon moon pie"
 		desc = "How is this even food?"
-		icon_state = "moonpie_bacon"
+		icon_state = "moonpie-bacon"
 		heal_amt = 5
 		initial_volume = 50
 		initial_reagents = "porktonium"
@@ -342,21 +342,21 @@
 	jaffa
 		name = "jaffa moon cobbler"
 		desc = "This dish was named in an attempt to dodge sales taxes on pie production. However, it is actually legally considered a form of crumble."
-		icon_state = "moonpie_jaffa"
+		icon_state = "moonpie-jaffa"
 		heal_amt = 8
 		food_effects = list("food_refreshed_big")
 
 	chocolate
 		name = "whoopie pie"
 		desc = "A confection infamous for being especially terrible for you, in a culture noted for having nothing but foods that are terrible for you."
-		icon_state = "moonpie_chocolate"
+		icon_state = "moonpie-chocolate"
 		heal_amt = 250 //oh jesus
 		food_effects = list("food_refreshed_big")
 
 	spooky
 		name = "full moon pie"
 		desc = "Caution: Do not serve confection within sight of a werewolf, wolfman, or particularly-hairy crew members."
-		icon_state = "moonpie_spooky"
+		icon_state = "moonpie-spooky"
 		heal_amt = 6
 		frosted = 1
 		initial_volume = 25
@@ -414,7 +414,7 @@
 /obj/item/reagent_containers/food/snacks/soup/mint_chutney
 	name = "mint chutney"
 	desc = "A flavorful paste that smells strongly of mint."
-	icon_state = "mint_chutney"
+	icon_state = "mintchutney"
 	needspoon = 1
 	amount = 6
 	heal_amt = 2
@@ -425,7 +425,7 @@
 /obj/item/reagent_containers/food/snacks/soup/refried_beans
 	name = "refried beans"
 	desc = "A dish made of mashed beans cooked with lard. It has bits of bacon in it."
-	icon_state = "refried_beans"
+	icon_state = "refriedbeans"
 	needspoon = 1
 	amount = 6
 	heal_amt = 2
@@ -500,7 +500,7 @@
 /obj/item/reagent_containers/food/snacks/soup/oatmeal
 	name = "oatmeal"
 	desc = "Sometimes the station gets the fun kind with the little candy dinosaur eggs. This isn't the fun kind."
-	icon_state = "oatmeal_plain"
+	icon_state = "oatmeal-plain"
 	needspoon = 1
 	amount = 6
 	heal_amt = 2
@@ -515,7 +515,7 @@
 
 	fun
 		desc = "The fun kind of oatmeal with the little candy dinosaur eggs.  HECK YES!"
-		icon_state = "oatmeal_fun"
+		icon_state = "oatmeal-fun"
 		randomized = 0
 
 		heal(var/mob/M)
@@ -814,14 +814,14 @@
 /obj/item/reagent_containers/food/snacks/surstromming
 	name = "funny-looking can"
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "surs_closed" //todo: get real sprite
+	icon_state = "surs" //todo: get real sprite
 	heal_amt = 0
 	amount = 5
 	desc = ""
 	food_effects = list("food_bad_breath")
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (src.icon_state == "surs_closed")
+		if (src.icon_state == "sursd")
 			if (user == M)
 				boutput(user, "<span style=\"color:red\">You need to take the lid off first, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -838,7 +838,7 @@
 			processing_items.Add(src)
 
 	process()
-		if (prob(30) && src.icon_state == "surs_open")
+		if (prob(30) && src.icon_state == "surs-open")
 			for(var/mob/living/carbon/H in viewers(src, null))
 				if (H.bioHolder.HasEffect("accent_swedish"))
 					return
@@ -932,7 +932,7 @@
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "surs_closed")
 			boutput(user, "<span style=\"color:blue\">You pop the lid off the [src].</span>")
-			src.icon_state = "surs_open" //todo: get real sprite
+			src.icon_state = "surs-open" //todo: get real sprite
 			for(var/mob/living/carbon/M in viewers(user, null))
 				if (M == user)
 					if (user.bioHolder.HasEffect("accent_swedish"))
@@ -973,7 +973,7 @@
 	name = "spaghetti noodles"
 	desc = "Just noodles on their own."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
-	icon_state = "spag_plain"
+	icon_state = "spag-plain"
 	needfork = 1
 	heal_amt = 1
 	amount = 3
@@ -1007,7 +1007,7 @@
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal
 	name = "boneless spaghetti"
 	desc = "Eh, this isn't very good at all..."
-	icon_state = "spag_dish"
+	icon_state = "spag-dish"
 	needfork = 1
 	heal_amt = 1
 	amount = 5
@@ -1026,7 +1026,7 @@
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce
 	name = "spaghetti with tomato sauce"
 	desc = "Eh, the sauce tastes pretty bland..."
-	icon_state = "spag_dish"
+	icon_state = "spag-dish"
 	needfork = 1
 	heal_amt = 3
 	amount = 5
@@ -1059,7 +1059,7 @@
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
-	icon_state = "spag_dish_spicy"
+	icon_state = "spag-dish-spicy"
 	needfork = 1
 	heal_amt = 1
 	amount = 5
@@ -1074,7 +1074,7 @@
 /obj/item/reagent_containers/food/snacks/spaghetti/meatball
 	name = "spaghetti and meatballs"
 	desc = "That's better!"
-	icon_state = "spag_meatball"
+	icon_state = "spag-meatball"
 	needfork = 1
 	heal_amt = 2
 	amount = 5
@@ -1190,7 +1190,7 @@
 /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. This one is quite different."
-	icon_state = "mushroom-M1"
+	icon_state = "mushroom-poison"
 	food_color = "#AF2B2B"
 	amount = 1
 	heal_amt = 3
@@ -1198,7 +1198,7 @@
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It's slightly more vibrant than usual."
-	icon_state = "mushroom-M2"
+	icon_state = "mushroom-magic"
 	food_color = "#A76933"
 	amount = 1
 	heal_amt = 1
@@ -1287,14 +1287,14 @@
 /obj/item/reagent_containers/food/snacks/candy/candy_apple
 	name = "candy apple"
 	desc = "An apple covered in a hard sugar coating."
-	icon_state = "candy apple"
+	icon_state = "candy-apple"
 	heal_amt = 2
 	food_effects = list("food_energized")
 
 	poison
 		name = "delicious candy apple"
 		desc = "A delicious apple covered in a hard sugar coating."
-		icon_state = "candy poison"
+		icon_state = "candy-poison"
 
 
 		New()
@@ -1304,9 +1304,9 @@
 
 //Candy corn!!
 /obj/item/reagent_containers/food/snacks/candy/candy_corn
-	name = "candy corn"
+	name = "candy-corn"
 	desc = "A confection resembling a kernel of corn. A Halloween classic."
-	icon_state = "candy corn"
+	icon_state = "candy-corn"
 	real_name = "candy corn"
 	amount = 1
 	sugar_content = 25
@@ -1692,7 +1692,7 @@
 	name = "chunk of hotdog"
 	desc = "A hot dog chopped in half!"
 	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
-	icon_state = "hotdog_chunk"
+	icon_state = "hotdog-chunk"
 	amount = 1
 	heal_amt = 1
 	initial_volume = 5
@@ -1702,7 +1702,7 @@
 	name = "hotdog octopus"
 	desc = "A hot dog chopped into the shape of an octopus! How cute!"
 	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
-	icon_state = "hotdog_octo"
+	icon_state = "hotdog-octo"
 	amount = 1
 	heal_amt = 1
 	initial_volume = 5
@@ -1715,7 +1715,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog_octo"))
 			src.visible_message("<span style=\"color:green\">[user.name] carves a cute little face on the [src]!</span>")
-			src.icon_state = "hotdog_octo2"
+			src.icon_state = "hotdog-octo2"
 			src.reagents.add_reagent("love", 1)
 		else
 			..()
@@ -1852,7 +1852,8 @@
 /obj/item/reagent_containers/food/snacks/bakedpotato
 	name = "baked potato"
 	desc = "Would go good with some cheese or steak."
-	icon_state = "bakedpotato"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "potato-baked"
 	amount = 6
 	heal_amt = 1
 	food_color = "#FFFF99"
@@ -1962,7 +1963,7 @@
 	name = "tortilla chip"
 	desc = "A crispy little tortilla disk."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "tortilla_chip"
+	icon_state = "tortilla-chip"
 	amount = 1
 	heal_amt = 1
 	food_effects = list("food_energized")
@@ -1977,7 +1978,7 @@
 			src.overlays = null
 			for(var/current_id in reagents.reagent_list)
 				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-				var/icon/I = icon('icons/obj/foodNdrink/food_snacks.dmi', "tortilla_chip_overlay")
+				var/icon/I = icon('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
 				I.Blend(rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b,current_reagent.transparency), ICON_ADD)
 				src.overlays += image("icon" = I, "layer" = FLOAT_LAYER)
 		return
@@ -2066,7 +2067,7 @@
 	name = "granola bar"
 	desc = "A crisp bar of oats bonded together by honey.  A big indicator of either space hikers or space hippies."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "granola_bar"
+	icon_state = "granola-bar"
 	amount = 2
 	heal_amt = 2
 	food_color = "#6A532D"
@@ -2161,7 +2162,7 @@
 	name = "goldfish cracker"
 	desc = "Wow! It's almost like eating a real goldfish!"
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "goldfish_cracker"
+	icon_state = "goldfish-cracker"
 	amount = 1
 	heal_amt = 6
 	initial_reagents = list("enriched_msg"=1)
@@ -2237,7 +2238,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			user.put_in_hand_or_drop(B)
 			src.amount--
 			if(src.amount == 0)
-				src.icon_state = "beans_empty"
+				src.icon_state = "beans-empty"
 				src.name = "empty Farty Snott's bag"
 	else
 		return ..()
@@ -2338,7 +2339,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	name = "deviled egg"
 	desc = "For when you want the taste of egg, but the feeling of luxury."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "deviledegg"
+	icon_state = "egg-deviled"
 	amount = 1
 	heal_amt = 1
 	food_color = "#6A532D"
@@ -2591,7 +2592,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	name = "zongzi"
 	desc = "A glutinous rice snack wrapped in bamboo leaves."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "zongzi_wrapped"
+	icon_state = "zongzi-wrapped"
 	amount = 3
 	heal_amt = 2
 	var/unwrapped = 0
@@ -2622,7 +2623,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	name = "fortune cookie"
 	desc = "A cookie that heralds your future."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "fortune_cookie"
+	icon_state = "fortune-cookie"
 	amount = 1
 	heal_amt = 1
 	food_color = "#f6ad58"
@@ -2637,8 +2638,8 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			B.name = "fortune cookie half"
 			desc = "Half of a fortune cookie. It has a fortune in it."
 			B.desc = "Half of a fortune cookie."
-			icon_state = "fortune_open"
-			B.icon_state = "fortune_top"
+			icon_state = "fortune-open"
+			B.icon_state = "fortune-top"
 			open = 1
 			B.open = 1
 			fortune = 1
@@ -2646,7 +2647,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	attack_hand(mob/user as mob, unused, flag)
 		if (fortune)
 			desc = "Half of a fortune cookie."
-			icon_state = "fortune_bottom"
+			icon_state = "fortune-bottom"
 			var/obj/item/paper/fortune/B = unpool(/obj/item/paper/fortune)
 			B.set_loc(user)
 
@@ -2659,7 +2660,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 /obj/item/kitchen/peach_rings
 	amount = 6
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "rings_full"
+	icon_state = "rings-full"
 	name = "bag of peach rings"
 	desc = "A bag of gummy peach rings. A Delectable Dan's favorite."
 
@@ -2675,7 +2676,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				user.put_in_hand_or_drop(B)
 				src.amount--
 				if(src.amount == 0)
-					src.icon_state = "rings_empty"
+					src.icon_state = "rings-empty"
 					src.name = "empty peach ring bag"
 					src.desc = "A crumpled bag that was once full of gummy peach rings."
 		else
@@ -2685,7 +2686,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 /obj/item/reagent_containers/food/snacks/candy/peach_ring
 	name = "peach ring"
 	desc = "A gummy peach ring dusted with sugar."
-	icon_state = "peach_ring"
+	icon_state = "peach-ring"
 	amount = 1
 	sugar_content = 5
 
