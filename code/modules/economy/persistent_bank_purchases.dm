@@ -390,7 +390,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate
+				S = new /obj/storage/crate(get_turf(M))
 				M.set_loc(S)
 			return buy_thing(S)
 
