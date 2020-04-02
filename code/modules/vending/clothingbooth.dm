@@ -4,7 +4,7 @@ var/clothingbooth_json
 var/list/clothingbooth_items = list()
 
 /proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
-	var/list/boothlist = list()
+	var/list/list/boothlist = list()
 	for(var/T in childrentypesof(/datum/clothingbooth_item))
 		var/datum/clothingbooth_item/I = new T
 		var/itemname = I.name

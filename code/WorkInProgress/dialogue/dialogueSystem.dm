@@ -3,7 +3,7 @@
 */
 
 var/global/list/globalDialogueFlags = list()
-/client/var/list/dialogueNodePath = list()
+/client/var/list/list/dialogueNodePath = list()
 
 //Same as the dialogue master based versions but global.vvv
 proc/setGlobalFlag(var/client/C, var/flag="", var/value=null)

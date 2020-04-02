@@ -22,9 +22,9 @@ var/global/list/datum/mind/football_players = list("blue" = list(), "red" = list
 	var/time_next_state = 15 SECONDS
 	var/obj/item/football/the_big_one/the_football = null
 	var/last_tick = 0
-	var/list/clock_num 
-	var/list/red_num
-	var/list/blue_num
+	var/list/obj/decal/big_number/clock_num
+	var/list/obj/decal/big_number/red_num
+	var/list/obj/decal/big_number/blue_num
 
 	announce()
 		boutput(world, "<B>Welcome to the Space American Football League's Space Bowl LXXXVII!</B>")
@@ -140,7 +140,7 @@ var/global/list/datum/mind/football_players = list("blue" = list(), "red" = list
 		src.update_score_numbers(blue_num, score_blue)
 
 
-	proc/update_score_numbers(var/list/numbers, var/score)
+	proc/update_score_numbers(var/list/obj/decal/big_number/numbers, var/score)
 		if (score >= 100)
 			numbers[1].color = null
 			numbers[1].icon_state = "num[clamp(round(score / 100), 0, 9)]"

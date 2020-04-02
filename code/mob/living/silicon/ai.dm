@@ -215,6 +215,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
+	RETURN_TYPE(/mob)
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src
@@ -1274,8 +1275,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	return
 
 /mob/living/silicon/ai/say_understands(var/other)
-	if (ishuman(other) && (!other:mutantrace || !other:mutantrace.exclusive_language))
-		return 1
+	if (ishuman(other))
+		var/mob/living/carbon/human/H = other
+		if(!H.mutantrace || !H.mutantrace.exclusive_language)
+			return 1
 	if (isrobot(other))
 		return 1
 	if (isshell(other))

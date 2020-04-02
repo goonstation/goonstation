@@ -95,10 +95,11 @@
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
 			if( ismob(A) )
-				if( !A:client )
+				var/mob/M = A
+				if( !M.client )
 					return 0
 				if( !blockedTimers ) blockedTimers = list()
-				if( !blockedTimers[ A:client.key ] || blockedTimers[ A:client.key ] < world.time )
+				if( !blockedTimers[ M.client.key ] || blockedTimers[ M.client.key ] < world.time )
 					return 0
 			else
 				return 0

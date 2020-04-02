@@ -331,6 +331,7 @@ mob/new_player
 				M.loc = L.loc
 				SPAWN_DBG(0) M.lunch(character, L.dir)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
+				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
@@ -339,9 +340,9 @@ mob/new_player
 				equip_battler(character)
 				character.mind.assigned_role = "MODE"
 				character.mind.special_role = "battler"
-				ticker.mode:living_battlers.Add(character.mind)
+				battlemode.living_battlers.Add(character.mind)
 				DEBUG_MESSAGE("Adding a new battler")
-				ticker.mode:battle_shuttle_spawn(character.mind)
+				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
 				starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)

@@ -180,7 +180,7 @@
 
 		owner.max_health -= 1.5
 
-		owner:ailments.len = 0
+		owner.ailments.Cut()
 		owner.take_toxin_damage(-INFINITY)
 		owner.take_oxygen_deprivation(-INFINITY)
 		owner.take_eye_damage(-INFINITY)

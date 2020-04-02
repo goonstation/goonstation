@@ -126,7 +126,7 @@
 			if (C.health < 0) continue
 			if (C in src.friends) continue
 			if (ishuman(C))
-				if (C:bioHolder && C:bioHolder.HasEffect("revenant"))
+				if (C.bioHolder?.HasEffect("revenant"))
 					continue
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1

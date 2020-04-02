@@ -2496,6 +2496,6 @@ proc/time_to_text(var/time)
 
 	if(time == 1 SECOND)
 		. += "1 second"
-	else if(time || !(.).len)
+	else if(time || !length(.))
 		. += "[round(time / (1 SECOND), 0.1)] seconds"
 	. = jointext(., " ")

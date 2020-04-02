@@ -561,7 +561,7 @@ datum
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if (M:bioHolder && M:bioHolder.HasEffect("bee"))
+				if (M.bioHolder?.HasEffect("bee"))
 
 					var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = new /obj/item/reagent_containers/food/snacks/ingredient/honey(get_turf(M))
 					if (honey.reagents)
