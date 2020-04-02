@@ -120,6 +120,9 @@
 				// of "organ", "type to replace with", "message to use"
 				// rather than, uh. this. yeah.
 				// also maybe visible_message for horking up your organs and it being gross as hell
+				var/mob/living/carbon/human/H
+				if(ishuman(affected_mob))
+					H = affected_mob
 				switch(replacing_organ)
 					if("heart")
 						if(istype(affected_mob.organHolder.get_organ("heart"),/obj/item/organ/heart/cyber))
@@ -220,35 +223,35 @@
 							boutput(affected_mob, "<span style=\"color:red\">You butt fall off!</span>")
 							affected_mob.emote("scream")
 					if("r_leg")
-						if(istype(affected_mob:limbs.get_limb("r_leg"),/obj/item/parts/robot_parts))
+						if(istype(H?.limbs.get_limb("r_leg"),/obj/item/parts/robot_parts))
 							return
 						else
-							affected_mob:limbs.r_leg.sever()
-							affected_mob:limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right, null , 0)
+							H?.limbs.r_leg.sever()
+							H?.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right, null , 0)
 							boutput(affected_mob, "<span style=\"color:red\">Your right leg falls off as a robotic version grows in its place!</span>")
 							affected_mob.emote("scream")
 					if("l_leg")
-						if(istype(affected_mob:limbs.get_limb("l_leg"),/obj/item/parts/robot_parts))
+						if(istype(H?.limbs.get_limb("l_leg"),/obj/item/parts/robot_parts))
 							return
 						else
-							affected_mob:limbs.l_leg.sever()
-							affected_mob:limbs.replace_with("l_leg", /obj/item/parts/robot_parts/leg/left, null , 0)
+							H?.limbs.l_leg.sever()
+							H?.limbs.replace_with("l_leg", /obj/item/parts/robot_parts/leg/left, null , 0)
 							boutput(affected_mob, "<span style=\"color:red\">Your left leg falls off as a robotic version grows in its place!</span>")
 							affected_mob.emote("scream")
 					if("r_arm")
-						if(istype(affected_mob:limbs.get_limb("r_arm"),/obj/item/parts/robot_parts))
+						if(istype(H?.limbs.get_limb("r_arm"),/obj/item/parts/robot_parts))
 							return
 						else
-							affected_mob:limbs.r_arm.sever()
-							affected_mob:limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right, null , 0)
+							H?.limbs.r_arm.sever()
+							H?.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right, null , 0)
 							boutput(affected_mob, "<span style=\"color:red\">Your right arm falls off as a robotic version grows in its place!</span>")
 							affected_mob.emote("scream")
 					if("l_arm")
-						if(istype(affected_mob:limbs.get_limb("l_arm"),/obj/item/parts/robot_parts))
+						if(istype(H?.limbs.get_limb("l_arm"),/obj/item/parts/robot_parts))
 							return
 						else
-							affected_mob:limbs.l_arm.sever()
-							affected_mob:limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left, null , 0)
+							H?.limbs.l_arm.sever()
+							H?.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left, null , 0)
 							boutput(affected_mob, "<span style=\"color:red\">Your left_arm falls off as a robotic version grows in its place!</span>")
 							affected_mob.emote("scream")
 				if(prob(50))

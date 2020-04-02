@@ -811,10 +811,8 @@ Urs' Hauntdog critter
 	name_the_meat = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
+		if(act == "scream" && src.emote_check(voluntary, 50))
+			return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
 		return null
 
 	specific_emote_type(var/act)
