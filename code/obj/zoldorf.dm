@@ -492,7 +492,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 							usr.put_in_hand_or_drop(new item.path(src))
 						else
 							boutput(usr, "<span style=\"color:red\">[src.name] stares blankly into your soul...begging you for more credits...</span>")
-				else if("soulspawn") //spawning items at the cost of a portion of the soul
+				if("soulspawn") //spawning items at the cost of a portion of the soul
 					var/cost = item.soul_cost()
 					if(istype(usr, /mob/living/carbon/human))
 						var/mob/living/carbon/human/user = usr

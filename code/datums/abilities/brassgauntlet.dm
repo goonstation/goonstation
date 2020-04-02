@@ -247,7 +247,7 @@
 proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	user.visible_message("<span style=\"color:red\"><B>[user] forces the [W] into the [B]!</B></span>")
 	user.drop_item()
-	W.set_loc(src) //<-- this sets the location to null
+	W.set_loc(null) //<-- this sets the location to null
 	sleep(50)
 
 	playsound(get_turf(user), 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
@@ -289,7 +289,7 @@ proc/goldsnap(var/mob/user)
 proc/badmaterial(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	user.visible_message("<span style=\"color:red\"><B>You push the [W] into the [B]!</B></span>")
 	user.drop_item()
-	W.set_loc(src) //<-- this sets the location to null
+	W.set_loc(null) //<-- this sets the location to null
 	sleep(50)
 	user.visible_message("<span style=\"color:red\"><B>The [B] begins to make an ungodly noise. Maybe that wasn't so safe after all...</B></span>")
 	sleep(100)

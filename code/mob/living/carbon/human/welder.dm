@@ -20,7 +20,7 @@
 		..()
 
 
-/mob/living/carbon/human/welder/Life(datum/controller/process_loop/mobs/parent)
+/mob/living/carbon/human/welder/Life(datum/controller/process/mobs/parent)
 	..()
 
 	if(world.time - welder_lastupgrade > 1200)

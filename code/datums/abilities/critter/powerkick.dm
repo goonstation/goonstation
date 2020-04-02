@@ -58,8 +58,8 @@
 						if (T && isturf(T) && !O.anchored)
 							SPAWN_DBG(0)
 								O.throw_at(T, 5, 2)
-							if (1)
-								return
+				if (1)
+					return
 
 			logTheThing("combat", ow, target, "uses Power Kick on %target% at [log_loc(ow)].")
 

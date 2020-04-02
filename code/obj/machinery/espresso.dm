@@ -60,7 +60,6 @@
 							user.show_text("You dumped [src.wateramt] units of water into the [src].")
 							src.wateramt = 0
 							return ..()
-					return ..()
 				else
 					user.show_text("The container does not have any water in it!")
 					return ..()
@@ -297,7 +296,6 @@
 						src.water_level += wateramt
 						user.show_text("You dump [wateramt] units of water into the [src].")
 						return ..()
-					return ..()
 				else
 					user.show_text("The container does not have any water in it!")
 					return ..()

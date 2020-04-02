@@ -787,42 +787,6 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				return 1//fluid is better. remove this later probably
 
-				var/mytemp = holder.total_temperature
-				src = null
-				// drsingh attempted fix for undefined variable /turf/space/var/wet
-				var/turf/simulated/T = target
-				if (volume >= 3 && istype(T))
-					if (istext(T.wet))
-						T.wet = text2num(T.wet)
-					if (T.wet >= 1) return
-
-					if (mytemp <= (T0C - 150)) //Ice
-						T.wet = 2
-					else if (mytemp > (T0C + 100) )
-						return //The steam. It does nothing!!!
-					else
-						T.wet = 1
-
-					if (!T.wet_overlay)
-						T.wet_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor")
-					T.UpdateOverlays(T.wet_overlay, "wet_overlay")
-
-					SPAWN_DBG(80 SECONDS)
-						if (istype(T))
-							T.wet = 0
-							T.UpdateOverlays(null, "wet_overlay")
-
-				var/obj/hotspot = (locate(/obj/hotspot) in T)
-				if(hotspot && T.air)
-					var/datum/gas_mixture/lowertemp = T.remove_air( T.air.total_moles() )
-					if (lowertemp)
-						lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-						lowertemp.react()
-						T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
-					pool(hotspot)
-				return
-
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
 				if(istype(O))

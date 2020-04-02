@@ -554,9 +554,10 @@ var/f_color_selector_handler/F_Color_Selector
 	//QM Categories by ZeWaka
 	build_qm_categories()
 
-	if(!SKIP_Z5_SETUP)
-		Z_LOG_DEBUG("World/Init", "Setting up mining level...")
-		makeMiningLevel()
+	#if SKIP_Z5_SETUP == 0
+	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
+	makeMiningLevel()
+	#endif
 
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2

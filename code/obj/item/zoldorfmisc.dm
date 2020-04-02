@@ -118,8 +118,8 @@
 					qdel(bufferlist[2])
 			if(cards.len == 0)
 				src.inuse = 0
-				for(var/b=1,i<=src.contents.len,i++)
-					src.contents[b].set_loc(get_turf(src))
+				for(var/atom/movable/AM in contents)
+					AM.set_loc(get_turf(src))
 				qdel(src)
 
 	attack_hand(mob/user as mob)

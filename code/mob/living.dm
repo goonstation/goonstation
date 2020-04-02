@@ -511,7 +511,7 @@
 			else
 				src.emote("handpuppet")
 
-/mob/living/say(var/message)
+/mob/living/say(var/message, ignore_stamina_winded)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
