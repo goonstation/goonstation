@@ -397,7 +397,7 @@
 
 /proc/name_autoname_cameras()
 	var/list/counts_by_area = list()
-	var/list/first_cam_by_area = list()
+	var/list/obj/machinery/camera/first_cam_by_area = list()
 	for(var/X in cameras)
 		var/obj/machinery/camera/C = X
 		if(!istype(C)) continue

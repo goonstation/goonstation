@@ -1165,7 +1165,7 @@
 
 	ex_act(severity)
 		if (src.nodamage) return
-		src.flash(30)
+		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
 				src.gib(1)

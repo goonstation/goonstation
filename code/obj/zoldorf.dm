@@ -1,9 +1,9 @@
 //The Holy Variable That Is Zoldorf
-var/global/list/the_zoldorf = list() //for some reason a global mob was acting strangely, so this list should hypothetically only ever have one zoldorf mob reference in it (the current one)
+var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob was acting strangely, so this list should hypothetically only ever have one zoldorf mob reference in it (the current one)
 
 //Zoldorf Interface
 var/global/zoldorf_items_raw
-var/global/list/zoldorf_items = list()
+var/global/list/datum/zoldorfitem/zoldorf_items = list()
 
 /proc/zoldorfsetup() //this is called in world.dm to initialize the zoldorf vending list for the rest of the round
 	for(var/I in childrentypesof(/datum/zoldorfitem))
@@ -77,7 +77,7 @@ var/global/list/zoldorf_items = list()
 	var/storedsouls = 0
 	var/partialsouls = 0
 	var/credits = 0
-	var/list/openwindows = list()
+	var/list/mob/openwindows = list()
 
 	var/usurpgrace //succession stuffs
 	var/mob/usurper
