@@ -66,7 +66,6 @@
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mv(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mount(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/grep(src) )
-		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/pwd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/scnt(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/getopt(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/date(src) )
@@ -101,7 +100,7 @@
 		subfolder.add_file( groupRec )
 
 		var/list/randomMails = get_random_email_list()
-		var/typeCount = rand(4,6)
+		var/typeCount = 5
 		while (typeCount-- > 0 && randomMails && randomMails.len)
 			var/mailName = pick(randomMails)
 			var/datum/computer/file/record/mailfile = new /datum/computer/file/record/random_email(mailName)
@@ -205,7 +204,6 @@
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/mv(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/mount(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/grep(src) )
-		src.root.add_file( new /datum/computer/file/mainframe_program/utility/pwd(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/scnt(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/getopt(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/date(src) )
