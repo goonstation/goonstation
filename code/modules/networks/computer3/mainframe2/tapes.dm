@@ -101,7 +101,7 @@
 		subfolder.add_file( groupRec )
 
 		var/list/randomMails = get_random_email_list()
-		var/typeCount = rand(6,12)
+		var/typeCount = rand(4,6)
 		while (typeCount-- > 0 && randomMails && randomMails.len)
 			var/mailName = pick(randomMails)
 			var/datum/computer/file/record/mailfile = new /datum/computer/file/record/random_email(mailName)
@@ -129,7 +129,7 @@
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
 		testR.fields += "Welcome to DWAINE System VI!"
-		testR.fields += pick("Better than System V ever was.","GLUEEEE GLUEEEE GLUEEEEE","Only YOU can prevent lp0 fires!","Please try not to kill yourselves today.", "Please don't set the lab facilities on fire.","system was here")
+		testR.fields += pick("Better than System V ever was.","GLUEEEE GLUEEEE GLUEEEEE","Only YOU can prevent lp0 fires!","Please try not to kill yourselves today.", "Please don't set the lab facilities on fire.")
 		newfolder.add_file( testR )
 
 		newfolder.add_file( new /datum/computer/file/record/dwaine_help(src) )
