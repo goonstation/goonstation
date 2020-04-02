@@ -2,6 +2,9 @@ language: generic
 dist: xenial
 sudo: false
 
+git:
+  submodules: false
+
 matrix:
   include:
     - name: "Compile"
