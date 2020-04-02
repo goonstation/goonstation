@@ -10,7 +10,7 @@
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			usr:targeting_spell = owner
+			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
 			SPAWN_DBG(0)

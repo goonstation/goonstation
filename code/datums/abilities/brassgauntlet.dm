@@ -42,6 +42,7 @@
 				L.friends = list(usr)
 				L.original_object = I
 				animate_float(L, -1, 30)
+		..()
 		return 1
 
 //Power Stone
@@ -53,6 +54,7 @@
 	execute_ability()
 		//Presumably explode a dude
 		boutput(the_mob, "<span style='color:red'>You totally would've exploded a dude. If it was implemented. This power stone is kinda chumpy, huh?</span>")
+		..()
 		return 1
 
 //Time Stone
@@ -67,6 +69,7 @@
 		SPAWN_DBG(0)
 			usr.full_heal()
 			timeywimey(100)
+		..()
 		return 1
 
 //Reality Stone
@@ -107,7 +110,7 @@
 
 			for(var/turf/T in affected)
 				animate(T)
-
+		..()
 		return 1
 
 ///////////////////////////////////////
@@ -185,7 +188,7 @@
 					if(prob(30))
 						boutput(usr,"<span style=\"color:red\"><B>The stone rejects you and backfires.</B></span>")
 						usr.owlgib()
-
+		..()
 		return 1
 
 
@@ -235,7 +238,7 @@
 							make_cleanable( /obj/decal/cleanable/blood/gibs,T)
 						else
 							make_cleanable( /obj/decal/cleanable/vomit,T) //Oh geez the janitor will not be happy
-
+		..()
 		return 1
 
 

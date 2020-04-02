@@ -1123,8 +1123,9 @@
 							goto showmessage
 
 
-					if (src.targeting_spell)
-						src.targeting_spell.flip_callback()
+					if (src.targeting_ability && istype(src.targeting_ability, /datum/targetable))
+						var/datum/targetable/D = src.targeting_ability
+						D.flip_callback()
 
 					if ((!istype(src.loc, /turf/space)) && (!src.on_chair))
 						if (!src.lying)
