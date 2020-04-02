@@ -10,7 +10,7 @@
 /*
  *	Mainframe 2 starting memory
  */
-/obj/item/disk/data/memcard/main2
+/obj/item/disk/data/diskpack/main2
 	file_amount = 4096
 
 	New()
@@ -66,6 +66,7 @@
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mv(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mount(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/grep(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/pwd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/scnt(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/getopt(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/date(src) )
@@ -100,7 +101,7 @@
 		subfolder.add_file( groupRec )
 
 		var/list/randomMails = get_random_email_list()
-		var/typeCount = 5
+		var/typeCount = rand(6,12)
 		while (typeCount-- > 0 && randomMails && randomMails.len)
 			var/mailName = pick(randomMails)
 			var/datum/computer/file/record/mailfile = new /datum/computer/file/record/random_email(mailName)
@@ -128,7 +129,7 @@
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
 		testR.fields += "Welcome to DWAINE System VI!"
-		testR.fields += pick("Better than System V ever was.","GLUEEEE GLUEEEE GLUEEEEE","Only YOU can prevent lp0 fires!","Please try not to kill yourselves today.", "Please don't set the lab facilities on fire.")
+		testR.fields += pick("Better than System V ever was.","GLUEEEE GLUEEEE GLUEEEEE","Only YOU can prevent lp0 fires!","Please try not to kill yourselves today.", "Please don't set the lab facilities on fire.","system was here")
 		newfolder.add_file( testR )
 
 		newfolder.add_file( new /datum/computer/file/record/dwaine_help(src) )
@@ -204,6 +205,7 @@
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/mv(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/mount(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/grep(src) )
+		src.root.add_file( new /datum/computer/file/mainframe_program/utility/pwd(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/scnt(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/getopt(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/date(src) )
