@@ -2900,5 +2900,3 @@
 		src.mind.damned = 1
 
 	return 1
-
-// /mob/proc/set_targeting_ability(var/path)
