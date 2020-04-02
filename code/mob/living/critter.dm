@@ -580,6 +580,7 @@
 		return
 
 	proc/get_active_hand()
+		RETURN_TYPE(/datum/handHolder)
 		if (!handcheck())
 			return null
 		return hands[active_hand]

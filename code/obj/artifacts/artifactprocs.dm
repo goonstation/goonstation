@@ -224,8 +224,6 @@
 					src.ArtifactActivated()
 				else if (!ACT.activator && A.activated)
 					src.ArtifactDeactivated()
-				else
-					..()
 
 	if (istype(W,/obj/item/weldingtool))
 		var/obj/item/weldingtool/WELD = W
@@ -248,7 +246,7 @@
 		if (R.do_the_shocky_thing(user))
 			src.ArtifactStimulus("elec", 2500)
 			src.visible_message("<span style=\"color:red\">[user.name] shocks \the [src] with \the [R]!</span>")
-		return 0		
+		return 0
 
 	if(istype(W,/obj/item/baton))
 		var/obj/item/baton/BAT = W

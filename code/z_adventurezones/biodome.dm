@@ -716,7 +716,7 @@ SYNDICATE DRONE FACTORY AREAS
 					playsound(get_turf(AM), pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 
 					for(var/mob/M in view(src, 5))
-						M.flash(30)
+						M.flash(3 SECONDS)
 
 /obj/graveyard/loose_rock
 	icon = 'icons/misc/worlds.dmi'

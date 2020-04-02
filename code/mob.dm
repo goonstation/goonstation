@@ -1055,8 +1055,6 @@
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
-	return ..(gibbed)
-
 /mob/proc/restrained()
 	if (src.handcuffed)
 		return 1
@@ -1248,6 +1246,7 @@
 		src.set_clothing_icon_dirty()
 
 /mob/proc/equipped()
+	RETURN_TYPE(/obj/item)
 	if (issilicon(src))
 		if (ishivebot(src)||isrobot(src))
 			if (src:module_active)

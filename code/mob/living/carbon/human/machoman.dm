@@ -470,7 +470,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		set name = "Macho Arena"
 		set desc = "Summon a wrestling ring."
 		set category = "Macho Moves"
-		
+
 		if (!src.stat && !src.transforming)
 			if(!macho_arena_turfs) // no arena exists
 				//var/arena_time = 45 SECONDS
@@ -616,7 +616,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							HU.Turn(rand(-60, 90))
 							HU.bioHolder.age += 10
 							sleep(10)
-						
+
 						playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(HU.loc)
 						HU.visible_message("<span style=\"color:red\"><B>The only thing that remains after [H] is a Slim Jim!</B></span>", "<span style=\"color:red\"><B>Your body is snapped into a Slim Jim!</B></span>")
@@ -682,7 +682,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message("<span style=\"color:red\">[src] begins radiating with dark energy!</span>")
 					sleep(40)
 					for (var/mob/N in viewers(src, null))
-						N.flash(30)
+						N.flash(3 SECONDS)
 						if (N.client)
 							shake_camera(N, 6, 4)
 							N.show_message(text("<span style=\"color:red\"><b>A blinding light envelops [src]!</b></span>"), 1)
@@ -710,7 +710,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			playsound(src.loc, "sound/voice/chanting.ogg", 75, 0, 0, src.get_age_pitch())
 			sleep(40)
 			for (var/mob/N in viewers(src, null))
-				N.flash(30)
+				N.flash(3 SECONDS)
 				if (N.client)
 					shake_camera(N, 6, 4)
 					N.show_message(text("<span style=\"color:red\"><b>A blinding light envelops [src]!</b></span>"), 1)
@@ -930,7 +930,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message("<span style=\"color:red\"><b>[src] begins radiating with evil energies!</b></span>")
 					sleep(40)
 					for (var/mob/N in viewers(src, null))
-						N.flash(30)
+						N.flash(3 SECONDS)
 						if (N.client)
 							shake_camera(N, 6, 4)
 							N.show_message(text("<span style=\"color:red\"><b>A blinding light envelops [src]!</b></span>"), 1)
@@ -1002,7 +1002,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message("<span style=\"color:red\"><b>[src] closes \his eyes in silent macho prayer!</b></span>")
 					sleep(40)
 					for (var/mob/N in viewers(src, null))
-						N.flash(30)
+						N.flash(3 SECONDS)
 						if (N.client)
 							shake_camera(N, 6, 4)
 							N.show_message(text("<span style=\"color:red\"><b>A blinding light envelops [src]!</b></span>"), 1)

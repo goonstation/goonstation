@@ -755,7 +755,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 						if (5)
 							hallucinate_item(M)
 						if (6)
-							M.flash(30)
+							M.flash(3 SECONDS)
 							var/sound/S = sound(pick('sound/effects/Explosion1.ogg','sound/effects/Explosion1.ogg'), repeat=0, wait=0, volume=50)
 							S.frequency = rand(32000, 55000)
 							M << S
@@ -791,7 +791,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 						if (5)
 							hallucinate_item(M)
 						if (6)
-							M.flash(30)
+							M.flash(3 SECONDS)
 							var/sound/S = sound(pick('sound/effects/Explosion1.ogg','sound/effects/Explosion1.ogg'), repeat=0, wait=0, volume=50)
 							S.frequency = rand(32000, 55000)
 							M << S
