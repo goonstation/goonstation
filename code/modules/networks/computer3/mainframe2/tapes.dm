@@ -10,7 +10,7 @@
 /*
  *	Mainframe 2 starting memory
  */
-/obj/item/disk/data/diskpack/main2
+/obj/item/disk/data/memcard/main2
 	file_amount = 4096
 
 	New()
