@@ -104,6 +104,7 @@
 		if(istype(src.material))
 			pressure_resistance = round((material.getProperty("density") + material.getProperty("density")) / 2)
 			throwforce = round(max(material.getProperty("hard"),1) / 8)
+			throwforce = max(throwforce, initial(throwforce))
 			quality = src.material.quality
 			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
 				RL_SetOpacity(0)
