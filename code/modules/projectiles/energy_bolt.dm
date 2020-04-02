@@ -114,28 +114,10 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
-	power = 0
-	dissipation_delay = 6
+	power = 15
+	dissipation_delay = 4
+	dissipation_rate = 5
 	icon_state = "spark"
-
-	on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
-		if(ks_ratio == 0) //stun projectiles only
-			if (isliving(hit))
-				var/mob/living/L = hit
-
-#ifdef USE_STAMINA_DISORIENT
-				L.do_disorient(stamina_damage = 45, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
-				L.emote("twitch_v")
-#else
-				L.changeStatus("slowed", power)
-				L.change_misstep_chance(5)
-				L.emote("twitch_v")
-			if (L.getStatusDuration("slowed") > power)
-				L.changeStatus("stunned", power)
-			if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-				L.changeStatus("weakened", power)
-#endif
-
 
 //////////// VUVUZELA
 /datum/projectile/energy_bolt_v
