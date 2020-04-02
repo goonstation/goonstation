@@ -232,7 +232,7 @@
 
 				user.show_message("<span style=\"color:blue\">Click where you want to aim the turret!</span>")
 				var/datum/targetable/deployable_turret_aim/A = new()
-				user.targeting_spell = A
+				user.targeting_ability = A
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)

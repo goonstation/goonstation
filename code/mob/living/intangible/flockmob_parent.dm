@@ -138,7 +138,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 
 // C&P'd from dead.dm until I think of something better to do
 /mob/living/intangible/flock/click(atom/target, params)
-	if (targeting_spell)
+	if (targeting_ability)
 		..()
 	else
 		if (get_dist(src, target) > 0)

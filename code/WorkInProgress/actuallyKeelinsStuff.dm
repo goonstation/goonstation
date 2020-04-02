@@ -794,7 +794,7 @@ var/list/electiles = list()
 
 	var/mob/M = usr
 	var/datum/targetable/cincam/R = new()
-	M.targeting_spell = R
+	M.targeting_ability = R
 	M.update_cursor()
 
 /datum/targetable/cincam
@@ -1642,14 +1642,14 @@ var/list/electiles = list()
 		dothepixelthing(selected)
 		var/mob/M = usr
 		var/datum/targetable/pixelpicker/R = new()
-		M.targeting_spell = R
+		M.targeting_ability = R
 		M.update_cursor()
 		return 1
 
 /proc/pixelmagic()
 	var/mob/M = usr
 	var/datum/targetable/pixelpicker/R = new()
-	M.targeting_spell = R
+	M.targeting_ability = R
 	M.update_cursor()
 
 /proc/dothepixelthing(var/atom/A)
@@ -2992,7 +2992,7 @@ var/list/electiles = list()
 			var/mob/M = usr
 			if (istype(M))
 				var/datum/targetable/portalpickerOrigin/R = new()
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				R.target = selected
 				return
@@ -3016,13 +3016,13 @@ var/list/electiles = list()
 			if (alert == "Yes")
 				var/datum/targetable/portalpickerOrigin/R = new()
 				alert("Click on where you want your portal to be placed",,"Ok")
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				R.target = selected
 				return
 			else if (alert == "No")
 				var/datum/targetable/portalpickerTarget/R = new()
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 			else
 				return
@@ -3036,7 +3036,7 @@ var/list/electiles = list()
 	if (istype(M))
 		alert("Click on where you want your portal to end up at",,"Ok")
 		var/datum/targetable/portalpickerTarget/R = new()
-		M.targeting_spell = R
+		M.targeting_ability = R
 		M.update_cursor()
 		return
 
@@ -3319,7 +3319,7 @@ var/list/electiles = list()
 			if(range == 1) boutput(user, "<span style=\"color:red\">You slip...</span>")
 			user.layer = MOB_LAYER
 			user.buckled = null
-			if (user.targeting_spell == user.chair_flip_ability) //we havent chair flipped, just do normal jump
+			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
 				user.throw_at(target, 5, 1)
 				user:changeStatus("weakened", 2 SECONDS)
 			user.end_chair_flip_targeting()

@@ -834,7 +834,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -1338,7 +1338,7 @@
 		//using.set_eye(null)
 		//using.client.view = world.view
 		if(ishuman(using) && istype(using.abilityHolder, /datum/abilityHolder/composite))
-			using.targeting_spell = null
+			using.targeting_ability = null
 			using.update_cursor()
 			var/datum/abilityHolder/composite/H = using.abilityHolder
 			AbHolder.suspendAllAbilities()
