@@ -508,7 +508,6 @@
 	name = "bowling melon"
 	crop_prefix = "bowling "
 	desc = "Just keep rollin' rollin'."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "bowling-melon"
 	var/base_icon_state = "bowling-melon"
 	var/already_burst = 0
