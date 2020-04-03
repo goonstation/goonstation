@@ -46,11 +46,12 @@
 	mats = 18
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35
+	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active. (note to self: set to 0, race conditions with life ticks)
 	stamina_cost = 30
 	stamina_crit_chance = 35
 	var/do_stun = 1 //controlled by itemspecial for csword. sorry.
 	var/active_force = 60
+	var/active_stamina_dmg = 100 //how much stamina dmg it should be doing in total when active
 	var/inactive_force = 1
 	var/state_name = "sword"
 	var/off_w_class = 2
@@ -70,7 +71,7 @@
 
 			if (!is_special)
 #ifdef USE_STAMINA_DISORIENT
-				target.do_disorient(205, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
+				target.do_disorient(active_stamina_dmg - stamina_damage, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 #else
 				target.changeStatus("stunned", 50)
 				target.changeStatus("weakened", 5 SECONDS)
