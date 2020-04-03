@@ -73,13 +73,11 @@ toxic - poisons
 		var/turf/T = get_turf(H)
 		if(P.power != 0) //avoid AoE on pointblank... but if you just shoot the guy beside you you're going to get EMPed
 			for(var/turf/tile in range(1,T))
-				for(var/atom/O in tile.contents)
-					if (isobj(O) || ismob(O))
-						O.emp_act()
-		if(prob(P.power*1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
-			for(var/atom/O in T.contents)
-				if (isobj(O) || ismob(O))
+				for(var/atom/movable/O in tile.contents)
 					O.emp_act()
+		if(prob(P.power*1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
+			for(var/atom/movable/O in T.contents)
+				O.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
