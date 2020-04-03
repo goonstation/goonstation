@@ -37,7 +37,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /proc/changelog_parse(var/changes, var/title)
-	var/html=""
+	var/list/html=list()
 	var/text = changes
 	if (!text)
 		diary << "Failed to load changelog."
@@ -137,7 +137,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 				else continue
 
 		html += "</ul>"
-		return html
+		return html.Join()
 
 /datum/changelog/New()
 //<img alt="Goon Station 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
