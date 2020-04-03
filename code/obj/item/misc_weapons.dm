@@ -868,6 +868,21 @@
 	red
 		icon_state = "red_cap_sword"
 
+/obj/item/katana/captain/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
+		user.visible_message("<span style=\"color:red\"><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
+		user.organHolder.drop_organ(organtokill)
+		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
+		user.TakeDamage("chest", 100, 0)
+		user.updatehealth()
+		SPAWN_DBG(10 SECONDS)
+		if (user)
+			user.suiciding = 0
+		return 1
+
 /obj/item/katana/nukeop
 	icon_state = "syndie_sword"
 	name = "Syndicate Commander's Sabre"
@@ -882,6 +897,14 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+
+/obj/item/katana/nukeop/suicide(var/mob/living/carbon/human/user as mob)
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		user.visible_message("<span style=\"color:red\"><b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b></span>")
+		user.organHolder.drop_organ("head")
+		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
 /obj/item/katana_sheath
 	name = "katana sheath"

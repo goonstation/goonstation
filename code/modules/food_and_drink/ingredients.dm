@@ -147,7 +147,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	name = "hard-boiled egg"
 	desc = "You're a loose cannon, egg. I'm taking you off the menu."
-	icon_state = "hboil"
+	icon_state = "egg-hardboiled"
 	food_color = "#FFFFFF"
 	initial_volume = 20
 	food_effects = list("food_brute", "food_cateyes")
@@ -184,7 +184,8 @@
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"
 	desc = "A sprig of rice. There's probably a decent amount in it, thankfully."
-	icon_state = "rice_sprig"
+	icon = 'icons/obj/foodNdrink/food_produce.dmi'
+	icon_state = "rice-sprig"
 	amount = 1
 	food_color = "#FFFFAA"
 	brewable = 1
@@ -314,7 +315,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice
 	name = "sticky rice"
 	desc = "A big lump of sticky rice."
-	icon_state = "sticky_rice"
+	icon_state = "rice-sticky"
 	amount = 1
 	food_color = "#E3E3E3"
 	custom_food = 0
@@ -382,7 +383,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina
 	name = "semolina dough"
 	desc = "Used for making pasta-y things."
-	icon_state = "dough_semolina"
+	icon_state = "dough-semolina"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/kitchen/rollingpin))
@@ -399,7 +400,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
 	name = "dough strip"
 	desc = "A strand of cut up dough. It looks like you can re-attach two of them back together."
-	icon_state = "dough_strip"
+	icon_state = "dough-strip"
 	amount = 1
 	food_color = "#FFFFF"
 	custom_food = 0
@@ -425,7 +426,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_circle
 	name = "dough circle"
 	desc = "Used for making torus-shaped things." //I used to eat out with friends, but bagels just torus apart.
-	icon_state = "dough_circle"
+	icon_state = "dough-circle"
 	amount = 1
 	food_color = "#FFFFF"
 	custom_food = 0
@@ -433,7 +434,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/holey_dough
 	name = "holey dough" //+1 to chaplain magic skills
 	desc = "Some dough with a bunch of holes poked in it. How exotic."
-	icon_state = "holey_dough"
+	icon_state = "dough-holey"
 	amount = 1
 	food_color = "#FFFFF"
 	custom_food = 0
@@ -441,7 +442,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	name = "sweet dough"
 	desc = "Used for making cakey things."
-	icon_state = "dough_s"
+	icon_state = "dough-sweet"
 	amount = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -455,7 +456,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	name = "cookie dough"
 	desc = "Probably shouldn't be eaten raw, not that THAT'S ever stopped anyone."
-	icon_state = "cookie_dough"
+	icon_state = "dough-cookie"
 	amount = 1
 	custom_food = 1
 
@@ -614,7 +615,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
 	name = "pasta sheet"
 	desc = "An uncooked sheet of pasta."
-	icon_state = "pasta_sheet"
+	icon_state = "pasta-sheet"
 
 
 /obj/item/reagent_containers/food/snacks/ingredient/chips
@@ -695,7 +696,7 @@
 obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "pepperoni log"
 	desc = "It's like a forest of pepperoni was felled just for you."
-	icon_state = "pepperoni_log"
+	icon_state = "pepperoni-log"
 	custom_food = 1
 	amount = 1
 	food_color = "#C90E0E"
