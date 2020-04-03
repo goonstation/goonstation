@@ -837,7 +837,10 @@ TRAYS
 				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat)) //setting ingredient type for the roller overlays
 					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
 						if(!fishflag)
-							fishflag = FOOD.icon_state
+							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small))
+								fishflag = "fillet-white"
+							else
+								fishflag = FOOD.icon_state
 							skip = src.toppings
 					ingredienttype="meat"
 				else
@@ -906,27 +909,7 @@ TRAYS
 				if(src.swedish) //setting actual overrides for sushi roll
 					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"fisk"),"fisk")
 				else if(src.fishflag) //fish overlays (there's two states, one for if the fish is the only ingredient, and one if there's other ingredients)
-					switch(fishflag) //using the icon state of the fish fillet to modify the color of the fish overlay
-						if("fillet-white")
-							if(src.toppings == 1)
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-s"),"f1")
-							else
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-m"),"f1")
-						if("fillet-small")
-							if(src.toppings == 1)
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-s"),"f1")
-							else
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-m"),"f1")
-						if("fillet-orange")
-							if(src.toppings == 1)
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f2-s"),"f2")
-							else
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f2-m"),"f2")
-						if("fillet-pink")
-							if(src.toppings == 1)
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f3-s"),"f3")
-							else
-								roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f3-m"),"f3")
+					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"[fishflag]-[src.toppings == 1 ? "s" : "m"]"),"[fishflag]")
 				if(skip != "ALL") //in case of swedish fisk, that is the only overlay rendered, so everything else is skipped
 					var/toppingoverlay = 0
 					for(var/t,t<=toppingdata.len,t++)
