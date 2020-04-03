@@ -160,3 +160,14 @@
 	msgGain = "You feel especially hairy."
 	msgLose = "Your fur falls out."
 	icon_state  = "cat"
+
+
+/datum/bioEffect/mutantrace/cow
+	name = "Bovine Genetics"
+	desc = "The subject takes on the appearance of a domesticated space cow and gains milk production."
+	id = "cow"
+	mutantrace_option = "Cow"
+	mutantrace_path = /datum/mutantrace/cow
+	msgGain = "You feel like you're ready for some Cow RP."
+	msgLose = "Your udders fall off!"
+	icon_state  = "cow"

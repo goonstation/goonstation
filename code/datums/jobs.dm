@@ -838,7 +838,6 @@
 /datum/job/civilian/staff_assistant
 	name = "Staff Assistant"
 	wages = 10
-	limit = 0
 	no_jobban_from_this_job = 1
 	low_priority_job = 1
 	cant_allocate_unwanted = 1
@@ -849,11 +848,6 @@
 		..()
 		src.access = get_access("Staff Assistant")
 		return
-
-/datum/job/civilian/staff_assistant/clown_college_student
-		name = "Clown College Student"
-		limit = -1
-		slot_jump = /obj/item/clothing/under/color/grey
 
 /datum/job/civilian/clown
 	name = "Clown"
@@ -1364,7 +1358,7 @@
 		..()
 		if (!M)
 			return
-		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob)
+		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 		M.set_mutantrace(morph)
 
 /datum/job/special/random/testsubject
