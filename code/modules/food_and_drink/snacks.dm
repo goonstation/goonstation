@@ -2437,11 +2437,11 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			src.set_loc(user)
 			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
 			switch(W.icon_state)
-				if("fillet_orange")
+				if("fillet-orange")
 					nigiri.icon_state = "nigiri1"
-				if("fillet_pink")
+				if("fillet-pink")
 					nigiri.icon_state = "nigiri2"
-				if("fillet_white")
+				if("fillet-white")
 					nigiri.icon_state = "nigiri3"
 			user.u_equip(W)
 			qdel(W)
@@ -2501,6 +2501,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushiroll"
+	food_color = "#5E6351"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))

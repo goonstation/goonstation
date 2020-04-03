@@ -798,11 +798,18 @@ TRAYS
 	var/fish //override for unique fish overlay handling
 	var/swedish //override for unique swedish fish oberlay handling
 
-	var/obj/item/reagent_containers/food/snacks/topping1 //storage for toppings (used later for referencing buffs and colors and such)
-	var/obj/item/reagent_containers/food/snacks/topping2
-	var/obj/item/reagent_containers/food/snacks/topping3
+	var/fishflag
+	var/skip
+
+	var/list/toppingdata = list() //(food_color)
+	var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll//= new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 
 	attackby(obj/item/W as obj, mob/user as mob)
+
+		if(!(locate(/obj/item/reagent_containers/food/snacks/sushi_roll/custom) in src))
+			var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll_internal = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom(src)
+			roll = roll_internal
+
 		if(istype(W,/obj/item/reagent_containers/food/snacks) && !src.rolling && !(src.toppings>=3))
 			var/obj/item/reagent_containers/food/snacks/FOOD = W
 			if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/seaweed)) //seaweed overlay handling
@@ -825,25 +832,30 @@ TRAYS
 				src.toppings++
 				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/swedish_fish)) //setting overrides
 					src.swedish = 1
+					skip = "ALL"
 				var/ingredienttype
 				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat)) //setting ingredient type for the roller overlays
 					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
-						src.fish = 1
+						if(!fishflag)
+							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small))
+								fishflag = "fillet-white"
+							else
+								fishflag = FOOD.icon_state
+							skip = src.toppings
 					ingredienttype="meat"
 				else
 					ingredienttype="nonmeat"
 				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
 				foodoverlay.color = FOOD.food_color
 				foodoverlay.layer = (src.layer+3)
-				switch(src.toppings) //storing a reference to the original item on the roller
-					if(1)
-						src.topping1 = FOOD
-					if(2)
-						src.topping2 = FOOD
-					if(3)
-						src.topping3 = FOOD
-				if(FOOD.reagents) //storing reagents in the roller itself because reagent data was lost for the reference items
-					FOOD.reagents.trans_to(src,FOOD.reagents.total_volume)
+				toppingdata.Add(FOOD.food_color)
+				if(FOOD.reagents)
+					FOOD.reagents.trans_to(roll,FOOD.reagents.total_volume)
+				for(var/food_effect in FOOD.food_effects)
+					if(food_effect in roll.food_effects)
+						continue
+					roll.food_effects += food_effect
+					roll.quality += FOOD.quality
 				src.UpdateOverlays(foodoverlay,"topping-[src.toppings]")
 				user.u_equip(FOOD)
 				qdel(FOOD)
@@ -885,16 +897,7 @@ TRAYS
 					src.UpdateOverlays(new /image('icons/obj/kitchen.dmi',"roller_roll"),"roll")
 					for(var/i=1,i<=src.toppings,i++)
 						var/image/rolltopping = new /image('icons/obj/kitchen.dmi',"roll_topping-[i]")
-						switch(i)
-							if(1)
-								if(topping1)
-									rolltopping.color = topping1.food_color
-							if(2)
-								if(topping2)
-									rolltopping.color = topping2.food_color
-							if(3)
-								if(topping3)
-									rolltopping.color = topping3.food_color
+						rolltopping.color = toppingdata[i]
 						src.UpdateOverlays(rolltopping,"roll_topping-[i]")
 					src.rolling = 0
 			else if(src.rolling == 0) //and out pops a sushi roll!
@@ -903,98 +906,30 @@ TRAYS
 				src.rice = 0
 				src.rolled = 0
 				src.ClearAllOverlays()
-				var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
-				var/skip
 				if(src.swedish) //setting actual overrides for sushi roll
 					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"fisk"),"fisk")
-					skip = "ALL"
-				else if(src.fish) //fish overlays (there's two states, one for if the fish is the only ingredient, and one if there's other ingredients)
-					var/fishflag
-					for(var/i=1,i<=3,i++) //this sets skip overrides for the next block of code so the overlays efectively skip fish and instead have a unique fish base layer
-						if((i==1) && (src.topping1))
-							if(istype(src.topping1,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
-								fishflag = src.topping1.icon_state
-								skip = 1
-						if((i==2) && (src.topping2))
-							if(istype(src.topping2,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
-								fishflag = src.topping2.icon_state
-								skip = 2
-						if((i==3) && (src.topping3))
-							if(istype(src.topping3,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
-								fishflag = src.topping3.icon_state
-								skip = 3
-						if(fishflag)
-							switch(fishflag) //using the icon state of the fish fillet to modify the color of the fish overlay
-								if("fillet_white")
-									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-s"),"f1")
-									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-m"),"f1")
-								if("fillet_small")
-									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-s"),"f1")
-									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f1-m"),"f1")
-								if("fillet_orange")
-									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f2-s"),"f2")
-									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f2-m"),"f2")
-								if("fillet_pink")
-									if(src.toppings == 1)
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f3-s"),"f3")
-									else
-										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"f3-m"),"f3")
-							break
+				else if(src.fishflag) //fish overlays (there's two states, one for if the fish is the only ingredient, and one if there's other ingredients)
+					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"[fishflag]-[src.toppings == 1 ? "s" : "m"]"),"[fishflag]")
 				if(skip != "ALL") //in case of swedish fisk, that is the only overlay rendered, so everything else is skipped
 					var/toppingoverlay = 0
-					if(topping1 && (skip != 1)) //its not the best way to do this, but im not sure if theres a decent way of dynamically referencing variables without a bunch of weird string conversions
-						toppingoverlay++
-						var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
-						if(topping1.food_color)
-							overlay.color = topping1.food_color
-						for(var/b=1,b<=topping1.food_effects.len,b++)
-							if(topping1.food_effects[b] in roll.food_effects)
-								continue
-							roll.food_effects += topping1.food_effects[b]
-						roll.quality += topping1.quality
-						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
-					if(topping2 && (skip != 2))
-						toppingoverlay++
-						var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
-						if(topping2.food_color)
-							overlay.color = topping2.food_color
-						for(var/b=1,b<=topping2.food_effects.len,b++)
-							if(topping2.food_effects[b] in roll.food_effects)
-								continue
-							roll.food_effects += topping2.food_effects[b]
-						roll.quality += topping2.quality
-						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
-					if(topping3 && (skip != 3))
-						toppingoverlay++
-						var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
-						if(topping3.food_color)
-							overlay.color = topping3.food_color
-						for(var/b=1,b<=topping3.food_effects.len,b++)
-							if(topping3.food_effects[b] in roll.food_effects)
-								continue
-							roll.food_effects += topping3.food_effects[b]
-						roll.quality += topping3.quality
-						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
-				if(src.reagents) //setting up the rest of the sushi roll item data <3
-					src.reagents.trans_to(roll,src.reagents.total_volume)
+					for(var/t,t<=toppingdata.len,t++)
+						if(toppingdata[t] && (skip != t)) //its not the best way to do this, but im not sure if theres a decent way of dynamically referencing variables without a bunch of weird string conversions
+							toppingoverlay++
+							var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"topping-[toppingoverlay]")
+							overlay.color = toppingdata[t]
+							roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
 				if(src.toppings)
 					roll.quality = (roll.quality/src.toppings)+1
 				else
 					roll.quality = 1
-				qdel(src.topping1)
-				qdel(src.topping2)
-				qdel(src.topping3)
 				user.put_in_hand_or_drop(roll)
 				src.toppings = 0
 				src.swedish = 0
 				src.fish = 0
-				src.reagents = null
+				src.toppingdata = list()
+				src.fishflag = null
+				src.skip = null
+				src.roll = null
 		else
 			..()
 
