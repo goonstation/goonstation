@@ -31,7 +31,7 @@
 
 	var/message = null
 	if (src.mutantrace)
-		message = src.mutantrace.emote(act)
+		message = src.mutantrace.emote(act, voluntary)
 	if (!message)
 		switch (lowertext(act))
 			if ("custom")
