@@ -1609,7 +1609,8 @@
 		return rgb(22, 210, 22)
 
 	say_filter(var/message)
-		return replacetext(message, "m", stutter("mm"))
+		.= replacetext(message, "cow", "human")
+		.= replacetext(., "m", stutter("mm"))
 
 	emote(var/act, var/voluntary)
 		switch(act)
