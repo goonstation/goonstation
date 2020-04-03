@@ -670,8 +670,8 @@
 /obj/item/reagent_containers/food/snacks/plant/lettuce/
 	name = "lettuce leaf"
 	crop_suffix = " leaf"
-	desc = "Not spinach at all. Nope. Nuh-uh."
-	icon_state = "spinach"
+	desc = "The go-to staple green vegetable in every good space diet, unlike Spinach."
+	icon_state = "lettuce-leaf"
 	planttype = /datum/plant/lettuce
 	w_class = 1.0
 	amount = 1
