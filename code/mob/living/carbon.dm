@@ -346,12 +346,8 @@
 	var/disorient_mult = 1 - (protection/100)
 	var/stamdmg_mult = lerp(disorient_mult, 1, 0.25) // apply 3/4 the reduction effect to the stamina damage
 
-	DEBUG_MESSAGE_VARDBG("stamdmg_mult = ", stamdmg_mult)
-	DEBUG_MESSAGE_VARDBG("stamina_damage = ", stamina_damage)
-
 	disorient *= disorient_mult
 	stamina_damage *= stamdmg_mult
-	DEBUG_MESSAGE_VARDBG("stamina_damage = ", stamina_damage)
 
 	if (remove_stamina_below_zero)
 		src.remove_stamina(stamina_damage)

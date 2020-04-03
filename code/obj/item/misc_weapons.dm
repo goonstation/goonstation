@@ -46,12 +46,13 @@
 	mats = 18
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active. (note to self: set to 0, race conditions with life ticks)
+	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 30
 	stamina_crit_chance = 35
 	var/do_stun = 1 //controlled by itemspecial for csword. sorry.
 	var/active_force = 60
-	var/active_stamina_dmg = 100 //how much stamina dmg it should be doing in total when active
+	var/active_stamina_dmg = 150
+	var/inactive_stamina_dmg = 35
 	var/inactive_force = 1
 	var/state_name = "sword"
 	var/off_w_class = 2
@@ -71,7 +72,7 @@
 
 			if (!is_special)
 #ifdef USE_STAMINA_DISORIENT
-				target.do_disorient(active_stamina_dmg - stamina_damage, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
+				target.do_disorient(0, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0) //we don't want disorient protection to affect stamina damage
 #else
 				target.changeStatus("stunned", 50)
 				target.changeStatus("weakened", 5 SECONDS)
@@ -129,6 +130,7 @@
 	if (src.active)
 		boutput(user, "<span style=\"color:blue\">The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
+		stamina_damage = active_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
@@ -144,6 +146,7 @@
 	else
 		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
+		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
