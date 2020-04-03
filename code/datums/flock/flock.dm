@@ -217,7 +217,7 @@
 		src.units |= D
 		if(src.panel && istype(D, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/drone = D
-			
+
 			// update the flock control panel
 			var/list/update = drone.describe_state()
 			update["update"] = "add"
@@ -479,14 +479,13 @@
 			animate_flock_convert_complete(FL)		
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
-		if (RL_Started) RL_UPDATE_LIGHT(T)
 		T.RL_LumR = RL_LumR
 		T.RL_LumG = RL_LumG
 		T.RL_LumB = RL_LumB
 		T.RL_AddLumR = RL_AddLumR
 		T.RL_AddLumG = RL_AddLumG
 		T.RL_AddLumB = RL_AddLumB
-		T.RL_UpdateLight()
+		if (RL_Started) RL_UPDATE_LIGHT(T)
 
 	return T
 
