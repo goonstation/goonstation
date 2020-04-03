@@ -1565,7 +1565,6 @@
 
 /datum/mutantrace/cow
 	name = "cow"
-	// icon_state = "lizard"
 	icon_state = "cow"
 	icon_override_static = 1
 	allow_fat = 1
@@ -1596,9 +1595,6 @@
 		if (L.len == 3)
 			return rgb(L["r"], L["g"], L["b"])
 		return rgb(22, 210, 22)
-
-	disposing()
-		..()
 
 	say_filter(var/message)
 		return replacetext(message, "m", stutter("mm"))
