@@ -903,11 +903,7 @@ TRAYS
 				var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 				var/skip
 				if(src.swedish) //setting actual overrides for sushi roll
-<<<<<<< HEAD
 					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_sushi.dmi',"fisk"),"fisk")
-=======
-					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_ssushi.dmi',"fisk"),"fisk")
->>>>>>> Refactor food DMIs because things don't belong in food.dmi
 					skip = "ALL"
 				else if(src.fish) //fish overlays (there's two states, one for if the fish is the only ingredient, and one if there's other ingredients)
 					var/fishflag

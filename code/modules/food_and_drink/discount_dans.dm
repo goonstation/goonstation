@@ -102,10 +102,7 @@
 */
 			if (10)
 <<<<<<< HEAD
-				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax SmÃ¶rgÃ¥sbord Smak"
-=======
-				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smï¿½rgï¿½sbord Smak"
->>>>>>> Refactor food DMIs because things don't belong in food.dmi
+				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
 				src.initial_reagents["cleaner"] = 2
 				src.initial_reagents["mercury"] = 2
 				src.initial_reagents["swedium"] = 6
