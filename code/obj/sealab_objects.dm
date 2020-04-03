@@ -95,7 +95,6 @@
 	//else if (istype(A,/obj/storage))
 	//	return 1
 	else return 1
-	..()
 
 /obj/sea_plant/HasExited(atom/movable/A as mob|obj)
 	..()

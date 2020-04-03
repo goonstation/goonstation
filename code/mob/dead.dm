@@ -19,7 +19,7 @@
 
 
 /mob/dead/click(atom/target, params)
-	if (targeting_spell)
+	if (targeting_ability)
 		..()
 	else
 		if (get_dist(src, target) > 0)

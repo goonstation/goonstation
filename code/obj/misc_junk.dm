@@ -822,7 +822,8 @@
 		if(world.time - pickup_time >= 300)
 			boutput(owner, "<h3><span style=\"color:red\">You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner && owner.client)
-				src.set_loc(pick(ass_arena_spawn).loc)
+				var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
+				src.set_loc(place.loc)
 				owner.client.respawn_target(owner,1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
@@ -835,6 +836,7 @@
 		DEBUG_MESSAGE("Heck someone broke the artifact")
 		var/obj/item/ass_day_artifact/next_artifact
 		next_artifact = new /obj/item/ass_day_artifact
-		next_artifact.set_loc(pick(ass_arena_spawn).loc)
+		var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
+		next_artifact.set_loc(place.loc)
 		processing_items.Remove(src)
 		..()

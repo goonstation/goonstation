@@ -6,6 +6,8 @@
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
 
+Visual Studio Code is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VS Code useful.
+
 Visit https://code.visualstudio.com/ to download the appropriate installation for your operating system. Then, run the installer.
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
@@ -26,6 +28,8 @@ Now, let's combine your repository and VS Code!
 
 First, we're going to need to download git, which can be found on [this page](https://git-scm.com/downloads). Install as normal, though I'd recommend not using vim as the default git editor. 
 
+Git is what will let you synchronize your code with others, make your own branches and merging them with other people's code, complete with VS Code integration to make the process easy.
+
 Now, go back to VS Code and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
 
 If that's not there, you can press `Ctrl+Shift+P` to open the command palette, then type `Git: Clone`, and then press enter. 
@@ -36,10 +40,18 @@ Once it's downloaded, open the folder in VS Code. You now have your own local co
 
 Next, we're going to need to get some necessary extensions!
 
-
 ### Step 4: Extension-O-Rama :gear: 
 
 Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 5 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+
+:::warning
+If this does not work, search for the following extensions:
+ - BYOND DM Language Support - syntax highlighting for the language
+ - DreamMaker Language Client - fancy features like debugging and jumping to definitions
+ - EditorConfig for VS Code - loads the suggested editor configuration for the codebase
+ - GitHub Pull Requests - lets you make a pull request directly from the editor
+ - Bracket Pair Colorizer 2 - paints matching brackets the same color
+:::
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly.
 
@@ -53,7 +65,7 @@ Now, let's connect the main goonstation repository to your client.
 
 We need to add the main Goonstation repository as a remote now. :satellite:
 
-To do this, open the command palette and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream.
+To do this, open the command palette and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
 You're just about done with that! Just one last thing you need to manually do.
 
@@ -64,7 +76,6 @@ If you're a Goonstation maintainer, run `git submodule update --init` instead of
 :::
 
 ++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.**
-
 
 That's it! Your local codebase is all set up to contribute now.
 
@@ -89,9 +100,16 @@ Go wild! Make your code changes! This is a guide on how to contribute, not *what
 
 ### Step 2: Change It Up :twisted_rightwards_arrows: 
 
+You'll find your code to edit in the Explorer sidebar of VS Code; if you need to find something, the Search sidebar is just below that.
+
+:::info
+Old-school style: If you want to use DreamMaker instead, go ahead and edit your files there - once you save them, VS Code will detect what you've done and you'll be able to follow the guide from there.
+:::
+
 Here's the changes I'm making for the purpose of this guide:
 
 * I added a new hat sprite to icons/obj/clothing/item_hats.dmi
+
 ![](https://i.imgur.com/tCmU12l.png)
 
 * I added the following code to code/obj/item/clothing/hats.dm
@@ -105,7 +123,32 @@ Here's the changes I'm making for the purpose of this guide:
 
 Now, save your changes. If we look at the Source Control tab, we'll see that we have some new changes. Git has found every change you made to your fork's repo on your computer! Even if you change a single space in a single line of code, Git will find that change. Just make sure you save your files.
 
-### Step 3: Up On Stage :movie_camera: 
+### Step 3: Testing your code :game_die:
+
+The easiest way to test your changes is to press **F5**. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press **Ctrl + F5** instead.
+
+:::warning
+If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
+:::
+
+Alternative solution is to press `ctrl+shift+B` and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
+
+<!--- TODO: Troubleshooting for non-existing task? --->
+
+![](https://i.imgur.com/mXSjfC2.png)
+
+This compiles the code to a dmb file. Then you can run Dream Daemon, select the dmb file, set security to Trusted and hit GO to run the server. After the server starts you can press the button above the GO / STOP button (now red) to connect.
+
+![](https://i.imgur.com/MxrZvHp.png)
+
+Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related.
+
+#### Using the Debugger
+
+TODO, for now you can read the VS Code guide to debugging: 
+https://code.visualstudio.com/docs/editor/debugging
+
+### Step 4: Up On Stage :movie_camera: 
 
 Hover over the word `Changes` and press the plus sign to stage all modified files. It should look like this:
 
@@ -124,7 +167,7 @@ Make sure you're checked out on the new branch you created earlier, and click th
 
 There you go! You have successfully made a commit to your branch. This is still 'unpublished', and only on your local computer, as indicated by the little cloud and arrow icon ![](https://i.imgur.com/3Ptpbgt.png) in the bottom left corner.
 
-### Step 4: Publishing to GitHub :cloud: 
+### Step 5: Publishing to GitHub :cloud: 
 
 Now, to get these changes onto GitHub, press ![](https://i.imgur.com/3Ptpbgt.png) or push normally for a prompt. This will push the commit you made to the origin on GitHub. You need an internet connection to do this, *obviously*.
 
@@ -139,7 +182,7 @@ If you go to your fork on the GitHub website and go to your code, you'll see tha
 
 Okay, we're almost done! Make as many changes and commits on your branch as you want, and move to the next step when you're done! Make sure to test your code. If you're not sure how to do that, ask somebody on `#imcoder`.
 
-## Making a Pull Request
+## Making a Pull Request :arrow_heading_up:
 
 Ok. We're almost there!
 :::info
@@ -156,18 +199,79 @@ Next, you'll want to change the description. To do so, you can click the `Create
 
 Now, you can edit your description in-editor, add labels, and request reviewers. Nifty! If you want to open it on GitHub, click the blue #NUMBER hyperlink.
 
+If you want your change to be included in the changelog it is helpful if you include a message that should appear there and the name which we should use to credit you (if different from your GitHub username).
+
 If you want to add more commits to your PR, all you need to do is just push those commits to the branch.
 
 Wow! Great job on making your PR. :tada: 
 
+### Feedback and You :scream: 
+
+At some point a maintainer will review your PR. Hopefully all is good and the PR will get merged into the main repo. But it might happen that you are requested to make changes. That is fortunately very easy; you don't need to touch the PR at all. Just make changes to your branch, push to origin and the PR gets updated automatically.
+
+You can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes.
+
+Automated checks are ran on each PR. If one of those fails (for example because your code does not even compile) you should go fix that immediately.
+
+### Merge Conflicts :negative_squared_cross_mark: 
+
+It might happen that somewhere in the process of making a PR you see a message about having merge conflicts. That means that you modified code that someone else also modified in the meantime. But don't worry, the next section will help you with that!
+
+## Staying In Sync :arrows_counterclockwise: 
+
+Changes will be made to the upstream repo and it's a good idea to keep your master in sync with that.
+
+1. Checkout the master branch
+    You do that by clicking on the name of the current branch in the bottom left corner and then selecting "master" in the command palette.
+    ![](https://i.imgur.com/z2o1Nw6.png)
+2. Select Pull From in the Source Control tab on the left
+    ![](https://i.imgur.com/b4dYlIX.png)
+3. Select the upstream remote
+    ![](https://i.imgur.com/YVUBk2A.png)
+4. Select the upstream/master branch
+    ![](https://i.imgur.com/maQ0CAw.png)
+
+If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
+
+1. Checkout your feature branch (as above)
+2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command
+    ![](https://i.imgur.com/LbH8XB9.png)
+3. Choose the master branch
+
+    ![](https://i.imgur.com/iBoUlGv.png)
+4. It might happen that merge conflicts appear (someone else modified the same code as you in the meantime and you need to decide which version to keep). Those should be listed in the sidebar:
+
+    ![](https://i.imgur.com/RRKUiUN.png)
+    
+    For each merge conflict you get several options along with a comparison of your changes and the changes that happened on the upstream.
+    
+    ![](https://i.imgur.com/Rb7RLjD.png)
+    
+    Choose whichever option is most fitting or do manual changes if the changes are more complex.
+5. After resolving all the conflicts in a file stage that file:
+
+    ![](https://i.imgur.com/U8nXwcp.png)
+6. When all files are staged hit the Commit button.
+
+    ![](https://i.imgur.com/RK5fNDR.png)
+
+Now your feature branch is up to date with master, yay!
+
+A good way to avoid merge conflicts in your PRs is to do this whole process before making a PR.
 
 ## Appendix :eyeglasses: 
 
 ### Terminology :open_book: 
 
+**VS Code / VSC:** Short for Visual Studio Code. The text editor we are using for editing our code in this guide.
+
+**Git:** The version control system we are using. It lets many people synchronize their versions of a codebase, review and merge each others' changes.
+
 **Repo:** Short for Repository. Contains all the Goonstation code, assets, commits, and other info. This is what you see at https://github.com/goonstation/goonstation.
 
 **Fork:** A copy of the repo that belongs to you. It is not synced with the main repo, so you can make changes to it without affecting the main repo, and vice versa.
+
+**Remote:** Short for remote repo; that is, any repo that is not your local one. In addition to your local repository, you will be working with your origin and upstream remote repositories.
 
 **Branch:** An independent version of your fork that you can work on without affecting your other branches. It is a way to group your commits.
 
@@ -177,17 +281,76 @@ Wow! Great job on making your PR. :tada:
 
 **PR:**  Short for Pull Request. This a request you make to the Goonstation repo to merge changes from one of your branches into the master branch on Goonstation.
 
-**Merge:** When a branch is merged into a repo, all of the commits on that branch are applied to the repo.
+**Merge:** When a branch is merged into a repo, all of the commits on that branch are applied to the repo. For example your feature branch will likely get merged into upstream.
+
+**Merge Conflict:** When two branches made different changes to the same part of the code since they split off they can't be merged automatically. This is called a merge conflict and someone (likely you) needs to decide how to join these changes and resolve it manually.
 
 **Origin:** In this guide, this refers to your fork of the goonstation repo.
 
 **Upstream:** In this guide, this refers to the master Goonstation repo at https://github.com/goonstation/goonstation
 
+**Staged files:** Files marked to get commited.
+
+### VS Code Tips :juggling: 
+
+You can press the Ticked / Unticked button in the bottom right corner to add / remove the current file from goonstation.dme (the file which says which files are actually included in the compilation process).
+
+![](https://i.imgur.com/goYeY9R.png)
+
+Do you vaguely remember the name of a command you want to do? Press **Ctrl+Shift+P** to open the Command Palette and start typing. There's a decent chance that VS Code will be able to suggest the correct thing. 
+
+One of the tabs in VS Code usually has its name written in italics; that means that it's a temporary tab (often created by Find) and any new tab will replace it. You can turn it into a permanent tab by doubleclicking on it or pressing Ctrl + K and Enter.
+
+**F12** jumps to the definition of the thing you have your cursor over.
+
+**Shift+F12** shows you all uses of the thing you have your cursor over.
+
+The above features might stop being accurate if you are doing a lot of changes, to refresh how VS Code sees the environment click the "goonstation" button in the bar at the bottom of the window.
+
+![](https://i.imgur.com/Lhs7EHK.png)
+
+**Ctrl + Shift + F** lets you search across the whole codebase.
+
+Press **Ctrl+T** and start typing the path / name of something you want to find, then hit enter to jump to its definition.
+
+Press **Ctrl+P** and start typing the name of a file you want to open, then hit enter to open it.
+
+### Using Command Line git
+
+Sometimes it might be useful to type in git commands directly. To do that press **ctrl + \`** to open PowerShell in VS Code. (Or **ctrl + shift + \`** to make a new PowerShell window.) Though this might depend on your operating system and default shell configuration.
+
+Cloning your repository: `git clone https://github.com/YOURNAME/goonstation`
+
+Creating a branch: `git checkout -b my-feature-branch`
+
+Staging a file: `git add file.dm`
+
+Staging all changes: `git add -A`
+
+Commiting staged files: `git commit -m "Your commit message."`
+
+Pushing a *new* branch to origin: `git push -u origin my-feature-branch`
+
+Pushing changes from your current branch to origin: `git push`
+
+Pulling changes from the corresponding origin branch to your current branch: `git pull`
+
+Pulling changes from upstream: `git pull upstream master` (make sure you did `git checkout master` first).
+
+The full process of updating your current branch to the current upstream master:
+```
+git checkout master
+git pull upstream master
+git checkout my-feature-branch
+git rebase master
+```
+
 *[repo]: Repository - contains all Goonstation code and etc.
 *[fork]: Your personal copy of the repo.
+*[remote]: A repo that is not your local one.
 *[commit]: A change to the repo that is submitted by someone.
 *[diff]: Difference before and after a commit is made.
-*[pr]: Pull Request - The changes you request to the upstream.
+*[PR]: Pull Request - The changes you request to the upstream.
 *[origin]: Your fork of the Goonstation repo
 *[upstream]: The master Goonstation repo at https://github.com/goonstation/goonstation
 

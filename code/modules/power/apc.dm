@@ -1091,8 +1091,6 @@ var/zapLimiter = 0
 
 		return
 
-		src.updateUsrDialog()
-
 	else
 		usr.Browse(null, "window=apc")
 		usr.machine = null

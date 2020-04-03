@@ -2,6 +2,7 @@
 /obj/item/reagent_containers/food/drinks/noodlecup
 	name = "Discount Dan's Quik-Noodles"
 	desc = "A self-heating cup of noodles. There's enough sodium in these to put the Dead Sea to shame."
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "noodlecup"
 	heal_amt = 1
 	var/activated = 0
@@ -100,7 +101,7 @@
 				R.add_reagent("venom",2)
 */
 			if (10)
-				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
+				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax SmÃ¶rgÃ¥sbord Smak"
 				src.initial_reagents["cleaner"] = 2
 				src.initial_reagents["mercury"] = 2
 				src.initial_reagents["swedium"] = 6
@@ -177,7 +178,7 @@
 /obj/item/reagent_containers/food/snacks/burrito
 	name = "Descuento Danito's Burritos"
 	desc = "A self-heating convenience reinterpretation of Mexican cuisine. The exact mechanism used to heat it is probably best left to speculation."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "burrito"
 	amount = 3
 	heal_amt = 2
@@ -314,7 +315,7 @@
 /obj/item/reagent_containers/food/snacks/snack_cake
 	name = "Little Danny's Snack Cake"
 	desc = "A highly-processed miniature cake, coated with a thin layer of solid pseudofrosting."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "snackcake"
 	amount = 2
 	heal_amt = 2
@@ -329,6 +330,7 @@
 	golden
 		name = "Little Danny's Legally-Distinct Creme-Filled Snack Loaf"
 		desc = "A highly-processed miniature sponge cake, filled with some manner of creme."
+		icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 		icon_state = "snackcake2"
 		color_prob = 10
 		brew_result = list("sewage", "mucus")
@@ -359,7 +361,7 @@
 /obj/item/tvdinner
 	name = "Hungry Dan's Self-Microwaving Meals"
 	desc = "A box containing a self-heating TV dinner."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnerc"
 	w_class = 1
 	throwforce = 2
@@ -422,7 +424,7 @@
 /obj/item/reagent_containers/food/snacks/tvdinner
 	name = "Hungry Dan's Self-Microwaving Meals"
 	desc = "A self-heating TV dinner. You should probably use a fork."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
 	needfork = 1
 	amount = 2
@@ -558,7 +560,7 @@
 /obj/item/reagent_containers/food/snacks/strudel
 	name = "Delectable Dan's Scrumptious Strudel"
 	desc = "A gigantic toaster strudel with a fruit filling. It looks pretty decent!"
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "strudel"
 	amount = 2
 	heal_amt = 2

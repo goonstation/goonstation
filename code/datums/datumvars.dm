@@ -815,7 +815,7 @@
 					R = new()
 				R.target = D
 				R.varname = variable
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				return
 

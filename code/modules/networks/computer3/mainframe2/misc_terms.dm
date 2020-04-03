@@ -3829,8 +3829,6 @@
 			boutput(user, "That is far too big to fit!")
 			return
 
-		return ..()
-
 /obj/machinery/networked/test_apparatus/impact_pad
 	name = "Impact Sensor Pad"
 	desc = "A floor pad that detects the physical reactions of objects placed on it."
@@ -4085,8 +4083,6 @@
 			boutput(user, "There is no room left for that!")
 			return
 
-		return ..()
-
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
@@ -4252,8 +4248,6 @@
 		else
 			boutput(user, "There is no room left for that!")
 			return
-
-		return ..()
 
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))

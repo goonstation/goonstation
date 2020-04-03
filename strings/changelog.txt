@@ -1,10 +1,14 @@
 ﻿
-(t)thu apr 2 20
+(t)thu apr 02 20
+(u)mbc
+(*)Added Cow mutantrace. It has special speech and scream sounds! You can purchase it in the spacebux menu.
+(u)AlfredoChicken
+(*)Added Folding Tables
 (u)Flourish
 (*)Added some spacebux rewards as suggested in one of our monthly contests - Mail Order, NT Backpack, Pride-O-Matic Jumpsuit, and Dancin Shoes.
 (u)ManlyDwarf
 (*)Added a new traitor objective to steal Gooncode.
-(t)wed apr 1 20
+(t)wed apr 01 20
 (u)mbc
 (*)New tile-fling special attack for crowbars.
 (*)Fixed bug where an item with a material property could have its throwforce weakened below its base value.

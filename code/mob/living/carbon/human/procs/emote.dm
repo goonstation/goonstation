@@ -31,7 +31,7 @@
 
 	var/message = null
 	if (src.mutantrace)
-		message = src.mutantrace.emote(act)
+		message = src.mutantrace.emote(act, voluntary)
 	if (!message)
 		switch (lowertext(act))
 			if ("custom")
@@ -1123,8 +1123,9 @@
 							goto showmessage
 
 
-					if (src.targeting_spell)
-						src.targeting_spell.flip_callback()
+					if (src.targeting_ability && istype(src.targeting_ability, /datum/targetable))
+						var/datum/targetable/D = src.targeting_ability
+						D.flip_callback()
 
 					if ((!istype(src.loc, /turf/space)) && (!src.on_chair))
 						if (!src.lying)
@@ -1745,7 +1746,7 @@
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 
-	showmessage
+	showmessage:
 	if (message)
 		logTheThing("say", src, null, "EMOTE: [message]")
 		act = lowertext(act)

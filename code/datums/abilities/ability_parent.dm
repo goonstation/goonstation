@@ -322,10 +322,10 @@
 						T.handleCast()
 						return
 					else
-						if(usr.targeting_spell == T)
-							usr.targeting_spell = null
+						if(usr.targeting_ability == T)
+							usr.targeting_ability = null
 						else
-							usr.targeting_spell = T
+							usr.targeting_ability = T
 						usr.update_cursor()
 					T.holder.updateButtons()
 					return 1
@@ -624,8 +624,8 @@
 		var/mob/user = holder.owner
 
 		if(parameters["left"])
-			if (owner.targeted && user.targeting_spell == owner)
-				user.targeting_spell = null
+			if (owner.targeted && user.targeting_ability == owner)
+				user.targeting_ability = null
 				user.update_cursor()
 				return
 
@@ -685,7 +685,7 @@
 						owner.handleCast()
 						return
 					else
-						user.targeting_spell = owner
+						user.targeting_ability = owner
 						user.update_cursor()
 		else if(parameters["middle"])
 			if(owner.waiting_for_hotkey)
@@ -952,7 +952,7 @@
 	vis_flags = VIS_INHERIT_ID
 
 /datum/abilityHolder/composite
-	var/list/holders = list()
+	var/list/datum/abilityHolder/holders = list()
 	rendered = 1
 	topBarRendered = 1
 
@@ -1038,7 +1038,7 @@
 				x_occupied = H.x_occupied
 				y_occupied = H.y_occupied
 				any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
-	
+
 	click(atom/target, params)
 		// ok, this is not ideal since each ability holder has its own keybinds. That sucks and should be reworked
 		. = 0
