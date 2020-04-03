@@ -101,8 +101,7 @@
 				R.add_reagent("venom",2)
 */
 			if (10)
-<<<<<<< HEAD
-				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
+				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax SmÃ¶rgÃ¥sbord Smak"
 				src.initial_reagents["cleaner"] = 2
 				src.initial_reagents["mercury"] = 2
 				src.initial_reagents["swedium"] = 6
