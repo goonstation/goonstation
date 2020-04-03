@@ -1645,7 +1645,7 @@
 
 			var/obj/item/reagent_containers/pee_target = mob.equipped()
 			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] fills [pee_target] with milk!</B></span>")
+				.= ("<span style=\"color:red\"><B>[mob] pees in [pee_target] with milk!</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				pee_target.reagents.add_reagent("milk", 20)
 				return
