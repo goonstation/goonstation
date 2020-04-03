@@ -59,7 +59,7 @@ toxic - poisons
 /datum/projectile/wavegun/emp
 	shot_number = 1
 	power = 0
-	dissipation_delay = 1
+	dissipation_delay = 0
 	dissipation_rate = -10 //only reliable past a few tiles 
 	max_range = 18 //taser-and-a-half range
 	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
@@ -71,21 +71,21 @@ toxic - poisons
 
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
-		if(prob(P.power*2.5))
-			for(var/atom/O in T.contents)
-				O.emp_act()
-		if(P.power >= 100) //10 tile shot, wow
+		if(P.power != 0) //avoid AoE on pointblank... but if you just shoot the guy beside you you're going to get EMPed
 			for(var/turf/tile in range(1,T))
 				for(var/atom/O in tile.contents)
 					if (isobj(O) || ismob(O))
 						O.emp_act()
+		if(prob(P.power*1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
+			for(var/atom/O in T.contents)
+				if (isobj(O) || ismob(O))
+					O.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
 	
-	on_pointblank(obj/projectile/P, mob/living/M)
-		if(prob(50))//make pointblanking less suck, but also only affect the target directly
-			M.emp_act()
+	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile. 
+		M.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, M)
 		s.start()
