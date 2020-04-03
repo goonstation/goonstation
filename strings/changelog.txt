@@ -1,4 +1,10 @@
 ﻿
+(t)fri apr 03 20
+(u)Erinexx
+(*)New dough, produce, herb, bowling melon, and snack sprites!
+(*)Shitty jpg pancake sprites have been preserved for future use <3
+(*)Clockwork orange is now a little more vivacious 
+(*)A bunch of other new food sprites!
 (t)thu apr 02 20
 (u)mbc
 (*)Added Cow mutantrace. It has special speech and scream sounds! You can purchase it in the spacebux menu.
