@@ -852,9 +852,9 @@ TRAYS
 				if(FOOD.reagents)
 					FOOD.reagents.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
-					if(FOOD.food_effects[food_effect] in roll.food_effects)
+					if(food_effect in roll.food_effects)
 						continue
-					roll.food_effects += FOOD.food_effects[food_effect]
+					roll.food_effects += food_effect
 					roll.quality += FOOD.quality
 				src.UpdateOverlays(foodoverlay,"topping-[src.toppings]")
 				user.u_equip(FOOD)
