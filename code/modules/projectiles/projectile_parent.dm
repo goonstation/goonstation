@@ -53,6 +53,7 @@
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 
+	var/projectile_paused = FALSE //for time stopping
 
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
@@ -86,6 +87,8 @@
 			src.setup()
 		is_processing = 1
 		while (!disposed)
+			while(src.projectile_paused)
+				sleep(10)
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0

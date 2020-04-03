@@ -260,6 +260,8 @@
 		var/turf/T = src.loc
 		while (target && ( (((src.x < target_true_x && dx == EAST) || (src.x > target_true_x && dx == WEST)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+			while(src.throwing_paused)
+				sleep(10)
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -300,6 +302,8 @@
 		var/turf/T = src.loc
 		while (target && ( (((src.y < target_true_y && dy == NORTH) || (src.y > target_true_y && dy == SOUTH)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+			while(src.throwing_paused)
+				sleep(10)
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge

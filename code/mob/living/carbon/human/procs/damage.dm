@@ -531,6 +531,10 @@
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
+	if (src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
 
 	brute = max(0, brute)
 	burn = max(0, burn)

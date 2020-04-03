@@ -535,6 +535,10 @@
 	if (..())
 		return
 
+	if(paused)
+		src.pausedbrain = max(0,src.pausedbrain + amount)
+		return
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
@@ -550,6 +554,10 @@
 
 /mob/living/carbon/take_toxin_damage(var/amount)
 	if (..())
+		return
+
+	if(paused)
+		src.pausedtox = max(0,src.pausedtox + amount)
 		return
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
@@ -569,6 +577,9 @@
 	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
 		src.oxyloss = 0
 		return
+
+	if(paused)
+		src.pausedoxy = max(0,src.pausedoxy + amount)
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
