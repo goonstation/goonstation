@@ -1605,6 +1605,12 @@
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> moos!"
 					playsound(get_turf(mob), "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch())
+			if ("pee", "piss", "urinate")
+				if (mob.emote_check(voluntary))
+					if (mob.sims)
+						.=..()
+					else
+						.= release_milk()
 			if ("milk")
 				if (mob.emote_check(voluntary))
 					.= release_milk()
@@ -1632,7 +1638,7 @@
 
 			var/obj/item/reagent_containers/pee_target = mob.equipped()
 			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] fills [pee_target] with milk!</B></span>")
+				.= ("<span style=\"color:red\"><B>[mob] pees in [pee_target] with milk!</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				pee_target.reagents.add_reagent("milk", 20)
 				return
