@@ -46,23 +46,23 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
 	name = "fish fillet"
 	desc = "A slab of meat from a fish."
-	icon_state = "fillet_pink"
+	icon_state = "fillet-pink"
 	amount = 1
 	food_color = "#F4B4BC"
 	real_name = "fish"
 	salmon
 		name = "salmon fillet"
-		icon_state = "fillet_orange"
+		icon_state = "fillet-orange"
 		food_color = "#F29866"
 		real_name = "salmon"
 	white
 		name = "white fish fillet"
-		icon_state = "fillet_white"
+		icon_state = "fillet-white"
 		food_color = "#FFECB7"
 		real_name = "white fish"
 	small
 		name = "small fish fillet"
-		icon_state = "fillet_small"
+		icon_state = "fillet-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
 
@@ -76,7 +76,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	name = "mystery meat"
 	desc = "What the fuck is this??"
-	icon_state = "mysterymeat"
+	icon_state = "meat-mystery"
 	amount = 1
 	var/cybermeat = 0
 
@@ -108,7 +108,7 @@
 	raw
 		name = "raw bacon"
 		desc = "A strip of salty raw cured pork. It really should be cooked first."
-		icon_state = "bacon_raw"
+		icon_state = "bacon-raw"
 		amount = 1
 		real_name = "bacon"
 
@@ -273,7 +273,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/peeled_banana
 	name = "peeled banana"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
-	icon_state = "banana_fruit"
+	icon_state = "banana-fruit"
 
 /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	name = "cheese"
@@ -715,7 +715,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	name = "seaweed sheets"
 	desc = "Dried and salted sheets of seaweed."
-	icon_state = "seaweed_sheets"
+	icon_state = "seaweed"
 	amount = 1
 	heal_amt = 1
 	food_color = "#4C453E"

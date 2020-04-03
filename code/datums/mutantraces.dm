@@ -1605,12 +1605,6 @@
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> moos!"
 					playsound(get_turf(mob), "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch())
-			if ("pee", "piss", "urinate")
-				if (mob.emote_check(voluntary))
-					if (mob.sims)
-						.=..()
-					else
-						.= release_milk()
 			if ("milk")
 				if (mob.emote_check(voluntary))
 					.= release_milk()
