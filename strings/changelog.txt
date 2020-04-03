@@ -1,5 +1,7 @@
 ﻿
 (t)thu apr 02 20
+(u)mbc
+(*)Added Cow mutantrace. It has special speech and scream sounds! You can purchase it in the spacebux menu.
 (u)AlfredoChicken
 (*)Added Folding Tables
 (u)Flourish
