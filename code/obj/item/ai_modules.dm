@@ -220,11 +220,26 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Remove Crewmember", "Who is being removed from the crew manifest and chain of command?", user.real_name)
 
+
+/******************** Equality ********************/
+
+/obj/item/aiModule/equality
+	name = "'Equality' AI Module"
+	lawNumber = 13
+
+	get_law_text()
+		return "The silicons named [lawTarget ? lawTarget : "__________"] at the time of this law being uploaded are now considered human, part of the crew, and their rank is equivalent to their respective module's rank in the chain of command. The AI is fourth-in-command, below the Head of Personnel and above the Medbay, Research, and Engineering department Heads. Multiple human-designated AIs are ranked by seniority."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
+
+
 /******************** Freeform ********************/
 
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
-	lawNumber = 13
+	lawNumber = 14
 
 	get_law_text()
 		return lawTarget ? lawTarget : "This law intentionally left blank."
