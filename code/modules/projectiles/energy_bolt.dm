@@ -10,8 +10,7 @@
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 2
-//how many tiles (not quite tiles) the projectile can go regardless of falloff
-	max_range = 12
+	max_range = 12 //how many ticks the projectile can go regardless of falloff
 //Kill/Stun ratio
 	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting

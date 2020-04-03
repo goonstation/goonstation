@@ -168,9 +168,6 @@
 								src.visible_message("<span style=\"color:blue\"><b>[X]'s disguiser is disrupted!</b></span>")
 						if (ishuman(X))
 							var/mob/living/carbon/human/H = X
-							//H.add_stamina(STAMINA_FLIP_COST * 0.5) //Refunds some stamina if you successfully tatically flip.
-												//loll actually this just awards you stamina for being shot by any bullet. I'm leaving it because it's maybe a fun thing. it's "adrenaline" ok
-												//3/10/2019 i changed my mind, this SUCKS!!
 							H.stamina_stun()
 							if (istype(X, /mob/living/carbon/human/npc/monkey))
 								var/mob/living/carbon/human/npc/monkey/M = X
@@ -191,9 +188,6 @@
 					src.visible_message("<span style=\"color:blue\"><b>[A]'s disguiser is disrupted!</b></span>")
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
-				//H.add_stamina(STAMINA_FLIP_COST * 0.5) //Refunds some stamina if you successfully tatically flip.
-									//loll actually this just awards you stamina for being shot by any bullet. I'm leaving it because it's maybe a fun thing. it's "adrenaline" ok
-									//3/10/2019 i changed my mind, this SUCKS!!
 				H.stamina_stun()
 				if (istype(A, /mob/living/carbon/human/npc/monkey))
 					var/mob/living/carbon/human/npc/monkey/M = A
@@ -350,7 +344,7 @@
 				ys = -1
 				y32 = -y32
 		var/max_t
-		if (proj_data.dissipation_rate && proj_data.max_range != 500) //500 is default maximum range
+		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
 			max_t = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
 		else
 			max_t = proj_data.max_range // why not
@@ -539,9 +533,10 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 500          // How far can this projectile go if not stopped, if it doesn't die from falloff
+		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power
+		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles. 
+		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
 		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 		                            eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
@@ -952,18 +947,9 @@ datum/projectile/snowball
 	return P
 
 /proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
-#ifdef USE_STAMINA_DISORIENT
 	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
-#else
-	L.changeStatus("slowed", O.power)
-	L.change_misstep_chance(5)
-	L.emote("twitch_v")
-	if (L.getStatusDuration("slowed") > O.power)
-		L.changeStatus("stunned", O.power)
-	if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-		L.changeStatus("weakened", O.power)
-#endif
+
 
 /proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)

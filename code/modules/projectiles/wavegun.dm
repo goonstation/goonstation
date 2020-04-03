@@ -8,8 +8,7 @@
 	cost = 33
 //How fast the power goes away
 	dissipation_rate = -2.5 //gets strong fast-ish
-//Range/time limiter on non-standard dissipation
-	max_range = 24 //long range, but not infinite
+	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
 //How many tiles till it starts to lose power (gain, in this case)
 	dissipation_delay = 4
 //Kill/Stun ratio
@@ -78,7 +77,8 @@ toxic - poisons
 		if(P.power >= 100) //10 tile shot, wow
 			for(var/turf/tile in range(1,T))
 				for(var/atom/O in tile.contents)
-					O.emp_act()
+					if (isobj(O) || ismob(O))
+						O.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
