@@ -257,6 +257,29 @@ Please clean it before use!</TT><BR>
 							src.extra_item = null // And the extra item
 							cooked_item = R.creates // Store the item that will be created
 
+						else if(src.egg_amount > 0) // egg was inserted alone
+							src.operating = 1 // Turn it on
+							src.icon_state = "mw1"
+							src.updateUsrDialog()
+							src.egg_amount = 0 //Clear all the values as this crap is what makes the mess inside!!
+							src.flour_amount = 0
+							src.water_amount = 0
+							src.humanmeat_amount = 0
+							src.monkeymeat_amount = 0
+							src.synthmeat_amount = 0
+							src.donkpocket_amount = 0
+							sleep(40) // Half way through
+							playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // Play a splat sound
+							icon_state = "mweggexplode1" // Make it look dirty!!
+							sleep(40) // Then at the end let it finish normally
+							playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+							src.visible_message("<span style=\"color:red\">The microwave gets covered in cooked egg!</span>")
+							src.dirty = 1 // Make it dirty so it can't be used util cleaned
+							src.icon_state = "mweggexplode" // Make it look dirty too
+							src.operating = 0 // Turn it off again aferwards
+							// Don't clear the extra item though so important stuff can't be deleted this way and
+							// an egg in the microwave would make a big mess.
+
 				if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
 					if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
 						src.operating = 1 // Turn it on
@@ -280,30 +303,6 @@ Please clean it before use!</TT><BR>
 						src.operating = 0 // Turn it off again aferwards
 						// Don't clear the extra item though so important stuff can't be deleted this way and
 						// it prolly wouldn't make a mess anyway
-
-
-					else if(src.egg_amount > 0) // egg was inserted alone
-						src.operating = 1 // Turn it on
-						src.icon_state = "mw1"
-						src.updateUsrDialog()
-						src.egg_amount = 0 //Clear all the values as this crap is what makes the mess inside!!
-						src.flour_amount = 0
-						src.water_amount = 0
-						src.humanmeat_amount = 0
-						src.monkeymeat_amount = 0
-						src.synthmeat_amount = 0
-						src.donkpocket_amount = 0
-						sleep(40) // Half way through
-						playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // Play a splat sound
-						icon_state = "mweggexplode1" // Make it look dirty!!
-						sleep(40) // Then at the end let it finish normally
-						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-						src.visible_message("<span style=\"color:red\">The microwave gets covered in cooked egg!</span>")
-						src.dirty = 1 // Make it dirty so it can't be used util cleaned
-						src.icon_state = "mweggexplode" // Make it look dirty too
-						src.operating = 0 // Turn it off again aferwards
-						// Don't clear the extra item though so important stuff can't be deleted this way and
-						// an egg in the microwave would make a big mess.
 
 					else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
 						src.operating = 1 // Turn it on
