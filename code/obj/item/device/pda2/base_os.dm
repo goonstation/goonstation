@@ -414,7 +414,7 @@
 						var/is_department_page = href_list["department"] == "1"
 						var/target_id = href_list["target"]
 						var/target_name = is_department_page ? target_id : detected_pdas[target_id]
-						if(!(target_id in src.detected_pdas))
+						if(!is_department_page && !(target_id in src.detected_pdas))
 							return
 
 						var/t = input(usr, "Please enter message", target_name, null) as text
