@@ -43,7 +43,7 @@
 	flags = NOSPLASH
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	var/beaker = null
+	var/obj/item/beaker = null
 	var/list/dispensable_reagents = list("aluminium","barium","bromine","carbon","calcium","chlorine", \
 										"chromium","copper","ethanol","fluorine","hydrogen", \
 										"iodine","iron","lithium","magnesium","mercury","nickel", \
@@ -110,7 +110,7 @@
 		if(!beaker)
 			data += {""stat_msg":"No [glass_name] loaded.\""}
 			show_stat = 1
-		else if (!beaker:reagents || beaker:reagents.total_volume >= beaker:reagents.maximum_volume)
+		else if (!beaker.reagents || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			data += {""stat_msg":"[capitalize(glass_name)] is full.\""}
 			show_stat = 1
 
@@ -372,8 +372,8 @@
 			if (!(id in dispensable_reagents))
 				doing_a_thing = 0
 				return
-			beaker:reagents.add_reagent(id,10)
-			beaker:reagents.handle_reactions()
+			beaker.reagents.add_reagent(id,10)
+			beaker.reagents.handle_reactions()
 			src.update_icon()
 			src.send_beaker_details()
 			send_reagent_details()
@@ -387,8 +387,8 @@
 			if (!(id in dispensable_reagents))
 				doing_a_thing = 0
 				return
-			beaker:reagents.add_reagent(id, isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
-			beaker:reagents.handle_reactions()
+			beaker.reagents.add_reagent(id, isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
+			beaker.reagents.handle_reactions()
 			src.update_icon()
 			src.send_beaker_details()
 			send_reagent_details()
@@ -405,8 +405,8 @@
 						var/amt = 10
 						if (isnum(group.reagents[reagent]))
 							amt = group.reagents[reagent]
-						beaker:reagents.add_reagent(reagent,amt)
-						beaker:reagents.handle_reactions()
+						beaker.reagents.add_reagent(reagent,amt)
+						beaker.reagents.handle_reactions()
 				src.update_icon()
 				src.send_beaker_details()
 				send_reagent_details()
@@ -423,31 +423,31 @@
 			return
 
 		else if (href_list["isolate"])
-			beaker:reagents.isolate_reagent(href_list["isolate"])
+			beaker.reagents.isolate_reagent(href_list["isolate"])
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["remove"])
-			beaker:reagents.del_reagent(href_list["remove"])
+			beaker.reagents.del_reagent(href_list["remove"])
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["removecustom"])
-			beaker:reagents.remove_reagent(href_list["removecustom"], isnum(src.user_remove_amt) ? src.user_remove_amt : 5)
+			beaker.reagents.remove_reagent(href_list["removecustom"], isnum(src.user_remove_amt) ? src.user_remove_amt : 5)
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["remove5"])
-			beaker:reagents.remove_reagent(href_list["remove5"], 5)
+			beaker.reagents.remove_reagent(href_list["remove5"], 5)
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["remove1"])
-			beaker:reagents.remove_reagent(href_list["remove1"], 1)
+			beaker.reagents.remove_reagent(href_list["remove1"], 1)
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()

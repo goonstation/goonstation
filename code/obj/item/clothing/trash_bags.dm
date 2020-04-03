@@ -120,21 +120,18 @@
 		..()
 		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1 || get_dist(usr, over_object) > 1)
 			return
-			if (usr.is_in_hands(src))
-				var/turf/T = over_object
-				if (istype(T, /obj/table))
-					T = get_turf(T)
-				if (!(usr in range(1, T)))
-					return
-				if (istype(T))
-					for (var/obj/O in T)
-						if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
-							return
-					if (!T.density)
-						return//usr.visible_message("<span style='color:red'>[usr] dumps the contents of [src] onto [T]!</span>")
-						for (var/obj/item/I in src.contents)
-							I.set_loc(T)
-							I.layer = initial(I.layer)
+		if (usr.is_in_hands(src))
+			var/turf/T = over_object
+			if (istype(T, /obj/table))
+				T = get_turf(T)
+			if (!(usr in range(1, T)))
+				return
+			if (istype(T))
+				for (var/obj/O in T)
+					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
+						return
+				if (!T.density)
+					return//usr.visible_message("<span style='color:red'>[usr] dumps the contents of [src] onto [T]!</span>")
 
 /obj/item/clothing/under/trash_bag/biohazard
 	name = "hazardous waste bag"

@@ -851,7 +851,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (ckey(folder1.name) == "etc")
 				for (var/datum/computer/folder/folder2 in folder1.contents)
 					if (ckey(folder2.name) == "mail")
-						folder2.add_file( new /datum/computer/file/record/iomoon_mail/rad_advisory(src) )
+						folder2.add_file( new /datum/computer/file/record/iomoon_mail/rad_advisory )
 						break
 
 				break

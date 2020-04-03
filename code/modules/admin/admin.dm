@@ -2909,9 +2909,10 @@ var/global/noir = 0
 								dat += "</table>"
 
 							else if (istype(ticker.mode, /datum/game_mode/spy))
-								if(ticker.mode:leaders.len > 0)
+								var/datum/game_mode/spy/spymode = ticker.mode
+								if(length(spymode.leaders))
 									dat += "<br><table cellspacing=5><tr><td><B>Infiltrators:</B></td><td></td><tr>"
-									for(var/datum/mind/leader in ticker.mode:leaders)
+									for(var/datum/mind/leader in spymode.leaders)
 										var/mob/M = leader.current
 										if(!M) continue
 										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -2922,14 +2923,14 @@ var/global/noir = 0
 								else
 									dat += "There are no infiltrators."
 
-								if(ticker.mode:spies.len > 0)
+								if(length(spymode.spies))
 									dat += "<br><table cellspacing=5><tr><td><B>Brainwashed Followers:</B></td><td></td><tr>"
-									for(var/datum/mind/spy in ticker.mode:spies)
+									for(var/datum/mind/spy in spymode.spies)
 										var/mob/M = spy.current
 										if(!M) continue
 										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td>Obeys: "
-										var/datum/mind/obeycheck = ticker.mode:spies[spy]
+										var/datum/mind/obeycheck = spymode.spies[spy]
 										if (istype(obeycheck) && obeycheck.current)
 											dat += "[obeycheck.current.ckey]"
 										else
@@ -2941,8 +2942,9 @@ var/global/noir = 0
 									dat += "There are no brainwashed followers."
 
 							else if (istype(ticker.mode, /datum/game_mode/gang))
-								if (ticker.mode:leaders.len > 0)
-									for(var/datum/mind/leader in ticker.mode:leaders)
+								var/datum/game_mode/gang/gangmode = ticker.mode
+								if (length(gangmode.leaders))
+									for(var/datum/mind/leader in gangmode.leaders)
 										var/mob/M = leader.current
 										var/datum/gang/gang = leader.gang
 										dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"

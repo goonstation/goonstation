@@ -160,8 +160,9 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				//BLUEGH ADMIN SHIT
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
-					if (TIME_DILATION_ENABLED)
-						stat("Variable Ticklag:", "[world.tick_lag]")
+					#if TIME_DILATION_ENABLED == 1
+					stat("Variable Ticklag:", "[world.tick_lag]")
+					#endif
 
 					if (!istype(src.loc, /turf) && !isnull(loc))
 						stat("Co-ordinates:", "([loc.x], [loc.y], [loc.z])")

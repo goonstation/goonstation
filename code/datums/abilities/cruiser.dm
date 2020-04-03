@@ -15,19 +15,19 @@
 				return
 			if (!spell.holder)
 				return
-			if (spell.targeted && usr:targeting_spell == owner)
-				usr:targeting_spell = null
+			if (spell.targeted && usr.targeting_ability == owner)
+				usr.targeting_ability = null
 				usr.update_cursor()
 				return
 			if (spell.targeted)
 				if (world.time < spell.last_cast)
 					return
-				usr:targeting_spell = owner
+				usr.targeting_ability = owner
 				usr.update_cursor()
-				return
 			else
 				SPAWN_DBG(0)
 					spell.handleCast()
+			return
 
 		owner.holder.updateButtons()
 

@@ -40,8 +40,8 @@
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev1])"
 			activator.set_clothing_icon_dirty()
 
-		else if (istype(activator.back, /obj/item/storage/backpack/NT))
-			var/obj/item/storage/backpack/NT/M = activator.back
+		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
+			var/obj/item/storage/backpack/M = activator.back
 			var/prev2 = M.name
 			M.icon = 'icons/obj/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'

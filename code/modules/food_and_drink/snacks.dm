@@ -4,6 +4,7 @@
 /obj/item/reagent_containers/food/snacks/yuck
 	name = "?????"
 	desc = "How the hell did they manage to cook this abomination..?!"
+	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "yuck"
 	amount = 1
 	heal_amt = 0
@@ -14,6 +15,7 @@
 /obj/item/reagent_containers/food/snacks/yuckburn
 	name = "smoldering mess"
 	desc = "This looks more like charcoal than food..."
+	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "burnt"
 	amount = 1
 	heal_amt = 0
@@ -25,7 +27,7 @@
 	name = "physical manifestation of the very concept of fried foods"
 	desc = "Oh, the power of the deep fryer."
 	heal_amt = 10
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "fried"
 	food_effects = list("food_warm")
 	use_bite_mask = 0
@@ -1408,6 +1410,7 @@
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"
 	desc = "A hotdog inside a fried cornmeal shell.  On a stick."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "corndog"
 	amount = 3
 	heal_amt = 4
@@ -1457,6 +1460,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
 	desc = "A plain hotdog."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog"
 	amount = 3
 	heal_amt = 2
@@ -1637,6 +1641,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog_half
 	name = "half hotdog"
 	desc = "A hot dog chopped in half!"
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog"
 	amount = 1
 	heal_amt = 1
@@ -1686,6 +1691,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog_chunk
 	name = "chunk of hotdog"
 	desc = "A hot dog chopped in half!"
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog_chunk"
 	amount = 1
 	heal_amt = 1
@@ -1695,6 +1701,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog_octo
 	name = "hotdog octopus"
 	desc = "A hot dog chopped into the shape of an octopus! How cute!"
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog_octo"
 	amount = 1
 	heal_amt = 1
@@ -2350,6 +2357,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 // Haggis and Scotch Eggs by Cirrial, 2017
 /obj/item/reagent_containers/food/snacks/haggis
 	name = "haggis"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "haggis"
 	needfork = 1
 	var/isbutt = 0
@@ -2406,7 +2414,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 /obj/item/reagent_containers/food/snacks/rice_ball
 	name = "rice ball"
 	desc = "A ball of sticky rice. Looks a bit plain."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "rice_ball"
 	amount = 2
 	heal_amt = 1
@@ -2445,12 +2453,13 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 /obj/item/reagent_containers/food/snacks/rice_ball/onigiri
 	name = "onigiri"
 	desc = "A strip of salty seaweed wrapped around a ball of sticky rice. Looks pretty good."
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "onigiri"
 
 /obj/item/reagent_containers/food/snacks/sushi_roll
 	name = "sushi roll"
 	desc = "A roll of seaweed, sticky rice, and freshly caught fish of unknown origin."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushi_roll"
 	amount = 4
 	heal_amt = 2
@@ -2489,7 +2498,8 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			..()
 
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
-	icon_state = "sushi_roll_custom"
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
+	icon_state = "sushiroll"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
@@ -2506,14 +2516,14 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type//src.type(get_turf(src))
 				S.cut = 1
 				S.amount = 1
-				S.icon_state = "chopped_sushi_roll"
+				S.icon_state = "chopped_sushiroll"
 				S.quality = src.quality
 				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
 				S.pixel_x = rand(-6, 6)
 				S.pixel_y = rand(-6, 6)
 				for(var/i=1,i<=src.overlays.len,i++) //transferring any overlays to the cut form
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"chopped_[src.overlay_refs[i]]")
+					var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"chopped_[src.overlay_refs[i]]")
 					overlay.color = buffer.color
 					S.UpdateOverlays(overlay,"[src.overlay_refs[i]]")
 				for(var/b=1,b<=src.food_effects.len,b++)
@@ -2527,7 +2537,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 /obj/item/reagent_containers/food/snacks/nigiri_roll
 	name = "nigiri roll"
 	desc = "A ball of sticky rice with a slice of freshly caught fish on top."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "nigiri"
 	amount = 2
 	heal_amt = 2

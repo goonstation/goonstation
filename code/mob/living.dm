@@ -100,7 +100,7 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
-	
+
 	qdel(chat_text)
 	chat_text = null
 
@@ -511,7 +511,7 @@
 			else
 				src.emote("handpuppet")
 
-/mob/living/say(var/message)
+/mob/living/say(var/message, ignore_stamina_winded)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -1189,8 +1189,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (src.buckled)
 				src.buckled.attack_hand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
-				if (src.targeting_spell == src.chair_flip_ability) //fuCKKK
-					src.targeting_spell = null
+				if (src.targeting_ability == src.chair_flip_ability) //fuCKKK
+					src.targeting_ability = null
 					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))

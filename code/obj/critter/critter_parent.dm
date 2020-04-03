@@ -792,7 +792,7 @@
 				return
 			var/list/visible = new()
 			for (var/mob/living/carbon/human/H in view (src.seekrange,src))
-				if (isdead(H) && H.decomp_stage <= 3 && !H:bioHolder.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
 			if (src.corpse_target && visible.Find(src.corpse_target))
@@ -830,7 +830,7 @@
 			if(!filter_target(C)) continue
 			if (C in src.friends) continue
 			if (ishuman(C))
-				if (C:bioHolder && C:bioHolder.HasEffect("revenant") || C:bioHolder && C:bioHolder.HasEffect("husk"))
+				if (C.bioHolder?.HasEffect("revenant") || C.bioHolder?.HasEffect("husk"))
 					continue
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1

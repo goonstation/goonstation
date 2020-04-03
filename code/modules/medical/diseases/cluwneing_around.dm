@@ -198,8 +198,8 @@
 		if (src.oldname && src.oldjob)
 			affected_mob.real_name = src.oldname
 			affected_mob.job = src.oldjob
-		if( affected_mob:mind.assigned_role == "Cluwne" )
-			affected_mob:mind.assigned_role = "Cleansed Cluwne"
+		if( affected_mob.mind?.assigned_role == "Cluwne" )
+			affected_mob.mind?.assigned_role = "Cleansed Cluwne"
 		boutput(affected_mob, "<span style=\"color:blue\">You feel like yourself again.</span>")
 		for(var/obj/item/clothing/W in affected_mob)
 			if (W.cant_self_remove && W.cant_other_remove)//this might not be a great way to do this.
