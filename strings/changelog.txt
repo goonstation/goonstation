@@ -1,5 +1,9 @@
 ﻿
 (t)thu apr 02 20
+(u)mbc
+(*)Added Cow mutantrace. It has special speech and scream sounds! You can purchase it in the spacebux menu.
+(u)AlfredoChicken
+(*)Added Folding Tables
 (u)Flourish
 (*)Added some spacebux rewards as suggested in one of our monthly contests - Mail Order, NT Backpack, Pride-O-Matic Jumpsuit, and Dancin Shoes.
 (u)ManlyDwarf

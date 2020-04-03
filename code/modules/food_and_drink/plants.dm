@@ -429,7 +429,7 @@
 /obj/item/reagent_containers/food/snacks/plant/melonslice/
 	name = "melon slice"
 	desc = "That's better!"
-	icon_state = "melon_slice"
+	icon_state = "melon-slice"
 	planttype = /datum/plant/melon
 	throwforce = 0
 	w_class = 1.0
@@ -442,7 +442,7 @@
 	name = "rainbow melon"
 	crop_prefix = "rainbow "
 	desc = "Sometime in the year 2472 these melons were required to have their name legally changed to protect the not-so-innocent. Also for tax evasion reasons."
-	icon_state = "george_melon"
+	icon_state = "george-melon"
 	throwforce = 0
 	w_class = 3.0
 	edible = 0
@@ -492,7 +492,7 @@
 /obj/item/reagent_containers/food/snacks/plant/melonslice/george
 	name = "rainbow melon slice"
 	desc = "A slice of a particularly special melon. Previously went by a different name but then it got married or something THIS IS HOW MELON NAMES WORK OKAY"
-	icon_state = "george_melon_slice"
+	icon_state = "george-melon-slice"
 	throwforce = 5
 	w_class = 1.0
 	amount = 1
@@ -508,9 +508,8 @@
 	name = "bowling melon"
 	crop_prefix = "bowling "
 	desc = "Just keep rollin' rollin'."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bowling_melon"
-	var/base_icon_state = "bowling_melon"
+	icon_state = "bowling-melon"
+	var/base_icon_state = "bowling-melon"
 	var/already_burst = 0
 	w_class = 3.0
 	force = 5
@@ -527,9 +526,9 @@
 	throw_at(atom/target, range, speed)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
-			src.icon_state = "[base_icon_state]_spin_right"
+			src.icon_state = "[base_icon_state]-spin-right"
 		else
-			src.icon_state = "[base_icon_state]_spin_left"
+			src.icon_state = "[base_icon_state]-spin-left"
 		..(target, range, speed)
 
 	attack_hand(mob/user as mob)
@@ -570,7 +569,7 @@
 			if(already_burst)
 				return
 			already_burst = 1
-			src.icon_state = "[base_icon_state]_burst"
+			src.icon_state = "[base_icon_state]-burst"
 			sleep(1)
 			var/n_slices = rand(1, 5)
 			var/amount_per_slice = 0
@@ -825,7 +824,7 @@
 			M.visible_message("<span style=\"color:red\">[M] eats [src] without peeling it. What a dumb beast!</span>")
 			M.take_toxin_damage(5)
 			pool (src)
-		else 
+		else
 			..()
 
 	attack_self(var/mob/user as mob)
@@ -1113,7 +1112,7 @@
 	name = "onion ring"
 	desc = "A sliced ring of onion. When fried, makes a side dish perfectly suited to being overlooked in favor of french fries."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "onion_ring"
+	icon_state = "onion-ring"
 	food_color = "#B923EB"
 	amount = 1
 	food_effects = list("food_bad_breath")
@@ -1187,7 +1186,7 @@
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
 	desc = "Tropical meat!"
-	icon_state = "coconut_meat"
+	icon_state = "coconut-meat"
 	planttype = /datum/plant/coconut
 	amount = 1
 	heal_amt = 2
