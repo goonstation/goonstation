@@ -273,10 +273,10 @@
 				return
 
 		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
-			if (!istype(src, /obj/table/folding))
-				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
-			else
+			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
+			else
+				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
@@ -300,8 +300,6 @@
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 			deconstruct()
-			src.set_density(0)
-			qdel(src)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
@@ -422,8 +420,6 @@
 			user.visible_message("<span style='color:red'>[user] collapses the [src] in one slam!</span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 			deconstruct()
-			src.set_density(0)
-			qdel(src)
 		else if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
