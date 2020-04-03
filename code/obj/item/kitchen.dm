@@ -806,7 +806,7 @@ TRAYS
 
 	attackby(obj/item/W as obj, mob/user as mob)
 
-		if(!locate(/obj/item/reagent_containers/food/snacks/sushi_roll/custom) in src.contents)
+		if(!(locate(/obj/item/reagent_containers/food/snacks/sushi_roll/custom) in src))
 			var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll_internal = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom(src)
 			roll = roll_internal
 
@@ -848,10 +848,10 @@ TRAYS
 				toppingdata.Add(FOOD.food_color)
 				if(FOOD.reagents)
 					FOOD.reagents.trans_to(roll,FOOD.reagents.total_volume)
-				for(var/b=1,b<=FOOD.food_effects.len,b++)
-					if(FOOD.food_effects[b] in roll.food_effects)
+				for(var/food_effect in FOOD.food_effects)
+					if(FOOD.food_effects[food_effect] in roll.food_effects)
 						continue
-					roll.food_effects += FOOD.food_effects[b]
+					roll.food_effects += FOOD.food_effects[food_effect]
 					roll.quality += FOOD.quality
 				src.UpdateOverlays(foodoverlay,"topping-[src.toppings]")
 				user.u_equip(FOOD)
