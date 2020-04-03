@@ -1587,6 +1587,18 @@
 			mob.update_body()
 			mob.update_clothing()
 
+			H.blood_id = "milk"
+			H.blood_color = "FFFFFF"
+
+
+	disposing()
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			H.blood_id = initial(H.blood_id)
+			H.blood_color = initial(H.blood_color)
+		..()
+
+
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)
@@ -1597,7 +1609,8 @@
 		return rgb(22, 210, 22)
 
 	say_filter(var/message)
-		return replacetext(message, "m", stutter("mm"))
+		.= replacetext(message, "cow", "human")
+		.= replacetext(., "m", stutter("mm"))
 
 	emote(var/act, var/voluntary)
 		switch(act)
