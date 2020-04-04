@@ -340,13 +340,16 @@ AI MODULES
 //note: these 'experimental' laws are spawned in via random_item_spawner instead of spawning every round
 //so, any given one of these will only have a chance of spawning
 //[IMPORTANT] The pool for the experimental laws starts on line 810 in file /code/obj/random_spawners.dm. UPDATE THAT TO INCLUDE ANY NEW LAWS SO THEY CAN SPAWN!!!
-//also note: ALL lawNumber of the experimental laws *must* be 13 so that any new ones uploaded overwrite any existing ones
+//also if you notice that there's like 5 or 6 experimental modules in the spawn list, maybe wanna increase the max amount that can spawn?
+
+/obj/item/aiModule/experimental
+	lawNumber = 13 //law number is at 13 for all experimental laws so they overwrite one another (override if you want I guess idc lol)
+
 
 /*** Equality ***/
 
 /obj/item/aiModule/experimental/equality/a
 	name = "Experimental 'Equality' AI Module"
-	lawNumber = 13
 
 	get_law_text()
 		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
@@ -357,7 +360,6 @@ AI MODULES
 
 /obj/item/aiModule/experimental/equality/b
 	name = "Experimental 'Equality' AI Module"
-	lawNumber = 13
 
 	get_law_text()
 		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
