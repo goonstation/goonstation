@@ -1067,7 +1067,7 @@ var/f_color_selector_handler/F_Color_Selector
 						if("rest")
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
-								H.resting = 1
+								H.setStatus("resting", INFINITE_STATUS)
 								H.force_laydown_standup()
 								H.hud.update_resting()
 							return 1
@@ -1075,7 +1075,7 @@ var/f_color_selector_handler/F_Color_Selector
 						if("stand")
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
-								H.resting = 0
+								H.delStatus("resting")
 								H.force_laydown_standup()
 								H.hud.update_resting()
 							return 1

@@ -131,7 +131,7 @@
 	attack_hand(mob/user as mob)
 		if(src.controller && !src.controller.loc == src)
 			src.exit(0)
-		
+
 		if(inUse) return
 
 		if(tube == null)
@@ -378,7 +378,7 @@
 				logTheThing("diary", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
-				M.resting = 1
+				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
 				logTheThing("combat", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]")
@@ -397,7 +397,7 @@
 			if (ismob(G.affecting))
 				var/mob/GM = G.affecting
 				GM.set_loc(src.loc)
-				GM.resting = 1
+				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
 				logTheThing("combat", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")

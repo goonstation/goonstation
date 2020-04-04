@@ -1645,13 +1645,13 @@
 
 			var/obj/item/reagent_containers/pee_target = mob.equipped()
 			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] pees in [pee_target] with milk!</B></span>")
+				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [pee_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				pee_target.reagents.add_reagent("milk", 20)
 				return
 
 			// possibly change the text colour to the gray emote text
-			.= (pick("<B>[mob]</B> squirts milk onto the floor.", "<B>[mob]</B> makes a big milk puddle on the floor."))
+			.= (pick("<B>[mob]</B> milk fall out.", "<B>[mob]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(mob)
 			T.fluid_react_single("milk", 5)

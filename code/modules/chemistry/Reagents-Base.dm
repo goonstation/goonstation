@@ -143,7 +143,7 @@ datum
 
 			on_add()
 				if (holder && ismob(holder.my_atom))
-					holder.my_atom.setStatus("drunk", duration = null)
+					holder.my_atom.setStatus("drunk", duration = INFINITE_STATUS)
 				return
 
 			on_remove()

@@ -122,6 +122,7 @@ var/list/global_spawn_dbg = list()
 #define issimulatedturf(x) istype(x, /turf/simulated)
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
 
+#define GET_MANHATTAN_DIST(A, B) ((!(A) || !(B)) ? 0 : abs((A).x - (B).x) + abs((A).y - (B).y))
 #define DIST_CHECK(A, B, R) (get_dist(A, B) <= (R) && get_step(A, 0).z == get_step(B, 0).z)
 
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return

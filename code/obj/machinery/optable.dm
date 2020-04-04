@@ -60,7 +60,7 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(M.hasStatus("resting"))
 			src.victim = M
 			icon_state = "table2-active"
 			return 1
@@ -77,7 +77,7 @@
 	if (istype(W, /obj/item/grab))
 		if(ismob(W:affecting))
 			var/mob/M = W:affecting
-			M.resting = 1
+			M.setStatus("resting", INFINITE_STATUS)
 			M.force_laydown_standup()
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -119,7 +119,7 @@
 	var/mob/living/carbon/C = O
 	if (user == C)
 		src.visible_message("<span style=\"color:red\"><b>[user.name]</b> lies down on [src].</span>")
-		user.resting = 1
+		user.setStatus("resting", INFINITE_STATUS)
 		user.force_laydown_standup()
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -129,7 +129,7 @@
 	else
 		src.visible_message("<span style=\"color:red\"><b>[user.name]</b> starts to move [C.name] onto the operating table.</span>")
 		if (do_mob(user,C,30))
-			C.resting = 1
+			C.setStatus("resting", INFINITE_STATUS)
 			C.force_laydown_standup()
 			if (ishuman(C))
 				var/mob/living/carbon/human/H = C

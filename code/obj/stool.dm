@@ -82,7 +82,7 @@
 			return ..()
 
 	proc/buckle_in(mob/living/to_buckle, var/stand = 0) //Handles the actual buckling in
-		to_buckle.setStatus("buckled", duration = null)
+		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return
 
 	proc/unbuckle() //Ditto but for unbuckling
@@ -344,7 +344,7 @@
 
 		to_buckle.set_clothing_icon_dirty()
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-		to_buckle.setStatus("buckled", duration = null)
+		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 
 	unbuckle()
 		..()
@@ -467,7 +467,7 @@
 			boutput(user, "<span style=\"color:red\">You must be lying down on [src] to sleep on it.</span>")
 			return
 
-		user.resting = 1
+		user.setStatus("resting", INFINITE_STATUS)
 		user.sleeping = 4
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -646,7 +646,7 @@
 				to_buckle.buckled = src
 				src.buckled_guy = to_buckle
 				src.buckledIn = 1
-				to_buckle.setStatus("buckled", duration = null)
+				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 				H.start_chair_flip_targeting()
 		else
 			if (src.anchored)
@@ -655,7 +655,7 @@
 			src.buckled_guy = to_buckle
 			to_buckle.set_loc(src.loc)
 			src.buckledIn = 1
-			to_buckle.setStatus("buckled", duration = null)
+			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 
