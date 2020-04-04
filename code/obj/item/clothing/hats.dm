@@ -435,20 +435,23 @@
 	icon_state = "chef"
 	item_state = "chefhat"
 	wear_image_icon = 'icons/mob/fruithat.dmi'
-	c_flags = SPACEWEAR
+	seal_hair = 1
+	//c_flags = SPACEWEAR
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
-	c_flags = SPACEWEAR
+	seal_hair = 1
+	//c_flags = SPACEWEAR
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
 	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
-	c_flags = SPACEWEAR
+	seal_hair = 1
+	//c_flags = SPACEWEAR
 
 /obj/item/clothing/head/mailcap
 	name = "Mailman's Hat"
@@ -851,12 +854,15 @@
 	desc = "The ultimate symbol of culinary mastery, setting you a step above the rest of Catering."
 	icon_state = "hoc-chef"
 	item_state = "hoc-chef"
-	c_flags = SPACEWEAR
+	seal_hair = 1
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
+
+	add_blood(mob/living/M as mob, var/amount = 5, var/reliquary = 0)
+		return
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"

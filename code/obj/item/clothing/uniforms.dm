@@ -425,6 +425,8 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 10)
 
+	add_blood(mob/living/M as mob, var/amount = 5, var/reliquary = 0)
+		return
 // Security
 
 /obj/item/clothing/under/rank/security
