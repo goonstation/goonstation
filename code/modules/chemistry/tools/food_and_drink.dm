@@ -468,7 +468,7 @@
 					return
 				user.visible_message("<span style='color:red'>[user] makes [M] drink from the [src].</span>")
 
-			if (M.mind && M.mind.assigned_role == "Bartender")
+			if (M.mind && M.mind.assigned_role == "Barman")
 				var/reag_list = ""
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
@@ -866,11 +866,11 @@
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Barman")
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Bartender")
+		else if (user.mind && user.mind.assigned_role == "Barman")
 			success_prob = 50
 			hurt_prob = 10
 
@@ -1231,7 +1231,7 @@
 	icon_state = "glass-oldf"
 	glass_style = "oldf"
 	initial_volume = 20
-
+	
 /obj/item/reagent_containers/food/drinks/drinkingglass/round
 	name = "round glass"
 	icon_state = "glass-round"

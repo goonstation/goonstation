@@ -2228,7 +2228,7 @@
 "aQR" = (/obj/machinery/door/airlock{name = "Bar"; req_access_txt = "25"},/turf/simulated/floor/plating,/area/station/crew_quarters/bar)
 "aQS" = (/obj/item/storage/glassbox,/turf/simulated/floor/plating,/area/station/crew_quarters/bar)
 "aQT" = (/obj/machinery/door/window/eastleft{name = "Bar"; req_access_txt = "25"},/turf/simulated/floor/plating,/area/station/crew_quarters/bar)
-"aQU" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
+"aQU" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aQV" = (/obj/table{dir = 5; icon_state = "tabledir"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aQW" = (/obj/stool/chair{dir = 1},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aQX" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)

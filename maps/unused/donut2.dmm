@@ -3552,7 +3552,7 @@
 "bqp" = (/obj/machinery/vending/kitchen,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "bqq" = (/obj/disposalpipe/segment/mail,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "bqr" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/table/auto,/obj/item/kitchen/rollingpin,/obj/item/storage/box/cutlery,/obj/item/reagent_containers/food/drinks/bowl,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
-"bqs" = (/obj/landmark/start{name = "Bartender"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/obj/machinery/light{dir = 8; icon_state = "tube1"; tag = ""},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
+"bqs" = (/obj/landmark/start{name = "Barman"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/obj/machinery/light{dir = 8; icon_state = "tube1"; tag = ""},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "bqt" = (/obj/table/reinforced/bar/auto,/obj/machinery/cashreg,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "bqu" = (/obj/landmark{icon_state = "x3"; name = "peststart"},/obj/stool,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "bqv" = (/obj/table/reinforced/bar/auto,/obj/item/plate,/obj/item/gun/russianrevolver,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)

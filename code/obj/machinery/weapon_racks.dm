@@ -10,7 +10,7 @@
 
 	To-Do:
 	Wall-mounted shotgun racks
-	A cool rack for the bartender's shotgun
+	A cool rack for the barman's shotgun
 */
 
 /obj/machinery/weapon_stand
@@ -206,7 +206,7 @@
 
 			user.Browse(pdat, "window=rackpanel")
 			onclose(user, "rackpanel")
-
+		
 		if(!ishuman(user) || !isliving(user))
 			return
 

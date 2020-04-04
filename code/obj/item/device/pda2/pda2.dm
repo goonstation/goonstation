@@ -193,7 +193,7 @@
 		icon_state = "pda-waiter"
 		mailgroups = list("kitchen","Party Line")
 
-	bartender
+	barman
 		mailgroups = list("kitchen","Party Line")
 
 	mechanic

@@ -211,7 +211,7 @@
 (-)
 (t)mon sep 30 13
 (u)AngriestIBM with special guest Daeren!!
-(*)Daeren made a bunch of new cocktails for the bartender.  Oh boy!!
+(*)Daeren made a bunch of new cocktails for the barman.  Oh boy!!
 (-)
 (t)sun sep 29 13
 (u)Aphtonites
@@ -1834,7 +1834,7 @@
 (-)
 (t)sun jan 15 12
 (u)Infinite Monkeys
-(*)Horror form isnï¿½t harmed by stepping on glass and can consume with an Agressive grip.
+(*)Horror form isn’t harmed by stepping on glass and can consume with an Agressive grip.
 (*)AI can now make an intercom (VOX) announcement once every two minutes!
 (-)
 (t)fri jan 13 12
@@ -2172,7 +2172,7 @@
 (*)updatedthe spawning system that picks from dead players to include dead players which are not only ghosts, but people still in their bodies
 (*)Decreased the amount of time it takes for you to get up after resting
 (*)Added a test room which allows new features to be tested on the server without disrupting the game currently in progress
-(*)Added in the Bartenders ability to taste what he drinks, meaning he'll get a message about what the drink contains
+(*)Added in the Barmans ability to taste what he drinks, meaning he'll get a message about what the drink contains
 (*)Added a bunch of new alien critters so that if there are no dead people to pick from, an alien critter will be created instead. This will go through the same larva -> humanoid process.
 (*)Decreased the amount of time it takes for a larva alien to evolve into a larger alien
 (*)Disable an admin toggle on aliens being in game in preparation for a new game mode
@@ -2393,7 +2393,7 @@
 (*)Hydro Satchels (now named Produce Satchels) can now carry all types of food. Chef gets one too.
 (*)Click/drag/drop a satchel onto a table to dump out its contents onto the table.
 (*)Chef's Processor can now be quickloaded with click/drag/drop.
-(*)Cafe back doors are restricted to Bartender (north) and Chef (south) access.
+(*)Cafe back doors are restricted to Barman (north) and Chef (south) access.
 (*)The Lawyer has been disbarred for pounding his fist on desks and screaming at the top of his voice while court is in session.
 (-)
 (t)mon feb 21 11
@@ -2458,7 +2458,7 @@
 (-)
 (t)thu jan 27 11
 (u)I Said No
-(*)Stills for the bartender. Load apples, grapes, potatoes and mushrooms into them. Max capacity of 1000, you can also use the drag/drop like the Fabricator to load it quickly.
+(*)Stills for the barman. Load apples, grapes, potatoes and mushrooms into them. Max capacity of 1000, you can also use the drag/drop like the Fabricator to load it quickly.
 (*)Tanks (water, foam, welder fuel, etc) will now try to fill your item completely in one click rather than transferring 10 units a time.
 (-)
 (t)sun jan 23 11
@@ -2699,7 +2699,7 @@
 (*)Russian roulette is now more like its exciting real life counterpart.
 (-)
 (u)ProcitizenSA (kinda)
-(*)<b>ATTENTION STATION SECURITY</b>: The following is a message from SecuTech security. <i>Thank you for trying SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unitï¿½. We hope you enjoyed your trial, but your evaluation copy has expired. Please register and purchase SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unitï¿½ to continue. Thank you and have a secure day. (NT vbrig will keep on keepin on)</i>
+(*)<b>ATTENTION STATION SECURITY</b>: The following is a message from SecuTech security. <i>Thank you for trying SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unit™. We hope you enjoyed your trial, but your evaluation copy has expired. Please register and purchase SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unit™ to continue. Thank you and have a secure day. (NT vbrig will keep on keepin on)</i>
 (-)
 (t)sun dec 19 10
 (u)I Said No

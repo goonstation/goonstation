@@ -1642,7 +1642,7 @@
 "aFD" = (/obj/table/auto,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aFE" = (/obj/table/auto,/obj/landmark{name = "monkeyspawn_mrmuggles"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aFF" = (/obj/table/reinforced/auto,/obj/item/coin,/obj/item/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
-"aFG" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
+"aFG" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aFH" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aFI" = (/turf/simulated/wall,/area/station/storage/autolathe)
 "aFJ" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/station/hallway/primary/central)

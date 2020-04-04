@@ -572,8 +572,8 @@
 /obj/item/clothing/under/rank/bartender
 	name = "bartender's suit"
 	desc = "A nice and tidy outfit. Shame about the bar though."
-	icon_state = "bartender"
-	item_state = "bartender"
+	icon_state = "barman"
+	item_state = "barman"
 
 /obj/item/clothing/under/rank/chef
 	name = "chef's uniform"

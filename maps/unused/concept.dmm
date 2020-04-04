@@ -2545,7 +2545,7 @@
 "aWW" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/black,/area/crew_quarters/bar)
 "aWX" = (/turf/simulated/floor/black,/area/crew_quarters/bar)
 "aWY" = (/obj/disposalpipe/segment,/turf/simulated/floor/black,/area/crew_quarters/bar)
-"aWZ" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/black,/area/crew_quarters/bar)
+"aWZ" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/black,/area/crew_quarters/bar)
 "aXa" = (/obj/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/simulated/floor/black,/area/crew_quarters/bar)
 "aXb" = (/obj/item/a_gift/festive,/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "aXc" = (/obj/disposalpipe/segment,/turf/simulated/floor/carpet,/area/crew_quarters/bar)

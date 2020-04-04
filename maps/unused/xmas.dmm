@@ -2495,7 +2495,7 @@
 "aVY" = (/obj/item/satchel/hydro,/turf/simulated/floor/sanitary,/area/crew_quarters/kitchen)
 "aVZ" = (/obj/machinery/camera{c_tag = "Kitchen"},/obj/machinery/alarm{name = "Local Air Monitor"; pixel_y = 29},/obj/secure_closet/kitchen,/turf/simulated/floor/sanitary,/area/crew_quarters/kitchen)
 "aWa" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/gibber,/turf/simulated/floor/sanitary,/area/crew_quarters/kitchen)
-"aWb" = (/obj/landmark/start{name = "Bartender"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
+"aWb" = (/obj/landmark/start{name = "Barman"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "aWc" = (/obj/landmark{name = "peststart"},/obj/stool,/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "aWd" = (/obj/table{icon_state = "tabledir"; dir = 9},/obj/item/plate,/mob/living/carbon/monkey{icon_state = "muggles"; monkey_name = "muggles"; name = "Mr. Muggles"},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "aWe" = (/obj/table{dir = 5; icon_state = "tabledir"},/obj/item/reagent_containers/food/drinks/drinkingglass,/obj/item/dice{pixel_y = 9},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)

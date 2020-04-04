@@ -2490,7 +2490,7 @@
 "aVT" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVU" = (/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVV" = (/obj/disposalpipe/segment,/turf/simulated/floor/black,/area/station/crew_quarters/bar)
-"aVW" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
+"aVW" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVX" = (/obj/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVY" = (/obj/item/a_gift/festive,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aVZ" = (/obj/disposalpipe/segment,/turf/simulated/floor/carpet,/area/station/crew_quarters/bar)

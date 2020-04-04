@@ -1030,7 +1030,7 @@
 "tP" = (/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "tQ" = (/obj/stool,/obj/landmark/start{name = "Head of Security"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "tR" = (/obj/table/reinforced{dir = 8; icon_state = "reinf_tabledir"; tag = "icon-reinf_tabledir"},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
-"tS" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
+"tS" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/specialroom/bar,/area/crew_quarters/bar)
 "tT" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/white,/area/crew_quarters/cafeteria)
 "tU" = (/obj/machinery/atmospherics/pipe/simple{icon_state = "intact"; level = 2},/obj/machinery/meter,/turf/simulated/floor,/area/atmos)
 "tV" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/floor,/area/atmos)

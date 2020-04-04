@@ -1140,7 +1140,7 @@
 "avV" = (/obj/table/reinforced/bar/auto,/obj/machinery/microwave,/turf/simulated/floor/specialroom/bar/edge{dir = 5},/area/station/crew_quarters/cafeteria)
 "avW" = (/obj/landmark{icon_state = "x3"; name = "peststart"},/turf/simulated/floor/black,/area/station/crew_quarters/cafeteria)
 "avX" = (/obj/machinery/door/firedoor/pyro{dir = 4},/obj/machinery/door/airlock/pyro{dir = 4; name = "Bar"; req_access_txt = "25"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/cafeteria)
-"avY" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
+"avY" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
 "avZ" = (/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
 "awa" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/machinery/door/firedoor/pyro{dir = 8},/obj/machinery/door/airlock/pyro{dir = 4; name = "Bar"; req_access_txt = "25"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
 "awb" = (/obj/disposalpipe/segment,/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/cable{icon_state = "2-4"; d1 = 2; d2 = 4},/turf/simulated/floor/black,/area/station/crew_quarters/catering)

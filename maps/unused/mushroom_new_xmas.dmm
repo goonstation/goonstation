@@ -2490,7 +2490,7 @@
 "aVU" = (/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVV" = (/obj/machinery/drainage,/obj/decal/tile_edge/stripe/xmas{icon_state = "xmas"; dir = 1},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVW" = (/obj/disposalpipe/segment,/obj/decal/tile_edge/stripe/xmas{icon_state = "xmas"; dir = 1},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
-"aVX" = (/obj/landmark/start{name = "Bartender"},/obj/decal/tile_edge/stripe/xmas{icon_state = "xmas"; dir = 1},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
+"aVX" = (/obj/landmark/start{name = "Barman"},/obj/decal/tile_edge/stripe/xmas{icon_state = "xmas"; dir = 1},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVY" = (/obj/stool/bar,/turf/simulated/floor{icon_state = "carpetN"},/area/station/crew_quarters/cafeteria)
 "aVZ" = (/obj/disposalpipe/segment,/turf/simulated/floor/carpet,/area/station/crew_quarters/bar)
 "aWa" = (/turf/simulated/floor/carpet,/area/station/crew_quarters/bar)
