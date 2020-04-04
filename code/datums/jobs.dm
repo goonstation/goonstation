@@ -425,6 +425,7 @@
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_drinker")
 		M.bioHolder.AddEffect("resist_foodpoisoning")
 		if (prob(20))
 			M.bioHolder.AddEffect("accent_swedish")
@@ -794,6 +795,22 @@
 			return
 		if (prob(20))
 			M.bioHolder.AddEffect("accent_swedish")
+
+/datum/job/catering/souschef
+	name = "Sous-Chef"
+	limit = 2
+	wages = 80
+	slot_belt = /obj/item/device/pda2/chef
+	slot_jump = /obj/item/clothing/under/rank/chef
+	slot_foot = /obj/item/clothing/shoes/chef
+	slot_head = /obj/item/clothing/head/souschefhat
+	slot_suit = /obj/item/clothing/suit/chef
+	slot_ears = /obj/item/device/radio/headset/catering
+
+	New()
+		..()
+		src.access = get_access("Sous-Chef")
+		return
 
 /datum/job/catering/barman
 	name = "Barman"
@@ -1546,36 +1563,6 @@
 			bee.name = replacetext(bee.name, "larva", "bee")
 
 		M.bioHolder.AddEffect("bee") //They're one with the bees!
-
-/datum/job/special/random/souschef
-	name = "Sous-Chef"
-	wages = 75
-	slot_belt = /obj/item/device/pda2/chef
-	slot_jump = /obj/item/clothing/under/rank/chef
-	slot_foot = /obj/item/clothing/shoes/chef
-	slot_head = /obj/item/clothing/head/souschefhat
-	slot_suit = /obj/item/clothing/suit/chef
-	slot_ears = /obj/item/device/radio/headset/civilian
-
-	New()
-		..()
-		src.access = get_access("Sous-Chef")
-		return
-
-/datum/job/special/random/waiter
-	name = "Waiter"
-	wages = 50
-	slot_jump = /obj/item/clothing/under/rank/bartender
-	slot_suit = /obj/item/clothing/suit/wcoat
-	slot_foot = /obj/item/clothing/shoes/black
-	slot_ears = /obj/item/device/radio/headset/civilian
-	slot_lhan = /obj/item/plate/tray
-	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
-
-	New()
-		..()
-		src.access = get_access("Waiter")
-		return
 
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
