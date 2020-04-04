@@ -999,7 +999,9 @@ var/list/statusGroupLimits = list("Food"=4)
 			if (ishuman(owner))
 				H = owner
 			else
-				if (owner.handcuffs) owner.handcuffs.drop_handcuffs(owner) //Some kind of invalid mob??
+				if (ismob(owner))
+					var/mob/M = owner
+					if (M.handcuffs) M.handcuffs.drop_handcuffs(M) //Some kind of invalid mob??
 				owner.delStatus("handcuffed")
 
 		clicked(list/params)
