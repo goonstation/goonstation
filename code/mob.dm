@@ -61,7 +61,6 @@
 	var/blinded = null
 	var/druggy = 0
 	var/sleeping = 0.0
-	var/resting = 0.0
 	var/lying = 0.0
 	var/lying_old = 0
 	var/canmove = 1.0

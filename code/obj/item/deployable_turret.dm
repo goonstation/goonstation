@@ -407,7 +407,7 @@
 			return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.resting || H.hasStatus("weakened")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus("resting") || H.hasStatus("weakened")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return 0
 		if (is_friend(C))
 			return 0

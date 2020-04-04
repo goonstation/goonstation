@@ -124,7 +124,7 @@
 	if(world.time < ai_lastaction + ai_actiondelay) return
 
 	var/action_delay = 0
-	resting = 0
+	delStatus("resting")
 	if(hud) hud.update_resting()
 
 	if (isdead(src))

@@ -469,7 +469,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 							if(iscarbon(src.target) && !uncuffable)
 								src.target.handcuffed = new /obj/item/handcuffs(src.target)
-								src.target.setStatus("handcuffed", duration = null)
+								src.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 							var/last_target = target
 

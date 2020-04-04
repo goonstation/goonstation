@@ -134,7 +134,7 @@
 	M.set_loc(src.loc)
 	src.add_fingerprint(user)
 	playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-	M.setStatus("buckled", duration = null)
+	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
 /obj/stool/barber_chair/attack_hand(mob/user as mob)

@@ -57,7 +57,7 @@
 			H.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
 
 	target.sleeping = 0
-	target.resting = 0
+	target.delStatus("resting")
 
 	target.changeStatus("stunned", -50)
 	target.changeStatus("paralysis", -50)

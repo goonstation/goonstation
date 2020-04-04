@@ -376,10 +376,10 @@
 				src.update_pulling()
 
 			if ("rest")
-				if(master.ai_active && !master.resting)
+				if(master.ai_active && !master.hasStatus("resting"))
 					master.show_text("You feel too restless to do that!", "red")
 				else
-					master.resting = !master.resting
+					master.hasStatus("resting") ? master.delStatus("resting") : master.setStatus("resting", INFINITE_STATUS)
 					master.force_laydown_standup()
 				src.update_resting()
 
@@ -572,7 +572,7 @@
 
 	proc/update_resting()
 		if (!resting) return 0
-		resting.icon_state = "rest[master.resting]"
+		resting.icon_state = "rest[master.hasStatus("resting") ? 1 : 0]"
 
 	proc/update_ability_hotbar()
 		if (!master || !master.client)
