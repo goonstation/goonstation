@@ -653,7 +653,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	attack_hand(var/mob/user as mob)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.job == "Chef" || H.job == "Sous-Chef")
+			if (H.job == "Head of Catering" || H.job == "Chef" || H.job == "Sous-Chef")
 				user.visible_message("<span style=\"color:blue\"><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span style=\"color:blue\">You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
