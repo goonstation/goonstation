@@ -24,7 +24,6 @@
 			"<span style='color:blue'>You crush up \the [src] in \the [target].</span>")
 			src.reagents.trans_to(target, 100)
 			qdel (src)
-			return
 
 		else return
 
