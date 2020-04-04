@@ -248,7 +248,7 @@
 "eN" = (/obj/machinery/manufacturer/robotics,/turf/simulated/floor/delivery,/area/station/quartermaster)
 "eO" = (/obj/machinery/manufacturer/general,/turf/simulated/floor/delivery,/area/station/quartermaster)
 "eP" = (/obj/machinery/light{dir = 4; layer = 9.1; pixel_x = 10},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/yellow/side{dir = 4},/area/station/quartermaster)
-"eQ" = (/obj/table/auto,/obj/item/aiModule/equality,/turf/simulated/floor/circuit,/area/station/turret_protected/Zeta)
+"eQ" = (/obj/table/auto,/obj/random_item_spawner/ai_experimental,/turf/simulated/floor/circuit,/area/station/turret_protected/Zeta)
 "eU" = (/obj/machinery/atmospherics/binary/pump{dir = 8; frequency = 1225; icon_state = "intact_on"; id = "Combustion Chamber Inlet 2"; on = 1; target_pressure = 1000},/obj/machinery/door_control{id = "vent"; name = "Combustion Chamber Vent Control"; pixel_x = -25},/turf/simulated/floor/caution/northsouth,/area/station/engine/core)
 "eV" = (/obj/cable{icon_state = "4-8"},/turf/simulated/floor/black,/area/station/crew_quarters/catering)
 "eW" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/random,/area/station/maintenance/NWmaint)

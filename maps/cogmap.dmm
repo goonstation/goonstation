@@ -6878,7 +6878,7 @@
 "cCn" = (/turf/space,/obj/grille/catwalk,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/disposalpipe/segment/morgue,/turf/simulated/floor/airless/plating/catwalk,/area)
 "cCo" = (/obj/decal/poster/wallsign/teaparty{pixel_y = 32},/turf/simulated/floor/yellow/side{dir = 1},/area/station/hallway/primary/south)
 "cCp" = (/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/stool/chair{dir = 4},/obj/disposalpipe/segment,/obj/landmark/start{name = "Janitor"},/turf/simulated/floor,/area/station/janitor/supply)
-"cCq" = (/obj/window/reinforced{dir = 1},/obj/table/reinforced/auto,/obj/item/aiModule/oneHuman,/obj/item/aiModule/makeCaptain,/obj/item/aiModule/equality,/turf/simulated/floor/blue,/area/station/turret_protected/ai_upload)
+"cCq" = (/obj/window/reinforced{dir = 1},/obj/table/reinforced/auto,/obj/item/aiModule/oneHuman,/obj/item/aiModule/makeCaptain,/obj/random_item_spawner/ai_experimental,/turf/simulated/floor/blue,/area/station/turret_protected/ai_upload)
 "cCr" = (/obj/storage/secure/closet/civilian/janitor,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/machinery/camera{c_tag = "autotag"; dir = 1; name = "autoname - SS13"; tag = ""},/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/trash_bags,/turf/simulated/floor/purple/side{dir = 10},/area/station/janitor/supply)
 "cCs" = (/obj/machinery/camera{c_tag = "autotag"; dir = 9; name = "autoname - SS13"; tag = ""},/obj/landmark/start{name = "Roboticist"},/turf/simulated/floor/grime,/area/station/medical/robotics)
 "cCt" = (/obj/machinery/door/airlock/pyro/external{dir = 4; name = "Mining Shuttle Airlock"},/obj/machinery/secscanner{dir = 4; pixel_x = -20},/turf/simulated/floor/delivery,/area/station/mining)
