@@ -15,6 +15,9 @@
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 1
 
+		else if (dir == SOUTHWEST || dir == SOUTHEAST)
+			layer = MOB_LAYER + 1.1
+
 		else if (dir == NORTH)
 			layer = OBJ_LAYER - 0.2
 
@@ -35,8 +38,10 @@
 			return 1
 		if(air_group || (height==0))
 			return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
+		if (src.dir == NORTHWEST || src.dir == NORTHEAST)
 			return 0
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST)
+			return 1
 		if(get_dir(loc, O) == dir)
 			return !density
 		else
@@ -86,13 +91,13 @@
 		..()
 		layerify()
 
-	attackby(obj/item/I, mob/user)
-		var/obj/item/weldingtool/WELDER
-		if (I == WELDER)
-			if (WELDER.get_fuel() == 2)
+	attackby(obj/item/W as obj, mob/user)
+		if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WELD = W
+			if (WELD.get_fuel() == 2)
 				actions.start(new /datum/action/bar/icon/railingDeconstruct(src), user)
 			else
-				user.show_text("[WELDER] doesn't have enough fuel!", "red")
+				user.show_text("[WELD] doesn't have enough fuel!", "red")
 
 	orange
 		color = "#ff7b00"
@@ -120,12 +125,12 @@
 	icon_state = "weldingtool_on"
 	var/obj/railing/target
 	var/mob/living/user
-	var/obj/item/weldingtool/WELDER
 	var/mob/ownerMob
+	var/obj/item/weldingtool/WELD
 
 	New(Target)
 		target = Target
-		WELDER = user.find_type_in_hand(/obj/item/weldingtool)
+		WELD = user.find_type_in_hand(/obj/item/weldingtool)
 		ownerMob = owner
 		..()
 
@@ -142,7 +147,7 @@
 			return
 		for(var/mob/O in AIviewers(owner))
 			O.show_text("[owner] begins to weld [target]!", "red")
-		WELDER.eyecheck(user)
+
 
 	onEnd()
 		..()
@@ -152,4 +157,5 @@
 			var/obj/item/ammo/bullets/rod/R = new(target)
 			R.amount = 4
 			qdel(target)
-			WELDER.use_fuel(1)
+			WELD.eyecheck(user)
+			WELD.use_fuel(1)
