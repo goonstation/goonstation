@@ -1755,6 +1755,7 @@
 		/datum/manufacture/blue_tube,
 		/datum/manufacture/purple_tube,
 		/datum/manufacture/blacklight_tube,
+		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
