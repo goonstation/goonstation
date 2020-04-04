@@ -812,11 +812,11 @@
 		src.access = get_access("Sous-Chef")
 		return
 
-/datum/job/catering/barman
-	name = "Barman"
+/datum/job/catering/bartender
+	name = "Bartender"
 	limit = 1
 	wages = 100
-	slot_belt = /obj/item/device/pda2/barman
+	slot_belt = /obj/item/device/pda2/bartender
 	slot_jump = /obj/item/clothing/under/rank/bartender
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_suit = /obj/item/clothing/suit/armor/vest
@@ -826,7 +826,7 @@
 
 	New()
 		..()
-		src.access = get_access("Barman")
+		src.access = get_access("Bartender")
 		return
 
 	special_setup(var/mob/living/carbon/human/M)

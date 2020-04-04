@@ -599,7 +599,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/barman,\
+	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
 	/obj/item/storage/box/clothing/waiter,\
 	/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
@@ -652,24 +652,24 @@
 			bc1.pixel_x = 3
 			bc2.pixel_x = 3
 			p.pixel_x = 3
-		
+
 			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
 			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
 			e1.pixel_y = -4
 			e2.pixel_y = -4
-			
+
 			var/obj/item/reagent_containers/food/drinks/cola/c1 = new(src)
 			var/obj/item/reagent_containers/food/drinks/cola/c2 = new(src)
 			c1.pixel_x = -8
 			c2.pixel_x = -8
-			
+
 			var/obj/item/storage/box/cheese/cheese = new(src)
 			cheese.pixel_x = 3
-			
+
 			var/obj/item/storage/box/butter/butter = new(src)
 			butter.pixel_x = 2
 			butter.pixel_y = 4
-			
+
 			if (prob(25))
 				for (var/i = rand(2,10), i > 0, i--)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)

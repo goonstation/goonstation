@@ -2794,7 +2794,7 @@
 "bbL" = (/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/obj/disposalpipe/segment/mail/vertical,/turf/simulated/floor,/area/station/hydroponics)
 "bbM" = (/obj/machinery/door/firedoor/border_only{dir = 8},/obj/table/reinforced/auto,/obj/item/plate,/obj/item/reagent_containers/food/snacks/sandwich/meat_m{name = "100% synthetic freerange monkey sandwich"},/turf/simulated/floor/sanitary,/area/station/hydroponics)
 "bbN" = (/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
-"bbO" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
+"bbO" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "bbP" = (/obj/cable{icon_state = "1-4"},/obj/decal/mule/beacon,/obj/machinery/navbeacon{codes_txt = "delivery;dir=2"; location = "Catering"; name = "MULE delivery beacon"},/turf/simulated/floor/plating,/area/station/maintenance/east)
 "bbQ" = (/obj/cable{icon_state = "4-8"},/obj/cable{icon_state = "2-4"; d1 = 2; d2 = 4},/obj/disposalpipe/junction/right/south,/turf/simulated/floor/plating,/area/station/maintenance/east)
 "bbR" = (/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc{areastring = "Chapel"; dir = 1; name = "Chapel APC"; pixel_x = 0; pixel_y = 24},/obj/cable{d2 = 4; icon_state = "0-4"; pixel_y = 0},/obj/disposalpipe/segment/horizontal,/turf/simulated/floor/plating,/area/station/maintenance/east)

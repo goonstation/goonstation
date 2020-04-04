@@ -88,7 +88,7 @@
 		jobs["Roboticist"] = 450
 //		jobs["Hangar Mechanic"]= 40
 //		jobs["Elite Security"] = 300
-		jobs["Barman"] = 250
+		jobs["Bartender"] = 250
 		jobs["Chef"] = 250
 		jobs["Janitor"] = 200
 		jobs["Clown"] = 1

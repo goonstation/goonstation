@@ -56,7 +56,7 @@ var/global/crew_creds = null
 					continue
 
 				// Civilian?
-				if("Head of Personnel","Botanist","Barman","Chef","Janitor","Staff Assistant","Clown","Chaplain")
+				if("Head of Personnel","Botanist","Bartender","Chef","Janitor","Staff Assistant","Clown","Chaplain")
 					round_civilian.Add(M)
 					continue
 

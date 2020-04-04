@@ -2488,7 +2488,7 @@
 "aVT" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVU" = (/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVV" = (/obj/disposalpipe/segment,/turf/simulated/floor/black,/area/station/crew_quarters/bar)
-"aVW" = (/obj/landmark/start{name = "Barman"},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
+"aVW" = (/obj/landmark/start{name = "Bartender"},/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVX" = (/obj/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/reagent_dispensers/beerkeg,/turf/simulated/floor/black,/area/station/crew_quarters/bar)
 "aVY" = (/obj/stool/bar,/turf/simulated/floor{icon_state = "carpetN"},/area/station/crew_quarters/cafeteria)
 "aVZ" = (/obj/disposalpipe/segment,/turf/simulated/floor/carpet,/area/station/crew_quarters/bar)

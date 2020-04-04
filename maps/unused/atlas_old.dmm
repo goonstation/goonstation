@@ -336,7 +336,7 @@
 "gx" = (/obj/wingrille_spawn/auto/tuff,/obj/cable,/turf/simulated/floor/plating,/area/station/storage/eva)
 "gy" = (/obj/stool/bar,/obj/landmark/start{name = "Staff Assistant"},/turf/simulated/floor/carpet{dir = 10; icon_state = "fred2"},/area/station/crew_quarters/cafeteria)
 "gz" = (/obj/stool/bar,/obj/landmark/start{name = "Staff Assistant"},/turf/simulated/floor/carpet{icon_state = "fred2"},/area/station/crew_quarters/cafeteria)
-"gA" = (/obj/landmark/start{name = "Barman"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/wood,/area/station/crew_quarters/cafeteria)
+"gA" = (/obj/landmark/start{name = "Bartender"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/wood,/area/station/crew_quarters/cafeteria)
 "gB" = (/turf/simulated/wall/auto/supernorn/the_tuff_stuff,/area/station/hallway/primary/south)
 "gC" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/disposal/small{dir = 1; layer = 32; pixel_y = 32},/obj/disposalpipe/trunk{dir = 4; name = "factory pipe"},/turf/simulated/floor/red/side{dir = 9},/area/station/security/main)
 "gD" = (/turf/simulated/floor/red/side,/area/station/security/main)

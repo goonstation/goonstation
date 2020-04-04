@@ -597,7 +597,7 @@
 "ma" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/station/hallway/primary/west)
 "mb" = (/turf/simulated/floor/carpet{dir = 10; icon_state = "fred2"},/area/station/crew_quarters/cafeteria)
 "mc" = (/obj/stool/bar,/obj/landmark/start{name = "Staff Assistant"},/turf/simulated/floor/carpet{icon_state = "fred2"},/area/station/crew_quarters/cafeteria)
-"md" = (/obj/landmark/start{name = "Barman"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/wood,/area/station/crew_quarters/cafeteria)
+"md" = (/obj/landmark/start{name = "Bartender"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/wood,/area/station/crew_quarters/cafeteria)
 "mf" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/turf/space,/area)
 "mg" = (/obj/cable{icon_state = "4-8"},/obj/decal/cleanable/rust,/obj/decal/cleanable/ripped_poster{pixel_y = 25},/turf/simulated/floor/plating/random,/area/station/maintenance/NEmaint)
 "mk" = (/obj/machinery/door/airlock/pyro/alt{dir = 4; tag = "icon-generic2_closed (EAST)"},/obj/cable{icon_state = "4-8"},/obj/access_spawn/maint,/obj/firedoor_spawn,/turf/simulated/floor/plating,/area/station/maintenance/NEmaint)

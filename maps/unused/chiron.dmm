@@ -1382,7 +1382,7 @@
 "aAD" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/cable{icon_state = "2-4"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/cafeteria)
 "aAE" = (/obj/machinery/door/firedoor/border_only{dir = 4},/obj/machinery/door/airlock{name = "Bar"; req_access_txt = "25"},/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/cafeteria)
 "aAF" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
-"aAG" = (/obj/landmark/start{name = "Barman"},/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
+"aAG" = (/obj/landmark/start{name = "Bartender"},/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
 "aAH" = (/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
 "aAI" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/machinery/door/firedoor/border_only{dir = 8},/obj/machinery/door/airlock{name = "Bar"; req_access_txt = "25"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/bar)
 "aAJ" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/disposalpipe/segment/brig,/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; location = "Catering"},/turf/simulated/floor/caution/south{dir = 2},/area/station/crew_quarters/catering)

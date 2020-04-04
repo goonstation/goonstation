@@ -3414,7 +3414,7 @@
 "bnI" = (/obj/machinery/vending/kitchen,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "bnJ" = (/obj/disposalpipe/segment/mail,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "bnK" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/table/auto,/obj/item/kitchen/rollingpin,/obj/item/storage/box/cutlery,/obj/item/reagent_containers/food/drinks/bowl,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
-"bnL" = (/obj/landmark/start{name = "Barman"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/obj/machinery/light{dir = 8; icon_state = "tube1"; tag = ""},/turf/simulated/floor/carpet{icon_state = "blue1"; dir = 2},/area/station/crew_quarters/bar)
+"bnL" = (/obj/landmark/start{name = "Bartender"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/obj/machinery/light{dir = 8; icon_state = "tube1"; tag = ""},/turf/simulated/floor/carpet{icon_state = "blue1"; dir = 2},/area/station/crew_quarters/bar)
 "bnM" = (/obj/stool,/turf/simulated/floor/carpet{icon_state = "blue1"; dir = 2},/area/station/crew_quarters/bar)
 "bnN" = (/obj/table/reinforced/bar/auto,/obj/machinery/cashreg,/turf/simulated/floor/carpet{icon_state = "blue1"; dir = 2},/area/station/crew_quarters/bar)
 "bnO" = (/obj/landmark{icon_state = "x3"; name = "peststart"},/obj/stool,/turf/simulated/floor/carpet{icon_state = "fblue2"; dir = 4},/area/station/crew_quarters/bar)

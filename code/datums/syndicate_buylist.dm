@@ -627,7 +627,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
 	desc = "A bottle of poison. Which poison? Who knows."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Barman")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chemicompiler
@@ -697,7 +697,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/food/drinks/moonshine
 	cost = 2
 	desc = "A jug full of incredibly potent alcohol. Not recommended for human consumption."
-	job = list("Barman")
+	job = list("Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/shotglass
@@ -705,7 +705,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
 	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
-	job = list("Barman")
+	job = list("Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/vuvuzelagun
@@ -795,7 +795,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/lawndart_kit
 	cost = 4
 	desc = "Three deadly throwing darts that embed themselves into your target."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Barman","Clown")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/monkey_barrel

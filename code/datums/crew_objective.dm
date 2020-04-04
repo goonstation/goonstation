@@ -49,7 +49,7 @@
 				boutput(crewMind.current, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 			boutput(crewMind.current, "<B>Objective #[obj_count]</B>: [newObjective.explanation_text]")
 			obj_count++
-		
+
 		var/mob/crewmob = crewMind.current
 		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist") && prob(20))
 			/*var/conspiracy_text = ""
@@ -60,7 +60,7 @@
 			conspiracy_text = "The [noun] are [conspiracy] in order to [reason]. [objective]"
 			conspiracy_text = replacetext(conspiracy_text, "%THING%", pick_string("conspiracy_theories.txt", "thing"))*/
 			var/conspiracy_text = pick_smart_string("conspiracy_theories.txt", "conspiracy_text")
-			
+
 			boutput(crewmob, "<B>Objective #[obj_count]</B>: [conspiracy_text]")
 
 		return
@@ -277,7 +277,7 @@
 						return 0
 				return 1
 
-//	barman
+//	bartender
 
 //	chef
 

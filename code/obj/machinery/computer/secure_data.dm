@@ -292,8 +292,8 @@
 													src.active1.fields["rank"] = "Head of Personnel"
 												if("captain")
 													src.active1.fields["rank"] = "Captain"
-												if("barman")
-													src.active1.fields["rank"] = "Barman"
+												if("bartender")
+													src.active1.fields["rank"] = "Bartender"
 												if("chemist")
 													src.active1.fields["rank"] = "Chemist"
 												if("janitor")

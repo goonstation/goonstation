@@ -462,7 +462,7 @@
 "aiU" = (/obj/storage/closet/wardrobe/white,/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
 "aiV" = (/obj/table/wood/auto,/obj/machinery/power/data_terminal,/obj/machinery/computer3/generic/personal,/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
 "aiW" = (/obj/storage/closet/wardrobe/black/formalwear,/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
-"aiX" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "black"; icon_state = "bedsheet-black"},/obj/landmark/start{name = "Barman"},/obj/decal/poster/wallsign/poster_rand{pixel_y = 26},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
+"aiX" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "black"; icon_state = "bedsheet-black"},/obj/landmark/start{name = "Bartender"},/obj/decal/poster/wallsign/poster_rand{pixel_y = 26},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
 "aiY" = (/obj/storage/secure/closet/security/forensics,/turf/simulated/floor/carpet/grime,/area/station/security/detectives_office)
 "aiZ" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "red"; icon_state = "bedsheet-red"},/obj/item/storage/secure/sbriefcase,/obj/decal/poster/wallsign/poster_rand{pixel_y = 26},/turf/simulated/floor/carpet/grime,/area/station/security/detectives_office)
 "aja" = (/obj/machinery/disposal,/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/obj/disposalpipe/trunk,/obj/landmark{icon_state = "x3"; name = "peststart"},/turf/simulated/floor/carpet/grime,/area/station/security/detectives_office)

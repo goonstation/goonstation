@@ -79,11 +79,11 @@
 		SPAWN_DBG(0)
 			JobEquipSpawned("Chaplain")
 
-/mob/living/carbon/human/normal/barman
+/mob/living/carbon/human/normal/bartender
 	New()
 		..()
 		SPAWN_DBG(0)
-			JobEquipSpawned("Barman")
+			JobEquipSpawned("Bartender")
 
 /mob/living/carbon/human/normal/botanist
 	New()

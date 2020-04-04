@@ -1104,7 +1104,7 @@
 (u)mbc
 (*)Fixed singularity collision bounds - instead of occupying 1 tile it will occupy a 3x3 area in the center of its mass. Should make it a bit easier to land shots on, maybe make it more clearly eat stuff idk
 (u)Azungar
-(*)Third round of Manta bug fixes, the grand architect of NSS Manta was a bit tired yesterday so uh, engineering wiring was a tad fucked. Sorry about that. It's fixed now. Barman also no longer spawns inside my WIP area (oops). And I removed the energy shields from blocking QM. If someone else has QoL suggestions, PM them my way.
+(*)Third round of Manta bug fixes, the grand architect of NSS Manta was a bit tired yesterday so uh, engineering wiring was a tad fucked. Sorry about that. It's fixed now. Bartender also no longer spawns inside my WIP area (oops). And I removed the energy shields from blocking QM. If someone else has QoL suggestions, PM them my way.
 (t)mon sep 16 19
 (u)Azungar
 (*)Second round of Manta bugfixes, let me know if the SMES wires are still not functional. It's also now safe to shoot borgs out of the torpedo tube.

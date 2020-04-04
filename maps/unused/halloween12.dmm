@@ -2464,7 +2464,7 @@
 "aVt" = (/obj/item/satchel/hydro,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "aVu" = (/obj/machinery/vending/kitchen,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
 "aVv" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/gibber,/turf/simulated/floor/sanitary,/area/station/crew_quarters/kitchen)
-"aVw" = (/obj/landmark/start{name = "Barman"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
+"aVw" = (/obj/landmark/start{name = "Bartender"},/obj/machinery/camera{c_tag = "Bar West"; dir = 4},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aVx" = (/obj/landmark{name = "peststart"},/obj/stool,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aVy" = (/obj/table/reinforced/bar{tag = "icon-bar (NORTHWEST)"; icon_state = "bar"; dir = 9},/obj/item/plate,/mob/living/carbon/human/monkey{icon_state = "muggles"; name = "Mr. Muggles"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)
 "aVz" = (/obj/table/reinforced/bar{dir = 5},/obj/item/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/bar)

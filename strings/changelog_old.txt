@@ -3543,7 +3543,7 @@
 (*)Hairs.
 (t)fri sep 12 14
 (u)Haine
-(*)Fancy beer!  Ask the barman to look in his booze closet for some of it!
+(*)Fancy beer!  Ask the bartender to look in his booze closet for some of it!
 (*)Harm intent with a bottle in your hand on the bar table.  Have fun!
 (*)Fixed up some of the kinds of booze so their bottles can be smashed, too.  Unfortunately, this wiped the map of all of those items, and I had to re-add them.  Also unfortunately, I'm not sure I got them all where they were supposed to go.  If there's hobo wine or some other alcohol missing from some place it ought to be, let me know!
 (t)thu sep 11 14
