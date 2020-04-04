@@ -1,5 +1,7 @@
 ﻿
 (t)sat apr 04 20
+(u)Nexusuxen
+(*)Added experimental "Equality" silicon law module.
 (u)Mordent
 (+)Fixed bug with cable coils in cyborg modules not having the correct amount.
 (+)Fixed bug with steel rods and cable coils in cyborg modules not starting with the correct sprite.
