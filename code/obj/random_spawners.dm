@@ -803,6 +803,7 @@
 						/obj/item/gun/kinetic/light_machine_gun)
 
 /obj/random_item_spawner/ai_experimental //used to spawn the experimental AI law modules, such as the Equality variants
+//the objects these are referencing can be found in the file code/obj/item/ai_modules
 	name = "experimental law module spawner"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
