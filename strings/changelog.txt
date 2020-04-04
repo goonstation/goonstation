@@ -1,5 +1,8 @@
 ﻿
 (t)sat apr 04 20
+(u)Mordent
+(+)Fixed bug with cable coils in cyborg modules not having the correct amount.
+(+)Fixed bug with steel rods and cable coils in cyborg modules not starting with the correct sprite.
 (u)Tarmunora
 (*)Added range falloff to stun projectiles (to a minimum of half initial power)
 (*)Stun projectile pointblanks no longer apply bonus stuns on top of what the projectile would normally do
