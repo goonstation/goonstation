@@ -511,6 +511,25 @@ TRAYS
 		return "[food_desc]"
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray))
+			qdel(W)
+			src.set_loc(user)
+			user.put_in_hand_or_drop(new /obj/item/platestack)
+			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
+			qdel(src)
+			return
+		else if (istype(W, /obj/item/platestack))
+			var/obj/item/platestack/stack = W
+			if(stack.platenum >= 7)
+				boutput(user,"<span style=\"color:red\"><b>The plates are piled too high!</b></span>")
+				return
+			src.set_loc(user)
+			stack.platenum++
+			stack.icon_state = "platestack[stack.platenum]"
+			stack.item_state = "platestack[stack.platenum]"
+			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
+			qdel(src)
+			return
 		if (!W.edible)
 			if (istype(W, /obj/item/kitchen/utensil/fork) || istype(W, /obj/item/kitchen/utensil/spoon))
 				var/obj/item/reagent_containers/food/sel_food = input(user, "Which food do you want to eat?", "[src] Contents") as null|anything in ordered_contents
@@ -1017,6 +1036,8 @@ TRAYS
 	throw_impact(var/turf/T)
 		..()
 		var/list/throw_targets = list()
+		if(platenum == 0)
+			return
 		for(var/i=1,i<=platenum,i++)
 			throw_targets += get_offset_target_turf(src.loc, rand(3)-rand(3), rand(3)-rand(3))
 		platenum++
