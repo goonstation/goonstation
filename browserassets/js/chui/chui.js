@@ -41,7 +41,9 @@ chui.setLabel = function( id, label ){
 chui.bycall = function( method, data ){
 	data = data || {};
 	data._cact = method;
-	document.location = "?src=" + chui.window + "&" + $.param( data );
+	const Http = new XMLHttpRequest();
+	Http.open("GET", "?src=" + chui.window + "&" + $.param( data ));
+	Http.send();
 };
 
 chui.close = function( ){
@@ -73,7 +75,7 @@ chui.chatDebug = function(msg){
 }
 chui.initialize = function(){
 	chui.data = {};
-	
+
 	$("meta").each( function(){
 		var key = $(this).attr( "name" );
 		if( key )
@@ -84,9 +86,9 @@ chui.initialize = function(){
 
 //Scrollbar
 	$('#content').nanoScroller({scrollTop: window.name});
-	
+
 	chui.winset( "transparent-color", "#FF00E4" );//Sets the window transparent color for 1 bit transparency.
-	
+
 //Window Movement
 ///////ALIGNMENT
 	//Save opening position
@@ -123,7 +125,7 @@ chui.initialize = function(){
 		};
 		chui.setCookie('chuiOffset',  JSON.stringify(cookieOffsetData), 0.333); //0.333 days is approx 8 hour expiry
 	}
-	
+
 	//Put the window back where it came from
 	chui.setPos( clampedX, clampedY );
 ///////ALIGNMENT FIN
@@ -140,7 +142,7 @@ chui.initialize = function(){
 			var dy = (ev.screenY - chui.lastY);
 			dx += window.screenLeft - chui.offsetX;
 			dy += window.screenTop - chui.offsetY;
-			
+
 			chui.setPos( dx, dy );
 		}
 		chui.lastX = ev.screenX;
@@ -171,13 +173,13 @@ chui.initialize = function(){
 				var height = document.body.offsetHeight;
 				var rx = Number($(this).attr( "rx" ));
 				var ry = Number($(this).attr( "ry" ));
-				
+
 				var dx = ((ev.screenX-chui.offsetX) - chui.lastX);
 				var dy = ((ev.screenY-chui.offsetY) - chui.lastY);
-				
+
 				var newX = window.screenLeft - chui.offsetX;
 				var newY = window.screenTop - chui.offsetY;
-				
+
 				var newW = width + (dx * rx);
 				if( rx == -1 ){
 					newX += dx;
@@ -186,15 +188,15 @@ chui.initialize = function(){
 				if( ry == -1 ){
 					newY += dy;
 				}
-				
+
 				newW = Math.max( chui.minWidth, newW );
 				newH = Math.max( chui.minHeight, newH );
-				
+
 				chui.setPosSize(newX, newY, newW, newH);
 			}
 			chui.lastX = ev.screenX - chui.offsetX;
 			chui.lastY = ev.screenY - chui.offsetY;
-			
+
 			chui.resizeWorking = false;//Prevent odd occasions where this gets called multiple times while working.
 		});
 		$('body').on('mousedown', 'div.resizeArea', function() {
@@ -219,7 +221,7 @@ chui.initialize = function(){
 		}
 		chui.bycall( "click", {id:this.id, data:info} );
 	});
-	
+
 	$(".close").click(function(){
 		if( chui.flags & CHUI_FLAG_FADEIN )
 			chui.fadeOut();
@@ -232,7 +234,7 @@ chui.initialize = function(){
 
 	if( chui.flags & CHUI_FLAG_FADEIN )
 		chui.fadeIn();
-	
+
 	if(chui.data.needstitle)
 		$("#windowtitle").text($('title').text() || " ");
 
@@ -241,10 +243,10 @@ chui.initialize = function(){
 chui.fadeIn = function(){
 	var width = document.body.offsetWidth;
 	var height = document.body.offsetHeight;
-	
+
 	var x = window.screenLeft - chui.offsetX;
 	var y = window.screenTop - chui.offsetY;
-	
+
 	chui.setSize( width + 80, height + 80 );
 	chui.setPos( x - 40, y - 40 );
 	chui.winset( "alpha", "0" );
@@ -267,7 +269,7 @@ chui.fadeIn = function(){
 chui.fadeOut = function(){
 	var width = document.body.offsetWidth;
 	var height = document.body.offsetHeight;
-	
+
 	var x = window.screenLeft - chui.offsetX;
 	var y = window.screenTop - chui.offsetY;
 	//setTimeout( function(){

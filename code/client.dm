@@ -425,7 +425,7 @@
 				var/cur = volumes.len
 				volumes = json_decode(decoded)
 				volumes.len = cur
-		
+
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
@@ -783,12 +783,12 @@ var/global/curr_day = null
 			if (!src || !src.mob)
 				return
 			var/target = href_list["nick"]
-			var/t = input("Message:", text("Private message to [target] (IRC)")) as null|text
+			var/t = input("Message:", text("Private message to [target] (Discord)")) as null|text
 			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style=\"color:blue\" class=\"bigPM\">Admin PM to-<b>[target] (IRC)</b>: [t]</span>")
+			boutput(src.mob, "<span style=\"color:blue\" class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
 
@@ -806,7 +806,7 @@ var/global/curr_day = null
 					if (K.client.player_mode && !K.client.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (IRC)</b>: [t]</font>")
+						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -820,7 +820,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [target] (IRC)</b>: <span class='message'>[t]</span></span>")
+			boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 			logTheThing("mentor_help", src, null, "<b>Mentor PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "Mentor PM'd [target]: [t]", "admin")
 
@@ -839,9 +839,9 @@ var/global/curr_day = null
 						if (K.client.player_mode && !K.client.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (IRC)</b>: <span class='message'>[t]</span></span>")
+							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (IRC)</b>: <span class='message'>[t]</span></span>")
+						boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 
 		if ("mentor_msg")
 			if (M)

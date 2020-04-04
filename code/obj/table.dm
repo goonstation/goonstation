@@ -219,13 +219,21 @@
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
-				if (!G.affecting.hasStatus("weakened"))
-					G.affecting.changeStatus("weakened", 3 SECONDS)
-					G.affecting.force_laydown_standup()
-				src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
+				if (istype(src, /obj/table/folding))
+					if (!G.affecting.hasStatus("weakened"))
+						G.affecting.changeStatus("weakened", 4 SECONDS)
+						G.affecting.force_laydown_standup()
+					src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src], collapsing it instantly!</b></span>")
+					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+					deconstruct()
+				else
+					if (!G.affecting.hasStatus("weakened"))
+						G.affecting.changeStatus("weakened", 3 SECONDS)
+						G.affecting.force_laydown_standup()
+					src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
+					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+					if (src.material)
+						src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 			else
 				if (!G.affecting.hasStatus("weakened"))
 					G.affecting.changeStatus("weakened", 2 SECONDS)
@@ -265,7 +273,10 @@
 				return
 
 		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
-			actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
+			if (istype(src, /obj/table/folding))
+				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
+			else
+				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
@@ -286,11 +297,9 @@
 	attack_hand(mob/user as mob)
 		if (user.is_hulk())
 			user.visible_message("<span style='color:red'>[user] destroys the table!</span>")
-			deconstruct()
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-			src.set_density(0)
-			qdel(src)
+			deconstruct()
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
@@ -399,6 +408,33 @@
 
 	auto
 		auto = 1
+
+/obj/table/folding
+	name = "folding table"
+	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
+	icon = 'icons/obj/table_folding.dmi'
+	parts_type = /obj/item/furniture_parts/table/folding
+
+	attack_hand(mob/user as mob)
+		if (user.is_hulk())
+			user.visible_message("<span style='color:red'>[user] collapses the [src] in one slam!</span>")
+			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			deconstruct()
+		else if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+				slaps += 1
+				src.visible_message("<span style='color:red'><b>[H] slams their palms against [src]!</b></span>")
+				if (slaps > 2 && prob(50))
+					src.visible_message("<span style='color:red'><b>The [src] collapses!</b></span>")
+					deconstruct()
+				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				for (var/mob/N in AIviewers(usr, null))
+					if (N.client)
+						shake_camera(N, 4, 1, 0.5)
+			else
+				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
+		return
 
 /* ======================================== */
 /* ---------------------------------------- */
@@ -908,3 +944,46 @@
 					the_table.desk_drawer.locked = 0
 				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
 		owner.visible_message("<span style='color:blue'>[owner] [verbens] [the_table].</span>")
+
+/datum/action/bar/icon/fold_folding_table
+	id = "fold_folding_table"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 15
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/table/the_table
+	var/obj/item/the_tool
+
+	New(var/obj/table/tabl, var/obj/item/tool)
+		..()
+		if (tabl)
+			the_table = tabl
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+
+	onUpdate()
+		..()
+		if (the_table == null || owner == null || get_dist(owner, the_table) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (the_tool)
+			playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
+		else
+			playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+		owner.visible_message("<span style='color:blue'>[owner] begins disassembling [the_table].</span>")
+
+	onEnd()
+		..()
+		playsound(get_turf(the_table), "sound/items/Deconstruct.ogg", 50, 1)
+		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_table].</span>")
+		the_table.deconstruct()

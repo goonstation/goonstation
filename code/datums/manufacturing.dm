@@ -447,6 +447,16 @@
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/table_folding
+	name = "Folding Table"
+	item_paths = list("MET-1","ALL")
+	item_names = list("Metal","Any Material")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/furniture_parts/table/folding)
+	time = 20
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/metal
 	name = "Metal Sheet"
 	item_paths = list("MET-1")
