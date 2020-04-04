@@ -138,7 +138,6 @@
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
 	var/mob/dead/observer/ghost = null
-	var/twitching = 0
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
