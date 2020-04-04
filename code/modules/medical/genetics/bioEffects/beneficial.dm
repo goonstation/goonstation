@@ -124,7 +124,7 @@
 	probability = 99
 	effectType = effectTypePower
 	msgGain = "You feel like you could eat anything!"
-	msgLose = "Your stomach feels weak."
+	msgLose = "Your stomach feels weak and sickly."
 	degrade_to = "fat"
 	icon_state  = "foodpoison_res"
 
