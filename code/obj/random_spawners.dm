@@ -720,7 +720,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd)
 
-/obj/random_item_spawner/shoe 
+/obj/random_item_spawner/shoe
 	name = "random shoe spawner"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
@@ -801,3 +801,10 @@
 						/obj/item/gun/kinetic/pistol,
 						/obj/item/gun/kinetic/assault_rifle,
 						/obj/item/gun/kinetic/light_machine_gun)
+
+/obj/random_item_spawner/ai_experimental //used to spawn the experimental AI law modules, such as the Equality variants
+	name = "experimental law module spawner"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
+						/obj/item/aiModule/experimental/equality/b)
