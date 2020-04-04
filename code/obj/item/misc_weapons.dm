@@ -437,7 +437,7 @@
 /obj/item/knife_butcher //Idea stolen from the welder!
 	name = "Butcher's Knife"
 	desc = "A huge and very sinister looking knife."
-	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon = 'icons/obj/items/items_kitchen.dmi'
 	icon_state = "knife-butcher"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "knife-butcher"

@@ -193,7 +193,7 @@ TRAYS
 
 /obj/item/kitchen/utensil/knife/chef
 	name = "chef's knife"
-	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon = 'icons/obj/items/items_kitchen.dmi'
 	icon_state = "knife-chef"
 	item_state = "knife"
 	desc = "A fancy chef's knife, like the ones you see on cooking shows."
@@ -255,7 +255,7 @@ TRAYS
 
 /obj/item/kitchen/utensil/knife/chef/cleaver
 	name = "meat cleaver"
-	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon = 'icons/obj/items/items_kitchen.dmi'
 	icon_state = "knife-cleaver"
 	item_state = "knife-cleaver"
 	desc = "An extremely sharp cleaver in a rectangular shape. Only for the professionals."
@@ -284,7 +284,7 @@ TRAYS
 
 /obj/item/kitchen/utensil/knife/bread
 	name = "bread knife"
-	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon = 'icons/obj/items/items_kitchen.dmi'
 	icon_state = "knife-bread"
 	item_state = "knife"
 	desc = "A rather blunt knife; it still cuts things, but not very effectively."
@@ -305,7 +305,7 @@ TRAYS
 
 /obj/item/kitchen/utensil/knife/pizza_cutter
 	name = "pizza cutter"
-	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon = 'icons/obj/items/items_kitchen.dmi'
 	icon_state = "pizzacutter"
 	force = 3.0 // it's a bladed instrument, sure, but you're not going to do much damage with it
 	throwforce = 3.0
