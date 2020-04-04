@@ -1,10 +1,10 @@
 //Config stuff
-#define SUPPLY_DOCKZ 2          //Z-level of the Dock.
-#define SUPPLY_STATIONZ 1       //Z-level of the Station.
 #define SUPPLY_POINTSPER 1      //Points per tick.
-#define SUPPLY_POINTDELAY 450	//Delay between ticks in milliseconds.
-#define SUPPLY_MOVETIME 1800	//Time to station is milliseconds. 1800 default
 #define SUPPLY_POINTSPERCRATE 10	//Points per crate sent back.
+#define SUPPLY_POINTDELAY 0.45 SECONDS	//Delay between ticks in seconds.
+#define SUPPLY_MOVETIME 1.8 SECONDS	//Time to station is seconds.
+#define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
+#define SUPPLY_CLOSE_TIME 13 SECONDS //Time it takes to close supply door in seconds.
 
 var/list/supply_requestlist = new/list()
 var/list/supply_history = new/list()
@@ -369,19 +369,6 @@ var/door_id = "qm_dock"
 // fuck it doing this with more globals
 var/crate_firing = 0
 
-
-//These should be #defines probably
-/proc/supplyshuttle_open_spawn_time()
-	if (ismap("CHIRON"))
-		return 40
-	return 10
-/proc/supplyshuttle_close_spawn_time()
-	if (ismap("CHIRON"))
-		return 180
-	return 130
-
-
-
 /proc/buy_thing(var/atom/movable/O as obj|mob)
 	var/turf/spawnpoint
 	for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -394,8 +381,8 @@ var/crate_firing = 0
 		break
 
 	SPAWN_DBG(0)
-		while(crate_firing)
-			sleep(20)
+		//while(crate_firing)
+		//	sleep(20)
 
 		if (!spawnpoint)
 			logTheThing("debug", null, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
@@ -405,9 +392,9 @@ var/crate_firing = 0
 			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
-		crate_firing = 1
-		SPAWN_DBG(8 SECONDS)
-			crate_firing = 0
+		//crate_firing = 1
+		//SPAWN_DBG(8 SECONDS)
+		//	crate_firing = 0
 
 		O.set_loc(spawnpoint)
 
@@ -420,10 +407,10 @@ var/crate_firing = 0
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == door_id)
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
-				SPAWN_DBG(supplyshuttle_open_spawn_time())
+				SPAWN_DBG(SUPPLY_OPEN_TIME)
 					if (P && P.density)
 						P.open()
-				SPAWN_DBG(supplyshuttle_close_spawn_time())
+				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)
 						P.close()
 
@@ -516,10 +503,10 @@ var/crate_firing = 0
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == door_id)
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
-				SPAWN_DBG(supplyshuttle_open_spawn_time())
+				SPAWN_DBG(SUPPLY_OPEN_TIME)
 					if (P && P.density)
 						P.open()
-				SPAWN_DBG(supplyshuttle_close_spawn_time())
+				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)
 						P.close()
 
@@ -566,10 +553,10 @@ var/crate_firing = 0
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == door_id)
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
-				SPAWN_DBG(supplyshuttle_open_spawn_time())
+				SPAWN_DBG(SUPPLY_OPEN_TIME)
 					if (P && P.density)
 						P.open()
-				SPAWN_DBG(supplyshuttle_close_spawn_time())
+				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)
 						P.close()
 
@@ -611,3 +598,10 @@ proc/prisontothestation()
 			end_location.move_contents_to(start_location)
 			turd_location = 0
 	return
+
+#undef SUPPLY_POINTSPER
+#undef SUPPLY_POINTSPERCRATE
+#undef SUPPLY_POINTDELAY
+#undef SUPPLY_MOVETIME
+#undef SUPPLY_OPEN_TIME
+#undef SUPPLY_CLOSE_TIME
