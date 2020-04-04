@@ -393,7 +393,7 @@
 	anchored = 0
 	var/mob/tysontarget2 = null
 	var/tysonmins2 = null
-	var/caller = null
+	var/mob/caller = null
 	var/tysonreason = null
 	var/tysoncantreach = 0
 	var/timelimit = 6
@@ -458,7 +458,7 @@
 			boutput(tysontarget2, "<span style=\"color:red\">This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
 			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
 			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
-			message_admins("<span style=\"color:blue\">[caller:client.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
+			message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
 //			if(ishuman(tysontarget2))
@@ -480,7 +480,7 @@
 	anchored = 0
 	var/mob/tysontarget2 = null
 	var/tysonspeed = 1
-	var/caller = null
+	var/mob/caller = null
 
 	New()
 		SPAWN_DBG(0) process()
@@ -522,7 +522,7 @@
 			if(tysontarget2 && tysontarget2.client)
 				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
 				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
-				message_admins("<span style=\"color:blue\">[caller:client.ckey] has tysongibbed [tysontarget2.ckey].</span>")
+				message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
 			sleep(5)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)

@@ -1830,7 +1830,7 @@
 
 											if(iscarbon(arrest_target))
 												arrest_target.handcuffed = new /obj/item/handcuffs/guardbot(arrest_target)
-												arrest_target.setStatus("handcuffed", duration = null)
+												arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 												boutput(arrest_target, "<span style=\"color:red\">[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
 												arrest_target:set_clothing_icon_dirty()
 
@@ -2147,12 +2147,12 @@
 
 				if (istype(perp.r_hand))
 					. += perp.r_hand.contraband
+				if(ishuman(perp))
+					if (istype(perp.belt))
+						. += perp.belt.contraband * 0.5
 
-				if (istype(perp:belt))
-					. += perp:belt.contraband * 0.5
-
-				if (istype(perp:wear_suit))
-					. += perp:wear_suit.contraband
+					if (istype(perp.wear_suit))
+						. += perp.wear_suit.contraband
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))

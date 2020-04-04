@@ -26,7 +26,7 @@
 
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis") || usr.hasStatus("stunned") || usr.hasStatus("weakened") || usr.resting)
+		if (usr.hasStatus("paralysis") || usr.hasStatus("stunned") || usr.hasStatus("weakened") || usr.hasStatus("resting"))
 			return
 		..()
 

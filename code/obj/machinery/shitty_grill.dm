@@ -80,28 +80,29 @@
 			return
 
 		else if (istype(W, /obj/item/grab))
-			if (!W:affecting) return
+			var/obj/item/grab/G = W
+			if (!G.affecting) return
 			user.lastattacked = src
-			src.visible_message("<span style=\"color:red\"><b>[user] is trying to shove [W:affecting] onto the [src]!</b></span>")
-			if(!do_mob(user, W:affecting) || !W)
+			src.visible_message("<span style=\"color:red\"><b>[user] is trying to shove [G.affecting] onto the [src]!</b></span>")
+			if(!do_mob(user, G.affecting) || !W)
 				return
 
-			if(ismonkey(W:affecting))
-				logTheThing("combat", user, W:affecting, "shoves %target% onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
-				src.visible_message("<span style=\"color:red\"><b>[user] shoves [W:affecting] onto the [src]!</b></span>")
+			if(ismonkey(G.affecting))
+				logTheThing("combat", user, G.affecting, "shoves %target% onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				src.visible_message("<span style=\"color:red\"><b>[user] shoves [G.affecting] onto the [src]!</b></span>")
 				src.icon_state = "shittygrill_bake"
 				light.enable()
 				src.cooktime = 0
-				src.grillitem = W:affecting
+				src.grillitem = G.affecting
 				SubscribeToProcess()
-				W:affecting.set_loc(src)
-				W:affecting.death( 0 )
+				G.affecting.set_loc(src)
+				G.affecting.death( 0 )
 				qdel(W)
 				return
 
-			logTheThing("combat", user, W:affecting, "shoves %target%'s face into the [src] at [log_loc(src)].")
-			src.visible_message("<span style=\"color:red\"><b>[user] shoves [W:affecting]'s face onto the [src]!</b></span>")
-			src.reagents.reaction(W:affecting, TOUCH)
+			logTheThing("combat", user, G.affecting, "shoves %target%'s face into the [src] at [log_loc(src)].")
+			src.visible_message("<span style=\"color:red\"><b>[user] shoves [G.affecting]'s face onto the [src]!</b></span>")
+			src.reagents.reaction(G.affecting, TOUCH)
 
 			return
 

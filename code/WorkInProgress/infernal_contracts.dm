@@ -241,7 +241,7 @@
 					if (1)
 						var/obj/item/contract/horse/H = new /obj/item/contract/horse(src)
 						H.merchant = src.merchant
-					else if (2)
+					if (2)
 						var/obj/item/contract/fart/F = new /obj/item/contract/fart(src)
 						F.merchant = src.merchant
 			else

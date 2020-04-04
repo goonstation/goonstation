@@ -41,9 +41,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/satchel/mining/))
-			if (W:contents.len < W:maxitems)
+			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
-				var/oreamt = W:contents.len
+				var/oreamt = W.contents.len
 				boutput(user, "<span style=\"color:blue\">You put [src] in [W].</span>")
 				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
 				if (oreamt == W:maxitems) boutput(user, "<span style=\"color:blue\">[W] is now full!</span>")

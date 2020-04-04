@@ -6,6 +6,7 @@
 	var/hint_text = "heck, someone forgot to put a hint in this scroll! Call 1-800-IMCODER"
 	var/chem_name = "1-800-CODER"
 	var/has_been_read = 0
+	var/only_on_production_no_file = 0
 
 	get_desc()
 		return " [chem_name] is carefully written on the outside of the scroll in fancy writing."

@@ -10,13 +10,13 @@
 			chair_flip_ability = src.abilityHolder.addAbility(/datum/targetable/chairflip)
 
 		chair_flip_ability.extrarange = extrarange
-		src.targeting_spell = chair_flip_ability
+		src.targeting_ability = chair_flip_ability
 		src.update_cursor()
 
 		playsound(src.loc, "sound/effects/chair_step.ogg", 50, 1)
 
 /mob/proc/end_chair_flip_targeting()
-	src.targeting_spell = null
+	src.targeting_ability = null
 	src.update_cursor()
 	if (src.chair_flip_ability)
 		src.chair_flip_ability.extrarange = 0
@@ -81,7 +81,7 @@
 		M.buckled = null
 		M.anchored = 0
 
-		M.targeting_spell = null
+		M.targeting_ability = null
 		M.update_cursor()
 
 		if (ishuman(M))

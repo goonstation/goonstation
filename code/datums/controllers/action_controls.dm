@@ -701,7 +701,7 @@ var/datum/action_controller/actions
 			target.drop_from_slot(target.l_hand)
 			target.drop_juggle()
 			target.update_clothing()
-			target.setStatus("handcuffed", duration = null)
+			target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span style=\"color:red\"><B>[owner] handcuffs [target]!</B></span>", 1)
@@ -902,9 +902,9 @@ var/datum/action_controller/actions
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
 				// only allow it if more than double that power remains to keep it from bottoming out
-				if (owner:cell.charge >= hpm_cost * 2)
+				if (UNLINT(owner:cell.charge >= hpm_cost * 2)) // i dont have the sanity to fix this
 					duration /= 3
-					owner:cell.use(hpm_cost)
+					UNLINT(owner:cell.use(hpm_cost))
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()
@@ -1138,7 +1138,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (M && M.resting && !M.stat && M.getStatusDuration("burning"))
+		if (M && M.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
 			M.update_burning(-1.2)
 
 			M.dir = turn(M.dir,up ? -90 : 90)
@@ -1163,8 +1163,8 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		M = owner
-		if (!M.resting)
-			M.resting = 1
+		if (!M.hasStatus("resting"))
+			M.setStatus("resting", INFINITE_STATUS)
 			var/mob/living/carbon/human/H = M
 			if (istype(H))
 				H.hud.update_resting()

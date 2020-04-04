@@ -461,8 +461,6 @@
 				return 0.5
 			else
 				return 0
-		qdel(G)
-		return
 
 	get_desc(dist)
 		if (dist <= 1)

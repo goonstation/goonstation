@@ -10,9 +10,9 @@ VUVUZELA
 /obj/item/bananapeel
 	name = "Banana Peel"
 	desc = "A peel from a banana."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "banana_peel"
-	item_state = "banana_peel"
+	icon = 'icons/obj/foodNdrink/food_produce.dmi'
+	icon_state = "banana-peel"
+	item_state = "banana-peel"
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 4

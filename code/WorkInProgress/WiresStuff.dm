@@ -1,4 +1,3 @@
-//test1
 
 /client/proc/wireTest()
 	set name = "WireTest"

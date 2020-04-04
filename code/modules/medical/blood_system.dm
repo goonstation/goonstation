@@ -399,19 +399,24 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (!blood_system) // we're here because we want to create a decal, so create it anyway
 
+
 		var/obj/decal/cleanable/blood/dynamic/B = locate(/obj/decal/cleanable/blood/dynamic) in T
 		var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+
+		if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
+			var/datum/reagent/current_reagent= reagents_cache[some_idiot.blood_id]
+			blood_color_to_pass = rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b, max(current_reagent.transparency,255))
 
 		if (istype(H))
 			blood_color_to_pass = H.blood_color
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
+			B.color = blood_color_to_pass
 
 		if (istype(H))
 			if (H.is_changeling())
 				B.ling_blood = 1
-
 
 		if (some_idiot.bioHolder)
 			B.blood_DNA = some_idiot.bioHolder.Uid
@@ -450,6 +455,10 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
+			if (H.blood_id)
+				B.set_sample_reagent_custom(H.blood_id)
+			if (H.blood_color)
+				B.color = H.blood_color
 
 		if (H.is_changeling())
 			B.ling_blood = 1

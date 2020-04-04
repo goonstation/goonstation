@@ -57,7 +57,7 @@
 			H.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
 
 	target.sleeping = 0
-	target.resting = 0
+	target.delStatus("resting")
 
 	target.changeStatus("stunned", -50)
 	target.changeStatus("paralysis", -50)
@@ -597,8 +597,9 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
-		if(STAMINA_LOW_COST_KICK)
-			msgs.stamina_self += STAMINA_HTH_COST / 3
+		#if STAMINA_LOW_COST_KICK == 1
+		msgs.stamina_self += STAMINA_HTH_COST / 3
+		#endif
 	else
 
 		msgs.played_sound = "punch"
@@ -911,7 +912,7 @@
 			for (var/P in after_effects)
 				call(P)(owner, target)
 
-			process_stamina
+			process_stamina:
 
 			if (stamina_target)
 				if (stamina_target > 0)

@@ -350,21 +350,23 @@ var/obj/item/dummy/click_dummy = new
 	return message
 
 
-/proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
+/proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(!current) return 0
-		if(current.opacity) return 0
+	if(current == target_turf)
+		return TRUE
+	if(get_dist(current, target_turf) > length)
+		return FALSE
+	current = get_step_towards(source, target_turf)
+	while((current != target_turf))
+		if(current.opacity)
+			return FALSE
 		for(var/atom/A in current)
-			if(A.opacity) return 0
+			if(A.opacity) 
+				return FALSE
 		current = get_step_towards(current, target_turf)
-		steps++
+	return TRUE
 
-	return 1
 
 
 /mob/proc/get_equipped_items()

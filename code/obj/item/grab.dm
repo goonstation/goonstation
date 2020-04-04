@@ -178,7 +178,7 @@
 				if (src.affecting.buckled)
 					src.affecting.buckled.attack_hand(src.assailant)
 					src.affecting.force_laydown_standup() //safety because buckle code is a mess
-					if (src.affecting.targeting_spell == src.affecting.chair_flip_ability) //fuCKKK
+					if (src.affecting.targeting_ability == src.affecting.chair_flip_ability) //fuCKKK
 						src.affecting.end_chair_flip_targeting()
 					src.affecting.buckled = null
 
@@ -282,7 +282,7 @@
 
 		step_to(src.assailant,T)
 
-		src.affecting.setStatus("pinned", duration = null)
+		src.affecting.setStatus("pinned", duration = INFINITE_STATUS)
 		src.affecting.force_laydown_standup()
 		if (!src.affecting.buckled)
 			set_affected_loc()

@@ -259,6 +259,7 @@
 
 
 /mob/proc/ghostize()
+	RETURN_TYPE(/mob/dead/observer)
 	if(src.key || src.client)
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			src.hell_respawn(src.mind)

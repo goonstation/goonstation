@@ -91,6 +91,10 @@ area/owlery/owleryhall/john_talk = list("Oh dang, That's me! Wait... Oh dang guy
 area/owlery/owleryhall/gangzone/john_talk = list("I don't likesa the looksa these Italians, brud","That's some tough lookin boids- We cool?","Oughta grill a couple of these types. Grill em well done.")
 area/diner/dining/john_talk = list("This place smells a lot like my bro.","This was a good spot to park the bus.","Y'all got a grill in here?","Could do a lot of crimes back there. Probably will.")
 area/diner/bathroom/john_talk = list("I haven't been here in a foggy second!", "I wonder what the fungus on the walls here tastes like... wanna juice it?", "I always wondered what happened to this toilet.")
+area/diner/motel/john_talk = list("Ain't much to look at, but we got the hull for this section pretty cheap!","Uh, don't bother with room 3- it's a little uh... rough.","Mmmm Mmm still smells like salvage.")
+area/diner/motel/observatory/john_talk = list("What a goddamn view.","Never thought I'd have a place like this.")
+area/diner/motel/pool/john_talk = list("Hey brungo, got any water? Like ten to twenty tonnes, eh?","It's a shame I can't swim, on account of the pirate's code.","I've seen this place in a video.")
+area/diner/motel/chemstorage/john_talk = list("Good a time as any to learn chemistry, I guess.","Think I can sell any of this juice?")
 area/lower_arctic/lower/john_talk = list("I ain't a fan of wendibros, they steal my meat.","Chilly eh?")
 area/moon/museum/west/john_talk = list("Got lost here once. More than once. Every time.","You got a map, beardo?","Can we go home yet?")
 area/jones/bar/john_talk = list("When the heck am I gonna get some service here, I'm parched!","What do I gotta start purrin' to get a drink here?","What's the holdup, catscratch? Let's get this party started!")
@@ -807,13 +811,11 @@ Urs' Hauntdog critter
 	name_the_meat = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					var/turf/T = get_turf(src)
-					return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
-					var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
-					playsound(T, hogg, 60, 1)
+		if(act == "scream" && src.emote_check(voluntary, 50))
+			var/turf/T = get_turf(src)
+			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
+			playsound(T, hogg, 60, 1)
+			return "<span style='color:#605b59'><b>[src]</b> screeeams!</span>"
 		return null
 
 	specific_emote_type(var/act)

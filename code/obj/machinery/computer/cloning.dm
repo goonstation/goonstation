@@ -140,7 +140,7 @@
 		if(allow_mind_erasure || allow_dead_scanning)
 			boutput(user, "<span style=\"color:red\">There is already an upgrade installed.</span>")
 			return
- 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
 		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
@@ -456,7 +456,7 @@
 		pod1.mindwipe = text2num(href_list["set_mindwipe"])
 
 	// considered harmful
-	BailOutOfCloningAttempt
+	BailOutOfCloningAttempt:
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()

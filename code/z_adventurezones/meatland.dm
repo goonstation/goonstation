@@ -499,7 +499,8 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	ChaseAttack(mob/M)
 		. = target_missing_limb(M)
-		if (. == "r_arm" || . == "l_arm" && M:limbs)
+		if ((. == "r_arm" || . == "l_arm") && ishuman(M))
+			var/mob/living/carbon/human/H = M
 			src.visible_message("<span style=\"color:red\"><b>[src] latches onto [M]'s stump!!</b></span>")
 			boutput(M, "<span style=\"color:red\">OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
@@ -509,17 +510,17 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			switch (.)
 				if ("r_arm")
 					var/obj/item/parts/human_parts/meat_mutant/part = new /obj/item/parts/human_parts/meat_mutant/arm/right {remove_stage = 2;} (M)
-					M:limbs.vars["r_arm"] = part
+					H.limbs.vars["r_arm"] = part
 					part.holder = M
 
 				if ("l_arm")
 					var/obj/item/parts/human_parts/meat_mutant/part = new /obj/item/parts/human_parts/meat_mutant/arm/left {remove_stage = 2;} (M)
-					M:limbs.vars["l_arm"] = part
+					H.limbs.vars["l_arm"] = part
 					part.holder = M
 
-			M:update_body()
-			M:update_clothing()
-			M:unlock_medal("My Bologna Has A First Name",1)
+			H.update_body()
+			H.update_clothing()
+			H.unlock_medal("My Bologna Has A First Name",1)
 			qdel(src)
 
 		else

@@ -98,15 +98,6 @@
 #define TOOLTIP_NEVER 2
 #define TOOLTIP_ALT 3
 
-var/list/RARITY_COLOR = list(
-	"#9d9d9d",
-	"#ffffff",
-	"#1eff00",
-	"#0070dd",
-	"#a335ee",
-	"#ff8000",
-	"#ff0000" )
-
 //Action defines
 #define INTERRUPT_ALWAYS -1 //Internal flag that will always interrupt any action.
 #define INTERRUPT_MOVE 1 //Interrupted when object moves
@@ -815,6 +806,9 @@ var/list/RARITY_COLOR = list(
 //I feel like these should be a thing, ok
 #define true 1
 #define false 0
+
+//For statusEffects
+#define INFINITE_STATUS null
 
 //How much stuff is allowed in the pools before the lifeguard throws them into the deletequeue instead. A shameful lifeguard.
 #define DEFAULT_POOL_SIZE 150
