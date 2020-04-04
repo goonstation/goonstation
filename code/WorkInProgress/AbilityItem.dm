@@ -464,9 +464,9 @@
 
 		the_mob:rush()
 		icon_state = "rushoff"
-		return 1
 
 		..()
+		return 1
 
 	on_cooldown()
 		..()

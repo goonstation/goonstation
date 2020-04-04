@@ -1202,7 +1202,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	. = ..()
 	if(src && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
 		if(src.chat_text.vis_locs.len)
-			src.chat_text.vis_locs[1].vis_contents -= src.chat_text
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
 		if(istype(src.loc, /turf))
 			src.vis_contents += src.chat_text
 		else
