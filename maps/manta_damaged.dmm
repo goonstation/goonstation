@@ -2546,7 +2546,7 @@
 "aWX" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{icon_state = "intact"; dir = 4},/obj/kitchenspike,/turf/simulated/floor/specialroom/freezer,/area/station/crew_quarters/kitchen/freezer)
 "aWY" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{icon_state = "intact"; dir = 4},/obj/machinery/vending/monkey,/turf/simulated/floor/specialroom/freezer,/area/station/crew_quarters/kitchen/freezer)
 "aWZ" = (/obj/kitchenspike,/obj/machinery/atmospherics/pipe/simple/heat_exchanging{icon_state = "intact"; dir = 4},/turf/simulated/floor/specialroom/freezer,/area/station/crew_quarters/kitchen/freezer)
-"aXa" = (/obj/table/auto,/obj/item/clothing/gloves/latex,/obj/item/spraybottle/cleaner,/obj/machinery/atmospherics/pipe/simple/heat_exchanging{icon_state = "intact"; dir = 10},/obj/item/kitchen/utensil/knife/cleaver,/turf/simulated/floor/specialroom/freezer,/area/station/crew_quarters/kitchen/freezer)
+"aXa" = (/obj/table/auto,/obj/item/clothing/gloves/latex,/obj/item/spraybottle/cleaner,/obj/machinery/atmospherics/pipe/simple/heat_exchanging{icon_state = "intact"; dir = 10},/obj/item/kitchen/utensil/knife/chef/cleaver,/turf/simulated/floor/specialroom/freezer,/area/station/crew_quarters/kitchen/freezer)
 "aXb" = (/turf/simulated/wall/auto/supernorn/blackred,/area/station/crew_quarters/courtroom)
 "aXc" = (/obj/storage/secure/closet/security/equipment,/obj/machinery/light/incandescent/netural{icon_state = "tube1"; dir = 8},/turf/simulated/floor/redblack{dir = 8},/area/station/security/secoffquarters)
 "aXd" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/black,/area/station/security/secoffquarters)

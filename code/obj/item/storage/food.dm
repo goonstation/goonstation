@@ -19,6 +19,26 @@
 	/obj/item/kitchen/utensil/knife = 2,\
 	/obj/item/kitchen/utensil/spoon = 2)
 
+/obj/item/storage/box/knives
+	name = "knife set"
+	icon_state = "knives"
+	desc = "A full set of chef's knives."
+	spawn_contents = list(/obj/item/kitchen/utensil/knife/chef,\
+	/obj/item/kitchen/utensil/knife/chef/santoku,\
+	/obj/item/kitchen/utensil/knife/chef/cleaver,\
+	/obj/item/kitchen/utensil/knife/chef/paring,\
+	/obj/item/kitchen/utensil/knife/bread)
+
+/obj/item/storage/box/knives/deluxe
+	name = "deluxe knife set"
+	icon_state = "knives-deluxe"
+	desc = "A full set of professional chef's knives. They probably cost a lot."
+	spawn_contents = list(/obj/item/kitchen/utensil/knife/chef/fancy,\
+	/obj/item/kitchen/utensil/knife/chef/santoku/fancy,\
+	/obj/item/kitchen/utensil/knife/chef/cleaver/fancy,\
+	/obj/item/kitchen/utensil/knife/chef/paring/fancy,\
+	/obj/item/kitchen/utensil/knife/bread/fancy)
+
 /obj/item/storage/box/plates
 	name = "dinnerware box"
 	icon_state = "dinnerware"

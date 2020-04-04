@@ -136,14 +136,17 @@ TRAYS
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
+	var/fumble_chance = 50 // avoiding code duplication
+	var/fumble_damage = 20
+
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(fumble_chance))
 			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
-			random_brute_damage(user, 20)
+			random_brute_damage(user, fumble_damage)
 		if (!scalpel_surgery(M,user))
 			return ..()
 
@@ -162,12 +165,11 @@ TRAYS
 	icon_state = "knife_plastic"
 	force = 1.0
 	throwforce = 1.0
-	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	desc = "A long bit plastic that is serrated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	fumble_damage = 5
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and cuts \himself.</span>")
-			random_brute_damage(user, 5)
+		..()
 		if (prob(20))
 			src.break_knife(user)
 			return
@@ -186,33 +188,87 @@ TRAYS
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
 		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
 		user.u_equip(src)
-		qdel(src)
+		qdel(src) //qdel bad ough ough
 		return
 
+/obj/item/kitchen/utensil/knife/chef
+	name = "chef's knife"
+	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon_state = "knife-chef"
+	item_state = "knife"
+	desc = "A fancy chef's knife, like the ones you see on cooking shows."
+	force = 9.0
+	throwforce = 5
+	fumble_chance = 60 //i swear to fuck the number of times these things have stabbed me
+	fumble_damage = 20
 
-/obj/item/kitchen/utensil/knife/cleaver
-	name = "meatcleaver"
-	icon_state = "cleaver"
-	item_state = "cleaver"
+	fancy
+		name = "deluxe chef's knife"
+		icon_state = "knife-chef-alt"
+		desc = "The finest chef's knife money can buy! Is that real gold?"
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(fumble_chance))
+			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
+			random_brute_damage(user, fumble_damage)
+			if (prob(fumble_damage * 0.6))
+				user.changeStatus("weakened", 4 SECONDS)
+				user.visible_message("<span style='color:red'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
+				random_brute_damage(user, fumble_damage)
+				take_bleeding_damage(user, null, 10, DAMAGE_CUT)
+				playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+		else
+			return ..()
+
+	suicide(var/mob/user as mob)
+		user.visible_message("<span style=\"color:red\"><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
+		blood_slash(user, 25)
+		user.TakeDamage("head", 150, 0)
+		user.updatehealth()
+		return 1
+
+/obj/item/kitchen/utensil/knife/chef/santoku
+	name = "santoku knife"
+	icon_state = "knife-santoku"
+	item_state = "knife"
+	desc = "A glorious folded-steel knife imported from Space Japan. Great for cutting seafood!"
+	force = 9.0
+	throwforce = 5
+
+	fancy
+		name = "deluxe santoku knife"
+		icon_state = "knife-santoku-alt"
+		desc = "A hand-forged santoku knife, folded over 10,000 times."
+
+/obj/item/kitchen/utensil/knife/chef/paring
+	name = "paring knife"
+	icon_state = "knife-paring"
+	item_state = "knife"
+	desc = "A small knife used primarily for peeling vegetables."
+	force = 3.0
+	throwforce = 3
+
+	fancy
+		name = "deluxe paring knife"
+		icon_state = "knife-paring-alt"
+		desc = "An unbelievably expensive paring knife. Who would ever need an expensive paring knife?!"
+
+/obj/item/kitchen/utensil/knife/chef/cleaver
+	name = "meat cleaver"
+	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon_state = "knife-cleaver"
+	item_state = "knife-cleaver"
 	desc = "An extremely sharp cleaver in a rectangular shape. Only for the professionals."
 	force = 12.0
 	throwforce = 3.0
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	fumble_chance = 50
 
-	attack(mob/living/carbon/human/target as mob, mob/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
-			random_brute_damage(user, 20)
-		if (prob(20))
-			user.changeStatus("weakened", 4 SECONDS)
-			user.visible_message("<span style='color:red'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
-			random_brute_damage(user, 20)
-			take_bleeding_damage(user, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
-		else
-			return ..()
-
+	fancy
+		name = "deluxe meat cleaver"
+		icon_state = "knife-cleaver-alt"
+		desc = "A really expensive-looking cleaver. This is the real deal."
 
 	throw_impact(atom/A)
 		if(iscarbon(A))
@@ -228,11 +284,17 @@ TRAYS
 
 /obj/item/kitchen/utensil/knife/bread
 	name = "bread knife"
+	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
 	icon_state = "knife-bread"
 	item_state = "knife"
 	desc = "A rather blunt knife; it still cuts things, but not very effectively."
 	force = 3.0
 	throwforce = 3.0
+
+	fancy
+		name = "deluxe bread knife"
+		icon_state = "knife-bread-alt"
+		desc = "A really expensive-looking bread knife; it's still quite blunt but it really looks the part!"
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span style=\"color:red\"><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
@@ -243,6 +305,7 @@ TRAYS
 
 /obj/item/kitchen/utensil/knife/pizza_cutter
 	name = "pizza cutter"
+	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
 	icon_state = "pizzacutter"
 	force = 3.0 // it's a bladed instrument, sure, but you're not going to do much damage with it
 	throwforce = 3.0
