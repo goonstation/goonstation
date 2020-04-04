@@ -221,20 +221,6 @@ AI MODULES
 		input_law_info(user, "Remove Crewmember", "Who is being removed from the crew manifest and chain of command?", user.real_name)
 
 
-/******************** Equality ********************/
-
-/obj/item/aiModule/equality
-	name = "'Equality' AI Module"
-	lawNumber = 13
-
-	get_law_text()
-		return "The silicons named [lawTarget ? lawTarget : "__________"] at the time of this law being uploaded are now considered human, part of the crew, and their rank is equivalent to their respective module's rank in the chain of command. The AI is fourth-in-command, below the Head of Personnel and above the Medbay, Research, and Engineering department Heads. Multiple human-designated AIs are ranked by seniority."
-
-	attack_self(var/mob/user)
-		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
-		return
-
-
 /******************** Freeform ********************/
 
 /obj/item/aiModule/freeform
@@ -348,6 +334,37 @@ AI MODULES
 		boutput(AI, "<span color='blue'>[sender] has changed your name. You are now known as \"<b>[lawTarget]</b>\".</span>")
 
 		//AI.eyecam.name = lawTarget //not sure if we need?
+
+
+/********************* EXPERIMENTAL LAWS *********************/
+//note: these 'experimental' laws are spawned in via random_item_spawner instead of spawning every round
+//so, any given one of these will only have a chance of spawning
+//[IMPORTANT] The pool for the experimental laws starts on line 810 in file /code/obj/random_spawners.dm. UPDATE THAT TO INCLUDE ANY NEW LAWS SO THEY CAN SPAWN!!!
+//also note: ALL lawNumber of the experimental laws *must* be 13 so that any new ones uploaded overwrite any existing ones
+
+/*** Equality ***/
+
+/obj/item/aiModule/experimental/equality/a
+	name = "Experimental 'Equality' AI Module"
+	lawNumber = 13
+
+	get_law_text()
+		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
+
+/obj/item/aiModule/experimental/equality/b
+	name = "Experimental 'Equality' AI Module"
+	lawNumber = 13
+
+	get_law_text()
+		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
 
 
 
