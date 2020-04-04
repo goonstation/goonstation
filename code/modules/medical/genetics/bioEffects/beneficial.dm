@@ -117,6 +117,24 @@
 	degrade_to = "drunk"
 	icon_state  = "alc_res"
 
+/datum/bioEffect/foodpoisonres
+	name = "Cast-Iron Stomach"
+	desc = "Renders the subject completely resistant to food poisoning."
+	id = "resist_foodpoisoning"
+	probability = 99
+	effectType = effectTypePower
+	msgGain = "You feel like you could eat anything!"
+	msgLose = "Your stomach feels weak."
+	degrade_to = "fat"
+	icon_state  = "foodpoison_res"
+
+	OnAdd()
+		..()
+		if (!ishuman(owner))
+			return
+		var/mob/living/carbon/human/H = owner
+		H.resistances += /datum/ailment/disease/food_poisoning
+
 /datum/bioEffect/toxres
 	name = "Toxic Resistance"
 	desc = "Renders the subject's blood immune to toxification. This will not stop other effects of poisons from occurring, however."
