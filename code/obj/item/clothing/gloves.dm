@@ -281,7 +281,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 
 /obj/item/clothing/gloves/swat
-	desc = "A pair of syndicate tactical gloves that are quite fire and electrically-resistant. They also protect against disarming somewhat."
+	desc = "A pair of syndicate tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	name = "SWAT Gloves"
 	icon_state = "swat_syndie"
 	item_state = "swat_syndie"
@@ -294,7 +294,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		setProperty("disarmblock", 20)
 
 /obj/item/clothing/gloves/swat/NT
-	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also protect against disarming somewhat."
+	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
