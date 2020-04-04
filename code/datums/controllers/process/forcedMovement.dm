@@ -54,7 +54,7 @@ datum/controller/process/fMove
 				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE)
 					var/prob_slip = 5
 
-					if (tmob.handcuffed)
+					if (tmob.hasStatus("handcuffed"))
 						prob_slip = 100
 
 					if (!tmob.canmove)
