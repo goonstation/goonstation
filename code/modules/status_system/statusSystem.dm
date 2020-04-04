@@ -25,7 +25,7 @@ Deletes the given status from the atom.
 Additional notes:
 Non-unique status effects (effects that can be applied several times to the same atom) can not be changed by normal means after they are added. Keep a reference if you need to change them.
 Status effect procs have comments in their base definition below. Check there if you want to know more about what they do.
-Status effects with a duration of null last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
+Status effects with a duration of INFINITE_STATUS (null) last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
 */
 
 var/list/globalStatusPrototypes = list()
@@ -820,7 +820,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			desc = "You are dormant.<br>Unable to take any actions, until you power yourself."
 			icon_state = "paralysis"
 			unique = 1
-			duration = null
+			duration = INFINITE_STATUS
 
 	staggered
 		id = "staggered"
@@ -873,7 +873,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are drunk."
 		icon_state = "drunk"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/how_drunk = 0
 
@@ -991,7 +991,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are handcuffed.<br>You cannot use your hands. Click this statuseffect to resist."
 		icon_state = "handcuffed"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/mob/living/carbon/human/H
 
@@ -1015,7 +1015,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are buckled.<br>You cannot walk. Click this statuseffect to unbuckle."
 		icon_state = "buckled"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/mob/living/carbon/human/H
 
@@ -1034,13 +1034,39 @@ var/list/statusGroupLimits = list("Food"=4)
 				owner.delStatus("buckled")
 			.=..()
 
+	resting
+		id = "resting"
+		name = "Resting"
+		desc = "You are resting.<br>You are laying down. Click this statuseffect to stand up."
+		icon_state = "resting"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(var/optional=null)
+			if (ishuman(owner))
+				H = owner
+			else
+				owner.delStatus("resting")
+
+		clicked(list/params)
+			H.delStatus("resting")
+			H.force_laydown_standup()
+			H.hud.update_resting()
+
+		onUpdate()
+			if (H && !H.hasStatus("resting"))
+				owner.delStatus("resting")
+			.=..()
+
 	ganger
 		id = "ganger"
 		name = "Gang Member"
 		desc = "You are a gang member wearing your uniform. You get health and stamina bonuses."
 		icon_state = "ganger"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/const/max_health = 30
 		var/const/max_stam = 60
@@ -1209,7 +1235,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	desc = "You have been cursed."
 	icon_state = "bleeding"
 	unique = 1
-	duration = null
+	duration = INFINITE_STATUS
 	maxDuration = null
 	var/mob/living/carbon/human/H
 	var/units = 5
@@ -1245,7 +1271,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	desc = "A mentor is helping you in the form of a mouse in your pocket. Click here to let them go."
 	icon_state = "mentor_mouse"
 	unique = 1
-	duration = null
+	duration = INFINITE_STATUS
 	maxDuration = null
 
 	clicked(list/params)
@@ -1264,7 +1290,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	desc = "An admin is helping you in the form of a mouse in your pocket. Click here to let them go."
 	icon_state = "admin_mouse"
 	unique = 1
-	duration = null
+	duration = INFINITE_STATUS
 	maxDuration = null
 
 	clicked(list/params)

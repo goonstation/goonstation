@@ -282,7 +282,7 @@
 
 		step_to(src.assailant,T)
 
-		src.affecting.setStatus("pinned", duration = null)
+		src.affecting.setStatus("pinned", duration = INFINITE_STATUS)
 		src.affecting.force_laydown_standup()
 		if (!src.affecting.buckled)
 			set_affected_loc()
