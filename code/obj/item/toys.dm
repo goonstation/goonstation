@@ -378,6 +378,7 @@ var/list/figure_high_rarity = list(\
 /datum/figure_info/md,
 /datum/figure_info/rd,
 /datum/figure_info/ce,
+/datum/figure_info/hoc,
 /datum/figure_info/boxer,
 /datum/figure_info/lawyer,
 /datum/figure_info/barber,
@@ -639,6 +640,10 @@ var/list/figure_patreon_rarity = list(\
 	ce
 		name = "chief engineer"
 		icon_state = "ce"
+
+	hoc
+		name = "head of catering"
+		icon_state = "hoc"
 
 	cyborg
 		name = "cyborg"
