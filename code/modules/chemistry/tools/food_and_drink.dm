@@ -629,7 +629,7 @@
 /obj/item/reagent_containers/food/drinks/bowl
 	name = "bowl"
 	desc = "A bowl is a common open-top container used in many cultures to serve food, and is also used for drinking and storing other items."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/items/items_kitchen.dmi'
 	icon_state = "bowl"
 	item_state = "zippo"
 	initial_volume = 50
@@ -640,7 +640,7 @@
 	on_reagent_change()
 		//src.overlays = null
 		if (reagents.total_volume)
-			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
+			ENSURE_IMAGE(src.fluid_image, src.icon, "[src.icon_state]-fluid")
 			//if (!src.fluid_image)
 				//src.fluid_image = image('icons/obj/kitchen.dmi', "fluid")
 			var/datum/color/average = reagents.get_average_color()
@@ -648,7 +648,7 @@
 			src.UpdateOverlays(src.fluid_image, "fluid")
 			//src.overlays += src.fluid_image
 		else
-			src.UpdateOverlays(null, "fluid")
+			src.UpdateOverlays(null, "[src.icon_state]-fluid")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/cereal_box))
@@ -1231,7 +1231,7 @@
 	icon_state = "glass-oldf"
 	glass_style = "oldf"
 	initial_volume = 20
-	
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/round
 	name = "round glass"
 	icon_state = "glass-round"
