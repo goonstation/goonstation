@@ -1,10 +1,12 @@
 ﻿
 (t)fri apr 03 20
+(u)archlinuxusa
+(+)Eggs no longer produce a meaty explosion in the microwave, splattered egg will now splatter all over your microwave... Yummy.
 (u)RichardGere
 (*)Reduced the stamina damage dealt by csabers
 (u)Erinexx
 (*)New dough, produce, herb, bowling melon, and snack sprites!
-(*)Shitty jpg pancake sprites have been preserved for future use <3
+(+)Shitty jpg pancake sprites have been preserved for future use <3
 (*)Clockwork orange is now a little more vivacious
 (*)A bunch of other new food sprites!
 (t)thu apr 02 20
