@@ -836,7 +836,7 @@
 /datum/job/catering/waiter
 	name = "Waiter"
 	limit = 2
-	wages = 60
+	wages = 80
 	slot_belt = /obj/item/device/pda2/waiter
 	slot_jump = /obj/item/clothing/under/rank/bartender
 	slot_suit = /obj/item/clothing/suit/wcoat
