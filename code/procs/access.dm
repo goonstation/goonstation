@@ -213,6 +213,9 @@
 			return list(access_engineering, access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,
 						access_mining_outpost, access_hangar, access_heads, access_ai_upload, access_construction, access_eva)
+		if("Head of Catering")
+			return list(access_heads, access_maint_tunnels, access_bar,
+						access_kitchen, access_cargo, access_hydro, access_mail)
 
 		///////////////////////////// Security
 		if("Security Officer")
@@ -284,11 +287,8 @@
 			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
-		///////////////////////////// Civilian
-		if("Chaplain")
-			return list(access_morgue, access_chapel_office, access_crematorium)
-		if("Janitor")
-			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
+		///////////////////////////// Catering
+
 		if("Botanist", "Apiculturist")
 			return list(access_maint_tunnels, access_hydro)
 		if("Chef", "Sous-Chef")
@@ -297,6 +297,12 @@
 			return list(access_bar)
 		if("Waiter")
 			return list(access_bar, access_kitchen)
+
+		///////////////////////////// Civilian
+		if("Chaplain")
+			return list(access_morgue, access_chapel_office, access_crematorium)
+		if("Janitor")
+			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
 		if("Clown", "Boxer", "Barber", "Mime")
 			return list(access_maint_tunnels)
 		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host")

@@ -31,6 +31,7 @@
 		"g" = R_FREQ_SECURITY,
 		"e" = R_FREQ_ENGINEERING,
 		"r" = R_FREQ_RESEARCH,
+		"f" = R_FREQ_CATERING,
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
@@ -40,6 +41,7 @@
 		"e" = RADIOC_ENGINEERING,
 		"r" = RADIOC_RESEARCH,
 		"m" = RADIOC_MEDICAL,
+		"f" = RADIOC_CATERING,
 		"c" = RADIOC_CIVILIAN,
 		)
 	bicon_override = "ai"
@@ -53,6 +55,7 @@
 		"e" = R_FREQ_ENGINEERING,
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
+		"f" = R_FREQ_CATERING,
 		"c" = R_FREQ_CIVILIAN,
 		)
 	secure_colors = list(
@@ -61,6 +64,7 @@
 		"e" = RADIOC_ENGINEERING,
 		"r" = RADIOC_RESEARCH,
 		"m" = RADIOC_MEDICAL,
+		"f" = RADIOC_CATERING,
 		"c" = RADIOC_CIVILIAN,
 		)
 	bicon_override = "cap"
@@ -105,6 +109,7 @@
 		"e" = R_FREQ_ENGINEERING,
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CATERING,
 		"c" = R_FREQ_CIVILIAN,
 		)
 	secure_colors = list(
@@ -112,6 +117,7 @@
 		"e" = RADIOC_ENGINEERING,
 		"r" = RADIOC_RESEARCH,
 		"m" = RADIOC_MEDICAL,
+		"c" = RADIOC_CATERING,
 		"c" = RADIOC_CIVILIAN,
 		)
 	bicon_override = "hop"
@@ -156,6 +162,16 @@
 		)
 	bicon_override = "ce"
 
+/obj/item/device/radio/headset/command/hoc
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"f" = R_FREQ_CATERING,
+		)
+	secure_colors = list(
+		"h" = RADIOC_COMMAND,
+		"f" = RADIOC_CATERING,
+		)
+
 /obj/item/device/radio/headset/security
 	name = "Security Headset"
 	desc = "A radio headset that is also capable of communicating over the Security radio channels."
@@ -187,6 +203,13 @@
 	secure_frequencies = list("r" = R_FREQ_RESEARCH)
 	secure_colors = list("r" = RADIOC_RESEARCH)
 	bicon_override = "sci"
+
+/obj/item/device/radio/headset/catering
+	name = "Catering Headset"
+	desc = "A radio headset that is also capable of communicating over the Catering radio channels."
+	icon_state = "catering headset"
+	secure_frequencies = list("f" = R_FREQ_CATERING)
+	secure_colors = list("f" = RADIOC_CATERING)
 
 /obj/item/device/radio/headset/civilian
 	name = "Civilian Headset"

@@ -471,6 +471,7 @@ var/list/RARITY_COLOR = list(
 #define RADIOC_ENGINEERING "#A86800"
 #define RADIOC_MEDICAL "#461B7E"
 #define RADIOC_RESEARCH "#153E7E"
+#define RADIOC_CATERING "#1F1D80"
 #define RADIOC_CIVILIAN "#A10082"
 #define RADIOC_SYNDICATE "#962121"
 #define RADIOC_OTHER "#800080"
@@ -484,6 +485,7 @@ var/list/RARITY_COLOR = list(
 #define R_FREQ_ENGINEERING 1357
 #define R_FREQ_RESEARCH 1354
 #define R_FREQ_MEDICAL 1356
+#define R_FREQ_CATERING 1351
 #define R_FREQ_CIVILIAN 1355
 #define R_FREQ_SYNDICATE 1352 // Randomized for nuke rounds.
 #define R_FREQ_GANG 1400 // Placeholder, it's actually randomized in gang rounds.

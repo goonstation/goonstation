@@ -116,6 +116,9 @@ GAUNTLET CARDS
 /obj/item/card/id/engineering
 	icon_state = "id_eng"
 
+/obj/item/card/id/catering
+	icon_state = "id_cat"
+
 /obj/item/card/id/civilian
 	icon_state = "id_civ"
 

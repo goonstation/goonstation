@@ -20,8 +20,8 @@ var/datum/job_controller/job_controls
 			new /datum/job/research/medical_doctor/derelict {limit = 6; name = "Salvage Medic";} (),
 			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
-			new /datum/job/civilian/chef (),
-			new /datum/job/civilian/barman (),
+			new /datum/job/catering/chef (),
+			new /datum/job/catering/barman (),
 			new /datum/job/civilian/chaplain ())
 
 		else
@@ -29,6 +29,7 @@ var/datum/job_controller/job_controls
 			for (var/A in typesof(/datum/job/security)) src.staple_jobs += new A(src)
 			for (var/A in typesof(/datum/job/research)) src.staple_jobs += new A(src)
 			for (var/A in typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
+			for (var/A in typesof(/datum/job/catering)) src.staple_jobs += new A(src)
 			for (var/A in typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
 			for (var/A in typesof(/datum/job/special)) src.special_jobs += new A(src)
 		job_creator = new /datum/job/created(src)
@@ -60,6 +61,10 @@ var/datum/job_controller/job_controls
 		dat += "<BR>"
 		dat += "<b>Engineering Jobs</b><BR>"
 		for(var/datum/job/engineering/JOB in src.staple_jobs)
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+		dat += "<BR>"
+		dat += "<b>Catering Jobs</b><BR>"
+		for(var/datum/job/catering/JOB in src.staple_jobs)
 			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
 		dat += "<BR>"
 		dat += "<b>Civilian Jobs</b><BR>"

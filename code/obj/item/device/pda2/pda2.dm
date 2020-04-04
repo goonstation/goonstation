@@ -186,6 +186,11 @@
 		mailgroups = list("mining","Party Line")
 
 	chef
+		icon_state = "pda-chef"
+		mailgroups = list("kitchen","Party Line")
+
+	waiter
+		icon_state = "pda-waiter"
 		mailgroups = list("kitchen","Party Line")
 
 	barman

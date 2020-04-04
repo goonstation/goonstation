@@ -529,8 +529,13 @@ a.latejoin-card:hover {
 			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Engineering</th></tr>"}
 			for(var/datum/job/engineering/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
-			dat += {"</table></div><div class='fuck'><table class='latejoin'><tr><th colspan='2'>Civilian</th></tr>"}
 
+			dat += {"</table></div><div class='fuck'><table class='latejoin'><tr><th colspan='2'>Catering</th></tr>"}
+
+			for(var/datum/job/catering/J in job_controls.staple_jobs)
+				dat += LateJoinLink(J)
+
+			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Civilian</th></tr>"}
 			for(var/datum/job/civilian/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
 

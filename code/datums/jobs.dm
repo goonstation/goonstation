@@ -395,6 +395,38 @@
 		return
 #endif
 
+/datum/job/command/head_of_catering
+	name = "Head of Catering"
+	limit = 1
+	wages = 250
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	announce_on_join = 1
+
+	slot_ears = /obj/item/device/radio/headset/command/captain
+	//slot_eyes = /obj/item/clothing/glasses/sunglasses
+	slot_jump = /obj/item/clothing/under/rank/head_of_catering
+	slot_card = /obj/item/card/id/command
+	slot_foot = /obj/item/clothing/shoes/black
+	slot_back = /obj/item/storage/backpack/withO2
+	slot_belt = /obj/item/device/pda2/heads
+	slot_poc1 = /obj/item/pen/fancy
+	slot_head = /obj/item/clothing/head/bighat/hoc_chefhat
+	//items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log)
+
+	New()
+		..()
+		src.access = get_access("Head of Catering")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("resist_foodpoisoning")
+		if (prob(20))
+			M.bioHolder.AddEffect("accent_swedish")
+
 // Security Jobs
 
 /datum/job/security
@@ -731,22 +763,22 @@
 				return
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
-// Civilian Jobs
+// Catering Jobs
 
-/datum/job/civilian
-	linkcolor = "#0099FF"
-	slot_card = /obj/item/card/id/civilian
+/datum/job/catering
+	linkcolor = "#3c45de"
+	slot_card = /obj/item/card/id/catering
 
-/datum/job/civilian/chef
+/datum/job/catering/chef
 	name = "Chef"
-	limit = 1
+	limit = 2
 	wages = 100
 	slot_belt = /obj/item/device/pda2/chef
 	slot_jump = /obj/item/clothing/under/rank/chef
 	slot_foot = /obj/item/clothing/shoes/chef
 	slot_head = /obj/item/clothing/head/chefhat
 	slot_suit = /obj/item/clothing/suit/chef
-	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_ears = /obj/item/device/radio/headset/catering
 	items_in_backpack = list(/obj/item/kitchen/rollingpin)
 
 	New()
@@ -761,7 +793,7 @@
 		if (prob(20))
 			M.bioHolder.AddEffect("accent_swedish")
 
-/datum/job/civilian/barman
+/datum/job/catering/barman
 	name = "Barman"
 	limit = 1
 	wages = 100
@@ -769,7 +801,7 @@
 	slot_jump = /obj/item/clothing/under/rank/bartender
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_suit = /obj/item/clothing/suit/armor/vest
-	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_ears = /obj/item/device/radio/headset/catering
 	slot_poc1 = /obj/item/paper/book/pocketguide/bartending
 	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
 
@@ -784,7 +816,7 @@
 			return
 		M.traitHolder.addTrait("training_drinker")
 
-/datum/job/civilian/botanist
+/datum/job/catering/botanist
 	name = "Botanist"
 	limit = 5
 	wages = 100
@@ -792,12 +824,35 @@
 	slot_jump = /obj/item/clothing/under/rank/hydroponics
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
-	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_ears = /obj/item/device/radio/headset/catering
 
 	New()
 		..()
 		src.access = get_access("Botanist")
 		return
+
+/datum/job/catering/waiter
+	name = "Waiter"
+	limit = 2
+	wages = 60
+	slot_belt = /obj/item/device/pda2/waiter
+	slot_jump = /obj/item/clothing/under/rank/bartender
+	slot_suit = /obj/item/clothing/suit/wcoat
+	slot_foot = /obj/item/clothing/shoes/black
+	slot_ears = /obj/item/device/radio/headset/catering
+	slot_lhan = /obj/item/plate/tray
+	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
+
+	New()
+		..()
+		src.access = get_access("Waiter")
+		return
+
+// Civilian Jobs
+
+/datum/job/civilian
+	linkcolor = "#0099FF"
+	slot_card = /obj/item/card/id/civilian
 
 /datum/job/civilian/janitor
 	name = "Janitor"

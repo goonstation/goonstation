@@ -3494,9 +3494,12 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span style=\"color:red\">Ugh! Eating that was a terrible idea!</span>")
-					M.changeStatus("stunned", 2 SECONDS)
-					M.changeStatus("weakened", 2 SECONDS)
-					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+					if (M.bioHolder && !M.bioHolder.HasEffect("resist_foodpoisoning"))
+						M.changeStatus("stunned", 2 SECONDS)
+						M.changeStatus("weakened", 2 SECONDS)
+						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+					else
+						boutput(M, "<span style=\"color:blue\">Strangely, you feel fine!</span>")
 
 		fooddrink/fakecheese
 			name = "cheese substitute"

@@ -846,6 +846,18 @@
 	icon_state = "tophat"
 	w_class = 4
 
+/obj/item/clothing/head/bighat/hoc_chefhat
+	name = "Head Chef's hat"
+	desc = "The ultimate symbol of culinary mastery, setting you a step above the rest of Catering."
+	icon_state = "hoc-chef"
+	item_state = "hoc-chef"
+	c_flags = SPACEWEAR
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 5)
+
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
 	desc = "A commitment."

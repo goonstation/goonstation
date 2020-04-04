@@ -399,6 +399,19 @@
 	icon_state = "comm_officer"
 	item_state = "comm_officer"
 
+/obj/item/clothing/under/rank/head_of_catering
+	name = "head of catering's uniform"
+	desc = "The garment of authority in the catering department. Blood seems to just run right off it."
+	icon_state = "hoc"
+	item_state = "hoc"
+	can_stain = 0
+	permeability_coefficient = 0.50
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 10)
+
 // Security
 
 /obj/item/clothing/under/rank/security
