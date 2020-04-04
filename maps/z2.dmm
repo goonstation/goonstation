@@ -4968,7 +4968,7 @@
 "bRB" = (/turf/unsimulated/floor/caution/east{dir = 2},/area/crypt/sigma/lab)
 "bRC" = (/obj/table/auto,/obj/item/instrument/bikehorn,/turf/simulated/floor/blue/checker,/area/crunch)
 "bRD" = (/obj/table/auto,/obj/machinery/light/worn,/turf/simulated/floor/blue/checker,/area/crunch)
-"bRE" = (/obj/table/auto,/obj/decal/fakeobjects/firealarm_broken{dir = 1; icon_state = "firex"; pixel_x = 0; pixel_y = -24},/obj/item/c_tube{desc = "A very large knife, possibly from a mail order catalog or a MLM scheme."; icon = 'icons/obj/kitchen.dmi'; icon_state = "knife_b"; item_state = "knife_b"; name = "Discount Dan-Branded Steak Knife"},/turf/simulated/floor/blue/checker,/area/crunch)
+"bRE" = (/obj/table/auto,/obj/decal/fakeobjects/firealarm_broken{dir = 1; icon_state = "firex"; pixel_x = 0; pixel_y = -24},/obj/item/c_tube{desc = "A very large knife, possibly from a mail order catalog or a MLM scheme."; icon = 'icons/obj/kitchen.dmi'; icon_state = "knife-welder"; item_state = "knife-welder"; name = "Discount Dan-Branded Steak Knife"},/turf/simulated/floor/blue/checker,/area/crunch)
 "bRF" = (/obj/table/auto,/turf/simulated/floor/plating,/area/crunch)
 "bRG" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/blue/checker,/area/crunch)
 "bRH" = (/obj/stool/chair{dir = 8},/turf/simulated/floor/blue/checker,/area/crunch)

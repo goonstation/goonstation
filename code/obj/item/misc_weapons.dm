@@ -436,10 +436,11 @@
 
 /obj/item/knife_butcher //Idea stolen from the welder!
 	name = "Butcher's Knife"
-	desc = "A huge knife."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "knife_b"
-	item_state = "knife_b"
+	desc = "A huge and very sinister looking knife."
+	icon = 'icons/obj/item/tools/tools_kitchen.dmi'
+	icon_state = "knife-butcher"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "knife-butcher"
 	force = 5.0
 	throwforce = 15.0
 	throw_speed = 4
@@ -516,8 +517,8 @@
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "predspear"
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	item_state = "knife_b"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "predspear"
 	force = 8.0
 	throwforce = 35.0
 	throw_speed = 6

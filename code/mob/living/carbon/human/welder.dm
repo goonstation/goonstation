@@ -167,9 +167,10 @@
 /obj/item/knife/welder
 	name = "Welder's Knife"
 	desc = "Something is wrong about this knife."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "knife_b"
-	item_state = "knife_b"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "knife-welder"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "knife-welder"
 	force = 20.0
 	throwforce = 20.0
 	throw_speed = 4
