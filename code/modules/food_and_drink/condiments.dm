@@ -17,12 +17,14 @@
 			user.visible_message("<span style=\"color:blue\">[user] adds [src] to \the [target].</span>", "<span style=\"color:blue\">You add [src] to \the [target].</span>")
 			src.reagents.trans_to(target, 100)
 			qdel (src)
+			return
 
 		if (istype(target, /obj/item/reagent_containers/))
 			user.visible_message("<span style='color:blue'><b>[user]</b> crushes up \the [src] in \the [target].</span>",\
 			"<span style='color:blue'>You crush up \the [src] in \the [target].</span>")
 			src.reagents.trans_to(target, 100)
 			qdel (src)
+			return
 
 		else return
 
