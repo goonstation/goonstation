@@ -337,10 +337,9 @@ AI MODULES
 
 
 /********************* EXPERIMENTAL LAWS *********************/
-//note: these 'experimental' laws are spawned in via random_item_spawner instead of spawning every round
-//so, any given one of these will only have a chance of spawning
-//[IMPORTANT] The pool for the experimental laws is in file /code/obj/random_spawners.dm. UPDATE THAT TO INCLUDE ANY NEW LAWS SO THEY CAN SPAWN!!!
-//also if you notice that there's like 5 or 6 experimental modules in the spawn list, maybe wanna increase the max amount that can spawn?
+//at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
+//This is because 'Experimental' laws should be randomized at round-start, as a sort of pre-fab gimmick law
+//Makes it so that you're not guaranteed to have any 1 'Experimental' law - and 'Experimental' is just a fancy name for 'Gimmick'
 
 /obj/item/aiModule/experimental
 	lawNumber = 13 //law number is at 13 for all experimental laws so they overwrite one another (override if you want I guess idc lol)
