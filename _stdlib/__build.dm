@@ -59,7 +59,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CLARION
 
 // Cogmap
-//#define MAP_OVERRIDE_COGMAP
+#define MAP_OVERRIDE_COGMAP
 
 // Cogmap 2
 //#define MAP_OVERRIDE_COGMAP2
