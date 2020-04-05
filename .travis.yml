@@ -18,6 +18,7 @@ matrix:
           - $HOME/SpacemanDMM
       install:
         - tools/travis/install_spaceman_dmm.sh dreamchecker
+        - touch +secret/__secret.dme
       script:
         - ~/dreamchecker
     - name: "Compile"
