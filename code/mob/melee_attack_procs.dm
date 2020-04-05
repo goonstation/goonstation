@@ -278,6 +278,8 @@
 	if (!src || !ismob(src) || !target || !ismob(target))
 		return
 
+	hit_twitch(target)
+
 	if (!isnum(extra_damage))
 		extra_damage = 0
 
@@ -896,6 +898,7 @@
 
 			if (istype(affecting))
 				affecting.take_damage((damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
+				hit_twitch(target)
 			else if (affecting)
 				target.TakeDamage(affecting, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 			else
