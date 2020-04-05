@@ -9659,7 +9659,7 @@
 "dDM" = (/obj/admin_plaque{name = "Stephanie Mir's Office"; pixel_x = 32},/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/offices{icon_state = "blue"})
 "dDN" = (/obj/potted_plant/potted_plant3,/turf/unsimulated/floor/wood/three,/area/centcom/offices/zamujasa)
 "dDO" = (/obj/admin_plaque{name = "AngriestIBM's Office"; pixel_x = -32},/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/offices{icon_state = "blue"})
-"dDP" = (/obj/machinery/ai_status_display,/turf/unsimulated/wall{icon = 'icons/misc/worlds.dmi'; icon_state = "leadwall"},/area/centcom/offices{icon_state = "blue"})
+"dDP" = (/turf/unsimulated/wall{icon = 'icons/misc/worlds.dmi'; icon_state = "leadwall"},/area/centcom/offices{icon_state = "blue"})
 "dDQ" = (/obj/machinery/light,/turf/unsimulated/floor/circuit,/area/centcom/offices/simianc)
 "dDR" = (/obj/item/reagent_containers/food/snacks/chips{name = "crisps"},/turf/unsimulated/floor/wood/two,/area/centcom/offices/darkchis)
 "dDS" = (/obj/machinery/light,/obj/item/paper/folded/ball{pixel_x = -1; pixel_y = -4},/obj/item/paper/folded/ball{pixel_x = -8; pixel_y = 7},/obj/item/clothing/suit/jacket/plastic/random_color{pixel_x = 8; pixel_y = -6},/turf/unsimulated/floor/wood/two,/area/centcom/offices/flourish)

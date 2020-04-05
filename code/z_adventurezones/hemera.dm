@@ -472,7 +472,6 @@ Obsidian Crown
 			humHost.take_ear_damage(-INFINITY, 1)
 			humHost.health = 100
 			humHost.buckled = initial(humHost.buckled)
-			humHost.handcuffed = initial(humHost.handcuffed)
 			humHost.bodytemperature = humHost.base_body_temp
 
 			humHost.stat=0

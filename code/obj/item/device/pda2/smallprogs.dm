@@ -233,12 +233,12 @@ Code:
 		dat += "<h4>Supply Record Interlink</h4>"
 
 		dat += "Order History: <BR><ol>"
-		for(var/S in supply_history)
+		for(var/S in shippingmarket.supply_history)
 			dat += S
 		dat += "</ol>"
 
 		dat += "Current requests: <BR><ol>"
-		for(var/S in supply_requestlist)
+		for(var/S in shippingmarket.supply_requests)
 			var/datum/supply_order/SO = S
 			dat += "<li>[SO.object.name] requested by [SO.orderedby]</li>"
 		dat += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
@@ -1116,7 +1116,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			O.object = P
 			O.orderedby = src.master.owner
 			O.console_location = get_area(src.master)
-			supply_requestlist += O
+			shippingmarket.supply_requests += O
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"
 
 			// pda alert ////////
@@ -1133,7 +1133,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if (href_list["viewrequests"])
 			src.temp = "<B>Current Requests:</B><BR><BR>"
-			for(var/S in supply_requestlist)
+			for(var/S in shippingmarket.supply_requests)
 				var/datum/supply_order/SO = S
 				src.temp += "[SO.object.name] requested by [SO.orderedby] from [SO.console_location].<BR>"
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

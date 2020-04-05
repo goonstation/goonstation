@@ -2469,11 +2469,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 
 
 
-proc/get_manhattan_dist(atom/A,atom/B)
-	if (!A || !B)
-		.= 0
-	else
-		.= abs(A.x - B.x) + abs(A.y - B.y)
 
 proc/time_to_text(var/time)
 	. = list()

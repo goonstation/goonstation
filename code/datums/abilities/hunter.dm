@@ -36,10 +36,9 @@
 		M.stuttering = 0
 		M.drowsyness = 0
 
-		if (M.handcuffed)
-			M.visible_message("<span style=\"color:red\"><B>[M] rips apart the handcuffs with pure brute strength!</b></span>")
-			qdel(M.handcuffed)
-			M.handcuffed = null
+		if (M.hasStatus("handcuffed"))
+			M.visible_message("<span style=\"color:red\"><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+			M.handcuffs.destroy_handcuffs(M)
 		M.buckled = null
 
 		if (M.mutantrace)

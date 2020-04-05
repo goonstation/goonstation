@@ -712,7 +712,9 @@
 	sname = "shotgun spread"
 	shot_number = 0
 	cost = 37.5
-	power = 80
+	power = 45 //a chunky pointblank
+	ks_ratio = 0
+	damage_type = D_ENERGY
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/energy_bolt/tasershotgun
 	split_type = 0
@@ -727,6 +729,10 @@
 		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
+
+	on_hit(atom/A, angle, obj/projectile/P)
+		if(isliving(A))
+			stun_bullet_hit(P,A)
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
