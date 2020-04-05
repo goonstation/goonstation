@@ -146,7 +146,8 @@ var/global
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
-	"Mithril" = 'icons/mob/hud_human_quilty.dmi')
+	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
+	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
 
 	list/customization_styles = list("None" = "none",
 	"Balding" = "balding",
