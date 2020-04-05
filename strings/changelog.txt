@@ -1,5 +1,7 @@
 ﻿
 (t)sun apr 05 20
+(u)mbc
+(*)You can now buckle into chairs by clicking yourself while standing on them. Same with climbing on chairs - click self with grab intent.
 (u)Flaborized
 (*)Added a new colorblind accessible HUD option! You can access it in the character setup options.
 (u)Flourish
