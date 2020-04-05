@@ -84,7 +84,7 @@
 
 /obj/machinery/computer/ordercomp/proc/view_requests()
 	. = "<B>Current Requests:</B><BR><BR>"
-	for(var/S in supply_requestlist)
+	for(var/S in shippingmarket.supply_requests)
 		var/datum/supply_order/SO = S
 		. += "[SO.object.name] requested by [SO.orderedby] from [SO.console_location].<BR>"
 	. += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -161,10 +161,11 @@
 					O.object = P
 					O.orderedby = usr.name
 					O.console_location = src.console_location
-					process_supply_order(O,usr)
+					var/obj/storage/S = O.create(usr)
+					shippingmarket.receive_crate(S)
 					logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
 					boutput(usr, "Your order of [P.name] has been processed and will be delivered shortly.")
-					supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits from personal account.<BR>"
+					shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits from personal account.<BR>"
 
 					// pda alert ////////
 					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
@@ -178,7 +179,7 @@
 				O.object = P
 				O.orderedby = usr.name
 				O.console_location = src.console_location
-				supply_requestlist += O
+				shippingmarket.supply_requests += O
 				boutput(usr, "Request for [P.name] sent to Supply Console. The Quartermasters will process your request as soon as possible.")
 
 				// pda alert ////////

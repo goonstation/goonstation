@@ -2038,7 +2038,7 @@
 
 /datum/commodity/costume/scifi
 	comname = "Sci-Fi Garb Set"
-	comtype = /obj/item/storage/box/costume/scifi 
+	comtype = /obj/item/storage/box/costume/scifi
 	desc = "From a faraway time and place."
 	price = 500
 	baseprice = 100

@@ -258,11 +258,7 @@
 				user.show_text("Access Denied", "red")
 			user.unlock_medal("Rookie Thief", 1)
 			return
-/*
-		else if (issilicon(user))
-			if (get_dist(src, user) <= 1)
-				return src.attack_hand(user)
-*/
+
 		else
 			return ..()
 

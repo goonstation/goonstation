@@ -11,18 +11,18 @@
 	var/whos_id = null
 	var/console_location = null
 
-	proc/create(var/spawnpoint, var/mob/orderer)
-		var/atom/movable/A = object.create(spawnpoint, orderer)
+	proc/create(var/mob/orderer)
+		var/obj/storage/S = object.create(orderer)
 
 		if(!isnull(whos_id))
-			A.name = "[A.name], Ordered by [whos_id:registered], [comment ? "([comment])":"" ]"
+			S.name = "[S.name], Ordered by [whos_id:registered], [comment ? "([comment])":"" ]"
 		else
-			A.name = "[A.name] [comment ? "([comment])":"" ]"
+			S.name = "[S.name] [comment ? "([comment])":"" ]"
 
 		if(comment)
-			A.delivery_destination = comment
+			S.delivery_destination = comment
 
-		return A
+		return S
 
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
@@ -43,10 +43,8 @@
 	var/id = 0 //What jobs can order it
 	var/whos_id = null //linked ID
 
-	proc/create(var/spawnpoint, var/mob/creator)
-		if (!spawnpoint)
-			return null
-		var/atom/movable/A
+	proc/create(var/mob/creator)
+		var/obj/storage/S
 		if (!ispath(containertype) && contains.len > 1)
 			containertype = text2path(containertype)
 			if (!ispath(containertype))
@@ -55,21 +53,19 @@
 		if (ispath(containertype))
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(10))
-				A = new /obj/storage/crate/haunted(spawnpoint)
+				S = new /obj/storage/crate/haunted
 			else
-				A = new containertype(spawnpoint)
+				S = new containertype
 #else
-			A = new containertype(spawnpoint)
+			S = new containertype
 #endif
-			if (A)
-				spawnpoint = A // set the spawnpoint to the container we made so we don't have to duplicate the contains spawner loop
+			if (S)
 				if (containername)
-					A.name = containername
+					S.name = containername
 
-				if (access && isobj(A))
-					var/obj/O = A
-					O.req_access = list()
-					O.req_access += text2num(access)
+				if (access && istype(S))
+					S.req_access = list()
+					S.req_access += text2num(access)
 
 		if (contains.len)
 			for (var/B in contains)
@@ -84,13 +80,11 @@
 					amt = abs(contains[B])
 
 				for (amt, amt>0, amt--)
-					var/atom/thething = new thepath(spawnpoint)
+					var/atom/thething = new thepath(S)
 					if (amount && isitem(thething))
 						var/obj/item/I = thething
 						I.amount = amount
-		if (A)
-			return A
-		return null
+		return S
 
 /datum/supply_packs/emptycrate
 	name = "Empty Crate"
