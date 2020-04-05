@@ -1,5 +1,7 @@
 ﻿
 (t)sat apr 04 20
+(u)ZeWaka
+(+)Handcuffing should be more consistent across the board.
 (u)Awkward Dryad
 (+)Fixed a plate stack runtime error.
 (*)Plates can now be stacked one by one instead of click-drag only.
