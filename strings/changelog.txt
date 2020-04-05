@@ -1,5 +1,8 @@
 ﻿
 (t)sat apr 04 20
+(u)mbc
+(+)Fixed bug where attack particle showed incorrect sprite when the attack obj was being deleted or dropped
+(+)Fixed bug where hit twitch animations wouldnt play in many circumstances
 (u)Nexusuxen
 (*)Added experimental "Equality" silicon law module.
 (u)Mordent
