@@ -1,5 +1,8 @@
 ﻿
 (t)sat apr 04 20
+(u)Awkward Dryad
+(+)Fixed a plate stack runtime error.
+(*)Plates can now be stacked one by one instead of click-drag only.
 (u)mbc
 (+)Fixed bug where attack particle showed incorrect sprite when the attack obj was being deleted or dropped
 (+)Fixed bug where hit twitch animations wouldnt play in many circumstances
