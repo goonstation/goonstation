@@ -1629,10 +1629,10 @@
 		var/obj/item/reagent_containers/glass/beaker = locate() in mob.loc
 
 		if (mob.urine < 1)
-			.= "<B>[mob]</B> strains, but has no milk left!"
+			.= "<B>[mob]</B> strains, but fails to output milk!"
 		else if (toilet && (mob.buckled != null) && (mob.urine >= 2))
 			for (var/obj/item/storage/toilet/T in mob.loc)
-				.= pick("<B>[mob]</B> squirts some milk into the toilet. What a waste.", "<B>[mob]</B> empties their udders.", "<span style=\"color:blue\">Ahhh, sweet relief.</span>")
+				.= "<B>[mob]</B> dispenses milk into the toilet. What a waste."
 				mob.urine = 0
 				T.clogged += 0.10
 				break
