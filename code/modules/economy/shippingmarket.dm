@@ -142,7 +142,7 @@
 
 		for(var/obj/O in sell_crate.contents)
 			for (var/datum/commodity/C in commodities)
-				if (istype(O, C))
+				if (istype(O, C.comtype))
 					add = C.price
 					if (C.indemand)
 						add *= shippingmarket.demand_multiplier
