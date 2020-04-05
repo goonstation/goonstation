@@ -1,5 +1,7 @@
 ﻿
 (t)sun apr 05 20
+(u)Flaborized
+(*)Added a new colorblind accessible HUD option! You can access it in the character setup options.
 (u)Flourish
 (*)Added Roach and Saxophone as spacebux rewards.
 (u)pali
