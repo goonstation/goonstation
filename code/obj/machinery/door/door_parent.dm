@@ -44,7 +44,7 @@
 			return
 		else
 			var/mob/M = AM
-			if (!M.handcuffed)
+			if (!M.hasStatus("handcuffed"))
 				src.bumpopen(M)
 
 	else if (istype(AM, /obj/vehicle))
@@ -52,7 +52,7 @@
 		var/mob/M2 = V.rider
 		if (!M2 || !ismob(M2))
 			return
-		if (!M2.handcuffed)
+		if (!M2.hasStatus("handcuffed"))
 			src.bumpopen(M2)
 
 	else if (istype(AM, /obj/machinery/vehicle/tank))

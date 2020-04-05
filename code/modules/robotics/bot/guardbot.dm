@@ -1704,7 +1704,7 @@
 			look_for_perp()
 				if(src.arrest_target) return //Already chasing somebody
 				for (var/mob/living/carbon/C in view(7,master)) //Let's find us a criminal
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					if (src.assess_perp(C))
@@ -1816,7 +1816,7 @@
 											if (!master || !master.on || master.idle || master.stunned)
 												src.cuffing = 0
 												return
-											if (arrest_target.handcuffed || !isturf(arrest_target.loc))
+											if (arrest_target.hasStatus("handcuffed") || !isturf(arrest_target.loc))
 												drop_arrest_target()
 												return
 
@@ -1829,7 +1829,7 @@
 													return
 
 											if(iscarbon(arrest_target))
-												arrest_target.handcuffed = new /obj/item/handcuffs/guardbot(arrest_target)
+												arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(arrest_target)
 												arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 												boutput(arrest_target, "<span style=\"color:red\">[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
 												arrest_target:set_clothing_icon_dirty()
@@ -2032,7 +2032,7 @@
 			look_for_perp()
 				if(src.arrest_target) return //Already chasing somebody
 				for (var/mob/living/carbon/C in view(7,master)) //Let's find us a criminal
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 60))
@@ -2172,7 +2172,7 @@
 				if(src.hug_target)
 					return
 				for (var/mob/living/carbon/C in view(7,master)) //Let's get some candy!
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 60))
@@ -2996,7 +2996,7 @@
 		proc
 			look_for_threat()
 				for (var/mob/living/carbon/C in view(7,master)) //Let's find us a criminal
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					var/threat = 0

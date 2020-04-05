@@ -685,7 +685,7 @@
 		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
 			src.unlock_medal("HUMANOID MUST NOT ESCAPE", 1)
 
-		if (src.handcuffed)
+		if (src.hasStatus("handcuffed"))
 			src.unlock_medal("Fell down the stairs", 1)
 
 		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
@@ -1472,7 +1472,7 @@
 	return
 
 /mob/living/carbon/human/restrained()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
@@ -1513,7 +1513,7 @@
 	<BR><B>ID:</B> <A href='?src=\ref[src];varname=wear_id;slot=[src.slot_wear_id];item=id'>[(src.wear_id ? src.wear_id : "Nothing")]</A>
 	<BR><B>Left Pocket:</B> <A href='?src=\ref[src];varname=l_store;slot=[src.slot_l_store];item=pockets'>[(src.l_store ? "Something" : "Nothing")]</A>
 	<BR><B>Right Pocket:</B> <A href='?src=\ref[src];varname=r_store;slot=[src.slot_r_store];item=pockets'>[(src.r_store ? "Something" : "Nothing")]</A>
-	<BR>[(src.handcuffed ? text("<A href='?src=\ref[src];slot=handcuff;item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff;slot=handcuff'>Not Handcuffed</A>"))]
+	<BR>[(src.hasStatus("handcuffed") ? text("<A href='?src=\ref[src];slot=handcuff;item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff;slot=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(src.internal ? text("<A href='?src=\ref[src];slot=internal;item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?action=mach_close&window=mob[src.name]'>Close</A>
 	<BR>"}
@@ -2003,8 +2003,8 @@
 		W.unequipped(src)
 		src.back = null
 		src.update_clothing()
-	else if (W == src.handcuffed)
-		src.handcuffed = null
+	else if (W == src.handcuffs)
+		src.handcuffs = null
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
@@ -2731,29 +2731,23 @@
 			src.show_text("You attempt to remove your shackles. (This will take around [round(time / 10)] seconds and you need to stand still.)", "red")
 			actions.start(new/datum/action/bar/private/icon/shackles_removal(time), src)
 
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
 			if (src.is_changeling())
 				boutput(src, "<span style=\"color:blue\">You briefly shrink your hands to remove your handcuffs.</span>")
-				src.handcuffed:set_loc(src.loc)
-				src.handcuffed.unequipped(src)
-				src.handcuffed = null
-				src.update_clothing()
+				src.handcuffs.drop_handcuffs(src)
 				return
 			if (ishunter(src))
 				for (var/mob/O in AIviewers(src))
 					O.show_message(text("<span style=\"color:red\"><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
 				boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
 
-				if (src.handcuffed:material) //This is a bit hacky.
-					src.handcuffed:material:triggerOnAttacked(src.handcuffed, src, src, src.handcuffed)
-
-				qdel(src.handcuffed)
-				src.handcuffed = null
-				src.update_clothing()
+				if (src.handcuffs:material) //This is a bit hacky.
+					src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+				src.handcuffs.destroy_handcuffs(src)
 				return
 			if (iswerewolf(src))
-				if (src.handcuffed.werewolf_cant_rip())
+				if (src.handcuffs.werewolf_cant_rip())
 					boutput(src, __red("You can't seem to rip apart these silver handcuffs. They burn!"))
 					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
 					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
@@ -2761,39 +2755,32 @@
 				else
 					src.visible_message("<span style=\"color:red\"><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
 					boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
-					if (src.handcuffed:material) //This is a bit hacky.
-						src.handcuffed:material:triggerOnAttacked(src.handcuffed, src, src, src.handcuffed)
-					qdel(src.handcuffed)
-					src.handcuffed = null
-					src.update_clothing()
+					if (src.handcuffs:material) //This is a bit hacky.
+						src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
 			for (var/mob/O in AIviewers(src))
 				O.show_message(text("<span style=\"color:red\"><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
 			boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
 
-			if (src.handcuffed:material) //This is a bit hacky.
-				src.handcuffed:material:triggerOnAttacked(src.handcuffed, src, src, src.handcuffed)
-				qdel(src.handcuffed)
-			src.handcuffed = null
-			src.update_clothing()
+			if (src.handcuffs:material) //This is a bit hacky.
+				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
 			for (var/mob/O in AIviewers(src))
 				O.show_message(text("<span style=\"color:red\"><B>[] rips apart the handcuffs with machine-like strength!</B></span>", src), 1)
 			boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
 
-			if (src.handcuffed:material) //This is a bit hacky.
-				src.handcuffed:material:triggerOnAttacked(src.handcuffed, src, src, src.handcuffed)
-
-			qdel(src.handcuffed)
-			src.handcuffed = null
-			src.update_clothing()
+			if (src.handcuffs:material) //This is a bit hacky.
+				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
+			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
-			var/calcTime = src.handcuffed.material ? max((src.handcuffed.material.getProperty("hard") + src.handcuffed.material.getProperty("density")) * 10, 200) : (istype(src.handcuffed, /obj/item/handcuffs/guardbot) ? rand(150, 180) : (src.canmove ? rand(400,500) : rand(600,750)))
+			var/calcTime = src.handcuffs.material ? max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) * 10, 200) : (istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(150, 180) : (src.canmove ? rand(400,500) : rand(600,750)))
 			boutput(src, "<span style=\"color:red\">You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
-			if (src.handcuffed:material) //This is a bit hacky.
-				src.handcuffed:material:triggerOnAttacked(src.handcuffed, src, src, src.handcuffed)
+			if (src.handcuffs:material) //This is a bit hacky.
+				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
 

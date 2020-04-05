@@ -2422,10 +2422,8 @@ var/global/night_mode_enabled = 0
 		usr.show_text("You can only remove handcuffs from mobs.", "red")
 		return
 
-	if (M.handcuffed)
-		M.handcuffed.set_loc(M.loc)
-		M.handcuffed.unequipped(M)
-		M.handcuffed = null
+	if (M.hasStatus("handcuffed"))
+		M.handcuffs.drop_handcuffs(M)
 
 		logTheThing("admin", src, M, "unhandcuffed %target% at [get_area(M)] ([showCoords(M.x, M.y, M.z)])")
 		logTheThing("diary", src, M, "unhandcuffed %target% at [get_area(M)] ([showCoords(M.x, M.y, M.z)])", "admin")
