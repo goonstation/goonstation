@@ -220,11 +220,12 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Remove Crewmember", "Who is being removed from the crew manifest and chain of command?", user.real_name)
 
+
 /******************** Freeform ********************/
 
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
-	lawNumber = 13
+	lawNumber = 14
 
 	get_law_text()
 		return lawTarget ? lawTarget : "This law intentionally left blank."
@@ -333,6 +334,38 @@ AI MODULES
 		boutput(AI, "<span color='blue'>[sender] has changed your name. You are now known as \"<b>[lawTarget]</b>\".</span>")
 
 		//AI.eyecam.name = lawTarget //not sure if we need?
+
+
+/********************* EXPERIMENTAL LAWS *********************/
+//at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
+//This is because 'Experimental' laws should be randomized at round-start, as a sort of pre-fab gimmick law
+//Makes it so that you're not guaranteed to have any 1 'Experimental' law - and 'Experimental' is just a fancy name for 'Gimmick'
+
+/obj/item/aiModule/experimental
+	lawNumber = 13 //law number is at 13 for all experimental laws so they overwrite one another (override if you want I guess idc lol)
+
+
+/*** Equality ***/
+
+/obj/item/aiModule/experimental/equality/a
+	name = "Experimental 'Equality' AI Module"
+
+	get_law_text()
+		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
+
+/obj/item/aiModule/experimental/equality/b
+	name = "Experimental 'Equality' AI Module"
+
+	get_law_text()
+		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
 
 
 

@@ -164,48 +164,45 @@
 //	attack_particle(user,src)
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
-	if (!M || !target) return
+	if (!M || !target || !M.attack_particle) return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
-	SPAWN_DBG(0)
-		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
-			return
 
-		M.attack_particle.invisibility = M.invisibility
+	M.attack_particle.invisibility = M.invisibility
 
-		if (target) //I want these to be recent, but sometimes they can be deleted during course of a spawn
-			diff_x = target.x - M.x
-			diff_y = target.y - M.y
+	if (target) //I want these to be recent, but sometimes they can be deleted during course of a spawn
+		diff_x = target.x - M.x
+		diff_y = target.y - M.y
 
-		M.last_interact_particle = world.time
+	M.last_interact_particle = world.time
 
-		var/obj/item/I = M.equipped()
-		if (I && !isgrab(I))
-			M.attack_particle.icon = I.icon
-			M.attack_particle.icon_state = I.icon_state
-		else
-			M.attack_particle.icon = 'icons/mob/mob.dmi'
-			M.attack_particle.icon_state = "[M.a_intent]"
+	var/obj/item/I = M.equipped()
+	if (I && !isgrab(I))
+		M.attack_particle.icon = I.icon
+		M.attack_particle.icon_state = I.icon_state
+	else
+		M.attack_particle.icon = 'icons/mob/mob.dmi'
+		M.attack_particle.icon_state = "[M.a_intent]"
 
-		M.attack_particle.alpha = 180
-		M.attack_particle.loc = M.loc
-		M.attack_particle.pixel_x = 0
-		M.attack_particle.pixel_y = 0
+	M.attack_particle.alpha = 180
+	M.attack_particle.loc = M.loc
+	M.attack_particle.pixel_x = 0
+	M.attack_particle.pixel_y = 0
 
-		var/matrix/start = matrix()
-		start.Scale(0.3,0.3)
-		start.Turn(rand(-80,80))
-		M.attack_particle.transform = start
-		var/matrix/t_size = matrix()
+	var/matrix/start = matrix()
+	start.Scale(0.3,0.3)
+	start.Turn(rand(-80,80))
+	M.attack_particle.transform = start
+	var/matrix/t_size = matrix()
 
-		//animate(M.attack_particle, alpha = 200, time = 1, easing = SINE_EASING)
+	//animate(M.attack_particle, alpha = 200, time = 1, easing = SINE_EASING)
 
-		//animate(M.attack_particle, pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = CUBIC_EASING)
-		//animate(transform = t_size, time = 6, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
+	//animate(M.attack_particle, pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = CUBIC_EASING)
+	//animate(transform = t_size, time = 6, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
 
-		animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
-		animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-		sleep(5)
+	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
+	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
+	SPAWN_DBG(5)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
 		M.attack_particle.alpha = 0
 
@@ -413,52 +410,47 @@
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!istype(A) || istype(A, /mob/living/object))
+	if (!A || istype(A, /mob/living/object))
 		return
-	if (ismob(A) || istype(A, /obj/critter/))
-		if (A:twitching)
-			return
-
-		A:twitching = 1
 	var/which = 0
 	if (usr)
 		which = get_dir(usr,A)
+	else
+		which = pick(alldirs)
+
 	if (!which)
 		which = pick(alldirs)
-	SPAWN_DBG(1 DECI SECOND)
-		if (A)
-			var/ipx = A.pixel_x
-			var/ipy = A.pixel_y
-			var/movepx = 0
-			var/movepy = 0
-			switch(which)
-				if (NORTH)			movepy = 3
-				if (WEST)			movepx = -3
-				if (SOUTH)			movepy = -3
-				if (EAST)			movepx = 3
-				if (NORTHEAST)
-					movepx = 2
-					movepy = 2
-				if (NORTHWEST)
-					movepx = -2
-					movepy = 2
-				if (SOUTHWEST)
-					movepx = -2
-					movepy = -2
-				if (SOUTHEAST)
-					movepx = 2
-					movepy = -2
-				else
-					return
 
-			var/x = movepx + ipx
-			var/y = movepy + ipy
+	var/ipx = A.pixel_x
+	var/ipy = A.pixel_y
+	var/movepx = 0
+	var/movepy = 0
+	switch(which)
+		if (NORTH)			movepy = 3
+		if (WEST)			movepx = -3
+		if (SOUTH)			movepy = -3
+		if (EAST)			movepx = 3
+		if (NORTHEAST)
+			movepx = 2
+			movepy = 2
+		if (NORTHWEST)
+			movepx = -2
+			movepy = 2
+			movepy = -2
+		if (SOUTHEAST)
+			movepx = 2
+			movepy = -2
+		if (SOUTHWEST)
+			movepx = -2
+			movepy = -2
+		else
+			return
 
-			animate(A, pixel_x = x, pixel_y = y, time = 1,easing = EASE_OUT)
-			animate(A, pixel_x = ipx, pixel_y = ipy, time = 1,easing = EASE_IN)
-			sleep(4)
-			if (ismob(A) || istype(A, /obj/critter/))
-				A:twitching = 0
+	var/x = movepx + ipx
+	var/y = movepy + ipy
+
+	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN)
+	animate(A, pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
 
 //only call this from disorient. ITS NOT YOURS DAD
 /proc/violent_twitch(var/atom/A)

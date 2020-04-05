@@ -50,7 +50,6 @@
 	var/atk_burn_amt = 0 // how much burn to do per attack
 	var/crit_brute_amt = 2
 	var/crit_burn_amt = 0
-	var/twitching = 0
 	var/steps = 0
 	var/firevuln = 1
 	var/brutevuln = 1

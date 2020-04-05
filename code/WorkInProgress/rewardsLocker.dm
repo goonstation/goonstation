@@ -784,6 +784,16 @@
 		activator.reagents.add_reagent("bee", 5)
 		boutput (activator, "<span style='color:red'>Pleeze hold, bee will bee with thee shortlee!</span>" )
 
+/datum/achievementReward/bloodflood
+	title = "(Fancy Gib) Plague of Blood"
+	desc = "You're gonna get ripped to shreds, probably."
+	required_medal = "Original Sin"
+
+	rewardActivate(var/mob/activator)
+		var/turf/T = get_turf(activator)
+		T.fluid_react_single("blood",5000)
+		activator.gib()
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
 /chui/window/contributorrewards

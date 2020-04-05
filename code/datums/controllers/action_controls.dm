@@ -649,7 +649,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if(target.handcuffed)
+		if(target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -670,7 +670,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.handcuffed && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
 
 			var/obj/item/handcuffs/cuffs2
 
@@ -693,10 +693,10 @@ var/datum/action_controller/actions
 
 			if (cuffs2 && istype(cuffs2))
 				cuffs2.set_loc(target)
-				target.handcuffed = cuffs2
+				target.handcuffs = cuffs2
 			else
 				cuffs.set_loc(target)
-				target.handcuffed = cuffs
+				target.handcuffs = cuffs
 			target.drop_from_slot(target.r_hand)
 			target.drop_from_slot(target.l_hand)
 			target.drop_juggle()
@@ -724,7 +724,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if(!target.handcuffed)
+		if(!target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -739,12 +739,9 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
-		if(owner && target && target.handcuffed)
+		if(owner && target && target.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
-			H.handcuffed:set_loc(H.loc)
-			H.handcuffed.unequipped(H)
-			H.handcuffed = null
-			H.update_clothing()
+			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span style=\"color:red\"><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -770,14 +767,9 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
-		if(owner != null && ishuman(owner) && owner:handcuffed)
+		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
-			H.handcuffed:set_loc(H.loc)
-			H.handcuffed.unequipped(H)
-			H.handcuffed = null
-			H.update_clothing()
-			if (H.handcuffed)
-				H.handcuffed.layer = initial(H.handcuffed.layer)
+			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span style=\"color:red\"><B>[H] manages to remove the handcuffs!</B></span>", 1)
 			boutput(H, "<span style=\"color:blue\">You successfully remove your handcuffs.</span>")

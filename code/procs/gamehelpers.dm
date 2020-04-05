@@ -263,7 +263,7 @@ var/obj/item/dummy/click_dummy = new
 
 /proc/can_act(var/mob/M, var/include_cuffs = 1)
 	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.handcuffed) return 0
+	if(include_cuffs && M.hasStatus("handcuffed")) return 0
 	if(M.getStatusDuration("stunned")) return 0
 	if(M.getStatusDuration("weakened")) return 0
 	if(M.getStatusDuration("paralysis")) return 0
@@ -362,7 +362,7 @@ var/obj/item/dummy/click_dummy = new
 		if(current.opacity)
 			return FALSE
 		for(var/atom/A in current)
-			if(A.opacity) 
+			if(A.opacity)
 				return FALSE
 		current = get_step_towards(current, target_turf)
 	return TRUE

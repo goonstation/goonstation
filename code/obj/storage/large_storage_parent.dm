@@ -27,6 +27,7 @@
 	var/icon_welded = "welded-closet"
 	var/open_sound = "sound/machines/click.ogg"
 	var/close_sound = "sound/machines/click.ogg"
+	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
 	var/locked = 0
@@ -53,8 +54,6 @@
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
-			//I wonder what it would do for world initialization time to do this when the locker is opened instead.
-			//src.make_my_stuff()
 
 			if (!src.open)		// if closed, any item at src's loc is put in the contents
 				for (var/obj/O in src.loc)
@@ -259,11 +258,7 @@
 				user.show_text("Access Denied", "red")
 			user.unlock_medal("Rookie Thief", 1)
 			return
-/*
-		else if (issilicon(user))
-			if (get_dist(src, user) <= 1)
-				return src.attack_hand(user)
-*/
+
 		else
 			return ..()
 
@@ -506,6 +501,7 @@
 		if (!src.open)
 			return 0
 		if (!src.can_close())
+			visible_message("<span style='color:red'>[src] can't close; looks like it's too full!</span>")
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
@@ -571,7 +567,11 @@
 		return 1
 
 	proc/can_close()
-		for (var/obj/storage/S in get_turf(src))
+		var/turf/T = get_turf(src)
+		if (!T) return 0
+		if (T.contents.len > src.max_capacity)
+			return 0
+		for (var/obj/storage/S in T)
 			if (S != src)
 				return 0
 		return 1

@@ -325,7 +325,7 @@
 			return
 
 	if (src.restrained())
-		if (src.handcuffed)
+		if (src.hasStatus("handcuffed"))
 			boutput(src, "<span style=\"color:red\">You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
