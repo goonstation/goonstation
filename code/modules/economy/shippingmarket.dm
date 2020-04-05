@@ -191,11 +191,11 @@
 			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
-		O.set_loc(spawnpoint)
+		S.set_loc(spawnpoint)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [O.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
@@ -210,8 +210,7 @@
 						P.close()
 
 			SPAWN_DBG(2 SECONDS)
-				O.throw_at(target, 100, 1)
-			src.supply_queue -= O
+				S.throw_at(target, 100, 1)
 
 // Debugging and admin verbs (mostly coder)
 
