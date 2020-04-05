@@ -43,7 +43,7 @@
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
-	var/list/target_locations = null
+	var/list/list/target_locations = null
 
 	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
 		target_locations = map_settings.valid_nuke_targets
