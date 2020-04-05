@@ -1,7 +1,9 @@
 ﻿
 (t)sun apr 05 20
-(u)adharainspace:
+(u)adharainspace
 (*)Added fancy new RCD sprites, courtesy of Flaborized!
+(u)Jero1717
+(*)Made Robustris Pro fancier and better
 (t)sat apr 04 20
 (u)ZeWaka
 (+)Handcuffing should be more consistent across the board.
