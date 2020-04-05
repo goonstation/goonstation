@@ -541,8 +541,8 @@
 		return
 
 /datum/matfab_recipe/lighttube
-	name = "5 Light tubes"
-	desc = "5 replacement light tubes. Lens color affects light color."
+	name = "Light tube"
+	desc = "A replacement light tube. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -551,7 +551,7 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount*5, i++)
+		for(var/i=0, i<amount*1, i++)
 			var/obj/item/light/tube/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
@@ -567,8 +567,8 @@
 		return
 
 /datum/matfab_recipe/lightbulb
-	name = "5 Light bulbs"
-	desc = "5 replacement light bulbs. Lens color affects light color."
+	name = "Light bulb"
+	desc = "A replacement light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -577,7 +577,7 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount*5, i++)
+		for(var/i=0, i<amount*1, i++)
 			var/obj/item/light/bulb/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
