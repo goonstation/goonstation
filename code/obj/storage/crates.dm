@@ -100,7 +100,7 @@
 
 	cdc
 		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."	
+		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
 		spawn_contents = list(/obj/item/reagent_containers/syringe,
 		/obj/item/paper/cdc_pamphlet)
 

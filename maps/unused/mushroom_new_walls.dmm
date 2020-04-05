@@ -3578,7 +3578,7 @@
 "bqW" = (/obj/cable,/obj/machinery/power/apc{dir = 2; name = "S APC"; pixel_y = -24},/obj/machinery/camera{c_tag = "Cargo Bay Office"; dir = 1},/obj/machinery/door_control{id = "qm_dock"; name = "Loading Door Control"; pixel_x = -24},/obj/machinery/computer/announcement{name = "QM Announcement Computer"; req_access_txt = "31"},/turf/simulated/floor/orangeblack/side{dir = 10},/area/station/quartermaster/office)
 "bqX" = (/obj/item/device/radio/intercom{pixel_y = -24},/obj/machinery/light,/turf/simulated/floor/orangeblack/side,/area/station/quartermaster/office)
 "bqY" = (/turf/simulated/floor/orangeblack/side,/area/station/quartermaster/office)
-"bqZ" = (/obj/machinery/status_display/supply_shuttle{pixel_y = -30},/turf/simulated/floor/orangeblack/side,/area/station/quartermaster/office)
+"bqZ" = (/turf/simulated/floor/orangeblack/side,/area/station/quartermaster/office)
 "bra" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/station/quartermaster/office)
 "brb" = (/obj/cable{d2 = 8; icon_state = "0-8"},/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/station/quartermaster/office)
 "brc" = (/obj/disposalpipe/segment{dir = 4; pixel_y = 0},/obj/machinery/light/emergency,/turf/simulated/floor/neutral/side{dir = 2},/area/station/hallway/primary/west)
