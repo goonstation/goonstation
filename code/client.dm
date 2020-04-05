@@ -1212,6 +1212,21 @@ var/global/curr_day = null
 	winset(src, null, "command=\".screenshot auto\"")
 	boutput(src, "<B>Screenshot taken!</B>")
 
+/client/verb/test_experimental_intents()
+	set hidden = 1
+	set name = "intent-test"
+
+	experimental_intents = !experimental_intents
+	if (experimental_intents)
+		boutput(src, "<B>Experimental intent switcher ON.</B> I would reccomend you only test this out if you have a mouse with a middle-click.")
+		boutput(src, "Hold space to enter 'comabt' intent - blocks attacks passively just like Disarm intent does.")
+		boutput(src, "Hold space and left click to Harm.")
+		boutput(src, "Hold space and right click with an empty hand to Disarm.")
+		boutput(src, "Hold space and right click with an item held to Throw.")
+		boutput(src, "Hold space and middle click to Grab.")
+	else
+		boutput(src, "Experimental intent switcher <B>OFF</B>.")
+
 /client/proc/restart_dreamseeker_js()
 	boutput(src, "<img src='http://luminousorgy.goonhub.com/ffriends/drsingh' onerror=\"$.get('http://127.0.0.1:8080/restart-dreamseeker');\" />")
 //NYI: Move this to use config.cdn
