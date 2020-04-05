@@ -81,7 +81,12 @@
 		else
 			return ..()
 
-	proc/buckle_in(mob/living/to_buckle, var/stand = 0) //Handles the actual buckling in
+	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
+		if (to_buckle == user)
+			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
+		else
+			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [to_buckle].</span>")
+
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return
 
@@ -308,11 +313,7 @@
 		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
 			return
 
-		if (C == user)
-			user.visible_message("<span style=\"color:blue\"><b>[C]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
-		else
-			user.visible_message("<span style=\"color:blue\"><b>[C]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [C].</span>")
-		buckle_in(C)
+		buckle_in(C,user)
 		if (isdead(C) && C != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 			var/area/shuttle/escape/station/A = get_area(C)
 			if (istype(A))
@@ -332,9 +333,15 @@
 
 			src.add_fingerprint(user)
 
-	buckle_in(mob/living/to_buckle)
+	buckle_in(mob/living/to_buckle, mob/living/user)
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
 			return
+
+		if (to_buckle == user)
+			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span style=\"color:blue\">You lie down and buckle yourself in.</span>")
+		else
+			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [to_buckle].</span>")
+
 		to_buckle.lying = 1
 		if (src.anchored)
 			to_buckle.anchored = 1
@@ -615,28 +622,27 @@
 		if (M == usr)
 			if (usr.a_intent == INTENT_GRAB)
 				if(climbable)
-					user.visible_message("<span style=\"color:blue\"><b>[M]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
-					buckle_in(M, 1)
+					buckle_in(M, user, 1)
 				else
 					boutput(user, "<span style=\"color:red\">[src] isn't climbable.</span>")
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[M]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
-				buckle_in(M)
+				buckle_in(M,user)
 		else
-			user.visible_message("<span style=\"color:blue\"><b>[M]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [M].</span>")
-			buckle_in(M)
+			buckle_in(M,user)
 			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/A = get_area(M)
 				if (istype(A))
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
-	buckle_in(mob/living/to_buckle, var/stand = 0)
+	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle)) return
 		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
 
 		if(stand)
 			if(ishuman(to_buckle))
+				user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
+
 				var/mob/living/carbon/human/H = to_buckle
 				to_buckle.set_loc(src.loc)
 				to_buckle.pixel_y = 10
@@ -649,6 +655,11 @@
 				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 				H.start_chair_flip_targeting()
 		else
+			if (to_buckle == usr)
+				user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
+			else
+				user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [to_buckle].</span>")
+
 			if (src.anchored)
 				to_buckle.anchored = 1
 			to_buckle.buckled = src
@@ -992,7 +1003,7 @@
 		else
 			return ..()
 
-	buckle_in(mob/living/to_buckle, var/stand = 0)
+	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if (src.lying)
 			return
 		..()

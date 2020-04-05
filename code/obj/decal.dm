@@ -443,7 +443,7 @@ obj/decal/fakeobjects/teleport_pad
 
 		M.set_loc(src.loc)
 		user.visible_message("<span style=\"color:blue\"><b>[M]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
-		buckle_in(M, 1)
+		buckle_in(M, user, 1)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
