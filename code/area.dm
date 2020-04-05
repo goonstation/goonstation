@@ -1297,7 +1297,6 @@ area/station/communications
 	name = "Asylum Shuttle"
 	icon_state = "asylum_shuttle"
 
-<<<<<<< HEAD
 	medbay
 		icon_state = "shuttle1"
 	
@@ -1307,8 +1306,6 @@ area/station/communications
 	observation
 		icon_state = "shuttle3"
 
-=======
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 /area/station/security/quarters
 	name = "Security Officer Quarters"
 	icon_state = "officer_quarters"

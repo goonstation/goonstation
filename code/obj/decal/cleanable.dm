@@ -741,10 +741,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/rust/jen
 	icon_state = "rust_jen"
 	random_icon_states = null
-<<<<<<< HEAD
 	plane = PLANE_NOSHADOW_BELOW
-=======
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 
 /obj/decal/cleanable/balloon
 	name = "balloon"
@@ -1186,11 +1183,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	jen
 		icon_state = "dirt_jen"
-<<<<<<< HEAD
 		plane = PLANE_NOSHADOW_BELOW
-=======
-
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"

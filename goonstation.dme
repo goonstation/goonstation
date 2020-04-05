@@ -43,9 +43,15 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\spaceman_dmm.dm"
 
 //Secret Code Handling
-#ifndef FASTDMM
+<<<<<<< HEAD
+/* #include "+secret\__secret.dme"
 #include "code\__secret.dm" */ // no
+=======
+#ifndef FASTDMM
+#include "+secret\__secret.dme"
 #endif
+#include "code\__secret.dm"
+>>>>>>> 56b738674bbb01290df36e1c82ff074844cd59d6
 
 // BEGIN_INCLUDE
 #include "_stdlib\__build.dm"

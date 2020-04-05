@@ -44,11 +44,7 @@
 				continue
 			new new_item(src.loc)
 
-<<<<<<< HEAD
 	snacks
-=======
-snacks
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 		name = "random snack spawner"
 		min_amt2spawn = 1
 		max_amt2spawn = 1

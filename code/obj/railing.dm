@@ -15,12 +15,9 @@
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 1
 
-<<<<<<< HEAD
 		else if (dir == SOUTHWEST || dir == SOUTHEAST)
 			layer = MOB_LAYER + 1.1
 
-=======
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 		else if (dir == NORTH)
 			layer = OBJ_LAYER - 0.2
 
@@ -34,7 +31,6 @@
 
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
-<<<<<<< HEAD
 		if (O == null)
 			return 0
 			logTheThing("debug", src, O, "Target is null! CanPass failed.")
@@ -46,14 +42,6 @@
 			return 0
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST)
 			return 1
-=======
-		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) || istype(O, /obj/lpt_laser) )
-			return 1
-		if(air_group || (height==0)) 
-			return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
-			return 0
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 		if(get_dir(loc, O) == dir)
 			return !density
 		else
@@ -68,20 +56,12 @@
 			return 0
 		else
 			return 1
-<<<<<<< HEAD
 /*
-=======
-/* 	
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
 		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
 			return 1
 			world.log << "CanPass: [O.name] Is nodense / tablepass! Pass!"
-<<<<<<< HEAD
 		if(air_group || (height==0))
-=======
-		if(air_group || (height==0)) 
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 			return 1
 			world.log << "CanPass: [O.name] Is air/height0! Pass!"
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
@@ -111,7 +91,6 @@
 		..()
 		layerify()
 
-<<<<<<< HEAD
 	attackby(obj/item/W as obj, mob/user)
 		if (istype(W, /obj/item/weldingtool))
 			var/obj/item/weldingtool/WELD = W
@@ -119,15 +98,6 @@
 				actions.start(new /datum/action/bar/icon/railingDeconstruct(src), user)
 			else
 				user.show_text("[WELD] doesn't have enough fuel!", "red")
-=======
-	attackby(obj/item/I, mob/user)
-		var/obj/item/weldingtool/WELDER
-		if (I == WELDER)
-			if (WELDER.get_fuel() == 2)
-				actions.start(new /datum/action/bar/icon/railingDeconstruct(src), user)
-			else
-				user.show_text("[WELDER] doesn't have enough fuel!", "red")
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 
 	orange
 		color = "#ff7b00"
@@ -155,21 +125,12 @@
 	icon_state = "weldingtool_on"
 	var/obj/railing/target
 	var/mob/living/user
-<<<<<<< HEAD
 	var/mob/ownerMob
 	var/obj/item/weldingtool/WELD
 
 	New(Target)
 		target = Target
 		WELD = user.find_type_in_hand(/obj/item/weldingtool)
-=======
-	var/obj/item/weldingtool/WELDER
-	var/mob/ownerMob
-
-	New(Target)
-		target = Target
-		WELDER = user.find_type_in_hand(/obj/item/weldingtool)
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 		ownerMob = owner
 		..()
 
@@ -186,11 +147,7 @@
 			return
 		for(var/mob/O in AIviewers(owner))
 			O.show_text("[owner] begins to weld [target]!", "red")
-<<<<<<< HEAD
 
-=======
-		WELDER.eyecheck(user)
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
 
 	onEnd()
 		..()
@@ -200,9 +157,5 @@
 			var/obj/item/ammo/bullets/rod/R = new(target)
 			R.amount = 4
 			qdel(target)
-<<<<<<< HEAD
 			WELD.eyecheck(user)
 			WELD.use_fuel(1)
-=======
-			WELDER.use_fuel(1) 
->>>>>>> b901950... Merges all Donut3 stuff, but NOT sprites (yet)
