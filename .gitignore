@@ -10,7 +10,7 @@
 /adventure
 
 # ignore build files
-_stdlib/__build.dm
+/_stdlib/__build.dm
 z_build_opts.dm
 
 # Pre-processor related
@@ -27,4 +27,4 @@ Build System.dm
 
 #Misc
 Thumbs.db
-goonstation/unversioned/
+/unversioned/*

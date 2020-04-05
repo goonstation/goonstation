@@ -150,11 +150,6 @@
 			src.updateUsrDialog()
 			return
 
-		src.update_icon()
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		return
-
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)
 

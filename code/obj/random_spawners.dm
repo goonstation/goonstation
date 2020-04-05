@@ -823,3 +823,14 @@ snacks
 						/obj/item/gun/kinetic/pistol,
 						/obj/item/gun/kinetic/assault_rifle,
 						/obj/item/gun/kinetic/light_machine_gun)
+
+/obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
+//intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
+
+	name = "experimental law module spawner"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
+	
+	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
+						/obj/item/aiModule/experimental/equality/b)

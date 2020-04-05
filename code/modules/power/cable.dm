@@ -269,13 +269,6 @@
 /obj/cable/reinforced/ex_act(severity)
 	return //nah
 
-	switch (severity)
-		if (3)
-			if (prob(15))
-				var/atom/A = new/obj/item/cable_coil(src.loc, src.d1 ? 2 : 1)
-				applyCableMaterials(A, src.insulator, src.conductor)
-			qdel(src)
-
 // called when a new cable is created
 // can be 1 of 3 outcomes:
 // 1. Isolated cable (or only connects to isolated machine) -> create new powernet

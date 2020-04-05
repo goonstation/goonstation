@@ -239,8 +239,10 @@ Shield and graivty well generators
 			//Adjust probability accordingly
 			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))
 				//Skip if wearing magnetic shoes
-				if (ishuman(X) && (X:shoes && X:shoes.magnetic) )
-					continue
+				if (ishuman(X))
+					var/mob/living/carbon/human/H = X
+					if(H.shoes?.magnetic)
+						continue
 				//If not achored make them move towards it
 				if (!X:anchored)
 					step_towards(X,src)

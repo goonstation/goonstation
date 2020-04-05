@@ -91,8 +91,8 @@
 			if (!isturf(owner.holder.owner.loc))
 				boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
 				return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 
@@ -102,7 +102,7 @@
 		if (spell.targeted || use_targeted == 1)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)

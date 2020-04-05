@@ -413,14 +413,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							src.frustration = 0
 						return
 
-						if(!path || !path.len || (4 < get_dist(src.target,path[path.len])) )
-							moving = 0
-							if (src.mover)
-								src.mover.master = null
-								src.mover = null
-							//current_movepath = "HEH" //Stop any current movement.
-							navigate_to(src.target,arrest_move_delay)
-
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
@@ -477,7 +469,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 							if(iscarbon(src.target) && !uncuffable)
 								src.target.handcuffed = new /obj/item/handcuffs(src.target)
-								src.target.setStatus("handcuffed", duration = null)
+								src.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 							var/last_target = target
 

@@ -2981,7 +2981,7 @@
 "bfq" = (/obj/cable{icon_state = "1-2"},/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/black,/area/station/bridge)
 "bfr" = (/obj/machinery/turretid{pixel_x = -8; req_access_txt = "19"},/turf/simulated/wall/auto/reinforced/gannets{explosion_resistance = 20; name = "very reinforced wall"},/area/station/turret_protected/ai)
 "bfs" = (/obj/machinery/light{dir = 8},/obj/table/reinforced/auto,/obj/item/aiModule/oneHuman,/obj/item/aiModule/notHuman,/obj/item/aiModule/freeform,/turf/simulated/floor/blueblack{dir = 9},/area/station/turret_protected/ai)
-"bft" = (/obj/machinery/light_switch/north,/obj/table/reinforced/auto,/obj/item/aiModule/makeCaptain,/obj/item/aiModule/emergency,/obj/item/aiModule/removeCrew,/turf/simulated/floor/blueblack{dir = 1},/area/station/turret_protected/ai)
+"bft" = (/obj/machinery/light_switch/north,/obj/table/reinforced/auto,/obj/item/aiModule/makeCaptain,/obj/item/aiModule/emergency,/obj/item/aiModule/removeCrew,/obj/random_item_spawner/ai_experimental,/turf/simulated/floor/blueblack{dir = 1},/area/station/turret_protected/ai)
 "bfu" = (/obj/machinery/turret,/turf/simulated/floor/blueblack{dir = 1},/area/station/turret_protected/ai)
 "bfv" = (/obj/table/reinforced/auto,/obj/item/device/infra_sensor,/obj/item/clothing/glasses/meson,/obj/item/aiModule/rename,/turf/simulated/floor/blueblack{dir = 1},/area/station/turret_protected/ai)
 "bfw" = (/obj/machinery/computer/aiupload,/turf/simulated/floor/blueblack{dir = 1},/area/station/turret_protected/ai)

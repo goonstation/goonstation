@@ -71,7 +71,7 @@
 
 	play_mix_sound(var/mix_sound) //play sound at random locs
 		for (var/i = 0, i < my_group.members.len / 20, i++)
-			playsound(pick(my_group.members).loc, mix_sound, 80, 1)
+			playsound(get_turf(pick(my_group.members)), mix_sound, 80, 1)
 			if (i > 8) break
 
 //We use datum/controller/process/fluid_group to do evaporation

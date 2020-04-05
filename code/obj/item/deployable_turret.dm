@@ -232,7 +232,7 @@
 
 				user.show_message("<span style=\"color:blue\">Click where you want to aim the turret!</span>")
 				var/datum/targetable/deployable_turret_aim/A = new()
-				user.targeting_spell = A
+				user.targeting_ability = A
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)
@@ -407,7 +407,7 @@
 			return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.resting || H.hasStatus("weakened")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus("resting") || H.hasStatus("weakened")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return 0
 		if (is_friend(C))
 			return 0

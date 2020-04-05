@@ -16,12 +16,11 @@ var/datum/mechanic_controller/mechanic_controls
 			return 1
 
 /datum/electronics/scanned_item
-	var
-		name = "Unknown"
-		item_type = ""
-		var/list/item_mats
-		var/finish_time = 0
-		var/datum/manufacture/mechanics/blueprint = null
+	var/name = "Unknown"
+	var/item_type = ""
+	var/list/item_mats
+	var/finish_time = 0
+	var/datum/manufacture/mechanics/blueprint = null
 
 	proc
 		create_partslist(var/mats_number = 10)

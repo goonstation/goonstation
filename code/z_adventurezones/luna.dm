@@ -2108,7 +2108,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 					B.reagents.add_reagent("wax", 20)
 
 				if(src.amount == 0)
-					src.icon_state = "beans_empty"
+					src.icon_state = "beans-empty"
 					src.name = "An empty Farty Snott's bag."
 		else
 			return ..()

@@ -299,6 +299,20 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 					if (O && prob(max(src.blood_volume*10, 10)))
 						O.add_blood(src)
 
+	proc/set_sample_reagent_custom(var/reagent_id)
+		if (!src.reagents)
+			var/datum/reagents/R = new/datum/reagents(10)
+			reagents = R
+			R.my_atom = src
+		else
+			src.reagents.clear_reagents()
+
+		if (ling_blood)
+			src.reagents.add_reagent("bloodc", 0.1)
+		src.sample_reagent = reagent_id
+		src.reagents.add_reagent(reagent_id, 10)
+
+
 	HasEntered(atom/movable/AM as mob|obj)
 		..()
 		if (!istype(AM))

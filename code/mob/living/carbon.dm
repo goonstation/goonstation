@@ -197,25 +197,30 @@
 	damage *= 4
 	//playsound(src.loc, "sound/impact_sounds/Generic_Punch_1.ogg", 50, 1, -1)
 	if(src.stamina >= 1 )
-		if(STAMINA_CRIT_DROP)
-			src.set_stamina(min(src.stamina,STAMINA_CRIT_DROP_NUM))
-		else
-			src.set_stamina (max(0,src.stamina - damage))
-			src.stamina_stun()
-		if(STAMINA_STUN_ON_CRIT)
-			src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
+		#if STAMINA_CRIT_DROP == 1
+		src.set_stamina(min(src.stamina,STAMINA_CRIT_DROP_NUM))
+		#else
+		src.set_stamina (max(0,src.stamina - damage))
+		src.stamina_stun()
+		#endif
+		#if STAMINA_STUN_ON_CRIT == 1
+		src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
+		#endif
 	else if(src.stamina <= 0)
-		if(STAMINA_CRIT_DROP)
-			src.set_stamina(min(src.stamina * 2,STAMINA_CRIT_DROP_NUM))
-		else
-			src.set_stamina (max(0,src.stamina - damage))
-			src.stamina_stun()
-		if(STAMINA_STUN_ON_CRIT)
-			src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
-		if(STAMINA_NEG_CRIT_KNOCKOUT)
-			if(!src.getStatusDuration("weakened"))
-				src.visible_message("<span style=\"color:red\">[src] collapses!</span>")
-				src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME)*10)
+		#if STAMINA_CRIT_DROP == 1
+		src.set_stamina(min(src.stamina * 2,STAMINA_CRIT_DROP_NUM))
+		#else
+		src.set_stamina (max(0,src.stamina - damage))
+		src.stamina_stun()\
+		#endif
+		#if STAMINA_STUN_ON_CRIT == 1
+		src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
+		#endif
+		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
+		if(!src.getStatusDuration("weakened"))
+			src.visible_message("<span style=\"color:red\">[src] collapses!</span>")
+			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME)*10)
+		#endif
 	stamina_stun() //Just in case.
 	return
 

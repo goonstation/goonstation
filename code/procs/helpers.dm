@@ -2425,7 +2425,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			var/mob/M = TA.loc
 			M.show_text("[TA] identifies and removes a harmful substance.", "red")
 		else
-			TA.visible_message("<span style=\"color:red\">[src] identifies and removes a harmful substance.</span>")
+			TA.visible_message("<span style=\"color:red\">[TA] identifies and removes a harmful substance.</span>")
 
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)
@@ -2469,11 +2469,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 
 
 
-proc/get_manhattan_dist(atom/A,atom/B)
-	if (!A || !B)
-		.= 0
-	else
-		.= abs(A.x - B.x) + abs(A.y - B.y)
 
 proc/time_to_text(var/time)
 	. = list()

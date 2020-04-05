@@ -100,7 +100,7 @@
 				var/datum/targetable/listrefpicker/R = new()
 				R.target = L
 				R.varname = index
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 			return
 
@@ -175,7 +175,7 @@
 			if (istype(M))
 				var/datum/targetable/addtolistrefpicker/R = new()
 				R.target = L
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 			return
 
@@ -369,7 +369,7 @@
 				var/datum/targetable/listrefpicker/R = new()
 				R.target = L
 				R.varname = variable_index
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				return
 
@@ -629,7 +629,7 @@
 				var/datum/targetable/refpicker/R = new()
 				R.target = O
 				R.varname = variable
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				return
 
