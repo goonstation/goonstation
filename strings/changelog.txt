@@ -6,6 +6,7 @@
 (*)Added a new colorblind accessible HUD option! You can access it in the character setup options.
 (u)Flourish
 (*)Added Roach and Saxophone as spacebux rewards.
+(*)Disaster mode now includes a wraith at roundstart.
 (u)pali
 (*)Nukies on ass day can now get much wilder target locations.
 (+)Until we rework matsci somewhat light bulbs, light tubes and tripod bulbs are now 5 times more expensive when it comes to material cost

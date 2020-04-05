@@ -372,10 +372,10 @@
 	proc/set_up()
 		// choose pod to spawn and spawn it
 		src.spawn_pod()
-		#ifdef RP_MODE
-			// everyone gets a lock
-			src.spawn_lock()
-		#endif
+#ifdef RP_MODE
+		// everyone gets a lock
+		src.spawn_lock()
+#endif
 
 		// add the pod to the list of available random pods
 		if (islist(random_pod_codes))

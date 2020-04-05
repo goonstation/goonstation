@@ -10,6 +10,21 @@
 	//Time until the shuttle can be called.
 	var/const/shuttle_waittime = 4000
 
+/datum/game_mode/disaster/pre_setup()
+	var/list/candidates = list()
+	for(var/mob/new_player/player in mobs)
+		if (ishellbanned(player))
+			continue
+		if (player.client && player.ready && !candidates.Find(player.mind) && player.client.preferences.be_wraith)
+			candidates += player.mind
+	if (candidates.len == 0)
+		return 0
+	var/datum/mind/twraith = pick(candidates) // Just one for now
+	twraith.special_role = "wraith"
+	Agimmicks += twraith
+
+	return 1
+
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
 		boutput(world, "<tt>BUG: MEM ERR 0000FF88 00F90045</tt>")
@@ -24,6 +39,10 @@
 /datum/game_mode/disaster/post_setup()
 
 //	boutput(world, "disaster loaded :I")
+	for(var/datum/mind/wraith in Agimmicks)
+		var/wraith_spawn = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
+		wraith.current.set_loc(wraith_spawn)
+		generate_wraith_objectives(wraith)
 
 	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.
 
