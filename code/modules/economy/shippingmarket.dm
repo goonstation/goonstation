@@ -143,9 +143,10 @@
 		if (!commodities_list)
 			for(var/obj/O in sell_crate.contents)
 				for (var/C in src.commodities) // Key is type of the commodity
-					if (istype(O, commodities[C].comtype))
-						add = commodities[C].price
-						if (commodities[C].indemand)
+					var/datum/commodity/CM = commodities[C]
+					if (istype(O, CM.comtype))
+						add = CM.price
+						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
 						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
 							add *= O:amount // TODO: fix for snacks
