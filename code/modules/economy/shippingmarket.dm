@@ -70,7 +70,7 @@
 
 		return timeleft
 
-	//Returns the time, in MM:SS format
+	// Returns the time, in MM:SS format
 	proc/get_market_timeleft()
 		var/timeleft = src.timeleft() / 10
 		if(timeleft)
@@ -133,26 +133,41 @@
 				removed_count--
 				src.active_traders += new /datum/trader/generic(src)
 
-	proc/sell_crate(obj/storage/crate/sell_crate, list/commodities)
+	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/data/record/account = sell_crate.account
 
-		var/duckets = src.points_per_crate  //fuck yeah duckets
+		var/duckets = src.points_per_crate  // fuck yeah duckets
 		var/add = 0
 
-		for(var/obj/O in sell_crate.contents)
-			for (var/datum/commodity/C in commodities)
-				if (istype(O, C.comtype))
-					add = C.price
-					if (C.indemand)
-						add *= shippingmarket.demand_multiplier
-					if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
-						add *= O?:amount
-						pool(O)
-					else
-						qdel(O)
-					break
-			duckets += add
+		if (!commodities_list)
+			for(var/obj/O in sell_crate.contents)
+				for (var/C in src.commodities) // Key is type of the commodity
+					if (istype(O, commodities[C].comtype))
+						add = commodities[C].price
+						if (commodities[C].indemand)
+							add *= shippingmarket.demand_multiplier
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+							add *= O:amount // TODO: fix for snacks
+							pool(O)
+						else
+							qdel(O)
+						duckets += add
+						break
+		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
+			for(var/obj/O in sell_crate.contents)
+				for (var/datum/commodity/C in commodities_list)
+					if (istype(O, C.comtype))
+						add = C.price
+						if (C.indemand)
+							add *= shippingmarket.demand_multiplier
+						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/material_piece) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant))
+							add *= O:amount // TODO: fix for snacks
+							pool(O)
+						else
+							qdel(O)
+						duckets += add
+						break
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
@@ -180,8 +195,6 @@
 		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
 			target = T
 			break
-
-		//SPAWN_DBG(0)
 
 		if (!spawnpoint)
 			logTheThing("debug", null, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
@@ -217,7 +230,6 @@
 /client/proc/cmd_modify_market_variables()
 	set category = "Debug"
 	set name = "Edit Market Variables"
-
 
 	if (shippingmarket == null) boutput(src, "UH OH!")
 	else src.debug_variables(shippingmarket)

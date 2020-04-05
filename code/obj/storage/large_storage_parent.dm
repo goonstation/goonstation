@@ -501,7 +501,7 @@
 		if (!src.open)
 			return 0
 		if (!src.can_close())
-			visible_message("<span style='color:red'>The [src] can't close; looks like it's too full!</span>")
+			visible_message("<span style='color:red'>[src] can't close; looks like it's too full!</span>")
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())

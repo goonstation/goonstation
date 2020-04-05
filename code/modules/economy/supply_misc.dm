@@ -35,7 +35,7 @@
 					if (T.crate_tag == AM.delivery_destination)
 						shippingmarket.sell_crate(AM, T.goods_buy)
 						return
-			shippingmarket.sell_crate(AM, shippingmarket.commodities)
+			shippingmarket.sell_crate(AM)
 
 /obj/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "Plastic flaps"
