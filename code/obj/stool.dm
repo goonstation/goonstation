@@ -81,7 +81,12 @@
 		else
 			return ..()
 
+	proc/can_buckle(var/mob/M, var/mob/user)
+		.= 1
+
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
+		if (!can_buckle(to_buckle,user)) return
+
 		if (to_buckle == user)
 			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
 		else
@@ -294,31 +299,31 @@
 			src.unbuckle_mob(M, user)
 		return
 
-	proc/buckle_mob(var/mob/living/carbon/C as mob, var/mob/user as mob)
+	can_buckle(var/mob/living/carbon/C, var/mob/user)
 		if (!C || (C.loc != src.loc))
-			return // yeesh
+			return 0// yeesh
+
+		if (get_dist(src, user) > 1)
+			user.show_text("[src] is too far away!", "red")
+			return 0
+
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
 			user.show_text("There's already someone buckled in [src]!", "red")
-			return
+			return 0
 
 		if (!ticker)
 			user.show_text("You can't buckle anyone in before the game starts.", "red")
-			return
+			return 0
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
-			return
+			return 0
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
-			return
+			return 0
 		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
-			return
+			return 0
 
-		buckle_in(C,user)
-		if (isdead(C) && C != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
-			var/area/shuttle/escape/station/A = get_area(C)
-			if (istype(A))
-				user.unlock_medal("Leave no man behind!", 1)
-		src.add_fingerprint(user)
+		return 1
 
 	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
 		if (M.buckled && !user.restrained())
@@ -335,6 +340,8 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user)
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
+			return
+		if (!can_buckle(to_buckle,user))
 			return
 
 		if (to_buckle == user)
@@ -427,9 +434,6 @@
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
 		..()
-		if (get_dist(src, user) > 1)
-			user.show_text("[src] is too far away!", "red")
-			return
 
 		if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
@@ -440,7 +444,13 @@
 				return
 
 		else if (ismob(A))
-			src.buckle_mob(A, user)
+			src.buckle_in(A, user)
+			var/mob/M = A
+			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
+				var/area/shuttle/escape/station/area = get_area(M)
+				if (istype(area))
+					user.unlock_medal("Leave no man behind!", 1)
+			src.add_fingerprint(user)
 		else
 			return ..()
 
@@ -611,14 +621,6 @@
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		..()
-		if (!ticker)
-			boutput(user, "You can't buckle anyone in before the game starts.")
-			return
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
-			return
-		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
-			user.show_text("There's already someone buckled in [src]!", "red")
-			return
 		if (M == usr)
 			if (usr.a_intent == INTENT_GRAB)
 				if(climbable)
@@ -635,9 +637,23 @@
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
+	can_buckle(var/mob/M, var/mob/user)
+		if (!ticker)
+			boutput(user, "You can't buckle anyone in before the game starts.")
+			return 0
+		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+			return 0
+		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
+			user.show_text("There's already someone buckled in [src]!", "red")
+			return 0
+		return 1
+
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle)) return
 		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
+
+		if (!can_buckle(to_buckle,user))
+			return
 
 		if(stand)
 			if(ishuman(to_buckle))
