@@ -34,11 +34,11 @@ var/global/list/smart_string_pickers = list()
 
 /datum/smart_string_picker
 	//var/static/regex/head_splitter = new(@"\s*([\l_\d]+)\s*:=\s*", "igm")
-	var/static/regex/section_splitter = new(@(##)(?:"?\s*\n\s*\n+\s*"?|"\s*$)##, "m")
-	var/static/regex/sentence_splitter = new(@(##)"?\s*(?:@,\n?|\n)\s*"?##, "m")
-	var/static/regex/bracket_splitter = new(@(##)\[\s*|\s*\)?\s*\]##)
-	var/static/regex/in_brackets_crap = new(@(##)\s*[(,:]\s*##)
-	
+	var/static/regex/section_splitter = new(@{"(?:"?\s*\n\s*\n+\s*"?|"\s*$)"}, "m")
+	var/static/regex/sentence_splitter = new(@{""?\s*(?:@,\n?|\n)\s*"?"}, "m")
+	var/static/regex/bracket_splitter = new(@{"\[\s*|\s*\)?\s*\]"})
+	var/static/regex/in_brackets_crap = new(@{"\s*[(,:]\s*"})
+
 	var/list/definitions = list()
 
 	New(input_file)
@@ -50,7 +50,7 @@ var/global/list/smart_string_pickers = list()
 			if(!section.len || !section[1])
 				continue
 			definitions[section[1]] = section.Copy(2)
-	
+
 	proc/weighted_pick(var/list/params)
 		var/total = 0
 		for(var/i = 2; i <= params.len; i+=2)
@@ -63,7 +63,7 @@ var/global/list/smart_string_pickers = list()
 			if(weighted_num <= running_total)
 				return params[i]
 		return
-	
+
 	proc/preprocess(var/line)
 		line = replacetext(line, "\\n", "\n")
 		line = splittext(line, bracket_splitter)
@@ -78,7 +78,7 @@ var/global/list/smart_string_pickers = list()
 				var/list/in_bracket_tokens = splittext(token, in_brackets_crap)
 				. += list(list(in_bracket_tokens[1], in_bracket_tokens.Copy(2)))
 			is_bracketed = !is_bracketed
-	
+
 	proc/parse_string_or_key(var/thing, var/params, var/additional_defs=null)
 		if(thing[1] == {"""})
 			return copytext(thing, 2, length(thing))
@@ -96,8 +96,8 @@ var/global/list/smart_string_pickers = list()
 				return src.generate(thing, additional_defs)
 			else
 				return ""
-		
-	
+
+
 	proc/generate(var/key, var/additional_defs=null)
 		var/list/choices = definitions[key]
 		var/choice_index = rand(1, choices.len)

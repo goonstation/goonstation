@@ -40,11 +40,10 @@
 		else
 			boutput(M, __blue("You feel refreshed and ready to get back into the fight."))
 
-		if (M.resting)
-			M.resting = 0
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.hud.update_resting()
+		M.delStatus("resting")
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.hud.update_resting()
 
 		M.force_laydown_standup()
 

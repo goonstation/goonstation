@@ -1,4 +1,35 @@
 ﻿
+(t)sat apr 04 20
+(u)ZeWaka
+(+)Handcuffing should be more consistent across the board.
+(u)Awkward Dryad
+(+)Fixed a plate stack runtime error.
+(*)Plates can now be stacked one by one instead of click-drag only.
+(u)mbc
+(+)Fixed bug where attack particle showed incorrect sprite when the attack obj was being deleted or dropped
+(+)Fixed bug where hit twitch animations wouldnt play in many circumstances
+(u)Nexusuxen
+(*)Added experimental "Equality" silicon law module.
+(u)Mordent
+(+)Fixed bug with cable coils in cyborg modules not having the correct amount.
+(+)Fixed bug with steel rods and cable coils in cyborg modules not starting with the correct sprite.
+(u)Tarmunora
+(*)Added range falloff to stun projectiles (to a minimum of half initial power)
+(*)Stun projectile pointblanks no longer apply bonus stuns on top of what the projectile would normally do
+(*)Reworked the wavegun found in QM experimental weapons crates to have more unique firing modes, all of which have non-standard range characteristics - try them out and experiment! Includes shiny new sprites by Flaborized
+(*)Rebalanced the detain and pulse projectiles to be hopefully closer together in power: detain now stuns in 2-3 shots, pulse now experiences some falloff with range on the disorient and throw
+(*)Taser shotgun pointblank implemented, and regular firing slightly rebalanced
+(+)Hopefully killed any last traces of the projectile doublehit bug
+(t)fri apr 03 20
+(u)archlinuxusa
+(+)Eggs no longer produce a meaty explosion in the microwave, splattered egg will now splatter all over your microwave... Yummy.
+(u)RichardGere
+(*)Reduced the stamina damage dealt by csabers
+(u)Erinexx
+(*)New dough, produce, herb, bowling melon, and snack sprites!
+(+)Shitty jpg pancake sprites have been preserved for future use <3
+(*)Clockwork orange is now a little more vivacious
+(*)A bunch of other new food sprites!
 (t)thu apr 02 20
 (u)mbc
 (*)Added Cow mutantrace. It has special speech and scream sounds! You can purchase it in the spacebux menu.
@@ -32,8 +63,8 @@
 (*)AwkwardDryad : Zoldorf (there's a new item in that wizard-in-a-box, go hack it to access the item and start something wonderful)
 (t)mon mar 23 20
 (u)pali
-(*)AwkwardDryad : Emergency hood now covers hair
-(*)Sidewinder7 : Chemicompiler improvement
+(+)AwkwardDryad : Emergency hood now covers hair
+(+)Sidewinder7 : Chemicompiler improvement
 (*)Polivilas : Compact medical sleepers (in escape shuttles for now)
 (*)glassofmilk : Dispatch mechcomp component
 (*)Polivilas : Owners of the Too Cool medal (monthly contest winners) can now use the :shelterbee: emote in OOC

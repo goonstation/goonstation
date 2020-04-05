@@ -2307,7 +2307,7 @@
 			src.changeStatus("paralysis", 30)
 			src.sleeping--
 
-		if(src.resting) src.changeStatus("weakened", 5 SECONDS)
+		if(src.hasStatus("resting")) src.changeStatus("weakened", 5 SECONDS)
 
 		if (!isdead(src)) //Alive.
 

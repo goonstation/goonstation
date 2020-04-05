@@ -10,7 +10,8 @@
 
 ## Changelog
 
-<!-- If necessary, put your changelog entry here. For example:
+<!-- If necessary, put your changelog entry here. Use * for major changes and + for minor changes. For example:
 CodeDude:
-* Added soft soft pizza to the game - a tasty drink found in soda machines! 
+* Added soft soft pizza to the game - a tasty drink found in soda machines!
++ Made some sprite changes to the base pizza sprite.
 -->

@@ -164,7 +164,6 @@ var/list/server_toggles_tab_verbs = list(\
 	admin_only
 	if (!src.holder.extratoggle)
 		src.verbs -= /client/proc/addreagents
-		src.verbs -= /client/proc/jobbans
 
 		src.verbs -= /proc/possess
 		src.verbs -= /client/proc/addreagents
@@ -181,7 +180,6 @@ var/list/server_toggles_tab_verbs = list(\
 		src.holder.extratoggle = 0
 		boutput(src, "Extra Toggled On")
 		src.verbs += /client/proc/addreagents
-		src.verbs += /client/proc/jobbans
 
 
 		src.verbs += /proc/possess

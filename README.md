@@ -1,6 +1,6 @@
 # Goonstation ![](https://i.imgur.com/mvQFRZm.png)
 
-![contains resentment](https://forthebadge.com/images/badges/built-with-resentment.svg)![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
+![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
 
 Master Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=master)](https://travis-ci.com/goonstation/goonstation)
 
@@ -31,5 +31,7 @@ Space Station 13 is a community developed, multiplayer round-based role playing 
 [Mapping Guidelines](https://hackmd.io/@ZeWaka/goonmap)
 
 ## LICENSE
+[![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+
 All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/).
 See LICENSE for more details.

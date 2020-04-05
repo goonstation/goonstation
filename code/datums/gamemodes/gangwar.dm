@@ -232,7 +232,7 @@
 			var/mob/living/carbon/human/H = G.leader.current
 			if (istype(H))
 				if (G.gear_worn(H) == 2)
-					H.setStatus("ganger", duration = null)
+					H.setStatus("ganger", duration = INFINITE_STATUS)
 				else
 					H.delStatus("ganger")
 		if (islist(G.members))
@@ -240,7 +240,7 @@
 				var/mob/living/carbon/human/H = M.current
 				if (istype(H))
 					if (G.gear_worn(H) == 2)
-						H.setStatus("ganger", duration = null)
+						H.setStatus("ganger", duration = INFINITE_STATUS)
 					else
 						H.delStatus("ganger")
 

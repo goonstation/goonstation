@@ -94,14 +94,12 @@
 				src.bioHolder.AddEffect("regenerator")
 				boutput(src, "<span style=\"color:red\">You will now heal over time!</span>")
 
-			if (M.handcuffed)
-				if (M.handcuffed.werewolf_cant_rip())
+			if (M.hasStatus("handcuffed"))
+				if (M.handcuffs.werewolf_cant_rip())
 					boutput(M, __red("You can't seem to break free from these silver handcuffs."))
 				else
-					M.visible_message("<span style=\"color:red\"><B>[M] rips apart the handcuffs with pure brute strength!</b></span>")
-					qdel(M.handcuffed)
-					M.handcuffed = null
-					src.update_clothing()
+					M.visible_message("<span style=\"color:red\"><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+					M.handcuffs.destroy_handcuffs(M)
 
 			which_way = 0
 

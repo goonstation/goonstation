@@ -218,10 +218,9 @@
 			var/mob/living/M = locate() in contents
 			if(M)
 				flush = 1
-				if(M.handcuffed)
+				if(M.hasStatus("handcuffed"))
 					boutput(M, "You feel your handcuffs being removed.")
-					M.handcuffed = null
-					new /obj/item/handcuffs(src)
+					M.handcuffs.drop_handcuffs(M)
 
 	// timed process
 	// charge the gas reservoir and perform flush if ready
