@@ -91,6 +91,8 @@
 
 	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
+	var/experimental_intents = 0
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
