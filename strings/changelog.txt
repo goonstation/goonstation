@@ -1,4 +1,7 @@
 ﻿
+(t)sun apr 05 20
+(u)adharainspace:
+(*)Added fancy new RCD sprites, courtesy of Flaborized!
 (t)sat apr 04 20
 (u)ZeWaka
 (+)Handcuffing should be more consistent across the board.
