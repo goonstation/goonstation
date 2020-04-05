@@ -1260,7 +1260,7 @@
 
 	// Seems to be the only way to get this stuff to auto-refresh properly, sigh (Convair880).
 	proc/control_interface(mob/user as mob)
-		if (!user.handcuffed && isalive(user))
+		if (!user.hasStatus("handcuffed") && isalive(user))
 			user.machine = src
 
 			var/dat = ""

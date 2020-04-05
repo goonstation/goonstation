@@ -91,7 +91,7 @@
 	var/m_intent = "run"
 	var/lastKnownIP = null
 	var/obj/stool/buckled = null
-	var/obj/item/handcuffs/handcuffed = null
+	var/obj/item/handcuffs/handcuffs = null
 	var/obj/item/l_hand = null
 	var/obj/item/r_hand = null
 	var/obj/item/back = null
@@ -138,7 +138,6 @@
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
 	var/mob/dead/observer/ghost = null
-	var/twitching = 0
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
@@ -324,7 +323,7 @@
 	energy_shield = null
 	hallucinations = null
 	buckled = null
-	handcuffed = null
+	handcuffs = null
 	l_hand = null
 	r_hand = null
 	back = null
@@ -1059,7 +1058,7 @@
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
 /mob/proc/restrained()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 1
 
 /mob/proc/key_down(var/key)
@@ -1347,8 +1346,8 @@
 	if (W == src.l_hand)
 		src.l_hand = null
 
-	if (W == src.handcuffed)
-		src.handcuffed = null
+	if (W == src.handcuffs)
+		src.handcuffs = null
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.wear_mask)
@@ -1590,7 +1589,7 @@
 	return
 
 /mob/proc/can_use_hands()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 0
 	if (src.buckled && istype(src.buckled, /obj/stool/bed)) // buckling does not restrict hands
 		return 0
@@ -2329,7 +2328,8 @@
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
 	src.buckled = initial(src.buckled)
-	src.handcuffed = initial(src.handcuffed)
+	if (src.hasStatus("handcuffed"))
+		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)

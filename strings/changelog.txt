@@ -1,5 +1,15 @@
 ﻿
 (t)sat apr 04 20
+(u)ZeWaka
+(+)Handcuffing should be more consistent across the board.
+(u)Awkward Dryad
+(+)Fixed a plate stack runtime error.
+(*)Plates can now be stacked one by one instead of click-drag only.
+(u)mbc
+(+)Fixed bug where attack particle showed incorrect sprite when the attack obj was being deleted or dropped
+(+)Fixed bug where hit twitch animations wouldnt play in many circumstances
+(u)Nexusuxen
+(*)Added experimental "Equality" silicon law module.
 (u)Mordent
 (+)Fixed bug with cable coils in cyborg modules not having the correct amount.
 (+)Fixed bug with steel rods and cable coils in cyborg modules not starting with the correct sprite.

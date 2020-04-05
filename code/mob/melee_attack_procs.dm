@@ -195,7 +195,6 @@
 	else
 		src.visible_message("<span style=\"color:red\"><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
 
-//mbc : janky suppress final message usage right now - fix later when we generralize grabs into working with more than 1 kind of item
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
 	if(!src || !target)
 		return 0
@@ -278,6 +277,8 @@
 /mob/proc/disarm(var/mob/living/target, var/extra_damage = 0, var/suppress_flags = 0, var/damtype = DAMAGE_BLUNT, var/is_special = 0)
 	if (!src || !ismob(src) || !target || !ismob(target))
 		return
+
+	hit_twitch(target)
 
 	if (!isnum(extra_damage))
 		extra_damage = 0
@@ -897,6 +898,7 @@
 
 			if (istype(affecting))
 				affecting.take_damage((damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
+				hit_twitch(target)
 			else if (affecting)
 				target.TakeDamage(affecting, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 			else

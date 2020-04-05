@@ -94,7 +94,7 @@
 		boutput(src, __red("[target] braces themselves to stop your tackle effortlessly!"))
 		return
 
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		boutput(src, __red("With your hands tied behind your back, you slam into [target] face first!"))
 		src.changeStatus("weakened", 3 SECONDS)
 		src.force_laydown_standup()

@@ -988,7 +988,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	handcuffed
 		id = "handcuffed"
 		name = "Handcuffed"
-		desc = "You are handcuffed.<br>You cannot use your hands. Click this statuseffect to resist."
+		desc = "You are handcuffed.<br>You cannot use your hands. Click this status effect to resist."
 		icon_state = "handcuffed"
 		unique = 1
 		duration = INFINITE_STATUS
@@ -999,20 +999,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			if (ishuman(owner))
 				H = owner
 			else
+				if (ismob(owner))
+					var/mob/M = owner
+					if (M.handcuffs) M.handcuffs.drop_handcuffs(M) //Some kind of invalid mob??
 				owner.delStatus("handcuffed")
 
 		clicked(list/params)
 			H.resist()
 
-		onUpdate()
-			if (!H.handcuffed)
-				owner.delStatus("handcuffed")
-			.=..()
-
 	buckled
 		id = "buckled"
 		name = "Buckled"
-		desc = "You are buckled.<br>You cannot walk. Click this statuseffect to unbuckle."
+		desc = "You are buckled.<br>You cannot walk. Click this status effect to unbuckle."
 		icon_state = "buckled"
 		unique = 1
 		duration = INFINITE_STATUS
@@ -1037,7 +1035,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	resting
 		id = "resting"
 		name = "Resting"
-		desc = "You are resting.<br>You are laying down. Click this statuseffect to stand up."
+		desc = "You are resting.<br>You are laying down. Click this status effect to stand up."
 		icon_state = "resting"
 		unique = 1
 		duration = INFINITE_STATUS
@@ -1054,11 +1052,6 @@ var/list/statusGroupLimits = list("Food"=4)
 			H.delStatus("resting")
 			H.force_laydown_standup()
 			H.hud.update_resting()
-
-		onUpdate()
-			if (H && !H.hasStatus("resting"))
-				owner.delStatus("resting")
-			.=..()
 
 	ganger
 		id = "ganger"
