@@ -1,5 +1,7 @@
 ﻿
 (t)sun apr 05 20
+(u)pali
+(+)Until we rework matsci somewhat light bulbs, light tubes and tripod bulbs are now 5 times more expensive when it comes to material cost
 (u)adharainspace
 (*)Added fancy new RCD sprites, courtesy of Flaborized!
 (u)Jero1717
