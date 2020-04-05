@@ -90,7 +90,7 @@
 		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
-#ifdef ASS_JAM
+#if ASS_JAM
 	var/station_only = prob(40)
 	target_locations = list()
 	for(var/area/A in world)
