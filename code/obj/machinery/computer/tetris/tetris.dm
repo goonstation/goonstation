@@ -36,7 +36,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
 
-	desc = "Instructions: Left/Right Arrows: move, Up Arrow: turn, Down Arrow: faster, Space: auto place | HIGHSCORE: 0"
+	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
 	machine_registry_idx = MACHINES_MISC
 	var/highscore = 0
 	var/highscoreholder

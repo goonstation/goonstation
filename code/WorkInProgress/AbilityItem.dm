@@ -775,7 +775,7 @@
 	proc/ability_allowed()
 		if (!src.the_item)
 			return 0
-		if (!src.the_mob || !src.the_mob.canmove)
+		if (!src.the_mob)
 			return 0
 		if (src.the_mob.hasStatus("paralysis") || src.the_mob.hasStatus("stunned") || src.the_mob.hasStatus("weakened")) //stun check
 			return 0

@@ -372,8 +372,10 @@
 	proc/set_up()
 		// choose pod to spawn and spawn it
 		src.spawn_pod()
+#ifdef RP_MODE
 		// everyone gets a lock
 		src.spawn_lock()
+#endif
 
 		// add the pod to the list of available random pods
 		if (islist(random_pod_codes))
@@ -809,6 +811,6 @@
 	min_amt2spawn = 1
 	max_amt2spawn = 1
 	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
-	
+
 	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
 						/obj/item/aiModule/experimental/equality/b)

@@ -1224,20 +1224,19 @@
 						src.a_intent = INTENT_DISARM
 						.=..()
 						src.a_intent = INTENT_DISARM
-				else
-					src.a_intent = INTENT_HARM
-					.=..()
-					src.a_intent = INTENT_DISARM
-				return
-
-			if (src.client.check_key(KEY_PULL))
-				if (params["left"] && ismob(target))
-					params["ctrl"] = 0 //hacky :)
+				else if (params["middle"])
+					params["middle"] = 0
+					params["left"] = 1 //hacky again :)
 					var/prev = src.a_intent
 					src.a_intent = INTENT_GRAB
 					.=..()
 					src.a_intent = prev
 					return
+				else
+					src.a_intent = INTENT_HARM
+					.=..()
+					src.a_intent = INTENT_DISARM
+				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				src.throw_item(target, params)
@@ -1254,10 +1253,6 @@
 				src.a_intent = INTENT_DISARM
 				src.hud.update_intent()
 				return
-			else if (src.client.check_key(KEY_PULL))
-				src.client.show_popup_menus = 0
-				src.a_intent = INTENT_GRAB
-				src.hud.update_intent()
 			else if (src.client.show_popup_menus == 0)
 				src.client.show_popup_menus = 1
 				src.a_intent = INTENT_HELP
