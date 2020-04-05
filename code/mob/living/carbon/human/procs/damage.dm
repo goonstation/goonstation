@@ -512,6 +512,8 @@
 /mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	if (src.nodamage) return
 
+	hit_twitch(src)
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		brute *= -1
 		burn *= -1
@@ -545,8 +547,6 @@
 	if (tox)
 		tox = max(0, tox)
 		take_toxin_damage(tox)
-
-	hit_twitch(src)
 
 	if (zone == "All")
 		var/organCount = 0

@@ -281,16 +281,22 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 
 /obj/item/clothing/gloves/swat
-	desc = "These tactical gloves are quite fire and electrically-resistant."
+	desc = "A pair of syndicate tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	name = "SWAT Gloves"
-	icon_state = "black"
-	item_state = "swat_gl"
+	icon_state = "swat_syndie"
+	item_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
+		setProperty("disarmblock", 20)
+
+/obj/item/clothing/gloves/swat/NT
+	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
+	icon_state = "swat_NT"
+	item_state = "swat_NT"
 
 /obj/item/clothing/gloves/stungloves/
 	name = "Stungloves"

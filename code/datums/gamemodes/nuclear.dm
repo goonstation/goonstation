@@ -320,7 +320,7 @@
 		if (!T)
 			continue
 		if (istype(T.loc, /area/station/security/brig))
-			if(M.current.handcuffed != null)
+			if(M.current.hasStatus("handcuffed"))
 				opdeathcount++
 				// If they're in a brig cell and cuffed
 

@@ -474,7 +474,7 @@
 							O.verbs += /mob/dead/target_observer/hivemind_observer/verb/exit_hivemind
 							boutput(O, __blue("<b>Your master seems to be inactive. You are permitted to use the Exit-Hivemind command.</b>"))
 
-#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam! 
+#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 	src.UpdateDamage()
 #endif
 
@@ -587,7 +587,7 @@
 					change_misstep_chance(-1 * mult)
 
 		// The value at which this stuff is capped at can be found in mob.dm
-		if (resting)
+		if (src.hasStatus("resting"))
 			dizziness = max(0, dizziness - 5)
 			jitteriness = max(0, jitteriness - 5)
 		else
@@ -1650,7 +1650,7 @@
 		//parent.setLastTask("status_updates max value calcs", src)
 
 		parent.setLastTask("status_updates sleep and paralysis calcs", src)
-		if (src.resting && src.sleeping) src.sleeping = 4
+		if (src.hasStatus("resting") && src.sleeping) src.sleeping = 4
 
 		if ((sleeping && !last_sleep) || (last_sleep && !sleeping))
 			last_sleep = sleeping
@@ -1663,10 +1663,7 @@
 			src.changeStatus("paralysis", 4 SECONDS)
 			if (prob(10) && (health > 0))
 				emote("snore")
-			if (!src.resting) src.sleeping--
-
-		//if (src.resting)
-			//src.changeStatus("weakened", 2 SECONDS)
+			if (!src.hasStatus("resting")) src.sleeping--
 
 		parent.setLastTask("status_updates health calcs", src)
 
@@ -1859,7 +1856,7 @@
 		var/lying_old = src.lying
 		var/cant_lie = (src.limbs && istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, src.loc) && !locate(/obj/machinery/optable, src.loc))
 
-		var/must_lie = resting || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/must_lie = hasStatus("resting") || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
 
 		var/changeling_fakedeath = 0
 		var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
@@ -1867,7 +1864,7 @@
 			changeling_fakedeath = 1
 
 		if (!isdead(src)) //Alive.
-			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.resting) //Stunned etc.
+			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.hasStatus("resting")) //Stunned etc.
 				parent.setLastTask("status_updates lying/standing checks stun calcs")
 				var/setStat = src.stat
 				var/oldStat = src.stat

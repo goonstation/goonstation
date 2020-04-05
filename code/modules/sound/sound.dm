@@ -103,7 +103,7 @@ var/global/list/falloff_cache = list()
 		Mloc = get_turf(M)
 
 		//Hard attentuation
-		var/dist = max(get_manhattan_dist(Mloc, source), 1)
+		var/dist = max(GET_MANHATTAN_DIST(Mloc, source), 1)
 		if (dist > MAX_SOUND_RANGE + extrarange)
 			continue
 

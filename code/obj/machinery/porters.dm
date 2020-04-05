@@ -447,7 +447,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("paralysis") > 0 || usr.getStatusDuration("weakened") || usr.handcuffed)
+		if (!isalive(usr) || usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("paralysis") > 0 || usr.getStatusDuration("weakened") || usr.hasStatus("handcuffed"))
 			return
 		src.go_out()
 		add_fingerprint(usr)

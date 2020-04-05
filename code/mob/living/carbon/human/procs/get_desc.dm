@@ -50,8 +50,8 @@
 	if (src.w_uniform)
 		. += "<br><span style='color:[src.w_uniform.blood_DNA ? "red" : "blue"]'>[src.name] is wearing [bicon(src.w_uniform)] [src.w_uniform.blood_DNA ? "a bloody [src.w_uniform.name]" : "\an [src.w_uniform.name]"].</span>"
 
-	if (src.handcuffed)
-		. +=  "<br><span style='color:blue'>[src.name] is [bicon(src.handcuffed)] handcuffed!</span>"
+	if (src.hasStatus("handcuffed"))
+		. +=  "<br><span style='color:blue'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.wear_suit)
 		. += "<br><span style='color:[src.wear_suit.blood_DNA ? "red" : "blue"]'>[src.name] has [bicon(src.wear_suit)] [src.wear_suit.blood_DNA ? "a bloody [src.wear_suit.name]" : "\an [src.wear_suit.name]"] on.</span>"

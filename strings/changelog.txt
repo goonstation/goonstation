@@ -1,4 +1,25 @@
 ﻿
+(t)sat apr 04 20
+(u)ZeWaka
+(+)Handcuffing should be more consistent across the board.
+(u)Awkward Dryad
+(+)Fixed a plate stack runtime error.
+(*)Plates can now be stacked one by one instead of click-drag only.
+(u)mbc
+(+)Fixed bug where attack particle showed incorrect sprite when the attack obj was being deleted or dropped
+(+)Fixed bug where hit twitch animations wouldnt play in many circumstances
+(u)Nexusuxen
+(*)Added experimental "Equality" silicon law module.
+(u)Mordent
+(+)Fixed bug with cable coils in cyborg modules not having the correct amount.
+(+)Fixed bug with steel rods and cable coils in cyborg modules not starting with the correct sprite.
+(u)Tarmunora
+(*)Added range falloff to stun projectiles (to a minimum of half initial power)
+(*)Stun projectile pointblanks no longer apply bonus stuns on top of what the projectile would normally do
+(*)Reworked the wavegun found in QM experimental weapons crates to have more unique firing modes, all of which have non-standard range characteristics - try them out and experiment! Includes shiny new sprites by Flaborized
+(*)Rebalanced the detain and pulse projectiles to be hopefully closer together in power: detain now stuns in 2-3 shots, pulse now experiences some falloff with range on the disorient and throw
+(*)Taser shotgun pointblank implemented, and regular firing slightly rebalanced
+(+)Hopefully killed any last traces of the projectile doublehit bug
 (t)fri apr 03 20
 (u)archlinuxusa
 (+)Eggs no longer produce a meaty explosion in the microwave, splattered egg will now splatter all over your microwave... Yummy.
