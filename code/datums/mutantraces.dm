@@ -1628,33 +1628,36 @@
 		var/obj/item/storage/toilet/toilet = locate() in mob.loc
 		var/obj/item/reagent_containers/glass/beaker = locate() in mob.loc
 
-		if (mob.urine < 1)
+		var/can_output = 0
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if (H.blood_volume > 250)
+				can_output = 1
+				H.blood_volume -= 10
+
+		if (!can_output)
 			.= "<B>[mob]</B> strains, but fails to output milk!"
-		else if (toilet && (mob.buckled != null) && (mob.urine >= 2))
+		else if (toilet && (mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in mob.loc)
 				.= "<B>[mob]</B> dispenses milk into the toilet. What a waste."
-				mob.urine = 0
 				T.clogged += 0.10
 				break
-		else if (beaker && (mob.urine >= 1))
+		else if (beaker)
 			.= pick("<B>[mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[mob]</B> takes aim and dispenses milk into the beaker!", "<B>[mob]</B> fills the beaker with milk!")
-			beaker.reagents.add_reagent("milk", mob.urine * 4)
-			mob.urine = 0
+			beaker.reagents.add_reagent("milk", 10)
 		else
-			mob.urine--
-
 			var/obj/item/reagent_containers/pee_target = mob.equipped()
 			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [pee_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
-				pee_target.reagents.add_reagent("milk", 20)
+				pee_target.reagents.add_reagent("milk", 10)
 				return
 
 			// possibly change the text colour to the gray emote text
 			.= (pick("<B>[mob]</B> milk fall out.", "<B>[mob]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(mob)
-			T.fluid_react_single("milk", 5)
+			T.fluid_react_single("milk", 10)
 
 
 
