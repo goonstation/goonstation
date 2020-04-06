@@ -1633,7 +1633,6 @@
 			var/mob/living/carbon/human/H = mob
 			if (H.blood_volume > 250)
 				can_output = 1
-				H.blood_volume -= 10
 
 		if (!can_output)
 			.= "<B>[mob]</B> strains, but fails to output milk!"
