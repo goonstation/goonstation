@@ -95,7 +95,7 @@
 			boutput(user, "<span style='color:red'>[H.name] [(handslost>1) ? "has no arms" : "only has one arm"], you can't handcuff them!</span>")
 			return
 
-		if (H.handcuffed)
+		if (H.hasStatus("handcuffed"))
 			boutput(user, "<span style='color:red'>[H] is already handcuffed</span>")
 			return
 
@@ -119,6 +119,19 @@
 
 /obj/item/handcuffs/proc/werewolf_cant_rip()
 	.= src.material && src.material.mat_id == "silver"
+
+
+/obj/item/handcuffs/proc/drop_handcuffs(mob/user)
+	user.handcuffs = null
+	user.delStatus("handcuffed")
+	user.drop_item(src)
+	user.update_clothing()
+
+/obj/item/handcuffs/proc/destroy_handcuffs(mob/user)
+	user.handcuffs = null
+	user.delStatus("handcuffed")
+	user.update_clothing()
+	qdel(src)
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"

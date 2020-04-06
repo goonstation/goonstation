@@ -1587,6 +1587,18 @@
 			mob.update_body()
 			mob.update_clothing()
 
+			H.blood_id = "milk"
+			H.blood_color = "FFFFFF"
+
+
+	disposing()
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			H.blood_id = initial(H.blood_id)
+			H.blood_color = initial(H.blood_color)
+		..()
+
+
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)
@@ -1597,7 +1609,8 @@
 		return rgb(22, 210, 22)
 
 	say_filter(var/message)
-		return replacetext(message, "m", stutter("mm"))
+		.= replacetext(message, "cow", "human")
+		.= replacetext(., "m", stutter("mm"))
 
 	emote(var/act, var/voluntary)
 		switch(act)
@@ -1605,12 +1618,6 @@
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> moos!"
 					playsound(get_turf(mob), "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch())
-			if ("pee", "piss", "urinate")
-				if (mob.emote_check(voluntary))
-					if (mob.sims)
-						.=..()
-					else
-						.= release_milk()
 			if ("milk")
 				if (mob.emote_check(voluntary))
 					.= release_milk()
@@ -1622,10 +1629,10 @@
 		var/obj/item/reagent_containers/glass/beaker = locate() in mob.loc
 
 		if (mob.urine < 1)
-			.= "<B>[mob]</B> strains, but has no milk left!"
+			.= "<B>[mob]</B> strains, but fails to output milk!"
 		else if (toilet && (mob.buckled != null) && (mob.urine >= 2))
 			for (var/obj/item/storage/toilet/T in mob.loc)
-				.= pick("<B>[mob]</B> squirts some milk into the toilet. What a waste.", "<B>[mob]</B> empties their udders.", "<span style=\"color:blue\">Ahhh, sweet relief.</span>")
+				.= "<B>[mob]</B> dispenses milk into the toilet. What a waste."
 				mob.urine = 0
 				T.clogged += 0.10
 				break
@@ -1638,13 +1645,13 @@
 
 			var/obj/item/reagent_containers/pee_target = mob.equipped()
 			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] pees in [pee_target]!</B></span>")
+				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [pee_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				pee_target.reagents.add_reagent("milk", 20)
 				return
 
 			// possibly change the text colour to the gray emote text
-			.= (pick("<B>[mob]</B> squirts milk onto the floor.", "<B>[mob]</B> makes a big milk puddle on the floor."))
+			.= (pick("<B>[mob]</B> milk fall out.", "<B>[mob]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(mob)
 			T.fluid_react_single("milk", 5)

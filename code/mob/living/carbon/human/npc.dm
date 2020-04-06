@@ -124,7 +124,7 @@
 	if(world.time < ai_lastaction + ai_actiondelay) return
 
 	var/action_delay = 0
-	resting = 0
+	delStatus("resting")
 	if(hud) hud.update_resting()
 
 	if (isdead(src))
@@ -134,7 +134,7 @@
 		return
 
 	//Moving this up because apparently beds were tripping the AI up.
-	if(src.buckled && !src.handcuffed)
+	if(src.buckled && !src.hasStatus("handcuffed"))
 		src.buckled.attack_hand(src)
 		if(src.buckled) //WE'RE STUCKED :C
 			return
@@ -155,9 +155,9 @@
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
-	if(ai_busy && !src.handcuffed)
+	if(ai_busy && !src.hasStatus("handcuffed"))
 		ai_busy = 0
-	if(src.handcuffed)
+	if(src.hasStatus("handcuffed"))
 		ai_target = null
 		ai_state = AI_PASSIVE
 		if(src.canmove && !ai_busy)
@@ -165,11 +165,9 @@
 			src.visible_message("<span style=\"color:red\"><B>[src] attempts to remove the handcuffs!</B></span>")
 			SPAWN_DBG(2 MINUTES)
 				ai_busy = 0
-				if(src.handcuffed && !ai_incapacitated())
+				if(src.hasStatus("handcuffed") && !ai_incapacitated())
 					src.visible_message("<span style=\"color:red\"><B>[src] manages to remove the handcuffs!</B></span>")
-					src.handcuffed:set_loc(src.loc)
-					src.handcuffed = null
-					src.set_clothing_icon_dirty()
+					src.handcuffs.drop_handcuffs(src)
 	ai_move()
 
 	if(ai_target)

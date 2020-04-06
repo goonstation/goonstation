@@ -1439,6 +1439,16 @@ window "rpane"
 		command = ".winset \"rpanewindow.left=infowindow\""
 		group = "rpanemode"
 		button-type = pushbox
+	elem "bugreportb"
+		type = BUTTON
+		pos = 380,5
+		size = 60x20
+		anchor1 = none
+		anchor2 = 100,0
+		saved-params = "is-checked"
+		text = "Bug Report"
+		command = "bugreport"
+		group = "rpaneutil"
 	elem "wikib"
 		type = BUTTON
 		pos = 445,5

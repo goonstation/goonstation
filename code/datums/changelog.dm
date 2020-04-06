@@ -2,6 +2,7 @@
 (t)
 (u)
 (*)
+(+)
 */
 /datum/changelog
 //	var/changelog_path = "icons/changelog.txt"
@@ -10,6 +11,7 @@
 New auto-generated changelog:
 Format:
 Use (t) for the timestamp, (u) for the user, and (*)for the line to add.
+Use (+) instead for minor changes (will be collapsed and grouped up at the end of the day's log).
 Be sure to add a \ before a [
 Examples:
 Single update for a given day:
@@ -20,6 +22,7 @@ Multiple updates in a day:
 (t)mon jan 01 12
 (u)Pantaloons
 (*)Did a thing.
+(+)Fixed a bug.
 (u)Nannek
 (*)Also did a thing.
 
@@ -44,6 +47,11 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 	else
 		html += "<ul class=\"log\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [vcs_revision]</li>"
 
+		var/list/collapsible_html = list()
+		var/added_collapsible_author = 0
+		var/added_author = 0
+		var/author = null
+
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
 			if (!line)
@@ -54,6 +62,12 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 
 			switch(copytext(line, 1, 4))
 				if("(t)")
+					if(collapsible_html.len)
+						html += "<li class=\"collapse-button\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
+						collapsible_html.Cut()
+						author = null
+						added_collapsible_author = 0
+						added_author = 0
 					var/day = copytext(line, 4, 7)
 					html += "<li class=\"date\">"
 					switch(day)
@@ -131,11 +145,23 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 									html += "th, "
 					html += "20[copytext(line, 15, 17)]</li>"
 				if("(u)")
-					html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [copytext(line, 4, 0)]</span> updated:</li>"
+					author = copytext(line, 4, 0)
+					added_collapsible_author = 0
+					added_author = 0
 				if("(*)")
+					if(!added_author && author)
+						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:</li>"
+						added_author = 1
 					html += "<li>[copytext(line, 4, 0)]</li>"
+				if("(+)")
+					if(!added_collapsible_author && author)
+						collapsible_html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:</li>"
+						added_collapsible_author = 1
+					collapsible_html += "<li>[copytext(line, 4, 0)]</li>"
 				else continue
 
+		if(collapsible_html.len)
+			html += "<li class=\"collapse-button\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
 		html += "</ul>"
 		return html.Join()
 

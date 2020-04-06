@@ -43,7 +43,7 @@
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
-	var/list/target_locations = null
+	var/list/list/target_locations = null
 
 	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
 		target_locations = map_settings.valid_nuke_targets
@@ -89,6 +89,18 @@
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
+
+#if ASS_JAM
+	var/station_only = prob(40)
+	target_locations = list()
+	for(var/area/A in world)
+		if(station_only && !istype(A, /area/station))
+			continue
+		if(!(A.name in target_locations))
+			target_locations[A.name] = list(A)
+		else
+			target_locations[A.name].Add(A)
+#endif
 
 	target_location_name = pick(target_locations)
 	if (!target_location_name)
@@ -320,7 +332,7 @@
 		if (!T)
 			continue
 		if (istype(T.loc, /area/station/security/brig))
-			if(M.current.handcuffed != null)
+			if(M.current.hasStatus("handcuffed"))
 				opdeathcount++
 				// If they're in a brig cell and cuffed
 
