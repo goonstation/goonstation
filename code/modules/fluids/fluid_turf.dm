@@ -18,8 +18,8 @@
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	fullbright = 0
-	luminosity = 3
+	fullbright = 1
+	luminosity = 1
 	intact = 0 //allow wire laying
 	throw_unlimited = 0
 	//todo fix : cannot flip.
@@ -306,7 +306,8 @@
 /turf/space/fluid/trench
 	name = "trench floor"
 	temperature = TRENCH_TEMP
-	luminosity = 2
+	fullbright = 0
+	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT
 
@@ -328,7 +329,7 @@
 
 //Manta
 /turf/space/fluid/manta
-	luminosity = 2
+	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_PLANTSMANTA
 	turf_flags = CAN_BE_SPACE_SAMPLE | MANTA_PUSH
