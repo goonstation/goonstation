@@ -5,7 +5,6 @@
 #define PLANE_HIDDENGAME 2
 #define PLANE_LIGHTING 10
 #define PLANE_SELFILLUM 20
-#define PLANE_AICAMERA 22
 #define PLANE_FLOCKVISION 25
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
@@ -40,7 +39,6 @@ client
 		plane_parents += new /obj/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_AICAMERA, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "aicamera_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane")
 
 		var/obj/screen/plane_parent/P = new /obj/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
@@ -65,11 +63,6 @@ client
 		for (var/atom in plane_parents)
 			var/atom/A = atom
 			screen += A
-			if (A.name == "aicamera_plane")
-				if (isAI(src.mob))
-					A.alpha = 255
-				else
-					A.alpha = 0
 
 	proc/get_plane(var/plane)
 		for (var/atom/A in plane_parents)
