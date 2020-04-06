@@ -134,10 +134,7 @@
 	var/leader_selected = 0
 
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
-	var/list/nato_callsigns = pick_string("agent_callsigns.txt", "nato")
-	var/list/melee_callsigns = pick_string("agent_callsigns.txt", "melee_weapons")
-	//Add new lists to the master callsign list.
-	var/list/callsign_list = pick(nato_callsigns, melee_callsigns)
+	var/list/callsign_list = strings("agent_callsigns.txt", "nato") + strings("agent_callsigns.txt", "melee_weapons") + strings("agent_callsigns.txt", "colors")
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
