@@ -43,12 +43,18 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
+		attack_particle(user,src)
+		hit_twitch(src)
+		if (W.hitsound)
+			playsound(src,W.hitsound,50,1)
 		..()
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
+
+		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
