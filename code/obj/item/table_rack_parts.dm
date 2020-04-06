@@ -324,6 +324,16 @@ RACK PARTS
 	furniture_type = /obj/stool/chair/comfy/wheelchair
 	furniture_name = "wheelchair"
 
+/obj/item/furniture_parts/barberchair
+	name = "barber chair parts"
+	desc = "A collection of parts that can be used to make a barber chair. You know, for cutting hair?"
+	icon = 'icons/obj/chairs.dmi'
+	icon_state = "barberchair_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/barber_chair
+	furniture_name = "barberchair"
+
 /obj/item/furniture_parts/office_chair
 	name = "office chair parts"
 	desc = "A collection of parts that can be used to make an office chair."

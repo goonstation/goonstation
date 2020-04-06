@@ -3076,7 +3076,7 @@
 "bhh" = (/obj/disposalpipe/segment/morgue,/obj/machinery/camera{c_tag = "autotag"; dir = 1; name = "autoname - SS13"; tag = ""},/turf/simulated/floor,/area/station/hallway/primary/west)
 "bhi" = (/obj/wingrille_spawn/auto,/turf/simulated/floor,/area/station/crew_quarters/barber_shop)
 "bhj" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "6-9"},/turf/simulated/floor/wood/two,/area/station/crew_quarters/barber_shop)
-"bhk" = (/obj/stool/barber_chair,/turf/simulated/floor/wood/two,/area/station/crew_quarters/barber_shop)
+"bhk" = (/obj/stool/chair/comfy/barber_chair,/turf/simulated/floor/wood/two,/area/station/crew_quarters/barber_shop)
 "bhl" = (/obj/submachine/chef_sink/chem_sink{dir = 8; pixel_x = 4},/turf/simulated/floor/wood/two,/area/station/crew_quarters/barber_shop)
 "bhm" = (/obj/table/auto,/obj/item/reagent_containers/food/drinks/fueltank{pixel_x = -6; pixel_y = 12},/obj/item/reagent_containers/food/drinks/fueltank{pixel_x = -2; pixel_y = 12},/obj/item/reagent_containers/food/drinks/fueltank{pixel_x = 2; pixel_y = 12},/obj/item/reagent_containers/food/drinks/fueltank{pixel_x = 6; pixel_y = 12},/obj/item/storage/box/cablesbox{pixel_y = 2},/turf/simulated/floor,/area/station/storage/eeva)
 "bhn" = (/obj/machinery/door/airlock/pyro/glass,/obj/access_spawn/maint,/obj/firedoor_spawn,/turf/simulated/floor,/area/station/storage/emergency)
