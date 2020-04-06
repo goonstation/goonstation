@@ -1649,7 +1649,7 @@
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
 				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [milk_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
-				transfer_blood(mob, pee_target, 10)
+				transfer_blood(mob, milk_target, 10)
 				return
 
 			// possibly change the text colour to the gray emote text
