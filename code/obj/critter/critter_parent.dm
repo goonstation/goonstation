@@ -198,14 +198,14 @@
 
 #if ASS_JAM
 	HasProximity(atom/movable/AM as mob|obj)
-		if(task == "hibernating" && istype(AM, /mob) && !paused)
+		if(task == "hibernating" && ismob(AM) && !paused)
 			var/mob/living/M = AM
 			if(M.client) wake_from_hibernation()
 
 		..()
 #else
 	HasProximity(atom/movable/AM as mob|obj)
-		if(task == "hibernating" && istype(AM, /mob))
+		if(task == "hibernating" && ismob(AM))
 			var/mob/living/M = AM
 			if(M.client) wake_from_hibernation()
 
