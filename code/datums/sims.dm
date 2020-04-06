@@ -451,7 +451,7 @@
 					return 0
 				if (holder.owner.lying)
 					return 0
-				if (holder.owner.sleeping) 
+				if (holder.owner.sleeping)
 					return 0
 				if (holder.owner.resting)
 					return 0
@@ -522,10 +522,10 @@
 		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
-#ifdef RP_MODE
+//#ifdef RP_MODE
 			SPAWN_DBG(0)
 				set_multiplier(1)
-#endif
+//#endif
 
 	Topic(href, href_list)
 		usr_admin_only
@@ -664,9 +664,9 @@ var/global/datum/simsControl/simsController = new()
 		simsController.register_simsHolder(src)
 		make_motives()
 		add_hud()
-	
+
 	proc/make_motives()
-	
+
 	proc/add_hud()
 		if (owner && ishuman(owner))
 			var/SY = src.start_y
