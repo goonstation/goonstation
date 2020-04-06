@@ -84,7 +84,6 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 
 #if ASS_JAM
 var/global/ass_mutation
-#endif
 
 proc/ass_jam_init()
 	if(prob(25))
@@ -97,5 +96,6 @@ proc/ass_jam_init()
 		if(prob(4))
 			job.limit += rand(1, 5)
 
+#endif
 
 
