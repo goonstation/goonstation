@@ -1,6 +1,8 @@
 
 
 var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 for this to be true ~ Warcrimes
+// LOOKING FOR HOW TO USE ASS_JAM ? SCROLL TO THE BOTTOM OF THIS FILE OKAY
+
 
 // called in world.New()
 //proc/is_it_ass_day() // not the fuck any more ~ Warc
@@ -84,4 +86,56 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 
 
 
+
+
+#if FALSE // this should stop the compiler reading any of this, so it's just between you n me, pal.
+/*
+Suppose for an instant that you have a brilliant idea to add to the game, something absolutely everyone ought to see, but maybe just once a month.
+“Excellent” you shout, at no one.
+It is time to add to the ASS_JAM.
+Simply take your excellent idea, and sandwich it between "#if ASS_JAM" and "#endif"
+*/
+
+#if ASS_JAM
+/obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding // Wow! What an example!
+	buttdesc = "Ain't twice the 'Rillo it used to be."
+	exploding = 1
+#endif
+
+/*
+If your ASS_JAM contribution replaces the functionality of a proc,
+simply make a copy of that proc, and wrap it between "#if ASS_JAM" and "#else",
+with the original proc between "#else" and "#endif", as demonstrated below.
+*/
+
+#if ASS_JAM
+
+	on_pet(mob/user)
+		my_new_terrible_idea()
+
+#else
+/*
+	on_pet(mob/user)
+		the_original_code()
+*/
+#endif
+/*
+It may be desireable, in longer procs, to only override one or several groups of lines.
+Please avoid unnecessary fracturing, and use only one #if-#else-#endif block per proc or object when possible.
+
+In order to assist in this request, the ASS_JAM define may also be used as a boolean variable.
+Its truth value is set by the build process, based on the calendar date. It evaluates to 1 on the 13th day of the month, 0 at all other times.
+Example Usage:
+*/
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (prob(ASS_JAM?50:25))
+			var/turf/T = get_turf(src)
+
+/*When you're all done wrapping your hogg in a vorbis, just open a PR directly to goon master, no special branches.
+
+*/
+#endif
+//ok my compiler ser you may continue
 
