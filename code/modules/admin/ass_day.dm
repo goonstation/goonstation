@@ -89,6 +89,8 @@ var/global/ass_mutation
 proc/ass_jam_init()
 	if(prob(25))
 		ass_mutation = pick(mutini_effects)
+	var/list/ass_trinket_blacklist = list() // good luck with this one lol
+	trinket_safelist = childrentypesof(/obj/item) - ass_trinket_blacklist
 
 
 
