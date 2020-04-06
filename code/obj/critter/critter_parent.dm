@@ -344,7 +344,7 @@
 
 #if ASS_JAM
 	proc/on_damaged(mob/user)
-		if(registered_area) //In case some butt fiddles with a hibernating critter
+		if(registered_area && !paused) //In case some butt fiddles with a hibernating critter
 			registered_area.wake_critters()
 		return
 #else
