@@ -1643,7 +1643,7 @@
 				break
 		else if (beaker)
 			.= pick("<B>[mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[mob]</B> takes aim and dispenses milk into the beaker!", "<B>[mob]</B> fills the beaker with milk!")
-			beaker.reagents.add_reagent("milk", 10)
+			transfer_blood(mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/pee_target = mob.equipped()
 			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
