@@ -1645,9 +1645,9 @@
 			.= pick("<B>[mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[mob]</B> takes aim and dispenses milk into the beaker!", "<B>[mob]</B> fills the beaker with milk!")
 			transfer_blood(mob, beaker, 10)
 		else
-			var/obj/item/reagent_containers/pee_target = mob.equipped()
-			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [pee_target].</B></span>")
+			var/obj/item/reagent_containers/milk_target = mob.equipped()
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
+				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [milk_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(mob, pee_target, 10)
 				return
