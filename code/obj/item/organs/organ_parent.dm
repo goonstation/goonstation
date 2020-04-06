@@ -245,9 +245,9 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
+#if ASS_JAM
 		if (ishuman(donor))
 			var/mob/living/carbon/human/H = donor
-#if ASS_JAM
 			if (H.paused)
 				H.pausedburn = max(0, H.pausedburn + burn)
 				H.pausedbrute = max(0, H.pausedbrute + brute)
