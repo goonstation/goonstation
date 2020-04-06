@@ -332,7 +332,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/comfy/barber_chair
-	furniture_name = "barberchair"
+	furniture_name = "barber chair"
 
 /obj/item/furniture_parts/office_chair
 	name = "office chair parts"
@@ -504,4 +504,3 @@ RACK PARTS
 		playsound(get_turf(the_furniture), "sound/items/Deconstruct.ogg", 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_furniture].</span>")
-
