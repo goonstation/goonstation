@@ -894,28 +894,6 @@ var/list/fun_images = list()
 	qdel(mymob)
 	H.JobEquipSpawned("Staff Assistant", 1)
 
-/client/proc/entangle_at_random()
-	set name = "Entangle Lockers at Random"
-	set desc = "Entangle every locker at random. Dangerous!"
-	set category = "Special Verbs"
-
-	admin_only
-	if(alert("Are you sure you want to do this?",,"Yes", "No") == "Yes")
-		message_admins("[key_name(src)] has entangled every locker!")
-		var/list/closets = list()
-		var/n_closets = 0
-		for(var/X in by_type[/obj/storage/closet])
-			var/obj/storage/closet/closet = X
-			closets += closet
-			n_closets++
-		for(var/i = 1, i < n_closets, i+=2)
-			var/obj/storage/A = pick(closets)
-			var/obj/storage/B = pick(closets)
-			closets -= A
-			closets -= B
-			A.entangled = B
-			B.entangled = A
-
 
 /client/proc/respawn_as_self()
 	set name = "Respawn As Self"
