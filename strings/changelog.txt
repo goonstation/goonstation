@@ -1,4 +1,7 @@
 ﻿
+(t)mon apr 06 20
+(u)mbc
+(*)Made some changes that should increase client side FPS a bit, especially on ocean maps (water on station zlevel will look a little bit uglier re:lighting, sorry)
 (t)sun apr 05 20
 (u)mbc
 (*)You can now buckle into chairs by clicking yourself while standing on them. Same with climbing on chairs - click self with grab intent.
