@@ -1248,7 +1248,10 @@
 	if (src.client)
 		if (src.client.experimental_intents)
 			if (src.client.check_key(KEY_THROW))
-				src.set_cursor('icons/cursors/combat.dmi')
+				if (src.equipped())
+					src.set_cursor('icons/cursors/combat.dmi')
+				else
+					src.set_cursor('icons/cursors/combat_barehand.dmi')
 				src.client.show_popup_menus = 0
 				src.a_intent = INTENT_DISARM
 				src.hud.update_intent()
