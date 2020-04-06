@@ -26,8 +26,9 @@
 	var/ai_attacknpc = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
+#if ASS_JAM
 	var/ai_prefrozen //needed for timestop
-
+#endif
 	var/blood_id = null
 
 	var/mob/living/ai_target = null
