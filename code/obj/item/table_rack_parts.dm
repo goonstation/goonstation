@@ -324,7 +324,7 @@ RACK PARTS
 	furniture_type = /obj/stool/chair/comfy/wheelchair
 	furniture_name = "wheelchair"
 
-/obj/item/furniture_parts/barberchair
+/obj/item/furniture_parts/barber_chair
 	name = "barber chair parts"
 	desc = "A collection of parts that can be used to make a barber chair. You know, for cutting hair?"
 	icon = 'icons/obj/chairs.dmi'
