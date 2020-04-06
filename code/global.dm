@@ -792,7 +792,7 @@ var/global/mentorhelp_text_color = "#CC0066"
 			if (M.client)
 				M << I
 		return I
-	return
+	return null
 
 /proc/getAIImage(var/key)
 	if(length(key) && aiImages[key]) return aiImages[key]
