@@ -580,7 +580,7 @@
 "lh" = (/obj/decal/tile_edge/line/blue{icon_state = "tile1"; dir = 6},/obj/decal/tile_edge/line/white{icon_state = "noedge-tile1"; dir = 5},/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/grime,/area/diner/motel/pool)
 "li" = (/turf/space,/obj/grille/catwalk{dir = 6; icon_state = "catwalk_cross"},/turf/simulated/floor/airless/plating/catwalk{dir = 5; icon_state = "catwalk_cross"},/area/noGenerate)
 "lj" = (/turf/space,/obj/cable{icon_state = "1-4"},/turf/simulated/floor/plating/damaged2,/area/diner/hangar)
-"lk" = (/turf/space,/obj/grille/catwalk,/obj/machinery/power/apc/autoname_north/nopoweralert,/obj/cable{icon_state = "0-2"},/turf/simulated/floor/airless/plating/catwalk,/area/diner/dining)
+"lk" = (/turf/space,/obj/grille/catwalk,/obj/machinery/power/apc/autoname_north/nopoweralert,/obj/cable{icon_state = "0-2"},/turf/simulated/floor/airless/plating/catwalk,/area/diner/solar)
 "ll" = (/obj/table/reinforced/auto,/obj/item/storage/wall/medical{dir = 1; pixel_y = 32},/obj/item/bluntwrap,/obj/decal/tile_edge/stripe/extra_big{dir = 6; icon_state = "xtra_bigstripe-corner2"},/obj/decal/cleanable/dirt,/obj/item/reagent_containers/dropper/mechanical,/turf/simulated/floor/black/grime,/area/diner/motel/chemstorage)
 "lm" = (/obj/decal/cleanable/urine,/turf/simulated/pool/no_animate,/area/diner/motel/pool)
 "ln" = (/obj/pool/perspective{dir = 4; tag = "icon-pool (EAST)"},/obj/pool_springboard,/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/grime,/area/diner/motel/pool)

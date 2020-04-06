@@ -138,6 +138,7 @@ var/list/admin_verbs = list(
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
+		/client/proc/jobbans,
 
 		// moved down from admin
 		/client/proc/cmd_admin_add_freeform_ai_law,
@@ -1419,7 +1420,7 @@ var/list/fun_images = list()
 	var/obj_path = get_one_match(obj_input, /atom/movable)
 	if (!obj_path)
 		return
-	
+
 	if(new_grenade)
 		var/obj/item/old_grenade/thing_thrower/nade = new
 		nade.count = input("How many things?", "How many things?", 8) as null|num

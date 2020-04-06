@@ -46,12 +46,59 @@
 			for (var/i = 0, i < count, i++)
 				new/obj/item/serum_injector(B, working_on, 1, 0)
 			B.name = "CDC Pathogen cure crate ([working_on.name])"
-			buy_thing(B)
+			shippingmarket.receive_crate(B)
 			batches_left--
 			if (batches_left)
 				next_cure_batch = round(rand(175, 233) / 100 * working_on_time_factor) + ticker.round_elapsed_ticks
 			else
 				working_on = null
+
+	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
+		for (var/R in sell_crate)
+			if (istype(R, /obj/item/reagent_containers) || ishuman(R)) //heh
+				var/obj/item/reagent_containers/RC = R
+				var/list/patho = RC.reagents.aggregate_pathogens()
+				for (var/uid in patho)
+					if (!(uid in src.analysis_by_uid))
+						var/datum/pathogen/P = patho[uid]
+						var/datum/cdc_contact_analysis/D = new
+						D.uid = uid
+						var/sym_count = max(min(length(P.effects), 7), 2)
+						D.time_factor = sym_count * rand(10, 15) // 200, 600
+						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
+						D.name = P.name
+						var/rating = max(P.advance_speed, P.mutation_speed, P.mutativeness, P.suppression_threshold, P.maliciousness)
+						var/ds = "weak"
+						switch (P.stages)
+							if (4)
+								ds = "potent"
+							if (5)
+								ds = "deadly"
+						var/df = "a relatively one-sided"
+						switch (sym_count)
+							if (3 to 4)
+								df = "a somewhat colorful"
+							if (5 to 6)
+								df = "a rather diverse"
+							if (7)
+								df = "an incredibly symptomatic"
+						D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
+						var/datum/pathogen/copy = unpool(/datum/pathogen)
+						copy.setup(0, P, 0, null)
+						D.assoc_pathogen = copy
+						src.analysis_by_uid[uid] = D
+						src.ready_to_analyze += D
+				if (ishuman(RC))
+					var/mob/living/carbon/human/H = RC
+					H.ghostize()
+				qdel(RC)
+			qdel(sell_crate)
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(null, pdaSignal)
 
 var/global/datum/cdc_contact_controller/QM_CDC = new()
 
@@ -327,7 +374,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		</div>
 		Budget: <strong>[wagesystem.shipping_budget]</strong> Credits
 		<div style='clear: both; text-align: center; font-weight: bold; padding: 0.2em;'>
-			<a href='[topicLink("requests")]'>Requests ([supply_requestlist.len])</a> &bull;
+			<a href='[topicLink("requests")]'>Requests ([shippingmarket.supply_requests.len])</a> &bull;
 			<a href='[topicLink("order")]'>Place Order</a> &bull;
 			<a href='[topicLink("order_history")]'>Order History</a> &bull;
 			<a href='[topicLink("viewmarket")]'>Shipping Market</a>
@@ -471,15 +518,16 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					//If this is a supply order we came from the request approval form
 					var/datum/supply_order/O = locate(href_list["what"])
 					var/datum/supply_packs/P = O.object
-					supply_requestlist -= O
+					shippingmarket.supply_requests -= O
 					if(wagesystem.shipping_budget >= P.cost)
 						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
 						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
-						process_supply_order(O,usr)
+						var/obj/storage/S = O.create(usr)
+						shippingmarket.receive_crate(S)
 						logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
-						supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
+						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
 						. = {"<strong>Insufficient funds in shipping budget.</strong>"}
@@ -505,10 +553,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							O.object = P
 							O.orderedby = usr.name
 							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
-
-							process_supply_order(O,usr)
+							var/obj/storage/S = O.create(usr)
+							shippingmarket.receive_crate(S)
 							logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
-							supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
+							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
 							. = {"<strong>Insufficient funds in shipping budget.</strong>"}
@@ -519,7 +567,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	order_history(subaction, href_list)
 		. = "<h2>Order History</h2>"
-		for(var/S in supply_history)
+		for(var/S in shippingmarket.supply_history)
 			. += S
 
 		return .
@@ -529,20 +577,20 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		switch (subaction)
 			if (null, "list")
 				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
-				for(var/datum/supply_order/SO in supply_requestlist)
+				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
 					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
 				. += {"</ul>"}
 				return .
 
 			if ("remove")
-				supply_requestlist -= locate(href_list["what"])
+				shippingmarket.supply_requests -= locate(href_list["what"])
 				// todo: fancy "your request got denied, doofus" message?
 				. = {"Request denied."}
 
 			if ("clear")
-				supply_requestlist = null
-				supply_requestlist = new/list()
+				shippingmarket.supply_requests = null
+				shippingmarket.supply_requests = new/list()
 				// todo: message people that their stuff's been denied?
 				. = {"All requests have been cleared."}
 
@@ -614,7 +662,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				else
 					wagesystem.shipping_budget -= 5
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
-					buy_thing(new /obj/storage/crate/biohazard/cdc())
+					shippingmarket.receive_crate(new /obj/storage/crate/biohazard/cdc())
 					QM_CDC.next_crate = ticker.round_elapsed_ticks + 300
 			set_cdc()
 
@@ -899,7 +947,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					T.current_message = pick(T.dialogue_cant_afford_that)
 				else
 					T.current_message = pick(T.dialogue_purchase)
-					buy_from_trader(T)
+					T.buy_from()
 			src.trader_dialogue_update("cart",T)
 
 		if ("trader_clr_cart")

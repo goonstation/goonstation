@@ -1205,7 +1205,7 @@ datum
 					if (11)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
 						M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
-						M.resting = 1
+						M.setStatus("resting", INFINITE_STATUS)
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					if (12 to 60) // Capped at ~2 minutes, that is 60 cycles + 10 paralysis (normally wears off at one per cycle).
 						M.changeStatus("paralysis", 30 * mult)
@@ -1235,7 +1235,7 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				if (counter == 10)
-					M.resting = 1
+					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 

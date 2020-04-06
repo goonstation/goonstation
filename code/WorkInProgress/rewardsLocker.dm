@@ -40,8 +40,8 @@
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev1])"
 			activator.set_clothing_icon_dirty()
 
-		else if (istype(activator.back, /obj/item/storage/backpack/NT))
-			var/obj/item/storage/backpack/NT/M = activator.back
+		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
+			var/obj/item/storage/backpack/M = activator.back
 			var/prev2 = M.name
 			M.icon = 'icons/obj/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -783,6 +783,16 @@
 		if (!activator.reagents) return
 		activator.reagents.add_reagent("bee", 5)
 		boutput (activator, "<span style='color:red'>Pleeze hold, bee will bee with thee shortlee!</span>" )
+
+/datum/achievementReward/bloodflood
+	title = "(Fancy Gib) Plague of Blood"
+	desc = "You're gonna get ripped to shreds, probably."
+	required_medal = "Original Sin"
+
+	rewardActivate(var/mob/activator)
+		var/turf/T = get_turf(activator)
+		T.fluid_react_single("blood",5000)
+		activator.gib()
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
