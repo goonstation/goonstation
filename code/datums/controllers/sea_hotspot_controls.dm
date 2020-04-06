@@ -400,7 +400,7 @@
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
 				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "combat")
+				logTheThing("diary", null, null, logmsg, "game")
 
 
 	proc/poll_capture_amt(var/turf/center)
