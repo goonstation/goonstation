@@ -396,7 +396,7 @@
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
-			if (phenomena_flags && recursion <= 0)
+			if (phenomena_flags > PH_QUAKE && recursion <= 0)
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
 				logTheThing("bombing", null, null, logmsg)
