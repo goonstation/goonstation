@@ -1656,7 +1656,7 @@
 			.= (pick("<B>[mob]</B> milk fall out.", "<B>[mob]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(mob)
-			T.fluid_react_single("milk", 10)
+			bleed(mob, 10, 3, T)
 
 
 
