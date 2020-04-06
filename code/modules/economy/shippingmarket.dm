@@ -223,8 +223,7 @@
 					if (P && !P.density)
 						P.close()
 
-		SPAWN_DBG(2 SECONDS)
-			S.throw_at(target, 100, 1)
+		S.throw_at(target, 100, 1)
 
 // Debugging and admin verbs (mostly coder)
 
