@@ -5957,7 +5957,7 @@
 "cot" = (/obj/table/wood/auto,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,/obj/item/storage/toolbox/mechanical,/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/item/dye_bottle,/turf/simulated/floor/plating/random,/area/station/crew_quarters/barber_shop)
 "cou" = (/obj/decal/cleanable/dirt,/obj/stool/bar,/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/landmark/start{name = "Staff Assistant"},/turf/simulated/floor/plating,/area/station/crew_quarters/barber_shop)
 "cov" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/station/crew_quarters/barber_shop)
-"cow" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/stool/barber_chair{desc = "A traditional barbershop chair, obviously a very old one at that.  What it is doing on a space station you haven't the foggiest."; name = "Old Barber Chair"},/turf/simulated/floor/plating,/area/station/crew_quarters/barber_shop)
+"cow" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/stool/chair/comfy/barber_chair{desc = "A traditional barbershop chair, obviously a very old one at that.  What it is doing on a space station you haven't the foggiest."; name = "Old Barber Chair"},/turf/simulated/floor/plating,/area/station/crew_quarters/barber_shop)
 "cox" = (/obj/burning_barrel,/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/cable{icon_state = "1-8"},/turf/simulated/floor/plating/random,/area/station/crew_quarters/barber_shop)
 "coy" = (/obj/grille/steel,/obj/window/auto/reinforced,/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating/random,/area/station/crew_quarters/barber_shop)
 "coz" = (/obj/item/clothing/mask/clown_hat,/turf/simulated/floor/caution/westeast,/area/station/crew_quarters/barber_shop)
