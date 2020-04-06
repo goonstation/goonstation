@@ -164,7 +164,6 @@ var/datum/event_controller/random_events
 				return
 			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
 			if (choice == "Yes")
-				RE.event_effect("Triggered by [key_name(usr)]")
 				if (RE.customization_available)
 					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
 					if (choice2 == "Custom")
