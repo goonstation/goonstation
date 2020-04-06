@@ -1,3 +1,4 @@
+#if ASS_JAM
 /obj/effect/timefield
 	name = "timefield"
 	desc = "/shrug"
@@ -53,6 +54,7 @@
 	Crossed(var/atom/crosser as mob|obj)
 		..(crosser)
 		masterfield.freeze_atom(crosser)
+
 //inorder to time stop simply insert the timestop proc anywhere look at code/datums/abilities/wizard/timestop.dm for an example of how this could be used
 proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfreeze controls whether or not loops are unsubbed to when pausing of a thing. it defaults to no(0/FALSE)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize, loopfreeze)
@@ -152,7 +154,7 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 	L.ai_prefrozen = L.ai_active
 	L.ai_active = 0
 	L.paused = 1
-//	L.can_move = 0
+	L.canmove = 0
 	if(freezeloop)
 		mobs.Remove(L)
 
@@ -169,7 +171,7 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 	L.pausedtox = 0 // see below
 	L.pausedoxy = 0 // see below
 	L.pausedbrain = 0 // needed for damage freezing
-//	L.can_move = 1
+	L.canmove = 1
 	if(freezeloop)
 		mobs.Add(L)
 
@@ -180,12 +182,12 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 	C.paused = 0
 
 /obj/effect/timefield/proc/freeze_machinery(obj/machinery/M)
-	if(freezeloop)
-		machines.Remove(M)
+//	if(freezeloop) //couldnt make it work(am lazy) - moon
+//		machines.Remove(M)
 
 /obj/effect/timefield/proc/unfreeze_machinery(obj/machinery/M)
-	if(freezeloop)
-		machines.Add(M)
+//	if(freezeloop) //seeabove
+//		machines.Add(M)
 
 /obj/effect/timefield/proc/freeze_deco(obj/O)
 	reversecolourin(O)
@@ -198,3 +200,4 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 
 /obj/effect/timefield/proc/reversecolourout(atom/A)
 	A.color = old_colors["\ref[A]"] //un reverses colours
+#endif

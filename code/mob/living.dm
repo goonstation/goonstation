@@ -566,11 +566,11 @@
 	if (src.wear_mask && src.wear_mask.is_muzzle)
 		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
 		return
-
+#if ASS_JAM
 	if(paused)
 		boutput(src, "<span style=\"color:red\">Can't speak in stopped time dummy!.</span>")
 		return
-
+#endif
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
@@ -1002,8 +1002,6 @@
 			move_laying.move_callback(src, oldloc, NewLoc)
 
 /mob/living/Move(var/turf/NewLoc, direct)
-	if(paused)
-		return
 	var/oldloc = loc
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)

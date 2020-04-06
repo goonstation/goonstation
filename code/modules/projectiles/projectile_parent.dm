@@ -52,9 +52,9 @@
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-
+#if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
-
+#endif
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -87,8 +87,10 @@
 			src.setup()
 		is_processing = 1
 		while (!disposed)
+#if ASS_JAM
 			while(src.projectile_paused)
 				sleep(10)
+#endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0

@@ -247,10 +247,12 @@
 	take_damage(brute, burn, tox, damage_type)
 		if (ishuman(donor))
 			var/mob/living/carbon/human/H = donor
+#if ASS_JAM
 			if (H.paused)
 				H.pausedburn = max(0, H.pausedburn + burn)
 				H.pausedbrute = max(0, H.pausedbrute + brute)
 				return 0
+#endif
 		src.brute_dam += brute
 		src.burn_dam += burn
 		src.tox_dam += tox

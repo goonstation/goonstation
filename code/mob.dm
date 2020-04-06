@@ -203,12 +203,14 @@
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
 //start of needed for timestop
+#if ASS_JAM
 	var/paused = FALSE
 	var/pausedbrute = 0
 	var/pausedburn = 0
 	var/pausedtox = 0
 	var/pausedoxy = 0
 	var/pausedbrain = 0
+#endif
 //end of needed for timestop
 	var/dir_locked = FALSE
 
@@ -950,10 +952,12 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch(src)
+#if ASS_JAM
 	if(src.paused)
 		src.pausedburn = max(0, src.pausedburn + burn)
 		src.pausedbrute = max(0, src.pausedbrute + brute)
 		return
+#endif ASS_JAM
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
