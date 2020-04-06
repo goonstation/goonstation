@@ -143,9 +143,10 @@
 	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	//var/agent_callsigns = list("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
-	var/agent_callsigns = list("Axe", "Baselard", "Cutlass", "Dagger", "Estoc", "Falchion", "Gladius", "Hatchet", "Ice-pick", "Javelin", "Katana", "Longsword", "Machete", "Nodachi", "Odachi", "Partisan", "Quarterstaff", "Rapier", "Scimitar", "Tomahawk", "Uchigatana", "Voulge", "Warhammer", "Xiphos", "Yumi", "Zweihander")
 	var/leader_selected = 0
+
+	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
+	var/list/callsign_list = strings("agent_callsigns.txt", "nato") + strings("agent_callsigns.txt", "melee_weapons") + strings("agent_callsigns.txt", "colors")
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
@@ -173,9 +174,9 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
-			var/callsign = pick(agent_callsigns)
+			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
-			agent_callsigns -= callsign
+			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
 		boutput(synd_mind.current, "<span style=\"color:red\">Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
