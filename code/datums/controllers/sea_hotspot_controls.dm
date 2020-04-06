@@ -390,7 +390,7 @@
 				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
 				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "combat")
+				logTheThing("diary", null, null, logmsg, "game")
 
 			SPAWN_DBG(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
