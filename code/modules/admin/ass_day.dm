@@ -81,7 +81,7 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 				</ol>
 				If you do not see this popup, that means it is not Ass Jam. Rule-breakers invoking Ass Jam when it is not Ass Jam will be dealt with incredibly severely, so don't fuck this up! A good rule of thumb to keep in mind - Ass Jam begins and ends when the admins or the game itself say it is, not when you say it is.<br><br>
 				Does all this sound like it doesn't appeal to you? No problem, Ass Jam is a feature of our non-RP server only, so if you'd like a bit of peace and quiet go ahead and check the RP server out. We won't mind.<br><br>
-				Would you like to contribute? Easy Peasy! INSERT LINK TO GITHUB HERE! Warcrimes will surely write a guide to joining the Ass Jam, and totally won't forget to do this before april 13th. <br>
+				Would you like to contribute? Easy Peasy! <a href="https://github.com/goonstation/goonstation">https://github.com/goonstation/goonstation</a>! Warcrimes will surely write a guide to joining the Ass Jam, and totally won't forget to do this before april 13th. <br>
 				"}, "window=assday;size=500x650;title=ASS JAM;fade_in=1")
 
 
