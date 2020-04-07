@@ -154,7 +154,6 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 	L.ai_prefrozen = L.ai_active
 	L.ai_active = 0
 	L.paused = 1
-	L.canmove = 0
 	if(freezeloop)
 		mobs.Remove(L)
 
@@ -171,7 +170,6 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 	L.pausedtox = 0 // see below
 	L.pausedoxy = 0 // see below
 	L.pausedbrain = 0 // needed for damage freezing
-	L.canmove = 1
 	if(freezeloop)
 		mobs.Add(L)
 
