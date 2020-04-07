@@ -56,9 +56,10 @@
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
 
-		for(var/key in aiImages)
-			var/image/I = aiImages[key]
-			src.client.images -= I
+		if(src.client)
+			for(var/key in aiImages)
+				var/image/I = aiImages[key]
+				src.client.images -= I
 
 		.=..()
 
