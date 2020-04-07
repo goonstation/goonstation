@@ -955,7 +955,7 @@
 		src.pausedburn = max(0, src.pausedburn + burn)
 		src.pausedbrute = max(0, src.pausedbrute + brute)
 		return
-#endif ASS_JAM
+#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
