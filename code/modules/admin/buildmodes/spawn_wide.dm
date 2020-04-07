@@ -64,11 +64,11 @@ change the direction of created objects.<br>
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = new objpath(Q)
+								A = Q.ReplaceWith(objpath, 1, 0, 1)
 							else
 								A = new objpath(Q)
 
-							if (isobj(A) || ismob(A) || isturf(A))
+							if (isobj(A) || ismob(A))
 								A.dir = holder.dir
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(5)
@@ -98,11 +98,11 @@ change the direction of created objects.<br>
 
 								var/atom/A = 0
 								if(ispath(objpath, /turf))
-									A = new objpath(Q)
+									A = Q.ReplaceWith(objpath, 1, 0, 1)
 								else
 									A = new objpath(Q)
 
-								if (isobj(A) || ismob(A) || isturf(A))
+								if (isobj(A) || ismob(A))
 									A.dir = holder.dir
 									A.onVarChanged("dir", SOUTH, A.dir)
 								sleep(5)
@@ -118,22 +118,22 @@ change the direction of created objects.<br>
 					if("Blink")
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = new objpath(Q)
+							A = Q.ReplaceWith(objpath, 1, 0, 1)
 						else
 							A = new objpath(Q)
 
-						if (isobj(A) || ismob(A) || isturf(A))
+						if (isobj(A) || ismob(A))
 							A.dir = holder.dir
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = new objpath(Q)
+							A = Q.ReplaceWith(objpath, 1, 0, 1)
 						else
 							A = new objpath(Q)
 
-						if (isobj(A) || ismob(A) || isturf(A))
+						if (isobj(A) || ismob(A))
 							A.dir = holder.dir
 							A.onVarChanged("dir", SOUTH, A.dir)
 				cnt++

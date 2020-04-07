@@ -148,7 +148,7 @@
 					if(src.check_access(I))
 						if(istype(R))
 							message_admins("<span style=\"color:red\">[key_name(usr)] has activated the robot self destruct on [key_name(R)].</span>")
-							logTheThing("combat", usr, R, "has activated the robot self destruct on %target%")
+							logTheThing("combat", usr, R, "has activated the robot killswitch process on %target%")
 							if(R.client)
 								boutput(R, "<span style=\"color:red\"><b>Killswitch process activated.</b></span>")
 							R.killswitch = 1
@@ -156,7 +156,7 @@
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span style=\"color:red\">[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
-							logTheThing("combat", usr, message, "has activated the AI self destruct on %target%")
+							logTheThing("combat", usr, message, "has activated the AI killswitch process on %target%")
 							if(message.client)
 								boutput(message, "<span style=\"color:red\"><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span style=\"color:red\"><b>Killswitch will engage in 60 seconds.</b></span>") // more like 180 really but whatever
@@ -170,7 +170,7 @@
 					R.killswitch_time = 60
 					R.killswitch = 0
 					message_admins("<span style=\"color:red\">[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
-					logTheThing("combat", usr, R, "has stopped the robot self destruct on %target%.")
+					logTheThing("combat", usr, R, "has stopped the robot killswitch process on %target%.")
 					if(R.client)
 						boutput(R, "<span style=\"color:blue\"><b>Killswitch process deactivated.</b></span>")
 				else if(istype(A))
@@ -178,7 +178,7 @@
 					A.killswitch = 0
 					var/mob/message = A.get_message_mob()
 					message_admins("<span style=\"color:red\">[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")
-					logTheThing("combat", usr, message, "has stopped the AI self destruct on %target%.")
+					logTheThing("combat", usr, message, "has stopped the AI killswitch process on %target%.")
 					if(message.client)
 						boutput(message, "<span style=\"color:blue\"><b>Killswitch process deactivated.</b></span>")
 
