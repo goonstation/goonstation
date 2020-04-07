@@ -294,7 +294,8 @@
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks/reliquary,get_turf(src))
 		else
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
-	B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
+		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
+
 	B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 0, src.tracked_blood, "footprints[rand(1,2)]", src.last_move, 0)
 
 	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // mirror from below
@@ -332,7 +333,6 @@
 			return //must have been consumed by a fluid? this might be unnecessary...
 
 	if (src.limbs)
-		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 		var/Lstate = istype(src.limbs.l_leg) ? src.limbs.l_leg.step_image_state : null
 		var/Rstate = istype(src.limbs.r_leg) ? src.limbs.r_leg.step_image_state : null
 		if (Lstate || Rstate)
