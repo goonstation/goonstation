@@ -26,10 +26,6 @@ chui/window/keybind_menu
 	GetBody()
 		var/html = ""
 
-		//elem.val() == what we want to feed (CTRL+K)
-		//need to get id of .input to feed (fart)
-		//after get both, shit this over to byond proc somehow(easier lmao)
-
 		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset{background-color: #f8d248; background: #f8d248}</style>"
 
 		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">This is a keybind menu for a shitty game engine. It's your fault if you type it in wrong.</span></i></b></td></tr></thead><tbody>"
@@ -47,6 +43,8 @@ chui/window/keybind_menu
 
 		html += "<tfoot><tr><td colspan=\"2\">[theme.generateButton("reset", "Reset All Keybinds")]</td></tr></tfoot></table>"
 
+		html += "<hr> <strong>Preset Templates:</strong> [theme.generateButton("set_arrow", "Arrow Keys")] [theme.generateButton("set_wasd", "WASD")] [theme.generateButton("set_tg", "/tg/")] [theme.generateButton("set_azerty", "AZERTY")] "
+ 
 		html += "<script language=\"JavaScript\">$(\".input\").on(\"change keyup paste\", function(){var elem=$(this); chui.bycall(\"changed_key\", {action:elem.attr(\"id\"), key:elem.val()})})</script>"
 
 		return html
@@ -64,6 +62,17 @@ chui/window/keybind_menu
 
 					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimial merge
 					owner.keymap.overwrite_by_action(keydat)
+
+					owner.cloud_put("keybind_data", json_encode(owner.keymap.keys))
+				
+			else if (id == "set_wasd")
+				changed_keys = new/list()
+				who.mob.
+			else if (id == "set_tg")
+				changed_keys = new/list()
+			else if (id == "set_azerty")
+				changed_keys = new/list()
+
 			else if (id == "reset")
 				boutput(world, "rasat")
 				who.mob.reset_keymap()
