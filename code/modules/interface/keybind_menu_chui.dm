@@ -67,7 +67,7 @@ chui/window/keybind_menu
 				
 			else if (id == "set_wasd")
 				changed_keys = new/list()
-				who.mob.
+				//who.mob.
 			else if (id == "set_tg")
 				changed_keys = new/list()
 			else if (id == "set_azerty")
