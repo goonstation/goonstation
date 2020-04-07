@@ -1,6 +1,8 @@
 ﻿
 (t)mon apr 06 20
 (u)mbc
+(*)Fixed a number of assorted bugs where blood cleanables would get wrong unit amounts and bloody footprints were handling things improperly
+(*)Fixed bloodletting not working if you were under the max bleed level (that means when you bleed,  some reagents in bloodstream should properly come out with the blood regardless of the bleed type)
 (*)Made some changes that should increase client side FPS a bit, especially on ocean maps (water on station zlevel will look a little bit uglier re:lighting, sorry)
 (t)sun apr 05 20
 (u)mbc
