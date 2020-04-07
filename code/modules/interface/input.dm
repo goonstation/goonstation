@@ -351,6 +351,7 @@ var/list/dirty_keystates = list()
 			src.keys[key] = other.keys[key]
 
 	proc/overwrite_by_action(datum/keymap/writer)
+		if (!writer) return
 		for (var/key in writer.keys)
 			var/new_key = key
 			var/act = writer.keys[key]
