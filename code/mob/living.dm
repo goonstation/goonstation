@@ -567,7 +567,7 @@
 	if (src.wear_mask && src.wear_mask.is_muzzle)
 		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
 		return
-#if ASS_JAM
+#if ASS_JAM //no speak in timestop
 	if(paused)
 		boutput(src, "<span style=\"color:red\">Can't speak in stopped time dummy!.</span>")
 		return

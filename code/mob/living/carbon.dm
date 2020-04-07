@@ -534,7 +534,7 @@
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
-#if ASS_JAM
+#if ASS_JAM //pausing damage for timestop
 	if(paused)
 		src.pausedbrain = max(0,src.pausedbrain + amount)
 		return
@@ -555,7 +555,7 @@
 /mob/living/carbon/take_toxin_damage(var/amount)
 	if (..())
 		return
-#if ASS_JAM
+#if ASS_JAM //pausing damage for timestop
 	if(paused)
 		src.pausedtox = max(0,src.pausedtox + amount)
 		return
@@ -577,7 +577,7 @@
 	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
 		src.oxyloss = 0
 		return
-#if ASS_JAM
+#if ASS_JAM //pausing damage for timestop
 	if(paused)
 		src.pausedoxy = max(0,src.pausedoxy + amount)
 #endif

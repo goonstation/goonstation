@@ -261,7 +261,7 @@
 		while (target && ( (((src.x < target_true_x && dx == EAST) || (src.x > target_true_x && dx == WEST)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 #if ASS_JAM
-			while(src.throwing_paused)
+			while(src.throwing_paused)//timestop effect
 				sleep(10)
 #endif
 			if(error < 0)
@@ -305,7 +305,7 @@
 		while (target && ( (((src.y < target_true_y && dy == NORTH) || (src.y > target_true_y && dy == SOUTH)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 #if ASS_JAM
-			while(src.throwing_paused)
+			while(src.throwing_paused)//timestop effect
 				sleep(10)
 #endif
 			if(error < 0)

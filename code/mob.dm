@@ -950,7 +950,7 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch(src)
-#if ASS_JAM
+#if ASS_JAM//pausing damage for timestop
 	if(src.paused)
 		src.pausedburn = max(0, src.pausedburn + burn)
 		src.pausedbrute = max(0, src.pausedbrute + brute)

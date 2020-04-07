@@ -1129,7 +1129,7 @@
 	src.throw_mode_off()
 	if (usr.stat)
 		return
-#if ASS_JAM
+#if ASS_JAM //no throwing while in timestop
 	if (paused)
 		return
 #endif
@@ -1228,22 +1228,9 @@
 						src.a_intent = INTENT_DISARM
 						.=..()
 						src.a_intent = INTENT_DISARM
-				/*else if (params["middle"])
+				else if (params["middle"])
 					params["middle"] = 0
 					params["left"] = 1 //hacky again :)
-					var/prev = src.a_intent
-					src.a_intent = INTENT_GRAB
-					.=..()
-					src.a_intent = prev
-					return*/
-				else
-					src.a_intent = INTENT_HARM
-					.=..()
-					src.a_intent = INTENT_DISARM
-				return
-			if (src.client.check_key(KEY_PULL))
-				if (params["left"] && ismob(target))
-					params["ctrl"] = 0 //hacky wows :)
 					var/prev = src.a_intent
 					src.a_intent = INTENT_GRAB
 					.=..()
@@ -1271,12 +1258,6 @@
 					src.set_cursor('icons/cursors/combat_barehand.dmi')
 				src.client.show_popup_menus = 0
 				src.a_intent = INTENT_DISARM
-				src.hud.update_intent()
-				return
-			else if (src.client.check_key(KEY_PULL))
-				src.set_cursor('icons/cursors/combat_grab.dmi')
-				src.client.show_popup_menus = 0
-				src.a_intent = INTENT_GRAB
 				src.hud.update_intent()
 				return
 			else if (src.client.show_popup_menus == 0)
@@ -1499,7 +1480,7 @@
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
 		return 1
-#if ASS_JAM
+#if ASS_JAM //no fucking with inventory in timestop
 	if (paused)
 		return 1
 #endif

@@ -98,7 +98,7 @@
 	var/mob/living/corpse_target = null
 
 	var/area/registered_area = null //the area this critter is registered in
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 	var/paused = FALSE
 #endif
 	/////////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@
 
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(paused)
 			return
 #endif
@@ -196,7 +196,7 @@
 			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 	HasProximity(atom/movable/AM as mob|obj)
 		if(task == "hibernating" && ismob(AM) && !paused)
 			var/mob/living/M = AM
@@ -299,7 +299,7 @@
 
 		if (!attack_force)
 			return
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if (src.sleeping && !src.paused)
 			sleeping = 0
 			on_wake()
@@ -342,7 +342,7 @@
 			src.task = "chasing"
 			on_grump()
 
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 	proc/on_damaged(mob/user)
 		if(registered_area && !paused) //In case some butt fiddles with a hibernating critter
 			registered_area.wake_critters()
@@ -353,7 +353,7 @@
 			registered_area.wake_critters()
 		return
 #endif
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 	proc/on_pet()
 		if(registered_area && !paused) //In case some nice person fiddles with a hibernating critter
 			registered_area.wake_critters()
@@ -369,7 +369,7 @@
 		if (!src.alive)
 			..()
 			return
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if (src.sleeping && !src.paused)
 			sleeping = 0
 			on_wake()
@@ -411,7 +411,7 @@
 	proc/patrol_step()
 		if (!mobile)
 			return
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(paused)
 			return
 #endif
@@ -441,7 +441,7 @@
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if (src.sleeping && !src.paused)
 			sleeping = 0
 			on_wake()
@@ -469,7 +469,7 @@
 			src.CritterDeath()
 
 	ex_act(severity)
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if (src.sleeping && !src.paused)
 			sleeping = 0
 			on_wake()
@@ -519,7 +519,7 @@
 		if (!mobile)
 			task = "thinking"
 			return
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(paused)
 			return
 #endif
@@ -559,7 +559,7 @@
 				step_to(src, nextturf)
 				followed_path -= nextturf
 		if (!follow_path_blindly)
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 			if(paused)
 				return
 #endif
@@ -569,7 +569,7 @@
 		if(!force && sleeping-- > 0) return
 
 		var/waking = 0
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(paused)
 			return
 #endif
@@ -607,7 +607,7 @@
 		if(!force && sleep_check-- > 0) return
 
 		var/stay_awake = 0
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(paused)
 			return
 #endif
@@ -674,7 +674,7 @@
 					src.last_found = world.time
 					src.frustration = 0
 					src.task = "thinking"
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 					if (mobile && !paused)
 						walk_to(src,0)
 #else
@@ -719,7 +719,7 @@
 					src.task = "thinking"
 
 			if ("chasing food")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(src.paused)
 					return
 #endif
@@ -731,7 +731,7 @@
 					walk_to(src, src.food_target,1,4)
 
 			if ("eating")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(src.paused)
 					return
 #endif
@@ -741,7 +741,7 @@
 					src.task = "eating2"
 
 			if ("eating2")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(src.paused)
 					return
 #endif
@@ -763,7 +763,7 @@
 						src.health += src.health_gain_from_food
 
 			if ("chasing corpse")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(src.paused)
 					return
 #endif
@@ -775,7 +775,7 @@
 					walk_to(src, src.corpse_target,1,4)
 
 			if ("scavenging")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(src.paused)
 					return
 #endif
@@ -802,7 +802,7 @@
 							src.visible_message("<span style=\"color:red\"><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
 
 			if ("attacking")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(src.paused)
 					return
 #endif
@@ -842,7 +842,7 @@
 						src.attacking = 0
 						src.task = "chasing"
 			if ("wandering")
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 				if(paused)
 					return
 #endif
@@ -952,7 +952,7 @@
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(src.paused)
 			return
 #endif
@@ -1025,7 +1025,7 @@
 	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 		if(target == start)
 			return
-#if ASS_JAM
+#if ASS_JAM //timestop stuff
 		if(paused)
 			return
 #endif

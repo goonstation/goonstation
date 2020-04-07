@@ -92,9 +92,9 @@ var/list/all_toilets = null
 	return
 
 /obj/item/storage/toilet/attack_hand(mob/user as mob)
-#if ASS_JAM
+#if ASS_JAM //timestop toilets
 	if(timestopped == 1)
-		if(prob(20)) 
+		if(prob(20))
 			boutput(user, "Slow down buddy! Can't force the time stop toilet when it don't want to!")
 	else
 		timestop(null, 100, 5)

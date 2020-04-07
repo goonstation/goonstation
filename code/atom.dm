@@ -409,7 +409,7 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/throwforce = 1
-#if ASS_JAM
+#if ASS_JAM //timestop var used for pausing thrown stuff midair
 	var/throwing_paused = FALSE
 #endif
 	var/soundproofing = 5
