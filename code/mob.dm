@@ -368,7 +368,7 @@
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	src.update_keymap()
+	src.reset_keymap()
 
 	SPAWN_DBG(3 SECONDS)
 		if (src && src.client) //Wire: fix for runtime error: Cannot execute null.setup macros().
@@ -1199,10 +1199,10 @@
 
 /mob/proc/build_keymap(client/C)
 	var/datum/keymap/keymap = new
-	keymap.merge(client.get_keymap("general"))
+	keymap.merge(client.get_default_keymap("general"))
 	return keymap
 
-/mob/proc/update_keymap()
+/mob/proc/reset_keymap()
 	if (src.client)
 		var/datum/keymap/keymap = src.build_keymap(src.client)
 		if (src.use_movement_controller)

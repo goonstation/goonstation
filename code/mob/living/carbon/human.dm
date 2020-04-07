@@ -1105,7 +1105,7 @@
 
 /mob/living/carbon/human/build_keymap(client/C)
 	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
+	keymap.merge(client.get_default_keymap("human"))
 	return keymap
 
 /mob/living/carbon/human/proc/toggle_throw_mode()

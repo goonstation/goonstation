@@ -76,6 +76,8 @@
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
+	var/chui/window/keybind_menu/keybind_menu = null
+
 	var/delete_state = DELETE_STOP
 
 	var/list/cloudsaves
@@ -1087,7 +1089,7 @@ var/global/curr_day = null
 	tg_controls = tg
 	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
 
-	src.mob.update_keymap()
+	src.mob.reset_keymap()
 
 /client/verb/set_tg_controls()
 	set hidden = 1

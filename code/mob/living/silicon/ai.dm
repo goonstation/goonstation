@@ -405,7 +405,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/build_keymap(client/C)
 	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("robot"))
+	keymap.merge(client.get_default_keymap("robot"))
 	return keymap
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user)
