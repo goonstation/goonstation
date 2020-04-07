@@ -280,7 +280,7 @@ chui/window/security_cameras
 
 		return dat
 
-	OnTopic( href, href_list[] )
+	OnTopic( mob/usr, href, href_list[] )
 		if (!islist(href_list))	//don't need to check for usr. that is done in chui/Topic()
 			usr.set_eye(null)
 			Unsubscribe(usr)

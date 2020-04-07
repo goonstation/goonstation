@@ -1042,7 +1042,7 @@ Frequency:
 
 	build_keymap(client/C)
 		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
+		keymap.merge(client.get_default_keymap("robot"))
 		return keymap
 
 	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa

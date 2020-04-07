@@ -1,8 +1,9 @@
 var/list/dirty_keystates = list()
 
-#define MODIFIER_SHIFT 1
-#define MODIFIER_ALT 2
-#define MODIFIER_CTRL 4
+#define MODIFIER_NONE   0x0000
+#define MODIFIER_SHIFT  0x0001
+#define MODIFIER_ALT    0x0002
+#define MODIFIER_CTRL   0x0004
 //o no
 //defines in here
 //o noooo
@@ -176,7 +177,7 @@ var/list/dirty_keystates = list()
 
 		if(findtext( control, "viewport" ))
 			var/datum/viewport/vp = getViewportById(control)
-			if(vp && vp.clickToMove && object && isturf(object) && (mob.type == /mob/living/intangible/blob_overmind || mob.type == /mob/dead/aieye))//NYI: Replace the typechecks with something Better.
+			if(vp && vp.clickToMove && object && isturf(object))
 				mob.loc = object
 				return
 		//In case we receive a dollop of modifier keys with the Click() we should force a keydown immediately.
@@ -201,12 +202,13 @@ var/list/dirty_keystates = list()
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me
-		if (istype(object, /obj/screen) && (!parameters["middle"] || istype(object, /obj/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
+		if (istype(object, /obj/screen) && !parameters["middle"])
 			if (istype(usr, /mob/dead/target_observer))
 				return
 			var/obj/screen/S = object
 			S.clicked(parameters)
 			return
+
 
 		if(src.keys_modifier) //Perhaps evaluating a heap of keymaps is not the best idea if we're only plain and simply clicking something
 			//But we will make "click" available as a bindable thing
@@ -289,7 +291,7 @@ var/list/dirty_keystates = list()
 			src.preferences.use_wasd = !wasd
 			//set_macro(src.preferences.use_wasd ? "macro_wasd" : "macro_arrow")
 			boutput(src, "<span style=\"color:blue\">WASD mode toggled [!wasd ? "on" : "off"]. Note that this setting will not save unless you manually do so in Character Preferences.</style>")
-			src.mob.update_keymap()
+			src.mob.reset_keymap()
 			return 1
 
 		return 0
@@ -348,10 +350,34 @@ var/list/dirty_keystates = list()
 		for (var/key in other.keys)
 			src.keys[key] = other.keys[key]
 
+	proc/overwrite_by_action(datum/keymap/writer)
+		for (var/key in writer.keys)
+			var/new_key = key
+			var/act = writer.keys[key]
+
+			src.keys[new_key] = act
+			message_coders("added: [new_key]: [act]")
+
+			for (var/oldkey in src.keys)
+				var/k = src.keys[oldkey]
+				message_coders("key: [k], [act]")
+				if (isnum(act))
+					if (src.keys[oldkey] == num2text(act))
+						message_coders("rem1: [k], [act]")
+						src.keys.Remove(oldkey)
+						break
+				else
+					if (src.keys[oldkey] == act)
+						message_coders("rem2: [k], [act]")
+						src.keys.Remove(oldkey)
+						break
+
+			src.keys[new_key] = act
+
 	proc/parse_keybind(keybind)
 		//Checks the input key and converts it to a usable format
 		//Wants input in the format "CTRL+F", as an example.
-		var/req_modifier = 0 //The modifier associated with this key
+		var/req_modifier = 0 //The modifier(s) associated with this key
 		var/bound_key //The final key that should be bound
 		var/list/keys = splittext(keybind, "+")
 
@@ -376,6 +402,53 @@ var/list/dirty_keystates = list()
 		ASSERT(bound_key) //If we didn't get a bound key something hecked the heck up.
 
 		return uppertext("[req_modifier][bound_key]")
+
+	proc/unparse_keybind(keytext)
+		//Converts the given usable format to a readable format
+		//Wants input in the format "0NORTH" or "5D", as an example.
+		var/bound_key = ""
+		var/modifier = text2num(copytext(keytext, 1, 2)) //The modifier(s) associated with this key (NUM/BITFLAG ONLY)
+		var/modifier_string = ""
+
+		if(modifier & MODIFIER_CTRL)
+			modifier_string += "CTRL+"
+		if(modifier & MODIFIER_ALT)
+			modifier_string += "ALT+"
+		if(modifier & MODIFIER_SHIFT)
+			modifier_string += "SHIFT+"
+
+		bound_key = copytext(keytext, 2)
+
+		ASSERT(bound_key) //If we didn't get a bound key something hecked the heck up.
+
+		return uppertext("[modifier_string][bound_key]")
+
+	proc/parse_action(action)
+		if (isnum(action)) //for bitflag actions (KEY_BOLT)
+			return key_bitflag_to_stringdesc(action)
+		else //must be a string
+			return key_string_to_desc(action)
+
+	proc/key_string_to_desc(string)
+		//Converts from code-readable action names to human-readable
+		//Example: "l_arm" to "Target Left Arm"
+		for (var/key in action_names)
+			if (string == key)
+				return action_names[key]
+		//must be a dastardly action verb
+		for (var/key in action_verbs)
+			if (string == key)
+				return action_verbs[key]
+		return "not a string in action_names/verbs you fucko"
+
+	proc/key_bitflag_to_stringdesc(bitflag)
+		//Converts from bitflag to a human-readable description
+		//Assuming we're not passed a combination, because fuck that
+		bitflag = num2text(bitflag)
+		for (var/key in key_names)
+			if (bitflag == key)
+				return key_names[key]
+		return "not a bitflag in key_names you fucko"
 
 	proc/check_keybind(pressed_key, modifier)
 		//If there is a modifier command on this key, then use that

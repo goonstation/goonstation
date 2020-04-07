@@ -100,5 +100,5 @@
 
 	modify_keymap(datum/keymap/keymap, client/C)
 		..()
-		keymap.merge(C.get_keymap("colosseum_putt"))
+		keymap.merge(C.get_default_keymap("colosseum_putt"))
 

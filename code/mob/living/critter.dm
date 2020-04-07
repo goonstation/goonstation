@@ -1242,7 +1242,7 @@
 
 /mob/living/critter/build_keymap(client/C)
 	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
+	keymap.merge(client.get_default_keymap("human"))
 	return keymap
 
 /mob/living/critter/proc/tokenized_message(var/message, var/target, var/mcolor)

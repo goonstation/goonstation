@@ -67,7 +67,7 @@
 
 	build_keymap(client/C)
 		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
+		keymap.merge(client.get_default_keymap("robot"))
 		return keymap
 
 	Move(NewLoc, direct)//Ewww!

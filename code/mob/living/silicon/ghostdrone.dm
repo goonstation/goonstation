@@ -1268,7 +1268,7 @@
 
 	build_keymap(client/C)
 		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("drone"))
+		keymap.merge(client.get_default_keymap("drone"))
 		return keymap
 
 
