@@ -1,4 +1,7 @@
 ﻿
+(t)tue apr 07 20
+(u)Ryumi
+(+)Added a bit more lighting to the Afterlife Bar's garden.
 (t)mon apr 06 20
 (u)mbc
 (*)Fixed a number of assorted bugs where blood cleanables would get wrong unit amounts and bloody footprints were handling things improperly
