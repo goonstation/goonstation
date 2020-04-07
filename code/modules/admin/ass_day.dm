@@ -84,12 +84,14 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 
 #if ASS_JAM
 var/global/ass_mutation
+#ifndef SECRETS_ENABLED
+var/list/ass_trinket_blacklist = list()
+#endif
 
 proc/ass_jam_init()
 	if(prob(25))
 		ass_mutation = pick(mutini_effects)
 
-	var/list/ass_trinket_blacklist = list() // good luck with this one lol
 	trinket_safelist = childrentypesof(/obj/item) - ass_trinket_blacklist
 
 	for(var/datum/job/job in job_controls.special_jobs)
