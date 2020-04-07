@@ -1279,17 +1279,16 @@
 				src.a_intent = INTENT_GRAB
 				src.hud.update_intent()
 				return
-			else if (src.client.show_popup_menus == 0)
-				src.client.show_popup_menus = 1
-				src.a_intent = INTENT_HELP
-				src.hud.update_intent()
-
 			else if (src.client.check_key(KEY_PULL))
 				src.set_cursor('icons/cursors/combat_grab.dmi')
 				src.client.show_popup_menus = 0
 				src.a_intent = INTENT_GRAB
 				src.hud.update_intent()
 				return
+			else if (src.client.show_popup_menus == 0)
+				src.client.show_popup_menus = 1
+				src.a_intent = INTENT_HELP
+				src.hud.update_intent()
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				src.set_cursor('icons/cursors/throw.dmi')
