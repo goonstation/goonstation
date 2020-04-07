@@ -97,7 +97,7 @@ var/list/all_toilets = null
 		if(prob(20)) 
 			boutput(user, "Slow down buddy! Can't force the time stop toilet when it don't want to!")
 	else
-		timestop(user, 100, 5)
+		timestop(null, 100, 5)
 		timestopped = 1
 #endif
 	for(var/mob/M in src.loc)
