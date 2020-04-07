@@ -1228,9 +1228,22 @@
 						src.a_intent = INTENT_DISARM
 						.=..()
 						src.a_intent = INTENT_DISARM
-				else if (params["middle"])
+				/*else if (params["middle"])
 					params["middle"] = 0
 					params["left"] = 1 //hacky again :)
+					var/prev = src.a_intent
+					src.a_intent = INTENT_GRAB
+					.=..()
+					src.a_intent = prev
+					return*/
+				else
+					src.a_intent = INTENT_HARM
+					.=..()
+					src.a_intent = INTENT_DISARM
+				return
+			if (src.client.check_key(KEY_PULL))
+				if (params["left"] && ismob(target))
+					params["ctrl"] = 0 //hacky wows :)
 					var/prev = src.a_intent
 					src.a_intent = INTENT_GRAB
 					.=..()
@@ -1264,6 +1277,13 @@
 				src.client.show_popup_menus = 1
 				src.a_intent = INTENT_HELP
 				src.hud.update_intent()
+
+			else if (src.client.check_key(KEY_PULL))
+				src.set_cursor('icons/cursors/combat_grab.dmi')
+				src.client.show_popup_menus = 0
+				src.a_intent = INTENT_GRAB
+				src.hud.update_intent()
+				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				src.set_cursor('icons/cursors/throw.dmi')
