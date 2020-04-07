@@ -36,7 +36,12 @@
 
 	New()
 		my_turf = get_turf(src)
+		START_TRACKING
 		..()
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	process()
 		if (!my_turf)
