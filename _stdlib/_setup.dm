@@ -802,8 +802,8 @@
 #define STEP_PRIORITY_NONE 0
 
 //I feel like these should be a thing, ok
-#define true 1
-#define false 0
+#define TRUE 1
+#define FALSE 0
 
 //For statusEffects
 #define INFINITE_STATUS null
