@@ -1657,8 +1657,7 @@
 
 			var/turf/T = get_turf(mob)
 			bleed(mob, 10, 3, T)
-
-
+			T.react_all_cleanables()
 
 
 #undef OVERRIDE_ARM_L
