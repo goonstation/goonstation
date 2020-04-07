@@ -30,12 +30,12 @@
 		for (var/turf/simulated/S in range(size, src))
 			var/obj/effect/timefieldsmall/newsmalltimefield = new(S, src)
 			smoltimefields += newsmalltimefield
-		spawn(duration)
-			unfreeze_all()
-			src.immune -= immune
-			for(var/t in smoltimefields)
-				qdel(t)
-				smoltimefields -= t
+		sleep(duration)
+		unfreeze_all()
+		src.immune -= immune
+		for(var/t in smoltimefields)
+			qdel(t)
+			smoltimefields -= t
 
 
 /obj/effect/timefieldsmall
@@ -58,8 +58,8 @@
 //inorder to time stop simply insert the timestop proc anywhere look at code/datums/abilities/wizard/timestop.dm for an example of how this could be used
 proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfreeze controls whether or not loops are unsubbed to when pausing of a thing. it defaults to no(0/FALSE)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize, loopfreeze)
-	spawn(setduration)
-		qdel(newtimefield)
+	sleep(setduration)
+	qdel(newtimefield)
 
 
 /obj/effect/timefield/proc/freeze_atom(atom/movable/A)
