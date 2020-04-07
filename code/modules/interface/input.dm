@@ -361,8 +361,8 @@ var/list/dirty_keystates = list()
 			for (var/oldkey in src.keys)
 				var/k = src.keys[oldkey]
 				message_coders("key: [k], [act]")
-				if (isnum(act))
-					if (src.keys[oldkey] == num2text(act))
+				if (text2num(act))
+					if (src.keys[oldkey] == text2num(act))
 						message_coders("rem1: [k], [act]")
 						src.keys.Remove(oldkey)
 						break
@@ -372,7 +372,11 @@ var/list/dirty_keystates = list()
 						src.keys.Remove(oldkey)
 						break
 
-			src.keys[new_key] = act
+			var/t2n = text2num(act)
+			if (t2n)
+				src.keys[new_key] = t2n
+			else
+				src.keys[new_key] = act
 
 	proc/parse_keybind(keybind)
 		//Checks the input key and converts it to a usable format
