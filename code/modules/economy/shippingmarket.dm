@@ -213,6 +213,18 @@
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
+
+#if ASS_JAM
+		if(prob(5))
+			var/list/turf/viable_turfs = get_area_turfs(/area/station/quartermaster/cargobay)
+			if(!viable_turfs.len)
+				viable_turfs = get_area_turfs(/area/station/quartermaster)
+			if(viable_turfs.len)
+				var/turf/ass_spawn = pick(viable_turfs)
+				S.set_loc(ass_spawn)
+				heavenly_spawn(S)
+				return
+#endif
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
