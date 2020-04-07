@@ -1176,7 +1176,6 @@
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
-
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)
