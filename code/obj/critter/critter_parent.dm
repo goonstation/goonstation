@@ -100,7 +100,7 @@
 	var/area/registered_area = null //the area this critter is registered in
 #if ASS_JAM
 	var/paused = FALSE
-#endif ASS_JAM
+#endif
 	/////////////////////////////////////////////////////////////
 	// INTRUDER VARS AND PROCS
 	var/selected = 0
