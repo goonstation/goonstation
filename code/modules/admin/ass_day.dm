@@ -88,7 +88,7 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 
 
 
-#if FALSE // this should stop the compiler reading any of this, so it's just between you n me, pal.
+#if false // this should stop the compiler reading any of this, so it's just between you n me, pal.
 /*
 Suppose for an instant that you have a brilliant idea to add to the game, something absolutely everyone ought to see, but maybe just once a month.
 “Excellent” you shout, at no one.
