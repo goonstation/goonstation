@@ -11,8 +11,6 @@
 		if (..())
 			return
 
-		message_admins("yee")
-
 		if (alert(usr, "Random reagent?", "Random reagent?", "Yes", "No") == "No")
 			var/list/L = list()
 			var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -41,24 +39,31 @@
 	event_effect()
 		..()
 
-		if(isnull(src.target))
-			src.target = pick(get_area_turfs(/area/station)) // don't @ me
-
 		if(isnull(src.reagent_type))
 			reagent_type = pick(childrentypesof(/datum/reagent))
+
+		var/datum/reagent/reagent = new reagent_type()
+
+		if(isnull(src.target))
+			if(prob(  0) || !by_type[/obj/machinery/drainage] || !by_type[/obj/machinery/drainage].len)
+				src.target = pick(get_area_turfs(/area/station)) // don't @ me
+				target.visible_message("<span style=\"color:red\"><b>A rift to a [reagent.name] dimension suddenly warps into existence!</b></span>")
+			else
+				var/obj/machinery/drainage/drain = pick(by_type[/obj/machinery/drainage])
+				drain.clogged = 60 // about 3 minutes
+				drain.update_icon()
+				src.target = get_turf(drain)
+				target.visible_message("<span style=\"color:red\"><b>\The [drain] overflows with [reagent.name]!</b></span>")
 
 		if(!amount)
 			amount = pick(50, 100, 200, 500, 1000, 2000, 5000)
 
-
-		var/datum/reagent/reagent = new reagent_type()
-
 		src.target.fluid_react_single(reagent.id, amount)
 
-		target.visible_message("<span style=\"color:red\"><b>A rift to a [reagent.name] dimension suddenly warps into existence!</b></span>")
+
 		playsound(target,"sound/effects/teleport.ogg",50,1)
 
-		message_admins("Random flood event triggered on ([target.x] [target.y] [target.z]) with [amount] [reagent.name].")
+		message_admins("Random flood event triggered on ([showCoords(target.x, target.y, target.z)]) with [amount] [reagent.name].")
 
 		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 		swirl.set_loc(target)
