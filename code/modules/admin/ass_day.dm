@@ -84,7 +84,23 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 				Would you like to contribute? Easy Peasy! <a href="https://github.com/goonstation/goonstation">https://github.com/goonstation/goonstation</a>! Warcrimes will surely write a guide to joining the Ass Jam, and totally won't forget to do this before april 13th. <br>
 				"}, "window=assday;size=500x650;title=ASS JAM;fade_in=1")
 
+#if ASS_JAM
+var/global/ass_mutation
+#ifndef SECRETS_ENABLED
+var/list/ass_trinket_blacklist = list()
+#endif
 
+proc/ass_jam_init()
+	if(prob(25))
+		ass_mutation = pick(mutini_effects)
+
+	trinket_safelist = childrentypesof(/obj/item) - ass_trinket_blacklist
+
+	for(var/datum/job/job in job_controls.special_jobs)
+		if(prob(4))
+			job.limit += rand(1, 5)
+
+#endif
 
 
 

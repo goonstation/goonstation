@@ -649,6 +649,12 @@ a.latejoin-card:hover {
 		if(new_character && new_character.client)
 			new_character.client.loadResources()
 
+#if ASS_JAM
+			if(ass_mutation)
+				new_character.bioHolder.AddEffect(ass_mutation)
+				boutput(new_character.mind.current,"<span style=\"color:red\">A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
+#endif
+
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
 		return new_character
