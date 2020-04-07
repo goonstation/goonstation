@@ -82,7 +82,7 @@
 			return ..()
 
 	proc/can_buckle(var/mob/M, var/mob/user)
-		.= 1
+		.= 0
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
 		if (!can_buckle(to_buckle,user)) return
