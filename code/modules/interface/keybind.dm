@@ -8,14 +8,40 @@
 //Global list holding all of the keybind style datums
 var/global/list/datum/keybind_style/keybind_styles = null
 
-/client/proc/get_keybind_style_keys(style)
+//The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
+//base -> base_wasd -> human_base -> human_wasd for example
+//If you switch to a different mobtype, such as a robot,
+//You would subtract the human_base and human_wasd and apply robot_base and robot_wasd(doesn't exist)
+
+
+/client/var/list/applied_keybind_styles = list()
+
+/client/proc/get_keybind_style_datum(var/style_name)
 
 	if (!keybind_styles)
 		keybind_styles = childrentypesof(/datum/keybind_style/)
 
 	for (var/datum/keybind_style/s in keybind_styles)
-		if (s.name == "[style]")
-			return s.changed_keys
+		if (s.name == "[style_name]")
+			return s
+
+
+/** apply_keys: Takes a keybind_style to apply to the src client
+	*
+  *	Informs client of applied keybind style and merges the keymap
+	*/
+/client/proc/apply_keys(var/datum/keybind_style/S)
+	if (applied_keybind_styles.Find("[S.name]")) //Already added
+		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [S.name] to [src] when already present.")
+		return
+	applied_keybind_styles.Add(S.name)
+	keymap.merge(S.changed_keys)
+
+
+//Applies a given style onto the client after getting the datum
+/client/proc/apply_keybind(var/style)
+	apply_keys(get_keybind_style_datum(style))
+
 
 /datum/keybind_style
 	var/name = "1-800-CODER"
