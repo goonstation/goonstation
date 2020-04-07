@@ -45,7 +45,7 @@
 		var/datum/reagent/reagent = new reagent_type()
 
 		if(isnull(src.target))
-			if(prob(  0) || !by_type[/obj/machinery/drainage] || !by_type[/obj/machinery/drainage].len)
+			if(prob(60) || !by_type[/obj/machinery/drainage] || !by_type[/obj/machinery/drainage].len)
 				src.target = pick(get_area_turfs(/area/station)) // don't @ me
 				target.visible_message("<span style=\"color:red\"><b>A rift to a [reagent.name] dimension suddenly warps into existence!</b></span>")
 			else
