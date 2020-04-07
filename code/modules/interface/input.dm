@@ -177,7 +177,7 @@ var/list/dirty_keystates = list()
 
 		if(findtext( control, "viewport" ))
 			var/datum/viewport/vp = getViewportById(control)
-			if(vp && vp.clickToMove && object && isturf(object))
+			if(vp && vp.clickToMove && object && isturf(object) && (mob.type == /mob/living/intangible/blob_overmind || mob.type == /mob/dead/aieye))//NYI: Replace the typechecks with something Better.
 				mob.loc = object
 				return
 		//In case we receive a dollop of modifier keys with the Click() we should force a keydown immediately.
@@ -202,7 +202,7 @@ var/list/dirty_keystates = list()
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me
-		if (istype(object, /obj/screen) && !parameters["middle"])
+		if (istype(object, /obj/screen) && (!parameters["middle"] || istype(object, /obj/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 			if (istype(usr, /mob/dead/target_observer))
 				return
 			var/obj/screen/S = object
