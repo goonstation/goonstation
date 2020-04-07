@@ -866,6 +866,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				src.body_standing.overlays += human_decomp_image
 
 			if (src.limbs)
+				src.limbs.reset_stone()
+
 				var/sleeveless = 1
 				if (istype(src.w_uniform, /obj/item/clothing) && !(src.w_uniform.c_flags & SLEEVELESS))
 					sleeveless = 0
