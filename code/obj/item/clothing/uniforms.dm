@@ -954,9 +954,17 @@
 	icon_state = "suitG"
 	item_state = "suitG"
 
+	blue
+		icon_state = "suit-capB"
+		item_state = "suit-capB"
+
 	dress
 		icon_state = "suitG-dress"
 		item_state = "suitG-dress"
+
+	dress/blue
+		icon_state = "suit-capB-dress"
+		item_state = "suit-capB-dress"
 
 /obj/item/clothing/under/suit/hop
 	name = "\improper Head of Personnel's suit"
