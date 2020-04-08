@@ -541,8 +541,8 @@
 		return
 
 /datum/matfab_recipe/lighttube
-	name = "5 Light tubes"
-	desc = "5 replacement light tubes. Lens color affects light color."
+	name = "Light tube"
+	desc = "A replacement light tube. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -551,7 +551,7 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount*5, i++)
+		for(var/i=0, i<amount*1, i++)
 			var/obj/item/light/tube/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
@@ -567,8 +567,8 @@
 		return
 
 /datum/matfab_recipe/lightbulb
-	name = "5 Light bulbs"
-	desc = "5 replacement light bulbs. Lens color affects light color."
+	name = "Light bulb"
+	desc = "A replacement light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -577,7 +577,7 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount*5, i++)
+		for(var/i=0, i<amount*1, i++)
 			var/obj/item/light/bulb/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
@@ -593,8 +593,8 @@
 		return
 
 /datum/matfab_recipe/tripodbulb
-	name = "5 Tripod bulbs"
-	desc = "5 replacement tripod light bulbs. Lens color affects light color."
+	name = "Tripod bulb"
+	desc = "a replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -603,7 +603,7 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount*5, i++)
+		for(var/i=0, i<amount*1, i++)
 			var/obj/item/tripod_bulb/light/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
@@ -650,7 +650,7 @@
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/cell_large
 	name = "Large energy cell"
@@ -669,7 +669,7 @@
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/infusion
 	name = "Infusion"
@@ -727,7 +727,7 @@
 			new_rod.setMaterial(fuel_1.material)
 			new_rod.sv_ratio = 1.22
 			new_rod.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/fuel_rod_4
 	name = "Advanced Nuclear Fuel Rod"

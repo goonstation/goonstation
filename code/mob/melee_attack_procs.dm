@@ -65,12 +65,16 @@
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
-		var/item = src.get_random_equipped_thing_name()
-		if (item)
-			var/v = pick("tidies","adjusts","brushes off", "flicks a piece of lint off", "tousles", "fixes", "readjusts","fusses with", "sweeps off")
-			src.visible_message("<span style=\"color:blue\">[src] [v] [his_or_her(src)] [item]!</span>")
+		var/obj/stool/S = (locate(/obj/stool) in src.loc)
+		if (S)
+			S.buckle_in(src,src)
 		else
-			src.visible_message("<span style=\"color:blue\">[src] pats themselves on the back. Feel better, [src].</span>")
+			var/item = src.get_random_equipped_thing_name()
+			if (item)
+				var/v = pick("tidies","adjusts","brushes off", "flicks a piece of lint off", "tousles", "fixes", "readjusts","fusses with", "sweeps off")
+				src.visible_message("<span style=\"color:blue\">[src] [v] [his_or_her(src)] [item]!</span>")
+			else
+				src.visible_message("<span style=\"color:blue\">[src] pats themselves on the back. Feel better, [src].</span>")
 
 	else
 		if (target.lying)
@@ -187,13 +191,17 @@
 	if(!..())
 		return
 
-	if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
-		src.visible_message("<span style=\"color:red\"><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
-	else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
-		var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
-		mask.honk_nose(src)
+	var/obj/stool/S = (locate(/obj/stool) in src.loc)
+	if (S)
+		S.buckle_in(src,src,1)
 	else
-		src.visible_message("<span style=\"color:red\"><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
+		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
+			src.visible_message("<span style=\"color:red\"><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
+			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
+			mask.honk_nose(src)
+		else
+			src.visible_message("<span style=\"color:red\"><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
 	if(!src || !target)
@@ -235,7 +243,7 @@
 			return
 		else
 			var/mob/living/carbon/human/T = target
-			if (istype(T) && !T.stat && !T.getStatusDuration("weakened") && !T.getStatusDuration("stunned") && !T.getStatusDuration("paralysis") && T.a_intent == "disarm" && T.stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_GRAB_BLOCK_CHANCE) && !T.equipped())
+			if (istype(T) && T.check_block())
 				src.visible_message("<span style=\"color:red\"><B>[T] blocks [src]'s attempt to grab [him_or_her(T)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 
@@ -423,8 +431,13 @@
 	return 0
 
 /mob/living/carbon/human/check_block()
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && a_intent == "disarm" && stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_BLOCK_CHANCE+get_deflection())&& !equipped())
-		return 1
+	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_BLOCK_CHANCE+get_deflection())&& !equipped())
+		if (src.client && src.client.experimental_intents)
+			if (a_intent == INTENT_HELP)
+				return 1
+		else
+			if (a_intent == INTENT_DISARM)
+				return 1
 	return 0
 
 

@@ -43,7 +43,7 @@
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
-	var/list/target_locations = null
+	var/list/list/target_locations = null
 
 	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
 		target_locations = map_settings.valid_nuke_targets
@@ -90,6 +90,18 @@
 		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
+#if ASS_JAM
+	var/station_only = prob(40)
+	target_locations = list()
+	for(var/area/A in world)
+		if(station_only && !istype(A, /area/station))
+			continue
+		if(!(A.name in target_locations))
+			target_locations[A.name] = list(A)
+		else
+			target_locations[A.name].Add(A)
+#endif
+
 	target_location_name = pick(target_locations)
 	if (!target_location_name)
 		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
@@ -131,9 +143,11 @@
 	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	//var/agent_callsigns = list("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
-	var/agent_callsigns = list("Axe", "Baselard", "Cutlass", "Dagger", "Estoc", "Falchion", "Gladius", "Hatchet", "Ice-pick", "Javelin", "Katana", "Longsword", "Machete", "Nodachi", "Odachi", "Partisan", "Quarterstaff", "Rapier", "Scimitar", "Tomahawk", "Uchigatana", "Voulge", "Warhammer", "Xiphos", "Yumi", "Zweihander")
 	var/leader_selected = 0
+
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors")
+	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
+	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
@@ -161,9 +175,9 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
-			var/callsign = pick(agent_callsigns)
+			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
-			agent_callsigns -= callsign
+			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
 		boutput(synd_mind.current, "<span style=\"color:red\">Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 

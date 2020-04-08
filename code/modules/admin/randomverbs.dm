@@ -564,28 +564,29 @@
 		M.print_contents(usr)
 	return
 
-/proc/get_all_vehicles_list()
-	return by_type[/obj/machinery/vehicle]
-
 /client/proc/cmd_admin_check_vehicle()
 	set category = "Special Verbs"
 	set name = "Check Vehicle Occupant"
 	set popup_menu = 0
 
-	var/list/all_vehicles = get_all_vehicles_list()
+	var/list/all_vehicles = by_type[/obj/machinery/vehicle] + by_type[/obj/vehicle]
 
 	if (!all_vehicles)
 		boutput(usr, "No vehicles found!")
 		return
 
-	var/obj/machinery/vehicle/V = input("Which vehicle?","Check vehicle occupant") as null|anything in all_vehicles
-	if (!istype(V,/obj/machinery/vehicle/))
+	var/obj/V = input("Which vehicle?","Check vehicle occupant") as null|anything in all_vehicles
+	if (!istype(V))
 		boutput(usr, "No vehicle defined!")
 		return
 
 	boutput(usr, "<b>[V.name]'s Occupants:</b>")
 	for(var/mob/M in V.contents)
-		boutput(usr, "[M.real_name] ([M.key]) [M == V.pilot ? "*Pilot*" : ""]")
+		var/obj/machinery/vehicle/MV = V
+		var/info = ""
+		if(istype(MV))
+			info = M == MV.pilot ? "*Pilot*" : ""
+		boutput(usr, "[M.real_name] ([M.key]) [info]")
 
 /client/proc/cmd_admin_remove_plasma()
 	set category = "Debug"

@@ -178,6 +178,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
 
+#if ASS_JAM
+	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
+	src.set_hat(new hat_type)
+	if(prob(5))
+		src.give_feet()
+#endif
+
 	SPAWN_DBG(0)
 		src.botcard.access = get_all_accesses()
 		src.cell.charge = src.cell.maxcharge
@@ -722,10 +729,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.light.disable()
 	src.update_appearance()
 
-	for(var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-		SPAWN_DBG( 0 )
-			O.mode = 2
-
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
 	if (src.mind)
@@ -1257,21 +1260,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..()
 	update_clothing()
 	src.updateOverlaysClient(src.client) //ov1
-	if (!isdead(src))
-		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			SPAWN_DBG(0)
-				O.mode = 1
-				O.emotion = src.faceEmotion
 	return
 
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
 	..()
-	// Only turn off the status displays if we're dead.
-	if (isdead(src))
-		SPAWN_DBG(0)
-			for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-				O.mode = 0
 	return
 
 /mob/living/silicon/ai/say_understands(var/other)
@@ -1625,12 +1618,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		update_appearance()
 	if (newMessage)
 		src.status_message = newMessage
-	SPAWN_DBG(0)
-		for (var/obj/machinery/ai_status_display/AISD in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			if (newEmotion)
-				AISD.emotion = ai_emotions[newEmotion]
-			if (newMessage)
-				AISD.message = newMessage
 	return
 
 /mob/living/silicon/ai/proc/ai_colorchange()

@@ -61,6 +61,7 @@ var/global
 	obj/screen/renderSourceHolder
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
@@ -146,7 +147,8 @@ var/global
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
-	"Mithril" = 'icons/mob/hud_human_quilty.dmi')
+	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
+	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
 
 	list/customization_styles = list("None" = "none",
 	"Balding" = "balding",
@@ -781,4 +783,25 @@ var/global/mentorhelp_text_color = "#CC0066"
 			C.images -= globalImages[key]
 		globalImages[key] = null
 		globalImages.Remove(key)
+	return
+
+/proc/addAIImage(var/image/I, var/key)
+	if(I && length(key))
+		aiImages[key] = I
+		for(var/mob/M in AIs)
+			if (M.client)
+				M << I
+		return I
+	return null
+
+/proc/getAIImage(var/key)
+	if(length(key) && aiImages[key]) return aiImages[key]
+	else return null
+
+/proc/removeAIImage(var/key)
+	if(length(key) && aiImages[key])
+		for(var/client/C in clients)
+			C.images -= aiImages[key]
+		aiImages[key] = null
+		aiImages.Remove(key)
 	return

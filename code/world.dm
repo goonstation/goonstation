@@ -550,6 +550,9 @@ var/f_color_selector_handler/F_Color_Selector
 	build_syndi_buylist_cache()
 	build_camera_network()
 	clothingbooth_setup()
+#if ASS_JAM
+	ass_jam_init()
+#endif
 
 	//QM Categories by ZeWaka
 	build_qm_categories()

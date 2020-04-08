@@ -1,4 +1,27 @@
 ﻿
+(t)tue apr 07 20
+(u)Ryumi
+(+)Added a bit more lighting to the Afterlife Bar's garden.
+(t)mon apr 06 20
+(u)mbc
+(*)Fixed a number of assorted bugs where blood cleanables would get wrong unit amounts and bloody footprints were handling things improperly
+(*)Fixed bloodletting not working if you were under the max bleed level (that means when you bleed,  some reagents in bloodstream should properly come out with the blood regardless of the bleed type)
+(*)Made some changes that should increase client side FPS a bit, especially on ocean maps (water on station zlevel will look a little bit uglier re:lighting, sorry)
+(t)sun apr 05 20
+(u)mbc
+(*)You can now buckle into chairs by clicking yourself while standing on them. Same with climbing on chairs - click self with grab intent.
+(u)Flaborized
+(*)Added a new colorblind accessible HUD option! You can access it in the character setup options.
+(u)Flourish
+(*)Added Roach and Saxophone as spacebux rewards.
+(*)Disaster mode now includes a wraith at roundstart.
+(u)pali
+(*)Nukies on ass day can now get much wilder target locations.
+(+)Until we rework matsci somewhat light bulbs, light tubes and tripod bulbs are now 5 times more expensive when it comes to material cost
+(u)adharainspace
+(*)Added fancy new RCD sprites, courtesy of Flaborized!
+(u)Jero1717
+(*)Made Robustris Pro fancier and better
 (t)sat apr 04 20
 (u)ZeWaka
 (+)Handcuffing should be more consistent across the board.
