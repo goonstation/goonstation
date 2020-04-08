@@ -343,7 +343,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread_angle)
+	var/spread = spread_angle
+	if (ismob(user) && user.reagents)
+		var/mob/living/carbon/human/M = user
+		var/how_drunk = 0
+		var/amt = M.reagents.get_reagent_amount("ethanol")
+		if (amt >= 110)
+			how_drunk = 2
+		else if (amt < 110)
+			how_drunk = 1
+		else if (amt <= 0)
+			how_drunk = 0
+		how_drunk = max(0, how_drunk - isalcoholresistant(M) ? 1 : 0)
+		spread += 5 * how_drunk
+
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread)
 	if (P)
 		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID
