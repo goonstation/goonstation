@@ -374,7 +374,7 @@
 	/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol)
 
-/obj/item/storage/backpack/syndicate_medic_satchel
+/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel
 	name = "medical shoulder pack"
 	desc = "A satchel containing larger medical supplies and instruments."
 	icon_state = "Syndiesatchel"
