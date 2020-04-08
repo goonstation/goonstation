@@ -1,3 +1,4 @@
+
 var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder uID stuff
 
 /obj/item/gun
@@ -287,24 +288,48 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!process_ammo(user))
 		return
-	var/obj/projectile/P = initialize_projectile_ST(user, current_projectile, M)
-	if (!P)
-		return
 
-	if (user == M)
-		P.shooter = null
-		P.mob_shooter = user
+	if(slowdown)
+		SPAWN_DBG(-1)
+			user.movement_delay_modifier += slowdown
+			sleep(slowdown_time)
+			user.movement_delay_modifier -= slowdown
 
-	alter_projectile(P)
-	P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-	P.was_pointblank = 1
-	hit_with_existing_projectile(P, M) // Includes log entry.
+	var/spread = spread_angle
+	if (user.reagents)
+		var/how_drunk = 0
+		var/amt = user.reagents.get_reagent_amount("ethanol")
+		if (amt >= 110)
+			how_drunk = 2
+		else if (amt < 110)
+			how_drunk = 1
+		else if (amt <= 0)
+			how_drunk = 0
+		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
+		spread += 5 * how_drunk
 
-	var/mob/living/L = M
-	if (M && isalive(M))
-		L.lastgasp()
-	M.set_clothing_icon_dirty()
-	src.update_icon()
+	for (var/i = 0; i < current_projectile.shot_number; i++)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
+		if (!P)
+			return
+		if (user == M)
+			P.shooter = null
+			P.mob_shooter = user
+
+		alter_projectile(P)
+		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+		P.was_pointblank = 1
+		if(get_dist(user,M) <= 1)
+			hit_with_existing_projectile(P, M) // Includes log entry.
+		else
+			P.launch()
+
+		var/mob/living/L = M
+		if (M && isalive(M))
+			L.lastgasp()
+		M.set_clothing_icon_dirty()
+		src.update_icon()
+		sleep(current_projectile.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
@@ -344,17 +369,16 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				M.movement_delay_modifier -= slowdown
 
 	var/spread = spread_angle
-	if (ismob(user) && user.reagents)
-		var/mob/living/carbon/human/M = user
+	if (user.reagents)
 		var/how_drunk = 0
-		var/amt = M.reagents.get_reagent_amount("ethanol")
+		var/amt = user.reagents.get_reagent_amount("ethanol")
 		if (amt >= 110)
 			how_drunk = 2
 		else if (amt < 110)
 			how_drunk = 1
 		else if (amt <= 0)
 			how_drunk = 0
-		how_drunk = max(0, how_drunk - isalcoholresistant(M) ? 1 : 0)
+		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
 		spread += 5 * how_drunk
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread)
