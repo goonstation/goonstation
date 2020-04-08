@@ -458,16 +458,7 @@
 
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
-				if (istype(M, /obj/item/clothing/under/rank/captain/dress))
-					var/prev = M.name
-					M.icon_state = "captain-dress-blue"
-					M.item_state = "captain-dress-blue"
-					M.name = "commander's uniform"
-					M.real_name = "commander's uniform"
-					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
-
-				else if (istype(M, /obj/item/clothing/under/rank/captain))
+				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
 					M.name = "commander's uniform"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
@@ -484,10 +475,14 @@
 
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
-					M.name = "commander's uniform"
+					M.name = "\improper Commander's suit"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					M.icon_state = "suit-capB"
-					M.item_state = "suit-capB"
+					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+						M.icon_state = "suit-capB-dress"
+						M.item_state = "suit-capB-dress"
+					else
+						M.icon_state = "suit-capB"
+						M.item_state = "suit-capB"
 					H.set_clothing_icon_dirty()
 
 			if (H.wear_suit)
