@@ -90,10 +90,12 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
 //#define RP_MODE
-//#define ASS_JAM 1
 //#define HALLOWEEN 1
 //#define XMAS 1
 //#define CANADADAY 1
+//#define FOOTBALL_MODE 1
+// see below for ASS_JAM
+
 
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
