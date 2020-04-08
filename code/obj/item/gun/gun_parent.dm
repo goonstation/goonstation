@@ -44,6 +44,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
+#if ASS_JAM
+	var/shoot_delay = 0
+#else
+	var/shoot_delay = 4
+#endif
 
 	buildTooltipContent()
 		var/Tcontent = ..()
@@ -187,18 +192,23 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/poy = text2num(params["icon-y"]) - 16
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
-
 	if(charge_up && !can_dual_wield && canshoot())
 		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 	else
+		if(canshoot())
+			user.next_click = max(user.next_click, world.time + src.shoot_delay)
 		shoot(target_turf, user_turf, user, pox, poy)
 
 	//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up) && ishuman(user))
 		if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
+			if (user.r_hand:canshoot())
+				user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
 			SPAWN_DBG(0.2 SECONDS)
 				user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 		else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
+			if (user.l_hand:canshoot())
+				user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 			SPAWN_DBG(0.2 SECONDS)
 				user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 
@@ -354,7 +364,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
-		M.next_click = world.time + 4
 
 	src.update_icon()
 
