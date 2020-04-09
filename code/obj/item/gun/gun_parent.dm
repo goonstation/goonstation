@@ -318,9 +318,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-		P.was_pointblank = 1
 		if(get_dist(user,M) <= 1)
 			hit_with_existing_projectile(P, M) // Includes log entry.
+			P.was_pointblank = 1
 		else
 			P.launch()
 
