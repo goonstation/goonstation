@@ -29,7 +29,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
-		AddComponent(/datum/component/tranfer_on_attack)
+		AddComponent(/datum/component/transfer_on_attack)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
