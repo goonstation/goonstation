@@ -46,7 +46,7 @@
 		else if (!dd_hasprefix(initparams, "/"))
 			initparams = "[current]" + (current == "/" ? null : "/") + initparams
 
-		var/datum/computer/folder/listfolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initparams))
+		var/datum/computer/folder/listfolder = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initparams))
 
 		if (istype(listfolder))
 			var/message
@@ -127,7 +127,7 @@
 		if (!dd_hasprefix(initparams, "/"))
 			initparams = "[current]" + (current == "/" ? null : "/") + initparams
 
-		var/datum/computer/folder/checkfolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initparams))
+		var/datum/computer/folder/checkfolder = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initparams))
 		if (!istype(checkfolder))
 			message_user("Error: Invalid path.")
 		else
@@ -209,7 +209,7 @@
 		if (!dd_hasprefix(initparams, "/"))
 			initparams = "[current]" + (current == "/" ? null : "/") + initparams
 
-		var/datum/computer/checkdatum = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initparams))
+		var/datum/computer/checkdatum = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initparams))
 		if (!istype(checkdatum))
 			message_user("Error: Invalid path.")
 		else
@@ -221,7 +221,7 @@
 					message_user("Remove target '[checkdatum.name]'?")
 					return
 
-				if (signal_program(1, list("command"=DWAINE_COMMAND_FKILL,"path"=initparams)) != ESIG_SUCCESS)
+				if (signal_program(1, list("command"=DUWANG_COMMAND_FKILL,"path"=initparams)) != ESIG_SUCCESS)
 					message_user("Error: Cannot remove target.")
 
 		mainframe_prog_exit
@@ -240,14 +240,14 @@
 		var/command = lowertext(command_list[1])
 
 		if (command == "yes" || command == "y")
-			var/datum/computer/checkdatum = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=target_path))
+			var/datum/computer/checkdatum = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=target_path))
 			if (!istype(checkdatum))
 				message_user("Error: Unable to locate target.")
 			else
 				if (istype(checkdatum, /datum/computer/folder) && !recursive)
 					message_user("Error: Cannot remove target (Is a directory).")
 				else
-					if (signal_program(1, list("command"=DWAINE_COMMAND_FKILL,"path"=target_path)) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"=DUWANG_COMMAND_FKILL,"path"=target_path)) != ESIG_SUCCESS)
 						message_user("Error: Cannot remove target.")
 
 		mainframe_prog_exit
@@ -281,13 +281,13 @@
 		if (!dd_hasprefix(initlist[2], "/"))
 			initlist[2] = "[current]" + (current == "/" ? null : "/") + initlist[2]
 
-		var/datum/computer/file/prototype = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=initlist[1]))
+		var/datum/computer/file/prototype = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=initlist[1]))
 		if (!istype(prototype))
 			message_user("Error: Invalid target path.")
 			mainframe_prog_exit
 			return
 
-		var/dest_check = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=initlist[2]))
+		var/dest_check = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=initlist[2]))
 
 		var/adjust_name = null
 		if (dest_check != ESIG_NOFILE)
@@ -318,7 +318,7 @@
 		copy.name = copyname
 		copy.metadata["owner"] = read_user_field("name")
 		copy.metadata["permission"] = COMP_ALLACC
-		if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"=initlist[2]), copy) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"=initlist[2]), copy) != ESIG_SUCCESS)
 			//qdel(copy)
 			copy.dispose()
 			message_user("Error: Could not copy file.")
@@ -348,13 +348,13 @@
 		if (!dd_hasprefix(initlist[2], "/"))
 			initlist[2] = "[current]" + (current == "/" ? null : "/") + initlist[2]
 
-		var/datum/computer/file/prototype = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=initlist[1]))
+		var/datum/computer/file/prototype = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=initlist[1]))
 		if (!istype(prototype))
 			message_user("Error: Invalid target path.")
 			mainframe_prog_exit
 			return
 
-		var/dest_check = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=initlist[2]))
+		var/dest_check = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=initlist[2]))
 
 		var/adjust_name = null
 		if (dest_check != ESIG_NOFILE)
@@ -385,12 +385,12 @@
 		copy.name = copyname
 		copy.metadata["owner"] = read_user_field("name")
 		copy.metadata["permission"] = COMP_ALLACC
-		if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"=initlist[2]), copy) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"=initlist[2]), copy) != ESIG_SUCCESS)
 			//qdel(copy)
 			copy.dispose()
 			message_user("Error: Could not move file.")
 		else
-			signal_program(1, list("command"=DWAINE_COMMAND_FKILL,"path"=initlist[1]))
+			signal_program(1, list("command"=DUWANG_COMMAND_FKILL,"path"=initlist[1]))
 
 		mainframe_prog_exit
 		return
@@ -421,7 +421,7 @@
 			if (!dd_hasprefix(initlist[1], "/"))
 				initlist[1] = "[current]" + (current == "/" ? null : "/") + initlist[1]
 
-			var/datum/computer/file/currfile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[1]))
+			var/datum/computer/file/currfile = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[1]))
 			initlist -= initlist[1]
 			if (!istype(currfile))
 				break
@@ -476,8 +476,8 @@
 		if (!dd_hasprefix(initlist[2], "/"))
 			initlist[2] = "[current]" + (current == "/" ? null : "/") + initlist[2]
 
-		var/datum/computer/folder/target_folder = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[1]))
-		var/link_check = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[2]))
+		var/datum/computer/folder/target_folder = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[1]))
+		var/link_check = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[2]))
 
 		if (!istype(target_folder))
 			message_user("Error: Invalid target path.")
@@ -507,7 +507,7 @@
 		symlink.name = linkname
 		symlink.metadata["owner"] = read_user_field("name")
 		symlink.metadata["permission"] = COMP_ALLACC & ~(COMP_WOTHER|COMP_DOTHER)
-		if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"=initlist[2]), symlink) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"=initlist[2]), symlink) != ESIG_SUCCESS)
 			//qdel(symlink)
 			symlink.dispose()
 			message_user("Error: Could not create link.")
@@ -565,7 +565,7 @@
 			new_folder.name = dirname
 			new_folder.metadata["owner"] = read_user_field("name")
 			new_folder.metadata["permission"] = COMP_ALLACC & ~(COMP_WOTHER|COMP_DOTHER)
-			if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"=initlist[1],"mkdir"=create_full), new_folder) != ESIG_SUCCESS)
+			if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"=initlist[1],"mkdir"=create_full), new_folder) != ESIG_SUCCESS)
 				//qdel(new_folder)
 				new_folder.dispose()
 
@@ -606,7 +606,7 @@
 		if (!dd_hasprefix(initlist[2], "/"))
 			initlist[2] = "[current]" + (current == "/" ? null : "/") + initlist[2]
 
-		var/outcome = signal_program(1, list("command"=DWAINE_COMMAND_FMODE,"path"=initlist[2], "permission"=newpermissions))
+		var/outcome = signal_program(1, list("command"=DUWANG_COMMAND_FMODE,"path"=initlist[2], "permission"=newpermissions))
 		switch(outcome)
 			if (ESIG_NOFILE, ESIG_NOTARGET)
 				message_user("Error: Invalid target path.")
@@ -695,7 +695,7 @@
 		if (!dd_hasprefix(initlist[2], "/"))
 			initlist[2] = "[current]" + (current == "/" ? null : "/") + initlist[2]
 
-		var/outcome = signal_program(1, list("command"=DWAINE_COMMAND_FOWNER,"path"=initlist[2], "owner"=newowner, "group"=newgroup))
+		var/outcome = signal_program(1, list("command"=DUWANG_COMMAND_FOWNER,"path"=initlist[2], "owner"=newowner, "group"=newgroup))
 		switch(outcome)
 			if (ESIG_NOFILE, ESIG_NOTARGET)
 				message_user("Error: Invalid target path.")
@@ -720,7 +720,7 @@
 		return
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
-		if (..() || (data["command"] != DWAINE_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
+		if (..() || (data["command"] != DUWANG_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
 			return ESIG_GENERIC
 
 		if (!src.useracc)
@@ -732,7 +732,7 @@
 
 		var/list/accessList = splittext(usdat.fields["access"] + ";", ";")
 		if ("[access_dwaine_superuser]" in accessList)
-			if(signal_program(1, list("command"=DWAINE_COMMAND_UGROUP, "group"=0)) == ESIG_SUCCESS)
+			if(signal_program(1, list("command"=DUWANG_COMMAND_UGROUP, "group"=0)) == ESIG_SUCCESS)
 				message_user("You are now authorized.")
 			else
 				message_user("Error: Unable to authorize.")
@@ -780,7 +780,7 @@
 			mainframe_prog_exit
 			return
 
-		if (signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=driver_id, "link"=mountname)) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=driver_id, "link"=mountname)) != ESIG_SUCCESS)
 			message_user("Error: Could not mount filesystem.")
 
 		mainframe_prog_exit
@@ -840,7 +840,7 @@
 				if (!dd_hasprefix(initlist[i], "/"))
 					initlist[i] = "[current]" + (current == "/" ? null : "/") + initlist[i]
 
-				var/datum/computer/to_check = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[i]))
+				var/datum/computer/to_check = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[i]))
 
 				if (!istype(to_check))
 					break
@@ -849,7 +849,7 @@
 					continue
 
 				if (recursive && istype(to_check, /datum/computer/folder))
-					var/datum/computer/folder/listfolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[i]))
+					var/datum/computer/folder/listfolder = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[i]))
 					if (istype(listfolder))
 						for(var/datum/computer/P in listfolder.contents)
 							initlist.Add(initlist[i]+"/"+P.name)
@@ -912,7 +912,7 @@
 			mainframe_prog_exit
 			return
 
-		if (signal_program(1, list("command"=DWAINE_COMMAND_DSCAN)) == ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_DSCAN)) == ESIG_SUCCESS)
 			message_user("Now scanning for devices -- This may take a few seconds.")
 		else
 			message_user("Scan already in progress -- Please be patient.")
@@ -929,7 +929,7 @@
 	var/err = null
 
 	proc/message_reply_and_user(var/message)
-		var/list/data = list("command"=DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "getopt")
+		var/list/data = list("command"=DUWANG_COMMAND_REPLY, "data" = message, "sender_tag" = "getopt")
 		if (useracc)
 			data["term"] = useracc.user_id
 		var/sig = signal_program(parent_task.progid, data)
@@ -1089,7 +1089,7 @@
 	var/opt_data
 
 	proc/message_reply_and_user(var/message)
-		var/list/data = list("command"=DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "date")
+		var/list/data = list("command"=DUWANG_COMMAND_REPLY, "data" = message, "sender_tag" = "date")
 		if (useracc)
 			data["term"] = useracc.user_id
 		var/sig = signal_program(parent_task.progid, data)
@@ -1105,13 +1105,13 @@
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		. = ..()
 		if (!.)
-			if (data["command"] == DWAINE_COMMAND_REPLY)
+			if (data["command"] == DUWANG_COMMAND_REPLY)
 				if (data["sender_tag"] == "getopt")
 					opt_data = data["data"]
 					return ESIG_USR4
 				else
 					return ESIG_GENERIC
-			else if (data["command"] == DWAINE_COMMAND_MSG_TERM)
+			else if (data["command"] == DUWANG_COMMAND_MSG_TERM)
 				message_user(data["data"])
 			else
 				return ESIG_GENERIC
@@ -1124,7 +1124,7 @@
 		if (!initparams)
 			initparams = ""
 		opt_data = null
-		var/status = signal_program(1, list("command"=DWAINE_COMMAND_TSPAWN, "passusr" = 1, "path" = "/bin/getopt", "args" = "ht: [initparams]"))
+		var/status = signal_program(1, list("command"=DUWANG_COMMAND_TSPAWN, "passusr" = 1, "path" = "/bin/getopt", "args" = "ht: [initparams]"))
 		if (status == ESIG_NOTARGET)
 			message_user("getopt: command not found")
 			mainframe_prog_exit
@@ -1173,7 +1173,7 @@
 	var/opt_data
 
 	proc/message_reply_and_user(var/message)
-		var/list/data = list("command"=DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "tar")
+		var/list/data = list("command"=DUWANG_COMMAND_REPLY, "data" = message, "sender_tag" = "tar")
 		if (useracc)
 			data["term"] = useracc.user_id
 		var/sig = signal_program(parent_task.progid, data)
@@ -1202,7 +1202,7 @@
 			if (!opts["q"])
 				message_user("tar: Stack overflow.")
 			return null
-		var/datum/computer/T = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[target][C.name]"))
+		var/datum/computer/T = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[target][C.name]"))
 		if (opts["v"])
 			message_reply_and_user("[cpath][C.name]")
 		if (istype(C, /datum/computer/folder))
@@ -1214,9 +1214,9 @@
 					if (!opts["q"])
 						message_user("tar: [target][C.name] already exists, cannot overwrite folder - skipping.")
 			else
-				if (signal_program(1, list("command"=DWAINE_COMMAND_TSPAWN, "passusr" = 1, "path"="/bin/mkdir", "args"="[target][C.name]")) == ESIG_NOTARGET && !opts["q"])
+				if (signal_program(1, list("command"=DUWANG_COMMAND_TSPAWN, "passusr" = 1, "path"="/bin/mkdir", "args"="[target][C.name]")) == ESIG_NOTARGET && !opts["q"])
 					message_user("mkdir: command not found")
-				T = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[target][C.name]"))
+				T = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[target][C.name]"))
 				var/datum/computer/folder/FO = C
 				if (!istype(T) && !opts["q"])
 					message_user("tar: Failed to create directory [C.name]")
@@ -1229,7 +1229,7 @@
 				if (!opts["q"])
 					message_user("[target][C.name] already exists, skipping")
 			else if ((istype(T) && !opts["k"]) || !istype(T))
-				var/outcome = signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = "[target]", "mkdir" = 1, "replace" = 1), C)
+				var/outcome = signal_program(1, list("command" = DUWANG_COMMAND_FWRITE, "path" = "[target]", "mkdir" = 1, "replace" = 1), C)
 				if (!opts["q"])
 					if (outcome == ESIG_NOWRITE)
 						message_user("[target][C.name]: permission denied")
@@ -1270,13 +1270,13 @@
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		. = ..()
 		if (!.)
-			if (data["command"] == DWAINE_COMMAND_REPLY)
+			if (data["command"] == DUWANG_COMMAND_REPLY)
 				if (data["sender_tag"] == "getopt")
 					opt_data = data["data"]
 					return ESIG_USR4
 				else
 					return ESIG_GENERIC
-			else if (data["command"] == DWAINE_COMMAND_MSG_TERM)
+			else if (data["command"] == DUWANG_COMMAND_MSG_TERM)
 				message_user(data["data"])
 			else
 				return ESIG_GENERIC
@@ -1298,7 +1298,7 @@
 				mainframe_prog_exit
 				return
 			opt_data = null
-			var/status = signal_program(1, list("command"=DWAINE_COMMAND_TSPAWN, "passusr" = 1, "path" = "/bin/getopt", "args" = "cf:ltqvx [initparams]"))
+			var/status = signal_program(1, list("command"=DUWANG_COMMAND_TSPAWN, "passusr" = 1, "path" = "/bin/getopt", "args" = "cf:ltqvx [initparams]"))
 			if (status == ESIG_NOTARGET)
 				message_user("getopt: command not found")
 				mainframe_prog_exit
@@ -1344,7 +1344,7 @@
 				arcfile = "/tmp/[temp_file_name()]"
 
 			if (opts["l"] || opts["x"])
-				var/datum/computer/file/archive/archive = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=arcfile))
+				var/datum/computer/file/archive/archive = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=arcfile))
 				if (!istype(archive))
 					message_user("tar: Cannot locate archive [opts["f"]]")
 					mainframe_prog_exit
@@ -1361,7 +1361,7 @@
 					var/target = curpath
 					if (unaff.len)
 						target = abspath(unaff[1], curpath)
-					var/datum/computer/folder/F = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=target))
+					var/datum/computer/folder/F = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=target))
 					if (!istype(F))
 						message_user("tar: cannot read target directory [target]")
 						mainframe_prog_exit
@@ -1377,7 +1377,7 @@
 					return
 				var/datum/computer/file/archive/archive = new()
 				for (var/path in unaff)
-					var/datum/computer/C = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=abspath(path, curpath)))
+					var/datum/computer/C = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=abspath(path, curpath)))
 					if (!istype(C))
 						message_user("tar: File [path] does not exist.")
 						mainframe_prog_exit
@@ -1396,7 +1396,7 @@
 					arcbase = "[jointext(arcparts, "/")]"
 				if (chs(arcbase, 1) != "/")
 					arcbase = "/[arcbase]"
-				var/outcome = signal_program(1, list("command"=DWAINE_COMMAND_FWRITE, "path"=arcbase, "mkdir"=1, "replace" = 1), archive)
+				var/outcome = signal_program(1, list("command"=DUWANG_COMMAND_FWRITE, "path"=arcbase, "mkdir"=1, "replace" = 1), archive)
 				if (outcome == ESIG_NOWRITE)
 					message_user("tar: Cannot write destination [opts["f"]]")
 				else if (outcome == ESIG_NOTARGET)
@@ -1414,4 +1414,4 @@
 	initialize(var/initparams)
 		message_user(read_user_field("curpath"))
 		mainframe_prog_exit
-	
+

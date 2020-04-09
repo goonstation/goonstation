@@ -61,7 +61,7 @@
 			mainframe_prog_exit
 			return
 
-		var/list/testDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="test_appt", "mode"=0))
+		var/list/testDrivers = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="test_appt", "mode"=0))
 		if (!istype(testDrivers))
 			return
 
@@ -82,7 +82,7 @@
 					var/driverID = ckey(initlist[1])
 					if (driverID in testDrivers)
 						var/targetID = testDrivers.Find(driverID)
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="info"))
+						var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="info"))
 						if (success == ESIG_SUCCESS)
 							message_user("Loading...")
 							response_timeout = 2
@@ -98,7 +98,7 @@
 								findSuccess = 1
 								var/targetID = testDrivers.Find(x)
 
-								var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="info"))
+								var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="info"))
 								if (success == ESIG_SUCCESS)
 									message_user("Loading...")
 									response_timeout = 2
@@ -125,7 +125,7 @@
 						if (initlist.len >= 2)
 							var/fieldName = ckey(initlist[2])
 							if (fieldName)
-								if(signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="peek", "field"="[fieldName]")) == ESIG_SUCCESS)
+								if(signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="peek", "field"="[fieldName]")) == ESIG_SUCCESS)
 									message_user("Loading...")
 									response_timeout = 2
 									return
@@ -145,7 +145,7 @@
 								if (initlist.len >= 2)
 									var/fieldName = ckey(initlist[2])
 									if (fieldName)
-										if(signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="peek", "field"="[fieldName]")) == ESIG_SUCCESS)
+										if(signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="peek", "field"="[fieldName]")) == ESIG_SUCCESS)
 											message_user("Loading...")
 											response_timeout = 2
 											return
@@ -174,7 +174,7 @@
 							var/fieldName = ckey(initlist[2])
 							var/newValue = ckey(initlist[3])
 							if (fieldName && newValue)
-								if(signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="poke", "field"="[fieldName]", "value"="[newValue]")) == ESIG_SUCCESS)
+								if(signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="poke", "field"="[fieldName]", "value"="[newValue]")) == ESIG_SUCCESS)
 									message_user("Sending...")
 									response_timeout = 2
 									return
@@ -195,7 +195,7 @@
 									var/fieldName = ckey(initlist[2])
 									var/newValue = ckey(initlist[3])
 									if (fieldName && newValue)
-										if(signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="poke", "field"="[fieldName]", "value"="[newValue]")) == ESIG_SUCCESS)
+										if(signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="poke", "field"="[fieldName]", "value"="[newValue]")) == ESIG_SUCCESS)
 											message_user("Sending...")
 											response_timeout = 2
 											return
@@ -233,7 +233,7 @@
 								duration = 1
 								message_user("Warning: Non-numeric pulse duration! Argument ignored.")
 
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="pulse", "duration"=duration))
+						var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="pulse", "duration"=duration))
 						if (success == ESIG_SUCCESS)
 							message_user("OK")
 
@@ -261,7 +261,7 @@
 										duration = 1
 										message_user("Warning: Non-numeric pulse duration! Argument ignored.")
 
-								var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="pulse", "duration"=duration))
+								var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="pulse", "duration"=duration))
 								if (success == ESIG_SUCCESS)
 									message_user("OK")
 
@@ -283,7 +283,7 @@
 					var/driverID = ckey(initlist[1])
 					if (driverID in testDrivers)
 						var/targetID = testDrivers.Find(driverID)
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"=command))
+						var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"=command))
 						if (success == ESIG_SUCCESS)
 							message_user("OK")
 
@@ -299,7 +299,7 @@
 								findSuccess = 1
 								var/targetID = testDrivers.Find(x)
 
-								var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"=command))
+								var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"=command))
 								if (success == ESIG_SUCCESS)
 									message_user("OK")
 
@@ -321,8 +321,8 @@
 					var/driverID = ckey(initlist[1])
 					if (driverID in testDrivers)
 						var/targetID = testDrivers.Find(driverID)
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="sense"))
-						if (success == ESIG_SUCCESS && signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="read")) == ESIG_SUCCESS)
+						var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="sense"))
+						if (success == ESIG_SUCCESS && signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="read")) == ESIG_SUCCESS)
 							message_user("Loading...")
 							response_timeout = 2
 							return
@@ -338,8 +338,8 @@
 								findSuccess = 1
 								var/targetID = testDrivers.Find(x)
 
-								var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="sense"))
-								if (success == ESIG_SUCCESS && signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="read")) == ESIG_SUCCESS)
+								var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="sense"))
+								if (success == ESIG_SUCCESS && signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=targetID, "dcommand"="read")) == ESIG_SUCCESS)
 									message_user("Loading...")
 									response_timeout = 2
 									return
@@ -371,7 +371,7 @@
 		if (!data["command"])
 			return ESIG_GENERIC
 
-		if (data["command"] == DWAINE_COMMAND_REPLY)
+		if (data["command"] == DUWANG_COMMAND_REPLY)
 			if (!data["data"])
 				return ESIG_GENERIC
 
@@ -614,15 +614,15 @@
 										valueToAdjust++
 
 								//Now we try to set that value on the actual device.
-								var/driverID = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+								var/driverID = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 								if (!(driverID & ESIG_DATABIT))
 									return
 
 								driverID &= ~ESIG_DATABIT
 
-								signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="poke", "field"=current_field, "value"=valueToAdjust))
+								signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driverID, "dcommand"="poke", "field"=current_field, "value"=valueToAdjust))
 								SPAWN_DBG(0.5 SECONDS)
-									signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"=current_field))
+									signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"=current_field))
 
 							return
 
@@ -634,14 +634,14 @@
 							if (!current_device_id || !(current_device_id in known_devices))
 								return
 
-							var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+							var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 							if (!(driver_id & ESIG_DATABIT))
 								return
 
 							driver_id &= ~ESIG_DATABIT
 
-							if (signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="sense")) == ESIG_SUCCESS)
-								signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="read"))
+							if (signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="sense")) == ESIG_SUCCESS)
+								signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="read"))
 
 							return
 
@@ -649,11 +649,11 @@
 							if (!current_device_id || !(current_device_id in known_devices))
 								return
 
-							var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+							var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 							if (!(driver_id & ESIG_DATABIT))
 								return
 
-							signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=(driver_id & ~ESIG_DATABIT), "dcommand"="pulse", "duration"=1))
+							signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=(driver_id & ~ESIG_DATABIT), "dcommand"="pulse", "duration"=1))
 
 							return
 
@@ -668,14 +668,14 @@
 
 							mode = (mode == MODE_BASE_MENU) ? MODE_DEVICE_ADJUST: MODE_DEVICE_SUBADJ
 
-							var/driverID = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+							var/driverID = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 							if (driverID & ESIG_DATABIT)
 								driverID &= ~ESIG_DATABIT
 							else
 								driverID = 0
 
 							if (!current_device_known_fields.len)
-								signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="info"))
+								signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driverID, "dcommand"="info"))
 								return null
 
 							. = ""
@@ -683,7 +683,7 @@
 								. += "| [value_entry] IS [(current_device_known_fields[uppertext(value_entry)]) ? current_device_known_fields[uppertext(value_entry)] : "LOADING"]|n"
 
 								if (driverID)
-									signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"="[value_entry]"))
+									signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"="[value_entry]"))
 
 							if (.)
 								message_device("command=message&title=Adjust Values&blank=1&data=[.]")
@@ -703,7 +703,7 @@
 		if (!data["command"])
 			return ESIG_GENERIC
 
-		if (data["command"] == DWAINE_COMMAND_REPLY)
+		if (data["command"] == DUWANG_COMMAND_REPLY)
 			if (!data["data"])
 				return ESIG_GENERIC
 
@@ -799,7 +799,7 @@
 
 						var/driverID
 						if (current_device_id)
-							driverID = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+							driverID = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 							if (driverID & ESIG_DATABIT)
 								driverID &= ~ESIG_DATABIT
 							else
@@ -816,7 +816,7 @@
 								formatted += "| [.] IS LOADING|n"
 
 								if (driverID)
-									signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"="[.]"))
+									signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"="[.]"))
 
 						if (formatted)
 							message_device("command=message&title=Adjust Values&blank=1&data=[formatted]")
@@ -834,7 +834,7 @@
 
 
 	proc/update_known_devices()
-		var/list/potential_new_devices = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="test_appt", "mode"=0))
+		var/list/potential_new_devices = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="test_appt", "mode"=0))
 		if (!istype(potential_new_devices))
 			return 1
 
@@ -853,14 +853,14 @@
 		if (!current_device_id)
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+		var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 		if (!driver_id & ESIG_DATABIT)
 			return
 
 		driver_id &= ~ESIG_DATABIT
 
 		for (var/field in current_device_known_fields)
-			signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="peek", "field"="[field]"))
+			signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="peek", "field"="[field]"))
 
 
 	proc/get_main_menu()
@@ -897,12 +897,12 @@
 			message_device("command=message&blank=1&data=[get_main_menu()]")
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
+		var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dnetid"=current_device_id))
 		if (!(driver_id & ESIG_DATABIT))
 			return
 
 		mode = MODE_DEVICE_INFO
-		signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id & ~ESIG_DATABIT, "dcommand"="info"))
+		signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id & ~ESIG_DATABIT, "dcommand"="info"))
 
 /*
 		var/list/testDrivers = signal_program(1, list("command"="dlist", "dtag"="test_appt", "mode"=0))

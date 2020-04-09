@@ -69,7 +69,7 @@
 			useracc.user_file.fields["curpath"] = "/home/usr[read_user_field("name")]"
 
 		if (!script_iteration)
-			message_user("[read_user_field("name")]@DWAINE - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
+			message_user("[read_user_field("name")]@DUWANG - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
 
 		process()
 		return
@@ -237,7 +237,7 @@
 
 					if ("who")
 						var/whotext = null
-						var/list/wholist = signal_program(1, list("command"=DWAINE_COMMAND_ULIST))
+						var/list/wholist = signal_program(1, list("command"=DUWANG_COMMAND_ULIST))
 
 						if (istype(wholist))
 							for (var/uid in wholist)
@@ -309,7 +309,7 @@
 						var/targetUser = lowertext(command_list[1])
 						command_list.Cut(1,2)
 
-						switch (signal_program(1, list("command"=DWAINE_COMMAND_UMSG, "term"=targetUser, data=jointext(command_list, " "))))
+						switch (signal_program(1, list("command"=DUWANG_COMMAND_UMSG, "term"=targetUser, data=jointext(command_list, " "))))
 							if (ESIG_SUCCESS)
 								continue
 							if (ESIG_NOTARGET)
@@ -396,7 +396,7 @@
 						continue
 
 					if ("help", "man")
-						var/datum/computer/file/record/helpRec = signal_program(1, list("command"=DWAINE_COMMAND_CONFGET,"fname"=setup_helprec_name))
+						var/datum/computer/file/record/helpRec = signal_program(1, list("command"=DUWANG_COMMAND_CONFGET,"fname"=setup_helprec_name))
 						if (istype(helpRec))
 							var/target_entry = "index"
 							if (command_list.len && ckey(command_list[1]))
@@ -412,9 +412,9 @@
 						continue
 
 					if ("logout","logoff")
-						message_user("Thank you for using DWAINE!", "clear")
+						message_user("Thank you for using DUWANG!", "clear")
 						if (scriptprocess)
-							signal_program(1, list("command"=DWAINE_COMMAND_TKILL,"target"=scriptprocess))
+							signal_program(1, list("command"=DUWANG_COMMAND_TKILL,"target"=scriptprocess))
 							scriptprocess = 0
 
 						mainframe_prog_exit
@@ -450,7 +450,7 @@
 							rec.metadata["owner"] = read_user_field("name")
 							rec.metadata["permission"] = COMP_ALLACC
 
-							if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"=command, "append"=1), rec) != ESIG_SUCCESS)
+							if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"=command, "append"=1), rec) != ESIG_SUCCESS)
 								message_user("Unable to pipe stream to file.")
 								//qdel(rec)
 								rec.dispose()
@@ -469,9 +469,9 @@
 	proc
 		execpath(var/fpath, var/current, var/command, var/list/command_list, var/scripting=0)
 //			boutput(world, "execpath([fpath], [current], [command], ,[scripting])")
-			var/datum/computer/file/record/exec = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=fpath))
+			var/datum/computer/file/record/exec = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=fpath))
 			if (istype(exec, /datum/computer/file/mainframe_program))
-				var/list/siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"=fpath)//"[current][command]")
+				var/list/siglist = list("command"=DUWANG_COMMAND_TSPAWN, "passusr"=1, "path"=fpath)//"[current][command]")
 				if (command_list.len)
 					siglist["args"] = strip_html(jointext(command_list, " ")) + (pipetemp ? " [pipetemp]" : null)
 				else if (pipetemp)
@@ -502,7 +502,7 @@
 				var/list/childScript = script_format( exec.fields.Copy() )
 				//boutput(world, "bloop script loaded, pip")
 
-				scriptprocess = signal_program(1, list("command"=DWAINE_COMMAND_TFORK,"args"=list(script_iteration+1, scriptvarsToPass, childScript)))
+				scriptprocess = signal_program(1, list("command"=DUWANG_COMMAND_TFORK,"args"=list(script_iteration+1, scriptvarsToPass, childScript)))
 				if (scriptprocess & ESIG_DATABIT)
 					scriptprocess &= ~ESIG_DATABIT
 					return 1
@@ -519,7 +519,7 @@
 					message_user("Break at line [scriptline+1]")
 
 					if (scriptprocess)
-						signal_program(1, list("command"=DWAINE_COMMAND_TKILL,"target"=scriptprocess))
+						signal_program(1, list("command"=DUWANG_COMMAND_TKILL,"target"=scriptprocess))
 						scriptprocess = 0
 
 					if (parent_id && pipetemp)
@@ -542,7 +542,7 @@
 			if (!shscript.len && !scriptprocess)
 
 //				if (scriptprocess)
-//					signal_program(1, list("command"=DWAINE_COMMAND_TKILL,"target"=scriptprocess))
+//					signal_program(1, list("command"=DUWANG_COMMAND_TKILL,"target"=scriptprocess))
 //					scriptprocess = 0
 
 
@@ -870,7 +870,7 @@
 						if (!istext(.))
 							return ERR_UNDEFINED
 
-						. = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[.]"))
+						. = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[.]"))
 						if (!istype(., /datum/computer))
 							. = 0
 
@@ -936,13 +936,13 @@
 			return ESIG_GENERIC
 
 		switch (data["command"])
-			if (DWAINE_COMMAND_MSG_TERM)
+			if (DUWANG_COMMAND_MSG_TERM)
 				if (piping)
 					pipetemp += data["data"]
 				else
 					return message_user(data["data"], data["render"])
 
-			if (DWAINE_COMMAND_BREAK)
+			if (DUWANG_COMMAND_BREAK)
 				if (shscript.len)
 					message_user("Break at line [scriptline+1]")
 					shscript.len = 0
@@ -950,14 +950,14 @@
 					//script_iteration = 1
 					return
 
-			if (DWAINE_COMMAND_TEXIT)
+			if (DUWANG_COMMAND_TEXIT)
 				//if (data["id"] == scriptprocess)
 				//	scriptprocess = 0
 				scriptprocess = 0
 
 				return
 
-			if (DWAINE_COMMAND_RECVFILE)
+			if (DUWANG_COMMAND_RECVFILE)
 				//save to current dir.
 				var/current_path = read_user_field("curpath")
 				if (!current_path)
@@ -966,7 +966,7 @@
 				if (!istype(theFile))
 					return ESIG_NOFILE
 
-				return signal_program(1, list("command"=DWAINE_COMMAND_FWRITE, "path"=current_path,"replace"=1,"mkdir"=0), theFile)
+				return signal_program(1, list("command"=DUWANG_COMMAND_FWRITE, "path"=current_path,"replace"=1,"mkdir"=0), theFile)
 
 		return
 
@@ -985,9 +985,9 @@
 
 		previous_pipeout += msg
 		if (render)
-			return signal_program(parent_task.progid, list("command"=DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id, "render" = render) )
+			return signal_program(parent_task.progid, list("command"=DUWANG_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id, "render" = render) )
 		else
-			return signal_program(parent_task.progid, list("command"=DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id) )
+			return signal_program(parent_task.progid, list("command"=DUWANG_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id) )
 
 
 #undef SCRIPT_IF_TRUE

@@ -475,9 +475,9 @@
 
 			if (parent_task)
 				if (render)
-					return signal_program(parent_task.progid, list("command"=DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id, "render" = render), file )
+					return signal_program(parent_task.progid, list("command"=DUWANG_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id, "render" = render), file )
 				else
-					return signal_program(parent_task.progid, list("command"=DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id), file )
+					return signal_program(parent_task.progid, list("command"=DUWANG_COMMAND_MSG_TERM, "data" = msg, "term" = useracc.user_id), file )
 
 			return ESIG_GENERIC
 

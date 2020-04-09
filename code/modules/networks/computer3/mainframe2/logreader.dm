@@ -433,13 +433,13 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		. = ..()
 		if (!.)
-			if (data["command"] == DWAINE_COMMAND_REPLY)
+			if (data["command"] == DUWANG_COMMAND_REPLY)
 				if (data["sender_tag"] == "getopt")
 					opt_data = data["data"]
 					return ESIG_USR4
 				else
 					return ESIG_GENERIC
-			else if (data["command"] == DWAINE_COMMAND_MSG_TERM)
+			else if (data["command"] == DUWANG_COMMAND_MSG_TERM)
 				message_user(data["data"])
 			else
 				return ESIG_GENERIC
@@ -470,7 +470,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 		return ret
 
 	proc/message_reply_and_user(var/message)
-		var/list/data = list("command"=DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "accesslog")
+		var/list/data = list("command"=DUWANG_COMMAND_REPLY, "data" = message, "sender_tag" = "accesslog")
 		if (useracc)
 			data["term"] = useracc.user_id
 		var/sig = signal_program(parent_task.progid, data)
@@ -488,7 +488,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 			return
 
 		var/log_to = DEFAULT_LOG_PATH
-		var/datum/computer/file/record/conf_file = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="/etc/accesslog"))
+		var/datum/computer/file/record/conf_file = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="/etc/accesslog"))
 		if (istype(conf_file))
 			if (conf_file.fields["logdir"])
 				log_to = conf_file.fields["logdir"]
@@ -496,7 +496,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 					log_to = "/log_to"
 
 		opt_data = null
-		var/status = signal_program(1, list("command"=DWAINE_COMMAND_TSPAWN, "passusr" = 1, "path" = "/bin/getopt", "args" = "afl:m:s:t: [initparams]"))
+		var/status = signal_program(1, list("command"=DUWANG_COMMAND_TSPAWN, "passusr" = 1, "path" = "/bin/getopt", "args" = "afl:m:s:t: [initparams]"))
 		if (status == ESIG_NOTARGET)
 			message_user("getopt: command not found")
 			mainframe_prog_exit
@@ -535,7 +535,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 					logfile.metadata["owner"] = read_user_field("name")
 				logfile.metadata["permissions"] = COMP_ROWNER | COMP_RGROUP
 				logfile.fields = loglist(opts["t"], opts["m"], opts["s"], jointext(params, " "))
-				var/datum/computer/folder/logs_dir = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=log_to))
+				var/datum/computer/folder/logs_dir = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=log_to))
 				if (istype(logs_dir))
 					var/idx = 0
 					while (logs_dir.contents.len >= ACCESSLOG_RECORDS_LIMIT)
@@ -550,7 +550,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 							if (to_delete)
 								qdel(to_delete)
 							idx--
-				var/result = signal_program(1, list("command"=DWAINE_COMMAND_FWRITE, "path"=log_to,"replace"=1,"mkdir"=1), logfile)
+				var/result = signal_program(1, list("command"=DUWANG_COMMAND_FWRITE, "path"=log_to,"replace"=1,"mkdir"=1), logfile)
 				if (result == ESIG_SUCCESS)
 					message_user("Data recorded.")
 				else
@@ -575,7 +575,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 					message_user("Invalid timestamp filter [time_filter].")
 					mainframe_prog_exit
 					return
-			var/datum/computer/folder/logs_folder = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"=log_to))
+			var/datum/computer/folder/logs_folder = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"=log_to))
 			if (logs_folder == ESIG_NOFILE)
 				message_user("No recorded data.")
 				mainframe_prog_exit
@@ -679,7 +679,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="logreader"))
+		signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, "link"="logreader"))
 		return
 
 	process()
@@ -688,7 +688,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		. = ..()
 		if (!.)
-			if (data["command"] == DWAINE_COMMAND_REPLY)
+			if (data["command"] == DUWANG_COMMAND_REPLY)
 				if (data["sender_tag"] == "accesslog")
 					records += data["data"]
 					return ESIG_USR4
@@ -697,7 +697,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 					return ESIG_USR4
 				else
 					return ESIG_GENERIC
-			else if (data["command"] == DWAINE_COMMAND_MSG_TERM)
+			else if (data["command"] == DUWANG_COMMAND_MSG_TERM)
 				message_user(data["data"])
 			else
 				return ESIG_GENERIC
@@ -716,19 +716,19 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 		switch (lowertext(dataList["command"]))
 			if ("record_query")
 				records.len = 0
-				var/datum/computer/file/mainframe_program/P = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="/sys/srv/accesslog"))
+				var/datum/computer/file/mainframe_program/P = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="/sys/srv/accesslog"))
 				if (istype(P))
-					var/list/siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/accesslog", "args"=strip_html(dataList["query"]))
+					var/list/siglist = list("command"=DUWANG_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/accesslog", "args"=strip_html(dataList["query"]))
 					signal_program(1, siglist)
 					// see what i did here? heh? HEH?
 					// doubly so, it almost sounds like tar gz
 					var/targs = jointext(records, " ")
 					archive_path = null
-					siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"="/bin/tar", "args"="-cqt -- [targs]")
+					siglist = list("command"=DUWANG_COMMAND_TSPAWN, "passusr"=1, "path"="/bin/tar", "args"="-cqt -- [targs]")
 					signal_program(1, siglist)
 					if (!archive_path)
 						return 1
-					var/datum/computer/file/archive/archive = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[archive_path]"))
+					var/datum/computer/file/archive/archive = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[archive_path]"))
 					if (!istype(archive))
 						return 1
 					message_device("ack", archive)

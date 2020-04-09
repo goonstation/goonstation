@@ -1075,7 +1075,7 @@
 (u)Dr. Cogwerks
 (*)Added a short little GETTING STARTED guide to ThinkDos, use the Help command on a computer to see it.
 (*)Also added a new software disk vending machine near Tech Storage (that dingy room below QM).
-(*)edit: oh no two updates collided, check out AngriestIBM's new "help basics1" "help basics2" and "help basics3" commands on DWAINE
+(*)edit: oh no two updates collided, check out AngriestIBM's new "help basics1" "help basics2" and "help basics3" commands on DUWANG
 (-)
 (t)tue jan 01 13
 (u)I Said No
@@ -1788,7 +1788,7 @@
 (-)
 (t)sat feb 11 12
 (u)DrMelon
-(*)Rejoice, DWAINE users! There's a book to teach you all about the new DWAINE in the artifact lab.
+(*)Rejoice, DUWANG users! There's a book to teach you all about the new DUWANG in the artifact lab.
 (-)
 (t)fri feb 10 12
 (u)AngriestIBM
@@ -1834,7 +1834,7 @@
 (-)
 (t)sun jan 15 12
 (u)Infinite Monkeys
-(*)Horror form isn’t harmed by stepping on glass and can consume with an Agressive grip.
+(*)Horror form isnï¿½t harmed by stepping on glass and can consume with an Agressive grip.
 (*)AI can now make an intercom (VOX) announcement once every two minutes!
 (-)
 (t)fri jan 13 12
@@ -2699,7 +2699,7 @@
 (*)Russian roulette is now more like its exciting real life counterpart.
 (-)
 (u)ProcitizenSA (kinda)
-(*)<b>ATTENTION STATION SECURITY</b>: The following is a message from SecuTech security. <i>Thank you for trying SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unit™. We hope you enjoyed your trial, but your evaluation copy has expired. Please register and purchase SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unit™ to continue. Thank you and have a secure day. (NT vbrig will keep on keepin on)</i>
+(*)<b>ATTENTION STATION SECURITY</b>: The following is a message from SecuTech security. <i>Thank you for trying SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unitï¿½. We hope you enjoyed your trial, but your evaluation copy has expired. Please register and purchase SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unitï¿½ to continue. Thank you and have a secure day. (NT vbrig will keep on keepin on)</i>
 (-)
 (t)sun dec 19 10
 (u)I Said No

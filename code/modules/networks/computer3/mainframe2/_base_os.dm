@@ -19,35 +19,35 @@
 
 #define ESIG_DATABIT 32768
 
-#define DWAINE_COMMAND_MSG_TERM	1
-#define DWAINE_COMMAND_ULOGIN	2
-#define DWAINE_COMMAND_UGROUP	3
-#define DWAINE_COMMAND_ULIST	4
-#define DWAINE_COMMAND_UMSG		5
-#define DWAINE_COMMAND_UINPUT	6
-#define DWAINE_COMMAND_DMSG		7
-#define DWAINE_COMMAND_DLIST	8
-#define DWAINE_COMMAND_DGET		9
-#define DWAINE_COMMAND_DSCAN	10
-#define DWAINE_COMMAND_EXIT		11
-#define DWAINE_COMMAND_TSPAWN	12
-#define DWAINE_COMMAND_TFORK	13
-#define DWAINE_COMMAND_TKILL	14
-#define DWAINE_COMMAND_TLIST	15
-#define DWAINE_COMMAND_TEXIT	16
-#define DWAINE_COMMAND_FGET		17
-#define DWAINE_COMMAND_FKILL	18
-#define DWAINE_COMMAND_FMODE	19
-#define DWAINE_COMMAND_FOWNER	20
-#define DWAINE_COMMAND_FWRITE	21
-#define DWAINE_COMMAND_CONFGET	22
-#define DWAINE_COMMAND_MOUNT	23
-#define DWAINE_COMMAND_RECVFILE	24
-#define DWAINE_COMMAND_BREAK	25
+#define DUWANG_COMMAND_MSG_TERM	1
+#define DUWANG_COMMAND_ULOGIN	2
+#define DUWANG_COMMAND_UGROUP	3
+#define DUWANG_COMMAND_ULIST	4
+#define DUWANG_COMMAND_UMSG		5
+#define DUWANG_COMMAND_UINPUT	6
+#define DUWANG_COMMAND_DMSG		7
+#define DUWANG_COMMAND_DLIST	8
+#define DUWANG_COMMAND_DGET		9
+#define DUWANG_COMMAND_DSCAN	10
+#define DUWANG_COMMAND_EXIT		11
+#define DUWANG_COMMAND_TSPAWN	12
+#define DUWANG_COMMAND_TFORK	13
+#define DUWANG_COMMAND_TKILL	14
+#define DUWANG_COMMAND_TLIST	15
+#define DUWANG_COMMAND_TEXIT	16
+#define DUWANG_COMMAND_FGET		17
+#define DUWANG_COMMAND_FKILL	18
+#define DUWANG_COMMAND_FMODE	19
+#define DUWANG_COMMAND_FOWNER	20
+#define DUWANG_COMMAND_FWRITE	21
+#define DUWANG_COMMAND_CONFGET	22
+#define DUWANG_COMMAND_MOUNT	23
+#define DUWANG_COMMAND_RECVFILE	24
+#define DUWANG_COMMAND_BREAK	25
 
-#define DWAINE_COMMAND_REPLY	30
+#define DUWANG_COMMAND_REPLY	30
 
-var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
+var/global/list/generic_exit_list = list("command"=DUWANG_COMMAND_EXIT)
 #define mainframe_prog_exit signal_program(1, generic_exit_list)
 
 #define setup_filepath_users "/usr"
@@ -110,7 +110,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 		src.master.timeout = 1
 		src.master.timeout_alert = 0
 		SPAWN_DBG(0.5 SECONDS)
-			src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
+			src.master.post_status("ping","data","DUWANG","net","[src.master.net_number]")
 
 		//Run "init" program, if present.
 		master.run_program(get_file_name(setup_progname_init, sysfolder), null, src)
@@ -129,16 +129,16 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 			if (the_user.current_prog)
 				if (isBreak)
-					the_user.current_prog.receive_progsignal(1, list("command"=DWAINE_COMMAND_BREAK, "user"=termid))
+					the_user.current_prog.receive_progsignal(1, list("command"=DUWANG_COMMAND_BREAK, "user"=termid))
 					return
 
 				if (file)
-					the_user.current_prog.receive_progsignal(1, list("command"=DWAINE_COMMAND_RECVFILE, "user"=termid), file)
+					the_user.current_prog.receive_progsignal(1, list("command"=DUWANG_COMMAND_RECVFILE, "user"=termid), file)
 				else
 					the_user.current_prog.input_text(data)
 			else
 				if (isBreak)
-					the_user.current_prog.receive_progsignal(1, list("command"=DWAINE_COMMAND_BREAK, "user"=termid))
+					the_user.current_prog.receive_progsignal(1, list("command"=DUWANG_COMMAND_BREAK, "user"=termid))
 					return
 
 				if (the_user.full_user)
@@ -270,7 +270,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 			return ESIG_GENERIC
 
 		switch (data["command"])
-			if (DWAINE_COMMAND_MSG_TERM)
+			if (DUWANG_COMMAND_MSG_TERM)
 				if (!data["term"])
 					return ESIG_NOTARGET
 
@@ -280,7 +280,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 					//boutput(world, "message term of \[[data["data"]]] to \[[data["term"]]]")
 					return message_term(data["data"], data["term"], data["render"])
 
-			if (DWAINE_COMMAND_ULOGIN)
+			if (DUWANG_COMMAND_ULOGIN)
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -300,7 +300,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_UGROUP) //Manipulate the group of the caller's user account to ["group"]
+			if (DUWANG_COMMAND_UGROUP) //Manipulate the group of the caller's user account to ["group"]
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -314,7 +314,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				caller.useracc.user_file.fields["group"] = min(255, max(data["group"], 0))
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_ULIST) //List current users.
+			if (DUWANG_COMMAND_ULIST) //List current users.
 				var/list/ulist = list()
 				for (var/uid in src.users)
 					var/datum/mainframe2_user_data/udat = src.users[uid]
@@ -337,7 +337,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				else
 					return ESIG_GENERIC
 
-			if (DWAINE_COMMAND_UMSG) //Send message to a user terminal, and ONLY user terminals (In contrast with msg_term)
+			if (DUWANG_COMMAND_UMSG) //Send message to a user terminal, and ONLY user terminals (In contrast with msg_term)
 				var/uid = data["term"]
 				var/message = data["data"]
 				if (!ckeyEx(message))
@@ -378,7 +378,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				else
 					return ESIG_IOERR
 
-			if (DWAINE_COMMAND_UINPUT) //Alternate path for user input
+			if (DUWANG_COMMAND_UINPUT) //Alternate path for user input
 				. = ckey(data["term"])
 				if (. in src.users)
 					var/datum/mainframe2_user_data/the_user = src.users[.]
@@ -388,7 +388,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 					if (the_user.current_prog)
 						if (file)
-							the_user.current_prog.receive_progsignal(1, list("command"=DWAINE_COMMAND_RECVFILE, "user"=.), file)
+							the_user.current_prog.receive_progsignal(1, list("command"=DUWANG_COMMAND_RECVFILE, "user"=.), file)
 						else
 							the_user.current_prog.input_text(data["data"])
 					else
@@ -401,7 +401,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_NOUSR
 
-			if (DWAINE_COMMAND_DMSG) //Send message to processing driver.
+			if (DUWANG_COMMAND_DMSG) //Send message to processing driver.
 				var/driver_id = data["target"]
 				if (data["mode"] == 1)
 					for (var/datum/computer/file/mainframe_program/driver/D in processing_drivers)
@@ -424,7 +424,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_NOTARGET
 
-			if (DWAINE_COMMAND_DLIST) //List processing drivers.
+			if (DUWANG_COMMAND_DLIST) //List processing drivers.
 				var/list/dlist = list()
 				var/target_tag = lowertext(data["dtag"])
 				var/omitWrongTags = (data["mode"] == 1 ? 1 : 0)
@@ -459,7 +459,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				else
 					return ESIG_GENERIC
 
-			if (DWAINE_COMMAND_DGET) //Get ID of processing driver.
+			if (DUWANG_COMMAND_DGET) //Get ID of processing driver.
 				var/target_tag = lowertext(data["dtag"])
 				if (!target_tag)
 					target_tag = lowertext(data["dnetid"])
@@ -478,7 +478,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_NOTARGET
 
-			if (DWAINE_COMMAND_DSCAN) //Instruct the mainframe to recheck for devices now instead of waiting for the full timeout.
+			if (DUWANG_COMMAND_DSCAN) //Instruct the mainframe to recheck for devices now instead of waiting for the full timeout.
 				if (src.ping_accept)
 					return ESIG_GENERIC
 
@@ -487,11 +487,11 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				src.master.timeout = 5
 				src.ping_accept = 5
 				SPAWN_DBG(2 SECONDS)
-					src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
+					src.master.post_status("ping","data","DUWANG","net","[src.master.net_number]")
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_EXIT)
+			if (DUWANG_COMMAND_EXIT)
 				if (!sendid)
 					return ESIG_GENERIC
 				var/datum/computer/file/mainframe_program/quitter = master.processing[sendid]
@@ -513,7 +513,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 					if (quituser.current_prog == quitter)
 						quituser.current_prog = quitparent
 					quitparent.useracc = quituser
-					quitparent.receive_progsignal(1, list("command"=DWAINE_COMMAND_TEXIT,"id"=sendid))
+					quitparent.receive_progsignal(1, list("command"=DUWANG_COMMAND_TEXIT,"id"=sendid))
 
 				else if (shellexit && quituser) //Outermost shell should only exit if things go really wrong or the user logs out.  big shell....  buddy gear....
 					var/quituser_id = quituser.user_id
@@ -524,7 +524,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_TSPAWN) //Spawn task
+			if (DUWANG_COMMAND_TSPAWN) //Spawn task
 				if (!data["path"])
 					return ESIG_NOTARGET
 
@@ -547,7 +547,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return task_model
 
-			if (DWAINE_COMMAND_TFORK)
+			if (DUWANG_COMMAND_TFORK)
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -561,7 +561,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return fork.progid | ESIG_DATABIT
 
-			if (DWAINE_COMMAND_TKILL) //Kill a child task of the calling program.
+			if (DUWANG_COMMAND_TKILL) //Kill a child task of the calling program.
 				if (!sendid)
 					return ESIG_NOTARGET
 
@@ -590,7 +590,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_TLIST) //List all child tasks of the calling program.
+			if (DUWANG_COMMAND_TLIST) //List all child tasks of the calling program.
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -609,7 +609,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return .
 
-			if (DWAINE_COMMAND_FGET) //Return the computer datum at the provided path, if it exists.
+			if (DUWANG_COMMAND_FGET) //Return the computer datum at the provided path, if it exists.
 				//boutput(world, "entering fget with path \"[data["path"]]\"")
 				if (!sendid)
 					return ESIG_GENERIC
@@ -626,7 +626,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 					//boutput(world, "a bad F")
 					return ESIG_NOFILE
 
-			if (DWAINE_COMMAND_FKILL) //Delete the computer datum at the provided path, if possible.
+			if (DUWANG_COMMAND_FKILL) //Delete the computer datum at the provided path, if possible.
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -648,7 +648,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				else
 					return ESIG_NOFILE
 
-			if (DWAINE_COMMAND_FMODE) //Adjust the permissions of the file at the provided path, if possible.
+			if (DUWANG_COMMAND_FMODE) //Adjust the permissions of the file at the provided path, if possible.
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -670,7 +670,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_FOWNER)
+			if (DUWANG_COMMAND_FOWNER)
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -696,7 +696,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_FWRITE) //Write a provided file to the provided path.  If it already exists and ["replace"] is 1, overwrite it.  If ["append"] is 1, add to it.
+			if (DUWANG_COMMAND_FWRITE) //Write a provided file to the provided path.  If it already exists and ["replace"] is 1, overwrite it.  If ["append"] is 1, add to it.
 				if (!sendid)
 					return ESIG_GENERIC
 
@@ -753,7 +753,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_CONFGET)
+			if (DUWANG_COMMAND_CONFGET)
 				if (!data["fname"])
 					return ESIG_NOTARGET
 
@@ -767,7 +767,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				else
 					return ESIG_NOFILE
 
-			if (DWAINE_COMMAND_MOUNT)
+			if (DUWANG_COMMAND_MOUNT)
 				if (!data["id"])
 					return ESIG_NOTARGET
 
@@ -829,7 +829,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				src.rescan_timer = initial(src.rescan_timer)
 				src.ping_accept = 4
 				SPAWN_DBG(1 DECI SECOND)
-					src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
+					src.master.post_status("ping","data","DUWANG","net","[src.master.net_number]")
 
 		return
 
@@ -1202,14 +1202,14 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 	size = 2
 	executable = 0
 
-	var/motd = "Welcome to DWAINE System VI!|nCopyright 2050 Thinktronic Systems, LTD."
+	var/motd = "Welcome to DUWANG System VI!|nCopyright 2050 Thinktronic Systems, LTD."
 	var/setup_filename_motd = "motd"
 
 	initialize()
 		if(..())
 			return
 
-		var/datum/computer/file/record/R = signal_program(1, list("command"=DWAINE_COMMAND_CONFGET,"fname"=setup_filename_motd))
+		var/datum/computer/file/record/R = signal_program(1, list("command"=DUWANG_COMMAND_CONFGET,"fname"=setup_filename_motd))
 		if (istype(R))
 			src.motd = ""
 			var/imax = min(5, R.fields.len)
@@ -1224,7 +1224,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 		return
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
-		if (..() || (data["command"] != DWAINE_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
+		if (..() || (data["command"] != DUWANG_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
 			return ESIG_GENERIC
 
 		if (!src.useracc)
@@ -1234,7 +1234,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 		if (!usdat.fields["registered"] || !usdat.fields["assignment"])
 			return ESIG_GENERIC
 
-		if (signal_program(1, list("command"=DWAINE_COMMAND_ULOGIN, "name"=usdat.fields["registered"])) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_ULOGIN, "name"=usdat.fields["registered"])) != ESIG_SUCCESS)
 			message_user("Error: Login failure.  Please try again.")
 			return ESIG_GENERIC
 

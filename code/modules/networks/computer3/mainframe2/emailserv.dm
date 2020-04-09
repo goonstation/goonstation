@@ -64,7 +64,7 @@
 					if (!dd_hasprefix(sentMailPath, "/"))
 						sentMailPath = "/[sentMailPath]"
 
-					var/datum/computer/file/record/sentMail = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[sentMailPath]"))
+					var/datum/computer/file/record/sentMail = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[sentMailPath]"))
 					if (istype(sentMail))
 						sentMail = sentMail.copy_file()
 						sentMail.fields = sentMail.fields.Copy()
@@ -89,7 +89,7 @@
 
 					var/datum/computer/file/record/targetMail = mailList[index]
 					if (istype(targetMail) && dd_hassuffix(targetMail.name, user_name))
-						if (signal_program(1, list("command"=DWAINE_COMMAND_FKILL, "path"="[setup_email_folder]/[targetMail.name]")) == ESIG_SUCCESS)
+						if (signal_program(1, list("command"=DUWANG_COMMAND_FKILL, "path"="[setup_email_folder]/[targetMail.name]")) == ESIG_SUCCESS)
 							message_user("ack")
 						else
 							message_user("nack")
@@ -136,7 +136,7 @@
 
 			var/datum/computer/folder/mailgroupTable = null
 			if (mailgroup && lowertext(mailgroup) != "*all" && lowertext(mailgroup) != "*none")
-				mailgroupTable = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[setup_email_folder]/[setup_mailgroup_table]"))
+				mailgroupTable = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[setup_email_folder]/[setup_mailgroup_table]"))
 				if (!istype(mailgroupTable))
 					return 4
 
@@ -147,7 +147,7 @@
 			"[ckeyEx(mailHeader["priority"]) ? copytext(uppertext(ckeyEx(mailHeader["priority"])), 1, 9) : "LOW"]",\
 			"[ckeyEx(mailHeader["subj"]) ? copytext(uppertext(mailHeader["subj"]), 1, 33) : "???"]")
 
-			if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE, "path"="[setup_email_folder]", "mkdir"=1), mail) == ESIG_SUCCESS)
+			if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE, "path"="[setup_email_folder]", "mkdir"=1), mail) == ESIG_SUCCESS)
 				return 0
 
 			return 5
@@ -157,7 +157,7 @@
 				return
 
 			var/list/mailList = list()
-			var/datum/computer/folder/mailFolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[setup_email_folder]"))
+			var/datum/computer/folder/mailFolder = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[setup_email_folder]"))
 			if (!istype(mailFolder))
 				return mailList
 
@@ -165,7 +165,7 @@
 			var/list/groupTargets = null
 			if (!(mailgroup && lowertext(mailgroup) != "*all"))
 				groupTargets = list()
-				mailgroupTable = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[setup_email_folder]/[setup_mailgroup_table]"))
+				mailgroupTable = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[setup_email_folder]/[setup_mailgroup_table]"))
 				if (istype(mailgroupTable))
 					for (var/groupDef in mailgroupTable.fields)
 						if (findtext(groupDef, "[target],"))
@@ -203,7 +203,7 @@
 				return
 
 			var/list/mailSubjs = list()
-			var/datum/computer/folder/mailFolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[setup_email_folder]"))
+			var/datum/computer/folder/mailFolder = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[setup_email_folder]"))
 			if (!istype(mailFolder))
 				return mailSubjs
 
@@ -211,7 +211,7 @@
 			var/list/groupTargets = null
 			if (!(mailgroup && lowertext(mailgroup) != "*all"))
 				groupTargets = list()
-				mailgroupTable = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="[setup_email_folder]/[setup_mailgroup_table]"))
+				mailgroupTable = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="[setup_email_folder]/[setup_mailgroup_table]"))
 				if (istype(mailgroupTable))
 					for (var/groupDef in mailgroupTable.fields)
 						if (findtext(groupDef, "[target],"))

@@ -47,7 +47,7 @@
 			if (!initialized || (length(src.name) != 8))
 				return ESIG_NOTARGET
 
-			return signal_program(1, list("command"=DWAINE_COMMAND_MSG_TERM, "data" = data, "term" = src.name), file)
+			return signal_program(1, list("command"=DUWANG_COMMAND_MSG_TERM, "data" = data, "term" = src.name), file)
 
 /datum/computer/file/mainframe_program/driver/mountable
 	var/tmp/list/contents_mirror = list()
@@ -138,7 +138,7 @@
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="term"))
+		signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, "link"="term"))
 		return
 
 	add_file(var/datum/computer/file/a_file, var/datum/mainframe2_user_data/user)
@@ -158,7 +158,7 @@
 		. = a_file.copy_file()
 		a_file.dispose()
 
-		return (signal_program(1, list("command"=DWAINE_COMMAND_MSG_TERM,"term"="[user.user_id]"), .) == ESIG_SUCCESS)
+		return (signal_program(1, list("command"=DUWANG_COMMAND_MSG_TERM,"term"="[user.user_id]"), .) == ESIG_SUCCESS)
 
 
 /datum/computer/file/mainframe_program/driver/mountable/databank
@@ -172,7 +172,7 @@
 			return
 
 		if (bank_name)
-			signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
+			signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
 		return
 
 	terminal_input(var/data, var/datum/computer/file/file)
@@ -188,7 +188,7 @@
 
 				if (datalist["data"] != src.bank_name)
 					src.bank_name = datalist["data"]
-					signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
+					signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
 					message_device("command=sync")
 
 			if ("sync")
@@ -436,7 +436,7 @@
 			return
 
 		if (printer_name)
-			signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="lp-[lowertext(src.printer_name)]"))
+			signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, "link"="lp-[lowertext(src.printer_name)]"))
 
 		if (!statusfile)
 			for (var/datum/computer/R in src.contents_mirror)
@@ -528,7 +528,7 @@
 
 				if (datalist["data"] != src.printer_name)
 					src.printer_name = datalist["data"]
-					signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, link="lp-[lowertext(src.printer_name)]"))
+					signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, link="lp-[lowertext(src.printer_name)]"))
 
 			if ("status")
 				var/status = lowertext(datalist["status"])
@@ -774,7 +774,7 @@
 			mainframe_prog_exit
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="s_telepad"))
+		var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dtag"="s_telepad"))
 		if (!(driver_id & ESIG_DATABIT))
 			message_user("Error: Could not detect driver.")
 			mainframe_prog_exit
@@ -786,7 +786,7 @@
 			. = text2num(initlist[2])
 			if (isnum(.))
 				. = max(0, min(round(.), 64))
-				var/list/possibleDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="s_telepad"))
+				var/list/possibleDrivers = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="s_telepad"))
 				if (istype(possibleDrivers))
 					for (var/x = 1, x <= possibleDrivers.len, x++)
 						if (possibleDrivers[x])
@@ -873,7 +873,7 @@
 					if (!isnum(new_x) || !isnum(new_y) || !isnum(new_z))
 						message_user("Invalid[!isnum(new_x) ? " x" : null][!isnum(new_y) ? " y" : null][!isnum(new_z) ? " z" : null]")
 					else
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="set_coords", "x"=new_x, "y"=new_y, "z"=new_z))
+						var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="set_coords", "x"=new_x, "y"=new_y, "z"=new_z))
 						switch (success)
 							if (ESIG_SUCCESS)
 								message_user("OK")
@@ -929,7 +929,7 @@
 					if (!isnum(start_x) || !isnum(start_y) || !isnum(start_z)  ||  !isnum(end_x) || !isnum(end_y) || !isnum(end_z))
 						message_user("Invalid[!isnum(start_x) ? " x1" : null][!isnum(start_y) ? " y1" : null][!isnum(start_z) ? " z1" : null][!isnum(end_x) ? " x2" : null][!isnum(end_y) ? " y2" : null][!isnum(end_z) ? " z2" : null]")
 					else
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="relay", "x1"=start_x, "y1"=start_y, "z1"=start_z, "x2" = end_x, "y2" = end_y, "z2" = end_z))
+						var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="relay", "x1"=start_x, "y1"=start_y, "z1"=start_z, "x2" = end_x, "y2" = end_y, "z2" = end_z))
 						switch (success)
 							if (ESIG_SUCCESS)
 								message_user("OK")
@@ -945,7 +945,7 @@
 					message_user("Insufficient arguments (Need x1 y1 z1, x2 y2 z2).")
 
 			if ("send", "receive", "portal")
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"=command))
+				var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"=command))
 				switch (success)
 					if (ESIG_SUCCESS)
 						message_user("OK")
@@ -963,7 +963,7 @@
 							message_user("Unable to interface with telepad.")
 
 			if ("scan")
-				var/list/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="scan"))
+				var/list/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="scan"))
 				if (istype(success))
 					message_user("Scan Results:|nAtmosphere: O2:[success["o2"]], Tox:[success["tox"]], N2:[success["n2"]], CO2:[success["co2"]],  [success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
 
@@ -1179,7 +1179,7 @@
 			mainframe_prog_exit
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="nuccharge"))
+		var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dtag"="nuccharge"))
 		if (!(driver_id & ESIG_DATABIT))
 			message_user("Error: Could not detect charge driver.")
 			mainframe_prog_exit
@@ -1189,7 +1189,7 @@
 		var/command = lowertext(initlist[1])
 		switch(command)
 			if ("status", "stat")
-				var/list/nuke_status = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="report_status"))
+				var/list/nuke_status = signal_program(1, list("command"=DUWANG_COMMAND_DMSG, "target"=driver_id, "dcommand"="report_status"))
 				if (istype(nuke_status) && (nuke_status.len >= 4))
 					message_user("Detonator Status:|n ACTIVE: [(nuke_status[2] == 1) ? "YES" : "NO"]|n TIMER: [nuke_status[1]] second(s)|n AUTHS: ([nuke_status[3]]/[nuke_status[4]])","multiline")
 				else
@@ -1206,7 +1206,7 @@
 				return
 
 			if ("activate", "n_act")
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="arm"))
+				var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="arm"))
 				switch(success)
 					if (ESIG_SUCCESS)
 
@@ -1236,7 +1236,7 @@
 						message_user("Error: Could not associate with charge driver.")
 
 			if ("abort", "deactivate", "disarm", "n_dis")
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="disarm"))
+				var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="disarm"))
 				switch(success)
 					if (ESIG_SUCCESS)
 						message_user("Transmitting Deactivation Code...")
@@ -1254,7 +1254,7 @@
 				if (initlist.len >= 2)
 					var/newtime = text2num(initlist[2])
 					if (isnum(newtime) && (newtime <= 440) && (newtime >= 30))
-						var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
+						var/success = signal_program( 1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
 						switch(success)
 							if (ESIG_SUCCESS)
 								message_user("New time set.")
@@ -1276,7 +1276,7 @@
 		return
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
-		if (..() || (data["command"] != DWAINE_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
+		if (..() || (data["command"] != DUWANG_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
 			return ESIG_GENERIC
 
 		if (!src.useracc)
@@ -1286,12 +1286,12 @@
 		if (!usdat.fields["registered"] || !usdat.fields["assignment"])
 			return ESIG_GENERIC
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="nuccharge"))
+		var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dtag"="nuccharge"))
 		if (driver_id & ESIG_DATABIT)
 			driver_id &= ~ESIG_DATABIT
 			var/result_msg = "Error communicating with charge driver."
 			if (authmode)
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="deauth"), file)
+				var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="deauth"), file)
 				switch(success)
 					if (ESIG_SUCCESS)
 						result_msg = "All authorizations have been revoked."
@@ -1299,7 +1299,7 @@
 						result_msg = "Error: Insufficient credentials."
 
 			else
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="auth"), file)
+				var/success = signal_program(1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="auth"), file)
 				switch(success)
 					if (ESIG_USR1)
 						result_msg = "User authorized."
@@ -1342,7 +1342,7 @@
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name))
+		signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name))
 		if (!statusfile)
 			for (var/datum/computer/R in src.contents_mirror)
 				if (R.name == setup_statusfile_name)
@@ -1583,7 +1583,7 @@
 			mainframe_prog_exit
 			return
 
-		var/list/driverlist = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
+		var/list/driverlist = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
 		if (!istype(driverlist) || !driverlist.len)
 			message_user("Error: Could not detect PR-6 driver(s).")
 			mainframe_prog_exit
@@ -1605,7 +1605,7 @@
 					mainframe_prog_exit
 					return
 
-				var/datum/computer/file/record/statrec = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/_[lowertext(initlist[2])]/status"))
+				var/datum/computer/file/record/statrec = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"="/mnt/_[lowertext(initlist[2])]/status"))
 				if (!istype(statrec))
 					message_user("Error: Unable to fetch unit status.")
 					mainframe_prog_exit
@@ -1648,12 +1648,12 @@
 				else if (!dd_hasprefix(initlist[3], "/"))
 					initlist[3] = "[current]" + (current == "/" ? null : "/") + initlist[3]
 
-				var/datum/computer/file/guardbot_task/task = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[3]))
+				var/datum/computer/file/guardbot_task/task = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[3]))
 				if (istype(task))
 					//If we're uploading a task, first we need to hand the driver a copy of that task!
 					var/datum/computer/file/guardbot_task/taskCopy = task.copy_file()
 					taskCopy.name = "uploadtmp"
-					if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]", "replace"=1), taskCopy) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]", "replace"=1), taskCopy) != ESIG_SUCCESS)
 						message_user("Error: Unable to pass task to dock driver. Code 0xF5")
 						//qdel(taskCopy)
 						taskCopy.dispose()
@@ -1676,7 +1676,7 @@
 							else if (!dd_hasprefix(initlist[4], "/"))
 								initlist[5] = "[current]" + (current == "/" ? null : "/") + initlist[5]
 
-							var/datum/computer/file/record/configfile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[5]))
+							var/datum/computer/file/record/configfile = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=initlist[5]))
 							if (istype(configfile))
 								commandRec.fields += configfile.fields
 							else
@@ -1691,7 +1691,7 @@
 
 
 					//Now give the driver the actual command record.
-					if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
 						message_user("Error: Unable to pass configuration to dock driver. Code 0xF7")
 						//qdel(commandRec)
 						if (commandRec)
@@ -1715,7 +1715,7 @@
 				commandRec.name = "command"
 				commandRec.fields += "command=wipe"
 
-				if(signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
+				if(signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
 					message_user("Error: Unable to interface with dock driver. Code 0xF7")
 					//qdel(commandRec)
 					if (commandRec)
@@ -1735,7 +1735,7 @@
 				commandRec.name = "command"
 				commandRec.fields += "command=wake"
 
-				if(signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
+				if(signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
 					message_user("Error: Unable to interface with dock driver.")
 					//qdel(commandRec)
 					if (commandRec)
@@ -1756,7 +1756,7 @@
 					mainframe_prog_exit
 					return
 
-				var/radioDriver = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="pr6_radio"))
+				var/radioDriver = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dtag"="pr6_radio"))
 				if (radioDriver & ESIG_DATABIT)
 					radioDriver &= ~ESIG_DATABIT
 					//signal_program(1, list("command"="dmsg", "target"=radioDriver, "dcommand"="transmit", "data"="[targetID == "all" ? "acc_code=[netpass_heads]" : "address_1=[targetID]"];command=dock_return;_freq=[buddyFreq]"))
@@ -1764,7 +1764,7 @@
 					var/datum/computer/file/record/sigFile = new
 					sigFile.name = "[ascii2text( rand(65,91) )][time2text(world.realtime, "MMDDhhmmss")]"
 					sigFile.fields = list(targetID == "all" ? "acc_code=[netpass_heads]" : "address_1=[targetID]", "command=dock_return")
-					signal_program(1, list("command"=DWAINE_COMMAND_FWRITE, "path"="/mnt/radio/[buddyFreq]","replace"=1,"mkdir"=1), sigFile)
+					signal_program(1, list("command"=DUWANG_COMMAND_FWRITE, "path"="/mnt/radio/[buddyFreq]","replace"=1,"mkdir"=1), sigFile)
 
 				else
 					message_user("Error: Could not detect radio driver.")
@@ -1787,7 +1787,7 @@
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="radio"))
+		signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name, "link"="radio"))
 		return
 
 	process()
@@ -1797,7 +1797,7 @@
 		for (var/a_user_id in radio_users)
 			var/list/id_stuff = radio_users[a_user_id]
 			if (istype(id_stuff) && id_stuff.len)
-				signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=id_stuff[1]))
+				signal_program(1, list("command"=DUWANG_COMMAND_TKILL, "target"=id_stuff[1]))
 
 		if (radio_users)
 			radio_users.len = 0
@@ -1830,7 +1830,7 @@
 					if(dataList["data"] != "noreply")
 						message_device("_freq=[ dataList["_freq"] ]&address_1=[ . ]&command=term_connect&data=noreply")
 
-					if (signal_program(1, list("command"=DWAINE_COMMAND_ULOGIN, "data"=., "name"="TEMP")) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"=DUWANG_COMMAND_ULOGIN, "data"=., "name"="TEMP")) != ESIG_SUCCESS)
 						radio_users -= .
 						return 1
 
@@ -1841,7 +1841,7 @@
 						return 1
 					if (!(. in radio_users))
 						return 1
-					return signal_program(1, list("command"=DWAINE_COMMAND_UINPUT, "data" = dataList["data"], "term" = .), theFile) != ESIG_SUCCESS
+					return signal_program(1, list("command"=DUWANG_COMMAND_UINPUT, "data" = dataList["data"], "term" = .), theFile) != ESIG_SUCCESS
 
 				if("term_ping")
 					if (!dataList["address_1"] || !dataList["_freq"])
@@ -1907,7 +1907,7 @@
 				message_device(data["data"], file)
 				return ESIG_SUCCESS
 
-			if (DWAINE_COMMAND_MSG_TERM)
+			if (DUWANG_COMMAND_MSG_TERM)
 				if (!data["term"] || !data["data"])
 					return ESIG_NOTARGET
 
@@ -2237,7 +2237,7 @@
 			mainframe_prog_exit
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="hept_emit"))
+		var/driver_id = signal_program(1, list("command"=DUWANG_COMMAND_DGET, "dtag"="hept_emit"))
 		if (!(driver_id & ESIG_DATABIT))
 			message_user("Error: Could not detect emitter driver.")
 			mainframe_prog_exit
@@ -2247,7 +2247,7 @@
 		var/command = lowertext(initlist[1])
 		switch(command)
 			if ("status")
-				var/statReport = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="report_status"))
+				var/statReport = signal_program( 1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="report_status"))
 				switch (statReport)
 					if (ESIG_USR1)
 						message_user("Emitter status: Active")
@@ -2259,7 +2259,7 @@
 						message_user("Error: Unknown status code from driver.")
 
 			if ("activate")
-				var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="activate"))
+				var/success = signal_program( 1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="activate"))
 				if (success == ESIG_SUCCESS)
 					message_user("Transmitting activation signal...")
 				else
@@ -2267,7 +2267,7 @@
 
 
 			if ("deactivate")
-				var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="deactivate"))
+				var/success = signal_program( 1, list("command"=DUWANG_COMMAND_DMSG,"target"=driver_id,"dcommand"="deactivate"))
 				if (success == ESIG_SUCCESS)
 					message_user("Transmitting deactivation signal...")
 				else
@@ -2304,7 +2304,7 @@
 		process_delay_divider = initial(process_delay_divider)
 
 		if (!security_state)
-			var/list/secDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="ir_detect"))
+			var/list/secDrivers = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="ir_detect"))
 			if (!istype(secDrivers))
 				return
 
@@ -2330,20 +2330,20 @@
 		return
 
 	proc/activateAPCs()
-		var/list/apcDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pwr_cntrl"))
+		var/list/apcDrivers = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="pwr_cntrl"))
 		if (!istype(apcDrivers))
 			return
 		for (var/drivID = 1, drivID <= apcDrivers.len, drivID++)
 			if (isnull(apcDrivers[drivID]))
 				continue
 
-			signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=drivID,"dcommand"="setmode","equip"=3,"light"=3,"environ"=3))
+			signal_program(1, list("command"=DUWANG_COMMAND_DMSG,"target"=drivID,"dcommand"="setmode","equip"=3,"light"=3,"environ"=3))
 			continue
 
 		return
 
 	proc/dispatchGuards()
-		var/list/guardDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
+		var/list/guardDrivers = signal_program(1, list("command"=DUWANG_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
 		if (!istype(guardDrivers))
 			return
 		for (var/drivID = 1, drivID <= guardDrivers.len, drivID++)
@@ -2355,7 +2355,7 @@
 			commandRec.name = "command"
 			commandRec.fields = list("command=wake")
 
-			var/result = signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(guardDrivers[drivID])]"), commandRec)
+			var/result = signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/_[lowertext(guardDrivers[drivID])]"), commandRec)
 			if(result != ESIG_SUCCESS)
 				//qdel(commandRec)
 				commandRec.dispose()
@@ -2522,7 +2522,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="SUCCESS"))
+						signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY,"data"="SUCCESS"))
 						return
 
 			if ("peeked")
@@ -2535,8 +2535,8 @@
 				if (!isnum(waitID))
 					return
 
-				signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY, "data"="[isnull(datalist["field"]) ? "NULL" : "[datalist["field"]]"]-[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]", "format"="field"))
-				//signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="Value: \[[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]]"))
+				signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY, "data"="[isnull(datalist["field"]) ? "NULL" : "[datalist["field"]]"]-[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]", "format"="field"))
+				//signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY,"data"="Value: \[[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]]"))
 				return
 
 			if ("nack")
@@ -2551,7 +2551,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="Error: Invalid Field or Value."))
+						signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY,"data"="Error: Invalid Field or Value."))
 						return
 
 					if ("peek")
@@ -2564,7 +2564,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="Error: Invalid Field."))
+						signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY,"data"="Error: Invalid Field."))
 						return
 
 					if ("read")
@@ -2577,7 +2577,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="No sense data to read!"))
+						signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY,"data"="No sense data to read!"))
 						return
 
 			if ("info")
@@ -2634,7 +2634,7 @@
 				if (datalist["valuelist"])
 					infotext += ",[datalist["valuelist"]]"
 
-				signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY, "data"=infotext, "format"="info"))
+				signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY, "data"=infotext, "format"="info"))
 				return
 
 			if ("read")
@@ -2662,7 +2662,7 @@
 
 					readDataString += "[knownReadingFields[i]] [knownReadings[i]] [knownReadingFields[ knownReadingFields[i] ]]"
 
-				signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="[readDataString]","format"="values"))
+				signal_program(waitID, list("command"=DUWANG_COMMAND_REPLY,"data"="[readDataString]","format"="values"))
 
 
 			if ("status")
@@ -2697,7 +2697,7 @@
 
 	disposing()
 		if (service_id)
-			signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=service_id))
+			signal_program(1, list("command"=DUWANG_COMMAND_TKILL, "target"=service_id))
 
 		userid = null
 		..()
@@ -2717,16 +2717,16 @@
 		srvUser.user_id = userid
 		srvUser.current_prog = src
 
-		if (signal_program(1, list("command"=DWAINE_COMMAND_ULOGIN, "name"="SRV[userid]", "service"=1, "sysop"=1)) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"=DUWANG_COMMAND_ULOGIN, "name"="SRV[userid]", "service"=1, "sysop"=1)) != ESIG_SUCCESS)
 			//qdel(srvUser)
 			srvUser.dispose()
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name))
+		signal_program(1, list("command"=DUWANG_COMMAND_MOUNT, "id"=src.name))
 		if (initRec.fields["service"])
-			var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="/sys/srv/[initRec.fields["service"]]"))
+			var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="/sys/srv/[initRec.fields["service"]]"))
 			if (istype(exec))
-				var/list/siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/[initRec.fields["service"]]")
+				var/list/siglist = list("command"=DUWANG_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/[initRec.fields["service"]]")
 				if (initRec.fields["args"])
 					siglist["args"] = strip_html(initRec.fields["args"])
 
@@ -2750,12 +2750,12 @@
 		if (!command)
 			return
 
-		if (service_id && (signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=service_id)) == ESIG_GENERIC))
+		if (service_id && (signal_program(1, list("command"=DUWANG_COMMAND_TKILL, "target"=service_id)) == ESIG_GENERIC))
 			service_id = null
 
-		var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="/sys/srv/[command]"))
+		var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"=DUWANG_COMMAND_FGET, "path"="/sys/srv/[command]"))
 		if (istype(exec))
-			var/list/siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/[command]")
+			var/list/siglist = list("command"=DUWANG_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/[command]")
 			if (datalist["args"])
 				siglist["args"] = strip_html(datalist["args"])
 
@@ -2787,7 +2787,7 @@
 		if (!data["command"])
 			return ESIG_GENERIC
 
-		if (data["command"]  == DWAINE_COMMAND_MSG_TERM)
+		if (data["command"]  == DUWANG_COMMAND_MSG_TERM)
 			if (findtext(data["render"],"record"))
 				var/list/dataList = splittext(data["data"],"|n")
 				var/dataMessage = ""
@@ -2804,7 +2804,7 @@
 			else
 				message_device("command=[data["data"]]", file)
 
-		else if (data["command"] == DWAINE_COMMAND_EXIT || data["command"] == DWAINE_COMMAND_TEXIT)
+		else if (data["command"] == DUWANG_COMMAND_EXIT || data["command"] == DUWANG_COMMAND_TEXIT)
 			src.service_id = 0
 			status = "IDLE"
 
@@ -2829,7 +2829,7 @@
 		switch (command)
 			if ("index")
 				//locate mounted printers
-				var/datum/computer/folder/mount = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt"))
+				var/datum/computer/folder/mount = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"="/mnt"))
 				if (istype(mount))
 					var/response = "print_index"
 					for (var/datum/computer/potentialPrinter in mount.contents)
@@ -2844,7 +2844,7 @@
 				//Retrieve printer status value from the little record it keeps for exactly those purposes.
 				if (initlist.len > 1)
 					var/printerName = copytext(ckeyEx(initlist[2]), 1,33)
-					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/lp-[printerName]/status"))
+					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"="/mnt/lp-[printerName]/status"))
 					var/theStatus = "???"
 					if (istype(printerStatus) && printerStatus.fields && printerStatus.fields.len)
 						theStatus = "[printerStatus.fields[1]]"
@@ -2857,9 +2857,9 @@
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"
 
-					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=toPrintPath))
+					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=toPrintPath))
 					if (istype(toPrintFile))
-						if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/lp-[printerName]"), toPrintFile) == ESIG_SUCCESS)
+						if (signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/lp-[printerName]"), toPrintFile) == ESIG_SUCCESS)
 							message_user("ack")
 						else
 							message_user("nack")
@@ -2872,16 +2872,16 @@
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"
 
-					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=toPrintPath))
+					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"=toPrintPath))
 					if (istype(toPrintFile))
-						var/datum/computer/folder/mnt = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt"))
+						var/datum/computer/folder/mnt = signal_program(1, list("command"=DUWANG_COMMAND_FGET,"path"="/mnt"))
 						if (istype(mnt))
 							var/failure = 0
 							for (var/datum/computer/folder/printFolder in mnt.contents)
 								if (copytext(printFolder.name, 1, 4) != "lp-")
 									continue
 
-								signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/[printFolder.name]"), toPrintFile.copy_file())
+								signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/[printFolder.name]"), toPrintFile.copy_file())
 /*
 								if (signal_program(1, list("command"="fwrite","path"="/mnt/[printFolder.name]"), toPrintFile.copy_file()) != ESIG_SUCCESS)
 									failure = 1
@@ -2974,7 +2974,7 @@
 				recfile.holder = src.holder
 
 				recfile = recfile.copy_file() //A copy for a printer, too
-				signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/lp-[bridge_printer_id]"), recfile)
+				signal_program(1, list("command"=DUWANG_COMMAND_FWRITE,"path"="/mnt/lp-[bridge_printer_id]"), recfile)
 
 				return
 

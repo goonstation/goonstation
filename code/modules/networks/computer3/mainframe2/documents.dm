@@ -1,5 +1,5 @@
 //CONTENTS:
-//DWAINE system help file
+//DUWANG system help file
 //Guardbot readme
 //Guardbot demo patrol script file
 //Guardbot demo bodyguard script file
@@ -15,9 +15,9 @@
 
 	New()
 		..()
-		src.fields["basics1"] = "DWAINE is a multi-user Unix-like operating system produced by Thinktronic Data Systems.  The primary user interface is through a text-based terminal shell.|nApplications may be invoked simply by typing their filename, followed by a list of arguments if necessary.  A set of primary commands, those covering basic system tasks (Such as ls and cd), are made available to all users regardless of location in the filesystem.  Otherwise, applications must be in the user's current working directory to run."
+		src.fields["basics1"] = "DUWANG is a multi-user Unix-like operating system produced by Thinktronic Data Systems.  The primary user interface is through a text-based terminal shell.|nApplications may be invoked simply by typing their filename, followed by a list of arguments if necessary.  A set of primary commands, those covering basic system tasks (Such as ls and cd), are made available to all users regardless of location in the filesystem.  Otherwise, applications must be in the user's current working directory to run."
 		src.fields["basics2"] = "Directory navigation is accomplished primarily through the ls and cd commands.|nLS, an abbreviation of \"list\" will list the contents of the current directory.  The argument -l will cause it to also display extended file information and hidden files.|nCD, or \"change directory\" will set the current directory to the provided path, if valid.  A filepath takes a form such as \"/mnt/drive0\"  Paths starting with / descend from the root directory  \"..\" refers to the directory one level up from the current, while \".\" refers to the current directory.|nEx: \"cd ../hams\" would specify a directory named ham with the same parent as the current working one."
-		src.fields["basics3"] = "DWAINE is, primarily, a networked system.  All devices, from user terminals to lineprinters and tape drives, are connected remotely to the central mainframe.  Devices that interact with files, such as drives or printers, may appear as part of the filesystem as a sub-directory of /mnt.|nFor example, the contents of tape databank \"Main\" would appear within /mnt/main and applications and other files could be accessed by setting it to your working directory with \"cd /mnt/main\""
+		src.fields["basics3"] = "DUWANG is, primarily, a networked system.  All devices, from user terminals to lineprinters and tape drives, are connected remotely to the central mainframe.  Devices that interact with files, such as drives or printers, may appear as part of the filesystem as a sub-directory of /mnt.|nFor example, the contents of tape databank \"Main\" would appear within /mnt/main and applications and other files could be accessed by setting it to your working directory with \"cd /mnt/main\""
 		src.fields["basics4"] = "Application software is often bundled with a \"readme\" file of some sort, which can be viewed with the CAT command.|nEx: \"cat readme\" will view the contents of a readme file in the user's working directory."
 		src.fields["ls"] = "View contents of a directory.  If no filepath is supplied, the working directory will be listed.|nExpanded file information, as well as hidden files, may be viewed through use of the -l argument.|nUsage: ls \[-l] \[filepath]"
 		src.fields["cd"] = "Change working directory to the filepath supplied as argument.|nUsage: cd \"filepath\""
