@@ -29,7 +29,7 @@ CONTAINS:
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3.0
+	force = 5
 	w_class = 1.0
 	throwforce = 5.0
 	throw_speed = 3
@@ -48,6 +48,7 @@ CONTAINS:
 			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
 		AddComponent(/datum/component/reagent_dipped)
+		setProperty("piercing", 33)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -95,7 +96,7 @@ CONTAINS:
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3
+	force = 5
 	w_class = 1.0
 	throwforce = 3.0
 	throw_speed = 3
@@ -114,6 +115,8 @@ CONTAINS:
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/reagent_dipped)
+		setProperty("piercing", 33)
+
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -159,7 +162,7 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 3.0
+	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
 	throw_speed = 3
@@ -176,6 +179,8 @@ CONTAINS:
 		..()
 		src.create_reagents(5)
 		AddComponent(/datum/component/reagent_dipped)
+		setProperty("piercing", 33)
+
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
