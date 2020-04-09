@@ -421,7 +421,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 60
 
-	var/mob/living/target
+	var/atom/target
 	var/obj/decal/decal
 
 	New(var/mob/living/ntarg, var/duration_i)
@@ -459,3 +459,43 @@
 		S.setMaterial(getMaterial("gnesisglass"))
 		c.dump_contents()
 		qdel(target)
+
+
+/datum/action/bar/flock_wall_decon
+	id = "flock_wall_decon"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 60
+
+	var/atom/target
+	var/obj/decal/decal
+
+	New(var/mob/living/ntarg, var/duration_i)
+		..()
+		if (ntarg)
+			target = ntarg
+		if (duration_i)
+			duration = duration_i
+
+	onUpdate()
+		..()
+		var/mob/living/critter/flock/F = owner
+		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		owner.visible_message("<span style='color:blue'>[owner] begins deconstructing [target].</span>")
+
+	onInterrupt()
+		..()
+		if(src.decal)
+			pool(src.decal)
+
+	onEnd()
+		..()
+		if(src.decal)
+			pool(src.decal)
+		message_admins("[target] is target")
+		var/turf/simulated/wall/auto/feather/f = target
+		f.dismantle_wall()

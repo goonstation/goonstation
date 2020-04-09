@@ -708,7 +708,7 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock)))
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder)))
 		target = get_turf(target) //breaks stuff like deconning with harm. a tad more annoying to hit the turfs but a small price to pay for ~~salvation~~ deconning stuff
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -748,6 +748,20 @@
 		else if(istype(target, /obj/storage/closet/flock))
 			//soap
 			actions.start(new /datum/action/bar/flock_locker_decon(target), user)
+		else if(istype(target, /turf/simulated/wall/auto/feather))
+			message_admins("its startttinnnggg")
+			actions.start(new /datum/action/bar/flock_wall_decon(target), user)
+		else if(istype(target, /obj/structure/girder))
+			if(target?.material.mat_id == "gnesis")
+				message_admins("it passed")
+				var/atom/A = new /obj/item/sheet(get_turf(target))
+				if (target.material)
+					A.setMaterial(target.material)
+					qdel(A)
+			else
+				return
+		else if(istype(target, /obj/machinery/door/feather))
+//			actions.start(new /datum/action/bar/flock_door_decon
 		else
 			..()
 
