@@ -49,7 +49,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret.dm"
 
 // BEGIN_INCLUDE
-#include "_stdlib\__build.dm"
 #include "_stdlib\_accessLevels.dm"
 #include "_stdlib\_mapDefines.dm"
 #include "_stdlib\_setup.dm"
