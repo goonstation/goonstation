@@ -264,7 +264,7 @@
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 			else
-				usr << output("ERR!&0", "ship_lock.browser:updateReadout")
+				usr << output("ERR!&0", "caselock.browser:updateReadout")
 				var/code_attempt = uppertext(ckey(href_list["enter"]))
 				/*
 				Mastermind game in which the solution is "code" and the guess is "code_attempt"
@@ -306,11 +306,11 @@
 					var/desctext = ""
 					switch(rightplace)
 						if (1)
-							desctext += "a short beep"
+							desctext += "a grumpy beep"
 						if (2)
-							desctext += "a pair of short beeps"
+							desctext += "a pair of grumpy beeps"
 						if (3)
-							desctext += "a trio of short beeps"
+							desctext += "a trio of grumpy beeps"
 
 					if (desctext && (wrongplace) > 0)
 						desctext += " and "
@@ -319,14 +319,14 @@
 						if (1)
 							desctext += "a short boop"
 						if (2)
-							desctext += "two warbly boops"
+							desctext += "two harsh boops"
 						if (3)
 							desctext += "a quick three boops"
 						if (4)
-							desctext += "a rather long boop"
+							desctext += "a long, sad, warbly boop"
 
 					if (desctext)
-						boutput(usr, "<span style=\"color:red\">The lock panel emits [desctext].</span>")
+						src.visible_message("<span style=\"color:red\">[src]'s lock panel emits [desctext].</span>")
 						playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1) // set this to play proper beeps later
 
 	else if (href_list["lock"])
