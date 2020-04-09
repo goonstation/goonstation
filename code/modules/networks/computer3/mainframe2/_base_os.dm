@@ -110,7 +110,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 		src.master.timeout = 1
 		src.master.timeout_alert = 0
 		SPAWN_DBG(0.5 SECONDS)
-			src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
+			src.master.post_status("ping","data","DUWANG","net","[src.master.net_number]")
 
 		//Run "init" program, if present.
 		master.run_program(get_file_name(setup_progname_init, sysfolder), null, src)
@@ -487,7 +487,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				src.master.timeout = 5
 				src.ping_accept = 5
 				SPAWN_DBG(2 SECONDS)
-					src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
+					src.master.post_status("ping","data","DUWANG","net","[src.master.net_number]")
 
 				return ESIG_SUCCESS
 
@@ -829,7 +829,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				src.rescan_timer = initial(src.rescan_timer)
 				src.ping_accept = 4
 				SPAWN_DBG(1 DECI SECOND)
-					src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
+					src.master.post_status("ping","data","DUWANG","net","[src.master.net_number]")
 
 		return
 
@@ -1202,7 +1202,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 	size = 2
 	executable = 0
 
-	var/motd = "Welcome to DWAINE System VI!|nCopyright 2050 Thinktronic Systems, LTD."
+	var/motd = "Welcome to DUWANG System VI!|nCopyright 2050 Thinktronic Systems, LTD."
 	var/setup_filename_motd = "motd"
 
 	initialize()

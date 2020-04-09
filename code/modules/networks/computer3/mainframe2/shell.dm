@@ -69,7 +69,7 @@
 			useracc.user_file.fields["curpath"] = "/home/usr[read_user_field("name")]"
 
 		if (!script_iteration)
-			message_user("[read_user_field("name")]@DWAINE - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
+			message_user("[read_user_field("name")]@DUWANG - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
 
 		process()
 		return
@@ -412,7 +412,7 @@
 						continue
 
 					if ("logout","logoff")
-						message_user("Thank you for using DWAINE!", "clear")
+						message_user("Thank you for using DUWANG!", "clear")
 						if (scriptprocess)
 							signal_program(1, list("command"=DWAINE_COMMAND_TKILL,"target"=scriptprocess))
 							scriptprocess = 0

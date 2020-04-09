@@ -4042,7 +4042,7 @@
 "bzL" = (/turf/simulated/wall/asteroid{dir = 4; icon_state = "ast1"},/area)
 "bzM" = (/obj/lattice,/turf/space,/area)
 "bzN" = (/turf/simulated/floor/plating/airless/asteroid,/turf/simulated/wall/asteroid{dir = 10; icon_state = "ast1"},/area)
-"bzO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "dwaine"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/listeningpost)
+"bzO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "DUWANG"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/listeningpost)
 "bzP" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/circuit,/area/listeningpost)
 "bzQ" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/caution/west,/area/listeningpost)
 "bzR" = (/obj/securearea{desc = ""; icon_state = "shock"; name = "Danger: High Voltage"},/turf/simulated/wall,/area/listeningpost)

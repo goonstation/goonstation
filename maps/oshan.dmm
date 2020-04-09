@@ -2059,7 +2059,7 @@
 "aNE" = (/obj/cable{icon_state = "1-2"},/obj/cable{icon_state = "1-2"},/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/securearea{desc = ""; icon_state = "shock"; name = "Danger: High Voltage"; pixel_y = 32},/turf/simulated/floor/caution/east,/area/listeningpost)
 "aNF" = (/turf/simulated/floor/circuit,/area/listeningpost)
 "aNG" = (/obj/machinery/camera{c_tag = "autotag"; dir = 1; name = "autoname - SS13"; tag = ""},/turf/simulated/floor,/area/station/hangar/catering{name = "Catering Hangar"})
-"aNH" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "dwaine"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/listeningpost)
+"aNH" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "DUWANG"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/listeningpost)
 "aNI" = (/obj/cable{icon_state = "1-2"},/turf/simulated/floor,/area/station/hangar/catering{name = "Catering Hangar"})
 "aNJ" = (/obj/stool/chair/green{dir = 4},/obj/landmark/start{name = "Botanist"},/turf/simulated/floor/grass,/area/station/hydroponics)
 "aNK" = (/obj/table/reinforced/auto{icon_state = "3"},/obj/item/paper_bin,/turf/simulated/floor/green,/area/station/hydroponics)

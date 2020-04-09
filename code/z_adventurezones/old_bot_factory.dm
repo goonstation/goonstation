@@ -124,7 +124,7 @@
 
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
-		testR.fields += "Welcome to DWAINE System VI!"
+		testR.fields += "Welcome to DUWANG System VI!"
 		testR.fields += "Industrial Process System Distribution"
 		newfolder.add_file( testR )
 
@@ -201,7 +201,7 @@
 			"",
 			"Description: Databank 2 was unable to read tapes.",
 			"Summary: Staff filed multiple complaints that volumes on USR databank, databank 2, could not be accessed from any account.",
-			"However, the databank's profile on the DWAINE system was properly configured.  Physical inspection of the databank revealed that the cover had been opened and the tape had been physically removed from the drive.",
+			"However, the databank's profile on the DUWANG system was properly configured.  Physical inspection of the databank revealed that the cover had been opened and the tape had been physically removed from the drive.",
 			"",
 			"Resolution: Tape replaced, drive functionality restored.")
 

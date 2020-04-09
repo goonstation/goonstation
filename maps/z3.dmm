@@ -1147,7 +1147,7 @@
 "awc" = (/obj/stool/chair{dir = 4},/turf/simulated/floor/specialroom/cafeteria,/area/buddyfactory)
 "awd" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/specialroom/cafeteria,/area/buddyfactory)
 "awe" = (/obj/machinery/door/airlock,/turf/simulated/floor/yellow,/area/tech_outpost)
-"awf" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It doesn't seem to be working yet."; icon = 'icons/obj/networked.dmi'; icon_state = "dwaine"; name = "inactive mainframe"},/turf/simulated/floor/plating,/area/tech_outpost)
+"awf" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It doesn't seem to be working yet."; icon = 'icons/obj/networked.dmi'; icon_state = "DUWANG"; name = "inactive mainframe"},/turf/simulated/floor/plating,/area/tech_outpost)
 "awg" = (/obj/item/cable_coil/cut,/turf/simulated/floor/plating,/area/tech_outpost)
 "awh" = (/obj/item/tile/steel,/obj/item/caution{desc = "Caution! Construction Zone!"; name = "caution sign"},/turf/simulated/floor/plating,/area/tech_outpost)
 "awi" = (/turf/simulated/floor/yellow,/area/tech_outpost)

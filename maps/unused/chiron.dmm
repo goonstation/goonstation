@@ -3394,7 +3394,7 @@
 "bnt" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/cable{icon_state = "1-8"},/obj/machinery/light{dir = 1},/turf/simulated/floor/caution/east{dir = 8},/area/listeningpost)
 "bnu" = (/obj/storage/crate/furnacefuel,/turf/simulated/floor/plating,/area/listeningpost)
 "bnv" = (/obj/machinery/power/monitor,/obj/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating,/area/listeningpost)
-"bnw" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "dwaine"; name = "old mainframe"},/obj/machinery/power/data_terminal,/turf/simulated/floor/circuit,/area/listeningpost)
+"bnw" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "DUWANG"; name = "old mainframe"},/obj/machinery/power/data_terminal,/turf/simulated/floor/circuit,/area/listeningpost)
 "bnx" = (/turf/simulated/floor/circuit,/area/listeningpost)
 "bny" = (/turf/simulated/floor/stairs{dir = 8},/area/listeningpost)
 "bnz" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/caution/east{dir = 8},/area/listeningpost)

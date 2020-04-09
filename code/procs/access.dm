@@ -471,7 +471,7 @@ var/list/access_name_lookup //Generated at round start.
 		if(access_head_of_personnel)
 			return "Head of Personnel's Office"
 		if(access_dwaine_superuser)
-			return "DWAINE Superuser"
+			return "DUWANG Superuser"
 
 
 

@@ -3886,7 +3886,7 @@
 "bwL" = (/obj/decal/fakeobjects/shuttlethruster,/turf/space,/area)
 "bwM" = (/obj/lattice,/turf/space,/area/syndicate_station)
 "bwN" = (/turf/simulated/floor/plating/airless/asteroid,/turf/simulated/wall/asteroid{dir = 10; icon_state = "ast1"},/area/syndicate_station)
-"bwO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "dwaine"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/syndicate_station)
+"bwO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "DUWANG"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/syndicate_station)
 "bwP" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/circuit,/area/syndicate_station)
 "bwQ" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/caution/west,/area)
 "bwR" = (/obj/securearea{desc = ""; icon_state = "shock"; name = "Danger: High Voltage"},/turf/simulated/wall,/area)
