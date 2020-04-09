@@ -47,7 +47,7 @@ CONTAINS:
 		if (src.icon_state == "scalpel1")
 			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
-		AddComponent(/datum/component/reagent_dipped)
+		AddComponent(/datum/component/tranfer_on_attack)
 		setProperty("piercing", 33)
 
 
@@ -114,7 +114,7 @@ CONTAINS:
 		if (src.icon_state == "saw1")
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
-		AddComponent(/datum/component/reagent_dipped)
+		AddComponent(/datum/component/tranfer_on_attack)
 		setProperty("piercing", 33)
 
 
@@ -178,7 +178,7 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/reagent_dipped)
+		AddComponent(/datum/component/tranfer_on_attack)
 		setProperty("piercing", 33)
 
 
