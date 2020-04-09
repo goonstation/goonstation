@@ -827,10 +827,11 @@ Urs' Hauntdog critter
 	on_pet(mob/user)
 		if (..())
 			return 1
-		if (prob(25))
+		if (prob(ASS_JAM?50:25))
 			var/turf/T = get_turf(src)
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
+
 

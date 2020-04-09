@@ -324,6 +324,16 @@ RACK PARTS
 	furniture_type = /obj/stool/chair/comfy/wheelchair
 	furniture_name = "wheelchair"
 
+/obj/item/furniture_parts/barber_chair
+	name = "barber chair parts"
+	desc = "A collection of parts that can be used to make a barber chair. You know, for cutting hair?"
+	icon = 'icons/obj/chairs.dmi'
+	icon_state = "barberchair_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/barber_chair
+	furniture_name = "barber chair"
+
 /obj/item/furniture_parts/office_chair
 	name = "office chair parts"
 	desc = "A collection of parts that can be used to make an office chair."
@@ -494,4 +504,3 @@ RACK PARTS
 		playsound(get_turf(the_furniture), "sound/items/Deconstruct.ogg", 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_furniture].</span>")
-

@@ -457,6 +457,7 @@
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	max_health = 60
 	can_hold_items = 1
+	accepts_normal_human_overlays = 1
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!ismob(M))

@@ -36,6 +36,7 @@ Broken RCD + Effects
 	icon = 'icons/obj/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "base"
+	item_state = "rcd" //oops
 	opacity = 0
 	density = 0
 	anchored = 0.0
