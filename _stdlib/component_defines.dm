@@ -54,4 +54,4 @@
 /// When an item is picked dropped (user)
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
-#define COMSIG_ITEM_HIT_MOB "itm_hit_mob"
+#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"

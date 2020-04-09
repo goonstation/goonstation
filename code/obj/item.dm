@@ -1118,8 +1118,8 @@
 	msgs.damage = power
 	msgs.flush()
 	src.add_fingerprint(user)
-	#ifdef COMSIG_ITEM_HIT_MOB
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_MOB, M, user, power, armor_mod)
+	#ifdef COMSIG_ITEM_ATTACK_POST
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power, armor_mod)
 	#endif
 	return
 
