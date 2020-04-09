@@ -1,4 +1,7 @@
 ﻿
+(t)wed apr 08 20
+(u)mbc
+(*)High amounts of Brute and Burn damage will be weighted more heavily in deciding whether you die or not. In practice this means that you previously could take 600 brute/burn damage before dropping dead, and now you can take 400.
 (t)tue apr 07 20
 (u)Ryumi
 (+)Added a bit more lighting to the Afterlife Bar's garden.
