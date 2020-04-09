@@ -451,7 +451,7 @@ var/sound/iomoon_alarm_sound = null
 
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
-		testR.fields += "Welcome to DUWANG System VI!"
+		testR.fields += "Welcome to DWAINE System VI!"
 		testR.fields += "This System Licensed to Xiang-Geisel Advanced Power Systems"
 		newfolder.add_file( testR )
 

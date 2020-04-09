@@ -2239,7 +2239,7 @@
 				else
 					return ..()
 
-		purge //Arrest anyone who isn't a DUWANG superuser.
+		purge //Arrest anyone who isn't a DWAINE superuser.
 			name = "purge"
 			task_id = "PURGE"
 			no_patrol = 0

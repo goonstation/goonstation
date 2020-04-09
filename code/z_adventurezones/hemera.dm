@@ -118,7 +118,7 @@ Obsidian Crown
 
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
-		testR.fields += "Welcome to DUWANG System VI!"
+		testR.fields += "Welcome to DWAINE System VI!"
 		testR.fields += "Hemera Research System Distribution"
 		newfolder.add_file( testR )
 

@@ -215,7 +215,7 @@
 				base_icon_state = "dwaine2"
 
 		zeta
-			name = "DUWANG Terminal"
+			name = "DWAINE Terminal"
 			setup_idscan_path = /obj/item/peripheral/card_scanner
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 

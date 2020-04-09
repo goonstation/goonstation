@@ -35,7 +35,7 @@
 	desc = "A mainframe computer. It's pretty big!"
 	density = 1
 	anchored = 1
-	icon_state = "DUWANG"
+	icon_state = "dwaine"
 	device_tag = "PNET_MAINFRAME"
 	timeout = 30
 	req_access = list(access_heads)

@@ -1027,7 +1027,7 @@
 	icon_state = "photo-heisenbee"
 
 /obj/item/paper/book/dwainedummies
-	name = "DUWANG for Dummies"
+	name = "DWAINE for Dummies"
 	icon_state = "orangebook"
 	info = {"<html>
 <head>
@@ -1078,11 +1078,11 @@ font-size:14px;
 
 <body>
 
-<h1>DUWANG for Dummies!</h1>
+<h1>DWAINE for Dummies!</h1>
 <p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date.<br>
 Point your browser to <a href=http://wiki.ss13.co/TermOS>http://wiki.ss13.co/TermOS</a> if anything seems amiss.</i>
 <h2>Introduction</h2>
-<p>If you're reading this book, it is likely that you have bought a DUWANG System Vi mainframe - but have no idea how to use it! Luckily for you, this book is here to teach you the basics.</p>
+<p>If you're reading this book, it is likely that you have bought a DWAINE System Vi mainframe - but have no idea how to use it! Luckily for you, this book is here to teach you the basics.</p>
 
 <h2>How to Use this Book</h2>
 <p>First off, for some bizarre reason you need to know how a book works.
@@ -1097,10 +1097,10 @@ Pictures are for losers and babies.</p>
 <div class="code">$: ls /butts</div>
 <br><br>
 <h2>Chapter 1: The Terminal</h2>
-<p>Operating a DUWANG mainframe is done solely through a terminal interface - graphics and icons and things are unnecessary and also are for tiny children with no understanding of REAL COMPUTERS.</p>
+<p>Operating a DWAINE mainframe is done solely through a terminal interface - graphics and icons and things are unnecessary and also are for tiny children with no understanding of REAL COMPUTERS.</p>
 <p>So, let's get started! After logging in, you will be presented with a prompt - usually following this format:</p>
 <div class="code">
-]GMelons@DUWANG - 12:00 03/04/52
+]GMelons@DWAINE - 12:00 03/04/52
 </div>
 <p>When you type in text and push the Enter key, you will notice your command is sent like this:</P>
 <div class="code">
@@ -1112,7 +1112,7 @@ Pictures are for losers and babies.</p>
 </div>
 <br><br>
 <h2>Chapter 1: Logging On</h2>
-<p>Before we can do anything, we need to log onto the network. This guide assumes you aren't already synched to your DUWANG mainframe.<br>
+<p>Before we can do anything, we need to log onto the network. This guide assumes you aren't already synched to your DWAINE mainframe.<br>
 Insert your ID into the ID card slot of your terminal.<br>
 Then, type
 <div class="code">
@@ -1137,11 +1137,11 @@ Then, with your ID inserted, simply type
 </div>
 <h2>Chapter 2: Basic Concepts</h2>
 <p>
-The first thing you need to know about DUWANG is the Filesystem.<br>
-There are no drives in DUWANG, no specific devices. Everything is a folder in DUWANG.
+The first thing you need to know about DWAINE is the Filesystem.<br>
+There are no drives in DWAINE, no specific devices. Everything is a folder in DWAINE.
 </p><p>
 The structure works like a tree, with everything starting at the "root" folder,
-and expanding outwards from there. A typical file path in DUWANG would look like
+and expanding outwards from there. A typical file path in DWAINE would look like
 this:<br>
 <div class="code">
 /home/GMelons/Pictures/pr0n_jpg
@@ -1268,7 +1268,7 @@ I like to read trashy romance novels!!!
 What a shocker, eh?
 <br>
 Writing files is a little bit different. At the time of writing this guide,
-no text editor existed for DUWANG so we have to make do with the
+no text editor existed for DWAINE so we have to make do with the
 <div class="code">
 >echo
 </div>
@@ -1311,15 +1311,15 @@ command.
 <br><br>
 <h2>Printing & Backups</h2>
 <p>
-Let's take a moment to go over devices in DUWANG.<br>
-There is no "print" function in DUWANG. Why? Because DUWANG stores devices as
+Let's take a moment to go over devices in DWAINE.<br>
+There is no "print" function in DWAINE. Why? Because DWAINE stores devices as
 folders, using drivers to communicate with them. Storage drives and printers
-appear in the <i>/mnt</i> folder in DUWANG.
+appear in the <i>/mnt</i> folder in DWAINE.
 <br>
 So, let's say we want to print off JGrife's embarrasing secrets and share them
 around the Research Sector - how do we do that?
 <br>
-Well, DUWANG's default printer driver works like this: if you move or copy a
+Well, DWAINE's default printer driver works like this: if you move or copy a
 file into the printer's folder, the printer reads the file and prints it off.
 Pretty simple, really!
 <div class="code">
@@ -1489,7 +1489,7 @@ The dock serves as more than just a battery charger, however: It is also allows 
 <li><b>PATROL:</b> Identical to the Secure task, with one exception: The Robuddy will patrol a set path based on navigational radio beacons.</li>
 </ul>
 <h2>Buddy Configuration</h2>
-<p>As previously stated, the PR-6 is configured and programmed through its charge dock, which is itself typically controlled by a networked Thinktronic mainframe running the DUWANG operating system.
+<p>As previously stated, the PR-6 is configured and programmed through its charge dock, which is itself typically controlled by a networked Thinktronic mainframe running the DWAINE operating system.
 "PRMAN" control software, with accompanying control driver and support scripts, is supplied with a standard Robuddy installation.
 PRMAN requires system operator privileges to operate, which may be granted through use of the "su" command.
 </p>

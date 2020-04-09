@@ -1141,7 +1141,7 @@
 "vW" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/listeningpost)
 "vX" = (/turf/simulated/wall/asteroid{dir = 4; icon_state = "ast1"},/area)
 "vY" = (/turf/simulated/floor/plating/airless/asteroid,/turf/simulated/wall/asteroid{dir = 10; icon_state = "ast1"},/area)
-"vZ" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "DUWANG"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/listeningpost)
+"vZ" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "How old is this?"; icon = 'icons/obj/networked.dmi'; icon_state = "dwaine"; name = "old mainframe"},/turf/simulated/floor/circuit,/area/listeningpost)
 "wa" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/circuit,/area/listeningpost)
 "wb" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/caution/west,/area/listeningpost)
 "wc" = (/obj/securearea{desc = ""; icon_state = "shock"; name = "Danger: High Voltage"},/turf/simulated/wall/auto/gannets,/area/listeningpost)
