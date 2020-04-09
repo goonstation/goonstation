@@ -1114,13 +1114,13 @@
 		var/turf/T = get_edge_target_turf(M, get_dir(user, M))
 		M.throw_at(T, 2, getProperty("impact"))
 
-	#ifdef COMSIG_ITEM_HIT_MOB
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_MOB, M, user, power, armor_mod)
-	#endif
 
 	msgs.damage = power
 	msgs.flush()
 	src.add_fingerprint(user)
+	#ifdef COMSIG_ITEM_HIT_MOB
+	SEND_SIGNAL(src, COMSIG_ITEM_HIT_MOB, M, user, power, armor_mod)
+	#endif
 	return
 
 /obj/item/onVarChanged(variable, oldval, newval)
