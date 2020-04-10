@@ -16,6 +16,7 @@
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+	var/isitspacemas = 0
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -30,6 +31,7 @@
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
+		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
 		src.UpdateOverlays(src.image_light, "light")
@@ -83,10 +85,16 @@
 			switch(src.health)
 				if(80 to 125)
 					boutput(usr, "<span style=\"color:red\">It is a little bit damaged.</span>")
+					if(!isitspacemas)
+						src.icon_state = "nuclearbomb1"
 				if(40 to 79)
 					boutput(usr, "<span style=\"color:red\">It looks pretty beaten up.</span>")
+					if(!isitspacemas)
+						src.icon_state = "nuclearbomb2"
 				if(1 to 39)
 					boutput(usr, "<span style=\"color:red\"><b>It seems to be on the verge of falling apart!</b></span>")
+					if(!isitspacemas)
+						src.icon_state = "nuclearbomb3"
 		return
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
