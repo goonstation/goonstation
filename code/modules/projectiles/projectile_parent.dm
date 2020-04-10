@@ -52,8 +52,9 @@
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-
-
+#if ASS_JAM
+	var/projectile_paused = FALSE //for time stopping
+#endif
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -86,6 +87,10 @@
 			src.setup()
 		is_processing = 1
 		while (!disposed)
+#if ASS_JAM //dont move while in timestop
+			while(src.projectile_paused)
+				sleep(10)
+#endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -536,7 +541,7 @@ datum/projectile
 		cost = 1                 // How much ammo this costs
 		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles. 
+		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
 		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
