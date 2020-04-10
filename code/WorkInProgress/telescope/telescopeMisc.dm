@@ -128,25 +128,11 @@ var/list/magnet_locations = list()
 
 		if (href_list["send"])
 			var/place = href_list["send"]
-			boutput(usr, "DEBUG: place=[place], Name=[href_list["send"]], len=[special_places.len], inplaces=[(href_list["send"] in special_places)]")
 			src.lrtsend(place)
 
 		if (href_list["recieve"])
 			var/place = href_list["recieve"]
 			src.lrtrecieve(place)
-
-/*		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
-
-		if(href_list["send"])
-			var/place = href_list["send"]
-			if(!place)
-				boutput(usr, "DEBUG: place=[place], Name=[href_list["send"]], len=[special_places.len], inplaces=[(href_list["send"] in special_places)]")
-			lrtsend(C)
-
-		if(href_list["recieve"])
-			var/datum/computer/file/coords/C = locate(href_list["recieve"])
-			lrtrecieve(C)*/
 
 //////////////////////////////////////////////////
 /datum/telescope_manager

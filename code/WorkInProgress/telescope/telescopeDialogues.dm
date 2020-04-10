@@ -154,7 +154,6 @@
 		onActivate(var/client/C)
 			if(!special_places.Find("Geminorum V"))
 				special_places.Add("Geminorum V")
-//				special_places["Geminorum V"] = "gemv" //name of landmark
 			return
 
 		canShow(var/client/C)
@@ -184,7 +183,6 @@
 		onActivate(var/client/C)
 			if(!special_places.Find("Hidden Workshop"))
 				special_places.Add("Hidden Workshop")
-//				special_places["Hidden Workshop"] = "workshop" //name of landmark
 			return
 
 		canShow(var/client/C)
