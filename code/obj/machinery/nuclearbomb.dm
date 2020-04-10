@@ -290,12 +290,10 @@
 			switch(src.health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"
-				if(40 to 79)
-					if(!isitspacemas)
-						src.icon_state = "nuclearbomb2"
-				if(1 to 39)
-					if(!isitspacemas)
-						src.icon_state = "nuclearbomb3"
+				if(40 to 80)
+					src.icon_state = "nuclearbomb2"
+				if(1 to 40)
+					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
 		src.health = max(0,src.health - amount)
