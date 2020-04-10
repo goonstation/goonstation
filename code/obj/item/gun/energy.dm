@@ -322,6 +322,7 @@
 	force = 5.0
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
+	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawgiver/sabre AND an egun.
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -345,6 +346,10 @@
 		..()
 		update_icon()
 		M.update_inhands()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/electronics/scanner))
+			nojobreward = 1
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -472,7 +477,7 @@
 	update_icon()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
-			ratio = round(ratio, 0.25) * 100	
+			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/wavegun)
 				src.icon_state = "wavegun[ratio]"
 				item_state = "wave"
