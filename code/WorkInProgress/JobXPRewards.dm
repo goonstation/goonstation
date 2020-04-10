@@ -225,10 +225,17 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		var/found = 0
-
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/egun/K = O
+			if (K.nojobreward) // Checks to see if it was scanned by a device analyzer
+				boutput(C.mob, "This [sacrifice_name] has forever been ruined by a device analyzer's magnets. It can't turn into a sword ever again!!")
+				src.claimedNumbers[usr.key] --
+				return
+			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
+				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
+				src.claimedNumbers[usr.key] --
+				return
 			C.mob.remove_item(K)
 			found = 1
 			qdel(K)
