@@ -326,8 +326,9 @@
 								return 1
 
 						continue
-
-
+					if ("cls", "clear")
+						message_user("Screen cleared.", "clear")
+						continue
 					//SCRIPTING COMMANDS FOLLOW:
 					//If - Evaluate an expression.  If true, set SCRIPT_IF_TRUE in scriptstat and continue piping
 					//if false, unset SCRIPT_IF_TRUE and continue to the next line
