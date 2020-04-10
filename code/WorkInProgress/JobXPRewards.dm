@@ -232,7 +232,7 @@ mob/verb/checkrewards()
 				boutput(C.mob, "This [sacrifice_name] has forever been ruined by a device analyzer's magnets. It can't turn into a sword ever again!!")
 				src.claimedNumbers[usr.key] --
 				return
-			if (K.deconstruct_flags == DECON_BUILT) //Checks to see if it was built from a frame
+			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
 				src.claimedNumbers[usr.key] --
 				return
