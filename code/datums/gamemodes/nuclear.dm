@@ -323,11 +323,8 @@
 	var/opdeathcount = 0
 	for(var/datum/mind/M in syndicates)
 		opcount++
-		if(!M.current || isdead(M.current) || inafterlife(M.current))
+		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
 			opdeathcount++ // If they're dead
-			continue
-		else if(isrobot(M.current) || issmallanimal(M.current))
-			opdeathcount++
 			continue
 
 		var/turf/T = get_turf(M.current)
