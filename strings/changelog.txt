@@ -1,5 +1,7 @@
 ﻿
 (t)thu apr 10 20
+(u)adharainspace
+(+)gives captains sabre a tooltip by making it use get_desc instead of examine
 (u)trerri
 (+)Made some small sprite changes to the deconstruction device sprite.
 (+)Redid examine text for deconstruction device.
