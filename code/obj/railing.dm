@@ -32,8 +32,8 @@
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
 		if (O == null)
-			return 0
 			logTheThing("debug", src, O, "Target is null! CanPass failed.")
+			return 0
 		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
 		if(air_group || (height==0))
@@ -110,6 +110,9 @@
 
 	yellow
 		color = "#ffe600"
+
+	cyan
+		color = "#00f7ff"
 
 	purple
 		color = "#cc00ff"
