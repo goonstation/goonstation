@@ -1,4 +1,8 @@
 ﻿
+(t)thu apr 10 20
+(u)Tarmunora
+(*)Surgical tools now hit a bit harder and pierce a bit of armor
+(*)Chemical dipped scalpels no longer are foiled by having the reagents fall out of your target on the same stab that they were transferred in
 (t)thu apr 09 20
 (u)TDHooligan
 (+)Sped up the chemicompiler significantly.
