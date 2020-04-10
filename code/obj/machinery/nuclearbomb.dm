@@ -85,16 +85,10 @@
 			switch(src.health)
 				if(80 to 125)
 					boutput(usr, "<span style=\"color:red\">It is a little bit damaged.</span>")
-					if(!isitspacemas)
-						src.icon_state = "nuclearbomb1"
 				if(40 to 79)
 					boutput(usr, "<span style=\"color:red\">It looks pretty beaten up.</span>")
-					if(!isitspacemas)
-						src.icon_state = "nuclearbomb2"
 				if(1 to 39)
 					boutput(usr, "<span style=\"color:red\"><b>It seems to be on the verge of falling apart!</b></span>")
-					if(!isitspacemas)
-						src.icon_state = "nuclearbomb3"
 		return
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
@@ -292,6 +286,16 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(!isitspacemas)
+			switch(src.health)
+				if(80 to 125)
+					src.icon_state = "nuclearbomb1"
+				if(40 to 79)
+					if(!isitspacemas)
+						src.icon_state = "nuclearbomb2"
+				if(1 to 39)
+					if(!isitspacemas)
+						src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
 		src.health = max(0,src.health - amount)
