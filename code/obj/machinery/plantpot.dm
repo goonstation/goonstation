@@ -732,10 +732,7 @@
 
 		if(src.reagents.total_volume)
 			average = src.reagents.get_average_color()
-			if(average.to_rgba() != src.water_sprite.color)
-				src.water_sprite.color = average.to_rgba()
-			else
-				average = null
+			src.water_sprite.color = average.to_rgba()
 
 		if(average || !current) //only update water level if there is no plant in the tray or reagent contents change color (cheap fix to a layer stacking issue)
 			UpdateOverlays(src.water_sprite, "water_fluid")
