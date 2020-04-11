@@ -831,6 +831,10 @@
 	if (!can_reach(M, src))
 		return
 
+	for (var/obj/item/cloaking_device/I in M)
+		if (I.active)
+			I.deactivate(M)
+			M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 
