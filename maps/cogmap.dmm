@@ -2407,7 +2407,7 @@
 "aUo" = (/obj/table/reinforced/bar/auto,/obj/item/clipboard,/obj/item/pen,/turf/simulated/floor,/area/station/crew_quarters/courtroom)
 "aUp" = (/obj/grille/steel,/obj/disposalpipe/segment,/obj/window/auto/reinforced,/turf/simulated/floor/plating,/area/station/crew_quarters/courtroom)
 "aUq" = (/obj/machinery/door/firedoor/pyro,/obj/machinery/door/airlock/pyro/glass,/turf/simulated/floor,/area/station/crew_quarters/courtroom)
-"aUr" = (/obj/bookshelf/persistent,/turf/simulated/floor/specialroom/chapel{dir = 8},/area/station/chapel/main)
+"aUr" = (/obj/bookshelf/persistent,/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/specialroom/chapel{dir = 8},/area/station/chapel/main)
 "aUs" = (/obj/machinery/door/firedoor/pyro,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/grey/side{dir = 8},/area/station/hallway/primary/central)
 "aUt" = (/obj/machinery/door/firedoor/pyro,/obj/disposalpipe/segment/transport,/turf/simulated/floor,/area/station/hallway/primary/central)
 "aUu" = (/obj/machinery/door/firedoor/pyro,/turf/simulated/floor,/area/station/hallway/primary/central)
