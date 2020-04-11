@@ -1,4 +1,15 @@
 ﻿
+(t)sat apr 11 20
+(u)Tarmunora
+(*)Cloakers now deactivate on picking things up, throwing, and unarmed specials
+(u)RichardGere
+(+)Fixed a bug that prevented players from swapping out the egun's power cell
+(*)Energy weapons can now have their power cells swapped out by clicking on the cells with an energy gun in hand
+(+)Fixed a bug that prevented players from swapping energy weapons to their other empty hand
+(u)SaccharineChampion
+(+)Added more cans to Atlas engineering storage, most notably its first empty cans.
+(u)adharainspace
+(+)Quantum telescope locations now work again
 (t)thu apr 10 20
 (u)Gannets
 (+)Nuclear operatives now pull their names from 6 callsign pools, nato alphabet, melee weapons, colors, birds, mammals and moons.
