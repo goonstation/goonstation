@@ -1,5 +1,10 @@
 ﻿
 (t)sat apr 11 20
+(u)Erinexx
+(*)New doughnuts sprites!
+(*)New bagel sprites!
+(*)New english muffin sprite!
+(+)Tweaked outline on fries sprite (what the fuck was i thinking before)
 (u)Tarmunora
 (*)Cloakers now deactivate on picking things up, throwing, and unarmed specials
 (u)RichardGere
