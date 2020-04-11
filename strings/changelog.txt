@@ -1,5 +1,7 @@
 ﻿
 (t)sat apr 11 20
+(u)Gannets
+(+)Removed Nuclear Operative assault rifle, marksman's rifle and light machine gun as options for item-arm surgery.
 (u)Erinexx
 (*)New doughnuts sprites!
 (*)New bagel sprites!
