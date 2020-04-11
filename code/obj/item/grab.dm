@@ -666,6 +666,22 @@
 
 		qdel(src)
 
+
+/obj/item/grab/block
+	c_flags = EQUIPPED_WHILE_HELD
+
+	New()
+		..()
+		setProperty("meleeprot", 5)
+		//test values prbably rethink later
+		setProperty("disorient_resist", 25)
+		setProperty("disorient_resist_eye", 25)
+		setProperty("disorient_resist_ear", 25)
+		//setProperty("block", 25)
+
+	attack_self()
+		.= 0
+
 ////////////////////////////
 //SPECIAL GRAB ITEMS STUFF//
 ////////////////////////////

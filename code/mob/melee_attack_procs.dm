@@ -195,6 +195,12 @@
 	if (S)
 		S.buckle_in(src,src,1)
 	else
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src)
+		G.assailant = src
+		src.put_in_hand(G, src.hand)
+		G.affecting = src
+		src.grabbed_by += G
+		/*
 		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
 			src.visible_message("<span style=\"color:red\"><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
@@ -202,6 +208,7 @@
 			mask.honk_nose(src)
 		else
 			src.visible_message("<span style=\"color:red\"><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
+		*/
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
 	if(!src || !target)
@@ -432,12 +439,8 @@
 
 /mob/living/carbon/human/check_block()
 	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_BLOCK_CHANCE+get_deflection())&& !equipped())
-		if (src.client && src.client.experimental_intents)
-			if (a_intent == INTENT_HELP)
-				return 1
-		else
-			if (a_intent == INTENT_DISARM)
-				return 1
+		if (istype(src.equipped(),/obj/item/grab/block))
+			return 1
 	return 0
 
 
@@ -462,7 +465,11 @@
 	else if (prob(src.get_total_block()))
 		visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
-		return 1
+		return
+
+	if (istype(src.equipped(),/obj/item/grab/block))
+		var/obj/item/grab/G = src.equipped()
+		qdel(G)
 
 	return ..()
 
