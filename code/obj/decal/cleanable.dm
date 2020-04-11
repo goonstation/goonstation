@@ -1064,6 +1064,43 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				src.sampled = 1
 				return 1
 
+/obj/decal/cleanable/voidpuke
+	name = "pool of... something"
+	desc= "Someone uh... definitely lost their... lunch? What the hell?"
+	density = 0
+	anchored = 1
+	icon = 'icons/effects/vomit.dmi'
+	icon_state = "void1"
+	random_icon_states = list("void1", "void2", "void3")
+	slippery = 70
+	can_sample = 1
+	sample_amt = 5
+	sample_reagent = "vomit"
+	sample_verb = "scoop"
+
+	Sample(var/obj/item/W as obj, var/mob/user as mob)
+		if (!src.can_sample || !W.reagents)
+			return 0
+		if (src.sampled)
+			user.show_text("There's not enough left of [src] to [src.sample_verb] into [W].", "red")
+			return 0
+
+		if (W.reagents.total_volume >= W.reagents.maximum_volume - (src.sample_amt - 1))
+			user.show_text("[W] is too full!", "red")
+			return 0
+		else
+			W.reagents.add_reagent("vomit", 2)
+			W.reagents.add_reagent("something", 2)
+			W.reagents.add_reagent("yuck", 1)
+
+			var/fluff = pick("twitches confusingly", "writhes unsettlingly", "burbles upsettedly", "glomps unnaturally")
+			user.visible_message("<span style=\"color:blue\"><b>[user]</b> is shoving their hands into [src] and scooping it into [W].<span style=\"color:red\">It [fluff].</span></span>",\
+			"<span style=\"color:blue\">You [src.sample_verb] some of the puke into [W].<span style=\"color:red\">It [fluff].</span></span>")
+			W.reagents.handle_reactions()
+			playsound(src.loc, "sound/effects/splat.ogg", 50, 1)
+			src.sampled = 1
+			return 1
+
 /obj/decal/cleanable/tomatosplat
 	name = "ruined tomato"
 	desc = "Gallows humour."

@@ -3237,6 +3237,21 @@ datum
 			mix_phrase = "The mixture dries into a pale blue powder."
 			mix_sound = 'sound/misc/fuse.ogg'
 
+		void_fluid
+			name = "Stablised Anomalous Semifluid"
+			id = "void_fluid"
+			result = "void_fluid"
+			result_amount = 1
+			required_reagents = list("water" = 1, "blood" = 1) //just a placeholder, dm me if you want suggestions!!
+			mix_phrase = "The solution rapidly turns purple and \"gloops\" up."
+			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/T = get_turf(holder.my_atom)
+				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+				s.set_up(3, 1, T)
+				s.start()
+
 	/*	helldrug // the worst thing. if splashed on floor, create void turf. if ingested, replace mob with crunch critter and teleport user to hell
 			name = "Cthonium"
 			id = "cthonium"

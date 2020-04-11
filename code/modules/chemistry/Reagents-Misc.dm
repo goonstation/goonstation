@@ -3917,6 +3917,58 @@ datum
 			description = "A low quality blend of chemical agents, water, an aggregate and cement."
 			concrete_strength = 1
 
+		void_fluid
+			name = "Stablised Anomalous Semifluid"
+			id = "void_fluid"
+			description = "And humankind marches onwards, off of their sphere and into the heavens. They do not stop to consider the effects of their actions and experiments. They only wish to go further and further, to bend the nature of the heavens to their wills. They do not stop, even when the cracks begin to reveal themselves. They do not relent."
+			reagent_state = LIQUID
+			fluid_r = 102
+			fluid_g = 0
+			fluid_b = 102
+			transparency = 200
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				if(volume < 5)
+					return
+				if(isrestrictedz(T.z))
+					return
+				if(istype(T, /turf/unsimulated))
+					return
+				if((istype(T, /turf/simulated/floor/void)) || (istype(T, /turf/simulated/wall/void)))
+					return
+				if(istype(T, /turf/simulated/floor))
+					playsound(T, "sound/machines/engine_alert3.ogg", 40, 1)
+					T.ReplaceWith(/turf/simulated/floor/void)
+					if(prob(5))
+						new /obj/critter/floateye(T)
+				else if(istype(T, /turf/simulated/wall))
+					playsound(T, "sound/machines/engine_alert3.ogg", 40, 1)
+					T.ReplaceWith(/turf/simulated/wall/void)
+					if(prob(5))
+						new /obj/critter/floateye(T)
+				else
+					return
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if ((holder.get_reagent_amount(src.id) >= 10) && prob(15)) //small(ish) prob to puke on life
+					var/turf/T = get_turf(M)
+					if (!locate(/obj/decal/cleanable/voidpuke) in T)
+						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						new /obj/decal/cleanable/voidpuke(T)
+						random_burn_damage(M, rand(1,6))
+						M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("hacks", "barfs", "hurls", "pukes", "vomits")] up some [pick("...uh... something", "shimmering slop", "weird purple goo", "shifty looking crud", "purple gunk")]?! [pick("What the hell?", "Grody!", "Is that healthy?")]</span>")
+						boutput(M, "<span style=\"color:red\">[pick("Urgh", "Damn", "God")]... that [pick("didn't feel good coming up", "didn't taste better coming up", "felt like puking up cement")].</span>")
+						if (prob(15))
+							boutput(M, "<span style=\"color:red\"><b>Something... else... is coming up, oh god!</b></span>")
+							sleep(20)
+							playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+							M.visible_message("<span style=\"color:red\"><b>[M]</b> pukes up a... a floating eyeball?! [pick("Ewwwwww...", "That's disturbing.", "Lord above!", "Good god!")]</span>")
+							new /obj/critter/floateye(T)
+				..()
+				return
+
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
 	desc = "Finally, a politician I can trust."
@@ -3965,5 +4017,3 @@ datum
 			else
 				walk_towards(src, src.deathtarget, deathspeed)
 				sleep(1)
-
-
