@@ -15,6 +15,9 @@
 (+)Fix messaging when repairing bleeding while having open surgical wounds
 (u)Scaltra
 (+)Adds the botanical mister as a valid transfer target for high capacity watering tanks
+(u)saccharineChampion
+(+)Additional argument in projectile code allows sounds to correctly play to drivers of large vehicles.
+(+)Large pod code changed to utilize this additional argument.
 (t)thu apr 09 20
 (u)TDHooligan
 (+)Sped up the chemicompiler significantly.
