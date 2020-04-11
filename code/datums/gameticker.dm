@@ -678,6 +678,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
 
+		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+			P.build_curr_contents()
+
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new

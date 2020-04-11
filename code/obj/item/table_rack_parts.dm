@@ -222,6 +222,20 @@ RACK PARTS
 	furniture_type = /obj/table/reinforced/chemistry/auto
 	furniture_name = "chemistry countertop"
 
+//bookshelf part construction
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/plank))
+			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
+			if (!do_after(user, 20))
+				return
+			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			new /obj/item/furniture_parts/bookshelf(get_turf(src))
+			qdel(src)
+			qdel(W)
+		else
+			..()
+
 /* ---------- Rack Parts ---------- */
 /obj/item/furniture_parts/rack
 	name = "rack parts"
