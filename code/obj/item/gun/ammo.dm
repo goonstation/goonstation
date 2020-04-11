@@ -825,23 +825,37 @@
 			else
 				return 0
 
+	attackby(obj/attacking_item as obj, mob/attacker as mob)
+		if(istype(attacking_item, /obj/item/gun/energy))
+			var/obj/item/ammo/power_cell/pcell = src
+			attacking_item.attackby(pcell, attacker)
+		else return ..()
+
 	swap(var/obj/item/gun/energy/E)
 		if(!istype(E.cell,/obj/item/ammo/power_cell))
 			return 0
-		var/obj/item/ammo/power_cell/temp = E.cell
+		var/obj/item/ammo/power_cell/swapped_cell = E.cell
 		var/mob/living/M = src.loc
-		if(!istype(M) || src != M.equipped())
-			return 0
+		var/atom/old_loc = src.loc
 
-		M.u_equip(src) // Fixed an instance of item teleportation here (Convair880).
+		if(istype(M) && src == M.equipped())
+			usr.u_equip(src)
+
 		src.set_loc(E)
 		E.cell = src
 
-		M.put_in_hand_or_drop(temp)
-		src.add_fingerprint(M)
+		if(istype(old_loc, /obj/item/storage))
+			swapped_cell.set_loc(old_loc)
+			var/obj/item/storage/cell_container = old_loc
+			cell_container.hud.remove_item(src)
+			cell_container.hud.update()
+		else
+			usr.put_in_hand_or_drop(swapped_cell)
+
+		src.add_fingerprint(usr)
 
 		E.update_icon()
-		temp.update_icon()
+		swapped_cell.update_icon()
 		src.update_icon()
 
 		playsound(get_turf(src), sound_load, 50, 1)
