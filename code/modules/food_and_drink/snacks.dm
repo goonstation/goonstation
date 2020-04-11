@@ -2111,9 +2111,9 @@
 
 /obj/item/reagent_containers/food/snacks/emuffin/butter
 	name = "buttered english muffin"
-	desc = "Just like the queen intended it."
+	desc = "Just like the Queen intended it."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "emuffin_butter"
+	icon_state = "emuffin-butter"
 	heal_amt = 2
 	food_color = "#6A532D"
 	initial_reagents = list("butter"=3)
