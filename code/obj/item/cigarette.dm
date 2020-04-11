@@ -13,9 +13,9 @@
 	force = 0
 	damtype = "brute"
 	throw_speed = 0.5
+	c_flags = EQUIPPED_WHILE_HELD
 	w_class = 1
 	var/on = 0
-	var/lastHolder = null
 	var/exploding = 0 //Does it blow up when it goes out?
 	var/flavor = null
 	var/nic_free = 0
@@ -24,6 +24,8 @@
 	var/buttstate = "cigbutt"
 	var/buttdesc = "cigarette butt"
 	var/buttname = "cigarette butt"
+	var/puffrate = 1
+	var/cycle = 4
 	rand_pos = 1
 	use_bloodoverlay = 0
 
@@ -95,6 +97,10 @@
 			if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
+			if(src && src.reagents)
+				puffrate = src.reagents.total_volume / 40 //40 active cycles (200 total, about 10 minutes)
+			if(exploding)
+				puffrate *= 8 //trick cigs detonate after 5 total cycles
 			if (!(src in processing_items))
 				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
 
@@ -233,90 +239,60 @@
 				if (9) message = "<B>[user]</B> pulls on [his_or_her(user)] [src.name]."
 				if (10) message = "<B>[user]</B> blows out some smoke in the shape of a [pick("butt","bee","shelterfrog","heart","burger","gun","cube","face","dog","star")]!"
 			user.visible_message("<span style='color:red'>[message]</span>", group = "blow_smoke")
+			src.reagents.trans_to(user, puffrate)
+			src.reagents.reaction(user, INGEST, puffrate)
 
 		src.puff_ready = 0
 
 	process()
-		var/atom/lastHolder = null
+		var/turf/location = src.loc
+		var/mob/M = null
 
-		//while (src.on == 1)
-		if (src.on == 1)
-			var/turf/location = src.loc
-			var/atom/holder = loc
-			var/isHeld = 0
-			var/mob/M = null
-
-			puff_ready = 1
-
-			if (!src.exploding && prob(20)) // cigs shouldn't go out instantly dang
-				if (ismob(location))
-					M = location
-					if(ishuman(M)) //HOLY DUPLICATE CODE BATMAN!!!
-						var/mob/living/carbon/human/H = M
-						if(H.traitHolder && H.traitHolder.hasTrait("smoker"))
-							src.reagents.remove_any(1)
-						else
-							if (prob(1))
-								H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-							src.reagents.trans_to(M, 1)
-							src.reagents.reaction(M, INGEST)
-							//lung damage
-							if (prob(28))
-								if (prob(70))
-									if (!H.organHolder.left_lung.robotic)
-										H.organHolder.damage_organ(0, 0, 1, "left_lung")
-								else
-									if (!H.organHolder.right_lung.robotic)
-										H.organHolder.damage_organ(0, 0, 1, "right_lung")
+		puff_ready = 1
+		if(cycle-- <= 0 || src.exploding)
+			cycle = 4 - (src.reagents ? min(4,round(src.reagents.maximum_volume/120)) : 0)  //every fifth cycle. Really big cigs get you really really high
+			if (ismob(location))
+				M = location
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn or in hand. Urs, the pocketsmoking if you have a cig in ur mouth is for you
+					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && istype(H.wear_mask, /obj/item/clothing/mask/cigarette)))) 
+						src.reagents.remove_any(puffrate)
 					else
-						src.reagents.trans_to(M, 1)
-						src.reagents.reaction(M, INGEST)
-				else if (src && src.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
-					src.reagents.remove_any(1)
-
-			else if (src.exploding)
-				if (ismob(location))
-					M = location
-					if(ishuman(M)) //HOLY DUPLICATE CODE BATMAN!!!
-						var/mob/living/carbon/human/H = M
-						if(H.traitHolder && H.traitHolder.hasTrait("smoker"))
-							src.reagents.remove_any(1)
-						else
-							if (prob(1))
-								H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-							src.reagents.trans_to(M, 1)
-					else
-						src.reagents.trans_to(M, 1)
-				else if (src && src.reagents) //Wire: fix for Cannot execute null.remove any().
-					src.reagents.remove_any(1)
-
-			if (!src.reagents || src.reagents.total_volume <= 0) //ZeWaka: fix for null.total_volume (syndie cigs)
-				if (src.exploding)
-					src.on = 0 //Let's not keep looping while we're busy blowing up, ok?
-					SPAWN_DBG((20)+(rand(1,10)))
-						trick_explode()
-					return
+						if (prob(1))
+							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
+						src.reagents.trans_to(M, puffrate)
+						src.reagents.reaction(M, INGEST, puffrate)
+						//lung damage
+						if (prob(28))
+							if (prob(70))
+								if (!H.organHolder.left_lung.robotic)
+									H.organHolder.damage_organ(0, 0, 1, "left_lung")
+							else
+								if (!H.organHolder.right_lung.robotic)
+									H.organHolder.damage_organ(0, 0, 1, "right_lung")
 				else
-					src.put_out(M, "<span style='color:red'><b>[M]</b>'s [src.name] goes out.</span>")
-					return
-			//if (istype(location, /turf)) //start a fire if possible
-			//	location.hotspot_expose(700, 5) // this doesn't seem to ever actually happen, gonna try a different setup - cogwerks
-			var/turf/T = get_turf(src.loc)
-			if (T)
-				T.hotspot_expose(650,5)
-			if (ismob(holder))
-				isHeld = 1
+					src.reagents.trans_to(M, puffrate)
+					src.reagents.reaction(M, INGEST, puffrate)
+			else if (src && src.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
+				src.reagents.remove_any(puffrate)
+
+		if (!src.reagents || src.reagents.total_volume <= 0) //ZeWaka: fix for null.total_volume (syndie cigs)
+			if (src.exploding)
+				src.on = 0 //Let's not keep looping while we're busy blowing up, ok?
+				processing_items.Remove(src)
+				SPAWN_DBG((20)+(rand(1,10)))
+					trick_explode()
+				return
 			else
-				isHeld = 0
-				if (lastHolder != null)
-					lastHolder = null
+				src.put_out(M, "<span style='color:red'><b>[M]</b>'s [src.name] goes out.</span>")
+				return
 
-			if (isHeld == 1)
-				lastHolder = holder
-			//sleep(10)
+		//if (istype(location, /turf)) //start a fire if possible
+		//	location.hotspot_expose(700, 5) // this doesn't seem to ever actually happen, gonna try a different setup - cogwerks
+		var/turf/T = get_turf(src.loc)
+		if (T)
+			T.hotspot_expose(650,5)
 
-		if (lastHolder != null)
-			lastHolder = null
 
 	dropped(mob/user as mob)
 		if (!isturf(src.loc))
