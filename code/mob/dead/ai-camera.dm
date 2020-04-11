@@ -691,7 +691,7 @@ world/proc/updateCameraVisibility()
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
 
-			LAGCHECK(LAG_MED)
+			LAGCHECK(100)
 
 		aiDirty = 1
 	for(var/obj/machinery/camera/C in cameras)
