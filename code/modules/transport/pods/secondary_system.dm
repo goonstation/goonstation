@@ -675,27 +675,42 @@
 				else
 					usr << output("ERR!&0", "ship_lock.browser:updateReadout")
 					var/code_attempt = uppertext(ckey(href_list["enter"]))
+					/*
+					Mastermind game in which the solution is "code" and the guess is "code_attempt"
+					First go through the guess and find any with the exact same position as in the solution
+					Increment rightplace when such occurs.
+					Then go through the guess and, with each letter, go through all the letters of the solution code
+					Increment wrongplace when such occurs.
+
+					In both cases, add a power of two corresponding to the locations of the relevant letters
+					This forms a set of flags which is checked whenever same-letters are found
+
+					Once all of the guess has been iterated through for both rightplace and wrongplace, construct
+					a beep/boop message dependant on what was gotten right.
+					*/
 					if (length(code_attempt) == 4)
-						var/i = 0
-						var/j = 0
-						var/incode = 0
+						var/guessplace = 0
+						var/codeplace = 0
+						var/guessflags = 0
+						var/codeflags = 0
+
+						var/wrongplace = 0
 						var/rightplace = 0
-						var/offset = 0
-						while (++i < 5)
-							if (copytext(code_attempt, i,i+1) == copytext(code, i, i + 1))
-								offset += 2 ** (i-1)
+						while (++guessplace < 5)
+							if ((((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, guessplace, guessplace + 1)))
+								guessflags += 2 ** (guessplace-1)
+								codeflags += 2 ** (guessplace-1)
 								rightplace++
-								incode++
-								continue
-						
-						i = 0
-						while (++i < 5)
-							j = 0
-							while(++j < 5)
-								if(i != j && (((offset - offset % (2 ** (j - 1))) / (2 ** (j - 1))) % 2 == 0) && (copytext(code_attempt, i,i+1) == copytext(code, j, j+1)))
-									offset += 2 ** (j-1)
-									incode++
-									j = 5
+
+						guessplace = 0
+						while (++guessplace < 5)
+							codeplace = 0
+							while(++codeplace < 5)
+								if(guessplace != codeplace && (((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (((codeflags - codeflags % (2 ** (codeplace - 1))) / (2 ** (codeplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, codeplace , codeplace + 1)))
+									guessflags += 2 ** (guessplace-1)
+									codeflags += 2 ** (codeplace-1)
+									wrongplace++
+									codeplace = 5
 
 						var/desctext = ""
 						switch(rightplace)
@@ -706,10 +721,10 @@
 							if (3)
 								desctext += "a trio of short beeps"
 
-						if (desctext && (incode - rightplace) > 0)
+						if (desctext && (wrongplace) > 0)
 							desctext += " and "
 
-						switch(incode - rightplace)
+						switch(wrongplace)
 							if (1)
 								desctext += "a short boop"
 							if (2)

@@ -145,7 +145,7 @@
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
-	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors")
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
@@ -323,11 +323,8 @@
 	var/opdeathcount = 0
 	for(var/datum/mind/M in syndicates)
 		opcount++
-		if(!M.current || isdead(M.current) || inafterlife(M.current))
+		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
 			opdeathcount++ // If they're dead
-			continue
-		else if(isrobot(M.current) || issmallanimal(M.current))
-			opdeathcount++
 			continue
 
 		var/turf/T = get_turf(M.current)
