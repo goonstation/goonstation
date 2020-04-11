@@ -1,5 +1,5 @@
 var/datum/telescope_manager/tele_man
-var/list/special_places = list() //associative List of name=/datum/computer/file/coords that can not be reached normally. For use with the telescope
+var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
 
 var/list/magnet_locations = list()
 
@@ -28,7 +28,7 @@ var/list/magnet_locations = list()
 
 		if(special_places.len)
 			for(var/A in special_places)
-				link_html += {"[A] <a href='?src=\ref[src];send=\ref[special_places[A]]'><small>(Send)</small></a> <a href='?src=\ref[src];recieve=\ref[special_places[A]]'><small>(Recieve)</small></a><br>"}
+				link_html += {"[A] <a href='?src=\ref[src];send=[A]'><small>(Send)</small></a> <a href='?src=\ref[src];recieve=[A]'><small>(Recieve)</small></a><br>"}
 		else
 			link_html = "<br>No co-ordinates available.<br>"
 
@@ -52,35 +52,41 @@ var/list/magnet_locations = list()
 	proc/mechcompsend(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/datum/computer/file/coords/C = special_places[input.signal]
-		if(C)
-			lrtsend(C)
+		var/place = special_places[input.signal]
+		if(place)
+			lrtsend(place)
 
 	proc/mechcomprecieve(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/datum/computer/file/coords/C = special_places[input.signal]
-		if(C)
-			lrtrecieve(C)
+		var/place = special_places[input.signal]
+		if(place)
+			lrtrecieve(place)
 
-	proc/is_good_location(var/datum/computer/file/coords/C)
+	proc/is_good_location(var/place)
 		if(special_places.len)
 			for(var/A in special_places)
-				if (C == special_places[A])
+				if (place == A)
 					return 1
 
 			return 0
 		else
 			return 0
 
-	proc/lrtsend(var/datum/computer/file/coords/C)
-		var/turf/target = locate(C.destx, C.desty, C.destz)
-		if(target && is_good_location(C))
-			busy = 1
+	proc/lrtsend(var/place)
+		if (place && src.is_good_location(place))
+			var/turf/target = null //set later
+			for (var/obj/landmark/lrt/potential in landmarks)
+				if (potential.name == place) //if the place we want to go has a matching landmark
+					target = potential.held_turf
+			if (!target) //we didnt find a turf to send to
+				return 0
+			src.busy = 1
 			flick("lrport1", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 			for(var/atom/movable/M in src.loc)
-				if(M.anchored) continue
+				if(M.anchored)
+					continue
 				animate_teleport(M)
 				if(ismob(M))
 					var/mob/O = M
@@ -90,14 +96,20 @@ var/list/magnet_locations = list()
 			return 1
 		return 0
 
-	proc/lrtrecieve(var/datum/computer/file/coords/C)
-		var/turf/target = locate(C.destx, C.desty, C.destz)
-		if(target && is_good_location(C))
-			busy = 1
+	proc/lrtrecieve(var/place)
+		if (place && src.is_good_location(place))
+			var/turf/target = null //set later
+			for (var/obj/landmark/lrt/potential in landmarks)
+				if (potential.name == place) //if the place we want to go has a matching landmark
+					target = potential.held_turf
+			if (!target) //we didnt find a turf to send to
+				return 0
+			src.busy = 1
 			flick("lrport1", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 			for(var/atom/movable/M in target)
-				if(M.anchored) continue
+				if(M.anchored)
+					continue
 				animate_teleport(M)
 				if(ismob(M))
 					var/mob/O = M
@@ -108,18 +120,19 @@ var/list/magnet_locations = list()
 		return 0
 
 	Topic(href, href_list)
-		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if (src.busy)
+			return
 
-		if(href_list["send"])
-			var/datum/computer/file/coords/C = locate(href_list["send"])
-			if(!C)
-				boutput(usr, "DEBUG: C=[C], Name=[href_list["send"]], len=[special_places.len], inplaces=[(href_list["send"] in special_places)]")
-			lrtsend(C)
+		if (get_dist(usr, src) > 1 || usr.z != src.z)
+			return
 
-		if(href_list["recieve"])
-			var/datum/computer/file/coords/C = locate(href_list["recieve"])
-			lrtrecieve(C)
+		if (href_list["send"])
+			var/place = href_list["send"]
+			src.lrtsend(place)
+
+		if (href_list["recieve"])
+			var/place = href_list["recieve"]
+			src.lrtrecieve(place)
 
 //////////////////////////////////////////////////
 /datum/telescope_manager
