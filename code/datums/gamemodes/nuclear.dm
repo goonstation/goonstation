@@ -145,7 +145,7 @@
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
-	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors")
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
