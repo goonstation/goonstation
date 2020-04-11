@@ -1,5 +1,7 @@
 ﻿
 (t)thu apr 10 20
+(u)Gannets
+(+)Nuclear operatives now pull their names from 6 callsign pools, nato alphabet, melee weapons, colors, birds, mammals and moons.
 (u)adharainspace
 (+)gives captains sabre a tooltip by making it use get_desc instead of examine
 (+)fixed radio host jumpsuit variants being invisible sometimes
