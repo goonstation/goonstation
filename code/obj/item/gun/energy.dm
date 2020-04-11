@@ -122,6 +122,8 @@
 				src.add_fingerprint(user)
 			else
 				return ..()
+		else
+			return ..()
 		return
 
 	proc/charge(var/amt)
