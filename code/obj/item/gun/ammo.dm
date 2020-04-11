@@ -826,10 +826,8 @@
 				return 0
 
 	attackby(obj/attacking_item as obj, mob/attacker as mob)
-		DEBUG_MESSAGE_VARDBG("ammo.attackby src is ", src)
 		if(istype(attacking_item, /obj/item/gun/energy))
 			var/obj/item/ammo/power_cell/pcell = src
-			DEBUG_MESSAGE_VARDBG("Attacked by ", attacking_item)
 			attacking_item.attackby(pcell, attacker)
 		else return ..()
 
