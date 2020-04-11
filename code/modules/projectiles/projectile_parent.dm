@@ -52,8 +52,9 @@
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-
-
+#if ASS_JAM
+	var/projectile_paused = FALSE //for time stopping
+#endif
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -86,6 +87,10 @@
 			src.setup()
 		is_processing = 1
 		while (!disposed)
+#if ASS_JAM //dont move while in timestop
+			while(src.projectile_paused)
+				sleep(10)
+#endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -95,6 +100,11 @@
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
 		if (A == shooter) return // never collide with the original shooter
+		if (ismob(A)) //don't doublehit
+			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
+				return
+			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
+				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
 
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
@@ -125,8 +135,9 @@
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
 			for (var/obj/O in A)
 				O.bullet_act(src)
-			if ((istype(A, /turf/simulated/wall) || istype(A, /turf/simulated/shuttle/wall)) && !goes_through_walls)
-				if (proj_data && proj_data.icon_turf_hit && !istype(A, /turf/simulated/shuttle/wall))
+			var/turf/T = A
+			if (T.density && !goes_through_walls)
+				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
 						W.forensic_impacts += src.forensic_ID
@@ -143,10 +154,34 @@
 				die()
 
 		else if (ismob(A))
-			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
-				return
+			if(pierces_left != 0) //try to hit other targets on the tile
+				var/turf/T = get_turf(A)
+				for (var/mob/X in T.contents)
+					if (X != A)
+						X.bullet_act(src)
+						pierces_left--
+						//holy duplicate code batman. If someone can come up with a better solution, be my guest
+						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
+							if (proj_data.hit_mob_sound)
+								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
+						for (var/obj/item/cloaking_device/S in X.contents)
+							if (S.active)
+								S.deactivate(X)
+								src.visible_message("<span style=\"color:blue\"><b>[X]'s cloak is disrupted!</b></span>")
+						for (var/obj/item/device/disguiser/D in A.contents)
+							if (D.on)
+								D.disrupt(X)
+								src.visible_message("<span style=\"color:blue\"><b>[X]'s disguiser is disrupted!</b></span>")
+						if (ishuman(X))
+							var/mob/living/carbon/human/H = X
+							H.stamina_stun()
+							if (istype(X, /mob/living/carbon/human/npc/monkey))
+								var/mob/living/carbon/human/npc/monkey/M = X
+								M.shot_by(shooter)
+
+					if(pierces_left == 0)
+						break
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
-				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 			for (var/obj/item/cloaking_device/S in A.contents)
@@ -159,9 +194,6 @@
 					src.visible_message("<span style=\"color:blue\"><b>[A]'s disguiser is disrupted!</b></span>")
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
-				//H.add_stamina(STAMINA_FLIP_COST * 0.5) //Refunds some stamina if you successfully tatically flip.
-									//loll actually this just awards you stamina for being shot by any bullet. I'm leaving it because it's maybe a fun thing. it's "adrenaline" ok
-									//3/10/2019 i changed my mind, this SUCKS!!
 				H.stamina_stun()
 				if (istype(A, /mob/living/carbon/human/npc/monkey))
 					var/mob/living/carbon/human/npc/monkey/M = A
@@ -318,10 +350,10 @@
 				ys = -1
 				y32 = -y32
 		var/max_t
-		if (proj_data.dissipation_rate)
+		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
 			max_t = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
 		else
-			max_t = 500 // why not
+			max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -387,9 +419,9 @@
 		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.dissipation_delay)
+		if (src.dissipation_ticker > src.proj_data.dissipation_delay || src.dissipation_ticker > src.proj_data.max_range)
 			src.power -= src.proj_data.dissipation_rate
-			if (src.power <= 0)
+			if (src.power <= 0 || src.dissipation_ticker > src.proj_data.max_range)
 				proj_data.on_max_range_die(src)
 				die()
 				return
@@ -507,8 +539,10 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
+		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power
+		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
+		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
 		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 		                            eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
@@ -596,22 +630,7 @@ datum/projectile
 				impact_image_effect("T", hit)
 				if (isliving(hit))
 					var/mob/living/L = hit
-
-
-
-#ifdef USE_STAMINA_DISORIENT
-					L.do_disorient(min(80 + (power),max(60,power*4)), weakened = power*2, stunned = power*2, disorient = min(power, 80), remove_stamina_below_zero = 0)
-					L.emote("twitch_v")
-#else
-					L.changeStatus("slowed", power)
-					L.change_misstep_chance(5)
-					L.emote("twitch_v")
-					if (L.getStatusDuration("slowed") > power)
-						L.changeStatus("stunned", power)
-					if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-						L.changeStatus("weakened", power)
-#endif
-
+					stun_bullet_hit(O,L)
 			return
 		tick(var/obj/projectile/O)
 			return
@@ -933,14 +952,10 @@ datum/projectile/snowball
 	P.yo = yo
 	return P
 
-/proc/stun_bullet_hit(var/obj/projectile/P, var/mob/living/M)
-	if (ishuman(M) && !isdead(M))
-		var/mob/living/carbon/human/H = M
-		H.changeStatus("stunned", max(H.getStatusDuration("stunned"), P.power*2.5))
-	else if (isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		R.changeStatus("stunned", max(R.getStatusDuration("stunned"), 50))
-	M.force_laydown_standup()
+/proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
+	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
+	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
+
 
 /proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)

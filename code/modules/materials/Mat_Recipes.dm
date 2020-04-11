@@ -123,3 +123,18 @@
 
 		if(one && two) return 1
 		else return 0
+
+/datum/material_recipe/plasmaglass
+	name = "plasmaglass"
+	result_id = "plasmaglass"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "plasmastone") one = 1
+			if(CM.mat_id == "glass") two = 1
+
+		if(one && two) return 1
+		else return 0

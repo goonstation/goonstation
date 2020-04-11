@@ -16,6 +16,7 @@
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+	var/isitspacemas = 0
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -30,6 +31,7 @@
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
+		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
 		src.UpdateOverlays(src.image_light, "light")
@@ -142,7 +144,7 @@
 				else
 					boutput(user, "<span style=\"color:red\">It isn't deployed, and you don't know how to deploy it anyway.</span>")
 			else
-				if (istype(NUKEMODE, /datum/game_mode/nuclear) && user.mind in NUKEMODE.syndicates)
+				if (istype(NUKEMODE, /datum/game_mode/nuclear) && (user.mind in NUKEMODE.syndicates))
 					boutput(user, "<span style=\"color:blue\">You don't need to do anything else with the bomb.</span>")
 				else
 					user.visible_message("<span style=\"color:red\"><b>[user]</b> kicks [src] uselessly!</span>")
@@ -284,6 +286,14 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(!isitspacemas)
+			switch(src.health)
+				if(80 to 125)
+					src.icon_state = "nuclearbomb1"
+				if(40 to 80)
+					src.icon_state = "nuclearbomb2"
+				if(1 to 40)
+					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
 		src.health = max(0,src.health - amount)

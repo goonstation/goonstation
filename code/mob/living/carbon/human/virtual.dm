@@ -45,7 +45,6 @@
 
 		qdel(src)
 		return
-		..()
 
 	disposing()
 		if (isghost && src.client)
@@ -57,7 +56,7 @@
 		..()
 
 	ex_act(severity)
-		src.flash(30)
+		src.flash(3 SECONDS)
 		if(severity == 1)
 			src.death()
 		return
@@ -148,14 +147,14 @@
 		if (!spell.holder)
 			return
 
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)

@@ -69,8 +69,6 @@
 
 		return respawned
 
-	return
-
 /mob/living/carbon/human/proc/monkeyize()
 	if (src.transforming || !src.bioHolder)
 		return
@@ -564,7 +562,7 @@
 	set category = "Ghost"
 
 	var/obj/machinery/ghost_catcher/catcher = null
-	if(by_type[/obj/machinery/ghost_catcher] && by_type[/obj/machinery/ghost_catcher].len)
+	if(length(by_type[/obj/machinery/ghost_catcher]))
 		catcher = by_type[/obj/machinery/ghost_catcher][1]
 
 	if (catcher)
@@ -582,7 +580,6 @@
 	if (usr && istype(usr, /mob/dead/observer))
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
-	..()
 
 
 
@@ -718,7 +715,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	else
 		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
-		
+
 		if(!src || !src.mind || !src.client)
 			return // prevent double-spawning etc.
 
@@ -872,7 +869,8 @@ var/respawn_arena_enabled = 0
 		newbody.key = src.key
 	equip_battler(newbody)
 	newbody.set_clothing_icon_dirty()
-	newbody.set_loc(pick(ass_arena_spawn).loc)
+	var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
+	newbody.set_loc(place.loc)
 	return
 
 ///////////////////

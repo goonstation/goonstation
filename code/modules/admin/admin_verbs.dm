@@ -138,6 +138,7 @@ var/list/admin_verbs = list(
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
+		/client/proc/jobbans,
 
 		// moved down from admin
 		/client/proc/cmd_admin_add_freeform_ai_law,
@@ -893,28 +894,6 @@ var/list/fun_images = list()
 	qdel(mymob)
 	H.JobEquipSpawned("Staff Assistant", 1)
 
-/client/proc/entangle_at_random()
-	set name = "Entangle Lockers at Random"
-	set desc = "Entangle every locker at random. Dangerous!"
-	set category = "Special Verbs"
-
-	admin_only
-	if(alert("Are you sure you want to do this?",,"Yes", "No") == "Yes")
-		message_admins("[key_name(src)] has entangled every locker!")
-		var/list/closets = list()
-		var/n_closets = 0
-		for(var/X in by_type[/obj/storage/closet])
-			var/obj/storage/closet/closet = X
-			closets += closet
-			n_closets++
-		for(var/i = 1, i < n_closets, i+=2)
-			var/obj/storage/A = pick(closets)
-			var/obj/storage/B = pick(closets)
-			closets -= A
-			closets -= B
-			A.entangled = B
-			B.entangled = A
-
 
 /client/proc/respawn_as_self()
 	set name = "Respawn As Self"
@@ -1419,7 +1398,7 @@ var/list/fun_images = list()
 	var/obj_path = get_one_match(obj_input, /atom/movable)
 	if (!obj_path)
 		return
-	
+
 	if(new_grenade)
 		var/obj/item/old_grenade/thing_thrower/nade = new
 		nade.count = input("How many things?", "How many things?", 8) as null|num

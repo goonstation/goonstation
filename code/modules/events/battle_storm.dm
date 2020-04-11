@@ -5,7 +5,7 @@
 	var/space_color = "#ff4646"
 	var/list/area/safe_areas = list()
 	var/list/safe_area_names = list()
-	var/list/safe_locations = list()
+	var/list/area/safe_locations = list()
 	var/activations = 0
 
 	New()
@@ -33,7 +33,7 @@
 		var/actualtime = timetoreachsec * 10
 
 		for (var/mob/N in mobs) // why N?  why not M?
-			N.flash(30)
+			N.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 		siren.repeat = 0
 		siren.channel = 5
@@ -48,7 +48,7 @@
 		siren.volume = 50
 
 		for (var/mob/N in mobs)
-			N.flash(30)
+			N.flash(3 SECONDS)
 
 #ifndef UNDERWATER_MAP
 		for (var/turf/space/S in world)
@@ -112,7 +112,7 @@
 			A.icon_state = ""
 			A.storming = 0
 		for (var/mob/N in mobs)
-			N.flash(30)
+			N.flash(3 SECONDS)
 
 proc/get_battle_area_names(var/list/strings)
 	. = ""

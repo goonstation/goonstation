@@ -35,7 +35,7 @@
 	add_hh_robot(-(src.health_brute), src.health_brute, src.health_brute_vuln)
 	add_hh_robot_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
 
-/mob/living/critter/flock/New(var/atom/loc/L, var/datum/flock/F=null)
+/mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 
 	// throw away the ability holder

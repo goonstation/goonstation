@@ -56,11 +56,12 @@ var/global
 
 	//obj/hud/main_hud1 = null
 
-	list/by_type = list()
+	list/list/by_type = list()
 
 	obj/screen/renderSourceHolder
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
-	list/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
@@ -146,7 +147,8 @@ var/global
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
-	"Mithril" = 'icons/mob/hud_human_quilty.dmi')
+	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
+	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
 
 	list/customization_styles = list("None" = "none",
 	"Balding" = "balding",
@@ -592,7 +594,7 @@ var/global
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null
 
-	list/powernets = null
+	list/datum/powernet/powernets = null
 
 	Debug = 0	// global debug switch
 	Debug2 = 0
@@ -696,7 +698,7 @@ var/global
 	camnet_needs_rebuild = 0 //Also what it says on the tin.
 	list/obj/machinery/camera/dirty_cameras = list() //Cameras that should be rebuilt
 
-	list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
+	list/list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
 	list/datum/particleSystem/mechanic/camera_path_list = list() //List of particlesystems that the connection display proc creates. I dunno where else to put it. :(
 	camera_network_reciprocity = 1 //If camera connections reciprocate one another or if the path is calculated separately for each camera
 	list/datum/ai_camera_tracker/tracking_list = list()
@@ -781,4 +783,25 @@ var/global/mentorhelp_text_color = "#CC0066"
 			C.images -= globalImages[key]
 		globalImages[key] = null
 		globalImages.Remove(key)
+	return
+
+/proc/addAIImage(var/image/I, var/key)
+	if(I && length(key))
+		aiImages[key] = I
+		for(var/mob/M in AIs)
+			if (M.client)
+				M << I
+		return I
+	return null
+
+/proc/getAIImage(var/key)
+	if(length(key) && aiImages[key]) return aiImages[key]
+	else return null
+
+/proc/removeAIImage(var/key)
+	if(length(key) && aiImages[key])
+		for(var/client/C in clients)
+			C.images -= aiImages[key]
+		aiImages[key] = null
+		aiImages.Remove(key)
 	return

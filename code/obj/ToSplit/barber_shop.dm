@@ -29,6 +29,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
+		AddComponent(/datum/component/transfer_on_attack)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -101,12 +102,17 @@
 	on_reagent_change()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
 
-/obj/stool/barber_chair
+/obj/stool/barber_chair //there shouldn't be any of these, here in case there's a secret map that has one, replace with /obj/stool/chair/comfy/barber_chair if you see one
+	name = "You shouldn't see me!"
+	desc = "You shouldn't be looking at this thing!"
+
+/obj/stool/chair/comfy/barber_chair
 	name = "barber chair"
-	desc = "Chair where hair can be cut"
-	icon = 'icons/obj/barber_shop.dmi'
+	desc = "A special chair designed for haircutting. You don't feel like any other chair would be good enough, it HAS to be one like this. You don't know why."
 	icon_state = "barberchair"
 	anchored = 1
+	arm_icon_state = "arm-barber"
+	parts_type = /obj/item/furniture_parts/barber_chair
 
 /obj/barber_pole
 	name = "barber pole"
@@ -116,76 +122,6 @@
 	anchored = 1
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 
-///////////////////////////////////////////
-///////////Barber Chair Code///////////////
-///////////////////////////////////////////
-/obj/stool/barber_chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if (!ticker)
-		boutput(user, "You can't buckle anyone in before the game starts.")
-		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
-		return
-	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[M] buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
-	else
-		user.visible_message("<span style=\"color:blue\">[M] is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [M].</span>")
-	M.anchored = 1
-	M.buckled = src
-	M.set_loc(src.loc)
-	src.add_fingerprint(user)
-	playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-	M.setStatus("buckled", duration = null)
-	return
-
-/obj/stool/barber_chair/attack_hand(mob/user as mob)
-	for(var/mob/M in src.loc)
-		if (M.buckled)
-			if (M != user)
-				user.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>", "<span style=\"color:blue\">You unbuckle [M].</span>")
-			else
-				user.visible_message("<span style=\"color:blue\">[M] unbuckles.</span>", "<span style=\"color:blue\">You unbuckle.</span>")
-			M.anchored = 0
-			M.buckled = null
-			src.add_fingerprint(user)
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-	return
-
-/obj/stool/barber_chair/ex_act(severity)
-	for(var/mob/M in src.loc)
-		if(M.buckled == src)
-			M.buckled = null
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-				return
-	return
-
-/obj/stool/barber_chair/blob_act(var/power)
-	if(prob(power * 2.5))
-		for(var/mob/M in src.loc)
-			if(M.buckled == src)
-				M.buckled = null
-		qdel(src)
-/*
-/obj/stool/barber_chair/verb/rotate()
-	set src in oview(1)
-	set category = "Local"
-
-	src.dir = turn(src.dir, 90)
-	if (src.dir == NORTH)
-		src.layer = FLY_LAYER
-	else
-		src.layer = OBJ_LAYER
-	return
-*/
 ///////////////////////////////////////////////////
 //////Hair Dye Bottle Code					///////
 ///////////////////////////////////////////////////
@@ -196,7 +132,7 @@
 		return
 	if(src.empty)
 		boutput(user, "<span style='color:red'>\The [src] is empty!</span>")
-	else //if(istype(M.buckled, /obj/stool/barber_chair))
+	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
@@ -237,7 +173,6 @@
 
 	if (src.reagents && src.reagents.total_volume)
 		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-		src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 	else
 		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 
@@ -245,7 +180,7 @@
 		return ..()
 	else
 		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+			src.reagents.trans_to(M,5)
 		return
 
 
@@ -258,7 +193,7 @@
 	if (user == M)
 		boutput(user, "<span style=\"color:red\">You can't cut your own hair!</span>")
 		return 0
-	if(istype(M.buckled, /obj/stool/barber_chair))
+	if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
@@ -329,7 +264,7 @@
 		M.emote("cry")
 		return
 
-	if(istype(M.buckled, /obj/stool/barber_chair))
+	if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))

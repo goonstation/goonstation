@@ -597,7 +597,6 @@
 				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transfrom"])
 				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
 					return
-					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
 				if (!howmuch)
 					return
@@ -1756,6 +1755,7 @@
 		/datum/manufacture/blue_tube,
 		/datum/manufacture/purple_tube,
 		/datum/manufacture/blacklight_tube,
+		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,

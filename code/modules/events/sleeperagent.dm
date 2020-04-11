@@ -24,8 +24,8 @@
 			message_admins("Setup of previous sleeper agents hasn't finished yet, aborting.")
 			return
 
-		var/agents = input(usr, "How many sleeper agents to awaken?", "Sleeper Agents", 0) as num
-		if (!agents)
+		var/agents = input(usr, "How many sleeper agents to awaken?", "Sleeper Agents", 0) as num|null
+		if (isnull(agents))
 			return
 		else
 			src.num_agents = agents
@@ -81,7 +81,7 @@
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
 		src.admin_override = initial(src.admin_override)
-#if ASS_JAM // no idea what this does or who did it 
+#if ASS_JAM // no idea what this does or who did it
 		var/list/sleepers = list()
 		for(var/mob/listener in listeners)
 			sleepers += new/obj/machinery/sleeper(get_turf(listener))

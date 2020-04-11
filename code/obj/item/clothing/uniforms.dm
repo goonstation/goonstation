@@ -247,7 +247,20 @@
 		icon_state ="trans"
 		item_state = "trans"
 
+	special
+		name = "pride-o-matic jumpsuit"
+		desc = "A corporate token of inclusivity, made in a sweatshop. This one is made of advanced fibres that can change color."
+		var/list/options
 
+		New()
+			..()
+			options = icon_states(src.icon) // gonna assume that the dmi will only ever have pride jumpsuits
+
+		attack_self(mob/user as mob)
+			if (src.options)
+				user.show_text("You change [src]'s style.")
+				src.icon_state = src.item_state = pick(options)
+				user.update_inhands()
 
 // RANKS
 
@@ -941,9 +954,17 @@
 	icon_state = "suitG"
 	item_state = "suitG"
 
+	blue
+		icon_state = "suit-capB"
+		item_state = "suit-capB"
+
 	dress
 		icon_state = "suitG-dress"
 		item_state = "suitG-dress"
+
+	dress/blue
+		icon_state = "suit-capB-dress"
+		item_state = "suit-capB-dress"
 
 /obj/item/clothing/under/suit/hop
 	name = "\improper Head of Personnel's suit"

@@ -1,6 +1,6 @@
 var/datum/dynamicQueue/delete_queue = new /datum/dynamicQueue(100) //List of items that want to be deleted
 
-var/datum/list/delete_queue_2[DELQUEUE_SIZE][0]
+var/list/datum/delete_queue_2[DELQUEUE_SIZE][0]
 var/datum/delqueue_pos = 1
 
 // hi i fucked up this file p bad. if it ends up being as bad as
@@ -133,5 +133,7 @@ proc/qdel(var/datum/O)
 // don't override this one, just call it instead of delete to get rid of something cheaply
 /datum/proc/dispose()
 	if (!disposed)
+		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()
+		SEND_SIGNAL(src, COMSIG_PARENT_POST_DISPOSING)
 		disposed = 1

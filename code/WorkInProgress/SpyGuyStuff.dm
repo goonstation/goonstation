@@ -486,7 +486,7 @@ proc/Create_Tommyname()
 			if(winexists(target, "[target_window].browser")) //Fuck if I know
 				target << output("\ref[src]", "[target_window].browser:setRef")
 			sleep(time_per_try + extrasleep++)
-		while(retries-- > 0 && target in connecting) //Keep trying to send the UI update until it times out or they get it.
+		while(retries-- > 0 && (target in connecting)) //Keep trying to send the UI update until it times out or they get it.
 
 		if(target in connecting)
 			connecting -= target

@@ -91,7 +91,7 @@
 		// low-pri list and move onto the next job - if we don't do this, the first time
 		// it hits a limitless job it'll get stuck on it and hand it out to everyone then
 		// boot the game up resulting in ~WEIRD SHIT~
-		else if (JOB.low_priority_job || JOB.limit < 0)
+		else if (JOB.low_priority_job)
 			low_priority_jobs += JOB.name
 			continue
 		// otherwise it's a normal role so it goes in that list instead

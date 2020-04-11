@@ -376,9 +376,8 @@
 				handimage.pixel_y = 6
 
 			if (H)
-				H.update_clothing()
+				//H.update_clothing()
 				H.update_body()
-				H.set_body_icon_dirty()
 				H.update_inhands()
 
 

@@ -91,6 +91,8 @@
 
 	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
+	var/experimental_intents = 0
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
@@ -425,7 +427,7 @@
 				var/cur = volumes.len
 				volumes = json_decode(decoded)
 				volumes.len = cur
-		
+
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
@@ -783,12 +785,12 @@ var/global/curr_day = null
 			if (!src || !src.mob)
 				return
 			var/target = href_list["nick"]
-			var/t = input("Message:", text("Private message to [target] (IRC)")) as null|text
-			if(!(src.holder && src.holder.rank in list("Host", "Coder")))
+			var/t = input("Message:", text("Private message to [target] (Discord)")) as null|text
+			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style=\"color:blue\" class=\"bigPM\">Admin PM to-<b>[target] (IRC)</b>: [t]</span>")
+			boutput(src.mob, "<span style=\"color:blue\" class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
 
@@ -806,7 +808,7 @@ var/global/curr_day = null
 					if (K.client.player_mode && !K.client.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (IRC)</b>: [t]</font>")
+						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -816,11 +818,11 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
-			if(!(src.holder && src.holder.rank in list("Host", "Coder")))
+			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [target] (IRC)</b>: <span class='message'>[t]</span></span>")
+			boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 			logTheThing("mentor_help", src, null, "<b>Mentor PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "Mentor PM'd [target]: [t]", "admin")
 
@@ -839,9 +841,9 @@ var/global/curr_day = null
 						if (K.client.player_mode && !K.client.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (IRC)</b>: <span class='message'>[t]</span></span>")
+							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (IRC)</b>: <span class='message'>[t]</span></span>")
+						boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 
 		if ("mentor_msg")
 			if (M)
@@ -853,7 +855,7 @@ var/global/curr_day = null
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
 					M = whois_ckey_to_mob_reference(href_list["target"])
-				if (!(src.holder && src.holder.rank in list("Host", "Coder")))
+				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 					t = strip_html(t,500)
 				if (!( t ))
 					return
@@ -1209,6 +1211,44 @@ var/global/curr_day = null
 
 	winset(src, null, "command=\".screenshot auto\"")
 	boutput(src, "<B>Screenshot taken!</B>")
+
+/client/verb/test_experimental_intents()
+	set hidden = 1
+	set name = "intent-test"
+
+	if (preferences)
+		if (!src.preferences.use_wasd)
+			boutput(src, "<B>Experimental intent switcher cannot be toggled on unless you enter WASD mode.</B>")
+			return
+	if (tg_controls)
+		boutput(src, "<B>Experimental intent switcher cannot be toggled when you are using TG controls.</B>")
+		return
+
+	if (!src.mob || !ishuman(mob))
+		boutput(src, "<B>Experimental intent switcher only works on humans right now.</B>")
+		return
+
+	experimental_intents = !experimental_intents
+	if (experimental_intents)
+		boutput(src, "<br><B>Experimental intent switcher ON.</B>")
+		boutput(src, "Hold space to enter 'combat' intent, which will let you Harm/Disarm if you left or right click. If you are holding an item, Disarm turns into Throw")
+		boutput(src, "Hold ctrl to enter 'grab' intent. Left click tries Grab, right click Pull.")
+
+		boutput(src, "<br>Also, CTRL+WASD emotes have been moved to 1-2-3-4 keys (this lets you hold CTRL while moving around. Scream is 2, you're welcome.")
+		boutput(src, "If you want to turn this off, type `intent-test` in the command bar at the bottom.<br>")
+
+		//lazy control scheme test : remove all this later for real tho
+		if (keymap)
+			keymap.keys.Remove("4S")
+			keymap.keys.Remove("4D")
+			keymap.keys.Remove("4A")
+			keymap.keys.Remove("4W")
+			keymap.keys["01"] = "salute"
+			keymap.keys["02"] = "scream"
+			keymap.keys["03"] = "dance"
+			keymap.keys["04"] = "wink"
+	else
+		boutput(src, "Experimental intent switcher <B>OFF</B>.")
 
 /client/proc/restart_dreamseeker_js()
 	boutput(src, "<img src='http://luminousorgy.goonhub.com/ffriends/drsingh' onerror=\"$.get('http://127.0.0.1:8080/restart-dreamseeker');\" />")

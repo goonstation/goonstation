@@ -36,10 +36,9 @@
 		M.stuttering = 0
 		M.drowsyness = 0
 
-		if (M.handcuffed)
-			M.visible_message("<span style=\"color:red\"><B>[M] rips apart the handcuffs with pure brute strength!</b></span>")
-			qdel(M.handcuffed)
-			M.handcuffed = null
+		if (M.hasStatus("handcuffed"))
+			M.visible_message("<span style=\"color:red\"><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+			M.handcuffs.destroy_handcuffs(M)
 		M.buckled = null
 
 		if (M.mutantrace)
@@ -234,14 +233,14 @@
 		if (!isturf(owner.holder.owner.loc))
 			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)

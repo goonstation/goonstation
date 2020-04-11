@@ -1563,6 +1563,101 @@
 			src.real_name = "RELIQUARY TEST - DO NOT USE"
 			src.set_mutantrace(/datum/mutantrace/reliquary_soldier)
 
+/datum/mutantrace/cow
+	name = "cow"
+	icon_state = "cow"
+	icon_override_static = 1
+	allow_fat = 1
+	override_attack = 0
+	voice_override = "cow"
+
+	New(var/mob/living/carbon/human/H)
+		..()
+		if(ishuman(mob))
+			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
+
+			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
+			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
+
+			hex_to_rgb_list(aH.customization_first_color)
+
+			detail_1.color = fix_colors(aH.customization_first_color)
+
+			mob.update_face()
+			mob.update_body()
+			mob.update_clothing()
+
+			H.blood_id = "milk"
+			H.blood_color = "FFFFFF"
+
+
+	disposing()
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			H.blood_id = initial(H.blood_id)
+			H.blood_color = initial(H.blood_color)
+		..()
+
+
+	proc/fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)
+
+	say_filter(var/message)
+		.= replacetext(message, "cow", "human")
+		.= replacetext(., "m", stutter("mm"))
+
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("scream")
+				if (mob.emote_check(voluntary, 50))
+					. = "<B>[mob]</B> moos!"
+					playsound(get_turf(mob), "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch())
+			if ("milk")
+				if (mob.emote_check(voluntary))
+					.= release_milk()
+			else
+				.= ..()
+
+	proc/release_milk() //copy pasted some piss code, im sorry
+		var/obj/item/storage/toilet/toilet = locate() in mob.loc
+		var/obj/item/reagent_containers/glass/beaker = locate() in mob.loc
+
+		var/can_output = 0
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if (H.blood_volume > 250)
+				can_output = 1
+
+		if (!can_output)
+			.= "<B>[mob]</B> strains, but fails to output milk!"
+		else if (toilet && (mob.buckled != null))
+			for (var/obj/item/storage/toilet/T in mob.loc)
+				.= "<B>[mob]</B> dispenses milk into the toilet. What a waste."
+				T.clogged += 0.10
+				break
+		else if (beaker)
+			.= pick("<B>[mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[mob]</B> takes aim and dispenses milk into the beaker!", "<B>[mob]</B> fills the beaker with milk!")
+			transfer_blood(mob, beaker, 10)
+		else
+			var/obj/item/reagent_containers/milk_target = mob.equipped()
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
+				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [milk_target].</B></span>")
+				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
+				transfer_blood(mob, milk_target, 10)
+				return
+
+			// possibly change the text colour to the gray emote text
+			.= (pick("<B>[mob]</B> milk fall out.", "<B>[mob]</B> makes a milk puddle on the floor."))
+
+			var/turf/T = get_turf(mob)
+			bleed(mob, 10, 3, T)
+			T.react_all_cleanables()
 
 
 #undef OVERRIDE_ARM_L

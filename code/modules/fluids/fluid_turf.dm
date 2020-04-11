@@ -18,8 +18,8 @@
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	fullbright = 0
-	luminosity = 3
+	fullbright = 1
+	luminosity = 1
 	intact = 0 //allow wire laying
 	throw_unlimited = 0
 	//todo fix : cannot flip.
@@ -287,10 +287,10 @@
 /turf/space/fluid/warp_z5/realwarp
 	New()
 		..()
-		if (locate(src.x,src.y+1,src.z).type != /turf/space/fluid/warp_z5/realwarp)
+		if (get_step(src, NORTH).type != /turf/space/fluid/warp_z5/realwarp)
 			icon_state = "pit_wall"
 
-		var/turf/space/fluid/under = locate(src.x,src.y-1,src.z)
+		var/turf/space/fluid/under = get_step(src, SOUTH)
 		if (under.type == /turf/space/fluid/warp_z5/realwarp)
 			under.icon_state = "pit"
 
@@ -306,7 +306,8 @@
 /turf/space/fluid/trench
 	name = "trench floor"
 	temperature = TRENCH_TEMP
-	luminosity = 2
+	fullbright = 0
+	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT
 
@@ -328,7 +329,7 @@
 
 //Manta
 /turf/space/fluid/manta
-	luminosity = 2
+	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_PLANTSMANTA
 	turf_flags = CAN_BE_SPACE_SAMPLE | MANTA_PUSH

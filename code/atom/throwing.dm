@@ -94,7 +94,7 @@
 				return
 
 		if(((C.in_throw_mode && C.a_intent == "help") || (C.client && C.client.check_key(KEY_THROW))) && !C.equipped())
-			if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.handcuffed || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
+			if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.hasStatus("handcuffed") || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
 				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>") //you're all thumbs!!!
 				// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
 				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
@@ -260,6 +260,10 @@
 		var/turf/T = src.loc
 		while (target && ( (((src.x < target_true_x && dx == EAST) || (src.x > target_true_x && dx == WEST)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+#if ASS_JAM
+			while(src.throwing_paused)//timestop effect
+				sleep(10)
+#endif
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -300,6 +304,10 @@
 		var/turf/T = src.loc
 		while (target && ( (((src.y < target_true_y && dy == NORTH) || (src.y > target_true_y && dy == SOUTH)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+#if ASS_JAM
+			while(src.throwing_paused)//timestop effect
+				sleep(10)
+#endif
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge

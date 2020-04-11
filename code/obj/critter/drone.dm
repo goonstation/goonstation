@@ -722,8 +722,6 @@
 				..()
 				name = "FishDrone CR-[rand(1,999)]b"
 				return
-				applyDeathState()
-				overlays += image('icons/obj/ship.dmi', "dying-overlay")
 
 
 			CritterDeath() //Yeah thanks for only supporting a single item, loot variable.

@@ -133,7 +133,6 @@ var/const/effectTypeFood = 4
 				return BE
 			else
 				return null
-		return null
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
@@ -272,7 +271,7 @@ var/const/effectTypeFood = 4
 			owner.handleCast()
 			return
 		else
-			user.targeting_spell = owner
+			user.targeting_ability = owner
 			user.update_cursor()
 
 	get_controlling_mob()

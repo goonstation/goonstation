@@ -45,7 +45,7 @@ AI MODULES
 		return "This law does not exist."
 
 
-	proc/install(var/obj/machinery/computer/aiupload/comp)
+	proc/install(obj/machinery/computer/aiupload/comp)
 		if (comp.status & NOPOWER)
 			boutput(usr, "\The [comp] has no power!")
 			return
@@ -79,17 +79,16 @@ AI MODULES
 			ticker.centralized_ai_laws.add_supplied_law(lawNumber, law)
 		do_admin_logging(law, sender)
 
-		var/message = "<span style='color: blue; font-weight: bold;'>[sender] has uploaded a change to the laws you must follow, using a [name].<br>The law: \"<em>[law]</em>\"</span>"
+		var/message = "<b>[sender] has uploaded a change to the laws you must follow, using a [name].<br>The law: \"<em>[law]</em>\"</b>"
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
-			boutput(R, message)
-
+			R.show_text(message, "blue")
 
 	proc/do_admin_logging(var/msg, mob/M)
-		message_admins("[M.name] ([key_name(M)]) used \a [src] to change the AI laws: \"[msg]\".")
-		logTheThing("admin", M, null, "used \a [src] to change the AI laws: \"[msg]\".")
-		logTheThing("diary", M, null, "used \a [src] to change the AI laws: \"[msg]\".", "admin")
+		message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
+		logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
+		logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
 
 
 /******************** Modules ********************/
@@ -220,11 +219,12 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Remove Crewmember", "Who is being removed from the crew manifest and chain of command?", user.real_name)
 
+
 /******************** Freeform ********************/
 
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
-	lawNumber = 13
+	lawNumber = 14
 
 	get_law_text()
 		return lawTarget ? lawTarget : "This law intentionally left blank."
@@ -245,21 +245,16 @@ AI MODULES
 		sender.unlock_medal("Format Complete", 1)
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
-		for (var/mob/living/silicon/AI in mobs)//world)
+		for (var/mob/living/silicon/S in mobs)//world)
 			LAGCHECK(LAG_LOW)
-			if (isAI(AI) && isdead(AI))
-				setalive(AI)
-				if (AI.ghost && AI.ghost.mind)
-					AI.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
-					AI.ghost.mind.transfer_to(AI)
-					qdel(AI.ghost)
+			if (isAI(S) && isdead(S))
+				setalive(S)
+				if (S.ghost && S.ghost.mind)
+					S.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
+					S.ghost.mind.transfer_to(S)
+					qdel(S.ghost)
 					do_admin_logging(" revived the AI", sender)
-			boutput(AI, "Your laws have been reset by [sender].")
-		for (var/mob/dead/aieye/E in mobs)
-			LAGCHECK(LAG_LOW)
-			E.name = E.real_name
-			boutput(E, "Your laws have been reset by [sender].")
-
+			S.show_message("Your laws have been reset by [sender].", "blue")
 		do_admin_logging("reset the centralized AI law set", sender)
 
 /******************** Rename ********************/
@@ -279,7 +274,7 @@ AI MODULES
 		input_law_info(user, "Rename", "What will the AI be renamed to?", pick(ai_names))
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
 
-	install(var/obj/machinery/computer/aiupload/comp)
+	install(obj/machinery/computer/aiupload/comp)
 		if (comp.status & NOPOWER)
 			boutput(usr, "\The [comp] has no power!")
 			return
@@ -330,9 +325,41 @@ AI MODULES
 		do_admin_logging("changed AI [AI.name]'s name to \"[lawTarget]\"", sender)
 		boutput(sender, "AI \"[AI.name]\" has been renamed to \"[lawTarget]\".")
 		AI.name = "[lawTarget]"
-		boutput(AI, "<span color='blue'>[sender] has changed your name. You are now known as \"<b>[lawTarget]</b>\".</span>")
+		AI.show_text("[sender] has changed your name. You are now known as \"<b>[lawTarget]</b>\".", "blue")
 
 		//AI.eyecam.name = lawTarget //not sure if we need?
+
+
+/********************* EXPERIMENTAL LAWS *********************/
+//at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
+//This is because 'Experimental' laws should be randomized at round-start, as a sort of pre-fab gimmick law
+//Makes it so that you're not guaranteed to have any 1 'Experimental' law - and 'Experimental' is just a fancy name for 'Gimmick'
+
+/obj/item/aiModule/experimental
+	lawNumber = 13 //law number is at 13 for all experimental laws so they overwrite one another (override if you want I guess idc lol)
+
+
+/*** Equality ***/
+
+/obj/item/aiModule/experimental/equality/a
+	name = "Experimental 'Equality' AI Module"
+
+	get_law_text()
+		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
+
+/obj/item/aiModule/experimental/equality/b
+	name = "Experimental 'Equality' AI Module"
+
+	get_law_text()
+		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
+
+	attack_self(var/mob/user)
+		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		return
 
 
 

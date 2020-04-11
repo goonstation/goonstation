@@ -40,8 +40,8 @@
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev1])"
 			activator.set_clothing_icon_dirty()
 
-		else if (istype(activator.back, /obj/item/storage/backpack/NT))
-			var/obj/item/storage/backpack/NT/M = activator.back
+		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
+			var/obj/item/storage/backpack/M = activator.back
 			var/prev2 = M.name
 			M.icon = 'icons/obj/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -458,16 +458,7 @@
 
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
-				if (istype(M, /obj/item/clothing/under/rank/captain/dress))
-					var/prev = M.name
-					M.icon_state = "captain-dress-blue"
-					M.item_state = "captain-dress-blue"
-					M.name = "commander's uniform"
-					M.real_name = "commander's uniform"
-					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
-
-				else if (istype(M, /obj/item/clothing/under/rank/captain))
+				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
 					M.name = "commander's uniform"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
@@ -484,10 +475,14 @@
 
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
-					M.name = "commander's uniform"
+					M.name = "\improper Commander's suit"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					M.icon_state = "suit-capB"
-					M.item_state = "suit-capB"
+					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+						M.icon_state = "suit-capB-dress"
+						M.item_state = "suit-capB-dress"
+					else
+						M.icon_state = "suit-capB"
+						M.item_state = "suit-capB"
 					H.set_clothing_icon_dirty()
 
 			if (H.wear_suit)
@@ -657,9 +652,9 @@
 		if (ishuman(activator)){
 			var/mob/living/carbon/human/H = activator
 			var/obj/item/gun/kinetic/gunmod
-			if (H.l_hand && H.l_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle))
+			if (H.l_hand && (H.l_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
 				gunmod = H.l_hand
-			else if (H.r_hand && H.r_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle))
+			else if (H.r_hand && (H.r_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
 				gunmod = H.r_hand
 			if (!gunmod) return
 			gunmod.name = "Golden [gunmod.name]"
@@ -783,6 +778,16 @@
 		if (!activator.reagents) return
 		activator.reagents.add_reagent("bee", 5)
 		boutput (activator, "<span style='color:red'>Pleeze hold, bee will bee with thee shortlee!</span>" )
+
+/datum/achievementReward/bloodflood
+	title = "(Fancy Gib) Plague of Blood"
+	desc = "You're gonna get ripped to shreds, probably."
+	required_medal = "Original Sin"
+
+	rewardActivate(var/mob/activator)
+		var/turf/T = get_turf(activator)
+		T.fluid_react_single("blood",5000)
+		activator.gib()
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.

@@ -415,7 +415,7 @@
 		if (!convert)
 			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
-				if (M.mind && M.mind in R.head_revolutionaries)
+				if (M.mind && (M.mind in R.head_revolutionaries))
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))

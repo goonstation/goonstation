@@ -472,7 +472,6 @@ Obsidian Crown
 			humHost.take_ear_damage(-INFINITY, 1)
 			humHost.health = 100
 			humHost.buckled = initial(humHost.buckled)
-			humHost.handcuffed = initial(humHost.handcuffed)
 			humHost.bodytemperature = humHost.base_body_temp
 
 			humHost.stat=0
@@ -494,7 +493,7 @@ Obsidian Crown
 		hear_voidSpeak("Time to leave already? Shame, shame, but what a time we had!")
 
 		for(var/mob/N in viewers(host, null))
-			N.flash(30)
+			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 4)
 				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")

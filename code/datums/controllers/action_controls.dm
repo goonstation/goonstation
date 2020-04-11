@@ -649,7 +649,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if(target.handcuffed)
+		if(target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -670,7 +670,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.handcuffed && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
 
 			var/obj/item/handcuffs/cuffs2
 
@@ -693,15 +693,15 @@ var/datum/action_controller/actions
 
 			if (cuffs2 && istype(cuffs2))
 				cuffs2.set_loc(target)
-				target.handcuffed = cuffs2
+				target.handcuffs = cuffs2
 			else
 				cuffs.set_loc(target)
-				target.handcuffed = cuffs
+				target.handcuffs = cuffs
 			target.drop_from_slot(target.r_hand)
 			target.drop_from_slot(target.l_hand)
 			target.drop_juggle()
 			target.update_clothing()
-			target.setStatus("handcuffed", duration = null)
+			target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span style=\"color:red\"><B>[owner] handcuffs [target]!</B></span>", 1)
@@ -724,7 +724,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if(!target.handcuffed)
+		if(!target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -739,12 +739,9 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
-		if(owner && target && target.handcuffed)
+		if(owner && target && target.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
-			H.handcuffed:set_loc(H.loc)
-			H.handcuffed.unequipped(H)
-			H.handcuffed = null
-			H.update_clothing()
+			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span style=\"color:red\"><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -770,14 +767,9 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
-		if(owner != null && ishuman(owner) && owner:handcuffed)
+		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
-			H.handcuffed:set_loc(H.loc)
-			H.handcuffed.unequipped(H)
-			H.handcuffed = null
-			H.update_clothing()
-			if (H.handcuffed)
-				H.handcuffed.layer = initial(H.handcuffed.layer)
+			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span style=\"color:red\"><B>[H] manages to remove the handcuffs!</B></span>", 1)
 			boutput(H, "<span style=\"color:blue\">You successfully remove your handcuffs.</span>")
@@ -902,9 +894,9 @@ var/datum/action_controller/actions
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
 				// only allow it if more than double that power remains to keep it from bottoming out
-				if (owner:cell.charge >= hpm_cost * 2)
+				if (UNLINT(owner:cell.charge >= hpm_cost * 2)) // i dont have the sanity to fix this
 					duration /= 3
-					owner:cell.use(hpm_cost)
+					UNLINT(owner:cell.use(hpm_cost))
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()
@@ -1138,7 +1130,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (M && M.resting && !M.stat && M.getStatusDuration("burning"))
+		if (M && M.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
 			M.update_burning(-1.2)
 
 			M.dir = turn(M.dir,up ? -90 : 90)
@@ -1163,8 +1155,8 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		M = owner
-		if (!M.resting)
-			M.resting = 1
+		if (!M.hasStatus("resting"))
+			M.setStatus("resting", INFINITE_STATUS)
 			var/mob/living/carbon/human/H = M
 			if (istype(H))
 				H.hud.update_resting()

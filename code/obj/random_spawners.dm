@@ -372,8 +372,10 @@
 	proc/set_up()
 		// choose pod to spawn and spawn it
 		src.spawn_pod()
+#ifdef RP_MODE
 		// everyone gets a lock
 		src.spawn_lock()
+#endif
 
 		// add the pod to the list of available random pods
 		if (islist(random_pod_codes))
@@ -627,7 +629,8 @@
 		/obj/item/clothing/under/gimmick/shirtnjeans,
 		/obj/item/clothing/under/gimmick/hakama/random,
 		/obj/item/clothing/under/gimmick/eightiesmens,
-		/obj/item/clothing/under/gimmick/eightieswomens)
+		/obj/item/clothing/under/gimmick/eightieswomens,
+		/obj/item/clothing/under/gimmick/ziggy)
 
 /obj/random_item_spawner/mask
 	name = "random mask spawner"
@@ -720,7 +723,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd)
 
-/obj/random_item_spawner/shoe 
+/obj/random_item_spawner/shoe
 	name = "random shoe spawner"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
@@ -801,3 +804,14 @@
 						/obj/item/gun/kinetic/pistol,
 						/obj/item/gun/kinetic/assault_rifle,
 						/obj/item/gun/kinetic/light_machine_gun)
+
+/obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
+//intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
+
+	name = "experimental law module spawner"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
+
+	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
+						/obj/item/aiModule/experimental/equality/b)

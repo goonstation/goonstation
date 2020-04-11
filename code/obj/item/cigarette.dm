@@ -82,7 +82,6 @@
 			return
 		else
 			return ..()
-		return
 
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
@@ -481,7 +480,11 @@
 			if(prob(5))
 				src.reagents.add_reagent("triplemeth",5)
 
-
+#if ASS_JAM
+/obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding // Wow! What an example!
+	buttdesc = "Ain't twice the 'Rillo it used to be."
+	exploding = 1
+#endif
 
 /obj/item/clothing/mask/cigarette/propuffs
 	desc = "Pro Puffs - a new taste thrill in every cigarette."

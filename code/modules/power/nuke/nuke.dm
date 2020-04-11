@@ -76,7 +76,7 @@
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 
-	var/fuel_array[9][9]
+	var/obj/item/nuke/rod/fuel_array[9][9]
 	var/debug = 1
 	var/displayHtml = ""
 	var/datum/nuke_knobset = null

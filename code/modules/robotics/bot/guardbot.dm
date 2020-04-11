@@ -1704,7 +1704,7 @@
 			look_for_perp()
 				if(src.arrest_target) return //Already chasing somebody
 				for (var/mob/living/carbon/C in view(7,master)) //Let's find us a criminal
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					if (src.assess_perp(C))
@@ -1780,7 +1780,7 @@
 
 					if(arrest_target)
 
-						if(!arrest_target in view(7,master) && !master.moving)
+						if(!(arrest_target in view(7,master)) && !master.moving)
 							//qdel(master.mover)
 							master.frustration += 2
 							if (master.mover)
@@ -1816,7 +1816,7 @@
 											if (!master || !master.on || master.idle || master.stunned)
 												src.cuffing = 0
 												return
-											if (arrest_target.handcuffed || !isturf(arrest_target.loc))
+											if (arrest_target.hasStatus("handcuffed") || !isturf(arrest_target.loc))
 												drop_arrest_target()
 												return
 
@@ -1829,8 +1829,8 @@
 													return
 
 											if(iscarbon(arrest_target))
-												arrest_target.handcuffed = new /obj/item/handcuffs/guardbot(arrest_target)
-												arrest_target.setStatus("handcuffed", duration = null)
+												arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(arrest_target)
+												arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 												boutput(arrest_target, "<span style=\"color:red\">[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
 												arrest_target:set_clothing_icon_dirty()
 
@@ -2032,7 +2032,7 @@
 			look_for_perp()
 				if(src.arrest_target) return //Already chasing somebody
 				for (var/mob/living/carbon/C in view(7,master)) //Let's find us a criminal
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 60))
@@ -2147,12 +2147,12 @@
 
 				if (istype(perp.r_hand))
 					. += perp.r_hand.contraband
+				if(ishuman(perp))
+					if (istype(perp.belt))
+						. += perp.belt.contraband * 0.5
 
-				if (istype(perp:belt))
-					. += perp:belt.contraband * 0.5
-
-				if (istype(perp:wear_suit))
-					. += perp:wear_suit.contraband
+					if (istype(perp.wear_suit))
+						. += perp.wear_suit.contraband
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
@@ -2172,7 +2172,7 @@
 				if(src.hug_target)
 					return
 				for (var/mob/living/carbon/C in view(7,master)) //Let's get some candy!
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 60))
@@ -2334,7 +2334,7 @@
 					handle_arrest_function() //So we don't have to wait for the next process. LIVES ARE ON THE LINE HERE!
 					return
 
-				if(!protected in view(7,master) && !master.moving)
+				if(!(protected in view(7,master)) && !master.moving)
 					//qdel(master.mover)
 					master.frustration++
 					if (master.mover)
@@ -2996,7 +2996,7 @@
 		proc
 			look_for_threat()
 				for (var/mob/living/carbon/C in view(7,master)) //Let's find us a criminal
-					if ((C.stat) || (C.handcuffed))
+					if ((C.stat) || (C.hasStatus("handcuffed")))
 						continue
 
 					var/threat = 0

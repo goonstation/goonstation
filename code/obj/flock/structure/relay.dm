@@ -85,7 +85,7 @@
 	// BOOOOOM
 	for(var/mob/M in mobs)
 		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 60, 0, 2)
-		M.flash(30)
+		M.flash(3 SECONDS)
 	SPAWN_DBG(1 SECOND)
 		emergency_shuttle.incall()
 		emergency_shuttle.can_recall = 0 // yeah centcom's coming no matter what

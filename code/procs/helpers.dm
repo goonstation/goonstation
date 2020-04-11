@@ -303,11 +303,9 @@ proc/get_angle(atom/a, atom/b)
 
 	if (!( istext(HTMLstring) ))
 		CRASH("Given non-text argument!")
-		return
 	else
 		if (length(HTMLstring) != 7)
 			CRASH("Given non-HTML argument!")
-			return
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
@@ -2427,7 +2425,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			var/mob/M = TA.loc
 			M.show_text("[TA] identifies and removes a harmful substance.", "red")
 		else
-			TA.visible_message("<span style=\"color:red\">[src] identifies and removes a harmful substance.</span>")
+			TA.visible_message("<span style=\"color:red\">[TA] identifies and removes a harmful substance.</span>")
 
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)
@@ -2471,11 +2469,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 
 
 
-proc/get_manhattan_dist(atom/A,atom/B)
-	if (!A || !B)
-		.= 0
-	else
-		.= abs(A.x - B.x) + abs(A.y - B.y)
 
 proc/time_to_text(var/time)
 	. = list()
@@ -2498,6 +2491,6 @@ proc/time_to_text(var/time)
 
 	if(time == 1 SECOND)
 		. += "1 second"
-	else if(time || !(.).len)
+	else if(time || !length(.))
 		. += "[round(time / (1 SECOND), 0.1)] seconds"
 	. = jointext(., " ")

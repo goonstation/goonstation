@@ -1,5 +1,98 @@
 ﻿
-(t)mon mar 31 20
+(t)thu apr 10 20
+(u)adharainspace
+(+)gives captains sabre a tooltip by making it use get_desc instead of examine
+(u)trerri
+(+)Made some small sprite changes to the deconstruction device sprite.
+(+)Redid examine text for deconstruction device.
+(u)Tarmunora
+(*)Surgical tools now hit a bit harder and pierce a bit of armor
+(*)Chemical dipped scalpels no longer are foiled by having the reagents fall out of your target on the same stab that they were transferred in
+(u)Scaltra
+(+)Adds the botanical mister as a valid transfer target for high capacity watering tanks
+(t)thu apr 09 20
+(u)TDHooligan
+(+)Sped up the chemicompiler significantly.
+(u)saccharineChampion
+(+)Corrected improper feedback on incorrect pod and secure safe lock guesses.
+(t)wed apr 08 20
+(u)mbc
+(*)High amounts of Brute and Burn damage will be weighted more heavily in deciding whether you die or not. In practice this means that you previously could take 600 brute/burn damage before dropping dead, and now you can take 400.
+(t)tue apr 07 20
+(u)Ryumi
+(+)Added a bit more lighting to the Afterlife Bar's garden.
+(t)mon apr 06 20
+(u)mbc
+(*)Fixed a number of assorted bugs where blood cleanables would get wrong unit amounts and bloody footprints were handling things improperly
+(*)Fixed bloodletting not working if you were under the max bleed level (that means when you bleed,  some reagents in bloodstream should properly come out with the blood regardless of the bleed type)
+(*)Made some changes that should increase client side FPS a bit, especially on ocean maps (water on station zlevel will look a little bit uglier re:lighting, sorry)
+(t)sun apr 05 20
+(u)mbc
+(*)You can now buckle into chairs by clicking yourself while standing on them. Same with climbing on chairs - click self with grab intent.
+(u)Flaborized
+(*)Added a new colorblind accessible HUD option! You can access it in the character setup options.
+(u)Flourish
+(*)Added Roach and Saxophone as spacebux rewards.
+(*)Disaster mode now includes a wraith at roundstart.
+(u)pali
+(*)Nukies on ass day can now get much wilder target locations.
+(+)Until we rework matsci somewhat light bulbs, light tubes and tripod bulbs are now 5 times more expensive when it comes to material cost
+(u)adharainspace
+(*)Added fancy new RCD sprites, courtesy of Flaborized!
+(u)Jero1717
+(*)Made Robustris Pro fancier and better
+(t)sat apr 04 20
+(u)ZeWaka
+(+)Handcuffing should be more consistent across the board.
+(u)Awkward Dryad
+(+)Fixed a plate stack runtime error.
+(*)Plates can now be stacked one by one instead of click-drag only.
+(u)mbc
+(+)Fixed bug where attack particle showed incorrect sprite when the attack obj was being deleted or dropped
+(+)Fixed bug where hit twitch animations wouldnt play in many circumstances
+(u)Nexusuxen
+(*)Added experimental "Equality" silicon law module.
+(u)Mordent
+(+)Fixed bug with cable coils in cyborg modules not having the correct amount.
+(+)Fixed bug with steel rods and cable coils in cyborg modules not starting with the correct sprite.
+(u)Tarmunora
+(*)Added range falloff to stun projectiles (to a minimum of half initial power)
+(*)Stun projectile pointblanks no longer apply bonus stuns on top of what the projectile would normally do
+(*)Reworked the wavegun found in QM experimental weapons crates to have more unique firing modes, all of which have non-standard range characteristics - try them out and experiment! Includes shiny new sprites by Flaborized
+(*)Rebalanced the detain and pulse projectiles to be hopefully closer together in power: detain now stuns in 2-3 shots, pulse now experiences some falloff with range on the disorient and throw
+(*)Taser shotgun pointblank implemented, and regular firing slightly rebalanced
+(+)Hopefully killed any last traces of the projectile doublehit bug
+(t)fri apr 03 20
+(u)archlinuxusa
+(+)Eggs no longer produce a meaty explosion in the microwave, splattered egg will now splatter all over your microwave... Yummy.
+(u)RichardGere
+(*)Reduced the stamina damage dealt by csabers
+(u)Erinexx
+(*)New dough, produce, herb, bowling melon, and snack sprites!
+(+)Shitty jpg pancake sprites have been preserved for future use <3
+(*)Clockwork orange is now a little more vivacious
+(*)A bunch of other new food sprites!
+(t)thu apr 02 20
+(u)mbc
+(*)Added Cow mutantrace. It has special speech and scream sounds! You can purchase it in the spacebux menu.
+(u)AlfredoChicken
+(*)Added Folding Tables
+(u)Flourish
+(*)Added some spacebux rewards as suggested in one of our monthly contests - Mail Order, NT Backpack, Pride-O-Matic Jumpsuit, and Dancin Shoes.
+(u)ManlyDwarf
+(*)Added a new traitor objective to steal Gooncode.
+(t)wed apr 01 20
+(u)mbc
+(*)New tile-fling special attack for crowbars.
+(*)Fixed bug where an item with a material property could have its throwforce weakened below its base value.
+(*)Improved the damage of basic special attacks to match their direct-click power levels (they still can't crit, that should be the main drawback)
+(u)Flaborized, SimianC, and Flourish
+(*)<a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14229">Apply to be a clown 2day!</a>
+(u)Tarmunora
+(*)Add a recipe for plasmaglass in the arc smelter (plasmastone and glass)
+(u)RichardGere
+(*)Added simethicone + superfart gibbing.
+(t)tue mar 31 20
 (u)ZeWaka
 (*)Reorganized Centcom a bunch.
 (u)Gannets
@@ -12,8 +105,8 @@
 (*)AwkwardDryad : Zoldorf (there's a new item in that wizard-in-a-box, go hack it to access the item and start something wonderful)
 (t)mon mar 23 20
 (u)pali
-(*)AwkwardDryad : Emergency hood now covers hair
-(*)Sidewinder7 : Chemicompiler improvement
+(+)AwkwardDryad : Emergency hood now covers hair
+(+)Sidewinder7 : Chemicompiler improvement
 (*)Polivilas : Compact medical sleepers (in escape shuttles for now)
 (*)glassofmilk : Dispatch mechcomp component
 (*)Polivilas : Owners of the Too Cool medal (monthly contest winners) can now use the :shelterbee: emote in OOC

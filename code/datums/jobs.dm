@@ -851,15 +851,16 @@
 
 /datum/job/civilian/clown
 	name = "Clown"
-	wages = 1
-	limit = 1 
-	//needs_college = 1
+	wages = 1000
+	needs_college = 1
 	linkcolor = "#FF99FF"
 	slot_back = null
 	slot_belt = /obj/item/storage/fanny/funny
 	slot_mask = /obj/item/clothing/mask/clown_hat
+	slot_head = /obj/item/clothing/head/graduation_cap
 	slot_jump = /obj/item/clothing/under/misc/clown
 	slot_foot = /obj/item/clothing/shoes/clown_shoes
+	slot_rhan = /obj/item/toy/diploma
 	slot_lhan = /obj/item/instrument/bikehorn
 	slot_poc1 = /obj/item/device/pda2/clown
 	slot_poc2 = /obj/item/reagent_containers/food/snacks/plant/banana
@@ -878,7 +879,7 @@
 			return
 		var/datum/bioEffect/incurableClowniness = M.bioHolder.AddEffect("clumsy")
 		incurableClowniness.curable_by_mutadone = 0
-		if (prob(10))
+		if (prob(50))
 			M.bioHolder.AddEffect("accent_comic")
 
 // AI and Cyborgs
@@ -1357,7 +1358,7 @@
 		..()
 		if (!M)
 			return
-		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob)
+		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 		M.set_mutantrace(morph)
 
 /datum/job/special/random/testsubject

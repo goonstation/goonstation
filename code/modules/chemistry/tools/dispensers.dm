@@ -65,7 +65,7 @@
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
 	MouseDrop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister))
 			return ..()
 
 		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
@@ -453,7 +453,7 @@
 
 		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
 			if (islist(W:brew_result) && W:brew_result:len)
-				W:brew_result += W:reagents.reagent_list
+				W:brew_result += W.reagents.reagent_list
 
 		//var/brewed_name = null
 		if (islist(W:brew_result) && W:brew_result:len)

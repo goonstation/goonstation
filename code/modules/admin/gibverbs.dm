@@ -182,6 +182,27 @@
 
 		SPAWN_DBG(0.5 SECONDS) M:implode()
 
+/client/proc/cmd_admin_buttgib(mob/M as mob in world)
+	set category = null
+	set name = "Butt Gib"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (!ishuman(M))
+		boutput(src, "<span style=\"color:red\">Only humans can be buttgibbed.</span>")
+		return
+
+	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing("admin", usr, M, "has buttgibbed %target%")
+			logTheThing("diary", usr, M, "has buttgibbed %target%", "admin")
+			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
+
+		SPAWN_DBG(0.5 SECONDS) M:buttgib()
+
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
 	set category = null
 	set name = "Cluwne Gib"
@@ -372,7 +393,7 @@
 	anchored = 0
 	var/mob/tysontarget2 = null
 	var/tysonmins2 = null
-	var/caller = null
+	var/mob/caller = null
 	var/tysonreason = null
 	var/tysoncantreach = 0
 	var/timelimit = 6
@@ -437,7 +458,7 @@
 			boutput(tysontarget2, "<span style=\"color:red\">This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
 			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
 			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
-			message_admins("<span style=\"color:blue\">[caller:client.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
+			message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
 //			if(ishuman(tysontarget2))
@@ -459,7 +480,7 @@
 	anchored = 0
 	var/mob/tysontarget2 = null
 	var/tysonspeed = 1
-	var/caller = null
+	var/mob/caller = null
 
 	New()
 		SPAWN_DBG(0) process()
@@ -501,7 +522,7 @@
 			if(tysontarget2 && tysontarget2.client)
 				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
 				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
-				message_admins("<span style=\"color:blue\">[caller:client.ckey] has tysongibbed [tysontarget2.ckey].</span>")
+				message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
 			sleep(5)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)

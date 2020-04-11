@@ -378,12 +378,6 @@
 		if (phenomena_flags & PH_EX)
 			explosion(0, phenomena_point, -1, -1, 2, 3)
 
-			var/logmsg = "Explosion (Source: sea hotspot)  at [log_loc(phenomena_point)]."
-			message_admins(logmsg)
-			logTheThing("bombing", null, null, logmsg)
-			logTheThing("diary", null, null, logmsg, "combat")
-
-
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
 			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
 		else if (found)
@@ -392,9 +386,22 @@
 
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
+			if (recursion <= 0)
+				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
+				message_admins(logmsg)
+				logTheThing("bombing", null, null, logmsg)
+				logTheThing("diary", null, null, logmsg, "game")
+
 			SPAWN_DBG(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
+		else
+			if (phenomena_flags > PH_QUAKE && recursion <= 0)
+				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
+				message_admins(logmsg)
+				logTheThing("bombing", null, null, logmsg)
+				logTheThing("diary", null, null, logmsg, "game")
+
 
 	proc/poll_capture_amt(var/turf/center)
 		vent_capture_amt = 0
@@ -455,7 +462,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
 	plane = 11
-	throwforce = 1
+	throwforce = 6
 	w_class = 2.0
 	force = 6
 	throw_speed = 4
@@ -861,7 +868,6 @@
 		..()
 
 	proc/update_icon()
-		..() //<-- doesn't do anything
 		icon_state = "stomper[on]"
 
 	attack_hand(var/mob/living/carbon/human/user as mob)

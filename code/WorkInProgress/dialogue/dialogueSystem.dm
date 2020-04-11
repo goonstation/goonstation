@@ -3,7 +3,7 @@
 */
 
 var/global/list/globalDialogueFlags = list()
-/client/var/list/dialogueNodePath = list()
+/client/var/list/list/datum/dialogueNode/dialogueNodePath = list()
 
 //Same as the dialogue master based versions but global.vvv
 proc/setGlobalFlag(var/client/C, var/flag="", var/value=null)
@@ -24,7 +24,6 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 			return curr[flag]
 		else
 			return null
-	return null
 
 /datum/dialogueMaster
 	var/datum/dialogueNode/start = null //The node the dialogue starts at.
@@ -104,7 +103,6 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 				return curr[flag]
 			else
 				return null
-		return null
 
 	proc/setFlagGlobal(var/client/C, var/flag="", var/value=null)
 		return setGlobalFlag(C, flag, value)
@@ -113,6 +111,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 		return getGlobalFlag(C, flag)
 
 	proc/getUserNode(var/client/C, var/steps=0) //Returns the last activated node of the given user on this dialogueMaster. Can be considered the currently "active" node.
+		RETURN_TYPE(/datum/dialogueNode)
 		if(C.dialogueNodePath)					//Optionally goes [steps] steps back and gets that node instead of the last one.
 			if(C.dialogueNodePath["\ref[src]"])
 				if(C.dialogueNodePath["\ref[src]"].len)

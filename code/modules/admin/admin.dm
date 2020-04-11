@@ -488,7 +488,7 @@ var/global/noir = 0
 			if(jobban_isbanned(M, "Captain"))
 				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'><font color=red>Captain</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'>Captain</a> " //why doesn't this work 
+				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'>Captain</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Head of Security"))
 				jobs += "<a href='?src=\ref[src];action=jobban;type=Head of Security;target=\ref[M]'><font color=red>Head of Security</font></a> "
@@ -498,7 +498,7 @@ var/global/noir = 0
 			if(jobban_isbanned(M, "Syndicate"))
 				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'><font color=red>[replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'>[replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work 
+				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'>[replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Special Respawn"))
 				jobs += " <a href='?src=\ref[src];action=jobban;type=Special Respawn;target=\ref[M]'><font color=red>[replacetext("Special Respawn", " ", "&nbsp")]</font></a> "
@@ -932,6 +932,14 @@ var/global/noir = 0
 			else
 				alert("You need to be at least a Primary Admin to gib a dude.")
 
+		if ("buttgib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_buttgib(M)
+			else
+				alert("You need to be at least a Primary Admin to buttgib a dude.")
+
 		if ("partygib")
 			if( src.level >= LEVEL_PA )
 				var/mob/M = locate(href_list["target"])
@@ -1035,7 +1043,7 @@ var/global/noir = 0
 					alert("This secret can only be used on human mobs.")
 					return
 				var/mob/living/carbon/human/H = M
-				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber")
+				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow")
 				if (!which)
 					return
 				. = 0
@@ -1069,6 +1077,8 @@ var/global/noir = 0
 						droneize(H, 0)
 					if("Flubber")
 						H.set_mutantrace(/datum/mutantrace/flubber)
+					if ("Cow")
+						H.set_mutantrace(/datum/mutantrace/cow)
 				if(.)
 					message_admins("<span style=\"color:blue\">[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
@@ -2002,7 +2012,7 @@ var/global/noir = 0
 							alert("This secret can only be used on human mobs.")
 							return
 						var/mob/living/carbon/human/H = who
-						var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman")
+						var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
 						if (!which)
 							return
 						switch(which)
@@ -2018,12 +2028,14 @@ var/global/noir = 0
 								H.set_mutantrace(/datum/mutantrace/skeleton)
 							if("Flashman")
 								H.set_mutantrace(/datum/mutantrace/flashy)
+							if ("Cow")
+								H.set_mutantrace(/datum/mutantrace/cow)
 						message_admins("<span style=\"color:blue\">[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed [H.real_name] into a [which].")
 						logTheThing("diary", usr, null, "transformed [H.real_name] into a [which].", "admin")
 
 					if("transform_all")
-						var/which = input("Transform everyone into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman")
+						var/which = input("Transform everyone into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
 						for(var/mob/living/carbon/human/H in mobs)
 							switch(which)
 								if("Monkey") H.monkeyize()
@@ -2038,6 +2050,8 @@ var/global/noir = 0
 									H.set_mutantrace(/datum/mutantrace/skeleton)
 								if("Flashman")
 									H.set_mutantrace(/datum/mutantrace/flashy)
+								if("Cow")
+									H.set_mutantrace(/datum/mutantrace/cow)
 							LAGCHECK(LAG_LOW)
 						message_admins("<span style=\"color:blue\">[key_name(usr)] transformed everyone into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed everyone into a [which].")
@@ -2901,9 +2915,10 @@ var/global/noir = 0
 								dat += "</table>"
 
 							else if (istype(ticker.mode, /datum/game_mode/spy))
-								if(ticker.mode:leaders.len > 0)
+								var/datum/game_mode/spy/spymode = ticker.mode
+								if(length(spymode.leaders))
 									dat += "<br><table cellspacing=5><tr><td><B>Infiltrators:</B></td><td></td><tr>"
-									for(var/datum/mind/leader in ticker.mode:leaders)
+									for(var/datum/mind/leader in spymode.leaders)
 										var/mob/M = leader.current
 										if(!M) continue
 										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -2914,14 +2929,14 @@ var/global/noir = 0
 								else
 									dat += "There are no infiltrators."
 
-								if(ticker.mode:spies.len > 0)
+								if(length(spymode.spies))
 									dat += "<br><table cellspacing=5><tr><td><B>Brainwashed Followers:</B></td><td></td><tr>"
-									for(var/datum/mind/spy in ticker.mode:spies)
+									for(var/datum/mind/spy in spymode.spies)
 										var/mob/M = spy.current
 										if(!M) continue
 										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td>Obeys: "
-										var/datum/mind/obeycheck = ticker.mode:spies[spy]
+										var/datum/mind/obeycheck = spymode.spies[spy]
 										if (istype(obeycheck) && obeycheck.current)
 											dat += "[obeycheck.current.ckey]"
 										else
@@ -2933,8 +2948,9 @@ var/global/noir = 0
 									dat += "There are no brainwashed followers."
 
 							else if (istype(ticker.mode, /datum/game_mode/gang))
-								if (ticker.mode:leaders.len > 0)
-									for(var/datum/mind/leader in ticker.mode:leaders)
+								var/datum/game_mode/gang/gangmode = ticker.mode
+								if (length(gangmode.leaders))
+									for(var/datum/mind/leader in gangmode.leaders)
 										var/mob/M = leader.current
 										var/datum/gang/gang = leader.gang
 										dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"
@@ -3363,7 +3379,7 @@ var/global/noir = 0
 				return alert("You must be at least a Primary Admin to do this.")
 
 			usr.client.disable_deletions()
-		
+
 		////////////
 
 		if ("toggle_dj")

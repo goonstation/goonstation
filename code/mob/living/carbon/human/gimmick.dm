@@ -771,7 +771,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/user)
 		return illusion_expire(user)
 	MouseDrop(mob/M)
-		if(iscarbon(M) && !M.handcuffed)
+		if(iscarbon(M) && !M.hasStatus("handcuffed"))
 			return illusion_expire(M)
 
 /mob/living/carbon/human/don_glab
@@ -912,7 +912,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.a_intent = INTENT_HARM
 		src.ai_active = 1
 
-#if ASS_JAM //explodey yank 
+#if ASS_JAM //explodey yank
 		say("Feel My Wrath.")
 		explosion_new(src, src.loc, 20)
 		src.gib()

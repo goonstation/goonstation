@@ -271,6 +271,8 @@ mob/new_player
 		if (JOB.requires_whitelist)
 			if (!NT.Find(src.ckey))
 				return 0
+		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
+			return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1
 		return 0
@@ -329,6 +331,7 @@ mob/new_player
 				M.loc = L.loc
 				SPAWN_DBG(0) M.lunch(character, L.dir)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
+				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
@@ -337,9 +340,9 @@ mob/new_player
 				equip_battler(character)
 				character.mind.assigned_role = "MODE"
 				character.mind.special_role = "battler"
-				ticker.mode:living_battlers.Add(character.mind)
+				battlemode.living_battlers.Add(character.mind)
 				DEBUG_MESSAGE("Adding a new battler")
-				ticker.mode:battle_shuttle_spawn(character.mind)
+				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
 				starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
@@ -645,6 +648,12 @@ a.latejoin-card:hover {
 
 		if(new_character && new_character.client)
 			new_character.client.loadResources()
+
+#if ASS_JAM
+			if(ass_mutation)
+				new_character.bioHolder.AddEffect(ass_mutation)
+				boutput(new_character.mind.current,"<span style=\"color:red\">A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
+#endif
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever

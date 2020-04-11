@@ -873,6 +873,7 @@
 			else
 				if (src.inserted == src.extract_to) src.extract_to = null
 				src.inserted.set_loc(src.output_target)
+				usr.put_in_hand_or_eject(inserted)
 				src.inserted = null
 			src.updateUsrDialog()
 

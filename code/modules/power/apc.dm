@@ -409,7 +409,6 @@ var/zapLimiter = 0
 					return
 				else
 					return
-			return
 
 		else if (iswrenchingtool(W))
 			switch (src.repair_status)
@@ -1091,8 +1090,6 @@ var/zapLimiter = 0
 				src.overload_lighting()
 
 		return
-
-		src.updateUsrDialog()
 
 	else
 		usr.Browse(null, "window=apc")

@@ -451,9 +451,9 @@
 					return 0
 				if (holder.owner.lying)
 					return 0
-				if (holder.owner.sleeping) 
+				if (holder.owner.sleeping)
 					return 0
-				if (holder.owner.resting)
+				if (holder.owner.hasStatus("resting"))
 					return 0
 				return 1
 
@@ -461,14 +461,14 @@
 			var/mob/living/L = holder.owner
 			if (forced_sleep)
 				if (value < 25)
-					if (!L.resting)
+					if (!L.hasStatus("resting"))
 						showOwner("<span style=\"color:red\">You overworked yourself and cannot wake up until you are minimally rested!</span>")
-						L.resting = 1
+						L.setStatus("resting", INFINITE_STATUS)
 					L.sleeping += 1
 				else
 					forced_sleep = 0
 					L.sleeping = 0
-			if (L.resting)
+			if (L.hasStatus("resting"))
 				var/sm = 1
 				if (forced_sleep)
 					sm *= 0.5
@@ -587,7 +587,7 @@
 			SM.depletion_rate = initial(SM.depletion_rate) * mult
 
 	proc/set_global_sims_var(var/datum/simsMotive/M, var/var_name, var/new_value) //Change one value on every simsHolder
-		if(!var_name in M.vars)
+		if(!(var_name in M.vars))
 			logTheThing("debug", null, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
 			return
 		for(var/datum/simsMotive/SM in simsMotives)
@@ -664,9 +664,9 @@ var/global/datum/simsControl/simsController = new()
 		simsController.register_simsHolder(src)
 		make_motives()
 		add_hud()
-	
+
 	proc/make_motives()
-	
+
 	proc/add_hud()
 		if (owner && ishuman(owner))
 			var/SY = src.start_y

@@ -1208,6 +1208,10 @@
 	icon_state = "rheels"
 	item_state = "r_shoes" // doesn't match perfectly but I cba to make perfect inhand states for all this shit
 
+/obj/item/clothing/shoes/heels/dancin // add unique sprites sometime
+	name = "dancin shoes"
+	desc = "Guilty feet have got no rhythm, but slip on a pair of dancin shoes, and voila!"
+
 /obj/item/clothing/suit/tuxedo_jacket
 	name = "tuxedo jacket"
 	desc = "A formal jacket with satin lapels. "

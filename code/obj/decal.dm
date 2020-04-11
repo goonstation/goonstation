@@ -434,16 +434,18 @@ obj/decal/fakeobjects/teleport_pad
 	buckle_move_delay = 6 // this should have been a var somepotato WHY WASN'T IT A VAR
 	securable = 0
 
-	MouseDrop_T(mob/M as mob, mob/user as mob)
+	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
-			return
-
+			return 0
 		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || usr.stat || !user.canmove))
-			return
+			return 0
+		return 1
 
-		M.set_loc(src.loc)
-		user.visible_message("<span style=\"color:blue\"><b>[M]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
-		buckle_in(M, 1)
+	MouseDrop_T(mob/M as mob, mob/user as mob)
+		if (can_buckle(M,user))
+			M.set_loc(src.loc)
+			user.visible_message("<span style=\"color:blue\"><b>[M]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
+			buckle_in(M, user, 1)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)

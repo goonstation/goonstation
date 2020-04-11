@@ -413,14 +413,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							src.frustration = 0
 						return
 
-						if(!path || !path.len || (4 < get_dist(src.target,path[path.len])) )
-							moving = 0
-							if (src.mover)
-								src.mover.master = null
-								src.mover = null
-							//current_movepath = "HEH" //Stop any current movement.
-							navigate_to(src.target,arrest_move_delay)
-
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
@@ -455,14 +447,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					if(isabomination(H))
 						return
 */
-				if (!src.target.handcuffed && !src.arrest_type)
+				if (!src.target.hasStatus("handcuffed") && !src.arrest_type)
 					playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 					mode = SECBOT_ARREST
 					src.visible_message("<span style=\"color:red\"><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
 
 					SPAWN_DBG(6 SECONDS)
 						if (get_dist(src, src.target) <= 1)
-							if (!src.target || src.target.handcuffed)
+							if (!src.target || src.target.hasStatus("handcuffed"))
 								return
 
 							var/uncuffable = 0
@@ -476,8 +468,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 								uncuffable = 1
 
 							if(iscarbon(src.target) && !uncuffable)
-								src.target.handcuffed = new /obj/item/handcuffs(src.target)
-								src.target.setStatus("handcuffed", duration = null)
+								src.target.handcuffs = new /obj/item/handcuffs(src.target)
+								src.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 							var/last_target = target
 
@@ -514,7 +506,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					src.moving = 0
 
 				if(src.target)
-					if (src.target.handcuffed)
+					if (src.target.hasStatus("handcuffed"))
 						src.anchored = 0
 						mode = SECBOT_IDLE
 						return
@@ -794,7 +786,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	proc/look_for_perp()
 		src.anchored = 0
 		for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
-			if ((C.stat) || (C.handcuffed))
+			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 				continue
@@ -880,17 +872,17 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (istype(perp.r_hand))
 				threatcount += perp.r_hand.contraband
 
-			if (istype(perp:belt))
-				threatcount += perp:belt.contraband * 0.5
+			if (istype(perp.belt))
+				threatcount += perp.belt.contraband * 0.5
 
-			if (istype(perp:wear_suit))
-				threatcount += perp:wear_suit.contraband
+			if (istype(perp.wear_suit))
+				threatcount += perp.wear_suit.contraband
 
 			if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 				threatcount += 5
 
 	//Agent cards lower threatlevel when normal idchecking is off.
-			if((istype(perp:wear_id, /obj/item/card/id/syndicate)) && src.idcheck)
+			if((istype(perp.wear_id, /obj/item/card/id/syndicate)) && src.idcheck)
 				threatcount -= 2
 
 		if (src.check_records)

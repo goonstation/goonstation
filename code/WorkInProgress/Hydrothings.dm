@@ -1376,7 +1376,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	set name = "Owl Slam"
 	set desc = "Hoot the entire station with the power of an owl."
 
-	var/mob/M = src
+	var/mob/M = usr
 
 	if(M.stat)
 		boutput(M, "Not when you're incapacitated.")
@@ -1423,7 +1423,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 			if(prob(15))
 				world << sound('sound/voice/animal/hoot.ogg', volume = 80) ///////////////////////////////////////////
 				for(var/mob/N in mobs)
-					N.flash(30)
+					N.flash(3 SECONDS)
 			sleep(5)
 	sleep(200)
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
@@ -1438,11 +1438,11 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.channel = 5
 	world << siren
 	M.visible_message("<span style=\"color:red\">[M] successfully executes a Owl Slam!</span>")
-	explosion_new(src, get_turf(M), 1, 75)
-	for(var/mob/living/carbon/human/M1 in range(5, src))
+	explosion_new(M, get_turf(M), 1, 75)
+	for(var/mob/living/carbon/human/M1 in range(5, M))
 		SPAWN_DBG(0)
 		M1.owlgib()
-	for(var/mob/living/carbon/human/M2 in range(50, src))
+	for(var/mob/living/carbon/human/M2 in range(50, M))
 		SPAWN_DBG(0)
 			if (!(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
 				for(var/obj/item/clothing/O in M2)

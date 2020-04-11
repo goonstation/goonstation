@@ -12,7 +12,8 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	var/datum/targetable/targeting_spell = null
+
+	var/targeting_ability = null
 
 	var/last_move_trigger = 0
 
@@ -60,7 +61,6 @@
 	var/blinded = null
 	var/druggy = 0
 	var/sleeping = 0.0
-	var/resting = 0.0
 	var/lying = 0.0
 	var/lying_old = 0
 	var/canmove = 1.0
@@ -91,7 +91,7 @@
 	var/m_intent = "run"
 	var/lastKnownIP = null
 	var/obj/stool/buckled = null
-	var/obj/item/handcuffs/handcuffed = null
+	var/obj/item/handcuffs/handcuffs = null
 	var/obj/item/l_hand = null
 	var/obj/item/r_hand = null
 	var/obj/item/back = null
@@ -138,7 +138,6 @@
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
 	var/mob/dead/observer/ghost = null
-	var/twitching = 0
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
@@ -201,7 +200,16 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-
+//start of needed for timestop
+#if ASS_JAM
+	var/paused = FALSE
+	var/pausedbrute = 0
+	var/pausedburn = 0
+	var/pausedtox = 0
+	var/pausedoxy = 0
+	var/pausedbrain = 0
+#endif
+//end of needed for timestop
 	var/dir_locked = FALSE
 
 	var/cooldowns = list()
@@ -308,6 +316,9 @@
 	if (src.abilityHolder)
 		src.abilityHolder.disposing()
 
+	if (src.targeting_ability)
+		src.targeting_ability = null
+
 	if (zone_sel)
 		if (zone_sel.master == src)
 			zone_sel.master = null
@@ -321,7 +332,7 @@
 	energy_shield = null
 	hallucinations = null
 	buckled = null
-	handcuffed = null
+	handcuffs = null
 	l_hand = null
 	r_hand = null
 	back = null
@@ -713,7 +724,7 @@
 		src.client.mouse_pointer_icon = cursor
 
 /mob/proc/update_cursor()
-	if (src.targeting_spell)
+	if (src.targeting_ability)
 		if(client)
 			src.set_cursor(cursors_selection[client.preferences.target_cursor])
 			return
@@ -939,6 +950,12 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch(src)
+#if ASS_JAM//pausing damage for timestop
+	if(src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
+#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
@@ -1055,10 +1072,8 @@
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
-	return ..(gibbed)
-
 /mob/proc/restrained()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 1
 
 /mob/proc/key_down(var/key)
@@ -1067,54 +1082,79 @@
 /mob/proc/click(atom/target, params)
 	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
 
-	if (src.targeting_spell)
-		var/datum/targetable/S = src.targeting_spell
+	if (src.targeting_ability)
+		if (istype(src.targeting_ability, /datum/targetable))
+			var/datum/targetable/S = src.targeting_ability
+			src.targeting_ability = null
+			update_cursor()
 
-		src.targeting_spell = null
-		update_cursor()
+			if (!S.target_anything && !ismob(target))
+				src.show_text("You have to target a person.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.check_range && (get_dist(src, target) > S.max_range))
+				src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
+				src.show_text("It would have no effect on this target.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.castcheck(src))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				S.handleCast(target)
+				if(S)
+					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
+						if(src)
+							src.targeting_ability = S
+							src.update_cursor()
+			return 100
 
-		if (!S.target_anything && !ismob(target))
-			src.show_text("You have to target a person.", "red")
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
+		else if (istype(src.targeting_ability, /obj/ability_button))
+			var/obj/ability_button/B = src.targeting_ability
+
+			if (!B.target_anything && !ismob(target) && !istype(target, B))
+				src.show_text("You have to target a person.", "red")
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (!isturf(target.loc) && !isturf(target) && !istype(target, B))
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (!B.ability_allowed())
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (istype(target, B))
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				B.execute_ability(target)
+				src.targeting_ability = null
+				src.update_cursor()
 			return 100
-		if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (S.check_range && (get_dist(src, target) > S.max_range))
-			src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
-			src.show_text("It would have no effect on this target.", "red")
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (!S.castcheck(src))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
-			S.handleCast(target)
-			if(S)
-				if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
-					if(src)
-						src.targeting_spell = S
-						src.update_cursor()
-		return 100
 
 	if (abilityHolder)
 		if (abilityHolder.topBarRendered)
@@ -1248,6 +1288,7 @@
 		src.set_clothing_icon_dirty()
 
 /mob/proc/equipped()
+	RETURN_TYPE(/obj/item)
 	if (issilicon(src))
 		if (ishivebot(src)||isrobot(src))
 			if (src:module_active)
@@ -1257,7 +1298,6 @@
 			return src.l_hand
 		else
 			return src.r_hand
-		return
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
 	. = list()
@@ -1321,8 +1361,8 @@
 	if (W == src.l_hand)
 		src.l_hand = null
 
-	if (W == src.handcuffed)
-		src.handcuffed = null
+	if (W == src.handcuffs)
+		src.handcuffs = null
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.wear_mask)
@@ -1487,7 +1527,6 @@
 		return (!mover.density || !src.density || src.lying)
 	else
 		return (!mover.density || !src.density || src.lying)
-	return
 
 /mob/proc/update_inhands()
 
@@ -1565,7 +1604,7 @@
 	return
 
 /mob/proc/can_use_hands()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 0
 	if (src.buckled && istype(src.buckled, /obj/stool/bed)) // buckling does not restrict hands
 		return 0
@@ -1982,6 +2021,63 @@
 			qdel(floorcluwne)
 			qdel(src)
 
+/mob/proc/buttgib(give_medal)
+	if (isobserver(src)) return
+#ifdef DATALOGGER
+	game_stats.Increment("violence")
+#endif
+	logTheThing("combat", src, null, "is butt-gibbed at [log_loc(src)].")
+	src.death(1)
+	var/atom/movable/overlay/gibs/animation = null
+	src.transforming = 1
+	src.canmove = 0
+	src.icon = null
+	src.invisibility = 101
+
+	var/bdna = null
+	var/btype = null
+	var/datum/organHolder/organHolder = null
+
+	if (ishuman(src))
+		var/mob/living/carbon/human_src = src
+		if (src.bioHolder)
+			bdna = src.bioHolder.Uid
+			btype = src.bioHolder.bloodType
+		if (human_src.organHolder)
+			organHolder = human_src.organHolder
+
+		animation = new(src.loc)
+		animation.master = src
+		flick("gibbed", animation)
+
+	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
+		var/mob/dead/observer/newmob = ghostize()
+		newmob.corpse = null
+
+	var/list/virus = src.ailments
+	var/list/ejectables = list_ejectables()
+
+	for(var/i = 0, i < 16, i++)
+		if(organHolder)
+			ejectables.Add(new /obj/item/clothing/head/butt(src.loc, organHolder))
+		else
+			ejectables.Add(new /obj/item/clothing/head/butt/synth)
+
+	if (bdna && btype)
+		gibs(src.loc, virus, ejectables, bdna, btype)
+	else
+		gibs(src.loc, virus, ejectables)
+
+	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1)
+	var/turf/src_turf = get_turf(src)
+	if(src_turf)
+		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
+		for(var/mob/living/L in range(src_turf, 6))
+			shake_camera(L, 10, 5)
+
+	if (animation)
+		animation.delaydispose()
+	qdel(src)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
@@ -2111,7 +2207,7 @@
 
 		OL = sortList(OL)
 
-		selection
+		selection:
 		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
 		if (!IP || !output_target || !ismob(output_target))
@@ -2247,7 +2343,8 @@
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
 	src.buckled = initial(src.buckled)
-	src.handcuffed = initial(src.handcuffed)
+	if (src.hasStatus("handcuffed"))
+		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)

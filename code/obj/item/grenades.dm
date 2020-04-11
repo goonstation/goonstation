@@ -568,7 +568,7 @@ PIPE BOMBS + CONSTRUCTION
 
 				for (var/mob/N in viewers(user, null))
 					if (get_dist(N, user) <= 6)
-						N.flash(30)
+						N.flash(3 SECONDS)
 				SPAWN_DBG(0.2 SECONDS)
 					if (old_light_grenade)
 						random_brute_damage(user, 200)

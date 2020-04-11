@@ -100,7 +100,7 @@
 				var/datum/targetable/listrefpicker/R = new()
 				R.target = L
 				R.varname = index
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 			return
 
@@ -175,7 +175,7 @@
 			if (istype(M))
 				var/datum/targetable/addtolistrefpicker/R = new()
 				R.target = L
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 			return
 
@@ -369,7 +369,7 @@
 				var/datum/targetable/listrefpicker/R = new()
 				R.target = L
 				R.varname = variable_index
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				return
 
@@ -477,7 +477,7 @@
 
 	//Let's prevent people from promoting themselves, yes?
 	var/list/locked_type = list(/datum/admins) //Short list
-	if(!(src.holder.rank in list("Host", "Coder")) && O.type in locked_type )
+	if(!(src.holder.rank in list("Host", "Coder")) && (O.type in locked_type) )
 		boutput(usr, "<span style=\"color:red\">You're not allowed to edit [O.type] for security reasons!</span>")
 		logTheThing("admin", usr, null, "tried to varedit [O.type] but was denied!")
 		logTheThing("diary", usr, null, "tried to varedit [O.type] but was denied!", "admin")
@@ -629,7 +629,7 @@
 				var/datum/targetable/refpicker/R = new()
 				R.target = O
 				R.varname = variable
-				M.targeting_spell = R
+				M.targeting_ability = R
 				M.update_cursor()
 				return
 

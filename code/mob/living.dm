@@ -26,7 +26,9 @@
 	var/ai_attacknpc = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
-
+#if ASS_JAM
+	var/ai_prefrozen //needed for timestop
+#endif
 	var/blood_id = null
 
 	var/mob/living/ai_target = null
@@ -100,7 +102,7 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
-	
+
 	qdel(chat_text)
 	chat_text = null
 
@@ -325,7 +327,7 @@
 			return
 
 	if (src.restrained())
-		if (src.handcuffed)
+		if (src.hasStatus("handcuffed"))
 			boutput(src, "<span style=\"color:red\">You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
@@ -511,7 +513,7 @@
 			else
 				src.emote("handpuppet")
 
-/mob/living/say(var/message)
+/mob/living/say(var/message, ignore_stamina_winded)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -565,7 +567,11 @@
 	if (src.wear_mask && src.wear_mask.is_muzzle)
 		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
 		return
-
+#if ASS_JAM //no speak in timestop
+	if(paused)
+		boutput(src, "<span style=\"color:red\">Can't speak in stopped time dummy!.</span>")
+		return
+#endif
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
@@ -939,7 +945,7 @@
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
 			(istype(M, /mob/zoldorf)) || \
-			(isintangible(M) && M in hearers(src)) || \
+			(isintangible(M) && (M in hearers(src))) || \
 			( \
 				(!isturf(src.loc) && src.loc == M.loc) && \
 				!(M in heard_a) && \
@@ -997,6 +1003,10 @@
 			move_laying.move_callback(src, oldloc, NewLoc)
 
 /mob/living/Move(var/turf/NewLoc, direct)
+#if ASS_JAM //timestop moving when shouldnt bugfix. canmove doesnt work with keyspamming diagonals???
+	if(paused)
+		return
+#endif
 	var/oldloc = loc
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
@@ -1189,8 +1199,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (src.buckled)
 				src.buckled.attack_hand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
-				if (src.targeting_spell == src.chair_flip_ability) //fuCKKK
-					src.targeting_spell = null
+				if (src.targeting_ability == src.chair_flip_ability) //fuCKKK
+					src.targeting_ability = null
 					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))
@@ -1202,7 +1212,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	. = ..()
 	if(src && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
 		if(src.chat_text.vis_locs.len)
-			src.chat_text.vis_locs[1].vis_contents -= src.chat_text
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
 		if(istype(src.loc, /turf))
 			src.vis_contents += src.chat_text
 		else

@@ -550,13 +550,17 @@ var/f_color_selector_handler/F_Color_Selector
 	build_syndi_buylist_cache()
 	build_camera_network()
 	clothingbooth_setup()
+#if ASS_JAM
+	ass_jam_init()
+#endif
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
 
-	if(!SKIP_Z5_SETUP)
-		Z_LOG_DEBUG("World/Init", "Setting up mining level...")
-		makeMiningLevel()
+	#if SKIP_Z5_SETUP == 0
+	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
+	makeMiningLevel()
+	#endif
 
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
@@ -1066,7 +1070,7 @@ var/f_color_selector_handler/F_Color_Selector
 						if("rest")
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
-								H.resting = 1
+								H.setStatus("resting", INFINITE_STATUS)
 								H.force_laydown_standup()
 								H.hud.update_resting()
 							return 1
@@ -1074,7 +1078,7 @@ var/f_color_selector_handler/F_Color_Selector
 						if("stand")
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
-								H.resting = 0
+								H.delStatus("resting")
 								H.force_laydown_standup()
 								H.hud.update_resting()
 							return 1
@@ -1230,7 +1234,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (K.client.player_mode && !K.client.player_mode_ahelp)
 								continue
 							else
-								boutput(K, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (IRC) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
+								boutput(K, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1250,7 +1254,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who)
 				if (M.client)
-					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (IRC)</b>: <span class='message'>[msg]</span></span>")
+					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "IRC: [nick] Mentor PM'd %target%: [msg]")
 					logTheThing("diary", null, M, "IRC: [nick] Mentor PM'd %target%: [msg]", "admin")
 					for (var/mob/K in mobs)
@@ -1259,7 +1263,7 @@ var/f_color_selector_handler/F_Color_Selector
 								if (K.client.player_mode && !K.client.player_mode_mhelp)
 									continue
 								else
-									boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (IRC) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
 							else
 								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (IRC) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 

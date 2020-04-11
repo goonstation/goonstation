@@ -15,7 +15,7 @@ var/list/rollList = list()
 	var/last_roll = null
 	var/last_roll_time = null
 	var/can_have_pals = 1
-	var/list/dicePals = list() // for combined dice rolls, up to 9 in a stack
+	var/list/obj/item/dice/dicePals = list() // for combined dice rolls, up to 9 in a stack
 	var/sound_roll = 'sound/items/dicedrop.ogg'
 	var/icon/paloverlay
 	var/image/paloverlayimage
@@ -533,7 +533,7 @@ var/list/rollList = list()
 	name = "holder of dice (not an actual item)"
 	desc = "Parent item of various dice holders"
 	icon = 'icons/obj/items.dmi'
-	var/list/dicelist = list()
+	var/list/obj/item/dice/dicelist = list()
 	var/diceposition = 0
 	var/icon/overlaydie
 	var/image/overlaydieimage //yay conversions of conversions

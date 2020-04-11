@@ -322,6 +322,7 @@
 	force = 5.0
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
+	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawgiver/sabre AND an egun.
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -345,6 +346,10 @@
 		..()
 		update_icon()
 		M.update_inhands()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/electronics/scanner))
+			nojobreward = 1
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -453,8 +458,8 @@
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "wavegun"
-	item_state = "wavegun"
+	icon_state = "wavegun100"
+	item_state = "wave"
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
@@ -463,17 +468,30 @@
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/wavegun
-		projectiles = list(current_projectile,new/datum/projectile/wavegun/burst,new/datum/projectile/wavegun/paralyze)
+		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
 		..()
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
+	// Flaborized has made even more wavegun sprites!
 	update_icon()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "wavegun[ratio]"
-			return
+			if(current_projectile.type == /datum/projectile/wavegun)
+				src.icon_state = "wavegun[ratio]"
+				item_state = "wave"
+			else if (current_projectile.type == /datum/projectile/wavegun/transverse)
+				src.icon_state = "wavegun_green[ratio]"
+				item_state = "wave-g"
+			else
+				src.icon_state = "wavegun_emp[ratio]"
+				item_state = "wave-emp"
+
+	attack_self(mob/user as mob)
+		..()
+		update_icon()
+		user.update_inhands()
 
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
@@ -1444,7 +1462,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-	current_projectile = new/datum/projectile/laser/quadwasp
+	current_projectile = new/datum/projectile/special/spreader/quadwasp
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
@@ -1452,6 +1470,6 @@
 	module_research = list("science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10, "hydroponics" = 10) //deprecated in current code
 
 	New()
-		current_projectile = new/datum/projectile/laser/quadwasp
+		current_projectile = new/datum/projectile/special/spreader/quadwasp
 		projectiles = list(current_projectile)
 		..()

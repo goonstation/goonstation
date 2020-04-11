@@ -33,20 +33,25 @@
 #define COMSIG_COMPONENT_ADDED "component_added"
 /// before a component is removed from a datum because of RemoveComponent: (/datum/component)
 #define COMSIG_COMPONENT_REMOVING "component_removing"
+/// just before a datum's disposing()
+#define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
+/// just after a datum's disposing()
+#define COMSIG_PARENT_POST_DISPOSING "parent_post_disposing"
 
 
 // atom/movable signals
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
 
+
+// item signals
 /// When an item is equipped (user, slot)
 #define COMSIG_ITEM_EQUIPPED "itm_equip"
-
 /// When an item is unequipped (user)
 #define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
-
 /// When an item is picked up (user)
 #define COMSIG_ITEM_PICKUP "itm_pickup"
-
 /// When an item is picked dropped (user)
 #define COMSIG_ITEM_DROPPED "itm_drop"
+/// When an item is used to attack a mob
+#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"

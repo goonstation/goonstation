@@ -1265,7 +1265,7 @@ var/datum/flock/testflock
 /proc/debugAddComponent(var/datum/target = null)
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
-		return
+		pathpart = "/"
 	var/comptype = get_one_match(pathpart, /datum/component)
 	if(!comptype)
 		return

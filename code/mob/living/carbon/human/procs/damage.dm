@@ -275,7 +275,7 @@
 	if (src.nodamage) return
 	// there used to be mining radiation check here which increases severity by one
 	// this needs to be derived from material properties instead and is disabled for now
-	src.flash(30)
+	src.flash(3 SECONDS)
 
 	if (isdead(src) && src.client)
 		SPAWN_DBG(1 DECI SECOND)
@@ -512,6 +512,8 @@
 /mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	if (src.nodamage) return
 
+	hit_twitch(src)
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		brute *= -1
 		burn *= -1
@@ -531,7 +533,12 @@
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
-
+#if ASS_JAM //pausing damage in timestop
+	if (src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
+#endif
 	brute = max(0, brute)
 	burn = max(0, burn)
 	//tox = max(0, burn)
@@ -545,8 +552,6 @@
 	if (tox)
 		tox = max(0, tox)
 		take_toxin_damage(tox)
-
-	hit_twitch(src)
 
 	if (zone == "All")
 		var/organCount = 0

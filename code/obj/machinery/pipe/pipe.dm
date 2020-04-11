@@ -490,7 +490,7 @@ var/linenums = 0
 		T = T.loc
 
 	for(var/mob/M in range(T))
-		M.flash(30)
+		M.flash(3 SECONDS)
 		//Foreach goto(732)
 	//var/m_range = 2
 

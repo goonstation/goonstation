@@ -111,7 +111,7 @@ proc/load_intraround_jars()
 			if (ispath(potential_new_item_path, /obj/item/reagent_containers/food))
 				potential_new_item = new potential_new_item_path //Isn't this ugly?  This is ugly.
 				//todo
-				new_pickle = new /obj/item/reagent_containers/food/snacks/pickle_holder (src, potential_new_item)
+				new_pickle = new /obj/item/reagent_containers/food/snacks/pickle_holder (null, potential_new_item)
 				new_pickle.set_loc( newJar )
 				if (potential_new_item.reagents)
 					potential_new_item.reagents.trans_to(new_pickle, 100)

@@ -197,7 +197,7 @@
 /obj/item/device/pda_module/flashlight/dan
 	name = "Deluxe Dan's Fancy Flashlight Module"
 	desc = "What a name, what an experience."
-	lumlevel = 0.2
+	lumlevel = 1.2
 
 	toggle_light()
 		..()

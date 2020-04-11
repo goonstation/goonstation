@@ -181,7 +181,7 @@
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
-			if (!L.getStatusDuration("weakened") && !L.resting)
+			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
 				boutput(L, "<span style=\"color:red\"><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
 				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
@@ -357,7 +357,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -447,7 +447,7 @@
 
 	New()
 		..()
-		if (!src.name || src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch"))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
+		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
 		SPAWN_DBG(0.5 SECONDS)
 			src.locate_blinds()

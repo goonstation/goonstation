@@ -17,6 +17,8 @@
 //date   Time manipulation utility.
 //tar    Archiving utility
 
+//pwd    Print current directory
+
 //List directory
 /datum/computer/file/mainframe_program/utility/ls
 	name = "ls"
@@ -392,6 +394,8 @@
 
 		mainframe_prog_exit
 		return
+
+
 
 //Concatenate...stuff
 /datum/computer/file/mainframe_program/utility/cat
@@ -798,7 +802,7 @@
 			var/print_only_match = 0
 			var/recursive = 0
 			var/no_messages = 1
-
+			var/plain = 0
 			. = ""
 
 			if (copytext(initlist[1], 1, 2) == "-")
@@ -812,7 +816,8 @@
 					recursive = 1
 				if (findtext(options, "s"))
 					no_messages = 0
-
+				if (findtext(options, "h"))
+					plain = 1
 				initlist.Cut(1,2)
 				if (initlist.len < 2)
 					. += "No pattern or target file. Try 'help grep'"
@@ -860,7 +865,8 @@
 						if (R.Find(case_sensitive ? "[textLine][to_check:fields[textLine]]" : lowertext("[textLine][to_check:fields[textLine]]")))
 							if (print_only_match)
 								. += "[R.match]|n"
-
+							else if (plain)
+								. += "[textLine][to_check:fields[textLine]]|n"
 							else
 								. += "[to_check.name]:[j]:" + "[textLine][to_check:fields[textLine]]|n"
 						R = null
@@ -1402,3 +1408,10 @@
 
 		mainframe_prog_exit
 		return
+/datum/computer/file/mainframe_program/utility/pwd
+	name = "pwd"
+	size = 1
+	initialize(var/initparams)
+		message_user(read_user_field("curpath"))
+		mainframe_prog_exit
+	
