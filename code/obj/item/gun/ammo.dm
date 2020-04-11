@@ -846,15 +846,13 @@
 		src.set_loc(E)
 		E.cell = src
 
-		if(istype(old_loc, /turf) || istype(old_loc, /mob/living)) //if it was on the ground, don't drop the swapped out cell
-			usr.put_in_hand_or_drop(swapped_cell)
-		else
-			swapped_cell.set_loc(old_loc)
-
 		if(istype(old_loc, /obj/item/storage))
+			swapped_cell.set_loc(old_loc)
 			var/obj/item/storage/cell_container = old_loc
 			cell_container.hud.remove_item(src)
 			cell_container.hud.update()
+		else
+			usr.put_in_hand_or_drop(swapped_cell)
 
 		src.add_fingerprint(usr)
 
