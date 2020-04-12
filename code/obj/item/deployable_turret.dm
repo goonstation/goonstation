@@ -453,11 +453,7 @@
 		if (src.emagged)
 			return 0 // NO FRIENDS :'[
 		*/
-		if (istype(C,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = C
-			if (istype(H.wear_id,/obj/item/card/id/syndicate))
-				return 1
-		return 0
+		return istype(C.get_id(), /obj/item/card/id/syndicate)
 
 
 	proc/shoot(var/turf/target, var/start, var/user, var/bullet = 0)
@@ -625,19 +621,18 @@
 		if (src.emagged)
 			return 0
 		*/
-		if (istype(C,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = C
-			if (istype(H.wear_id,/obj/item/card/id)) //This goes off appearance because people can change jobs mid-round... but that also means agent ids are a pretty hard counter. TODO: Fix?
-				var/obj/item/card/id/I = H.wear_id
-				switch(I.icon_state)
-					if("id_sec")
-						return 1
-					if("id_com")
-						return 1
-					if("gold")
-						return 1
-					else
-						return 0
+		var/obj/item/card/id/I = C.get_id()
+		if(!istype(I))
+			return 0
+		switch(I.icon_state)
+			if("id_sec")
+				return 1
+			if("id_com")
+				return 1
+			if("gold")
+				return 1
+			else
+				return 0
 		return 0
 
 	spawn_deployer()
