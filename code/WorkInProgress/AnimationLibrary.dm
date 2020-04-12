@@ -998,6 +998,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	var/fade_time = time / 2
 	target.filters += filter(type = "layer", blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00")
 	var/filter = target.filters[target.filters.len]
+	if(!filter) return
 	animate(filter, y = -28, easing = QUAD_EASING, time = time)
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)
