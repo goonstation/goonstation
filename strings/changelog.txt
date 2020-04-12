@@ -10,6 +10,7 @@
 (+)Crowbars no longer pry floortiles while on harm intent, hopefully now we won't uproot the entire station floor when trying to beat people to death
 (u)Tarmunora
 (*)Cloakers now deactivate on picking things up, throwing, and unarmed specials
+(+)Chopping weapons work properly on bolted doors
 (u)RichardGere
 (+)Fixed a bug that prevented players from swapping out the egun's power cell
 (*)Energy weapons can now have their power cells swapped out by clicking on the cells with an energy gun in hand
