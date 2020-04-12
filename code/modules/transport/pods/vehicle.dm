@@ -1139,7 +1139,7 @@
 
 /obj/machinery/vehicle/proc/find_pilot()
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client)
+		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
 			src.pilot = M
 			break
 
