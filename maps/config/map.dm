@@ -46,6 +46,12 @@
 #elif defined(MAP_OVERRIDE_MANTA)
 #include "manta.dm"
 
+#elif defined(MAP_OVERRIDE_KONDARU)
+#include "kondaru.dm"
+
+#elif defined(MAP_OVERRIDE_FLEET)
+#include "fleet.dm"
+
 #elif defined(MAP_OVERRIDE_GEHENNA)
 #include "gehenna.dm"
 
