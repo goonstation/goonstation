@@ -1,4 +1,10 @@
 ﻿
+(t)sun apr 12 20
+(u)adharainspace
+(*)finally added cross-round bookshelves to every map you can normally vote in! have fun!
+(+)minor qol changes to printing press
+(u)Moonlol
+(*)Soup is now serve-able in the afterlife bar!
 (t)sat apr 11 20
 (u)2027
 (+)Adds acquiring methods to old medals.
