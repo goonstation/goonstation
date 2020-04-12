@@ -678,8 +678,10 @@ turf
 			else
 				if(src.RL_MulOverlay)
 					pool(src.RL_MulOverlay)
+					src.RL_MulOverlay = null
 				if(src.RL_AddOverlay)
 					pool(src.RL_AddOverlay)
+					src.RL_AddOverlay = null
 			src.N = get_step(src, NORTH) || src
 			src.S = get_step(src, SOUTH) || src
 			src.W = get_step(src, WEST) || src

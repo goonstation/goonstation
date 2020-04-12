@@ -1129,6 +1129,10 @@
 	src.throw_mode_off()
 	if (usr.stat)
 		return
+#if ASS_JAM //no throwing while in timestop
+	if (paused)
+		return
+#endif
 
 	//MBC : removing this because it felt bad and it wasn't *too* exploitable. still does click delay on the end of a throw anyway.
 	//if (usr.next_click > world.time)
@@ -1252,6 +1256,10 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
+				for (var/obj/item/cloaking_device/I in src)
+					if (I.active)
+						I.deactivate(src)
+						src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
 				src.throw_item(target, params)
 				return
 
@@ -1495,6 +1503,10 @@
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
 		return 1
+#if ASS_JAM //no fucking with inventory in timestop
+	if (paused)
+		return 1
+#endif
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
 		return 1*/
 

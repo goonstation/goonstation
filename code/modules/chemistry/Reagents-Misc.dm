@@ -3955,6 +3955,7 @@ datum
 				deathtarget.emote("scream")
 				deathtarget.setStatus("stunned", max(deathtarget.getStatusDuration("stunned"), 50))
 				deathtarget.setStatus("weakened", max(deathtarget.getStatusDuration("weakened"), 50))
+				deathtarget.unlock_medal("OW! MY BALLS!", 1)
 				var/deathturf = get_turf(src)
 				animate_slide(deathturf, 0, -24, 25)
 				sleep(20)
