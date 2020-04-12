@@ -250,7 +250,7 @@
 
 		puff_ready = 1
 		if(cycle-- <= 0 || src.exploding)
-			cycle = 4 - (src.reagents ? min(4,round(src.reagents.maximum_volume/120)) : 0)  //every fifth cycle. Really big cigs get you really really high
+			cycle = 4  //every fifth cycle.
 			if (ismob(location))
 				M = location
 				if(ishuman(M))
@@ -263,7 +263,7 @@
 						src.reagents.trans_to(M, puffrate)
 						src.reagents.reaction(M, INGEST, puffrate)
 						//lung damage
-						if (prob(28))
+						if (prob(50))
 							if (prob(70))
 								if (!H.organHolder.left_lung.robotic)
 									H.organHolder.damage_organ(0, 0, 1, "left_lung")
