@@ -571,8 +571,8 @@
 /////////////////////////////
 
 /obj/item/turret_deployer/riot
-	name = "N.A.R.C.S."
-	desc = "A Nanotrasen Automatic Riot Control System."
+	name = "N.A.R.C.S. Deployer"
+	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	icon_state = "st_deployer"
 	w_class = 4
 	health = 125
@@ -588,8 +588,8 @@
 		return turret
 
 /obj/deployable_turret/riot
-	name = "N.A.R.C.S. Deployer"
-	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
+	name = "N.A.R.C.S."
+	desc = "A Nanotrasen Automatic Riot Control System."
 	health = 125
 	max_health = 125
 	wait_time = 20 //wait if it can't find a target
