@@ -2,6 +2,9 @@
 (t)sun apr 12 20
 (u)Goonstation Administration Team
 (*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a href="https://cdn.discordapp.com/attachments/182254222694285312/698982134718660758/unknown.png">here</a> for more details.
+(u)Enfaeutchie
+(+)The Lawgiver now comes with an instructional pamphlet.
+(+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
 (u)Flaborized
 (*)Resprited a bunch of the ore in the game!
 (u)adharainspace
