@@ -2914,3 +2914,10 @@
 		src.mind.damned = 1
 
 	return 1
+
+/mob/proc/get_id()
+	if(istype(src.equipped(), /obj/item/card/id))
+		return src.equipped()
+	if(istype(src.equipped(), /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = src.equipped()
+		return pda.ID_card

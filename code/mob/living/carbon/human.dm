@@ -3517,3 +3517,13 @@
 	if (abilityHolder)
 		abilityHolder.set_loc_callback(newloc)
 	..()
+
+/mob/living/carbon/human/get_id()
+	. = ..()
+	if(.)
+		return
+	if(istype(src.wear_id, /obj/item/card/id))
+		return src.wear_id
+	if(istype(src.wear_id, /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = src.wear_id
+		return pda.ID_card
