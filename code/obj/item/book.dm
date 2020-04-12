@@ -3304,7 +3304,7 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 
 	proc/build_custom_book()
 		if (src.custom_cover)
-			src.icon = 'icons/obj/custom_books.dmi'
+			src.icon = 'icons/obj/items/custom_books.dmi'
 			src.icon_state = "paper"
 			if (src.cover_color)
 				var/image/I = SafeGetOverlayImage("cover", src.icon, "base-colorable")
@@ -3322,7 +3322,7 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 				src.UpdateOverlays(I, "flair")
 		else
 			if (src.book_cover == "bible")
-				src.icon = 'icons/obj/storage.dmi'
+				src.icon = 'icons/obj/items/storage.dmi'
 			else if (!src.book_cover)
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
