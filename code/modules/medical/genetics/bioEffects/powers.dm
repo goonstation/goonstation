@@ -904,6 +904,7 @@
 			if (!linked_power.safety)
 				gib_user = 1
 				fart_string = "'s body is torn apart like a wet paper bag by [his_or_her(owner)] unbelievably powerful farting!"
+				owner.unlock_medal("Shit Fest", 1)
 
 		sleep(30)
 		if (can_act(owner))
