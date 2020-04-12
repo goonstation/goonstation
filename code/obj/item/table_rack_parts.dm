@@ -222,6 +222,18 @@ RACK PARTS
 	furniture_type = /obj/table/reinforced/chemistry/auto
 	furniture_name = "chemistry countertop"
 
+/* ---------- Rack Parts ---------- */
+/obj/item/furniture_parts/rack
+	name = "rack parts"
+	desc = "A collection of parts that can be used to make a rack."
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "rack_parts"
+	stamina_damage = 25
+	stamina_cost = 25
+	stamina_crit_chance = 15
+	furniture_type = /obj/rack
+	furniture_name = "rack"
+
 //bookshelf part construction
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/plank))
@@ -235,18 +247,6 @@ RACK PARTS
 			qdel(W)
 		else
 			..()
-
-/* ---------- Rack Parts ---------- */
-/obj/item/furniture_parts/rack
-	name = "rack parts"
-	desc = "A collection of parts that can be used to make a rack."
-	icon = 'icons/obj/metal.dmi'
-	icon_state = "rack_parts"
-	stamina_damage = 25
-	stamina_cost = 25
-	stamina_crit_chance = 15
-	furniture_type = /obj/rack
-	furniture_name = "rack"
 
 /* ---------- Stool Parts ---------- */
 /obj/item/furniture_parts/stool

@@ -369,37 +369,35 @@
 		text2file(json_encode(curr_contents), file_name)
 
 	proc/build_old_contents(var/list/old_contents) //this goes and takes our giant weird list and makes it into books
-		if (old_contents.len)
-			for (var/i = 1, i <= old_contents.len, i++)
-				var/list/book_vars = old_contents[i]
-				if (book_vars["custom_cover"] == 0) //0 means this isnt a custom book
-					var/obj/item/paper/book/B = new(get_turf(src))
-					B.name = book_vars["name"]
-					B.desc = book_vars["desc"]
-					B.icon = icon(book_vars["icon"])
-					B.icon_state = book_vars["icon_state"]
-					B.info = book_vars["info"]
-					src.add_to_bookshelf(B)
-				else //so it has to be a custom book now
-					var/obj/item/paper/book/custom/B = new(get_turf(src))
-					B.name = book_vars["name"]
-					B.desc = book_vars["desc"]
-					B.icon = book_vars["icon"]
-					B.icon_state = book_vars["icon_state"]
-					B.info = book_vars["info"]
-					B.custom_cover = book_vars["custom_cover"]
-					B.ink_color = book_vars["ink_color"]
-					B.book_cover = book_vars["book_cover"]
-					B.cover_color = book_vars["cover_color"]
-					B.cover_symbol = book_vars["cover_symbol"]
-					B.symbol_color = book_vars["symbol_color"]
-					B.cover_flair = book_vars["cover_flair"]
-					B.flair_color = book_vars["flair_color"]
-					B.symbol_colorable = book_vars["symbol_colorable"]
-					B.flair_colorable = book_vars["flair_colorable"]
-					B.build_custom_book()
-					src.add_to_bookshelf(B)
-			src.update_icon()
+		for (var/list/book_vars in old_contents)
+			if (book_vars["custom_cover"] == 0) //0 means this isnt a custom book
+				var/obj/item/paper/book/B = new(get_turf(src))
+				B.name = book_vars["name"]
+				B.desc = book_vars["desc"]
+				B.icon = icon(book_vars["icon"])
+				B.icon_state = book_vars["icon_state"]
+				B.info = book_vars["info"]
+				src.add_to_bookshelf(B)
+			else //so it has to be a custom book now
+				var/obj/item/paper/book/custom/B = new(get_turf(src))
+				B.name = book_vars["name"]
+				B.desc = book_vars["desc"]
+				B.icon = book_vars["icon"]
+				B.icon_state = book_vars["icon_state"]
+				B.info = book_vars["info"]
+				B.custom_cover = book_vars["custom_cover"]
+				B.ink_color = book_vars["ink_color"]
+				B.book_cover = book_vars["book_cover"]
+				B.cover_color = book_vars["cover_color"]
+				B.cover_symbol = book_vars["cover_symbol"]
+				B.symbol_color = book_vars["symbol_color"]
+				B.cover_flair = book_vars["cover_flair"]
+				B.flair_color = book_vars["flair_color"]
+				B.symbol_colorable = book_vars["symbol_colorable"]
+				B.flair_colorable = book_vars["flair_colorable"]
+				B.build_custom_book()
+				src.add_to_bookshelf(B)
+		src.update_icon()
 
 	proc/build_curr_contents() //this takes our books and makes it into a giant weird list
 		var/list/curr_contents = list()
