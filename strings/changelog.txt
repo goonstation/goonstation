@@ -1,4 +1,7 @@
 ﻿
+(t)sun apr 12 20
+(u)Moonlol
+(*)Soup is now serve-able in the afterlife bar!
 (t)sat apr 11 20
 (u)2027
 (+)Adds acquiring methods to old medals.
