@@ -3956,7 +3956,7 @@ datum
 					var/turf/T = get_turf(M)
 					if (!locate(/obj/decal/cleanable/voidpuke) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-						new /obj/decal/cleanable/voidpuke(T)
+						make_cleanable(/obj/decal/cleanable/voidpuke, T)
 						random_burn_damage(M, rand(1,6))
 						M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("hacks", "barfs", "hurls", "pukes", "vomits")] up some [pick("...uh... something", "shimmering slop", "weird purple goo", "shifty looking crud", "purple gunk")]?! [pick("What the hell?", "Grody!", "Is that healthy?")]</span>")
 						boutput(M, "<span style=\"color:red\">[pick("Urgh", "Damn", "God")]... that [pick("didn't feel good coming up", "didn't taste better coming up", "felt like puking up cement")].</span>")
