@@ -26,6 +26,7 @@
 	var/buttname = "cigarette butt"
 	var/puffrate = 1
 	var/cycle = 4
+	var/numpuffs = 40 //number of times the cig can dispense reagents
 	rand_pos = 1
 	use_bloodoverlay = 0
 
@@ -49,6 +50,7 @@
 			if (src.flavor)
 				R.add_reagent(src.flavor, 5)
 			R.add_reagent("nicotine", 5)
+			numpuffs = 5 //trickcigs burn out faster
 			return
 		else if (!src.nic_free)
 			R.add_reagent("nicotine", 40)
@@ -98,9 +100,7 @@
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
 			if(src && src.reagents)
-				puffrate = src.reagents.total_volume / 40 //40 active cycles (200 total, about 10 minutes)
-			if(exploding)
-				puffrate *= 8 //trick cigs detonate after 5 total cycles
+				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			if (!(src in processing_items))
 				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
 
