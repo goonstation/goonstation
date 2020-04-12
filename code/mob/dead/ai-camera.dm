@@ -691,6 +691,8 @@ world/proc/updateCameraVisibility()
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
 
+			LAGCHECK(100)
+
 		aiDirty = 1
 	for(var/obj/machinery/camera/C in cameras)
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))

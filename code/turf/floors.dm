@@ -1368,7 +1368,7 @@
 	if (!C || !user)
 		return 0
 
-	if (ispryingtool(C))
+	if (ispryingtool(C) && user.a_intent != INTENT_HARM)
 		src.pry_tile(C,user,params)
 		return
 
