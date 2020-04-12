@@ -847,7 +847,7 @@
 /obj/item/katana/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
-	desc = null
+	desc = ""
 
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 16 //not awful but not amazing
@@ -855,12 +855,11 @@
 	delimb_prob = 1
 	contraband = 4
 
-	examine()
-		set src in usr
-		if (usr.mind && usr.mind.assigned_role == "Captain")
-			boutput(usr, "An ornate and finely crafted blade designed only for the most competent and highly respected of NT's chain of command. Like you!")
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Captain")
+			. = "An ornate and finely crafted blade designed only for the most competent and highly respected of NT's chain of command. Like you!"
 		else
-			boutput(usr, "Looks like some sort of cheap historical recreation sword. You'd have to be a total dork to own this thing.")
+			. = "Looks like some sort of cheap historical recreation sword. You'd have to be a total dork to own this thing."
 
 	New()
 		..()
@@ -1008,12 +1007,11 @@
 			return
 		..()
 
-	examine()
-		set src in usr
-		if (usr.mind && usr.mind.assigned_role == "Captain")
-			boutput(usr, "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard.")
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Captain")
+			. = "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard."
 		else
-			boutput(usr, "A tacky container for a sword. Hey! This thing's actually just plastic painted to look like metal! What a ripoff!")
+			. = "A tacky container for a sword. Hey! This thing's actually just plastic painted to look like metal! What a ripoff!"
 
 	blue //for NTSO medal reward
 		icon_state = "blue_cap_sword_scabbard"

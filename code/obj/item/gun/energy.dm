@@ -120,6 +120,8 @@
 				src.cell = null
 				update_icon()
 				src.add_fingerprint(user)
+			else
+				return ..()
 		else
 			return ..()
 		return
@@ -350,6 +352,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/electronics/scanner))
 			nojobreward = 1
+		..()
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
