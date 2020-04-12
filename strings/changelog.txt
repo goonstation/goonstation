@@ -1,7 +1,9 @@
 ﻿
 (t)sun apr 12 20
-(u)goonstation administration team
+(u)Goonstation Administration Team
 (*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a href="https://cdn.discordapp.com/attachments/182254222694285312/698982134718660758/unknown.png">here</a> for more details.
+(u)Flaborized
+(*)Resprited a bunch of the ore in the game!
 (u)adharainspace
 (*)finally added cross-round bookshelves to every map you can normally vote in! have fun!
 (+)minor qol changes to printing press
