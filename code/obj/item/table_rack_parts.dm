@@ -234,6 +234,20 @@ RACK PARTS
 	furniture_type = /obj/rack
 	furniture_name = "rack"
 
+//bookshelf part construction
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/plank))
+			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
+			if (!do_after(user, 20))
+				return
+			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			new /obj/item/furniture_parts/bookshelf(get_turf(src))
+			qdel(src)
+			qdel(W)
+		else
+			..()
+
 /* ---------- Stool Parts ---------- */
 /obj/item/furniture_parts/stool
 	name = "stool parts"

@@ -83,7 +83,8 @@
 	/datum/commodity/contraband/briefcase,
 	/datum/commodity/bodyparts/heart,
 	/datum/commodity/bodyparts/r_eye,
-	/datum/commodity/bodyparts/l_eye)
+	/datum/commodity/bodyparts/l_eye,
+	/datum/commodity/sketchy_press_upgrade)
 
 	var/num_common_products = 13 //how many of these to pick for sale
 
