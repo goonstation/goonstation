@@ -1,5 +1,7 @@
 ﻿
 (t)sat apr 11 20
+(u)2027
+(+)Adds acquiring methods to old medals.
 (u)Gannets
 (+)Removed Nuclear Operative assault rifle, marksman's rifle and light machine gun as options for item-arm surgery.
 (u)Erinexx
