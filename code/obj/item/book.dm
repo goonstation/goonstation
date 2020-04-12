@@ -3286,24 +3286,6 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			boutput(wearer, "[voidMessage]")
 		return
 
-/obj/item/paper/book/custom/example_1
-	name = "testing 3"
-	desc = "afnsanf"
-	book_cover = "redbook"
-	ink_color = "#FE2200"
-	info = {"this text is red"}
-
-/obj/item/paper/book/custom/example_2
-	name = "testing 4"
-	desc = "screaaaaaaaaaaaaam"
-	custom_cover = 1
-	cover_color = "#5566FF"
-	cover_symbol = "duck"
-	cover_flair = "spinecover"
-	flair_color = "#FF6655"
-	flair_colorable = 1
-	info = {"yo bitch im a fuckin duck"}
-
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
 	var/custom_cover = 0 //if 1, goes thru with the build custom icon process
 	var/book_cover = "" //what cover does our book have
