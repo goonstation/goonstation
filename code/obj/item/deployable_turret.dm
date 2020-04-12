@@ -633,7 +633,6 @@
 				return 1
 			else
 				return 0
-		return 0
 
 	spawn_deployer()
 		var/obj/item/turret_deployer/riot/deployer = new /obj/item/turret_deployer/riot(src.loc)
