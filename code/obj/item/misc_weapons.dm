@@ -41,6 +41,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
 	mats = 18
@@ -144,6 +145,8 @@
 		src.item_state = "[state_name]1-[src.bladecolor]"
 		src.w_class = 4
 		user.unlock_medal("The Force is strong with this one", 1)
+		setProperty("rangedprot", 1)
+		setProperty("disorient_resist", 35)
 	else
 		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
@@ -156,6 +159,8 @@
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
 		src.w_class = off_w_class
+		setProperty("rangedprot", 1)
+		setProperty("disorient_resist", 35)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
@@ -392,7 +397,8 @@
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY 
+	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
 	stamina_cost = 35
