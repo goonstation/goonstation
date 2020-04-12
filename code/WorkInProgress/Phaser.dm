@@ -43,7 +43,7 @@ var/const/PHASER_SNIPER = 256
 	desc = "For use with phasers"
 	item_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	var/proj_mod = null
 	var/proj_sound = null
 	var/proj_sound_impact = null
@@ -131,7 +131,7 @@ var/const/PHASER_SNIPER = 256
 
 /obj/item/oldgun
 	name = "gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	item_state = "gun"
@@ -220,9 +220,9 @@ var/const/PHASER_SNIPER = 256
 	proc/generate_overlays()
 		src.overlays = null
 		if(extension_mod)
-			src.overlays += icon('icons/obj/gun.dmi',extension_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun.dmi',extension_mod.overlay_name)
 		if(converter_mod)
-			src.overlays += icon('icons/obj/gun.dmi',converter_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun.dmi',converter_mod.overlay_name)
 
 	attackby(obj/O as obj, mob/user as mob)
 		if (istype(O,/obj/item/gun_ext))

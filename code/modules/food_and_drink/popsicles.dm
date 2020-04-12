@@ -1,7 +1,7 @@
 /obj/item/stick
 	name = "popsicle stick"
 	desc = "You made a house out of these once in kindergarten."
-	icon = 'icons/obj/foodNdrink/popsicles.dmi'
+	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "stick"
 	throwforce = 1
 	w_class = 1.0
@@ -23,7 +23,7 @@
 /obj/item/popsicle
 	name = "popsicle"
 	desc = "A popsicle. It's in a wrapper right now."
-	icon = 'icons/obj/foodNdrink/popsicles.dmi'
+	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "popsiclewrapper"
 	throwforce = 1
 	w_class = 1.0
@@ -42,7 +42,7 @@
 /obj/item/reagent_containers/food/snacks/popsicle
 	name = "popsicle"
 	desc = "A popsicle. It's in a wrapper right now."
-	icon = 'icons/obj/foodNdrink/popsicles.dmi'
+	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = null
 	amount = 4
 	heal_amt = 4

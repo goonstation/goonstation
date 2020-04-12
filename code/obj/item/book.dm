@@ -2735,7 +2735,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	opacity = 0
 	anchored = 1
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
 	item_state = "lawbook"
 

@@ -231,7 +231,7 @@
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
 	I.icon_state = "id"
-	I.icon = 'icons/obj/card.dmi'
+	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
 
 	var/obj/item/implant/microbomb/M = new /obj/item/implant/microbomb(synd_mob)

@@ -1,6 +1,6 @@
 /obj/item/storage/photo_album
 	name = "Photo album"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
 
@@ -13,7 +13,7 @@
 
 /obj/item/camera_test
 	name = "camera"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	desc = "A reusable polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
@@ -84,7 +84,7 @@
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "camera_film"
 	item_state = "box"
 	w_class = 2.0
@@ -104,7 +104,7 @@
 
 /obj/item/photo
 	name = "photo"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "photo"
 	item_state = "clipboard"
 	w_class = 1.0

@@ -1362,7 +1362,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 /obj/item/storage/belt/macho_belt
 	name = "Championship Belt"
 	desc = "Awarded to the best space wrestler of the year."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -1375,7 +1375,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 /obj/item/macho_coke
 	name = "unmarked white bag"
 	desc = "Contains columbian sugar."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cokebag"
 	item_state = "chefhat" // lol
 	w_class = 1

@@ -473,7 +473,7 @@
 
 			if (book_cover)
 				if (book_cover == "custom")
-					B.icon = 'icons/obj/custom_books.dmi'
+					B.icon = 'icons/obj/items/custom_books.dmi'
 					B.icon_state = "paper"
 					if (cover_color) //should always be yes
 						var/image/I = SafeGetOverlayImage("cover", B.icon, "base-colorable")
@@ -493,7 +493,7 @@
 					if (book_cover in non_writing_icons) //for our non-writing.dmi icons
 						switch (book_cover)
 							if ("bible")
-								B.icon = 'icons/obj/storage.dmi'
+								B.icon = 'icons/obj/items/storage.dmi'
 								B.icon_state = book_cover
 					else
 						B.icon_state = book_cover

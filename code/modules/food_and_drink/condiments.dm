@@ -124,7 +124,7 @@
 /obj/item/shaker // todo: rewrite shakers to not be horrible hacky nonsense - haine
 	name = "shaker"
 	desc = "A little bottle for shaking things onto other things."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = 2.0

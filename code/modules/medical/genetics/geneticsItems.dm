@@ -140,7 +140,7 @@
 /obj/item/speed_injector
 	name = "screwdriver"
 	desc = "A hollow tool used to turn slotted screws and other slotted objects."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS | CONDUCT

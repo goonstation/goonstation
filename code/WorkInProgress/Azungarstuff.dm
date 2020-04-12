@@ -1085,7 +1085,7 @@
 	opacity = 0
 	anchored = 1
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
 	item_state = "lawbook"
 
@@ -1233,7 +1233,7 @@
 /obj/item/rpcargotele
 	name = "special cargo transporter"
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
 	w_class = 2
 	flags = ONBELT
@@ -1255,7 +1255,7 @@
 	id = "scenariocrate"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 300
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "cargotele"
 
 	var/obj/decoration/scenario/crate/thecrate
