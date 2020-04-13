@@ -1,5 +1,7 @@
 ﻿
 (t)mon apr 12 20
+(u)Erinexx
+(+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
 (u)ASS_JAM
 (*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
 (*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
