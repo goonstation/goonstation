@@ -660,9 +660,8 @@
 		shot = 1
 
 		if (affecting && assailant && isitem(src.loc))
-			if (get_dist(src.affecting,src.assailant) <= 1)
-				var/obj/item/gun/G = src.loc
-				G.shoot_point_blank(src.affecting,src.assailant)
+			var/obj/item/gun/G = src.loc
+			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 		qdel(src)
 

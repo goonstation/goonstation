@@ -598,7 +598,7 @@ WET FLOOR SIGN
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"
 	desc = "Wait a minute! This isn't cheese..."
-	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cheese-sponge"
 	item_state = "sponge"
 
