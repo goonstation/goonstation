@@ -1,9 +1,8 @@
 name: Auto-Labeler
-on: 
-  issues:
-    types: [opened, edited]
-  pull_request:
-    types: [opened, edited]
+on:
+  push:
+    branches-ignore:
+      - '**'
 
 jobs:
 
@@ -13,6 +12,6 @@ jobs:
     steps:
     - name: Check Labels
       id: labeler
-      uses: ZeWaka/labeler-action@v1.1
+      uses: jimschubert/labeler-action@v1
       with:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
