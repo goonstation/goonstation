@@ -593,7 +593,6 @@
 	item_state = "fireaxe"
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
-	damtype = "brute"
 	hit_type = DAMAGE_CUT
 	click_delay = 10
 	two_handed = 0
@@ -1224,7 +1223,6 @@ obj/item/whetstone
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
-	damtype = "brute"
 	hit_type = DAMAGE_BLUNT
 	w_class = 3
 	two_handed = 1

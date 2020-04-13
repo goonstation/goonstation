@@ -96,7 +96,7 @@
 		if (!src.on)
 			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
 			src.on = 1
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
@@ -111,7 +111,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
 			src.item_state = src.item_off

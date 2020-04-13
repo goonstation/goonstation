@@ -6,7 +6,6 @@
 	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
-	var/damtype = "brute"
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1//4
 	var/r_speed = 1.0
@@ -1042,7 +1041,7 @@
 		if (istext(attack_resistance))
 			msgs.show_message_target(attack_resistance)
 
-	if (damtype == "fire" || damtype == "burn" || hasProperty("searing"))
+	if (hasProperty("searing"))
 		msgs.damage_type = DAMAGE_BURN
 	else
 		msgs.damage_type = hit_type

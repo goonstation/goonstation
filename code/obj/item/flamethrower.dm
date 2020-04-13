@@ -253,7 +253,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		user.u_equip(W)
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/fuel = "_no_fuel"
 		if(src.part5)
 			fuel = "_fuel"
@@ -268,7 +268,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		user.u_equip(W)
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/oxy = "_no_oxy"
 		if(src.part4)
 			oxy = "_oxy"
@@ -329,13 +329,13 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			icon_state = "flamethrower_ignite_on"
 			item_state = "flamethrower1"
 			force = 10
-			damtype = "fire"
+			hit_type = DAMAGE_BURN
 			if (!(src in processing_items))
 				processing_items.Add(src)
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
-			damtype = "brute"
+			hit_type = DAMAGE_BLUNT
 	if (href_list["removeair"])
 		if(!src.part4)	return
 		var/obj/item/tank/A = src.part4
@@ -344,7 +344,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part4 = null
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/fuel = "_no_fuel"
 		if(src.part5)
 			fuel = "_fuel"
@@ -360,7 +360,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part5 = null
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/oxy = "_no_oxy"
 		if(src.part4)
 			oxy = "_oxy"

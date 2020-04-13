@@ -1029,11 +1029,12 @@
 
 		user.lastattacked = src
 
-		if (W.damtype == "brute")
-			take_damage(W.force)
-			user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
-		else
-			user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+			else
+				take_damage(W.force)
+				user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))

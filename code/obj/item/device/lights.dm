@@ -227,7 +227,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
@@ -239,7 +239,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()

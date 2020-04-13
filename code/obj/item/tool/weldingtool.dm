@@ -154,7 +154,7 @@
 				boutput(usr, "<span style=\"color:blue\">Need more fuel!</span>")
 				src.welding = 0
 				src.force = 3
-				src.damtype = "brute"
+				hit_type = DAMAGE_BLUNT
 				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
 				src.item_state = "weldingtool-off" + src.item_state_variant_suffix
 				user.update_inhands()
@@ -176,7 +176,7 @@
 				return 0
 			boutput(user, "<span style=\"color:blue\">You will now weld when you attack.</span>")
 			src.force = 15
-			src.damtype = "fire"
+			hit_type = DAMAGE_BURN
 			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
 			if (!(src in processing_items))
@@ -184,7 +184,7 @@
 		else
 			boutput(user, "<span style=\"color:blue\">Not welding anymore.</span>")
 			src.force = 3
-			src.damtype = "brute"
+			hit_type = DAMAGE_BLUNT
 			set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-off" + src.item_state_variant_suffix
 		user.update_inhands()
@@ -215,7 +215,7 @@
 			if (!get_fuel())
 				welding = 0
 				force = 3
-				damtype = "brute"
+				hit_type = DAMAGE_BLUNT
 				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
 				src.item_state = "weldingtool-off" + src.item_state_variant_suffix
 				processing_items.Remove(src)
@@ -271,7 +271,7 @@
 		var/variant = H.bioHolder.HasEffect("lost_[part]")
 		if (!variant) return
 
-		
+
 		if(!src.try_weld(user, 5))
 			return
 		eyecheck(user)
@@ -329,7 +329,7 @@
 			if(burn_eyes)
 				src.eyecheck(user)
 			return 1 //welding, has fuel
-		return 0 //not welding 
+		return 0 //not welding
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"

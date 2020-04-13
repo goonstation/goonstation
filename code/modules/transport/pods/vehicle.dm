@@ -179,8 +179,8 @@
 		playsound(src.loc, W.hitsound, 50, 1, -1)
 		hit_twitch(src)
 
-		switch(W.damtype)
-			if("fire")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
 				if(src.material)
 					src.material.triggerTemp(src, W.force * 1000)
 				if (prob(W.force*2))
@@ -189,14 +189,13 @@
 						M.changeStatus("weakened",5 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 				return /////ships should pretty much be immune to fire
-			if("brute")
+			else
 				src.health -= W.force
 				if (prob(W.force*3))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
 						M.changeStatus("weakened",5 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
-
 
 		checkhealth()
 
