@@ -14,6 +14,8 @@
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
+	var/item_grab_overlay_state = "grab_small"
+
 
 	New(atom/loc)
 		..()
@@ -25,7 +27,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 
-			var/image/ima = SafeGetOverlayImage("grab", src.icon, "grab_small")
+			var/image/ima = SafeGetOverlayImage("grab", src.icon, item_grab_overlay_state)
 			ima.layer = src.loc.layer + 1
 			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
 
@@ -668,19 +670,50 @@
 
 
 /obj/item/grab/block
-	c_flags = EQUIPPED_WHILE_HELD
+	c_flags = EQUIPPED_WHILE_HELD_ACTIVE
+	item_grab_overlay_state = "grab_block_small"
+	icon_state = "grab_block"
+	name = "block"
+	desc = "By holding this in your active hand, you are blocking!"
 
 	New()
 		..()
-		setProperty("meleeprot", 5)
-		//test values prbably rethink later
-		setProperty("disorient_resist", 25)
-		setProperty("disorient_resist_eye", 25)
-		setProperty("disorient_resist_ear", 25)
-		//setProperty("block", 25)
+		//setProperty("block", 1)
+
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			I.c_flags |= HAS_GRAB_EQUIP
+
+	disposing()
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			I.c_flags &= ~HAS_GRAB_EQUIP
+		..()
 
 	attack_self()
 		.= 0
+
+	update_icon()
+		.= 0
+
+	proc/can_block(var/obj/item/W)
+		.= 0
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+
+			var/prop = "block_blunt"
+			switch(W.hit_type)
+				if (DAMAGE_BLUNT)
+					prop = "block_blunt"
+				if (DAMAGE_CUT)
+					prop = "block_cut"
+				if (DAMAGE_STAB)
+					prop = "block_stab"
+				if (DAMAGE_BURN)
+					prop = "block_burn"
+
+			if (I.hasProperty(prop))
+				.= 1
 
 ////////////////////////////
 //SPECIAL GRAB ITEMS STUFF//

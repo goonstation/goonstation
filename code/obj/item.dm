@@ -977,7 +977,7 @@
 		hit_area = parse_zone(affecting)
 		d_zone = affecting
 
-	if (!M.melee_attack_test(user, d_zone))
+	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks %target% with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 

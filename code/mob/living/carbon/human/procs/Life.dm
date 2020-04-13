@@ -1188,9 +1188,14 @@
 					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
 					var/curr = C.getProperty("meleeprot")
 					protection = max(curr, protection)
+
+		var/obj/item/grab/block/G = src.check_block()
+		if (G)
+			protection += 1
+
 		return protection
 
-	proc/get_deflection()
+	get_deflection()
 		if (!src)
 			return 0
 

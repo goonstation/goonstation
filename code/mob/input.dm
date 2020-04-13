@@ -222,6 +222,7 @@ mob
 								else
 									pulling += src.pulling
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+								if (G.affecting == src) continue
 								pulling += G.affecting
 
 							for (var/atom/movable/A in pulling)

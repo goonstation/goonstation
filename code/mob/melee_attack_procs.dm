@@ -432,29 +432,45 @@
 
 #undef DISARM_WITH_ITEM_TEXT
 
-/mob/proc/check_block()
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && a_intent == "disarm" && prob(STAMINA_BLOCK_CHANCE) && !equipped())
-		return 1
+/mob/proc/check_block() //am i blocking?
+	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis"))
+		var/obj/item/I = src.equipped()
+		if (I)
+			if (istype(I,/obj/item/grab/block))
+				return I
+			else if (I.c_flags & HAS_GRAB_EQUIP)
+				for (var/obj/item/grab/block/G in I)
+					return G
 	return 0
 
 /mob/living/carbon/human/check_block()
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_BLOCK_CHANCE+get_deflection())&& !equipped())
-		if (istype(src.equipped(),/obj/item/grab/block))
+	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && stamina > STAMINA_DEFAULT_BLOCK_COST)
+		var/obj/item/I = src.equipped()
+		if (I)
+			if (istype(I,/obj/item/grab/block))
+				return I
+			else if (I.c_flags & HAS_GRAB_EQUIP)
+				for (var/obj/item/grab/block/G in I)
+					return G
+	return 0
+
+
+/mob/proc/do_block(var/mob/attacker, var/obj/item/W)
+	var/obj/item/grab/block/G = check_block()
+	if (G)
+		if (G.can_block(W) && prob(STAMINA_BLOCK_CHANCE + get_deflection()))
+			visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")//with the [blank]!
+			playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
+
+			remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
+			stamina_stun()
+
+			qdel(G)
+
 			return 1
 	return 0
 
-
-/mob/proc/do_block(var/mob/attacker)
-	if (check_block())
-		visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
-		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
-
-		remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-		stamina_stun()
-		return 1
-	return 0
-
-/mob/living/carbon/human/do_block(var/mob/attacker)
+/mob/living/carbon/human/do_block(var/mob/attacker, var/obj/item/W)
 	if (stance == "dodge")
 		visible_message("<span style=\"color:red\"><B>[src] narrowly dodges [attacker]'s attack!</span>")
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
@@ -462,25 +478,25 @@
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
 		stamina_stun()
 		return 1
-	else if (prob(src.get_total_block()))
+	else if (prob(src.get_passive_block()))
 		visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
-		return
-
-	if (istype(src.equipped(),/obj/item/grab/block))
-		var/obj/item/grab/G = src.equipped()
-		qdel(G)
+		return 1
 
 	return ..()
 
-/mob/living/carbon/human/proc/get_total_block()
+/mob/living/carbon/human/proc/get_passive_block(var/obj/item/W)
 	var/ret = 0
 	if(getStatusDuration("stonerit"))
 		ret += 20
+
 	for(var/atom in src.get_equipped_items())
 		var/obj/item/C = atom
 		ret += C.getProperty("block")
+
 	return ret
+
+
 
 /////////////////////////////////////////////////// Harm intent ////////////////////////////////////////////////////////
 
@@ -1019,7 +1035,7 @@
 	if (!..())
 		return 0
 
-	if (src.do_block(attacker))
+	if (src.do_block(attacker, I))
 		return 0
 
 	return 1
@@ -1126,6 +1142,9 @@
 
 /mob/proc/get_ranged_protection()
 	return 1
+
+/mob/proc/get_deflection()
+	.= 0
 
 ///////////////////
 /mob/proc/get_head_pierce_prot()
