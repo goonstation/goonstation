@@ -28,7 +28,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /** apply_keys: Takes a keybind_style to apply to the src client
 	*
-  *	Informs client of applied keybind style and merges the keymap
+  *	Informs client of applied keybind style and merges the keymap.
 	*/
 /client/proc/apply_keys(var/datum/keybind_style/S)
 	if (applied_keybind_styles.Find("[S.name]")) //Already added
@@ -39,6 +39,10 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 
 //Applies a given style onto the client after getting the datum
+/** apply_keybind: Takes a given string style, and finds the datum, then applies it.
+ *
+ *	This is what external stuff should be calling when applying their additive styles.
+ */
 /client/proc/apply_keybind(var/style)
 	apply_keys(get_keybind_style_datum(style))
 
@@ -51,7 +55,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 ///	BASE MOB KEYBINDS
 ///
 
-/datum/keybind_style/base
+/datum/keybind_style
 	name = "base"
 	changed_keys = list(
 	"W" = KEY_FORWARD,
@@ -138,8 +142,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 ///	HUMAN-SPECIFIC KEYBINDS
 ///
 
-/datum/keybind_style/human/base
-	name = "human_base"
+/datum/keybind_style/human
+	name = "human"
 	changed_keys = list(
 		"SHIFT" = KEY_RUN,
 		"CTRL" = KEY_PULL,
@@ -202,8 +206,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 ///	ROBOT-SPECIFIC KEYBINDS
 ///
 
-/datum/keybind_style/robot/base
-	name = "robot_base"
+/datum/keybind_style/robot
+	name = "robot"
 	changed_keys = list(
 		"SHIFT" = KEY_BOLT,
 		"CTRL" = KEY_OPEN,
@@ -248,8 +252,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 ///	DRONE-SPECIFIC KEYBINDS
 ///
 
-/datum/keybind_style/drone/base
-	name = "drone_base"
+/datum/keybind_style/drone
+	name = "drone"
 	changed_keys = list(
 		"B" = KEY_POINT,
 		"C" = "attackself",
@@ -279,14 +283,14 @@ var/global/list/datum/keybind_style/keybind_styles = null
 ///	MISC-SPECIFIC KEYBINDS
 ///
 
-/datum/keybind_style/pod/base
-	name = "pod_base"
+/datum/keybind_style/pod
+	name = "pod"
 	changed_keys = list(
 		"SPACE" = "fire"
 	)
 
-/datum/keybind_style/col_putt/base
-	name = "colputt_base"
+/datum/keybind_style/col_putt
+	name = "colputt"
 	changed_keys = list(
 		"SPACE" = "fire",
 		"Q" = "stop",
@@ -301,15 +305,15 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"NORTHEAST" = "alt_fire" /*PGUP*/
 	)
 
-/datum/keybind_style/artillery/base
-	name = "art_base"
+/datum/keybind_style/artillery
+	name = "art"
 	changed_keys = list(
 		"SPACE" = "fire",
 		"Q" = "cycle"
 	)
 
-/datum/keybind_style/torpedo/base
-	name = "torp_base"
+/datum/keybind_style/torpedo
+	name = "torp"
 	changed_keys = list(
 		"SPACE" = "fire",
 		"E" = "exit",
