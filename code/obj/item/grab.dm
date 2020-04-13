@@ -709,8 +709,9 @@
 		.= 0
 
 	proc/can_block(var/obj/item/W)
-		.= 0
-		if (isitem(src.loc))
+		.= 1
+		if (isitem(src.loc) && W)
+			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = "block_blunt"
