@@ -9,12 +9,16 @@ labels:
     - '\[BUG\]'
   'bug - minor':
     - '\[BUG - MINOR\]'
+    - '\[MINOR\]'
   'bug - major':
     - '\[BUG - MAJOR\]'
+    - '\[MAJOR\]'
   'help wanted':
     - '\[HELP WANTED\]'
+    - '\[HELP\]'
   'enhancement':
     - '\[ENHANCEMENT\]'
+    - '\[FEATURE\]'
   'balance':
     - '\[BALANCE\]'
   'style':
@@ -25,6 +29,7 @@ labels:
     - '\[RUNTIME\]'
   'performance':
     - '\[PERFORMANCE\]'
+    - '\[PERF\]'
   'secret':
     - '\[SECRET\]'
   'tooling':
