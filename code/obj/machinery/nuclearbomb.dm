@@ -318,10 +318,15 @@
 			explosion_new(src, get_turf(src), src.boom_size)
 			qdel(src)
 			return
-		var/datum/game_mode/nuclear/NUKEMODE = null
+		var/datum/game_mode/nuclear/NUKEMODE = ticker?.mode
 		var/turf/nuke_turf = get_turf(src)
-		if (nuke_turf.z != 1 && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
-			NUKEMODE = ticker.mode
+		var/area/nuke_area = get_area(src)
+		var/area_correct = 0
+		if(src.target_override && istype(nuke_area, src.target_override))
+			area_correct = 1
+		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
+			area_correct = 1
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
