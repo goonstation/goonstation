@@ -270,7 +270,7 @@
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0

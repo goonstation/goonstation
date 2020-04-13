@@ -74,7 +74,7 @@
 /obj/item/storage/fanny
 	name = "fanny pack"
 	desc = "No, 'fanny' as in 'butt.' Not the other thing."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -104,7 +104,7 @@
 
 /obj/item/storage/belt
 	name = "belt"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -362,7 +362,7 @@
 
 /obj/item/storage/belt/syndicate_medic_belt
 	name = "medical lifesaver bag"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	desc = "A canvas duffel bag full of medicines."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
@@ -408,7 +408,7 @@
 /obj/item/inner_tube
 	name = "inner tube"
 	desc = "An inflatable torus for your waist!"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT

@@ -207,7 +207,7 @@
 				prize = new /obj/item/wrench/gold(src.loc)
 			if(7)
 				prize = new /obj/item/firework(src.loc)
-				prize.icon = 'icons/obj/device.dmi'
+				prize.icon = 'icons/obj/items/device.dmi'
 				prize.icon_state = "shield0"
 				prize.name = "decloaking device"
 				prize.desc = "A device for removing cloaks. Made in Space-Taiwan."

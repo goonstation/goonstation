@@ -623,7 +623,7 @@
 	proc/color_icon(var/obj/item/reagent_containers/pill/P)
 		if (P.reagents)
 			var/datum/color/average = P.reagents.get_average_color()
-			P.color_overlay = image('icons/obj/pills.dmi', "pill0")
+			P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
 			P.color_overlay.color = average.to_rgb()
 			P.color_overlay.alpha = P.color_overlay_alpha
 			P.overlays += P.color_overlay
@@ -702,7 +702,7 @@ datum/chemicompiler_core/stationaryCore
 		executor.panel()
 		onclose(usr, "chemicompiler")
 		return
-	
+
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
@@ -729,7 +729,7 @@ datum/chemicompiler_core/stationaryCore
 				icon_state = initial(icon_state)
 				status |= NOPOWER
 				light.disable()
-	
+
 	process()
 		. = ..()
 		if ( src.executor )

@@ -1,0 +1,49 @@
+# labeler "simple" schema
+# If you need a more robust solution, consider the "full" schema.
+
+# Labels is an object where:
+# - keys are labels
+# - values are array of string patterns to match against title + body in issues/prs
+labels:
+  'bug':
+    - '\[BUG\]'
+  'bug - minor':
+    - '\[BUG - MINOR\]'
+    - '\[MINOR\]'
+  'bug - major':
+    - '\[BUG - MAJOR\]'
+    - '\[MAJOR\]'
+  'help wanted':
+    - '\[HELP WANTED\]'
+    - '\[HELP\]'
+  'enhancement':
+    - '\[ENHANCEMENT\]'
+    - '\[FEATURE\]'
+  'balance':
+    - '\[BALANCE\]'
+  'style':
+    - '\[STYLE\]'
+  'rework':
+    - '\[REWORK\]'
+  'runtime':
+    - '\[RUNTIME\]'
+  'performance':
+    - '\[PERFORMANCE\]'
+    - '\[PERF\]'
+  'secret':
+    - '\[SECRET\]'
+  'tooling':
+    - '\[TOOLING\]'
+  'meta':
+    - '\[META\]'
+  'QoL':
+    - '\[QOL\]'
+  'WIP':
+    - '\[WIP\]'
+  'ass-jam':
+    - '\[ASS JAM\]'
+  'cleanliness':
+    - '\[CLEANLINESS\]'
+  'input wanted':
+    - '\[INPUT WANTED\]'
+    - '\[INPUT\]'

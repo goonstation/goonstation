@@ -131,7 +131,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/table_glass.dmi', a_icon_state, a_name, null, src, 1), user)
+						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, src, 1), user)
 					return
 				else if (src.material.material_flags & MATERIAL_CRYSTAL && S.material.material_flags & MATERIAL_METAL) // we're a glass and they're a metal
 					if (src.amount_check(2,usr) && S.amount_check(1,usr))
@@ -139,7 +139,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/table_glass.dmi', a_icon_state, a_name, null, S, 1), user)
+						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, S, 1), user)
 					return
 
 				else
@@ -336,7 +336,7 @@ MATERIAL
 					a_type = /obj/item/furniture_parts/table
 					a_amount = 1
 					a_cost = 2
-					a_icon = 'icons/obj/table.dmi'
+					a_icon = 'icons/obj/furniture/table.dmi'
 					a_icon_state = "table_parts"
 					a_name = "table parts"
 
@@ -411,7 +411,7 @@ MATERIAL
 					a_type = /obj/item/pipebomb/frame
 					a_amount = 1
 					a_cost = 3
-					a_icon = 'icons/obj/assemblies.dmi'
+					a_icon = 'icons/obj/items/assemblies.dmi'
 					a_icon_state = "Pipe_Frame"
 					a_name = "a pipe frame"
 
@@ -500,7 +500,7 @@ MATERIAL
 					a_type = /obj/item/furniture_parts/table/reinforced
 					a_amount = 1
 					a_cost = 2
-					a_icon = 'icons/obj/table_reinforced.dmi'
+					a_icon = 'icons/obj/furniture/table_reinforced.dmi'
 					a_icon_state = "table_parts"
 					a_name = "reinforced table parts"
 

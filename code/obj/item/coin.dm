@@ -1,7 +1,7 @@
 /obj/item/coin
 	name = "coin"
 	desc = "A small gold coin with an alien head on one side and a monkey buttocks on the other."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
 	w_class = 1.0
@@ -34,7 +34,7 @@
 /obj/item/coin_bot
 	name = "Probability Disc"
 	desc = "A small golden disk of some sort. Possibly used in highly complex quantum experiments."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
 	w_class = 1.0

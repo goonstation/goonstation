@@ -295,7 +295,7 @@
 
 		var/turf/the_turf = get_turf(target)
 
-		var/icon/photo = icon('icons/obj/items.dmi',"photo")
+		var/icon/photo = icon('icons/obj/items/items.dmi',"photo")
 
 		var/icon/turficon = build_composite_icon(the_turf)
 		turficon.Scale(22,20)

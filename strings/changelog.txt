@@ -1,5 +1,7 @@
 ﻿
 (t)mon apr 12 20
+(u)Erinexx
+(+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
 (u)ASS_JAM
 (*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
 (*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
@@ -8,6 +10,14 @@
 (*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
 (*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
 (*)UrsulaMajor - Updated Density, map smol.
+(u)Flaborized
+(*)Added a few small items to the surplus crate!
+(u)Tarmunora
+(*)On ass day you can shoot as fast as you can click.
+(*)Guns have a little bit of extra spread when drunk. Alcohol immunity mitigates this, to an extent
+(+)Added the ability to refill/combine ammo boxes by hitting them with a box of the same type
+(+)Changed pointblanking to hit with all the projectiles in a burst, not just one
+(+)Fixes up gunpoint grabs a little bit (should shoot more consistently)
 (t)sun apr 12 20
 (u)Goonstation Administration Team
 (*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.

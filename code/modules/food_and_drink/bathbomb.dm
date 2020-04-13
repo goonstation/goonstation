@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/bath_bomb
 	name = "Discount Dan's Bath Bomb"
 	desc = "a bath bomb"
-	icon = 'icons/obj/bathbomb.dmi'
+	icon = 'icons/obj/items/bathbomb.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "bathbomb"
 	item_state = "bathbomb"

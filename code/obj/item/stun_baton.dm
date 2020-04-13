@@ -8,7 +8,7 @@
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton"
@@ -552,7 +552,7 @@
 /obj/item/barrier
 	name = "barrier"
 	desc = "A personal barrier. Activate this item with both hands free to use it."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
@@ -650,7 +650,7 @@
 /obj/item/syndicate_barrier
 	name = "Aegis Riot Barrier"
 	desc = "A personal barrier."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"

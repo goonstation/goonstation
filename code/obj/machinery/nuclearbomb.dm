@@ -367,7 +367,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 

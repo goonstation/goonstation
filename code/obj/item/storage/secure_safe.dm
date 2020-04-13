@@ -30,10 +30,10 @@
 /obj/item/storage/secure/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if ((src.locked == 1) && (!src.emagged))
 		emagged = 1
-		src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+		src.overlays += image('icons/obj/items/storage.dmi', icon_sparking)
 		sleep(6)
 		src.overlays = null
-		overlays += image('icons/obj/storage.dmi', icon_locking)
+		overlays += image('icons/obj/items/storage.dmi', icon_locking)
 		locked = 0
 		if (user)
 			boutput(user, "You short out the lock on [src].")
@@ -245,7 +245,7 @@
 
 				if (locked)
 					locked = 0
-					overlays = list(image('icons/obj/storage.dmi', icon_open))
+					overlays = list(image('icons/obj/items/storage.dmi', icon_open))
 					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clicks unlocked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
@@ -344,7 +344,7 @@
 
 		src.configure_mode = 1
 		src.locked = 0
-		overlays = list(image('icons/obj/storage.dmi', icon_open))
+		overlays = list(image('icons/obj/items/storage.dmi', icon_open))
 		src.code = ""
 
 		boutput(usr, "Code reset.  Please type new code and press enter.")
@@ -360,7 +360,7 @@
 			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('icons/obj/storage.dmi', icon_open)
+				overlays += image('icons/obj/items/storage.dmi', icon_open)
 				src.code = null
 			else
 				src.code = "ERROR"
@@ -386,7 +386,7 @@
 
 /obj/item/storage/secure/sbriefcase
 	name = "secure briefcase"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
@@ -442,7 +442,7 @@
 
 /obj/item/storage/secure/ssafe
 	name = "secure safe"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "safe"
 	icon_open = "safe0"
 	icon_locking = "safeb"

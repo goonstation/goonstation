@@ -203,7 +203,7 @@
 
 /obj/item/feather
 	name = "feather"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "feather"
 	w_class = 1
 	p_class = 1
@@ -1382,7 +1382,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /obj/item/pen/crayon/lipstick // every time I think I've made the stupidest path I could, there's nowhere to go from here, I surpass my own expectations
 	name = "lipstick"
 	desc = "A tube of wax, oil and pigment that is intended to be used to color a person's lips."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
@@ -1434,7 +1434,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "apply_makeup"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick1"
 	var/mob/living/carbon/human/target
 	var/obj/item/pen/crayon/lipstick/makeup
@@ -1504,7 +1504,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "gun"
 

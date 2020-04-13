@@ -336,8 +336,8 @@ var/list/electiles = list()
 		I.Scale(iconSize*scalingFactor, iconSize*scalingFactor)
 		I.Shift(EAST,((sizeX * scalingFactor) / 2) / 2)
 
-	var/icon/backGlass = icon('icons/obj/cabinet.dmi', "slot_empty")
-	var/icon/glass = icon('icons/obj/cabinet.dmi', "slot_transparent")
+	var/icon/backGlass = icon('icons/obj/furniture/cabinet.dmi', "slot_empty")
+	var/icon/glass = icon('icons/obj/furniture/cabinet.dmi', "slot_transparent")
 	I.Blend(backGlass, ICON_UNDERLAY)
 	I.Blend(glass, ICON_OVERLAY)
 
@@ -363,7 +363,7 @@ var/list/electiles = list()
 
 /obj/item/permmarker
 	name = "Permanent Marker"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "marker"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	color = "#0099ff"
@@ -1035,7 +1035,7 @@ var/list/electiles = list()
 /obj/item/experimental/ranged
 	name = "test"
 	desc = ""
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
@@ -1090,7 +1090,7 @@ var/list/electiles = list()
 /obj/item/experimental/melee
 	name = "melee weapon"
 	desc = ""
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
@@ -1127,7 +1127,7 @@ var/list/electiles = list()
 /datum/action/bar/private/icon/daggerStab
 	id = "daggerStab"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"
 	var/obj/item/experimental/melee/dagger/dagger
 	var/mob/user
@@ -1202,7 +1202,7 @@ var/list/electiles = list()
 /obj/item/experimental/melee/dagger
 	name = "Dagger"
 	desc = "A dagger. Perfect for back-stabbing. Only good for back-stabbing, actually."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "dagger"
@@ -1294,7 +1294,7 @@ var/list/electiles = list()
 	force = 10
 	throwforce = 20
 	color = "#ffffff"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "staff_crystal"
@@ -1350,14 +1350,14 @@ var/list/electiles = list()
 	proc/buildOverlays()
 		overlays.Cut()
 		if(shaft)
-			var/image/imgShaft = image('icons/obj/weapons.dmi',icon_state = "spear")
+			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
 			imgShaft.color = shaft.color
 			imgShaft.alpha = shaft.alpha
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
-			var/image/imgHead = image('icons/obj/weapons.dmi',icon_state = "spearhead")
+			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
 			imgHead.color = head.color
 			imgHead.alpha = head.alpha
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
@@ -1833,7 +1833,7 @@ var/list/electiles = list()
 /obj/item/ghostboard
 	name = "Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lboard"
 	item_state = "clipboard"
 	w_class = 3.0
@@ -2150,7 +2150,7 @@ var/list/electiles = list()
 /obj/item/teslacannon
 	desc = "An experimental piece of syndicate technology."
 	name = "Tesla cannon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2534,7 +2534,7 @@ var/list/electiles = list()
 /obj/shuttle_cannon
 	name = "Shuttle Cannon"
 	desc = "Pew Pew"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuttlecannonthing"
 	anchored = 1
 	density = 1
@@ -2870,7 +2870,7 @@ var/list/electiles = list()
 	anchored = 1
 	contraband = 4
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "boomerang"
 	item_state = "boomerang"
 
@@ -3832,7 +3832,7 @@ var/list/lag_list = new/list()
 /obj/item/engibox
 	name = "Engineer-in-a-box"
 	desc = "The concentrated power of a whole team of engineers. In a box."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "engi"
 	var/list/modes = new/list()
 	var/datum/engibox_mode/active_mode = null

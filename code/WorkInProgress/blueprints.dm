@@ -333,7 +333,7 @@
 /obj/item/blueprint_marker
 	name = "Blueprint Marker"
 	desc = "A tool used to map rooms for the creation of blueprints."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 
 	icon_state = "blueprintmarker"
 	item_state = "gun"

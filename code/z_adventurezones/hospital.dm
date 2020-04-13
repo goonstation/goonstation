@@ -281,7 +281,7 @@ var/list/samostrel_warps = list()
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/drink.dmi'
+	//icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "whiskey"
 	bottle_style = "whiskey"
 	fluid_style = "whiskey"

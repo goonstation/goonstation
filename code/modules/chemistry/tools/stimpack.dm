@@ -1,6 +1,6 @@
 /obj/item/stimpack
 	name = "Stimpack"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dnainjector"
 	throw_speed = 1
 	throw_range = 5

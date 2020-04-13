@@ -227,7 +227,7 @@
 /obj/item/device/spy_implanter
 	name = "Multi-Use Implanter"
 	desc = "A specialized, self-sanitizing implantation implement that may be used to inject multiple implants. As a trade-off, it cannot be reloaded outside of the factory."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "revimplanter4"
 	item_state = "syringe_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'

@@ -744,7 +744,7 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"
 	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "yoyo"
 	item_state = "yoyo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -770,7 +770,7 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/unkill_shield
 	name = "Shield of Souls"
 	desc = "It appears to be a metal shield with blue LEDs glued to it."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "magic"
 
 	pickup(mob/user)

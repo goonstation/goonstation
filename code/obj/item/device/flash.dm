@@ -392,6 +392,12 @@
 			secure = !secure
 		return
 
+/obj/item/storage/box/turbo_flash_kit
+	name = "\improper Box of flash/cell assemblies."
+	desc = "A box filled with five dangerous looking flash/cell assemblies."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/device/flash/turbo = 5)
+
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
