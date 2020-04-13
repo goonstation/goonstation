@@ -537,7 +537,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/saw/syndie
 	cost = 7
 	desc = "This old earth beauty is made by hand with strict attention to detail. Unlike today's competing botanical chainsaw, it actually cuts things!"
-	//not_in_crates = 1
+	not_in_crates = 1
 	job = list("Botanist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
@@ -940,13 +940,6 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
 	blockedmode = list(/datum/game_mode/revolution)
-
-/datum/syndicate_buylist/surplus/bighat
-	name = "Syndicate Hat"
-	item = /obj/item/clothing/head/bighat/syndicate
-	cost = 1 //to prevent it from using 12 tc in a crate
-	desc = "Think you're tough shit buddy?"
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/surplus/emaghypo
 	name = "Hacked Hypospray"
