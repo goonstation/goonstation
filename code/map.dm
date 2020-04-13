@@ -434,6 +434,7 @@ var/global/list/mapNames = list(
 	auto_windows = 1
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
 
 	escape_centcom = /area/shuttle/escape/centcom/cogmap2
 	escape_transit = /area/shuttle/escape/transit/cogmap2
