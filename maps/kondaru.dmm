@@ -22424,11 +22424,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/kitchen)
-"aYM" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/locker{
-	name = "Cryosleep Terminus"
-	})
 "aYN" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -35140,7 +35135,8 @@
 /area/station/science)
 "bAV" = (
 /obj/machinery/door/airlock/pyro/medical{
-	name = "Research Sector"
+	name = "Research Sector";
+	req_access = null
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/access_spawn/research,
@@ -38793,7 +38789,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	name = "Research Sector"
+	name = "Research Sector";
+	req_access = null
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/access_spawn/research,
@@ -38829,7 +38826,8 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	name = "Research Sector"
+	name = "Research Sector";
+	req_access = null
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/purple,
@@ -108445,11 +108443,11 @@ aQT
 aRZ
 aSe
 aQT
-aYM
-aYM
-aYM
-aYM
-aYM
+aUz
+aUz
+aUz
+aUz
+aUz
 aZN
 aZM
 bci
@@ -108751,7 +108749,7 @@ aIY
 bmO
 aXO
 aWO
-aYM
+aUz
 aZO
 aZM
 bcj
@@ -109053,7 +109051,7 @@ aIY
 bpB
 pqx
 coV
-aYM
+aUz
 aZP
 aZM
 bcj
@@ -109355,7 +109353,7 @@ aIY
 coV
 pqx
 aXP
-aYM
+aUz
 aZQ
 bbc
 bck
@@ -109657,7 +109655,7 @@ aUA
 tYP
 kBY
 aXQ
-aYM
+aUz
 aZR
 bbd
 bcl
@@ -109959,7 +109957,7 @@ aIY
 aVz
 pqx
 aXR
-aYM
+aUz
 aZS
 bbd
 bcl
@@ -110257,11 +110255,11 @@ aQY
 aSe
 aSe
 aTM
-aYM
-aYM
+aUz
+aUz
 aWP
-aYM
-aYM
+aUz
+aUz
 aZT
 bbd
 bcl
