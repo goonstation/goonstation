@@ -56,7 +56,7 @@ VUVUZELA
 
 /obj/item/canned_laughter
 	name = "Canned laughter"
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 	icon_state = "cola-5"
 	desc = "All of the rewards of making a good joke with none of the effort! In a can!"
 	var/opened = 0

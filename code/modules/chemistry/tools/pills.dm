@@ -6,7 +6,7 @@
 /obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "a pill."
-	icon = 'icons/obj/pills.dmi'
+	icon = 'icons/obj/items/pills.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "pill0"
 	item_state = "pill"

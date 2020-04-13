@@ -2,7 +2,7 @@
 
 /obj/item/wrapping_paper
 	name = "wrapping paper"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "wrap_paper-r"
 	item_state = "wrap_paper"
 	uses_multiple_icon_states = 1
@@ -83,7 +83,7 @@
 /obj/item/gift
 	desc = "For me!?"
 	name = "gift"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-p"
 	item_state = "gift"
 	var/size = 3.0
@@ -115,7 +115,7 @@
 /obj/item/a_gift
 	name = "gift"
 	desc = "I wonder what's inside!?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-b"
 	item_state = "gift"
 	pressure_resistance = 70
@@ -183,7 +183,7 @@
 /obj/spresent // bandaid fix for presents having no icon or name other than "spresent"
 	name = "present"
 	desc = "What could it be?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "strange-r"
 
 /obj/spresent/relaymove(mob/user as mob)

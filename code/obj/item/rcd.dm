@@ -33,7 +33,7 @@ Broken RCD + Effects
 /obj/item/rcd
 	name = "rapid construction device"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "base"
 	item_state = "rcd" //oops
@@ -616,7 +616,7 @@ Broken RCD + Effects
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for a rapid construction device."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "ammo"
 	item_state = "rcdammo"
@@ -654,7 +654,7 @@ Broken RCD + Effects
 /obj/item/rcd_fake
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
@@ -671,7 +671,7 @@ Broken RCD + Effects
 /obj/item/broken_rcd
 	name = "prototype rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"

@@ -11,7 +11,7 @@
 	health = 4
 	can_flip_bust = 1
 	p_class = 1.5
-	
+
 	recalcPClass()
 		var/maxPClass = 0
 		for (var/atom/movable/O in contents)
@@ -56,7 +56,7 @@
 /obj/storage/cart/hotdog
 	name = "hotdog stand"
 	desc = "This will probably never be used to sell hotdogs."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "hotdogstand"
 	icon_closed = "hotdogstand"
 	icon_opened = "hotdogstandopen"

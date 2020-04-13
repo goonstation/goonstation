@@ -1,4 +1,26 @@
 ﻿
+(t)mon apr 12 20
+(u)ASS_JAM
+(*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
+(*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
+(*)Moonlol - New wizard spell: Timestop. "This very handy dandy feature surely wont cause any runtimes"
+(*)Polivilas - Disables zipgun, adds a slamgun. "I will pay out 100k spacebux for better sprites - contact 2027#2027 on discord for more details."
+(*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
+(*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
+(*)UrsulaMajor - Updated Density, map smol.
+(t)sun apr 12 20
+(u)Goonstation Administration Team
+(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
+(u)Enfaeutchie
+(+)The Lawgiver now comes with an instructional pamphlet.
+(+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
+(u)Flaborized
+(*)Resprited a bunch of the ore in the game!
+(u)adharainspace
+(*)finally added cross-round bookshelves to every map you can normally vote in! have fun!
+(+)minor qol changes to printing press
+(u)Moonlol
+(*)Soup is now serve-able in the afterlife bar!
 (t)sat apr 11 20
 (u)2027
 (+)Adds acquiring methods to old medals.

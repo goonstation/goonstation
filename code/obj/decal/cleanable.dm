@@ -732,7 +732,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/balloon
 	name = "balloon"
 	desc = "The remains of a balloon."
-	icon = 'icons/obj/balloon.dmi'
+	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white_pop"
 
 /obj/decal/cleanable/writing

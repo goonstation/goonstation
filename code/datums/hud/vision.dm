@@ -28,11 +28,20 @@
 		flash.mouse_opacity = 0
 		flash.alpha = 0
 
+		remove_screen(scan)
+		remove_screen(color_mod)
+		remove_screen(color_mod_floor)
+		remove_screen(dither)
+		remove_screen(flash)
+
 	proc
 		flash(duration)
 			if(flash)
+				add_screen(flash)
 				flash.alpha = 255
 				animate(flash, alpha = 0, time = duration, easing = SINE_EASING)
+				SPAWN_DBG(duration)
+					remove_screen(flash)
 
 		noise(duration)
 			// hacky and incorrect but I didnt want to introduce another object just for this
@@ -42,18 +51,46 @@
 				flash.icon_state = "white"
 
 		set_scan(scanline)
+			if (scanline)
+				add_screen(scan)
+			else
+				remove_screen(scan)
 			scan.alpha = scanline ? 50 : 0
 
 		set_color_mod(color)
 			color_mod.color = color
 			color_mod_floor.color = color
+			if (color == "#000000")
+				remove_screen(color_mod)
+				remove_screen(color_mod_floor)
+			else
+				add_screen(color_mod)
+				add_screen(color_mod_floor)
 
 		animate_color_mod(color, duration)
 			animate(color_mod, color = color, time = duration)
 			animate(color_mod_floor, color = color, time = duration)
+			SPAWN_DBG(duration + 1)
+				if (color == "#000000")
+					remove_screen(color)
+					remove_screen(color_mod_floor)
+				else
+					add_screen(color)
+					add_screen(color_mod_floor)
 
 		set_dither_alpha(alpha)
+			if (alpha > 0)
+				add_screen(dither)
+			else
+				remove_screen(dither)
 			dither.alpha = alpha
 
 		animate_dither_alpha(alpha, duration)
 			animate(dither, alpha = alpha, time = duration)
+			SPAWN_DBG(duration + 1)
+				if (alpha > 0)
+					add_screen(dither)
+				else
+					remove_screen(dither)
+
+

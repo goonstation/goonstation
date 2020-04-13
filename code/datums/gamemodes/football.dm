@@ -122,7 +122,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				src.score_red += points
 			if ("blue")
 				src.score_blue += points
-		
+
 		src.time_next_state = 5 SECONDS
 		src.game_state = FOOTBALL_POSTSCORE
 		boutput(world, "<h1>[points == 6 ? "Touchdown!" : "Toss in."]</h1><h2>Team [uppertext(team)] scores! [points] point\s.</h2> Next possession in 30 seconds...")
@@ -198,7 +198,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				team = "blue"
 			else
 				team = "red"
-			
+
 			footballer.mind.special_role = team
 			football_players[team] += footballer.mind
 
@@ -206,7 +206,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(footballer) // for whatever reason, this is neccessary
 		I.registered = "[footballer.name]"
-		I.icon = 'icons/obj/card.dmi'
+		I.icon = 'icons/obj/items/card.dmi'
 		I.icon_state = "fingerprint0"
 		I.desc = "A tag for indicating what team you're on. Doesn't really matter."
 		if (team == "blue")
@@ -217,15 +217,15 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			I.assignment = "Blue Team"
 			I.color = "#0000ff"
 		else
-			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(footballer), footballer.slot_wear_suit)		
+			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(footballer), footballer.slot_wear_suit)
 			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(footballer), footballer.slot_head)
 			footballer.equip_if_possible(new /obj/item/clothing/under/football/red(footballer), footballer.slot_w_uniform)
 			I.name = "Red Team"
 			I.assignment = "Red Team"
 			I.color = "#ff0000"
 
-		footballer.equip_if_possible(new /obj/item/clothing/shoes/cleats(footballer), footballer.slot_shoes)		
-	
+		footballer.equip_if_possible(new /obj/item/clothing/shoes/cleats(footballer), footballer.slot_shoes)
+
 		footballer.equip_if_possible(I, footballer.slot_wear_id)
 		//footballer.Equip_Bank_Purchase(footballer.mind.purchased_bank_item)
 		footballer.set_clothing_icon_dirty()

@@ -189,6 +189,7 @@ mob/verb/checkrewards()
 			return
 
 		var/obj/item/gun/energy/lawgiver/LG = new reward_path()
+		var/obj/item/paper/lawgiver_pamphlet/LGP = new/obj/item/paper/lawgiver_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
@@ -200,6 +201,8 @@ mob/verb/checkrewards()
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
+		C.mob.put_in_hand_or_drop(LGP)
+		boutput(C.mob, "<span style='color:#605b59'>A pamphlet flutters out.</span>")
 		return
 
 /datum/jobXpReward/head_of_security_LG/old

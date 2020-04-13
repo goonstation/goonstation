@@ -2735,7 +2735,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	opacity = 0
 	anchored = 1
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
 	item_state = "lawbook"
 
@@ -3285,3 +3285,45 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
+	var/custom_cover = 0 //if 1, goes thru with the build custom icon process
+	var/book_cover = "" //what cover does our book have
+	var/cover_color = "#FFFFFF" //white by default, what colour will our book be?
+	var/cover_symbol = "" //what symbol is on our front cover?
+	var/symbol_color = "#FFFFFF" //white by default, if our symbol is colourable, what colour is it?
+	var/cover_flair = "" //whats the "flair" thing on the book?
+	var/flair_color = "#FFFFFF" //white by default, whats the color of the flair (if its colorable)?
+	var/symbol_colorable = 0 //set this to 1 if your symbol is colourable
+	var/flair_colorable = 0 //set this to 1 if your flair is colourable
+	var/ink_color = "#000000" //what color is the text written in?
+
+	New()
+		..()
+		src.build_custom_book()
+
+	proc/build_custom_book()
+		if (src.custom_cover)
+			src.icon = 'icons/obj/items/custom_books.dmi'
+			src.icon_state = "paper"
+			if (src.cover_color)
+				var/image/I = SafeGetOverlayImage("cover", src.icon, "base-colorable")
+				I.color = src.cover_color
+				src.UpdateOverlays(I, "cover")
+			if (src.cover_symbol)
+				var/image/I = SafeGetOverlayImage("symbol", src.icon, "symbol-[cover_symbol]")
+				if (src.symbol_colorable)
+					I.color = src.symbol_color
+				src.UpdateOverlays(I, "symbol")
+			if (src.cover_flair)
+				var/image/I = SafeGetOverlayImage("flair", src.icon, "flair-[cover_flair]")
+				if (src.flair_colorable)
+					I.color = flair_color
+				src.UpdateOverlays(I, "flair")
+		else
+			if (src.book_cover == "bible")
+				src.icon = 'icons/obj/items/storage.dmi'
+			else if (!src.book_cover)
+				src.book_cover = "book0"
+			src.icon_state = src.book_cover
+		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"

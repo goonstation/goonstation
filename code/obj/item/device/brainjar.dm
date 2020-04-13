@@ -19,13 +19,13 @@
 	New()
 		..()
 
-		overlays_list["wires"] = new /icon('icons/obj/device.dmi', "bjwires")
-		overlays_list["radio"] = new /icon('icons/obj/device.dmi', "bjradio")
-		overlays_list["analyzer"] = new /icon('icons/obj/device.dmi', "bjhealthanalyzer")
-		overlays_list["head_01"] = new /icon('icons/obj/device.dmi', "head-nobrain")
-		overlays_list["head_00"] = new /icon('icons/obj/device.dmi', "head-nobrain-unpow")
-		overlays_list["head_11"] = new /icon('icons/obj/device.dmi', "head-brain")
-		overlays_list["head_10"] = new /icon('icons/obj/device.dmi', "head-brain-unpow")
+		overlays_list["wires"] = new /icon('icons/obj/items/device.dmi', "bjwires")
+		overlays_list["radio"] = new /icon('icons/obj/items/device.dmi', "bjradio")
+		overlays_list["analyzer"] = new /icon('icons/obj/items/device.dmi', "bjhealthanalyzer")
+		overlays_list["head_01"] = new /icon('icons/obj/items/device.dmi', "head-nobrain")
+		overlays_list["head_00"] = new /icon('icons/obj/items/device.dmi', "head-nobrain-unpow")
+		overlays_list["head_11"] = new /icon('icons/obj/items/device.dmi', "head-brain")
+		overlays_list["head_10"] = new /icon('icons/obj/items/device.dmi', "head-brain-unpow")
 
 		controller = new(src)
 		controller.container = src

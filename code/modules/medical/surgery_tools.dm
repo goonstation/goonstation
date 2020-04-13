@@ -216,7 +216,7 @@ CONTAINS:
 /obj/item/staple_gun
 	name = "staple gun"
 	desc = "A medical staple gun for securely reattaching limbs."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "staplegun"
 	w_class = 1
 	throw_speed = 4
@@ -307,6 +307,9 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
+		#if ASS_JAM
+			//DISABLE ZIPGUN DURING ASSJAM
+		#else
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -324,12 +327,13 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
+		#endif
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
 	name = "stapler"
 	desc = "A red stapler.  No, not THAT red stapler."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "stapler"
 	item_state = "stapler"
 

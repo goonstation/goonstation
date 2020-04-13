@@ -282,7 +282,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	initial_volume = 6
 	throwforce = 0
 	w_class = 1.0
@@ -368,7 +368,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	name = "grapefruit wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = 1.0
 	amount = 1
@@ -932,7 +932,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	name = "lime wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = 1.0
 	amount = 1
@@ -975,7 +975,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	name = "lemon wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = 1.0
 	amount = 1

@@ -8,7 +8,7 @@ GAUNTLET CARDS
 
 /obj/item/card
 	name = "card"
-	icon = 'icons/obj/card.dmi'
+	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
 	wear_image_icon = 'icons/mob/mob.dmi'
 	w_class = 1.0

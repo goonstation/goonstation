@@ -1,7 +1,7 @@
 /obj/item/satchel
 	name = "satchel"
 	desc = "A leather satchel for holding things."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
 	flags = ONBELT
 	w_class = 1
@@ -144,17 +144,17 @@
 		src.overlays = null
 		switch(perc)
 			if (-INFINITY to 0)
-				src.overlays += image('icons/obj/items.dmi', "satcounter0")
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter0")
 			if (1 to 24)
-				src.overlays += image('icons/obj/items.dmi', "satcounter1")
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter1")
 			if (25 to 49)
-				src.overlays += image('icons/obj/items.dmi', "satcounter2")
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter2")
 			if (50 to 74)
-				src.overlays += image('icons/obj/items.dmi', "satcounter3")
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter3")
 			if (75 to 99)
-				src.overlays += image('icons/obj/items.dmi', "satcounter4")
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter4")
 			if (100 to INFINITY)
-				src.overlays += image('icons/obj/items.dmi', "satcounter5")
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter5")
 
 		signal_event("icon_updated")
 
