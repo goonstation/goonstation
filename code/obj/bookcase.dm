@@ -188,7 +188,9 @@
 		return shelf_overlay_list[book_count]
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/paper/book))
+		if(istype(W, /obj/item/storage/bible))
+			boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
+		else if (istype(W, /obj/item/paper/book))
 			if (!(bookshelf_contents.len >= capacity))
 				boutput(user, "You shelf the book.")
 				user.drop_item()
@@ -374,7 +376,7 @@
 				var/obj/item/paper/book/B = new(get_turf(src))
 				B.name = book_vars["name"]
 				B.desc = book_vars["desc"]
-				B.icon = icon(book_vars["icon"])
+				// B.icon = icon(book_vars["icon"])
 				B.icon_state = book_vars["icon_state"]
 				B.info = book_vars["info"]
 				src.add_to_bookshelf(B)
@@ -382,7 +384,7 @@
 				var/obj/item/paper/book/custom/B = new(get_turf(src))
 				B.name = book_vars["name"]
 				B.desc = book_vars["desc"]
-				B.icon = icon(book_vars["icon"])
+				// B.icon = icon(book_vars["icon"])
 				B.icon_state = book_vars["icon_state"]
 				B.info = book_vars["info"]
 				B.custom_cover = book_vars["custom_cover"]
@@ -408,7 +410,7 @@
 					var/list/book_vars = list()
 					book_vars["name"] = B.name
 					book_vars["desc"] = B.desc
-					book_vars["icon"] = "[B.icon]"
+					// book_vars["icon"] = "[B.icon]"
 					book_vars["icon_state"] = B.icon_state
 					book_vars["info"] = B.info
 					if (istype(B, /obj/item/paper/book/custom))
