@@ -65,10 +65,12 @@ var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 
 				"}, "window=assday;size=500x650;title=ASS DAY;fade_in=1")
 #endif*/
 	src.Browse({"<center><h2>!!! ASS JAM !!!</h2></center><hr>
+				<h3>PLEASE READ THIS POPUP - THE RULES HAVE CHANGED</h3>
 				You have joined us for Ass Jam, an event that occurs on the 13th of every month. During this time, unstable and off-kilter features and bugs are sure to be on the menu. New variations on old concepts, nostalgic ex-content, and colorful additions from the community may make gameplay radically different from what you're used to!<br><br>
 				Some loss of productivity is to be expected, and accidents WILL happen! Some stuff will kill you, or you pals- understanding is key. That being said, <i>please don't intentionally grief other players if you are not an antagonist~</i>. <br>
-				Bear in mind that these rules are still in full effect, however:<br>
+				Bear in mind that the following rules are IN FORCE:<br>
 				<ol>
+					<li><h3>DO NOT GRIEF OR OTHERWISE SELF-ANTAG. PLAY AS NORMAL</h3></li>
 					<li>No intentionally crashing the server or causing lag.</li>
 					<li>No bigotry.</li>
 					<li>No sexual stuff.</li>
