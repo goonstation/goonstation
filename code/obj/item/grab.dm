@@ -15,6 +15,7 @@
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
 	var/item_grab_overlay_state = "grab_small"
+	var/can_pin = 1
 
 
 	New(atom/loc)
@@ -518,6 +519,9 @@
 	if (get_dist(src, M) > 1)
 		return 0
 
+	if (!G.can_pin)
+		return 0
+
 	if (ishuman(G.affecting))
 		G.affecting:was_harmed(G.assailant)
 
@@ -532,6 +536,12 @@
 
 	if (get_dist(src, M) > 1)
 		return 0
+
+	if (!G.can_pin)
+		return 0
+
+	if (ishuman(G.affecting))
+		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
 	attack_particle(user,src)
@@ -675,6 +685,8 @@
 	icon_state = "grab_block"
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
+	can_pin = 0
+
 
 	New()
 		..()
