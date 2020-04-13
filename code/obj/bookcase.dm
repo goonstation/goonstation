@@ -382,7 +382,7 @@
 				var/obj/item/paper/book/custom/B = new(get_turf(src))
 				B.name = book_vars["name"]
 				B.desc = book_vars["desc"]
-				B.icon = book_vars["icon"]
+				B.icon = icon(book_vars["icon"])
 				B.icon_state = book_vars["icon_state"]
 				B.info = book_vars["info"]
 				B.custom_cover = book_vars["custom_cover"]
@@ -408,7 +408,7 @@
 					var/list/book_vars = list()
 					book_vars["name"] = B.name
 					book_vars["desc"] = B.desc
-					book_vars["icon"] = B.icon
+					book_vars["icon"] = "[B.icon]"
 					book_vars["icon_state"] = B.icon_state
 					book_vars["info"] = B.info
 					if (istype(B, /obj/item/paper/book/custom))
