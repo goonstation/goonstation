@@ -425,6 +425,19 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/nails // oh god oh fuck
+	sname = "Nails"
+	name = "nailshot ammo box"
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/nails
+	icon_state = "custom-8"
+	icon_short = "custom"
+	amount_left = 8.0
+	max_amount = 8.0
+	caliber = 0.72
+	icon_dynamic = 1
+	icon_empty = "custom-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 /obj/item/ammo/bullets/aex
 	sname = "12ga AEX"
 	name = "12ga AEX ammo box"
