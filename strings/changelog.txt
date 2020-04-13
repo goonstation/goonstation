@@ -10,6 +10,8 @@
 (*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
 (*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
 (*)UrsulaMajor - Updated Density, map smol.
+(u)Flaborized
+(*)Added a few small items to the surplus crate!
 (t)sun apr 12 20
 (u)Goonstation Administration Team
 (*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
