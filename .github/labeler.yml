@@ -21,6 +21,8 @@ labels:
     - '\[STYLE\]'
   'rework':
     - '\[REWORK\]'
+  'runtime':
+    - '\[RUNTIME\]'
   'performance':
     - '\[PERFORMANCE\]'
   'secret':
