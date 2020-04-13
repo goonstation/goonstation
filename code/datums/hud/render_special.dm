@@ -8,7 +8,7 @@
 		obj/screen/right_fill
 
 	New()
-		center_light = create_screen("", "", 'icons/effects/vision_default.dmi', "default", "CENTER-1.5, CENTER-1.5", LIGHTING_LAYER_BASE)
+		center_light = create_screen("", "", 'icons/effects/vision_default.dmi', "default", "CENTER-1, CENTER-1", LIGHTING_LAYER_BASE)
 		center_light.mouse_opacity = 0 // this is really a giant hack and shouldn't be in the HUD system, but there aren't many good ways to handle this
 		center_light.blend_mode = BLEND_ADD
 		center_light.plane = PLANE_LIGHTING
@@ -18,13 +18,13 @@
 		switch(state)
 			if ("default")
 				center_light.icon = 'icons/effects/vision_default.dmi'
-				center_light.screen_loc = "CENTER-1.5, CENTER-1.5"
+				center_light.screen_loc = "CENTER-1, CENTER-1"
 			if ("cateyes")
 				center_light.icon = 'icons/effects/vision_cateyes.dmi'
-				center_light.screen_loc = "CENTER-2.5, CENTER-2.5"
+				center_light.screen_loc = "CENTER-2, CENTER-2"
 			if ("thermal")
 				center_light.icon = 'icons/effects/vision_thermal.dmi'
-				center_light.screen_loc = "CENTER-4.875, CENTER-4.875"
+				center_light.screen_loc = "CENTER-4.375, CENTER-4.375"
 			else
 				if (wide)
 					center_light.icon = 'icons/effects/vision_wide.dmi'
