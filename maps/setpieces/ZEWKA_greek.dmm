@@ -1,6 +1,6 @@
 "aa" = (/turf/space,/area)
 "ab" = (/turf/cordon,/area/cordon)
-"ac" = (/turf/unsimulated/wall/greek/underwall{tag = "icon-under-wall (NORTHEAST)"; icon_state = "under-wall"; dir = 5},/area/greek/underworld)
+"ac" = (/turf/unsimulated/wall/greek/underwall{icon_state = "under-wall"; dir = 5},/area/greek/underworld)
 "ad" = (/turf/unsimulated/wall/greek/underwall{tag = "icon-under-wall (NORTH)"; icon_state = "under-wall"; dir = 1},/area/greek/underworld)
 "ae" = (/turf/unsimulated/greek/underworld{tag = "icon-bodge (NORTHWEST)"; icon_state = "bodge"; dir = 9},/area/greek/underworld/pit)
 "af" = (/turf/unsimulated/greek/pit,/area/greek/underworld/pit)
