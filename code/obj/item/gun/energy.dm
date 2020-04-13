@@ -1170,7 +1170,7 @@
 			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		else
-			boutput(user, "<span style=\"color:blue\">There don't see to be any buttons on [src] to press.</span>")
+			boutput(user, "<span style=\"color:blue\">There don't seem to be any buttons on [src] to press.</span>")
 
 	proc/asign_name(var/mob/M)
 		if (ishuman(M))
@@ -1377,7 +1377,7 @@
 			gun_setting_name = "execute"
 		else if (current_projectile.type == /datum/projectile/bullet/smoke)
 			gun_setting_name = "smokeshot"
-		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart)
+		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)
 			gun_setting_name = "knockout"
 		else if (current_projectile.type == /datum/projectile/bullet/flare)
 			gun_setting_name = "hotshot"
@@ -1391,13 +1391,13 @@
 		src.desc = "It is set to [gun_setting_name]."
 		if(src.cell)
 				//[src.projectiles ? "It will use the projectile: [src.current_projectile.sname]. " : ""]
-			src.desc += "There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+			src.desc += " There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 		else
-			src.desc += "There is no cell loaded!"
+			src.desc += " There is no cell loaded!"
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += " <span style=\"color:red\">*ERROR* No output selected!</span>"
 		return
 
 

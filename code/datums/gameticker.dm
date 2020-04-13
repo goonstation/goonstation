@@ -100,6 +100,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
 
+	#if ASS_JAM //who the hell knows if this works, i can't be arsed to check.
+	if(prob(10))
+		src.mode = "assday"
+	#endif
+
 	if(hide_mode)
 		#ifdef RP_MODE
 		boutput(world, "<B>Have fun and RP!</B>")
