@@ -1,4 +1,64 @@
 ﻿
+(t)sun apr 12 20
+(u)Goonstation Administration Team
+(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
+(u)Enfaeutchie
+(+)The Lawgiver now comes with an instructional pamphlet.
+(+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
+(u)Flaborized
+(*)Resprited a bunch of the ore in the game!
+(u)adharainspace
+(*)finally added cross-round bookshelves to every map you can normally vote in! have fun!
+(+)minor qol changes to printing press
+(u)Moonlol
+(*)Soup is now serve-able in the afterlife bar!
+(t)sat apr 11 20
+(u)2027
+(+)Adds acquiring methods to old medals.
+(u)Gannets
+(+)Removed Nuclear Operative assault rifle, marksman's rifle and light machine gun as options for item-arm surgery.
+(u)Erinexx
+(*)New doughnuts sprites!
+(*)New bagel sprites!
+(*)New english muffin sprite!
+(+)Added new tool inhand sprites
+(+)Tweaked outline on fries sprite (what the fuck was i thinking before)
+(+)Crowbars no longer pry floortiles while on harm intent, hopefully now we won't uproot the entire station floor when trying to beat people to death
+(u)Tarmunora
+(*)Cloakers now deactivate on picking things up, throwing, and unarmed specials
+(+)Chopping weapons work properly on bolted doors
+(u)RichardGere
+(+)Fixed a bug that prevented players from swapping out the egun's power cell
+(*)Energy weapons can now have their power cells swapped out by clicking on the cells with an energy gun in hand
+(+)Fixed a bug that prevented players from swapping energy weapons to their other empty hand
+(u)SaccharineChampion
+(+)Added more cans to Atlas engineering storage, most notably its first empty cans.
+(u)adharainspace
+(+)Quantum telescope locations now work again
+(t)thu apr 10 20
+(u)Gannets
+(+)Nuclear operatives now pull their names from 6 callsign pools, nato alphabet, melee weapons, colors, birds, mammals and moons.
+(u)adharainspace
+(+)gives captains sabre a tooltip by making it use get_desc instead of examine
+(+)fixed radio host jumpsuit variants being invisible sometimes
+(u)trerri
+(+)Made some small sprite changes to the deconstruction device sprite.
+(+)Redid examine text for deconstruction device.
+(u)Tarmunora
+(*)Surgical tools now hit a bit harder and pierce a bit of armor
+(*)Chemical dipped scalpels no longer are foiled by having the reagents fall out of your target on the same stab that they were transferred in
+(*)Attaching a synthlimb will now fully attach it instead of leaving it at the last surgical stage
+(+)Fix messaging when repairing bleeding while having open surgical wounds
+(u)Scaltra
+(+)Adds the botanical mister as a valid transfer target for high capacity watering tanks
+(u)saccharineChampion
+(+)Additional argument in projectile code allows sounds to correctly play to drivers of large vehicles.
+(+)Large pod code changed to utilize this additional argument.
+(t)thu apr 09 20
+(u)TDHooligan
+(+)Sped up the chemicompiler significantly.
+(u)saccharineChampion
+(+)Corrected improper feedback on incorrect pod and secure safe lock guesses.
 (t)wed apr 08 20
 (u)mbc
 (*)High amounts of Brute and Burn damage will be weighted more heavily in deciding whether you die or not. In practice this means that you previously could take 600 brute/burn damage before dropping dead, and now you can take 400.

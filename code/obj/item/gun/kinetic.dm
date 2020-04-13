@@ -850,6 +850,7 @@
 	caliber = 0.223
 	max_ammo_capacity = 30
 	auto_eject = 1
+	object_flags = NO_ARM_ATTACH
 
 	two_handed = 1
 	can_dual_wield = 0
@@ -903,6 +904,7 @@
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
 
 	spread_angle = 8
 	can_dual_wield = 0
@@ -964,6 +966,8 @@
 	caliber = 0.308
 	max_ammo_capacity = 4
 	auto_eject = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
 
 	slowdown = 7
 	slowdown_time = 5
@@ -971,7 +975,6 @@
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = 4
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 
 	var/datum/movement_controller/snipermove = null
 
