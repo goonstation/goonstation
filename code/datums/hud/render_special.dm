@@ -8,19 +8,30 @@
 		obj/screen/right_fill
 
 	New()
-		center_light = create_screen("", "", 'icons/effects/vision.dmi', "default", "CENTER-7, CENTER-7", LIGHTING_LAYER_BASE)
+		center_light = create_screen("", "", 'icons/effects/vision_default.dmi', "default", "CENTER-1, CENTER-1", LIGHTING_LAYER_BASE)
 		center_light.mouse_opacity = 0 // this is really a giant hack and shouldn't be in the HUD system, but there aren't many good ways to handle this
 		center_light.blend_mode = BLEND_ADD
 		center_light.plane = PLANE_LIGHTING
 		center_light.color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255)
 
 	proc/set_centerlight_icon(state, color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255), blend_mode = BLEND_ADD, plane = PLANE_LIGHTING, wide = 0, alpha = 255)
-		if (wide)
-			center_light.icon = 'icons/effects/vision-wide.dmi'
-			center_light.screen_loc = "CENTER-10, CENTER-7"
-		else
-			center_light.icon = 'icons/effects/vision.dmi'
-			center_light.screen_loc = "CENTER-7, CENTER-7"
+		switch(state)
+			if ("default")
+				center_light.icon = 'icons/effects/vision_default.dmi'
+				center_light.screen_loc = "CENTER-1, CENTER-1"
+			if ("cateyes")
+				center_light.icon = 'icons/effects/vision_cateyes.dmi'
+				center_light.screen_loc = "CENTER-2, CENTER-2"
+			if ("thermal")
+				center_light.icon = 'icons/effects/vision_thermal.dmi'
+				center_light.screen_loc = "CENTER-4.375, CENTER-4.375"
+			else
+				if (wide)
+					center_light.icon = 'icons/effects/vision_wide.dmi'
+					center_light.screen_loc = "CENTER-10, CENTER-7"
+				else
+					center_light.icon = 'icons/effects/vision.dmi'
+					center_light.screen_loc = "CENTER-7, CENTER-7"
 
 		center_light.icon_state = state
 		center_light.color = color
