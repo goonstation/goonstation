@@ -626,7 +626,7 @@
 "mb" = (/turf/simulated/floor/white,/area/station/medical/medbay)
 "mc" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/station/medical/cdc)
 "md" = (/obj/disposalpipe/segment,/obj/machinery/power/apc{areastring = "Pathology Research"; dir = 8; name = "Pathology APC"; pixel_x = -24},/obj/cable{icon_state = "0-2"; d2 = 2},/obj/cable,/turf/simulated/floor/plating,/area/station/maintenance)
-"me" = (/obj/landmark/map{name = "COGMAP2"},/turf/space,/area)
+"me" = (/obj/landmark/map{name = "DENSITY"},/turf/space,/area)
 "mf" = (/obj/item/rods/steel/fullstack,/turf/simulated/floor/red,/area)
 "mg" = (/obj/cable{icon_state = "4-8"},/obj/disposalpipe/segment{dir = 4},/obj/disposalpipe/segment,/turf/simulated/floor/plating,/area/station/maintenance)
 "mh" = (/turf/simulated/wall/auto/supernorn,/area/station/science/lab)
