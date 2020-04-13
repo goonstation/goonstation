@@ -40,3 +40,10 @@ labels:
     - '\[QOL\]'
   'WIP':
     - '\[WIP\]'
+  'ass-jam':
+    - '\[ASS JAM\]'
+  'cleanliness':
+    - '\[CLEANLINESS\]'
+  'input wanted':
+    - '\[INPUT WANTED\]'
+    - '\[INPUT\]'
