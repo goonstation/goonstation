@@ -13,6 +13,6 @@ jobs:
     steps:
     - name: Check Labels
       id: labeler
-      uses: ZeWaka/labeler-action@v1.1
+      uses: jimschubert/labeler-action@v1
       with:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
