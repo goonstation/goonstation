@@ -2,20 +2,26 @@
  * This file is intended to hold the following keybind-related data:
  * datum/keybind_style - Preset keybinding data for players to use as a template.
  * list/keybind_styles - Global list holding all of these for access
- * proc/get_keybind_style_keys - Getter for obtaining keybind data.
  */
 
 //Global list holding all of the keybind style datums
 var/global/list/datum/keybind_style/keybind_styles = null
+//TODO: Set this to be typesof() somewhere early in init
 
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
-//base -> base_wasd -> human_base -> human_wasd for example
+//base -> base_wasd -> human -> human_wasd for example
 //If you switch to a different mobtype, such as a robot,
-//You would subtract the human_base and human_wasd and apply robot_base and robot_wasd(doesn't exist)
+//You would subtract the human_base and human_wasd and apply robot_base and robot_wasd(last one is fictional)
 
 
+///List on each client containing the styles we've applied so we don't double-apply.
 /client/var/list/applied_keybind_styles = list()
 
+
+/** get_keybind_style_datum: Given the string name of a style, finds the keybind_style with the matching name.
+ *
+ *	Called by apply_keybind to fetch our datum.
+ */
 /client/proc/get_keybind_style_datum(var/style_name)
 
 	if (!keybind_styles)
@@ -27,9 +33,9 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 
 /** apply_keys: Takes a keybind_style to apply to the src client
-	*
-  *	Informs client of applied keybind style and merges the keymap.
-	*/
+ *
+ *	Merges the given keybind_style onto the client. Also adds it to the client's tracking list.
+ */
 /client/proc/apply_keys(var/datum/keybind_style/S)
 	if (applied_keybind_styles.Find("[S.name]")) //Already added
 		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [S.name] to [src] when already present.")
@@ -47,17 +53,20 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	apply_keys(get_keybind_style_datum(style))
 
 
-/datum/keybind_style
-	var/name = "1-800-CODER"
-	var/changed_keys = list("FUCK" = "1-800-CODER")
+
+//Dummy used to find old code - What should be done is successive calls of apply_keybind(name) going down the tree of mob/human/monkey/wasd etc.
+/client/proc/get_default_keymap(name)
+	message_admins("OLD CALLER BAD BAD BAD: [name]")
+	return
+
 
 ///
 ///	BASE MOB KEYBINDS
 ///
 
 /datum/keybind_style
-	name = "base"
-	changed_keys = list(
+	var/name = "base"
+	var/changed_keys = list(
 	"W" = KEY_FORWARD,
 	"A" = KEY_BACKWARD,
 	"S" = KEY_LEFT,
@@ -319,7 +328,3 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"E" = "exit",
 		"Q" = "exit"
 	)
-
-/client/proc/get_default_keymap(name)
-	message_admins("u suck - [name]")
-	return
