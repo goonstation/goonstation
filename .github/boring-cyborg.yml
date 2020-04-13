@@ -1,5 +1,5 @@
 ##### Labeler ##########################################################################################################
-# Enable "labeler" for your PR that would add labels to PRs based on the paths that are modified in the PR.
+# Enable "labeler" for your PR that would add labels to PRs based on the file paths that are modified in the PR.
 labelPRBasedOnFilePath:
   # Add 'sprites' label to any changes within 'icons' folder or any subfolders
   sprites:
