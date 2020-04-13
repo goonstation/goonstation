@@ -1,5 +1,7 @@
 ﻿
 (t)mon apr 12 20
+(u)Kubius
+(+)Batch one of small improvements and fixes to Kondaru.
 (u)Erinexx
 (+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
 (u)ASS_JAM
