@@ -253,17 +253,3 @@
 		photo_info = list()
 		paper_photo_info = list()
 		butt_stuff = 0
-
-/*	verb/toggle_lid()
-		set name = "Open/Close Lid"
-		set src in oview(1)
-		set category = "Local"
-		if (src.use_state == 2)
-			boutput(usr, "\The [src] is busy right now! Try again later!")
-			return
-		if (src.icon_state == "open_sesame")
-			src.icon_state = "close_sesame"
-			src.use_state = 0
-		else
-			src.icon_state = "open_sesame"
-			src.use_state = 1*/
