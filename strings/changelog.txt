@@ -12,6 +12,12 @@
 (*)UrsulaMajor - Updated Density, map smol.
 (u)Flaborized
 (*)Added a few small items to the surplus crate!
+(u)Tarmunora
+(*)On ass day you can shoot as fast as you can click.
+(*)Guns have a little bit of extra spread when drunk. Alcohol immunity mitigates this, to an extent
+(+)Added the ability to refill/combine ammo boxes by hitting them with a box of the same type
+(+)Changed pointblanking to hit with all the projectiles in a burst, not just one
+(+)Fixes up gunpoint grabs a little bit (should shoot more consistently)
 (t)sun apr 12 20
 (u)Goonstation Administration Team
 (*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
