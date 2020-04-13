@@ -825,6 +825,13 @@ This is basically useless for anyone but miners.
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/wiretap
+	name = "Wiretap Radio Upgrade"
+	item = /obj/item/device/radio_upgrade
+	cost = 3
+	desc = "A small device that may be installed in a headset to grant access to all station channels."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus
