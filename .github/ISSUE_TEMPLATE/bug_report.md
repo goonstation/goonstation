@@ -6,6 +6,7 @@ labels: bug
 assignees: ''
 
 ---
+<!-- To automatically tag this issue, add the uppercase label surrounded by brackets in the description, for example: [BUG - MINOR] -->
 
 **Describe the bug**
 A clear and concise description of what the bug is.
