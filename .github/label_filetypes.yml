@@ -8,7 +8,7 @@ mapping:
 
 # Add 'documentation' label to any changes to a .md file
 documentation:
-  - *.md
+  - **/*.md
   
 # Add 'github' label to any changes to the .github folder or any subfolders
 github:
