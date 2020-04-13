@@ -1,17 +1,13 @@
 name: Auto-Labeler
 on:
-  push:
-    branches-ignore:
-      - '**'
-
+  schedule:
+    - cron: '*/5 * * * *'
 jobs:
-
   labeler:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check Labels
-      id: labeler
-      uses: jimschubert/labeler-action@v1
-      with:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - uses: paulfantom/periodic-labeler@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          LABEL_MAPPINGS_FILE: .github/label_filetypes.yml
