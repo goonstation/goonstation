@@ -94,6 +94,8 @@
 	var/station_only = prob(40)
 	target_locations = list()
 	for(var/area/A in world)
+		if(!A.contents?.len)
+			continue
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))
