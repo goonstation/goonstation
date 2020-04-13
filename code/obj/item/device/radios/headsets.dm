@@ -13,13 +13,14 @@
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	bicon_override = 1
-	var/upgraded
+	var/haswiretap
 
 	attackby(obj/item/R as obj, mob/user as mob)
 		if (istype(R, /obj/item/device/radio_upgrade))
-			if (upgraded)
+			if (haswiretap)
 				boutput(user, "<span style=\"color:red\">This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
 				return
+			src.haswiretap = 1
 			src.secure_frequencies = list(
 				"h" = R_FREQ_COMMAND,
 				"g" = R_FREQ_SECURITY,
@@ -39,7 +40,6 @@
 			boutput(user, "<span style=\"color:blue\">Wiretap Radio Upgrade successfully installed in the [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 			set_secure_frequencies(src)
-			src.upgraded = 1
 			qdel(R)
 
 		..()
