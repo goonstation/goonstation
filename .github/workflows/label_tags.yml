@@ -1,4 +1,4 @@
-name: Labeler
+name: Auto-Labeler
 on: 
   issues:
     types: [opened, edited]
@@ -13,6 +13,6 @@ jobs:
     steps:
     - name: Check Labels
       id: labeler
-      uses: jimschubert/labeler-action@v1
+      uses: ZeWaka/labeler-action@v1.1
       with:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
