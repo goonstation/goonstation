@@ -1,9 +1,8 @@
 name: Auto-Labeler
-on: 
-  issues:
-    types: [opened, edited]
-  pull_request:
-    types: [opened, edited]
+on:
+  push:
+    branches-ignore:
+      - '**'
 
 jobs:
 
