@@ -322,6 +322,6 @@ Secure Frequency:
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "Wiretap Radio Upgrade"
 	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
 	w_class = 1
