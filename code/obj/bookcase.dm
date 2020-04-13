@@ -3,7 +3,7 @@
 /obj/bookshelf //these should be placed on ground
 	name = "bookshelf"
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
-	icon = 'icons/obj/bookshelf.dmi'
+	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_empty"
 	anchored = 1
 	density = 1
@@ -433,7 +433,7 @@
 /obj/item/furniture_parts/bookshelf
 	name = "bookshelf parts"
 	desc = "A collection of parts that can be used to construct a bookshelf."
-	icon = 'icons/obj/bookshelf.dmi'
+	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_parts"
 	furniture_type = /obj/bookshelf
 	furniture_name = "bookshelf"

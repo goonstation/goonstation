@@ -42,7 +42,7 @@
 		rev_number = 3
 	else
 		rev_number = revs_possible.len
-	
+
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
@@ -494,7 +494,7 @@
 	name = "revolutionary sign"
 	desc = "A sign bearing revolutionary propaganda. Good for picketing."
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"

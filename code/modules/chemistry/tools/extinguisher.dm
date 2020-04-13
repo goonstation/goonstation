@@ -1,6 +1,6 @@
 /obj/item/extinguisher
 	name = "fire extinguisher"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
 	var/safety = 1

@@ -108,7 +108,7 @@
 /obj/item/robojumper
 	name = "Cell Cables"
 	desc = "Used by Engineering Cyborgs for emergency recharging of APCs."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
 	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
 
@@ -120,7 +120,7 @@
 /obj/item/atmosporter
 	name = "Atmospherics Transporter"
 	desc = "Used by Atmospherics Cyborgs for convenient transport of siphons and tanks."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	var/capacity = 2
 
@@ -138,7 +138,7 @@
 /obj/item/robot_chemaster
 	name = "Mini-ChemMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
 	flags = NOSPLASH
 	var/working = 0
@@ -292,7 +292,7 @@ ported and crapped up by: haine
 /obj/item/reagent_containers/food/drinks/juicer
 	name = "\improper Juice-O-Matic 3000"
 	desc = "It's the Juice-O-Matic 3000! The pinicle of juicing technology! A revolutionary new juicing system!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "juicer"
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
@@ -356,7 +356,7 @@ ported and crapped up by: haine
 /obj/item/borghose
 	name = "\improper Nutriant Hose 3000" // Name of the Module
 	desc = "A nutriant hose for hydroponics work." // Description that shows up when examined
-	icon = 'icons/obj/device.dmi' // Icon, just using a green cable coil for now.
+	icon = 'icons/obj/items/device.dmi' // Icon, just using a green cable coil for now.
 	icon_state = "nutrient"
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/amt_to_transfer = 10  // How much it transfers at once.

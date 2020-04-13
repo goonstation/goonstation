@@ -1,7 +1,7 @@
 /obj/item/device/accessgun
 	name = "access-pro"
 	desc = "This device can reprogram electronic access requirements. It will copy the permissions of any inserted ID. Activate it in-hand while empty to change between AND/OR modes"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "accessgun"
 	item_state = "accessgun"
 	w_class = 2.0

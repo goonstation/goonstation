@@ -208,7 +208,7 @@
 /obj/bomberman
 	name = "large cartoon bomb"
 	desc = "It looks like it's gonna blow."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dumb_bomb"
 	density = 1
 	var/exploding = 0

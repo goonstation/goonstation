@@ -657,7 +657,7 @@
 /obj/item/slag_shovel
 	name = "slag shovel"
 	desc = "Used to remove slag from the arc smelter."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"

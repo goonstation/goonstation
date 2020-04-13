@@ -687,7 +687,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/shovel
 	name = "rusty old shovel"
 	desc = "It's seen better days."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
@@ -1011,7 +1011,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/device/sat_crash_caller
 	name = "satellite transceiver"
 	desc = "A hand-held device for communicating with some sort of satellite."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "satcom"
 	w_class = 1
 

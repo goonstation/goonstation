@@ -2,7 +2,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun
 	name = "gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -152,7 +152,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "guncharge"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
 	var/pox

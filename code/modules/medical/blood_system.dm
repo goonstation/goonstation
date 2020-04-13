@@ -852,7 +852,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	name = "test dagger"
 	desc = "this is for testing bleeding stuff"
 	w_class = 1.0
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"

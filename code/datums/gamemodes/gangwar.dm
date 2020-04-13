@@ -570,7 +570,7 @@
 /obj/item/spray_paint
 	name = "Spraypaint Can"
 	desc = "A can of spray paint."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -627,7 +627,7 @@
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
 	id = "spray_tag"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
 	var/area/target_area
@@ -1586,7 +1586,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 // /obj/item/chem_grenade/incendiary
 // 	name = "incendiary grenade"
 // 	desc = "A rather volatile grenade that creates a small fire."
-// 	icon = 'icons/obj/grenade.dmi'
+// 	icon = 'icons/obj/items/grenade.dmi'
 // 	icon_state = "incendiary"
 // 	icon_state_armed = "incendiary1"
 // 	stage = 2

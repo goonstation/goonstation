@@ -1,5 +1,5 @@
 /obj/item/device/transfer_valve
-	icon = 'icons/obj/assemblies.dmi' //TODO: as of 02/02/2020 missing sprite for regular air tank
+	icon = 'icons/obj/items/assemblies.dmi' //TODO: as of 02/02/2020 missing sprite for regular air tank
 	name = "tank transfer valve" // because that's what it is exadv1 and don't you dare change it
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks."
@@ -420,7 +420,7 @@
 
 
 /obj/item/pressure_crystal
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_3"
 	var/pressure = 0
 	var/total_pressure = 0
@@ -433,7 +433,7 @@
 		icon_state = "pressure_[CLAMP(ex, 1, 3)]"
 /obj/item/device/pressure_sensor
 	name = "Pressure Sensor"
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
 	var/obj/item/pressure_crystal/crystal

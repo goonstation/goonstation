@@ -51,7 +51,7 @@
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
 	heal_amt = 10
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "fried" // fix this
 	food_effects = list("food_warm")
 	use_bite_mask = 0
