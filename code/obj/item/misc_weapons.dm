@@ -145,8 +145,9 @@
 		src.item_state = "[state_name]1-[src.bladecolor]"
 		src.w_class = 4
 		user.unlock_medal("The Force is strong with this one", 1)
-		setProperty("rangedprot", 1)
-		setProperty("disorient_resist", 35)
+		if(off_w_class == 2) //this is gross but it makes it so only extendable swords (not d-saber) get defensive bonuses
+			setProperty("rangedprot", 1)
+			setProperty("disorient_resist", 35)
 	else
 		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
@@ -159,8 +160,9 @@
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
 		src.w_class = off_w_class
-		setProperty("rangedprot", 0)
-		setProperty("disorient_resist", 0)
+		if(off_w_class == 2) //this is gross but it makes it so only extendable swords (not d-saber) get defensive bonuses
+			setProperty("rangedprot", 0)
+			setProperty("disorient_resist", 0)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
@@ -196,6 +198,8 @@
 	off_w_class = 3
 	active_force = 18
 	inactive_force = 8
+	active_stamina_dmg = 65
+	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 	valid_colors = list("R","O","Y","G","C","B","P")
 
@@ -218,7 +222,7 @@
 		return
 
 	if (active)
-		target.do_disorient(65, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 
 		if (prob(30))
 			boutput(user, "<span style=\"color:red\">The sword shorted out! The laser turned off!</span>")
