@@ -68,6 +68,11 @@
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
+		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
+			src.visible_message("<span style=\"color:red\"><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
+			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
+			mask.honk_nose(src)
 		else
 			var/item = src.get_random_equipped_thing_name()
 			if (item)
@@ -200,15 +205,30 @@
 		src.put_in_hand(G, src.hand)
 		G.affecting = src
 		src.grabbed_by += G
+
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+		src.visible_message("<span style=\"color:red\">[src] starts blocking!</span>")
+
 		/*
-		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
-			src.visible_message("<span style=\"color:red\"><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
-		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
-			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
-			mask.honk_nose(src)
+		RIP
 		else
 			src.visible_message("<span style=\"color:red\"><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
 		*/
+
+/mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
+	var/obj/item/I = src.equipped()
+	if (!I)
+		src.grab_self()
+	else
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I)
+		G.assailant = src
+		G.affecting = src
+		src.grabbed_by += G
+		G.loc = I
+
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+		src.visible_message("<span style=\"color:red\">[src] starts blocking with [I]!</span>")
+
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
 	if(!src || !target)

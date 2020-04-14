@@ -1170,7 +1170,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return
 
 	var/turf/T = get_turf(src)
-	if (T.active_liquid)
+	if (T.active_liquid && src.lying)
 		T.active_liquid.HasEntered(src, T)
 		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
 
@@ -1194,8 +1194,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))
+
+					src.grab_block()
+
+					/*
 					for (var/mob/O in AIviewers(src, null))
 						O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+					*/
+
 	return 0
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)
 	var/atom/oldloc = src.loc

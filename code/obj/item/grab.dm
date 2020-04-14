@@ -725,6 +725,9 @@
 				if (DAMAGE_BURN)
 					prop = "block_burn"
 
+					if (I.reagents)
+						I.reagents.temperature_reagents(2000,10)
+
 			if (I.hasProperty(prop))
 				.= 1
 
