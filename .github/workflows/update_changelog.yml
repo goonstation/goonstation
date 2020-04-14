@@ -1,7 +1,9 @@
 name: update-changelog
 on:
   pull_request:
-    branches: [ master ]
+    #branches: [ master ]
+    branches-ignore:
+      - '**'
     types: [ closed ]
 
 jobs:
