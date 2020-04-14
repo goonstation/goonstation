@@ -292,7 +292,7 @@ world/proc/updateCameraVisibility()
 /obj/somepotato/vfd
 	name = "Variable Frequency Drive"
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
 	New()
 /obj/somepotato/billiards

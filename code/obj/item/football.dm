@@ -164,7 +164,7 @@
 /obj/item/football
 	name = "football"
 	desc = "A pigskin. An oblate leather spheroid. For tossing around."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "football"
 	uses_multiple_icon_states = 1
 	item_state = "football"

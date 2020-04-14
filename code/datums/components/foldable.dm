@@ -41,7 +41,7 @@
 	var/atom/movable/object = src
 	if(!object)
 		return
-	
+
 	var/datum/component/foldable/fold_component = object.GetComponent(/datum/component/foldable)
 	if(!fold_component)
 		return
@@ -54,14 +54,14 @@
 
 	if(src.loc == usr)
 		usr.drop_from_slot(src)
-	
+
 	briefcase.set_loc(get_turf(object))
 	object.set_loc(briefcase)
 	usr.visible_message("<span style=\"color:red\">[usr] folds [object] back up!</span>")
 
 /obj/item/objBriefcase
 	name = "briefcase"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	item_state = "briefcase"
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -86,9 +86,9 @@
 		src.name = "foldable [object.name]"
 		src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
 
-	attack_self(mob/user)	
+	attack_self(mob/user)
 		deploy(user)
-	
+
 	verb/unfold()
 		set src in view(1)
 		set category = "Local"
@@ -103,7 +103,7 @@
 			user.drop_from_slot(src)
 		src.set_loc(null)
 		user.visible_message("<span style=\"color:red\">[user] unfolds [thingInside] from a briefcase!</span>")
-	
+
 	disposing()
 		if(src.thingInside)
 			var/datum/component/foldable/fold_component = src.thingInside.GetComponent(/datum/component/foldable)

@@ -150,7 +150,7 @@ Contents:
 /obj/item/dojohammer
 	name = "blacksmithing hammer"
 	desc = "An unusal looking hammer with an extended head used for pounding sword blades."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "dojo_hammer"
 	item_state = "dojo_hammer"
@@ -166,7 +166,7 @@ Contents:
 /obj/unfinished_katana
 	name = "unfinished blade"
 	desc = "A blade that still requires some work before it'll be an effective weapon."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana"
 
 	attackby(obj/item/H as obj, mob/user as mob)
@@ -340,7 +340,7 @@ Contents:
 /obj/decal/fakeobjects/katana_fake
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
 
 /obj/lantern // bad copypaste code from candle_light

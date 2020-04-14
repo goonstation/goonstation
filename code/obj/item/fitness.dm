@@ -153,7 +153,7 @@
 /obj/item/rubberduck
 	name = "rubber duck"
 	desc = "Awww, it squeaks!"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1

@@ -668,9 +668,9 @@
 
 /obj/item/deconstructor
 	name = "deconstruction device"
-	desc = "A device able to break copied objects down into their base materials."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "forensic0"
+	desc = "A device meant to facilitate the deconstruction of scannable machines."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "deconstruction"
 	w_class = 3.0
 	var/datum/effects/system/spark_spread/spark_system
 	module_research = list("electronics" = 3, "engineering" = 1)

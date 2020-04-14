@@ -6,7 +6,7 @@
 	density = 0
 	anchored = 1
 	layer = OBJ_LAYER
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
 	is_syndicate = 1
 	mats = 6

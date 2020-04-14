@@ -999,8 +999,8 @@
 	M.update_keymap()
 	M.recheck_keys()
 	if(!src.pilot && !isghostcritter(boarder))
-		src.pilot = M
 		src.ion_trail.start()
+	src.find_pilot()
 	if (M.client)
 		myhud.add_client(M.client)
 		if (M.client.tooltipHolder)
@@ -1080,7 +1080,7 @@
 
 	onEnd()
 		..()
-		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
+		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked || V.capacity <= V.passengers)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1138,8 +1138,10 @@
 /////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/proc/find_pilot()
+	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
+		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client)
+		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
 			src.pilot = M
 			break
 

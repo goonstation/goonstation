@@ -13,7 +13,7 @@
 /obj/item/saw
 	name = "chainsaw"
 	desc = "A chainsaw used to chop up harmful plants. Despite its appearance, it's not extremely dangerous to humans."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
 	item_state = "c_saw"
@@ -200,7 +200,7 @@
 	stamina_damage = 100
 	stamina_cost = 20
 	stamina_crit_chance = 40
-	
+
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target
 
@@ -268,7 +268,7 @@
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
-			
+
 
 		if (H.organHolder.spleen)
 			H.organHolder.drop_organ("spleen")
@@ -301,7 +301,7 @@
 /obj/item/saw/elimbinator
 	name = "The Elimbinator"
 	desc = "Lops off limbs left and right!"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_s"
 	item_state = "c_saw_s"
@@ -350,7 +350,7 @@
 /obj/item/seedplanter
 	name = "Portable Seed Fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "forensic0"
 	var/list/available = list()
 	var/datum/plant/selected = null
@@ -394,7 +394,7 @@
 	desc = "This is supposed to be a cyborg part. You're not quite sure what it's doing here."
 
 
-///////////////////////////////////// Garden Trowel ///////////////////////////////////////////////	
+///////////////////////////////////// Garden Trowel ///////////////////////////////////////////////
 
 /obj/item/gardentrowel
 	name = "garden trowel"

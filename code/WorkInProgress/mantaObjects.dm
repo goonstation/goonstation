@@ -690,7 +690,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -730,14 +730,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/hosmedal
 	name = "war medal"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "hosmedal"
 	item_state = "hosmedal"
 
 /obj/item/rddiploma
 	name = "RD's diploma"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	desc = ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "rddiploma"
@@ -745,14 +745,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/mdlicense
 	name = "MD's medical license"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "mdlicense"
 	item_state = "mdlicense"
 
 /obj/item/firstbill
 	name = "HoP's first bill"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "hopbill"
 
 //CONSTRUCTION WORKER STUFF//
@@ -1596,7 +1596,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /obj/item/broken_egun
 	name = "broken energy gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_egun"
 	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."
 	item_state = "energy"
@@ -1605,7 +1605,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /obj/item/blackbox
 	name = "flight recorder of NSS Polaris"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "blackbox"
 	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"

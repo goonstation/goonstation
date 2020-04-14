@@ -292,7 +292,7 @@
 /*
 /obj/testtuberack
 	name = "test tube rack"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "clipboard00"
 
 	attackby(obj/item/W, mob/user as mob)

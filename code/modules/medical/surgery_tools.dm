@@ -29,7 +29,7 @@ CONTAINS:
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3.0
+	force = 5
 	w_class = 1.0
 	throwforce = 5.0
 	throw_speed = 3
@@ -47,18 +47,20 @@ CONTAINS:
 		if (src.icon_state == "scalpel1")
 			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
+		AddComponent(/datum/component/transfer_on_attack)
+		setProperty("piercing", 33)
+
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-			src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 		else
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!scalpel_surgery(M, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+				src.reagents.trans_to(M,5)
 			return
 
 	custom_suicide = 1
@@ -94,7 +96,7 @@ CONTAINS:
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3
+	force = 5
 	w_class = 1.0
 	throwforce = 3.0
 	throw_speed = 3
@@ -112,18 +114,21 @@ CONTAINS:
 		if (src.icon_state == "saw1")
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
+		AddComponent(/datum/component/transfer_on_attack)
+		setProperty("piercing", 33)
+
+
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-			src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 		else
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!saw_surgery(M, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+				src.reagents.trans_to(M,5)
 			return
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -157,7 +162,7 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 3.0
+	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
 	throw_speed = 3
@@ -173,18 +178,20 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
+		AddComponent(/datum/component/transfer_on_attack)
+		setProperty("piercing", 33)
+
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-			src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 		else
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!spoon_surgery(M, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+				src.reagents.trans_to(M,5)
 			return
 
 	custom_suicide = 1
@@ -209,7 +216,7 @@ CONTAINS:
 /obj/item/staple_gun
 	name = "staple gun"
 	desc = "A medical staple gun for securely reattaching limbs."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "staplegun"
 	w_class = 1
 	throw_speed = 4
@@ -300,6 +307,9 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
+		#if ASS_JAM
+			//DISABLE ZIPGUN DURING ASSJAM
+		#else
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -317,12 +327,13 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
+		#endif
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
 	name = "stapler"
 	desc = "A red stapler.  No, not THAT red stapler."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "stapler"
 	item_state = "stapler"
 

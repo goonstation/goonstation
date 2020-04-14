@@ -91,7 +91,7 @@
 /obj/item/fuel_pellet
 	name = "fuel pellet"
 	desc = "A rather small fuel pellet for use in RTGs."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "fuelpellet"
 	throwforce = 5
 	w_class = 1

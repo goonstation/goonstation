@@ -1,6 +1,6 @@
 /obj/item
 	name = "item"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/abstract = 0.0
@@ -831,6 +831,10 @@
 	if (!can_reach(M, src))
 		return
 
+	for (var/obj/item/cloaking_device/I in M)
+		if (I.active)
+			I.deactivate(M)
+			M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 
@@ -1052,7 +1056,7 @@
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	armor_mod=M.get_melee_protection(d_zone)
+	armor_mod = M.get_melee_protection(d_zone)
 
 	var/pierce_prot = 0
 	if (d_zone == "head")
@@ -1068,6 +1072,12 @@
 	if (is_special && src.special)
 		if (src.special.damageMult > 0 && src.special.damageMult != 1)
 			power *= src.special.damageMult
+
+	if(user.traitHolder && user.traitHolder.hasTrait("glasscannon"))
+		power *= 2
+
+	if(user.is_hulk())
+		power *= 1.5
 
 	power -= armor_mod
 
@@ -1085,7 +1095,6 @@
 		else
 			stam_power = max(  stam_power / 4, stam_power * ( power / (power + armor_mod) )  )
 
-
 		//stam_power -= armor_mod
 
 		msgs.stamina_target -= max(stam_power, 0)
@@ -1094,13 +1103,7 @@
 		if(src.special.overrideCrit >= 0)
 			stam_crit_pow = src.special.overrideCrit
 
-	if(user.is_hulk())
-		power *= 1.5
-
 	if(M.traitHolder && M.traitHolder.hasTrait("deathwish"))
-		power *= 2
-
-	if(user.traitHolder && user.traitHolder.hasTrait("glasscannon"))
 		power *= 2
 
 	if (ishuman(user))
@@ -1115,9 +1118,13 @@
 		var/turf/T = get_edge_target_turf(M, get_dir(user, M))
 		M.throw_at(T, 2, getProperty("impact"))
 
+
 	msgs.damage = power
 	msgs.flush()
 	src.add_fingerprint(user)
+	#ifdef COMSIG_ITEM_ATTACK_POST
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power, armor_mod)
+	#endif
 	return
 
 /obj/item/onVarChanged(variable, oldval, newval)

@@ -1,6 +1,6 @@
 /obj/item/toy/sponge_capsule
 	desc = "Just add water!"
-	icon = 'icons/obj/sponge_capsule.dmi'
+	icon = 'icons/obj/items/sponge_capsule.dmi'
 	icon_state = "sponge"
 	w_class = 1
 	throwforce = 1
@@ -53,24 +53,22 @@
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
-	SPAWN_DBG(8 DECI SECONDS)
-		if(!src || (src.qdeled)) //The capsule was deleted as it was expanding.
-			return
-		var/obj/critter/C = new animal_to_spawn(get_turf(src))
-		var/turf/T = get_turf(src)
-		T.visible_message("<span style=\"color:blue\">What was once [src] has become [C.name]!</span>")
-		qdel(src)
+	var/obj/critter/C = new animal_to_spawn(get_turf(src))
+	var/turf/T = get_turf(src)
+	T.visible_message("<span style=\"color:blue\">What was once [src] has become [C.name]!</span>")
+	qdel(src)
+
+/obj/item/toy/sponge_capsule/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
+	if(F.group.reagents && F.group.reagents.reagent_list["water"])
+		src.add_water()
 
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
-	user.visible_message("<span style=\"color:red\"><b>[user] is eating [src]!</b></span>")
-	SPAWN_DBG(2 SECONDS)
-		if(!src || (src.qdeled))
-			return
-		var/obj/critter/C = new animal_to_spawn(user.loc)
-		C.name = user.real_name
-		C.desc = "Holy shit! That used to be [user.real_name]!"
-		user.gib()
-		return TRUE
+	user.visible_message("<span style=\"color:red\"><b>[user] eats [src]!</b></span>")
+	var/obj/critter/C = new animal_to_spawn(user.loc)
+	C.name = user.real_name
+	C.desc = "Holy shit! That used to be [user.real_name]!"
+	user.gib()
+	return 1
 
 /obj/item/toy/sponge_capsule/afterattack(atom/target, mob/user as mob)
 	if(istype(target, /obj/item/spongecaps))
@@ -84,7 +82,7 @@
 /obj/item/spongecaps
 	name = "\improper BioToys Sponge Capsules"
 	desc = "What was once a toy to be enjoyed by children across the galaxy is now a work of biological engineering brilliance! Patent pending."
-	icon = 'icons/obj/sponge_capsule.dmi'
+	icon = 'icons/obj/items/sponge_capsule.dmi'
 	icon_state = "spongecaps"
 	w_class = 1
 	throwforce = 2

@@ -1,6 +1,6 @@
 
 /obj/health_scanner
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	anchored = 1
 	var/reagent_upgrade = 0
 	var/reagent_scan = 0
@@ -14,7 +14,7 @@
 		SPAWN_DBG(0.5 SECONDS)
 			src.find_partners(src.find_in_range)
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

@@ -17,7 +17,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/org_det_time = 30
 	var/alt_det_time = 60
 	w_class = 2.0
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "banana"
 	item_state = "banana"
@@ -420,7 +420,7 @@ PIPE BOMBS + CONSTRUCTION
 	det_time = 50.0
 	org_det_time = 50
 	alt_det_time = 30
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
@@ -497,7 +497,7 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/light_gimmick
 	name = "light grenade"
 	icon_state = "lightgrenade"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	desc = "It's a small cast-iron egg-shaped object, with the words \"Pick Me Up\" in gold in it."
 	state = 0
 	not_in_mousetraps = 1
@@ -594,7 +594,7 @@ PIPE BOMBS + CONSTRUCTION
 
 /obj/item/gimmickbomb/
 	name = "Don't spawn this directly!"
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = ""
 	var/armed = 0
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
@@ -781,7 +781,7 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/firework
 	name = "firework"
 	desc = "BOOM!"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "firework"
 	opacity = 0
 	density = 0
@@ -841,7 +841,7 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/breaching_charge
 	desc = "It is set to detonate in 5 seconds."
 	name = "Breaching Charge"
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
 	var/state = null
 	var/det_time = 50.0
@@ -1081,7 +1081,7 @@ PIPE BOMBS + CONSTRUCTION
 //////////////////////////////////////////
 
 /obj/item/pipebomb
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
 
 /obj/item/pipebomb/frame
@@ -1108,6 +1108,14 @@ PIPE BOMBS + CONSTRUCTION
 		return
 
 	attackby(obj/item/W, mob/user)
+		#if ASS_JAM
+		if(istype(W, /obj/item/pipebomb/frame))
+			if((src.state + W:state == 3)) // one of pipes is welded, other one is not
+				var/turf/T = get_turf(src)
+				new/obj/item/gun/kinetic/slamgun(T)
+				qdel(W)
+				qdel(src)
+		#endif
 		if(istype(W, /obj/item/weldingtool) && state == 1)
 			if(!W:try_weld(user, 1))
 				return

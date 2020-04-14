@@ -5,7 +5,7 @@ var/list/rollList = list()
 /obj/item/dice
 	name = "die"
 	desc = "A six-sided die."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
 	throwforce = 0
 	w_class = 1.0
@@ -492,7 +492,7 @@ var/list/rollList = list()
 /obj/item/dice_bot
 	name = "Probability Cube"
 	desc = "A device for the calculation of random probabilities. Especially ones between one and six."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
 	w_class = 1.0
 	var/sides = 6
@@ -532,7 +532,7 @@ var/list/rollList = list()
 /obj/item/diceholder
 	name = "holder of dice (not an actual item)"
 	desc = "Parent item of various dice holders"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	var/list/obj/item/dice/dicelist = list()
 	var/diceposition = 0
 	var/icon/overlaydie
@@ -554,7 +554,7 @@ var/list/rollList = list()
 		if((D.dicePals.len)&&(src.diceposition <5))
 			for(var/i=1, i<=D.dicePals.len, i++)
 				src.diceposition++
-				src.overlaydie = new /icon('icons/obj/items.dmi',"[baseoverlay][src.diceposition]")
+				src.overlaydie = new /icon('icons/obj/items/items.dmi',"[baseoverlay][src.diceposition]")
 				if((D.dicePals[i].color)&&(D.dicePals[i].color != "null"))
 					src.overlaydie.Blend(D.dicePals[i].color, ICON_MULTIPLY)
 				src.overlaydieimage = image(src.overlaydie)
@@ -590,7 +590,7 @@ var/list/rollList = list()
 			if((!istype(D,/obj/item/dice/magic8ball))&&(!istype(D,/obj/item/dice/coin)))
 				src.diceposition++
 				user.visible_message("<span style=\"color:green\">[user] adds the [D] to the [src]</span>","<span style=\"color:green\">You add the [D] to the [src].</span>")
-				src.overlaydie = new /icon('icons/obj/items.dmi',"[baseoverlay][src.diceposition]")
+				src.overlaydie = new /icon('icons/obj/items/items.dmi',"[baseoverlay][src.diceposition]")
 				if((D.color)&&(D.color != "null"))
 					src.overlaydie.Blend(D.color, ICON_MULTIPLY)
 				src.overlaydieimage = image(src.overlaydie)
@@ -663,7 +663,7 @@ var/list/rollList = list()
 					src.diceposition++
 					src.dicelist.Add(new /obj/item/dice)
 					src.dicelist[i].color = src.setcolor
-					src.overlaydie = new /icon('icons/obj/items.dmi',"diceboxt[src.diceposition]")
+					src.overlaydie = new /icon('icons/obj/items/items.dmi',"diceboxt[src.diceposition]")
 					if(src.setcolor != "null")
 						src.overlaydie.Blend(src.setcolor, ICON_MULTIPLY)
 					src.overlaydieimage = image(src.overlaydie)
@@ -731,7 +731,7 @@ var/list/rollList = list()
 
 /obj/item/storage/dicepouch
 	name = "dice pouch"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
 	max_wclass = 1
 	w_class = 1

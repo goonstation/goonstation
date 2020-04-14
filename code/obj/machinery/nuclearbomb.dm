@@ -16,6 +16,7 @@
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+	var/isitspacemas = 0
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -30,6 +31,7 @@
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
+		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
 		src.UpdateOverlays(src.image_light, "light")
@@ -284,6 +286,14 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(!isitspacemas)
+			switch(src.health)
+				if(80 to 125)
+					src.icon_state = "nuclearbomb1"
+				if(40 to 80)
+					src.icon_state = "nuclearbomb2"
+				if(1 to 40)
+					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
 		src.health = max(0,src.health - amount)
@@ -308,10 +318,15 @@
 			explosion_new(src, get_turf(src), src.boom_size)
 			qdel(src)
 			return
-		var/datum/game_mode/nuclear/NUKEMODE = null
+		var/datum/game_mode/nuclear/NUKEMODE = ticker?.mode
 		var/turf/nuke_turf = get_turf(src)
-		if (nuke_turf.z != 1 && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
-			NUKEMODE = ticker.mode
+		var/area/nuke_area = get_area(src)
+		var/area_correct = 0
+		if(src.target_override && istype(nuke_area, src.target_override))
+			area_correct = 1
+		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
+			area_correct = 1
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
@@ -352,7 +367,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 

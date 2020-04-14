@@ -71,6 +71,7 @@
 	/obj/item/device/radio/headset/command/hos,
 #if ASS_JAM
 	/obj/item/gun/kinetic/beepsky,
+	/obj/item/turret_deployer/riot,
 #endif
 	/obj/item/barrier)
 

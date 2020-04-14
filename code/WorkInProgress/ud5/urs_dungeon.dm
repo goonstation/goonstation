@@ -88,7 +88,7 @@
 
 	name = "adventure bomb"
 	invisibility = 20
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "Pipe_Timed"
 	density = 0
 	opacity = 0

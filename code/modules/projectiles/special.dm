@@ -191,6 +191,17 @@
 		FC.dissipation_ticker = rand(0,dissipation_variance)
 		FC.launch()
 
+/datum/projectile/special/spreader/buckshot_burst/nails
+	name = "nails"
+	sname = "nails"
+	cost = 1
+	pellets_to_fire = 8
+	spread_projectile_type = /datum/projectile/bullet/nails
+	casing = /obj/item/casing/shotgun_gray
+	spread_angle_variance = 10
+	damage_type = D_SLASHING
+	power = 40
+
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
 	sname = "circular spread"

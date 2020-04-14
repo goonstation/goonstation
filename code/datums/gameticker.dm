@@ -100,6 +100,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
 
+	#if ASS_JAM //who the hell knows if this works, i can't be arsed to check.
+	if(prob(10))
+		src.mode = "assday"
+	#endif
+
 	if(hide_mode)
 		#ifdef RP_MODE
 		boutput(world, "<B>Have fun and RP!</B>")
@@ -677,6 +682,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.held_item = player.client.persistent_bank_item
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
+
+		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+			P.build_curr_contents()
 
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")

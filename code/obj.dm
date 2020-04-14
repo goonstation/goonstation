@@ -299,7 +299,7 @@
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	var/amount = 23.0
 	anchored = 1.0
@@ -326,7 +326,7 @@
 /obj/towelbin
 	name = "towel bin"
 	desc = "A bin for containing towels."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	var/amount = 23.0
 	anchored = 1.0
