@@ -159,8 +159,8 @@
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
 		src.w_class = off_w_class
-		setProperty("rangedprot", 1)
-		setProperty("disorient_resist", 35)
+		setProperty("rangedprot", 0)
+		setProperty("disorient_resist", 0)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
