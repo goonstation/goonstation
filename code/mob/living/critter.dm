@@ -314,16 +314,11 @@
 		u_equip(item)
 
 		if (istype(item, /obj/item/grab))
-			var/obj/item/grab/grab = item
-			var/mob/M = grab.affecting
-			if (grab.state < 1 && !(M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || M.stat))
-				src.visible_message("<span style='color:red'>[M] stumbles a little!</span>")
-				qdel(grab)
-				return
-			M.lastattacker = src
-			M.lastattackertime = world.time
-			item = M
-			qdel(grab)
+			var/obj/item/grab/G = item
+			item = G.handle_throw(src,target)
+			if (G && !G.qdeled) //make sure it gets qdeled because our u_equip function sucks and doesnt properly call dropped()
+				qdel(G)
+			if (!item) return
 
 		item.set_loc(src.loc)
 

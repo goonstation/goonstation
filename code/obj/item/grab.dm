@@ -379,6 +379,19 @@
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span style=\"color:red\">[] attempts to break free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 
+	//returns an atom to be thrown if any
+	proc/handle_throw(var/mob/living/user, var/atom/target)
+		if (!src.affecting) return 0
+
+		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
+			user.visible_message("<span style=\"color:red\">[src.affecting] stumbles a little!</span>")
+			user.u_equip(src)
+			return 0
+
+		src.affecting.lastattacker = src
+		src.affecting.lastattackertime = world.time
+		user.u_equip(src)
+		.= src.affecting
 
 //////////////////////
 //PROGRESS BAR STUFF//
@@ -733,6 +746,42 @@
 
 			if (I.hasProperty(prop))
 				.= 1
+
+	handle_throw(var/mob/living/user,var/atom/target)
+		if (isturf(src.loc) && target)
+			var/turf/T = src.loc
+			if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+				user.changeStatus("weakened", 0.5 SECONDS)
+				user.force_laydown_standup()
+
+				var/turf/target_turf = get_step(src,get_dir(src,target))
+				if (!target_turf)
+					target_turf = T
+
+				var/mob/living/dive_attack_hit = null
+
+				for (var/mob/living/L in target_turf)
+					dive_attack_hit = L
+					break
+
+				if (dive_attack_hit)
+					var/damage = 1
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.shoes)
+							damage += H.shoes.kick_bonus/4
+
+					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+					for (var/mob/O in AIviewers(user))
+						O.show_message("<span style=\"color:red\"><B>[user] dives to the ground and slides into [dive_attack_hit]!</B></span>", 1)
+					logTheThing("combat", user, dive_attack_hit, "dive-kicks [dive_attack_hit] (very weak attack) [log_loc(dive_attack_hit)].")
+				else
+					for (var/mob/O in AIviewers(user))
+						O.show_message("<span style=\"color:red\"><B>[user] dives to the ground!</B></span>", 1, group = "resist")
+
+				step_to(src,target_turf)
+
+		user.u_equip(src)
 
 ////////////////////////////
 //SPECIAL GRAB ITEMS STUFF//
