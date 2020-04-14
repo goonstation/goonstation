@@ -674,9 +674,22 @@ toxic - poisons
 
 	seeker
 		name = "drone-seeking grenade"
+		power = 50 //even if they don't explode, you FEEL this one
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
+		on_hit(atom/hit, angle, var/obj/projectile/P)
+			if (P.data || prob(10)) //maybe
+				..()
+			else
+				new /obj/effects/rendersparks(hit.loc)
+				if(ishuman(hit))//copypasted shamelessly from singbuster rockets
+					var/mob/living/carbon/human/M = hit
+					boutput(M, "<span style=\"color:red\">You are struck by an autocannon round! Thankfully it was not armed.</span>")
+					M.do_disorient(stunned = 40)
+					if (!M.stat)
+						M.emote("scream")
+				
 
 		on_launch(var/obj/projectile/P)
 			var/D = locate(type_to_seek) in range(15, P)
