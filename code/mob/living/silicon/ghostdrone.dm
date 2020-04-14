@@ -40,6 +40,7 @@
 		ghost_drones += src
 		hud = new(src)
 		src.attach_hud(hud)
+		src.see_invisible = 8
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
 
 		//Set the drone name
@@ -77,6 +78,7 @@
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool(src),
 			new /obj/item/rcd/safe(src),
+			new /obj/item/room_planner(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
