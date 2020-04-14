@@ -1195,12 +1195,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			else
 				if (!src.getStatusDuration("burning"))
 
-					src.grab_block()
+					if (!src.grab_block())
+						for (var/mob/O in AIviewers(src, null))
+							O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
 
-					/*
-					for (var/mob/O in AIviewers(src, null))
-						O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
-					*/
 
 	return 0
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)

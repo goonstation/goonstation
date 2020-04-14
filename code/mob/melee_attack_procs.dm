@@ -216,6 +216,11 @@
 		*/
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
+	if (src.grabbed_by && src.grabbed_by.len > 0)
+		return 0
+
+	.= 1
+
 	var/obj/item/I = src.equipped()
 	if (!I)
 		src.grab_self()
@@ -225,6 +230,9 @@
 		G.affecting = src
 		src.grabbed_by += G
 		G.loc = I
+
+		I.chokehold = G
+		I.chokehold.post_item_setup()
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking with [I]!</span>")
@@ -298,6 +306,9 @@
 		target.grabbed_by += G
 		G.loc = grab_item
 		.= G
+
+	for (var/obj/item/grab/block/G in target.equipped_list(check_for_magtractor = 0)) //being grabbed breaks a block
+		qdel(G)
 
 	playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (!suppress_final_message) // Melee-focused roles (resp. their limb datums) grab the target aggressively (Convair880).

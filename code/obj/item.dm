@@ -713,9 +713,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
-	if (special_grab)
-		if(chokehold)
-			chokehold.attack_self(user)
+	if(chokehold)
+		chokehold.attack_self(user)
 
 	return
 
@@ -953,14 +952,13 @@
 			logTheThing("combat", user, M, "tries to attack %target% with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
-	if (special_grab)
-		if (chokehold)
-			chokehold.attack(M, user, def_zone, is_special)
+	if (chokehold)
+		chokehold.attack(M, user, def_zone, is_special)
+		return
+	else if (special_grab)
+		if (user.a_intent == INTENT_GRAB)
+			src.try_grab(M, user)
 			return
-		else
-			if (user.a_intent == INTENT_GRAB)
-				src.try_grab(M, user)
-				return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
 	var/hit_area
@@ -1228,7 +1226,7 @@
 			if (M.trinket == src)
 				M.trinket = null
 
-	if (special_grab)
+	if (special_grab || chokehold)
 		drop_grab()
 
 	..()
@@ -1277,7 +1275,7 @@
 	hide_buttons()
 	clear_mob()
 
-	if (special_grab)
+	if (special_grab || chokehold)
 		drop_grab()
 	return
 

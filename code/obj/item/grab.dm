@@ -703,9 +703,12 @@
 		..()
 
 	attack_self()
-		.= 0
+		qdel(src)
 
 	update_icon()
+		.= 0
+
+	do_resist()
 		.= 0
 
 	proc/can_block(var/hit_type = null)
