@@ -10,6 +10,7 @@ import sys
 import re
 import time
 import random
+import traceback
 from collections import OrderedDict
 from github import Github
 
@@ -62,6 +63,7 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
             repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch)
         except:
             completed = 0
+            traceback.print_exc()
             time.sleep(random.random() * 2) # just in case multiple instances are fighting or something
         else:
             completed = 1
