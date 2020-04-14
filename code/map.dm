@@ -125,6 +125,9 @@ var/global/list/mapNames = list(
 /datum/map_settings/donut3
 	name = "DONUT3"
 	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/jen
+	rwalls = /turf/simulated/wall/auto/reinforced/jen
+
 	escape_centcom = /area/shuttle/escape/centcom/donut3
 	escape_transit = /area/shuttle/escape/transit/donut3
 	escape_station = /area/shuttle/escape/station/donut3
