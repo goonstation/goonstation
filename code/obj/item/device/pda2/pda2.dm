@@ -3,7 +3,7 @@
 /obj/item/device/pda2
 	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
 	w_class = 2.0
@@ -710,7 +710,7 @@
 			//for (var/mob/O in hearers(3, src.loc))
 
 		src.overlays = null
-		src.overlays += image('icons/obj/pda.dmi', "pda-r")
+		src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
 		return
 
 	proc/display_message(var/message)

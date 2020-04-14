@@ -82,7 +82,7 @@
 /obj/item/device/voltron
 	name = "Voltron"
 	desc = "Converts matter into energy and back. Needs to be used while standing on a cable."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "voltron"
 	item_state = "electronic"
 	var/active = 0
@@ -155,7 +155,7 @@
 
 		if(rebuild_overlay)
 			overlays.Cut()
-			overlays += image('icons/obj/device.dmi',src,power_icon)
+			overlays += image('icons/obj/items/device.dmi',src,power_icon)
 	var/overlay_state = 0//0: nothing visible; 1: there's some visible
 	var/client/prev_user
 	proc/check()

@@ -42,7 +42,7 @@
 /obj/item/playing_cards
 	name = "deck of cards"
 	desc = "Some cards, all in a neat stack, for playing some kinda game with."
-	icon = 'icons/obj/playing_card.dmi'
+	icon = 'icons/obj/items/playing_card.dmi'
 	icon_state = "deck-suit"
 	w_class = 1.0
 	force = 0
@@ -812,7 +812,7 @@
 /obj/item/card_box
 	name = "deck box"
 	desc = "A little cardboard box for keeping card decks in. Woah! We're truly in the future with technology like this."
-	icon = 'icons/obj/playing_card.dmi'
+	icon = 'icons/obj/items/playing_card.dmi'
 	icon_state = "box"
 	force = 1
 	throwforce = 1

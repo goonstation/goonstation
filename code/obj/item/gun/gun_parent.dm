@@ -1,8 +1,9 @@
+
 var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder uID stuff
 
 /obj/item/gun
 	name = "gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -44,6 +45,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
+#if ASS_JAM
+	var/shoot_delay = 0
+#else
+	var/shoot_delay = 4
+#endif
 
 	buildTooltipContent()
 		var/Tcontent = ..()
@@ -152,7 +158,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "guncharge"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
 	var/pox
@@ -187,18 +193,23 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/poy = text2num(params["icon-y"]) - 16
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
-
 	if(charge_up && !can_dual_wield && canshoot())
 		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 	else
+		if(canshoot())
+			user.next_click = max(user.next_click, world.time + src.shoot_delay)
 		shoot(target_turf, user_turf, user, pox, poy)
 
 	//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up) && ishuman(user))
 		if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
+			if (user.r_hand:canshoot())
+				user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
 			SPAWN_DBG(0.2 SECONDS)
 				user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 		else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
+			if (user.l_hand:canshoot())
+				user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 			SPAWN_DBG(0.2 SECONDS)
 				user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 
@@ -277,24 +288,48 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!process_ammo(user))
 		return
-	var/obj/projectile/P = initialize_projectile_ST(user, current_projectile, M)
-	if (!P)
-		return
 
-	if (user == M)
-		P.shooter = null
-		P.mob_shooter = user
+	if(slowdown)
+		SPAWN_DBG(-1)
+			user.movement_delay_modifier += slowdown
+			sleep(slowdown_time)
+			user.movement_delay_modifier -= slowdown
 
-	alter_projectile(P)
-	P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-	P.was_pointblank = 1
-	hit_with_existing_projectile(P, M) // Includes log entry.
+	var/spread = spread_angle
+	if (user.reagents)
+		var/how_drunk = 0
+		var/amt = user.reagents.get_reagent_amount("ethanol")
+		if (amt >= 110)
+			how_drunk = 2
+		else if (amt < 110)
+			how_drunk = 1
+		else if (amt <= 0)
+			how_drunk = 0
+		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
+		spread += 5 * how_drunk
 
-	var/mob/living/L = M
-	if (M && isalive(M))
-		L.lastgasp()
-	M.set_clothing_icon_dirty()
-	src.update_icon()
+	for (var/i = 0; i < current_projectile.shot_number; i++)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
+		if (!P)
+			return
+		if (user == M)
+			P.shooter = null
+			P.mob_shooter = user
+
+		alter_projectile(P)
+		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+		if(get_dist(user,M) <= 1)
+			hit_with_existing_projectile(P, M) // Includes log entry.
+			P.was_pointblank = 1
+		else
+			P.launch()
+
+		var/mob/living/L = M
+		if (M && isalive(M))
+			L.lastgasp()
+		M.set_clothing_icon_dirty()
+		src.update_icon()
+		sleep(current_projectile.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
@@ -333,7 +368,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread_angle)
+	var/spread = spread_angle
+	if (user.reagents)
+		var/how_drunk = 0
+		var/amt = user.reagents.get_reagent_amount("ethanol")
+		if (amt >= 110)
+			how_drunk = 2
+		else if (amt < 110)
+			how_drunk = 1
+		else if (amt <= 0)
+			how_drunk = 0
+		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
+		spread += 5 * how_drunk
+
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread)
 	if (P)
 		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID
@@ -354,7 +402,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
-		M.next_click = world.time + 4
 
 	src.update_icon()
 

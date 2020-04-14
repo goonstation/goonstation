@@ -6,7 +6,7 @@
 /obj/item/reagent_containers/balloon
 	name = "balloon"
 	desc = "Water balloon fights are a classic way to have fun in the summer. I don't know that chlorine trifluoride balloon fights hold the same appeal for most people."
-	icon = 'icons/obj/balloon.dmi'
+	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
@@ -209,7 +209,7 @@
 /obj/item/balloon_animal
 	name = "balloon animal"
 	desc = "A little animal, made out of a balloon! How spiffy!"
-	icon = 'icons/obj/balloon.dmi'
+	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "animal-bee"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	item_state = "balloon"

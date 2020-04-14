@@ -3980,7 +3980,7 @@
 /obj/item/token/hug_token
 	name = "Hug Token"
 	desc = "A Hug Token. Just looking at it makes you feel better."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
 	w_class = 1.0

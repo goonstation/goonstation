@@ -2,7 +2,7 @@
 /obj/item/magtractor
 	name = "magtractor"
 	desc = "A device used to pick up and hold objects via the mysterious power of magnets."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "magtractor"
 	opacity = 0
@@ -204,7 +204,7 @@
 		src.icon_state = "magtractor-active"
 
 		src.UpdateOverlays(null, "magField")
-		var/image/I = image('icons/obj/items.dmi', "magtractor-field")
+		var/image/I = image('icons/obj/items/items.dmi', "magtractor-field")
 		I.layer = -2
 
 		if (src.highpower)

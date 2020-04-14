@@ -1,6 +1,6 @@
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
@@ -215,7 +215,7 @@
 /obj/item/casing
 	name = "bullet casing"
 	desc = "A spent casing from a bullet of some sort."
-	icon = 'icons/obj/casings.dmi'
+	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
 	w_class = 1
 	var/forensic_ID = null
@@ -702,7 +702,7 @@
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "MPRT-7"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "rpg7_empty"
 	uses_multiple_icon_states = 1
@@ -740,7 +740,7 @@
 
 /obj/item/gun/kinetic/coilgun_TEST
 	name = "coil gun"
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "coilgun_2"
 	item_state = "flaregun"
 	force = 10.0

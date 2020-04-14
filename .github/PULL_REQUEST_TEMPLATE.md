@@ -10,11 +10,11 @@
 
 ## Changelog
 <!-- If necessary, put your changelog entry below. Otherwise, please delete it.
-Use * for major changes and + for minor changes. For example: -->
+Use however you want to be credited in the changelog in place of CodeDude.
+Use (*) for major changes and (+) for minor changes. For example: -->
 
 ```
-CodeDude:
-* Added soft soft pizza to the game - a tasty drink found in soda machines!
-+ Made some small sprite changes to the base pizza sprite.
+(u)CodeDude:
+(*)Added soft soft pizza to the game - a tasty drink found in soda machines!
+(+)Made some small sprite changes to the base pizza sprite.
 ```
-

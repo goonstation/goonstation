@@ -3,7 +3,7 @@
 /obj/storage/monkey_barrel
 	name = "mysterious barrel"
 	desc = "More fun than a ValuChimp!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel"
 	throwforce = 50
 	p_class = 3
@@ -20,7 +20,7 @@
 /obj/item/barrel_signaller
 	name = "mysterious signaller"
 	desc = "For monkey business only."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel_signaller"
 	w_class = 1.0
 	var/obj/storage/monkey_barrel/my_barrel = null

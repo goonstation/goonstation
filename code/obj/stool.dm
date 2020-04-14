@@ -20,7 +20,7 @@
 /obj/stool
 	name = "stool"
 	desc = "A four-legged padded stool for crewmembers to relax on."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "stool"
 	flags = FPRINT | FLUID_SUBMERGE
 	throwforce = 10
@@ -148,7 +148,7 @@
 /obj/stool/bench
 	name = "bench"
 	desc = "It's a bench! You can sit on it!"
-	icon = 'icons/obj/bench.dmi'
+	icon = 'icons/obj/furniture/bench.dmi'
 	icon_state = "0"
 	anchored = 1
 	var/auto = 0
@@ -192,7 +192,7 @@
 /* ---------- Red ---------- */
 
 /obj/stool/bench/red
-	icon = 'icons/obj/bench_red.dmi'
+	icon = 'icons/obj/furniture/bench_red.dmi'
 	parts_type = /obj/item/furniture_parts/bench/red
 
 /obj/stool/bench/red/auto
@@ -202,7 +202,7 @@
 /* ---------- Blue ---------- */
 
 /obj/stool/bench/blue
-	icon = 'icons/obj/bench_blue.dmi'
+	icon = 'icons/obj/furniture/bench_blue.dmi'
 	parts_type = /obj/item/furniture_parts/bench/blue
 
 /obj/stool/bench/blue/auto
@@ -212,7 +212,7 @@
 /* ---------- Green ---------- */
 
 /obj/stool/bench/green
-	icon = 'icons/obj/bench_green.dmi'
+	icon = 'icons/obj/furniture/bench_green.dmi'
 	parts_type = /obj/item/furniture_parts/bench/green
 
 /obj/stool/bench/green/auto
@@ -222,7 +222,7 @@
 /* ---------- Yellow ---------- */
 
 /obj/stool/bench/yellow
-	icon = 'icons/obj/bench_yellow.dmi'
+	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	parts_type = /obj/item/furniture_parts/bench/yellow
 
 /obj/stool/bench/yellow/auto
@@ -232,7 +232,7 @@
 /* ---------- Wooden ---------- */
 
 /obj/stool/bench/wooden
-	icon = 'icons/obj/bench_wood.dmi'
+	icon = 'icons/obj/furniture/bench_wood.dmi'
 	parts_type = /obj/item/furniture_parts/bench/wooden
 
 /obj/stool/bench/wooden/auto
@@ -242,7 +242,7 @@
 /* ---------- Sauna ---------- */
 
 /obj/stool/bench/sauna
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "saunabench"
 
 /* ============================================== */
@@ -811,7 +811,7 @@
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
 	w_class = 4.0

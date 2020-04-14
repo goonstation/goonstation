@@ -1,11 +1,11 @@
 /obj/item/device/light/sparkler
 	name = "sparkler"
 	desc = "Be careful not to start a fire!"
-	icon = 'icons/obj/sparklers.dmi'
+	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler-off"
 	icon_on = "sparkler-on"
 	icon_off = "sparkler-off"
-	inhand_image_icon = 'icons/obj/sparklers.dmi'
+	inhand_image_icon = 'icons/obj/items/sparklers.dmi'
 	item_state = "sparkler-off"
 	var/item_on = "sparkler-on"
 	var/item_off = "sparkler-off"
@@ -125,7 +125,7 @@
 /obj/item/storage/sparkler_box
 	name = "sparkler box"
 	desc = "Have fun!"
-	icon = 'icons/obj/sparklers.dmi'
+	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler_box-close"
 	max_wclass = 1
 	slots = 5

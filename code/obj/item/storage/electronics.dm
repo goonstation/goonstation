@@ -11,7 +11,7 @@
 /obj/item/storage/box/PDAbox
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "pdabox"
 	spawn_contents = list(/obj/item/device/pda2 = 4)
 
@@ -60,7 +60,7 @@
 
 /obj/item/storage/box/lightbox
 	name = "replacement light bulbs"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "light"
 	spawn_contents = list(/obj/item/light/bulb = 7)
 

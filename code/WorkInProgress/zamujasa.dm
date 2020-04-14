@@ -26,7 +26,7 @@
 /obj/item/device/speechtotext
 	name = "dumb microphone"
 	desc = "This is really stupid."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
 
@@ -627,7 +627,7 @@
 
 	disposing()
 		UnsubscribeProcess()
-	
+
 	process()
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
@@ -637,6 +637,6 @@
 			src.maptext_x = -100
 			src.maptext_width = 232
 			src.maptext_y = 34
-		
+
 	ex_act()
 		return

@@ -2,7 +2,7 @@
 /obj/item/storage/wall
 	name = "cabinet"
 	desc = "It's basically a big box attached to the wall."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "wall"
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
