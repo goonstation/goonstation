@@ -59,14 +59,8 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
             changelog_data = changelog_data[1:]
         changelog_data = [''] + [date_string] + lines + changelog_data
         changelog_text = '\n'.join(changelog_data)
-        try:
-            repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch)
-        except:
-            completed = 0
-            traceback.print_exc()
-            time.sleep(random.random() * 2) # just in case multiple instances are fighting or something
-        else:
-            completed = 1
+        repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch)
+        completed = 1
         tries -= 1
     return completed
 
