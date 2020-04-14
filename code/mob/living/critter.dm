@@ -1126,11 +1126,18 @@
 				armor_mod = max(C.getProperty("meleeprot"), armor_mod)
 		return armor_mod
 
-	get_melee_protection(zone)//critters and stuff, I suppose
+	get_melee_protection(zone, damage_type)//critters and stuff, I suppose
+		var/add = 0
+		var/obj/item/grab/block/G = src.check_block()
+		if (G)
+			add += 1
+			if (G.can_block(damage_type))
+				add += 2
+
 		if(zone=="head")
-			return get_head_armor_modifier()
+			return get_head_armor_modifier() + add
 		else
-			return get_chest_armor_modifier()
+			return get_chest_armor_modifier() + add
 
 	full_heal()
 		..()

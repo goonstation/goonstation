@@ -458,15 +458,14 @@
 /mob/proc/do_block(var/mob/attacker, var/obj/item/W)
 	var/obj/item/grab/block/G = check_block()
 	if (G)
-		if (G.can_block(W) && prob(STAMINA_BLOCK_CHANCE + get_deflection()))
+		if (G.can_block(W?.hit_type) && prob(STAMINA_BLOCK_CHANCE + get_deflection()))
 			visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")//with the [blank]!
 			playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 
 			remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 			stamina_stun()
 
-			qdel(G)
-
+			//qdel(G)
 			return 1
 	return 0
 
@@ -651,7 +650,7 @@
 		var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
 
 		var/armor_mod = 0
-		armor_mod = target.get_melee_protection(def_zone)
+		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
 
 		damage -= armor_mod
 
@@ -1137,7 +1136,7 @@
 		return "<span style=\"color:red\">You drunkenly shrug off the blow!</span>"
 	return null
 
-/mob/proc/get_melee_protection(zone)
+/mob/proc/get_melee_protection(zone, damage_type = 0)
 	return 0
 
 /mob/proc/get_ranged_protection()

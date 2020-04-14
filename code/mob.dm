@@ -947,7 +947,7 @@
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone), burn-get_melee_protection(zone))
+	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)

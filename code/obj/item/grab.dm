@@ -708,14 +708,14 @@
 	update_icon()
 		.= 0
 
-	proc/can_block(var/obj/item/W)
+	proc/can_block(var/hit_type = null)
 		.= 1
-		if (isitem(src.loc) && W)
+		if (isitem(src.loc) && hit_type)
 			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = "block_blunt"
-			switch(W.hit_type)
+			switch(hit_type)
 				if (DAMAGE_BLUNT)
 					prop = "block_blunt"
 				if (DAMAGE_CUT)
