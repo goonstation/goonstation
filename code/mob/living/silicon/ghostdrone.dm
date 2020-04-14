@@ -40,7 +40,7 @@
 		ghost_drones += src
 		hud = new(src)
 		src.attach_hud(hud)
-		src.see_invisible = 8
+		src.see_invisible = 8 //Gives them the ability to see the Floor and Wall planner blueprints, identical to Construction Visualizer glasses
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
 
 		//Set the drone name
