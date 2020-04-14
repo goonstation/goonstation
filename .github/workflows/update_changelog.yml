@@ -22,7 +22,7 @@ jobs:
         pip install pygithub
     - name: Update Changelog
       run: |
-        python .github/update_changelog.py
+        python update_changelog.py
       env:
         REPO: ${{ github.repository }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
