@@ -747,6 +747,17 @@
 			if (I.hasProperty(prop))
 				.= 1
 
+	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
+		switch(hit_type)
+			if (DAMAGE_BLUNT)
+				playsound(get_turf(src), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			if (DAMAGE_CUT)
+				playsound(get_turf(src), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+			if (DAMAGE_STAB)
+				playsound(get_turf(src), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+			if (DAMAGE_BURN)
+				playsound(get_turf(src), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(src.loc) && target)
 			var/turf/T = src.loc

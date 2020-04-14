@@ -209,6 +209,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking!</span>")
 
+		block_begin(src)
 		/*
 		RIP
 		else
@@ -236,6 +237,8 @@
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking with [I]!</span>")
+
+		block_begin(src)
 
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
@@ -489,15 +492,16 @@
 /mob/proc/do_block(var/mob/attacker, var/obj/item/W)
 	var/obj/item/grab/block/G = check_block()
 	if (G)
-		if (G.can_block(W?.hit_type) && prob(STAMINA_BLOCK_CHANCE + get_deflection()))
-			visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")//with the [blank]!
-			playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
-
-			remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-			stamina_stun()
-
-			//qdel(G)
-			return 1
+		if (G.can_block(W?.hit_type))
+			if (prob(STAMINA_BLOCK_CHANCE + get_deflection()))
+				visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")//with the [blank]!
+				playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
+				remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
+				stamina_stun()
+				fuckup_attack_particle(attacker)
+				return 1
+			block_spark(src)
+			fuckup_attack_particle(attacker)
 	return 0
 
 /mob/living/carbon/human/do_block(var/mob/attacker, var/obj/item/W)
@@ -507,10 +511,12 @@
 
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
 		stamina_stun()
+		fuckup_attack_particle(attacker)
 		return 1
 	else if (prob(src.get_passive_block()))
 		visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
+		fuckup_attack_particle(attacker)
 		return 1
 
 	return ..()
@@ -863,7 +869,12 @@
 			msg_group = "[affecting]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
-			playsound(owner.loc, played_sound, 50, 1, -1)
+			var/obj/item/grab/block/G = target.check_block()
+			if (G && G.can_block(damage_type))
+				G.play_block_sound(damage_type)
+				playsound(owner.loc, played_sound, 15, 1, -1, 1.4)
+			else
+				playsound(owner.loc, played_sound, 50, 1, -1)
 
 		if (!(suppress & SUPPRESS_BASE_MESSAGE) && base_attack_message)
 			owner.visible_message(base_attack_message)
