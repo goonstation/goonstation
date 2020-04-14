@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Get The Script
       run: |
-        wget "https://raw.githubusercontent.com/${{ github.respoitory }}/master/.github/update_changelog.py"
+        wget "https://raw.githubusercontent.com/${{ github.repository }}/master/.github/update_changelog.py"
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
