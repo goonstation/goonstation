@@ -1193,7 +1193,8 @@
 			if (G)
 				protection += 1
 				if (G.can_block(damage_type))
-					protection += 1
+					if (G != src.equipped()) // bare handed block is less protective
+						protection += 1
 
 		return protection
 

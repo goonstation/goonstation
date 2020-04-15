@@ -285,6 +285,8 @@
 			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
+		if ("resist")
+			src.resist()
 		else
 			return ..()
 
