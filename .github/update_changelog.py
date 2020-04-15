@@ -14,6 +14,19 @@ import traceback
 from collections import OrderedDict
 from github import Github
 
+labels_to_emoji = {
+	'ass-jam': '🍑',
+	'balance': '⚖',
+	'bug-major': '🐛',
+	'bug-minor': '🐛',
+	'bug-trivial': '🐛',
+	'bug': '🐛',
+	'enhancement': '➕',
+	'sprites': '🖼',
+	'mapping': '🗺',
+	'refactor': '🔄'
+}
+
 def parse_pr_changelog(pr):
     entries = []
     author = None
@@ -21,6 +34,8 @@ def parse_pr_changelog(pr):
     if changelog_match is None:
         return
     lines = changelog_match.group(1).split('\n')
+    emoji = ''.join(labels_to_emoji.get(label.name, '') for label in pr.labels)
+    emoji += "|" + ' '.join(label.name for label in pr.labels)
     for line in lines:
         line = line.strip()
         if not line:
@@ -30,6 +45,7 @@ def parse_pr_changelog(pr):
         author_match = re.match(r"\(u\)\s*(.*?):?$", line)
         is_major = None
         content = None
+        new_author = False
         if major_match is not None:
             is_major = True
             content = major_match.group(1)
@@ -38,14 +54,15 @@ def parse_pr_changelog(pr):
             content = minor_match.group(1)
         elif author_match is not None:
             author = author_match.group(1)
-            entries.append("(u){}".format(author))
-            entries.append("(p){}".format(pr.number))
+            new_author = True
         if not content:
             continue
-        if not author:
+        if not author or new_author:
             author = pr.user.name
             entries.append("(u){}".format(author))
             entries.append("(p){}".format(pr.number))
+            if emoji:
+                entries.append("(e){}".format(emoji))
         entry = "({}){}".format('*' if is_major else '+', content)
         entries.append(entry)
     return entries
