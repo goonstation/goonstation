@@ -51,7 +51,6 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		var/added_collapsible_author = 0
 		var/added_author = 0
 		var/author = null
-		var/pr_num = null
 
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
@@ -62,8 +61,6 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 				continue
 
 			switch(copytext(line, 1, 4))
-				if("(p)")
-					pr_num = copytext(line, 4, 0)
 				if("(t)")
 					if(collapsible_html.len)
 						html += "<li class=\"collapse-button\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
@@ -151,7 +148,6 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 					author = copytext(line, 4, 0)
 					added_collapsible_author = 0
 					added_author = 0
-					pr_num = 0
 				if("(*)")
 					if(!added_author && author)
 						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:</li>"
