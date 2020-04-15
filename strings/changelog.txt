@@ -1,5 +1,8 @@
 
 (t)wed apr 15 20
+(u)Tarmunora
+(p)244
+(e)⚖|balance
 (*)Power picks, hammers, shovels now use standard small power cells for their internal charge. This makes them charge more quickly, as an aside. Additionally, attacking things that aren't asteroids with them will drain their cell much more quickly - if using one as a weapon, keep an eye on your charge!
 (u)Tarmunora
 (p)242
