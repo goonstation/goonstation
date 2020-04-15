@@ -1436,7 +1436,7 @@
 /obj/item/mining_tool
 	name = "pickaxe"
 	desc = "A thing to bash rocks with until they become smaller rocks."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
@@ -1520,7 +1520,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/power_pick
 	name = "power pick"
 	desc = "An energised mining tool."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick"
 	flags = ONBELT
@@ -1532,7 +1532,7 @@ obj/item/clothing/gloves/concussive
 
 	New()
 		..()
-		powered_overlay = image('icons/obj/mining.dmi', "pp-glow")
+		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		charges = maximum_charges
 		src.power_up()
 
@@ -1578,7 +1578,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/drill
 	name = "laser drill"
 	desc = "Safe mining tool that doesn't require recharging."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
@@ -1593,7 +1593,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/powerhammer
 	name = "power hammer"
 	desc = "An energised mining tool."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "hammer"
@@ -1606,7 +1606,7 @@ obj/item/clothing/gloves/concussive
 
 	New()
 		..()
-		src.powered_overlay = image('icons/obj/mining.dmi', "ph-glow")
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
 		charges = maximum_charges
 		src.power_up()
 
@@ -1842,7 +1842,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/cargotele
 	name = "cargo transporter"
 	desc = "A device for teleporting crated goods."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "cargotele"
 	var/charges = 8
 	var/maximum_charges = 8
@@ -1999,7 +1999,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/oreprospector
 	name = "geological scanner"
 	desc = "A device capable of detecting nearby mineral deposits."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
 	w_class = 1.0
@@ -2049,7 +2049,7 @@ obj/item/clothing/gloves/concussive
 
 /proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
 	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/mining.dmi',T,decalicon,AREA_LAYER+1)
+	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
 	SPAWN_DBG(2 MINUTES)
 		if (user && user.client)
@@ -2063,7 +2063,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/device/chargehacker
 	name = "geological scanner"
 	desc = "The scanner doesn't look right somehow."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
 	w_class = 1.0
@@ -2270,7 +2270,7 @@ var/global/list/cargopads = list()
 /obj/item/ore_scoop
 	name = "ore scoop"
 	desc = "A device that sucks up ore into a satchel automatically. Just load in a satchel and walk over ore to scoop it up."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "scoop"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"

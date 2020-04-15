@@ -111,7 +111,7 @@
 /obj/storage/crate/bin
 	name = "large bin"
 	desc = "A large bin."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
 	icon_closed = "largebin"

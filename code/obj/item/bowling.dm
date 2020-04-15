@@ -10,7 +10,7 @@
 /obj/item/bowling_ball
 	name = "bowling ball"
 	desc = "Just keep rollin' rollin'."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bowling_ball"
 	w_class = 3.0
 	force = 5

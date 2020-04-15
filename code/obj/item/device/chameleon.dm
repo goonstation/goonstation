@@ -190,7 +190,7 @@
 
 /obj/item/device/chameleon/bomb
 	name = "chameleon bomb"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
 	burn_possible = 0
 	var/strength = 32 // same as syndie pipebombs, calls the same proc

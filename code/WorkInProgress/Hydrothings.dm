@@ -365,7 +365,7 @@ obj/item/gnomechompski/elf
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "hootolver"
 	w_class = 3.0
 	throw_speed = 2

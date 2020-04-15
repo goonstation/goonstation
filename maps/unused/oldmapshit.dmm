@@ -173,7 +173,7 @@
 "dq" = (/turf/simulated/floor{icon_state = "carpetSW"},/area)
 "dr" = (/obj/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHWEST)"; icon_state = "tracks"; dir = 10},/turf/simulated/floor{icon_state = "carpet2"},/area)
 "ds" = (/obj/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/simulated/floor{icon_state = "carpet1"},/area)
-"dt" = (/obj/item/axe{icon = 'icons/obj/weapons.dmi'; name = "Fist of the Robusters"},/turf/simulated/floor{icon_state = "carpet1"},/area)
+"dt" = (/obj/item/axe{icon = 'icons/obj/items/weapons.dmi'; name = "Fist of the Robusters"},/turf/simulated/floor{icon_state = "carpet1"},/area)
 "du" = (/turf/simulated/floor{icon_state = "carpetSE"},/area)
 "dv" = (/obj/computerframe{anchored = 1; state = 1},/turf/simulated/floor/black,/area)
 "dw" = (/obj/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/wall/r_wall,/area)

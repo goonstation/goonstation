@@ -5,7 +5,7 @@
 
 /obj/item/clothing/mask/cigarette
 	name = "cigarette"
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	wear_image_icon = 'icons/mob/mask.dmi'
 	icon_state = "cig"
 	uses_multiple_icon_states = 1
@@ -411,7 +411,7 @@
 //not a cigarette as it is not smokable on its own. comes pre-flavoured though.
 /obj/item/bluntwrap
 	name = "blunt wrap"
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "bluntwrap"
 	force = 0
 	hit_type = DAMAGE_BLUNT
@@ -528,7 +528,7 @@
 /obj/item/cigpacket
 	name = "cigarette packet"
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigpacket"
 	uses_multiple_icon_states = 1
 	item_state = "cigpacket"
@@ -621,7 +621,7 @@
 /obj/item/cigbutt
 	name = "cigarette butt"
 	desc = "A manky old cigarette butt."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
@@ -632,7 +632,7 @@
 /obj/item/cigarbox
 	name = "cigar box"
 	desc = "The not-so-prestigeous brand of Space Cigars."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
@@ -695,7 +695,7 @@
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
 	desc = "The most prestigeous brand of Space Cigars, made in Space Cuba."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
@@ -780,7 +780,7 @@
 /obj/item/matchbook
 	name = "matchbook"
 	desc = "A little bit of heavy paper with some matches in it, and a little strip to light them on."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "matchbook"
 	uses_multiple_icon_states = 1
 	w_class = 1
@@ -858,7 +858,7 @@
 /obj/item/match
 	name = "match"
 	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either or."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
 	uses_multiple_icon_states = 1
 	w_class = 1
@@ -1054,7 +1054,7 @@
 /obj/item/device/light/zippo
 	name = "zippo lighter"
 	desc = "A pretty nice lighter."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'

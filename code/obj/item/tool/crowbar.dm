@@ -3,9 +3,9 @@
 	desc = "A tool used as a lever to pry objects."
 	icon = 'icons/obj/items/tools/crowbar.dmi'
 	// TODO: crowbar inhand icon
-	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
+	inhand_image_icon = 'icons/mob/inhand/tools/crowbar.dmi'
 	icon_state = "crowbar"
-	item_state = "wrench"
+	item_state = "crowbar"
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_PRYING

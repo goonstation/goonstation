@@ -307,11 +307,11 @@ mob/new_player
 				F.init_player(character, 0, 1)
 
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station in a nondescript container! Good luck!</h3>")
+				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You're a space diner patron!</h3>")
+				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && rp_latejoin && rp_latejoin.len)

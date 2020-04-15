@@ -57,7 +57,7 @@
 /obj/adventurepuzzle/triggerable/triggerer/delay
 	name = "delay"
 	invisibility = 20
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "timer0"
 	density = 0
 	opacity = 0

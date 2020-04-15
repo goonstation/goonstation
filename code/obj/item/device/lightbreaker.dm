@@ -1,6 +1,6 @@
 /obj/item/lightbreaker
 	name = "compact tape"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recorder"
 	var/active = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT

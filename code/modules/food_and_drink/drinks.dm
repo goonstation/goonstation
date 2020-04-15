@@ -164,7 +164,7 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bottlewater"
 	item_state = "contliquid"
 	initial_volume = 50
@@ -274,7 +274,7 @@
 /obj/item/crushed_can
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 
 	proc/set_stuff(var/name, var/icon_state)
 		src.name = "crushed [name]"
@@ -292,7 +292,7 @@
 /obj/item/reagent_containers/food/drinks/cola/random
 	name = "space cola"
 	desc = "You don't recognise this cola brand at all."
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50

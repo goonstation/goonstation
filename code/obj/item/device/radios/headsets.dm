@@ -13,6 +13,36 @@
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	bicon_override = 1
+	var/haswiretap
+
+	attackby(obj/item/R as obj, mob/user as mob)
+		if (istype(R, /obj/item/device/radio_upgrade))
+			if (haswiretap)
+				boutput(user, "<span style=\"color:red\">This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
+				return
+			src.haswiretap = 1
+			src.secure_frequencies = list(
+				"h" = R_FREQ_COMMAND,
+				"g" = R_FREQ_SECURITY,
+				"e" = R_FREQ_ENGINEERING,
+				"r" = R_FREQ_RESEARCH,
+				"m" = R_FREQ_MEDICAL,
+				"c" = R_FREQ_CIVILIAN,
+				)
+			src.secure_colors = list(
+				"h" = RADIOC_COMMAND,
+				"g" = RADIOC_SECURITY,
+				"e" = RADIOC_ENGINEERING,
+				"r" = RADIOC_RESEARCH,
+				"m" = RADIOC_MEDICAL,
+				"c" = RADIOC_CIVILIAN,
+				)
+			boutput(user, "<span style=\"color:blue\">Wiretap Radio Upgrade successfully installed in the [src].</span>")
+			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+			set_secure_frequencies(src)
+			qdel(R)
+
+		..()
 
 
 /obj/item/device/radio/headset/command
@@ -289,3 +319,9 @@ Secure Frequency:
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
 
+/obj/item/device/radio_upgrade //traitor radio upgrader
+	name = "Wiretap Radio Upgrade"
+	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "syndie_upgr"
+	w_class = 1

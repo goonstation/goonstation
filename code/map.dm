@@ -18,14 +18,17 @@ var/global/list/mapNames = list(
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
-	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1), 
+	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
 	"Linemap" = 		list("id" = "LINEMAP", 		"settings" = "linemap",			"playerPickable" = ASS_JAM),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
 	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = ASS_JAM),
-	"Oshan Laboratory"= list("id" = "OSHAN", 		"settings" = "oshan", 			"playerPickable" = 1),
+	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = 1),
 	"Samedi" = 			list("id" = "SAMEDI", 		"settings" = "samedi", 			"playerPickable" = ASS_JAM),
-	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 			"playerPickable" = 1,	"MaxPlayersAllowed" = 30),
-	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 			"playerPickable" = 1),
+	"Kondaru" = 		list("id" = "KONDARU", "settings" = "kondaru", 				"playerPickable" = ASS_JAM),
+	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
+	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
+	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
+	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1),
 )
 
 /obj/landmark/map
@@ -409,6 +412,133 @@ var/global/list/mapNames = list(
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
+
+/datum/map_settings/kondaru
+	name = "KONDARU"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/668188498347556884/kondaru.jpg"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_transit = /area/shuttle/escape/transit/cogmap2
+	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_dir = EAST
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the quartermaster's front office" = list(/area/station/quartermaster/office),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the janitor's office" = list(/area/station/janitor))
+
+/datum/map_settings/fleet
+	name = "FLEET"
+	display_name = "Bellerophon Fleet"
+	style = "ship"
+	goonhub_map = "https://cdn.discordapp.com/attachments/679773626467221570/679774961543413772/fleep.png"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+	arrivals_type = MAP_SPAWN_CRYO
+	dir_fore = WEST
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+
+	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_transit = /area/shuttle/escape/transit/cogmap2
+	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_dir = EAST
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/aviary),
+		"the Tenebrae primary zone" = list(/area/station/science),
+		"the Asclepius primary zone" = list(/area/station/medical/medbay),
+		"the Meridian primary zone" = list(/area/station/crew_quarters/captain),
+		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
+		"the Maru primary zone" = list(/area/station/engine/engineering),
+		"the Hammer primary zone" = list(/area/station/security/main))
+
+/datum/map_settings/density // I just copied cog2 for now, ok????
+	name = "density"
+	goonhub_map = "https://cdn.discordapp.com/attachments/383743035894267905/616657633050624020/unknown-35.png"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_transit = /area/shuttle/escape/transit/cogmap2
+	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_dir = EAST
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
+
+	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the central research sector hub" = list(/area/station/science),
+		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the net cafe" = list(/area/station/crew_quarters/info),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the genetics lab" = list(/area/station/medical/research))
 
 /datum/map_settings/samedi
 	name = "SAMEDI"

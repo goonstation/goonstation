@@ -8,7 +8,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 /obj/item/flamethrower
 	name = "flamethrower"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"

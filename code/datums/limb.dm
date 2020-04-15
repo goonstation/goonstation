@@ -64,10 +64,18 @@
 	proc/attack_range(atom/target, var/mob/user, params)
 		if(user.a_intent == "disarm")
 			if(disarm_special)
+				for (var/obj/item/cloaking_device/I in user)
+					if (I.active)
+						I.deactivate(user)
+						user.visible_message("<span style=\"color:blue\"><b>[user]'s cloak is disrupted!</b></span>")
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
 			if(harm_special)
+				for (var/obj/item/cloaking_device/I in user)
+					if (I.active)
+						I.deactivate(user)
+						user.visible_message("<span style=\"color:blue\"><b>[user]'s cloak is disrupted!</b></span>")
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else

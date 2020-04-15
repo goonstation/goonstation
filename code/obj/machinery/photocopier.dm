@@ -145,32 +145,46 @@
 		if (src.use_state == 2)
 			boutput(user, "<span style=\"color:red\">\The [src] is busy right now! Try again later!</span>")
 			return
-		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount")
+		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
 		if (get_dist(user, src) <= 1)
 			switch(mode_sel)
 				if ("Reset Memory")
+					if (src.use_state == 2)
+						boutput(user, "\The [src] is busy right now! Try again later!")
+						return
 					src.reset_all()
 					playsound(src.loc, "sound/machines/bweep.ogg", 50, 1)
 					boutput(user, "<span style=\"color:blue\">You reset \the [src]'s memory.</span>")
 					return
 
 				if ("Print Copies")
+					if (src.use_state == 2)
+						boutput(user, "\The [src] is busy right now! Try again later!")
+						return
+					src.icon_state = "close_sesame"
 					src.visible_message("\The [src] starts printing copies!")
-					make_amount = max(make_amount, 30)
+					make_amount = min(make_amount, 30)
 					if (paper_amount <= 0)
 						src.visible_message("No more paper in tray!")
 						return
+					src.use_state = 2
 					for (var/i = 1, i <= src.make_amount, i++)
-						if (paper_amount <= 0) break
+						if (paper_amount <= 0)
+							break
 						flick("print", src)
 						sleep(18)
 						playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 1)
 						paper_amount --
 						src.print_stuff()
+					src.use_state = 0
+					src.icon_state = "close_sesame"
 					src.visible_message("\The [src] finishes its print job.")
 					return
 
 				if ("Adjust Amount")
+					if (src.use_state == 2)
+						boutput(user, "\The [src] is busy right now! Try again later!")
+						return
 					var/num_sel = input("How many copies do you want to make?", "Photocopier Controls") as num
 					if (num_sel && get_dist(user, src) <= 1)
 						if (num_sel <= src.paper_amount)
@@ -182,12 +196,24 @@
 							boutput(user, "<span style=\"color:red\">There's not enough paper for that!</span>")
 							return
 
+				if ("Toggle Lid")
+					if (src.use_state == 2)
+						boutput(user, "\The [src] is busy right now! Try again later!")
+						return
+					if (src.icon_state == "open_sesame")
+						src.icon_state = "close_sesame"
+						src.use_state = 0
+					else
+						src.icon_state = "open_sesame"
+						src.use_state = 1
+
 	proc/print_stuff() //handles printing photos, papers
 		if (src.paper_info.len)
 			var/obj/item/paper/P = new(get_turf(src))
 			P.name = src.paper_info[1]
 			P.desc = src.paper_info[2]
 			P.info = src.paper_info[3]
+			P.icon_state = "paper" //bugfix for blank sheets being printed
 
 		else if (src.photo_info.len)
 			var/obj/item/photo/P = new(get_turf(src))
@@ -227,17 +253,3 @@
 		photo_info = list()
 		paper_photo_info = list()
 		butt_stuff = 0
-
-	verb/toggle_lid()
-		set name = "Open/Close Lid"
-		set src in oview(1)
-		set category = "Local"
-		if (src.use_state == 2)
-			boutput(usr, "\The [src] is busy right now! Try again later!")
-			return
-		if (src.icon_state == "open_sesame")
-			src.icon_state = "close_sesame"
-			src.use_state = 0
-		else
-			src.icon_state = "open_sesame"
-			src.use_state = 1

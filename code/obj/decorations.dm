@@ -502,7 +502,11 @@
 /obj/blind_switch/area
 	locate_blinds()
 		var/area/A = get_area(src)
-		for (var/obj/window_blinds/blind in A)
+		for (var/X in by_type[/obj/window_blinds])
+			var/obj/window_blinds/blind = X
+			var/area/blind_area = get_area(blind)
+			if(blind_area != A)
+				continue
 			LAGCHECK(LAG_LOW)
 			if (!(blind in src.myBlinds))
 				src.myBlinds += blind

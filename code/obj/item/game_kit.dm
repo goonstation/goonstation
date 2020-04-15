@@ -5,7 +5,7 @@ THAT STUPID GAME KIT
 */
 /obj/item/game_kit
 	name = "Gaming Kit"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "game_kit"
 	var/selected = null
 	var/board_stat = null

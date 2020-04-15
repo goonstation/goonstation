@@ -758,7 +758,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			myProj = /datum/projectile/bullet/a12
 			ammo = 40
 			abstract = 0
-			icon = 'icons/obj/gun.dmi'
+			icon = 'icons/obj/items/gun.dmi'
 			icon_state = "shotgun"
 
 		aex
@@ -920,7 +920,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				myProj = /datum/projectile/bullet/rifle_3006
 				ammo = 6
 				abstract = 0
-				icon = 'icons/obj/gun.dmi'
+				icon = 'icons/obj/items/gun.dmi'
 				icon_state = "hunting_rifle"
 				rarity_class = 1
 
@@ -1710,7 +1710,7 @@ proc/get_colosseum_message(var/name, var/message)
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

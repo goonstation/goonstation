@@ -1,6 +1,6 @@
 /obj/item/vending/restock_cartridge
 	name = "Empty restock cartridge"
-	icon = 'icons/obj/vendcart.dmi'
+	icon = 'icons/obj/items/vendcart.dmi'
 	icon_state = "vendcart_base"
 	desc = "An empty vanding machine restocking cartridge."
 	throwforce = 1

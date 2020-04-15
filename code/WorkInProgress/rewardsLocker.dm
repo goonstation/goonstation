@@ -28,7 +28,7 @@
 		if (istype(activator.back, /obj/item/storage/backpack/medic))
 			var/obj/item/storage/backpack/medic/M = activator.back
 			var/prev1 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -43,7 +43,7 @@
 		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev2 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -58,7 +58,7 @@
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev3 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'

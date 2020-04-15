@@ -13,7 +13,7 @@
 /obj/item/saw
 	name = "chainsaw"
 	desc = "A chainsaw used to chop up harmful plants. Despite its appearance, it's not extremely dangerous to humans."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
 	item_state = "c_saw"
@@ -302,7 +302,7 @@
 /obj/item/saw/elimbinator
 	name = "The Elimbinator"
 	desc = "Lops off limbs left and right!"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_s"
 	item_state = "c_saw_s"
@@ -351,7 +351,7 @@
 /obj/item/seedplanter
 	name = "Portable Seed Fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "forensic0"
 	var/list/available = list()
 	var/datum/plant/selected = null

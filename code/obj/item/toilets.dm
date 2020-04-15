@@ -17,7 +17,9 @@ var/list/all_toilets = null
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	rand_pos = 0
-
+#if ASS_JAM
+	var/timestopped = 0 // one time timstop for toilet fun in assday
+#endif
 /obj/item/storage/toilet/New()
 	..()
 	if (!islist(all_toilets))
@@ -90,6 +92,14 @@ var/list/all_toilets = null
 	return
 
 /obj/item/storage/toilet/attack_hand(mob/user as mob)
+#if ASS_JAM //timestop toilets
+	if(timestopped == 1)
+		if(prob(20))
+			boutput(user, "Slow down buddy! Can't force the time stop toilet when it don't want to!")
+	else
+		timestop(null, 100, 5)
+		timestopped = 1
+#endif
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)

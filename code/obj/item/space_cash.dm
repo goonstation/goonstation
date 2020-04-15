@@ -3,7 +3,7 @@
 	name = "1 credit"
 	real_name = "credit"
 	desc = "You gotta have money."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cashgreen"
 	uses_multiple_icon_states = 1
 	opacity = 0
@@ -229,7 +229,7 @@
 		amount = rand(1,10000)
 		name = "money bag"
 		desc = "Loadsamoney!"
-		icon = 'icons/obj/items.dmi'
+		icon = 'icons/obj/items/items.dmi'
 		icon_state = "moneybag"
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -239,7 +239,7 @@
 		amount = rand(1,10000)
 		name = "money bag"
 		desc = "Loadsamoney!"
-		icon = 'icons/obj/items.dmi'
+		icon = 'icons/obj/items/items.dmi'
 		icon_state = "moneybag"
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -251,7 +251,7 @@
 
 /obj/item/spacebux // Not space cash. Actual spacebux. Wow.
 	name = "\improper Spacebux token"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacebux_gray"
 	desc = "A Spacebux token, neat! You can insert this into an ATM to add it to your account."
 

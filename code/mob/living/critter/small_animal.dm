@@ -2296,7 +2296,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 2
-	icon = 'icons/obj/figures.dmi'
+	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
 	icon_state_dead = "fig-"
 	health_brute = 20
@@ -2431,15 +2431,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
 		overlay.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
-	
+
 	death()
 		..()
 		if(!src.colorkey_overlays)
 			src.UpdateOverlays(null, "hair")
-	
+
 	attack_hand(mob/living/M)
 		src.into_pocket(M)
-	
+
 	proc/into_pocket(mob/M, var/voluntary = 1)
 		if(M == src || isdead(src))
 			return // no recursive pockets, thank you. Also no dead mice in pockets
@@ -2471,7 +2471,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else if(src.client)
 			obs.client = src.client
 		M.setStatus(src.status_name, duration = null)
-	
+
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
 			boutput(src, "<span class='game' style='color:[mentorhelp_text_color]'>You poke [target] in a way that clearly indicates you want to help them.</span>")
@@ -2481,7 +2481,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				flick(src.icon_state_exclaim, src)
 		else
 			return ..()
-	
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
@@ -2491,7 +2491,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						flick(src.icon_state_exclaim, src)
 					return "<span style='color:#605b59'><b>[src]</b> squeaks!</span>"
 		return ..()
-	
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("fart")
@@ -2520,7 +2520,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		/*src.fur_color = "#d43b3b"
 		src.setup_overlays()*/
-	
+
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living))
 			var/mob/living/M = target

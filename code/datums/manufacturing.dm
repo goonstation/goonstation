@@ -217,6 +217,16 @@
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/bullet_12g_nail
+	name = "12 gauge nailshot"
+	item_paths = list("MET-2","CON-1")
+	item_names = list("Sturdy Metal","Conductive Material")
+	item_amounts = list(40,30)
+	item_outputs = list(/obj/item/ammo/bullets/nails)
+	time = 30
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/bullet_smoke
 	name = "40mm Smoke Grenade"
 	item_paths = list("MET-2","CON-1")

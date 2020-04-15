@@ -524,7 +524,7 @@
 
 /obj/item/device/energy_shield/viking
 	name = "Space Viking energy-shield"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"

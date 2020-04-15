@@ -9,7 +9,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 /obj/item/injector_belt
 	name = "injector belt"
 	desc = "Automated injection system attached to a belt."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH

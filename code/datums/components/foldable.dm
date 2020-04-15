@@ -61,7 +61,7 @@
 
 /obj/item/objBriefcase
 	name = "briefcase"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	item_state = "briefcase"
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'

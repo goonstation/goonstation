@@ -354,6 +354,10 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (prob(final_repair_chance))
 		H.bleeding -= repair_amount
+		//BLOOD_DEBUG("[H]'s bleeding repaired by [repair_amount], now [H.bleeding]")
+		if (H.bleeding < 0)
+			H.bleeding = 0
+			//BLOOD_DEBUG("[H]'s bleeding dropped below 0 and was reset to 0")
 		if (!H.bleeding && H.get_surgery_status())
 			H.bleeding ++
 		switch (H.bleeding)
@@ -378,10 +382,6 @@ this is already used where it needs to be used, you can probably ignore it.
 			if (9 to INFINITY)
 				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
 */
-		//BLOOD_DEBUG("[H]'s bleeding repaired by [repair_amount], now [H.bleeding]")
-		if (H.bleeding < 0)
-			H.bleeding = 0
-			//BLOOD_DEBUG("[H]'s bleeding dropped below 0 and was reset to 0")
 
 	//else
 		//BLOOD_DEBUG("[H] rolled no repair")
@@ -852,7 +852,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	name = "test dagger"
 	desc = "this is for testing bleeding stuff"
 	w_class = 1.0
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"

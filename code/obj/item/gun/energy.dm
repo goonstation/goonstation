@@ -1,6 +1,6 @@
 /obj/item/gun/energy
 	name = "energy weapon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
@@ -120,6 +120,8 @@
 				src.cell = null
 				update_icon()
 				src.add_fingerprint(user)
+			else
+				return ..()
 		else
 			return ..()
 		return
@@ -322,6 +324,7 @@
 	force = 5.0
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
+	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawgiver/sabre AND an egun.
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -345,6 +348,11 @@
 		..()
 		update_icon()
 		M.update_inhands()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/electronics/scanner))
+			nojobreward = 1
+		..()
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -452,7 +460,7 @@
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
 	uses_multiple_icon_states = 1
@@ -472,7 +480,7 @@
 	update_icon()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
-			ratio = round(ratio, 0.25) * 100	
+			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/wavegun)
 				src.icon_state = "wavegun[ratio]"
 				item_state = "wave"
@@ -491,7 +499,7 @@
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
 	name = "BFG 9000"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "bfg"
 	m_amt = 4000
 	force = 6.0
@@ -658,7 +666,7 @@
 /obj/item/gun/energy/blaster_pistol
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = 3.0
 	force = 5.0
@@ -722,14 +730,14 @@
 	/*proc/generate_overlays()
 		src.overlays = null
 		if(extension_mod)
-			src.overlays += icon('icons/obj/gun_mod.dmi',extension_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun_mod.dmi',extension_mod.overlay_name)
 		if(converter_mod)
-			src.overlays += icon('icons/obj/gun_mod.dmi',converter_mod.overlay_name)*/
+			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
 /obj/item/gun/energy/blaster_smg
 	name = "burst blaster"
 	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = 3.0
@@ -757,7 +765,7 @@
 /obj/item/gun/energy/blaster_cannon
 	name = "blaster cannon"
 	desc = "A heavily overcharged blaster weapon, modified for extreme firepower. It's self-charging by a larger radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
 	can_dual_wield = 0
@@ -788,7 +796,7 @@
 	desc = "Components for building custom sidearms."
 	item_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "frame" // todo: make more item icons
 	mats = 0
 
@@ -929,7 +937,7 @@
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
 	name = "Glitch Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "airzooka"
 	m_amt = 4000
 	force = 0.0
@@ -1113,13 +1121,13 @@
 ///////////////////////////////////////////////////
 /obj/item/gun/energy/lawgiver/old
 	name = "Antique Lawgiver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "old-lawgiver0"
 	old = 1
 
 /obj/item/gun/energy/lawgiver
 	name = "Lawgiver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
 	icon_state = "lawgiver0"
 	var/old = 0
@@ -1137,7 +1145,7 @@
 		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawgiver, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawgiver,new/datum/projectile/bullet/clownshot)
 
-		src.indicator_display = image('icons/obj/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
 		update_icon()
@@ -1162,7 +1170,7 @@
 			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		else
-			boutput(user, "<span style=\"color:blue\">There don't see to be any buttons on [src] to press.</span>")
+			boutput(user, "<span style=\"color:blue\">There don't seem to be any buttons on [src] to press.</span>")
 
 	proc/asign_name(var/mob/M)
 		if (ishuman(M))
@@ -1369,7 +1377,7 @@
 			gun_setting_name = "execute"
 		else if (current_projectile.type == /datum/projectile/bullet/smoke)
 			gun_setting_name = "smokeshot"
-		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart)
+		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)
 			gun_setting_name = "knockout"
 		else if (current_projectile.type == /datum/projectile/bullet/flare)
 			gun_setting_name = "hotshot"
@@ -1383,13 +1391,13 @@
 		src.desc = "It is set to [gun_setting_name]."
 		if(src.cell)
 				//[src.projectiles ? "It will use the projectile: [src.current_projectile.sname]. " : ""]
-			src.desc += "There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+			src.desc += " There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 		else
-			src.desc += "There is no cell loaded!"
+			src.desc += " There is no cell loaded!"
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += " <span style=\"color:red\">*ERROR* No output selected!</span>"
 		return
 
 

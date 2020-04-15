@@ -2,7 +2,7 @@
 /obj/item/mining_head
 	name = "mining tool head"
 	desc = "A mining tool head."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 
 	drill
@@ -28,7 +28,7 @@
 /obj/item/mining_mod
 	name = "mining mod"
 	desc = "A mod for mining tools."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "mod_none"
 
 	conc
@@ -39,7 +39,7 @@
 /obj/item/mining_tools
 	name = "mining tool"
 	desc = "A simple mining tool."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick"
