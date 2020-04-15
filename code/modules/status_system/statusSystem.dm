@@ -837,7 +837,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "blocking"
 		unique = 1
 		duration = INFINITE_STATUS
-
+		maxDuration = null
 
 		clicked(list/params)
 			if (ishuman(owner))
