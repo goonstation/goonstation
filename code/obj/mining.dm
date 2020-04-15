@@ -1499,6 +1499,15 @@
 			signal_event("icon_updated")
 		return
 		
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (istype(b, /obj/item/ammo/power_cell/))
+			var/obj/item/ammo/power_cell/pcell = b
+			if (src.cell)
+				if (pcell.swap(src))
+					user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+		else
+			..()
+
 	proc/update_icon()
 		return
 obj/item/clothing/gloves/concussive
@@ -1551,19 +1560,6 @@ obj/item/clothing/gloves/concussive
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/ammo/power_cell/))
-			var/obj/item/ammo/power_cell/pcell = b
-			if (src.cell)
-				if (pcell.swap(src))
-					user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
-			else
-				src.cell = pcell
-				user.drop_item()
-				pcell.set_loc(src)
-				user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
-		else
-			..()
 
 	power_up()
 		..()
