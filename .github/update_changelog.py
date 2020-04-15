@@ -24,7 +24,7 @@ labels_to_emoji = {
 	'enhancement': '➕',
 	'sprites': '🖼',
 	'mapping': '🗺',
-	'refactor': '🔄'
+	'rework': '🔄'
 }
 
 def parse_pr_changelog(pr):
@@ -55,14 +55,14 @@ def parse_pr_changelog(pr):
         elif author_match is not None:
             author = author_match.group(1)
             new_author = True
-        if not content:
-            continue
-        if not author or new_author:
+        if (content and not author) or new_author:
             author = pr.user.name
             entries.append("(u){}".format(author))
             entries.append("(p){}".format(pr.number))
             if emoji:
                 entries.append("(e){}".format(emoji))
+        if not content:
+            continue
         entry = "({}){}".format('*' if is_major else '+', content)
         entries.append(entry)
     return entries
