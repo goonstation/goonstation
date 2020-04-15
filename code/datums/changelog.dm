@@ -51,6 +51,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		var/added_collapsible_author = 0
 		var/added_author = 0
 		var/author = null
+		var/pr_num = null
 
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
@@ -61,6 +62,8 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 				continue
 
 			switch(copytext(line, 1, 4))
+				if("(p)")
+					pr_num = copytext(line, 4, 0)
 				if("(t)")
 					if(collapsible_html.len)
 						html += "<li class=\"collapse-button\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
@@ -148,14 +151,21 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 					author = copytext(line, 4, 0)
 					added_collapsible_author = 0
 					added_author = 0
+					pr_num = 0
 				if("(*)")
 					if(!added_author && author)
-						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:</li>"
+						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
+						if(pr_num)
+							html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
+						html += "</li>"
 						added_author = 1
 					html += "<li>[copytext(line, 4, 0)]</li>"
 				if("(+)")
 					if(!added_collapsible_author && author)
-						collapsible_html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:</li>"
+						collapsible_html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
+						if(pr_num)
+							collapsible_html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
+						collapsible_html += "</li>"
 						added_collapsible_author = 1
 					collapsible_html += "<li>[copytext(line, 4, 0)]</li>"
 				else continue

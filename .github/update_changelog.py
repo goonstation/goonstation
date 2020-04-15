@@ -39,11 +39,13 @@ def parse_pr_changelog(pr):
         elif author_match is not None:
             author = author_match.group(1)
             entries.append("(u){}".format(author))
+            entries.append("(p){}".format(pr.number))
         if not content:
             continue
         if not author:
             author = pr.user.name
             entries.append("(u){}".format(author))
+            entries.append("(p){}".format(pr.number))
         entry = "({}){}".format('*' if is_major else '+', content)
         entries.append(entry)
     return entries
