@@ -240,6 +240,9 @@
 		if(user.a_intent == "help" || user.a_intent == "grab")
 			return 0
 
+		if (user.check_block())
+			return 0
+
 		if (!istype(user.loc, /turf))
 			return 0
 

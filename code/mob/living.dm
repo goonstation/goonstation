@@ -1197,9 +1197,20 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			else
 				if (!src.getStatusDuration("burning"))
 
-					if (!src.grab_block())
-						for (var/mob/O in AIviewers(src, null))
-							O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+					if (src.grab_block())
+						src.last_resist = world.time + 5
+						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 0.7)
+					else
+						var/obj/item/grab/G = src.check_block()
+						if (G)
+							src.last_resist = world.time + 5
+							playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
+							qdel(G)
+							for (var/mob/O in AIviewers(src, null))
+								O.show_message(text("<span style=\"color:red\"><B>[] lowers their defenses!</B></span>", src), 1, group = "resist")
+						else
+							for (var/mob/O in AIviewers(src, null))
+								O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
 
 
 	return 0

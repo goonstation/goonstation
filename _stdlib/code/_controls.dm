@@ -297,7 +297,7 @@ var/list/key_names = list(
 							"E" = "equip",
 							"X" = "swaphand",
 							"Z" = "attackself",
-							"C" = "resist"
+							"C" = "resist",
 							"Q" = "drop"
 						))
 				else
@@ -353,7 +353,7 @@ var/list/key_names = list(
 							"B" = KEY_POINT,
 							"X" = "swaphand",
 							"Z" = "attackself",
-							"C" = "resist"
+							"C" = "resist",
 							"Q" = "unequip"
 						))
 				else
@@ -574,7 +574,7 @@ var/list/key_names = list(
 						"B" = KEY_POINT,
 						"X" = "swaphand",
 						"Z" = "attackself",
-						"C" = "resist"
+						"C" = "resist",
 						"Q" = "unequip"
 					))
 				else

@@ -764,39 +764,39 @@
 
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
-#define BLOCK_ALL{\
-	setProperty("block_blunt", 1)\
-	setProperty("block_cut", 1)\
-	setProperty("block_stab", 1)\
-	setProperty("block_burn", 1)\
-}
-#define BLOCK_LARGE{\
-	setProperty("block_blunt", 1)\
-	setProperty("block_cut", 1)\
-	setProperty("block_stab", 1)\
-}
+#define BLOCK_ALL do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+	setProperty("block_stab", 1);\
+	setProperty("block_burn", 1);\
+} while (FALSE)
+#define BLOCK_LARGE do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+	setProperty("block_stab", 1);\
+} while (FALSE)
 #define BLOCK_SWORD BLOCK_LARGE
 
-#define BLOCK_ROD{\
-	setProperty("block_blunt", 1)\
-	setProperty("block_cut", 1)\
-}
-#define BLOCK_TANK{\
-	setProperty("block_blunt", 1)\
-	setProperty("block_cut", 1)\
-	setProperty("block_burn", 1)\
-}
-#define BLOCK_SOFT{\
-	setProperty("block_stab", 1)\
-	setProperty("block_burn", 1)\
-}
-#define BLOCK_KNIFE{\
-	setProperty("block_cut", 1)\
-	setProperty("block_stab", 1)\
-}
-#define BLOCK_BOOK{\
-	setProperty("block_stab", 1)\
-}
+#define BLOCK_ROD do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+} while (FALSE)
+#define BLOCK_TANK do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+	setProperty("block_burn", 1);\
+} while (FALSE)
+#define BLOCK_SOFT do {\
+	setProperty("block_stab", 1);\
+	setProperty("block_burn", 1);\
+} while (FALSE)
+#define BLOCK_KNIFE do {\
+	setProperty("block_cut", 1);\
+	setProperty("block_stab", 1);\
+} while (FALSE)
+#define BLOCK_BOOK do {\
+	setProperty("block_stab", 1);\
+} while (FALSE)
 #define BLOCK_ROPE BLOCK_BOOK
 
 // Process Scheduler defines

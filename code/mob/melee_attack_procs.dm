@@ -494,7 +494,7 @@
 	if (G)
 		if (G.can_block(W?.hit_type))
 			if (prob(STAMINA_BLOCK_CHANCE + get_deflection()))
-				visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")//with the [blank]!
+				visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack with [W]!</span>")
 				playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 				remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 				stamina_stun()
@@ -870,7 +870,7 @@
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
 			var/obj/item/grab/block/G = target.check_block()
-			if (G && G.can_block(damage_type))
+			if (G && G.can_block(damage_type) && damage > 0)
 				G.play_block_sound(damage_type)
 				playsound(owner.loc, played_sound, 15, 1, -1, 1.4)
 			else

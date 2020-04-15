@@ -390,8 +390,8 @@
 
 		src.affecting.lastattacker = src
 		src.affecting.lastattackertime = world.time
-		user.u_equip(src)
 		.= src.affecting
+		user.u_equip(src)
 
 //////////////////////
 //PROGRESS BAR STUFF//
@@ -699,7 +699,7 @@
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
 	can_pin = 0
-
+	hide_attack = 2
 
 	New()
 		..()
