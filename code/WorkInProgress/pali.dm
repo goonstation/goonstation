@@ -1,3 +1,5 @@
+// im pali
+
 /datum/projectile/bullet/beepsky
 	name = "Beepsky"
 	window_pass = 0

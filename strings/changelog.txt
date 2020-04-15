@@ -1,5 +1,10 @@
 ﻿
-(t)mon apr 12 20
+(t)tue apr 14 20
+(u)comradef191
+(+)Fixed up Mushroom a lot.
+(u)adharainspace
+(+)Fixed weird photocopier bugs and makes them less painful to use.
+(t)mon apr 13 20
 (u)Kubius
 (+)Batch one of small improvements and fixes to Kondaru.
 (u)Erinexx
