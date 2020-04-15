@@ -66,15 +66,24 @@
 		if (prob(1))
 			src.bladecolor = null
 		switch(src.bladecolor)
-			if("R") {r = 255}
-			if("O") {r = 255; g = 127}
-			if("Y") {r = 255; g = 255}
-			if("G") {g = 255}
-			if("C") {b = 255; g = 200}
-			if("B") {b = 255}
-			if("P") {r = 153; b = 255}
-			if("Pi") {r = 255; g = 121; b = 255}
-			if("W") {r = 255; g = 255; b = 255}
+			if("R")
+				r = 255
+			if("O")
+				r = 255; g = 127
+			if("Y")
+				r = 255; g = 255
+			if("G")
+				g = 255
+			if("C")
+				b = 255; g = 200
+			if("B")
+				b = 255
+			if("P")
+				r = 153; b = 255
+			if("Pi")
+				r = 255; g = 121; b = 255
+			if("W")
+				r = 255; g = 255; b = 255
 		var/datum/component/holdertargeting/simple_light/light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
