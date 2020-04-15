@@ -1111,7 +1111,7 @@
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user,T)
 			if (T.status)
-				T.process_charges(1)
+				T.process_charges(T.digcost)
 
 		else if (istype(W, /obj/item/oreprospector))
 			var/message = "----------------------------------<br>"
@@ -1444,9 +1444,9 @@
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
-	var/charges = 0
-	var/maximum_charges = 0
+	var/obj/item/ammo/power_cell/cell = null
 	var/status = 0
+	var/digcost = 0
 	var/weakener = 0
 	var/image/powered_overlay = null
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
@@ -1456,30 +1456,34 @@
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine()
 		..()
-		if (src.maximum_charges <= 0) return
+		if (!src.cell) return 
 		if (isrobot(usr)) return // Drains battery instead.
-		boutput(usr, "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.charges]/[src.maximum_charges] charges left!")
+		boutput(usr, "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!")
 		return
 
 	proc/process_charges(var/use)
 		if (!isnum(use) || use < 0)
 			return 0
-		if (src.charges < 1)
+		if (cell.charge < 1)
 			return 0
-		src.charges -= use
-		src.charges = max(0,min(src.charges,src.maximum_charges))
-		if (charges == 0)
+		src.cell.use(use)
+		if (src.cell.charge == 0)
 			src.power_down()
 			var/turf/T = get_turf(src)
 			T.visible_message("<span style=\"color:red\">[src] runs out of charge and powers down!</span>")
 		return 1
 
+	afterattack(target as mob, mob/user as mob)
+		..()
+		if (src.status && !isturf(target))
+			src.process_charges(digcost*5)
+
 	proc/charge(var/amount)
 		//Support for recharge stations. Increment uses by one until we reach max.
-		src.charges = src.charges + 1 > src.maximum_charges ? src.maximum_charges : src.charges + 1
-
-		//Return if we are finished charging or not to the recharger
-		return src.charges < src.maximum_charges
+		if(src.cell)
+			return src.cell.charge(amount)
+		else//No cell, or not rechargeable. Tell anything trying to charge it.
+			return -1
 
 	proc/power_up()
 		src.status = 1
@@ -1494,7 +1498,9 @@
 			src.overlays = null
 			signal_event("icon_updated")
 		return
-
+		
+	proc/update_icon()
+		return
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
@@ -1521,7 +1527,8 @@ obj/item/clothing/gloves/concussive
 	item_state = "ppick"
 	flags = ONBELT
 	dig_strength = 2
-	maximum_charges = 50
+	digcost = 2
+	cell = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
@@ -1529,7 +1536,6 @@ obj/item/clothing/gloves/concussive
 	New()
 		..()
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
-		charges = maximum_charges
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
@@ -1545,10 +1551,19 @@ obj/item/clothing/gloves/concussive
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
 
-	afterattack(target as mob, mob/user as mob)
-		if(src.status)
-			src.process_charges(1)
-		..()
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (istype(b, /obj/item/ammo/power_cell/))
+			var/obj/item/ammo/power_cell/pcell = b
+			if (src.cell)
+				if (pcell.swap(src))
+					user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+			else
+				src.cell = pcell
+				user.drop_item()
+				pcell.set_loc(src)
+				user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+		else
+			..()
 
 	power_up()
 		..()
@@ -1559,13 +1574,14 @@ obj/item/clothing/gloves/concussive
 		..()
 		src.force = 7
 		src.dig_strength = 1
+		
 
 	borg
 		process_charges(var/use)
 			var/mob/living/silicon/robot/R = usr
 			if (istype(R))
-				if (R.cell.charge > use * 200)
-					R.cell.use(200 * use)
+				if (R.cell.charge > use * 66)
+					R.cell.use(66 * use)
 					return 1
 				return 0
 			else
@@ -1593,9 +1609,10 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "hammer"
-	maximum_charges = 30
+	cell = new/obj/item/ammo/power_cell 
 	force = 9
 	dig_strength = 3
+	digcost = 3
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 1, "mining" = 5)
@@ -1603,7 +1620,6 @@ obj/item/clothing/gloves/concussive
 	New()
 		..()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
-		charges = maximum_charges
 		src.power_up()
 
 	power_up()
@@ -1633,17 +1649,12 @@ obj/item/clothing/gloves/concussive
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
 
-	afterattack(target as mob, mob/user as mob)
-		..()
-		if (src.status)
-			src.process_charges(1)
-
 	borg
 		process_charges(var/use)
 			var/mob/living/silicon/robot/R = usr
 			if (istype(R))
-				if (R.cell.charge > use * 200)
-					R.cell.use(200 * use)
+				if (R.cell.charge > use * 66)
+					R.cell.use(66 * use)
 					return 1
 				return 0
 			else
@@ -1658,7 +1669,8 @@ obj/item/clothing/gloves/concussive
 	item_state = "powershovel"
 	flags = ONBELT
 	dig_strength = 0
-	maximum_charges = 50
+	digcost = 2
+	cell = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
@@ -1667,7 +1679,6 @@ obj/item/clothing/gloves/concussive
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
-		charges = maximum_charges
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
@@ -1683,11 +1694,6 @@ obj/item/clothing/gloves/concussive
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
 
-	afterattack(target as mob, mob/user as mob)
-		if(src.status)
-			src.process_charges(1)
-		..()
-
 	power_up()
 		..()
 		src.force = 8
@@ -1702,8 +1708,8 @@ obj/item/clothing/gloves/concussive
 		process_charges(var/use)
 			var/mob/living/silicon/robot/R = usr
 			if (istype(R))
-				if (R.cell.charge > use * 200)
-					R.cell.use(200 * use)
+				if (R.cell.charge > use * 100)
+					R.cell.use(100 * use)
 					return 1
 				return 0
 			else

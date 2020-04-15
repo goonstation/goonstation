@@ -621,7 +621,7 @@
 			if (istype(master,/obj/item/mining_tool))
 				var/obj/item/mining_tool/M = master
 				if (M.status)
-					M.process_charges(3)
+					M.process_charges(30)
 
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
