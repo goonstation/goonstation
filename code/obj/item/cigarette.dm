@@ -239,8 +239,7 @@
 				if (9) message = "<B>[user]</B> pulls on [his_or_her(user)] [src.name]."
 				if (10) message = "<B>[user]</B> blows out some smoke in the shape of a [pick("butt","bee","shelterfrog","heart","burger","gun","cube","face","dog","star")]!"
 			user.visible_message("<span style='color:red'>[message]</span>", group = "blow_smoke")
-			src.reagents.trans_to(user, puffrate)
-			src.reagents.reaction(user, INGEST, puffrate)
+			src.cycle = 0 //do the transfer on the next cycle. Also means we get the lung damage etc rolls
 
 		src.puff_ready = 0
 
@@ -263,7 +262,7 @@
 						src.reagents.trans_to(M, puffrate)
 						src.reagents.reaction(M, INGEST, puffrate)
 						//lung damage
-						if (prob(50))
+						if (prob(40))
 							if (prob(70))
 								if (!H.organHolder.left_lung.robotic)
 									H.organHolder.damage_organ(0, 0, 1, "left_lung")
