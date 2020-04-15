@@ -90,10 +90,11 @@
 	var/water_level = 4 // Used for efficiency in the update_icon proc with water level changing
 	var/total_volume = 4 // How much volume total is actually in the tray because why the fuck was water the only reagent being counted towards the level
 	var/image/water_sprite = null
-	var/image/water_display = null
+	var/image/water_meter = null
 	var/image/plant_sprite = null
 	var/grow_level = 1 // Same as the above except for current plant growth
 	var/do_update_icon = 0 // this is now a var on the pot itself so you can actually call it outside of process()
+	var/do_update_water_icon = 1 // this handles the water overlays specifically (water and water level) It's set to 1 by default so it'll update on spawn
 	var/growth_rate = 2
 		// We have this here as a check for whether or not the plant needs to update its sprite.
 		// Originally plantpots updated constantly but this was found to be rather expensive, so
@@ -111,7 +112,7 @@
 		R.add_reagent("water", 200)
 		// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 		// to have too much water, which stunts plant growth speed.
-		src.water_display = image('icons/obj/hydroponics/hydroponics.dmi', "wat-[src.water_level]")
+		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi', "wat-[src.water_level]")
 		src.plant_sprite = image('icons/obj/hydroponics/hydroponics.dmi', "")
 		update_icon()
 
@@ -151,6 +152,7 @@
 			if(200 to INFINITY) current_water_level = 5
 		if(current_water_level != src.water_level)
 			src.water_level = current_water_level
+			src.do_update_water_icon = 1
 		if(!current) // Make sure we don't have a plant in the tray first (layering stuffs)
 			switch(current_total_volume)
 				if(0 to 0) current_total_volume = 1
@@ -160,11 +162,16 @@
 				if(200 to INFINITY) current_total_volume = 5
 			if(current_total_volume != src.total_volume)
 				src.total_volume = current_total_volume
+				src.do_update_water_icon = 1
 
-		src.update_water_icon()
+		if(src.do_update_water_icon)
+			src.update_water_icon()
+			src.do_update_water_icon = 0
+
 		return current_water_level
 
 	on_reagent_change()
+		src.do_update_water_icon = 1
 		src.update_water_level()
 
 	process()
@@ -728,19 +735,18 @@
 	proc/update_water_icon()
 		var/datum/color/average
 		src.water_sprite = image('icons/obj/hydroponics/hydroponics.dmi',"wat-[src.total_volume]")
-		src.water_display = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
-
+		src.water_sprite.layer = 4
+		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
 		if(src.reagents.total_volume)
 			average = src.reagents.get_average_color()
 			src.water_sprite.color = average.to_rgba()
 
-		if(average || !current) //only update water level if there is no plant in the tray or reagent contents change color (cheap fix to a layer stacking issue)
-			UpdateOverlays(src.water_sprite, "water_fluid")
-		UpdateOverlays(src.water_display, "water_display")
+		UpdateOverlays(src.water_sprite, "water_fluid")
+		UpdateOverlays(src.water_meter, "water_meter")
 
 	proc/update_icon() //plant icon stuffs
-		src.water_display = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
-		UpdateOverlays(water_display, "water_display")
+		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
+		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
 			UpdateOverlays(null, "harvest_display")
 			UpdateOverlays(null, "health_display")
@@ -791,6 +797,7 @@
 
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon
+		src.plant_sprite.layer = 3
 		UpdateOverlays(plant_sprite, "plant")
 
 	proc/update_name()
