@@ -50,6 +50,7 @@
 		SPAWN_DBG (5)
 			if (src)
 				src.update_icon()
+		BLOCK_ROD
 		return
 
 	proc/check_health()
@@ -200,7 +201,7 @@
 	stamina_damage = 100
 	stamina_cost = 20
 	stamina_crit_chance = 40
-	
+
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target
 
@@ -268,7 +269,7 @@
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
-			
+
 
 		if (H.organHolder.spleen)
 			H.organHolder.drop_organ("spleen")
@@ -394,7 +395,7 @@
 	desc = "This is supposed to be a cyborg part. You're not quite sure what it's doing here."
 
 
-///////////////////////////////////// Garden Trowel ///////////////////////////////////////////////	
+///////////////////////////////////// Garden Trowel ///////////////////////////////////////////////
 
 /obj/item/gardentrowel
 	name = "garden trowel"
@@ -419,6 +420,10 @@
 	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 	var/image/plantyboi
+
+	New()
+		..()
+		BLOCK_KNIFE
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))

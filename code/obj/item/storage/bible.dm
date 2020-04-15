@@ -20,6 +20,7 @@ var/list/bible_contents = list()
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
 		ritualComponent.autoActive = 1
 		#endif
+		BLOCK_BOOK
 
 	disposing()
 		..()

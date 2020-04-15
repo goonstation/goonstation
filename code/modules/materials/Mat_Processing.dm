@@ -665,3 +665,7 @@
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
+
+	New()
+		..()
+		BLOCK_ROD

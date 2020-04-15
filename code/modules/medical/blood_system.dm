@@ -862,6 +862,10 @@ this is already used where it needs to be used, you can probably ignore it.
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1
 
+	New()
+		..()
+		BLOCK_KNIFE
+
 	throw_impact(atom/A)
 		if(iscarbon(A))
 			if (ismob(usr))

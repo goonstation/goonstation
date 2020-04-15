@@ -75,6 +75,10 @@
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
 
+	New()
+		..()
+		BLOCK_ALL
+
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
@@ -166,7 +170,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

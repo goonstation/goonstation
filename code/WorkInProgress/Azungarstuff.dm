@@ -1096,6 +1096,10 @@
 
 	var/prob_clonk = 0
 
+	New()
+		..()
+		BLOCK_BOOK
+
 	throw_begin(atom/target)
 		icon_state = "lawspin"
 		playsound(src.loc, "rustle", 50, 1)

@@ -73,7 +73,8 @@
 		..()
 		processing_items.Add(src)
 		START_TRACKING
-	
+		BLOCK_TANK
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -120,6 +121,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(issnippingtool(W))
@@ -553,6 +555,10 @@
 	icon_state = "rubber_hammer"
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 0
+
+	New()
+		..()
+		BLOCK_ALL
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)

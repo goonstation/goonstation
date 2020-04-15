@@ -47,6 +47,7 @@ CONTAINS:
 		if (src.icon_state == "scalpel1")
 			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
+		BLOCK_KNIFE
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
@@ -112,6 +113,7 @@ CONTAINS:
 		if (src.icon_state == "saw1")
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
+		BLOCK_LARGE
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)

@@ -215,6 +215,10 @@
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
 	/obj/item/bowling_ball = 4)
 
+	New()
+		..()
+		BLOCK_BOOK
+
 /obj/item/storage/football
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"

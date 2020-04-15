@@ -971,6 +971,10 @@
 	item_state = "paper"
 	layer = OBJ_LAYER
 
+	New()
+		..()
+		BLOCK_BOOK
+
 	examine()
 		set src in view()
 		if (!issilicon(usr))

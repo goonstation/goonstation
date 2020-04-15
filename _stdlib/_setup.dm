@@ -762,6 +762,43 @@
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
 
+
+//some different generalized block weapon shapes that i can re use instead of copy paste
+#define BLOCK_ALL{\
+	setProperty("block_blunt", 1)\
+	setProperty("block_cut", 1)\
+	setProperty("block_stab", 1)\
+	setProperty("block_burn", 1)\
+}
+#define BLOCK_LARGE{\
+	setProperty("block_blunt", 1)\
+	setProperty("block_cut", 1)\
+	setProperty("block_stab", 1)\
+}
+#define BLOCK_SWORD BLOCK_LARGE
+
+#define BLOCK_ROD{\
+	setProperty("block_blunt", 1)\
+	setProperty("block_cut", 1)\
+}
+#define BLOCK_TANK{\
+	setProperty("block_blunt", 1)\
+	setProperty("block_cut", 1)\
+	setProperty("block_burn", 1)\
+}
+#define BLOCK_SOFT{\
+	setProperty("block_stab", 1)\
+	setProperty("block_burn", 1)\
+}
+#define BLOCK_KNIFE{\
+	setProperty("block_cut", 1)\
+	setProperty("block_stab", 1)\
+}
+#define BLOCK_BOOK{\
+	setProperty("block_stab", 1)\
+}
+#define BLOCK_ROPE BLOCK_BOOK
+
 // Process Scheduler defines
 // Process status defines
 #define PROCESS_STATUS_IDLE 1

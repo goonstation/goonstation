@@ -57,7 +57,8 @@
 			processing_items.Add(src)
 		src.update_icon()
 		src.setItemSpecial(/datum/item_special/spark)
-		return
+
+		BLOCK_ROD
 
 	disposing()
 		if (src in processing_items)

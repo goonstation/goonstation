@@ -690,7 +690,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -735,6 +735,10 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "hosmedal"
 	item_state = "hosmedal"
 
+	New()
+		..()
+		BLOCK_BOOK
+
 /obj/item/rddiploma
 	name = "RD's diploma"
 	icon = 'icons/obj/items.dmi'
@@ -766,6 +770,10 @@ var/obj/manta_speed_lever/mantaLever = null
 	two_handed = 1
 	click_delay = 30
 	force = 50
+
+	New()
+		..()
+		BLOCK_ROD
 
 /obj/item/constructioncone
 	desc = "Caution!"

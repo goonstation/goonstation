@@ -42,7 +42,7 @@
 		rev_number = 3
 	else
 		rev_number = revs_possible.len
-	
+
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
@@ -512,3 +512,4 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_LARGE

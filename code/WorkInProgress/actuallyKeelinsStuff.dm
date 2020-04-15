@@ -1687,6 +1687,7 @@ var/list/electiles = list()
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+		BLOCK_ROD
 
 	rebuild()
 		..()
@@ -1844,6 +1845,7 @@ var/list/electiles = list()
 	New()
 		. = ..()
 		START_TRACKING
+		BLOCK_BOOK
 
 	disposing()
 		. = ..()
@@ -2880,6 +2882,10 @@ var/list/electiles = list()
 	throw_return = 1
 
 	var/prob_clonk = 0
+
+	New()
+		..()
+		BLOCK_LARGE
 
 	throw_begin(atom/target)
 		icon_state = "boomerang1"

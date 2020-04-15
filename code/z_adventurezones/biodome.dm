@@ -696,6 +696,9 @@ SYNDICATE DRONE FACTORY AREAS
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
+	New()
+		..()
+		BLOCK_ROD
 
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'

@@ -321,6 +321,10 @@
 	// Don't use up more slots, certain job datums put items in the briefcase the player spawns with.
 	// And nobody needs six sheets of paper right away, realistically speaking.
 
+	New()
+		..()
+		BLOCK_BOOK
+
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
 	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"

@@ -749,6 +749,10 @@ var/sound/iomoon_alarm_sound = null
 	item_state = "yoyo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
+	New()
+		..()
+		BLOCK_ROPE
+
 /obj/spawner/ancient_robot_artifact
 	name = "robot artifact spawn"
 	icon = 'icons/misc/mark.dmi'

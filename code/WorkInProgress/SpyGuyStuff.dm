@@ -863,6 +863,10 @@ proc/Create_Tommyname()
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
 
+	New()
+		..()
+		BLOCK_ROPE
+
 
 /obj/item/garrote/proc/toggle_wire_readiness()
 	set_readiness(!wire_readied)

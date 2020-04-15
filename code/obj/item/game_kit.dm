@@ -21,6 +21,7 @@ THAT STUPID GAME KIT
 /obj/item/game_kit/New()
 	src.board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	src.selected = "CR"
+	BLOCK_BOOK
 
 /obj/item/game_kit/MouseDrop(mob/user as mob)
 	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))

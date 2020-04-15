@@ -38,6 +38,10 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	stamina_crit_chance = 1
 	move_triggered = 1
 
+	New()
+		..()
+		BLOCK_LARGE
+
 /obj/item/flamethrower/loaded/
 	icon_state = "flamethrower_oxy_fuel"
 

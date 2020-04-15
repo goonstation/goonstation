@@ -1271,6 +1271,10 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_cost = 5
 	stamina_crit_chance = 35
 
+	New()
+		..()
+		BLOCK_KNIFE
+
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (!ismob(M) || !M.contents.len)
 			return ..()
