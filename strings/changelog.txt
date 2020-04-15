@@ -1,5 +1,6 @@
 
 (t)wed apr 15 20
+(*)Power picks, hammers, shovels now use standard small power cells for their internal charge. This makes them charge more quickly, as an aside. Additionally, attacking things that aren't asteroids with them will drain their cell much more quickly - if using one as a weapon, keep an eye on your charge!
 (u)Tarmunora
 (p)242
 (*)Rebalanced meatcleaver to fumble far less often on hit and removes stun on throw
