@@ -2,7 +2,7 @@
 (t)wed apr 15 20
 (u)Kubius
 (p)247
-(e)🆕🗺|DNM enhancement input wanted mapping
+(e)🆕🗺|enhancement mapping
 (*)Kondaru (Kubius Map 3: Third Time's the Charm) has moved into official rotation.
 (u)Kubius
 (p)250
