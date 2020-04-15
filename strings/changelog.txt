@@ -7,10 +7,6 @@
 (*)Hydro trays now properly update visual water level without having to have a plant growing!
 (*)Hydro trays now properly display reagent-colour in the trays water pool!
 (u)Kubius
-(p)247
-(e)🆕🗺|enhancement mapping
-(*)Kondaru (Kubius Map 3: Third Time's the Charm) has moved into official rotation.
-(u)Kubius
 (p)250
 (e)🐛🗺|bug mapping
 (+)Fixed habitat dome prefab - no longer shrouded in shadow.
