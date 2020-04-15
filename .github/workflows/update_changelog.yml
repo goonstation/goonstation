@@ -1,14 +1,10 @@
 name: update-changelog
 on:
-  pull_request:
-    #branches: [ master ]
-    branches-ignore:
-      - '**'
-    types: [ closed ]
+  push:
+    branches: [ master ]
 
 jobs:
   update-changelog:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - name: Get The Script
@@ -28,5 +24,4 @@ jobs:
       env:
         REPO: ${{ github.repository }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PR_NUM: ${{ github.event.number }}
         CHANGELOG_PATH: strings/changelog.txt

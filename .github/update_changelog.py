@@ -1,7 +1,7 @@
 # Expected environment variables:
-# PR_NUM: ${{ github.event.number }}
 # TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # REPO: ${{ github.repository }}
+# GITHUB_SHA - pushed commit (assigned automatically)
 # CHANGELOG_PATH: strings/changelog.txt
 
 import os
@@ -59,23 +59,37 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
             changelog_data = changelog_data[1:]
         changelog_data = [''] + [date_string] + lines + changelog_data
         changelog_text = '\n'.join(changelog_data)
-        repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch)
-        completed = 1
+        print("Adding changelog:")
+        print('\n'.join([date_string] + lines))
+        try:
+            repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch)
+        except:
+            completed = 0
+            traceback.print_exc()
+            time.sleep(random.random() * 2) # just in case multiple instances are fighting or something
+        else:
+            completed = 1
         tries -= 1
     return completed
 
 def main():
     g = Github(os.environ["TOKEN"])
     repo = g.get_repo(os.environ["REPO"])
-    pr_num = int(os.environ["PR_NUM"])
-    pr = repo.get_pull(pr_num)
+
+    commit = repo.get_commit(os.environ["GITHUB_SHA"])
+    pulls = commit.get_pulls()
+    if not pulls.totalCount:
+        print("Not a PR.")
+        return
+    pr = pulls[0]
 
     pr_data = parse_pr_changelog(pr)
     date_string = '(t)' + pr.merged_at.strftime("%a %b %d %y").lower()
     if pr_data is None: # no changelog
+        print("No changelog provided.")
         return
 
-    status = update_changelog(repo, os.environ["CHANGELOG_PATH"],date_string, pr_data, "Changelog for #{}".format(pr_num))
+    status = update_changelog(repo, os.environ["CHANGELOG_PATH"], date_string, pr_data, "Changelog for #{}".format(pr.number))
 
     if not status:
         sys.exit(1) # scream at people
