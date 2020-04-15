@@ -1,5 +1,8 @@
 
 (t)wed apr 15 20
+(u)Tarmunora
+(p)242
+(*)Rebalanced meatcleaver to fumble far less often on hit and removes stun on throw
 (u)trerri
 (+)Added extra supplies to the Oshan locker room.
 (t)tue apr 14 20
