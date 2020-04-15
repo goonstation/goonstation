@@ -1,5 +1,11 @@
 
 (t)wed apr 15 20
+(u)Erinexx
+(p)112
+(e)🐛🎨|bug spriting
+(*)New hydro tray sprite!
+(*)Hydro trays now properly update visual water level without having to have a plant growing!
+(*)Hydro trays now properly display reagent-colour in the trays water pool!
 (u)Kubius
 (p)247
 (e)🆕🗺|enhancement mapping
