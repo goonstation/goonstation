@@ -2696,7 +2696,7 @@
 "aZT" = (/obj/table/auto,/obj/random_item_spawner/tableware,/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/cafeteria)
 "aZU" = (/obj/shrub,/turf/simulated/floor/darkblue,/area/station/crew_quarters/cafeteria)
 "aZV" = (/obj/disposalpipe/segment/brig{dir = 1},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/cafeteria)
-"aZW" = (/obj/submachine/claw_machine,/obj/voting_box,/turf/simulated/floor/darkblue,/area/station/crew_quarters/cafeteria)
+"aZW" = (/obj/voting_box,/turf/simulated/floor/darkblue,/area/station/crew_quarters/cafeteria)
 "aZX" = (/obj/disposalpipe/segment/mail/vertical,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/cafeteria)
 "aZY" = (/obj/shrub,/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/simulated/floor/darkblue,/area/station/crew_quarters/cafeteria)
 "aZZ" = (/obj/loudspeaker,/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/cafeteria)
