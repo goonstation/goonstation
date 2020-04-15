@@ -23,7 +23,7 @@ labels_to_emoji = {
 	'bug': '🐛',
 	'enhancement': '🆕',
 	'removal': '⛔',
-	'sprites': '🖼',
+	'sprites': '🎨',
 	'mapping': '🗺',
 	'rework': '🔄'
 }
