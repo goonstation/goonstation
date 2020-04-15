@@ -205,7 +205,7 @@
 	name = "sugar cookie"
 	desc = "Outside of North America, the Earth's Moon, and certain regions of Europa, these are referred to as biscuits."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "cookie_sugar"
+	icon_state = "cookie-sugar"
 	amount = 1
 	heal_amt = 1
 	var/frosted = 0
