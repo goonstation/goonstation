@@ -209,6 +209,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking!</span>")
 
+		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 		/*
 		RIP
@@ -238,6 +239,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking with [I]!</span>")
 
+		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 
 
@@ -281,7 +283,7 @@
 			return
 		else
 			var/mob/living/carbon/human/T = target
-			if (istype(T) && T.check_block())
+			if (istype(T) && T.do_block(src, null, show_msg = 0))
 				src.visible_message("<span style=\"color:red\"><B>[T] blocks [src]'s attempt to grab [him_or_her(T)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 
@@ -477,24 +479,17 @@
 					return G
 	return 0
 
-/mob/living/carbon/human/check_block()
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && stamina > STAMINA_DEFAULT_BLOCK_COST)
-		var/obj/item/I = src.equipped()
-		if (I)
-			if (istype(I,/obj/item/grab/block))
-				return I
-			else if (I.c_flags & HAS_GRAB_EQUIP)
-				for (var/obj/item/grab/block/G in I)
-					return G
-	return 0
-
-
-/mob/proc/do_block(var/mob/attacker, var/obj/item/W)
+/mob/proc/do_block(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
 	var/obj/item/grab/block/G = check_block()
 	if (G)
 		if (G.can_block(W?.hit_type))
 			if (prob(STAMINA_BLOCK_CHANCE + get_deflection()))
-				visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack with [W]!</span>")
+				if (show_msg)
+					if (G != src.equipped())
+						visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack with [G.loc]!</span>")
+					else
+						visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
+
 				playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 				remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 				stamina_stun()
@@ -504,9 +499,10 @@
 			fuckup_attack_particle(attacker)
 	return 0
 
-/mob/living/carbon/human/do_block(var/mob/attacker, var/obj/item/W)
+/mob/living/carbon/human/do_block(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
 	if (stance == "dodge")
-		visible_message("<span style=\"color:red\"><B>[src] narrowly dodges [attacker]'s attack!</span>")
+		if (show_msg)
+			visible_message("<span style=\"color:red\"><B>[src] narrowly dodges [attacker]'s attack!</span>")
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
@@ -514,10 +510,13 @@
 		fuckup_attack_particle(attacker)
 		return 1
 	else if (prob(src.get_passive_block()))
-		visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
+		if (show_msg)
+			visible_message("<span style=\"color:red\"><B>[src] blocks [attacker]'s attack!</span>")
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 		fuckup_attack_particle(attacker)
 		return 1
+	if (stamina <= STAMINA_DEFAULT_BLOCK_COST)
+		return 0
 
 	return ..()
 

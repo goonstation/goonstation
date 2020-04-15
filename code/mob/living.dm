@@ -1177,17 +1177,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
 
 	if (!src.stat && !src.restrained())
+		var/struggled_grab = 0
 		if (src.canmove)
 			for (var/obj/item/grab/G in src.grabbed_by)
 				G.do_resist()
-				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+				struggled_grab = 1
 		else
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.stunned_targets_can_break())
 					G.do_resist()
-					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+					struggled_grab = 1
 
-		if (!src.grabbed_by || !src.grabbed_by.len)
+		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
 				src.buckled.attack_hand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
@@ -1199,19 +1200,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 					if (src.grab_block())
 						src.last_resist = world.time + 5
-						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 0.7)
 					else
-						var/obj/item/grab/G = src.check_block()
-						if (G)
-							src.last_resist = world.time + 5
-							playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
-							qdel(G)
-							for (var/mob/O in AIviewers(src, null))
-								O.show_message(text("<span style=\"color:red\"><B>[] lowers their defenses!</B></span>", src), 1, group = "resist")
-						else
-							for (var/mob/O in AIviewers(src, null))
-								O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
-
+						for (var/mob/O in AIviewers(src, null))
+							O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)

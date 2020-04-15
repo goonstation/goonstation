@@ -820,7 +820,7 @@
 	if (src.nodamage)
 		return tally
 
-	if (src.getStatusDuration("staggered"))
+	if (src.getStatusDuration("staggered") || src.getStatusDuration("blocking"))
 		tally += 0.5
 		//sprint disable handled in input.dm process_move, so that stamina isn't used up when running is impossible
 

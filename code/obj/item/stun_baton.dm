@@ -576,6 +576,10 @@
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = 0
 
+	New()
+		..()
+		BLOCK_ALL
+
 	proc/update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"
@@ -675,3 +679,4 @@
 		setProperty("disorient_resist_ear", 50)
 
 		src.setItemSpecial(/datum/item_special/barrier)
+		BLOCK_ALL

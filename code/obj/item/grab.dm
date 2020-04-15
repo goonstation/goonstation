@@ -340,6 +340,8 @@
 		src.affecting.dir = pick(alldirs)
 		resist_count += 1
 
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+
 		if (src.state == GRAB_PASSIVE)
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span style=\"color:red\">[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
@@ -699,11 +701,10 @@
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
 	can_pin = 0
-	hide_attack = 2
+	hide_attack = 1
 
 	New()
 		..()
-		//setProperty("block", 1)
 
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
@@ -713,9 +714,19 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
+
+		if (assailant)
+			assailant.delStatus("blocking")
 		..()
 
+	attack(atom/target, mob/user)
+		if (assailant)
+			assailant.visible_message("<span style=\"color:red\">[assailant] lowers their defenses!</span>")
+		qdel(src)
+
 	attack_self()
+		if (assailant)
+			assailant.visible_message("<span style=\"color:red\">[assailant] lowers their defenses!</span>")
 		qdel(src)
 
 	update_icon()
@@ -723,6 +734,12 @@
 
 	do_resist()
 		.= 0
+		if (assailant)
+			assailant.last_resist = world.time + 5
+			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
+			assailant.visible_message("<span style=\"color:red\">[assailant] lowers their defenses!</span>")
+		qdel(src)
+
 
 	proc/can_block(var/hit_type = null)
 		.= 1
@@ -759,13 +776,13 @@
 				playsound(get_turf(src), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
 
 	handle_throw(var/mob/living/user,var/atom/target)
-		if (isturf(src.loc) && target)
-			var/turf/T = src.loc
-			if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
-				user.changeStatus("weakened", 0.5 SECONDS)
+		if (isturf(user.loc) && target)
+			var/turf/T = user.loc
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 				user.force_laydown_standup()
 
-				var/turf/target_turf = get_step(src,get_dir(src,target))
+				var/turf/target_turf = get_step(user,get_dir(user,target))
 				if (!target_turf)
 					target_turf = T
 
@@ -776,21 +793,22 @@
 					break
 
 				if (dive_attack_hit)
-					var/damage = 1
+					var/damage = rand(1,6)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
-							damage += H.shoes.kick_bonus/4
+							damage += H.shoes.kick_bonus
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
 					for (var/mob/O in AIviewers(user))
-						O.show_message("<span style=\"color:red\"><B>[user] dives to the ground and slides into [dive_attack_hit]!</B></span>", 1)
-					logTheThing("combat", user, dive_attack_hit, "dive-kicks [dive_attack_hit] (very weak attack) [log_loc(dive_attack_hit)].")
+						O.show_message("<span style=\"color:red\"><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 				else
 					for (var/mob/O in AIviewers(user))
-						O.show_message("<span style=\"color:red\"><B>[user] dives to the ground!</B></span>", 1, group = "resist")
+						O.show_message("<span style=\"color:red\"><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
-				step_to(src,target_turf)
+				step_to(user,target_turf)
 
 		user.u_equip(src)
 

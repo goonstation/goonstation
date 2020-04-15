@@ -351,37 +351,37 @@ var/list/globalPropList = null
 			return "[propVal]%"
 
 	block_blunt
-		name = "Block (Blunt)"
+		name = "Block"
 		id = "block_blunt"
 		desc = "This item could be held to block blunt damage. Use RESIST to block." //Value is % protection.
-		tooltipImg = "protdisorient.png"
+		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return ""
+			return "Blunt Damage"
 
 	block_cut
-		name = "Block (Cut)"
+		name = "Block"
 		id = "block_cut"
 		desc = "This item could be held to block slashing damage. Use RESIST to block." //Value is % protection.
-		tooltipImg = "protdisorient.png"
+		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return ""
+			return "Cut/Slash Damage"
 
 	block_stab
-		name = "Block (Stab)"
+		name = "Block"
 		id = "block_stab"
 		desc = "This item could be held to block stabbing damage. Use RESIST to block." //Value is % protection.
-		tooltipImg = "protdisorient.png"
+		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return ""
+			return "Stab Damage"
 
 	block_burn
-		name = "Block (Burn)"
+		name = "Block"
 		id = "block_burn"
 		desc = "This item could be held to block burn damage. Use RESIST to block." //Value is % protection.
-		tooltipImg = "protdisorient.png"
+		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return ""
+			return "Burn Damage"
