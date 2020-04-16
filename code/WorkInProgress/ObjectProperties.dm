@@ -366,7 +366,7 @@ var/list/globalPropList = null
 		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Cut/Slash Damage"
+			return "Slash Damage"
 
 	block_stab
 		name = "Block"
