@@ -66,7 +66,7 @@
 	proc/spacket(var/datum/mechanicsMessage/input)
 		if(!ready) return
 		ready = 0
-		SPAWN_DBG(2 SECONDS) ready = 1
+		SPAWN_DBG(0.4 SECONDS) ready = 1
 		post_raw(input.signal)
 		return
 
