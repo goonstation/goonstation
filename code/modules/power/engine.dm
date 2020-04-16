@@ -15,18 +15,6 @@
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return
 
-/turf/simulated/floor/engine/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			ReplaceWithSpace()
-			return
-		if(2.0)
-			if (prob(50))
-				ReplaceWithSpace()
-				return
-		else
-	return
-
 /turf/simulated/floor/engine/blob_act(var/power)
 	if (prob(15))
 		ReplaceWithSpace()
