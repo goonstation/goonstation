@@ -1,4 +1,11 @@
 
+(t)thu apr 16 20
+(u)mbc
+(p)252
+(e)⚖🆕🔄|balance, enhancement, rework
+(*)Added blocking. Replaced classic passive-disarm-intent-blocking with a new block function tied to Resist.
+(*)You can block barehanded OR with a weapon. Weapons have block properties attached (you can see them on the tooltip) to tell you what kinds of damage they are effective against. You get a small armor boost while blocking, which is increased when you have an effective item matchup.
+(*)Added Resist hotkey (Z on default controls, C on /tg/)
 (t)wed apr 15 20
 (u)Erinexx
 (p)112
