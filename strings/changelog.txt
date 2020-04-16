@@ -1,4 +1,9 @@
 
+(t)thu apr 16 20
+(u)Kubius
+(p)267
+(e)🗺|mapping
+(*)First batch of post-launch fixes to Kondaru. See pull request 267 for details.
 (t)wed apr 15 20
 (u)Kubius
 (p)247
