@@ -61,6 +61,7 @@
 	New()
 		..()
 		src.bladecolor = pick(valid_colors)
+		AddComponent(/datum/component/itemblock/saberblock)
 		if (prob(1))
 			src.bladecolor = null
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
@@ -145,9 +146,6 @@
 		src.item_state = "[state_name]1-[src.bladecolor]"
 		src.w_class = 4
 		user.unlock_medal("The Force is strong with this one", 1)
-		if(off_w_class == 2) //this is gross but it makes it so only extendable swords (not d-saber) get defensive bonuses
-			setProperty("rangedprot", 1)
-			setProperty("disorient_resist", 35)
 	else
 		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
@@ -160,9 +158,6 @@
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
 		src.w_class = off_w_class
-		if(off_w_class == 2) //this is gross but it makes it so only extendable swords (not d-saber) get defensive bonuses
-			setProperty("rangedprot", 0)
-			setProperty("disorient_resist", 0)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
