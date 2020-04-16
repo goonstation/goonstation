@@ -296,6 +296,27 @@
 /turf/simulated/floor/darkblue/checker/other
 	icon_state = "blue-dblue2"
 
+
+/turf/simulated/floor/darkblue/side
+	icon_state = "darkblue"
+
+/turf/simulated/floor/darkblue/corner
+	icon_state = "darkbluecorner"
+
+
+/turf/simulated/floor/darkblueblack/side
+	icon_state = "dblueblack"
+
+/turf/simulated/floor/darkblueblack/corner
+	icon_state = "dbluebcorner"
+
+
+/turf/simulated/floor/darkbluewhite/side
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/bluegreen
@@ -337,12 +358,50 @@
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/darkgreen
+	icon_state = "fulldgreen"
+
+/turf/simulated/floor/darkgreen/side
+	icon_state = "darkgreen"
+
+/turf/simulated/floor/darkgreen/corner
+	icon_state = "darkgreencorner"
+
+
+/turf/simulated/floor/darkgreenblack
+	icon_state = "dgreenblack"
+
+/turf/simulated/floor/darkgreenblack/corner
+	icon_state = "dgreenbcorner"
+
+
+/turf/simulated/floor/darkgreenwhite
+	icon_state = "dgreenwhite"
+
+/turf/simulated/floor/greenwhite/corner
+	icon_state = "dgreenwcorner"
+
+/////////////////////////////////////////
+
 /turf/simulated/floor/greenwhite/other
 	icon_state = "toxshuttle"
 
 /turf/simulated/floor/greenwhite/other/corner
 	icon_state = "toxshuttlecorner"
 
+
+/turf/simulated/floor/greenwhite/black
+	icon_state = "toxshuttleblack"
+
+/turf/simulated/floor/greenwhite/black/corner
+	icon_state = "toxshuttlebcorner"
+
+
+/turf/simulated/floor/greenwhite/white
+	icon_state = "toxshuttlewhite"
+
+/turf/simulated/floor/greenwhite/white/corner
+	icon_state = "toxshuttlewcorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/purple
@@ -379,6 +438,23 @@
 /turf/simulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/simulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
+
+/turf/simulated/floor/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/simulated/floor/darkpurpleblack/corner
+	icon_state = "dpurplebcorner"
+
+
+/turf/simulated/floor/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/simulated/floor/darkpurplewhite/corner
+	icon_state = "dpurplewcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
@@ -390,17 +466,26 @@
 /turf/simulated/floor/yellow/corner
 	icon_state = "yellowcorner"
 
+
 /turf/simulated/floor/yellow/alt
 	icon_state = "fullyellow_alt"
 
 /turf/simulated/floor/yellow/checker
 	icon_state = "yellowchecker"
 
+
 /turf/simulated/floor/yellowblack
 	icon_state = "yellowblack"
 
 /turf/simulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
+
+
+/turf/simulated/floor/yellowwhite/side
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
 
 /////////////////////////////////////////
 
@@ -412,6 +497,20 @@
 
 /turf/simulated/floor/orange/corner
 	icon_state = "orangecorner"
+
+
+/turf/simulated/floor/realorangeblack/side
+	icon_state = "orangeblack"
+
+/turf/simulated/floor/realorangeblack/corner
+	icon_state = "orangebcorner"
+
+
+/turf/simulated/floor/orangewhite/side
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/orangewhite/corner
+	icon_state = "orangewcorner"
 
 
 /turf/simulated/floor/orangeblack
@@ -596,6 +695,20 @@
 /turf/simulated/floor/arrival/corner
 	icon_state = "arrivalcorner"
 
+
+/turf/simulated/floor/arrivalblack
+	icon_state = "arrivalblack"
+
+/turf/simulated/floor/arrivalblack/corner
+	icon_state = "arrivalbcorner"
+
+
+/turf/simulated/floor/arrivalwhite
+	icon_state = "arrivalwhite"
+
+/turf/simulated/floor/arrivalwhite/corner
+	icon_state = "arrivalwcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/escape
@@ -603,6 +716,20 @@
 
 /turf/simulated/floor/escape/corner
 	icon_state = "escapecorner"
+
+
+/turf/simulated/floor/escapeblack
+	icon_state = "escapeblack"
+
+/turf/simulated/floor/escapeblack/corner
+	icon_state = "escapebcorner"
+
+
+/turf/simulated/floor/escapewhite
+	icon_state = "escapewhite"
+
+/turf/simulated/floor/escapewhite/corner
+	icon_state = "escapewcorner"
 
 /////////////////////////////////////////
 
@@ -768,14 +895,41 @@
 /turf/simulated/floor/longtile
 	icon_state = "longtile"
 
+/turf/simulated/floor/longtile/white
+	icon_state = "longtile-white"
+
 /turf/simulated/floor/longtile/black
 	icon_state = "longtile-dark"
 
 /turf/simulated/floor/longtile/blue
 	icon_state = "longtile-blue"
 
+/turf/simulated/floor/longtile/darkblue
+	icon_state = "longtile-dblue"
+
 /turf/simulated/floor/longtile/red
 	icon_state = "longtile-red"
+
+/turf/simulated/floor/longtile/darkred
+	icon_state = "longtile-dred"
+
+/turf/simulated/floor/longtile/green
+	icon_state = "longtile-green"
+
+/turf/simulated/floor/longtile/darkgreen
+	icon_state = "longtile-dgreen"
+
+/turf/simulated/floor/longtile/purple
+	icon_state = "longtile-purple"
+
+/turf/simulated/floor/longtile/darkpurple
+	icon_state = "longtile-dpurple"
+
+/turf/simulated/floor/longtile/yellow
+	icon_state = "longtile-yellow"
+
+/turf/simulated/floor/longtile/orange
+	icon_state = "longtile-dyellow"
 
 /turf/simulated/floor/specialroom/clown
 	icon_state = "clownfloor"
