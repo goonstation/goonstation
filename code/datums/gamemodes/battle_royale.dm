@@ -240,7 +240,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.icon_state = "gold"
-	I.icon = 'icons/obj/card.dmi'
+	I.icon = 'icons/obj/items/card.dmi'
 	battler.equip_if_possible(I, battler.slot_wear_id)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()

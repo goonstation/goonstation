@@ -1,6 +1,6 @@
 /obj/item/cloaking_device
 	name = "cloaking device"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	uses_multiple_icon_states = 1
 	var/active = 0.0

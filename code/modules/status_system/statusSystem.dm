@@ -830,6 +830,20 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		maxDuration = 5 SECONDS
 
+	blocking
+		id = "blocking"
+		name = "Blocking"
+		desc = "You are currently blocking. Use Resist to stop blocking.<br>Slowed slightly, unable to sprint. This overrides the 'staggered' effect and does not stack."
+		icon_state = "blocking"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+
+		clicked(list/params)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.resist()
+
 	slowed
 		id = "slowed"
 		name = "Slowed"

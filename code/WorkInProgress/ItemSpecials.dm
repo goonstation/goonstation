@@ -240,6 +240,9 @@
 		if(user.a_intent == "help" || user.a_intent == "grab")
 			return 0
 
+		if (user.check_block())
+			return 0
+
 		if (!istype(user.loc, /turf))
 			return 0
 
@@ -621,7 +624,7 @@
 			if (istype(master,/obj/item/mining_tool))
 				var/obj/item/mining_tool/M = master
 				if (M.status)
-					M.process_charges(3)
+					M.process_charges(30)
 
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return

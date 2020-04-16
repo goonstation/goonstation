@@ -92,6 +92,7 @@
 
 	New()
 		work()
+		BLOCK_BOOK
 		return
 
 	proc/work()

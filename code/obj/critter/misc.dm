@@ -1096,10 +1096,11 @@
 		if (!src.alive)
 			..()
 			return
-		switch(W.damtype)
-			if("fire")
+
+		switch(W.hit_type)
+			if(DAMAGE_BURN)
 				src.health -= W.force * src.firevuln
-			if("brute")
+			if(DAMAGE_BLUNT)
 				src.health -= W.force * src.brutevuln
 
 		if (src.alive && src.health <= 0) src.CritterDeath()

@@ -206,7 +206,7 @@ proc/Create_Tommyname()
 
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "tommy1"
 	m_amt = 4000
 	rechargeable = 1
@@ -854,7 +854,7 @@ proc/Create_Tommyname()
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = 1
 
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
 
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -862,6 +862,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	New()
+		..()
+		BLOCK_ROPE
 
 
 /obj/item/garrote/proc/toggle_wire_readiness()

@@ -192,7 +192,7 @@
 /obj/item/grenade_fuse
 	name = "grenade fuse"
 	desc = "A fuse mechanism with a safety lever."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "grenade_fuse"
 	item_state = "pen"
 	force = 0
@@ -209,7 +209,7 @@
 /obj/item/chem_grenade/metalfoam
 	name = "metal foam grenade"
 	desc = "Used for emergency sealing of air breaches."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "metal_foam"
 	icon_state_armed = "metal_foam1"
 	stage = 2
@@ -229,7 +229,7 @@
 /obj/item/chem_grenade/firefighting
 	name = "fire fighting grenade"
 	desc = "Can help to put out dangerous fires from a distance."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "fire_fighting"
 	icon_state_armed = "fire_fighting1"
 	stage = 2
@@ -248,7 +248,7 @@
 /obj/item/chem_grenade/cleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
@@ -268,7 +268,7 @@
 /obj/item/chem_grenade/fcleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
@@ -290,7 +290,7 @@
 /obj/item/chem_grenade/flashbang
 	name = "flashbang"
 	desc = "A standard stun grenade."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "flashbang"
 	icon_state_armed = "flashbang1"
 	stage = 2
@@ -355,7 +355,7 @@
 /obj/item/chem_grenade/cryo
 	name = "cryo grenade"
 	desc = "An experimental non-lethal grenade using cryogenic technologies."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cryo"
 	icon_state_armed = "cryo1"
 	stage = 2
@@ -371,7 +371,7 @@
 /obj/item/chem_grenade/incendiary
 	name = "incendiary grenade"
 	desc = "A rather volatile grenade that creates a small fire."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
 	stage = 2
@@ -385,7 +385,7 @@
 /obj/item/chem_grenade/very_incendiary
 	name = "high range incendiary grenade"
 	desc = "A rather volatile grenade that creates a large fire."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "high_range_incendiary"
 	icon_state_armed = "high_range_incendiary1"
 	stage = 2
@@ -404,7 +404,7 @@
 /obj/item/chem_grenade/shock
 	name = "shock grenade"
 	desc = "An arc flashing grenade that shocks everyone close by."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "shock"
 	icon_state_armed = "shock1"
 	stage = 2
@@ -418,7 +418,7 @@
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
 	desc = "An non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"
 	stage = 2
@@ -439,7 +439,7 @@
 /obj/item/chem_grenade/sarin
 	name = "sarin gas grenade"
 	desc = "A smoke grenade containing an extremely lethal nerve agent. Use of this mixture constitutes a war crime, so... try not to leave any witnesses."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "sarin"
 	icon_state_armed = "sarin1"
 	stage = 2
@@ -457,11 +457,11 @@
 
 		beakers += B1
 		beakers += B2
-		
+
 /obj/item/chem_grenade/luminol
 	name = "luminol smoke grenade"
 	desc = "A smoke grenade containing a compound that reveals traces of blood."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
@@ -483,7 +483,7 @@
 /obj/item/chem_grenade/fog
 	name = "fog grenade"
 	desc = "A specialized smoke grenade that releases a fog that blocks vision, but is not irritating to inhale."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2

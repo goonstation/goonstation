@@ -287,6 +287,12 @@
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 			src.take_damage(I.force, user)
+			if (I.tool_flags & TOOL_CHOPPING)
+				user.lastattacked = src
+				attack_particle(user,src)
+				playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
+				src.take_damage(I.force*4, user)
+
 		return
 	if (src.operating)
 		return

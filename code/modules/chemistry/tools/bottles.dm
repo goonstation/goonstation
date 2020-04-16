@@ -94,10 +94,10 @@
 	name = "poison canister"
 	desc = "A large fluid-filled canister designed to fill a syringe gun."
 	initial_volume = 90
-	
-	curare 
+
+	curare
 		initial_reagents = "curare"
-	
+
 	neurotoxin
 		initial_reagents = "neurotoxin"
 
@@ -315,7 +315,7 @@
 /obj/item/reagent_containers/glass/bottle/bubblebath
 	name = "Cap'n Bubs(TM) Extra-Manly Bubble Bath"
 	desc = "Industrial strength bubblebath with a fat and sassy mascot on the bottle. Neat."
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "moonshine"
 	initial_volume = 50
 	initial_reagents = list("fluorosurfactant"=30,"pepperoni"=10,"bourbon"=10)
@@ -325,7 +325,7 @@
 /obj/item/reagent_containers/glass/bottle/icing
 	name = "icing tube"
 	desc = "Used to put icing on cakes."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "icing_tube"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5

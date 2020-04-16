@@ -17,6 +17,11 @@
 		for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
 			G.shoot()
 
+	var/obj/item/grab/block/block = user.check_block()
+	if (block)
+		block.attack(src,user)
+		return
+
 	var/shielded = 0
 	if (src.spellshield)
 		shielded = 1

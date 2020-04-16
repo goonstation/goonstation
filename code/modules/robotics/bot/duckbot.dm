@@ -93,12 +93,7 @@
 		emag_act(user, W)
 	else
 		src.visible_message("<span style=\"color:red\">[user] hits [src] with [W]!</span>")
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.5
-			if("brute")
-				src.health -= W.force * 0.5
-			else
+		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 

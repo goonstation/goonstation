@@ -240,7 +240,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 
 /obj/item/pixel_gun
 	name = "experimental gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	item_state = "gun"
@@ -368,7 +368,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 
 /obj/item/pixel_gun/energy
 	name = "experimental energy weapon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "energy"
 	item_state = "gun"
 	m_amt = 2000

@@ -527,12 +527,14 @@
 
 	proc/update_stats()
 		var/newDesc = ""
-		newDesc += "<div><img src='[resource("images/tooltips/block.png")]' alt='' class='icon' /><span>Total Block: [master.get_total_block()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/heat.png")]' alt='' class='icon' /><span>Total Resistance (Heat): [master.get_heat_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
 
+		var/block = master.get_passive_block()
+		if (block)
+			newDesc += "<div><img src='[resource("images/tooltips/block.png")]' alt='' class='icon' /><span>Passive Block: [block]%</span></div>"
 
 		var/prot = master.get_disorient_protection()
 		var/disorientprot = 0

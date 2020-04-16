@@ -21,7 +21,7 @@
 /obj/item/decoration/ashtray
 	name = "ashtray"
 	desc = "The rarely visited graveyard for cigarettes."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "ashtray"
 	uses_multiple_icon_states = 1
 	w_class = 1.0

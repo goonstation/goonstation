@@ -3,7 +3,7 @@
 
 /obj/item/storage/toolbox
 	name = "toolbox"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "red"
 	item_state = "toolbox_red"
@@ -28,6 +28,7 @@
 		if (src.type == /obj/item/storage/toolbox)
 			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
 			qdel(src)
+		BLOCK_ROD
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

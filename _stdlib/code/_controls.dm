@@ -155,6 +155,7 @@ var/list/key_names = list(
 							"B" = KEY_POINT,
 							"T" = "say",
 							"Y" = "say_radio",
+							"W" = "resist",
 							"G" = "refocus",
 							"F" = "fart",
 							"R" = "flip",
@@ -208,6 +209,7 @@ var/list/key_names = list(
 							"EAST" = KEY_RIGHT,
 							"T" = "say",
 							"Y" = "say_radio",
+							"Z" = "resist",
 							"G" = "refocus",
 							"F" = "fart",
 							"R" = "flip",
@@ -295,6 +297,7 @@ var/list/key_names = list(
 							"E" = "equip",
 							"X" = "swaphand",
 							"Z" = "attackself",
+							"C" = "resist",
 							"Q" = "drop"
 						))
 				else
@@ -350,6 +353,7 @@ var/list/key_names = list(
 							"B" = KEY_POINT,
 							"X" = "swaphand",
 							"Z" = "attackself",
+							"C" = "resist",
 							"Q" = "unequip"
 						))
 				else
@@ -418,6 +422,7 @@ var/list/key_names = list(
 						"EAST" = KEY_RIGHT,
 						"T" = "say",
 						"Y" = "say_radio",
+						"C" = "resist",
 						"G" = "refocus",
 						"F" = "fart",
 						"R" = "flip",
@@ -465,6 +470,7 @@ var/list/key_names = list(
 							"EAST" = KEY_RIGHT,
 							"T" = "say",
 							"Y" = "say_radio",
+							"Z" = "resist",
 							"G" = "refocus",
 							"F" = "fart",
 							"R" = "flip",
@@ -568,6 +574,7 @@ var/list/key_names = list(
 						"B" = KEY_POINT,
 						"X" = "swaphand",
 						"Z" = "attackself",
+						"C" = "resist",
 						"Q" = "unequip"
 					))
 				else

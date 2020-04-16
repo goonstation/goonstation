@@ -11,7 +11,7 @@ Contains:
 
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/back.dmi'
 
@@ -37,6 +37,7 @@ Contains:
 		src.air_contents.temperature = T20C
 		if (!(src in processing_items))
 			processing_items.Add(src)
+		BLOCK_TANK
 		return
 
 	disposing()

@@ -453,12 +453,11 @@
 			return
 
 		else
-			switch(W.damtype)
-				if("fire")
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
 					src.health -= W.force * 0.6
-				if("brute")
-					src.health -= W.force * 0.4
 				else
+					src.health -= W.force * 0.4
 			if (src.health <= 0)
 				..()
 				src.explode()
@@ -3980,7 +3979,7 @@
 /obj/item/token/hug_token
 	name = "Hug Token"
 	desc = "A Hug Token. Just looking at it makes you feel better."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
 	w_class = 1.0

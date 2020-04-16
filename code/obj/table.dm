@@ -8,7 +8,7 @@
 /obj/table
 	name = "table"
 	desc = "A metal table strong enough to support a substantial amount of weight, but easily made portable by unsecuring the bolts with a wrench."
-	icon = 'icons/obj/table.dmi'
+	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0"
 	density = 1
 	anchored = 1.0
@@ -372,12 +372,12 @@
 /obj/table/auto/desk // this type is special because it needs to connect with the default tables, so it's like the only thing that's a child of an /auto flavor of table
 	name = "desk"
 	desc = "A desk with a little drawer to store things in!"
-	icon = 'icons/obj/table_desk.dmi'
+	icon = 'icons/obj/furniture/table_desk.dmi'
 	parts_type = /obj/item/furniture_parts/table/desk
 	has_storage = 1
 
 /obj/table/round
-	icon = 'icons/obj/table_round.dmi'
+	icon = 'icons/obj/furniture/table_round.dmi'
 	auto_type = /obj/table/round/auto
 	parts_type = /obj/item/furniture_parts/table/round
 
@@ -387,7 +387,7 @@
 /obj/table/wood
 	name = "wooden table"
 	desc = "A table made from solid oak, which is quite rare in space."
-	icon = 'icons/obj/table_wood.dmi'
+	icon = 'icons/obj/furniture/table_wood.dmi'
 	auto_type = /obj/table/wood/auto
 	parts_type = /obj/item/furniture_parts/table/wood
 
@@ -397,12 +397,12 @@
 /obj/table/wood/auto/desk
 	name = "wooden desk"
 	desc = "A desk made of wood with a little drawer to store things in!"
-	icon = 'icons/obj/table_wood_desk.dmi'
+	icon = 'icons/obj/furniture/table_wood_desk.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood/desk
 	has_storage = 1
 
 /obj/table/wood/round
-	icon = 'icons/obj/table_wood_round.dmi'
+	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	auto_type = /obj/table/wood/round/auto
 	parts_type = /obj/item/furniture_parts/table/wood/round
 
@@ -412,7 +412,7 @@
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
-	icon = 'icons/obj/table_folding.dmi'
+	icon = 'icons/obj/furniture/table_folding.dmi'
 	parts_type = /obj/item/furniture_parts/table/folding
 
 	attack_hand(mob/user as mob)
@@ -443,7 +443,7 @@
 /obj/table/reinforced
 	name = "reinforced table"
 	desc = "A table made from reinforced metal, it is quite strong and it requires welding and wrenching to disassemble it."
-	icon = 'icons/obj/table_reinforced.dmi'
+	icon = 'icons/obj/furniture/table_reinforced.dmi'
 	status = 2
 	auto_type = /obj/table/reinforced/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced
@@ -473,7 +473,7 @@
 /obj/table/reinforced/bar
 	name = "bar table"
 	desc = "A reinforced table with a faux wooden finish to make you feel at ease."
-	icon = 'icons/obj/table_bar.dmi'
+	icon = 'icons/obj/furniture/table_bar.dmi'
 	auto_type = /obj/table/reinforced/bar/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced/bar
 
@@ -491,7 +491,7 @@
 /obj/table/reinforced/chemistry
 	name = "lab counter"
 	desc = "A labratory countertop made from a paper composite, which is very heat resistant."
-	icon = 'icons/obj/table_chemistry.dmi'
+	icon = 'icons/obj/furniture/table_chemistry.dmi'
 	auto_type = /obj/table/reinforced/chemistry/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced/chemistry
 	has_storage = 1
@@ -502,7 +502,7 @@
 /obj/table/reinforced/industrial
 	name = "industrial table"
 	desc = "An industrial table that looks like it has been made out of a scaffolding."
-	icon = 'icons/obj/table_industrial.dmi'
+	icon = 'icons/obj/furniture/table_industrial.dmi'
 	auto_type = /obj/table/reinforced/industrial/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced/industrial
 
@@ -516,7 +516,7 @@
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
-	icon = 'icons/obj/table_glass.dmi'
+	icon = 'icons/obj/furniture/table_glass.dmi'
 	mat_appearances_to_ignore = list("glass")
 	parts_type = /obj/item/furniture_parts/table/glass
 	auto_type = /obj/table/glass // has to be the base type here or else regular glass tables won't connect to reinforced ones

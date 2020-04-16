@@ -15,7 +15,7 @@
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
-	icon = 'icons/obj/table_flock.dmi'
+	icon = 'icons/obj/furniture/table_flock.dmi'
 	auto_type = /obj/table/flock/auto
 	parts_type = /obj/item/furniture_parts/table/flock
 
@@ -34,7 +34,7 @@
 /obj/item/furniture_parts/table/flock
 	name = "collapsed disk"
 	desc = "An extendable... <i>thing</i> that can be stretched out to make, uh, probably a table of some kind? Where's the goddamn instructions?!"
-	icon = 'icons/obj/table_flock.dmi'
+	icon = 'icons/obj/furniture/table_flock.dmi'
 	furniture_type = /obj/table/flock/auto
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
@@ -74,7 +74,7 @@
 /obj/item/furniture_parts/flock_chair
 	name = "pulsing orb"
 	desc = "It feels dense and like it wants to pop open. If you fumble around, maybe you can find some sort of catch or button."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "flchair_parts"
 	stamina_damage = 15
 	stamina_cost = 15

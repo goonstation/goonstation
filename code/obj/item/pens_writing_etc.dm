@@ -610,6 +610,10 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 
+	New()
+		..()
+		BLOCK_BOOK
+
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
 		if (src.pen)

@@ -1,6 +1,6 @@
 /obj/item/extinguisher
 	name = "fire extinguisher"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
 	var/safety = 1
@@ -50,6 +50,7 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("ff-foam", 100)
+	BLOCK_TANK
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)

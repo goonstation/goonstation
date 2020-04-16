@@ -367,6 +367,61 @@
 		M.attack_particle.alpha = 0
 
 
+/proc/block_begin(var/mob/M)
+	if (!M || !M.attack_particle) return
+
+	M.attack_particle.invisibility = M.invisibility
+	M.last_interact_particle = world.time
+
+	M.attack_particle.icon = 'icons/mob/mob.dmi'
+	M.attack_particle.icon_state = "block"
+
+	M.attack_particle.alpha = 255
+	M.attack_particle.loc = M.loc
+	M.attack_particle.pixel_x = 0
+	M.attack_particle.pixel_y = 0
+
+	var/matrix/start = matrix()
+	start.Scale(0.3,0.3)
+	start.Turn(rand(-45,45))
+	M.attack_particle.transform = start
+	var/matrix/t_size = matrix()
+
+	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
+	SPAWN_DBG(5)
+		M.attack_particle.alpha = 0
+
+/proc/block_spark(var/mob/M)
+	if (!M || !M.attack_particle) return
+
+	M.attack_particle.invisibility = M.invisibility
+	M.last_interact_particle = world.time
+
+	M.attack_particle.icon = 'icons/mob/mob.dmi'
+	if (M.attack_particle.icon_state == "block_spark")
+		flick("block_spark",M.attack_particle)
+	M.attack_particle.icon_state = "block_spark"
+
+	M.attack_particle.alpha = 255
+	M.attack_particle.loc = M.loc
+	M.attack_particle.pixel_x = 0
+	M.attack_particle.pixel_y = 0
+
+	M.attack_particle.transform.Turn(rand(0,360))
+
+	SPAWN_DBG(10)
+		M.attack_particle.alpha = 0
+
+proc/fuckup_attack_particle(var/mob/M)
+	SPAWN_DBG(1)
+		if (!M || !M.attack_particle) return
+		var/r = rand(0,360)
+		var/x = cos(r)
+		var/y = sin(r)
+		x *= 22
+		y *= 22
+		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
+
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
@@ -998,6 +1053,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	var/fade_time = time / 2
 	target.filters += filter(type = "layer", blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00")
 	var/filter = target.filters[target.filters.len]
+	if(!filter) return
 	animate(filter, y = -28, easing = QUAD_EASING, time = time)
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)

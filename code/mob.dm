@@ -200,7 +200,16 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-
+//start of needed for timestop
+#if ASS_JAM
+	var/paused = FALSE
+	var/pausedbrute = 0
+	var/pausedburn = 0
+	var/pausedtox = 0
+	var/pausedoxy = 0
+	var/pausedbrain = 0
+#endif
+//end of needed for timestop
 	var/dir_locked = FALSE
 
 	var/cooldowns = list()
@@ -619,6 +628,7 @@
 						else
 							pulling += src.pulling
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+						if (G.affecting == src) continue
 						pulling += G.affecting
 					for (var/atom/movable/A in pulling)
 						if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
@@ -941,12 +951,18 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch(src)
+#if ASS_JAM//pausing damage for timestop
+	if(src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
+#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone), burn-get_melee_protection(zone))
+	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -2899,3 +2915,10 @@
 		src.mind.damned = 1
 
 	return 1
+
+/mob/proc/get_id()
+	if(istype(src.equipped(), /obj/item/card/id))
+		return src.equipped()
+	if(istype(src.equipped(), /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = src.equipped()
+		return pda.ID_card
