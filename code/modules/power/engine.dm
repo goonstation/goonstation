@@ -19,12 +19,10 @@
 	switch(severity)
 		if(1.0)
 			ReplaceWithSpace()
-			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				ReplaceWithSpace()
-				qdel(src)
 				return
 		else
 	return
