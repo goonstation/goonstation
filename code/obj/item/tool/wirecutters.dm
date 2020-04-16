@@ -21,6 +21,10 @@
 	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 
+	New()
+		..()
+		BLOCK_KNIFE
+
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!src.remove_bandage(M, user) && !snip_surgery(M, user))
 			return ..()

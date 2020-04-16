@@ -330,10 +330,11 @@
 			attack_particle(user,src)
 			src.visible_message("<span style=\"color:red\"><b>[usr]</b> attacks [src] with [W].</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
-			switch(W.damtype)
-				if("fire")
+
+			switch(W.hit_type)
+				if(DAMAGE_BURN)
 					damage_heat(W.force)
-				if("brute")
+				else
 					damage_blunt(W.force * 0.5)
 		return
 

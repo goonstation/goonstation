@@ -98,6 +98,10 @@
 	var/active = 0
 	var/probability = 40
 
+	New()
+		..()
+		BLOCK_ALL
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && mounted)
 			src.visible_message("<span style=\"color:blue\"><b>[user] removes [src].</b></span>")

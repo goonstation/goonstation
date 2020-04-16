@@ -50,6 +50,7 @@
 		SPAWN_DBG (5)
 			if (src)
 				src.update_icon()
+		BLOCK_ROD
 		return
 
 	proc/check_health()
@@ -419,6 +420,10 @@
 	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 	var/image/plantyboi
+
+	New()
+		..()
+		BLOCK_KNIFE
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))

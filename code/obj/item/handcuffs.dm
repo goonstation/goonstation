@@ -105,6 +105,10 @@
 
 	return
 
+/obj/item/handcuffs/New()
+	..()
+	BLOCK_ROPE
+
 /obj/item/handcuffs/disposing()
 	if (ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc

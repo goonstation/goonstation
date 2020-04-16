@@ -54,6 +54,7 @@ MATERIAL
 		..()
 		SPAWN_DBG(0)
 			update_appearance()
+		BLOCK_ALL
 
 	proc/amount_check(var/use_amount,var/mob/user)
 		if (src.amount < use_amount)
@@ -592,6 +593,7 @@ MATERIAL
 	New()
 		..()
 		update_icon()
+		BLOCK_ROD
 
 	check_valid_stack(atom/movable/O as obj)
 		if (!istype(O,/obj/item/rods/))
@@ -945,7 +947,7 @@ MATERIAL
 	stamina_crit_chance = 15
 
 	New()
-
+		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
 		return

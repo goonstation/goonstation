@@ -6,7 +6,6 @@
 	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
-	var/damtype = "brute"
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1//4
 	var/r_speed = 1.0
@@ -714,9 +713,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
-	if (special_grab)
-		if(chokehold)
-			chokehold.attack_self(user)
+	if(chokehold)
+		chokehold.attack_self(user)
 
 	return
 
@@ -958,14 +956,13 @@
 			logTheThing("combat", user, M, "tries to attack %target% with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
-	if (special_grab)
-		if (chokehold)
-			chokehold.attack(M, user, def_zone, is_special)
+	if (chokehold)
+		chokehold.attack(M, user, def_zone, is_special)
+		return
+	else if (special_grab)
+		if (user.a_intent == INTENT_GRAB)
+			src.try_grab(M, user)
 			return
-		else
-			if (user.a_intent == INTENT_GRAB)
-				src.try_grab(M, user)
-				return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
 	var/hit_area
@@ -982,7 +979,7 @@
 		hit_area = parse_zone(affecting)
 		d_zone = affecting
 
-	if (!M.melee_attack_test(user, d_zone))
+	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks %target% with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
@@ -1046,7 +1043,7 @@
 		if (istext(attack_resistance))
 			msgs.show_message_target(attack_resistance)
 
-	if (damtype == "fire" || damtype == "burn" || hasProperty("searing"))
+	if (hasProperty("searing"))
 		msgs.damage_type = DAMAGE_BURN
 	else
 		msgs.damage_type = hit_type
@@ -1056,7 +1053,7 @@
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	armor_mod = M.get_melee_protection(d_zone)
+	armor_mod = M.get_melee_protection(d_zone, src.hit_type)
 
 	var/pierce_prot = 0
 	if (d_zone == "head")
@@ -1236,7 +1233,7 @@
 			if (M.trinket == src)
 				M.trinket = null
 
-	if (special_grab)
+	if (special_grab || chokehold)
 		drop_grab()
 
 	..()
@@ -1285,7 +1282,7 @@
 	hide_buttons()
 	clear_mob()
 
-	if (special_grab)
+	if (special_grab || chokehold)
 		drop_grab()
 	return
 

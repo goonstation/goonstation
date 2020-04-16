@@ -256,6 +256,7 @@ WET FLOOR SIGN
 	R.my_atom = src
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
+	BLOCK_ROD
 
 /obj/item/mop/disposing()
 	. = ..()
@@ -618,6 +619,10 @@ WET FLOOR SIGN
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 10
+
+	New()
+		..()
+		BLOCK_SOFT
 
 	dropped()
 		JOB_XP(usr, "Janitor", 2)

@@ -13,7 +13,7 @@
 	var/build_time = 6 // in seconds
 	var/health = 30 // fragile little thing
 	var/health_max
-	var/bruteVuln = 1.2 
+	var/bruteVuln = 1.2
 	var/fireVuln = 0.2 // very flame-retardant
 	var/datum/flock/flock = null
 
@@ -30,11 +30,11 @@
 	..()
 
 /obj/flock_structure/special_desc(dist, mob/user)
-	if(isflock(user))		
+	if(isflock(user))
 		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> [flock_id]"    
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"		
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"		
+		special_desc += "<br><span class='bold'>ID:</span> [flock_id]"
+		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
+		special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"
 		var/info = building_specific_info()
 		if(info != "")
 			special_desc += "<br>[info]"
@@ -73,7 +73,7 @@
 		location = get_turf(src)
 	visible_message("<span class='text-red'>[src.name] violently breaks apart!</span>")
 	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 80, 1)
-	flockdronegibs(location)	
+	flockdronegibs(location)
 	var/num_pieces = rand(2,8)
 	var/atom/movable/B
 	for(var/i=1 to num_pieces)
@@ -114,7 +114,12 @@
 /obj/flock_structure/attackby(obj/item/W as obj, mob/user as mob)
 	src.visible_message("<span class='text-red'><b>[user]</b> attacks [src] with [W]!</span>")
 	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
-	takeDamage(W.damtype, W.force)
+
+	var/damtype = "brute"
+	if (W.hit_type == DAMAGE_BURN)
+		damtype = "fire"
+
+	takeDamage(damtype, W.force)
 
 /obj/flock_structure/ex_act(severity)
 	var/damage = 0

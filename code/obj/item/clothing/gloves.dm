@@ -388,6 +388,10 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
+	New()
+		..()
+		BLOCK_ROPE
+
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
 	name = "power gloves"

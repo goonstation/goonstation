@@ -11,7 +11,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "cig"
 	force = 0
-	damtype = "brute"
+	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
 	w_class = 1
 	var/on = 0
@@ -86,7 +86,7 @@
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
 			src.on = 1
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
 			src.item_state = litstate
@@ -98,10 +98,12 @@
 			if (!(src in processing_items))
 				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
 
+			hit_type = DAMAGE_BURN
+
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = buttstate
 			src.item_state = buttstate
@@ -113,6 +115,8 @@
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
 			processing_items.Remove(src)
+
+			hit_type = DAMAGE_BLUNT
 
 			playsound(get_turf(src), "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
 
@@ -410,7 +414,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "bluntwrap"
 	force = 0
-	damtype = "brute"
+	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
 	w_class = 1
 	rand_pos = 1

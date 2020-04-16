@@ -26,6 +26,7 @@ TRAYS
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
@@ -51,6 +52,7 @@ TRAYS
 	New()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
+		BLOCK_KNIFE
 		return
 
 	verb/rotate()
@@ -820,6 +822,10 @@ TRAYS
 
 	var/list/toppingdata = list() //(food_color)
 	var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll//= new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
+
+	New()
+		..()
+		BLOCK_BOOK
 
 	attackby(obj/item/W as obj, mob/user as mob)
 

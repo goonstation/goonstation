@@ -63,6 +63,7 @@
 		if (prob(1))
 			src.bladecolor = null
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
+		BLOCK_SWORD
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(ishuman(user))
@@ -250,6 +251,10 @@
 	stamina_crit_chance = 50
 	pickup_sfx = "sound/items/blade_pull.ogg"
 
+	New()
+		..()
+		BLOCK_KNIFE
+
 /obj/item/dagger/throw_impact(atom/A)
 	if(iscarbon(A))
 		if (ismob(usr))
@@ -373,6 +378,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/nunchucks)
+		BLOCK_ROPE
 
 /obj/item/quarterstaff
 	name = "quarterstaff"
@@ -402,6 +408,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/simple)
+		BLOCK_ROD
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -449,6 +456,10 @@
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
 	var/makemeat = 1
+
+/obj/item/knife_butcher/New()
+	..()
+	BLOCK_KNIFE
 
 /obj/item/knife_butcher/throw_impact(atom/A)
 	if(iscarbon(A))
@@ -547,6 +558,12 @@
 	stamina_cost = 45
 	stamina_crit_chance = 5
 
+
+	New()
+		..()
+		BLOCK_ROD
+
+
 // vvv what the heck why?? vvv
 //obj/item/axe/attack(target as mob, mob/user as mob)
 //	..()
@@ -593,7 +610,6 @@
 	item_state = "fireaxe"
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
-	damtype = "brute"
 	hit_type = DAMAGE_CUT
 	click_delay = 10
 	two_handed = 0
@@ -648,6 +664,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
@@ -668,6 +685,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 /obj/item/ratstick
 	name = "rat stick"
@@ -686,12 +704,12 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 	attack(var/atom/A as mob|obj|turf, var/mob/user as mob)
 		if (prob(50))
 			hit_type = DAMAGE_BLUNT
 			hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
-
 		else
 			hit_type = DAMAGE_CUT
 			hitsound = "sound/impact_sounds/Blade_Small_Bloody.ogg"
@@ -750,6 +768,7 @@
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
 		src.setItemSpecial(/datum/item_special/katana_dash)
+		BLOCK_SWORD
 
 /obj/item/katana/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	if(target == user) //Can't cut off your own limbs, dumbo
@@ -938,6 +957,7 @@
 		var/obj/item/katana/K = new sword_path()
 		sword_inside = K
 		K.set_loc(src)
+		BLOCK_ROD
 
 	attack_hand(mob/living/carbon/human/user as mob)
 		if(user.r_hand == src || user.l_hand == src || user.belt == src)
@@ -1083,6 +1103,8 @@
 		..()
 		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("T'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SWORD
+
 
 	/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
 		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
@@ -1119,6 +1141,10 @@ obj/item/fragile_sword
 	pickup_sfx = "sound/items/blade_pull.ogg"
 	var/minimum_force = 5
 	var/maximum_force = 70
+
+	New()
+		..()
+		BLOCK_SWORD
 
 	attack(target as mob, mob/user as mob)
 		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
@@ -1180,6 +1206,7 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SWORD
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(istype (M) | !isdead(M))
@@ -1222,7 +1249,6 @@ obj/item/whetstone
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
-	damtype = "brute"
 	hit_type = DAMAGE_BLUNT
 	w_class = 3
 	two_handed = 1
@@ -1231,3 +1257,7 @@ obj/item/whetstone
 	force = 25 //this number is multiplied by 4 when attacking doors.
 	stamina_damage = 10
 	stamina_cost = 20
+
+	New()
+		..()
+		BLOCK_ROD

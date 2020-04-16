@@ -30,6 +30,7 @@
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 		AddComponent(/datum/component/transfer_on_attack)
+		BLOCK_KNIFE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -64,6 +65,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
+		BLOCK_KNIFE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

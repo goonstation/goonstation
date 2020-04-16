@@ -49,6 +49,7 @@ CONTAINS:
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 33)
+		BLOCK_KNIFE
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -116,8 +117,7 @@ CONTAINS:
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 33)
-
-
+		BLOCK_LARGE
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)

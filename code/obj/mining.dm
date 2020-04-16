@@ -1453,6 +1453,10 @@
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 3, "engineering" = 1, "mining" = 1)
 
+	New()
+		..()
+		BLOCK_ROD
+
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine()
 		..()

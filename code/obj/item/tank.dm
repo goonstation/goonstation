@@ -37,6 +37,7 @@ Contains:
 		src.air_contents.temperature = T20C
 		if (!(src in processing_items))
 			processing_items.Add(src)
+		BLOCK_TANK
 		return
 
 	disposing()
