@@ -244,17 +244,17 @@
 	icon_state = "redblackchecker"
 
 
-/turf/simulated/floor/redblack
+/turf/simulated/floor/red/redblack
 	icon_state = "redblack"
 
-/turf/simulated/floor/redblack/corner
+/turf/simulated/floor/red/redblack/corner
 	icon_state = "redblackcorner"
 
 
-/turf/simulated/floor/redwhite
+/turf/simulated/floor/red/redwhite
 	icon_state = "redwhite"
 
-/turf/simulated/floor/redwhite/corner
+/turf/simulated/floor/red/redwhite/corner
 	icon_state = "redwhitecorner"
 
 /////////////////////////////////////////
@@ -272,17 +272,17 @@
 	icon_state = "bluechecker"
 
 
-/turf/simulated/floor/blueblack
+/turf/simulated/floor/blue/blueblack
 	icon_state = "blueblack"
 
-/turf/simulated/floor/blueblack/corner
+/turf/simulated/floor/blue/blueblack/corner
 	icon_state = "blueblackcorner"
 
 
-/turf/simulated/floor/bluewhite
+/turf/simulated/floor/blue/bluewhite
 	icon_state = "bluewhite"
 
-/turf/simulated/floor/bluewhite/corner
+/turf/simulated/floor/blue/bluewhite/corner
 	icon_state = "bluewhitecorner"
 
 /////////////////////////////////////////
@@ -295,6 +295,27 @@
 
 /turf/simulated/floor/darkblue/checker/other
 	icon_state = "blue-dblue2"
+
+
+/turf/simulated/floor/darkblue/side
+	icon_state = "darkblue"
+
+/turf/simulated/floor/darkblue/corner
+	icon_state = "darkbluecorner"
+
+
+/turf/simulated/floor/darkblue/darkblueblack
+	icon_state = "dblueblack"
+
+/turf/simulated/floor/darkblue/darkblueblack/corner
+	icon_state = "dbluebcorner"
+
+
+/turf/simulated/floor/darkblue/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/darkblue/darkbluewhite/corner
+	icon_state = "dbluewcorner"
 
 /////////////////////////////////////////
 
@@ -322,18 +343,43 @@
 	icon_state = "greenchecker"
 
 
-/turf/simulated/floor/greenblack
+/turf/simulated/floor/green/greenblack
 	icon_state = "greenblack"
 
-/turf/simulated/floor/greenblack/corner
+/turf/simulated/floor/green/greenblack/corner
 	icon_state = "greenblackcorner"
 
 
-/turf/simulated/floor/greenwhite
+/turf/simulated/floor/green/greenwhite
 	icon_state = "greenwhite"
 
-/turf/simulated/floor/greenwhite/corner
+/turf/simulated/floor/green/greenwhite/corner
 	icon_state = "greenwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/darkgreen
+	icon_state = "fulldgreen"
+
+/turf/simulated/floor/darkgreen/side
+	icon_state = "darkgreen"
+
+/turf/simulated/floor/darkgreen/corner
+	icon_state = "darkgreencorner"
+
+
+/turf/simulated/floor/darkgreen/darkgreenblack
+	icon_state = "dgreenblack"
+
+/turf/simulated/floor/darkgreen/darkgreenblack/corner
+	icon_state = "dgreenbcorner"
+
+
+/turf/simulated/floor/darkgreen/darkgreenwhite
+	icon_state = "dgreenwhite"
+
+/turf/simulated/floor/darkgreen/darkgreenwhite/corner
+	icon_state = "dgreenwcorner"
 
 /////////////////////////////////////////
 
@@ -343,6 +389,19 @@
 /turf/simulated/floor/greenwhite/other/corner
 	icon_state = "toxshuttlecorner"
 
+
+/turf/simulated/floor/greenwhite/black
+	icon_state = "toxshuttleblack"
+
+/turf/simulated/floor/greenwhite/black/corner
+	icon_state = "toxshuttlebcorner"
+
+
+/turf/simulated/floor/greenwhite/white
+	icon_state = "toxshuttlewhite"
+
+/turf/simulated/floor/greenwhite/white/corner
+	icon_state = "toxshuttlewcorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/purple
@@ -358,17 +417,17 @@
 	icon_state = "purplechecker"
 
 
-/turf/simulated/floor/purpleblack
+/turf/simulated/floor/purple/purpleblack
 	icon_state = "purpleblack"
 
-/turf/simulated/floor/purpleblack/corner
+/turf/simulated/floor/purple/purpleblack/corner
 	icon_state = "purpleblackcorner"
 
 
-/turf/simulated/floor/purplewhite
+/turf/simulated/floor/purple/purplewhite
 	icon_state = "purplewhite"
 
-/turf/simulated/floor/purplewhite/corner
+/turf/simulated/floor/purple/purplewhite/corner
 	icon_state = "purplewhitecorner"
 
 /////////////////////////////////////////
@@ -377,7 +436,24 @@
 	icon_state = "fulldpurple"
 
 /turf/simulated/floor/darkpurple/side
-	icon_state = "dpurple"
+	icon_state = "darkpurple"
+
+/turf/simulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
+
+/turf/simulated/floor/darkpurple/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/simulated/floor/darkpurple/darkpurpleblack/corner
+	icon_state = "dpurplebcorner"
+
+
+/turf/simulated/floor/darkpurple/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/simulated/floor/darkpurple/darkpurplewhite/corner
+	icon_state = "dpurplewcorner"
 
 /////////////////////////////////////////
 
@@ -390,17 +466,26 @@
 /turf/simulated/floor/yellow/corner
 	icon_state = "yellowcorner"
 
+
 /turf/simulated/floor/yellow/alt
 	icon_state = "fullyellow_alt"
 
 /turf/simulated/floor/yellow/checker
 	icon_state = "yellowchecker"
 
-/turf/simulated/floor/yellowblack
+
+/turf/simulated/floor/yellow/yellowblack
 	icon_state = "yellowblack"
 
-/turf/simulated/floor/yellowblack/corner
+/turf/simulated/floor/yellow/yellowblack/corner
 	icon_state = "yellowblackcorner"
+
+
+/turf/simulated/floor/yellow/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/yellow/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
 
 /////////////////////////////////////////
 
@@ -412,6 +497,20 @@
 
 /turf/simulated/floor/orange/corner
 	icon_state = "orangecorner"
+
+
+/turf/simulated/floor/orange/orangeblack
+	icon_state = "orangeblack"
+
+/turf/simulated/floor/orange/orangeblack/corner
+	icon_state = "orangebcorner"
+
+
+/turf/simulated/floor/orange/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/orange/orangewhite/corner
+	icon_state = "orangewcorner"
 
 
 /turf/simulated/floor/orangeblack
@@ -596,6 +695,20 @@
 /turf/simulated/floor/arrival/corner
 	icon_state = "arrivalcorner"
 
+
+/turf/simulated/floor/arrivalblack
+	icon_state = "arrivalblack"
+
+/turf/simulated/floor/arrivalblack/corner
+	icon_state = "arrivalbcorner"
+
+
+/turf/simulated/floor/arrivalwhite
+	icon_state = "arrivalwhite"
+
+/turf/simulated/floor/arrivalwhite/corner
+	icon_state = "arrivalwcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/escape
@@ -603,6 +716,20 @@
 
 /turf/simulated/floor/escape/corner
 	icon_state = "escapecorner"
+
+
+/turf/simulated/floor/escapeblack
+	icon_state = "escapeblack"
+
+/turf/simulated/floor/escapeblack/corner
+	icon_state = "escapebcorner"
+
+
+/turf/simulated/floor/escapewhite
+	icon_state = "escapewhite"
+
+/turf/simulated/floor/escapewhite/corner
+	icon_state = "escapewcorner"
 
 /////////////////////////////////////////
 
@@ -768,14 +895,42 @@
 /turf/simulated/floor/longtile
 	icon_state = "longtile"
 
+/turf/simulated/floor/longtile/white
+	icon_state = "longtile-white"
+
 /turf/simulated/floor/longtile/black
 	icon_state = "longtile-dark"
 
 /turf/simulated/floor/longtile/blue
 	icon_state = "longtile-blue"
 
+/turf/simulated/floor/longtile/lightblue
+	icon_state = "longtile-lblue"
+
 /turf/simulated/floor/longtile/red
 	icon_state = "longtile-red"
+
+/turf/simulated/floor/longtile/darkred
+	icon_state = "longtile-dred"
+
+/turf/simulated/floor/longtile/green
+	icon_state = "longtile-green"
+
+/turf/simulated/floor/longtile/darkgreen
+	icon_state = "longtile-dgreen"
+
+/turf/simulated/floor/longtile/purple
+	icon_state = "longtile-purple"
+
+/turf/simulated/floor/longtile/darkpurple
+	icon_state = "longtile-dpurple"
+
+/turf/simulated/floor/longtile/yellow
+	icon_state = "longtile-yellow"
+
+/turf/simulated/floor/longtile/orange
+	icon_state = "longtile-dyellow"
+
 
 /turf/simulated/floor/specialroom/clown
 	icon_state = "clownfloor"
@@ -1345,31 +1500,25 @@
 	qdel(parts)
 	return
 
-/turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
-	if (!intact)
-		return
-
-	if(broken || burnt)
-		boutput(user, "<span style=\"color:red\">You remove the broken plating.</span>")
-	else
-		var/atom/A = new /obj/item/tile(src)
-		if(src.material)
-			A.setMaterial(src.material)
-		else
-			var/datum/material/M = getMaterial("steel")
-			A.setMaterial(M)
-		.= A //return tile for crowbar special attack ok
-
-	to_plating()
-	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
-
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
 
 	if (!C || !user)
 		return 0
 
-	if (ispryingtool(C) && user.a_intent != INTENT_HARM)
-		src.pry_tile(C,user,params)
+	if (ispryingtool(C) && intact)
+		if(broken || burnt)
+			boutput(user, "<span style=\"color:red\">You remove the broken plating.</span>")
+		else
+			var/atom/A = new /obj/item/tile(src)
+			if(src.material)
+				A.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				A.setMaterial(M)
+
+		to_plating()
+		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+
 		return
 
 	if (istype(C, /obj/item/pen))
