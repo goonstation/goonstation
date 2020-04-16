@@ -385,3 +385,12 @@ var/list/globalPropList = null
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "Burn Damage"
+
+	block_bonus
+		name = "Block+"
+		id = "block_bonus"
+		desc = "This item has bonus blocking potential. Use RESIST to block."
+		tooltipImg = "prot.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "RESIST with this item for more info"

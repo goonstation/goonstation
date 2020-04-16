@@ -764,41 +764,15 @@
 
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
-#define BLOCK_ALL do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-	setProperty("block_stab", 1);\
-	setProperty("block_burn", 1);\
-} while (FALSE)
-#define BLOCK_LARGE do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-	setProperty("block_stab", 1);\
-} while (FALSE)
-#define BLOCK_SWORD BLOCK_LARGE
-
-#define BLOCK_ROD do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-} while (FALSE)
-#define BLOCK_TANK do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-	setProperty("block_burn", 1);\
-} while (FALSE)
-#define BLOCK_SOFT do {\
-	setProperty("block_stab", 1);\
-	setProperty("block_burn", 1);\
-} while (FALSE)
-#define BLOCK_KNIFE do {\
-	setProperty("block_cut", 1);\
-	setProperty("block_stab", 1);\
-} while (FALSE)
-#define BLOCK_BOOK do {\
-	setProperty("block_stab", 1);\
-} while (FALSE)
-#define BLOCK_ROPE BLOCK_BOOK
-
+#define BLOCK_ALL		AddComponent(/datum/component/itemblock/basic_block/all)
+#define BLOCK_LARGE		AddComponent(/datum/component/itemblock/basic_block/large)
+#define BLOCK_SWORD		BLOCK_LARGE
+#define BLOCK_ROD 		AddComponent(/datum/component/itemblock/basic_block/rod)
+#define BLOCK_TANK 		AddComponent(/datum/component/itemblock/basic_block/tank)
+#define BLOCK_SOFT 		AddComponent(/datum/component/itemblock/basic_block/soft)
+#define BLOCK_KNIFE		AddComponent(/datum/component/itemblock/basic_block/knife)
+#define BLOCK_BOOK		AddComponent(/datum/component/itemblock/basic_block/book)
+#define BLOCK_ROPE		BLOCK_BOOK
 // Process Scheduler defines
 // Process status defines
 #define PROCESS_STATUS_IDLE 1

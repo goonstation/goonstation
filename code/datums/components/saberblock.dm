@@ -1,4 +1,5 @@
 datum/component/itemblock/saberblock
+	bonus = 1
 
 datum/component/itemblock/saberblock/on_block_begin(datum/source, mob/user)
 	. = ..()
