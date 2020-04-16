@@ -517,7 +517,7 @@
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
-	G.affecting.TakeDamage("chest", 0, rand(4,5))
+	G.affecting.TakeDamage("chest", rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 
 	user.u_equip(G)
@@ -788,6 +788,7 @@
 				var/mob/living/dive_attack_hit = null
 
 				for (var/mob/living/L in target_turf)
+					if (user == L) continue
 					dive_attack_hit = L
 					break
 

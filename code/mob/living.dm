@@ -1117,6 +1117,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else if (src.r_hand)
 			thing = src.r_hand
 
+	//no passing blocks around >:L
+	if (istype(thing,/obj/item/grab/block))
+		return
+	if (thing.c_flags & HAS_GRAB_EQUIP)
+		return
+
 	if (thing)
 		if (alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes")
 			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
