@@ -1,12 +1,16 @@
 
-(t)thu apr 16 20
+(t)wed apr 15 20
+(u)Kubius
+(p)247
+(e)🆕🗺|enhancement mapping
+(*)Kondaru (Kubius Map 3: Third Time's the Charm) has moved into official rotation.
+(*)Please provide suggestions on <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14335">the official Kondaru thread</a> and please report bugs through the Bug Report button in the upper right corner.
 (u)mbc
 (p)252
 (e)⚖🆕🔄|balance, enhancement, rework
 (*)Added blocking. Replaced classic passive-disarm-intent-blocking with a new block function tied to Resist.
 (*)You can block barehanded OR with a weapon. Weapons have block properties attached (you can see them on the tooltip) to tell you what kinds of damage they are effective against. You get a small armor boost while blocking, which is increased when you have an effective item matchup.
 (*)Added Resist hotkey (Z on default controls, C on /tg/)
-(t)wed apr 15 20
 (u)Erinexx
 (p)112
 (e)🐛🎨|bug spriting
