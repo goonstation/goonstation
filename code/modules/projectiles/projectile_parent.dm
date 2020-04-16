@@ -626,11 +626,12 @@ datum/projectile
 			return
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
-			if(ks_ratio == 0) //stun projectiles only
+/*			if(ks_ratio == 0) //stun projectiles only
 				impact_image_effect("T", hit)
 				if (isliving(hit))
 					var/mob/living/L = hit
 					stun_bullet_hit(O,L)
+*/
 			return
 		tick(var/obj/projectile/O)
 			return
@@ -956,7 +957,7 @@ datum/projectile/snowball
 	return P
 
 /proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
-	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
+	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = 20, stunned = 20, disorient = min(O.power, 80), remove_stamina_below_zero = 0, stack_stuns = 0)
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 

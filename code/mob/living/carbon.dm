@@ -315,14 +315,14 @@
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm
 	.=0
 
-/mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+/mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, var/stack_stuns = 1)
 	.= 1
 	if (stunned)
-		src.changeStatus("stunned", stunned)
+		src.changeStatus("stunned", stack_stuns ? stunned : max(0, stunned - src.getStatusDuration("stunned")))
 	if (weakened)
-		src.changeStatus("weakened", weakened)
+		src.changeStatus("weakened", stack_stuns ? weakened : max(0, weakened - src.getStatusDuration("weakened")))
 	if (paralysis)
-		src.changeStatus("paralysis", paralysis)
+		src.changeStatus("paralysis", stack_stuns ? paralysis : max(0, paralysis - src.getStatusDuration("paralysis")))
 
 	src.force_laydown_standup()
 
@@ -330,7 +330,7 @@
 		.= 0
 
 //Do stamina damage + disorient above 0 stamina. Stun/Weaken/Paralyze when we hit or drop below 0.
-/mob/living/carbon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+/mob/living/carbon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, var/stack_stuns = 1)
 	var/protection = 0
 
 	if (target_type & DISORIENT_BODY)
@@ -344,7 +344,7 @@
 		return
 
 	var/disorient_mult = 1 - (protection/100)
-	var/stamdmg_mult = lerp(disorient_mult, 1, 0.25) // apply 3/4 the reduction effect to the stamina damage
+	var/stamdmg_mult = disorient ? lerp(disorient_mult, 1, 0.25) : 1 // apply 3/4 the reduction effect to the stamina damage //Don't apply disorient resist if it doesn't disorient anyways
 
 	disorient *= disorient_mult
 	stamina_damage *= stamdmg_mult

@@ -149,7 +149,7 @@ burning - hot
 radioactive - rips apart cells or some shit
 toxic - poisons
 */
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL //this is a sound wave, not a taser shot
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 0
 	//Can we pass windows
@@ -219,9 +219,9 @@ toxic - poisons
 /datum/projectile/energy_bolt/aoe
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
-	power = 20
+	power = 10
 	cost = 50
-	dissipation_rate = 5
+	dissipation_rate = 2.5
 	dissipation_delay = 3
 	color_red = 255
 	color_green = 165
@@ -231,18 +231,8 @@ toxic - poisons
 
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
-
-		//lets make getting hit by the projectile a bit worse than getting the shockwave
-		//tasers have changed in production code, I'm not really sure what value is good to give it here...
-		if (isliving(O))
-			var/mob/living/L = O
-			L.changeStatus("slowed", 2 SECONDS)
-			L.do_disorient(stamina_damage = 2*P.power, weakened = 0, stunned = 0, disorient = P.power, remove_stamina_below_zero = 0)
-			L.emote("twitch_v")
-
-
+		//Handled in bullet_act()
 		hit = 1
-
 		detonate(O, P)
 
 	//do AOE stuff. This is not on on_hit because this effect should trigger when the projectile reaches the end of its distance OR hits things.
@@ -262,7 +252,7 @@ toxic - poisons
 			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
-				L.do_disorient(stamina_damage = 70, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
+				L.do_disorient(stamina_damage = 70, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0) //haha try a baton
 				L.emote("twitch_v")
 
 
@@ -298,7 +288,7 @@ toxic - poisons
 	cost = 35
 	sname = "pulse"
 	shot_sound = 'sound/weapons/Taser.ogg'
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL //we want special handling for our disorient
 	hit_ground_chance = 30
 	brightness = 0
 	disruption = 8

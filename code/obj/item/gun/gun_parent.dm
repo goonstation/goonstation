@@ -372,12 +372,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (user.reagents)
 		var/how_drunk = 0
 		var/amt = user.reagents.get_reagent_amount("ethanol")
-		if (amt >= 110)
-			how_drunk = 2
-		else if (amt < 110)
-			how_drunk = 1
-		else if (amt <= 0)
-			how_drunk = 0
+		switch(amt)
+			if (110 to INFINITY)
+				how_drunk = 2
+			if (1 to 110)
+				how_drunk = 1
 		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
 		spread += 5 * how_drunk
 

@@ -49,12 +49,8 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
-//Any special things when it hits shit?
-	on_hit(atom/hit, direction, projectile)
-		if (ishuman(hit) && src.hit_type)
-			take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
-		..()//uh, what the fuck, call your parent
-		//return // BULLETS CANNOT BLEED, HAINE
+//Any special things when it hits shit? No. Bleeding is handled in bullet_act() in damage.dm again.
+
 
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
@@ -156,6 +152,13 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
 
+	on_hit(atom/hit, angle, obj/projectile/P)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/H = hit
+			H.remove_stamina(round(P.power) * 5)
+		..()
+		
+
 /datum/projectile/bullet/nine_mm_NATO/burst
 	shot_number = 3
 	cost = 3
@@ -188,8 +191,6 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 		impact_image_effect("K", hit)
 
 /datum/projectile/bullet/rifle_762_NATO //like .308 but military
@@ -219,8 +220,6 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
@@ -283,25 +282,21 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 100
+	power = 200
 	dissipation_delay = 1
 	dissipation_rate = 25
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.5
+	ks_ratio = 0.4
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
 
 	on_hit(atom/hit)
-		if(ismob(hit) && hasvar(hit, "stunned"))
-			hit:stunned += 5
-		if (ishuman(hit))
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
-				impact_image_effect("K", hit)
-		return
+		if(ismob(hit))
+			hit.changeStatus("stunned", 5)
+		..()
 
 /datum/projectile/bullet/a12
 	name = "buckshot"
@@ -311,7 +306,7 @@ toxic - poisons
 	dissipation_delay = 3//2
 	dissipation_rate = 20
 	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
+	hit_type = DAMAGE_STAB
 	caliber = 0.72 // roughly
 	icon_turf_hit = "bhole"
 	implanted = /obj/item/implant/projectile/bullet_12ga
@@ -327,14 +322,11 @@ toxic - poisons
 				M.changeStatus("stunned", 50)
 				M.changeStatus("weakened", 5 SECONDS)
 #endif
-			if(proj.power > 70)
+			if(proj.power > 60) //let's reenable this
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
-
 	weak
 		power = 30
 
@@ -1119,8 +1111,6 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
