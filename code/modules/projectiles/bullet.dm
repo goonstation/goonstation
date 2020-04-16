@@ -648,6 +648,16 @@ toxic - poisons
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
 
+	knocker
+		name = "breaching round"
+		power = 10
+		on_hit(atom/hit)
+			if(istype(hit , /obj/machinery/door))
+				var/obj/machinery/door/D = hit
+				if(!D.cant_emag)
+					D.take_damage(D.health/2) //fuck up doors without needing ex_act(1)
+			explosion_new(null, get_turf(hit), 4, 1.75)
+
 	plasma_orb
 		name = "fusion orb"
 		damage_type = D_BURNING
