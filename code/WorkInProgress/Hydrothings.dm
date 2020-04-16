@@ -365,7 +365,7 @@ obj/item/gnomechompski/elf
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "hootolver"
 	w_class = 3.0
 	throw_speed = 2
@@ -1080,7 +1080,11 @@ obj/critter/madnessowl/switchblade
 			damage_type = ME.damtype
 		else
 			attack_force = W.force
-			damage_type = W.damtype
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
+					damage_type = "fire"
+				else
+					damage_type = "brute"
 		switch(damage_type)
 			if("fire")
 				src.health -= attack_force * src.firevuln

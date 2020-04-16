@@ -1,6 +1,6 @@
 /obj/item/medical
 	name = "medical pack"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	amount = 5
 	w_class = 1

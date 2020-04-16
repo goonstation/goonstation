@@ -57,7 +57,7 @@ var/list/rkey_descfluff = list(\
 	name = ""
 	desc = "You are not sure what this key is for."
 
-	icon = 'icons/obj/randomkeys.dmi'
+	icon = 'icons/obj/items/randomkeys.dmi'
 	icon_state = "null"
 
 	New(var/loca)
@@ -107,9 +107,9 @@ var/list/rkey_descfluff = list(\
 		if (findtext(name, "burning") || findtext(name, "searing") || findtext(name, "fire") || findtext(name, "sun"))
 			particleMaster.SpawnSystem(new /datum/particleSystem/fireTest(src))
 
-		overlays += image('icons/obj/randomkeys.dmi',src,"ring[rand(0,10)]")
-		overlays += image('icons/obj/randomkeys.dmi',src,"shaft[rand(0,9)]")
-		overlays += image('icons/obj/randomkeys.dmi',src,"teeth[rand(0,10)]")
+		overlays += image('icons/obj/items/randomkeys.dmi',src,"ring[rand(0,10)]")
+		overlays += image('icons/obj/items/randomkeys.dmi',src,"shaft[rand(0,9)]")
+		overlays += image('icons/obj/items/randomkeys.dmi',src,"teeth[rand(0,10)]")
 		return
 
 /obj/item/device/key/iridium

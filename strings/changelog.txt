@@ -1,4 +1,102 @@
-﻿
+
+(t)thu apr 16 20
+(u)Kubius
+(p)267
+(e)🗺|mapping
+(*)First batch of post-launch fixes to Kondaru. See pull request 267 for details.
+(t)wed apr 15 20
+(u)Kubius
+(p)247
+(e)🆕🗺|enhancement mapping
+(*)Kondaru (Kubius Map 3: Third Time's the Charm) has moved into official rotation.
+(*)Please provide suggestions on <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14335">the official Kondaru thread</a> and please report bugs through the Bug Report button in the upper right corner.
+(u)mbc
+(p)252
+(e)⚖🆕🔄|balance, enhancement, rework
+(*)Added blocking. Replaced classic passive-disarm-intent-blocking with a new block function tied to Resist.
+(*)You can block barehanded OR with a weapon. Weapons have block properties attached (you can see them on the tooltip) to tell you what kinds of damage they are effective against. You get a small armor boost while blocking, which is increased when you have an effective item matchup.
+(*)Added Resist hotkey (Z on default controls, C on /tg/)
+(u)Erinexx
+(p)112
+(e)🐛🎨|bug spriting
+(*)New hydro tray sprite!
+(*)Hydro trays now properly update visual water level without having to have a plant growing!
+(*)Hydro trays now properly display reagent-colour in the trays water pool!
+(u)Kubius
+(p)250
+(e)🐛🗺|bug mapping
+(+)Fixed habitat dome prefab - no longer shrouded in shadow.
+(u)Tarmunora
+(p)244
+(e)⚖|balance
+(*)Power picks, hammers, shovels now use standard small power cells for their internal charge. This makes them charge more quickly, as an aside. Additionally, attacking things that aren't asteroids with them will drain their cell much more quickly - if using one as a weapon, keep an eye on your charge!
+(u)Tarmunora
+(p)242
+(*)Rebalanced meatcleaver to fumble far less often on hit and removes stun on throw
+(u)trerri
+(+)Added extra supplies to the Oshan locker room.
+(t)tue apr 14 20
+(u)comradef191
+(+)Fixed up Mushroom a lot.
+(u)adharainspace
+(+)Fixed weird photocopier bugs and makes them less painful to use.
+(t)mon apr 13 20
+(u)Kubius
+(+)Batch one of small improvements and fixes to Kondaru.
+(u)Erinexx
+(+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
+(u)ASS_JAM
+(*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
+(*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
+(*)Moonlol - New wizard spell: Timestop. "This very handy dandy feature surely wont cause any runtimes"
+(*)Polivilas - Disables zipgun, adds a slamgun. "I will pay out 100k spacebux for better sprites - contact 2027#2027 on discord for more details."
+(*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
+(*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
+(*)UrsulaMajor - Updated Density, map smol.
+(u)Flaborized
+(*)Added a few small items to the surplus crate!
+(u)Tarmunora
+(*)On ass day you can shoot as fast as you can click.
+(*)Guns have a little bit of extra spread when drunk. Alcohol immunity mitigates this, to an extent
+(+)Added the ability to refill/combine ammo boxes by hitting them with a box of the same type
+(+)Changed pointblanking to hit with all the projectiles in a burst, not just one
+(+)Fixes up gunpoint grabs a little bit (should shoot more consistently)
+(t)sun apr 12 20
+(u)Goonstation Administration Team
+(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
+(u)Enfaeutchie
+(+)The Lawgiver now comes with an instructional pamphlet.
+(+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
+(u)Flaborized
+(*)Resprited a bunch of the ore in the game!
+(u)adharainspace
+(*)finally added cross-round bookshelves to every map you can normally vote in! have fun!
+(+)minor qol changes to printing press
+(u)Moonlol
+(*)Soup is now serve-able in the afterlife bar!
+(t)sat apr 11 20
+(u)2027
+(+)Adds acquiring methods to old medals.
+(u)Gannets
+(+)Removed Nuclear Operative assault rifle, marksman's rifle and light machine gun as options for item-arm surgery.
+(u)Erinexx
+(*)New doughnuts sprites!
+(*)New bagel sprites!
+(*)New english muffin sprite!
+(+)Added new tool inhand sprites
+(+)Tweaked outline on fries sprite (what the fuck was i thinking before)
+(+)Crowbars no longer pry floortiles while on harm intent, hopefully now we won't uproot the entire station floor when trying to beat people to death
+(u)Tarmunora
+(*)Cloakers now deactivate on picking things up, throwing, and unarmed specials
+(+)Chopping weapons work properly on bolted doors
+(u)RichardGere
+(+)Fixed a bug that prevented players from swapping out the egun's power cell
+(*)Energy weapons can now have their power cells swapped out by clicking on the cells with an energy gun in hand
+(+)Fixed a bug that prevented players from swapping energy weapons to their other empty hand
+(u)SaccharineChampion
+(+)Added more cans to Atlas engineering storage, most notably its first empty cans.
+(u)adharainspace
+(+)Quantum telescope locations now work again
 (t)thu apr 10 20
 (u)Gannets
 (+)Nuclear operatives now pull their names from 6 callsign pools, nato alphabet, melee weapons, colors, birds, mammals and moons.

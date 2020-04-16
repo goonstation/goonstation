@@ -276,7 +276,12 @@
 			damage_type = ME.damtype
 		else
 			attack_force = W.force
-			damage_type = W.damtype
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
+					damage_type = "fire"
+				else
+					damage_type = "brute"
+
 
 		//Simplified weapon properties for critters. Fuck this shit.
 		if(W.getProperty("searing"))

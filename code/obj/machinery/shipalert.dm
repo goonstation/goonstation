@@ -119,7 +119,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 
 /obj/item/tinyhammer
 	name = "teeny tiny hammer"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "tinyhammer"
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'

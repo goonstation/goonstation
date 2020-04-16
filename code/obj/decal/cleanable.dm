@@ -293,7 +293,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if (!src.pooled)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
-					if (O && prob(max(src.reagents.total_volume*5, 10)))
+					if (O && (!src.pooled) && prob(max(src.reagents.total_volume*5, 10)))
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
@@ -732,7 +732,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/balloon
 	name = "balloon"
 	desc = "The remains of a balloon."
-	icon = 'icons/obj/balloon.dmi'
+	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white_pop"
 
 /obj/decal/cleanable/writing

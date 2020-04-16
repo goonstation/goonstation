@@ -256,6 +256,7 @@ WET FLOOR SIGN
 	R.my_atom = src
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
+	BLOCK_ROD
 
 /obj/item/mop/disposing()
 	. = ..()
@@ -598,7 +599,7 @@ WET FLOOR SIGN
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"
 	desc = "Wait a minute! This isn't cheese..."
-	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cheese-sponge"
 	item_state = "sponge"
 
@@ -618,6 +619,10 @@ WET FLOOR SIGN
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 10
+
+	New()
+		..()
+		BLOCK_SOFT
 
 	dropped()
 		JOB_XP(usr, "Janitor", 2)

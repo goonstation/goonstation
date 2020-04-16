@@ -717,34 +717,17 @@
 
 /obj/window/auto/reinforced/indestructible
 	desc = "A window. A particularly robust one at that."
-	extreme
-		name = "extremely indestructible window"
-		desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
-		var/initialPos
-		anchored = 2
-		New()
-			..()
-			initialPos = loc
-		disposing()
-			SPAWN_DBG(0)
-				loc = initialPos
-				qdeled = 0// L   U    L
-		set_loc()
-			loc = initialPos
-			return
-		Del()
-			if(!initialPos)
-				return ..()
-			loc = initialPos//LULLE
+
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			ini_dir = 5//gurgle
 			dir = 5//grumble
+
 	smash(var/actuallysmash)
 		if(actuallysmash)
 			return ..()
-	attackby()
+
 	attack_hand()
 		src.visible_message("<span style=\"color:red\"><b>[usr]</b> knocks on [src].</span>")
 		playsound(src.loc, src.hitsound, 100, 1)
@@ -753,6 +736,8 @@
 		sleep(3)
 		playsound(src.loc, src.hitsound, 100, 1)
 		return
+
+	attackby()
 	hitby()
 	reagent_act()
 	bullet_act()
@@ -764,6 +749,29 @@
 	damage_piercing()
 	damage_slashing()
 	damage_blunt()
+
+/obj/window/auto/reinforced/indestructible/extreme
+	name = "extremely indestructible window"
+	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
+	var/initialPos
+	anchored = 2
+	New()
+		..()
+		initialPos = loc
+
+	disposing()
+		SPAWN_DBG(0)
+			loc = initialPos
+			qdeled = 0// L   U    L
+
+	set_loc()
+		loc = initialPos
+		return
+
+	Del()
+		if(!initialPos)
+			return ..()
+		loc = initialPos//LULLE
 
 /obj/window/auto/crystal
 	default_material = "plasmaglass"

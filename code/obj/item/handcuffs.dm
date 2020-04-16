@@ -1,6 +1,6 @@
 /obj/item/handcuffs
 	name = "handcuffs"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
@@ -104,6 +104,10 @@
 		return
 
 	return
+
+/obj/item/handcuffs/New()
+	..()
+	BLOCK_ROPE
 
 /obj/item/handcuffs/disposing()
 	if (ishuman(src.loc))

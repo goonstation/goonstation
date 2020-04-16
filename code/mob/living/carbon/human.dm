@@ -820,7 +820,7 @@
 	if (src.nodamage)
 		return tally
 
-	if (src.getStatusDuration("staggered"))
+	if (src.getStatusDuration("staggered") || src.hasStatus("blocking"))
 		tally += 0.5
 		//sprint disable handled in input.dm process_move, so that stamina isn't used up when running is impossible
 
@@ -1143,17 +1143,9 @@
 	if (!item) return
 
 	if (istype(item, /obj/item/grab))
-		var/obj/item/grab/grab = item
-		var/mob/M = grab.affecting
-		if (istype(M))
-			if ((grab.state < 1 && !(M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || M.stat)) || !isturf(src.loc))
-				src.visible_message("<span style=\"color:red\">[M] stumbles a little!</span>")
-				u_equip(grab)
-				return
-			M.lastattacker = src
-			M.lastattackertime = world.time
-			u_equip(grab)
-			item = M
+		var/obj/item/grab/G = item
+		item = G.handle_throw(src, target)
+		if (!item) return
 
 	u_equip(item)
 
@@ -1256,6 +1248,10 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
+				for (var/obj/item/cloaking_device/I in src)
+					if (I.active)
+						I.deactivate(src)
+						src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
 				src.throw_item(target, params)
 				return
 
@@ -1395,6 +1391,7 @@
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	M.lastattacked = src
+
 	attack_particle(M,src)
 
 	if (!ishuman(M) && !ismobcritter(M))
@@ -3513,3 +3510,13 @@
 	if (abilityHolder)
 		abilityHolder.set_loc_callback(newloc)
 	..()
+
+/mob/living/carbon/human/get_id()
+	. = ..()
+	if(.)
+		return
+	if(istype(src.wear_id, /obj/item/card/id))
+		return src.wear_id
+	if(istype(src.wear_id, /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = src.wear_id
+		return pda.ID_card

@@ -657,7 +657,7 @@
 /obj/item/slag_shovel
 	name = "slag shovel"
 	desc = "Used to remove slag from the arc smelter."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
@@ -665,3 +665,7 @@
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
+
+	New()
+		..()
+		BLOCK_ROD

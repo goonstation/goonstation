@@ -26,6 +26,7 @@ TRAYS
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
@@ -51,6 +52,7 @@ TRAYS
 	New()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
+		BLOCK_KNIFE
 		return
 
 	verb/rotate()
@@ -204,7 +206,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
-		if(prob(20))
+		if(prob(5))
 			user.changeStatus("weakened", 4 SECONDS)
 			user.visible_message("<span style='color:red'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
 			random_brute_damage(user, 20)
@@ -220,8 +222,6 @@ TRAYS
 			if(ismob(usr))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			C.changeStatus("weakened", 2 SECONDS)
-			C.force_laydown_standup()
 			random_brute_damage(C, 15, 1)
 			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
@@ -822,6 +822,10 @@ TRAYS
 
 	var/list/toppingdata = list() //(food_color)
 	var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll//= new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
+
+	New()
+		..()
+		BLOCK_BOOK
 
 	attackby(obj/item/W as obj, mob/user as mob)
 

@@ -4,7 +4,7 @@
 
 /obj/item/storage
 	name = "storage"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "box_blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "box"
@@ -321,10 +321,14 @@
 	// Don't use up more slots, certain job datums put items in the briefcase the player spawns with.
 	// And nobody needs six sheets of paper right away, realistically speaking.
 
+	New()
+		..()
+		BLOCK_BOOK
+
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
 	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
 	w_class = 4.0
@@ -356,7 +360,7 @@
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"
 	desc = "Huh..."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT

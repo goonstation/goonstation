@@ -30,7 +30,7 @@
 
 /obj/newmeteor/basketball
 	name = "basketball"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball_spin"
 	hits = 6
 
@@ -422,7 +422,7 @@
 
 /obj/item/bball_uplink
 	name = "station bounced radio"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 4.0

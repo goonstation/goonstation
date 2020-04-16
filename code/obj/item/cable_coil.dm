@@ -44,6 +44,7 @@
 		..(loc)
 		if (spawn_conductor_name)
 			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
+		BLOCK_ROPE
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span style=\"color:blue\">[user] begins coiling cable!</span>")

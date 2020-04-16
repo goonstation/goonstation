@@ -215,6 +215,7 @@ proc/build_syndi_buylist_cache()
 	item = /obj/item/clothing/head/bighat/syndicate
 	cost = 12
 	desc = "Think you're tough shit buddy?"
+	not_in_crates = 1 //see /datum/syndicate_buylist/surplus/bighat
 
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
@@ -825,6 +826,13 @@ This is basically useless for anyone but miners.
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/wiretap
+	name = "Wiretap Radio Upgrade"
+	item = /obj/item/device/radio_upgrade
+	cost = 3
+	desc = "A small device that may be installed in a headset to grant access to all station channels."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus
@@ -895,11 +903,11 @@ This is basically useless for anyone but miners.
 	desc = "Honk."
 	blockedmode = list(/datum/game_mode/spy)
 
-/datum/syndicate_buylist/surplus/turboflash
-	name = "Flash/cell assembly"
-	item = /obj/item/device/flash/turbo
+/datum/syndicate_buylist/surplus/turboflash_box
+	name = "Flash/cell assembly box"
+	item = /obj/item/storage/box/turbo_flash_kit
 	cost = 1
-	desc = "A common stun weapon with a power cell hastily wired into it. Looks dangerous."
+	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
 	blockedmode = list(/datum/game_mode/spy)
 
 /datum/syndicate_buylist/surplus/syndicate_armor
@@ -932,6 +940,27 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A pair of surplus cybereyes that can access the Security HUD system. Operating table not included."
 	blockedmode = list(/datum/game_mode/revolution)
+
+/datum/syndicate_buylist/surplus/holographic_disguiser
+	name = "Holographic Disguiser"
+	item = /obj/item/device/disguiser
+	cost = 1
+	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
+	blockedmode = list(/datum/game_mode/revolution)
+
+/datum/syndicate_buylist/surplus/emaghypo
+	name = "Hacked Hypospray"
+	item = /obj/item/reagent_containers/hypospray/emagged
+	cost = 1
+	desc = "A special hacked hypospray, capable of holding any chemical!"
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/surplus/sarin_grenade
+	name = "Sarin Grenade"
+	item = /obj/item/chem_grenade/sarin
+	cost = 1
+	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 

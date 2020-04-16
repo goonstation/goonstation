@@ -746,7 +746,7 @@
 		return
 
 /obj/machinery/sleeper/compact
-	name = "Compact sleeper"
+	name = "Compact Sleeper"
 	desc = "Your usual sleeper, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"

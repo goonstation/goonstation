@@ -323,7 +323,10 @@
 #define SLEEVELESS 64			// ain't got no sleeeeeves
 #define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
 #define IS_JETPACK 256
-#define EQUIPPED_WHILE_HELD 512	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
+
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -758,6 +761,43 @@
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
+
+
+//some different generalized block weapon shapes that i can re use instead of copy paste
+#define BLOCK_ALL do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+	setProperty("block_stab", 1);\
+	setProperty("block_burn", 1);\
+} while (FALSE)
+#define BLOCK_LARGE do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+	setProperty("block_stab", 1);\
+} while (FALSE)
+#define BLOCK_SWORD BLOCK_LARGE
+
+#define BLOCK_ROD do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+} while (FALSE)
+#define BLOCK_TANK do {\
+	setProperty("block_blunt", 1);\
+	setProperty("block_cut", 1);\
+	setProperty("block_burn", 1);\
+} while (FALSE)
+#define BLOCK_SOFT do {\
+	setProperty("block_stab", 1);\
+	setProperty("block_burn", 1);\
+} while (FALSE)
+#define BLOCK_KNIFE do {\
+	setProperty("block_cut", 1);\
+	setProperty("block_stab", 1);\
+} while (FALSE)
+#define BLOCK_BOOK do {\
+	setProperty("block_stab", 1);\
+} while (FALSE)
+#define BLOCK_ROPE BLOCK_BOOK
 
 // Process Scheduler defines
 // Process status defines

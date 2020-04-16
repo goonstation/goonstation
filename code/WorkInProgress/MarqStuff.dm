@@ -330,7 +330,7 @@
 
 /obj/item/arrow
 	name = "steel-headed arrow"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	// placeholder
@@ -491,7 +491,7 @@
 
 /obj/item/arrowhead
 	name = "arrowhead"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "arrowhead"
 
 	examine()
@@ -519,7 +519,7 @@
 
 /obj/item/quiver
 	name = "quiver"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/back.dmi'
 	item_state = "quiver"
@@ -626,7 +626,7 @@
 
 /obj/item/gun/bow
 	name = "bow"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "bow"
 	item_state = "bow"

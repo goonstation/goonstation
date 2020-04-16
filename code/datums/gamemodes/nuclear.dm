@@ -94,6 +94,12 @@
 	var/station_only = prob(40)
 	target_locations = list()
 	for(var/area/A in world)
+		var/has_turfs = 0
+		for (var/turf/T in A)
+			has_turfs = 1
+			break
+		if(!has_turfs)
+			break
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))

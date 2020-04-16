@@ -13,7 +13,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 /obj/item/remote/porter
 	name = "Remote"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	desc = "You shouldn't be able to see this!"
 	icon_state = "locator"
 	item_state = "electronic"

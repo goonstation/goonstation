@@ -744,10 +744,14 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"
 	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "yoyo"
 	item_state = "yoyo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_ROPE
 
 /obj/spawner/ancient_robot_artifact
 	name = "robot artifact spawn"
@@ -770,7 +774,7 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/unkill_shield
 	name = "Shield of Souls"
 	desc = "It appears to be a metal shield with blue LEDs glued to it."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "magic"
 
 	pickup(mob/user)
@@ -941,10 +945,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				event_iomoon_blowout()
 				return
 
-			if (I.damtype == "brute")
-				src.health -= I.force * 0.50
-			else
+			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
+			else
+				src.health -= I.force * 0.50
 
 
 			if (src.health <= 0 && active != -1)
@@ -1038,10 +1042,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return
 
 			user.lastattacked = src
-			if (I.damtype == "brute")
-				src.health -= I.force * 0.50
-			else
+			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
+			else
+				src.health -= I.force * 0.50
 
 			user.visible_message("<span style=\"color:red\"><b>[user] bonks [src] with [I]!</b></span>","<span style=\"color:red\"><b>You hit [src] with [I]!</b></span>")
 			if (src.health <= 0)

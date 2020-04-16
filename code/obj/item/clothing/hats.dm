@@ -174,14 +174,14 @@
 
 		if (src.on)
 			src.force = 10
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
 			if (!(src in processing_items))
 				processing_items.Add(src)
 		else
 			src.force = 3
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()
 

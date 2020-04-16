@@ -2,7 +2,7 @@
 /obj/item/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
 	w_class = 1
@@ -34,7 +34,7 @@
 
 			New()
 				..()
-				src.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 				src.grenade = new /obj/item/chem_grenade/cleaner(src)
 				return
 
@@ -87,7 +87,7 @@
 				CG.set_loc(src)
 				user.show_text("You attach [CG]'s detonator to [src].", "blue")
 				src.grenade = CG
-				src.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
@@ -99,7 +99,7 @@
 				OG.set_loc(src)
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
 				src.grenade_old = OG
-				src.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
@@ -111,7 +111,7 @@
 				PB.set_loc(src)
 				user.show_text("You attach [PB]'s detonator to [src].", "blue")
 				src.pipebomb = PB
-				src.overlays += image('icons/obj/weapons.dmi', "trap-pipebomb")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
@@ -122,7 +122,7 @@
 			S.set_loc(src)
 			user.show_text("You attach [S]'s detonator to [src].", "blue")
 			src.signaler = S
-			src.overlays += image('icons/obj/weapons.dmi', "trap-signaler")
+			src.overlays += image('icons/obj/items/weapons.dmi', "trap-signaler")
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing("bombing", user, null, "rigs [src] with [S] at [log_loc(user)].")
@@ -178,22 +178,22 @@
 				user.show_text("You detach [src.grenade].", "blue")
 				src.grenade.set_loc(get_turf(src))
 				src.grenade = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 			else if (src.grenade_old)
 				user.show_text("You detach [src.grenade_old].", "blue")
 				src.grenade_old.set_loc(get_turf(src))
 				src.grenade_old = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 			else if (src.pipebomb)
 				user.show_text("You detach [src.pipebomb].", "blue")
 				src.pipebomb.set_loc(get_turf(src))
 				src.pipebomb = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-pipebomb")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			else if (src.signaler)
 				user.show_text("You detach [src.signaler].", "blue")
 				src.signaler.set_loc(get_turf(src))
 				src.signaler = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-signaler")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-signaler")
 			else if (src.pie)
 				user.show_text("You remove [src.pie] from [src].", "blue")
 				src.overlays -= image(src.pie.icon, src.pie.icon_state)
@@ -275,17 +275,17 @@
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
 			src.grenade = null
-			src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.grenade_old)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
 			src.grenade_old.prime()
 			src.grenade_old = null
-			src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.pipebomb)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			src.overlays -= image('icons/obj/weapons.dmi', "trap-pipebomb")
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 
@@ -309,7 +309,7 @@
 /obj/item/mousetrap_roller
 	name = "mousetrap roller assembly"
 	desc = "A mousetrap bomb attached to a set of wheels. Looks like the mousetrap going off would send it rolling. Huh."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
 	w_class = 1
@@ -330,7 +330,7 @@
 		// Fallback in case something goes wrong.
 		if (!src.mousetrap.grenade && !src.mousetrap.grenade_old && !src.mousetrap.pipebomb)
 			src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
-			src.mousetrap.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+			src.mousetrap.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		if (src.mousetrap.grenade)
 			src.payload = src.mousetrap.grenade.name

@@ -307,12 +307,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.health = initial(health)
 				src.visible_message("<span style=\"color:red\">[user] repairs [src]!</span>", "<span style=\"color:red\">You repair [src].</span>")
 		else
-			switch(W.damtype)
-				if("fire")
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
 					src.health -= W.force * 0.75
-				if("brute")
-					src.health -= W.force * 0.5
 				else
+					src.health -= W.force * 0.5
 			if (src.health <= 0)
 				src.explode()
 			else if (W.force && (!iscarbon(src.target) || (src.mode != SECBOT_HUNT)))

@@ -25,9 +25,9 @@
 	var/book_info = "" //what text will the made books have?
 	var/book_info_raw = "" // raw version of the text, for editing.
 	var/book_name = "" //whats the made books name?
-	var/info_len_lim = 64 //64 character titles/author names max
+	var/const/info_len_lim = 64 //64 character titles/author names max
 	var/book_author = "" //who made the book?
-	var/ink_color = "" //what color is the text written in?
+	var/ink_color = "#000000" //what color is the text written in?
 	var/list/cover_designs = list("Grey", "Dull red", "Red", "Blue", "Green", "Yellow", "Dummies", "Robuddy", "Skull", "Latch", "Bee",\
 	"Albert", "Surgery", "Law", "Nuke", "Rat", "Pharma", "Bar") //list of covers to choose from
 	var/list/non_writing_icons = list("bible") //just the bible for now. !!!add covers to this list if their icon file isnt icons/obj/writing.dmi!!!
@@ -380,6 +380,8 @@
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
 								symbol_colorable = 0
+							else
+								cover_symbol = "none"
 
 						if ("colorable")
 							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in colorable_symbols
@@ -389,12 +391,16 @@
 								if (color_sel)
 									symbol_color = color_sel
 									symbol_colorable = 1
+							else
+								cover_symbol = "none"
 
 						if ("alchemical")
 							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alchemical_symbols
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
 								symbol_colorable = 0
+							else
+								cover_symbol = "none"
 
 						if ("alphanumeric")
 							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alphanumeric_symbols
@@ -404,6 +410,8 @@
 								if (color_sel)
 									symbol_color = color_sel
 									symbol_colorable = 1
+							else
+								cover_symbol = "none"
 
 					var/f_cat_sel = input("What type of flair would you like?", "Cover Control") as null|anything in list("Standard", "Colorable")
 
@@ -412,6 +420,8 @@
 						if (flair_sel)
 							cover_flair = lowertext(flair_sel)
 							flair_colorable = 0
+						else
+							cover_flair = "none"
 
 					else if (f_cat_sel == "Colorable")
 						var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in colorable_flairs
@@ -421,6 +431,8 @@
 							if (color_sel)
 								flair_color = color_sel
 								flair_colorable = 1
+						else
+							cover_flair = "none"
 
 			if ("view information")
 				if (book_author)
@@ -458,24 +470,34 @@
 			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
 			update_icon()
 
-			var/obj/item/paper/book/B = new(get_turf(src))
+			var/obj/item/paper/book/custom/B = new(get_turf(src))
 
 			if (book_name)
-				B.name = book_name
+				B.name = src.book_name
 			else
 				B.name = "unnamed book"
 
 			B.desc = "A book printed by a machine! The future is now! (if you live in the 15th century)"
 			if (book_author)
-				B.desc += " It says it was written by [book_author]."
+				B.desc += " It says it was written by [src.book_author]."
 			else
 				B.desc += " It says it was written by... anonymous."
 
-			if (book_cover)
-				if (book_cover == "custom")
-					B.icon = 'icons/obj/custom_books.dmi'
-					B.icon_state = "paper"
-					if (cover_color) //should always be yes
+			if (src.book_cover)
+				if (src.book_cover == "custom")
+					B.custom_cover = 1
+					B.cover_color = src.cover_color
+					B.cover_symbol = src.cover_symbol
+					B.symbol_color = src.symbol_color
+					B.cover_flair = src.cover_flair
+					B.flair_color = src.cover_flair
+					B.symbol_colorable = src.symbol_colorable
+					B.flair_colorable = src.flair_colorable
+				B.info = src.book_info
+				B.ink_color = src.ink_color
+				B.book_cover = src.book_cover
+				B.build_custom_book()
+/*					if (cover_color) //should always be yes
 						var/image/I = SafeGetOverlayImage("cover", B.icon, "base-colorable")
 						I.color = cover_color
 						B.UpdateOverlays(I, "cover")
@@ -493,18 +515,14 @@
 					if (book_cover in non_writing_icons) //for our non-writing.dmi icons
 						switch (book_cover)
 							if ("bible")
-								B.icon = 'icons/obj/storage.dmi'
+								B.icon = 'icons/obj/items/storage.dmi'
 								B.icon_state = book_cover
 					else
 						B.icon_state = book_cover
 			else
 				B.icon_state = "book0"
-
 			if (book_info)
-				if (ink_color)
-					B.info = "<span style=\"color:[ink_color]\">[book_info]</span>"
-				else
-					B.info = book_info
+				B.info = "<span style=\"color:[src.ink_color]\">[src.book_info]</span>"*/
 
 			books_to_make--
 			ink_level -= 2

@@ -1,7 +1,7 @@
 /obj/machinery/cashreg
 	name = "credit transfer device"
 	desc = "Sends funds directly to a host ID."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "scanner"
 	anchored = 1
 	mats = 6

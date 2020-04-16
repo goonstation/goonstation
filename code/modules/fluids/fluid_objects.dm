@@ -425,6 +425,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_LARGE
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))

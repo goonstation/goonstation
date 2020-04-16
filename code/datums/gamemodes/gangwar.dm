@@ -570,7 +570,7 @@
 /obj/item/spray_paint
 	name = "Spraypaint Can"
 	desc = "A can of spray paint."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -627,7 +627,7 @@
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
 	id = "spray_tag"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
 	var/area/target_area
@@ -1029,11 +1029,12 @@
 
 		user.lastattacked = src
 
-		if (W.damtype == "brute")
-			take_damage(W.force)
-			user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
-		else
-			user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+			else
+				take_damage(W.force)
+				user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
@@ -1586,7 +1587,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 // /obj/item/chem_grenade/incendiary
 // 	name = "incendiary grenade"
 // 	desc = "A rather volatile grenade that creates a small fire."
-// 	icon = 'icons/obj/grenade.dmi'
+// 	icon = 'icons/obj/items/grenade.dmi'
 // 	icon_state = "incendiary"
 // 	icon_state_armed = "incendiary1"
 // 	stage = 2

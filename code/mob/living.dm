@@ -287,6 +287,8 @@
 			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
+		if ("resist")
+			src.resist()
 		else
 			return ..()
 
@@ -1180,22 +1182,23 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return
 
 	var/turf/T = get_turf(src)
-	if (T.active_liquid)
+	if (T.active_liquid && src.lying)
 		T.active_liquid.HasEntered(src, T)
 		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
 
 	if (!src.stat && !src.restrained())
+		var/struggled_grab = 0
 		if (src.canmove)
 			for (var/obj/item/grab/G in src.grabbed_by)
 				G.do_resist()
-				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+				struggled_grab = 1
 		else
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.stunned_targets_can_break())
 					G.do_resist()
-					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+					struggled_grab = 1
 
-		if (!src.grabbed_by || !src.grabbed_by.len)
+		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
 				src.buckled.attack_hand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
@@ -1204,8 +1207,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))
-					for (var/mob/O in AIviewers(src, null))
-						O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+
+					if (src.grab_block())
+						src.last_resist = world.time + 5
+					else
+						for (var/mob/O in AIviewers(src, null))
+							O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+
 	return 0
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)
 	var/atom/oldloc = src.loc

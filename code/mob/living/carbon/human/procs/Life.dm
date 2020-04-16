@@ -1169,7 +1169,7 @@
 
 		return protection
 
-	get_melee_protection(zone)
+	get_melee_protection(zone, damage_type)
 		if (!src)
 			return 0
 		var/protection = 0
@@ -1177,7 +1177,7 @@
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
 		if(a_zone=="All")
-			protection=(5*get_melee_protection("chest")+get_melee_protection("head"))/6
+			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
 		else
 			// Resistance from Clothing
 			for(var/atom in src.get_equipped_items())
@@ -1188,9 +1188,17 @@
 					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
 					var/curr = C.getProperty("meleeprot")
 					protection = max(curr, protection)
+
+			var/obj/item/grab/block/G = src.check_block()
+			if (G)
+				protection += 1
+				if (G.can_block(damage_type))
+					if (G != src.equipped()) // bare handed block is less protective
+						protection += 1
+
 		return protection
 
-	proc/get_deflection()
+	get_deflection()
 		if (!src)
 			return 0
 

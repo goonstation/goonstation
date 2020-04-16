@@ -977,6 +977,16 @@ toxic - poisons
 	dissipation_delay = 3
 	damage_type = D_KINETIC
 
+/datum/projectile/bullet/nails
+	name = "nails"
+	sname = "nails"
+	icon_state = "trace"
+	power = 4
+	dissipation_rate = 3
+	dissipation_delay = 4
+	damage_type = D_SLASHING
+	casing = /obj/item/casing/shotgun_gray
+
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0

@@ -1,6 +1,6 @@
 /obj/item/pinpointer
 	name = "pinpointer"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "disk_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	w_class = 2.0
@@ -67,7 +67,7 @@
 
 /obj/item/idtracker
 	name = "ID tracker"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "id_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	w_class = 2.0
@@ -172,7 +172,7 @@
 
 /obj/item/bloodtracker
 	name = "BloodTrak"
-	icon = 'icons/obj/bloodtrak.dmi'
+	icon = 'icons/obj/items/bloodtrak.dmi'
 	icon_state = "blood_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	w_class = 2.0

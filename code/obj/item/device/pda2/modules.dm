@@ -98,7 +98,7 @@
 	var/lumlevel = 0.5 //How bright are we?
 	var/datum/light/light
 	abilities = list(/obj/ability_button/pda_flashlight_toggle)
-	var/flashlight_icon = 'icons/obj/pda.dmi'
+	var/flashlight_icon = 'icons/obj/items/pda.dmi'
 	var/flashlight_icon_state = "flashlight"
 	var/image/lensflare
 	var/use_simple_light = 1
@@ -207,7 +207,7 @@
 /obj/item/device/pda_module/flashlight/high_power
 	name = "high-power flashlight module"
 	lumlevel = 1
-	flashlight_icon = 'icons/obj/pda.dmi'
+	flashlight_icon = 'icons/obj/items/pda.dmi'
 	flashlight_icon_state = "flashlight-2"
 	use_simple_light = 0
 
