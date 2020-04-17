@@ -2,10 +2,11 @@
 name: Bug report
 about: Report a bug!
 title: ''
-labels: bug
 assignees: ''
 
 ---
+<!-- To automatically tag this issue, add the uppercase label(s) surrounded by brackets below, for example: [BUG - MAJOR] -->
+[BUG]
 
 **Describe the bug**
 A clear and concise description of what the bug is.
