@@ -5,7 +5,7 @@ title: ''
 assignees: ''
 
 ---
-<!-- To automatically tag this issue, add the uppercase label(s) surrounded by brackets below, for example: [BUG - MAJOR] -->
+<!-- To automatically tag this issue, add the uppercase label(s) surrounded by brackets below, for example: [LABEL] -->
 [BUG]
 
 **Describe the bug**
