@@ -311,7 +311,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 				if (src.path && src.path.len)
 					step_to(src, src.path[1])
 					src.path -= src.path[1]
-					sleep(3)
+					sleep(0.3 SECONDS)
 
 			if (get_turf(src.loc) == get_turf(src.target))
 				do_the_thing()

@@ -42,7 +42,7 @@
 			SPAWN_DBG( 0 )
 				M.open()
 				return
-	sleep(20)
+	sleep(2 SECONDS)
 
 	//src.connected.drive()		*****RM from 40.93.3S
 	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
@@ -50,7 +50,7 @@
 			M.power = src.connected.power
 			M.drive()
 
-	sleep(50)
+	sleep(5 SECONDS)
 	for(var/obj/machinery/door/poddoor/M in doors)
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )

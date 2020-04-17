@@ -1386,7 +1386,7 @@
 			src.highlightMap = 0
 			displayingAlertFlag = 1
 			src.updateUsrDialog(REASON_FIELDS|REASON_HIGHLIGHT)
-			sleep(10)
+			sleep(1 SECOND)
 
 			DEBUG_OUT(5)
 			src.last_reset = world.time
@@ -1395,7 +1395,7 @@
 			src.old_host_id = null
 
 			src.post_status(old, "command","term_disconnect")
-			sleep(5)
+			sleep(0.5 SECONDS)
 			DEBUG_OUT(6)
 			src.post_status(old, "command", "term_connect", "device", src.device_tag)
 

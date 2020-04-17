@@ -117,7 +117,7 @@ var/global/derelict_mode = 0
 			return
 
 		server_kicked_over = 1
-		sleep(10)
+		sleep(1 SECOND)
 		src.icon_state = "serverf"
 		src.visible_message("<span style=\"color:red\"><b>[src] bursts into flames!</b><br>UHHHHHHHH</span>")
 		SPAWN_DBG(0)
@@ -147,15 +147,15 @@ var/global/derelict_mode = 0
 					SPAWN_DBG(rand(50,90))
 						H.emote("scream")
 			creepify_station() // creep as heck
-			sleep(125)
+			sleep(12.5 SECONDS)
 			var/datum/hud/cinematic/cinematic = new
 			for (var/client/C in clients)
 				cinematic.add_client(C)
 			cinematic.play("sadbuddy")
-			sleep(10)
+			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
 
-			sleep(150)
+			sleep(15 SECONDS)
 			logTheThing("diary", null, null, "Rebooting due to completion of solarium quest.", "game")
 			Reboot_server()
 

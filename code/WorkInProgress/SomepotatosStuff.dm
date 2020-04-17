@@ -111,7 +111,7 @@
 			var/matrix/xf = matrix()
 			img.transform = xf/2
 			animate(img,alpha=255,transform=xf,time=2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"

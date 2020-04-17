@@ -225,7 +225,7 @@
 						flick("vendbreak", src)
 						SPAWN_DBG(0.8 SECONDS)
 							src.icon_state = "fallen"
-							sleep(70)
+							sleep(7 SECONDS)
 							playsound(src.loc, "sound/effects/Explosion2.ogg", 100, 1)
 
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
@@ -233,7 +233,7 @@
 
 							invisibility = 100
 							set_density(0)
-							sleep(150)
+							sleep(15 SECONDS)
 							qdel(delme)
 							qdel(src)
 							return

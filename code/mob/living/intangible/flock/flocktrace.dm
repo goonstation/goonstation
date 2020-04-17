@@ -1,7 +1,7 @@
 /////////////////
 // FLOCKTRACE
 /////////////////
-// Unlike the flockmind, when player drones exit their corporeal body to jump into another one, 
+// Unlike the flockmind, when player drones exit their corporeal body to jump into another one,
 // they're tiny little flickers of thought.
 /mob/living/intangible/flock/trace
 	name = "weird radio ghost bird"
@@ -25,14 +25,14 @@
 	var/state = list()
 	state["update"] = "partition"
 	state["ref"] = "\ref[src]"
-	state["name"] = src.real_name	
+	state["name"] = src.real_name
 	var/mob/living/critter/flock/host = src.loc
-	if(istype(host))		
+	if(istype(host))
 		state["host"] = host.real_name
 		state["health"] = round(host.get_health_percentage()*100)
 	else
 		state["host"] = null
-		state["health"] = 100		
+		state["health"] = 100
 	. = state
 
 
@@ -77,7 +77,7 @@
 	src.canmove = 0
 	flick("flocktrace-death", src)
 	src.ghostize()
-	sleep(20) // wait for the animation to finish
+	sleep(2 SECONDS) // wait for the animation to finish
 	qdel(src)
 
 /mob/living/intangible/flock/trace/ghostize()

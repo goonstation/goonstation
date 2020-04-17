@@ -93,7 +93,7 @@
 							else
 								aborted = 1
 								return
-						sleep(1)
+						sleep(0.1 SECONDS)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

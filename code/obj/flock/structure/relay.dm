@@ -92,7 +92,7 @@
 		boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
 		boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> Hostile transmission intercepted. Sending emergency shuttle.</span>")
 		boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
-	sleep(20)
+	sleep(2 SECONDS)
 	for(var/x = -2 to 2)
 		for(var/y = -2 to 2)
 			flockdronegibs(locate(location.x + x, location.y + y, location.z))

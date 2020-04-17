@@ -523,7 +523,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 		if(halt)
 			break
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	operating = 0
 	for(var/mob/M in viewers(1, src.loc))

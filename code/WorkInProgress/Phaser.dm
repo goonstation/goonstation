@@ -427,7 +427,7 @@ var/const/PHASER_SNIPER = 256
 							if(M == O.origin) continue
 							SPAWN_DBG(0)
 								step_towards(M,myloc)
-								sleep(5)
+								sleep(0.5 SECONDS)
 								step_towards(M,myloc)
 
 					var/obj/projectile/PBul = unpool(/obj/projectile)
@@ -444,7 +444,7 @@ var/const/PHASER_SNIPER = 256
 							var/dir_old = O.dir
 							SPAWN_DBG(0)
 								step(B,dir_old)
-								sleep(3)
+								sleep(0.3 SECONDS)
 								step(B,dir_old)
 
 					for(var/obj/critter/C in view(O.range,O.loc))
@@ -453,7 +453,7 @@ var/const/PHASER_SNIPER = 256
 							var/dir_old = O.dir
 							SPAWN_DBG(0)
 								step(C,dir_old)
-								sleep(3)
+								sleep(0.3 SECONDS)
 								step(C,dir_old)
 
 					qdel(PBul)
@@ -487,7 +487,7 @@ var/const/PHASER_SNIPER = 256
 							SPAWN_DBG(0)
 								M.weakened += 2
 								step(M,dir_old)
-								sleep(3)
+								sleep(0.3 SECONDS)
 								step(M,dir_old)
 
 					switch(O.power)
@@ -524,7 +524,7 @@ var/const/PHASER_SNIPER = 256
 
 					qdel(O)
 					return
-				sleep(1)
+				sleep(0.1 SECONDS)
 			return
 
 	Topic(href, href_list)

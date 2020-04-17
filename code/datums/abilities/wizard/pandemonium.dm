@@ -159,7 +159,7 @@
 	for (var/mob/living/carbon/human/M in mobs)
 		if (M.ears) boutput(M, "<span style=\"color:red\">Your headset speaker suddenly bursts into weird static!</span>")
 	signal_loss += 100
-	sleep(100)
+	sleep(10 SECONDS)
 	signal_loss -= 100
 
 /mob/living/proc/PAND_Grilles(var/protectuser = 1)

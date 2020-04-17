@@ -77,7 +77,7 @@
 
 			the_user.client.images += cableimgs
 
-			sleep(10)*/
+			sleep(1 SECOND)*/
 
 /obj/item/device/voltron
 	name = "Voltron"
@@ -176,7 +176,7 @@
 						img.loc = null
 						img.alpha = 0
 					overlay_state = 0
-				sleep(10)
+				sleep(1 SECOND)
 			else
 				overlay_state = 1
 				for(var/image/img in cableimgs)
@@ -212,7 +212,7 @@
 					var/mob/old_trg = target
 					deactivate()
 					old_trg.changeStatus("stunned", 200)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/deactivate()
 		if(activating) return
@@ -234,7 +234,7 @@
 		target.transforming = 1
 		O.icon = 'icons/effects/effects.dmi'
 		O.icon_state = "energytwirlout"
-		sleep(5)
+		sleep(0.5 SECONDS)
 		target.transforming = 0
 		qdel(O)
 
@@ -263,7 +263,7 @@
 			usr:transforming = 1
 			O.icon = 'icons/effects/effects.dmi'
 			O.icon_state = "energytwirlin"
-			sleep(5)
+			sleep(0.5 SECONDS)
 			usr:transforming = 0
 			qdel(O)
 

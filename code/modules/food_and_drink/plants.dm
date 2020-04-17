@@ -59,7 +59,7 @@
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 			throw_impact(get_turf(src))
@@ -570,7 +570,7 @@
 				return
 			already_burst = 1
 			src.icon_state = "[base_icon_state]-burst"
-			sleep(1)
+			sleep(0.1 SECONDS)
 			var/n_slices = rand(1, 5)
 			var/amount_per_slice = 0
 			if(src.reagents)
@@ -597,7 +597,7 @@
 					SPAWN_DBG(0)
 						slice.throw_at(target, rand(0, 10), rand(1, 4))
 				n_slices--
-			sleep(1)
+			sleep(0.1 SECONDS)
 			qdel(src)
 		return
 

@@ -50,7 +50,7 @@
 					if(B)
 						B.Life()
 			count++
-			sleep(50)
+			sleep(5 SECONDS)
 
 	ex_act(severity)
 		switch(severity)

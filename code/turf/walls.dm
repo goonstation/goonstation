@@ -329,7 +329,7 @@
 
 		boutput(user, "<span style=\"color:blue\">Now disassembling the outer wall plating.</span>")
 
-		sleep(100)
+		sleep(10 SECONDS)
 
 		if ((user.loc == T && user.equipped() == W))
 			boutput(user, "<span style=\"color:blue\">You disassembled the outer wall plating.</span>")
@@ -414,7 +414,7 @@
 		if (src.d_state == 2)
 			boutput(user, "<span style=\"color:blue\">Slicing metal cover.</span>")
 			playsound(src, "sound/items/Welder.ogg", 100, 1)
-			sleep(60)
+			sleep(6 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
 				boutput(user, "<span style=\"color:blue\">You removed the metal cover.</span>")
@@ -425,7 +425,7 @@
 		else if (src.d_state == 5)
 			boutput(user, "<span style=\"color:blue\">Removing support rods.</span>")
 			playsound(src, "sound/items/Welder.ogg", 100, 1)
-			sleep(100)
+			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
 				var/atom/A = new /obj/item/rods( src )
@@ -448,7 +448,7 @@
 			var/turf/T = user.loc
 			boutput(user, "<span style=\"color:blue\">Detaching support rods.</span>")
 			playsound(src, "sound/items/Ratchet.ogg", 100, 1)
-			sleep(40)
+			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
 				boutput(user, "<span style=\"color:blue\">You detach the support rods.</span>")
@@ -471,7 +471,7 @@
 			var/turf/T = user.loc
 			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			boutput(user, "<span style=\"color:blue\">Removing support lines.</span>")
-			sleep(40)
+			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 2
 				boutput(user, "<span style=\"color:blue\">You removed the support lines.</span>")
@@ -484,7 +484,7 @@
 			var/turf/T = user.loc
 			boutput(user, "<span style=\"color:blue\">Prying cover off.</span>")
 			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
-			sleep(100)
+			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
 				boutput(user, "<span style=\"color:blue\">You removed the cover.</span>")
@@ -495,7 +495,7 @@
 			var/turf/T = user.loc
 			boutput(user, "<span style=\"color:blue\">Prying outer sheath off.</span>")
 			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
-			sleep(100)
+			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				boutput(user, "<span style=\"color:blue\">You removed the outer sheath.</span>")
 				dismantle_wall()
@@ -524,7 +524,7 @@
 		var/obj/item/sheet/S = W
 		var/turf/T = user.loc
 		boutput(user, "<span style=\"color:blue\">Repairing wall.</span>")
-		sleep(100)
+		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == S))
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)

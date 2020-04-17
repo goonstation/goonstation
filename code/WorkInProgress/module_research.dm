@@ -550,7 +550,7 @@
 		var/break_timer = 0
 		while (locked)
 			break_timer++
-			sleep(10)
+			sleep(1 SECOND)
 			if (break_timer > 5)
 				locked = 0
 		locked = 1

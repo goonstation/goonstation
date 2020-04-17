@@ -181,7 +181,7 @@
 						var/in_x = I.pixel_x
 						for(var/d = 0; d < delay; d++)
 							if(I) I.pixel_x = in_x + rand(-1, 1)
-							sleep(1)
+							sleep(0.1 SECONDS)
 						if(I) I.pixel_x = in_x
 					sleep(delay)
 					if(I && I.loc == src.loc)
@@ -470,9 +470,9 @@
 
 		air_contents.zero()
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -658,7 +658,7 @@
 			if (AM.anchored || AM.loc != target)
 				continue
 			AM.set_loc(src)
-			sleep(5)
+			sleep(0.5 SECONDS)
 		src.visible_message("[user] deposits [target]'s contents into [src].")
 		update()
 

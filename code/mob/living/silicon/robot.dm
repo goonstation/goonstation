@@ -437,7 +437,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -449,7 +449,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 

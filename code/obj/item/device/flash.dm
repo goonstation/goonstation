@@ -123,7 +123,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
@@ -226,7 +226,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	// Flash target mobs.

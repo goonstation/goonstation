@@ -26,7 +26,7 @@
 	/*if(malf_ai.len < 1)
 		boutput(world, "Uh oh, its malfunction and there is no AI! Please report this.")
 		boutput(world, "Rebooting world in 5 seconds.")
-		sleep(50)
+		sleep(5 SECONDS)
 		world.Reboot()
 		return*/
 

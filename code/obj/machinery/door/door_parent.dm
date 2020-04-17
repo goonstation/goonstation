@@ -262,7 +262,7 @@
 		last_used = world.time
 		src.operating = -1
 		flick(text("[]_spark", src.icon_base), src)
-		sleep(6)
+		sleep(0.6 SECONDS)
 		open()
 		return 1
 	return 0
@@ -271,7 +271,7 @@
 	if (src.operating != -1)
 		return 0
 	src.operating = 0
-	sleep(6)
+	sleep(0.6 SECONDS)
 	close()
 	return 1
 
@@ -586,7 +586,7 @@
 
 /obj/machinery/door/proc/opened()
 	if(autoclose)
-		sleep(150)
+		sleep(15 SECONDS)
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else

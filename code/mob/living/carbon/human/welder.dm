@@ -221,5 +221,5 @@
 	for(var/I, I <= number_left, I++)
 		var/obj/zomb = new /obj/critter/zombie(src.loc)
 		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
-		sleep(25)
+		sleep(2.5 SECONDS)
 	qdel(src)
