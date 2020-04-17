@@ -96,7 +96,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	var/deployed_to_eyecam = 0
 
-	proc/set_hat( var/obj/item/clothing/head/hat, mob/user as mob)
+	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
 			src.hat.wear_image.pixel_y = 0
 			src.UpdateOverlays(null, "hat")

@@ -680,6 +680,11 @@
 
 //power armor
 
+/obj/item/clothing/head/power // placeholder icons until someone sprites an unpainted helmet
+	name = "plastic power helmet"
+	desc = "Wow this really looks like a noise marine helmet. But it's not!"
+	icon_state = "nm_helm"
+
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"
 	desc = "Wow, what kind of dork fields an unpainted army? Gauche."

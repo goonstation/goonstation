@@ -83,8 +83,7 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
-	..()
-	return
+	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
 	if (src.transforming)

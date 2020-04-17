@@ -298,7 +298,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
-					player.AIize()
+					var/mob/living/silicon/ai/A = player.AIize()
+					A.Equip_Bank_Purchase(A.mind.purchased_bank_item)
 
 				else if (player.mind && player.mind.special_role == "wraith")
 					player.close_spawn_windows()
