@@ -9,6 +9,8 @@ matchBody: true
 
 # Explicit keyword mappings to labels. Form of match:label. Required.
 labelMappings:
+	[BUG - CRITICAL]: bug - critical
+	[CRITICAL]: bug - critical
 	[BUG - MAJOR]: bug - major
 	[MAJOR]: bug - major
 	[BUG]: bug
