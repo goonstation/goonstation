@@ -1,6 +1,10 @@
 
 (t)fri apr 17 20
 (u)Kubius
+(p)301
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 6. Notable: QM import upgrades, Engine cold loop radiator.
+(u)Kubius
 (p)298
 (e)🆕🗺|enhancement, mapping
 (*)Kondaru fix batch 5, including bookshelf and a map image refresh.
