@@ -83,8 +83,8 @@
 					src.set_clothing_icon_dirty()
 
 				if (stat==0) lastgasp()
-
-				take_bleeding_damage(src, null, round(damage / (3 * armor_value_bullet)), P.proj_data.hit_type)
+				if(P.proj_data.hit_type != DAMAGE_BLUNT)
+					take_bleeding_damage(src, null, round(damage / (3 * armor_value_bullet)), P.proj_data.hit_type)
 				if (src.wear_suit && armor_value_bullet >= 2)
 					return
 				else
@@ -133,7 +133,8 @@
 
 
 				if (stat==0) lastgasp()
-				take_bleeding_damage(src, null, round(damage / 3), P.proj_data.hit_type)
+				if(P.proj_data.hit_type != DAMAGE_BLUNT)
+					take_bleeding_damage(src, null, round(damage / 3), P.proj_data.hit_type)
 				if (P.implanted)
 					if (istext(P.implanted))
 						P.implanted = text2path(P.implanted)
@@ -165,7 +166,8 @@
 					stun = stun / armor_value_bullet
 					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 				if (isalive(src)) lastgasp()
-				take_bleeding_damage(src, null, round(damage / (3 * armor_value_bullet)), P.proj_data.hit_type)
+				if(P.proj_data.hit_type != DAMAGE_BLUNT)
+					take_bleeding_damage(src, null, round(damage / (3 * armor_value_bullet)), P.proj_data.hit_type)
 
 				//bleed
 				if (armor_value_bullet > 1)

@@ -108,7 +108,7 @@ toxic - poisons
 	name = "staple"
 	power = 5
 	damage_type = D_KINETIC // don't staple through armor
-	hit_type = DAMAGE_BLUNT
+	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/staple // HEH
 	shot_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	icon_turf_hit = "bhole-staple"
@@ -227,7 +227,7 @@ toxic - poisons
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
 	damage_type = D_TOXIC
-	hit_type = DAMAGE_BLUNT
+	hit_type = DAMAGE_CUT
 	implanted = null
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	dissipation_delay = 10
