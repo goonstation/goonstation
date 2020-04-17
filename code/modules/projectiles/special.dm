@@ -721,7 +721,7 @@
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	shot_number = 0
+	shot_number = 1
 	cost = 37.5
 	power = 45 //a chunky pointblank
 	ks_ratio = 0

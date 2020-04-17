@@ -252,7 +252,7 @@ toxic - poisons
 			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
-				L.do_disorient(stamina_damage = 70, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0) //haha try a baton
+				L.do_disorient(stamina_damage = 70, weakened = 20, stunned = 20, disorient = 20, remove_stamina_below_zero = 0) //haha try a baton
 				L.emote("twitch_v")
 
 

@@ -68,7 +68,7 @@
 			if (D_KINETIC)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / max(1, armor_value_bullet*0.75)
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = 0, remove_stamina_below_zero = 1)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 				if (isalive(src)) lastgasp()
 
@@ -115,7 +115,7 @@
 							//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 			if (D_PIERCING)
 				if (stun > 0) //kinetic weapons don't disorient
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = 0, remove_stamina_below_zero = 1)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 				if (isalive(src)) lastgasp()
 
@@ -163,9 +163,9 @@
 			if (D_SLASHING)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / armor_value_bullet
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = 0, remove_stamina_below_zero = 1)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 				if (isalive(src)) lastgasp()
-				take_bleeding_damage(src, null, round(damage / (3 * armor_value_bullet), P.proj_data.hit_type))
+				take_bleeding_damage(src, null, round(damage / (3 * armor_value_bullet)), P.proj_data.hit_type)
 
 				//bleed
 				if (armor_value_bullet > 1)
@@ -180,7 +180,7 @@
 
 			if (D_ENERGY)
 				if (stun > 0) //energy weapons do a disorient
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = min(stun*1.5, 80), remove_stamina_below_zero = 0, stack_stuns = 0)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = min(stun, 80), remove_stamina_below_zero = 0, stack_stuns = 1)
 					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 				if (isalive(src)) lastgasp()
 
@@ -200,7 +200,7 @@
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = 0, remove_stamina_below_zero = 1)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
@@ -221,7 +221,7 @@
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = 0, remove_stamina_below_zero = 1)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 
 				src.changeStatus("radiation", damage SECONDS)
 				if (src.add_stam_mod_regen("projectile", -5))
@@ -230,7 +230,7 @@
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun, stunned = stun, disorient = 0, remove_stamina_below_zero = 1)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1)
 
 				if (P.proj_data.reagent_payload)
 					if (armor_value_bullet > 1)

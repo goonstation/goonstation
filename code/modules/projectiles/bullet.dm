@@ -282,13 +282,13 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 200
+	power = 150
 	dissipation_delay = 1
 	dissipation_rate = 25
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.4
+	ks_ratio = 0.5
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
@@ -296,6 +296,9 @@ toxic - poisons
 	on_hit(atom/hit)
 		if(ismob(hit))
 			hit.changeStatus("stunned", 5)
+		if(iscarbon(hit))
+			var/mob/living/carbon/C = hit
+			C.remove_stamina(75)
 		..()
 
 /datum/projectile/bullet/a12
