@@ -624,6 +624,8 @@
 
 	var/datum/data/record/accessed_record = null
 	var/obj/item/card/id/scan = null
+	var/health = 70
+	var/broken = 0
 
 	var/state = STATE_LOGGEDOFF
 	var/const
@@ -631,11 +633,16 @@
 		STATE_LOGGEDIN = 2
 
 	attackby(var/obj/item/I as obj, user as mob)
+		if(broken)
+			boutput(user, "<span style=\"color:red\">With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
+			return
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
+			return
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span style=\"color:blue\">You swipe your ID card in the ATM.</span>")
 			src.scan = I
+			return
 		if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span style=\"color:blue\">You insert the cash into the ATM.</span>")
@@ -643,6 +650,7 @@
 				I.amount = 0
 				pool(I)
 			else boutput(user, "<span style=\"color:red\">You need to log in before depositing cash!</span>")
+			return
 		if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span style=\"color:blue\">You insert the lottery ticket into the ATM.</span>")
@@ -658,6 +666,7 @@
 					boutput(user, "<span style=\"color:red\">This ticket isn't a winner. Better luck next time!</span>")
 				qdel(I)
 			else boutput(user, "<span style=\"color:red\">You need to log in before inserting a ticket!</span>")
+			return
 		if(istype(I, /obj/item/spacebux))
 			var/obj/item/spacebux/SB = I
 			if(SB.spent == 1)
@@ -667,14 +676,25 @@
 			usr.client.add_to_bank(SB.amount)
 			boutput(user, "<span style=\"color:red\">You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
+		var/damage = I.force
+		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
+			usr.lastattacked = src
+			attack_particle(user,src)
+			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
+			src.take_damage(damage)
+			usr.visible_message("<span style='color:red'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			src.attack_hand(user)
-		return
+			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+			usr.visible_message("<span style='color:red'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
+			return
 
 	attack_ai(var/mob/user as mob)
 		return
 
 	attack_hand(var/mob/user as mob)
+		if(broken)
+			boutput(user, "<span style=\"color:red\">With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
+			return
 		if(..())
 			return
 
@@ -727,6 +747,12 @@
 		user.Browse(dat, "window=atm;size=400x500;title=Automated Teller Machine")
 		onclose(user, "atm")
 
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
+		if (!damage)
+			return
+		src.take_damage(70) //shooting ATMs with lethal rounds instantly makes them spit out their money, just like in the movies!
 
 	proc/TryToFindRecord()
 		for(var/datum/data/record/B in data_core.bank)
@@ -854,6 +880,25 @@
 					usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
+
+	proc/take_damage(var/damage_amount = 0)
+		if (!damage_amount)
+			return
+		src.health -= damage_amount
+		src.health = max(0,min(src.health,100))
+		if (damage_amount > 0)
+			if (src.health == 0)
+				if(broken)
+					return
+				src.broken = 1
+				src.visible_message("<span style=\"color:red\"><b>The [src.name] breaks apart and spews out cash!</b></span>")
+				src.icon_state = "[src.icon_state]_broken"
+				var/obj/item/C = pick("/obj/item/spacecash/hundred", "/obj/item/spacecash/fifty", "/obj/item/spacecash/ten")
+				C = new C(get_turf(src))
+				playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+				playsound(src.loc,'sound/machines/capsulebuy.ogg', 50, 2)
+				C.throw_at(usr, 20, 3)
+				return
 
 	atm_alt
 		icon_state = "atm_alt"
