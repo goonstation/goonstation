@@ -1,5 +1,10 @@
 
 (t)fri apr 17 20
+(u)Tarmunora
+(p)217
+(e)🔄|rework
+(*)Cigarettes now have a fixed burn time, with the reagent/cycle adjusted to match
+(*)Pocket cigs no longer transfer reagents if you have on active internals or a gas mask
 (u)RichardGere
 (p)275
 (e)|
