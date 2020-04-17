@@ -1,5 +1,9 @@
 
 (t)fri apr 17 20
+(u)RichardGere
+(p)275
+(e)|
+(+)Fixed an issue that would let explosions destroy the nuclear bomb on certain floor types.
 (u)Enfaeutchie
 (p)273
 (e)🐛|bug
