@@ -305,7 +305,7 @@
 	if (href_list["print"])
 		if (!( src.printing ))
 			src.printing = 1
-			sleep(50)
+			sleep(5 SECONDS)
 			var/obj/item/paper/P = unpool(/obj/item/paper)
 			P.set_loc(src.loc)
 

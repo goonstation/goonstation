@@ -131,7 +131,7 @@
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
-		sleep(50)
+		sleep(5 SECONDS)
 		del(src)
 		return
 
@@ -769,7 +769,7 @@ var/global/curr_day = null
 			stat( A )
 
 	if (!src.holder)//todo : maybe give admins a toggle
-		sleep(12) //and make this number larger
+		sleep(1.2 SECONDS) //and make this number larger
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))

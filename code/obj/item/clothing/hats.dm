@@ -698,7 +698,7 @@
 
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] fiddles with [src]!</b></span>")
-		sleep(10)
+		sleep(1 SECOND)
 		src.toggle_active(user)
 		user.update_inhands()
 		src.add_fingerprint(user)

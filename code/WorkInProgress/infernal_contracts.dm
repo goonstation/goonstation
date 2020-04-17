@@ -467,7 +467,7 @@ obj/item/contract/wrestle
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			user.mind.special_role = "Faustian Wrestler"
-			sleep(1)
+			sleep(0.1 SECONDS)
 			user.make_wrestler(1)
 			user.traitHolder.addTrait("addict") //HEH
 			user.traitHolder.addTrait("clutz")

@@ -354,7 +354,7 @@
 			var/my_range = 3
 			SPAWN_DBG(my_time) qdel(C)
 			for(var/b=0, b<my_range, b++)
-				sleep(15)
+				sleep(1.5 SECONDS)
 				if (!C) break
 				step(C,my_dir)
 				C.expose()
@@ -405,7 +405,7 @@
 					var/my_range = 3
 					SPAWN_DBG(my_time) qdel(C)
 					for(var/b=0, b<my_range, b++)
-						sleep(15)
+						sleep(1.5 SECONDS)
 						if (!C) break
 						step(C,my_dir)
 						C.expose()
@@ -500,7 +500,7 @@
 			if (!stack_result)
 				continue
 			else
-				sleep(3)
+				sleep(0.3 SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
 				if (src.amount >= max_stack)
@@ -987,7 +987,7 @@
 		SPAWN_DBG(0)
 			var/frenzy = getProperty("frenzy")
 			click_delay -= frenzy
-			sleep(30)
+			sleep(3 SECONDS)
 			click_delay += frenzy
 /*
 	if(hasProperty("Momentum"))

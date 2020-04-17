@@ -286,10 +286,10 @@
 			while(user && !user.stat && user:shoes == src)
 				if(user.pixel_y < 12)
 					user.pixel_y += 3
-					sleep(1)
+					sleep(0.1 SECONDS)
 				else
 					user.pixel_y -= 6
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 			if(user)
 				user.pixel_y = 0

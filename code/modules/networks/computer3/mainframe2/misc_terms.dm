@@ -2334,7 +2334,7 @@
 
 		scanning = 1
 		flick("scanner-scanning",src)
-		sleep(20)
+		sleep(2 SECONDS)
 		if (scan_buffer)
 			scan_buffer.dispose()
 			scan_buffer = null

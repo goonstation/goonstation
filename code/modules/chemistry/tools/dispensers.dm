@@ -429,7 +429,7 @@
 				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 				src.reagents.add_reagent("poo", amount)
 				pool( P )
-				sleep(3)
+				sleep(0.3 SECONDS)
 			boutput(user, "<span style=\"color:blue\">You finish stuffing [O] into [src]!</span>")
 		else ..()
 

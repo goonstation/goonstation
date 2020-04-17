@@ -31,14 +31,14 @@
 
 	// DESCRIBE TRACES
 	var/list/tracelist = list()
-	for(var/mob/living/intangible/flock/trace/T in src.traces)					
-		tracelist[++tracelist.len] = T.describe_state()			
+	for(var/mob/living/intangible/flock/trace/T in src.traces)
+		tracelist[++tracelist.len] = T.describe_state()
 	state["partitions"] = tracelist
 
 	// DESCRIBE DRONES
 	var/list/dronelist = list()
-	for(var/mob/living/critter/flock/drone/F in src.units)					
-		dronelist[++dronelist.len] = F.describe_state()			
+	for(var/mob/living/critter/flock/drone/F in src.units)
+		dronelist[++dronelist.len] = F.describe_state()
 	state["drones"] = dronelist
 
 	// DESCRIBE ENEMIES
@@ -46,7 +46,7 @@
 	for(var/name in src.enemies)
 		var/list/enemy_stats = src.enemies[name]
 		var/mob/living/M = enemy_stats["mob"]
-		if(istype(M)) // fix runtime: Cannot read null.name 
+		if(istype(M)) // fix runtime: Cannot read null.name
 			var/list/enemy = list()
 			enemy["name"] = M.name
 			enemy["area"] = enemy_stats["last_seen"]
@@ -63,7 +63,7 @@
 	vitals["drones"] = dronelist.len
 	vitals["partitions"] = tracelist.len
 	state["vitals"] = vitals
-	
+
 	return state
 
 /datum/flock/disposing()
@@ -217,7 +217,7 @@
 		src.units |= D
 		if(src.panel && istype(D, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/drone = D
-			
+
 			// update the flock control panel
 			var/list/update = drone.describe_state()
 			update["update"] = "add"
@@ -226,12 +226,12 @@
 			panel.PushUpdate(update)
 
 	if(istype(D, /obj/flock_structure/egg))
-		src.units |= D	
+		src.units |= D
 
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D))
 		src.units -= D
-		
+
 		// update the flock control panel
 		var/list/update = list()
 		update["update"] = "remove"
@@ -242,7 +242,7 @@
 		if(D:real_name && busy_tiles[D:real_name])
 			src.busy_tiles[D:real_name] = null
 	if(istype(D, /obj/flock_structure/egg))
-		src.units -= D		
+		src.units -= D
 
 /datum/flock/proc/getComplexDroneCount()
 	var/count = 0
@@ -431,7 +431,7 @@
 				if(isnull(replacementPath))
 					qdel(O)
 				else
-					var/dir = O.dir				
+					var/dir = O.dir
 					var/obj/converted = new replacementPath(T)
 					// if the object is a closet, it might not have spawned its contents yet
 					// so force it to do that first
@@ -461,7 +461,7 @@
 	if(istype(T, /turf/simulated/wall))
 		T.ReplaceWith("/turf/simulated/wall/auto/feather", 0)
 		animate_flock_convert_complete(T)
-	
+
 
 	if(istype(T, /turf/space))
 		// if we have a fibrenet, make it a floor
@@ -473,7 +473,7 @@
 		// if we have no fibrenet, make one
 		else
 			FL = new(T)
-			animate_flock_convert_complete(FL)		
+			animate_flock_convert_complete(FL)
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
 		if (RL_Started) RL_UPDATE_LIGHT(T)
@@ -507,12 +507,12 @@
 			if(istype(tile, /turf/simulated) && !isfeathertile(tile))
 				flock_convert_turf(tile)
 				sleep(0.5)
-		LAGCHECK(LAG_LOW)		
+		LAGCHECK(LAG_LOW)
 		radius++
 		sleep(radius * 10)
 		if(isnull(source))
 			return // our source is gone, stop the process
-	
+
 
 /proc/flock_spiral_conversion(var/turf/T)
 	if(!T) return
@@ -530,7 +530,7 @@
 		if(istype(T, /turf/simulated) && !isfeathertile(T))
 			// do stuff to turf
 			flock_convert_turf(T)
-			sleep(2)
+			sleep(0.2 SECONDS)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is
 		if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1-y))

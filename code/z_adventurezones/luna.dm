@@ -75,7 +75,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -760,7 +760,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 					SPAWN_DBG (15)
 						if (master)
 							master.speak("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
-						sleep(8)
+						sleep(0.8 SECONDS)
 						if (master)
 							master.speak("There is a log indicating that all employees of Research Station #13 are to be charged 10% extra.  I've never seen that before.  Huh.")
 
@@ -842,7 +842,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				src.master.mover = null
 			master.moving = 0
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.master.speak("Uh.  That isn't supposed to happen.")
 			src.state = 0	//Yeah, let's find that route.
 
@@ -897,7 +897,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.operating = 1
 		flick("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
-		sleep(10)
+		sleep(1 SECOND)
 		src.set_density(0)
 		src.RL_SetOpacity(0)
 		update_nearby_tiles()
@@ -931,7 +931,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.RL_SetOpacity(1)
 		update_nearby_tiles()
 
-		sleep(10)
+		sleep(1 SECOND)
 		src.operating = 0
 		return
 
@@ -975,7 +975,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.icon_state = "breakairlock2"
 			sleep (2)
 			src.opacity = 0
-			sleep(6)
+			sleep(0.6 SECONDS)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 			s.set_up(3, 1, src)
 			s.start()
@@ -2138,7 +2138,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 
 			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)
 
-			sleep(30)
+			sleep(3 SECONDS)
 			//do tiny baby explosion noise
 			//Todo: a squeakier blast sound.
 			playsound(src.loc, "sound/effects/Explosion2.ogg", 40, 0, 0, 4)

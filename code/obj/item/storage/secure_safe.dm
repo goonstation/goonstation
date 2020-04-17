@@ -31,7 +31,7 @@
 	if ((src.locked == 1) && (!src.emagged))
 		emagged = 1
 		src.overlays += image('icons/obj/items/storage.dmi', icon_sparking)
-		sleep(6)
+		sleep(0.6 SECONDS)
 		src.overlays = null
 		overlays += image('icons/obj/items/storage.dmi', icon_locking)
 		locked = 0
@@ -44,7 +44,7 @@
 	if (!src.emagged)
 		return 0
 	emagged = 0
-	sleep(6)
+	sleep(0.6 SECONDS)
 	src.overlays = null
 	if (user)
 		user.show_text("You repair the lock on [src].", "blue")
@@ -56,7 +56,7 @@
 	//Waluigi hates this
 	if (hackable)
 		if (isscrewingtool(W) && (src.locked == 1))
-			sleep(6)
+			sleep(0.6 SECONDS)
 			src.open =! src.open
 			user.show_message("<span style=\"color:blue\">You [src.open ? "open" : "close"] the service panel.</span>")
 			return
@@ -69,7 +69,7 @@
 					src.l_setshort = 1
 					configure_mode = 1
 					user.show_message("<span style=\"color:red\">Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
-					sleep(80)
+					sleep(8 SECONDS)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else

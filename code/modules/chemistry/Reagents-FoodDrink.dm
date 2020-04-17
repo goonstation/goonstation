@@ -1023,7 +1023,7 @@ datum
 							//Roast up the player
 							if (M)
 								boutput(M, "<span style=\"color:red\"><b>IT BURNS!!!!</b></span>")
-								sleep(2)
+								sleep(0.2 SECONDS)
 								M.visible_message("<span style=\"color:red\">[M] is consumed in flames!</span>")
 								M.firegib()
 
@@ -3608,7 +3608,7 @@ datum
 							//Roast up the player
 							if (M)
 								boutput(M, "<span style=\"color:red\"><b>IT BURNS!!!!</b></span>")
-								sleep(2)
+								sleep(0.2 SECONDS)
 								M.visible_message("<span style=\"color:red\">[M] is consumed in flames!</span>")
 								M.firegib()
 				..()

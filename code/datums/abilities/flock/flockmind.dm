@@ -141,7 +141,7 @@
 		return 1
 	playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 	boutput(holder.owner, "<span class='text-blue'>You focus the flock's efforts on fixing [target.real_name]</span>")
-	sleep(15)
+	sleep(1.5 SECONDS)
 	target.HealDamage("All", 200, 200)
 	target.visible_message("<span class='text-blue'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='text-blue'>The flockmind has restored you to full health!</span>")
 
@@ -186,7 +186,7 @@
 		// do casty stuff here
 		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='text-blue'>You force open all the doors around you.</span>")
-		sleep(15)
+		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
 			// open the door
 			SPAWN_DBG(1 DECI SECOND)

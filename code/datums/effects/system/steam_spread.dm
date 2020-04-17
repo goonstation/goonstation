@@ -59,7 +59,7 @@ steam.start() -- spawns the effect
 			else
 				direction = pick(alldirs)
 			for(var/j=0, j<pick(1,2,3), j++)
-				sleep(5)
+				sleep(0.5 SECONDS)
 				step(steam,direction)
 			SPAWN_DBG(2 SECONDS)
 				if (steam)

@@ -2328,7 +2328,7 @@ var/global/noir = 0
 												X.bioHolder.AddEffect(pick)
 											else
 												X.bioHolder.RemoveEffect(pick)
-										sleep(1)
+										sleep(0.1 SECONDS)
 
 								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
 								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
@@ -2371,7 +2371,7 @@ var/global/noir = 0
 											else
 												if (X.reagents)
 													X.reagents.remove_reagent(pick,amt)
-										sleep(1)
+										sleep(0.1 SECONDS)
 
 								message_admins("[key_name(usr)] [adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] everyone.")
 								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] everyone.")
@@ -3393,7 +3393,7 @@ var/global/noir = 0
 			world << "Undefined action [href_list["action"]]"
 
 	//Wires bad hack part 2
-	sleep(5)
+	sleep(0.5 SECONDS)
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
@@ -3767,7 +3767,7 @@ var/global/noir = 0
 
 		round_end_data(2) //Wire: Export round end packet (manual restart)
 
-		sleep(30)
+		sleep(3 SECONDS)
 		Reboot_server()
 
 /datum/admins/proc/announce()

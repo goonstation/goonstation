@@ -226,7 +226,7 @@
 		holder.owner.say("See you in hell.")
 		H.mind.damned = 1
 		animate_blink(H)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.implode()
 
 /datum/targetable/gimmick/go2hell
@@ -240,7 +240,7 @@
 	cast(atom/T)
 		holder.owner.say("So long folks!")
 		playsound(holder.owner.loc, "sound/voice/wizard/BlinkGrim.ogg", 50, 0, -1)
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 		if(!spawnturf)
 			spawnturf = get_turf(usr)

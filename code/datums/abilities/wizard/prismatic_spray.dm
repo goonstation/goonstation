@@ -49,7 +49,7 @@
 						var/obj/projectile/P = shoot_projectile_XY(S, ps_proj, cos(rand(0,360)), sin(rand(0,360)))
 						if (P)
 							P.mob_shooter = holder.owner
-							sleep(1)
+							sleep(0.1 SECONDS)
 					else
 						var/obj/projectile/P = initialize_projectile_ST(holder.owner, ps_proj, target )
 						if (P)
@@ -57,7 +57,7 @@
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
 							P.rotateDirection(angle)
 							P.launch()
-							sleep(1)
+							sleep(0.1 SECONDS)
 			else
 				for(var/i=0, i<num_projectiles, i++)
 					var/turf/S = get_turf(holder.owner)
@@ -65,7 +65,7 @@
 						var/obj/projectile/P = shoot_projectile_XY(S, pick(proj_types), cos(rand(0,360)), sin(rand(0,360)))
 						if (P)
 							P.mob_shooter = holder.owner
-							sleep(1)
+							sleep(0.1 SECONDS)
 					else
 						var/obj/projectile/P = initialize_projectile_ST(holder.owner, pick(proj_types), target )
 						if (P)
@@ -73,7 +73,7 @@
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
 							P.rotateDirection(angle)
 							P.launch()
-							sleep(1)
+							sleep(0.1 SECONDS)
 		else
 			boutput(holder.owner, "<span style=\"color:red\">Your spell doesn't work without a staff to refract the light!</span>")
 			return 1

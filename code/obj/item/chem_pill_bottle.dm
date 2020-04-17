@@ -134,7 +134,7 @@
 			P.set_loc(src)
 			P.dropped()
 			src.rebuild_desc()
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
 		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")

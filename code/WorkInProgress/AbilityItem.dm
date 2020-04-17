@@ -39,7 +39,7 @@
 		E.special = 1
 		the_mob.transforming = 1
 		SPAWN_DBG(3 SECONDS) if (the_mob) the_mob.transforming = 0
-		sleep(30)
+		sleep(3 SECONDS)
 
 		var/theturf
 		var/list/spraybits = new/list()
@@ -76,7 +76,7 @@
 		if (the_mob) playsound(the_mob, 'sound/effects/spray.ogg', 75, 1, 0)
 		//E.reagents.clear_reagents()
 
-		sleep(5)
+		sleep(0.5 SECONDS)
 		E.special = 0
 
 		SPAWN_DBG(0)
@@ -101,7 +101,7 @@
 					if(is_blocked_turf(SP.loc))
 						spraybits -= SP
 						qdel(SP)
-				sleep(5)
+				sleep(0.5 SECONDS)
 		..()
 
 	OnDrop()
@@ -210,10 +210,10 @@
 						the_mob:update_burning(10)
 						if(prob(30))
 							the_mob.emote("scream")
-						sleep(1)
+						sleep(0.1 SECONDS)
 					else
 						the_mob:update_burning(1)
-						sleep(3)
+						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
 				the_mob.gib()
 
@@ -234,7 +234,7 @@
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
 							pool(A)
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 			the_mob.throw_at(curr, 16, 3)
 			..()

@@ -375,7 +375,7 @@ MATERIAL
 						return
 					boutput(usr, "<span style=\"color:blue\">Building wall girders ...</span>")
 					var/turf/location = usr.loc
-					sleep(20)
+					sleep(2 SECONDS)
 					if ((usr.loc == location))
 						if (!istype(location, /turf/simulated/floor))
 							return

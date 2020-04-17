@@ -220,7 +220,7 @@
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 		return
-		
+
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark. They sort of hurt your eyes to look through."
 	color_r = 1
@@ -401,7 +401,7 @@
 				assigned.images.Remove(health_mon_icons)
 				assigned = null
 
-			//sleep(20)
+			//sleep(2 SECONDS)
 		else
 			processing_items.Remove(src)
 
@@ -496,7 +496,7 @@
 				assigned.images.Remove(mob_static_icons)
 				assigned = null
 
-			//sleep(20)
+			//sleep(2 SECONDS)
 		else
 			processing_items.Remove(src)
 
@@ -525,7 +525,7 @@
 			assigned = null
 			processing_items.Remove(src)
 		return
-		
+
 /obj/item/clothing/glasses/noir
 	name = "Noir-Tech Glasses"
 	desc = "A pair of glasses that simulate what the world looked like before the invention of color."

@@ -21,7 +21,7 @@
 			sharktarget << sound('sound/misc/jaws.ogg')
 			logTheThing("diary", usr, sharktarget, "has set the Banshark on %target%!", "admin")
 			message_admins("[usr.client.ckey] has set the Banshark on [sharktarget.ckey]!")
-			sleep(200)
+			sleep(20 SECONDS)
 			startx = sharktarget.x - rand(-11, 11)
 			starty = sharktarget.y - rand(-11, 11)
 			var/turf/pickedstart = locate(startx, starty, sharktarget.z)
@@ -63,7 +63,7 @@
 //						startx = 2
 	boutput(sharktarget, "Uh oh.")
 	sharktarget << sound('sound/misc/jaws.ogg')
-	sleep(200)
+	sleep(20 SECONDS)
 	startx = sharktarget.x - rand(-11, 11)
 	starty = sharktarget.y - rand(-11, 11)
 //				pickedstarter = get_turf(pick(sharktarget:range(10)))
@@ -102,7 +102,7 @@
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -128,7 +128,7 @@
 				return
 			else
 				walk_towards(src, src.sharktarget2, sharkspeed)
-				sleep(10)
+				sleep(1 SECOND)
 				sharkcantreach++
 
 	proc/banproc()
@@ -169,7 +169,7 @@
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -186,11 +186,11 @@
 				return
 			else
 				walk_towards(src, src.sharktarget2, sharkspeed)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/gibproc()
 		// drsingh for various cannot read null.
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if (get_dist(src, src.sharktarget2) <= 1)
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span style=\"color:red\"><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
@@ -200,9 +200,9 @@
 				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed %target%", "admin")
 				message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")
 				sharktarget2.gib()
-			sleep(5)
+			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(src)
 		else
 			process()
