@@ -525,7 +525,7 @@ TRAYS
 				return
 			src.set_loc(user)
 			stack.platenum++
-			stack.update_icon(user)  // moved this stuff into a callable proc because it wasn't updating the item state in here
+			stack.update_icon(user)
 			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
 			qdel(src)
 			return
