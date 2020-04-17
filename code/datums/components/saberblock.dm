@@ -13,6 +13,3 @@ datum/component/itemblock/saberblock/on_block_end(datum/source, mob/user)
 	var/obj/item/sword/S = src.parent
 	S.delProperty("rangedprot")
 	S.delProperty("disorient_resist")
-
-
-

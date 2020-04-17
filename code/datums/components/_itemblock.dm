@@ -14,8 +14,6 @@
 	if(istype(I) && bonus)
 		I.setProperty("block_bonus")
 
-
-
 /datum/component/itemblock/proc/on_block_begin(datum/source, mob/user)
 	RegisterSignal(user, signals, proctype, TRUE)
 	var/obj/item/I = src.parent
@@ -27,4 +25,3 @@
 	var/obj/item/I = src.parent
 	if(istype(I) && bonus)
 		I.setProperty("block_bonus")
-
