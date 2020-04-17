@@ -1435,6 +1435,7 @@
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
+	item_state = "pulse_rifle"
 	force = 5
 	two_handed = 1
 	can_dual_wield = 0
