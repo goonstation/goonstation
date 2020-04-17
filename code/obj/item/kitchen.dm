@@ -1025,7 +1025,7 @@ TRAYS
 			else
 				src.platenum += (p.platenum+1)
 				src.update_icon(user)
-			if(keeptrigger != platemax)
+			if(keeptrigger != 1)
 				user.u_equip(p)
 				qdel(p)
 
