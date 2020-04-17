@@ -253,8 +253,8 @@
 			if (ismob(location))
 				M = location
 				if(ishuman(M))
-					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn or in hand. Urs, the pocketsmoking if you have a cig in ur mouth is for you
-					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && istype(H.wear_mask, /obj/item/clothing/mask/cigarette)))) 
+					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn or in hand. 
+					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
 						if (prob(1))
