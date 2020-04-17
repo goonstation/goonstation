@@ -1,5 +1,9 @@
 
 (t)fri apr 17 20
+(u)Kubius
+(p)295
+(e)🗺|mapping
+(+)Kondaru Fixes IV: The Voyage Home (in an escape pod). PR #295
 (u)Tarmunora
 (p)217
 (e)🔄|rework
