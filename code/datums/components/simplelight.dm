@@ -3,7 +3,7 @@
 	var/r = 255
 	var/g = 255
 	var/b = 255
-	var/a = 127
+	var/a = 255
 	var/light_name
 	var/enabled = 1
 	var/atom/light_target = null
