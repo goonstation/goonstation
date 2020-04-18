@@ -47,8 +47,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/dancin_shoes,\
 
 	new /datum/bank_purchaseable/alohamaton,\
-	new /datum/bank_purchaseable/ai_hat,\
-	new /datum/bank_purchaseable/ai_legs)
+	new /datum/bank_purchaseable/ai_hat)
 
 
 /datum/bank_purchaseable
@@ -594,14 +593,4 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
-	ai_legs
-		name = "AI legs"
-		cost = 10000
-
-		Create(var/mob/living/M)
-			if (isAI(M))
-				var/mob/living/silicon/ai/A = M
-				A.give_feet()
-				return 1
-			return 0
 
