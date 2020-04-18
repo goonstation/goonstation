@@ -136,6 +136,8 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if (!isdead(src)) //still breathing
+			//do on_life things for components?
+			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 
 			parent.setLastTask("handle_material_triggers", src)
 
