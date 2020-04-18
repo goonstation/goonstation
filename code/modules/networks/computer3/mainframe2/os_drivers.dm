@@ -295,7 +295,7 @@
 			//file.holder = src.holder
 			lastOperationResponse = null
 			message_device("command=filestore&session=[sessionid]", file)
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			return (lastOperationResponse == "success")
 
@@ -311,7 +311,7 @@
 			contents_mirror -= file
 			lastOperationResponse = null
 			message_device("command=delfile&fname=[file.name]&session=[sessionid]")
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			return (lastOperationResponse == "success")
 
@@ -330,7 +330,7 @@
 		to_adjust[sessionid] = list(file, field, newval)
 		lastOperationResponse = null
 		message_device("command=modfile&fname=[file.name]&field=[field]&val=[newval]&session=[sessionid]")
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 		return (lastOperationResponse == "success")
 
@@ -664,7 +664,7 @@
 				sessions[sessionid] = ESIG_USR1
 
 				message_device("command=set_coords&session=[sessionid]", new_coords)
-				sleep(6)
+				sleep(0.6 SECONDS)
 				. = sessions[sessionid]
 				sessions -= sessionid
 				return .
@@ -718,7 +718,7 @@
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions[sessionid] = ESIG_USR1
 				message_device("command=[lowertext(data["command"])]&session=[sessionid]")
-				sleep(6)
+				sleep(0.6 SECONDS)
 				. = sessions[sessionid]
 				sessions -= sessionid
 				return .

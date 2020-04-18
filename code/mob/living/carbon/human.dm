@@ -617,7 +617,7 @@
 				emote("deathgasp")
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> begins to grow another head!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				sleep(200)
+				sleep(20 SECONDS)
 				if(!M || M.disposed)
 					return
 				if (M && M.current)
@@ -2683,7 +2683,7 @@
 	boutput(src, "<span style=\"color:red\"><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
-	sleep(1)
+	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10

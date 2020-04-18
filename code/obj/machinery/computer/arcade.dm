@@ -112,7 +112,7 @@
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.enemy_hp -= attackamt
 			src.arcade_action()
 
@@ -124,7 +124,7 @@
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			src.updateUsrDialog()
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.player_mp -= pointamt
 			src.player_hp += healamt
 			src.blocked = 1
@@ -139,7 +139,7 @@
 			src.player_mp += chargeamt
 
 			src.updateUsrDialog()
-			sleep(10)
+			sleep(1 SECOND)
 			src.arcade_action()
 
 	if (href_list["close"])
@@ -224,7 +224,7 @@
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
-			sleep(10)
+			sleep(1 SECOND)
 			src.temp = "You have been drained! GAME OVER"
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))

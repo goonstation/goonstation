@@ -94,7 +94,7 @@
 
 			src.homebooth = null
 		src.set_loc(get_turf(src.loc))
-		
+
 		src.removeAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/color)
 
@@ -259,7 +259,7 @@
 							wiggle--
 							src.pixel_x = rand(-3,3)
 							src.pixel_y = rand(-3,3)
-							sleep(1)
+							sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
 						src.invisibility = 10
@@ -291,7 +291,7 @@
 						wiggle--
 						src.pixel_x = rand(-2,2)
 						src.pixel_y = rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 					src.pixel_x = 0
 					src.pixel_y = 0
 
@@ -415,7 +415,7 @@
 				var/obj/item/paper/thermal/playerfortune/fi = i
 				fi.icon = 'icons/obj/zoldorf.dmi'
 				fi.icon_state = "fortuneburn"
-				sleep(8)
+				sleep(0.8 SECONDS)
 				qdel(fi)
 			else
 				i.set_loc(Ta)

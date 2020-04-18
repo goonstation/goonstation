@@ -36,7 +36,7 @@
 /mob/proc/handle_natural_werewolf(var/datum/abilityHolder/werewolf/W)
 	src.emote("shiver")
 	boutput(src, "<span style=\"color:red\"><b>You feel feral!</b></span>")
-	sleep(50)
+	sleep(5 SECONDS)
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		boutput(src, "<span style=\"color:red\"><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")

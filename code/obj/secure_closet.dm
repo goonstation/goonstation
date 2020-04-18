@@ -934,7 +934,7 @@
 	if(health <= 0)
 		src.visible_message("<span style=\"color:red\"><b>[src]</b> breaks apart!</span>")
 		src.dump_contents()
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/newloc = src.loc
 		new /obj/decal/cleanable/machine_debris(newloc)
 		qdel(src)
@@ -1129,7 +1129,7 @@
 				shakes--
 				src.pixel_x = rand(-5,5)
 				src.pixel_y = rand(-5,5)
-				sleep(1)
+				sleep(0.1 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
 			SPAWN_DBG(0.5 SECONDS)
@@ -1146,7 +1146,7 @@
 
 	if (src.opened)
 		step_towards(usr, src)
-		sleep(10)
+		sleep(1 SECOND)
 		if (usr.loc == src.loc)
 			src.close()
 	else
@@ -1157,7 +1157,7 @@
 
 		if (src.open())
 			step_towards(usr, src)
-			sleep(10)
+			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				src.close()
 	return

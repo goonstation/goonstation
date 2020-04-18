@@ -89,7 +89,7 @@
 		while (!disposed)
 #if ASS_JAM //dont move while in timestop
 			while(src.projectile_paused)
-				sleep(10)
+				sleep(1 SECOND)
 #endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff

@@ -555,7 +555,7 @@
 			WS.set_loc(src)
 			HYPnewplant(WS)
 			pool(W)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			pool(WS)
 			if(!(user in src.contributors))
 				src.contributors += user

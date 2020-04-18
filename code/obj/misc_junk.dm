@@ -685,7 +685,7 @@
 			src.smoke.attach(target_loc)
 			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
-				sleep(10)
+				sleep(1 SECOND)
 
 			if(!PH)
 				usr.visible_message("<span style='color:red'><B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\

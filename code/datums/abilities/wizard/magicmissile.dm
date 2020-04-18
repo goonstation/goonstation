@@ -77,5 +77,5 @@
 						M.lastattackertime = world.time
 						qdel(A)
 						return
-					sleep(6)
+					sleep(0.6 SECONDS)
 				qdel(A)

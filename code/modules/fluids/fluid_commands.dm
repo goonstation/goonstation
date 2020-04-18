@@ -36,7 +36,7 @@ client/proc/delete_fluids()
 				fluid.removed()
 			i++
 			if(!(i%30))
-				sleep(2)
+				sleep(0.2 SECONDS)
 
 		enable_waterflow(exenabled)
 

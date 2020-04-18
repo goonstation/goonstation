@@ -201,7 +201,7 @@
 			if(I.type in bad_types) continue
 			I.set_loc(src)
 			//parts.Add(I)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			if (user.loc != staystill) break
 
 		boutput(user, "<span style=\"color:blue\">You finish adding components to [src]!</span>")

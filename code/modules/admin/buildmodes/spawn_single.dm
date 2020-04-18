@@ -53,11 +53,11 @@ change the direction of created objects.<br>
 						if (isobj(A) || ismob(A) || isturf(A))
 							A.dir = holder.dir
 							A.onVarChanged("dir", SOUTH, A.dir)
-						sleep(5)
+						sleep(0.5 SECONDS)
 						mtx.Reset()
 						mtx.Translate(0,64)
 						animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-						sleep(5)
+						sleep(0.5 SECONDS)
 						swirl.mouse_opacity = 1
 						pad.mouse_opacity = 1
 						pool(swirl)

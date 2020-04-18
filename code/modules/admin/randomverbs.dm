@@ -1087,7 +1087,7 @@
 			if(!usercl || !target_mob)
 				qdel(src)
 				return
-			sleep(20)
+			sleep(2 SECONDS)
 		return
 
 	proc/update_preview_icon()

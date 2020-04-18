@@ -568,13 +568,13 @@
 					SPAWN_DBG(1 DECI SECOND)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
 

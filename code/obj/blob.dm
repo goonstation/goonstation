@@ -342,7 +342,7 @@ var/image/blob_icon_cache
 				SPAWN_DBG(1 SECOND)
 					while (poison)
 						Life()
-						sleep(10)
+						sleep(1 SECOND)
 
 		src.health -= amount
 		src.health = max(0,min(src.health_max,src.health))

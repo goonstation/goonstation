@@ -166,7 +166,7 @@
 					if (A == O || A == user) continue
 					A.meteorhit(O)
 
-			sleep(3)
+			sleep(0.3 SECONDS)
 			for (var/obj/O in affected)
 				pool(O)
 

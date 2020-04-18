@@ -79,7 +79,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -1422,7 +1422,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				src.icon_state = "ganglion_blink_slow"
 				SPAWN_DBG ((timer - 3) * 10)
 					src.icon_state = "ganglion_blink_fast"
-					sleep(30)
+					sleep(3 SECONDS)
 					src.deactivate()
 
 			else

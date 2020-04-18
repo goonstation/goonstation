@@ -536,7 +536,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 					var/edge = get_edge_target_turf(T, pick(alldirs))
 					O.throw_at(edge, 80, 4)
 
-				sleep(15)
+				sleep(1.5 SECONDS)
 				qdel(Ov)
 
 				if (ishuman(owner))

@@ -159,7 +159,7 @@
 			while (wiggle > 0)
 				wiggle--
 				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
 

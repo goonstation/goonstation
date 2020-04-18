@@ -26,7 +26,7 @@ CONTENTS:
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2 && prob(10))
 					sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/spooky/Void_Wail.ogg','sound/ambience/spooky/Void_Calls.ogg')
@@ -350,7 +350,7 @@ CONTENTS:
 		if(!active || activating || operating) return
 		activating = 1
 		playsound(src.loc, "sound/machines/computerboot_pc_end.ogg", 50, 0)
-		sleep(20)
+		sleep(2 SECONDS)
 		activating = 0
 		active = 0
 		update_icons()
@@ -412,7 +412,7 @@ CONTENTS:
 					B.show_text("<B>You feel your mind slipping...</B>", "red")
 					B.drowsyness = max(B.drowsyness, 10)
 
-				sleep(100)
+				sleep(10 SECONDS)
 				playsound(src.loc,'sound/effects/elec_bzzz.ogg', 60, 1)
 				if(A && B && can_operate()) //We're all here, still
 					A.emote("faint")

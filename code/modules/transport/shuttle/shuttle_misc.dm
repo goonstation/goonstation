@@ -55,14 +55,14 @@
 		if (src.stat1 == 0)
 			boutput(usr, "<span style=\"color:blue\">Resecuring outer frame.</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-			sleep(20)
+			sleep(2 SECONDS)
 			boutput(usr, "<span style=\"color:blue\">Outer frame secured.</span>")
 			src.stat1 = 1
 			return
 		if (src.stat1 == 1)
 			boutput(usr, "<span style=\"color:red\">Unsecuring outer frame.</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-			sleep(20)
+			sleep(2 SECONDS)
 			boutput(usr, "<span style=\"color:red\">Done.</span>")
 			src.stat1 = 0
 			return
@@ -71,7 +71,7 @@
 			return
 	else if (istype(W, /obj/item/rods) && src.stat2 == 0)
 		boutput(usr, "<span style=\"color:blue\">Now plating hull.</span>")
-		sleep(20)
+		sleep(2 SECONDS)
 		boutput(usr, "<span style=\"color:blue\">Plating secured.</span>")
 		qdel(W)
 		src.stat2 = 1
@@ -80,7 +80,7 @@
 		var/obj/item/rods/R = new /obj/item/rods
 		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
 		boutput(usr, "<span style=\"color:red\">Removing outer hull plating.</span>")
-		sleep(20)
+		sleep(2 SECONDS)
 		boutput(usr, "<span style=\"color:red\">Done.</span>")
 		src.stat2 = 0
 		R.set_loc(src.loc)
@@ -155,7 +155,7 @@
 		flick(src.icon_firing, src)
 		src.visible_message("<span style=\"color:red\">[src] is charging up!</span>")
 		playsound(src.loc, sound_firing, 70, 1)
-		sleep(13)
+		sleep(1.3 SECONDS)
 		src.visible_message("<span style=\"color:red\"><b>[src] fires!</b></span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
 

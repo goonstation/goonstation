@@ -85,11 +85,11 @@
 						boutput(user, "You put the picture on the scan bed, close the lid, and press start...")
 					else
 						boutput(user, "You put the paper on the scan bed, close the lid, and press start...")
-				sleep(3)
+				sleep(0.3 SECONDS)
 				src.icon_state = "close_sesame"
 				flick("scan", src)
 				playsound(src.loc, "sound/machines/scan.ogg", 50, 1)
-				sleep(18)
+				sleep(1.8 SECONDS)
 				src.icon_state = "open_sesame"
 				w.set_loc(get_turf(src))
 				src.visible_message("\The [src] finishes scanning and opens automatically!")
@@ -172,7 +172,7 @@
 						if (paper_amount <= 0)
 							break
 						flick("print", src)
-						sleep(18)
+						sleep(1.8 SECONDS)
 						playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 1)
 						paper_amount --
 						src.print_stuff()

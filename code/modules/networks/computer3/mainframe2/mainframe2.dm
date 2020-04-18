@@ -85,7 +85,7 @@
 				src.bootstrap = new setup_bootstrap_path
 				src.bootstrap.master = src
 
-			sleep(54)
+			sleep(5.4 SECONDS)
 			src.posted = 0
 			src.post_system()
 

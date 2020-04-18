@@ -144,7 +144,7 @@
 			M.icon_state = text("igniter[]", M.on)
 		LAGCHECK(LAG_MED)
 
-	sleep(50)
+	sleep(5 SECONDS)
 
 	icon_state = "launcherbtt"
 	active = 0

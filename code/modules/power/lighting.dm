@@ -834,9 +834,9 @@
 	var/turf/T = get_turf(src.loc)
 	SPAWN_DBG(0)
 		broken()	// break it first to give a warning
-		sleep(2)
+		sleep(0.2 SECONDS)
 		explosion(src, T, 0, 1, 2, 2)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		qdel(src)
 
 

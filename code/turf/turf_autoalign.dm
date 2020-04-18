@@ -140,7 +140,7 @@
 				var/turf/T = user.loc
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 				boutput(user, "<span style=\"color:blue\">Removing support lines.</span>")
-				sleep(25)
+				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 2
 					boutput(user, "<span style=\"color:blue\">You removed the support lines.</span>")
@@ -156,7 +156,7 @@
 			if (src.d_state == 2)
 				boutput(user, "<span style=\"color:blue\">Slicing metal cover.</span>")
 				playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
-				sleep(25)
+				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 3
 					boutput(user, "<span style=\"color:blue\">You removed the metal cover.</span>")
@@ -165,7 +165,7 @@
 			else if (src.d_state == 5)
 				boutput(user, "<span style=\"color:blue\">Removing support rods.</span>")
 				playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
-				sleep(25)
+				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 6
 					var/atom/A = new /obj/item/rods( src )
@@ -181,7 +181,7 @@
 				var/turf/T = user.loc
 				boutput(user, "<span style=\"color:blue\">Prying cover off.</span>")
 				playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-				sleep(25)
+				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 4
 					boutput(user, "<span style=\"color:blue\">You removed the cover.</span>")
@@ -191,7 +191,7 @@
 				var/turf/T = user.loc
 				boutput(user, "<span style=\"color:blue\">Prying outer sheath off.</span>")
 				playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-				sleep(25)
+				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					boutput(user, "<span style=\"color:blue\">You removed the outer sheath.</span>")
 					logTheThing("station", user, null, "dismantles a Reinforced Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
@@ -203,7 +203,7 @@
 				var/turf/T = user.loc
 				boutput(user, "<span style=\"color:blue\">Detaching support rods.</span>")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-				sleep(25)
+				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 5
 					boutput(user, "<span style=\"color:blue\">You detach the support rods.</span>")
@@ -229,7 +229,7 @@
 			var/obj/item/sheet/S = W
 			var/turf/T = user.loc
 			boutput(user, "<span style=\"color:blue\">Repairing wall.</span>")
-			sleep(25)
+			sleep(2.5 SECONDS)
 			if (user.loc == T && user.equipped() == S)
 				src.d_state = 0
 				src.icon_state = initial(src.icon_state)

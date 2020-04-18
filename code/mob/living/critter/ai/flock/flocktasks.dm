@@ -165,7 +165,7 @@
 		if(build_target && get_dist(holder.owner, build_target) <= 1)
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(F && F.set_hand(2)) // nanite spray
-				sleep(2)
+				sleep(0.2 SECONDS)
 				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(build_target)
 				has_started = 1
@@ -198,10 +198,10 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		sleep(1)
+		sleep(0.1 SECONDS)
 		F.a_intent = INTENT_HELP
 		F.hud.update_intent()
-		sleep(1)
+		sleep(0.1 SECONDS)
 		F.hud.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/repair/get_targets()
@@ -238,7 +238,7 @@
 		var/mob/living/critter/flock/drone/T = holder.target
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
-				sleep(2)
+				sleep(0.2 SECONDS)
 				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(T)
 				has_started = 1
@@ -296,7 +296,7 @@
 	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F && F.set_hand(1)) // grip tool
-			sleep(2)
+			sleep(0.2 SECONDS)
 			F.dir = get_dir(F, container_target)
 			F.hand_attack(container_target) // wooo
 	// tick up a fail counter so we don't try to open something we can't forever
@@ -356,19 +356,19 @@
 		var/mob/living/critter/flock/drone/F = holder.owner
 		usr = F // don't ask, please, don't
 		if(F && F.set_hand(1)) // grip tool
-			sleep(2)
+			sleep(0.2 SECONDS)
 			// drop whatever we're holding
 			F.drop_item()
-			sleep(1)
+			sleep(0.1 SECONDS)
 			F.dir = get_dir(F, container_target)
 			F.hand_attack(container_target)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if(F.equipped() == container_target)
 				// we've picked up a container
 				// just eat it
 				// dump it onto the floor
 				container_target.MouseDrop(get_turf(F))
-				sleep(15)
+				sleep(1.5 SECONDS)
 				// might as well eat the container now
 				F.absorber.equip(container_target)
 				return
@@ -376,12 +376,12 @@
 				// we've opened a HUD
 				// do a fake HUD click, because i am dedicated to this whole puppetry schtick
 				container_target.hud.clicked("boxes", F, dummy_params)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT
 					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it
 					F.throw_mode_on()
-					sleep(4)
+					sleep(0.4 SECONDS)
 					var/list/random_pixel_offsets = list("icon-x" = rand(1, 32), "icon-y" = rand(1, 32))
 					// pick a random turf in sight to throw this at
 					var/list/throw_targets = list()
@@ -392,7 +392,7 @@
 						return
 					var/turf/throw_target = pick(throw_targets)
 					F.throw_item(throw_target, random_pixel_offsets)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					F.throw_mode_off()
 					return
 				else
@@ -461,20 +461,20 @@
 	if(harvest_target && get_dist(holder.owner, harvest_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F && F.set_hand(1)) // grip tool
-			sleep(2)
+			sleep(0.2 SECONDS)
 			var/obj/item/already_held = F.get_active_hand().item
 			if(already_held)
 				// we're already holding a thing to eat
 				harvest_target = already_held
 			else
 				F.empty_hand(1) // drop whatever we might be holding just in case
-				sleep(1)
+				sleep(0.1 SECONDS)
 				// grab the item
 				F.dir = get_dir(F, harvest_target)
 				F.hand_attack(harvest_target)
 			// if we have the item, equip it into our horrifying death chamber
 			if(F.is_in_hands(harvest_target))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				F.absorber.equip(harvest_target) // hooray!
 	// tick up a fail counter so we don't try to get something we can't forever
 	fails++
@@ -520,7 +520,7 @@
 		else
 			if(holder.owner.active_hand != 3) // stunner
 				holder.owner.set_hand(3)
-				sleep(2)
+				sleep(0.2 SECONDS)
 			holder.owner.dir = get_dir(holder.owner, holder.target)
 			holder.owner.hand_attack(holder.target, dummy_params)
 			if(dist < run_range)
@@ -529,7 +529,7 @@
 			else if(prob(30))
 				// ROBUST DODGE
 				walk(holder.owner, 0)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				walk_rand(holder.owner, 1, 4)
 
 
@@ -585,10 +585,10 @@
 		else if(!actions.hasAction(holder.owner, "flock_entomb")) // let's not keep interrupting our own action
 			if(holder.owner.active_hand != 2) // nanite spray
 				holder.owner.set_hand(2)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				holder.owner.a_intent = INTENT_DISARM
 				holder.owner.hud.update_intent()
-				sleep(1)
+				sleep(0.1 SECONDS)
 			holder.owner.dir = get_dir(holder.owner, holder.target)
 			holder.owner.hand_attack(holder.target)
 

@@ -8,13 +8,13 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
 
-	var/started = 0	
+	var/started = 0
 	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
 
 /mob/living/intangible/flock/flockmind/New()
 	..()
 
-	src.abilityHolder = new /datum/abilityHolder/flockmind(src)	
+	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 	src.last_time = world.timeofday
 
 	src.flock = new /datum/flock()
@@ -32,7 +32,7 @@
     special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]"
     special_desc += "<br><span class='bold'>Resources:</span> [src.flock.total_resources()]"
     special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%"
-    special_desc += "<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS"    
+    special_desc += "<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS"
     special_desc += "<br>###=-</span></span>"
     return special_desc
   else
@@ -51,7 +51,7 @@
 
 /mob/living/intangible/flock/flockmind/Login()
 	..()
-	abilityHolder.updateButtons()			
+	abilityHolder.updateButtons()
 
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -70,10 +70,10 @@
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAllAbilities()
 
-/mob/living/intangible/flock/flockmind/proc/addAllAbilities()	
+/mob/living/intangible/flock/flockmind/proc/addAllAbilities()
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
-	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)	
+	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)
 	src.addAbility(/datum/targetable/flockmindAbility/splitDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/healDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/doorsOpen)
@@ -96,7 +96,7 @@
 	src.canmove = 0
 	flick("flockmind-death", src)
 	src.ghostize()
-	sleep(20) // wait for the animation to finish	
+	sleep(2 SECONDS) // wait for the animation to finish
 	qdel(src)
 
 /mob/living/intangible/flock/flockmind/ghostize()
@@ -132,7 +132,7 @@
 		if(O && O.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
-		SPAWN_DBG (10) 
+		SPAWN_DBG (10)
 			boutput(src, "<span class='text-red'>Unable to partition, please try again later.</span>")
 		return
 	// pick a random ghost

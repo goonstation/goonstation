@@ -81,7 +81,7 @@
 			if(ishuman(M))
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
-				sleep(200)
+				sleep(20 SECONDS)
 				src.overlays -= F
 
 	ex_act(severity)
@@ -204,7 +204,7 @@
 		else
 			user.visible_message("[user] presses one of the old rover's buttons.", "You press one of the rover's buttons.")
 			playsound(src.loc, 'sound/misc/curiosity_beep.ogg', 50, 1)
-			sleep(10)
+			sleep(1 SECOND)
 			src.visible_message("<b>[src]</b> beeps out a little tune.")
 
 
@@ -649,7 +649,7 @@
 		var/sound/S = null
 		var/sound_delay = 0
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(prob(10))
 					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'), volume=100)
@@ -741,7 +741,7 @@
 		src.anchored = 0
 		if(overheat == 10)
 			speak("WARNING : OVERHEATING")
-			sleep(50)
+			sleep(5 SECONDS)
 			overheat = 0
 		else
 			for (var/mob/living/C in hearers(src.seekrange,src))

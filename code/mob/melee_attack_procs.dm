@@ -1228,7 +1228,7 @@
 			if (prob(20))
 				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				step_away(target,src,15)
 			else if (prob(20))				//what's this math, like 40% then with the if else? who cares
 

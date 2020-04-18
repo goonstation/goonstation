@@ -138,7 +138,7 @@
   playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
   //speak("Pocketbuddy v0.9 - Copyright 2051-2053 Thinktronic Data Systems, LTD.")
   src.speak("System message. Pocketbuddy v0.9 initializing.")
-  sleep(20)
+  sleep(2 SECONDS)
   src.speak(src.get_quip_for("init"))
   if(!(src in processing_items))
     processing_items += src

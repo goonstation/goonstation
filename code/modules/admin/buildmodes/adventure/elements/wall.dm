@@ -69,7 +69,7 @@
 					waited++
 					if (waited == 5)
 						break
-					sleep(1)
+					sleep(0.1 SECONDS)
 				if (waiting.loc != target)
 					set_loc(target)
 				sliding = 0

@@ -38,7 +38,7 @@
 					newmob = new/mob/dead/observer(user)
 					user:client:mob = newmob
 				qdel(user)
-				sleep(30)
+				sleep(3 SECONDS)
 				playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs/core, src.loc )
 				gib.streak(src.dir)
