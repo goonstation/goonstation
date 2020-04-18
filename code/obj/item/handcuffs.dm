@@ -117,9 +117,6 @@
 
 /obj/item/handcuffs/unequipped(var/mob/user)
 	..()
-	if (src.material && src.material.mat_id == "silver")
-		boutput(user, "<span style='color:red'>[src] disintegrate.</span>")
-		qdel(src)
 
 /obj/item/handcuffs/proc/werewolf_cant_rip()
 	.= src.material && src.material.mat_id == "silver"
@@ -130,6 +127,16 @@
 	user.delStatus("handcuffed")
 	user.drop_item(src)
 	user.update_clothing()
+	if(src.strength == 1)
+		if (src.material && src.material.mat_id == "silver")
+			src.visible_message("<span style='color:red'>[src] disintegrate.</span>")
+			qdel(src)
+		else if((istype(src, /obj/item/handcuffs/guardbot)))
+			src.visible_message("<span style='color:red'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")
+			qdel(src)
+		else
+			src.visible_message("<span style='color:red'>[src] break apart.</span>")
+			qdel(src)
 
 /obj/item/handcuffs/proc/destroy_handcuffs(mob/user)
 	user.handcuffs = null
@@ -159,5 +166,3 @@
 
 /obj/item/handcuffs/guardbot/unequipped(var/mob/user)
 	..()
-	boutput(user, "<span style='color:red'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")
-	qdel(src)
