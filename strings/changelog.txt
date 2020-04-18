@@ -1,4 +1,13 @@
 
+(t)sat apr 18 20
+(u)Gannets
+(p)300
+(e)🎨|sprites
+(+)Added missing pulse rifle in-hand sprites.
+(u)Kubius
+(p)306
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch seven: relocation/rework of test chamber, plus a bit.
 (t)fri apr 17 20
 (u)Kubius
 (p)301

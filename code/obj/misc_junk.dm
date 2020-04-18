@@ -152,7 +152,7 @@
 
 	attack_self(mob/user as mob)
 		boutput(user, __blue("You deftly fold [src] into a party hat!."))
-		user.put_in_hand_or_drop(new /obj/item/clothing/head/party(src.loc))
+		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
 /obj/item/disk
