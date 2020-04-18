@@ -71,7 +71,8 @@
 				else
 					src.go_out()
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-
+		if(next_trans < 10)
+			next_trans++
 
 		if(air_contents)
 			temperature_archived = air_contents.temperature
@@ -340,11 +341,9 @@
 		else
 			src.go_out()
 			return
-		if(beaker && (next_trans == 0))
+		if(beaker && (next_trans == 10))
 			beaker.reagents.trans_to(occupant, 1, 10)
 			beaker.reagents.reaction(occupant)
-		next_trans++
-		if(next_trans == 10)
 			next_trans = 0
 
 	proc/heat_gas_contents()
