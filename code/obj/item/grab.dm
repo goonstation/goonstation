@@ -704,11 +704,9 @@
 
 	New()
 		..()
-
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
-
 
 	post_item_setup()
 		. = ..()

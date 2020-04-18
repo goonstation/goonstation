@@ -764,15 +764,16 @@
 
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
-#define BLOCK_ALL		AddComponent(/datum/component/itemblock/basic_block/all)
-#define BLOCK_LARGE		AddComponent(/datum/component/itemblock/basic_block/large)
+#define BLOCK_ALL		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_stab", "block_burn"))
+#define BLOCK_LARGE		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_stab"))
 #define BLOCK_SWORD		BLOCK_LARGE
-#define BLOCK_ROD 		AddComponent(/datum/component/itemblock/basic_block/rod)
-#define BLOCK_TANK 		AddComponent(/datum/component/itemblock/basic_block/tank)
-#define BLOCK_SOFT 		AddComponent(/datum/component/itemblock/basic_block/soft)
-#define BLOCK_KNIFE		AddComponent(/datum/component/itemblock/basic_block/knife)
-#define BLOCK_BOOK		AddComponent(/datum/component/itemblock/basic_block/book)
+#define BLOCK_ROD 		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut"))
+#define BLOCK_TANK 		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_burn"))
+#define BLOCK_SOFT 		AddComponent(/datum/component/itemblock/basic_block,	list("block_stab", "block_burn"))
+#define BLOCK_KNIFE		AddComponent(/datum/component/itemblock/basic_block,	list("block_cut", "block_stab"))
+#define BLOCK_BOOK		AddComponent(/datum/component/itemblock/basic_block,	list("block_stab"))
 #define BLOCK_ROPE		BLOCK_BOOK
+
 // Process Scheduler defines
 // Process status defines
 #define PROCESS_STATUS_IDLE 1
