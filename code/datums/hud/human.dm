@@ -321,7 +321,7 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove && master.var_name.cant_drop)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; master.put_in_hand(C) } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; master.put_in_hand(C) } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
