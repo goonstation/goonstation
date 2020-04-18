@@ -1,5 +1,9 @@
 
 (t)sat apr 18 20
+(u)Kubius
+(p)316
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch eight - assorted QoL upgrades, including clown gear.
 (u)mbc
 (p)314
 (e)⚖|balance
