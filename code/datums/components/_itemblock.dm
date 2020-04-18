@@ -4,6 +4,8 @@
 	var/list/signals = list()
 	var/proctype // = .proc/pass
 	var/bonus = 0
+	var/mobtype = /mob/living
+
 
 /datum/component/itemblock/Initialize()
 	if(!isitem(parent))
@@ -17,7 +19,10 @@
 
 
 /datum/component/itemblock/proc/on_block_begin(datum/source, mob/user)
-	RegisterSignal(user, signals, proctype, TRUE)
+	if(istype(user, mobtype))
+		RegisterSignal(user, signals, proctype, TRUE)
+	else
+		UnregisterSignal(user, signals)
 	var/obj/item/I = src.parent
 	if(istype(I) && bonus)
 		I.delProperty("block_bonus")
