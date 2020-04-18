@@ -41,7 +41,6 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
-	c_flags = EQUIPPED_WHILE_HELD
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
 	mats = 18
@@ -61,7 +60,7 @@
 	New()
 		..()
 		src.bladecolor = pick(valid_colors)
-		AddComponent(/datum/component/itemblock/saberblock)
+		//AddComponent(/datum/component/itemblock/saberblock)
 		if (prob(1))
 			src.bladecolor = null
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
