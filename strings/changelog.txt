@@ -1,5 +1,9 @@
 
 (t)sat apr 18 20
+(u)Gannets
+(p)300
+(e)🎨|sprites
+(+)Added missing pulse rifle in-hand sprites.
 (u)Kubius
 (p)306
 (e)🆕🗺|enhancement, mapping
