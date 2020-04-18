@@ -1,5 +1,9 @@
 
 (t)sat apr 18 20
+(u)mbc
+(p)314
+(e)⚖|balance
+(*)Pods have improved braking and occupants get stunned for far less time when impacted by melee.
 (u)pali
 (p)256
 (e)🆕|enhancement
