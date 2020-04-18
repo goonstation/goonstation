@@ -465,7 +465,7 @@
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 
-			#define clicked_slot(slot) var/obj/item/W = master.get_slot(master.slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, master.slot)) { return; } master.u_equip(I); master.force_equip(I, master.slot); }
+			#define clicked_slot(slot) var/obj/item/W = master.get_slot(master.slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, master.slot) || I.cant_drop) { return; } master.u_equip(I); master.force_equip(I, master.slot); }
 			if("belt")
 				clicked_slot(slot_belt)
 			if("storage1")
