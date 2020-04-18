@@ -1448,7 +1448,7 @@ var/zapLimiter = 0
 
 			switch(lowertext(data["command"]))
 				if ("status")
-					src.post_status(src.host_id,"command","term_message","data","command=status&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
+					src.post_status(src.host_id,"command","term_message","data","command=status&area=[ckey("[src.area]")]&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
 					return
 				if ("setmode")
 					var/newEquip = text2num(data["equip"])
