@@ -1,5 +1,9 @@
 
 (t)sat apr 18 20
+(u)pali
+(p)256
+(e)🆕|enhancement
+(+)Turned on C-Sabers now actually emit light!
 (u)Gannets
 (p)300
 (e)🎨|sprites
