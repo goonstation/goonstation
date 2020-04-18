@@ -393,4 +393,32 @@ var/list/globalPropList = null
 		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "RESIST with this item for more info"
+			return (propVal ? "RESIST with this item for more info" : "Hold in active hand for:")
+
+	custom1
+		name = "Special"
+		id = "custom1"
+		desc = "This item does something special!"
+		tooltipImg = "special.png"
+		defaultValue = ""
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return propVal
+	
+	custom2
+		name = "Special"
+		id = "custom2"
+		desc = "This item does something special!"
+		tooltipImg = "special.png"
+		defaultValue = ""
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return propVal
+
+	custom3
+		name = "Special"
+		id = "custom3"
+		desc = "This item does something special!"
+		tooltipImg = "special.png"
+		defaultValue = ""
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return propVal
+

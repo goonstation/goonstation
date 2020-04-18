@@ -7,16 +7,18 @@ datum/component/itemblock/basic_block/Initialize(list/blocktypes) //we get passe
 	. = ..()
 	src.blocktypes = blocktypes
 
-datum/component/itemblock/basic_block/on_block_begin(datum/source, mob/user)
+datum/component/itemblock/basic_block/on_block_begin(obj/item/I, mob/user)
 	. = ..()
-	var/obj/item/I = src.parent
-	for (var/blocktype in blocktypes)
-		I.setProperty(blocktype, 1) //for each thing in our list of types to block, add the thing
-datum/component/itemblock/basic_block/on_block_end(datum/source, mob/user)
+	if(I.c_flags & HAS_GRAB_EQUIP)
+		for(var/obj/item/grab/block/B in I)
+			for (var/blocktype in blocktypes)
+				B.setProperty(blocktype, 1) //for each thing in our list of types to block, add the thing
+datum/component/itemblock/basic_block/on_block_end(obj/item/I, mob/user)
 	. = ..()
-	var/obj/item/I = src.parent
-	for (var/blocktype in blocktypes)
-		I.delProperty(blocktype, 1) //block is ended, get rid of the blocking properties
+	if(I.c_flags & HAS_GRAB_EQUIP)
+		for(var/obj/item/grab/block/B in I)
+			for (var/blocktype in blocktypes)
+				B.delProperty(blocktype, 1) //block is ended, get rid of the blocking properties
 
 
 

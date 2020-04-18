@@ -113,6 +113,10 @@
 			for(var/datum/objectProperty/P in src.properties)
 				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
+		if(src.chokehold && src.chokehold.properties && src.chokehold.properties.len)
+			for(var/datum/objectProperty/P in src.chokehold.properties)
+				. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [(P.name != "Special") ? (P.name + ": ") : ""][P.getTooltipDesc(src.chokehold, src.chokehold.properties[P])]"
+
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"

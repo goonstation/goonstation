@@ -766,7 +766,7 @@
 					if (I.reagents)
 						I.reagents.temperature_reagents(2000,10)
 
-			if (I.hasProperty(prop))
+			if (src.hasProperty(prop))
 				.= 1
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)

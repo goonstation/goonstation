@@ -14,19 +14,17 @@
 	RegisterSignal(parent, COMSIG_ITEM_BLOCK_END, .proc/on_block_end)
 	var/obj/item/I = src.parent
 	if(istype(I) && bonus)
-		I.setProperty("block_bonus")
+		I.setProperty("block_bonus", 1)
 
-/datum/component/itemblock/proc/on_block_begin(datum/source, mob/user)
+/datum/component/itemblock/proc/on_block_begin(obj/item/I, mob/user)
 	if(istype(user, mobtype))
 		RegisterSignal(user, signals, proctype, TRUE)
 	else
 		UnregisterSignal(user, signals)
-	var/obj/item/I = src.parent
-	if(istype(I) && bonus)
-		I.delProperty("block_bonus")
+	if(bonus)
+		I.setProperty("block_bonus", 0)
 
-/datum/component/itemblock/proc/on_block_end(datum/source, mob/user)
+/datum/component/itemblock/proc/on_block_end(obj/item/I, mob/user)
 	UnregisterSignal(user, signals)
-	var/obj/item/I = src.parent
-	if(istype(I) && bonus)
-		I.setProperty("block_bonus")
+	if(bonus)
+		I.setProperty("block_bonus", 1)

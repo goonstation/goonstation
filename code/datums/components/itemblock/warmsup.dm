@@ -12,5 +12,23 @@
 //(registering for the signal happened in /datum/component/itemblock/proc/on_block_begin()), so this triggers the proc below
 //third argument, (life_time_passed / tick_spacing), is the tick spacing multiplier for the Life Loop. Signalled procs may have any number of additional arguments. This signal only sends this one additional argument, however
 /datum/component/itemblock/warmsup/proc/warmup(mob/living/carbon/human/H, var/mult) 
-	if(H.bodytemperature < H.base_body_temp) // Shamelessly copy-pasted from coffee
+	if(parent != H.equipped())
+		return //do nothing if not in active hand
+	if(parent in H.get_equipped_items() && H.bodytemperature < H.base_body_temp) // Shamelessly copy-pasted from coffee
 		H.bodytemperature = min(H.base_body_temp, H.bodytemperature+(5 * mult))
+
+//proc that is called when the base item is used to block. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_BEGIN" signal 
+datum/component/itemblock/warmsup/on_block_begin(obj/item/I, mob/user)
+	. = ..()//Always call your parents
+	if(I.c_flags & HAS_GRAB_EQUIP)
+		for(var/obj/item/grab/block/B in I)
+			B.setProperty("coldprot", 25)
+			B.setProperty("custom1", "Warms you up over time")
+
+//proc that is called when the block is ended. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_END" signal
+datum/component/itemblock/warmsup/on_block_end(obj/item/I, mob/user)
+	. = ..()//always always
+	if(I.c_flags & HAS_GRAB_EQUIP)
+		for(var/obj/item/grab/block/B in I)
+			B.delProperty("coldprot")
+			B.delProperty("custom1")
