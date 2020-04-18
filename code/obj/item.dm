@@ -940,8 +940,8 @@
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		insertChestItem(M, user)	// Puting item in patient's chest
-		return
+		if(insertChestItem(M, user))	// Puting item in patient's chest
+			return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on %target%")
