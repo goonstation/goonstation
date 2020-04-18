@@ -115,9 +115,6 @@
 		H.set_clothing_icon_dirty()
 	..()
 
-/obj/item/handcuffs/unequipped(var/mob/user)
-	..()
-
 /obj/item/handcuffs/proc/werewolf_cant_rip()
 	.= src.material && src.material.mat_id == "silver"
 
@@ -160,6 +157,3 @@
 	icon_state = "buddycuff"
 	m_amt = 0
 	strength = 1
-
-/obj/item/handcuffs/guardbot/unequipped(var/mob/user)
-	..()
