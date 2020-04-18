@@ -121,7 +121,6 @@
 /obj/item/handcuffs/proc/werewolf_cant_rip()
 	.= src.material && src.material.mat_id == "silver"
 
-
 /obj/item/handcuffs/proc/drop_handcuffs(mob/user)
 	user.handcuffs = null
 	user.delStatus("handcuffed")
