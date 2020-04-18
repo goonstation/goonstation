@@ -121,6 +121,7 @@
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
+	var/health = 50
 	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
 	var/spawn_chance = 0 // How likely is this shrub to spawn something?
@@ -193,6 +194,27 @@
 						L.changeStatus("stunned", 2 SECONDS)
 
 		interact_particle(user,src)
+
+	attackby(var/obj/item/W as obj, user as mob)
+		var/damage = W.force
+		usr.lastattacked = src
+		hit_twitch(src)
+		attack_particle(user,src)
+		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
+		src.take_damage(damage)
+		usr.visible_message("<span style='color:red'><b>[user] hacks at the [src] with [W]!</b></span>")
+
+	proc/take_damage(var/damage_amount = 0)
+		src.health -= damage_amount
+		src.health = max(0,min(src.health,100))
+		if (damage_amount > 0)
+			if (src.health == 0)
+				src.visible_message("<span style=\"color:red\"><b>The [src.name] falls apart!</b></span>")
+				var/obj/item/L = "/obj/decal/cleanable/leaves"
+				L = new L(get_turf(src))
+				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+				qdel(src)
+				return
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
