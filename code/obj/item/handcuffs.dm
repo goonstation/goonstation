@@ -126,16 +126,14 @@
 	user.delStatus("handcuffed")
 	user.drop_item(src)
 	user.update_clothing()
-	if(src.strength == 1)
+	if (src.strength == 1) // weak cuffs break
 		if (src.material && src.material.mat_id == "silver")
 			src.visible_message("<span style='color:red'>[src] disintegrate.</span>")
-			qdel(src)
-		else if((istype(src, /obj/item/handcuffs/guardbot)))
+		else if ((istype(src, /obj/item/handcuffs/guardbot)))
 			src.visible_message("<span style='color:red'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")
-			qdel(src)
 		else
 			src.visible_message("<span style='color:red'>[src] break apart.</span>")
-			qdel(src)
+		qdel(src)
 
 /obj/item/handcuffs/proc/destroy_handcuffs(mob/user)
 	user.handcuffs = null
