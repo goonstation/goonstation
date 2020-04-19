@@ -69,6 +69,7 @@
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
+	/obj/item/clothing/shoes/swat/heavy,
 #if ASS_JAM
 	/obj/item/gun/kinetic/beepsky,
 	/obj/item/turret_deployer/riot,
