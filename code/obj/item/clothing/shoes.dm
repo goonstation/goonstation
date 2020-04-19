@@ -368,14 +368,15 @@
 
 /obj/item/clothing/shoes/swat/heavy
 	name = "heavy military boots"
+	desc = "Fairly worn out military boots."
 	step_sound = "step_heavyboots"
 	step_priority = STEP_PRIORITY_LOW
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
-			. = "They have seen a lot of action. Still fit like a glove! Or a shoe."
+			. = "Still fit like a glove! Or a shoe."
 		else
-			. = "Fairly worn out military boots. Looks like some big shoes to fill!"
+			. = "Looks like some big shoes to fill!"
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
