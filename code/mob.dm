@@ -351,6 +351,7 @@
 	ghost = null
 	resistances = null
 	ailments = null
+	cooldowns = null
 	..()
 
 /mob/Login()
