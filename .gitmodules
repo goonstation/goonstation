@@ -1,6 +1,3 @@
 [submodule "+secret"]
 	path = +secret
 	url = git@bitbucket.org:spacewizards13/goonstation-secret.git
-[submodule "goonstation-secret"]
-	path = goonstation-secret
-	url = https://HydroFloric@bitbucket.org/spacewizards13/goonstation-secret.git
