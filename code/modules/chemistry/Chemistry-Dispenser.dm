@@ -253,12 +253,11 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				qdel(src)
+				src.take_damage(400)
 				return
 			if(2.0)
-				if (prob(50))
-					qdel(src)
-					return
+				src.take_damage(150)
+				return
 
 	blob_act(var/power)
 		if (prob(25 * power/20))

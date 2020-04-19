@@ -140,11 +140,7 @@
 				loc = null
 				qdel(src)
 			else
-				if(prob(50))
-					loc = null
-					qdel(src)
-				else
-					destroyed = 1
+				src.take_damage(45)
 	attack_hand(mob/user as mob)
 		if (!user) return
 		if (destroyed) return ..()

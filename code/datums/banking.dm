@@ -900,6 +900,9 @@
 				C.throw_at(usr, 20, 3)
 				return
 
+	ex_act(severity)
+		src.take_damage(70)
+
 	atm_alt
 		icon_state = "atm_alt"
 		layer = EFFECTS_LAYER_UNDER_1
