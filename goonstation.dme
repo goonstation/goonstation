@@ -49,7 +49,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret.dm"
 
 // BEGIN_INCLUDE
-#include "code\__secret.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
