@@ -1,5 +1,7 @@
 # Goonstation Code Guidelines
 
+[ToC]
+
 ## General
 
 * Don't use `goto`. Bad.
