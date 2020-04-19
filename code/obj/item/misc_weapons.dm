@@ -60,9 +60,32 @@
 	New()
 		..()
 		src.bladecolor = pick(valid_colors)
-		//AddComponent(/datum/component/itemblock/saberblock)
+		var/r = 0
+		var/g = 0
+		var/b = 0
 		if (prob(1))
 			src.bladecolor = null
+		switch(src.bladecolor)
+			if("R")
+				r = 255
+			if("O")
+				r = 255; g = 127
+			if("Y")
+				r = 255; g = 255
+			if("G")
+				g = 255
+			if("C")
+				b = 255; g = 200
+			if("B")
+				b = 255
+			if("P")
+				r = 153; b = 255
+			if("Pi")
+				r = 255; g = 121; b = 255
+			if("W")
+				r = 255; g = 255; b = 255
+		var/datum/component/holdertargeting/simple_light/light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
+		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		BLOCK_SWORD
 
@@ -130,6 +153,8 @@
 		take_bleeding_damage(user, user, 5)
 	src.active = !( src.active )
 	if (src.active)
+		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		light_c.update(1)
 		boutput(user, "<span style=\"color:blue\">The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
@@ -146,6 +171,8 @@
 		src.w_class = 4
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
+		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		light_c.update(0)
 		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg

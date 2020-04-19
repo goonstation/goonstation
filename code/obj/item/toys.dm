@@ -945,6 +945,7 @@ var/list/figure_patreon_rarity = list(\
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 
 
+
 /obj/item/toy/gooncode
 	name = "gooncode hard disk drive"
 	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \

@@ -12,12 +12,12 @@
 		if(active == 1)
 			return //This is to prevent admins from fucking up the shuttle arrival/departures by spamming this event.
 		event = 1
-		active = 1 
+		active = 1
 		map_turf = map_settings.shuttle_map_turf
 #ifdef UNDERWATER_MAP // bodge fix for oshan
 		var/shuttle = pick("left","right");
 #else
-		var/shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common. 
+		var/shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
 #endif
 		var/docked_where = shuttle == "diner" ? "space diner" : "station";
 		command_alert("A merchant shuttle has docked with the [docked_where].", "Commerce and Customs Alert")
@@ -70,7 +70,7 @@
 
 		command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
 
-		sleep(300)
+		sleep(30 SECONDS)
 
 		// hey you, get out of my shuttle! I ain't taking you back to centcom!
 		var/area/teleport_to_location = locate(/area/station/crew_quarters/bar)
@@ -93,7 +93,7 @@
 		#ifdef UNDERWATER_MAP
 		start_location.color = OCEAN_COLOR
 		#endif
-		
+
 		active = 0
 
 /proc/get_hiding_jerk(var/atom/movable/container)

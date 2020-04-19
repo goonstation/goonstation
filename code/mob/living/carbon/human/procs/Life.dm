@@ -75,7 +75,7 @@
 		SPAWN_DBG(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
-				sleep(20)
+				sleep(2 SECONDS)
 	proc/Thumper_stopThumps()
 		doThumps = 0
 	proc/Thumper_paralyzed()
@@ -1562,7 +1562,7 @@
 
 		if (!src.organHolder)
 			src.organHolder = new(src)
-			sleep(10)
+			sleep(1 SECOND)
 
 		var/datum/organHolder/oH = src.organHolder
 		if (!oH.head && !src.nodamage)

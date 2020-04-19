@@ -573,7 +573,7 @@
 						if(M.anchored || M == source) continue
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(50)
+					sleep(5 SECONDS)
 					src.now_pushing = 0
 
 					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
@@ -2263,7 +2263,7 @@
 			client.pixel_x = amplitude * sin(0.008 * dizziness * world.time)
 			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_dizzy = 0
 	if (client)
@@ -2299,7 +2299,7 @@
 		pixel_x = old_x + rand(-amplitude, amplitude)
 		pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
 	pixel_x = old_x

@@ -92,7 +92,7 @@ var/list/clothingbooth_items = list()
 						wiggle--
 						src.pixel_x = rand(-3,3)
 						src.pixel_y = rand(-3,3)
-						sleep(1)
+						sleep(0.1 SECONDS)
 					src.pixel_x = 0
 					src.pixel_y = 0
 			if("render")
@@ -151,7 +151,7 @@ var/list/clothingbooth_items = list()
 	if((src.open == 1)&&(!user.stat))
 		user.set_loc(src.loc)
 		src.set_open(0)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		user.set_loc(src)
 		boutput(user, "<span style=\"color:green\"><br>Welcome to the clothing booth! Click an item to veiw its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
 		uisetup(user)

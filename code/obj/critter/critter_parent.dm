@@ -298,7 +298,7 @@
 			SPAWN_DBG(0)
 				var/frenzy = W.getProperty("frenzy")
 				W.click_delay -= frenzy
-				sleep(30)
+				sleep(3 SECONDS)
 				W.click_delay += frenzy
 		///////////////////////////
 
@@ -1135,9 +1135,9 @@
 					var/hatch_wiggle_counter = rand(3,8)
 					while (hatch_wiggle_counter-- > 0)
 						src.pixel_x++
-						sleep(2)
+						sleep(0.2 SECONDS)
 						src.pixel_x--
-						sleep(10)
+						sleep(1 SECOND)
 					src.visible_message("[src] hatches!")
 
 				if (!ispath(critter_type))
@@ -1157,7 +1157,7 @@
 				if (shouldThrow && T)
 					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 
-				sleep(1)
+				sleep(0.1 SECONDS)
 				qdel(src)
 				return
 		else

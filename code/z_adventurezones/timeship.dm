@@ -56,7 +56,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		var/sound_delay = 0
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -229,7 +229,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 
 		SPAWN_DBG(0) //Delete the overlay when finished with it.
 			src.on = 0
-			sleep(15)
+			sleep(1.5 SECONDS)
 			qdel(Ov)
 			qdel(src)
 
@@ -294,7 +294,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 				src.master.speak("Aaa! Please stay away from there! You can't wake him up, okay? It's not safe!")
 				SPAWN_DBG(1.5 SECONDS)
 					src.master.speak("I mean, for him.  Sleepers slow down aging, but it turns out that DNA or whatever still ages really, really slowly.")
-					sleep(10)
+					sleep(1 SECOND)
 					src.master.speak("And um, it's been so long that when the cell tries to divide it...doesn't work.")
 
 				return
@@ -308,9 +308,9 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			src.master.speak( "Oh, this place is familiar!  It looks like a ship, a model...um...")
 			SPAWN_DBG(1 SECOND)
 				src.master.speak("I'm sorry, I don't recognize this ship!  Maybe I can interface with its onboard computer though?")
-				sleep(20)
+				sleep(2 SECONDS)
 				src.master.speak("Okay, it's yelling at me in a language I do not understand!  Weird!")
-				sleep(20)
+				sleep(2 SECONDS)
 				src.master.speak("...and now it's not responding. So much for that!")
 
 			return
@@ -364,7 +364,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			bioHolder.mobAppearance.underwear = "briefs"
 			bioHolder.age = 3500
 			gender = "male"
-			sleep(5)
+			sleep(0.5 SECONDS)
 			bioHolder.mobAppearance.UpdateMob()
 			bioHolder.AddEffect("psy_resist") // Heh
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)

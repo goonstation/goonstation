@@ -18,7 +18,7 @@
 	if (isscrewingtool(W))
 		src.add_fingerprint(user)
 		user.show_message(text("<span style=\"color:red\">Now [] the panel...</span>", (src.locked) ? "unscrewing" : "reattaching"), 1)
-		sleep(30)
+		sleep(3 SECONDS)
 		src.locked =! src.locked
 		src.updateicon()
 		return

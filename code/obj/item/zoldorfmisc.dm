@@ -20,7 +20,7 @@
 			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
-			sleep(46)
+			sleep(4.6 SECONDS)
 			src.signer = user.real_name
 			src.name = "[user.real_name]'s signed demonic contract"
 			src.icon_state = "signed"
@@ -382,15 +382,15 @@
 		switch(src.icon_state)
 			if("scrollred")
 				src.icon_state = "animred"
-				sleep(11)
+				sleep(1.1 SECONDS)
 				src.icon_state = "scrollclosed"
 			if("scrollblue")
 				src.icon_state = "animblue"
-				sleep(11)
+				sleep(1.1 SECONDS)
 				src.icon_state = "scrollclosed"
 			if("scrollpurple")
 				src.icon_state = "animpurple"
-				sleep(11)
+				sleep(1.1 SECONDS)
 				src.icon_state = "scrollclosed"
 			if("scrollclosed")
 				switch(src.scrolltype)
@@ -457,7 +457,7 @@
 				user.visible_message("<span style=\"color:red\"><b>The [target.name] disappears! Wow!</b></span>")
 				user.u_equip(src)
 				src.set_loc(user)
-				sleep(100)
+				sleep(10 SECONDS)
 				if(!user)
 					return
 				if(istype(user, /mob/living/carbon/human))

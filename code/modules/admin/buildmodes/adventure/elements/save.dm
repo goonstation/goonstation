@@ -95,7 +95,7 @@
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
-								sleep(1)
+								sleep(0.1 SECONDS)
 						if (usr && usr.client)
 							if (fexists("adventure/adventure_save_[usr.client.ckey].dat"))
 								fdel("adventure/adventure_save_[usr.client.ckey].dat")

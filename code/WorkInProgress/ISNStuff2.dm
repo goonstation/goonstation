@@ -220,7 +220,7 @@
 				return
 
 			boutput(user, "<span style=\"color:red\">Pressing button. Please wait thirty seconds.</span>")
-			sleep(300)
+			sleep(30 SECONDS)
 
 			input = alert("For real though, you're okay with pressing the button?","DONT PRESS IT","Yes","No")
 			if (input != "Yes")
@@ -252,7 +252,7 @@
 				A.updateicon()
 				LAGCHECK(LAG_LOW)
 
-			sleep(300)
+			sleep(30 SECONDS)
 
 			siren.repeat = 0
 			siren.status = SOUND_UPDATE

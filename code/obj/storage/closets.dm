@@ -8,7 +8,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -166,7 +166,7 @@
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
 	..()
-	sleep(2)*/
+	sleep(0.2 SECONDS)*/
 
 /obj/storage/closet/thunderdome/red
 	icon_state = "syndicate"

@@ -289,7 +289,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
 	O.name = "alien"
@@ -323,7 +323,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
 	O.name = "alien queen"

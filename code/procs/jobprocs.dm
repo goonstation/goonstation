@@ -408,7 +408,7 @@
 				equip_traitor(src)
 
 		set_clothing_icon_dirty()
-		sleep(1)
+		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO)//!ismap("DESTINY") && !ismap("CLARION"))

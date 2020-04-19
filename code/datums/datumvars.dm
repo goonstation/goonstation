@@ -431,7 +431,7 @@
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
-			sleep(1)
+			sleep(0.1 SECONDS)
 			boutput(src, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to display a flat icon of something all rude-like.")

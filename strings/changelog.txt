@@ -1,4 +1,64 @@
 
+(t)sun apr 19 20
+(u)Gerhazo
+(p)311
+(e)|
+(+)Fixed certain cuff types not breaking apart on removal as well as trying to remove silver handcuffs from your belt breaking that slot.
+(u)Awkward Dryad
+(p)299
+(e)|
+(+)Fixed plant layering in pots <3
+(t)sat apr 18 20
+(u)Kubius
+(p)316
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch eight - assorted QoL upgrades, including clown gear.
+(u)mbc
+(p)314
+(e)⚖|balance
+(*)Pods have improved braking and occupants get stunned for far less time when impacted by melee.
+(u)pali
+(p)256
+(e)🆕|enhancement
+(+)Turned on C-Sabers now actually emit light!
+(u)Gannets
+(p)300
+(e)🎨|sprites
+(+)Added missing pulse rifle in-hand sprites.
+(u)Kubius
+(p)306
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch seven: relocation/rework of test chamber, plus a bit.
+(t)fri apr 17 20
+(u)Kubius
+(p)301
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 6. Notable: QM import upgrades, Engine cold loop radiator.
+(u)Kubius
+(p)298
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 5, including bookshelf and a map image refresh.
+(u)Kubius
+(p)295
+(e)🗺|mapping
+(+)Kondaru Fixes IV: The Voyage Home (in an escape pod). PR #295
+(u)Tarmunora
+(p)217
+(e)🔄|rework
+(*)Cigarettes now have a fixed burn time, with the reagent/cycle adjusted to match
+(*)Pocket cigs no longer transfer reagents if you have on active internals or a gas mask
+(u)RichardGere
+(p)275
+(e)|
+(+)Fixed an issue that would let explosions destroy the nuclear bomb on certain floor types.
+(u)Enfaeutchie
+(p)273
+(e)🐛|bug
+(+)Click+dragging produce into crates won't overfill them, so you can ship and sell it more easily.
+(u)Kubius
+(p)274
+(e)🗺|mapping
+(*)Second batch of post-launch fixes to Kondaru. See pull request 274 for details.
 (t)thu apr 16 20
 (u)trerri
 (p)263

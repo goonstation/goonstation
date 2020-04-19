@@ -99,7 +99,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -122,7 +122,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -141,7 +141,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -152,8 +152,8 @@
 							if (C.net_id == src.comm_net_id)
 								for (var/logg in C.cargo_logs)
 									src.print_text(logg)
-									sleep(1)
-					
+									sleep(0.1 SECONDS)
+
 					if("transmit")
 						if(!src.pnet_card)
 							src.print_text("<b>Error:</b> Network card required.")
@@ -162,7 +162,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -207,7 +207,7 @@
 
 				if(!src.comm_net_id)
 					src.detect_comm_dish()
-					sleep(8)
+					sleep(0.8 SECONDS)
 					if (!src.comm_net_id)
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return
@@ -231,7 +231,7 @@
 				src.print_text(src.transmit_title)
 				src.print_text("Please type and enter your emergency message:")
 				menu = MENU_TRANSMIT_MESSAGE
-			
+
 			if(MENU_TRANSMIT_MESSAGE)
 				menu = MENU_MAIN
 
@@ -242,7 +242,7 @@
 
 				if(!src.comm_net_id)
 					src.detect_comm_dish()
-					sleep(8)
+					sleep(0.8 SECONDS)
 					if (!src.comm_net_id)
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return
@@ -306,10 +306,10 @@
 						if(master && master.current_user)
 							message_admins("<span style=\"color:blue\">[key_name(master.current_user)] recalled the Emergency Shuttle</span>")
 							logTheThing("station", null, null, "[key_name(master.current_user)] recalled the Emergency Shuttle")
-					
+
 					if("transmit_e_success")
 						src.print_text("Message transmitted successfuly.")
-					
+
 					if("transmit_e_cooldown")
 						src.print_text("Communication dish recharging. Available in [time_to_text(signal.data["time"])].")
 

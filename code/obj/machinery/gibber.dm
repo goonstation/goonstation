@@ -59,7 +59,7 @@
 
 	user.visible_message("<span style=\"color:red\">[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
-	sleep(30)
+	sleep(3 SECONDS)
 	if(G && G.affecting)
 		user.visible_message("<span style=\"color:red\">[user] stuffs [G.affecting] into the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced %target% into a gibber at [log_loc(src)].")

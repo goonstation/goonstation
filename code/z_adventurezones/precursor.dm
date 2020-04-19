@@ -125,7 +125,7 @@
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2 && prob(10))
 					sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg','sound/ambience/industrial/Precursor_Choir.ogg','sound/ambience/industrial/Precursor_Drone3.ogg','sound/ambience/industrial/Precursor_Bells.ogg')
@@ -343,7 +343,7 @@
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H:update_burning(5) // this isn't a safe way to travel at all!!!
-			sleep(50)
+			sleep(5 SECONDS)
 			src.ready = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -360,7 +360,7 @@
 				O.set_loc(src)
 				src.icon_state = "orb_activated"
 				src.assembled = 1
-				sleep(5)
+				sleep(0.5 SECONDS)
 				src.visible_message("<span style=\"color:blue\"><b>[src] makes a strange noise!</b></span>")
 				playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 60, 1)
 				src.ready = 1
@@ -370,7 +370,7 @@
 
 		else if(istype(W, /obj/item/basketball) && !src.assembled) // sailor dave thinks the bball is the orb, this will really fuck with his day
 			user.visible_message("<span style=\"color:blue\"><b>[user] slams [W] down onto [src]'s central spike.</b></span>")
-			sleep(1)
+			sleep(0.1 SECONDS)
 			user.visible_message("<span style=\"color:red\"><b>[W] violently pops! Way to go, jerk!</span>")
 			user.drop_item(W)
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 75, 1)
@@ -570,7 +570,7 @@
 					src.animate_effect()
 					playsound(src.loc, "sound/effects/warp1.ogg", 65, 1)
 					src.visible_message("<span style=\"color:red\"><b>[src]</b> charges up!</span>")
-					sleep(5)
+					sleep(0.5 SECONDS)
 					playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
 
 					var/list/lineObjs
@@ -599,14 +599,14 @@
 
 
 
-			sleep(5)
+			sleep(0.5 SECONDS)
 			src.active = 0
 
 		animate_effect()
 			if(src.overlays.len)
 				return
 			src.overlays += src.effect_icon
-			sleep(15)
+			sleep(1.5 SECONDS)
 			src.overlays -= src.effect_icon
 
 		deactivate()
@@ -666,7 +666,7 @@
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 60, 1)
 		src.icon = 'icons/obj/artifacts/puzzles.dmi'
 		src.icon_state = "column_spin"
-		sleep(10)
+		sleep(1 SECOND)
 		src.icon = 'icons/obj/artifacts/artifacts.dmi'
 		src.icon_state = "precursor-6"
 		playsound(src.loc, "sound/machines/click.ogg", 60, 1)
@@ -801,15 +801,15 @@
 				if(setting_red == target_red)
 					src.visible_message("<span style=\"color:blue\"><b>[src]</b> beeps oddly.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 				if(setting_green == target_green)
 					src.visible_message("<span style=\"color:blue\"><b>[src]</b> beeps strangely.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 				if(setting_blue == target_blue)
 					src.visible_message("<span style=\"color:blue\"><b>[src] beeps curiously.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 				Z_LOG_INFO("Adventure/Precursor", "Puzzle value: [setting_red] [setting_green] [setting_blue] ([target_red] [target_green] [target_blue])")
 				if(setting_red == target_red && setting_green == target_green && setting_blue == target_blue)
@@ -1224,11 +1224,11 @@
 							if (n2 > 9)
 								n2 = 9 - (n2 - 9)
 							I.pixel_y = old_pixel_y + pixel_y_mod + n2 - 1
-							sleep(4)
+							sleep(0.4 SECONDS)
 
 						while (I && I.pixel_y > old_pixel_y)
 							I.pixel_y--
-							sleep(2)
+							sleep(0.2 SECONDS)
 */
 			if (prob(T_effect_prob))
 				SPAWN_DBG(rand(80, 100))
@@ -1254,7 +1254,7 @@
 							for (var/atom/A in T)
 								A.ex_act(max(1, T_dist))
 
-						sleep(6)
+						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
 							pool(O)
 
