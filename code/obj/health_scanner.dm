@@ -35,7 +35,7 @@
 	desc = "A screen that shows health information recieved from connected floor scanners."
 	icon_state = "wallscan1"
 	var/list/partners // who do we know?
-	var/examine_range = 7 // from how far away can people examine the screen
+	var/examine_range = (SQUARE_TILE_WIDTH - 1) / 2 // from how far away can people examine the screen
 
 	New()
 		src.partners = list()
