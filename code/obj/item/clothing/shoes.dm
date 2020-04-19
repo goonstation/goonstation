@@ -369,6 +369,7 @@
 /obj/item/clothing/shoes/swat/heavy
 	name = "heavy military boots"
 	desc = "Fairly worn out military boots."
+	icon_state = "swatheavy"
 	step_sound = "step_heavyboots"
 	step_priority = STEP_PRIORITY_LOW
 
