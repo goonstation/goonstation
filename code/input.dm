@@ -261,8 +261,6 @@ var/list/dirty_keystates = list()
 	proc/set_keymap(datum/keymap/map)
 		src.keymap = map
 
-	proc/setup_macros()
-
 		// oh god
 		/*
 		I have removed a heap of commented out shit.

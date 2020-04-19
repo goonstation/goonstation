@@ -375,10 +375,6 @@
 	src.update_cursor()
 	src.update_keymap()
 
-	SPAWN_DBG(3 SECONDS)
-		if (src && src.client) //Wire: fix for runtime error: Cannot execute null.setup macros().
-			src.client.setup_macros()
-
 	if (src.client)
 		src.client.mouse_pointer_icon = src.cursor
 
