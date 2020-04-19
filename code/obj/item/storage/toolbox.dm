@@ -4,7 +4,7 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	icon = 'icons/obj/items/storage.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
