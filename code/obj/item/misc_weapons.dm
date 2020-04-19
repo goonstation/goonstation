@@ -219,6 +219,8 @@
 	off_w_class = 3
 	active_force = 18
 	inactive_force = 8
+	active_stamina_dmg = 65
+	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 	valid_colors = list("R","O","Y","G","C","B","P")
 
@@ -241,7 +243,7 @@
 		return
 
 	if (active)
-		target.do_disorient(65, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 
 		if (prob(30))
 			boutput(user, "<span style=\"color:red\">The sword shorted out! The laser turned off!</span>")
@@ -420,7 +422,8 @@
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY 
+	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
 	stamina_cost = 35
