@@ -375,8 +375,7 @@
 	src.update_cursor()
 	src.update_keymap()
 
-	if (src.client)
-		src.client.mouse_pointer_icon = src.cursor
+	src.client.mouse_pointer_icon = src.cursor
 
 	logTheThing("diary", null, src, "Login: %target% from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
