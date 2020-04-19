@@ -250,6 +250,8 @@ Broken RCD + Effects
 						return
 
 				if (istype(A, /turf/simulated/wall))
+					if (istype(A, /turf/simulated/wall/auto/shuttle))
+						return
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, 5 SECONDS))
 						var/datum/material/M = A:material
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
