@@ -107,7 +107,8 @@
 	name = "photo"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "photo"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "paper"
 	w_class = 1.0
 	var/image/fullImage
 	var/icon/fullIcon
