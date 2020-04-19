@@ -2,6 +2,103 @@
 /* ==================================================== */
 /* -------------------- Cigarettes -------------------- */
 /* ==================================================== */
+/obj/item/clothing/mask/cig_bundle
+	name = "bundle of cigarettes"
+	icon = 'icons/obj/cigarettes.dmi'
+	wear_image_icon = 'icons/mob/mask.dmi'
+	icon_state = "cig_bundle"
+	uses_multiple_icon_states = 1
+	item_state = "cig_bundle"
+	var/list/cig_list = list()
+	var/const/max_cigs = 28
+
+	New(var/obj/item/clothing/mask/cigarette/cig1, var/obj/item/clothing/mask/cigarette/cig1)
+		
+	attackby(obj/item/W as obj, mob/user as mob)
+	// proc/add_to_bundle(var/mob/user as mob, var/obj/item/clothing/mask/cigarette/C)
+		if (istype(W, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/C = W
+			if (cig_list.len < max_cigs)
+				cig_list += C
+
+				boutput(user, "You add [C] to [src].")
+				user.u_equip(C)
+				C.set_loc(src)
+				if (src.on)
+					C.light(user)
+					//Remove from processing loop since src will now call proc/process for all cigs in its contents
+					processing_items.Remove(C)
+
+				//Change sprites
+			else
+				boutput(user, "There's no way you can fit another cigarette in!")
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if (islist(cig_list) && cig_list.len > 0)
+			var/obj/item/clothing/mask/cigarette/C = pick(cig_list)
+			cig_list -= C
+			user.put_in_hand_or_drop(C)
+			boutput(user, "You remove [C] from [src].")
+			if (C.on && !(C in processing_items))
+				processing_items.Add(C)
+
+
+			//if there's only one cigarette left, then just delete this object and put that cig where this is.
+			if (cig_list.len == 1)
+				var/obj/item/clothing/mask/cigarette/last_cig = cig_list[1]
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.wear_mask == src)
+						force_equip(last_cig, H.slot_wear_mask)
+				qdel(src)
+			//Change sprites
+
+	proc/break_up_bundle()
+		src.visible_message("<span style='color:red'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+		for (var/obj/item/clothing/mask/cigarette/C in cig_list)
+			C.set_loc(src.loc)
+
+	dropped(mob/user as mob)
+		src.visible_message("<span style='color:red'>[src] falls apart into", group = "cig_drop")
+		for (var/obj/item/clothing/mask/cigarette/C in cig_list)
+			C.set_loc(src.loc)
+
+		qdel(src)
+
+	process()
+		for (var/obj/item/clothing/mask/cigarette/C in cig_list)
+			C.process()
+
+	proc/light(var/mob/user as mob, var/message as text)
+		if (src.on == 0)
+			//Silently light all cigs
+			for (var/obj/item/clothing/mask/cigarette/C in cig_list)
+				C.light(user)
+			src.on = 1
+			src.damtype = "fire"
+			src.force = 4
+			src.icon_state = litstate
+			src.item_state = litstate
+			if (!(src in processing_items))
+				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
+
+	proc/put_out(var/mob/user as mob, var/message as text)
+		if (src.on == 1)
+			for (var/obj/item/clothing/mask/cigarette/C in cig_list)
+				C.put_out(user)
+			src.on = -1
+			src.damtype = "brute"
+			src.force = 0
+			src.icon_state = buttstate
+			src.item_state = buttstate
+			src.name = buttname
+			src.desc = buttdesc
+			processing_items.Remove(src)
+
+			playsound(get_turf(src), "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+	
 
 /obj/item/clothing/mask/cigarette
 	name = "cigarette"
