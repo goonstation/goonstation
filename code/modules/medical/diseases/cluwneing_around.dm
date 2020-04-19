@@ -48,14 +48,12 @@
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
-			// NPCs should always be cluwnable, I guess (Convair880)?
-			if (affected_mob.mind && (affected_mob.mind.assigned_role != "Cluwne") || (!affected_mob.mind || !affected_mob.client))
+			if (affected_mob.job != "Cluwne")
 				//src.oldname = affected_mob.real_name
 				affected_mob.real_name = "cluwne"
 				affected_mob.stuttering = 120
 				//src.oldjob = affected_mob.job
-				if (affected_mob.mind)
-					affected_mob.mind.assigned_role = "Cluwne"
+				affected_mob.job = "Cluwne"
 
 			if(prob(10) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
@@ -198,8 +196,8 @@
 		if (src.oldname && src.oldjob)
 			affected_mob.real_name = src.oldname
 			affected_mob.job = src.oldjob
-		if( affected_mob.mind?.assigned_role == "Cluwne" )
-			affected_mob.mind?.assigned_role = "Cleansed Cluwne"
+		if(affected_mob.job == "Cluwne" )
+			affected_mob.job = "Cleansed Cluwne"
 		boutput(affected_mob, "<span style=\"color:blue\">You feel like yourself again.</span>")
 		for(var/obj/item/clothing/W in affected_mob)
 			if (W.cant_self_remove && W.cant_other_remove)//this might not be a great way to do this.

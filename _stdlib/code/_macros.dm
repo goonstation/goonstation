@@ -64,7 +64,7 @@ var/list/global_spawn_dbg = list()
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == "spy_thief")
 
 // Why the separate mask check? NPCs don't use assigned_role and we still wanna play the cluwne-specific sound effects.
-#define iscluwne(x) ((x?.mind?.assigned_role == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
+#define iscluwne(x) ((x?.job == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
 #define ishorse(x) (istype(x, /mob/living/carbon/human) && ((x.mind?.assigned_role == "Horse") || istype(x.wear_mask, /obj/item/clothing/mask/horse_mask/cursed)))
 #define isdiabolical(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:diabolical == 1)
 #define iswelder(x) istype(x, /mob/living/carbon/human/welder)
