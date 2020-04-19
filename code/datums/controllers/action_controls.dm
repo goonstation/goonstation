@@ -700,8 +700,8 @@ var/datum/action_controller/actions
 			target.drop_from_slot(target.r_hand)
 			target.drop_from_slot(target.l_hand)
 			target.drop_juggle()
-			target.update_clothing()
 			target.setStatus("handcuffed", duration = INFINITE_STATUS)
+			target.update_clothing()
 
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span style=\"color:red\"><B>[owner] handcuffs [target]!</B></span>", 1)
