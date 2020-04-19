@@ -1,5 +1,4 @@
 # Goonstation Contributor Guidelines
-[ToC]
 
 ## Code
 
@@ -9,10 +8,13 @@
 
 ## Making PRs (read before making a PR)
 Aside from the actual changes to the repo that you make, opening a PR has some required sections in the initial PR comment. Here are the general guidelines for filling out each section.
+
 ### About the PR (Required)
 - Here you can describe your PR in as much detail as you like, as opposed to the changelog entry which has to be concise. You're welcome to include pictures, gifs, and videos in this section that can further illustrate what this PR does.
+
 ### Why's this needed? (Required)
 - Give your reasoning or opinion why you think your change is needed or would improve things.
+
 ### Changelog (Optional)
 * Use the markdown and text`## Changelog` to denote this section. (our changelog bot searches for this string)
 * This section is **not required** for small changes such as: code cleanup, small sprite updates, small code changes that don't result in balance issues, small map changes.
