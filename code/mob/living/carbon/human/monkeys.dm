@@ -133,7 +133,7 @@
 			user.drop_item()
 			W.set_loc(src)
 			src.update_clothing()
-			boutput(user, "<span style=\"color:blue\">You blindfold [src].</span>")
+			user.visible_message("<span style=\"color:blue\"><b>[user]</b> puts a blindfold on [src]!</span>")
 			return
 		..()
 
