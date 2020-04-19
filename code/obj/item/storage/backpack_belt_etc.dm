@@ -5,6 +5,7 @@
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
