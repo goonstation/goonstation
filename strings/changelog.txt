@@ -1,5 +1,9 @@
 
 (t)sun apr 19 20
+(u)Kubius
+(p)323
+(e)🆕🗺|enhancement, mapping
+(+)Assorted small improvements to Horizon.
 (u)Gerhazo
 (p)311
 (e)|
