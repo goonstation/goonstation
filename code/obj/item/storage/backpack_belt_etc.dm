@@ -35,7 +35,8 @@
 
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
-	icon_state = "bp_medic"
+	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
+	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel
