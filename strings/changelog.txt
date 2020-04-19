@@ -1,5 +1,9 @@
 
 (t)sun apr 19 20
+(u)Gerhazo
+(p)311
+(e)|
+(+)Fixed certain cuff types not breaking apart on removal as well as trying to remove silver handcuffs from your belt breaking that slot.
 (u)Awkward Dryad
 (p)299
 (e)|
