@@ -366,6 +366,12 @@
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
 
+/obj/item/clothing/shoes/swat/heavy
+	name = "heavy military boots"
+	desc = "Fairly worn out military boots. These ones seem very bulky in particular."
+	step_sound = "step_heavyboots"
+	step_priority = STEP_PRIORITY_LOW
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."
