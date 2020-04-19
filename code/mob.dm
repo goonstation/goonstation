@@ -70,8 +70,8 @@
 	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
-	var/bodytemperature = 310.055 // 98.7F / 37C
-	var/base_body_temp = 310.055
+	var/bodytemperature = T0C + 37
+	var/base_body_temp = T0C + 37
 	var/temp_tolerance = 15 // iterations between each temperature state
 	var/thermoregulation_mult = 0.025 // how quickly the body's temperature tries to correct itself, higher = faster
 	var/innate_temp_resistance = 0.16  // how good the body is at resisting environmental temperature, lower = more resistant
