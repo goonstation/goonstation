@@ -337,8 +337,7 @@
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
 		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
-		if (user.mind)
-			user.mind.assigned_role = "Cluwne"
+		user.job = "Cluwne"
 		src.cant_self_remove = 1
 		src.cant_other_remove = 1
 	return
