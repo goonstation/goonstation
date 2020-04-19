@@ -574,6 +574,7 @@ var/global/list/soundCache = list(
  	"sound/machines/romhack3.ogg" = 'sound/machines/romhack3.ogg',\
  	"sound/machines/satcrash.ogg" = 'sound/machines/satcrash.ogg',\
  	"sound/machines/scan.ogg" = 'sound/machines/scan.ogg',\
+	 "sound/machines/scan2.ogg" = 'sound/machines/scan2.ogg',\
  	"sound/machines/shielddown.ogg" = 'sound/machines/shielddown.ogg',\
  	"sound/machines/shieldgen_mainloop.ogg" = 'sound/machines/shieldgen_mainloop.ogg',\
  	"sound/machines/shieldgen_shutoff.ogg" = 'sound/machines/shieldgen_shutoff.ogg',\
