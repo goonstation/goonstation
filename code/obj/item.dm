@@ -107,11 +107,21 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg, [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+(src.hit_type != 1 ? src.hit_type != 2 ? src.hit_type != 4 ? src.hit_type != 8 ? "crush":"burn":"stab":"cut":"blunt")+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
 				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+
+		//itemblock tooltip additions
+		if(src.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/block/B in src)
+				if(B.properties && B.properties.len)
+					for(var/datum/objectProperty/P in B.properties)
+						. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
+			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
+				. += jointext(C.getTooltipDesc(), "")
+
 
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
@@ -354,7 +364,7 @@
 			var/my_range = 3
 			SPAWN_DBG(my_time) qdel(C)
 			for(var/b=0, b<my_range, b++)
-				sleep(15)
+				sleep(1.5 SECONDS)
 				if (!C) break
 				step(C,my_dir)
 				C.expose()
@@ -405,7 +415,7 @@
 					var/my_range = 3
 					SPAWN_DBG(my_time) qdel(C)
 					for(var/b=0, b<my_range, b++)
-						sleep(15)
+						sleep(1.5 SECONDS)
 						if (!C) break
 						step(C,my_dir)
 						C.expose()
@@ -500,7 +510,7 @@
 			if (!stack_result)
 				continue
 			else
-				sleep(3)
+				sleep(0.3 SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
 				if (src.amount >= max_stack)
@@ -940,8 +950,8 @@
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		insertChestItem(M, user)	// Puting item in patient's chest
-		return
+		if(insertChestItem(M, user))	// Puting item in patient's chest
+			return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on %target%")
@@ -987,7 +997,7 @@
 		SPAWN_DBG(0)
 			var/frenzy = getProperty("frenzy")
 			click_delay -= frenzy
-			sleep(30)
+			sleep(3 SECONDS)
 			click_delay += frenzy
 /*
 	if(hasProperty("Momentum"))

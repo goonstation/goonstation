@@ -706,7 +706,7 @@ proc/debug_color_of(var/thing)
 			while (X && X.activeOverlay)
 				// its a debug overlay so f u
 				X.RenderOverlay()
-				sleep(10)
+				sleep(1 SECOND)
 /turf
 	MouseEntered(location, control, params)
 		if(usr.client.activeOverlay)

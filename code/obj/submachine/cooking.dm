@@ -701,7 +701,7 @@ table#cooktime a#start {
 		user.visible_message("<span style='color:red'><b>[user] shoves [his_or_her(user)] head in the oven and turns it on.</b></span>")
 		src.icon_state = "oven_bake"
 		user.TakeDamage("head", 0, 150)
-		sleep(50)
+		sleep(5 SECONDS)
 		src.icon_state = "oven_off"
 		SPAWN_DBG(55 SECONDS)
 			if (user && !isdead(user))
@@ -971,11 +971,11 @@ table#cooktime a#start {
 			var/staystill = user.loc
 			for(var/obj/item/reagent_containers/food/M in view(1,user))
 				M.set_loc(src)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (user.loc != staystill) break
 			for(var/obj/item/plant/P in view(1,user))
 				P.set_loc(src)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (user.loc != staystill) break
 			boutput(user, "<span style=\"color:blue\">You finish stuffing food into [src]!</span>")
 		else ..()

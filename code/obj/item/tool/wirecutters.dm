@@ -47,7 +47,7 @@
 		else
 			user.visible_message("<b>[user.name]</b> snips [src].")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1, -6)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1, -6)
 		return
 

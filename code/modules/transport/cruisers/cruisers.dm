@@ -538,12 +538,12 @@
 		animate(src, alpha = 0, time = 10)
 		shield_obj.invisibility = 101
 
-		sleep(20)
+		sleep(2 SECONDS)
 
 		do_teleport(src, target, 1)
 		animate(src, alpha = 255, time = 10)
 
-		sleep(15)
+		sleep(1.5 SECONDS)
 		overlays.Cut()
 		shield_obj.invisibility = 0
 		warping = 0

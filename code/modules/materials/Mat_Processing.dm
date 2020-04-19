@@ -528,14 +528,14 @@
 			if(components.len == 1)
 				boutput(user, "<span style=\"color:red\">You activate the [src].</span>")
 				icon_state = "smelter1"
-				sleep(10)
+				sleep(1 SECOND)
 				var/atom/obj1 = components[1]
 				output = copyMaterial(obj1.material)
 				logTheThing("station", user, null, "creates a [output] bar (<b>Material:</b> <i>[output.mat_id]</i>) with the [src] at [log_loc(src)].") //  Re-added/fixed because of erebite, plasmastone etc. alloys (Convair880).
 				handleSlag()
 			else
 				icon_state = "smelter1"
-				sleep(10)
+				sleep(1 SECOND)
 				var/atom/obj1 = components[1]
 				var/atom/obj2 = components[2]
 

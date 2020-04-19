@@ -129,7 +129,7 @@
 					shakes--
 					src.pixel_x = rand(-5,5)
 					src.pixel_y = rand(-5,5)
-					sleep(1)
+					sleep(0.1 SECONDS)
 				src.pixel_x = 0
 				src.pixel_y = 0
 				SPAWN_DBG(0.5 SECONDS)
@@ -704,14 +704,14 @@
 
 		if (src.open)
 			step_towards(usr, src)
-			sleep(10)
+			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open())
 			step_towards(usr, src)
-			sleep(10)
+			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1

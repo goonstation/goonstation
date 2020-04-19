@@ -199,7 +199,7 @@ var/global/the_automaton = null
 				W.dropped(user)
 				W.loc = src
 				src.visible_message("<span style=\"color:red\"><b>[src]</b> takes \the [W] and studies it intently for a moment.</span>")
-				sleep(30)
+				sleep(3 SECONDS)
 				if (!got_cheget_key)
 					got_cheget_key = 1
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
@@ -232,9 +232,9 @@ var/global/the_automaton = null
 					playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 					qdel(W)
-					sleep(5)
+					sleep(0.5 SECONDS)
 					playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-					sleep(8)
+					sleep(0.8 SECONDS)
 					src.visible_message("<span style=\"color:red\"><b>[src]</b> twitches before locking into a pose of contemplation.  Its hand held before it, as if reading from a text.</span>")
 
 			else if (dd_hasprefix(ckey(W.name), "lead"))
@@ -247,9 +247,9 @@ var/global/the_automaton = null
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 				qdel(W)
-				sleep(5)
+				sleep(0.5 SECONDS)
 				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				src.visible_message("<span style=\"color:red\"><b>[src]</b> makes a curious sign in the air. Huh.</span>")
 
 				for (var/mob/M in range(5))
@@ -262,7 +262,7 @@ var/global/the_automaton = null
 					Sun.icon_state = "sun"
 					Sun.desc = "Hey, it looks better again!"
 
-				sleep(8)
+				sleep(0.8 SECONDS)
 				src.visible_message("<span style=\"color:red\"><b>[src]</b> tips over.</span>")
 				src.health = 0
 				src.CritterDeath() // rip
@@ -274,7 +274,7 @@ var/global/the_automaton = null
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 				qdel (W)
-				sleep(5)
+				sleep(0.5 SECONDS)
 				inserted_key()
 
 				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
@@ -363,7 +363,7 @@ var/global/the_automaton = null
 			src.visible_message("<span style=\"color:red\"><b>[src]</b> appears to read from [W].</span>")
 			user.drop_item()
 			W.set_loc(src)
-			sleep(10)
+			sleep(1 SECOND)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 50, 1)
 			src.visible_message("<span style=\"color:red\"><b>[src] frantically tears [W] to pieces! What!</b></span>")
 			if (narrator_mode)
@@ -378,7 +378,7 @@ var/global/the_automaton = null
 
 					tornpaper.name = "torn page"
 					tornpaper.info = "A page torn from a book.  Most of the text is illegible."
-					sleep(3)
+					sleep(0.3 SECONDS)
 					tornpaper.combust()
 				keycount = INFINITY
 				world << sound('sound/musical_instruments/Gong_Rumbling.ogg')
@@ -460,7 +460,7 @@ var/global/the_automaton = null
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-						sleep(6)
+						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
 							pool(O)
 		world << sound('sound/misc/automaton_spaz.ogg')
@@ -482,14 +482,14 @@ var/global/the_automaton = null
 			SPAWN_DBG(rand(10,70))
 				H.emote("scream")
 		var/turf/T = get_turf(src)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		new /obj/effects/void_break(T)
 		src.visible_message("<span style=\"color:red\"><b>[src]</b> shatters! Oh shit!</span>")
 		new /obj/effects/shockwave(T)
 		new /obj/effects/exposion/smoky(T)
 		src.health = 0
 		src.CritterDeath()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		qdel(src)
 		*/
 

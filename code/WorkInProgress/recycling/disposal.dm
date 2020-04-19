@@ -92,7 +92,7 @@
 						H.unlock_medal("Try jiggling the handle",1)
 
 				break
-			sleep(1)		// was 1
+			sleep(0.1 SECONDS)		// was 1
 			if (!loc)
 				return
 			var/obj/disposalpipe/curr = loc
@@ -416,7 +416,7 @@
 				var/turf/uloc = user.loc
 				var/atom/wloc = W.loc
 				boutput(user, "You begin slicing [src].")
-				sleep(1)
+				sleep(0.1 SECONDS)
 				if (user.loc == uloc && wloc == W.loc)
 					welded(user)
 				else
@@ -883,7 +883,7 @@
 
 						if(!isdead(poorSoul))
 							poorSoul:emote("scream")
-						sleep(5)
+						sleep(0.5 SECONDS)
 						poorSoul.ghostize()
 
 					if (newIngredient.reagents)
@@ -942,7 +942,7 @@
 							newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 						if(!isdead(poorSoul))
 							poorSoul:emote("scream")
-						sleep(5)
+						sleep(0.5 SECONDS)
 						poorSoul.death()
 						if ((poorSoul.mind || poorSoul.client) && !istype(poorSoul, /mob/living/carbon/human/npc))
 							poorSoul.ghostize()
@@ -965,12 +965,12 @@
 
 			StopLoafing:
 
-			sleep(3)	//make a bunch of ongoing noise i guess?
+			sleep(0.3 SECONDS)	//make a bunch of ongoing noise i guess?
 			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 50, 1)
-			sleep(3)
+			sleep(0.3 SECONDS)
 
 			playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 1)
-			sleep(30)
+			sleep(3 SECONDS)
 			src.icon_state = "pipe-loaf0"
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
 
@@ -1055,7 +1055,7 @@
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -1357,7 +1357,7 @@
 			flick("unblockoutlet-open", src)
 			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
 
-			sleep(20)	//wait until correct animation frame
+			sleep(2 SECONDS)	//wait until correct animation frame
 			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
 
@@ -1429,7 +1429,7 @@
 			flick("unblockoutlet-open", src)
 			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
 
-			sleep(20)	//wait until correct animation frame
+			sleep(2 SECONDS)	//wait until correct animation frame
 			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
 			for (var/atom/movable/AM in things_to_dump)
@@ -1813,7 +1813,7 @@
 		flick("outlet-open", src)
 		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
 
-		sleep(20)	//wait until correct animation frame
+		sleep(2 SECONDS)	//wait until correct animation frame
 		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
 
@@ -1894,7 +1894,7 @@
 		flick("outlet-open", src)
 		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
 
-		sleep(20)	//wait until correct animation frame
+		sleep(2 SECONDS)	//wait until correct animation frame
 		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
 

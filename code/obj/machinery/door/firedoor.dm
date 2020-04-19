@@ -141,7 +141,7 @@
 
 				play_animation("opening")
 				update_icon(1)
-				sleep(15)
+				sleep(1.5 SECONDS)
 				src.set_density(0)
 				update_nearby_tiles()
 				if (ignore_light_or_cam_opacity)
@@ -158,7 +158,7 @@
 				update_icon(1)
 				src.set_density(1)
 				update_nearby_tiles()
-				sleep(15)
+				sleep(1.5 SECONDS)
 
 				if (ignore_light_or_cam_opacity)
 					src.opacity = 1

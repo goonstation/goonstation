@@ -396,6 +396,21 @@
 				H.set_clothing_icon_dirty()
 		return
 
+/datum/achievementReward/clown_college
+	title = "Clown College Regalia"
+	desc = "Spawns you your clown college graduation cap and diploma."
+	required_medal = "Unlike the director, I went to college"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.mind.assigned_role == "Clown")
+				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
+				H.put_in_hand_or_drop(new /obj/item/toy/diploma)
+			else
+				boutput(H, "You're not a honking clown, you imposter!")
+		return
+
 /datum/achievementReward/inspectorscloths
 	title = "(Skin set) Inspector's Clothes"
 	desc = "Requires that you wear something in your suit and jumpsuit slots."

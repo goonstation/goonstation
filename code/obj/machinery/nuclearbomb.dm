@@ -310,7 +310,7 @@
 			qdel(src)
 
 	proc/explode()
-		sleep(20)
+		sleep(2 SECONDS)
 		done = 1
 		if(src.boom_size != "nuke")
 			var/area/A = get_area(src)
@@ -340,7 +340,7 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
-		sleep(55)
+		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
 		for(var/mob/living/carbon/human/nukee in mobs)
@@ -356,10 +356,10 @@
 			ticker.mode:nuke_detonated = 1
 			ticker.mode.check_win()
 		else
-			sleep(10)
+			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
-			sleep(300)
+			sleep(30 SECONDS)
 			logTheThing("diary", null, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 

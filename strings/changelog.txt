@@ -1,5 +1,55 @@
 
+(t)sun apr 19 20
+(u)Flourish
+(p)292
+(e)🆕|enhancement
+(*)Added hats as an AI spacebux reward.
+(u)ZeWaka
+(p)258
+(e)|
+(+)Reverted #203, crowbars on harm intent once again pry up floors.
+(u)Kubius
+(p)323
+(e)🆕🗺|enhancement, mapping
+(+)Assorted small improvements to Horizon.
+(u)Gerhazo
+(p)311
+(e)|
+(+)Fixed certain cuff types not breaking apart on removal as well as trying to remove silver handcuffs from your belt breaking that slot.
+(u)Awkward Dryad
+(p)299
+(e)|
+(+)Fixed plant layering in pots <3
+(t)sat apr 18 20
+(u)Kubius
+(p)316
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch eight - assorted QoL upgrades, including clown gear.
+(u)mbc
+(p)314
+(e)⚖|balance
+(*)Pods have improved braking and occupants get stunned for far less time when impacted by melee.
+(u)pali
+(p)256
+(e)🆕|enhancement
+(+)Turned on C-Sabers now actually emit light!
+(u)Gannets
+(p)300
+(e)🎨|sprites
+(+)Added missing pulse rifle in-hand sprites.
+(u)Kubius
+(p)306
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch seven: relocation/rework of test chamber, plus a bit.
 (t)fri apr 17 20
+(u)Kubius
+(p)301
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 6. Notable: QM import upgrades, Engine cold loop radiator.
+(u)Kubius
+(p)298
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 5, including bookshelf and a map image refresh.
 (u)Kubius
 (p)295
 (e)🗺|mapping

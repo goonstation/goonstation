@@ -23,7 +23,7 @@
 		matrix/M
 
 		braking = 0
-		brake_decel_mult = 0.6
+		brake_decel_mult = 0.3
 
 		last_dir = 0
 

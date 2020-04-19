@@ -160,7 +160,9 @@
 		else if (patient.chest_item != null)
 			// State that there's already something in the patient's chest.
 			surgeon.show_text("<span style=\"color:red\">[patient.chest_item] is already inside [patient]'s chest cavity.</span>")
-	return
+		return 1
+	else
+		return 0
 
 
 /obj/item/proc/remove_bandage(var/mob/living/carbon/human/H as mob, var/mob/user as mob)

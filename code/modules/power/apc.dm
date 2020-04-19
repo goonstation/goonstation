@@ -310,7 +310,7 @@ var/zapLimiter = 0
 				boutput(user, "This APC doesn't have a local interface to hack.")
 		else
 			flick("apc-spark", src)
-			sleep(6)
+			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
 				locked = 0
@@ -812,7 +812,7 @@ var/zapLimiter = 0
 		var/mob/living/L = user
 		L.Virus_ShockCure(33)
 		L.shock_cyberheart(33)
-	sleep(1)
+	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
 	var/weak = (user.getStatusDuration("weakened") < shock_damage * 20) ? shock_damage * 20 : 0
@@ -1178,7 +1178,7 @@ var/zapLimiter = 0
 		SPAWN_DBG(0)
 			if(zapStuff())
 				zapLimiter += 1
-				sleep(50)
+				sleep(5 SECONDS)
 				zapLimiter -= 1
 
 	if(cell && !shorted)
@@ -1372,7 +1372,7 @@ var/zapLimiter = 0
 					continue
 				L.on = 1
 				L.broken()
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 /obj/machinery/power/apc/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 	if(!istype(src.terminal, /obj/machinery/power/terminal/netlink) || !target_id)
@@ -1448,7 +1448,7 @@ var/zapLimiter = 0
 
 			switch(lowertext(data["command"]))
 				if ("status")
-					src.post_status(src.host_id,"command","term_message","data","command=status&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
+					src.post_status(src.host_id,"command","term_message","data","command=status&area=[ckey("[src.area]")]&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
 					return
 				if ("setmode")
 					var/newEquip = text2num(data["equip"])

@@ -111,7 +111,7 @@
 				holder.owner.dir = pick(cardinal)
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
-				sleep(4)
+				sleep(0.4 SECONDS)
 				spaz--
 			if (MT)
 				MT.canmove = 1
@@ -172,7 +172,7 @@
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				holder.owner.HealDamage("All", 1, 1)
-				sleep(4)
+				sleep(0.4 SECONDS)
 				drain--
 			if (H && H.stat && holder.owner.loc == H.loc)
 				holder.owner.visible_message("<span class='combat'><b>[src] drains [H] dry!</b></span>",\
@@ -326,7 +326,7 @@
 				holder.owner.dir = pick(cardinal)
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
-				sleep(4)
+				sleep(0.4 SECONDS)
 				spaz--
 			if (MT)
 				MT.canmove = 1

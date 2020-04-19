@@ -287,16 +287,16 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
-				sleep(20)
+				sleep(2 SECONDS)
 				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
-				sleep(50)
+				sleep(5 SECONDS)
 				W.dir = 2
-				sleep(20)
+				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				gibs(get_turf(W), list(), list())
 				qdel(W)
 				tutorial.Advance()
@@ -364,16 +364,16 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
-				sleep(20)
+				sleep(2 SECONDS)
 				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
-				sleep(50)
+				sleep(5 SECONDS)
 				W.dir = 2
-				sleep(20)
+				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				gibs(get_turf(W), list(), list())
 				qdel(W)
 				tutorial.Advance()
@@ -717,7 +717,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			sleep(50)
+			sleep(5 SECONDS)
 			tutorial.Advance()
 
 proc/AddBlobSteps(var/datum/tutorial/blob/T)

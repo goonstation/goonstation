@@ -318,7 +318,7 @@
 			if (i<=1)
 				user.suiciding = 0
 			else
-				sleep(50)
+				sleep(5 SECONDS)
 		return 1
 
 /* -------------------- Vuvuzela -------------------- */

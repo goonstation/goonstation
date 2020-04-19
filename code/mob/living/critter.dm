@@ -1031,7 +1031,7 @@
 								wiggle--
 								container.pixel_x = rand(-3,3)
 								container.pixel_y = rand(-3,3)
-								sleep(1)
+								sleep(0.1 SECONDS)
 							container.pixel_x = 0
 							container.pixel_y = 0
 							if (prob(33))

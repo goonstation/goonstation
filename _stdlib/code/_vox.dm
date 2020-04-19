@@ -240,7 +240,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 		SPAWN_DBG(0)
 			for (var/datum/VOXsound/vxx in soundQueue)
 				vxx.play(C)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	return output
 

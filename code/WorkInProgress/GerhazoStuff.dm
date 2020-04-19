@@ -223,7 +223,7 @@
 				else
 					my_mob.visible_message("<span style=\"color:red\"><b>[sword] lands at [my_mob]'s feet!</b></span>")
 				i=100
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 /datum/projectile/force_wave
 	name = "force wave"
@@ -434,13 +434,13 @@
 		mob_target.changeStatus("stunned", 150)
 		mob_target.force_laydown_standup()
 
-		sleep(15)
+		sleep(1.5 SECONDS)
 		M.visible_message("<span style=\"color:red\"><b>[M] begins lifting his hand, with [mob_target] following!</b></span>")
 		var/i
 		for(i = 0; i < 12; i++)
 			mob_target.pixel_y += 2
-			sleep(1)
-		sleep(5)
+			sleep(0.1 SECONDS)
+		sleep(0.5 SECONDS)
 		M.visible_message("<span style=\"color:red\"><b>[M] closes his grip!</b></span>")
 		mob_target.losebreath += 10
 

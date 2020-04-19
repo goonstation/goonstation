@@ -94,11 +94,11 @@ change the direction of created objects.<br>
 
 						spawn_gift(T)
 
-						sleep(5)
+						sleep(0.5 SECONDS)
 						mtx.Reset()
 						mtx.Translate(0,64)
 						animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-						sleep(5)
+						sleep(0.5 SECONDS)
 						swirl.mouse_opacity = 1
 						pad.mouse_opacity = 1
 						pool(swirl)
@@ -145,11 +145,11 @@ change the direction of created objects.<br>
 
 							spawn_gift(Q)
 
-							sleep(5)
+							sleep(0.5 SECONDS)
 							mtx.Reset()
 							mtx.Translate(0,64)
 							animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-							sleep(5)
+							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
 							pool(swirl)
@@ -162,7 +162,7 @@ change the direction of created objects.<br>
 				cnt++
 				if (cnt > 499)
 					cnt = 0
-					sleep(2)
+					sleep(0.2 SECONDS)
 			first_corner = null
 			update_button_text(objpath)
 

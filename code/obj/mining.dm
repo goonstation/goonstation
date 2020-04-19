@@ -32,7 +32,7 @@
 				return
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
 			var/turf/T = get_turf(user)
-			sleep(240)
+			sleep(24 SECONDS)
 			if (user.loc == T && user.equipped() == W && !user.stat)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.dir = src.dir

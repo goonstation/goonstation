@@ -75,7 +75,7 @@
 		SPAWN_DBG(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
-				sleep(20)
+				sleep(2 SECONDS)
 	proc/Thumper_stopThumps()
 		doThumps = 0
 	proc/Thumper_paralyzed()
@@ -136,6 +136,8 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if (!isdead(src)) //still breathing
+			//do on_life things for components?
+			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 
 			parent.setLastTask("handle_material_triggers", src)
 
@@ -1560,7 +1562,7 @@
 
 		if (!src.organHolder)
 			src.organHolder = new(src)
-			sleep(10)
+			sleep(1 SECOND)
 
 		var/datum/organHolder/oH = src.organHolder
 		if (!oH.head && !src.nodamage)

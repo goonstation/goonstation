@@ -270,7 +270,7 @@
 		return 1 // invalid cargo
 
 	C.set_loc(src.loc)
-	sleep(2)
+	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
 	C.anchored = 1 // fix for pulled items getting pulled back out of the cargo hold
