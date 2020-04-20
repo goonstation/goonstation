@@ -539,21 +539,17 @@
 			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
 		return
 
-	proc/take_damage(var/damage_amount = 0)
-		if (!damage_amount)
-			return
+	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
-		if (damage_amount > 0)
-			if (src.health == 0)
-				if (beaker)
-					beaker:set_loc(src.output_target ? src.output_target : get_turf(src))
-					beaker = null
-				src.visible_message("<span style=\"color:red\"><b>The [src.name] falls apart into useless debris!</b></span>")
-				robogibs(src.loc,null)
-				playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
-				qdel(src)
-				return
+		if (src.health <= 0)
+			if (beaker)
+				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker = null
+			src.visible_message("<span style=\"color:red\"><b>[name] falls apart into useless debris!</b></span>")
+			robogibs(src.loc,null)
+			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+			qdel(src)
+			return
 
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"

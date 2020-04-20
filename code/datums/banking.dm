@@ -678,14 +678,14 @@
 			qdel(SB)
 		var/damage = I.force
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
-			usr.lastattacked = src
+			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
 			src.take_damage(damage)
-			usr.visible_message("<span style='color:red'><b>[user] bashes the [src] with [I]!</b></span>")
+			user.visible_message("<span style='color:red'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
 			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
-			usr.visible_message("<span style='color:red'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
+			user.visible_message("<span style='color:red'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 
 	attack_ai(var/mob/user as mob)
@@ -748,11 +748,8 @@
 		onclose(user, "atm")
 
 	bullet_act(var/obj/projectile/P)
-		var/damage = 0
-		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
-		if (!damage)
-			return
-		src.take_damage(70) //shooting ATMs with lethal rounds instantly makes them spit out their money, just like in the movies!
+		if (P.power && P.proj_data.ks_ratio) //shooting ATMs with lethal rounds instantly makes them spit out their money, just like in the movies!
+			src.take_damage(70) 
 
 	proc/TryToFindRecord()
 		for(var/datum/data/record/B in data_core.bank)
@@ -881,24 +878,19 @@
 
 		src.updateUsrDialog()
 
-	proc/take_damage(var/damage_amount = 0)
-		if (!damage_amount)
-			return
-		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
-		if (damage_amount > 0)
-			if (src.health == 0)
-				if(broken)
-					return
-				src.broken = 1
-				src.visible_message("<span style=\"color:red\"><b>The [src.name] breaks apart and spews out cash!</b></span>")
-				src.icon_state = "[src.icon_state]_broken"
-				var/obj/item/C = pick("/obj/item/spacecash/hundred", "/obj/item/spacecash/fifty", "/obj/item/spacecash/ten")
-				C = new C(get_turf(src))
-				playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
-				playsound(src.loc,'sound/machines/capsulebuy.ogg', 50, 2)
-				C.throw_at(usr, 20, 3)
+	proc/take_damage(var/damage_amount = 5)
+		if (broken)
 				return
+		src.health -= damage_amount
+		if (src.health <= 0)
+			src.broken = 1
+			src.visible_message("<span style=\"color:red\"><b>The [src.name] breaks apart and spews out cash!</b></span>")
+			src.icon_state = "[src.icon_state]_broken"
+			var/obj/item/C = pick(/obj/item/spacecash/hundred, /obj/item/spacecash/fifty, /obj/item/spacecash/ten)
+			C = new C(get_turf(src))
+			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+			playsound(src.loc,'sound/machines/capsulebuy.ogg', 50, 2)
+			C.throw_at(user, 20, 3)
 
 	ex_act(severity)
 		src.take_damage(70)

@@ -192,25 +192,21 @@
 		interact_particle(user,src)
 
 	attackby(var/obj/item/W as obj, user as mob)
-		var/damage = W.force
-		usr.lastattacked = src
+		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
-		src.take_damage(damage)
-		usr.visible_message("<span style='color:red'><b>[user] hacks at the [src] with [W]!</b></span>")
+		src.take_damage(W.force)
+		user.visible_message("<span style='color:red'><b>[user] hacks at [src] with [W]!</b></span>")
 
-	proc/take_damage(var/damage_amount = 0)
+	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
-		if (damage_amount > 0)
-			if (src.health == 0)
-				src.visible_message("<span style=\"color:red\"><b>The [src.name] falls apart!</b></span>")
-				var/obj/item/L = "/obj/decal/cleanable/leaves"
-				L = new L(get_turf(src))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
-				qdel(src)
-				return
+		if (src.health <= 0)
+			src.visible_message("<span style=\"color:red\"><b>The [src.name] falls apart!</b></span>")
+			new /obj/decal/cleanable/leaves(get_turf(src))
+			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+			qdel(src)
+			return
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
