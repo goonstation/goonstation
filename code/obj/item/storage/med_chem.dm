@@ -107,7 +107,7 @@
 	/obj/item/reagent_containers/emergency_injector/lexorin,\
 	/obj/item/reagent_containers/emergency_injector/synaptizine,\
 	/obj/item/device/analyzer/healthanalyzer)
-
+/*
 /obj/item/storage/firstaid/diagnostickit
 	name = "diagnostic kit"
 	icon_state = "berserk1"
@@ -122,15 +122,15 @@
 	// what else???
 	// wound measuring scale?
 	// aaa
-	)
-
+	)WIP
+*/
 /obj/item/storage/firstaid/docbag
 	name = "doctor's bag"
 	icon_state = "docbag1"
 	item_state = "docbag1"
 	desc = "A old-fashioned doctor's bag designed to cary medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
-	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood)
+	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
 
 /* -------------------- First Aid Kits - VR -------------------- */
 
