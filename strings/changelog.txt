@@ -1,4 +1,9 @@
 
+(t)mon apr 20 20
+(u)RichardGere
+(p)308
+(e)🐛|bug
+(+)Fixed an issue where players were able to equip items attached to limbs.
 (t)sun apr 19 20
 (u)Flourish
 (p)292
