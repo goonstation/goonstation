@@ -1448,7 +1448,7 @@ var/list/fun_images = list()
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
-		sleep(15)
+		sleep(1.5 SECONDS)
 
 	var/mob/O = src.mob
 	src.mob.ghostize()

@@ -1377,3 +1377,17 @@ so that the Lawgiver™ can be the best it can be. Do not place fingers in path 
 is solid-state and should not feature moving parts. Note that the Cell may experience spontaneous explosive overload when
 exposed to overconfident outbursts on the part of individuals unqualifed to embody the law; in event of such explosion, run.
 "}
+
+/obj/item/paper/postcard/mushroom
+	name = "Mushroom Station postcard"
+	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
+	icon_state = "postcard-mushroom"
+
+	//sizex = 1066
+	//sizey = 735
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"

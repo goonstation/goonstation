@@ -1,5 +1,159 @@
-﻿
-(t)mon apr 12 20
+
+(t)mon apr 20 20
+(u)Gerhazo, Flaborized
+(p)329
+(e)🆕🎨|enhancement, sprites
+(*)Added heavy military boots with unique distinctive footstep sounds to the Head of Security's locker.
+(u)Flourish
+(p)331
+(e)🆕🔄|enhancement, rework
+(*)Made the floor health scanners in medbay more useful. Step on top of one of them to receive a readout of your health and trigger a PDA alert to medical if you're in crit.
+(u)Fautz0
+(p)327
+(e)⚖🆕|balance, enhancement
+(+)You can now blindfold monkeys and humans by attacking their head with a blindfold.
+(u)Erinexx
+(p)277
+(e)🍑🎨|ass-jam, sprites
+(+)Added new plate sprites and fixed a display bug.
+(u)Flaborized
+(p)303
+(e)🆕🎨|enhancement, sprites
+(*)You can now destroy chemical dispensers, ATMs and shrubs by smashing them with a weapon. ATMs will spew out small amounts of money if you do this, and can also be shot to destroy them! Also improved visual feedback when destroying fabricators through brute force.
+(u)Tarmunora
+(p)241
+(e)⚖|balance
+(+)MPRT-7 launcher no longer supports dual-wielding
+(u)Kubius
+(p)337
+(e)🗺|mapping
+(*)Kondaru FB9: significant reworks to Medbay and Security.
+(u)MarkNstein
+(p)339
+(e)🆕|enhancement
+(+)Similar to airlocks, APCs will now show their powernet address when unscrewed.
+(u)RichardGere
+(p)308
+(e)🐛|bug
+(+)Fixed an issue where players were able to equip items attached to limbs.
+(t)sun apr 19 20
+(u)Flourish
+(p)292
+(e)🆕|enhancement
+(*)Added hats as an AI spacebux reward.
+(u)ZeWaka
+(p)258
+(e)|
+(+)Reverted #203, crowbars on harm intent once again pry up floors.
+(u)Kubius
+(p)323
+(e)🆕🗺|enhancement, mapping
+(+)Assorted small improvements to Horizon.
+(u)Gerhazo
+(p)311
+(e)|
+(+)Fixed certain cuff types not breaking apart on removal as well as trying to remove silver handcuffs from your belt breaking that slot.
+(u)Awkward Dryad
+(p)299
+(e)|
+(+)Fixed plant layering in pots <3
+(t)sat apr 18 20
+(u)Kubius
+(p)316
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch eight - assorted QoL upgrades, including clown gear.
+(u)mbc
+(p)314
+(e)⚖|balance
+(*)Pods have improved braking and occupants get stunned for far less time when impacted by melee.
+(u)pali
+(p)256
+(e)🆕|enhancement
+(+)Turned on C-Sabers now actually emit light!
+(u)Gannets
+(p)300
+(e)🎨|sprites
+(+)Added missing pulse rifle in-hand sprites.
+(u)Kubius
+(p)306
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch seven: relocation/rework of test chamber, plus a bit.
+(t)fri apr 17 20
+(u)Kubius
+(p)301
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 6. Notable: QM import upgrades, Engine cold loop radiator.
+(u)Kubius
+(p)298
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 5, including bookshelf and a map image refresh.
+(u)Kubius
+(p)295
+(e)🗺|mapping
+(+)Kondaru Fixes IV: The Voyage Home (in an escape pod). PR #295
+(u)Tarmunora
+(p)217
+(e)🔄|rework
+(*)Cigarettes now have a fixed burn time, with the reagent/cycle adjusted to match
+(*)Pocket cigs no longer transfer reagents if you have on active internals or a gas mask
+(u)RichardGere
+(p)275
+(e)|
+(+)Fixed an issue that would let explosions destroy the nuclear bomb on certain floor types.
+(u)Enfaeutchie
+(p)273
+(e)🐛|bug
+(+)Click+dragging produce into crates won't overfill them, so you can ship and sell it more easily.
+(u)Kubius
+(p)274
+(e)🗺|mapping
+(*)Second batch of post-launch fixes to Kondaru. See pull request 274 for details.
+(t)thu apr 16 20
+(u)trerri
+(p)263
+(e)🗺|mapping
+(*)Added a windoor to Oshan sec
+(u)Kubius
+(p)267
+(e)🗺|mapping
+(*)First batch of post-launch fixes to Kondaru. See pull request 267 for details.
+(t)wed apr 15 20
+(u)Kubius
+(p)247
+(e)🆕🗺|enhancement mapping
+(*)Kondaru (Kubius Map 3: Third Time's the Charm) has moved into official rotation.
+(*)Please provide suggestions on <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14335">the official Kondaru thread</a> and please report bugs through the Bug Report button in the upper right corner.
+(u)mbc
+(p)252
+(e)⚖🆕🔄|balance, enhancement, rework
+(*)Added blocking. Replaced classic passive-disarm-intent-blocking with a new block function tied to Resist.
+(*)You can block barehanded OR with a weapon. Weapons have block properties attached (you can see them on the tooltip) to tell you what kinds of damage they are effective against. You get a small armor boost while blocking, which is increased when you have an effective item matchup.
+(*)Added Resist hotkey (Z on default controls, C on /tg/)
+(u)Erinexx
+(p)112
+(e)🐛🎨|bug spriting
+(*)New hydro tray sprite!
+(*)Hydro trays now properly update visual water level without having to have a plant growing!
+(*)Hydro trays now properly display reagent-colour in the trays water pool!
+(u)Kubius
+(p)250
+(e)🐛🗺|bug mapping
+(+)Fixed habitat dome prefab - no longer shrouded in shadow.
+(u)Tarmunora
+(p)244
+(e)⚖|balance
+(*)Power picks, hammers, shovels now use standard small power cells for their internal charge. This makes them charge more quickly, as an aside. Additionally, attacking things that aren't asteroids with them will drain their cell much more quickly - if using one as a weapon, keep an eye on your charge!
+(u)Tarmunora
+(p)242
+(*)Rebalanced meatcleaver to fumble far less often on hit and removes stun on throw
+(u)trerri
+(+)Added extra supplies to the Oshan locker room.
+(t)tue apr 14 20
+(u)comradef191
+(+)Fixed up Mushroom a lot.
+(u)adharainspace
+(+)Fixed weird photocopier bugs and makes them less painful to use.
+(t)mon apr 13 20
 (u)Kubius
 (+)Batch one of small improvements and fixes to Kondaru.
 (u)Erinexx

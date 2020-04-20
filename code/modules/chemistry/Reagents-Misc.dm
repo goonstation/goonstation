@@ -3620,7 +3620,7 @@ datum
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span style=\"color:blue\"> <B> You feel a sense of dread and patriotism wash over you. </B>")
 						badmantarget << sound('sound/misc/american_patriot.ogg', volume = 50)
-						sleep(100)
+						sleep(10 SECONDS)
 						startx = badmantarget.x - rand(-11, 11)
 						starty = badmantarget.y - rand(-11, 11)
 						var/turf/pickedstart = locate(startx, starty, badmantarget.z)
@@ -3937,7 +3937,7 @@ datum
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -3950,7 +3950,7 @@ datum
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-				sleep(10)
+				sleep(1 SECOND)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Punch_4.ogg', 50, 1, -1)
 				deathtarget.emote("scream")
 				deathtarget.setStatus("stunned", max(deathtarget.getStatusDuration("stunned"), 50))
@@ -3958,13 +3958,13 @@ datum
 				deathtarget.unlock_medal("OW! MY BALLS!", 1)
 				var/deathturf = get_turf(src)
 				animate_slide(deathturf, 0, -24, 25)
-				sleep(20)
+				sleep(2 SECONDS)
 				animate_slide(deathturf, 0, 0, 15)
 				qdel(src)
 				deathtarget.deathhunted = 0
 				return
 			else
 				walk_towards(src, src.deathtarget, deathspeed)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 

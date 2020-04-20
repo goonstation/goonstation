@@ -4,7 +4,7 @@
 	icon = 'icons/obj/electronics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	force = 5
-	damtype = "brute"
+	hit_type = DAMAGE_BLUNT
 	throwforce = 5
 	w_class = 1.0
 	pressure_resistance = 10
@@ -201,7 +201,7 @@
 			if(I.type in bad_types) continue
 			I.set_loc(src)
 			//parts.Add(I)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			if (user.loc != staystill) break
 
 		boutput(user, "<span style=\"color:blue\">You finish adding components to [src]!</span>")
@@ -410,7 +410,7 @@
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "solderingiron"
 	force = 10
-	damtype = "fire"
+	hit_type = DAMAGE_BURN
 	throwforce = 5
 	w_class = 2.0
 	pressure_resistance = 40
@@ -440,7 +440,7 @@
 	icon_state = "deviceana"
 	desc = "Used for scanning certain items for use with the ruckingenur kit."
 	force = 2
-	damtype = "brute"
+	hit_type = DAMAGE_BLUNT
 	throwforce = 5
 	w_class = 2.0
 	pressure_resistance = 50

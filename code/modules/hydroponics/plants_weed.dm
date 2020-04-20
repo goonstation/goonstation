@@ -108,7 +108,7 @@
 				else if (!C.current)
 					var/obj/item/seed/creeper/WS = new(src)
 					C.HYPnewplant(WS)
-					sleep(5)
+					sleep(0.5 SECONDS)
 					qdel(WS)
 					break
 

@@ -13,6 +13,10 @@
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
+	New()
+		..()
+		BLOCK_LARGE
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
@@ -86,6 +90,10 @@
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
 
+	New()
+		..()
+		BLOCK_ROPE
+
 /obj/item/storage/fanny/funny
 	name = "funny pack"
 	desc = "Haha, get it? Get it? 'Funny'!"
@@ -113,6 +121,10 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
+
+	New()
+		..()
+		BLOCK_ROPE
 
 	proc/can_use()
 		.= 1

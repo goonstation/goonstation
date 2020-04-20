@@ -96,7 +96,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	var/deployed_to_eyecam = 0
 
-	proc/set_hat( var/obj/item/clothing/head/hat, mob/user as mob)
+	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
 			src.hat.wear_image.pixel_y = 0
 			src.UpdateOverlays(null, "hat")
@@ -934,7 +934,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-2,2)
 				src.pixel_y += rand(-1,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x = old_x
 				src.pixel_y = old_y
 
@@ -946,7 +946,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-3,3)
 				src.pixel_y += rand(-1,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x = old_x
 				src.pixel_y = old_y
 
@@ -1396,11 +1396,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
-	sleep(10)
+	sleep(1 SECOND)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
-	sleep(10)
+	sleep(1 SECOND)
 	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	sleep(10)
+	sleep(1 SECOND)
 	src.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
@@ -1467,7 +1467,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.say("[laws_to_state[law_number]]. [laws_list[law_number]]")
 			else
 				src.say("[law_number]. [laws_list[law_number]]")
-			sleep(10)
+			sleep(1 SECOND)
 
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
@@ -1483,13 +1483,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(10)
+			sleep(1 SECOND)
 	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
 		var/law = ticker.centralized_ai_laws.supplied[index]
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(10)
+			sleep(1 SECOND)
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
@@ -1665,7 +1665,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		message_admins("[key_name(message_mob)] globally de-shocked [count] airlocks.")
 		boutput(message_mob, "Removed electrification from [count] airlocks.")
 		src.verbs -= /mob/living/silicon/ai/proc/de_electrify_verb
-		sleep(100)
+		sleep(10 SECONDS)
 		src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 
 /mob/living/silicon/ai/proc/unbolt_all_airlocks()
@@ -1688,7 +1688,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		message_admins("[key_name(message_mob)] globally unbolted [count] airlocks.")
 		boutput(message_mob, "Unbolted [count] airlocks.")
 		src.verbs -= /mob/living/silicon/ai/proc/unbolt_all_airlocks
-		sleep(100)
+		sleep(10 SECONDS)
 		src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 
 /mob/living/silicon/ai/proc/toggle_alerts_verb()

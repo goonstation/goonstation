@@ -299,7 +299,7 @@
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
 					s.start()
-					sleep(3)
+					sleep(0.3 SECONDS)
 					D.dispose()
 
 				SPAWN_DBG(firerate)

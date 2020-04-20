@@ -307,12 +307,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.health = initial(health)
 				src.visible_message("<span style=\"color:red\">[user] repairs [src]!</span>", "<span style=\"color:red\">You repair [src].</span>")
 		else
-			switch(W.damtype)
-				if("fire")
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
 					src.health -= W.force * 0.75
-				if("brute")
-					src.health -= W.force * 0.5
 				else
+					src.health -= W.force * 0.5
 			if (src.health <= 0)
 				src.explode()
 			else if (W.force && (!iscarbon(src.target) || (src.mode != SECBOT_HUNT)))
@@ -396,7 +395,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							if (!stuncount && maxstuns-- <= 0)
 								target = null
 							if (stuncount > 0)
-								sleep(3)
+								sleep(0.3 SECONDS)
 
 						SPAWN_DBG(0.2 SECONDS)
 							src.icon_state = "secbot[src.on][(src.on && src.emagged == 2) ? "-spaz" : null]"
@@ -559,7 +558,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				SPAWN_DBG(0.4 SECONDS)
 					if(mode == SECBOT_SUMMON)
 						patrol_step()
-						sleep(4)
+						sleep(0.4 SECONDS)
 						patrol_step()
 
 		return
@@ -815,9 +814,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 					while (weeoo)
 						add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
-						sleep(3)
+						sleep(0.3 SECONDS)
 						add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
-						sleep(3)
+						sleep(0.3 SECONDS)
 						weeoo--
 
 					//old one in case we still want that
@@ -825,9 +824,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					light.set_brightness(0.8)
 					while (weeoo)
 						light.set_color(0.9, 0.1, 0.1)
-						sleep(3)
+						sleep(0.3 SECONDS)
 						light.set_color(0.1, 0.1, 0.9)
-						sleep(3)
+						sleep(0.3 SECONDS)
 						weeoo--
 					light.set_brightness(0.4)
 					light.set_color(1, 1, 1)

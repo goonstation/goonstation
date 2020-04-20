@@ -334,7 +334,7 @@ var/HasturPresent = 0
 					if (A == O || A == user) continue
 					A.meteorhit(O)
 
-			sleep(7)
+			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
 				pool(O)
 
@@ -407,7 +407,7 @@ var/HasturPresent = 0
 					if (A == O || A == user) continue
 					A.meteorhit(O)
 
-			sleep(7)
+			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
 				pool(O)
 

@@ -170,7 +170,7 @@ Returns:
 	addGlobalImage(R.lineImage, globalImageKey)
 	// for(var/atom/A in R.crossed)
 	// 	A.color = "#32a867"
-	sleep(70)
+	sleep(7 SECONDS)
 	removeGlobalImage(globalImageKey)
 	return
 
@@ -828,7 +828,7 @@ var/list/electiles = list()
 	if(!istype(source, /mob/cinematicCamera))
 		C =	new/mob/cinematicCamera(get_turf(source))
 		C.start(source, remove_source, freeze_source)
-		sleep(3)
+		sleep(0.3 SECONDS)
 	else
 		C = source
 
@@ -851,7 +851,7 @@ var/list/electiles = list()
 	if(!istype(source, /mob/cinematicCamera))
 		C =	new/mob/cinematicCamera(get_turf(source))
 		C.start(source, remove_source, freeze_source)
-		sleep(3)
+		sleep(0.3 SECONDS)
 	else
 		C = source
 
@@ -1687,6 +1687,7 @@ var/list/electiles = list()
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+		BLOCK_ROD
 
 	rebuild()
 		..()
@@ -1844,6 +1845,7 @@ var/list/electiles = list()
 	New()
 		. = ..()
 		START_TRACKING
+		BLOCK_BOOK
 
 	disposing()
 		. = ..()
@@ -2187,8 +2189,8 @@ var/list/electiles = list()
 						else
 							T:burn_tile()
 			SPAWN_DBG(0.6 SECONDS) qdel(B)
-			sleep(3)
-		sleep(1)
+			sleep(0.3 SECONDS)
+		sleep(0.1 SECONDS)
 
 		user.canmove = 1
 		firing = 0
@@ -2375,7 +2377,7 @@ var/list/electiles = list()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/obj/beam_dummy/B = showLine(get_turf(src), get_turf(target), "beam", 10)
-		sleep(30)
+		sleep(3 SECONDS)
 		qdel(B)
 		return
 
@@ -2881,6 +2883,10 @@ var/list/electiles = list()
 
 	var/prob_clonk = 0
 
+	New()
+		..()
+		BLOCK_LARGE
+
 	throw_begin(atom/target)
 		icon_state = "boomerang1"
 		playsound(src.loc, "rustle", 50, 1)
@@ -3275,30 +3281,30 @@ var/list/electiles = list()
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
 			user.buckled = src
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -3
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -6
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -9
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -12
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_y = 25
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 15
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			user.start_chair_flip_targeting(extrarange = 2)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 15
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			playsound(user, "sound/effects/brrp.ogg", 15, 1)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if(range == 1) boutput(user, "<span style=\"color:red\">You slip...</span>")
 			user.layer = MOB_LAYER
 			user.buckled = null
@@ -3366,7 +3372,7 @@ var/list/lag_list = new/list()
 
 /proc/lag_loop()
 	var/before = world.timeofday
-	sleep(1)
+	sleep(0.1 SECONDS)
 	add_and_average( (world.timeofday - before) )
 	SPAWN_DBG(0.5 SECONDS) lag_loop()
 
@@ -3405,7 +3411,7 @@ var/list/lag_list = new/list()
 		break_it()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		M:transforming = 1
-		sleep(30)
+		sleep(3 SECONDS)
 		var/obj/screen/creepy = new /obj/screen()
 		creepy.name = "GARHLGHARLHGARHGL"
 		creepy.icon = 'icons/creepy.png'
@@ -3415,14 +3421,14 @@ var/list/lag_list = new/list()
 		var/client/the_client = M.client
 		creepy.add_to_client(the_client)
 		playsound(src, "sound/effects/ghost2.ogg", 100, 0)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		if(!M)
 			the_client.screen -= creepy
 			return
 		M:gib()
-		sleep(5)
+		sleep(0.5 SECONDS)
 		the_client.screen -= creepy
-		sleep(30)
+		sleep(3 SECONDS)
 
 	New()
 		build_base()
@@ -3564,12 +3570,12 @@ var/list/lag_list = new/list()
 			playsound(L, 'sound/vox/ghost.ogg', 5, 0)
 		else
 			playsound(L, 'sound/effects/ghost.ogg', 5, 0)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
 		src.invisibility = 0
 		flick("apparition",src)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		src.invisibility = 100
 		src.set_loc(startloc)
 		walk(src,0)
@@ -3927,7 +3933,7 @@ var/list/lag_list = new/list()
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2)
 					sound_fx_2 = pick('sound/ambience/nature/Seagulls1.ogg','sound/ambience/nature/Seagulls2.ogg','sound/ambience/nature/Seagulls3.ogg')

@@ -129,7 +129,7 @@
 					shakes--
 					src.pixel_x = rand(-5,5)
 					src.pixel_y = rand(-5,5)
-					sleep(1)
+					sleep(0.1 SECONDS)
 				src.pixel_x = 0
 				src.pixel_y = 0
 				SPAWN_DBG(0.5 SECONDS)
@@ -295,6 +295,7 @@
 			. = 1
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		var/turf/T = get_turf(src)
 		if (!in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
@@ -341,6 +342,10 @@
 		if (!src.open)
 			src.open()
 
+		if (T.contents.len >= src.max_capacity)
+			user.show_text("[src] is too full!", "red")
+			return
+
 		if (O.loc == user)
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
@@ -361,6 +366,8 @@
 						break
 					if (user.loc != staystill)
 						break
+					if (T.contents.len >= src.max_capacity)
+						break
 				for (var/obj/item/material_piece/M in view(1,user))
 					if (M.material && M.material.getProperty("radioactive") > 0)
 						user.changeStatus("radiation", (round(min(M.material.getProperty("radioactive") / 2, 20)))*10, 2)
@@ -371,6 +378,8 @@
 					if (!src.open)
 						break
 					if (user.loc != staystill)
+						break
+					if (T.contents.len >= src.max_capacity)
 						break
 				user.show_text("You finish stuffing materials into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
@@ -392,6 +401,8 @@
 						break
 					if (user.loc != staystill)
 						break
+					if (T.contents.len >= src.max_capacity)
+						break
 				for (var/obj/item/reagent_containers/food/snacks/F in view(1,user))
 					if (F in user)
 						continue
@@ -402,6 +413,8 @@
 					if (!src.open)
 						break
 					if (user.loc != staystill)
+						break
+					if (T.contents.len >= src.max_capacity)
 						break
 				user.show_text("You finish stuffing produce into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
@@ -691,14 +704,14 @@
 
 		if (src.open)
 			step_towards(usr, src)
-			sleep(10)
+			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open())
 			step_towards(usr, src)
-			sleep(10)
+			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1

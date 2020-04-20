@@ -375,7 +375,7 @@
 				score += addscore
 				mulch_item(P, addscore)
 				update_score(MT, score)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 			boutput(user, "<span style=\"color:blue\">You finish stuffing things into [src]!</span>")
 			finish_scoring(MT)

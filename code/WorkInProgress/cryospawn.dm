@@ -1,5 +1,5 @@
-#define CRYOSLEEP_DELAY 9000 // 15 minutes
-#define CRYOTRON_MESSAGE_DELAY 30 // 3 seconds
+#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
 	New()
@@ -95,7 +95,7 @@
 		src.icon_state = "cryotron_down"
 		flick("cryotron_go_down", src)
 
-		//sleep(19)
+		//sleep(1.9 SECONDS)
 		SPAWN_DBG(1.9 SECONDS)
 			if (!thePerson)
 				busy = 0
@@ -106,7 +106,7 @@
 			for (var/obj/O in src) // someone dropped something
 				O.set_loc(firstLoc)
 
-		//sleep(10)
+		//sleep(1 SECOND)
 			SPAWN_DBG(1 SECOND)
 				if (!thePerson)
 					busy = 0
@@ -124,7 +124,7 @@
 							if (!A.status && A.announces_arrivals)
 								A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
 //#endif
-		//sleep(9)
+		//sleep(0.9 SECONDS)
 				SPAWN_DBG(0.9 SECONDS)
 					busy = 0
 					return (folks_to_spawn.len != 0)

@@ -38,8 +38,6 @@ datum/mind
 
 	//Ability holders.
 	var/datum/abilityHolder/changeling/is_changeling = 0
-	var/datum/abilityHolder/wizard/is_wizard = 0
-	var/datum/abilityHolder/vampire/is_vampire = 0
 
 	var/list/intrinsic_verbs = list()
 

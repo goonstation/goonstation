@@ -15,6 +15,7 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"ash",\
 	"blackpowder",\
 	"reliquary_blood",\
+	"leaves",\
 )
 
 ///////////////////
@@ -634,7 +635,7 @@ var/list/depth_levels = list(2,50,100,200)
 			F = C[i]
 			F.finalcolor = c
 			animate( F, color = F.finalcolor, alpha = finalalpha, time = 5 )
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 
 

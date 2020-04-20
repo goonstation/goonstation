@@ -240,6 +240,9 @@
 		if(user.a_intent == "help" || user.a_intent == "grab")
 			return 0
 
+		if (user.check_block())
+			return 0
+
 		if (!istype(user.loc, /turf))
 			return 0
 
@@ -621,7 +624,7 @@
 			if (istype(master,/obj/item/mining_tool))
 				var/obj/item/mining_tool/M = master
 				if (M.status)
-					M.process_charges(3)
+					M.process_charges(30)
 
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
@@ -1308,16 +1311,16 @@
 				K.start.loc = T1
 				K.start.dir = direction
 				flick(K.start.icon_state, K.start)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				if (T4)
 					K.mid1.loc = T2
 					K.mid1.dir = direction
 					flick(K.mid1.icon_state, K.mid1)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.mid2.loc = T3
 					K.mid2.dir = direction
 					flick(K.mid2.icon_state, K.mid2)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.end.loc = T4
 					K.end.dir = direction
 					flick(K.end.icon_state, K.end)
@@ -1325,7 +1328,7 @@
 					K.mid1.loc = T2
 					K.mid1.dir = direction
 					flick(K.mid1.icon_state, K.mid1)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.end.loc = T3
 					K.end.dir = direction
 					flick(K.end.icon_state, K.end)

@@ -73,6 +73,7 @@
 		..()
 		processing_items.Add(src)
 		START_TRACKING
+		BLOCK_TANK
 
 	disposing()
 		. = ..()
@@ -120,6 +121,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(issnippingtool(W))
@@ -150,7 +152,7 @@
 
 	attack_self(mob/user as mob)
 		boutput(user, __blue("You deftly fold [src] into a party hat!."))
-		user.put_in_hand_or_drop(new /obj/item/clothing/head/party(src.loc))
+		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
 /obj/item/disk
@@ -554,6 +556,10 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 0
 
+	New()
+		..()
+		BLOCK_ALL
+
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
 
@@ -679,7 +685,7 @@
 			src.smoke.attach(target_loc)
 			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
-				sleep(10)
+				sleep(1 SECOND)
 
 			if(!PH)
 				usr.visible_message("<span style='color:red'><B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\

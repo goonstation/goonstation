@@ -663,7 +663,7 @@
 			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (P.type == O.type)
 					if (istype(O, /obj/item/seed/)) src.seeds.Add(P)
@@ -1034,7 +1034,7 @@
 			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (P.type == O.type)
 					src.ingredients.Add(P)

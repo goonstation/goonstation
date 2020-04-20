@@ -164,7 +164,12 @@
 			damage_type = ME.damtype
 		else
 			attack_force = W.force
-			damage_type = W.damtype
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
+					damage_type = "fire"
+				else
+					damage_type = "brute"
+
 		switch(damage_type)
 			if("fire")
 				src.health -= attack_force * src.firevuln
@@ -247,7 +252,7 @@
 			var/mob/living/silicon/robot/BORG = M
 			if (!BORG.part_head)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> sniffs at [BORG.name].</span>")
-				sleep(15)
+				sleep(1.5 SECONDS)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
 				playsound(src.loc, "sound/voice/animal/wendigo_scream.ogg", 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
@@ -260,7 +265,7 @@
 					playsound(src.loc, "sound/voice/animal/wendigo_laugh.ogg", 70, 1)
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 					BORG.compborg_lose_limb(BORG.part_head)
-					sleep(15)
+					sleep(1.5 SECONDS)
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
 					playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 					make_cleanable( /obj/decal/cleanable/blood,src.loc)
@@ -351,7 +356,7 @@
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
-				sleep(4)
+				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
 			if(spazzing < 0)
@@ -381,7 +386,7 @@
 					bleed(target, 5, 5, get_step(src.loc, pick(alldirs)), 1)
 				if(king && prob(33))
 					bleed(target, 5, 5, get_step(src.loc, pick(alldirs)), 1)
-				sleep(4)
+				sleep(0.4 SECONDS)
 				src.frenzied--
 			src.frenzied = 0
 

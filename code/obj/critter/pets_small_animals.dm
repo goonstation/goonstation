@@ -295,7 +295,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 					if (C.health <= 0 && C.alive)
 						C.CritterDeath()
 						src.attacking = 0
-				sleep(2)
+				sleep(0.2 SECONDS)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.was_harmed(src)
@@ -348,7 +348,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 				while (x-- > 0)
 					src.pixel_x = rand(-6,6)
 					src.pixel_y = rand(-6,6)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 			if (prob(10))
 				src.visible_message("[src.name] [pick("purrs","frolics","rolls about","does a cute cat thing of some sort")]!")
@@ -418,7 +418,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			while(attackCount-- > 0)
 				src.visible_message("<span class='combat'><B>[src]</B> claws at [src.target]!</span>")
 				random_brute_damage(src.target, 6,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 
 			SPAWN_DBG(1 SECOND)
 				src.attacking = 0
@@ -459,7 +459,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -1868,7 +1868,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				while (x-- > 0)
 					src.pixel_x = rand(-6,6)
 					src.pixel_y = rand(-6,6)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 				src.pixel_x = 0
 				src.pixel_y = 0
@@ -2094,7 +2094,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			random_brute_damage(src.target, 2)
 			SPAWN_DBG(0)
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 30, 0, -1)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 30, 0, -1)
 			SPAWN_DBG(rand(1,10))
 				src.attacking = 0

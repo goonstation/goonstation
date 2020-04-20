@@ -258,7 +258,7 @@
 	if(src.emagged)
 		boutput(M, "You feel a terrible pain in your head, and everything goes black...")
 		M.paralysis += 5
-		sleep(5)
+		sleep(0.5 SECONDS)
 		M.set_loc(pick(mazewarp))
 		return
 	*/

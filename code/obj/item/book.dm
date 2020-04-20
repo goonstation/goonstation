@@ -971,6 +971,10 @@
 	item_state = "paper"
 	layer = OBJ_LAYER
 
+	New()
+		..()
+		BLOCK_BOOK
+
 	examine()
 		set src in view()
 		if (!issilicon(usr))
@@ -2550,7 +2554,7 @@ After a very long time, Albert got up. He was not going to give up just because 
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
 			boutput(user, "<span style=\"color:blue\">You pore over the book with the magnifying glass.</span>")
-			sleep(20)
+			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
 /obj/item/paper/book/zoo_diary

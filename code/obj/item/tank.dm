@@ -37,6 +37,7 @@ Contains:
 		src.air_contents.temperature = T20C
 		if (!(src in processing_items))
 			processing_items.Add(src)
+		BLOCK_TANK
 		return
 
 	disposing()
@@ -639,7 +640,7 @@ Contains:
 		src.icon_state = text("jetpack_mk2_[]", src.on)
 		if(src.on)
 			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
-			playsound(src.loc, "sound/misc/JetPackMK2on.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/JetpackMK2on.ogg", 50, 1)
 		else
 			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
 		return

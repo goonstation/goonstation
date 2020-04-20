@@ -371,7 +371,7 @@
 				boutput(user, "You show \the [E] to [src]! They are super impressed!")
 				SPAWN_DBG(1 SECOND)
 					boutput(user, "Like, really REALLY impressed.  They probably think you're some kind of celebrity or something.")
-					sleep(10)
+					sleep(1 SECOND)
 					boutput(user, "Or the president. The president of space.")
 			else
 				boutput(user, "You show \the [E] to [src]! They are very impressed.")
@@ -395,7 +395,7 @@
 					boutput(user, "You show \the [W] to [src]! They are super impressed!")
 					SPAWN_DBG(1 SECOND)
 						boutput(user, "Like, really REALLY impressed.  They probably think you're some kind of celebrity or something.")
-						sleep(10)
+						sleep(1 SECOND)
 						boutput(user, "Or the president. The president of space.")
 				else
 					boutput(user, "You show \the [W] to [src]! They are very impressed.")
@@ -453,12 +453,11 @@
 			return
 
 		else
-			switch(W.damtype)
-				if("fire")
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
 					src.health -= W.force * 0.6
-				if("brute")
-					src.health -= W.force * 0.4
 				else
+					src.health -= W.force * 0.4
 			if (src.health <= 0)
 				..()
 				src.explode()
@@ -716,7 +715,7 @@
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
 				src.on = 0
-				sleep(15)
+				sleep(1.5 SECONDS)
 				qdel(Ov)
 				qdel(src)
 
@@ -2628,13 +2627,13 @@
 						if (findtext(current_tour_text, "|p")) //There are pauses present! So, um, pause.
 							var/list/tour_text_with_pauses = splittext(current_tour_text, "|p")
 							SPAWN_DBG (0)
-								sleep(10)
+								sleep(1 SECOND)
 								for (var/tour_line in tour_text_with_pauses)
 									if (!ckey(tour_line) || !master)
 										break
 
 									master.speak( copytext( html_encode(tour_line), 1, MAX_MESSAGE_LEN ) )
-									sleep(10)
+									sleep(1 SECOND)
 						else
 							master.speak( copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN))
 
@@ -2731,7 +2730,7 @@
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
 							src.master.speak("OH! Sorry! Sorry, [H.name]! I didn't mean it that way!")
-							sleep(5)
+							sleep(0.5 SECONDS)
 							var/mob/living/carbon/human/deaf_person = null
 							for (var/mob/living/carbon/human/maybe_deaf in view(7, master))
 								if (!isdead(maybe_deaf) && !maybe_deaf.hearing_check(1))
@@ -2740,16 +2739,16 @@
 
 							if (deaf_person)
 								src.master.speak("I'll just narrate things so you can all hear it--")
-								sleep(10)
+								sleep(1 SECOND)
 								if (deaf_person == H)
 									src.master.speak("SORRY [H] I DIDN'T MEAN THAT EITHER AAAA")
 
 								else
 									src.master.speak("Oh! Sorry! Sorry, [deaf_person.name]!! I didn't mean that that way eith-wait um.")
-									sleep(10)
+									sleep(1 SECOND)
 									src.master.visible_message("<b>[src.master]</b> begins signing frantically!  Despite, um, robot hands not really being equipped for sign language.")
 
-							sleep(100)
+							sleep(10 SECONDS)
 							desired_emotion = .
 							master.set_emotion(desired_emotion)
 
@@ -3796,7 +3795,7 @@
 
 		SPAWN_DBG(0) //Delete the overlay when finished with it.
 			src.on = 0
-			sleep(15)
+			sleep(1.5 SECONDS)
 			qdel(Ov)
 			qdel(src)
 

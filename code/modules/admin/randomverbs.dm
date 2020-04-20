@@ -656,8 +656,7 @@
 	boutput(M, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
-	if (M.mind)
-		M.mind.assigned_role = "Cluwne"
+	M.job = "Cluwne"
 	M.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1) // path, name, strain, bypass resist
 	M.contract_disease(/datum/ailment/disability/clumsy, null, null, 1) // path, name, strain, bypass resist
 	M.change_misstep_chance(66)
@@ -1087,7 +1086,7 @@
 			if(!usercl || !target_mob)
 				qdel(src)
 				return
-			sleep(20)
+			sleep(2 SECONDS)
 		return
 
 	proc/update_preview_icon()

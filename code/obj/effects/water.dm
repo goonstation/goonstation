@@ -43,7 +43,7 @@
 			R.reaction(atm,TOUCH,1)
 		R.remove_any(1)
 
-		sleep(2)
+		sleep(0.2 SECONDS)
 
 		if (try_connect_fluid && T && T.active_liquid)
 			T.active_liquid.try_connect_to_adjacent()

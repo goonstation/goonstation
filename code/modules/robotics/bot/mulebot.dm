@@ -444,7 +444,7 @@
 			crate.close()
 		C.anchored = 1
 		C.set_loc(src.loc)
-		sleep(2)
+		sleep(0.2 SECONDS)
 		C.set_loc(src)
 		load = C
 		if(ismob(C))
@@ -508,15 +508,15 @@
 						// do nothing
 					if(1)
 						for (var/i = 1 to 6)
-							sleep(2)
+							sleep(0.2 SECONDS)
 							process_bot()
 					if(2)
 						for (var/i = 1 to 6)
-							sleep(3)
+							sleep(0.3 SECONDS)
 							process_bot()
 					if(3)
 						for (var/i = 1 to 5)
-							sleep(4)
+							sleep(0.4 SECONDS)
 							process_bot()
 
 	proc/process_bot()

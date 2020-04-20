@@ -409,7 +409,7 @@
 		sg.set_loc(boothloc)
 		var/obj/ectoplasm = new /obj/item/reagent_containers/food/snacks/ectoplasm
 		ectoplasm.set_loc(boothloc)
-		sleep(600)
+		sleep(60 SECONDS)
 		if(sg && sg.mind)
 			sg.mind.transfer_to(user)
 			qdel(sg)
@@ -457,7 +457,7 @@
 								qdel(sg)
 							else
 								sg.gib(1) // TODO does this all make them uncloneable?
-		sleep(550)
+		sleep(55 SECONDS)
 		pz.lightfade(5)
 		pz.remove_simple_light("zoldorf")
 

@@ -426,7 +426,7 @@
 				var/datum/gang/G = hot_zone.gang_owners
 				G.score_event += hot_zone_score
 				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(100)
+				sleep(10 SECONDS)
 			process_hot_zones()
 
 //bleh
@@ -1029,11 +1029,12 @@
 
 		user.lastattacked = src
 
-		if (W.damtype == "brute")
-			take_damage(W.force)
-			user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
-		else
-			user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+			else
+				take_damage(W.force)
+				user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
@@ -1047,7 +1048,7 @@
 			if (I in user)
 				continue
 			I.set_loc(src)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill) break
 
 		boutput(user, "<span style=\"color:blue\">You finish filling the [src]!</span>")

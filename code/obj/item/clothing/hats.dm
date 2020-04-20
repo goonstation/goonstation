@@ -174,14 +174,14 @@
 
 		if (src.on)
 			src.force = 10
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
 			if (!(src in processing_items))
 				processing_items.Add(src)
 		else
 			src.force = 3
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()
 
@@ -572,6 +572,13 @@
 	item_state = "cowboy"
 	c_flags = SPACEWEAR
 
+/obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
+	name = "fancy hat"
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "tophat"
+	item_state = "that"
+	desc = "What do you mean this is hat isn't fancy?"
+
 /obj/item/clothing/head/fancy/captain
 	name = "captain's hat"
 	icon_state = "captain-fancy"
@@ -698,7 +705,7 @@
 
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] fiddles with [src]!</b></span>")
-		sleep(10)
+		sleep(1 SECOND)
 		src.toggle_active(user)
 		user.update_inhands()
 		src.add_fingerprint(user)

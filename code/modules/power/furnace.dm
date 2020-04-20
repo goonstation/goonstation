@@ -78,7 +78,7 @@
 				logTheThing("combat", user, W:affecting, "attempted to force %target% into a furnace at [log_loc(src)].")
 				message_admins("[key_name(user)] is trying to force [key_name(W:affecting)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
-				sleep(50)
+				sleep(5 SECONDS)
 				if(W && W:affecting && src.active) //ZeWaka: Fix for null.affecting
 					user.visible_message("<span style=\"color:red\">[user] stuffs [W:affecting] into the furnace!</span>")
 					var/mob/M = W:affecting
@@ -181,7 +181,7 @@
 					src.fuel = src.maxfuel
 					boutput(user, "<span style=\"color:blue\">The furnace is now full!</span>")
 					break
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (user.loc != staystill) break
 			boutput(user, "<span style=\"color:blue\">You finish stuffing ore into [src]!</span>")
 
@@ -199,7 +199,7 @@
 					src.fuel = src.maxfuel
 					boutput(user, "<span style=\"color:blue\">The furnace is now full!</span>")
 					break
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (user.loc != staystill) break
 			boutput(user, "<span style=\"color:blue\">You finish stuffing weed into [src]!</span>")
 
@@ -216,7 +216,7 @@
 					src.fuel = src.maxfuel
 					boutput(user, "<span style=\"color:blue\">The furnace is now full!</span>")
 					break
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (user.loc != staystill) break
 			boutput(user, "<span style=\"color:blue\">You finish stuffing ore into [src]!</span>")
 

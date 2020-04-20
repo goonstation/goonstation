@@ -215,11 +215,11 @@
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
 						src.dir = turn(src.dir, 90)
-						sleep(2)
+						sleep(0.2 SECONDS)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x-= 2
 						src.dir = turn(src.dir, 90)
-						sleep(2)
+						sleep(0.2 SECONDS)
 					if(!src.water_need)
 						animate_bumble(src)
 				return "<b>[src]</b> dances!"
@@ -437,11 +437,11 @@
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x+= 2
 					src.dir = turn(src.dir, 90)
-					sleep(2)
+					sleep(0.2 SECONDS)
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x-= 2
 					src.dir = turn(src.dir, 90)
-					sleep(2)
+					sleep(0.2 SECONDS)
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)

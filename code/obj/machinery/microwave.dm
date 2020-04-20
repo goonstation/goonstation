@@ -70,12 +70,12 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.broken > 0)
 		if (isscrewingtool(O) && src.broken == 2)
 			src.visible_message("<span style=\"color:blue\">[user] starts to fix part of the microwave.</span>")
-			sleep(20)
+			sleep(2 SECONDS)
 			src.visible_message("<span style=\"color:blue\">[user] fixes part of the microwave.</span>")
 			src.broken = 1 // Fix it a bit
 		else if (src.broken == 1 && iswrenchingtool(O))
 			src.visible_message("<span style=\"color:blue\">[user] starts to fix part of the microwave.</span>")
-			sleep(20)
+			sleep(2 SECONDS)
 			src.visible_message("<span style=\"color:blue\">[user] fixes the microwave!</span>")
 			src.icon_state = "mw"
 			src.broken = 0 // Fix it!
@@ -84,7 +84,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if(src.dirty) // The microwave is all dirty so can't be used!
 		if(istype(O, /obj/item/spraybottle)) // If they're trying to clean it then let them
 			src.visible_message("<span style=\"color:blue\">[user] starts to clean the microwave.</span>")
-			sleep(20)
+			sleep(2 SECONDS)
 			src.visible_message("<span style=\"color:blue\">[user] has cleaned the microwave!</span>")
 			src.dirty = 0 // It's cleaned!
 			src.icon_state = "mw"
@@ -232,7 +232,7 @@ Please clean it before use!</TT><BR>
 					src.donkpocket_amount = 0
 					src.humanmeat_name = ""
 					src.humanmeat_job = ""
-					sleep(60)
+					sleep(6 SECONDS)
 					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 					s.set_up(2, 1, src)
 					s.start()
@@ -269,12 +269,12 @@ Please clean it before use!</TT><BR>
 						src.monkeymeat_amount = 0
 						src.synthmeat_amount = 0
 						src.donkpocket_amount = 0
-						sleep(40) // Half way through
+						sleep(4 SECONDS) // Half way through
 						if(isnull(src)) // if object even still exists, who knows what that damn chef has done to that microwave
 							return
 						playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // Play a splat sound
 						icon_state = "mwbloody1" // Make it look dirty!!
-						sleep(40) // Then at the end let it finish normally
+						sleep(4 SECONDS) // Then at the end let it finish normally
 						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 						src.visible_message("<span style=\"color:red\">The microwave gets covered in muck!</span>")
 						src.dirty = 1 // Make it dirty so it can't be used util cleaned
@@ -294,12 +294,12 @@ Please clean it before use!</TT><BR>
 						src.monkeymeat_amount = 0
 						src.synthmeat_amount = 0
 						src.donkpocket_amount = 0
-						sleep(40) // Half way through
+						sleep(4 SECONDS) // Half way through
 						if(isnull(src)) // if object even still exists, who knows what that damn chef has done to that microwave
 							return
 						playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // Play a splat sound
 						icon_state = "mweggexplode1" // Make it look dirty!!
-						sleep(40) // Then at the end let it finish normally
+						sleep(4 SECONDS) // Then at the end let it finish normally
 						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 						src.visible_message("<span style=\"color:red\">The microwave gets covered in cooked egg!</span>")
 						src.dirty = 1 // Make it dirty so it can't be used util cleaned
@@ -319,7 +319,7 @@ Please clean it before use!</TT><BR>
 						src.synthmeat_amount = 0
 						src.monkeymeat_amount = 0
 						src.donkpocket_amount = 0
-						sleep(60) // Wait a while
+						sleep(6 SECONDS) // Wait a while
 						if(isnull(src)) // if object even still exists, who knows what that damn chef has done to that microwave
 							return
 						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -336,7 +336,7 @@ Please clean it before use!</TT><BR>
 						src.operating = 1
 						src.icon_state = "mw1"
 						src.updateUsrDialog()
-						sleep(80)
+						sleep(8 SECONDS)
 						src.icon_state = "mw"
 						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 						src.operating = 0

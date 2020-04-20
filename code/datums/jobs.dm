@@ -851,16 +851,14 @@
 
 /datum/job/civilian/clown
 	name = "Clown"
+	limit = 1
 	wages = 1000
-	needs_college = 1
 	linkcolor = "#FF99FF"
 	slot_back = null
 	slot_belt = /obj/item/storage/fanny/funny
 	slot_mask = /obj/item/clothing/mask/clown_hat
-	slot_head = /obj/item/clothing/head/graduation_cap
 	slot_jump = /obj/item/clothing/under/misc/clown
 	slot_foot = /obj/item/clothing/shoes/clown_shoes
-	slot_rhan = /obj/item/toy/diploma
 	slot_lhan = /obj/item/instrument/bikehorn
 	slot_poc1 = /obj/item/device/pda2/clown
 	slot_poc2 = /obj/item/reagent_containers/food/snacks/plant/banana

@@ -323,7 +323,10 @@
 #define SLEEVELESS 64			// ain't got no sleeeeeves
 #define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
 #define IS_JETPACK 256
-#define EQUIPPED_WHILE_HELD 512	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
+
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -758,6 +761,18 @@
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
+
+
+//some different generalized block weapon shapes that i can re use instead of copy paste
+#define BLOCK_ALL		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_stab", "block_burn"))
+#define BLOCK_LARGE		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_stab"))
+#define BLOCK_SWORD		BLOCK_LARGE
+#define BLOCK_ROD 		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut"))
+#define BLOCK_TANK 		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_burn"))
+#define BLOCK_SOFT 		AddComponent(/datum/component/itemblock/basic_block,	list("block_stab", "block_burn"))
+#define BLOCK_KNIFE		AddComponent(/datum/component/itemblock/basic_block,	list("block_cut", "block_stab"))
+#define BLOCK_BOOK		AddComponent(/datum/component/itemblock/basic_block,	list("block_stab"))
+#define BLOCK_ROPE		BLOCK_BOOK
 
 // Process Scheduler defines
 // Process status defines

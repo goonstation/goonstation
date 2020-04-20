@@ -59,7 +59,7 @@
 				shake_camera(M, 20, 1)
 				if(M.loc == src.loc)
 					M.gib(1, 1)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			new/obj/lootbox(src.loc)
 			qdel(src)
 		..()

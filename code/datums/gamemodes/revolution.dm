@@ -67,7 +67,7 @@
 
 	if(!head_revolutionaries || !heads)
 		boutput(world, "<B><span style=\"color:red\">Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
-		sleep(50)
+		sleep(5 SECONDS)
 		Reboot_server()
 		return
 
@@ -512,3 +512,4 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_LARGE

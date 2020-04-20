@@ -50,6 +50,7 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("ff-foam", 100)
+	BLOCK_TANK
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)

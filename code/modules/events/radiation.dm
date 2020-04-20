@@ -96,7 +96,7 @@
 	Run()
 		if (..())
 			for(var/i=0, i<4, i++)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				SpawnParticle()
 			state = 1
 

@@ -340,7 +340,7 @@
 					wiggle--
 					container.pixel_x = rand(-3,3)
 					container.pixel_y = rand(-3,3)
-					sleep(1)
+					sleep(0.1 SECONDS)
 				container.pixel_x = 0
 				container.pixel_y = 0
 
@@ -396,7 +396,7 @@
 					wiggle--
 					container.pixel_x = rand(-3,3)
 					container.pixel_y = rand(-3,3)
-					sleep(1)
+					sleep(0.1 SECONDS)
 				container.pixel_x = 0
 				container.pixel_y = 0
 
@@ -906,7 +906,7 @@
 				fart_string = "'s body is torn apart like a wet paper bag by [his_or_her(owner)] unbelievably powerful farting!"
 				owner.unlock_medal("Shit Fest", 1)
 
-		sleep(30)
+		sleep(3 SECONDS)
 		if (can_act(owner))
 			if(owner.reagents.has_reagent("anti_fart"))
 				owner.visible_message("<span style=\"color:red\"><b>[owner.name]</b> swells up. That can't be good.</span>")

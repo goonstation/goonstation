@@ -518,7 +518,7 @@
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
-			sleep(9)
+			sleep(0.9 SECONDS)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/bfg/vr
@@ -955,7 +955,7 @@
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
-			sleep(1)
+			sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
@@ -1241,7 +1241,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(4)
+					sleep(0.4 SECONDS)
 					playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
@@ -1435,6 +1435,7 @@
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
+	item_state = "pulse_rifle"
 	force = 5
 	two_handed = 1
 	can_dual_wield = 0

@@ -75,7 +75,7 @@
 		SPAWN_DBG(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
-				sleep(20)
+				sleep(2 SECONDS)
 	proc/Thumper_stopThumps()
 		doThumps = 0
 	proc/Thumper_paralyzed()
@@ -136,6 +136,8 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if (!isdead(src)) //still breathing
+			//do on_life things for components?
+			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 
 			parent.setLastTask("handle_material_triggers", src)
 
@@ -1169,7 +1171,7 @@
 
 		return protection
 
-	get_melee_protection(zone)
+	get_melee_protection(zone, damage_type)
 		if (!src)
 			return 0
 		var/protection = 0
@@ -1177,7 +1179,7 @@
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
 		if(a_zone=="All")
-			protection=(5*get_melee_protection("chest")+get_melee_protection("head"))/6
+			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
 		else
 			// Resistance from Clothing
 			for(var/atom in src.get_equipped_items())
@@ -1188,9 +1190,17 @@
 					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
 					var/curr = C.getProperty("meleeprot")
 					protection = max(curr, protection)
+
+			var/obj/item/grab/block/G = src.check_block()
+			if (G)
+				protection += 1
+				if (G.can_block(damage_type))
+					if (G != src.equipped()) // bare handed block is less protective
+						protection += 1
+
 		return protection
 
-	proc/get_deflection()
+	get_deflection()
 		if (!src)
 			return 0
 
@@ -1552,7 +1562,7 @@
 
 		if (!src.organHolder)
 			src.organHolder = new(src)
-			sleep(10)
+			sleep(1 SECOND)
 
 		var/datum/organHolder/oH = src.organHolder
 		if (!oH.head && !src.nodamage)

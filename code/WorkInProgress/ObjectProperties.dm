@@ -164,9 +164,9 @@ var/list/globalPropList = null
 			return "[propOwner.force] to [propOwner.force*propVal] dmg"
 
 	block
-		name = "Block"
+		name = "Block (Passive)"
 		id = "block"
-		desc = "Gives a chance to block melee attacks." //Value is extra block chance.
+		desc = "Passive chance to block melee attacks." //Value is extra block chance.
 		tooltipImg = "block.png"
 		defaultValue = 5
 		getTooltipDesc(var/obj/propOwner, var/propVal)
@@ -349,3 +349,48 @@ var/list/globalPropList = null
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
+
+	block_blunt
+		name = "Block"
+		id = "block_blunt"
+		desc = "This item could be held to block blunt damage. Use RESIST to block." //Value is % protection.
+		tooltipImg = "prot.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "Blunt Damage"
+
+	block_cut
+		name = "Block"
+		id = "block_cut"
+		desc = "This item could be held to block slashing damage. Use RESIST to block." //Value is % protection.
+		tooltipImg = "prot.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "Slash Damage"
+
+	block_stab
+		name = "Block"
+		id = "block_stab"
+		desc = "This item could be held to block stabbing damage. Use RESIST to block." //Value is % protection.
+		tooltipImg = "prot.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "Stab Damage"
+
+	block_burn
+		name = "Block"
+		id = "block_burn"
+		desc = "This item could be held to block burn damage. Use RESIST to block." //Value is % protection.
+		tooltipImg = "prot.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "Burn Damage"
+
+	block_bonus
+		name = "Block+"
+		id = "block_bonus"
+		desc = "This item has bonus blocking potential. Use RESIST to block."
+		tooltipImg = "prot.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return (propVal ? "RESIST with this item for more info" : "Hold in active hand for:")

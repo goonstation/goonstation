@@ -21,7 +21,7 @@
 	if(affected_mob.job == "Clown")
 		D.state = "Asymptomatic"
 		return
-	if(affected_mob.mind && (affected_mob.mind.assigned_role == "Cluwne"))
+	if(affected_mob.job == "Cluwne")
 		D.state = "Asymptomatic"
 		return
 	if(isdead(affected_mob))

@@ -169,7 +169,7 @@
 				timeout--
 				if (!timeout)
 					break
-				sleep(1)
+				sleep(0.1 SECONDS)
 			explode()
 
 	proc/explode()

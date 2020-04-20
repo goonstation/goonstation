@@ -98,7 +98,7 @@ WET FLOOR SIGN
 					src.set_loc(T)
 					clean(direction)
 					src.dir = direction
-			sleep(2)
+			sleep(0.2 SECONDS)
 		vanish()
 		return
 
@@ -210,7 +210,7 @@ WET FLOOR SIGN
 				D.reagents.remove_any(1)
 			if (!D.reagents.total_volume)
 				break
-			sleep(3)
+			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
 	logTheThing("combat", user, logTurf, "sprays [src] at %target% [log_reagents] at [log_loc(user)].")
@@ -256,6 +256,7 @@ WET FLOOR SIGN
 	R.my_atom = src
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
+	BLOCK_ROD
 
 /obj/item/mop/disposing()
 	. = ..()
@@ -618,6 +619,10 @@ WET FLOOR SIGN
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 10
+
+	New()
+		..()
+		BLOCK_SOFT
 
 	dropped()
 		JOB_XP(usr, "Janitor", 2)

@@ -60,6 +60,6 @@
 					qdel(A)
 					qdel(B)
 					return
-				sleep(5)
+				sleep(0.5 SECONDS)
 			qdel(A)
 			qdel(B)

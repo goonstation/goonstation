@@ -36,7 +36,7 @@
 				random_brute_damage(user, 15)
 				user.changeStatus("paralysis", 70)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
-				sleep(4)
+				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null

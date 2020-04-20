@@ -32,6 +32,7 @@ client/verb/hotkeys()
 			<li><b>4:</b> Harm intent</li>
 			<li><b>R:</b> Flip</li>
 			<li><b>F:</b> Fart</li>
+			<li><b>Z:</b> Resist</li>
 		<p>
 		<h3>Arrow Keys Mode Specific Keys</h3>
 			<li><b>PgUp:</b> Switch active hand</li>

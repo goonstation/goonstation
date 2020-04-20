@@ -812,7 +812,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -824,7 +824,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -926,7 +926,7 @@
 							SPAWN_DBG(0) // some movement to make it look cooler
 								for (var/i = 0, i < 10, i++)
 									src.dir = turn(src.dir, 90)
-									sleep(2)
+									sleep(0.2 SECONDS)
 
 							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 							s.set_up(3, 1, src)
@@ -964,7 +964,7 @@
 								SPAWN_DBG(0)
 									for (var/i = 0, i < 4, i++)
 										src.dir = turn(src.dir, 90)
-										sleep(2)
+										sleep(0.2 SECONDS)
 							//standard dancing
 							else
 								var/dancemove = rand(1,7)
@@ -975,24 +975,24 @@
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
 												src.dir = turn(src.dir, 90)
-												sleep(2)
+												sleep(0.2 SECONDS)
 
 									if (2)
 										message = "<B>[src]</B> does the twist, like they did last summer."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
 												src.dir = turn(src.dir, -90)
-												sleep(2)
+												sleep(0.2 SECONDS)
 
 									if (3)
 										message = "<B>[src]</B> moonwalks."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 2
-												sleep(2)
+												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 2
-												sleep(2)
+												sleep(0.2 SECONDS)
 
 									if (4)
 										message = "<B>[src]</B> boogies!"
@@ -1000,21 +1000,21 @@
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 2
 												src.dir = turn(src.dir, 90)
-												sleep(2)
+												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 2
 												src.dir = turn(src.dir, 90)
-												sleep(2)
+												sleep(0.2 SECONDS)
 
 									if (5)
 										message = "<B>[src]</B> gets on down."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_y-= 2
-												sleep(2)
+												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_y+= 2
-												sleep(2)
+												sleep(0.2 SECONDS)
 
 									if (6)
 										message = "<B>[src]</B> dances!"
@@ -1022,11 +1022,11 @@
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 1
 												src.pixel_y+= 1
-												sleep(2)
+												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 1
 												src.pixel_y-= 1
-												sleep(2)
+												sleep(0.2 SECONDS)
 
 									else
 										message = "<B>[src]</B> cranks out some dizzying windmills."
@@ -1035,12 +1035,12 @@
 												src.pixel_x+= 1
 												src.pixel_y+= 1
 												src.dir = turn(src.dir, -90)
-												sleep(2)
+												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 1
 												src.pixel_y-= 1
 												src.dir = turn(src.dir, -90)
-												sleep(2)
+												sleep(0.2 SECONDS)
 										// expand this too, however much
 
 									// todo: add context-sensitive break dancing and some other goofy shit
@@ -1822,7 +1822,7 @@
 	SPAWN_DBG(10)
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		torso.loc = null
 		qdel(torso)
 		right_arm.loc = null

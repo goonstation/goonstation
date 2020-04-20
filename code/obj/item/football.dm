@@ -78,7 +78,7 @@
 		S.in_rush = i
 		T = get_step(T, charge_dir)
 		src.Move(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	S.in_rush = 0
 

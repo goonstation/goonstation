@@ -286,10 +286,10 @@
 			while(user && !user.stat && user:shoes == src)
 				if(user.pixel_y < 12)
 					user.pixel_y += 3
-					sleep(1)
+					sleep(0.1 SECONDS)
 				else
 					user.pixel_y -= 6
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 			if(user)
 				user.pixel_y = 0
@@ -365,6 +365,19 @@
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
+
+/obj/item/clothing/shoes/swat/heavy
+	name = "heavy military boots"
+	desc = "Fairly worn out military boots."
+	icon_state = "swatheavy"
+	step_sound = "step_heavyboots"
+	step_priority = STEP_PRIORITY_LOW
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Head of Security")
+			. = "Still fit like a glove! Or a shoe."
+		else
+			. = "Looks like some big shoes to fill!"
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

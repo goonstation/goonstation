@@ -55,3 +55,11 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
+/// When an item block is created
+#define COMSIG_ITEM_BLOCK_BEGIN "itm_block_begin"
+/// When an item block is disposed
+#define COMSIG_ITEM_BLOCK_END "itm_block_end"
+
+// human signals
+///when a human Life tick occurs
+#define COMSIG_HUMAN_LIFE_TICK "human_life_tick"

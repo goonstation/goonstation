@@ -587,7 +587,7 @@
 			src.flock.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
 			B.loc = pick(candidate_turfs)
-	sleep(1) // make sure the animation finishes
+	sleep(0.1 SECONDS) // make sure the animation finishes
 	// finally, away with us
 	src.ghostize()
 	qdel(src)
