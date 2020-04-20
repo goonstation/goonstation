@@ -1015,6 +1015,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery.dm"
 #include "code\obj\map.dm"
 #include "code\obj\martian.dm"
+#include "code\obj\medicaldiagnosis.dm"
 #include "code\obj\mining.dm"
 #include "code\obj\misc_junk.dm"
 #include "code\obj\mopbucket.dm"
