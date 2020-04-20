@@ -124,19 +124,6 @@
 		npcmonkeypals -= src
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob) //Monkies can be blindfolded by targetting head with help intent
-		if (istype(W, /obj/item/clothing/glasses/blindfold) && user.zone_sel.selecting == "head" && user.a_intent == "help")
-			if(src.glasses)
-				boutput(user, "<span style=\"color:red\">[src] is already wearing something on their eyes!</span>")
-				return
-			src.glasses = W
-			user.drop_item()
-			W.set_loc(src)
-			src.update_clothing()
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> puts a blindfold on [src]!</span>")
-			return
-		..()
-
 	ai_action()
 		if(ai_aggressive)
 			return ..()
