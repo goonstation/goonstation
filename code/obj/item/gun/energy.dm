@@ -323,6 +323,7 @@
 	item_state = "egun"
 	force = 5.0
 	mats = 50
+	is_syndicate = 1 //haha NO
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawgiver/sabre AND an egun.
 
