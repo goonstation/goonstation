@@ -880,7 +880,7 @@
 
 	proc/take_damage(var/damage_amount = 5)
 		if (broken)
-				return
+			return
 		src.health -= damage_amount
 		if (src.health <= 0)
 			src.broken = 1
