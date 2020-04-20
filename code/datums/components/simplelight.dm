@@ -28,10 +28,7 @@
 		light_target.add_simple_light(src.light_name, list(r, g, b, a))
 
 /datum/component/holdertargeting/simple_light/RegisterWithParent()
-	. = ..()
-	var/obj/item/I = src.parent
-	if(istype(I.loc, /mob))
-		src.light_target = I.loc
+	src.light_target = src.parent
 	src.update()
 
 /datum/component/holdertargeting/simple_light/UnregisterFromParent()
