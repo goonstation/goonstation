@@ -73,11 +73,6 @@
 	var/yeet_chance = 1 //yeet
 
 	New()
-		src.abilityHolder = new /datum/abilityHolder/critter(src)
-		if (islist(src.add_abilities) && src.add_abilities.len)
-			for (var/abil in src.add_abilities)
-				if (ispath(abil))
-					abilityHolder.addAbility(abil)
 //		if (ispath(default_task))
 //			default_task = new default_task
 //		if (ispath(current_task))
@@ -92,9 +87,6 @@
 			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
 		count_healths()
 
-		hud = new custom_hud_type(src)
-		src.attach_hud(hud)
-		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 		SPAWN_DBG(0)
 			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 			src.attach_hud(zone_sel)
@@ -105,8 +97,6 @@
 		burning_image.icon = 'icons/misc/critter.dmi'
 		burning_image.icon_state = null
 
-		updatehealth()
-
 		src.old_canmove = src.canmove
 
 		if(!isnull(src.custom_organHolder_type))
@@ -114,6 +104,18 @@
 		else
 			src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 		..()
+
+		hud = new custom_hud_type(src)
+		src.attach_hud(hud)
+		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+
+		updatehealth()
+
+		src.abilityHolder = new /datum/abilityHolder/critter(src)
+		if (islist(src.add_abilities) && src.add_abilities.len)
+			for (var/abil in src.add_abilities)
+				if (ispath(abil))
+					abilityHolder.addAbility(abil)
 
 		SPAWN_DBG(0.5 SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
 			if (abilityHolder)

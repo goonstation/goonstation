@@ -1,4 +1,58 @@
 
+(t)mon apr 20 20
+(u)Flourish
+(p)331
+(e)🆕🔄|enhancement, rework
+(*)Made the floor health scanners in medbay more useful. Step on top of one of them to receive a readout of your health and trigger a PDA alert to medical if you're in crit.
+(u)Fautz0
+(p)327
+(e)⚖🆕|balance, enhancement
+(+)You can now blindfold monkeys and humans by attacking their head with a blindfold.
+(u)Erinexx
+(p)277
+(e)🍑🎨|ass-jam, sprites
+(+)Added new plate sprites and fixed a display bug.
+(u)Flaborized
+(p)303
+(e)🆕🎨|enhancement, sprites
+(*)You can now destroy chemical dispensers, ATMs and shrubs by smashing them with a weapon. ATMs will spew out small amounts of money if you do this, and can also be shot to destroy them! Also improved visual feedback when destroying fabricators through brute force.
+(u)Tarmunora
+(p)241
+(e)⚖|balance
+(+)MPRT-7 launcher no longer supports dual-wielding
+(u)Kubius
+(p)337
+(e)🗺|mapping
+(*)Kondaru FB9: significant reworks to Medbay and Security.
+(u)MarkNstein
+(p)339
+(e)🆕|enhancement
+(+)Similar to airlocks, APCs will now show their powernet address when unscrewed.
+(u)RichardGere
+(p)308
+(e)🐛|bug
+(+)Fixed an issue where players were able to equip items attached to limbs.
+(t)sun apr 19 20
+(u)Flourish
+(p)292
+(e)🆕|enhancement
+(*)Added hats as an AI spacebux reward.
+(u)ZeWaka
+(p)258
+(e)|
+(+)Reverted #203, crowbars on harm intent once again pry up floors.
+(u)Kubius
+(p)323
+(e)🆕🗺|enhancement, mapping
+(+)Assorted small improvements to Horizon.
+(u)Gerhazo
+(p)311
+(e)|
+(+)Fixed certain cuff types not breaking apart on removal as well as trying to remove silver handcuffs from your belt breaking that slot.
+(u)Awkward Dryad
+(p)299
+(e)|
+(+)Fixed plant layering in pots <3
 (t)sat apr 18 20
 (u)Kubius
 (p)316

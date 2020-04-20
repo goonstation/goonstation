@@ -704,15 +704,21 @@
 
 	New()
 		..()
-
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
+
+	post_item_setup()
+		. = ..()
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, assailant)
 
 	disposing()
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
+			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, assailant)
 
 		if (assailant)
 			assailant.delStatus("blocking")
@@ -760,7 +766,7 @@
 					if (I.reagents)
 						I.reagents.temperature_reagents(2000,10)
 
-			if (I.hasProperty(prop))
+			if (src.hasProperty(prop))
 				.= 1
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)

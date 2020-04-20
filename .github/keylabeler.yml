@@ -30,6 +30,7 @@ labelMappings:
     [ASS-JAM]: ass-jam
     [BALANCE]: balance
     [CLEANLINESS]: cleanliness
+    [CLEAN]: cleanliness
     [CHORE]: cleanliness
     [EXPERIMENTAL]: experimental
     [PERFORMANCE]: performance

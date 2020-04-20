@@ -572,6 +572,13 @@
 	item_state = "cowboy"
 	c_flags = SPACEWEAR
 
+/obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
+	name = "fancy hat"
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "tophat"
+	item_state = "that"
+	desc = "What do you mean this is hat isn't fancy?"
+
 /obj/item/clothing/head/fancy/captain
 	name = "captain's hat"
 	icon_state = "captain-fancy"
