@@ -191,7 +191,7 @@
 
 		interact_particle(user,src)
 
-	attackby(var/obj/item/W as obj, user as mob)
+	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)

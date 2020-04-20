@@ -632,7 +632,7 @@
 		STATE_LOGGEDOFF = 1
 		STATE_LOGGEDIN = 2
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I as obj, mob/user as mob)
 		if(broken)
 			boutput(user, "<span style=\"color:red\">With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -672,8 +672,8 @@
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
-			logTheThing("diary",usr,null,"deposits a spacebux token worth [SB.amount].")
-			usr.client.add_to_bank(SB.amount)
+			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
+			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span style=\"color:red\">You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
 		var/damage = I.force
@@ -681,7 +681,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
-			src.take_damage(damage)
+			src.take_damage(damage, user)
 			user.visible_message("<span style='color:red'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
 			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
@@ -749,7 +749,7 @@
 
 	bullet_act(var/obj/projectile/P)
 		if (P.power && P.proj_data.ks_ratio) //shooting ATMs with lethal rounds instantly makes them spit out their money, just like in the movies!
-			src.take_damage(70) 
+			src.take_damage(70)
 
 	proc/TryToFindRecord()
 		for(var/datum/data/record/B in data_core.bank)
@@ -878,7 +878,7 @@
 
 		src.updateUsrDialog()
 
-	proc/take_damage(var/damage_amount = 5)
+	proc/take_damage(var/damage_amount = 5, var/mob/user as mob)
 		if (broken)
 			return
 		src.health -= damage_amount
@@ -890,7 +890,8 @@
 			C = new C(get_turf(src))
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			playsound(src.loc,'sound/machines/capsulebuy.ogg', 50, 2)
-			C.throw_at(user, 20, 3)
+			if (user)
+				C.throw_at(user, 20, 3)
 
 	ex_act(severity)
 		src.take_damage(70)
