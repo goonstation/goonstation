@@ -41,6 +41,7 @@
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH
+	var/health = 400
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
@@ -193,7 +194,21 @@
 			send_group_details()
 			return
 
-		if (!istype(B, glass_path) || B.incompatible_with_chem_dispensers == 1)
+		if (!istype(B, glass_path))
+			var/damage = B.force
+			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
+				user.lastattacked = src
+				attack_particle(user,src)
+				hit_twitch(src)
+				playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+				src.take_damage(damage)
+				user.visible_message("<span style='color:red'><b>[user] bashes [src] with [B]!</b></span>")
+			else
+				playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+				user.visible_message("<span style='color:red'><b>[user] uselessly taps [src] with [B]!</b></span>")
+			return
+
+		if (B.incompatible_with_chem_dispensers == 1)
 			return
 
 		if (status & (NOPOWER|BROKEN))
@@ -218,22 +233,18 @@
 			B.reagents.add_reagent(the_reagent,amount)
 			B.reagents.handle_reactions()
 			return
+		if (src.beaker)
+			boutput(user, "A [glass_name] is already loaded into the machine.")
+			return
 
-		else
-			if (src.beaker)
-				boutput(user, "A [glass_name] is already loaded into the machine.")
-				return
-
-			src.beaker =  B
-			user.drop_item()
-			B.set_loc(src)
-			boutput(user, "You add the [glass_name] to the machine!")
-			if(ch_window.IsSubscribed(user.client))
-				send_beaker_details()
-				send_reagent_details(0)
-			else
-				attack_hand(user)
-			src.update_icon()
+		src.beaker =  B
+		user.drop_item()
+		B.set_loc(src)
+		boutput(user, "You add the [glass_name] to the machine!")
+		if(ch_window.IsSubscribed(user.client))
+			send_beaker_details()
+			send_reagent_details(0)
+		src.update_icon()
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
@@ -242,12 +253,11 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				qdel(src)
+				src.take_damage(400)
 				return
 			if(2.0)
-				if (prob(50))
-					qdel(src)
-					return
+				src.take_damage(150)
+				return
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
@@ -528,6 +538,18 @@
 		else
 			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
 		return
+
+	proc/take_damage(var/damage_amount = 5)
+		src.health -= damage_amount
+		if (src.health <= 0)
+			if (beaker)
+				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker = null
+			src.visible_message("<span style=\"color:red\"><b>[name] falls apart into useless debris!</b></span>")
+			robogibs(src.loc,null)
+			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+			qdel(src)
+			return
 
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"

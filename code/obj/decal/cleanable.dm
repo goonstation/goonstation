@@ -719,6 +719,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		pixel_x += rand(-4,4)
 		return
 
+/obj/decal/cleanable/leaves
+	name = "leaves"
+	desc = "A sad little pile of leaves from a sad, destroyed bush."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "leaves"
+	random_dir = 4
+
 /obj/decal/cleanable/rust
 	name = "rust"
 	desc = "That sure looks safe."
