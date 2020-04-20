@@ -23,7 +23,7 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = list()
+	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
 	var/last_resist = 0
 
@@ -112,8 +112,8 @@
 
 	var/obj/hud/hud_used = null
 
-	var/list/organs = list(  )
-	var/list/grabbed_by = list(  )
+	var/list/organs = null
+	var/list/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
 
@@ -220,6 +220,9 @@
 
 // mob procs
 /mob/New()
+	hallucinations = new
+	organs = new
+	grabbed_by = new
 	resistances = new
 	ailments = new
 	huds = new
@@ -621,12 +624,11 @@
 				// so yeah, i copy+pasted this from process_move.
 				if (src.pulling != AM && old_loc != src.loc) //causes infinite pull loop without these checks. lol
 					var/list/pulling = list()
-					if (src.pulling)
-						if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
-							src.pulling = null
-							//hud.update_pulling() // FIXME
-						else
-							pulling += src.pulling
+					if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+						src.pulling = null
+						//hud.update_pulling() // FIXME
+					else
+						pulling += src.pulling
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 						if (G.affecting == src) continue
 						pulling += G.affecting
