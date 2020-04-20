@@ -227,7 +227,7 @@
 	ailments = new
 	huds = new
 	render_special = new
-	traitHolder = new
+	traitHolder = new(src)
 	cooldowns = new
 	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
