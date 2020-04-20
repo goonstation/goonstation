@@ -81,7 +81,7 @@
 	desc = "An in-floor health scanner that sends its data to connected status screens."
 	icon_state = "floorscan1"
 	var/time_between_scans = 3 SECONDS
-	var/on_cooldown = TRUE
+	var/on_cooldown = FALSE
 
 	find_partners(var/in_range = 0)
 		if (in_range)
