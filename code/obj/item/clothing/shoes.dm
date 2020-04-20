@@ -366,6 +366,19 @@
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
 
+/obj/item/clothing/shoes/swat/heavy
+	name = "heavy military boots"
+	desc = "Fairly worn out military boots."
+	icon_state = "swatheavy"
+	step_sound = "step_heavyboots"
+	step_priority = STEP_PRIORITY_LOW
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Head of Security")
+			. = "Still fit like a glove! Or a shoe."
+		else
+			. = "Looks like some big shoes to fill!"
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."
