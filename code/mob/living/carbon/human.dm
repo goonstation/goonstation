@@ -913,6 +913,7 @@
 
 	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
 		var/mob/living/carbon/human/H = G.affecting
+		if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 		if (G.state == 0)
 			if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 				if(istype(H) && H.intent != INTENT_HELP && H.lying)
