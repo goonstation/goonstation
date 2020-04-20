@@ -576,7 +576,8 @@ var/zapLimiter = 0
 			return
 	if(wiresexposed && (!isAI(user)))
 		user.machine = src
-		var/t1 = text("<B>Access Panel</B><br><br>")
+		var/t1 = text("<B>Access Panel</B><br>")
+		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
 		var/list/apcwires = list(
 			"Orange" = 1,
 			"Dark red" = 2,
