@@ -69,7 +69,7 @@
 						boutput(user, "<span style=\"color:blue\">You hear extremely slow breathing interspersed with what sounds like light snoring inside [(user != M) ? "[M]'s" : "your"] lungs.</span>")
 						//playsound
 					else
-						boutput(user, "Please report this on github and include the following: [iscarbon()],[ishuman()],[M.get_oxygen_deprivation()],[M.sleeping],[M.organHolder.left_lung],[M.organHolder.right_lung]. Also please include what you were doing when the bug occurred and if possible the health analyzer scan for [M]")
+						boutput(user, "Please report this on github and include the following: [iscarbon(M)],[ishuman(M)],[M.get_oxygen_deprivation()],[M.sleeping],[M.organHolder.left_lung],[M.organHolder.right_lung]. Also please include what you were doing when the bug occurred and if possible the health analyzer scan for [M]")
 				else
 					user.visible_message("<span style=\"color:blue\"><b>[user]</b> stops listening to [(user != M) ? "[M]'s" : "their"] chest.</span>", "<span style=\"color:blue\">You stop listening to [(user != M) ? "[M]'s" : "your"] chest.</span>")
 		else
