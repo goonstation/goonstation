@@ -1,5 +1,9 @@
 
 (t)mon apr 20 20
+(u)Flourish
+(p)331
+(e)🆕🔄|enhancement, rework
+(*)Made the floor health scanners in medbay more useful. Step on top of one of them to receive a readout of your health and trigger a PDA alert to medical if you're in crit.
 (u)Fautz0
 (p)327
 (e)⚖🆕|balance, enhancement
