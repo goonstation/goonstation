@@ -1132,7 +1132,7 @@
 			if (fuelamt)
 				var/removed = min(fuelamt, 50)
 				O.reagents.remove_reagent("fuel", removed)
-				src.fuel += removed
+				fuel += removed
 				user.show_text("[src] refueled.", "blue")
 				playsound(user.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
