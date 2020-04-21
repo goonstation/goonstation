@@ -487,7 +487,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_cardinal_normal_reflected(projectile, projectile) //shoot_reflected()
+			shoot_reflected_true(projectile, projectile) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add
