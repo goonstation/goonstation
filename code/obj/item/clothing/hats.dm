@@ -587,7 +587,7 @@
 		setProperty("meleeprot", 3)
 
 /obj/item/clothing/head/fancy/rank
-	name = "hat"
+	name = "officer's hat"
 	icon_state = "rank-fancy"
 	c_flags = SPACEWEAR
 	setupProperties()
