@@ -960,7 +960,7 @@ datum/projectile/snowball
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 
-/proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
@@ -970,7 +970,7 @@ datum/projectile/snowball
 	Q.launch()
 	return Q
 
-/proc/shoot_cardinal_normal_reflected(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector)
 	if (!P.incidence || !(P.incidence in cardinal))
 		return null
 
