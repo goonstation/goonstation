@@ -707,6 +707,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
+		setProperty("disorient_resist", 15)
 
 	post_item_setup()
 		. = ..()
