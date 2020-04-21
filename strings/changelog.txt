@@ -1,5 +1,22 @@
 
+(t)tue apr 21 20
+(u)Kubius
+(p)353
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch ten: Towels! And some other stuff.
+(u)Erinexx
+(p)302
+(e)🎨|sprites
+(*)Updated sprites for cigarettes, cigarette packets, zippos, cigar cases and ashtrays!
+(u)Somethings
+(p)342
+(e)|
+(+)You now see the expected messages for the Necrotic Detonation and Necrotic Resurrection symptoms on a pathogen when you look at the pathogen holding petri dish under a microscope after applying some synthflesh on it with a mechanical dropper.
 (t)mon apr 20 20
+(u)Gerhazo, Flaborized
+(p)329
+(e)🆕🎨|enhancement, sprites
+(*)Added heavy military boots with unique distinctive footstep sounds to the Head of Security's locker.
 (u)Flourish
 (p)331
 (e)🆕🔄|enhancement, rework

@@ -318,6 +318,7 @@
 
 		else if (issnippingtool(P))
 			boutput(user, "<span style=\"color:blue\">You cut the paper into a mask.</span>")
+			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
 			user.put_in_hand_or_drop(M)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times

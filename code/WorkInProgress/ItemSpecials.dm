@@ -1670,7 +1670,7 @@
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected(P, src)
+				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
 				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")

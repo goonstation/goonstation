@@ -579,7 +579,7 @@ var/image/blob_icon_cache
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY && src.overmind && prob(src.overmind.nucleus_reflectivity))
-			shoot_reflected(P, src)
+			shoot_reflected_to_sender(P, src)
 		else
 			..()
 
@@ -1029,7 +1029,7 @@ var/image/blob_icon_cache
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY)
-			shoot_reflected(P, src)
+			shoot_reflected_to_sender(P, src)
 		else
 			..()
 
