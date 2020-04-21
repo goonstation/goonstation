@@ -248,6 +248,7 @@ var/global/list/falloff_cache = list()
 			if ("step_robo") soundin = pick(sounds_step_robo)
 			if ("step_flipflop") soundin = pick(sounds_step_flipflop)
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
+			if ("step_military") soundin = pick(sounds_step_military)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -397,6 +398,7 @@ var/global/list/falloff_cache = list()
 /var/global/list/sounds_step_robo = 		list(sound('sound/misc/step/step_robo_1.ogg'),sound('sound/misc/step/step_robo_2.ogg'),sound('sound/misc/step/step_robo_3.ogg'))
 /var/global/list/sounds_step_flipflop = 	list(sound('sound/misc/step/step_flipflop_1.ogg'),sound('sound/misc/step/step_flipflop_2.ogg'),sound('sound/misc/step/step_flipflop_3.ogg'))
 /var/global/list/sounds_step_heavyboots = 	list(sound('sound/misc/step/step_heavyboots_1.ogg'),sound('sound/misc/step/step_heavyboots_2.ogg'),sound('sound/misc/step/step_heavyboots_3.ogg'))
+/var/global/list/sounds_step_military = 	list(sound('sound/misc/step/step_military_1.ogg'),sound('sound/misc/step/step_military_2.ogg'),sound('sound/misc/step/step_military_3.ogg'),sound('sound/misc/step/step_military_4.ogg'))
 
 
 

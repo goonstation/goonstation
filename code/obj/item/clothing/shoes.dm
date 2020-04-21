@@ -358,6 +358,8 @@
 	icon_state = "swat"
 	permeability_coefficient = 0.20
 	protective_temperature = 1250
+	step_sound = "step_military"
+	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
