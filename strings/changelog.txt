@@ -1,5 +1,9 @@
 
 (t)tue apr 21 20
+(u)Flaborized
+(p)326
+(e)⚖🆕🎨|balance, enhancement, sprites
+(+)Added the security pouch, a small pocket pouch containing all the kit previously contained in the Security Starter Kit. Starts in security officers', vice officers' and the HoS' pocket. Can be used to hold extra small items.
 (u)Kubius
 (p)353
 (e)🆕🗺|enhancement, mapping
