@@ -1,4 +1,9 @@
 
+(t)tue apr 21 20
+(u)Somethings
+(p)342
+(e)|
+(+)You now see the expected messages for the Necrotic Detonation and Necrotic Resurrection symptoms on a pathogen when you look at the pathogen holding petri dish under a microscope after applying some synthflesh on it with a mechanical dropper.
 (t)mon apr 20 20
 (u)Gerhazo, Flaborized
 (p)329
