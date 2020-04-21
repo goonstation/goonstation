@@ -1,5 +1,9 @@
 
 (t)tue apr 21 20
+(u)Erinexx
+(p)302
+(e)🎨|sprites
+(*)Updated sprites for cigarettes, cigarette packets, zippos, cigar cases and ashtrays!
 (u)Somethings
 (p)342
 (e)|
