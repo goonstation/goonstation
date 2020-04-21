@@ -295,7 +295,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
 
-	var/spread = spread_angle
+	var/spread = 0
 	if (user.reagents)
 		var/how_drunk = 0
 		var/amt = user.reagents.get_reagent_amount("ethanol")
@@ -307,7 +307,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			how_drunk = 0
 		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
 		spread += 5 * how_drunk
-
+	spread = max(spread, spread_angle)
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
 		if (!P)
@@ -368,7 +368,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/spread = spread_angle
+	var/spread = 0
 	if (user.reagents)
 		var/how_drunk = 0
 		var/amt = user.reagents.get_reagent_amount("ethanol")
@@ -379,7 +379,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				how_drunk = 1
 		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
 		spread += 5 * how_drunk
-
+	spread = max(spread, spread_angle)
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread)
 	if (P)
 		alter_projectile(P)
