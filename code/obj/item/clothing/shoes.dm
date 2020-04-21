@@ -359,6 +359,7 @@
 	permeability_coefficient = 0.20
 	protective_temperature = 1250
 	step_sound = "step_military"
+	step_priority = STEP_PRIORITY_LOW
 	step_lots = 1
 	kick_bonus = 2
 
@@ -374,6 +375,7 @@
 	icon_state = "swatheavy"
 	step_sound = "step_heavyboots"
 	step_priority = STEP_PRIORITY_LOW
+	step_lots = 0
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
