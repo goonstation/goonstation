@@ -574,9 +574,8 @@
 
 /obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
 	name = "fancy hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
-	icon_state = "tophat"
-	item_state = "that"
+	icon_state = "rank-fancy"
+	item_state = "that"  // todo actual inhands for this and children ?
 	desc = "What do you mean this is hat isn't fancy?"
 
 /obj/item/clothing/head/fancy/captain
