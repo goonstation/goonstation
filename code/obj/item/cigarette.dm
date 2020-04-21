@@ -18,6 +18,9 @@
 		cig1.set_loc(src)
 		cig2.set_loc(src)
 
+	get_desc()
+		. += "There's [islist(contents) ? contents.len : "some unknown amount of"] cigarettes in there."
+
 	//This is basically just adding more cigs to the list
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/mask/cigarette))
@@ -27,9 +30,8 @@
 				C.set_loc(src)
 				boutput(user, "You add [C] to [src].")
 				if (C.on)
-					C.light(user)
-					//Remove from processing loop since src will now call proc/process for all cigs in its contents
-					processing_items.Remove(C)
+					src.light(user)
+					// processing_items.Remove(C)
 
 				//Change sprites
 				update_icon()
@@ -45,17 +47,32 @@
 				if (istype(cig))
 					cig.attackby(W, user)
 					if (cig.on)
-						light(user)
+						src.light(user)
 			else
 				..()
 
 	proc/update_icon()
 		if (islist(contents) && contents.len == 0)
 			return
+
+		//Simple math way you get numbers, almost done, but doesn't look great round((contents.len/max_cigs)*9)
+		var/state_num = 2
+		switch (contents.len)
+			if (2) 			state_num = 2
+			if (3) 			state_num = 3
+			if (4) 			state_num = 4
+			if (5) 			state_num = 5
+			if (6 to 7) 	state_num = 5
+			if (8 to 11) 	state_num = 6
+			if (12 to 15) 	state_num = 7
+			if (16 to 20) 	state_num = 8
+			if (21) 		state_num = 9
+
+
 		if (on)
-			icon_state = "cig_bundle-[round((contents.len/max_cigs)*9)]-o"	//9 is the amount of icon states
+			icon_state = "cig_bundle-[state_num]-o"	//9 is the amount of icon states
 		else
-			icon_state = "cig_bundle-[round((contents.len/max_cigs)*9)]"
+			icon_state = "cig_bundle-[state_num]"
 
 	attack_hand(mob/user as mob)
 		if (islist(contents) && contents.len > 0)
@@ -63,32 +80,30 @@
 			contents -= C
 			user.put_in_hand_or_drop(C)
 			boutput(user, "You remove [C] from [src].")
-			if (C.on && !(C in processing_items))
-				processing_items.Add(C)
+			// if (C.on && !(C in processing_items))
+			// 	processing_items.Add(C)
 
 
 			//if there's only one cigarette left after we just removed a cig, then just delete this object and put that cig where this is.
 			if (contents.len == 1)
-				boutput(user, "1.")
 				var/obj/item/clothing/mask/cigarette/last_cig = contents[1]
 				if (istype(last_cig))
-					if (last_cig.on && !(last_cig in processing_items))
-						processing_items.Add(last_cig)
-					contents -= last_cig
-					last_cig = set_loc(user)
+					// if (last_cig.on && !(last_cig in processing_items))
+					// 	processing_items.Add(last_cig)
+					last_cig.set_loc(user)
 					if (ishuman(user))
-						boutput(user, "2-.")
 						var/mob/living/carbon/human/H = user
 						if (H.wear_mask == src)
-							boutput(user, "3.")
-							H.force_equip(last_cig)
+							H.u_equip(src)
+							H.force_equip(last_cig, H.slot_wear_mask)
+							return
 				qdel(src)
 			update_icon()
 
-	proc/break_up_bundle()
-		src.visible_message("<span style='color:red'>[src] breaks apart!</span>", group = "cig_drop")
-		for (var/obj/item/clothing/mask/cigarette/C in contents)
-			C.set_loc(src.loc)
+	// proc/break_up_bundle()
+	// 	src.visible_message("<span style='color:red'>[src] breaks apart!</span>", group = "cig_drop")
+	// 	for (var/obj/item/clothing/mask/cigarette/C in contents)
+	// 		C.set_loc(src.loc)
 
 	dropped(mob/user as mob)
 		src.visible_message("<span style='color:red'>[src] falls apart into", group = "cig_drop")
@@ -97,10 +112,6 @@
 
 		qdel(src)
 
-	process()
-		for (var/obj/item/clothing/mask/cigarette/C in contents)
-			C.process()
-
 	proc/light(var/mob/user as mob)
 		if (src.on == 0)
 			//Silently light all cigs
@@ -108,23 +119,18 @@
 				C.light(user)
 			src.visible_message("<span style='color:red'>[user] lights all [islist(contents) ? contents.len : "of the"] cigarettes in the bundle!")
 			src.on = 1
-			// src.damtype = "fire"
 			src.force = 4
 			update_icon()
-			if (!(src in processing_items))
-				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
+
 
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			for (var/obj/item/clothing/mask/cigarette/C in contents)
 				C.put_out(user)
 			src.on = -1
-			// src.damtype = "brute"
 			src.force = 0
-			update_icon()
-			processing_items.Remove(src)
-
 			playsound(get_turf(src), "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			update_icon()
 
 
 /obj/item/clothing/mask/cigarette
@@ -432,6 +438,8 @@
 				return
 			else
 				src.put_out(M, "<span style='color:red'><b>[M]</b>'s [src.name] goes out.</span>")
+				if (istype(src.loc, /obj/item/clothing/mask/cig_bundle))
+					src.set_loc(get_turf(src.loc))
 				return
 
 		//if (istype(location, /turf)) //start a fire if possible
