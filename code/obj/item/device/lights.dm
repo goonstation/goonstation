@@ -210,10 +210,10 @@
 	col_g = 0.5
 	col_b = 0.9
 
-/obj/item/device/light/glowstick/teal
+/obj/item/device/light/glowstick/cyan
 	icon_state_base = "glowstick-teal"
-	icon_state = "glowstick-teal0"
-	desc = "A regular emergency glowstick but somehow those madmen made it glow teal instead."
+	icon_state = "glowstick-cyan0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow cyan instead."
 	col_r = 0.1
 	col_g = 0.9
 	col_b = 0.9
