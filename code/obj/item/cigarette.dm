@@ -1122,16 +1122,17 @@
 		return
 
 	afterattack(atom/target, mob/user as mob)
-		if (!on && istype(target, /obj/reagent_dispensers/fueltank))
+		if (!on && (istype(target, /obj/reagent_dispensers/fueltank) || istype(target, /obj/item/reagent_containers/food/drinks/fueltank)))
 			if (src.fuel == -1)
 				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
 				return
+			//Even if it is a handheld fuel tank, this will behave the same.
 			var/obj/reagent_dispensers/fueltank/O = target
 			var/fuelamt = O.reagents.get_reagent_amount("fuel")
 			if (fuelamt)
 				var/removed = min(fuelamt, 50)
 				O.reagents.remove_reagent("fuel", removed)
-				fuel += removed
+				src.fuel += removed
 				user.show_text("[src] refueled.", "blue")
 				playsound(user.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
