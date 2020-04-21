@@ -1,5 +1,9 @@
 
 (t)tue apr 21 20
+(u)Kubius
+(p)353
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch ten: Towels! And some other stuff.
 (u)Erinexx
 (p)302
 (e)🎨|sprites
