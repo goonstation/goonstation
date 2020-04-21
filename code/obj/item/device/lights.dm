@@ -102,7 +102,8 @@
 
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "glowstick-off"
+	var/icon_state_base = "glowstick-green"
+	icon_state = "glowstick-green0"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
 	w_class = 2
@@ -153,7 +154,7 @@
 		if (!on)
 			boutput(user, "<span style=\"color:blue\">You crack [src].</span>")
 			on = 1
-			icon_state = "glowstick-on"
+			icon_state = "[icon_state_base][on]"
 			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			light.enable()
 		else
@@ -168,6 +169,70 @@
 				burst()
 			else
 				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+
+/obj/item/device/light/glowstick/white
+	icon_state_base = "glowstick-white"
+	icon_state = "glowstick-white0"
+	desc = "A regular emergency glowstick filtered for only the purest space light."
+	col_r = 0.9
+	col_g = 0.9
+	col_b = 0.9
+
+/obj/item/device/light/glowstick/yellow
+	icon_state_base = "glowstick-yellow"
+	icon_state = "glowstick-yellow0"
+	desc = "A regular emergency glowstick full of lovely artificial sunshine!"
+	col_r = 0.9
+	col_g = 0.8
+	col_b = 0.1
+
+/obj/item/device/light/glowstick/blue
+	icon_state_base = "glowstick-blue"
+	icon_state = "glowstick-blue0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow blue instead."
+	col_r = 0.1
+	col_g = 0.1
+	col_b = 0.9
+
+/obj/item/device/light/glowstick/purple
+	icon_state_base = "glowstick-purple"
+	icon_state = "glowstick-purple0"
+	desc = "A emergency glowstick, designed by the legendary Samuel L. Jackson."
+	col_r = 0.6
+	col_g = 0.1
+	col_b = 0.9
+
+/obj/item/device/light/glowstick/pink
+	icon_state_base = "glowstick-pink"
+	icon_state = "glowstick-pink0"
+	desc = "A regular emergency glowstick, 60% cuter!"
+	col_r = 0.9
+	col_g = 0.5
+	col_b = 0.9
+
+/obj/item/device/light/glowstick/teal
+	icon_state_base = "glowstick-teal"
+	icon_state = "glowstick-teal0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow teal instead."
+	col_r = 0.1
+	col_g = 0.9
+	col_b = 0.9
+
+/obj/item/device/light/glowstick/orange
+	icon_state_base = "glowstick-orange"
+	icon_state = "glowstick-orange0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow orange instead."
+	col_r = 0.9
+	col_g = 0.6
+	col_b = 0.1
+
+/obj/item/device/light/glowstick/red
+	icon_state_base = "glowstick-red"
+	icon_state = "glowstick-red0"
+	desc = "A regular emergency glowstick edgy and red!"
+	col_r = 0.9
+	col_g = 0.1
+	col_b = 0.0
 
 /obj/item/device/light/candle
 	name = "candle"
