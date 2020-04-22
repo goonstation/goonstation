@@ -1,5 +1,9 @@
 
 (t)wed apr 22 20
+(u)mbc
+(p)378
+(e)|
+(*)Reduced lag when you right click on objects. You shouldn't notice any significant changes to the menu functions, but I did move around and merge some commands.
 (u)Kubius
 (p)370
 (e)🐛🆕🗺|bug, enhancement, mapping
