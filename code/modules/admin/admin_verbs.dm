@@ -1780,50 +1780,16 @@ var/list/fun_images = list()
 			A = input(usr, "Which item to admin-interact with?") as anything in atoms
 
 
-	var/list/options = list(\
-	"Get Thing",\
-	"Follow Thing",\
-	"Add Reagents",\
-	"Check Reagents",\
-	"View Variables",\
-	"View Fingerprints",\
-	"Delete",\
-	)
 
+
+	var/choice = 0
 	if (ismob(A))
-		options -= "Delete"
-		options -= "View Fingerprints"
-
-		options += "Player Options"
-		options += "Private Message"
-		options += "Subtle Message"
-		options += "Check Health"
-		options += "Heal"
-		options += "Gib"
-		options += "Polymorph"
-		options += "Modify Organs"
-		options += "Modify Parts"
-		options += "Swap Minds"
-		options += "Transfer Client To"
-		options += "Shamecube"
+		choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["mob"]
 	else if (isturf(A))
-		options -= "Get Thing"
-		options -= "Follow Thing"
-		options -= "Add Reagents"
-		options -= "Check Reagents"
-
-		options += "Jump To Turf"
-		options += "Air Status"
-		options += "Create Explosion"
-		options += "Create Fluid"
-		options += "Create Smoke"
-		options += "Create Portal"
-		options += "Get Telesci Coords"
+		choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["turf"]
 	else
-		options += "Possess"
-	options += "Create Poster"
+		choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["obj"]
 
-	var/choice = input(usr, "What do?") as anything in options
 	var/client/C = src.client
 	switch(choice)
 		if("Get Thing")
