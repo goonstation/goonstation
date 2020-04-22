@@ -1057,9 +1057,6 @@
 		src.setItemSpecial(/datum/item_special/flame)
 		return
 
-	borg
-		infinite_fuel = 1
-
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
@@ -1226,3 +1223,6 @@
 	col_r = 0.45
 	col_g = 0.22
 	col_b = 1
+
+/obj/item/device/light/zippo/borg
+	infinite_fuel = 1
