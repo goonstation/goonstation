@@ -536,7 +536,7 @@
 			//Same shit here with update_icon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			F.name = src.master_reagent_name //maybe obscure later?
+			fluid_ma.name = src.master_reagent_name //maybe obscure later?
 
 			F.finalalpha = targetalpha
 			F.finalcolor = targetcolor
