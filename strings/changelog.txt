@@ -1,5 +1,7 @@
 
 (t)tue apr 21 20
+(u)mbc:
+(*)Blocking will now grant you some minor resistance to Disorient(Body)
 (u)Flaborized
 (p)326
 (e)⚖🆕🎨|balance, enhancement, sprites
