@@ -423,7 +423,7 @@
 			src.set_internal_radio(user)
 		else
 			src.set_internal_camera(user)
-					
+
 	fall_off()
 		if (src.radio)
 			src.loc.open_to_sound = 0

@@ -75,8 +75,7 @@
 	src.invisibility = src.invisibility_old
 
 
-/mob/dead/observer/verb/point(var/atom/target as mob|obj|turf in oview())
-	set name = "Point"
+/mob/dead/observer/point_at(var/atom/target)
 	if (!isturf(src.loc))
 		return
 

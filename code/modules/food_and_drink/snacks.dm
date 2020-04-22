@@ -1713,7 +1713,7 @@
 		src.reagents.add_reagent("love", 1)*/
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog_octo"))
+		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog-octo"))
 			src.visible_message("<span style=\"color:green\">[user.name] carves a cute little face on the [src]!</span>")
 			src.icon_state = "hotdog-octo2"
 			src.reagents.add_reagent("love", 1)

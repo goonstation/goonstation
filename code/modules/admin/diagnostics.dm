@@ -133,6 +133,8 @@ proc/debug_color_of(var/thing)
 	air_status(turf/target as turf)
 		set category = "Debug"
 		set name = "Air Status"
+		set popup_menu = 0
+
 
 		if(!isturf(target))
 			return
@@ -194,6 +196,7 @@ proc/debug_color_of(var/thing)
 
 	proc/makeText(text, additional_flags=0)
 		var/mutable_appearance/mt = new
+		mt.plane = FLOAT_PLANE
 		mt.icon = 'icons/effects/effects.dmi'
 		mt.icon_state = "nothing"
 		mt.maptext = "<span class='pixel r ol'>[text]</span>"
@@ -604,6 +607,10 @@ proc/debug_color_of(var/thing)
 	maptext = null
 	alpha = 128
 	var/mutable_appearance/debug_overlay_appearance/app = new
+
+	New()
+		..()
+		app.plane = FLOAT_PLANE
 
 	proc/reset()
 		src.app.reset()

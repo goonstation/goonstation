@@ -55,6 +55,9 @@ TRAYS
 		BLOCK_KNIFE
 		return
 
+
+	//mbc disabling for now bc this can be done other ways without a verb and obj verbs slow down rclick menu
+	/*
 	verb/rotate()
 		set name = "Rotate"
 		set category = "Local"
@@ -63,6 +66,7 @@ TRAYS
 
 			src.dir = turn(src.dir, 90)
 		return
+	*/
 
 /obj/item/kitchen/utensil/fork
 	name = "fork"
@@ -986,10 +990,11 @@ TRAYS
 	item_state = "platestack1"
 	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
+#if ASS_JAM
+	var/platemax = 13
+#else
 	var/platemax = 8
-	#if ASS_JAM
-		var/platemax = 13
-	#endif
+#endif
 
 	proc/update_icon(mob/user as mob)
 		src.icon_state = "platestack[src.platenum]"

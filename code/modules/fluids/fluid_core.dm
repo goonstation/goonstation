@@ -26,6 +26,8 @@ var/global/waterflow_enabled = 1
 
 var/list/depth_levels = list(2,50,100,200)
 
+var/mutable_appearance/fluid_ma
+
 /obj/fluid
 	name = "fluid"
 	desc = "It's a free-flowing liquid state of matter!"
@@ -103,6 +105,9 @@ var/list/depth_levels = list(2,50,100,200)
 		for (var/dir in cardinal)
 			blocked_perspective_objects["[dir]"] = 0
 
+		if (!fluid_ma)
+			fluid_ma = new(src)
+
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
@@ -153,12 +158,13 @@ var/list/depth_levels = list(2,50,100,200)
 			src.loc:active_liquid = 0
 
 		name = "fluid"
-		icon_state = "15"
+		fluid_ma.icon_state = "15"
+		fluid_ma.alpha = 255
+		fluid_ma.color = "#ffffff"
+		src.appearance = fluid_ma
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
-		alpha = 255
-		color = "#ffffff"
 		amt = 0
 		avg_viscosity = initial(avg_viscosity)
 		movement_speed_mod = 0

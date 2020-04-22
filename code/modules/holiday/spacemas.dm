@@ -451,9 +451,11 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	New()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 
-	verb/extinguish()
-		set src in oview(1)
-		set category = "Local"
+	attack_hand(mob/user as mob)
+		extinguish()
+		..()
+
+	proc/extinguish()
 		if (!src.on_fire)
 			return
 		src.visible_message("<span class='combat'>[usr] attempts to extinguish the fire!</span>")
@@ -609,6 +611,10 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		light.attach(src)
 		light.enable()
 
+	attack_hand(mob/user as mob)
+		change_light_pattern()
+		..()
+
 	proc/light_pattern(var/pattern as num)
 		if (!pattern)
 			src.icon_state = "lights0"
@@ -619,10 +625,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			light.enable()
 			return
 
-	verb/change_light_pattern()
-		set src in oview(1)
-		set category = "Local"
-
+	proc/change_light_pattern()
 		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
 		if (isnull(pattern))
 			return

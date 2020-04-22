@@ -155,7 +155,7 @@
 			src.visible_message(msg)
 
 		if (target == user && !istype(src,/obj/machinery/disposal/transport))
-			src.interact(user)
+			src.interacted(user)
 
 		update()
 		return
@@ -233,14 +233,14 @@
 
 	// ai as human but can't flush
 	attack_ai(mob/user as mob)
-		interact(user, 1)
+		interacted(user, 1)
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
-		interact(user, 0)
+		interacted(user, 0)
 		interact_particle(user,src)
 
-	proc/interact(mob/user, var/ai=0)
+	proc/interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
 			user.machine = null
