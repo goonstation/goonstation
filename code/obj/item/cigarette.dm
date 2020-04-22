@@ -1049,7 +1049,13 @@
 
 	New()
 		..()
+		var/datum/reagents/R = new/datum/reagents(30)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("fuel", 30)
+
 		src.setItemSpecial(/datum/item_special/flame)
+		return
 
 	borg
 		fuel = -1
@@ -1121,26 +1127,23 @@
 		user.visible_message("<span style='color:red'><b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]</span>")
 		return
 
-	afterattack(atom/target, mob/user as mob)
-		if (!on && (istype(target, /obj/reagent_dispensers/fueltank) || istype(target, /obj/item/reagent_containers/food/drinks/fueltank)))
+	afterattack(atom/O, mob/user as mob)
+		if (!on && (istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)))
 			if (src.fuel == -1)
 				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
 				return
-			//Even if it is a handheld fuel tank, this will behave the same.
-			var/obj/reagent_dispensers/fueltank/O = target
-			var/fuelamt = O.reagents.get_reagent_amount("fuel")
-			if (fuelamt)
-				var/removed = min(fuelamt, 50)
-				O.reagents.remove_reagent("fuel", removed)
-				fuel += removed
-				user.show_text("[src] refueled.", "blue")
-				playsound(user.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+
+			if (O.reagents.total_volume)
+				O.reagents.trans_to(src, 20)
+				boutput(user, "<span style=\"color:blue\">[src] refueled</span>")
+				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
 				user.show_text("[O] is empty.", "red")
 			return
-		else if (!ismob(target) && src.on && target.reagents)
-			user.show_text("You heat [target].", "blue")
-			target.reagents.temperature_reagents(1500,10)
+
+		else if (!ismob(O) && src.on && O.reagents)
+			user.show_text("You heat [O].", "blue")
+			O.reagents.temperature_reagents(1500,10)
 		else
 			return ..()
 
