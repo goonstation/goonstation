@@ -1792,11 +1792,11 @@ var/list/fun_images = list()
 
 	var/choice = 0
 	if (ismob(A))
-		choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["mob"]
+		choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
 	else if (isturf(A))
-		choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["turf"]
+		choice = input(usr, "What do?") as null|anything  in client.holder.admin_interact_verbs["turf"]
 	else
-		choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["obj"]
+		choice = input(usr, "What do?") as null|anything  in client.holder.admin_interact_verbs["obj"]
 
 	var/client/C = src.client
 	switch(choice)
