@@ -1049,10 +1049,10 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(50) //this is the max volume
+		var/datum/reagents/R = new/datum/reagents(100) //this is the max volume
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("fuel", 50)
+		R.add_reagent("fuel", 100)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1189,7 +1189,7 @@
 		qdel(src)
 		return 1
 
-	//thanks whoever coded the welder u the goat
+	//thanks whoever coded the welder ur the goat
 	proc/get_fuel()
 		if (reagents)
 			return reagents.get_reagent_amount("fuel")
