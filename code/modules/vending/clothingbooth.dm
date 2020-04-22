@@ -62,7 +62,7 @@ var/list/clothingbooth_items = list()
 		if (user.stat != 0 || user.getStatusDuration("stunned"))
 			return
 		src.set_open(1)
-		sleep(20)
+		sleep(2 SECONDS)
 		if(!(user in src))
 			return
 		user.set_loc(src.loc) //possible fix to the for loop bug (possibly need to clear contents of src upon dropping items)
