@@ -1039,31 +1039,31 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	var/fuel = 30 // -1 means infinite fuel
 	icon_off = "zippo"
 	icon_on = "zippoon"
 	brightness = 0.4
 	col_r = 0.94
 	col_g = 0.69
 	col_b = 0.27
+	var/infinite_fuel = 0 //1 is infinite fuel. Borgs use this apparently.
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(30)
+		var/datum/reagents/R = new/datum/reagents(50) //this is the max volume
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("fuel", 30)
+		R.add_reagent("fuel", 5)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
 
 	borg
-		fuel = -1
+		infinite_fuel = 1
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
-				if (fuel == 0)
+				if (get_fuel() == 0)
 					user.show_text("Out of fuel.", "red")
 					return
 				src.on = 1
@@ -1129,13 +1129,17 @@
 
 	afterattack(atom/O, mob/user as mob)
 		if (!on && (istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)))
-			if (src.fuel == -1)
+			if (infinite_fuel)
 				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
 				return
 
+			if (get_fuel() >= src.reagents.maximum_volume) //this could be == but just in case...
+				boutput(user, "<span style='color:red'>[src] is full!</span>")
+				return
+
 			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, 20)
-				boutput(user, "<span style=\"color:blue\">[src] refueled</span>")
+				O.reagents.trans_to(src, src.reagents.maximum_volume)
+				boutput(user, "<span style=\"color:blue\">[src] has been refueled.</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
 				user.show_text("[O] is empty.", "red")
@@ -1149,8 +1153,8 @@
 
 	process()
 		if (src.on)
-			if (src.fuel >= 0)
-				fuel--
+			if (get_fuel() >= 0 && !infinite_fuel)
+				use_fuel(1)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1159,7 +1163,7 @@
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(700,5)
-			if (fuel == 0)
+			if (get_fuel() == 0)
 				src.on = 0
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
@@ -1187,6 +1191,17 @@
 				user.suiciding = 0
 		qdel(src)
 		return 1
+
+	//thanks whoever coded the welder u the goat
+	proc/get_fuel()
+		if (reagents)
+			return reagents.get_reagent_amount("fuel")
+
+	proc/use_fuel(var/amount)
+		amount = min(get_fuel(), amount)
+		if (reagents)
+			reagents.remove_reagent("fuel", amount)
+		return
 
 /obj/item/device/light/zippo/gold
 	name = "golden zippo lighter"
