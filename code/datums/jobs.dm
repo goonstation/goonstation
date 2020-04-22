@@ -216,23 +216,23 @@
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/gun/energy/taser_gun
 	slot_poc1 = /obj/item/device/pda2/hos
+	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_head = /obj/item/clothing/head/helmet/HoS
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
 
 #else
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/gun/energy/taser_gun
 	slot_poc1 = /obj/item/device/pda2/hos
+	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_head = /obj/item/clothing/head/helmet/HoS
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
 #endif
 
 	New()
@@ -423,7 +423,7 @@
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_ears =  /obj/item/device/radio/headset/security
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 
 	New()
 		..()
@@ -1005,7 +1005,7 @@
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears =  /obj/item/device/radio/headset/security
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 
 	New()
 		..()

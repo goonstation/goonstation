@@ -428,7 +428,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/kondaru
 	name = "KONDARU"
-	goonhub_map = "https://i.imgur.com/tB7MnZ2.jpg"
+	goonhub_map = "https://i.imgur.com/XWmF0IA.jpg"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1

@@ -47,7 +47,7 @@
 				animate(HH, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 				sleep (15)
 				if (HH)
-					animate(transform = null, time = 1, loop = 0)
+					animate(HH, transform = null, time = 1, loop = 0)
 
 		var/GT = G.state // Can't include a possibly non-existent item in the loop before we can run the check.
 		for (var/i = 0, i < (GT * 3), i++)

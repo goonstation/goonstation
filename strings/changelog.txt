@@ -1,4 +1,29 @@
 
+(t)wed apr 22 20
+(u)Kubius
+(p)374
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 11: Medbay bigger - and this time, the booth too!
+(t)tue apr 21 20
+(u)mbc:
+(*)Blocking will now grant you some minor resistance to Disorient(Body)
+(*)When someone is using an item limb, shoving them to the ground will cause them to attack themselves (same as when you 'disarm' them).
+(u)Flaborized
+(p)326
+(e)⚖🆕🎨|balance, enhancement, sprites
+(+)Added the security pouch, a small pocket pouch containing all the kit previously contained in the Security Starter Kit. Starts in security officers', vice officers' and the HoS' pocket. Can be used to hold extra small items.
+(u)Kubius
+(p)353
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch ten: Towels! And some other stuff.
+(u)Erinexx
+(p)302
+(e)🎨|sprites
+(*)Updated sprites for cigarettes, cigarette packets, zippos, cigar cases and ashtrays!
+(u)Somethings
+(p)342
+(e)|
+(+)You now see the expected messages for the Necrotic Detonation and Necrotic Resurrection symptoms on a pathogen when you look at the pathogen holding petri dish under a microscope after applying some synthflesh on it with a mechanical dropper.
 (t)mon apr 20 20
 (u)Gerhazo, Flaborized
 (p)329

@@ -1139,31 +1139,31 @@
 	//if (usr.next_click > world.time)
 	//	return
 
-	var/atom/movable/item = src.equipped()
+	var/obj/item/I = src.equipped()
 
-	if (!item) return
+	if (!I || !isitem(I) || I.cant_drop) return
 
-	if (istype(item, /obj/item/grab))
-		var/obj/item/grab/G = item
-		item = G.handle_throw(src, target)
-		if (!item) return
+	if (istype(I, /obj/item/grab))
+		var/obj/item/grab/G = I
+		I = G.handle_throw(src, target)
+		if (!I) return
 
-	u_equip(item)
+	u_equip(I)
 
-	item.set_loc(src.loc)
+	I.set_loc(src.loc)
 
-	// u_equip() already calls item.dropped()
+	// u_equip() already calls I.dropped()
 	// no it doesn't
-	if (isitem(item))
-		item:dropped(src) // let it know it's been dropped
+	if (isitem(I))
+		I.dropped(src) // let it know it's been dropped
 
 	if (get_dist(src, target) > 0)
 		src.dir = get_dir(src, target)
 
 	//actually throw it!
-	if (item)
+	if (I)
 		attack_twitch(src)
-		item.layer = initial(item.layer)
+		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
 
 		if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
@@ -1174,33 +1174,33 @@
 			yeet_chance = 0.1
 
 		if(prob(yeet_chance))
-			src.visible_message("<span style=\"color:red\">[src] yeets [item].</span>")
+			src.visible_message("<span style=\"color:red\">[src] yeets [I].</span>")
 			src.say("YEET")
 			yeet = 1 // I hate this
 		else
-			src.visible_message("<span style=\"color:red\">[src] throws [item].</span>")
-		if (iscarbon(item))
-			var/mob/living/carbon/C = item
+			src.visible_message("<span style=\"color:red\">[src] throws [I].</span>")
+		if (iscarbon(I))
+			var/mob/living/carbon/C = I
 			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")
+			logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
 			src.inertia_dir = get_dir(target, src)
 			step(src, inertia_dir)
-		if ((istype(item.loc, /turf/space) || item.no_gravity)  && ismob(item))
-			var/mob/M = item
+		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
+			var/mob/M = I
 			M.inertia_dir = get_dir(src,target)
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		SPAWN_DBG(item.throw_at(target, item.throw_range, item.throw_speed, params, thrown_from))
+		SPAWN_DBG(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from))
 			if(yeet)
-				new/obj/effect/supplyexplosion(item.loc)
-				playsound(item.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
-				for(var/mob/M in view(7, item.loc))
+				new/obj/effect/supplyexplosion(I.loc)
+				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+				for(var/mob/M in view(7, I.loc))
 					shake_camera(M, 20, 1)
 
 		if (mob_flags & AT_GUNPOINT)
