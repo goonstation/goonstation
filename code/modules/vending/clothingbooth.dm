@@ -27,7 +27,7 @@ var/list/clothingbooth_items = list()
 /obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
 	if(!user.client)
 		return
-	if(!istype(user,/mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	user << browse_rsc('browserassets/css/clothingbooth.css')
 	user << browse_rsc('browserassets/js/clothingbooth.js')
@@ -100,7 +100,8 @@ var/list/clothingbooth_items = list()
 				usr << output("preview_overlay.png", "ClothingBooth.browser:preview")
 
 	Click()
-		if(!istype(usr,/mob/living/carbon/human))
+		if(!ishuman(usr))
+			boutput(usr,"<span style=\"color:red\">Human clothes don't fit you, silly :P</span>")
 			return
 		if((usr in src) && (src.open == 0))
 			if(istype(usr.equipped(),/obj/item/spacecash))
@@ -150,7 +151,8 @@ var/list/clothingbooth_items = list()
 	src.open = new_open
 
 /obj/machinery/clothingbooth/attack_hand(mob/user as mob)
-	if(!istype(user,/mob/living/carbon/human))
+	if(!ishuman(user))
+		boutput(user,"<span style=\"color:red\">Human clothes don't fit you, silly :P</span>")
 		return
 	if(!(user in range(1,src)))
 		return
