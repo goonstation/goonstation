@@ -802,6 +802,8 @@
 		src.ArtifactStimulus("carbtouch", 1)
 	return
 
+//nah
+/*
 /obj/item/verb/move_to_top()
 	set name = "Move to Top"
 	set src in oview(1)
@@ -815,16 +817,10 @@
 	src.set_loc(null)
 
 	src.set_loc(T)
+*/
 
-/obj/item/interact_verb()
-	set hidden = 1
-
-/obj/item/verb/pick_up()
-	set name = "Pick Up"
-	set src in oview(1)
-	set category = "Local"
-
-	src.pick_up_by(usr)
+/obj/item/interact(mob/user)
+	src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
 	if (world.time < M.next_click)
@@ -839,6 +835,7 @@
 	if (!can_reach(M, src))
 		return
 
+	.= 1
 	for (var/obj/item/cloaking_device/I in M)
 		if (I.active)
 			I.deactivate(M)

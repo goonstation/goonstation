@@ -617,24 +617,6 @@
 	//DEBUG_MESSAGE("[src] got a silicon hotkey from [user], containing: [user.client.check_key(KEY_OPEN) ? "KEY_OPEN" : ""] [user.client.check_key(KEY_BOLT) ? "KEY_BOLT" : ""] [user.client.check_key(KEY_SHOCK) ? "KEY_SHOCK" : ""]")
 	return 0
 
-
-/obj/verb/interact_verb()
-	set name = "Interact"
-	set src in oview(1)
-	set category = "Local"
-
-	if (isdead(usr) || (!iscarbon(usr) && !iscritter(usr)))
-		return
-
-	if (!istype(src.loc, /turf) || usr.stat || usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.restrained())
-		return
-
-	if (!can_reach(usr, src))
-		return
-
-	if (usr.client)
-		usr.client.Click(src,get_turf(src))
-
 /obj/proc/mob_flip_inside(var/mob/user)
 	user.show_text("<span style=\"color:red\">You leap and slam against the inside of [src]! Ouch!</span>")
 	user.changeStatus("paralysis", 40)

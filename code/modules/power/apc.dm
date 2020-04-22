@@ -141,18 +141,18 @@ var/zapLimiter = 0
 	if (!(status & BROKEN)) // unbroken
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
-				src.interact(M)
+				src.interacted(M)
 	if (issilicon(usr) || isAI(usr))
 		if (!(usr in nearby))
 			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.interact(usr)
+				src.interacted(usr)
 
 /obj/machinery/power/apc/updateDialog()
 	if(!(status & BROKEN)) // unbroken
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			if (M.client && M.machine == src)
-				src.interact(M)
+				src.interacted(M)
 	AutoUpdateAI(src)
 
 /obj/machinery/power/apc/New()
@@ -557,11 +557,11 @@ var/zapLimiter = 0
 
 	else
 		// do APC interaction
-		src.interact(user)
+		src.interacted(user)
 
 
 
-/obj/machinery/power/apc/proc/interact(mob/user)
+/obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 

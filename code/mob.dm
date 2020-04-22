@@ -2924,3 +2924,46 @@
 	if(istype(src.equipped(), /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
+
+
+
+
+
+
+
+// http://www.byond.com/forum/post/1326139&page=2
+//MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
+// ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
+
+/mob/verb/point(atom/A as mob|obj|turf in view())
+	set name = "Point"
+	src.point_at(A)
+
+/mob/proc/point_at(var/atom/target) //overriden by living and dead
+	.=0
+
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+	set name = "Pull"
+	set category = "Local"
+	A.pull()
+
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+	set name = "Examine"
+	set category = "Local"
+	A.examine()
+
+/mob/verb/interact_verb(obj/A as obj in view(1))
+	set name = "Pick Up / Interact"
+	set category = "Local"
+	A.interact(src)
+
+/mob/verb/pickup_verb()
+	set name = "Pick Up"
+	set hidden = 1
+
+	var/list/items = list()
+	for(var/obj/item/I in view(1,src))
+		items += I
+	if (items.len)
+		var/atom/A = input(usr, "What do you want to do with [src]?") as anything in items
+		A.interact(src)
