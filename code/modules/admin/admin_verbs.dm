@@ -1776,6 +1776,7 @@ var/list/fun_images = list()
 /mob/proc/admin_interact(var/atom/A,var/list/parameters)
 	src.client.admin_intent = 0
 	src.client.show_popup_menus = 1
+	src.update_cursor()
 	usr_admin_only
 
 
@@ -1859,4 +1860,4 @@ var/list/fun_images = list()
 			possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
-	src.update_cursor()
+	
