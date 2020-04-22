@@ -51,7 +51,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
 		/client/proc/change_admin_prefs,
-		/client/proc/cmd_boot,
+		//client/proc/cmd_boot,
 
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
@@ -90,8 +90,8 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_bees,
 		/client/proc/revive_all_cats,
 		/client/proc/revive_all_parrots,
-		/client/proc/revive_critter,
-		/client/proc/kill_critter,
+		///client/proc/revive_critter,
+		///client/proc/kill_critter,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
 		/client/proc/admin_pick_random_player,
@@ -203,7 +203,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
-		/proc/possess,
+		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
 		/client/proc/critter_creator_debug,
@@ -213,19 +213,19 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_advview,
 		/client/proc/cmd_swap_minds,
 		/client/proc/cmd_transfer_client,
-		/client/proc/edit_module,
+		//client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
 		/client/proc/toggle_camera_network_reciprocity,
-		/client/proc/generate_poster,
+		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 
 		// moved up from admin
-		/client/proc/cmd_admin_delete,
+		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
-		/client/proc/addpathogens,
+		///client/proc/addpathogens,
 		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
@@ -296,7 +296,6 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
 		/client/proc/find_all_of,
-		/client/proc/cmd_add_to_screen,
 		/client/proc/respawn_as,
 
 		/client/proc/general_report,
@@ -312,7 +311,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_explosion,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/admin_smoke,
-		/client/proc/admin_foam,
+		///client/proc/admin_foam,
 		/client/proc/admin_fluid,
 		/client/proc/implant_all,
 
@@ -323,7 +322,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_nightmode,
 		/client/proc/toggle_ip_alerts,
 		/client/proc/upload_custom_hud,
-		/client/proc/replace_with_explosive,
+		///client/proc/replace_with_explosive,
 		/client/proc/enable_waterflow,
 		/client/proc/delete_fluids,
 		/client/proc/special_fullbright,
@@ -366,20 +365,20 @@ var/list/admin_verbs = list(
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
-		/client/proc/view_save_data,
+		///client/proc/view_save_data,
 		/client/proc/check_gang_scores,
 		/client/proc/mapWorld,
-		/client/proc/call_proc_atom,
+		///client/proc/call_proc_atom,
 		/client/proc/haine_blood_debug,
 		/client/proc/debug_messages,
 		/client/proc/toggle_next_click,
 		/client/proc/debug_reaction_list,
 		/client/proc/debug_reagents_cache,
-		/client/proc/debug_check_possible_reactions,
+		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
 		/client/proc/show_camera_paths,
-		/client/proc/dbg_itemspecial,
-		/client/proc/dbg_objectprop,
+		///client/proc/dbg_itemspecial,
+		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
 		// /client/proc/show_runtime_window,
 		/client/proc/cmd_chat_debug,
@@ -448,6 +447,7 @@ var/list/special_pa_observing_verbs = list(
 	/client/proc/cmd_admin_aview,
 	)
 
+/*
 /client/proc/cmd_add_to_screen(var/atom/A as obj|mob|turf in world)
 	set name = "Add to Screen"
 	set desc = "Add a thing to some poor sod's screen."
@@ -473,7 +473,7 @@ var/list/special_pa_observing_verbs = list(
 		C.screen += A
 		boutput(usr, "<span style=\"color:blue\">Successful.</span>")
 		logTheThing("admin", usr, C.mob, "added [A] to %target%'s screen.")
-
+*/
 /client/proc/update_admins(var/rank)
 	if(!src.holder)
 		src.holder = new /datum/admins(src)

@@ -572,10 +572,8 @@
 /obj/proc/hide(h)
 	return
 
-/client/proc/replace_with_explosive(var/obj/O as obj in world)
-	set name = "Replace with explosive replica"
-	set desc = "Dick move."
-	set category = "Special Verbs"
+/obj/proc/replace_with_explosive()
+	var/obj/O = src
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
 		message_admins("[key_name(usr)] replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
 		logTheThing("admin", usr, null, "replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")

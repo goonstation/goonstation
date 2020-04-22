@@ -1,4 +1,4 @@
-/client/proc/dbg_objectprop(var/obj/item/I in world)
+/obj/item/proc/dbg_objectprop()
 	set name = "Give Property"
 	var/list/ids = list()
 	propListCheck()
@@ -11,7 +11,7 @@
 
 	var/value = input(usr,"Value:","") as num
 
-	I.setProperty(sel, value)
+	src.setProperty(sel, value)
 	return
 
 /obj/var/list/properties = null

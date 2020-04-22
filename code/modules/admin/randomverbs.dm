@@ -1505,10 +1505,9 @@
 	if(holder)
 		src.holder.playeropt(M)
 
-/client/proc/addpathogens(var/obj/A in world)
-	set category = null
-	set name = "Add Random Pathogens Reagent"
-	admin_only
+/obj/proc/addpathogens()
+	usr_admin_only
+	var/obj/A = src
 	if(!A.reagents) A.create_reagents(100)
 	var/amount = input(usr,"Amount:","Amount",50) as num
 	if(!amount) return
@@ -1662,50 +1661,6 @@
 		else if (!C.alive && !alive)
 			critters += C
 	return critters
-
-/client/proc/revive_critter(var/obj/critter/C)
-	set name = "Revive Critter"
-	set category = null
-	set desc = "Brings a critter back to life, like magic!"
-	set popup_menu = 1
-	admin_only
-
-	if (!istype(C, /obj/critter))
-		boutput(src, "[C] isn't a critter! How did you even get here?!")
-		return
-
-	if (!C.alive || C.health <= 0)
-		C.health = initial(C.health)
-		C.alive = 1
-		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
-		C.set_density(initial(C.density))
-		C.on_revive()
-		C.visible_message("<span style=\"color:red\">[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
-		message_admins("[key_name(src)] revived [C] (critter)!")
-	else
-		boutput(src, "[C] isn't dead, you goof!")
-		return
-
-/client/proc/kill_critter(var/obj/critter/C)
-	set name = "Kill Critter"
-	set category = null
-	set desc = "Kills a critter DEAD!"
-	set popup_menu = 1
-	admin_only
-
-	if (!istype(C, /obj/critter))
-		boutput(src, "[C] isn't a critter! How did you even get here?!")
-		return
-
-	if (C.alive)
-		C.health = 0
-		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
-		message_admins("[key_name(src)] killed [C] (critter)!")
-	else
-		boutput(src, "[C] isn't alive, you goof!")
-		return
 
 /client/proc/cmd_transfer_client(var/mob/M)
 	set name = "Transfer Client To"
@@ -1870,6 +1825,8 @@
 
 	return
 
+//flourish told me this was broken... if you want admin foam brew it yourself!!
+/*
 /client/proc/admin_foam(var/atom/A as turf|obj|mob, var/amount as num)
 	set name = "Create Foam"
 	set category = null
@@ -1889,6 +1846,7 @@
 	s.start()
 	if (A.reagents)
 		holder.clear_reagents()
+*/
 
 //client/proc/admin_smoke(var/atom/A as turf|obj|mob, var/size as num)
 //	set name = "Create Smoke"
@@ -2270,7 +2228,6 @@ var/global/night_mode_enabled = 0
 /client/proc/generate_poster(var/target as null|area|turf|obj|mob in world)
 	set name = "Create Poster"
 	set category = "Special Verbs"
-	set popup_menu = 1
 	admin_only
 	if (alert(usr, "Wanted poster or custom poster?", "Select Poster Style", "Wanted", "Custom") == "Wanted")
 		gen_wp(target)
