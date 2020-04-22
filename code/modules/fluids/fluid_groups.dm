@@ -527,7 +527,7 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		fluid_ma.color = targetcolor
-		fluid_ma.color = targetalpha
+		fluid_ma.alpha = targetalpha
 
 		for(var/fluid in src.members)
 			var/obj/fluid/F = fluid
@@ -561,15 +561,17 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
-
-			F.appearance = fluid_ma
+			else
+				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			F.opacity = master_opacity
+			fluid_ma.opacity = master_opacity
+
+			F.appearance = fluid_ma
 
 
 		src.last_contained_amt = src.contained_amt
