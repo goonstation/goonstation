@@ -326,7 +326,11 @@
 #define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
 #define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
 #define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
-
+#define BLOCK_TOOLTIP 4096				//whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_CUT 8192					//block an extra point of cut damage when used to block
+#define BLOCK_STAB 16384				//block an extra point of stab damage when used to block
+#define BLOCK_BURN 32768				//block an extra point of burn damage when used to block
+#define BLOCK_BLUNT 65536				//block an extra point of blunt damage when used to block
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -764,15 +768,16 @@
 
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
-#define BLOCK_ALL		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_stab", "block_burn"))
-#define BLOCK_LARGE		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_stab"))
-#define BLOCK_SWORD		BLOCK_LARGE
-#define BLOCK_ROD 		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut"))
-#define BLOCK_TANK 		AddComponent(/datum/component/itemblock/basic_block,	list("block_blunt", "block_cut", "block_burn"))
-#define BLOCK_SOFT 		AddComponent(/datum/component/itemblock/basic_block,	list("block_stab", "block_burn"))
-#define BLOCK_KNIFE		AddComponent(/datum/component/itemblock/basic_block,	list("block_cut", "block_stab"))
-#define BLOCK_BOOK		AddComponent(/datum/component/itemblock/basic_block,	list("block_stab"))
-#define BLOCK_ROPE		BLOCK_BOOK
+#define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work
+#define BLOCK_ALL		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_LARGE		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_SWORD		BLOCK_LARGE 
+#define BLOCK_ROD 		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT)
+#define BLOCK_TANK		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_BURN)
+#define BLOCK_SOFT		BLOCK_SETUP; src.c_flags |= (BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_KNIFE		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_STAB)
+#define BLOCK_ROPE		BLOCK_BOOK 
 
 // Process Scheduler defines
 // Process status defines
