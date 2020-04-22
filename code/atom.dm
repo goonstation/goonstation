@@ -626,7 +626,7 @@
 		return
 	if (!( src.anchored ))
 		var/mob/user = usr
-		user.set_pulling(usr)
+		user.set_pulling(src)
 
 		if (user.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
