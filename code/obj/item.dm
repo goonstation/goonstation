@@ -115,12 +115,15 @@
 
 		//itemblock tooltip additions
 		if(src.c_flags & HAS_GRAB_EQUIP)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: Hold in active hand for: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && B.properties.len)
 					for(var/datum/objectProperty/P in B.properties)
 						. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
 			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
 				. += jointext(C.getTooltipDesc(), "")
+		else if(src.c_flags & BLOCK_TOOLTIP)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
 
 		if(special && !istype(special, /datum/item_special/simple))
@@ -221,6 +224,19 @@
 			return
 	else
 		..()
+
+//set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
+/obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
+	if(!src.c_flags)
+		return
+	if(src.c_flags & BLOCK_CUT)
+		B.setProperty("block_cut", 1)
+	if(src.c_flags & BLOCK_STAB)
+		B.setProperty("block_stab", 1)
+	if(src.c_flags & BLOCK_BURN)
+		B.setProperty("block_burn", 1)
+	if(src.c_flags & BLOCK_BLUNT)
+		B.setProperty("block_blunt", 1)
 
 /obj/item/proc/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(special && !special.manualTriggerOnly)
