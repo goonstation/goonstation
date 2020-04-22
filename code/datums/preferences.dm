@@ -213,7 +213,7 @@ datum/preferences
 
 		if(!user)
 			return
-			
+
 		if (!AH)
 			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
@@ -970,7 +970,7 @@ datum/preferences
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=2;job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
 					[JD.name]</a>
 				</div>
 				"}

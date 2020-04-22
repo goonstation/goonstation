@@ -6,7 +6,7 @@
 
 	flags = FPRINT | FLUID_SUBMERGE
 	event_handler_flags = USE_CANPASS
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND | LONG_GLIDE
 
 	var/datum/mind/mind
 
@@ -227,7 +227,7 @@
 	ailments = new
 	huds = new
 	render_special = new
-	traitHolder = new
+	traitHolder = new(src)
 	cooldowns = new
 	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
