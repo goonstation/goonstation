@@ -3481,7 +3481,7 @@
 "bqg" = (/obj/disposalpipe/segment/mail/vertical,/obj/machinery/door/airlock/pyro/glass{name = "Robotics"},/obj/access_spawn/robotics,/obj/cable{icon_state = "1-2"},/obj/firedoor_spawn,/turf/simulated/floor/grey,/area/station/medical/robotics)
 "bqh" = (/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/north,/turf/simulated/floor/bluewhite{dir = 4},/area/station/medical/medbay)
 "bqi" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/light{dir = 8; layer = 9.1; pixel_x = -10},/turf/simulated/floor/specialroom/medbay,/area/station/medical/medbay/lobby)
-"bqj" = (/obj/stool/bed/moveable,/turf/simulated/floor/specialroom/medbay,/area/station/medical/medbay/lobby)
+"bqj" = (/obj/stool/bed/moveable,/obj/item/clothing/suit/bedsheet,/turf/simulated/floor/specialroom/medbay,/area/station/medical/medbay/lobby)
 "bqk" = (/obj/table/auto,/obj/random_item_spawner/medicine,/obj/machinery/camera{c_tag = "autotag"; dir = 10; name = "autoname - SS13"; tag = ""},/turf/simulated/floor/specialroom/medbay,/area/station/medical/medbay/lobby)
 "bql" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/specialroom/medbay,/area/station/medical/medbay/lobby)
 "bqm" = (/obj/reagent_dispensers/watertank/fountain,/turf/simulated/floor/specialroom/medbay,/area/station/medical/medbay/lobby)
