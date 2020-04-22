@@ -1087,6 +1087,14 @@ var/list/fun_images = list()
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
 
+	// Get fucked ghost HUD
+	for (var/obj/screen/ability/hudItem in src.screen)
+		del(hudItem)
+
+	// Also get fucked giant...planet...things
+	for (var/obj/effects/background_objects/bgObj in world)
+		del(bgObj)
+
 	var/start_x = (viewport_width / 2) + 1
 	var/start_y = (viewport_height / 2) + 1
 
