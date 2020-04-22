@@ -986,10 +986,11 @@ TRAYS
 	item_state = "platestack1"
 	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
+#if ASS_JAM
+	var/platemax = 13
+#else
 	var/platemax = 8
-	#if ASS_JAM
-		var/platemax = 13
-	#endif
+#endif
 
 	proc/update_icon(mob/user as mob)
 		src.icon_state = "platestack[src.platenum]"
