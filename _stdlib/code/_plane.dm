@@ -27,7 +27,7 @@
 		src.render_target = name
 
 	proc/add_depth_shadow()
-		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=5, offset=1)
+		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=4, offset=1)
 
 client
 	var/list/plane_parents = list()

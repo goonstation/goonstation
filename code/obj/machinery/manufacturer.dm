@@ -1444,7 +1444,7 @@
 				if (O == src.beaker)
 					continue
 			if (istype(O,src.base_material_class) && O.material)
-				mat_amts[O.material.name] += 10
+				mat_amts[O.material.name] += 10 * O.amount
 		for (var/mat_id in cuttings)
 			var/amount = cuttings[mat_id]
 			var/datum/material/mat = getMaterial(mat_id)
