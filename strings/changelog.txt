@@ -1,6 +1,10 @@
 
 (t)wed apr 22 20
 (u)Kubius
+(p)370
+(e)🐛🆕🗺|bug, enhancement, mapping
+(+)Atlas fixes and improvements, including lighting and powernet.
+(u)Kubius
 (p)374
 (e)🆕🗺|enhancement, mapping
 (+)Kondaru fix batch 11: Medbay bigger - and this time, the booth too!
