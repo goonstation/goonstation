@@ -161,6 +161,10 @@ var/list/dirty_keystates = list()
 
 		var/list/parameters = params2list(params)
 
+		if (admin_intent)
+			src.mob.admin_interact(object,parameters)
+			return
+
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object

@@ -3019,6 +3019,8 @@ var/list/electiles = list()
 /client/proc/create_portal()
 	set category = null
 	set name = "Create Portal"
+	set popup_menu = 0
+
 	admin_only
 
 	var/mob/M = src.mob

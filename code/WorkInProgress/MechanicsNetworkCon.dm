@@ -1,3 +1,4 @@
+
 //This is a big messy copy & paste job of several things and thus has been banished to its own file.
 //Shouldve probably done it like ibm and have based it on a networked thing instead of duplicating it all here.
 //im coder
@@ -45,7 +46,7 @@
 		self_only = !self_only
 		boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
 		return
-		
+
 	verb/toggleregister() //shameless copy from above verb
 		set src in view(1)
 		set name = "\[Toggle Mainframe registration\]"
@@ -62,7 +63,7 @@
 		register = !register
 		boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
 		return
-		
+
 	proc/spacket(var/datum/mechanicsMessage/input)
 		if(!ready) return
 		ready = 0

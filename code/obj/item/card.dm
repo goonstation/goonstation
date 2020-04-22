@@ -183,11 +183,13 @@ GAUNTLET CARDS
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
 	src.emagged = 1
 
+/*
 /obj/item/card/id/verb/read()
 	set src in usr
 
 	boutput(usr, "[bicon(src)] [src.name]: The current assignment on the card is [src.assignment].")
 	return
+*/
 
 /obj/item/card/id/syndicate
 	name = "agent card"

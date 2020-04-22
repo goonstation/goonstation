@@ -2,7 +2,7 @@
 /client/proc/cmd_admin_gib(mob/M as mob in world)
 	set category = null
 	set name = "Gib"
-	set popup_menu = 1
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")

@@ -449,8 +449,7 @@
 	src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
 
-/mob/living/verb/point(var/atom/target as mob|obj|turf in oview())
-	set name = "Point"
+/mob/living/point_at(var/atom/target)
 	if (!isturf(src.loc) || usr.stat || usr.restrained())
 		return
 

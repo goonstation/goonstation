@@ -38,13 +38,13 @@ Atmos alert computer
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/atmosphere/alerts/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/atmosphere/alerts/attackby(var/obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
@@ -81,7 +81,7 @@ Atmos alert computer
 	return
 
 
-/obj/machinery/computer/atmosphere/alerts/proc/interact(mob/user)
+/obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
 	usr.machine = src
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"

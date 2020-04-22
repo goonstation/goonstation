@@ -746,8 +746,6 @@
 			new/datum/gang_item/space/stims)
 
 	examine()
-		set src in oview(7)
-
 		..()
 
 		if(health == 0)

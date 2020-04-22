@@ -55,6 +55,9 @@ TRAYS
 		BLOCK_KNIFE
 		return
 
+
+	//mbc disabling for now bc this can be done other ways without a verb and obj verbs slow down rclick menu
+	/*
 	verb/rotate()
 		set name = "Rotate"
 		set category = "Local"
@@ -63,6 +66,7 @@ TRAYS
 
 			src.dir = turn(src.dir, 90)
 		return
+	*/
 
 /obj/item/kitchen/utensil/fork
 	name = "fork"

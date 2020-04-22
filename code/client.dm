@@ -93,6 +93,8 @@
 
 	var/experimental_intents = 0
 
+	var/admin_intent = 0
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)

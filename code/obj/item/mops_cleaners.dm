@@ -651,10 +651,7 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull()
-		set src in oview(1)
-		set category = "Local"
-		var/mob/living/user = usr
+	pull(var/mob/user)
 		if (!istype(user))
 			return
 		if(user.key != ownerKey && ownerKey != null)

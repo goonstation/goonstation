@@ -142,6 +142,19 @@
 			W.flip_up()
 		..()
 
+
+/obj/ability_button/labcoat_toggle
+	name = "(Un)Button Labcoat"
+	icon_state = "labcoat"
+
+	execute_ability()
+		var/obj/item/clothing/suit/labcoat/W = the_item
+		if(W.buttoned)
+			W.unbutton()
+		else
+			W.button()
+		..()
+
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tank_valve_toggle
