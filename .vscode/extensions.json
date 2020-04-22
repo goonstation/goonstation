@@ -8,10 +8,11 @@
 		"platymuus.dm-langclient",
 		"coenraads.bracket-pair-colorizer-2",
 		"editorconfig.editorconfig",
-		"github.vscode-pull-request-github"
+		"github.vscode-pull-request-github",
+		"mhutchie.git-graph"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
-		
+
 	]
 }
