@@ -6,6 +6,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 
 /client/proc/modify_parts(var/mob/living/carbon/human/target as mob)
 	set category = "Special Verbs"
+	set popup_menu = 0
 	admin_only
 	if (!istype(target))
 		return

@@ -727,12 +727,12 @@
 		src.client.mouse_pointer_icon = cursor
 
 /mob/proc/update_cursor()
-	if (src.targeting_ability)
-		if(client)
+	if (client)
+		if (src.targeting_ability)
 			src.set_cursor(cursors_selection[client.preferences.target_cursor])
 			return
-		else
-			src.set_cursor('icons/cursors/target/default.dmi')
+		if (src.client.admin_intent)
+			src.set_cursor('icons/cursors/admin.dmi')
 			return
 	src.set_cursor(null)
 
@@ -1194,7 +1194,8 @@
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
-
+		if ("admin_interact")
+			src.admin_interact_verb()
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)

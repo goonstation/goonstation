@@ -133,6 +133,8 @@ proc/debug_color_of(var/thing)
 	air_status(turf/target as turf)
 		set category = "Debug"
 		set name = "Air Status"
+		set popup_menu = 0
+
 
 		if(!isturf(target))
 			return

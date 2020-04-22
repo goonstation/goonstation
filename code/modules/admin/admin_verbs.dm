@@ -855,6 +855,8 @@ var/list/fun_images = list()
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
@@ -1753,3 +1755,134 @@ var/list/fun_images = list()
 			boutput(usr, "<span style='color:red;'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span style='color:red;'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+
+
+/mob/verb/admin_interact_verb()
+	set name = "admin_interact"
+	set hidden = 1
+	usr_admin_only
+	src.client.admin_intent = 1
+	src.client.show_popup_menus = 0
+	src.update_cursor()
+
+/mob/proc/admin_interact(var/atom/A,var/list/parameters)
+	src.client.admin_intent = 0
+	src.client.show_popup_menus = 1
+	usr_admin_only
+
+
+	if (parameters["right"])
+		var/list/atoms = list(get_turf(A))
+		for(var/thing in get_turf(A))
+			var/atom/atom = thing
+			atoms += atom
+		if (atoms.len)
+			A = input(usr, "Which item to admin-interact with?") as anything in atoms
+
+
+	var/list/options = list(\
+	"Get Thing",\
+	"Follow Thing",\
+	"Add Reagents",\
+	"Check Reagents",\
+	"View Variables",\
+	"View Fingerprints",\
+	"Delete",\
+	)
+
+	if (ismob(A))
+		options -= "Delete"
+		options -= "View Fingerprints"
+
+		options += "Player Options"
+		options += "Private Message"
+		options += "Subtle Message"
+		options += "Check Health"
+		options += "Heal"
+		options += "Gib"
+		options += "Polymorph"
+		options += "Modify Organs"
+		options += "Modify Parts"
+		options += "Swap Minds"
+		options += "Transfer Client To"
+		options += "Shamecube"
+	else if (isturf(A))
+		options -= "Get Thing"
+		options -= "Follow Thing"
+		options -= "Add Reagents"
+		options -= "Check Reagents"
+
+		options += "Jump To Turf"
+		options += "Air Status"
+		options += "Create Explosion"
+		options += "Create Fluid"
+		options += "Create Smoke"
+		options += "Create Portal"
+		options += "Get Telesci Coords"
+	else
+		options += "Possess"
+	options += "Create Poster"
+
+	var/choice = input(usr, "What do?") as anything in options
+	var/client/C = src.client
+	switch(choice)
+		if("Get Thing")
+			C.cmd_admin_get_mobject(A)
+		if("Follow Thing")
+			C.admin_follow_mobject(A)
+		if("Add Reagents")
+			C.addreagents(A)
+		if("Check Reagents")
+			C.cmd_admin_check_reagents(A)
+		if("View Variables")
+			C.debug_variables(A)
+		if("View Fingerprints")
+			C.view_fingerprints(A)
+		if("Delete")
+			C.cmd_admin_delete(A)
+
+		if("Player Options")
+			C.cmd_admin_playeropt(A)
+		if("Private Message")
+			C.cmd_admin_pm(A)
+		if("Subtle Message")
+			C.cmd_admin_subtle_message(A)
+		if("Check Health")
+			C.cmd_admin_check_health(A)
+		if("Heal")
+			C.cmd_admin_rejuvenate(A)
+		if("Gib")
+			C.cmd_admin_gib(A)
+		if("Polymorph")
+			C.cmd_admin_polymorph(A)
+		if("Modify Organs")
+			C.modify_organs(A)
+		if("Modify Parts")
+			C.modify_parts(A)
+		if("Swap Minds")
+			C.cmd_swap_minds(A)
+		if("Transfer Client To")
+			C.cmd_admin_polymorph(A)
+		if("Shamecube")
+			C.cmd_shame_cube(A)
+
+		if("Jump To Turf")
+			C.jumptoturf(A)
+		if("Air Status")
+			C.air_status(A)
+		if("Create Explosion")
+			C.cmd_explosion(A)
+		if("Create Fluid")
+			C.admin_fluid(A)
+		if("Create Smoke")
+			C.admin_smoke(A)
+		if("Create Portal")
+			C.create_portal(A)
+		if("Get Telesci Coords")
+			C.getturftelesci(A)
+
+		if ("Possess")
+			possess(A)
+		if ("Create Poster")
+			C.generate_poster(A)
+	src.update_cursor()

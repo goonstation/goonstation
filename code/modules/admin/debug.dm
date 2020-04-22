@@ -538,6 +538,8 @@ var/global/debug_messages = 0
 // GO AWAY
 /client/proc/cmd_explosion(var/turf/T in world)
 	set name = "Create Explosion"
+	set popup_menu = 0
+
 	var/esize = input("Enter POWER of Explosion\nPlease use decimals for greater accuracy!)","Explosion Power",null) as num|null
 	if (!esize)
 		return
