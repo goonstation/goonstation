@@ -1050,7 +1050,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				if (sleepcount > 0)
 					sleepcount -= timedPassed
 					if (sleepcount <= 0)
-						if (istype(H.buckled,/obj/stool/bed))
+						if (H.resting && istype(H.buckled,/obj/stool/bed))
 							var/obj/stool/bed/B = H.buckled
 							B.sleep_in(H)
 
