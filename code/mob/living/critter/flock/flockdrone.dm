@@ -331,7 +331,10 @@
 				var/obj/item/organ/heart/flock/F = I
 				boutput(src, "<span class='text-blue'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 				src.resources += F.resources
-			qdel(I)
+			if(istype(I, /obj/item/raw_material))
+				pool(I) //gotta pool stuff bruh
+			else
+				qdel(I)
 	// AI ticks are handled in mob_ai.dm, as they ought to be
 
 /mob/living/critter/flock/drone/process_move(keys)
@@ -708,8 +711,10 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder)))
+	message_admins("[target] target pre")
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
 		target = get_turf(target) //breaks stuff like deconning with harm. a tad more annoying to hit the turfs but a small price to pay for ~~salvation~~ deconning stuff
+	message_admins("[target] target post")
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='text-red'>Something about this structure prevents it from being assimilated.</span>")
@@ -749,11 +754,9 @@
 			//soap
 			actions.start(new /datum/action/bar/flock_locker_decon(target), user)
 		else if(istype(target, /turf/simulated/wall/auto/feather))
-			message_admins("its startttinnnggg")
 			actions.start(new /datum/action/bar/flock_wall_decon(target), user)
 		else if(istype(target, /obj/structure/girder))
 			if(target?.material.mat_id == "gnesis")
-				message_admins("it passed")
 				var/atom/A = new /obj/item/sheet(get_turf(target))
 				if (target.material)
 					A.setMaterial(target.material)
@@ -761,7 +764,7 @@
 			else
 				return
 		else if(istype(target, /obj/machinery/door/feather))
-//			actions.start(new /datum/action/bar/flock_door_decon
+			actions.start(new /datum/action/bar/flock_door_decon(target), user)
 		else
 			..()
 

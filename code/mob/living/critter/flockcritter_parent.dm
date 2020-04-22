@@ -416,6 +416,9 @@
 			F.pay_resources(15)
 			playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
+///
+//decon actions
+///
 /datum/action/bar/flock_locker_decon
 	id = "flock_locker_decon"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -496,6 +499,50 @@
 		..()
 		if(src.decal)
 			pool(src.decal)
-		message_admins("[target] is target")
 		var/turf/simulated/wall/auto/feather/f = target
 		f.dismantle_wall()
+
+/datum/action/bar/flock_door_decon
+	id = "flock_door_decon"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 60
+
+	var/atom/target
+	var/obj/decal/decal
+
+	New(var/mob/living/ntarg, var/duration_i)
+		..()
+		if (ntarg)
+			target = ntarg
+		if (duration_i)
+			duration = duration_i
+
+	onUpdate()
+		..()
+		var/mob/living/critter/flock/F = owner
+		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		owner.visible_message("<span style='color:blue'>[owner] begins deconstructing [target].</span>")
+
+	onInterrupt()
+		..()
+		if(src.decal)
+			pool(src.decal)
+
+	onEnd()
+		..()
+		if(src.decal)
+			pool(src.decal)
+		var/turf/T = get_turf(target)
+		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+		var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+		S.set_loc(T)
+		S.setMaterial(getMaterial("gnesisglass"))
+		S = unpool(/obj/item/raw_material/shard)
+		S.set_loc(T)
+		S.setMaterial(getMaterial("gnesis"))
+		qdel(target)
