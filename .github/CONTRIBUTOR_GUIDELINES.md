@@ -1,10 +1,6 @@
 # Goonstation Contributor Guidelines
 
-## Code
-
-* Don't use `goto`, you fiend
-* Don't use `:` (if you need to, please get permission from a Developer)
-* Use SPAWN_DBG() instead of spawn()
+[ToC]
 
 ## Making PRs (read before making a PR)
 Aside from the actual changes to the repo that you make, opening a PR has some required sections in the initial PR comment. Here are the general guidelines for filling out each section.

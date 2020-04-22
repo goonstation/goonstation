@@ -106,6 +106,7 @@
 				boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
 				M.emote("scream")
 			qdel(src)
+			return
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
 			user.visible_message("<span style=\"color:red\">[src] ruptures!</span>")
@@ -114,6 +115,7 @@
 			fireflash(src.loc, 0)
 			new/obj/item/scrap(get_turf(user))
 			qdel(src)
+			return
 
 		for (var/reagent in src.banned_reagents)
 			if (src.reagents.has_reagent(reagent))
@@ -126,6 +128,7 @@
 				user.drop_item()
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(user))
 				qdel(src)
+				return
 
 		playsound(get_turf(src), "sound/effects/spray.ogg", 75, 1, -3)
 
