@@ -2963,7 +2963,8 @@
 
 	var/list/items = list()
 	for(var/obj/item/I in view(1,src))
-		items += I
+		if (I.loc == get_turf(I))
+			items += I
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to do with [src]?") as anything in items
 		A.interact(src)
