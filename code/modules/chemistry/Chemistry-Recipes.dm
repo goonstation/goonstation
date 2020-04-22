@@ -4013,4 +4013,14 @@ datum
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
 
+		hot_toddy
+			name = "Hot Toddy"
+			id = "hottoddy"
+			result = "hottoddy"
+			required_reagents = list("bourbon" = 1, "tea" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "The drink suddenly fills the room with the a fetive aroma."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 #undef get_fucked_clarks
