@@ -467,7 +467,9 @@ var/list/key_names = list(
 						"J" = "look_w",
 						"L" = "look_e",
 						"P" = "pickup",
-						"DELETE" = "stop_pull"
+						"DELETE" = "stop_pull",
+						"`" = "admin_interact",
+						"~" = "admin_interact"
 					))
 				else
 					return new /datum/keymap(list(
@@ -514,7 +516,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 			if ("human")
 				if(src.tg_controls)
