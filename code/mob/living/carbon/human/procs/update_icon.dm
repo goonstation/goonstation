@@ -1248,6 +1248,12 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
 	else
 		src.maptext = ""
+
+/mob/living/carbon/human/dummy/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+	src.UpdateDamage()
+	
 #endif
 
 /mob/living/carbon/human/UpdateDamageIcon()
