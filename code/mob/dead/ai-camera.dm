@@ -682,7 +682,7 @@ world/proc/updateCameraVisibility()
 		ma.color = "#777777"
 		ma.dir = pick(alldirs)
 		ma.appearance_flags = TILE_BOUND | KEEP_APART
-
+		ma.name = " "
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue
 			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
@@ -690,7 +690,6 @@ world/proc/updateCameraVisibility()
 			t.aiImage = new
 			t.aiImage.appearance = ma
 			t.aiImage.loc = t
-			t.aiImage.name = " "
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
 
