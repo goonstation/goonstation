@@ -117,7 +117,7 @@
 /obj/item/storage/box/glowstickbox
 	name = "emergency glowsticks"
 	icon = 'icons/obj/items/storage.dmi'
-	icon_state = "light"
+	icon_state = "glowstickbox"
 	spawn_contents = list(/obj/item/device/light/glowstick = 7)
 
 	assorted
