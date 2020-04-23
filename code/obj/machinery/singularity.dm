@@ -950,7 +950,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	..()
 
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
-	if (iswrenchingtool(W))
+	if (ispryingtool(W))
+		if(!anchored)
+			src.dir = turn(src.dir, -90)
+			return
+		else
+			boutput(user, "The emitter is too firmly secured to be rotated!")
+			return
+	else if (iswrenchingtool(W))
 		if(active)
 			boutput(user, "Turn off the emitter first.")
 			return
@@ -1088,14 +1095,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.active = 0
 		icon_state = "Emitter"
 
-	return
-
-/obj/machinery/emitter/verb/rotate()
-	set src in view(1)
-	if (src.state != 0)
-		boutput(usr, "<span style=\"color:red\">It's secured to the floor and can't be rotated.</span>")
-		return
-	src.dir = turn(src.dir, 90)
 	return
 
 /////////////////////////////////// Collector array /////////////////////////////////
