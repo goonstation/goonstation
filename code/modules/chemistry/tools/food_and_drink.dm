@@ -380,7 +380,6 @@
 							H.force_equip(I,item_slot) // mobs don't have force_equip
 							return
 			drop.loc = get_turf(src.loc)
-		return
 
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"
