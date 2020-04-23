@@ -59,4 +59,4 @@ Remember: although this trade-off makes sense in many cases, it doesn't cover th
 ### Profiler
 
 ### Target Dummy
-* You can spawn in a target dummy (`/mob/living/carbon/human/dummy`) to more easily test things that do damage - they have the assday health percent and damage popups visible even if your build isn't set to assday.
+* You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the assday health percent and damage popups visible even if your build isn't set to assday.
