@@ -48,7 +48,7 @@
 	var/image/work_display = null
 	var/image/activity_display = null
 	var/image/panel_sprite = null
-	var/list/free_resources = list() // please only material pieces
+	var/list/obj/item/material_piece/free_resources = list() // please only material pieces
 	var/free_resource_amt = 0
 	var/list/nearby_turfs = list()
 	var/sound_happy = 'sound/machines/chime.ogg'
