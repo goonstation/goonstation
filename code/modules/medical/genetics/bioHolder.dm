@@ -259,7 +259,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		// changed this to transfer the instance across rather than add a copy
 		// since some bioeffects have unique stuff
 		effects[E.id] = E
-		effectPool -= E.id
+		effectPool.Remove(E.id)
 		E.owner = owner
 		E.holder = src
 		E.activated_from_pool = 1
@@ -427,10 +427,19 @@ var/list/datum/bioEffect/mutini_effects = list()
 			mobAppearance.CopyOther(toCopy.mobAppearance)
 			mobAppearance.UpdateMob()
 
+			age = toCopy.age
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
-			age = toCopy.age
 			clone_generation = toCopy.clone_generation
+			genetic_stability = toCopy.genetic_stability
+			ownerName = toCopy.ownerName
+			Uid = toCopy.Uid
+
+		if (copyPool)
+			src.RemoveAllPoolEffects()
+			for (var/id in toCopy.effectPool)
+				AddNewPoolEffect(id)
+
 		if(copyActiveEffects)
 			src.RemoveAllEffects()
 			var/datum/bioEffect/BE
@@ -456,7 +465,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
-		if (progress >= 10)
+		if (progress > 10)
 			return CopyOther(toCopy)
 
 		if (mobAppearance)
@@ -569,7 +578,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/D in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				effectPool -= BE
+				effectPool.Remove(D)
 				//qdel(BE)
 		return 1
 
