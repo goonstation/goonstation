@@ -1793,7 +1793,7 @@ var/list/fun_images = list()
 
 	var/choice = 0
 
-	if (client.holder.animtoggle)
+	if (!client.holder.animtoggle)
 		if (ismob(A))
 			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
