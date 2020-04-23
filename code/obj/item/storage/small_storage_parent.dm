@@ -6,7 +6,7 @@
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "box_blank"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	var/list/can_hold = null//new/list()
 	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit

@@ -1,9 +1,9 @@
-/client/proc/dbg_itemspecial(var/obj/item/I in world)
+/obj/item/proc/dbg_itemspecial()
 	set name = "Give Special"
 	var/sel = input(usr,"Type:","Select type") in childrentypesof(/datum/item_special)
-	I.max_stack = INFINITY
-	I.amount = INFINITY
-	I.setItemSpecial(sel)
+	src.max_stack = INFINITY
+	src.amount = INFINITY
+	src.setItemSpecial(sel)
 	return
 
 /datum/limb/proc/dbg_itemspecial()
@@ -1670,7 +1670,7 @@
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected(P, src)
+				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
 				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")

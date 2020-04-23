@@ -584,10 +584,10 @@
 	else
 		last_turf = 0
 
-/atom/movable/verb/pull()
-	set name = "Pull"
-	set src in oview(1)
-	set category = "Local"
+/atom/movable/proc/pull()
+	//set name = "Pull"
+	//set src in oview(1)
+	//set category = "Local"
 
 	if (!( usr ))
 		return
@@ -640,7 +640,7 @@
 /atom/proc/special_desc(dist, mob/user)
 	return null
 
-/atom/verb/examine()
+/atom/proc/examine()
 	set name = "Examine"
 	set category = "Local"
 	set src in view(12)	//make it work from farther away
@@ -1032,3 +1032,18 @@
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return
+
+
+/atom/proc/interact(var/mob/user)
+	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
+		return
+
+	if (!istype(src.loc, /turf) || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.restrained())
+		return
+
+	if (!can_reach(user, src))
+		return
+
+	if (user.client)
+		user.client.Click(src,get_turf(src))
+

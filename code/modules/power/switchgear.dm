@@ -28,7 +28,7 @@
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/switchgear/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -37,7 +37,7 @@
 		return
 
 	if (open)
-		interact(user)
+		interacted(user)
 	else
 		if (locked)
 			boutput(user, "<span style=\"color:red\">The access panel is locked.</span>")
@@ -60,7 +60,7 @@
 	else
 		return ..(W, user)
 
-/obj/machinery/power/switchgear/proc/interact(mob/user)
+/obj/machinery/power/switchgear/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))

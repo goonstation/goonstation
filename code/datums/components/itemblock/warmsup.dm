@@ -14,24 +14,20 @@
 /datum/component/itemblock/warmsup/proc/warmup(mob/living/carbon/human/H, var/mult) 
 	if(parent != H.equipped())
 		return //do nothing if not in active hand
-	if(parent in H.get_equipped_items() && H.bodytemperature < H.base_body_temp) // Shamelessly copy-pasted from coffee
+	if(H.bodytemperature < H.base_body_temp) // Shamelessly copy-pasted from coffee
 		H.bodytemperature = min(H.base_body_temp, H.bodytemperature+(5 * mult))
 
 //proc that is called when the base item is used to block. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_BEGIN" signal
 //This gives the block some cold resistance. Properties on a block are generally only counted if the block is held in the active hand
-/datum/component/itemblock/warmsup/on_block_begin(obj/item/I, mob/user)
+/datum/component/itemblock/warmsup/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//Always call your parents. This makes sure that we get properly registered for the COMSIG_ON_HUMAN_LIFE signal, among other things
-	if(I.c_flags & HAS_GRAB_EQUIP) //sanity checking
-		for(var/obj/item/grab/block/B in I) //this may not be the best way, but it works?
-			B.setProperty("coldprot", 25) //add the property to the block, not to the item
+	B.setProperty("coldprot", 25) //add the property to the block, not to the item
 
 //proc that is called when the block is ended. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_END" signal
 //now that the block is ended, we want to remove the property from the block. This is probably not strictly necessary, but it is best practice to clean up after ourselves
-/datum/component/itemblock/warmsup/on_block_end(obj/item/I, mob/user)
+/datum/component/itemblock/warmsup/on_block_end(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//always always always.
-	if(I.c_flags & HAS_GRAB_EQUIP)
-		for(var/obj/item/grab/block/B in I)
-			B.delProperty("coldprot") //again, delete property from the block, not the item
+	B.delProperty("coldprot") //again, delete property from the block, not the item
 
 //tooltip line that gets appended to the block section of the parent item's tooltip when blocking with it.
 /datum/component/itemblock/warmsup/getTooltipDesc()

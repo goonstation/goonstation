@@ -2,6 +2,7 @@
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
 	set category = null
+	set popup_menu = 0
 	if (src.holder)
 		src.holder.playeropt(M)
 	return
@@ -282,7 +283,6 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[iswelder(M) ? "<em>Is Welder</em>" : "<a href='[playeropt_link(M, "makewelder")]'>Welder</a>"] &bull;
 						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
 					</div>
 				</div>

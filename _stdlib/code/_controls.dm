@@ -84,7 +84,9 @@ var/list/action_names = list(
 	"fire" = "Fire",
 	"fire_secondary" = "Fire Secondary",
 	"cycle" = "Cycle Shell",
-	"exit" = "Exit"
+	"exit" = "Exit",
+
+	"admin_interact" = "Admin Interact"
 )
 
 var/list/action_verbs = list(
@@ -124,6 +126,7 @@ var/list/action_verbs = list(
 	"refocus"   = ".winset \\\"mainwindow.input.focus=true;mainwindow.input.text=\\\"\\\"\\\"",
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
+	"Admin Interact" = "admin_interact"
 )
 
 var/list/key_names = list(
@@ -194,7 +197,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 				else
 					return new /datum/keymap(list(
@@ -248,7 +253,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 			if ("human")
 				if (src.preferences.use_azerty)
@@ -460,7 +467,9 @@ var/list/key_names = list(
 						"J" = "look_w",
 						"L" = "look_e",
 						"P" = "pickup",
-						"DELETE" = "stop_pull"
+						"DELETE" = "stop_pull",
+						"`" = "admin_interact",
+						"~" = "admin_interact"
 					))
 				else
 					return new /datum/keymap(list(
@@ -507,7 +516,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 			if ("human")
 				if(src.tg_controls)

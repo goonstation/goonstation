@@ -811,13 +811,13 @@
 
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
-				shoot_reflected(P, src)
+				shoot_reflected_to_sender(P, src)
 				src.cell.use(damage * 30)
 				boutput(src, "<span style=\"color:blue\">Your force shield deflects the shot!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				return
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated && dmgtype == 1)
-				shoot_reflected(P, src)
+				shoot_reflected_to_sender(P, src)
 				src.cell.use(damage * 20)
 				boutput(src, "<span style=\"color:blue\">Your fire shield deflects the shot!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)

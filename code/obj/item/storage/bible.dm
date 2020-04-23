@@ -4,6 +4,7 @@ var/list/bible_contents = list()
 /obj/item/storage/bible
 	name = "bible"
 	icon_state ="bible"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5

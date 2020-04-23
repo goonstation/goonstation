@@ -25,7 +25,6 @@
 
 
 /obj/item/scrap/New()
-	src.verbs -= /atom/movable/verb/pull
 	..()
 	update()
 

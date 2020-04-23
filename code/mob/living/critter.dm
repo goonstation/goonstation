@@ -306,49 +306,47 @@
 		if (usr.stat)
 			return
 
-		var/atom/movable/item = src.equipped()
+		var/obj/item/I = src.equipped()
 
-		if (isitem(item) && item:cant_self_remove)
+		if (!I || !isitem(I) || I.cant_drop)
 			return
 
-		if (!item) return
+		u_equip(I)
 
-		u_equip(item)
-
-		if (istype(item, /obj/item/grab))
-			var/obj/item/grab/G = item
-			item = G.handle_throw(src,target)
+		if (istype(I, /obj/item/grab))
+			var/obj/item/grab/G = I
+			I = G.handle_throw(src,target)
 			if (G && !G.qdeled) //make sure it gets qdeled because our u_equip function sucks and doesnt properly call dropped()
 				qdel(G)
-			if (!item) return
+			if (!I) return
 
-		item.set_loc(src.loc)
+		I.set_loc(src.loc)
 
-		if (isitem(item))
-			item:dropped(src) // let it know it's been dropped
+		if (isitem(I))
+			I.dropped(src) // let it know it's been dropped
 
 		//actually throw it!
-		if (item)
-			item.layer = initial(item.layer)
+		if (I)
+			I.layer = initial(I.layer)
 			if(prob(yeet_chance))
-				src.visible_message("<span style=\"color:red\">[src] yeets [item].</span>")
+				src.visible_message("<span style=\"color:red\">[src] yeets [I].</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[src] throws [item].</span>")
-			if (iscarbon(item))
-				var/mob/living/carbon/C = item
+				src.visible_message("<span style=\"color:red\">[src] throws [I].</span>")
+			if (iscarbon(I))
+				var/mob/living/carbon/C = I
 				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")
+				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
 				src.inertia_dir = get_dir(target, src)
 				step(src, inertia_dir)
-			if (istype(item.loc, /turf/space) && ismob(item))
-				var/mob/M = item
+			if (istype(I.loc, /turf/space) && ismob(I))
+				var/mob/M = I
 				M.inertia_dir = get_dir(src,target)
-			item.throw_at(target, item.throw_range, item.throw_speed, params)
+			I.throw_at(target, I.throw_range, I.throw_speed, params)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 

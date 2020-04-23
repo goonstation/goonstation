@@ -37,7 +37,6 @@
 			if (C.health < 0) continue
 			if (ishuman(C))
 				if (C:mutantrace && istype(C:mutantrace, /datum/mutantrace/zombie)) continue
-				if (iswelder(C)) continue
 				if (istype(C:head, /obj/item/clothing/head/void_crown)) continue
 
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1

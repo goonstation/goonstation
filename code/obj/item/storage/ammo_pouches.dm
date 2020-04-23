@@ -17,8 +17,8 @@
 		name = "rifle magazine pouch"
 		icon_state = "ammopouch-large"
 		spawn_contents = list(/obj/item/ammo/bullets/assault_rifle = 5)
-	
-		mixed 
+
+		mixed
 			spawn_contents = list(/obj/item/ammo/bullets/assault_rifle = 3, /obj/item/ammo/bullets/assault_rifle/armor_piercing = 2)
 
 	bullet_9mm
@@ -50,7 +50,7 @@
 		name = "power cell pouch"
 		icon_state = "ammopouch-cell"
 		spawn_contents = list(/obj/item/ammo/power_cell/med_power = 5)
-	
+
 	sniper
 		name = "sniper magazine pouch"
 		icon_state = "ammopouch-double"
@@ -64,7 +64,7 @@
 
 		weak
 			spawn_contents = list(/obj/item/ammo/bullets/a12/weak = 5)
-	
+
 	revolver
 		name = "revolver speedloader pouch"
 		icon_state = "ammopouch-double"
@@ -94,7 +94,7 @@
 	high_explosive
 		name = "high explosive grenade pouch"
 		spawn_contents = list(/obj/item/old_grenade/high_explosive = 6)
-	
+
 	smoke
 		name = "smoke grenade pouch"
 		spawn_contents = list(/obj/item/old_grenade/smoke = 6)
@@ -111,3 +111,14 @@
 	/obj/item/item_box/medical_patches/mini_silver_sulf,
 	/obj/item/item_box/medical_patches/mini_synthflesh)
 
+/obj/item/storage/security_pouch
+	name = "security pouch"
+	desc = "A small pouch containing some essential security supplies. Keep out of reach of the clown."
+	icon_state = "ammopouch-sec"
+	w_class = 2.00
+	slots = 6
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/handcuffs/ = 3,\
+	/obj/item/ammo/power_cell/med_power,\
+	/obj/item/device/flash,\
+	/obj/item/instrument/whistle)

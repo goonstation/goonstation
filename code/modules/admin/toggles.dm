@@ -5,55 +5,9 @@
 //ADD YOUR SHIT HERE IF YOU MAKE A NEW VERB THAT GOES ON RIGHT-CLICK OR YOU ARE LITERALLY HITLER (Aka marquesas jr)
 //fixed that for you -marq
 var/list/popup_verbs_to_toggle = list(\
-/client/proc/addpathogens,\
-/client/proc/addreagents,\
-/client/proc/call_proc_atom,\
-/client/proc/cmd_admin_check_reagents,\
-/client/proc/cmd_admin_check_health,\
-/client/proc/cmd_admin_get_mobject,\
-/client/proc/admin_follow_mobject,\
-/client/proc/cmd_admin_delete,\
-/client/proc/debug_variables,\
-/proc/possess,\
-/client/proc/view_fingerprints,\
-/client/proc/cmd_admin_pm,\
-/client/proc/cmd_admin_gib,\
-/client/proc/cmd_admin_rejuvenate,\
-/client/proc/jumptomob,\
-/client/proc/cmd_admin_playeropt,\
-/client/proc/cmd_admin_subtle_message,\
-/client/proc/view_save_data,\
-/client/proc/cmd_admin_polymorph,\
-/client/proc/sendmobs,\
-/client/proc/sendhmobs,\
-/client/proc/create_portal,\
-/client/proc/jumptoturf,\
-/client/proc/cmd_explosion,\
-/client/proc/air_status,\
+/client/proc/sendmobs,
+/client/proc/sendhmobs,
 /client/proc/Jump,\
-/client/proc/debug_check_possible_reactions,\
-/client/proc/revive_critter,\
-/client/proc/kill_critter,\
-/client/proc/admin_smoke,\
-/client/proc/admin_foam,\
-/client/proc/cmd_swap_minds,\
-/client/proc/cmd_transfer_client,\
-/client/proc/cmd_admin_polymorph,\
-/client/proc/cmd_add_to_screen,\
-/client/proc/edit_module,\
-/client/proc/modify_organs,\
-/client/proc/generate_poster,\
-/client/proc/modify_parts,\
-/client/proc/cmd_boot,\
-/client/proc/cmd_shame_cube,\
-/client/proc/cmd_unshame_cube,\
-/client/proc/replace_with_explosive,\
-/client/proc/getturftelesci, \
-/client/proc/admin_fluid, \
-///client/proc/admin_airborne_fluid, \
-/client/proc/dbg_objectprop, \
-/client/proc/dbg_itemspecial
-
 )
 
 /client/proc/toggle_popup_verbs()
@@ -165,7 +119,7 @@ var/list/server_toggles_tab_verbs = list(\
 	if (!src.holder.extratoggle)
 		src.verbs -= /client/proc/addreagents
 
-		src.verbs -= /proc/possess
+		//src.verbs -= /proc/possess
 		src.verbs -= /client/proc/addreagents
 		src.verbs -= /client/proc/cmd_admin_rejuvenate
 
@@ -182,7 +136,7 @@ var/list/server_toggles_tab_verbs = list(\
 		src.verbs += /client/proc/addreagents
 
 
-		src.verbs += /proc/possess
+		//src.verbs += /proc/possess
 		src.verbs += /client/proc/addreagents
 		src.verbs += /client/proc/cmd_admin_rejuvenate
 

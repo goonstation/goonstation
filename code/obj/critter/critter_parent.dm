@@ -239,7 +239,7 @@
 
 					user.visible_message("<span style=\"color:red\">[user] skins [src].</span>","You skin [src].")
 
-			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife_butcher)))
+			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
 				user.visible_message("<span style=\"color:red\">[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
@@ -1162,3 +1162,39 @@
 				return
 		else
 			return
+
+/obj/critter/proc/revive_critter()
+	usr_admin_only
+	var/obj/critter/C = src
+	if (!istype(C, /obj/critter))
+		boutput(src, "[C] isn't a critter! How did you even get here?!")
+		return
+
+	if (!C.alive || C.health <= 0)
+		C.health = initial(C.health)
+		C.alive = 1
+		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
+		C.set_density(initial(C.density))
+		C.on_revive()
+		C.visible_message("<span style=\"color:red\">[C] seems to rise from the dead!</span>")
+		logTheThing("admin", src, null, "revived [C] (critter).")
+		message_admins("[key_name(src)] revived [C] (critter)!")
+	else
+		boutput(src, "[C] isn't dead, you goof!")
+		return
+
+/obj/critter/proc/kill_critter()
+	usr_admin_only
+	var/obj/critter/C = src
+	if (!istype(C, /obj/critter))
+		boutput(src, "[C] isn't a critter! How did you even get here?!")
+		return
+
+	if (C.alive)
+		C.health = 0
+		C.CritterDeath()
+		logTheThing("admin", src, null, "killed [C] (critter).")
+		message_admins("[key_name(src)] killed [C] (critter)!")
+	else
+		boutput(src, "[C] isn't alive, you goof!")
+		return

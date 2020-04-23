@@ -91,8 +91,6 @@
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
 
-		verbs -= /atom/movable/verb/pull
-
 	// set up the wire colours in random order
 	// and the random wire display order
 	// needs 10 wire colours
@@ -188,12 +186,12 @@
 
 
 	attack_ai(var/mob/user, params)
-		interact(user, 1, params)
+		interacted(user, 1, params)
 
 	attack_hand(var/mob/user, params)
-		interact(user, 0, params)
+		interacted(user, 0, params)
 
-	proc/interact(var/mob/user, var/ai=0, params)
+	proc/interacted(var/mob/user, var/ai=0, params)
 		var/dat
 		dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 		dat += "ID: [suffix]<BR>"

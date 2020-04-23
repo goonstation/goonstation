@@ -5,6 +5,7 @@
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = null
 	var/stampable = 1
@@ -318,6 +319,7 @@
 
 		else if (issnippingtool(P))
 			boutput(user, "<span style=\"color:blue\">You cut the paper into a mask.</span>")
+			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
 			user.put_in_hand_or_drop(M)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
@@ -528,6 +530,7 @@ ASC: Aux. Solar Control<BR>
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	anchored = 1.0
 
@@ -882,6 +885,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "photo"
 	icon_state = "photo"
 	var/photo_id = 0.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 /obj/item/paper/photograph/New()
