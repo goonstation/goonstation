@@ -142,6 +142,19 @@
 			W.flip_up()
 		..()
 
+
+/obj/ability_button/labcoat_toggle
+	name = "(Un)Button Labcoat"
+	icon_state = "labcoat"
+
+	execute_ability()
+		var/obj/item/clothing/suit/labcoat/W = the_item
+		if(W.buttoned)
+			W.unbutton()
+		else
+			W.button()
+		..()
+
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tank_valve_toggle
@@ -728,8 +741,8 @@
 	var/cooldown = 0
 	var/last_use_time = 0
 
-	var/targeted = 0 //does clicking this let you click on something to target it?
-	var/target_anything = 0 //can you target any atom, not just people
+	var/targeted = 0 //does activating this ability let you click on something to target it?
+	var/target_anything = 0 //can you target any atom, not just people?
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
@@ -783,8 +796,8 @@
 			var/mob/living/carbon/human/H = the_mob
 			if (H.restrained())
 				return 0
-		if (src.cooldown > 0 && ( src.last_use_time + cooldown ) > world.time)
-			boutput(src.the_mob, "<span style=\"color:red\">This ability is recharging. ([round((src.cooldown/10)-((world.time - src.last_use_time)/10))] seconds left)</span>")
+		if (src.last_use_time && src.cooldown && ( src.last_use_time + cooldown ) > TIME)
+			boutput(src.the_mob, "<span style=\"color:red\">This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)</span>")
 			return 0
 		return 1
 
@@ -794,6 +807,7 @@
 
 	//please call back to parent to trigger handle cooldown
 	proc/execute_ability()
+		src.handle_cooldown()
 		return
 
 	proc/OnDrop()
@@ -801,6 +815,6 @@
 
 	proc/handle_cooldown() //copy and pasted from Click() - which is dead now
 		if (src.cooldown)
-			src.last_use_time = world.time
+			src.last_use_time = TIME
 			sleep(src.cooldown)
 			src.on_cooldown()

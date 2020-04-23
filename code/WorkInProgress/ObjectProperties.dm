@@ -1,4 +1,4 @@
-/client/proc/dbg_objectprop(var/obj/item/I in world)
+/obj/item/proc/dbg_objectprop()
 	set name = "Give Property"
 	var/list/ids = list()
 	propListCheck()
@@ -11,7 +11,7 @@
 
 	var/value = input(usr,"Value:","") as num
 
-	I.setProperty(sel, value)
+	src.setProperty(sel, value)
 	return
 
 /obj/var/list/properties = null
@@ -385,12 +385,3 @@ var/list/globalPropList = null
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "Burn Damage"
-
-	block_bonus
-		name = "Block+"
-		id = "block_bonus"
-		desc = "This item has bonus blocking potential. Use RESIST to block."
-		tooltipImg = "prot.png"
-		defaultValue = 0
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return (propVal ? "RESIST with this item for more info" : "Hold in active hand for:")

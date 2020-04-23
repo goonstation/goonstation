@@ -388,7 +388,7 @@ var/global/client/ff_debugger = null
 
 	if (!(A.last_move))
 		return
-	
+
 	//if(!(src in A.locs))
 	//	return
 
@@ -1130,21 +1130,3 @@ var/global/client/ff_debugger = null
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
-
-//MBC : another one of these exists on obj/verb/interact_verb(). Sorry i'm lazy haw ahaw haw
-/turf/verb/interact_floor_verb()
-	set name = "Interact Floor"
-	set src in oview(1)
-	set category = "Local"
-
-	if (isdead(usr) || (!iscarbon(usr) && !iscritter(usr) && !issilicon(usr)))
-		return
-
-	if (usr.stat || usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.restrained())
-		return
-
-	if (!can_reach(usr, src))
-		return
-
-	if (usr.client)
-		usr.client.Click(src,src)

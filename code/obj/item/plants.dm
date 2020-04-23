@@ -234,7 +234,7 @@
 	icon_state = "sugarcane"
 	brewable = 1
 	brew_result = "rum"
-	
+
 /obj/item/plant/herb/grass
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
@@ -366,10 +366,8 @@
 				A:lastattacker = usr
 				A:lastattackertime = world.time
 			A:weakened += 15
-	pull()
-		set src in oview(1)
-		set category = "Local"
-		var/mob/living/user = usr
+
+	pull(var/mob/user)
 		if (!istype(user))
 			return
 		if (!iswerewolf(user))
@@ -424,4 +422,4 @@
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"
 	desc = "Also known as fish mint or heart leaf, used in cuisine for its distinct fishy flavor."
-	icon_state = "hcordata" 
+	icon_state = "hcordata"

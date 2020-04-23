@@ -17,8 +17,6 @@
 		//return
 
 	examine()
-		set src in view()
-
 		boutput(usr, "<span style=\"color:blue\">*---------*</span>")
 		boutput(usr, "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>")
 		if(prob(50) && ishuman(usr) && usr.bioHolder.HasEffect("clumsy"))

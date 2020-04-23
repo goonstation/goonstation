@@ -707,24 +707,19 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
-			I.setProperty("block_bonus", 0) //temporary property
-
 		setProperty("disorient_resist", 15)
 
 	post_item_setup()
 		. = ..()
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
-			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, assailant)
+			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, src)
 
 	disposing()
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
-			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, assailant)
-
-			if (I.getProperty("block_bonus") == 0) //SEND_SIGNAL ITEM_BLOCK_END did not set this property back to 1, so this must be temporary shit
-				I.delProperty("block_bonus")
+			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 
 		if (assailant)
 			assailant.delStatus("blocking")

@@ -2124,20 +2124,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		walk(src, dir, 2.5)
 	return
 
-/obj/vehicle/forklift/verb/brake()
-	set category = "Forklift"
-	set src = usr.loc
-
-	if (usr.stat)
-		return
-
-	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space))
-		return
-
-	walk(src, 0)
-	return
-
 /obj/vehicle/forklift/verb/toggle_lights()
 	set category = "Forklift"
 	set src = usr.loc

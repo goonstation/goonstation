@@ -478,7 +478,7 @@
 
 
 	attack_ai(mob/user as mob)
-		src.interact(user)
+		src.interacted(user)
 
 	attack_hand(mob/user as mob)
 		if(..())
@@ -493,7 +493,7 @@
 		if(get_dist(user, src) > 1)
 			return
 
-		src.interact(user)
+		src.interacted(user)
 
 	Topic(href, href_list)
 		if(..())
@@ -953,7 +953,7 @@
 				src.overlays.len = 0 //Clear overlays so it will update on update_icon call
 				src.hat_shown = 0
 */
-		interact(mob/user as mob)
+		interacted(mob/user as mob)
 			var/dat = "<tt><B>PR-6S Guardbuddy v1.4</B></tt><br><br>"
 
 			var/power_readout = null
@@ -3710,7 +3710,7 @@
 	speak(var/message)
 		return ..("<font face=Consolas>[uppertext(message)]</font>")
 
-	interact(mob/user as mob)
+	interacted(mob/user as mob)
 		var/dat = "<tt><B>PR-4 Robuddy v0.8</B></tt><br><br>"
 
 		var/power_readout = null
