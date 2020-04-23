@@ -1786,27 +1786,24 @@ var/list/fun_images = list()
 			var/atom/atom = thing
 			atoms += atom
 		if (atoms.len)
-			A = input(usr, "Which item to admin-interact with?") as anything in atoms
-
-
-
+			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
 
 	var/choice = 0
 
 	if (!client.holder.animtoggle)
 		if (ismob(A))
-			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
-			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
 		else
-			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
 	else
 		if (ismob(A))
-			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["mob"]
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
 		else if (isturf(A))
-			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["turf"]
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["turf"]
 		else
-			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["obj"]
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["obj"]
 
 	var/client/C = src.client
 	switch(choice)
