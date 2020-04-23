@@ -63,3 +63,7 @@
 // human signals
 ///when a human Life tick occurs
 #define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
+
+// misc?
+///when a human an attack_results datum gets flushed
+#define COMSIG_ON_ATTACK_FLUSH "attack_flush"

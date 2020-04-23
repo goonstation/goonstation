@@ -230,13 +230,13 @@
 	if(!src.c_flags)
 		return
 	if(src.c_flags & BLOCK_CUT)
-		B.setProperty("block_cut", 1)
+		B.setProperty("block_cut", max(1, B.getProperty("block_cut")))
 	if(src.c_flags & BLOCK_STAB)
-		B.setProperty("block_stab", 1)
+		B.setProperty("block_stab", max(1, B.getProperty("block_stab")))
 	if(src.c_flags & BLOCK_BURN)
-		B.setProperty("block_burn", 1)
+		B.setProperty("block_burn", max(1, B.getProperty("block_burn")))
 	if(src.c_flags & BLOCK_BLUNT)
-		B.setProperty("block_blunt", 1)
+		B.setProperty("block_blunt", max(1, B.getProperty("block_blunt")))
 
 /obj/item/proc/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(special && !special.manualTriggerOnly)

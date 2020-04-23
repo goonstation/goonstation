@@ -900,6 +900,7 @@
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
 
+		SEND_SIGNAL(target, COMSIG_ON_ATTACK_FLUSH, owner, src)
 		if (stamina_self)
 			if (stamina_self > 0)
 				owner.add_stamina(stamina_self)
@@ -997,7 +998,6 @@
 
 			for (var/P in after_effects)
 				call(P)(owner, target)
-
 			process_stamina:
 
 			if (stamina_target)
