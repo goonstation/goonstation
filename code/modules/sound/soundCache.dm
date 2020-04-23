@@ -1095,6 +1095,7 @@ var/global/list/soundCache = list(
  	"sound/voice/mapvote_bill.ogg" = 'sound/voice/mapvote_bill.ogg',\
  	"sound/voice/mapvote_cirr.ogg" = 'sound/voice/mapvote_cirr.ogg',\
  	"sound/voice/mapvote_dions.ogg" = 'sound/voice/mapvote_dions.ogg',\
+ 	"sound/voice/mapvote_enakai.ogg" = 'sound/voice/mapvote_enakai.ogg',\
  	"sound/voice/mapvote_hufflaw.ogg" = 'sound/voice/mapvote_hufflaw.ogg',\
  	"sound/voice/mapvote_pope.ogg" = 'sound/voice/mapvote_pope.ogg',\
  	"sound/voice/mapvote_readster.ogg" = 'sound/voice/mapvote_readster.ogg',\
