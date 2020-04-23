@@ -24,6 +24,7 @@
 	var/audit = AUDIT_ACCESS_DENIED
 
 	var/static/list/admin_interact_verbs
+	var/static/list/admin_interact_atom_verbs
 
 	New()
 		..()
@@ -32,6 +33,14 @@
 				var/client/C = src.owner
 				C.chatOutput.getContextFlag()
 				src.load_admin_prefs()
+
+		if (!admin_interact_atom_verbs || admin_interact_atom_verbs.len <= 0)
+			admin_interact_atom_verbs = list(\
+			"Spin",\
+			"Rotate",\
+			"Scale",\
+			"Emag",\
+			)
 
 		if (!admin_interact_verbs || admin_interact_verbs.len <= 0)
 			admin_interact_verbs = list()
