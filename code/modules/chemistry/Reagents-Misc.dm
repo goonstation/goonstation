@@ -245,7 +245,8 @@ datum
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				M = holder?.my_atom
+				if (!M) 
+					M = holder.my_atom
 				if(istype(M))
 					if(holder.get_reagent_amount(src.id) > theraputicamount)
 						if (prob(90))
@@ -266,7 +267,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							if(blood_system)
 								H.blood_volume += 1  * mult
-							H.nutrition -= 1  * mult
+						M.nutrition -= 1  * mult
 					..()
 				return
 
