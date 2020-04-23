@@ -249,6 +249,11 @@ WET FLOOR SIGN
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
+/obj/item/mop/attack(mob/target, mob/user, def_zone, is_special = 0)
+	if (ishuman(user))
+			if (handle_parry(target, user))
+					return 1
+
 /obj/item/mop/New()
 	..()
 	var/datum/reagents/R = new/datum/reagents(20)

@@ -94,12 +94,15 @@
 				..()
 
 /obj/item/sword/proc/handle_parry(mob/target, mob/user)
-	if (target != user && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
-		if (!S)
-			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned") || H.hasStatus("weakened") || H.hasStatus("paralysis")))
+    if (target != user && ishuman(target))
+        var/mob/living/carbon/human/H = target
+        var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
+        if (!S)
+            S = H.find_type_in_hand(/obj/item/sword, "left")
+        var/obj/item/mop/mop = H.find_type_in_hand(/obj/item/mop, "right")
+        if (!mop)
+            mop = H.find_type_in_hand(/obj/item/mop, "left")
+        if (((S && S.active) || (mop)) && !(H.lying || isdead(H) || H.hasStatus("stunned") || H.hasStatus("weakened") || H.hasStatus("paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
 			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
 			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
