@@ -61,8 +61,11 @@
 			attackby(O, user)
 		return ..()
 
+	proc/CanReload()
+		return 1 // overridable!
+
 	attackby(obj/item/ammo/bullets/b as obj, mob/user as mob)
-		if(istype(b, /obj/item/ammo/bullets))
+		if(istype(b, /obj/item/ammo/bullets) && CanReload())
 			switch (src.ammo.loadammo(b,src))
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
@@ -100,52 +103,52 @@
 
 	//attack_self(mob/user as mob)
 	//	return
+	proc/unload_weapon(mob/user, var/limit = 420)
+		src.add_fingerprint(user)
+		if (src.sanitycheck(0, 1) == 0)
+			user.show_text("You can't unload this gun.", "red")
+			return
+		if (src.ammo.amount_left <= 0)
+			// The gun may have been fired; eject casings if so.
+			if ((src.casings_to_eject > 0) && src.current_projectile.casing)
+				if (src.sanitycheck(1, 0) == 0)
+					logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+					src.casings_to_eject = 0
+					return
+				else
+					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+					src.ejectcasings()
+					return
+			else
+				user.show_text("[src] is empty!", "red")
+				return
+		// Make a copy here to avoid item teleportation issues.
+		var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
+		ammoHand.amount_left = min(src.ammo.amount_left, limit)
+		ammoHand.name = src.ammo.name
+		ammoHand.icon = src.ammo.icon
+		ammoHand.icon_state = src.ammo.icon_state
+		ammoHand.ammo_type = src.ammo.ammo_type
+		ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
+		ammoHand.update_icon()
+		user.put_in_hand_or_drop(ammoHand)
+
+		// The gun may have been fired; eject casings if so.
+		src.ejectcasings()
+		src.casings_to_eject = 0
+		src.ammo.amount_left -= ammoHand.amount_left; // now this is epic
+		src.update_icon()
+		src.add_fingerprint(user)
+		ammoHand.add_fingerprint(user)
+
+		user.visible_message("<span style=\"color:red\">[user] unloads [src].</span>", "<span style=\"color:red\">You unload [src].</span>")
+		//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
 
 	attack_hand(mob/user as mob)
 	// Added this to make manual reloads possible (Convair880).
 
 		if ((src.loc == user) && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
-			src.add_fingerprint(user)
-			if (src.sanitycheck(0, 1) == 0)
-				user.show_text("You can't unload this gun.", "red")
-				return
-			if (src.ammo.amount_left <= 0)
-				// The gun may have been fired; eject casings if so.
-				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
-					if (src.sanitycheck(1, 0) == 0)
-						logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-						src.casings_to_eject = 0
-						return
-					else
-						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						return
-				else
-					user.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
-			user.put_in_hand_or_drop(ammoHand)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.update_icon()
-			src.ammo.amount_left = 0
-			src.add_fingerprint(user)
-			ammoHand.add_fingerprint(user)
-
-			user.visible_message("<span style=\"color:red\">[user] unloads [src].</span>", "<span style=\"color:red\">You unload [src].</span>")
-			//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
+			unload_weapon(user)
 			return
 
 		return ..()
@@ -578,24 +581,21 @@
 	icon_state = "zipgun"
 	force = 3
 	contraband = 6
+	#if ASS_JAM
 	caliber = null // use any ammo at all BA HA HA HA HA
+	#else
+	caliber = 0.22 // Whoops! Only lethals!
+	#endif
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 
 	New()
-#if ASS_JAM
-		var/turf/T = get_turf(src)
-		playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
-		new/obj/item/gun/kinetic/slamgun(T)
-		qdel(src)
-		return // Sorry! No zipguns during ASS JAM
-#else
 		ammo = new/obj/item/ammo/bullets/derringer
 		ammo.amount_left = 0 // start empty
 		current_projectile = new/datum/projectile/bullet/derringer
 		..()
-#endif
 
+#if ASS_JAM // no explode during not-ass-jam
 	shoot()
 		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
 			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
@@ -606,6 +606,7 @@
 		else
 			..()
 			return
+#endif
 
 /obj/item/gun/kinetic/silenced_22
 	name = "Suppressed .22 Pistol"
@@ -974,6 +975,7 @@
 	name = "slamgun"
 	desc = "A 12 gauge shotgun. Apparently. It's just two pipes stacked together."
 	icon = 'icons/obj/slamgun.dmi'
+	var/wep_state = "ready" // tracking weapon state *boogie
 	icon_state = "slamgun-ready"
 	inhand_image_icon = 'icons/obj/slamgun.dmi'
 	item_state = "slamgun-ready-world"
@@ -995,27 +997,29 @@
 		..()
 
 	attack_self(mob/user as mob)
-		if (src.icon_state == "slamgun-ready")
-			w_class = 3
-			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
-				src.icon_state = "slamgun-open-loaded"
-			else
-				src.icon_state = "slamgun-open"
-			update_icon()
-			two_handed = 0
-			user.updateTwoHanded(src, 0)
-			user.update_inhands()
+		if (src.wep_state == "ready")
+			if(user.updateTwoHanded(src,0))
+				wep_state = "open"
+				w_class = 3
+				if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+					src.icon_state = "slamgun-[src.wep_state]-loaded"
+				else
+					src.icon_state = "slamgun-[src.wep_state]"
+				update_icon()
+				two_handed = null
+				user.update_inhands()
 		else
-			w_class = 4
-			src.icon_state = "slamgun-ready"
-			update_icon()
-			two_handed = 1
-			user.updateTwoHanded(src, 1)
-			user.update_inhands()
+			if(user.updateTwoHanded(src,1))
+				w_class = 4
+				wep_state = "ready"
+				src.icon_state = "slamgun-[src.wep_state]"
+				update_icon()
+				two_handed = 1
+				user.update_inhands()
 		..()
 
 	canshoot()
-		if (src.icon_state == "slamgun-ready")
+		if (src.wep_state == "ready")
 			return ..()
 		else
 			return 0
@@ -1026,73 +1030,33 @@
 		..()
 
 	update_icon()
-		if(src.icon_state == "slamgun-ready")
-			src.item_state = "slamgun-ready-world"
+		if(src.wep_state == "ready")
+			src.item_state = "slamgun-[src.wep_state]-world"
 		else
-			src.item_state = "slamgun-open-world"
+			src.item_state = "slamgun-[src.wep_state]-world"
 			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
-				src.icon_state = "slamgun-open-loaded"
+				src.icon_state = "slamgun-[src.wep_state]-loaded"
 			else
-				src.icon_state = "slamgun-open"
+				src.icon_state = "slamgun-[src.wep_state]"
 
 		..()
 
 	MouseDrop(atom/over_object, src_location, over_location, params)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
-		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			src.add_fingerprint(usr)
-			if (src.sanitycheck(0, 1) == 0)
-				usr.show_text("You can't unload this gun.", "red")
-				return
-			if (src.ammo.amount_left <= 0)
-				if ((src.casings_to_eject > 0))
-					if (src.sanitycheck(1, 0) == 0)
-						src.casings_to_eject = 0
-						return
-					else
-						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						src.casings_to_eject = 0 // needed for bullets that don't have casings (???)
-						src.update_icon()
-						return
-				else
-					usr.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
-			usr.put_in_hand_or_drop(ammoHand)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.ammo.amount_left = 0
-			src.update_icon()
-
-			src.add_fingerprint(usr)
-			ammoHand.add_fingerprint(usr)
-
-			usr.visible_message("<span style=\"color:red\">[usr] unloads [src].</span>", "<span style=\"color:red\">You unload [src].</span>")
+		if (over_object == usr && src.wep_state == "open") // sorry for doing it like this, but i have no idea how to do it cleaner.
+			unload_weapon(usr)
 			return
 		..()
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
-			boutput(user, "<span style=\"color:red\">You can't shove shells down the barrel! You'll have to open the [src]!</span>")
-			return
-		if (istype(b, /obj/item/ammo/bullets) && (src.ammo.amount_left > 0 || src.casings_to_eject > 0))
-			boutput(user, "<span style=\"color:red\">The [src] already has a shell inside! You'll have to unload the [src]!</span>")
-			return
-		..()
+	CanReload()
+		if (src.wep_state == "ready")
+			boutput(usr, "<span style=\"color:red\">You can't shove shells down the barrel! You'll have to open the [src]!</span>")
+			return 0
+		if(src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+			boutput(usr, "<span style=\"color:red\">The [src] already has a shell inside! You'll have to unload the [src]!</span>")
+			return 0
+		return ..()
 
 // sniper
 /obj/item/gun/kinetic/sniper

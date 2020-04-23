@@ -1108,14 +1108,13 @@ PIPE BOMBS + CONSTRUCTION
 		return
 
 	attackby(obj/item/W, mob/user)
-		#if ASS_JAM
 		if(istype(W, /obj/item/pipebomb/frame))
 			if((src.state + W:state == 3)) // one of pipes is welded, other one is not
 				var/turf/T = get_turf(src)
 				new/obj/item/gun/kinetic/slamgun(T)
 				qdel(W)
 				qdel(src)
-		#endif
+				return
 		if(istype(W, /obj/item/weldingtool) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
