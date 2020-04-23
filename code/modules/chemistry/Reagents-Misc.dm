@@ -231,7 +231,7 @@ datum
 			viscosity = 0.4
 
 			on_add(var/mob/M)
-				M = holder.my_atom
+				M = holder?.my_atom
 				if(istype(M) && holder.get_reagent_amount(src.id) > theraputicamount)
 					M.add_stam_mod_regen("aranesp", 15)
 					M.add_stam_mod_max("aranesp", 25)
@@ -260,10 +260,8 @@ datum
 							M.take_oxygen_deprivation(15 * mult)
 							M.losebreath += (1 * mult)
 					else
-						if (istype(holder) && istype(holder.my_atom)) // thought you could cheat the system huh
-							M.remove_stam_mod_regen("aranesp")
-						if (istype(holder) && istype(holder.my_atom))
-							M.remove_stam_mod_max("aranesp")
+						M.remove_stam_mod_regen("aranesp")
+						M.remove_stam_mod_max("aranesp")
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if(blood_system)
