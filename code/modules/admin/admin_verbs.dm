@@ -1787,6 +1787,7 @@ var/list/fun_images = list()
 			atoms += atom
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
+			if (isnull(A)) return
 
 	var/choice = 0
 
