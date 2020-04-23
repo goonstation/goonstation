@@ -1300,6 +1300,20 @@ area/station/communications
 
 /////////////////////////////////////////////////// Donut 3 specific areas
 
+// Civilian
+
+/area/station/library
+	name = "Library"
+	icon_state = "library"
+
+/area/station/library/reading1
+	name = "Reading Room 1"
+	icon_state = "reading-room1"
+
+/area/station/library/reading2
+	name = "Reading Room 2"
+	icon_state = "reading-room2"
+
 // Security
 
 /area/shuttle/asylum
@@ -1308,10 +1322,10 @@ area/station/communications
 
 	medbay
 		icon_state = "shuttle1"
-	
+
 	pathology
 		icon_state = "shuttle2"
-	
+
 	observation
 		icon_state = "shuttle3"
 
