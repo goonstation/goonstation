@@ -375,8 +375,8 @@
 					if(item_slot)
 						M.u_equip(src)
 						src.loc = null
-						var/mob/living/carbon/human/H = M
-						if(istype(H))
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
 							H.force_equip(I,item_slot) // mobs don't have force_equip
 							return
 			drop.loc = get_turf(src.loc)
