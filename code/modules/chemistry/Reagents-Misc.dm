@@ -217,22 +217,22 @@ datum
 			fluid_b = 255
 			transparency = 128
 			viscosity = 0.8
-
 		aranesp
 			name = "aranesp"
 			id = "aranesp"
-			description = "An illegal performance enhancing drug. Side effects might include chest pain, seizures, swelling, headache, fever... ... ..."
+			description = "Darbepoetin alfa, commonly known as Aranesp, is an erythropoietic drug used to increase red-blood cell counts. Safe when used in low amounts, dangerous when used to dope."
 			fluid_r = 120
 			fluid_g = 255
 			fluid_b = 240
 			transparency = 215
+			var/theraputicamount = 5
 			value = 41 // 17 18 6
 			viscosity = 0.4
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
+				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen") && holder.get_reagent_amount(src.id) > theraputicamount)
 					holder.my_atom:add_stam_mod_regen("aranesp", 15)
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
+				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max") && holder.get_reagent_amount(src.id) > theraputicamount)
 					holder.my_atom:add_stam_mod_max("aranesp", 25)
 				return
 
@@ -244,16 +244,26 @@ datum
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (!M) M = holder.my_atom
-				if (prob(90))
-					M.take_toxin_damage(1 * mult)
-				if (prob(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
-				if (prob(8)) boutput(M, "<span style=\"color:blue\">You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
-				if (prob(5))
-					boutput(M, "<span style=\"color:red\">You cannot breathe!</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
-					M.take_oxygen_deprivation(15 * mult)
-					M.losebreath += (1 * mult)
+				if(holder.get_reagent_amount(src.id) > theraputicamount)
+					if (!M) M = holder.my_atom
+					if (prob(90))
+						M.take_toxin_damage(1 * mult)
+					if (prob(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
+					if (prob(8)) boutput(M, "<span style=\"color:blue\">You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
+					if (prob(5))
+						boutput(M, "<span style=\"color:red\">You cannot breathe!</span>")
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
+						M.take_oxygen_deprivation(15 * mult)
+						M.losebreath += (1 * mult)
+				else
+					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen")) // thought you could cheat the system huh
+						holder.my_atom:remove_stam_mod_regen("aranesp")
+					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
+						holder.my_atom:remove_stam_mod_max("aranesp")
+					if (blood_system && ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.blood_volume += 1  * mult
+						H.nutrition -= 1  * mult
 				..()
 				return
 
