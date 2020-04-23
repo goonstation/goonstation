@@ -913,8 +913,8 @@
 /obj/item/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
-	icon_state = "tube-yellow"
-	base_state = "tube-yellow"
+	icon_state = "tube-white"
+	base_state = "tube-white"
 	item_state = "c_tube"
 	g_amt = 200
 	color_r = 0.95
@@ -980,80 +980,80 @@
 
 	warm
 		name = "fluorescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-orange"
+		base_state = "itube-orange"
 		color_r = 1
 		color_g = 0.844
 		color_b = 0.81
 
 		very
 			name = "warm fluorescent light tube"
-			icon_state = "tube-yellow"
-			base_state = "tube-yellow"
+			icon_state = "itube-red"
+			base_state = "itube-red"
 			color_r = 1
 			color_g = 0.67
 			color_b = 0.67
 
 	neutral
 		name = "incandescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-white"
+		base_state = "itube-white"
 		color_r = 0.95
 		color_g = 0.98
 		color_b = 0.97
 
 	greenish
 		name = "greenish incandescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-yellow"
+		base_state = "itube-yellow"
 		color_r = 0.87
 		color_g = 0.98
 		color_b = 0.89
 
 	blueish
 		name = "blueish fluorescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-blue"
+		base_state = "itube-blue"
 		color_r = 0.51
 		color_g = 0.66
 		color_b = 0.85
 
 	purpleish
 		name = "purpleish fluorescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-purple"
+		base_state = "itube-purple"
 		color_r = 0.42
 		color_g = 0.20
 		color_b = 0.58
 
 	cool
 		name = "cool incandescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-white"
+		base_state = "itube-white"
 		color_r = 0.88
 		color_g = 0.904
 		color_b = 1
 
 		very
 			name = "very cool incandescent light tube"
-			icon_state = "tube-yellow"
-			base_state = "tube-yellow"
+			icon_state = "itube-purple"
+			base_state = "itube-purple"
 			color_r = 0.74
 			color_g = 0.74
 			color_b = 1
 
 	harsh
 		name = "harsh incandescent light tube"
-		icon_state = "tube-yellow"
-		base_state = "tube-yellow"
+		icon_state = "itube-white"
+		base_state = "itube-white"
 		color_r = 0.99
 		color_g = 0.899
 		color_b = 0.99
 
 		very
 			name = "very harsh incandescent light tube"
-			icon_state = "tube-yellow"
-			base_state = "tube-yellow"
+			icon_state = "itube-pink"
+			base_state = "itube-pink"
 			color_r = 0.99
 			color_g = 0.81
 			color_b = 0.99
@@ -1194,24 +1194,24 @@
 
 		very
 			name = "very cool incandescent light bulb"
-			icon_state = "ibulb-white"
-			base_state = "ibulb-white"
+			icon_state = "ibulb-blue"
+			base_state = "ibulb-blue"
 			color_r = 0.74
 			color_g = 0.74
 			color_b = 1
 
 	harsh
 		name = "harsh incandescent light bulb"
-		icon_state = "ibulb-white"
-		base_state = "ibulb-white"
+		icon_state = "ibulb-pink"
+		base_state = "ibulb-pink"
 		color_r = 0.99
 		color_g = 0.899
 		color_b = 0.99
 
 		very
 			name = "very harsh incandescent light bulb"
-		icon_state = "ibulb-white"
-		base_state = "ibulb-white"
+			icon_state = "ibulb-pink"
+			base_state = "ibulb-pink"
 			color_r = 0.99
 			color_g = 0.81
 			color_b = 0.99
