@@ -27,10 +27,6 @@ Build System.dm
 !/.vscode/extensions.json
 *.idea/*
 
-# Files which are not used by production
-/config/admins.txt
-/config/config.txt
-
 # Local Map Backups
 /maps/**/backup/
 
