@@ -180,7 +180,7 @@ var/global/atom_emergency_stop = 0
 
 /client/proc/cmd_emag_target(var/atom/target as mob|obj|turf in world)
 	set category = "Atom"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Emag Target"
 	set desc = "Emag this thing. Not the other thing like this thing. THIS thing."
 	admin_only
@@ -312,7 +312,7 @@ var/global/atom_emergency_stop = 0
 
 /client/proc/cmd_scale_target(var/atom/target as mob|obj|turf in world)
 	set category = "Atom"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Scale Target"
 	set desc = "Scales a target."
 	admin_only
@@ -442,7 +442,7 @@ var/global/atom_emergency_stop = 0
 
 /client/proc/cmd_rotate_target(var/atom/target as mob|obj|turf in world)
 	set category = "Atom"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Rotate Target"
 	set desc = "Rotates a target."
 	admin_only
@@ -592,7 +592,7 @@ var/global/atom_emergency_stop = 0
 
 /client/proc/cmd_spin_target(var/atom/target as mob|obj|turf in world)
 	set category = "Atom"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Spin Target"
 	set desc = "Spins a target."
 	admin_only

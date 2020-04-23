@@ -1792,12 +1792,21 @@ var/list/fun_images = list()
 
 
 	var/choice = 0
-	if (ismob(A))
-		choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
-	else if (isturf(A))
-		choice = input(usr, "What do?") as null|anything  in client.holder.admin_interact_verbs["turf"]
+
+	if (client.holder.animtoggle)
+		if (ismob(A))
+			choice = input(usr, "What do?") as anything in client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]
+		else if (isturf(A))
+			choice = input(usr, "What do?") as anything in client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]
+		else
+			choice = input(usr, "What do?") as anything in client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]
 	else
-		choice = input(usr, "What do?") as null|anything  in client.holder.admin_interact_verbs["obj"]
+		if (ismob(A))
+			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["mob"]
+		else if (isturf(A))
+			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["turf"]
+		else
+			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["obj"]
 
 	var/client/C = src.client
 	switch(choice)
@@ -1860,4 +1869,14 @@ var/list/fun_images = list()
 			possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
-	
+
+		if ("Spin")
+			C.cmd_spin_target(A)
+		if ("Rotate")
+			C.cmd_rotate_target(A)
+		if ("Scale")
+			C.cmd_scale_target(A)
+		if ("Emag")
+			C.cmd_emag_target(A)
+
+	src.update_cursor()
