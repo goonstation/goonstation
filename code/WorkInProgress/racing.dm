@@ -435,7 +435,7 @@
 		SPAWN_DBG(0)
 			for(var/i=0, i<magnitude, i++)
 				src.dir = turn(src.dir, 90)
-				sleep(1)
+				sleep(0.1 SECONDS)
 		return
 
 	proc/boost()

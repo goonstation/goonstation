@@ -197,7 +197,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		SPAWN_DBG(0) //Delete the overlay when finished with it.
 			src.on = 0
-			sleep(15)
+			sleep(1.5 SECONDS)
 			qdel(Ov)
 			qdel(src)
 
@@ -451,9 +451,11 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	New()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 
-	verb/extinguish()
-		set src in oview(1)
-		set category = "Local"
+	attack_hand(mob/user as mob)
+		extinguish()
+		..()
+
+	proc/extinguish()
 		if (!src.on_fire)
 			return
 		src.visible_message("<span class='combat'>[usr] attempts to extinguish the fire!</span>")
@@ -609,6 +611,10 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		light.attach(src)
 		light.enable()
 
+	attack_hand(mob/user as mob)
+		change_light_pattern()
+		..()
+
 	proc/light_pattern(var/pattern as num)
 		if (!pattern)
 			src.icon_state = "lights0"
@@ -619,10 +625,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			light.enable()
 			return
 
-	verb/change_light_pattern()
-		set src in oview(1)
-		set category = "Local"
-
+	proc/change_light_pattern()
 		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
 		if (isnull(pattern))
 			return
@@ -725,7 +728,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				var/obj/item/a_gift/festive/X = new /obj/item/a_gift/festive(src.loc)
 				X.throw_at(pick(nearby_turfs), 16, 3)
 				to_throw--
-				sleep(2)
+				sleep(0.2 SECONDS)
 			src.transforming = 0
 
 			SPAWN_DBG(2 MINUTES)
@@ -758,7 +761,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				var/obj/item/X = new snack(src.loc)
 				X.throw_at(pick(nearby_turfs), 16, 3)
 				to_throw--
-				sleep(1)
+				sleep(0.1 SECONDS)
 			src.transforming = 0
 
 			SPAWN_DBG(80 SECONDS)
@@ -977,7 +980,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			playsound(src.loc, "sound/misc/rustle5.ogg", 100, 1, 0, 0.3)
 			src.visible_message("<span style=\"color:red\"><B>[src] leaps high into the air, heading right for [M]!</B></span>")
 			animate_fading_leap_up(src)
-			sleep(25)
+			sleep(2.5 SECONDS)
 			src.loc = target
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 50, 1, 0, 0.8)
 			animate_fading_leap_down(src)
@@ -1123,7 +1126,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 						playsound(src.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 75, 0.7)
 						H.UpdateDamage()
 						H.UpdateDamageIcon()
-						sleep(15)
+						sleep(1.5 SECONDS)
 				else
 					playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 					src.visible_message("<span style=\"color:red\"><B>[src] crushes [G.affecting] like a bug!</B></span>")
@@ -1146,7 +1149,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					var/mob/living/carbon/human/H = G.affecting
 					src.visible_message("<span style=\"color:red\"><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
 					H.loc = src.loc
-					sleep(60)
+					sleep(6 SECONDS)
 					if (src.stat || src.transforming || get_dist(src,H) > 1)
 						boutput(src, "<span style=\"color:red\">Your prey escaped! Curses!</span>")
 					else
@@ -1157,7 +1160,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 						qdel(H)
 						qdel(G)
 						src.HealDamage("All", 15, 15)
-						sleep(10)
+						sleep(1 SECOND)
 						playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 1, 0 ,0.5)
 
 /obj/stocking

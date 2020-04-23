@@ -212,10 +212,10 @@
 
 		else
 			..()
-			switch(W.damtype)
-				if("fire")
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
 					src.health -= W.force * 0.75
-				if("brute")
+				else
 					src.health -= W.force * 0.5
 			if (src.health <= 0)
 				src.explode()

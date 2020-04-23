@@ -4,6 +4,7 @@ var/list/bible_contents = list()
 /obj/item/storage/bible
 	name = "bible"
 	icon_state ="bible"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5
@@ -20,6 +21,7 @@ var/list/bible_contents = list()
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
 		ritualComponent.autoActive = 1
 		#endif
+		BLOCK_BOOK
 
 	disposing()
 		..()
@@ -200,7 +202,7 @@ var/list/bible_contents = list()
 						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
-				sleep(3)
+				sleep(0.3 SECONDS)
 		return 1
 	farty_heresy(var/mob/user)
 		if (farty_party)
@@ -219,5 +221,5 @@ var/list/bible_contents = list()
 						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
-				sleep(3)
+				sleep(0.3 SECONDS)
 		return 1

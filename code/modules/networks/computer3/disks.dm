@@ -128,6 +128,7 @@
 	desc = "A form of proprietary magnetic data tape used by Thinktronic Data Systems, LLC."
 	title = "MAGTAPE"
 	icon_state = "tape"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	file_amount = 128
 	portable = 0
@@ -270,7 +271,7 @@
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0

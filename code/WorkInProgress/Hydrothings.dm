@@ -365,7 +365,7 @@ obj/item/gnomechompski/elf
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "hootolver"
 	w_class = 3.0
 	throw_speed = 2
@@ -434,7 +434,7 @@ obj/item/gnomechompski/elf
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
 			usr.visible_message("<span style=\"color:red\"><b>[usr] absorbs the [src] into their body!")
-			sleep(15)
+			sleep(1.5 SECONDS)
 			playsound(user.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 			usr.reagents.add_reagent("hootonium", 10)
 			qdel(src)
@@ -885,7 +885,7 @@ obj/critter/madnessowl
 			turftarget = get_turf(target)
 			src.set_loc(turftarget)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 35, 1, -1)
-			sleep(10)
+			sleep(1 SECOND)
 
 obj/critter/madnessowl/gun
 	name = "space owl with a gun"
@@ -1080,7 +1080,11 @@ obj/critter/madnessowl/switchblade
 			damage_type = ME.damtype
 		else
 			attack_force = W.force
-			damage_type = W.damtype
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
+					damage_type = "fire"
+				else
+					damage_type = "brute"
 		switch(damage_type)
 			if("fire")
 				src.health -= attack_force * src.firevuln
@@ -1173,7 +1177,7 @@ obj/critter/madnessowl/switchblade
 			var/mob/living/silicon/robot/BORG = M
 			if (!BORG.part_head)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> pecks at [BORG.name].</span>")
-				sleep(15)
+				sleep(1.5 SECONDS)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
 				playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
@@ -1186,7 +1190,7 @@ obj/critter/madnessowl/switchblade
 					playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 					BORG.compborg_lose_limb(BORG.part_head)
-					sleep(15)
+					sleep(1.5 SECONDS)
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
 					playsound(src.loc, "sound/voice/animal/hoot.ogg", 80, 1)
 					make_cleanable( /obj/decal/cleanable/blood,src.loc)
@@ -1247,7 +1251,7 @@ obj/critter/madnessowl/switchblade
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
-				sleep(4)
+				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
 			if(spazzing < 0)
@@ -1272,7 +1276,7 @@ obj/critter/madnessowl/switchblade
 				take_bleeding_damage(target, null, 5, DAMAGE_CUT, 0, get_turf(target))
 				if(prob(33)) // don't make quite so much mess
 					bleed(target, 5, 5, get_step(src.loc, pick(alldirs)), 1)
-				sleep(4)
+				sleep(0.4 SECONDS)
 				src.frenzied--
 			src.frenzied = 0
 
@@ -1294,7 +1298,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2 && prob(15))
 					sound_fx_2 = pick(owlery_sounds)
@@ -1406,7 +1410,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
 		M.dir = turn(M.dir, 90)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 	siren.repeat = 1
@@ -1424,15 +1428,15 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 				world << sound('sound/voice/animal/hoot.ogg', volume = 80) ///////////////////////////////////////////
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
-			sleep(5)
-	sleep(200)
+			sleep(0.5 SECONDS)
+	sleep(20 SECONDS)
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
 		M.dir = turn(M.dir, 90)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	siren.repeat = 0
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
@@ -1528,10 +1532,10 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 			else
 				playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 50, 1)
 				usr.visible_message("<span style=\"color:blue\">[usr] pull the string located at the back of Greg Jr.")
-				sleep(30)
+				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
 					usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")
-					sleep(10)
+					sleep(1 SECOND)
 					usr.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
 					new /obj/item/audio_tape/beepoker(get_turf(usr))
 					seensol = 1
@@ -1539,9 +1543,9 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 					return
 				else
 					usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\"")
-					sleep(30)
+					sleep(3 SECONDS)
 					cantalk = 1
-					sleep(20)
+					sleep(2 SECONDS)
 					return
 
 	hear_talk(var/mob/living/carbon/speaker, text, real_name)

@@ -175,5 +175,5 @@
 		while(C.health < 100 || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(isdead(C))
 				break
-			sleep(30)
+			sleep(3 SECONDS)
 			changeling_super_heal_step(C)

@@ -26,7 +26,7 @@
 /obj/item/device/speechtotext
 	name = "dumb microphone"
 	desc = "This is really stupid."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
 
@@ -375,7 +375,7 @@
 				score += addscore
 				mulch_item(P, addscore)
 				update_score(MT, score)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 			boutput(user, "<span style=\"color:blue\">You finish stuffing things into [src]!</span>")
 			finish_scoring(MT)
@@ -627,7 +627,7 @@
 
 	disposing()
 		UnsubscribeProcess()
-	
+
 	process()
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
@@ -637,6 +637,6 @@
 			src.maptext_x = -100
 			src.maptext_width = 232
 			src.maptext_y = 34
-		
+
 	ex_act()
 		return

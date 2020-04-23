@@ -386,6 +386,8 @@
 	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
 
+	abilities = list(/obj/ability_button/labcoat_toggle)
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
@@ -393,7 +395,6 @@
 
 	New()
 		..()
-		src.verbs -= /obj/item/clothing/suit/labcoat/verb/button
 
 	attack_self()
 		..()
@@ -403,38 +404,27 @@
 				src.icon_state = "[src.coat_style]_o"
 				usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 				"You unbutton your [src.name].")
-				src.verbs += /obj/item/clothing/suit/labcoat/verb/button
-				src.verbs -= /obj/item/clothing/suit/labcoat/verb/unbutton
 			else
 				src.icon_state = src.coat_style
 				usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 				"You button your [src.name].")
-				src.verbs += /obj/item/clothing/suit/labcoat/verb/unbutton
-				src.verbs -= /obj/item/clothing/suit/labcoat/verb/button
 
 		buttoned = !buttoned
 
-	verb/button()
-		set category = "Local"
-		set src in usr
+	proc/button()
 		if (src.coat_style)
 			src.icon_state = src.coat_style
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 		"You button your [src.name].")
-		src.verbs += /obj/item/clothing/suit/labcoat/verb/unbutton
-		src.verbs -= /obj/item/clothing/suit/labcoat/verb/button
 
-	verb/unbutton()
-		set category = "Local"
-		set src in usr
+	proc/unbutton()
 		if (src.coat_style)
 			src.icon_state = "[src.coat_style]_o"
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
-		src.verbs += /obj/item/clothing/suit/labcoat/verb/button
-		src.verbs -= /obj/item/clothing/suit/labcoat/verb/unbutton
+
 
 /obj/item/clothing/suit/labcoat/genetics
 	name = "geneticist's labcoat"

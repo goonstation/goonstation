@@ -815,6 +815,8 @@
 		else
 			..()
 			user.lastattacked = src
+			attack_particle(user,src)
+			hit_twitch(src)
 			if (W.hitsound)
 				playsound(src.loc, W.hitsound, 50, 1)
 			if (W.force)
@@ -1442,7 +1444,7 @@
 				if (O == src.beaker)
 					continue
 			if (istype(O,src.base_material_class) && O.material)
-				mat_amts[O.material.name] += 10
+				mat_amts[O.material.name] += 10 * O.amount
 		for (var/mat_id in cuttings)
 			var/amount = cuttings[mat_id]
 			var/datum/material/mat = getMaterial(mat_id)
@@ -1770,6 +1772,9 @@
 		/datum/manufacture/stunrounds,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
+#if ASS_JAM
+		/datum/manufacture/bullet_12g_nail,
+#endif
 		/datum/manufacture/stapler)
 
 /obj/machinery/manufacturer/robotics

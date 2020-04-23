@@ -5,6 +5,7 @@
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
@@ -12,6 +13,10 @@
 	wear_image_icon = 'icons/mob/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
+
+	New()
+		..()
+		BLOCK_LARGE
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -30,7 +35,8 @@
 
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
-	icon_state = "bp_medic"
+	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
+	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel
@@ -74,7 +80,7 @@
 /obj/item/storage/fanny
 	name = "fanny pack"
 	desc = "No, 'fanny' as in 'butt.' Not the other thing."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -85,6 +91,10 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
+
+	New()
+		..()
+		BLOCK_ROPE
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -104,7 +114,7 @@
 
 /obj/item/storage/belt
 	name = "belt"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -113,6 +123,10 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
+
+	New()
+		..()
+		BLOCK_ROPE
 
 	proc/can_use()
 		.= 1
@@ -362,7 +376,7 @@
 
 /obj/item/storage/belt/syndicate_medic_belt
 	name = "medical lifesaver bag"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	desc = "A canvas duffel bag full of medicines."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
@@ -408,7 +422,7 @@
 /obj/item/inner_tube
 	name = "inner tube"
 	desc = "An inflatable torus for your waist!"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT

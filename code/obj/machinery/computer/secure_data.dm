@@ -460,7 +460,7 @@
 																						if (href_list["print_p"])
 																							if (!( src.printing ))
 																								src.printing = 1
-																								sleep(50)
+																								sleep(5 SECONDS)
 																								var/obj/item/paper/P = new /obj/item/paper( src.loc )
 																								P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 																								if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))

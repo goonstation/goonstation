@@ -295,7 +295,7 @@
 
 		var/turf/the_turf = get_turf(target)
 
-		var/icon/photo = icon('icons/obj/items.dmi',"photo")
+		var/icon/photo = icon('icons/obj/items/items.dmi',"photo")
 
 		var/icon/turficon = build_composite_icon(the_turf)
 		turficon.Scale(22,20)
@@ -629,7 +629,7 @@
 		if (state != 2 && ..())
 			for(var/i, i < 125, i++)
 				SpawnParticle()
-				sleep(3)
+				sleep(0.3 SECONDS)
 			Die()
 
 /datum/particleType/spooky_mist
@@ -691,4 +691,4 @@
 		for (var/i=src.trigger_duration, i>0, i--)
 			src.dir = pick(cardinal)
 			src.pixel_x = rand(-3,3)
-			sleep(1)
+			sleep(0.1 SECONDS)

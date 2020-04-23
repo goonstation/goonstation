@@ -282,7 +282,7 @@ Nanotrasen, Inc.<br>
 			broadcast_sound(period)
 			batch++
 			if (batch >= 3)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	proc/process()
 		if (ticker.round_elapsed_ticks >= next_warning)

@@ -248,12 +248,12 @@ proc/is_teleportation_allowed(var/turf/T)
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(10)
+								sleep(1 SECOND)
 								src.send(turfcheck)
-							sleep(5)
+							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
-							sleep(10)
+							sleep(1 SECOND)
 
 							recharging = 0
 
@@ -272,18 +272,18 @@ proc/is_teleportation_allowed(var/turf/T)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(10)
+								sleep(1 SECOND)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(10)
+								sleep(1 SECOND)
 								src.receive(turfcheck)
-							sleep(5)
+							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
-							sleep(10)
+							sleep(1 SECOND)
 
 							recharging = 0
 
@@ -317,9 +317,9 @@ proc/is_teleportation_allowed(var/turf/T)
 							if (coords.can_cheat || (is_teleportation_allowed(endturf) && is_teleportation_allowed(sourceturf)))
 								src.receive(sourceturf)
 								SPAWN_DBG(0)
-									sleep(10)
+									sleep(1 SECOND)
 									recharging = 0
-									sleep(40)
+									sleep(4 SECONDS)
 									src.send(endturf)
 								message_host("command=ack")
 
@@ -361,18 +361,18 @@ proc/is_teleportation_allowed(var/turf/T)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(10)
+								sleep(1 SECOND)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(10)
+								sleep(1 SECOND)
 								src.doubleportal(turfcheck)
-							sleep(5)
+							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
-							sleep(10)
+							sleep(1 SECOND)
 
 							recharging = 0
 

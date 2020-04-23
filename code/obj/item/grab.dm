@@ -14,6 +14,9 @@
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
+	var/item_grab_overlay_state = "grab_small"
+	var/can_pin = 1
+
 
 	New(atom/loc)
 		..()
@@ -25,7 +28,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 
-			var/image/ima = SafeGetOverlayImage("grab", src.icon, "grab_small")
+			var/image/ima = SafeGetOverlayImage("grab", src.icon, item_grab_overlay_state)
 			ima.layer = src.loc.layer + 1
 			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
 
@@ -337,6 +340,8 @@
 		src.affecting.dir = pick(alldirs)
 		resist_count += 1
 
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+
 		if (src.state == GRAB_PASSIVE)
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span style=\"color:red\">[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
@@ -376,6 +381,19 @@
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span style=\"color:red\">[] attempts to break free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 
+	//returns an atom to be thrown if any
+	proc/handle_throw(var/mob/living/user, var/atom/target)
+		if (!src.affecting) return 0
+
+		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
+			user.visible_message("<span style=\"color:red\">[src.affecting] stumbles a little!</span>")
+			user.u_equip(src)
+			return 0
+
+		src.affecting.lastattacker = src
+		src.affecting.lastattackertime = world.time
+		.= src.affecting
+		user.u_equip(src)
 
 //////////////////////
 //PROGRESS BAR STUFF//
@@ -499,7 +517,7 @@
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
-	G.affecting.TakeDamage("chest", 0, rand(4,5))
+	G.affecting.TakeDamage("chest", rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 
 	user.u_equip(G)
@@ -516,6 +534,9 @@
 	if (get_dist(src, M) > 1)
 		return 0
 
+	if (!G.can_pin)
+		return 0
+
 	if (ishuman(G.affecting))
 		G.affecting:was_harmed(G.assailant)
 
@@ -530,6 +551,12 @@
 
 	if (get_dist(src, M) > 1)
 		return 0
+
+	if (!G.can_pin)
+		return 0
+
+	if (ishuman(G.affecting))
+		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
 	attack_particle(user,src)
@@ -660,11 +687,137 @@
 		shot = 1
 
 		if (affecting && assailant && isitem(src.loc))
-			if (get_dist(src.affecting,src.assailant) <= 1)
-				var/obj/item/gun/G = src.loc
-				G.shoot_point_blank(src.affecting,src.assailant)
+			var/obj/item/gun/G = src.loc
+			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 		qdel(src)
+
+
+/obj/item/grab/block
+	c_flags = EQUIPPED_WHILE_HELD_ACTIVE
+	item_grab_overlay_state = "grab_block_small"
+	icon_state = "grab_block"
+	name = "block"
+	desc = "By holding this in your active hand, you are blocking!"
+	can_pin = 0
+	hide_attack = 1
+
+	New()
+		..()
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			I.c_flags |= HAS_GRAB_EQUIP
+		setProperty("disorient_resist", 15)
+
+	post_item_setup()
+		. = ..()
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, src)
+
+	disposing()
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			I.c_flags &= ~HAS_GRAB_EQUIP
+			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
+
+		if (assailant)
+			assailant.delStatus("blocking")
+		..()
+
+	attack(atom/target, mob/user)
+		if (assailant)
+			assailant.visible_message("<span style=\"color:red\">[assailant] lowers their defenses!</span>")
+		qdel(src)
+
+	attack_self()
+		if (assailant)
+			assailant.visible_message("<span style=\"color:red\">[assailant] lowers their defenses!</span>")
+		qdel(src)
+
+	update_icon()
+		.= 0
+
+	do_resist()
+		.= 0
+		if (assailant)
+			assailant.last_resist = world.time + 5
+			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
+			assailant.visible_message("<span style=\"color:red\">[assailant] lowers their defenses!</span>")
+		qdel(src)
+
+
+	proc/can_block(var/hit_type = null)
+		.= 1
+		if (isitem(src.loc) && hit_type)
+			.= 0
+			var/obj/item/I = src.loc
+
+			var/prop = "block_blunt"
+			switch(hit_type)
+				if (DAMAGE_BLUNT)
+					prop = "block_blunt"
+				if (DAMAGE_CUT)
+					prop = "block_cut"
+				if (DAMAGE_STAB)
+					prop = "block_stab"
+				if (DAMAGE_BURN)
+					prop = "block_burn"
+
+					if (I.reagents)
+						I.reagents.temperature_reagents(2000,10)
+
+			if (src.hasProperty(prop))
+				.= 1
+
+	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
+		switch(hit_type)
+			if (DAMAGE_BLUNT)
+				playsound(get_turf(src), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			if (DAMAGE_CUT)
+				playsound(get_turf(src), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+			if (DAMAGE_STAB)
+				playsound(get_turf(src), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+			if (DAMAGE_BURN)
+				playsound(get_turf(src), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+
+	handle_throw(var/mob/living/user,var/atom/target)
+		if (isturf(user.loc) && target)
+			var/turf/T = user.loc
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
+				user.force_laydown_standup()
+
+				var/turf/target_turf = get_step(user,get_dir(user,target))
+				if (!target_turf)
+					target_turf = T
+
+				var/mob/living/dive_attack_hit = null
+
+				for (var/mob/living/L in target_turf)
+					if (user == L) continue
+					dive_attack_hit = L
+					break
+
+				if (dive_attack_hit)
+					var/damage = rand(1,6)
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.shoes)
+							damage += H.shoes.kick_bonus
+
+					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+					for (var/mob/O in AIviewers(user))
+						O.show_message("<span style=\"color:red\"><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
+				else
+					for (var/mob/O in AIviewers(user))
+						O.show_message("<span style=\"color:red\"><B>[user] slides to the ground!</B></span>", 1, group = "resist")
+
+				step_to(user,target_turf)
+
+		user.u_equip(src)
 
 ////////////////////////////
 //SPECIAL GRAB ITEMS STUFF//

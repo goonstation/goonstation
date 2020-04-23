@@ -1224,7 +1224,7 @@
 				assigned.images.Remove(health_mon_icons)
 				assigned = null
 
-			sleep(20)
+			sleep(2 SECONDS)
 
 	proc/addIcons()
 		if(assigned)

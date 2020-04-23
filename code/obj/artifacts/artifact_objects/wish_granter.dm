@@ -39,11 +39,11 @@
 
 		wish_granted += user.key
 		user.say(wish)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		boutput(user, "<b>[O]</b> resonates, \"<big>SO BE IT...</big>\"")
 		playsound(O, "sound/musical_instruments/Gong_Rumbling.ogg", 40, 1)
 		O.visible_message("<span style=\"color:red\"><b>[O]</b> begins to charge up...</span>")
-		sleep(30)
+		sleep(3 SECONDS)
 		if (prob(2))
 			evil = !evil
 

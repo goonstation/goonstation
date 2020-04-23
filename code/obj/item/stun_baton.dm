@@ -8,7 +8,7 @@
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton"
@@ -57,7 +57,8 @@
 			processing_items.Add(src)
 		src.update_icon()
 		src.setItemSpecial(/datum/item_special/spark)
-		return
+
+		BLOCK_ROD
 
 	disposing()
 		if (src in processing_items)
@@ -552,7 +553,7 @@
 /obj/item/barrier
 	name = "barrier"
 	desc = "A personal barrier. Activate this item with both hands free to use it."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
@@ -574,6 +575,10 @@
 
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = 0
+
+	New()
+		..()
+		BLOCK_ALL
 
 	proc/update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
@@ -650,7 +655,7 @@
 /obj/item/syndicate_barrier
 	name = "Aegis Riot Barrier"
 	desc = "A personal barrier."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
@@ -674,3 +679,4 @@
 		setProperty("disorient_resist_ear", 50)
 
 		src.setItemSpecial(/datum/item_special/barrier)
+		BLOCK_ALL

@@ -427,7 +427,7 @@
 	attack_ai(mob/user)
 		if(status & (BROKEN|NOPOWER)) return
 
-		interact(user)
+		interacted(user)
 
 	attack_hand(mob/user)
 
@@ -435,9 +435,9 @@
 
 		if(status & (BROKEN|NOPOWER)) return
 
-		interact(user)
+		interacted(user)
 
-	proc/interact(mob/user)
+	proc/interacted(mob/user)
 		window.Subscribe(user.client)
 		return 1
 

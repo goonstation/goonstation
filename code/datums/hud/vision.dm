@@ -72,10 +72,10 @@
 			animate(color_mod_floor, color = color, time = duration)
 			SPAWN_DBG(duration + 1)
 				if (color == "#000000")
-					remove_screen(color)
+					remove_screen(color_mod)
 					remove_screen(color_mod_floor)
 				else
-					add_screen(color)
+					add_screen(color_mod)
 					add_screen(color_mod_floor)
 
 		set_dither_alpha(alpha)

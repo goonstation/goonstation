@@ -224,7 +224,7 @@
 		if (O.layer > layer)
 			SPAWN_DBG(0)
 				O.overlays += image('icons/effects/fire.dmi', "2old")
-				sleep(10)
+				sleep(1 SECOND)
 				if (O)
 					O.visible_message("<span style=\"color:red\">[src]'s flashbulb burns [O] to a crisp.</span>")
 					qdel(O)

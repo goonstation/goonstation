@@ -220,7 +220,7 @@
 				return
 
 			boutput(user, "<span style=\"color:red\">Pressing button. Please wait thirty seconds.</span>")
-			sleep(300)
+			sleep(30 SECONDS)
 
 			input = alert("For real though, you're okay with pressing the button?","DONT PRESS IT","Yes","No")
 			if (input != "Yes")
@@ -252,7 +252,7 @@
 				A.updateicon()
 				LAGCHECK(LAG_LOW)
 
-			sleep(300)
+			sleep(30 SECONDS)
 
 			siren.repeat = 0
 			siren.status = SOUND_UPDATE
@@ -293,7 +293,7 @@
 			boutput(user, "<span style=\"color:blue\">You pry out the loose screw with the knife. This is just ridiculous.</span>")
 			steps_until_pressable--
 			return
-		if (istype(W,/obj/item/knife_butcher) && steps_until_pressable == 13)
+		if (istype(W,/obj/item/knife/butcher) && steps_until_pressable == 13)
 			boutput(user, "<span style=\"color:red\">That's a bit excessive. A regular knife will do.</span>")
 			return
 		if (istype(W,/obj/item/shovel) && steps_until_pressable == 12)

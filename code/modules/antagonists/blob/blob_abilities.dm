@@ -847,7 +847,7 @@
 			return 1
 
 		Bleb.visible_message("<span style=\"color:red\"><b>The blobs starts devouring [I]!</b></span>")
-		sleep(20)
+		sleep(2 SECONDS)
 		if (!I)
 			return 1
 		if (!isturf(I.loc))
@@ -1282,7 +1282,7 @@
 					O.setMaterial(getInterpolatedMaterial(O.material, to_merge, 0.17))
 				wg++
 				if (wg >= 20)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					wg = 0
 			boutput(usr, "<span style=\"color:blue\">Finished applying material upgrade!</span>")
 			taking = 0

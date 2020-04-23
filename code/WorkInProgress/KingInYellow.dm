@@ -84,6 +84,7 @@
 	desc = "This appears to be an ancient Book containing a Play."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "bookkiy"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
 
@@ -92,6 +93,7 @@
 
 	New()
 		work()
+		BLOCK_BOOK
 		return
 
 	proc/work()

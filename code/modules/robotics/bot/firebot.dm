@@ -180,12 +180,11 @@
 			src.health = initial(src.health)
 			src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
 	else
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.1 //More fire resistant than other bots
-			if("brute")
-				src.health -= W.force * 0.5
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				src.health -= W.force * 0.1 //more fire resistant than other bots
 			else
+				src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 		else if (W.force)

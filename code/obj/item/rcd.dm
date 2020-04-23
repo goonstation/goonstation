@@ -33,7 +33,7 @@ Broken RCD + Effects
 /obj/item/rcd
 	name = "rapid construction device"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "base"
 	item_state = "rcd" //oops
@@ -206,7 +206,7 @@ Broken RCD + Effects
 						return
 
 				if (istype(A, /turf/simulated/wall))
-					if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
+					if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istype(A, /turf/simulated/wall/auto/shuttle))
 						return	// You can't go reinforcing stuff that's already reinforced you dope.
 					if (do_thing(user, A, "reinforcing the wall", matter_create_wall, 5 SECONDS))
 						var/datum/material/M = A:material
@@ -250,6 +250,8 @@ Broken RCD + Effects
 						return
 
 				if (istype(A, /turf/simulated/wall))
+					if (istype(A, /turf/simulated/wall/auto/shuttle))
+						return
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, 5 SECONDS))
 						var/datum/material/M = A:material
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
@@ -616,7 +618,7 @@ Broken RCD + Effects
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for a rapid construction device."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "ammo"
 	item_state = "rcdammo"
@@ -654,7 +656,7 @@ Broken RCD + Effects
 /obj/item/rcd_fake
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
@@ -671,7 +673,7 @@ Broken RCD + Effects
 /obj/item/broken_rcd
 	name = "prototype rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'icons/obj/rcd.dmi'
+	icon = 'icons/obj/items/rcd.dmi'
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"

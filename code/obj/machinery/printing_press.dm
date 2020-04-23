@@ -71,7 +71,7 @@
 			src.UpdateOverlays(I, "ink")
 		if (is_running)
 			flick("printing_press-work", src)
-			sleep(24)
+			sleep(2.4 SECONDS)
 			return
 		icon_state = "printing_press-idle"
 
@@ -515,7 +515,7 @@
 					if (book_cover in non_writing_icons) //for our non-writing.dmi icons
 						switch (book_cover)
 							if ("bible")
-								B.icon = 'icons/obj/storage.dmi'
+								B.icon = 'icons/obj/items/storage.dmi'
 								B.icon_state = book_cover
 					else
 						B.icon_state = book_cover

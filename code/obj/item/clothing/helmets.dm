@@ -536,11 +536,11 @@
 				light.set_color(0.9, 0.1, 0.1)
 				if (!weeoo_in_progress)
 					break
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (!weeoo_in_progress)
 					break
 				light.set_color(0.1, 0.1, 0.9)
-				sleep(3)
+				sleep(0.3 SECONDS)
 			light.disable()
 			src.icon_state = "siren0"
 			weeoo_in_progress = 0

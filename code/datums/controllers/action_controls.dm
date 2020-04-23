@@ -633,7 +633,7 @@ var/datum/action_controller/actions
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "handcuffsset"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
 	var/obj/item/handcuffs/cuffs
@@ -700,8 +700,8 @@ var/datum/action_controller/actions
 			target.drop_from_slot(target.r_hand)
 			target.drop_from_slot(target.l_hand)
 			target.drop_juggle()
-			target.update_clothing()
 			target.setStatus("handcuffed", duration = INFINITE_STATUS)
+			target.update_clothing()
 
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span style=\"color:red\"><B>[owner] handcuffs [target]!</B></span>", 1)
@@ -710,7 +710,7 @@ var/datum/action_controller/actions
 	duration = 70
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "handcuffsother"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
 
@@ -749,7 +749,7 @@ var/datum/action_controller/actions
 	duration = 600
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "handcuffs"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 
 	New(var/dur)
@@ -864,7 +864,7 @@ var/datum/action_controller/actions
 	duration = 30 //How long does this action take in ticks.
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "magpicker"
-	icon = 'icons/obj/items.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
+	icon = 'icons/obj/items/items.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "magtractor-small"
 
 	var/obj/item/target = null //This will contain the object we are trying to pick up.
@@ -1104,7 +1104,7 @@ var/datum/action_controller/actions
 /obj/bombtest
 	name = "large cartoon bomb"
 	desc = "It looks like it's gonna blow."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dumb_bomb"
 	density = 1
 

@@ -135,7 +135,7 @@
 
 		operating = 1
 
-		sleep(50)
+		sleep(5 SECONDS)
 
 		var/energy	//energy from the reaction
 		var/H		//residual matter if H
@@ -162,7 +162,7 @@
 		if(energy > convert2energy(8e-12))	//TOO MUCH ENERGY
 			for(var/mob/M in hearers(src, null))
 				M.show_message(text("<span style=\"color:red\">You hear a loud whirring!</span>"))
-			sleep(20)
+			sleep(2 SECONDS)
 
 			//Q = k x (delta T)
 			//Too much energy so machine panics and dissapates half of it as heat
@@ -185,7 +185,7 @@
 
 		else	//this amount of energy is okay so it does the proper output thing
 
-			sleep(60)
+			sleep(6 SECONDS)
 			//E = Pt
 			//Lets say its 86% efficient
 			var/output = 0.86*energy/20
@@ -198,7 +198,7 @@
 			H_fuel += H
 			antiH_fuel += antiH
 		operating = 0
-		sleep(100)
+		sleep(10 SECONDS)
 
 	while(!stopping)
 

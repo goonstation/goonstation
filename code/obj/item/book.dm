@@ -3,6 +3,7 @@
 	desc = "A book.  I wonder how many of these there are here, it's not like there would be a library on a space station or something."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "book0"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
 	//cogwerks - burn vars
@@ -968,8 +969,13 @@
 	name = "Beepsky's private journal"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "pinkbook"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
+
+	New()
+		..()
+		BLOCK_BOOK
 
 	examine()
 		set src in view()
@@ -2550,7 +2556,7 @@ After a very long time, Albert got up. He was not going to give up just because 
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
 			boutput(user, "<span style=\"color:blue\">You pore over the book with the magnifying glass.</span>")
-			sleep(20)
+			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
 /obj/item/paper/book/zoo_diary
@@ -2735,7 +2741,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	opacity = 0
 	anchored = 1
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
 	item_state = "lawbook"
 
@@ -3304,7 +3310,7 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 
 	proc/build_custom_book()
 		if (src.custom_cover)
-			src.icon = 'icons/obj/custom_books.dmi'
+			src.icon = 'icons/obj/items/custom_books.dmi'
 			src.icon_state = "paper"
 			if (src.cover_color)
 				var/image/I = SafeGetOverlayImage("cover", src.icon, "base-colorable")
@@ -3322,7 +3328,7 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 				src.UpdateOverlays(I, "flair")
 		else
 			if (src.book_cover == "bible")
-				src.icon = 'icons/obj/storage.dmi'
+				src.icon = 'icons/obj/items/storage.dmi'
 			else if (!src.book_cover)
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover

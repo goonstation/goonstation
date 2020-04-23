@@ -263,7 +263,7 @@ datum/pathogeneffects/benevolent/resurrection
 				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
 
 	react_to(var/R, var/zoom)
-		if (R == "Synthflesh")
+		if (R == "synthflesh")
 			return "Dead parts of the synthflesh seem to still be transferring blood."
 
 

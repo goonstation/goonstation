@@ -82,7 +82,7 @@
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = null
 	amount = 3
 	heal_amt = 1
@@ -345,7 +345,7 @@
 
 			if (desired_mask != current_mask)
 				current_mask = desired_mask
-				src.filters = list(filter(type="alpha", icon=icon('icons/obj/food.dmi', "eating[desired_mask]")))
+				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
 
@@ -355,7 +355,7 @@
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"
 	desc = "This is a chunk of partially digested food."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "scotchegg"
 	amount = 1
 	heal_amt = 0
@@ -397,7 +397,7 @@
 /obj/item/reagent_containers/food/drinks
 	name = "drink"
 	desc = "yummy"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
@@ -714,7 +714,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle
 	name = "bottle"
-	icon = 'icons/obj/bottle.dmi'
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "bottle"
 	desc = "A stylish bottle for the containment of liquids."
 	var/label = "none" // Look in bottle.dmi for the label names
@@ -776,7 +776,7 @@
 			if (src.label)
 				ENSURE_IMAGE(src.image_label, src.icon, "label-broken-[src.label]")
 				//if (!src.image_label)
-					//src.image_label = image('icons/obj/bottle.dmi')
+					//src.image_label = image('icons/obj/foodNdrink/bottle.dmi')
 				//src.image_label.icon_state = "label-broken-[src.label]"
 				src.UpdateOverlays(src.image_label, "label")
 			else
@@ -788,14 +788,14 @@
 				src.icon_state = "bottle-[src.bottle_style][src.alt_filled_state]"
 				ENSURE_IMAGE(src.image_fluid, src.icon, "fluid-[src.fluid_style]")
 				//if (!src.image_fluid)
-					//src.image_fluid = image('icons/obj/bottle.dmi')
+					//src.image_fluid = image('icons/obj/foodNdrink/bottle.dmi')
 				var/datum/color/average = reagents.get_average_color()
 				image_fluid.color = average.to_rgba()
 				src.underlays += src.image_fluid
 			if (src.label)
 				ENSURE_IMAGE(src.image_label, src.icon, "label-[src.label]")
 				//if (!src.image_label)
-					//src.image_label = image('icons/obj/bottle.dmi')
+					//src.image_label = image('icons/obj/foodNdrink/bottle.dmi')
 				//src.image_label.icon_state = "label-[src.label]"
 				src.UpdateOverlays(src.image_label, "label")
 			else
@@ -911,7 +911,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Caution - fragile."
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
 	item_state = "drink_glass"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -1231,7 +1231,7 @@
 	icon_state = "glass-oldf"
 	glass_style = "oldf"
 	initial_volume = 20
-	
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/round
 	name = "round glass"
 	icon_state = "glass-round"
@@ -1444,7 +1444,7 @@
 
 		var/datum/color/average = reagents.get_average_color()
 		if (!src.fluid_image)
-			src.fluid_image = image('icons/obj/drink.dmi', "fluid-[glass_style]", -1)
+			src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-[glass_style]", -1)
 		src.fluid_image.color = average.to_rgba()
 		src.overlays += src.fluid_image
 
@@ -1467,7 +1467,7 @@
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()
 			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/drink.dmi', "fluid-carafe", -1)
+				src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-carafe", -1)
 				src.fluid_image.color = average_rgb
 				src.UpdateOverlays(src.fluid_image, "fluid")
 			if (istype(src.loc, /obj/machinery/coffeemaker))
@@ -1539,7 +1539,7 @@
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"
 	desc = "Must be migrational."
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "coconut"
 	item_state = "drink_glass"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -1564,7 +1564,7 @@
 /obj/item/reagent_containers/food/drinks/detflask
 	name = "detective's flask"
 	desc = "Must be migrational."
-	icon = 'icons/obj/bottle.dmi'
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "detflask"
 	item_state = "detflask"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO

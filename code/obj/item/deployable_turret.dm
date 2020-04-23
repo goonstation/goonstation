@@ -182,7 +182,7 @@
 
 			if(src.anchored)
 				user.show_message("You start to unweld the turret from the floor.")
-				sleep(30)
+				sleep(3 SECONDS)
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You unweld the turret from the floor.")
@@ -196,7 +196,7 @@
 
 			else
 				user.show_message("You start to weld the turret to the floor.")
-				sleep(30)
+				sleep(3 SECONDS)
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You weld the turret to the floor.")
@@ -218,7 +218,7 @@
 				return
 
 			user.show_message("You start to repair the turret.")
-			sleep(20)
+			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
 				W:eyecheck(user)
@@ -243,7 +243,7 @@
 				user.show_message("You begin to disassemble the turret.")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 
-				sleep(20)
+				sleep(2 SECONDS)
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You disassemble the turret.")
@@ -268,7 +268,7 @@
 
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 
-			sleep(10)
+			sleep(1 SECOND)
 
 			if ((user.loc == T && user.equipped() == W))
 				if(src.active)
@@ -318,11 +318,12 @@
 
 
 	bullet_act(var/obj/projectile/P)
-		if(istype(P.proj_data,/datum/projectile/energy_bolt)) // fuck tasers
+		var/damage = 0
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
 			return
-		else
-			src.health = src.health - max(P.power/2,0) // staples have a power of 5, .22 bullets have a power of 35
-			src.check_health()
+		src.health = src.health - max(P.power/2,0) // staples have a power of 5, .22 bullets have a power of 35
+		src.check_health()
 
 
 	proc/check_health()

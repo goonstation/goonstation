@@ -83,15 +83,15 @@
 				walk_to(src, shitfood, 1, 5)
 				if (prob(50))
 					speak(pick("ALRIGHT, EVERYBODY STOP!" , "THAT'S ENOUGH!"))
-				sleep(10)
+				sleep(1 SECOND)
 				drama()
-				sleep(20)
+				sleep(2 SECONDS)
 				if (is_thechef_the_chef && prob(50) && thechef)
 					point(thechef)
 					speak(pick("COME HERE YOU!", "COME HERE, LET ME TELL YOU SOMETHING!", "STOP WHAT YOU'RE DOING AND COME HERE RIGHT NOW!"))
 				else
 					speak("WHO COOKED THIS SHIT?")
-				sleep(20)
+				sleep(2 SECONDS)
 				if (shitfood) // fix for cannot read null.name (the food sometimes no longer exists after a sleep (because people eat it I assume)) - haine
 					if (dork && prob(10))
 						speak("THIS [shitfood.name] LOOKS LIKE [dork]!")
@@ -101,7 +101,7 @@
 					var/area/area = get_area(thechef)
 					if (findtext(area.name, "Kitchen"))
 						is_in_kitchen = 1
-				sleep(20)
+				sleep(2 SECONDS)
 				if (is_in_kitchen && prob(40))
 					speak(pick("SWITCH IT OFF!", "SHUT IT DOWN!", "FUCK OFF OUT OF HERE!", "OUT. GET OUT! GET OUT OF THIS KITCHEN! GET OUT!"))
 				else
@@ -126,10 +126,10 @@
 				if (somefucker)
 					speak(pick("WHAT IS THIS?", "OH MY GOD."))
 					drama()
-					sleep(20)
+					sleep(2 SECONDS)
 					point(somefucker)
 					speak("WHO COOKED THIS?")
-					sleep(20)
+					sleep(2 SECONDS)
 					if (somefucker)
 						if (somefucker.getStatusDuration("burning") > 0)
 							speak("YOU DON'T LEAVE YOUR FUCKING FOOD UNATTENDED ON THE FUCKING STOVE. LOOK AT THIS. IT'S ON FIRE! IT'S GOING TO BE FUCKING BURNT!")
@@ -139,7 +139,7 @@
 							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
 			if (2 to 3)
 				drama()
-				sleep(20)
+				sleep(2 SECONDS)
 				var/msg = pick("WHY DID THE CHICKEN CROSS THE ROAD? BECAUSE YOU DIDN'T FUCKING COOK IT.", "THIS PORK IS SO RAW IT'S STILL SINGING HAKUNA MATATA!", "THIS STEAK IS SO RAW OLD MCDONALD IS STILL TRYING TO MILK IT!", "THIS FISH IS SO RAW IT'S STILL TRYING TO FIND NEMO!")
 				speak(msg)
 			if (4)
@@ -147,10 +147,10 @@
 				if (someborg)
 					speak(pick("WHAT IS THIS?", "OH MY GOD."))
 					drama()
-					sleep(20)
+					sleep(2 SECONDS)
 					point(someborg)
 					speak("WHO COOKED THIS?")
-					sleep(20)
+					sleep(2 SECONDS)
 					if (someborg)
 						speak("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
 		raging = 0
@@ -177,12 +177,7 @@
 		emag_act(user, W)
 	else
 		src.visible_message("<span style=\"color:red\">[user] hits [src] with [W]!</span>")
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.5
-			if("brute")
-				src.health -= W.force * 0.5
-			else
+		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 

@@ -263,7 +263,7 @@
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-2,2)
 				src.pixel_y += rand(-1,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x = old_x
 				src.pixel_y = old_y
 
@@ -275,7 +275,7 @@
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-3,3)
 				src.pixel_y += rand(-1,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x = old_x
 				src.pixel_y = old_y
 
@@ -1059,7 +1059,7 @@ Frequency:
 					SPAWN_DBG(0)
 						while(src.pixel_y < 10)
 							src.pixel_y++
-							sleep(1)
+							sleep(0.1 SECONDS)
 						if (src.beebot == 1)
 							src.icon_state = "eyebot-bee"
 						else

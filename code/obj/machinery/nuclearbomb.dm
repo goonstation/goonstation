@@ -310,7 +310,7 @@
 			qdel(src)
 
 	proc/explode()
-		sleep(20)
+		sleep(2 SECONDS)
 		done = 1
 		if(src.boom_size != "nuke")
 			var/area/A = get_area(src)
@@ -318,10 +318,15 @@
 			explosion_new(src, get_turf(src), src.boom_size)
 			qdel(src)
 			return
-		var/datum/game_mode/nuclear/NUKEMODE = null
+		var/datum/game_mode/nuclear/NUKEMODE = ticker?.mode
 		var/turf/nuke_turf = get_turf(src)
-		if (nuke_turf.z != 1 && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
-			NUKEMODE = ticker.mode
+		var/area/nuke_area = get_area(src)
+		var/area_correct = 0
+		if(src.target_override && istype(nuke_area, src.target_override))
+			area_correct = 1
+		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
+			area_correct = 1
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
@@ -335,7 +340,7 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
-		sleep(55)
+		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
 		for(var/mob/living/carbon/human/nukee in mobs)
@@ -351,10 +356,10 @@
 			ticker.mode:nuke_detonated = 1
 			ticker.mode.check_win()
 		else
-			sleep(10)
+			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
-			sleep(300)
+			sleep(30 SECONDS)
 			logTheThing("diary", null, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
@@ -362,7 +367,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 

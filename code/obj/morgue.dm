@@ -167,7 +167,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -306,7 +306,7 @@
 
 				var/i
 				for (i = 0, i < 10, i++)
-					sleep(10)
+					sleep(1 SECOND)
 					L.TakeDamage("chest", 0, 30)
 					if (!isdead(L) && prob(25))
 						L.emote("scream")
@@ -529,7 +529,7 @@
 			if (isliving(M))
 				var/mob/living/L = M
 				for (var/i in 1 to src.settime)
-					sleep(10)
+					sleep(1 SECOND)
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
 						if (src.emagged)

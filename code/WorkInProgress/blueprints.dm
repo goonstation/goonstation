@@ -194,7 +194,7 @@
 				V.set_density(0)
 				V.layer = EFFECTS_LAYER_BASE
 
-				sleep(15)
+				sleep(1.5 SECONDS)
 
 				qdel(V)
 
@@ -333,7 +333,7 @@
 /obj/item/blueprint_marker
 	name = "Blueprint Marker"
 	desc = "A tool used to map rooms for the creation of blueprints."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 
 	icon_state = "blueprintmarker"
 	item_state = "gun"

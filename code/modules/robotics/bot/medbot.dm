@@ -315,12 +315,11 @@
 		return
 
 	else
-		switch (W.damtype)
-			if ("fire")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
 				src.health -= W.force * 0.75
-			if ("brute")
-				src.health -= W.force * 0.5
 			else
+				src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 		else if (W.force)
@@ -569,13 +568,13 @@
 					SPAWN_DBG(1 DECI SECOND)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
 

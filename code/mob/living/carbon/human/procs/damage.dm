@@ -590,7 +590,7 @@
 	if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 		a_zone = "chest"
 
-	armor_mod = get_melee_protection(zone)
+	armor_mod = get_melee_protection(zone, damage_type)
 	/*switch (zone)
 		if ("l_arm")
 			z_name = "left arm"

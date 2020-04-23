@@ -539,7 +539,7 @@
 				scriptline++
 
 			scriptline = (shscript.len) ? scriptline : 0
-				//sleep(10)
+				//sleep(1 SECOND)
 			if (!shscript.len && !scriptprocess)
 
 //				if (scriptprocess)

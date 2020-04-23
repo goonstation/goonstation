@@ -6,7 +6,7 @@ HAND_TELE
 */
 /obj/item/locator
 	name = "locator"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "locator"
 	var/temp = null
 	var/frequency = 1451
@@ -118,7 +118,7 @@ Frequency:
 
 /obj/item/hand_tele
 	name = "hand tele"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5

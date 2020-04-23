@@ -92,7 +92,7 @@ Fibre wire
 
 			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
-			sleep(30)
+			sleep(3 SECONDS)
 			qdel(src)
 
 //////////////////////////////
@@ -206,7 +206,7 @@ proc/Create_Tommyname()
 
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "tommy1"
 	m_amt = 4000
 	rechargeable = 1
@@ -225,7 +225,7 @@ proc/Create_Tommyname()
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
 			O.show_message("<span style=\"color:red\"><B>[user] fires the [src] at [target]!</B></span>", 1, "<span style=\"color:red\">You hear a loud crackling noise.</span>", 2)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
 	update_icon()
@@ -368,18 +368,18 @@ proc/Create_Tommyname()
 					return
 				else
 					activated = 1
-					sleep(20)
+					sleep(2 SECONDS)
 					var/startx = 1
 					var/starty = 1
 					var/mob/badmantarget = M
 					boutput(badmantarget, "<span style=\"color:black\"> <B> You hear a voice in your head, 'You're not supposed to be here'. </B>")
 					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, 1, -1)
-					sleep(100)
+					sleep(10 SECONDS)
 					startx = badmantarget.x - rand(-11, 11)
 					starty = badmantarget.y - rand(-11, 11)
 					var/turf/pickedstart = locate(startx, starty, badmantarget.z)
 					new /obj/badman(pickedstart, badmantarget)
-					sleep(150)
+					sleep(15 SECONDS)
 					activated = 0
 
 ////////////////////////////// Donald Trumpet
@@ -854,7 +854,7 @@ proc/Create_Tommyname()
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = 1
 
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
 
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -862,6 +862,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	New()
+		..()
+		BLOCK_ROPE
 
 
 /obj/item/garrote/proc/toggle_wire_readiness()

@@ -22,9 +22,6 @@
 				V.addAbility(/datum/targetable/vampire/glare)
 				V.addAbility(/datum/targetable/vampire/hypnotize)
 
-			if (src.mind)
-				src.mind.is_vampire = V
-
 			SPAWN_DBG (25) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
@@ -47,9 +44,6 @@
 				C.abilityHolder.addAbility(/datum/targetable/vampire/call_bats)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/vampire_scream)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/enthrall)
-
-			if (C.mind)
-				C.mind.is_vampire = C.abilityHolder
 
 		if (src.mind && src.mind.special_role != "omnitraitor")
 			if(shitty)

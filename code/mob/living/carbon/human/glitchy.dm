@@ -15,7 +15,7 @@
 			src.reagents.add_reagent("stimulants", 200)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
-			sleep(10)
+			sleep(1 SECOND)
 			bioHolder.mobAppearance.UpdateMob()
 
 	Life(datum/controller/process/mobs/parent)

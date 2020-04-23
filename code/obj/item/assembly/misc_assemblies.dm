@@ -18,7 +18,7 @@ Contains:
 
 /obj/item/assembly
 	name = "assembly"
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
 	var/status = 0.0
@@ -191,7 +191,7 @@ Contains:
 
 /obj/item/assembly/time_ignite/c_state(n)
 	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/assemblies.dmi'
+		src.icon = 'icons/obj/items/assemblies.dmi'
 		src.icon_state = text("timer-igniter[n]")
 		src.overlays = null
 		src.underlays = null
@@ -201,14 +201,14 @@ Contains:
 		src.icon_state = part5.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
 		src.name = "Timer/Igniter/Pipebomb Assembly"
 	else
 		src.icon = part3.icon
 		src.icon_state = part3.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
 		src.underlays += part3.underlays
 		src.name = "Timer/Igniter/Beaker Assembly"
 	return
@@ -287,7 +287,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/c_state(n)
 	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/assemblies.dmi'
+		src.icon = 'icons/obj/items/assemblies.dmi'
 		src.icon_state = text("prox-igniter[n]")
 		src.overlays = null
 		src.underlays = null
@@ -297,14 +297,14 @@ Contains:
 		src.icon_state = part5.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
 		src.name = "Proximity/Igniter/Pipebomb Assembly"
 	else
 		src.icon = part3.icon
 		src.icon_state = part3.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
 		src.underlays += part3.underlays
 		src.name = "Proximity/Igniter/Beaker Assembly"
 	return
@@ -631,7 +631,7 @@ Contains:
 
 /obj/item/assembly/rad_ignite/c_state()
 	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/assemblies.dmi'
+		src.icon = 'icons/obj/items/assemblies.dmi'
 		src.icon_state = text("radio-igniter")
 		src.overlays = null
 		src.underlays = null
@@ -641,14 +641,14 @@ Contains:
 		src.icon_state = part5.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
 		src.name = "Radio/Igniter/Pipebomb Assembly"
 	else
 		src.icon = part3.icon
 		src.icon_state = part3.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
 		src.underlays += part3.underlays
 		src.name = "Radio/Igniter/Beaker Assembly"
 	return

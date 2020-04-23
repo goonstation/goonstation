@@ -1,6 +1,6 @@
 /obj/item/gun/energy
 	name = "energy weapon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
@@ -460,7 +460,7 @@
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
 	uses_multiple_icon_states = 1
@@ -499,7 +499,7 @@
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
 	name = "BFG 9000"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "bfg"
 	m_amt = 4000
 	force = 6.0
@@ -518,7 +518,7 @@
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
-			sleep(9)
+			sleep(0.9 SECONDS)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/bfg/vr
@@ -666,7 +666,7 @@
 /obj/item/gun/energy/blaster_pistol
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = 3.0
 	force = 5.0
@@ -730,14 +730,14 @@
 	/*proc/generate_overlays()
 		src.overlays = null
 		if(extension_mod)
-			src.overlays += icon('icons/obj/gun_mod.dmi',extension_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun_mod.dmi',extension_mod.overlay_name)
 		if(converter_mod)
-			src.overlays += icon('icons/obj/gun_mod.dmi',converter_mod.overlay_name)*/
+			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
 /obj/item/gun/energy/blaster_smg
 	name = "burst blaster"
 	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = 3.0
@@ -765,7 +765,7 @@
 /obj/item/gun/energy/blaster_cannon
 	name = "blaster cannon"
 	desc = "A heavily overcharged blaster weapon, modified for extreme firepower. It's self-charging by a larger radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
 	can_dual_wield = 0
@@ -796,7 +796,7 @@
 	desc = "Components for building custom sidearms."
 	item_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "frame" // todo: make more item icons
 	mats = 0
 
@@ -937,7 +937,7 @@
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
 	name = "Glitch Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "airzooka"
 	m_amt = 4000
 	force = 0.0
@@ -955,7 +955,7 @@
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
-			sleep(1)
+			sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
@@ -1121,13 +1121,13 @@
 ///////////////////////////////////////////////////
 /obj/item/gun/energy/lawgiver/old
 	name = "Antique Lawgiver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "old-lawgiver0"
 	old = 1
 
 /obj/item/gun/energy/lawgiver
 	name = "Lawgiver"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
 	icon_state = "lawgiver0"
 	var/old = 0
@@ -1145,7 +1145,7 @@
 		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawgiver, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawgiver,new/datum/projectile/bullet/clownshot)
 
-		src.indicator_display = image('icons/obj/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
 		update_icon()
@@ -1241,7 +1241,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(4)
+					sleep(0.4 SECONDS)
 					playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
@@ -1435,6 +1435,7 @@
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
+	item_state = "pulse_rifle"
 	force = 5
 	two_handed = 1
 	can_dual_wield = 0

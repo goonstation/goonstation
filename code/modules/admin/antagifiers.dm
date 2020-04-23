@@ -4,7 +4,7 @@
 	name = "An Offer You Couldn't Refuse"
 	desc = "In this economy you'd be stupid to turn this down."
 	anchored = 1
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda-s"
 	var/attachedObjective = "For the free market!"
 	var/uses = -1 // -1 for infinite uses
@@ -76,7 +76,7 @@
 	name = "VERY Haunted Championship Belt"
 	desc = "You feel more awesome just looking at this thing."
 	attachedObjective = "Climb to the top of the mountain!"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
@@ -194,7 +194,7 @@
 	wrestler
 		name = "WRESTL~1.EXE"
 		desc = "Installs some sweet wrestling moves into your virtual body."
-		icon = 'icons/obj/belts.dmi'
+		icon = 'icons/obj/items/belts.dmi'
 		icon_state = "machobelt"
 
 		makeAntag(mob/living/carbon/human/M as mob)

@@ -356,7 +356,7 @@
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "domino"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "domino"
