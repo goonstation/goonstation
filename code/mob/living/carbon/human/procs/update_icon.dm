@@ -1229,7 +1229,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	else
 		src.maptext = ""
 #else
-/mob/living/carbon/human/dummy/UpdateDamage()
+/mob/living/carbon/human/tdummy/UpdateDamage()
 	..()
 	var/prev = health
 	src.updatehealth()
@@ -1249,7 +1249,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	else
 		src.maptext = ""
 
-/mob/living/carbon/human/dummy/Life(datum/controller/process/mobs/parent)
+/mob/living/carbon/human/tdummy/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
 	src.UpdateDamage()
