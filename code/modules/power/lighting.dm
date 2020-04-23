@@ -889,8 +889,6 @@
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
 
-// TODO: SET UP ICON STATES PROPERLY!
-
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -972,7 +970,7 @@
 	blacklight
 		name = "black light tube"
 		desc = "Fancy."
-		icon_state = "tube-uv" // this isn't working for some reason
+		icon_state = "tube-uv"
 		base_state = "tube-uv"
 		color_r = 0.3
 		color_g = 0

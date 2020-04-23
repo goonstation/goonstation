@@ -332,7 +332,6 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
-	// valid_colors = list("R") // why was this even here
 	off_w_class = 3
 	active_force = 18
 	inactive_force = 8
