@@ -180,7 +180,7 @@
 
 				return
 			if(src.reagents.total_volume > 5)
-				reagents.reaction(src.myuser, TOUCH)
+				reagents.reaction(src.myuser, TOUCH, 5)
 				src.reagents.trans_to(src.myuser,5,1)
 			else
 				src.reagents.clear_reagents()
