@@ -435,7 +435,7 @@
 		if (istype(src.back, /obj/item/storage))
 			for (var/X in JOB.items_in_backpack)
 				src.equip_new_if_possible(X, slot_in_backpack)
-			if(JOB.recieves_disk)
+			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, slot_in_backpack)
 				var/datum/data/record/R = new /datum/data/record(  )
