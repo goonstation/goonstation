@@ -1375,6 +1375,44 @@
 		return r_store
 	return null
 
+/mob/living/carbon/human/get_slot_from_item(var/thing)
+	if (!(thing in src.contents))
+		return null
+
+	//wanted the following to be a switch case but those expect constant expressions
+
+	if (src.w_uniform == thing)
+		return slot_w_uniform
+	if (src.wear_id == thing)
+		return slot_wear_id
+	if (src.gloves == thing)
+		return slot_gloves
+	if (src.shoes == thing)
+		return slot_shoes
+	if (src.wear_suit == thing)
+		return slot_wear_suit
+	if (src.back == thing)
+		return slot_back
+	if (src.glasses == thing)
+		return slot_glasses
+	if (src.ears == thing)
+		return ears
+	if (src.wear_mask == thing)
+		return slot_wear_mask
+	if (src.head == thing)
+		return slot_head
+	if (src.belt == thing)
+		return slot_belt
+	if (src.l_store == thing)
+		return slot_l_store
+	if (src.r_store == thing)
+		return slot_r_store
+	if(src.l_hand == thing)
+		return slot_l_hand
+	if(src.r_hand == thing)
+		return slot_r_hand
+	return null
+
 /mob/living/carbon/human/is_in_hands(var/obj/O)
 	if (l_hand == O || r_hand == O)
 		return 1

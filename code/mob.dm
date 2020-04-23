@@ -2630,6 +2630,9 @@
 /mob/proc/find_in_equipment(var/eqtype)
 	return null
 
+/mob/proc/get_slot_from_item(var/obj/item/I)
+	return null
+
 /mob/proc/is_in_hands(var/obj/O)
 	return 0
 

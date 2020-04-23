@@ -374,6 +374,7 @@
 	w_class = 2
 	initial_volume = 100
 	food_effects = list("food_warm")
+	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
