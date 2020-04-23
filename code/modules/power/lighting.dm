@@ -1162,8 +1162,8 @@
 
 	greenish
 		name = "greenish incandescent light bulb"
-		icon_state = "ibulb-white"
-		base_state = "ibulb-white"
+		icon_state = "ibulb-green"
+		base_state = "ibulb-green"
 		color_r = 0.87
 		color_g = 0.98
 		color_b = 0.89
