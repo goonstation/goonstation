@@ -686,7 +686,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/butcherknife
 	name = "Butcher's Knife"
-	item = /obj/item/knife_butcher
+	item = /obj/item/knife/butcher
 	cost = 7
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1

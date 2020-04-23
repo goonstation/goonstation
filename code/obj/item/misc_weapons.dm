@@ -422,7 +422,7 @@
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY 
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
@@ -470,9 +470,10 @@
 		setTwoHanded(0)
 		status = 0
 		..()
+
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
 
-/obj/item/knife_butcher //Idea stolen from the welder!
+/obj/item/knife/butcher //Idea stolen from the welder!
 	name = "Butcher's Knife"
 	desc = "A huge knife."
 	icon = 'icons/obj/kitchen.dmi'
@@ -488,11 +489,11 @@
 	hit_type = DAMAGE_STAB
 	var/makemeat = 1
 
-/obj/item/knife_butcher/New()
+/obj/item/knife/butcher/New()
 	..()
 	BLOCK_KNIFE
 
-/obj/item/knife_butcher/throw_impact(atom/A)
+/obj/item/knife/butcher/throw_impact(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if (ismob(usr))
@@ -505,8 +506,8 @@
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
-/obj/item/knife_butcher/attack(target as mob, mob/user as mob)
-	if (!istype(src,/obj/item/knife_butcher/predspear) && ishuman(target) && ishuman(user))
+/obj/item/knife/butcher/attack(target as mob, mob/user as mob)
+	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
 		if (scalpel_surgery(target,user))
 			return
 
@@ -541,8 +542,8 @@
 	..()
 	return
 
-/obj/item/knife_butcher/custom_suicide = 1
-/obj/item/knife_butcher/suicide(var/mob/user as mob)
+/obj/item/knife/butcher/custom_suicide = 1
+/obj/item/knife/butcher/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
 	user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
@@ -553,7 +554,7 @@
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
 
-/obj/item/knife_butcher/predspear
+/obj/item/knife/butcher/predspear
 	name = "Hunting Spear"
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/items/weapons.dmi'

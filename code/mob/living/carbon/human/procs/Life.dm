@@ -595,7 +595,7 @@
 			dizziness = max(0, dizziness - 2)
 			jitteriness = max(0, jitteriness - 2)
 
-		if (!isnull(src.mind) && (isvampire(src) || iswelder(src)))
+		if (src.mind && isvampire(src))
 			if (istype(get_area(src), /area/station/chapel) && src.check_vampire_power(3) != 1)
 				if (prob(33))
 					boutput(src, "<span style=\"color:red\">The holy ground burns you!</span>")

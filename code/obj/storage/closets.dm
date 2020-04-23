@@ -176,7 +176,7 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
+	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2)
@@ -188,7 +188,7 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
+	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2)
