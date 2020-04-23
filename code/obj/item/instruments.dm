@@ -8,6 +8,7 @@
 	desc = "It makes noise!"
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "bike_horn"
+	inhand_image_icon = 'icons/mob/inhand/hand_instruments.dmi'
 	item_state = "bike_horn"
 	w_class = 3
 	p_class = 1

@@ -660,7 +660,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "pick"
+	item_state = "shovel"
 	w_class = 3
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons

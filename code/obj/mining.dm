@@ -1537,7 +1537,7 @@ obj/item/clothing/gloves/concussive
 	desc = "An energised mining tool."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
-	item_state = "ppick"
+	item_state = "ppick1"
 	flags = ONBELT
 	dig_strength = 2
 	digcost = 2
@@ -1556,10 +1556,14 @@ obj/item/clothing/gloves/concussive
 			if (!src.status)
 				boutput(user, "<span style=\"color:blue\">You power up [src].</span>")
 				src.power_up()
+				item_state = "ppick1"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
 			else
 				boutput(user, "<span style=\"color:blue\">You power down [src].</span>")
 				src.power_down()
+				item_state = "ppick0"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
@@ -1608,7 +1612,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "hammer"
+	item_state = "phammer1"
 	cell = new/obj/item/ammo/power_cell
 	force = 9
 	dig_strength = 3
@@ -1641,10 +1645,14 @@ obj/item/clothing/gloves/concussive
 			if (!src.status)
 				boutput(user, "<span style=\"color:blue\">You power up [src].</span>")
 				src.power_up()
+				item_state = "phammer1"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
 			else
 				boutput(user, "<span style=\"color:blue\">You power down [src].</span>")
 				src.power_down()
+				item_state = "phammer0"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
@@ -1666,7 +1674,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "powershovel"
+	item_state = "pshovel1"
 	flags = ONBELT
 	dig_strength = 0
 	digcost = 2
@@ -1686,10 +1694,14 @@ obj/item/clothing/gloves/concussive
 			if (!src.status)
 				boutput(user, "<span style=\"color:blue\">You power up [src].</span>")
 				src.power_up()
+				item_state = "pshovel1"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
 			else
 				boutput(user, "<span style=\"color:blue\">You power down [src].</span>")
 				src.power_down()
+				item_state = "pshovel0"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
 		else
 			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
