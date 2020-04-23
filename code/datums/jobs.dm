@@ -17,7 +17,7 @@
 	var/cant_allocate_unwanted = 0
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
-	var/receives_disk = 0
+	var/recieves_disk = 0
 	var/announce_on_join = 0
 	var/list/alt_names = list()
 	var/slot_head = null
@@ -69,7 +69,7 @@
 				I.implanted = 1
 				H.implant.Add(I)
 				I.implanted(H)
-				if (receives_disk)
+				if (recieves_disk)
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
 						if (D)
@@ -207,7 +207,7 @@
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
-	receives_disk = 1
+	recieves_disk = 1
 	recieves_implant = /obj/item/implant/health/security
 
 #ifdef SUBMARINE_MAP
@@ -414,7 +414,7 @@
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
-	receives_disk = 1
+	recieves_disk = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/rank/security
