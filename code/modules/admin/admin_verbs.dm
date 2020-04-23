@@ -1795,11 +1795,11 @@ var/list/fun_images = list()
 
 	if (client.holder.animtoggle)
 		if (ismob(A))
-			choice = input(usr, "What do?") as anything in client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]
+			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
-			choice = input(usr, "What do?") as anything in client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]
+			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
 		else
-			choice = input(usr, "What do?") as anything in client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]
+			choice = input(usr, "What do? (Atom verbs are ON)") as anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
 	else
 		if (ismob(A))
 			choice = input(usr, "What do?") as anything in client.holder.admin_interact_verbs["mob"]
