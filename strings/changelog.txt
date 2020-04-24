@@ -1,4 +1,9 @@
 
+(t)fri apr 24 20
+(u)Erinexx
+(p)406
+(e)🆕🎨|enhancement, sprites
+(*)Glowsticks are now colored. You can buy their colored variants from QM. You can also change csaber blade colors by unscrewing them and swapping out the glowstick inside!
 (t)thu apr 23 20
 (u)Erinexx
 (p)335
