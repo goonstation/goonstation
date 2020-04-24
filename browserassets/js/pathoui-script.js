@@ -501,7 +501,7 @@
 		{
 			$(id).removeClass("a-green-on");
 		}
-		else if($(id).hasClass("a-green-on"))
+		else if($(id).hasClass("a-red-on"))
 		{
 			$(id).removeClass("a-red-on");
 		}
@@ -520,7 +520,7 @@
 
 		setAnnunciator("#annTransYes", iTrans == 1);
 		setAnnunciator("#annTransNo", iTrans == -1);
-		
+
 		updateAnalysisResult("#stableType", iStableType);
 		updateAnalysisResult("#transTypesGood", iTransGood);
 		updateAnalysisResult("#transTypesBad", iTransBad);
