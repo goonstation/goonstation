@@ -131,6 +131,7 @@
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
 
