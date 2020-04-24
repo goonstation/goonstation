@@ -93,37 +93,6 @@
 			else
 				..()
 
-/obj/item/sword/proc/handle_parry(mob/target, mob/user)
-    if (target != user && ishuman(target))
-        var/mob/living/carbon/human/H = target
-        var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
-        if (!S)
-            S = H.find_type_in_hand(/obj/item/sword, "left")
-        var/obj/item/mop/mop = H.find_type_in_hand(/obj/item/mop, "right")
-        if (!mop)
-            mop = H.find_type_in_hand(/obj/item/mop, "left")
-        if (((S && S.active) || (mop)) && !(H.lying || isdead(H) || H.hasStatus("stunned") || H.hasStatus("weakened") || H.hasStatus("paralysis")))
-			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
-			C.setup(H.loc)
-			var/matrix/m = matrix()
-			m.Turn(rand(0,360))
-			C.transform = m
-			var/matrix/m1 = C.transform
-			m1.Scale(2,2)
-			C.pixel_x = 32*(user.x - target.x)*0.5
-			C.pixel_y = 32*(user.y - target.y)*0.5
-			animate(C,transform=m1,time=8)
-			H.remove_stamina(40)
-			if (ishuman(user))
-				var/mob/living/carbon/human/U = user
-				U.remove_stamina(15)
-
-			return 1
-	return 0
-
-
 /obj/item/sword/attack_self(mob/user as mob)
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and cuts \himself.</span>")
@@ -759,7 +728,7 @@
 		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
-	if (handle_parry(H, user))
+	if (handle_katanaparry(H, user))
 		return
 	switch(zoney)
 		if("head")
@@ -785,29 +754,6 @@
 				H.sever_limb(zoney)
 			return ..()
 	..()
-
-/obj/item/katana/proc/handle_parry(mob/target, mob/user)
-	if (target != user && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
-			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			playsound(get_turf(target), pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
-			C.setup(H.loc)
-			var/matrix/m = matrix()
-			m.Turn(rand(0,360))
-			C.transform = m
-			var/matrix/m1 = C.transform
-			m1.Scale(2,2)
-			C.pixel_x = 32*(user.x - target.x)*0.5
-			C.pixel_y = 32*(user.y - target.y)*0.5
-			animate(C,transform=m1,time=8)
-			H.remove_stamina(60)
-			if (ishuman(user))
-				var/mob/living/carbon/human/U = user
-				U.remove_stamina(20)
-
-			return 1
-	return 0
 
 /obj/item/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span style=\"color:red\"><b>[user] thrusts [src] through their stomach!</b></span>")
