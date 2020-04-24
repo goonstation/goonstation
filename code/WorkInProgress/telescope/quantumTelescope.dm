@@ -79,6 +79,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		return
 
 	Topic(href, href_list)
+		if (get_dist(src, usr) > 1) return
 		if(href_list["close"])
 			using = null
 
