@@ -1,5 +1,9 @@
 
 (t)fri apr 24 20
+(u)Tarmunora
+(p)395
+(e)🐛|bug
+(+)Fixed issue where guns treated you as if you were always slightly drunk for the purposes of aiming.
 (u)AwkwardDryad
 (p)385
 (e)🎨|sprites
