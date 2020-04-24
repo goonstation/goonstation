@@ -342,7 +342,7 @@
 				patient.organHolder.head.op_stage = 3.0
 				return 1
 
-		else if (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0 && surgeon.find_in_hand(src) == surgeon.r_hand)
+		else if (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "right"))
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
@@ -364,7 +364,7 @@
 			patient.organHolder.right_eye.op_stage = 2.0
 			return 1
 
-		else if (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0 && surgeon.find_in_hand(src) == surgeon.l_hand)
+		else if (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "left"))
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
@@ -1627,110 +1627,69 @@
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
 
-/* ---------- SPOON - RIGHT EYE ---------- */
+		var/obj/item/organ/eye/target_eye = null
+		var/target_side = null
 
-		if (surgeon.find_in_hand(src) == surgeon.r_hand && patient.organHolder.right_eye)
-			if (patient.organHolder.right_eye.op_stage == 0.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-
-				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
-					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
-					return 1
-
-				patient.tri_message("<span style='color:red'><b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye socket!</span>",\
-				surgeon, "<span style='color:red'>You insert [src] into [surgeon == patient ? "your" : "[patient]'s"] right eye socket!</span>", \
-				patient, "<span style='color:red'>[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your right eye socket!</span>")
-
-				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
-				patient.organHolder.right_eye.op_stage = 1.0
-				return 1
-
-			else if (patient.organHolder.right_eye.op_stage == 2.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-
-				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
-					patient.TakeDamage("head", damage_high, 0)
-					take_bleeding_damage(patient, surgeon, damage_high)
-					return 1
-
-				patient.tri_message("<span style='color:red'><b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye with [src]!</span>",\
-				surgeon, "<span style='color:red'>You remove [surgeon == patient ? "your" : "[patient]'s"] right eye with [src]!</span>",\
-				patient, "<span style='color:red'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your right eye with [src]!</span>")
-
-				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				logTheThing("combat", surgeon, patient, "removed %target%'s right eye with [src].")
-				patient.organHolder.drop_organ("right_eye")
-				return 1
-
-			else
-				src.surgeryConfusion(patient, surgeon, damage_high)
-				return 1
-
-/* ---------- SPOON - LEFT EYE ---------- */
-
-		else if (surgeon.find_in_hand(src) == surgeon.l_hand && patient.organHolder.left_eye)
-			if (patient.organHolder.left_eye.op_stage == 0.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-
-				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
-					patient.TakeDamage("head", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low)
-					return 1
-
-				patient.tri_message("<span style='color:red'><b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket!</span>",\
-				surgeon, "<span style='color:red'>You insert [src] into [surgeon == patient ? "your" : "[patient]'s"] left eye socket!</span>", \
-				patient, "<span style='color:red'>[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your left eye socket!</span>")
-
-				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
-				patient.organHolder.left_eye.op_stage = 1.0
-				return 1
-
-			else if (patient.organHolder.left_eye.op_stage == 2.0)
-				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-
-				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
-					patient.TakeDamage("head", damage_high, 0)
-					take_bleeding_damage(patient, surgeon, damage_high)
-					return 1
-
-				patient.tri_message("<span style='color:red'><b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye with [src]!</span>",\
-				surgeon, "<span style='color:red'>You remove [surgeon == patient ? "your" : "[patient]'s"] left eye with [src]!</span>",\
-				patient, "<span style='color:red'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your left eye with [src]!</span>")
-
-				patient.TakeDamage("head", damage_low, 0)
-				if (!surgeon.find_type_in_hand(/obj/item/hemostat))
-					take_bleeding_damage(patient, surgeon, damage_low)
-				else
-					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				logTheThing("combat", surgeon, patient, "removed %target%'s left eye with [src].")
-				patient.organHolder.drop_organ("left_eye")
-				return 1
-
-			else
-				src.surgeryConfusion(patient, surgeon, damage_high)
-				return 1
-
+		if (surgeon.find_in_hand(src, "right") && patient.organHolder.right_eye)
+			target_eye = patient.organHolder.right_eye
+			target_side = "right"
+		else if (surgeon.find_in_hand(src, "left") && patient.organHolder.left_eye)
+			target_eye = patient.organHolder.left_eye
+			target_side = "left"
 		else
 			return 0
+
+		if (target_eye.op_stage == 0.0)
+			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+			if (prob(screw_up_prob))
+				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+				patient.TakeDamage("head", damage_low, 0)
+				take_bleeding_damage(patient, surgeon, damage_low)
+				return 1
+
+			patient.tri_message("<span style='color:red'><b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!</span>",\
+			surgeon, "<span style='color:red'>You insert [src] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!</span>", \
+			patient, "<span style='color:red'>[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your [target_side] eye socket!</span>")
+
+			patient.TakeDamage("head", damage_low, 0)
+			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
+				take_bleeding_damage(patient, surgeon, damage_low)
+			else
+				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			patient.updatehealth()
+			target_eye.op_stage = 1.0
+			return 1
+
+		else if (target_eye.op_stage == 2.0)
+			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+			if (prob(screw_up_prob))
+				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
+				patient.TakeDamage("head", damage_high, 0)
+				take_bleeding_damage(patient, surgeon, damage_high)
+				return 1
+
+			patient.tri_message("<span style='color:red'><b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye with [src]!</span>",\
+			surgeon, "<span style='color:red'>You remove [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye with [src]!</span>",\
+			patient, "<span style='color:red'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [target_side] eye with [src]!</span>")
+
+			patient.TakeDamage("head", damage_low, 0)
+			if (!surgeon.find_type_in_hand(/obj/item/hemostat))
+				take_bleeding_damage(patient, surgeon, damage_low)
+			else
+				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
+			logTheThing("combat", surgeon, patient, "removed %target%'s [target_side] eye with [src].")
+
+			if (target_eye == patient.organHolder.right_eye)
+				patient.organHolder.drop_organ("right_eye")
+			else if (target_eye == patient.organHolder.left_eye)
+				patient.organHolder.drop_organ("left_eye")
+			return 1
+
+		else
+			src.surgeryConfusion(patient, surgeon, damage_high)
+			return 1
 
 ////////////////////////////////////////////////////////////////////
 
