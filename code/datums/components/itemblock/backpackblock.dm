@@ -20,7 +20,6 @@
 	src.updateblock() //has to happen before throw starts
 	I.throw_at(target, 4, 1)
 
-
 /datum/component/itemblock/backpackblock/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	..()
 	updateblock()

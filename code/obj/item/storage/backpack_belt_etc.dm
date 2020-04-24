@@ -19,7 +19,6 @@
 		BLOCK_LARGE
 		AddComponent(/datum/component/itemblock/backpackblock)
 
-
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 

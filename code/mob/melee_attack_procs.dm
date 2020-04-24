@@ -998,6 +998,7 @@
 
 			for (var/P in after_effects)
 				call(P)(owner, target)
+
 			process_stamina:
 
 			if (stamina_target)
