@@ -248,6 +248,7 @@
 		attack_hand(user)
 
 	proc/get_contents()
+		RETURN_TYPE(/list)
 		var/list/cont = src.contents.Copy()
 		for(var/atom/A in cont)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
@@ -387,7 +388,7 @@
 
 		I.set_loc(get_turf(src.loc))
 		I.dropped()
-		src.hud.remove_item(I)
+		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2)
 

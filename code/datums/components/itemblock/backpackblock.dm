@@ -8,7 +8,7 @@
 	if(!istype(S)) //HOW???
 		return
 	if(S != M.equipped())
-		return 
+		return  //do nothing if not in open hand
 	var/obj/item/I = pick(S.get_contents())
 	if (!I)
 		return
@@ -17,7 +17,7 @@
 	I.dropped(M)
 	S.hud.remove_item(I)
 	I.layer = initial(I.layer)
-	src.updateblock()
+	src.updateblock() //has to happen before throw starts
 	I.throw_at(target, 4, 1)
 
 
@@ -28,21 +28,21 @@
 /datum/component/itemblock/backpackblock/getTooltipDesc()
 	.= ..()
 	if(showTooltip) 
-		. += itemblock_tooltip_entry("special.png", "Blocks damage based on contents")
-		. += itemblock_tooltip_entry("minus.png", "Contents thrown around when attacked")
+		var/obj/item/storage/I = parent
+		. += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[round(I.get_contents().len/3)])")
+		. += itemblock_tooltip_entry("minus.png", "Contents ejected when attacked")
 
 /datum/component/itemblock/backpackblock/proc/updateblock()
 	var/obj/item/storage/I = parent
 	if(!istype(I)||!(I.c_flags && I.c_flags & HAS_GRAB_EQUIP))
 		return
-	var/list/L=I.get_contents()//make dreamchecker happy
-	var/blockplus = 1 + round(L.len/3)
+	var/blockplus = 1 + round(I.get_contents().len/3) //a bit of bonus protection. 1 point bonus per 3 items in the bag
 	for (var/obj/item/grab/block/B in I.contents)
-		if(I.c_flags & BLOCK_CUT)
-			B.setProperty("block_cut",blockplus)
+		if(I.c_flags & BLOCK_CUT) //only increase the types we're actually blocking
+			B.setProperty("block_cut", blockplus)
 		if(I.c_flags & BLOCK_STAB)
-			B.setProperty("block_stab",blockplus)
+			B.setProperty("block_stab", blockplus)
 		if(I.c_flags & BLOCK_BURN)
-			B.setProperty("block_burn",blockplus)
+			B.setProperty("block_burn", blockplus)
 		if(I.c_flags & BLOCK_BLUNT)
-			B.setProperty("block_blunt",blockplus)
+			B.setProperty("block_blunt", blockplus)

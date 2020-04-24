@@ -765,7 +765,7 @@
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
-
+#define DAMAGE_TYPE_TO_STRING(x) (x == 1 ? "blunt" : x == 2 ? "cut" : x == 4 ? "stab" : x == 8 ? "burn" : x == 16 ? "crush" : "")
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
 #define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work
