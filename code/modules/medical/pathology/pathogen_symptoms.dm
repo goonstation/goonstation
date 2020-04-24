@@ -1594,7 +1594,7 @@ datum/pathogeneffects/malevolent/ultimatefever
 						var/IC = M.loc
 						M.set_loc(get_turf(M))
 						qdel(IC)
-				if (prob(1))
+				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("fire_resist","thermal_resist"))
 					M.show_message("<span style=\"color:red\">You completely burn up!</span>")
 					logTheThing("pathology", M, null, " is firegibbed due to symptom [src].")
 					M.firegib()
@@ -1767,7 +1767,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 						M.show_message("<span style=\"color:red\">[pick("You're freezing!", "You're getting cold...", "So very cold...", "You feel your skin turning into ice...")]</span>")
 						M.changeStatus("stunned", 3 SECONDS)
 						M.emote("shiver")
-				if (prob(1))
+				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span style=\"color:red\">You freeze completely!</span>")
 					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
 					M:become_ice_statue()
