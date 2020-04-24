@@ -530,6 +530,23 @@
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
 
+/datum/supply_packs/glowsticks
+	name = "Emergency Glowsticks Crate - 4 pack"
+	desc = "x4 Glowsticks Box (28 glowsticks total)"
+	category = "Civilian Department"
+	contains = list(/obj/item/storage/box/glowstickbox = 4)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Emergency Glowsticks Crate - 4 pack"
+
+/datum/supply_packs/glowsticksassorted
+	name = "Assorted Glowsticks Crate - 4 pack"
+	desc = "Everything you need for your very own DIY rave!"
+	contains = list(/obj/item/storage/box/glowstickbox/assorted = 4)
+	cost = 600
+	containertype = /obj/storage/crate
+	containername = "Assorted Glowsticks Crate - 4 pack"
+
 /datum/supply_packs/fueltank
 	name = "Welding Fuel tank"
 	desc = "1x Welding Fuel tank"
