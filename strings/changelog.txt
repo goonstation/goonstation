@@ -1,5 +1,9 @@
 
 (t)fri apr 24 20
+(u)Flourish
+(p)400
+(e)🐛🆕|bug, enhancement
+(*)Cloning and stable mutagen now properly copy blood DNA, fingerprints, and genetic effects. The advanced genetic analysis option on the cloning computer toggles copying active genetic effects (yes, that includes mutantraces).
 (u)Tarmunora
 (p)395
 (e)🐛|bug
