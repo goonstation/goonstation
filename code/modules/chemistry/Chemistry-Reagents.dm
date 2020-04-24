@@ -140,7 +140,7 @@ datum
 						AD.affected_mob = M
 						AD.max_severity = src.max_addiction_severity
 						M.ailments += AD
-					else */if (AD)
+					else */if (AD && AD.last_reagent_dose + 2 SECONDS < world.timeofday)
 						boutput(M, "<span style='color:blue'><b>You feel slightly better, but for how long?</b></span>")
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1

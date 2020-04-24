@@ -12,11 +12,15 @@
 	var/list/cig_list = list()
 	var/const/max_cigs = 21
 	var/on = 0
+	cant_self_remove = 1
 
 	New(var/obj/item/clothing/mask/cigarette/cig1, var/obj/item/clothing/mask/cigarette/cig2)
 		..()
 		cig1.set_loc(src)
 		cig2.set_loc(src)
+		if (cig1.on || cig2.on)
+			src.light()
+			src.visible_message("<span style='color:red'><b>[src] is set alight!</span>")
 
 	get_desc()
 		. += "There's [islist(contents) ? contents.len : "some unknown amount of"] cigarettes in there."
@@ -29,17 +33,17 @@
 				user.u_equip(C)
 				C.set_loc(src)
 				boutput(user, "You add [C] to [src].")
-				if (C.on)
+				if (C.on && !src.on)		//light bundle if C is lit
 					src.light(user)
-					// processing_items.Remove(C)
+				else if (!C.on && src.on)	//light C if bundle is lit
+					C.light(user)
 
-				//Change sprites
 				update_icon()
 			else
 				boutput(user, "There's no way you can fit another cigarette in!")
 
 		else
-			//This is just a tricky way to light the bundle without making this object a subtype of cigarette or copy-paste
+			//This is just a tricksy way to light the bundle without making this object a subtype of cigarette or copy-paste
 			//Pick a random object from the bundle's contents (should only be cigs sans shenanigans) and call its attackby proc with
 			//the arguments for this current proc. If it lights the cig, call the light proc on this object which lights all cigs.
 			if (islist(contents))
@@ -268,6 +272,23 @@
 			src.light()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/clothing/mask/cigarette))
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (H.wear_mask == src)
+					H.u_equip(src)
+					// src.dropped(H)
+					H.u_equip(W)
+					// W.dropped(H)
+					H.force_equip(new/obj/item/clothing/mask/cig_bundle(cig1 = src, cig2 = W), H.slot_wear_mask)
+					H.visible_message("[user] stuffs another cigarette into their mouth!")
+					return
+			if (!src.on)
+				if (W:on)
+					src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
+				return
+
+
 		if (src.on == 0)
 			if (istype(W, /obj/item/weldingtool) && W:welding)
 				src.light(user, "<span style='color:red'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -287,21 +308,21 @@
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
 				return
-			else if (istype(W, /obj/item/clothing/mask/cigarette))
+			// else if (istype(W, /obj/item/clothing/mask/cigarette))
 
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if (H.wear_mask == src)
-						H.u_equip(src)
-						// src.dropped(H)
-						H.u_equip(W)
-						// W.dropped(H)
-						H.force_equip(new/obj/item/clothing/mask/cig_bundle(cig1 = src, cig2 = W), H.slot_wear_mask)
-						H.visible_message("[user] stuffs another cigarette into their mouth!")
-						return
-				if (W:on)
-					src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
-				return
+			// 	if (ishuman(user))
+			// 		var/mob/living/carbon/human/H = user
+			// 		if (H.wear_mask == src)
+			// 			H.u_equip(src)
+			// 			// src.dropped(H)
+			// 			H.u_equip(W)
+			// 			// W.dropped(H)
+			// 			H.force_equip(new/obj/item/clothing/mask/cig_bundle(cig1 = src, cig2 = W), H.slot_wear_mask)
+			// 			H.visible_message("[user] stuffs another cigarette into their mouth!")
+			// 			return
+			// 	if (W:on)
+			// 		src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
+			// 	return
 
 			else if (W.burning)
 				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
@@ -407,8 +428,16 @@
 					M = location.loc
 
 				if(ishuman(M))
-					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn or in hand.
-					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
+					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn, in hand, or in a bundle.
+					// var/x1 = H.traitHolder && H.traitHolder.hasTrait("smoker")
+					// var/x2 = (istype(location, /obj/item/clothing/mask/cig_bundle) && !(src in H.get_equipped_items())) || (src in H.get_equipped_items())
+					// var/x3 = (H.l_store==src||H.r_store==src)
+					// var/x4 = H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))
+					// if(x1 || !(x2 || (x3 && !(x4))))
+
+					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((istype(location, /obj/item/clothing/mask/cig_bundle) && !(src in H.get_equipped_items())) || (src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
+					// if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
+					// if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
 						if (prob(1))
