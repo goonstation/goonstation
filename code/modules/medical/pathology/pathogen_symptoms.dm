@@ -1871,6 +1871,7 @@ datum/pathogeneffects/malevolent/farts/co2
 		if (T)
 			T.assume_air(gas)
 
+	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
 		..()
