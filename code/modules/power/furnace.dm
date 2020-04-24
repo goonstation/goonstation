@@ -97,33 +97,14 @@
 						src.fuel = src.maxfuel
 						boutput(user, "<span style=\"color:blue\">The furnace is now full!</span>")
 					return
-		else if (istype(W, /obj/item/raw_material/char))
-			src.fuel += 60 * W.amount
-			do_pool = 1
-		else if (istype(W, /obj/item/raw_material/plasmastone))
-			src.fuel += 800 * W.amount
-			do_pool = 1
-		else if (istype(W, /obj/item/paper/))
-			src.fuel += 6
-			do_pool = 1
-		else if (istype(W, /obj/item/spacecash/))
-			src.fuel += 6
-			do_pool = 1
-		else if (istype(W, /obj/item/clothing/gloves/)) src.fuel += 10
-		else if (istype(W, /obj/item/clothing/head/)) src.fuel += 20
-		else if (istype(W, /obj/item/clothing/mask/)) src.fuel += 10
-		else if (istype(W, /obj/item/clothing/shoes/)) src.fuel += 10
-		else if (istype(W, /obj/item/clothing/head/)) src.fuel += 20
-		else if (istype(W, /obj/item/clothing/suit/)) src.fuel += 40
-		else if (istype(W, /obj/item/clothing/under/)) src.fuel += 30
-		else if (istype(W, /obj/item/plank)) src.fuel += 100
-		else if (istype(W, /obj/item/plant/herb/cannabis))
-			src.fuel += 30
-			stoked += 10
-			do_pool = 1
 		else
-			..()
-			return
+			switch(load_into_furnace(W))
+				if(0)
+					..()
+					return
+				if(2)
+					do_pool = 1
+
 		boutput(user, "<span style=\"color:blue\">You load [W] into [src]!</span>")
 		user.u_equip(W)
 		W.dropped()
@@ -248,4 +229,52 @@
 		src.fuel += 400
 		if(src.fuel >= src.maxfuel)
 			src.fuel = src.maxfuel
+		return 1
+
+	// this is run after it's checked a person isn't being loaded in with a grab
+	// return value 0 means it can't be put it, 1 is loaded in, 2 means to set do_pool to 1
+	proc/load_into_furnace(obj/item/W as obj)
+		if (istype(W, /obj/item/raw_material/char))
+			fuel += 60 * W.amount
+			return 2
+		else if (istype(W, /obj/item/raw_material/plasmastone))
+			fuel += 800 * W.amount
+			return 2
+		else if (istype(W, /obj/item/paper/))
+			fuel += 6
+			return 2
+		else if (istype(W, /obj/item/spacecash/))
+			fuel += 6
+			return 2
+		else if (istype(W, /obj/item/clothing/gloves/)) fuel += 10
+		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
+		else if (istype(W, /obj/item/clothing/mask/)) fuel += 10
+		else if (istype(W, /obj/item/clothing/shoes/)) fuel += 10
+		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
+		else if (istype(W, /obj/item/clothing/suit/)) fuel += 40
+		else if (istype(W, /obj/item/clothing/under/)) fuel += 30
+		else if (istype(W, /obj/item/plank)) fuel += 100
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuckburn)) fuel += 120
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/fry_holder) || istype(W, /obj/item/reagent_containers/food/snacks/grill_holder) )
+			var/obj/item/reagent_containers/food/snacks/fry_holder/F = W
+			fuel += F.charcoaliness
+			for(var/mob/M in W)
+				M.death(1)
+				if (M.mind)
+					M.ghostize()
+					qdel(M)
+				else
+					qdel(M)
+				fuel += 400
+				stoked += 50
+			var/contentsReturn = 1
+			for(var/obj/item/O in W)
+				if(load_into_furnace(O) == 2)contentsReturn = 2
+			return contentsReturn
+		else if (istype(W, /obj/item/plant/herb/cannabis))
+			fuel += 30
+			stoked += 10
+			return 2
+		else
+			return 0
 		return 1

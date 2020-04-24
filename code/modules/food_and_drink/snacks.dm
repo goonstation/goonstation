@@ -31,6 +31,7 @@
 	icon_state = "fried"
 	food_effects = list("food_warm")
 	use_bite_mask = 0
+	var/charcoaliness = 0 // how long it cooked - can be used to quickly check grill level
 
 	on_finish(mob/eater)
 		..()
@@ -55,6 +56,7 @@
 	icon_state = "fried" // fix this
 	food_effects = list("food_warm")
 	use_bite_mask = 0
+	var/charcoaliness = 0 // how long it cooked - can be used to quickly check grill level
 
 	on_finish(mob/eater)
 		..()

@@ -292,6 +292,7 @@
 			else
 				shittysteak.color = ( rgb(33,19,9) )
 
+		shittysteak.charcoaliness = src.cooktime
 		shittysteak.icon = composite
 		shittysteak.overlays = grillitem.overlays
 		shittysteak.set_loc(get_turf(src))

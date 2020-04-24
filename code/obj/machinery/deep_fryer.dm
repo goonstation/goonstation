@@ -227,6 +227,7 @@
 				fryholder.reagents.maximum_volume += 25
 				fryholder.reagents.add_reagent("friedessence",25)
 
+		fryholder.charcoaliness = src.cooktime
 		fryholder.icon = composite
 		fryholder.overlays = fryitem.overlays
 		fryholder.set_loc(get_turf(src))
