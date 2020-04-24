@@ -118,6 +118,7 @@
 				else
 					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 					src.ejectcasings()
+					src.update_icon()
 					return
 			else
 				user.show_text("[src] is empty!", "red")
