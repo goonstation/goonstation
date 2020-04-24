@@ -1193,9 +1193,8 @@
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
 				protection += 1
-				if (G.can_block(damage_type))
-					if (G != src.equipped()) // bare handed block is less protective
-						protection += 1
+				if (G != src.equipped()) // bare handed block is less protective
+					protection += G.can_block(damage_type)
 
 		return protection
 

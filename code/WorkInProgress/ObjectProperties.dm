@@ -357,7 +357,7 @@ var/list/globalPropList = null
 		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Blunt Damage"
+			return "Blunt Damage[propVal]"
 
 	block_cut
 		name = "Block"
@@ -366,7 +366,7 @@ var/list/globalPropList = null
 		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Slash Damage"
+			return "Slash Damage[propVal]"
 
 	block_stab
 		name = "Block"
@@ -375,7 +375,7 @@ var/list/globalPropList = null
 		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Stab Damage"
+			return "Stab Damage[propVal]"
 
 	block_burn
 		name = "Block"
@@ -384,4 +384,4 @@ var/list/globalPropList = null
 		tooltipImg = "prot.png"
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Burn Damage"
+			return "Burn Damage[propVal]"

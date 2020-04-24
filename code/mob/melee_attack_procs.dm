@@ -620,6 +620,7 @@
 	msgs.valid = 1
 
 	var/crit_chance = STAMINA_CRIT_CHANCE
+	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -900,7 +901,6 @@
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
 
-		SEND_SIGNAL(target, COMSIG_ON_ATTACK_FLUSH, owner, src)
 		if (stamina_self)
 			if (stamina_self > 0)
 				owner.add_stamina(stamina_self)

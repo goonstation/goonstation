@@ -65,5 +65,5 @@
 #define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
 
 // misc?
-///when a human an attack_results datum gets flushed
-#define COMSIG_ON_ATTACK_FLUSH "attack_flush"
+///near the beginnihng of when an attackresults datum is being set up, but after total deflection etc rolls
+#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"

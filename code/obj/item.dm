@@ -1005,6 +1005,9 @@
 	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks %target% with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
+	
+	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
+
 
 	if(hasProperty("frenzy"))
 		SPAWN_DBG(0)

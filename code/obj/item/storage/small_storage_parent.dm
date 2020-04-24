@@ -250,7 +250,7 @@
 	proc/get_contents()
 		var/list/cont = src.contents.Copy()
 		for(var/atom/A in cont)
-			if(!istype(A, /obj/item))
+			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
 				cont.Remove(A)
 		return cont
 
@@ -386,6 +386,9 @@
 				I.throwforce -= 8
 
 		I.set_loc(get_turf(src.loc))
+		I.dropped()
+		src.hud.remove_item(I)
+		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
