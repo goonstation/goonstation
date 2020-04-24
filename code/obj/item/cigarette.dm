@@ -394,7 +394,7 @@
 		src.puff_ready = 0
 
 	process()
-		var/turf/location = src.loc
+		var/atom/location = src.loc
 		var/mob/M = null
 
 		puff_ready = 1
