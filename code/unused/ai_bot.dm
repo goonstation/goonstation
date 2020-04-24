@@ -136,7 +136,7 @@ To-do: Add overlays here */
 			boutput(user, "You must close the panel first")
 		else
 			flick("apc-spark", src)
-			sleep(6)
+			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
 				locked = 0

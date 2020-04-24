@@ -12,7 +12,7 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
-	item_state = "fire_extinguisher"
+	item_state = "fireextinguisher0"
 	m_amt = 90
 	desc = "A portable container with a spray nozzle that contains specially mixed fire-fighting foam. The safety is removed, the nozzle pointed at the base of the fire, and the trigger squeezed to extinguish fire."
 	stamina_damage = 15
@@ -106,6 +106,7 @@
 				boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
 				M.emote("scream")
 			qdel(src)
+			return
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
 			user.visible_message("<span style=\"color:red\">[src] ruptures!</span>")
@@ -114,6 +115,7 @@
 			fireflash(src.loc, 0)
 			new/obj/item/scrap(get_turf(user))
 			qdel(src)
+			return
 
 		for (var/reagent in src.banned_reagents)
 			if (src.reagents.has_reagent(reagent))
@@ -126,6 +128,7 @@
 				user.drop_item()
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(user))
 				qdel(src)
+				return
 
 		playsound(get_turf(src), "sound/effects/spray.ogg", 75, 1, -3)
 
@@ -169,12 +172,16 @@
 
 /obj/item/extinguisher/attack_self(mob/user as mob)
 	if (safety)
+		src.item_state = "fireextinguisher1"
 		set_icon_state("fire_extinguisher1")
+		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
 		safety = 0
 	else
+		src.item_state = "fireextinguisher0"
 		set_icon_state("fire_extinguisher0")
+		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
 		safety = 1

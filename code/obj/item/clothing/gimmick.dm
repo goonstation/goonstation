@@ -337,8 +337,7 @@
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
 		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
-		if (user.mind)
-			user.mind.assigned_role = "Cluwne"
+		user.job = "Cluwne"
 		src.cant_self_remove = 1
 		src.cant_other_remove = 1
 	return
@@ -679,6 +678,11 @@
 	over_all = 1
 
 //power armor
+
+/obj/item/clothing/head/power // placeholder icons until someone sprites an unpainted helmet
+	name = "plastic power helmet"
+	desc = "Wow this really looks like a noise marine helmet. But it's not!"
+	icon_state = "nm_helm"
 
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"

@@ -55,17 +55,20 @@ atom
 
 	proc/show_simple_light()
 		if (!simple_light)
+			var/mutable_appearance/ma = mutable_appearance('icons/effects/overlays/simplelight.dmi', "3x3")
 			simple_light = image('icons/effects/overlays/simplelight.dmi', src, "3x3")
-			simple_light.loc = src
 
-			simple_light.icon_state = "3x3"
-			simple_light.plane = PLANE_LIGHTING
-			simple_light.blend_mode = BLEND_ADD
-			simple_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | TILE_BOUND | NO_CLIENT_COLOR | KEEP_APART
-			simple_light.pixel_x = -32
-			simple_light.pixel_y = -32
-			simple_light.layer = LIGHTING_LAYER_BASE
-			simple_light.mouse_opacity = 0
+			ma.icon_state = "3x3"
+			ma.plane = PLANE_LIGHTING
+			ma.blend_mode = BLEND_ADD
+			ma.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | TILE_BOUND | NO_CLIENT_COLOR | KEEP_APART
+			ma.pixel_x = -32
+			ma.pixel_y = -32
+			ma.layer = LIGHTING_LAYER_BASE
+			ma.mouse_opacity = 0
+
+			simple_light.appearance = ma
+			simple_light.loc = src
 
 		addGlobalImage(simple_light, "simplelight_\ref[src]")
 		if(istype(src, /mob))

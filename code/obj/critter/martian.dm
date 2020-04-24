@@ -159,7 +159,7 @@
 							break
 						if (gib_delay - gib_counter >= 10)
 							gib_delay += 10
-							sleep(10)
+							sleep(1 SECOND)
 						else
 							var/slp = gib_delay - gib_counter
 							gib_delay = gib_counter

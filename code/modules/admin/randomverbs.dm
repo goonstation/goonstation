@@ -86,7 +86,7 @@
 /client/proc/cmd_admin_subtle_message(mob/M as mob in world)
 	set category = null
 	set name = "Subtle Message"
-	set popup_menu = 1 // this was actually kinda useful to have in rclick menu, hope you dont mind me reactivating it
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -159,6 +159,8 @@
 /client/proc/cmd_admin_pm(mob/M as mob in world)
 	set category = null
 	set name = "Admin PM"
+	set popup_menu = 0
+
 	admin_only
 
 	do_admin_pm(M.ckey, src.mob) //Changed to work off of ckeys instead of mobs.
@@ -409,7 +411,7 @@
 /client/proc/cmd_admin_rejuvenate(mob/M as mob in world)
 	set category = null
 	set name = "Heal"
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 	if(!src.mob)
 		return
@@ -536,6 +538,7 @@
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Debug"
 	set name = "Delete"
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -656,8 +659,7 @@
 	boutput(M, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
-	if (M.mind)
-		M.mind.assigned_role = "Cluwne"
+	M.job = "Cluwne"
 	M.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1) // path, name, strain, bypass resist
 	M.contract_disease(/datum/ailment/disability/clumsy, null, null, 1) // path, name, strain, bypass resist
 	M.change_misstep_chance(66)
@@ -691,7 +693,7 @@
 	set category = "Special Verbs"
 	set name = "Polymorph Player"
 	set desc = "Futz with a human mob's DNA."
-	set popup_menu = 1
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -1087,7 +1089,7 @@
 			if(!usercl || !target_mob)
 				qdel(src)
 				return
-			sleep(20)
+			sleep(2 SECONDS)
 		return
 
 	proc/update_preview_icon()
@@ -1219,6 +1221,7 @@
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
 	set category = "Special Verbs"
+	set popup_menu = 0
 	new /mob/living/object(O, usr)
 
 /proc/possessmob(mob/M as mob in world)
@@ -1313,7 +1316,7 @@
 
 /client/proc/cmd_admin_check_health(var/atom/target as null|mob in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Check Health"
 	set desc = "Checks the health of someone."
 	admin_only
@@ -1327,7 +1330,7 @@
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Check Reagents"
 	set desc = "Checks the reagents of something."
 	admin_only
@@ -1506,10 +1509,9 @@
 	if(holder)
 		src.holder.playeropt(M)
 
-/client/proc/addpathogens(var/obj/A in world)
-	set category = null
-	set name = "Add Random Pathogens Reagent"
-	admin_only
+/obj/proc/addpathogens()
+	usr_admin_only
+	var/obj/A = src
 	if(!A.reagents) A.create_reagents(100)
 	var/amount = input(usr,"Amount:","Amount",50) as num
 	if(!amount) return
@@ -1526,6 +1528,7 @@
 /client/proc/addreagents(var/atom/A in world)
 	set category = null
 	set name = "Add Reagent"
+	set popup_menu = 0
 
 	admin_only
 
@@ -1664,55 +1667,11 @@
 			critters += C
 	return critters
 
-/client/proc/revive_critter(var/obj/critter/C)
-	set name = "Revive Critter"
-	set category = null
-	set desc = "Brings a critter back to life, like magic!"
-	set popup_menu = 1
-	admin_only
-
-	if (!istype(C, /obj/critter))
-		boutput(src, "[C] isn't a critter! How did you even get here?!")
-		return
-
-	if (!C.alive || C.health <= 0)
-		C.health = initial(C.health)
-		C.alive = 1
-		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
-		C.set_density(initial(C.density))
-		C.on_revive()
-		C.visible_message("<span style=\"color:red\">[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
-		message_admins("[key_name(src)] revived [C] (critter)!")
-	else
-		boutput(src, "[C] isn't dead, you goof!")
-		return
-
-/client/proc/kill_critter(var/obj/critter/C)
-	set name = "Kill Critter"
-	set category = null
-	set desc = "Kills a critter DEAD!"
-	set popup_menu = 1
-	admin_only
-
-	if (!istype(C, /obj/critter))
-		boutput(src, "[C] isn't a critter! How did you even get here?!")
-		return
-
-	if (C.alive)
-		C.health = 0
-		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
-		message_admins("[key_name(src)] killed [C] (critter)!")
-	else
-		boutput(src, "[C] isn't alive, you goof!")
-		return
-
 /client/proc/cmd_transfer_client(var/mob/M)
 	set name = "Transfer Client To"
 	set category = "Special Verbs"
 	set desc = "Transfer a client to the selected mob."
-	set popup_menu = 1 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
+	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 	admin_only
 
 	if (M.ckey)
@@ -1739,7 +1698,7 @@
 	set name = "Swap Bodies With"
 	set category = "Special Verbs"
 	set desc = "Swaps yours and the other person's bodies around."
-	set popup_menu = 1 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
+	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 
 	admin_only
 	if(!M || M == usr ) return
@@ -1871,6 +1830,8 @@
 
 	return
 
+//flourish told me this was broken... if you want admin foam brew it yourself!!
+/*
 /client/proc/admin_foam(var/atom/A as turf|obj|mob, var/amount as num)
 	set name = "Create Foam"
 	set category = null
@@ -1890,6 +1851,7 @@
 	s.start()
 	if (A.reagents)
 		holder.clear_reagents()
+*/
 
 //client/proc/admin_smoke(var/atom/A as turf|obj|mob, var/size as num)
 //	set name = "Create Smoke"
@@ -1912,7 +1874,7 @@
 /client/proc/admin_smoke(var/turf/T in world)
 	set name = "Create smoke"
 	set category = "Special Verbs"
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	var/list/L = list()
@@ -1955,7 +1917,7 @@
 	set name = "Create Fluid"
 	set category = null
 	set desc = "Attempt a fluid reaction on a turf."
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	if (!T)
@@ -2043,7 +2005,7 @@
 
 /client/proc/admin_follow_mobject(var/atom/target as mob|obj in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Follow Thing"
 	set desc = "It's like observing, but without that part where you see everything as the person you're observing. Move to cancel if an observer, or use any jump command to leave if alive."
 	admin_only
@@ -2149,6 +2111,7 @@ var/global/night_mode_enabled = 0
 /client/proc/modify_organs(var/mob/living/carbon/human/H as mob in list_humans())
 	set name = "Modify Organs"
 	set category = "Special Verbs"
+	set popup_menu = 0
 	admin_only
 
 	if (!istype(H))
@@ -2271,7 +2234,8 @@ var/global/night_mode_enabled = 0
 /client/proc/generate_poster(var/target as null|area|turf|obj|mob in world)
 	set name = "Create Poster"
 	set category = "Special Verbs"
-	set popup_menu = 1
+	set popup_menu = 0
+
 	admin_only
 	if (alert(usr, "Wanted poster or custom poster?", "Select Poster Style", "Wanted", "Custom") == "Wanted")
 		gen_wp(target)
@@ -2282,6 +2246,8 @@ var/global/night_mode_enabled = 0
 	set name = "Boot"
 	set desc = "Boot a player off the server"
 	set category = "Admin"
+	set popup_menu = 0
+
 	admin_only
 
 	if (src.holder.level >= LEVEL_MOD)
@@ -2298,6 +2264,8 @@ var/global/night_mode_enabled = 0
 	set name = "Fake Medal"
 	set desc = "Creates a false medal message and shows it to someone, or everyone."
 	set category = "Admin"
+	set popup_menu = 0
+
 	admin_only
 
 	if (!msg)
@@ -2327,6 +2295,8 @@ var/global/night_mode_enabled = 0
 	set name = "Unshamecube"
 	set desc = "Mostly removes the shamecube someone is under"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 
 	if (!M || !src.mob || !M.client || !M.client.player || !M.client.player.shamecubed)
@@ -2359,6 +2329,8 @@ var/global/night_mode_enabled = 0
 	set name = "Shamecube"
 	set desc = "Places the player in a windowed cube at your location"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
@@ -2460,6 +2432,8 @@ var/global/night_mode_enabled = 0
 	set name = "Get Telesci Coords"
 	set desc = "Get the weird messed up co-ordinates that telesci wants for this turf"
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if(!telesci_modifiers_set)
@@ -2478,6 +2452,8 @@ var/global/night_mode_enabled = 0
 	set name = "Clear Medals"
 	set desc = "Clear medals of an account."
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if (!target_key)
@@ -2502,6 +2478,8 @@ var/global/night_mode_enabled = 0
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if (!config || !config.medal_hub || !config.medal_password)
@@ -2527,6 +2505,8 @@ var/global/night_mode_enabled = 0
 	set name = "Copy Medals"
 	set desc = "Copy medals from one account to another."
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if (!config || !config.medal_hub || !config.medal_password)
@@ -2558,6 +2538,8 @@ var/global/night_mode_enabled = 0
 	set name = "Disable Admin Powers"
 	set desc = "Disables all admin features for yourself until returned or you log in again."
 	set category = "Admin"
+	set popup_menu = 0
+
 	admin_only
 
 	if(alert("Disable admin powers? Lasts until you log in or you cancel the effect.", "Disable admin powers?", "Yes", "No") == "Yes")
@@ -2570,6 +2552,8 @@ var/global/night_mode_enabled = 0
 	set name = "Return Admin Powers"
 	set desc = "Returns your admin powers to you. If you had any. If not you will always and forever be a chumperton."
 	set category = "Commands"
+	set popup_menu = 0
+
 	if(src.init_admin())
 		message_admins("[key_name(src)] has re-enabled their admin powers.")
 	else

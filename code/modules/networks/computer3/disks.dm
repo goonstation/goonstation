@@ -128,6 +128,7 @@
 	desc = "A form of proprietary magnetic data tape used by Thinktronic Data Systems, LLC."
 	title = "MAGTAPE"
 	icon_state = "tape"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	file_amount = 128
 	portable = 0

@@ -37,6 +37,19 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
+	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
+		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
+			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
+				boutput(user, "<span style=\"color:red\">Put it on your eyes, dingus!</span>")
+				return
+			var/mob/living/carbon/human/target = M //can't equip to mobs unless they are human
+			if(target.glasses)
+				boutput(user, "<span style=\"color:red\">[target] is already wearing something on their eyes!</span>")
+				return
+			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped() , target.slot_glasses, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
+			return
+		..() //if not selecting the head of a human or monkey, just do normal attack.
+
 /obj/item/clothing/glasses/meson
 	name = "Meson Goggles"
 	icon_state = "meson"
@@ -220,7 +233,7 @@
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 		return
-		
+
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark. They sort of hurt your eyes to look through."
 	color_r = 1
@@ -401,7 +414,7 @@
 				assigned.images.Remove(health_mon_icons)
 				assigned = null
 
-			//sleep(20)
+			//sleep(2 SECONDS)
 		else
 			processing_items.Remove(src)
 
@@ -496,7 +509,7 @@
 				assigned.images.Remove(mob_static_icons)
 				assigned = null
 
-			//sleep(20)
+			//sleep(2 SECONDS)
 		else
 			processing_items.Remove(src)
 
@@ -525,7 +538,7 @@
 			assigned = null
 			processing_items.Remove(src)
 		return
-		
+
 /obj/item/clothing/glasses/noir
 	name = "Noir-Tech Glasses"
 	desc = "A pair of glasses that simulate what the world looked like before the invention of color."

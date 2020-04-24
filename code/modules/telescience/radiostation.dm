@@ -226,7 +226,7 @@
 				sleep(3000)
 #endif
 			is_playing = 0
-	else 
+	else
 		..()
 
 /obj/submachine/record_player/attack_hand(mob/user as mob)
@@ -414,7 +414,7 @@
 /obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
 	if (istype(P, /obj/item/magnifying_glass))
 		boutput(user, "<span style=\"color:blue\">You examine the record with the magnifying glass.</span>")
-		sleep(20)
+		sleep(2 SECONDS)
 		boutput(user, "The scratch on the record, upon close examination, is actually tiny lettering. It says, <i>Fuck Discount Dan's. I hope more of your factories go under and you all drown in your toxic sewage.</i>")
 
 /obj/item/record/atlas
@@ -488,7 +488,7 @@
 	..()
 	icon_state = "sleeve_[rand(4,36)]"
 
-/obj/item/storage/box/record/radio/one 
+/obj/item/storage/box/record/radio/one
 	spawn_contents = list(/obj/item/record/january,
 	/obj/item/record/february,
 	/obj/item/record/march,
@@ -496,7 +496,7 @@
 	/obj/item/record/may,
 	/obj/item/record/june)
 
-/obj/item/storage/box/record/radio/two 
+/obj/item/storage/box/record/radio/two
 	spawn_contents = list(/obj/item/record/july,
 	/obj/item/record/august,
 	/obj/item/record/september,
@@ -504,7 +504,7 @@
 	/obj/item/record/november,
 	/obj/item/record/december)
 
-/obj/item/storage/box/record/radio/host 
+/obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
 /obj/item/storage/box/record/radio/host/New()

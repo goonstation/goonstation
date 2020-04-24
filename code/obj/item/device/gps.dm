@@ -241,7 +241,7 @@ var/global/list/all_GPSs = list()
 				begin_tracking()
 			else
 				boutput(usr, "<span style=\"color:red\">Invalid GPS coordinates.</span>")
-		sleep(10)
+		sleep(1 SECOND)
 
 	proc/begin_tracking()
 		if(!active)

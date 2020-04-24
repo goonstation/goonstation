@@ -194,7 +194,7 @@
 				V.set_density(0)
 				V.layer = EFFECTS_LAYER_BASE
 
-				sleep(15)
+				sleep(1.5 SECONDS)
 
 				qdel(V)
 

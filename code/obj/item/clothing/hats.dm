@@ -572,6 +572,12 @@
 	item_state = "cowboy"
 	c_flags = SPACEWEAR
 
+/obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
+	name = "fancy hat"
+	icon_state = "rank-fancy"
+	item_state = "that"  // todo actual inhands for this and children ?
+	desc = "What do you mean this is hat isn't fancy?"
+
 /obj/item/clothing/head/fancy/captain
 	name = "captain's hat"
 	icon_state = "captain-fancy"
@@ -581,7 +587,7 @@
 		setProperty("meleeprot", 3)
 
 /obj/item/clothing/head/fancy/rank
-	name = "hat"
+	name = "officer's hat"
 	icon_state = "rank-fancy"
 	c_flags = SPACEWEAR
 	setupProperties()
@@ -698,7 +704,7 @@
 
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] fiddles with [src]!</b></span>")
-		sleep(10)
+		sleep(1 SECOND)
 		src.toggle_active(user)
 		user.update_inhands()
 		src.add_fingerprint(user)

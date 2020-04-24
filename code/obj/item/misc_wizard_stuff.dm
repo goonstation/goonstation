@@ -12,6 +12,7 @@
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
 	w_class = 2.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
@@ -196,12 +197,7 @@
 		..()
 		return
 
-	pull()
-		set src in oview(1)
-		set category = "Local"
-
-		var/mob/living/user = usr
-
+	pull(var/mob/user)
 		if(check_target_immunity(user))
 			return ..()
 

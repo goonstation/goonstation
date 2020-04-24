@@ -83,9 +83,9 @@
 		steam.start()
 		H.canmove = 0
 		H.restrain_time = world.timeofday + 40
-		sleep(20)
+		sleep(2 SECONDS)
 		flick("reappear",animation)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
 		H.canmove = 1
 		H.restrain_time = 0
@@ -200,7 +200,7 @@
 				if (reduc_count >= 4)
 					reduc_count = 0
 					owner.remove_stamina(1)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 			if (src && !src.qdeled)
 				dispel()

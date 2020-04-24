@@ -206,7 +206,7 @@ Broken RCD + Effects
 						return
 
 				if (istype(A, /turf/simulated/wall))
-					if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
+					if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istype(A, /turf/simulated/wall/auto/shuttle))
 						return	// You can't go reinforcing stuff that's already reinforced you dope.
 					if (do_thing(user, A, "reinforcing the wall", matter_create_wall, 5 SECONDS))
 						var/datum/material/M = A:material
@@ -250,6 +250,8 @@ Broken RCD + Effects
 						return
 
 				if (istype(A, /turf/simulated/wall))
+					if (istype(A, /turf/simulated/wall/auto/shuttle))
+						return
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, 5 SECONDS))
 						var/datum/material/M = A:material
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()

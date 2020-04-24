@@ -33,7 +33,7 @@
 			var/obj/effects/expl_particles/expl = new /obj/effects/expl_particles(src.location)
 			var/direct = pick(alldirs)
 			for(i=0, i<pick(1;25,2;55,3,4;200), i++)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				step(expl,direct)
 
 /obj/effects/explosion

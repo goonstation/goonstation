@@ -75,7 +75,7 @@
 		SPAWN_DBG(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
-				sleep(20)
+				sleep(2 SECONDS)
 	proc/Thumper_stopThumps()
 		doThumps = 0
 	proc/Thumper_paralyzed()
@@ -136,6 +136,8 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if (!isdead(src)) //still breathing
+			//do on_life things for components?
+			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 
 			parent.setLastTask("handle_material_triggers", src)
 
@@ -477,7 +479,6 @@
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 	src.UpdateDamage()
 #endif
-
 	last_life_tick = world.timeofday
 
 
@@ -594,7 +595,7 @@
 			dizziness = max(0, dizziness - 2)
 			jitteriness = max(0, jitteriness - 2)
 
-		if (!isnull(src.mind) && (isvampire(src) || iswelder(src)))
+		if (src.mind && isvampire(src))
 			if (istype(get_area(src), /area/station/chapel) && src.check_vampire_power(3) != 1)
 				if (prob(33))
 					boutput(src, "<span style=\"color:red\">The holy ground burns you!</span>")
@@ -1560,7 +1561,7 @@
 
 		if (!src.organHolder)
 			src.organHolder = new(src)
-			sleep(10)
+			sleep(1 SECOND)
 
 		var/datum/organHolder/oH = src.organHolder
 		if (!oH.head && !src.nodamage)

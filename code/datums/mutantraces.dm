@@ -1043,13 +1043,13 @@
 					SPAWN_DBG(0)
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x+= 1
-							sleep(1)
+							sleep(0.1 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.mob.dir = turn(src.mob.dir, -90)
-							sleep(2)
+							sleep(0.2 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x-= 1
-							sleep(1)
+							sleep(0.1 SECONDS)
 					SPAWN_DBG(0.5 SECONDS)
 						var/beeMax = 15
 						for (var/obj/critter/domestic_bee/responseBee in range(7, src.mob))

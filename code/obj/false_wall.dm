@@ -38,7 +38,7 @@
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
-				sleep(10)
+				sleep(1 SECOND)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
 					W.update_icon()
 

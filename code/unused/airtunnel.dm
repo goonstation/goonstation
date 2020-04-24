@@ -333,7 +333,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 					if (!( src.d1.density ))
 						src.d1.close()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (!( src.d2.density ))
 							src.d2.close()
@@ -345,7 +345,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 						if (src.d1.density)
 							src.d1.open()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (src.d2.density)
 							src.d2.open()
@@ -414,7 +414,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 						A.current.deployed = 1
 					else
 						src.operating = 0
-			sleep(20)
+			sleep(2 SECONDS)
 		return
 
 /datum/air_tunnel/proc/retract()
@@ -440,5 +440,5 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 				for(var/obj/move/airtunnel/connector/A in src.connectors)
 					if (!( A.current.move_right() ))
 						src.operating = 0
-			sleep(20)
+			sleep(2 SECONDS)
 		return

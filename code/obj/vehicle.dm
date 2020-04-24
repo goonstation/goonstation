@@ -27,7 +27,7 @@ Contains:
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -131,9 +131,9 @@ Contains:
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
 		while (weeoo_in_progress--)
 			light.set_color(0.9, 0.1, 0.1)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			light.set_color(0.1, 0.1, 0.9)
-			sleep(3)
+			sleep(0.3 SECONDS)
 		light.disable()
 		src.update()
 		weeoo_in_progress = 0
@@ -636,7 +636,7 @@ Contains:
 			D.reagents.reaction(D_turf)
 			for(var/atom/T in D_turf)
 				D.reagents.reaction(T)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			if (D_turf.active_liquid)
 				D_turf.active_liquid.try_connect_to_adjacent()
 
@@ -752,14 +752,14 @@ Contains:
 			if(T.throw_unlimited && istype(T, /turf/space))
 				return
 		src.glide_size = (32 / speed) * world.tick_lag
-		for(var/mob/M in src) 
+		for(var/mob/M in src)
 			M.glide_size = src.glide_size
 			M.animate_movement = SYNC_STEPS
 		if(src.booster_upgrade)
 			src.overlays += image('icons/mob/robots.dmi', "up-speed")
 		walk(src, dir, speed)
 		src.glide_size = (32 / speed) * world.tick_lag
-		for(var/mob/M in src) 
+		for(var/mob/M in src)
 			M.glide_size = src.glide_size
 			M.animate_movement = SYNC_STEPS
 	else
@@ -1717,7 +1717,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			msg = "[user.name] climbs into the driver's seat of the [src]."
 			boutput(user, "<span style=\"color:blue\">You climb into the driver's seat of the [src].</span>")
 			rider.add_adminbus_powers()
-			sleep(10)
+			sleep(1 SECOND)
 			for(var/obj/ability_button/B in ability_buttons)
 				B.the_mob = rider
 
@@ -2122,20 +2122,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		if(src.dir != direction)
 			src.dir = direction
 		walk(src, dir, 2.5)
-	return
-
-/obj/vehicle/forklift/verb/brake()
-	set category = "Forklift"
-	set src = usr.loc
-
-	if (usr.stat)
-		return
-
-	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space))
-		return
-
-	walk(src, 0)
 	return
 
 /obj/vehicle/forklift/verb/toggle_lights()

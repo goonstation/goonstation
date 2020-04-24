@@ -91,7 +91,7 @@
 	A.holder = src
 
 	if (!artifact_controls) //Hasn't been init'd yet
-		sleep(20)
+		sleep(2 SECONDS)
 
 	var/datum/artifact_origin/AO = artifact_controls.get_origin_from_string(pick(A.validtypes))
 	if (!istype(AO,/datum/artifact_origin/))

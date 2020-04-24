@@ -1505,20 +1505,8 @@
 	if (!C || !user)
 		return 0
 
-	if (ispryingtool(C) && intact)
-		if(broken || burnt)
-			boutput(user, "<span style=\"color:red\">You remove the broken plating.</span>")
-		else
-			var/atom/A = new /obj/item/tile(src)
-			if(src.material)
-				A.setMaterial(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-
-		to_plating()
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
-
+	if (ispryingtool(C))
+		src.pry_tile(C,user,params)
 		return
 
 	if (istype(C, /obj/item/pen))

@@ -5,6 +5,7 @@
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = null
 	var/stampable = 1
@@ -318,6 +319,7 @@
 
 		else if (issnippingtool(P))
 			boutput(user, "<span style=\"color:blue\">You cut the paper into a mask.</span>")
+			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
 			user.put_in_hand_or_drop(M)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
@@ -528,6 +530,7 @@ ASC: Aux. Solar Control<BR>
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	anchored = 1.0
 
@@ -882,6 +885,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "photo"
 	icon_state = "photo"
 	var/photo_id = 0.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 /obj/item/paper/photograph/New()
@@ -1377,3 +1381,17 @@ so that the Lawgiver™ can be the best it can be. Do not place fingers in path 
 is solid-state and should not feature moving parts. Note that the Cell may experience spontaneous explosive overload when
 exposed to overconfident outbursts on the part of individuals unqualifed to embody the law; in event of such explosion, run.
 "}
+
+/obj/item/paper/postcard/mushroom
+	name = "Mushroom Station postcard"
+	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
+	icon_state = "postcard-mushroom"
+
+	//sizex = 1066
+	//sizey = 735
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"

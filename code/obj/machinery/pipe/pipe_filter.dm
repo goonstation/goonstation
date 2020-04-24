@@ -22,7 +22,7 @@
 	if(f_ngas)
 		pool(f_ngas)
 	..()
-	
+
 /obj/machinery/pipefilter/buildnodes()
 	var/turf/T = src.loc
 
@@ -124,7 +124,7 @@
 			return
 		src.add_fingerprint(user)
 		user.show_message(text("<span style=\"color:red\">Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
-		sleep(30)
+		sleep(3 SECONDS)
 		locked =! locked
 		user.show_message(text("<span style=\"color:red\">Done!</span>"),1)
 		src.updateicon()
@@ -140,14 +140,14 @@
 			user.show_message(text("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>"),1)
 		src.add_fingerprint(user)
 		user.show_message(text("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
-		sleep(100)
+		sleep(10 SECONDS)
 		bypassed = 1
 		src.updateicon()
 		return
 	if (issnippingtool(W) && bypassed)
 		src.add_fingerprint(user)
 		user.show_message(text("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
-		sleep(50)
+		sleep(5 SECONDS)
 		bypassed = 0
 		src.updateicon()
 		return
@@ -157,7 +157,7 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span style=\"color:red\">[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('pipes2.dmi', "filter-spark")
-		sleep(6)
+		sleep(0.6 SECONDS)
 		src.updateicon()
 		return src.attack_hand(user)
 	return src.attack_hand(user)

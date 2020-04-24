@@ -268,7 +268,7 @@
 		if (src.active)
 			outcome_text += " The generator shuts down for a brief moment to recalibrate."
 			shield_off()
-			sleep(5)
+			sleep(0.5 SECONDS)
 			shield_on()
 		boutput(usr, "<span style=\"color:blue\">[outcome_text]</span>")
 

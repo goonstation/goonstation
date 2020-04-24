@@ -87,10 +87,10 @@
 	var/last_chat_color = null
 
 /mob/living/New()
+	..()
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
-	..()
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
@@ -449,8 +449,7 @@
 	src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
 
-/mob/living/verb/point(var/atom/target as mob|obj|turf in oview())
-	set name = "Point"
+/mob/living/point_at(var/atom/target)
 	if (!isturf(src.loc) || usr.stat || usr.restrained())
 		return
 

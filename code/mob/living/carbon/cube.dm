@@ -17,8 +17,6 @@
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
 
 	examine()
-		set src in view()
-
 		boutput(usr, "<span style=\"color:blue\">*---------*</span>")
 		boutput(usr, "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>")
 		if(prob(50) && ishuman(usr) && usr.bioHolder.HasEffect("clumsy"))
@@ -153,7 +151,7 @@
 							message = "<span style=\"color:red\"><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								sleep(1)
+								sleep(0.1 SECONDS)
 								message = "<span style=\"color:red\">[M] vomits!</span>"
 								M.vomit()
 							break
@@ -193,7 +191,7 @@
 								wiggle--
 								container.pixel_x = rand(-3,3)
 								container.pixel_y = rand(-3,3)
-								sleep(1)
+								sleep(0.1 SECONDS)
 							container.pixel_x = 0
 							container.pixel_y = 0
 							if (prob(33))
@@ -327,7 +325,7 @@
 							message = "<span style=\"color:red\"><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								sleep(1)
+								sleep(0.1 SECONDS)
 								message = "<span style=\"color:red\">[M] vomits!</span>"
 								M.vomit()
 							break

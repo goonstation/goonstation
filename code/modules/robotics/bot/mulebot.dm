@@ -91,8 +91,6 @@
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
 
-		verbs -= /atom/movable/verb/pull
-
 	// set up the wire colours in random order
 	// and the random wire display order
 	// needs 10 wire colours
@@ -188,12 +186,12 @@
 
 
 	attack_ai(var/mob/user, params)
-		interact(user, 1, params)
+		interacted(user, 1, params)
 
 	attack_hand(var/mob/user, params)
-		interact(user, 0, params)
+		interacted(user, 0, params)
 
-	proc/interact(var/mob/user, var/ai=0, params)
+	proc/interacted(var/mob/user, var/ai=0, params)
 		var/dat
 		dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 		dat += "ID: [suffix]<BR>"
@@ -444,7 +442,7 @@
 			crate.close()
 		C.anchored = 1
 		C.set_loc(src.loc)
-		sleep(2)
+		sleep(0.2 SECONDS)
 		C.set_loc(src)
 		load = C
 		if(ismob(C))
@@ -508,15 +506,15 @@
 						// do nothing
 					if(1)
 						for (var/i = 1 to 6)
-							sleep(2)
+							sleep(0.2 SECONDS)
 							process_bot()
 					if(2)
 						for (var/i = 1 to 6)
-							sleep(3)
+							sleep(0.3 SECONDS)
 							process_bot()
 					if(3)
 						for (var/i = 1 to 5)
-							sleep(4)
+							sleep(0.4 SECONDS)
 							process_bot()
 
 	proc/process_bot()

@@ -153,7 +153,7 @@
 		if(current_water_level != src.water_level)
 			src.water_level = current_water_level
 			src.do_update_water_icon = 1
-		if(!current) // Make sure we don't have a plant in the tray first (layering stuffs)
+		if(!current)
 			switch(current_total_volume)
 				if(0 to 0) current_total_volume = 1
 				if(0 to 40) current_total_volume = 2
@@ -555,7 +555,7 @@
 			WS.set_loc(src)
 			HYPnewplant(WS)
 			pool(W)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			pool(WS)
 			if(!(user in src.contributors))
 				src.contributors += user
@@ -735,7 +735,7 @@
 	proc/update_water_icon()
 		var/datum/color/average
 		src.water_sprite = image('icons/obj/hydroponics/hydroponics.dmi',"wat-[src.total_volume]")
-		src.water_sprite.layer = 4
+		src.water_sprite.layer = 3
 		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
 		if(src.reagents.total_volume)
 			average = src.reagents.get_average_color()
@@ -797,7 +797,7 @@
 
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon
-		src.plant_sprite.layer = 3
+		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
 
 	proc/update_name()

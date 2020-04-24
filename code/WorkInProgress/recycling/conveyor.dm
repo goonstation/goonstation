@@ -366,12 +366,12 @@
 	if(deployed)
 		flick("diverter10",src)
 		icon_state = "diverter0"
-		sleep(10)
+		sleep(1 SECOND)
 		deployed = 0
 	else
 		flick("diverter01",src)
 		icon_state = "diverter1"
-		sleep(10)
+		sleep(1 SECOND)
 		deployed = 1
 	operating = 0
 	update()

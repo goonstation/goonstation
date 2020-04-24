@@ -306,7 +306,7 @@ todo: add more small animals!
 				while (x-- > 0)
 					src.pixel_x = rand(-6,6)
 					src.pixel_y = rand(-6,6)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 			if (prob(10))
 				src.visible_message("[src] [pick("purrs","frolics","rolls about","does a cute cat thing of some sort")]!")
@@ -1416,7 +1416,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				while (x-- > 0)
 					src.pixel_x = rand(-6,6)
 					src.pixel_y = rand(-6,6)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 			if (prob(5))
 				animate_spin(src, pick("L","R"))
@@ -1976,10 +1976,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					SPAWN_DBG(0)
 						for (var/i = 0, i < 4, i++)
 							src.pixel_x+= 2
-							sleep(2)
+							sleep(0.2 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.pixel_x-= 2
-							sleep(2)
+							sleep(0.2 SECONDS)
 					return "<span style='color:#605b59'><b>[src]</b> flutters.</span>"
 		return null
 
