@@ -917,17 +917,19 @@
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SWORD
 
-/obj/item/katana/attack(mob/living/carbon/human/target as mob, mob/user as mob)
+/obj/item/katana/attack(mob/target as mob, mob/user as mob)
 	if(target == user) //Can't cut off your own limbs, dumbo
 		return ..()
+	if(!ishuman(target))
+		return ..()  //Only humans can currently be dismembered
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
 		return
 	switch(zoney)
 		if("head")
-			if(!target.limbs.r_arm && !target.limbs.l_arm && !target.limbs.l_leg && !target.limbs.r_leg) //Does the target not have all of their limbs?
-				target.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
+			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
+				H.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
 			return ..()
 		if("chest")
 			return ..()
