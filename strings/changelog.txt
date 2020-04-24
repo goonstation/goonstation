@@ -1,5 +1,9 @@
 
 (t)fri apr 24 20
+(u)UrsulaMajor
+(p)394
+(e)🆕|enhancement
+(+)You can now ladle soup back into the soup pot, if you want. Soups also now drop their bowls when eaten.
 (u)Erinexx
 (p)406
 (e)🆕🎨|enhancement, sprites
