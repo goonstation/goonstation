@@ -735,6 +735,7 @@ datum
 					added_new = 1
 				else
 					return 0
+			// Else, if the reagent datum already exists, we'll just be adding to that and won't update with our new reagent datum data
 
 			var/new_amount = (current_reagent.volume + amount)
 			current_reagent.volume = new_amount

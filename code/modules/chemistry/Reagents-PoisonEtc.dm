@@ -1575,24 +1575,16 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				//M.changeStatus("radiation", 30, 1)
-				var/datum/bioHolder/data_as_holder = null
-				if (!src.data) //Do we have some BLOOODDD to use?
+				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
 					var/datum/reagent/blood/cheating = holder.reagent_list["blood"]
 					if (cheating && istype(cheating.data, /datum/bioHolder))
 						src.data = cheating.data
-						data_as_holder = src.data
 
 				if (src.data && M.bioHolder && progress_timer <= 10)
 
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (progress_timer > 10)
-						if (data_as_holder && data_as_holder.ownerName)
-							M.real_name = data_as_holder.ownerName
-							M.bioHolder.ownerName = M.real_name
-							M.bioHolder.CopyOther(data)
-						else if (data && data:ownerName)
-							M.real_name = data:ownerName
-							M.bioHolder.ownerName = M.real_name
+						M.real_name = M.bioHolder.ownerName
 
 				..()
 				return
