@@ -251,8 +251,8 @@
 		if(5) //Advanced genetics analysis
 			dat += {"<h4>Advanced Genetic Analysis</h4>
 					<a href='byond://?src=\ref[src];menu=1'>Back</a><br>
-					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to analyze the genetic makeup of the subject during cloning.
-					Data will then be sent to any nearby GeneTek scanners and be used to improve their efficiency. The cloning process will be slightly slower as a result.<BR><BR>"}
+					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.
+					The cloning process will be slightly slower as a result.<BR><BR>"}
 
 			if(pod1 && !pod1.operating)
 				if(pod1.gen_analysis)

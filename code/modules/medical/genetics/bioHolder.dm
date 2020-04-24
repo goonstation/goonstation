@@ -479,7 +479,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/AddEffect(var/idToAdd, var/variant = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
-		if(!owner) return
 
 		if(HasEffect(idToAdd))
 			return 0
@@ -512,7 +511,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
-			if(lentext(newEffect.msgGain) > 0)
+			if(owner && lentext(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span style=\"color:red\">[newEffect.msgGain]</span>")
 				else
