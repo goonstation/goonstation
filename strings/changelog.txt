@@ -1,5 +1,9 @@
 
 (t)fri apr 24 20
+(u)AwkwardDryad
+(p)385
+(e)🎨|sprites
+(*)Added the Double-Part and Drill hairstyles.
 (u)UrsulaMajor
 (p)394
 (e)🆕|enhancement
