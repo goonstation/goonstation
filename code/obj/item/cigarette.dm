@@ -108,7 +108,7 @@
 	dropped(mob/user as mob)
 		src.visible_message("<span style='color:red'>[src] falls apart into a pile of cigarettes!", group = "cig_drop")
 		for (var/obj/item/clothing/mask/cigarette/C in contents)
-			C.set_loc(src.loc)
+			C.set_loc(get_turf(src.loc))
 
 		qdel(src)
 
