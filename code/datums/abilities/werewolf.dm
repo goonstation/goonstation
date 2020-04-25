@@ -18,7 +18,6 @@
 		W.addAbility(/datum/targetable/werewolf/werewolf_throw)
 		W.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
 		W.addAbility(/datum/targetable/werewolf/werewolf_defense)
-		W.updateButtons()
 		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction)	//not using for now, but could be fun later ish.
 		if (force)
 			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
