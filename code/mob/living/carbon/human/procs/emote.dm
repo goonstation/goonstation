@@ -223,7 +223,7 @@
 								else
 									src.add_juggle(thing)
 							else
-								message = "<B>[src]</B> wiggles \his fingers a bit.[prob(10) ? " Weird." : null]"
+								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 
 						// everyone else
 						else
@@ -253,7 +253,7 @@
 				if (!src.restrained() && !src.stat)
 					if (istype(src.head, /obj/item/clothing/head/fedora))
 						var/obj/item/clothing/head/fedora/hat = src.head
-						message = "<B>[src]</B> tips \his [hat] and [pick("winks", "smiles", "grins", "smirks")].<br><B>[src]</B> [pick("says", "states", "articulates", "implies", "proclaims", "proclamates", "promulgates", "exclaims", "exclamates", "extols", "predicates")], &quot;M'lady.&quot;"
+						message = "<B>[src]</B> tips [his_or_her(src)] [hat] and [pick("winks", "smiles", "grins", "smirks")].<br><B>[src]</B> [pick("says", "states", "articulates", "implies", "proclaims", "proclamates", "promulgates", "exclaims", "exclamates", "extols", "predicates")], &quot;M'lady.&quot;"
 						SPAWN_DBG(1 SECOND)
 							hat.set_loc(src.loc)
 							src.head = null
@@ -288,10 +288,10 @@
 
 					// the actual messages are generated here
 					if (on_head)
-						message = "<B>[src]</B> yanks \his [hat_or_beret] off \his head, throws it on the floor and stomps on it![already_stomped]\
+						message = "<B>[src]</B> yanks [his_or_her(src)] [hat_or_beret] off [his_or_her(src)] head, throws it on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn[prob(1) ? " dick dastardly" : null]</i>.\""
 					else
-						message = "<B>[src]</B> throws \his [hat_or_beret] on the floor and stomps on it![already_stomped]\
+						message = "<B>[src]</B> throws [his_or_her(src)] [hat_or_beret] on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn</i>.\""
 
 					if (hat_or_beret == "beret")
@@ -302,7 +302,7 @@
 					if(src.mind && src.mind.assigned_role != "Head of Security")
 						karma_update(5, "SAINT", src)
 				else
-					message = "<B>[src]</B> tries to move \his arm and grumbles."
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm and grumbles."
 				m_type = 1
 
 			if ("bubble")
@@ -430,9 +430,9 @@
 					else
 						switch(act)
 							if ("hug")
-								message = "<B>[src]</b> [act]s \himself."
+								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
 							if ("blowkiss")
-								message = "<B>[src]</b> blows a kiss to...themselves?"
+								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
 							else
 								message = "<B>[src]</b> [act]s."
 								karma_update(2, "SAINT", src)
@@ -483,11 +483,11 @@
 				m_type = 1
 
 			if ("shakehead","smh")
-				message = "<B>[src]</B> shakes \his head."
+				message = "<B>[src]</B> shakes [his_or_her(src)] head."
 				m_type = 1
 
 			if ("shakebutt","shakebooty","shakeass","twerk")
-				message = "<B>[src]</B> shakes \his ass!"
+				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
 				m_type = 1
 				karma_update(3, "SIN", src)
 
@@ -518,14 +518,14 @@
 				m_type = 1
 
 			if ("shame","hanghead")
-				message = "<B>[src]</B> hangs \his head in shame."
+				message = "<B>[src]</B> hangs [his_or_her(src)] head in shame."
 				m_type = 1
 
 			// basic emotes with alternates for restraints
 
 			if ("flap")
 				if (!src.restrained())
-					message = "<B>[src]</B> flaps \his arms!"
+					message = "<B>[src]</B> flaps [his_or_her(src)] arms!"
 					if (src.sound_list_flap && src.sound_list_flap.len)
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch())
 				else
@@ -534,7 +534,7 @@
 
 			if ("aflap")
 				if (!src.restrained())
-					message = "<B>[src]</B> flaps \his arms ANGRILY!"
+					message = "<B>[src]</B> flaps [his_or_her(src)] arms ANGRILY!"
 					if (src.sound_list_flap && src.sound_list_flap.len)
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch())
 				else
@@ -543,11 +543,11 @@
 
 			if ("raisehand")
 				if (!src.restrained()) message = "<B>[src]</B> raises a hand."
-				else message = "<B>[src]</B> tries to move \his arm."
+				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
-				if (!src.restrained()) message = "<B>[src]</B> cracks \his knuckles."
+				if (!src.restrained()) message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
 				else message = "<B>[src]</B> irritably shuffles around."
 				m_type = 1
 
@@ -558,12 +558,12 @@
 
 			if ("rude")
 				if (!src.restrained()) message = "<B>[src]</B> makes a rude gesture."
-				else message = "<B>[src]</B> tries to move \his arm."
+				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 				m_type = 1
 
 			if ("cry")
 				if (!muzzled) message = "<B>[src]</B> cries."
-				else message = "<B>[src]</B> makes an odd noise. A tear runs down \his face."
+				else message = "<B>[src]</B> makes an odd noise. A tear runs down [his_or_her(src)] face."
 				m_type = 2
 
 			if ("retch","gag")
@@ -573,7 +573,7 @@
 
 			if ("raspberry")
 				if (!muzzled) message = "<B>[src]</B> blows a raspberry."
-				else message = "<B>[src]</B> slobbers all over \himself."
+				else message = "<B>[src]</B> slobbers all over [himself_or_herself(src)]."
 				m_type = 2
 
 			if ("tantrum")
@@ -592,15 +592,15 @@
 				m_type = 1
 
 			if ("smug")
-				if (!src.restrained()) message = "<B>[src]</B> folds \his arms and smirks broadly, making a self-satisfied \"heh\"."
+				if (!src.restrained()) message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
 				else message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
 				m_type = 1
 				if (src.mind)
 					karma_update(2, "SIN", src)
 
 			if ("nosepick","picknose")
-				if (!src.restrained()) message = "<B>[src]</B> picks \his nose."
-				else message = "<B>[src]</B> sniffs and scrunches \his face up irritably."
+				if (!src.restrained()) message = "<B>[src]</B> picks [his_or_her(src)] nose."
+				else message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
 				m_type = 1
 				if (src.mind)
 					karma_update(1, "SIN", src)
@@ -608,13 +608,13 @@
 			if ("flex","flexmuscles")
 				if (!src.restrained())
 					var/roboarms = src.limbs && istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && istype(src.limbs.l_arm, /obj/item/parts/robot_parts)
-					if (roboarms) message = "<B>[src]</B> flexes \his powerful robotic muscles."
-					else message = "<B>[src]</B> flexes \his muscles."
-				else message = "<B>[src]</B> tries to stretch \his arms."
+					if (roboarms) message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
+					else message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
+				else message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
 				m_type = 1
 
 			if ("facepalm")
-				if (!src.restrained()) message = "<B>[src]</B> places \his hand on \his face in exasperation."
+				if (!src.restrained()) message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
 				else message = "<B>[src]</B> looks rather exasperated."
 				m_type = 1
 
@@ -639,7 +639,7 @@
 					if (param)
 						message = "<B>[src]</B> tweaks [param]'s nipples."
 					else
-						message = "<B>[src]</b> tweaks \his nipples."
+						message = "<B>[src]</b> tweaks [his_or_her(src)] nipples."
 				m_type = 1
 
 			if ("flipoff","flipbird","middlefinger")
@@ -652,8 +652,8 @@
 								M = A
 								break
 					if (M) message = "<B>[src]</B> flips off [M]."
-					else message = "<B>[src]</B> raises \his middle finger."
-				else message = "<B>[src]</B> scowls and tries to move \his arm."
+					else message = "<B>[src]</B> raises [his_or_her(src)] middle finger."
+				else message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arm."
 
 			if ("doubleflip","doubledeuce","doublebird","flip2")
 				m_type = 1
@@ -665,8 +665,8 @@
 								M = A
 								break
 					if (M) message = "<B>[src]</B> gives [M] the double deuce!"
-					else message = "<B>[src]</B> raises both of \his middle fingers."
-				else message = "<B>[src]</B> scowls and tries to move \his arms."
+					else message = "<B>[src]</B> raises both of [his_or_her(src)] middle fingers."
+				else message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arms."
 
 			if ("boggle")
 				m_type = 1
@@ -688,9 +688,9 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> angrily shakes \his fist at [M]!"
-					else message = "<B>[src]</B> angrily shakes \his fist!"
-				else message = "<B>[src]</B> tries to move \his arm angrily!"
+					if (M) message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
+					else message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
+				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
 
 			if ("handshake","shakehand","shakehands")
 				m_type = 1
@@ -705,7 +705,7 @@
 
 					if (M)
 						if (M.canmove && !M.r_hand && !M.restrained()) message = "<B>[src]</B> shakes hands with [M]."
-						else message = "<B>[src]</B> holds out \his hand to [M]."
+						else message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
 
 			if ("daps","dap")
 				m_type = 1
@@ -717,7 +717,7 @@
 								M = A
 								break
 					if (M) message = "<B>[src]</B> gives daps to [M]."
-					else message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
+					else message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps [himself_or_herself(src)]. Shameful."
 				else message = "<B>[src]</B> wriggles around a bit."
 
 			if ("slap","bitchslap","smack")
@@ -734,7 +734,7 @@
 									break
 						if (M) message = "<B>[src]</B> slaps [M] across the face! Ouch!"
 						else
-							message = "<B>[src]</B> slaps \himself!"
+							message = "<B>[src]</B> slaps [himself_or_herself(src)]!"
 							src.TakeDamage("head", 0, 4, 0, DAMAGE_BURN)
 						playsound(src.loc, src.sound_snap, 100, 1)
 				else message = "<B>[src]</B> lurches forward strangely and aggressively!"
@@ -767,7 +767,7 @@
 								message = "<B>[src]</B> highfives [M]!"
 								playsound(src.loc, src.sound_snap, 100, 1)
 						else
-							message = "<B>[src]</B> randomly raises \his hand!"
+							message = "<B>[src]</B> randomly raises [his_or_her(src)] hand!"
 			// emotes that do STUFF! or are complex in some way i guess
 
 			if ("snap","snapfingers","fingersnap","click","clickfingers")
@@ -777,7 +777,7 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 						if (prob(5))
-							message = "<font color=red><B>[src]</B> snaps \his fingers RIGHT OFF!</font>"
+							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*
 							if (src.bioHolder)
 								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")
@@ -789,7 +789,7 @@
 							else
 								playsound(src.loc, src.sound_snap, 100, 1)
 						else
-							message = "<B>[src]</B> snaps \his fingers."
+							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
 							if (narrator_mode)
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1)
 							else
@@ -801,7 +801,7 @@
 					message = "<B>[src]</B> sneers, \"Ah yes, \"[param]\". We have dismissed that claim.\""
 					m_type = 2
 				else
-					message = "<B>[src]</B> makes air quotes with \his fingers."
+					message = "<B>[src]</B> makes air quotes with [his_or_her(src)] fingers."
 					m_type = 1
 
 			if ("twitch")
@@ -839,7 +839,7 @@
 						src.deathConfetti()
 					if (prob(15) && !src.is_changeling() && !isdead(src)) message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
-						message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless...</span>"
+						message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
@@ -855,7 +855,7 @@
 						if(nearby.len)
 							M = pick(nearby)
 					if(M)
-						message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows \his name out in smoke."
+						message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows [his_or_her(src)] name out in smoke."
 						particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(src.loc, src.dir))
 						m_type = 2
 
@@ -916,7 +916,7 @@
 					cooldown = 15
 				if (src.emote_check(voluntary, cooldown))
 					if (src.restrained()) // check this first for convenience
-						message = "<B>[src]</B> twitches feebly in time to music only they can hear."
+						message = "<B>[src]</B> twitches feebly in time to music only [he_or_she(src)] can hear."
 					else
 						if (iswizard(src) && prob(10))
 							message = pick("<span style=\"color:red\"><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span style=\"color:red\"><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
@@ -1134,7 +1134,7 @@
 								src.changeStatus("weakened", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
 							if (src.bioHolder.HasEffect("fat"))
-								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under their own weight!")
+								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under [his_or_her(src)] own weight!")
 								src.changeStatus("weakened", 2 SECONDS)
 								src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 							else
@@ -1323,7 +1323,7 @@
 							return
 					else if ((src.charges >= 1) && (muzzled))
 						for (var/mob/O in viewers(src, null))
-							O.show_message("<B>[src]</B> vomits in \his own mouth a bit.")
+							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)
 						src.charges -=1
 						return
@@ -1345,7 +1345,7 @@
 							SPAWN_DBG(0)
 								FB.cast()
 					else
-						message = "<B>[src]</B> vomits in \his own mouth a bit."
+						message = "<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit."
 						m_type = 2
 
 			if ("fart")
@@ -1355,12 +1355,12 @@
 						m_type = 1
 						if (prob(10))
 							switch(rand(1, 5))
-								if (1) message = "<B>[src]</B> purses \his lips and makes a wet sound. It's not very convincing."
+								if (1) message = "<B>[src]</B> purses [his_or_her(src)] lips and makes a wet sound. It's not very convincing."
 								if (2) message = "<B>[src]</B> quietly peels some eggs. <B>Ugh!</B> what a <i>smell!</i>"
 								if (3) message = "<B>[src]</B> does some armpit singing. Rude."
 								if (4) message = "<B>[src]</B> manages to blow one out- but it goes <i>right back in!</i>"
 								if (5)
-									message = "<span style=\"color:red\"><B>[src]</B> grunts so hard \he tears a ligament!</span>"
+									message = "<span style=\"color:red\"><B>[src]</B> grunts so hard [he_or_she(src)] tears a ligament!</span>"
 									src.emote("scream")
 									random_brute_damage(src, 20)
 						else
@@ -1405,7 +1405,7 @@
 							//break deliberately omitted
 						if (!fart_on_other)
 							switch(rand(1, 42))
-								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from \his butt."
+								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
 								if (2) message = "<B>[src]</B> farts loudly!"
 								if (3) message = "<B>[src]</B> lets one rip!"
 								if (4) message = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."
@@ -1438,17 +1438,17 @@
 								if (31) message = "<B>[src]</B> farts egregiously."
 								if (32) message = "<B>[src]</B> farts voraciously."
 								if (33) message = "<B>[src]</B> farts cantankerously."
-								if (34) message = "<B>[src]</B> fart in \he own mouth. A shameful [src]."
+								if (34) message = "<B>[src]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
 								if (35)
 									message = "<B>[src]</B> farts out pure plasma! <span style='color:red'><B>FUCK!</B></span>"
 									oxyplasmafart = 1
 								if (36)
-									message = "<B>[src]</B> farts out pure oxygen. What the fuck did \he eat?"
+									message = "<B>[src]</B> farts out pure oxygen. What the fuck did [he_or_she(src)] eat?"
 									oxyplasmafart = 2
 								if (37) message = "<B>[src]</B> breaks wind noisily!"
 								if (38) message = "<B>[src]</B> releases gas with the power of the gods! The very station trembles!!"
 								if (39) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-								if (40) message = "<B>[src]</B> laughs! \His breath smells like a fart."
+								if (40) message = "<B>[src]</B> laughs! [his_or_her(src)] breath smells like a fart."
 								if (41) message = "<B>[src]</B> farts, and as such, blob cannot evoulate."
 								if (42) message = "<b>[src]</B> farts. It might have been the Citizen Kane of farts."
 						if (src.bioHolder && src.bioHolder.HasEffect("toxic_farts"))
@@ -1519,7 +1519,7 @@
 						else if (bladder > 50)
 							if(toilet)
 								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips their pants and pees in the toilet."
+									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
 								toilet.clogged += 0.10
@@ -1535,7 +1535,7 @@
 						else if (bladder > 25)
 							if(toilet)
 								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips their pants and pees in the toilet."
+									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
 								toilet.clogged += 0.10
@@ -1543,7 +1543,7 @@
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
 								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips their pants, takes aim, and pees in the beaker."
+									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
 								else
 									message = "<B>[src]</B> takes aim and pees in the beaker."
 								beaker.reagents.add_reagent("urine", 5)
@@ -1560,7 +1560,7 @@
 						else
 							if (toilet)
 								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips their pants and pees in the toilet."
+									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
 								toilet.clogged += 0.10
@@ -1568,7 +1568,7 @@
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
 								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips their pants, takes aim, and fills the beaker with pee."
+									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and fills the beaker with pee."
 								else
 									message = "<B>[src]</B> takes aim and fills the beaker with pee."
 								sims.affectMotive("Bladder", 100)
@@ -1576,7 +1576,7 @@
 								beaker.reagents.add_reagent("urine", 10)
 							else
 								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> pisses all over themselves!"
+									message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"
 									sims.affectMotive("Bladder", 100)
 									sims.affectMotive("Hygiene", -100)
 									if (w_uniform)
@@ -1593,15 +1593,15 @@
 						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
 
 						if (src.urine < 1)
-							message = "<B>[src]</B> pees themselves a little bit."
+							message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
 						else if (toilet && (src.buckled != null) && (src.urine >= 2))
 							for (var/obj/item/storage/toilet/T in src.loc)
-								message = pick("<B>[src]</B> unzips their pants and pees in the toilet.", "<B>[src]</B> empties their bladder.", "<span style=\"color:blue\">Ahhh, sweet relief.</span>")
+								message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span style=\"color:blue\">Ahhh, sweet relief.</span>")
 								src.urine = 0
 								T.clogged += 0.10
 								break
 						else if (beaker && (src.urine >= 1))
-							message = pick("<B>[src]</B> unzips their pants, takes aim, and pees in the beaker.", "<B>[src]</B> takes aim and pees in the beaker!", "<B>[src]</B> fills the beaker with pee!")
+							message = pick("<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker.", "<B>[src]</B> takes aim and pees in the beaker!", "<B>[src]</B> fills the beaker with pee!")
 							beaker.reagents.add_reagent("urine", src.urine * 4)
 							src.urine = 0
 						else
@@ -1656,7 +1656,7 @@
 					else if (istype(src.loc.loc, /area/station/crew_quarters/cafeteria))
 						message = "<span style=\"color:black\"><B>[src]</B> says, \"A place to eat, but not an appealing one. I've heard rumours about this place, and if there's one thing I know, it's that it's not normal to eat people.\"</span>"
 					else if (istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
-						message = "<B>[src]</B> takes a drag on \his cigarette, surveying the scene around them carefullly."
+						message = "<B>[src]</B> takes a drag on [his_or_her(src)] cigarette, surveying the scene around them carefullly."
 					else
 						message = "<B>[src]</B> looks uneasy, like [src.gender == MALE ? "" : "s"]he's missing a vital part of h[src.gender == MALE ? "im" : "er"]self. [src.gender == MALE ? "H" : "Sh"]e needs a smoke badly."
 
@@ -1710,12 +1710,12 @@
 
 						if(get_dabbed_on == 0)
 							if (src.mind && src.mind.assigned_role == "Clown")
-								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody their dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before", "shows everyone how they dab in the circus")]!!!"
+								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before", "shows everyone how they dab in the circus")]!!!"
 							else
-								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody their dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before")]!!!"
+								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before")]!!!"
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
-						message = "<span style=\"color:red\"><B>[src]</B> dabs their arms <B>RIGHT OFF</B>!!!!</span>"
+						message = "<span style=\"color:red\"><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0)
 						shake_camera(src, 40, 0.5)
 						if(H)

@@ -600,7 +600,8 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "clipboard00"
 	var/obj/item/pen/pen = null
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "clipboard0"
 	throwforce = 0
 	w_class = 3.0
 	throw_speed = 3
@@ -717,6 +718,7 @@
 			else
 				return
 		src.update()
+		user.update_inhands()
 		SPAWN_DBG(0)
 			attack_self(user)
 			return
@@ -724,6 +726,7 @@
 
 	proc/update()
 		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
 		return
 
 /obj/item/clipboard/with_pen

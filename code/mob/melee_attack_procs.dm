@@ -424,6 +424,10 @@
 			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			msgs.disarm_RNG_result = "shoved_down"
+			var/obj/item/I = target.equipped()
+			if (I && I.temp_flags & IS_LIMB_ITEM)
+				msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
+
 			return msgs
 
 	if (is_shove) return msgs
@@ -914,7 +918,7 @@
 						target.deliver_move_trigger("bump")
 						target.drop_item_throw()
 
-					if ("attack_self_with_item")
+					if ("attack_self_with_item", "attack_self_with_item_shoved_down")
 						var/obj/item/I = target.equipped()
 						if (I)
 							var/old_zone_sel = 0
@@ -933,6 +937,10 @@
 
 							if (prob(20))
 								I.attack_self(target)
+
+							if (src.disarm_RNG_result == "attack_self_with_item_shoved_down")
+								target.changeStatus("weakened", 1 SECONDS)
+								target.force_laydown_standup()
 
 					if ("shoved_down")
 						target.deliver_move_trigger("pushdown")

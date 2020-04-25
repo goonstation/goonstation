@@ -38,7 +38,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	layer = DECAL_LAYER
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
-	//plane = PLANE_FLOOR - BAD IDEA, STUFF GOES BELOW WALLS
+	//plane = PLANE_NOSHADOW_BELOW - BAD IDEA, STUFF GOES BELOW WALLS
 
 	New(var/loc,var/list/viral_list)
 		if (!pooled)
@@ -718,6 +718,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		pixel_y += rand(-4,4)
 		pixel_x += rand(-4,4)
 		return
+
+/obj/decal/cleanable/leaves
+	name = "leaves"
+	desc = "A sad little pile of leaves from a sad, destroyed bush."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "leaves"
+	random_dir = 4
 
 /obj/decal/cleanable/rust
 	name = "rust"

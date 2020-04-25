@@ -258,6 +258,7 @@ datum
 			transparency = 180
 			depletion_rate = 0.1
 			value = 2 // I think this is correct?
+			hygiene_value = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -268,11 +269,6 @@ datum
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),280)
 				..()
 				return
-
-			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
-				if (M.sims)
-					if (method == TOUCH)
-						M.sims.affectMotive("Hygiene", volume)
 
 		medical/calomel // COGWERKS CHEM REVISION PROJECT. marked for revision. should be a chelation agent
 			name = "calomel"

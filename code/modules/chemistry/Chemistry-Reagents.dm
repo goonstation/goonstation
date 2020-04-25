@@ -117,7 +117,7 @@ datum
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*modifier,self.data)
 							did_not_react = 0
-					if (ishuman(M) && hygiene_value)
+					if (ishuman(M) && hygiene_value && method == TOUCH)
 						var/mob/living/carbon/human/H = M
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)

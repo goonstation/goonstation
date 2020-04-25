@@ -19,10 +19,10 @@
 
 // cirr here, the amount of code duplication for suicides a) made me sad and b) ought to have been in a parent proc to allow this functionality for everyone anyway
 // the suiciding var is already at the mob level for fuck's sakes
-/mob/living/verb/suicide()
+/mob/verb/suicide()
 	set hidden = 1
 
-	if (isdead(src))
+	if (!isliving(src) || isdead(src))
 		boutput(src, "You're already dead!")
 		return
 
@@ -69,8 +69,12 @@
 	else
 		src.suiciding = 0
 
+
 // !!!! OVERRIDE THIS PROC FOR YOUR NEW SUICIDE BEHAVIOUR FOR YOUR NEW FLYING CHAIR MOB OR WHATEVER !!!!
-/mob/living/proc/do_suicide()
+/mob/proc/do_suicide()
+	.= 0
+
+/mob/living/do_suicide()
 	// default behaviour: just die, i guess
 	src.unlock_medal("Damned", 1)
 	src.death()

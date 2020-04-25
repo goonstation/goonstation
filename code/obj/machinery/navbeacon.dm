@@ -136,14 +136,14 @@
 		return
 
 	attack_ai(var/mob/user)
-		interact(user, 1)
+		interacted(user, 1)
 
 	attack_hand(var/mob/user)
 		if (ismonkey(user))
 			return
-		interact(user, 0)
+		interacted(user, 0)
 
-	proc/interact(var/mob/user, var/ai = 0)
+	proc/interacted(var/mob/user, var/ai = 0)
 		var/turf/T = loc
 		if(T.intact)
 			return		// prevent intraction when T-scanner revealed

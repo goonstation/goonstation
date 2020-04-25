@@ -102,6 +102,8 @@
 	var/list/food_effects = list()
 	var/create_time = 0
 
+	var/dropped_item = null
+
 	New()
 		..()
 		start_amount = amount
@@ -146,7 +148,11 @@
 		if (istype(W,/obj/item/kitchen/utensil/fork) || istype(W,/obj/item/kitchen/utensil/spoon))
 			if (prob(20) && (istype(W,/obj/item/kitchen/utensil/fork/plastic) || istype(W,/obj/item/kitchen/utensil/spoon/plastic)))
 				var/obj/item/kitchen/utensil/spoon/plastic/S = W
-				S.break_spoon(user)
+				if(istype(S))
+					S.break_spoon(user)
+				var/obj/item/kitchen/utensil/fork/plastic/F = W
+				if(istype(F))
+					F.break_fork(user)
 				user.visible_message("<span style=\"color:red\">[user] stares glumly at [src].</span>")
 				return
 
@@ -263,6 +269,8 @@
 									S.planttype = hybrid
 								user.visible_message("<span style='color:blue'><b>[user]</b> spits out a seed.</span>",\
 								"<span style='color:blue'>You spit out a seed.</span>")
+					if(src.dropped_item)
+						drop_item(dropped_item)
 					user.u_equip(src)
 					on_finish(M, user)
 					qdel(src)
@@ -306,6 +314,8 @@
 				if (!src.amount)
 					M.visible_message("<span style='color:red'>[M] finishes eating [src].</span>",\
 					"<span style='color:red'>You finish eating [src].</span>")
+					if(src.dropped_item)
+						drop_item(dropped_item)
 					user.u_equip(src)
 					on_finish(M, user)
 					qdel(src)
@@ -351,6 +361,25 @@
 
 	proc/on_finish(mob/eater)
 		return
+
+	proc/drop_item(var/path)
+		var/obj/drop = new path
+		if(istype(drop))
+			drop.pixel_x = src.pixel_x
+			drop.pixel_y = src.pixel_y
+			var/obj/item/I = drop
+			if(istype(I))
+				var/mob/M = src.loc
+				if(istype(M))
+					var/item_slot = M.get_slot_from_item(src)
+					if(item_slot)
+						M.u_equip(src)
+						src.loc = null
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							H.force_equip(I,item_slot) // mobs don't have force_equip
+							return
+			drop.loc = get_turf(src.loc)
 
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"

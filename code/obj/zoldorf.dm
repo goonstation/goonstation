@@ -465,7 +465,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					else
 						return
 				else
-					boutput(usr,"<span style=\"color:red\"><b>You don't have a soul, silly :P</b></span>")
+					boutput(usr,"<span style=\"color:red\"><b>You don't have a soul, silly.</b></span>")
 					return
 			if(item.stock != "i")
 				if(item.stock == 0)

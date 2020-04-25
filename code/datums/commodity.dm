@@ -2517,13 +2517,13 @@
 
 ///////////////////greg///////////////////////////////
 /datum/commodity/airzooka
-	comname = "Donk Co brand Airzooka"
+	comname = "Donk Co. brand Airzooka"
 	comtype = /obj/item/gun/kinetic/airzooka
-	desc = "A high tech air deploying and transportation device!"
+	desc = "A high tech air deploying and transportation device produced by Donk Co!"
 	price = 5000
 	baseprice = 5000
-	upperfluc = 200
-	lowerfluc = -200
+	upperfluc = 500
+	lowerfluc = -500
 
 /datum/commodity/airbag
 	comname = "Airzooka Replacement Bag"
@@ -2531,17 +2531,17 @@
 	desc = "A replacement bag for your Donk Co brand Airzooka!"
 	price = 500
 	baseprice = 500
-	upperfluc = 200
-	lowerfluc = -200
+	upperfluc = 100
+	lowerfluc = -100
 
 /datum/commodity/dangerbag
-	comname = "Airzooka Replacement Bag"
+	comname = "Airzooka Replacement Bag: Xtreme Edition"
 	comtype = /obj/item/ammo/bullets/airzooka/bad
 	desc = "A replacement bag for your Donk Co brand Airzooka, now with plasma lining!"
-	price = 3500
+	price = 3000
 	baseprice = 500
-	upperfluc = 200
-	lowerfluc = -200
+	upperfluc = 500
+	lowerfluc = -500
 
 /datum/commodity/owleggs
 	comname = "Owl Eggs"

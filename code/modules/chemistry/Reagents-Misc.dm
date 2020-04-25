@@ -1076,10 +1076,8 @@ datum
 				T.clean_forensic()
 
 			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				..()
 				M.clean_forensic()
-				if (ishuman(M) && M.sims)
-					if (method == TOUCH)
-						M.sims.affectMotive("Hygiene", volume)
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"

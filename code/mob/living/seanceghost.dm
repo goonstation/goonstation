@@ -54,7 +54,7 @@
 		return 1
 
 	say_understands(var/other)
-	
+
 		if (isAI(other))
 			return 1
 
@@ -147,7 +147,7 @@
 
 			if (src.mind)
 				mind.transfer_to(originalmob)
-			
+
 			originalmob.set_loc(src.loc)
 		else
 			var/mob/dead/observer/o = src.ghostize()

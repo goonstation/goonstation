@@ -51,7 +51,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
 		/client/proc/change_admin_prefs,
-		/client/proc/cmd_boot,
+		//client/proc/cmd_boot,
 
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
@@ -90,8 +90,8 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_bees,
 		/client/proc/revive_all_cats,
 		/client/proc/revive_all_parrots,
-		/client/proc/revive_critter,
-		/client/proc/kill_critter,
+		///client/proc/revive_critter,
+		///client/proc/kill_critter,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
 		/client/proc/admin_pick_random_player,
@@ -203,7 +203,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
-		/proc/possess,
+		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
 		/client/proc/critter_creator_debug,
@@ -213,19 +213,19 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_advview,
 		/client/proc/cmd_swap_minds,
 		/client/proc/cmd_transfer_client,
-		/client/proc/edit_module,
+		//client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
 		/client/proc/toggle_camera_network_reciprocity,
-		/client/proc/generate_poster,
+		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 
 		// moved up from admin
-		/client/proc/cmd_admin_delete,
+		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
-		/client/proc/addpathogens,
+		///client/proc/addpathogens,
 		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
@@ -296,7 +296,6 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
 		/client/proc/find_all_of,
-		/client/proc/cmd_add_to_screen,
 		/client/proc/respawn_as,
 
 		/client/proc/general_report,
@@ -312,7 +311,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_explosion,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/admin_smoke,
-		/client/proc/admin_foam,
+		///client/proc/admin_foam,
 		/client/proc/admin_fluid,
 		/client/proc/implant_all,
 
@@ -323,7 +322,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_nightmode,
 		/client/proc/toggle_ip_alerts,
 		/client/proc/upload_custom_hud,
-		/client/proc/replace_with_explosive,
+		///client/proc/replace_with_explosive,
 		/client/proc/enable_waterflow,
 		/client/proc/delete_fluids,
 		/client/proc/special_fullbright,
@@ -366,20 +365,20 @@ var/list/admin_verbs = list(
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
-		/client/proc/view_save_data,
+		///client/proc/view_save_data,
 		/client/proc/check_gang_scores,
 		/client/proc/mapWorld,
-		/client/proc/call_proc_atom,
+		///client/proc/call_proc_atom,
 		/client/proc/haine_blood_debug,
 		/client/proc/debug_messages,
 		/client/proc/toggle_next_click,
 		/client/proc/debug_reaction_list,
 		/client/proc/debug_reagents_cache,
-		/client/proc/debug_check_possible_reactions,
+		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
 		/client/proc/show_camera_paths,
-		/client/proc/dbg_itemspecial,
-		/client/proc/dbg_objectprop,
+		///client/proc/dbg_itemspecial,
+		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
 		// /client/proc/show_runtime_window,
 		/client/proc/cmd_chat_debug,
@@ -448,6 +447,7 @@ var/list/special_pa_observing_verbs = list(
 	/client/proc/cmd_admin_aview,
 	)
 
+/*
 /client/proc/cmd_add_to_screen(var/atom/A as obj|mob|turf in world)
 	set name = "Add to Screen"
 	set desc = "Add a thing to some poor sod's screen."
@@ -473,7 +473,7 @@ var/list/special_pa_observing_verbs = list(
 		C.screen += A
 		boutput(usr, "<span style=\"color:blue\">Successful.</span>")
 		logTheThing("admin", usr, C.mob, "added [A] to %target%'s screen.")
-
+*/
 /client/proc/update_admins(var/rank)
 	if(!src.holder)
 		src.holder = new /datum/admins(src)
@@ -855,6 +855,8 @@ var/list/fun_images = list()
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
@@ -1086,6 +1088,14 @@ var/list/fun_images = list()
 	if (confirm6 == "Yes")
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
+
+	// Get fucked ghost HUD
+	for (var/obj/screen/ability/hudItem in src.screen)
+		del(hudItem)
+
+	// Also get fucked giant...planet...things
+	for (var/obj/effects/background_objects/bgObj in world)
+		del(bgObj)
 
 	var/start_x = (viewport_width / 2) + 1
 	var/start_y = (viewport_height / 2) + 1
@@ -1753,3 +1763,118 @@ var/list/fun_images = list()
 			boutput(usr, "<span style='color:red;'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span style='color:red;'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+
+
+/mob/verb/admin_interact_verb()
+	set name = "admin_interact"
+	set hidden = 1
+	usr_admin_only
+	src.client.admin_intent = 1
+	src.client.show_popup_menus = 0
+	src.update_cursor()
+
+/mob/proc/admin_interact(var/atom/A,var/list/parameters)
+	src.client.admin_intent = 0
+	src.client.show_popup_menus = 1
+	src.update_cursor()
+	usr_admin_only
+
+
+	if (parameters["right"])
+		var/list/atoms = list(get_turf(A))
+		for(var/thing in get_turf(A))
+			var/atom/atom = thing
+			atoms += atom
+		if (atoms.len)
+			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
+			if (isnull(A)) return
+
+	var/choice = 0
+
+	if (!client.holder.animtoggle)
+		if (ismob(A))
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
+		else if (isturf(A))
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
+		else
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
+	else
+		if (ismob(A))
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
+		else if (isturf(A))
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["turf"]
+		else
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["obj"]
+
+	var/client/C = src.client
+	switch(choice)
+		if("Get Thing")
+			C.cmd_admin_get_mobject(A)
+		if("Follow Thing")
+			C.admin_follow_mobject(A)
+		if("Add Reagents")
+			C.addreagents(A)
+		if("Check Reagents")
+			C.cmd_admin_check_reagents(A)
+		if("View Variables")
+			C.debug_variables(A)
+		if("View Fingerprints")
+			C.view_fingerprints(A)
+		if("Delete")
+			C.cmd_admin_delete(A)
+
+		if("Player Options")
+			C.cmd_admin_playeropt(A)
+		if("Private Message")
+			C.cmd_admin_pm(A)
+		if("Subtle Message")
+			C.cmd_admin_subtle_message(A)
+		if("Check Health")
+			C.cmd_admin_check_health(A)
+		if("Heal")
+			C.cmd_admin_rejuvenate(A)
+		if("Gib")
+			C.cmd_admin_gib(A)
+		if("Polymorph")
+			C.cmd_admin_polymorph(A)
+		if("Modify Organs")
+			C.modify_organs(A)
+		if("Modify Parts")
+			C.modify_parts(A)
+		if("Swap Minds")
+			C.cmd_swap_minds(A)
+		if("Transfer Client To")
+			C.cmd_admin_polymorph(A)
+		if("Shamecube")
+			C.cmd_shame_cube(A)
+
+		if("Jump To Turf")
+			C.jumptoturf(A)
+		if("Air Status")
+			C.air_status(A)
+		if("Create Explosion")
+			C.cmd_explosion(A)
+		if("Create Fluid")
+			C.admin_fluid(A)
+		if("Create Smoke")
+			C.admin_smoke(A)
+		if("Create Portal")
+			C.create_portal(A)
+		if("Get Telesci Coords")
+			C.getturftelesci(A)
+
+		if ("Possess")
+			possess(A)
+		if ("Create Poster")
+			C.generate_poster(A)
+
+		if ("Spin")
+			C.cmd_spin_target(A)
+		if ("Rotate")
+			C.cmd_rotate_target(A)
+		if ("Scale")
+			C.cmd_scale_target(A)
+		if ("Emag")
+			C.cmd_emag_target(A)
+
+	src.update_cursor()

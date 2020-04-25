@@ -1836,7 +1836,8 @@ var/list/electiles = list()
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lboard"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "ouijaboard"
 	w_class = 3.0
 	var/ready = 1
 	var/list/users = list()
@@ -3019,6 +3020,8 @@ var/list/electiles = list()
 /client/proc/create_portal()
 	set category = null
 	set name = "Create Portal"
+	set popup_menu = 0
+
 	admin_only
 
 	var/mob/M = src.mob

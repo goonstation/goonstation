@@ -1,4 +1,8 @@
 
+(t)wed apr 22 20
+(u)mbc
+(*)Moved all admin-specific right click verbs into a new menu. Press Tilde to turn on 'Admin Interact' mode, and then left click on an item to view options for that item (or right click a tile to select from a list of items on that tile).
+(*)Apologies for switching things up - this is actually a super important change to reduce lag that players experience when they use right-click.
 (t)fri mar 20 20
 (u)pali
 (*)A bunch of debug-overlay stuff. Specifically:

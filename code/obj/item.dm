@@ -113,6 +113,19 @@
 			for(var/datum/objectProperty/P in src.properties)
 				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
+		//itemblock tooltip additions
+		if(src.c_flags & HAS_GRAB_EQUIP)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: Hold in active hand for: "
+			for(var/obj/item/grab/block/B in src)
+				if(B.properties && B.properties.len)
+					for(var/datum/objectProperty/P in B.properties)
+						. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
+			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
+				. += jointext(C.getTooltipDesc(), "")
+		else if(src.c_flags & BLOCK_TOOLTIP)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
+
+
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
@@ -211,6 +224,19 @@
 			return
 	else
 		..()
+
+//set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
+/obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
+	if(!src.c_flags)
+		return
+	if(src.c_flags & BLOCK_CUT)
+		B.setProperty("block_cut", 1)
+	if(src.c_flags & BLOCK_STAB)
+		B.setProperty("block_stab", 1)
+	if(src.c_flags & BLOCK_BURN)
+		B.setProperty("block_burn", 1)
+	if(src.c_flags & BLOCK_BLUNT)
+		B.setProperty("block_blunt", 1)
 
 /obj/item/proc/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(special && !special.manualTriggerOnly)
@@ -792,6 +818,8 @@
 		src.ArtifactStimulus("carbtouch", 1)
 	return
 
+//nah
+/*
 /obj/item/verb/move_to_top()
 	set name = "Move to Top"
 	set src in oview(1)
@@ -805,16 +833,10 @@
 	src.set_loc(null)
 
 	src.set_loc(T)
+*/
 
-/obj/item/interact_verb()
-	set hidden = 1
-
-/obj/item/verb/pick_up()
-	set name = "Pick Up"
-	set src in oview(1)
-	set category = "Local"
-
-	src.pick_up_by(usr)
+/obj/item/interact(mob/user)
+	src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
 	if (world.time < M.next_click)
@@ -829,6 +851,7 @@
 	if (!can_reach(M, src))
 		return
 
+	.= 1
 	for (var/obj/item/cloaking_device/I in M)
 		if (I.active)
 			I.deactivate(M)
@@ -940,8 +963,8 @@
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		insertChestItem(M, user)	// Puting item in patient's chest
-		return
+		if(insertChestItem(M, user))	// Puting item in patient's chest
+			return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on %target%")

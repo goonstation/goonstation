@@ -358,6 +358,9 @@
 	icon_state = "swat"
 	permeability_coefficient = 0.20
 	protective_temperature = 1250
+	step_sound = "step_military"
+	step_priority = STEP_PRIORITY_LOW
+	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
@@ -365,6 +368,19 @@
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
+
+/obj/item/clothing/shoes/swat/heavy
+	name = "heavy military boots"
+	desc = "Fairly worn out military boots."
+	icon_state = "swatheavy"
+	step_sound = "step_heavyboots"
+	step_priority = STEP_PRIORITY_LOW
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Head of Security")
+			. = "Still fit like a glove! Or a shoe."
+		else
+			. = "Looks like some big shoes to fill!"
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
@@ -409,6 +425,12 @@
 		..()
 		setProperty("movespeed", 0.9)
 
+	proc/toggle()
+		src.on = !(src.on)
+		boutput(usr, "<span style='color:blue'>The jet boots are now [src.on ? "on" : "off"].</span>")
+		return
+
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/tank))
 			if (src.tank)
@@ -421,23 +443,32 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.tank = W
-			src.verbs += /obj/item/clothing/shoes/jetpack/verb/eject_tank
 			return
 		else
 			..()
 
-	verb/toggle()
-		src.on = !(src.on)
-		boutput(usr, "<span style='color:blue'>The jet boots are now [src.on ? "on" : "off"].</span>")
-		return
-
-	verb/eject_tank()
+	attack_self(mob/user)
+		var/list/actions = list()
 		if (src.tank)
-			boutput(usr, "<span style='color:blue'>You eject [src.tank] from [src].</span>")
-			usr.put_in_hand_or_drop(src.tank)
-			src.tank = null
-		src.verbs -= /obj/item/clothing/shoes/jetpack/verb/eject_tank
-		return
+			actions += "Toggle"
+			actions += "Remove Tank"
+		if (!actions.len)
+			user.show_text("[src] has no tank attached!", "red")
+			return ..()
+
+		var/action = input(user, "What do you want to do with [src]?") as null|anything in actions
+
+		switch (action)
+			if ("Toggle")
+				src.on = !(src.on)
+				boutput(usr, "<span style='color:blue'>The jet boots are now [src.on ? "on" : "off"].</span>")
+				return
+			if ("Remove Tank")
+				boutput(usr, "<span style='color:blue'>You eject [src.tank] from [src].</span>")
+				usr.put_in_hand_or_drop(src.tank)
+				src.tank = null
+				return
+		..()
 
 	proc/allow_thrust(num, mob/user as mob) // blatantly c/p from jetpacks
 		if (!src.on || !istype(src.tank))

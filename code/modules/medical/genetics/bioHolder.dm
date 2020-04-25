@@ -259,7 +259,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		// changed this to transfer the instance across rather than add a copy
 		// since some bioeffects have unique stuff
 		effects[E.id] = E
-		effectPool -= E.id
+		effectPool.Remove(E.id)
 		E.owner = owner
 		E.holder = src
 		E.activated_from_pool = 1
@@ -427,10 +427,19 @@ var/list/datum/bioEffect/mutini_effects = list()
 			mobAppearance.CopyOther(toCopy.mobAppearance)
 			mobAppearance.UpdateMob()
 
+			age = toCopy.age
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
-			age = toCopy.age
 			clone_generation = toCopy.clone_generation
+			genetic_stability = toCopy.genetic_stability
+			ownerName = toCopy.ownerName
+			Uid = toCopy.Uid
+
+		if (copyPool)
+			src.RemoveAllPoolEffects()
+			for (var/id in toCopy.effectPool)
+				AddNewPoolEffect(id)
+
 		if(copyActiveEffects)
 			src.RemoveAllEffects()
 			var/datum/bioEffect/BE
@@ -456,7 +465,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
-		if (progress >= 10)
+		if (progress > 10)
 			return CopyOther(toCopy)
 
 		if (mobAppearance)
@@ -470,7 +479,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/AddEffect(var/idToAdd, var/variant = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
-		if(!owner) return
 
 		if(HasEffect(idToAdd))
 			return 0
@@ -503,7 +511,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
-			if(lentext(newEffect.msgGain) > 0)
+			if(owner && lentext(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span style=\"color:red\">[newEffect.msgGain]</span>")
 				else
@@ -569,7 +577,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/D in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				effectPool -= BE
+				effectPool.Remove(D)
 				//qdel(BE)
 		return 1
 

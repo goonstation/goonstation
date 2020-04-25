@@ -140,7 +140,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.interact(M)
+			src.interacted(M)
 	AutoUpdateAI(src)
 
 
@@ -149,7 +149,7 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
@@ -158,9 +158,9 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	interact(user)
+	interacted(user)
 
-/obj/machinery/power/turbine/proc/interact(mob/user)
+/obj/machinery/power/turbine/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
 		user.machine = null
@@ -204,7 +204,7 @@
 		SPAWN_DBG(0)
 			for(var/mob/M in viewers(1, src))
 				if ((M.client && M.machine == src))
-					src.interact(M)
+					src.interacted(M)
 
 	else
 		usr.Browse(null, "window=turbine")

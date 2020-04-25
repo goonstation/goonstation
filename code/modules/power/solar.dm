@@ -292,14 +292,14 @@
 
 	if(status & (BROKEN | NOPOWER)) return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN | NOPOWER)) return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
@@ -329,7 +329,7 @@
 
 	src.updateDialog()
 
-/obj/machinery/power/solar_control/proc/interact(mob/user)
+/obj/machinery/power/solar_control/proc/interacted(mob/user)
 	if(status & (BROKEN | NOPOWER)) return
 	if ( (get_dist(src, user) > 1 ))
 		if (!isAI(user))

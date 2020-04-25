@@ -62,7 +62,7 @@
 			if(my_ability_holder.points > 0) // we didn't run out of ability holder points, deflect successful
 				if(P.proj_data.damage_type == D_ENERGY || P.proj_data.damage_type == D_BURNING || P.proj_data.damage_type == D_TOXIC || P.proj_data.damage_type == D_RADIOACTIVE) // energy-related damage types
 					src.visible_message("<span style=\"color:red\">[src] deflects the [P.name] with his [deflecting_sword]!</span>")
-					shoot_reflected(P, src)
+					shoot_reflected_to_sender(P, src)
 					P.die()
 					playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 60, 0.1, 0, 2.6)
 					return

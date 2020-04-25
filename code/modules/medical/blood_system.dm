@@ -516,9 +516,10 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (!isvampire(some_human_idiot) && (some_human_idiot.blood_volume < blood_to_transfer))
 			blood_to_transfer = some_human_idiot.blood_volume
 
-		bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(some_idiot.bioHolder)
-		bloodHolder.ownerName = some_idiot.real_name
+		if (!A.reagents.get_reagent("bloodc") && !A.reagents.get_reagent("blood")) // if it doesn't have blood with blood bioholder data already, only then create this
+			bloodHolder = new/datum/bioHolder(null)
+			bloodHolder.CopyOther(some_idiot.bioHolder)
+			bloodHolder.ownerName = some_idiot.real_name
 
 	var/datum/reagent/R = null
 

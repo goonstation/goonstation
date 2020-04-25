@@ -959,6 +959,10 @@
 			src.updateUsrDialog()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		if (isrobot(user))
+			boutput(user, "This machine is not compatible with mechanical users.")
+			return
+
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
 				boutput(user, "<span style=\"color:red\">A container is already loaded into the machine.</span>")
