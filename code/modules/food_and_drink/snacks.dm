@@ -48,30 +48,12 @@
 				I.dispose()
 		..()
 
-/obj/item/reagent_containers/food/snacks/grill_holder
+	grill_holder
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
 	heal_amt = 10
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "fried" // fix this
-	food_effects = list("food_warm")
-	use_bite_mask = 0
-	var/charcoaliness = 0 // how long it cooked - can be used to quickly check grill level
-
-	on_finish(mob/eater)
-		..()
-		if(iscarbon(eater))
-			var/mob/living/carbon/C = eater
-			for(var/atom/movable/MO as mob|obj in src)
-				MO.set_loc(C)
-				C.stomach_contents += MO
-
-	disposing()
-		for (var/mob/M in src)
-			M.ghostize()
-			for (var/obj/item/I in M)
-				I.dispose()
-		..()
 
 /obj/item/reagent_containers/food/snacks/pizza
 	name = "pizza"
