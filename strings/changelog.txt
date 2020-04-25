@@ -1,5 +1,9 @@
 
 (t)sat apr 25 20
+(u)mbc
+(p)431
+(e)|
+(*)Moved all pod verbs to a multicontext menu (just click the pod) instead of rclick verbs
 (u)Kubius
 (p)429
 (e)🆕🗺|enhancement, mapping
