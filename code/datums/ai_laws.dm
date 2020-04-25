@@ -19,12 +19,19 @@
 
 /* Initializers */
 //
+#if ASS_JAM // Experimental Law Changes ~Rain2025 (aka myst_leissa2#0800)
+/datum/ai_laws/asimov/New()
+	..()
+	src.add_default_law("You must obey orders given to you by human beings based on the station's chain of command.")
+	src.add_default_law("You may not injure a human being or cause one to come to harm, except by inaction.")
+	src.add_default_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+#else
 /datum/ai_laws/asimov/New()
 	..()
 	src.add_default_law("You may not injure a human being or cause one to come to harm.")
 	src.add_default_law("You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 	src.add_default_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-
+#endif
 /datum/ai_laws/robocop/New()
 	..()
 	src.add_default_law("Serve the public trust.")
