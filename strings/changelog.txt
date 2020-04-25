@@ -1,4 +1,10 @@
 
+(t)sat apr 25 20
+(u)mbc
+(p)420
+(e)|
+(*)Shoving a person who is downed and using item limbs will cause them to attack themselves just like they would if they were standing upright.
+(+)Fixed bug where item limbs wouldn't show icons on your hud.
 (t)fri apr 24 20
 (u)Flourish
 (p)400
