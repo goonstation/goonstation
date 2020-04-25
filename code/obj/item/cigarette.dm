@@ -268,22 +268,22 @@
 			src.light()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		//special interactions for hitting cigs with cigs. either make a bundle or light it.
 		if (istype(W, /obj/item/clothing/mask/cigarette))
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.wear_mask == src)
 					H.u_equip(src)
-					// src.dropped(H)
 					H.u_equip(W)
-					// W.dropped(H)
 					H.force_equip(new/obj/item/clothing/mask/cig_bundle(cig1 = src, cig2 = W), H.slot_wear_mask)
 					H.visible_message("[user] stuffs another cigarette into their mouth!")
 					return
-			if (!src.on)
-				if (W:on)
-					src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
+			if (!src.on && W:on)
+				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
 				return
-
+			else if (src.on && !W:on)
+				W:light(user, "<span style='color:red'><b>[user]</b> lights [W] with [src].</span>")
+				return
 
 		if (src.on == 0)
 			if (istype(W, /obj/item/weldingtool) && W:welding)
@@ -304,22 +304,6 @@
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
 				return
-			// else if (istype(W, /obj/item/clothing/mask/cigarette))
-
-			// 	if (ishuman(user))
-			// 		var/mob/living/carbon/human/H = user
-			// 		if (H.wear_mask == src)
-			// 			H.u_equip(src)
-			// 			// src.dropped(H)
-			// 			H.u_equip(W)
-			// 			// W.dropped(H)
-			// 			H.force_equip(new/obj/item/clothing/mask/cig_bundle(cig1 = src, cig2 = W), H.slot_wear_mask)
-			// 			H.visible_message("[user] stuffs another cigarette into their mouth!")
-			// 			return
-			// 	if (W:on)
-			// 		src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
-			// 	return
-
 			else if (W.burning)
 				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				return
@@ -425,12 +409,13 @@
 
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn, in hand, or in a bundle.
+					
+					//Okay I was drunk when I tried to understand this conditional. It might not actually be hard to understand, but it was VERY hard at the time and this is how I was trying to puzzle it out. Might be useful, idk -Kyle
 					// var/x1 = H.traitHolder && H.traitHolder.hasTrait("smoker")
 					// var/x2 = (istype(location, /obj/item/clothing/mask/cig_bundle) && !(src in H.get_equipped_items())) || (src in H.get_equipped_items())
 					// var/x3 = (H.l_store==src||H.r_store==src)
 					// var/x4 = H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))
 					// if(x1 || !(x2 || (x3 && !(x4))))
-
 					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((istype(location, /obj/item/clothing/mask/cig_bundle) && !(src in H.get_equipped_items())) || (src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 					// if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 					// if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
