@@ -1,5 +1,9 @@
 
 (t)sat apr 25 20
+(u)Tarmunora
+(p)410
+(e)⚖🆕|balance, enhancement
+(+)Added special block functionality to backpacks/satchels.
 (u)mbc
 (p)421
 (e)|
