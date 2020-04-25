@@ -637,7 +637,7 @@
 		return
 
 	MouseDrop(atom/over_object as mob|obj)
-		if(get_dist(over_object,usr) <= 1)
+		if(get_dist(src,usr) <= 1)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 
