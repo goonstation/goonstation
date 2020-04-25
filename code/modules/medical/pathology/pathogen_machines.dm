@@ -560,6 +560,8 @@
 				for (var/bit in bits)
 					if (bit != "|")
 						src.manip.analysis_list += bit
+				src.manip.analysis_list -= src.manip.analysis_list[1]
+				src.manip.analysis_list = sortList(src.manip.analysis_list)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
 				visible_message("<span style=\"color:blue\">The manipulator ejects the empty vial.</span>")
