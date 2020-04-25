@@ -1,6 +1,10 @@
 
 (t)sat apr 25 20
 (u)mbc
+(p)421
+(e)|
+(+)Click+Drag chairs in order to rotate them. They also rotate when you are buckled in and trying to move.
+(u)mbc
 (p)420
 (e)|
 (*)Shoving a person who is downed and using item limbs will cause them to attack themselves just like they would if they were standing upright.
