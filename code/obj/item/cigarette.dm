@@ -447,8 +447,10 @@
 				return
 			else
 				src.put_out(M, "<span style='color:red'><b>[M]</b>'s [src.name] goes out.</span>")
-				if (istype(src.loc, /obj/item/clothing/mask/cig_bundle))
+				var/obj/item/clothing/mask/cig_bundle/bundle = src.loc
+				if (istype(bundle))
 					src.set_loc(get_turf(src.loc))
+					bundle.update_icon()
 				return
 
 		//if (istype(location, /turf)) //start a fire if possible
