@@ -416,9 +416,8 @@
 					// var/x3 = (H.l_store==src||H.r_store==src)
 					// var/x4 = H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))
 					// if(x1 || !(x2 || (x3 && !(x4))))
-					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((istype(location, /obj/item/clothing/mask/cig_bundle) && !(src in H.get_equipped_items())) || (src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
-					// if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
-					// if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
+					var/list/in_equipped_items = H.get_equipped_items()
+					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((istype(location, /obj/item/clothing/mask/cig_bundle) && !in_equipped_items) || (src in in_equipped_items) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
 						if (prob(1))
