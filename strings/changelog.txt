@@ -1,5 +1,9 @@
 
 (t)sat apr 25 20
+(u)Kubius
+(p)429
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch twelve - more cargo pads and miscellaneous tuneups.
 (u)Tarmunora
 (p)410
 (e)⚖🆕|balance, enhancement
