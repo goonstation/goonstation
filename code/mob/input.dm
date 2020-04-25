@@ -105,6 +105,8 @@ mob
 					if (src.buckled && istype(src.buckled, /obj/stool/chair))
 						var/obj/stool/chair/C = src.buckled
 						delay += C.buckle_move_delay //GriiiiIIIND
+						if (C.rotatable)
+							C.rotate(src.move_dir)
 
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 						if (get_dist(src, G.affecting) > 1)
