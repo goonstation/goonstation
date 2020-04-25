@@ -1982,7 +1982,6 @@
 					src.surgeryConfusion(patient, surgeon, damage_high)
 					return 1
 
-			src.surgeryConfusion(patient, surgeon, damage_low)
 		else
 			return 0
 	else
