@@ -63,3 +63,7 @@
 // human signals
 ///when a human Life tick occurs
 #define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
+
+// mob signals
+///At the beginning of when an attackresults datum is being set up
+#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"

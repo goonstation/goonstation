@@ -624,6 +624,7 @@
 	msgs.valid = 1
 
 	var/crit_chance = STAMINA_CRIT_CHANCE
+	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src

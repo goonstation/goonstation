@@ -107,7 +107,7 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+(src.hit_type != 1 ? src.hit_type != 2 ? src.hit_type != 4 ? src.hit_type != 8 ? "crush":"burn":"stab":"cut":"blunt")+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
@@ -230,13 +230,13 @@
 	if(!src.c_flags)
 		return
 	if(src.c_flags & BLOCK_CUT)
-		B.setProperty("block_cut", 1)
+		B.setProperty("block_cut", max(1, B.getProperty("block_cut")))
 	if(src.c_flags & BLOCK_STAB)
-		B.setProperty("block_stab", 1)
+		B.setProperty("block_stab", max(1, B.getProperty("block_stab")))
 	if(src.c_flags & BLOCK_BURN)
-		B.setProperty("block_burn", 1)
+		B.setProperty("block_burn", max(1, B.getProperty("block_burn")))
 	if(src.c_flags & BLOCK_BLUNT)
-		B.setProperty("block_blunt", 1)
+		B.setProperty("block_blunt", max(1, B.getProperty("block_blunt")))
 
 /obj/item/proc/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(special && !special.manualTriggerOnly)
@@ -1040,6 +1040,7 @@
 	msgs.logs = list()
 	msgs.logc("attacks %target% with [src] ([type], object name: [initial(name)])")
 
+	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
