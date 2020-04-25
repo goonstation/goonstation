@@ -543,6 +543,8 @@
 #define ui_rest "CENTER+6, SOUTH"
 #define ui_abiltoggle "CENTER-6, SOUTH"
 #define ui_stats "CENTER+7, SOUTH"
+#define ui_legend "CENTER+7:16, SOUTH"
+
 
 #define ui_zone_sel "CENTER+4, SOUTH"
 #define ui_storage_area "1,8 to 1,1"
@@ -566,6 +568,7 @@
 #define tg_ui_ears "WEST+2:10,SOUTH+2:9"
 #define tg_ui_mask "WEST+1:8,SOUTH+2:9"
 #define tg_ui_head "WEST+1:8,SOUTH+3:11"
+#define tg_ui_legend "WEST+2:10, SOUTH+3:11"
 #define tg_ui_throwing "EAST-1:28,SOUTH+1:7"
 #define tg_ui_intent "EAST-3:24,SOUTH:5"
 #define tg_ui_mintent "EAST-2:26,SOUTH:5"
