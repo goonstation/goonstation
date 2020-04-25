@@ -3,6 +3,7 @@
 
 /datum/plant/rose
 	name = "Rose"
+	special_dmi = 'icons/obj/hydroponics/plants_flower.dmi'
 	category = "Flower" //????
 	seedcolor = "#AA2222"
 	crop = /obj/item/plant/flower/rose

@@ -1,5 +1,6 @@
 /datum/plant/fungus
 	name = "Fungus"
+	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#224400"
@@ -19,6 +20,7 @@
 
 /datum/plant/lasher
 	name = "Lasher"
+	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#00FFFF"
@@ -79,6 +81,7 @@
 
 /datum/plant/creeper
 	name = "Creeper"
+	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
 	unique_seed = /obj/item/seed/creeper
 	growthmode = "weed"
 	category = "Miscellaneous"
@@ -114,6 +117,7 @@
 
 /datum/plant/radweed
 	name = "Radweed"
+	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#55CC55"
@@ -168,6 +172,7 @@
 
 /datum/plant/slurrypod
 	name = "Slurrypod"
+	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#004400"

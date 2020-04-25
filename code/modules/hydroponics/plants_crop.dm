@@ -1,5 +1,6 @@
 /datum/plant/bamboo
 	name = "Bamboo"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#FCDA91"
 	crop = /obj/item/material_piece/organic/bamboo
@@ -15,6 +16,7 @@
 
 /datum/plant/wheat
 	name = "Wheat"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#FFFF88"
 	crop = /obj/item/plant/wheat
@@ -38,6 +40,7 @@
 
 /datum/plant/oat
 	name = "Oat"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#CCFF88"
 	crop = /obj/item/plant/oat
@@ -53,6 +56,7 @@
 
 /datum/plant/rice
 	name = "Rice"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#FFFFAA"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
@@ -68,6 +72,7 @@
 
 /datum/plant/beans
 	name = "Bean"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#AA7777"
 	crop = /obj/item/reagent_containers/food/snacks/plant/bean
@@ -84,6 +89,7 @@
 
 /datum/plant/corn
 	name = "Corn"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#FFFF00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn
@@ -100,6 +106,7 @@
 
 /datum/plant/synthmeat
 	name = "Synthmeat"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#550000"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
@@ -129,6 +136,7 @@
 
 /datum/plant/sugar
 	name = "Sugar"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#BBBBBB"
 	crop = /obj/item/plant/sugar
@@ -145,6 +153,7 @@
 
 /datum/plant/soy
 	name = "Soybean"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#CCCC88"
 	crop = /obj/item/reagent_containers/food/snacks/plant/soy
@@ -161,6 +170,7 @@
 
 /datum/plant/peanut
 	name = "Peanut"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#999900"
 	crop = /obj/item/reagent_containers/food/snacks/plant/peanuts
@@ -184,6 +194,7 @@
 
 /datum/plant/cotton
 	name = "Cotton"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#FFFFFF"
 	dont_rename_crop = true
@@ -200,6 +211,7 @@
 
 /datum/plant/tree // :effort:
 	name = "Tree"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#9C5E13"
 	dont_rename_crop = true
@@ -220,6 +232,7 @@
 
 /datum/plant/coffee
 	name = "Coffee"
+	special_dmi = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#302013"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry

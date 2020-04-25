@@ -1,5 +1,6 @@
 /datum/plant/lettuce
 	name = "Lettuce"
+	special_dmi = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
 	seedcolor = "#006622"
 	crop = /obj/item/reagent_containers/food/snacks/plant/lettuce
@@ -15,6 +16,7 @@
 
 /datum/plant/cucumber
 	name = "Cucumber"
+	special_dmi = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
 	seedcolor = "#005622"
 	crop = /obj/item/reagent_containers/food/snacks/plant/cucumber
@@ -30,6 +32,7 @@
 
 /datum/plant/carrot
 	name = "Carrot"
+	special_dmi = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
 	seedcolor = "#774400"
 	crop = /obj/item/reagent_containers/food/snacks/plant/carrot
@@ -46,6 +49,7 @@
 
 /datum/plant/potato
 	name = "Potato"
+	special_dmi = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
 	seedcolor = "#555500"
 	crop = /obj/item/reagent_containers/food/snacks/plant/potato
@@ -62,6 +66,7 @@
 
 /datum/plant/onion
 	name = "Onion"
+	special_dmi = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
 	seedcolor = "#DDFFDD"
 	crop = /obj/item/reagent_containers/food/snacks/plant/onion
@@ -76,6 +81,7 @@
 
 /datum/plant/garlic
 	name = "Garlic"
+	special_dmi = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
 	seedcolor = "#BBDDBB"
 	crop = /obj/item/reagent_containers/food/snacks/plant/garlic

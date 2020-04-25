@@ -1,5 +1,6 @@
 /datum/plant/contusine
 	name = "Contusine"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#DD00AA"
 	crop = /obj/item/plant/herb/contusine
@@ -17,6 +18,7 @@
 
 /datum/plant/nureous
 	name = "Nureous"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#226600"
 	crop = /obj/item/plant/herb/nureous
@@ -35,6 +37,7 @@
 
 /datum/plant/asomna
 	name = "Asomna"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	seedcolor = "#00AA77"
 	crop = /obj/item/plant/herb/asomna
 	starthealth = 20
@@ -51,6 +54,7 @@
 
 /datum/plant/commol
 	name = "Commol"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#559900"
 	crop = /obj/item/plant/herb/commol
@@ -69,6 +73,7 @@
 
 /datum/plant/venne
 	name = "Venne"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#DDFF99"
 	crop = /obj/item/plant/herb/venne
@@ -86,6 +91,7 @@
 
 /datum/plant/mint
 	name = "Mint"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#258934"
 	crop = /obj/item/plant/herb/mint
@@ -102,6 +108,7 @@
 
 /datum/plant/cannabis
 	name = "Cannabis"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#66DD66"
 	crop = /obj/item/plant/herb/cannabis
@@ -122,6 +129,7 @@
 
 /datum/plant/catnip
 	name = "Nepeta Cataria"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#00CA70"
 	crop = /obj/item/plant/herb/catnip
@@ -138,6 +146,7 @@
 
 /datum/plant/hcordata
 	name = "Houttuynia Cordata"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#00CA70"
 	crop = /obj/item/plant/herb/hcordata
@@ -154,10 +163,11 @@
 	endurance = 0
 	vending = 1
 	genome = 1
-	assoc_reagents = list("mercury") 
+	assoc_reagents = list("mercury")
 
 /datum/plant/poppy
 	name = "Poppy"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#FF1500"
 	crop = /obj/item/plant/herb/poppy
@@ -174,6 +184,7 @@
 
 /datum/plant/aconite
 	name = "Aconite"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#990099"
 	crop = /obj/item/plant/herb/aconite
@@ -190,6 +201,7 @@
 
 /datum/plant/tobacco
 	name = "Tobacco"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
 	seedcolor = "#82D213"
 	crop = /obj/item/plant/herb/tobacco
@@ -204,10 +216,11 @@
 	nectarlevel = 5
 	assoc_reagents = list("nicotine")
 	mutations = list(/datum/plantmutation/tobacco/twobacco)
-	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted) 
+	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
 /datum/plant/grass
 	name = "Grass"
+	special_dmi = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Miscellaneous"
 	seedcolor = "#00CC00"
 	crop = /obj/item/plant/herb/grass
