@@ -1108,7 +1108,7 @@
 		var rptr_index = $(".right-ptr", jqT).index() - 2;
 		//shift based on direction
 		dir = dir / Math.abs(dir);
-		lptr_index += dir;
+		//lptr_index += dir;
 		rptr_index += dir;
 		//Select sequence based on new indices
 		sendSelectionUpdate(lptr_index, rptr_index, jqT.attr("id") === "spliceTargetField");
