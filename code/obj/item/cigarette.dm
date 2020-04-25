@@ -104,10 +104,6 @@
 				qdel(src)
 			update_icon()
 
-	// proc/break_up_bundle()
-	// 	src.visible_message("<span style='color:red'>[src] breaks apart!</span>", group = "cig_drop")
-	// 	for (var/obj/item/clothing/mask/cigarette/C in contents)
-	// 		C.set_loc(src.loc)
 
 	dropped(mob/user as mob)
 		src.visible_message("<span style='color:red'>[src] falls apart into", group = "cig_drop")
