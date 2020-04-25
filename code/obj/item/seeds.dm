@@ -2,7 +2,7 @@
 /obj/item/seed/
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 	var/seedcolor = "#000000"
 	w_class = 1.0
@@ -90,7 +90,7 @@
 		// it to color in the seed packet so you can recognise the packets at a glance.
 		if (!colorRef) return
 		if (!src.artifact)
-			var/icon/I = new /icon('icons/obj/hydroponics/hydromisc.dmi',"seeds-ovl")
+			var/icon/I = new /icon('icons/obj/hydroponics/items_hydroponics.dmi',"seeds-ovl")
 			I.Blend(colorRef, ICON_ADD)
 			src.overlays += I
 

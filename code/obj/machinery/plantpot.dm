@@ -62,7 +62,7 @@
 	// get kind of resource intensive past a certain point.
 	name = "hydroponics tray"
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife."
-	icon = 'icons/obj/hydroponics/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "tray"
 	anchored = 0
 	density = 1
@@ -112,8 +112,8 @@
 		R.add_reagent("water", 200)
 		// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 		// to have too much water, which stunts plant growth speed.
-		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi', "wat-[src.water_level]")
-		src.plant_sprite = image('icons/obj/hydroponics/hydroponics.dmi', "")
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
+		src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
 		update_icon()
 
 		SPAWN_DBG(0.5 SECONDS)
@@ -734,9 +734,9 @@
 
 	proc/update_water_icon()
 		var/datum/color/average
-		src.water_sprite = image('icons/obj/hydroponics/hydroponics.dmi',"wat-[src.total_volume]")
+		src.water_sprite = image('icons/obj/hydroponics/machines_hydroponics.dmi',"wat-[src.total_volume]")
 		src.water_sprite.layer = 4
-		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		if(src.reagents.total_volume)
 			average = src.reagents.get_average_color()
 			src.water_sprite.color = average.to_rgba()
@@ -745,7 +745,7 @@
 		UpdateOverlays(src.water_meter, "water_meter")
 
 	proc/update_icon() //plant icon stuffs
-		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
 			UpdateOverlays(null, "harvest_display")
@@ -758,14 +758,14 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
 
-		var/iconname = 'icons/obj/hydroponics/hydroponics.dmi'
-		if(growing.special_dmi)
-			iconname = growing.special_dmi
+		var/iconname = 'icons/obj/hydroponics/plants_weed.dmi'
+		if(growing.plant_icon)
+			iconname = growing.plant_icon
 		else if(MUT && MUT.iconmod)
-			if(MUT.special_dmi)
-				iconname = MUT.special_dmi
+			if(MUT.plant_icon)
+				iconname = MUT.plant_icon
 			else
-				iconname = 'icons/obj/hydroponics/hydro_mutants.dmi'
+				iconname = 'icons/obj/hydroponics/plants_mutants.dmi'
 
 		if(src.dead)
 			UpdateOverlays(hydro_controls.pot_death_display, "plantdeath")
@@ -790,8 +790,8 @@
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
-		else if(growing.special_icon)
-			planticon = "[growing.special_icon]-G[src.grow_level]"
+		else if(growing.override_icon_state)
+			planticon = "[growing.override_icon_state]-G[src.grow_level]"
 		else
 			planticon = "[growing.name]-G[src.grow_level]"
 
@@ -1665,7 +1665,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 /obj/machinery/hydro_growlamp
 	name = "\improper UV Grow Lamp"
 	desc = "A special lamp that emits ultraviolet light to help plants grow quicker."
-	icon = 'icons/obj/hydroponics/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
 	anchored = 0

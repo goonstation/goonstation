@@ -1,7 +1,7 @@
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 
 	attack(mob/M, mob/user)
@@ -361,7 +361,7 @@
 					icon_state = "bulb-closed"
 
 				sleep(bulb_complete)
-				
+
 				if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)

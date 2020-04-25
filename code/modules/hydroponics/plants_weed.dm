@@ -1,6 +1,6 @@
 /datum/plant/fungus
 	name = "Fungus"
-	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#224400"
@@ -20,7 +20,7 @@
 
 /datum/plant/lasher
 	name = "Lasher"
-	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#00FFFF"
@@ -81,7 +81,7 @@
 
 /datum/plant/creeper
 	name = "Creeper"
-	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	unique_seed = /obj/item/seed/creeper
 	growthmode = "weed"
 	category = "Miscellaneous"
@@ -117,7 +117,7 @@
 
 /datum/plant/radweed
 	name = "Radweed"
-	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#55CC55"
@@ -141,7 +141,7 @@
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( POT.loc )
-			B.icon = 'icons/obj/hydroponics/hydromisc.dmi'
+			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1
@@ -172,7 +172,7 @@
 
 /datum/plant/slurrypod
 	name = "Slurrypod"
-	special_dmi = 'icons/obj/hydroponics/plants_weed.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#004400"

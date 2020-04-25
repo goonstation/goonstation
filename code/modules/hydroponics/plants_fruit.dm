@@ -1,6 +1,6 @@
 /datum/plant/tomato
 	name = "Tomato" // You want to capitalise this, it shows up in the seed vendor and plant pot
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit" // This is either Fruit, Vegetable, Herb or Miscellaneous
 	seedcolor = "#CC0000" // Hex string for color. Don't forget the hash!
 	crop = /obj/item/reagent_containers/food/snacks/plant/tomato
@@ -32,7 +32,7 @@
 
 /datum/plant/grape
 	name = "Grape"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#8800CC"
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape
@@ -49,7 +49,7 @@
 
 /datum/plant/cherry
 	name = "Cherry"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#CC0000"
 	crop = /obj/item/reagent_containers/food/snacks/plant/cherry
@@ -66,7 +66,7 @@
 
 /datum/plant/orange
 	name = "Orange"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#FF8800"
 	crop = /obj/item/reagent_containers/food/snacks/plant/orange
@@ -84,7 +84,7 @@
 
 /datum/plant/melon
 	name = "Melon"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#33BB00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/melon
@@ -115,7 +115,7 @@
 
 /datum/plant/chili
 	name = "Chili"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#FF0000"
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili
@@ -150,7 +150,7 @@
 
 /datum/plant/apple
 	name = "Apple"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#00AA00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/apple
@@ -167,7 +167,7 @@
 
 /datum/plant/banana
 	name = "Banana"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#CCFF99"
 	crop = /obj/item/reagent_containers/food/snacks/plant/banana
@@ -183,7 +183,7 @@
 
 /datum/plant/lime
 	name = "Lime"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#00FF00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/lime
@@ -199,7 +199,7 @@
 
 /datum/plant/lemon
 	name = "Lemon"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#FFFF00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/lemon
@@ -214,7 +214,7 @@
 
 /datum/plant/pumpkin
 	name = "Pumpkin"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#DD7733"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkin
@@ -229,7 +229,7 @@
 
 /datum/plant/avocado
 	name = "Avocado"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#00CC66"
 	crop = /obj/item/reagent_containers/food/snacks/plant/avocado
@@ -243,7 +243,7 @@
 
 /datum/plant/eggplant
 	name = "Eggplant"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#CCCCCC"
 	crop = /obj/item/reagent_containers/food/snacks/plant/eggplant
@@ -267,7 +267,7 @@
 
 /datum/plant/strawberry
 	name = "Strawberry"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#FF2244"
 	crop = /obj/item/reagent_containers/food/snacks/plant/strawberry
@@ -283,7 +283,7 @@
 
 /datum/plant/blueberry
 	name = "Blueberry"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#0000FF"
 	crop = /obj/item/reagent_containers/food/snacks/plant/blueberry
@@ -299,7 +299,7 @@
 
 /datum/plant/coconut
 	name = "Coconut"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#4D2600"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coconut
@@ -314,7 +314,7 @@
 
 /datum/plant/pineapple
 	name = "Pineapple"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#F8D016"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pineapple
@@ -328,7 +328,7 @@
 
 /datum/plant/pear
 	name = "Pear"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#3FB929"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear
@@ -344,7 +344,7 @@
 
 /datum/plant/peach
 	name = "Peach"
-	special_dmi = 'icons/obj/hydroponics/plants_fruit.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit"
 	seedcolor = "#DEBA5F"
 	crop = /obj/item/reagent_containers/food/snacks/plant/peach

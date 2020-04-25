@@ -6,7 +6,7 @@
 	var/crop_suffix = ""
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
@@ -85,7 +85,6 @@
 /obj/item/plant/herb/cannabis/
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
 	icon_state = "cannabisleaf"
 	brewable = 1
 	brew_result = list("THC", "CBD")
@@ -234,7 +233,7 @@
 	icon_state = "sugarcane"
 	brewable = 1
 	brew_result = "rum"
-	
+
 /obj/item/plant/herb/grass
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
@@ -424,4 +423,4 @@
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"
 	desc = "Also known as fish mint or heart leaf, used in cuisine for its distinct fishy flavor."
-	icon_state = "hcordata" 
+	icon_state = "hcordata"

@@ -1,6 +1,6 @@
 /datum/plant/artifact
 	name = "Unknown"
-	special_dmi = 'icons/obj/hydroponics/hydro_alien.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	cantscan = 0
 	vending = 0
 
@@ -9,7 +9,7 @@
 /datum/plant/artifact/pukeplant
 	name = "Puker"
 	growthmode = "weed"
-	special_icon = "puker"
+	override_icon_state = "puker"
 	unique_seed = /obj/item/seed/alien/pukeplant
 	nothirst = 1
 	starthealth = 80
@@ -33,7 +33,7 @@
 /datum/plant/artifact/peeker
 	name = "Peeker"
 	growthmode = "weed"
-	special_icon = "peeker"
+	override_icon_state = "peeker"
 	unique_seed = /obj/item/seed/alien/peeker
 	nothirst = 1
 	starthealth = 120
@@ -119,12 +119,12 @@
 		var/pr = 20
 		if(src.focused)
 			pr += 10
-		
+
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
-			
+
 			var/extreme_start = prob(1 + max(0, DNA.potency / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
@@ -141,7 +141,7 @@
 
 /datum/plant/artifact/dripper
 	name = "Dripper"
-	special_icon = "dripper"
+	override_icon_state = "dripper"
 	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop
 	unique_seed = /obj/item/seed/alien/dripper
 	starthealth = 4
@@ -154,7 +154,7 @@
 
 /datum/plant/artifact/rocks
 	name = "Rock"
-	special_icon = "rocks"
+	override_icon_state = "rocks"
 	crop = /obj/item/raw_material/rock
 	unique_seed = /obj/item/seed/alien/rocks
 	starthealth = 80
@@ -168,7 +168,7 @@
 
 /datum/plant/artifact/litelotus
 	name = "Light Lotus"
-	special_icon = "litelotus"
+	override_icon_state = "litelotus"
 	crop = /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	unique_seed = /obj/item/seed/alien/litelotus
 	starthealth = 30
@@ -181,7 +181,7 @@
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
-	special_icon = "plasma"
+	override_icon_state = "plasma"
 	crop = /obj/critter/spore
 	unique_seed = /obj/item/seed/alien/plasma
 	starthealth = 20
@@ -193,7 +193,7 @@
 
 /datum/plant/artifact/goldfish
 	name = "Goldfish"
-	special_icon = "goldfish"
+	override_icon_state = "goldfish"
 	crop = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	unique_seed = /obj/item/seed/alien/goldfish
 	starthealth = 40
@@ -205,7 +205,7 @@
 
 /datum/plant/artifact/cat
 	name = "Synthetic Cat"
-	special_icon = "cat"
+	override_icon_state = "cat"
 	crop = /obj/critter/cat/synth
 	unique_seed = /obj/item/seed/alien/cat
 	starthealth = 90 // 9 lives

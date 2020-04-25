@@ -1,7 +1,7 @@
 /datum/plantmutation/
 	var/name = null // If this is set, plants will use this instead of regular plant name
 	var/crop = null // What crop does it give?
-	var/special_dmi = null // same as in base plant thing really
+	var/plant_icon = 'icons/obj/hydroponics/plants_mutants.dmi' // same as in base plant thing really
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
@@ -452,7 +452,7 @@
 
 		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( POT.loc )
-			B.icon = 'icons/obj/hydroponics/hydromisc.dmi'
+			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1

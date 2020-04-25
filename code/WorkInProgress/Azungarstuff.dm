@@ -737,7 +737,7 @@
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#FF0000"
-	special_icon = "hellshroom"
+	override_icon_state = "hellshroom"
 	crop = /obj/item/reagent_containers/food/snacks/hellshroom
 	starthealth = 10
 	nothirst = 1
