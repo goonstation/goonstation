@@ -132,7 +132,7 @@
 						/obj/item/gun/energy/taser_gun,
 						/obj/item/sword,
 						/obj/item/axe,
-						/obj/item/knife_butcher,
+						/obj/item/knife/butcher,
 						/obj/item/old_grenade/light_gimmick,
 						/obj/item/storage/belt/wrestling)
 

@@ -526,6 +526,9 @@
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		fluid_ma.color = targetcolor
+		fluid_ma.alpha = targetalpha
+
 		for(var/fluid in src.members)
 			var/obj/fluid/F = fluid
 			if (!F || F.pooled || src.qdeled) continue
@@ -533,27 +536,24 @@
 			//Same shit here with update_icon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			F.name = src.master_reagent_name //maybe obscure later?
+			fluid_ma.name = src.master_reagent_name //maybe obscure later?
 
 			F.finalalpha = targetalpha
 			F.finalcolor = targetcolor
-
-			F.color = F.finalcolor
-			F.alpha = F.finalalpha
 
 
 			if (F.do_iconstate_updates)
 				last_icon = F.icon_state
 
 				if (F.last_spread_was_blocked || (src.amt_per_tile > src.required_to_spread))
-					F.icon_state = "15"
+					fluid_ma.icon_state = "15"
 				else
 					var/dirs = 0
 					for (var/dir in cardinal)
 						var/turf/simulated/T = get_step(F, dir)
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
-					F.icon_state = num2text(dirs)
+					fluid_ma.icon_state = num2text(dirs)
 
 					if (F.overlay_refs && F.overlay_refs.len)
 						if (F)
@@ -561,13 +561,17 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
+			else
+				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			F.opacity = master_opacity
+			UNLINT(fluid_ma.opacity = master_opacity) //TODO: ZeWaka: Stop unlinting this when DreamChecker +1.4 comes out
+
+			F.appearance = fluid_ma
 
 
 		src.last_contained_amt = src.contained_amt

@@ -365,10 +365,8 @@
 				A:lastattacker = usr
 				A:lastattackertime = world.time
 			A:weakened += 15
-	pull()
-		set src in oview(1)
-		set category = "Local"
-		var/mob/living/user = usr
+
+	pull(var/mob/user)
 		if (!istype(user))
 			return
 		if (!iswerewolf(user))

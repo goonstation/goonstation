@@ -87,10 +87,10 @@
 	var/last_chat_color = null
 
 /mob/living/New()
+	..()
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
-	..()
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
@@ -449,8 +449,7 @@
 	src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
 
-/mob/living/verb/point(var/atom/target as mob|obj|turf in oview())
-	set name = "Point"
+/mob/living/point_at(var/atom/target)
 	if (!isturf(src.loc) || usr.stat || usr.restrained())
 		return
 
@@ -1116,6 +1115,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			thing = src.l_hand
 		else if (src.r_hand)
 			thing = src.r_hand
+
+	//no passing blocks around >:L
+	if (istype(thing,/obj/item/grab/block))
+		return
+	if (thing.c_flags & HAS_GRAB_EQUIP)
+		return
 
 	if (thing)
 		if (alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes")

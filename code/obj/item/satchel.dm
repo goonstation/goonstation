@@ -126,7 +126,7 @@
 				I.set_loc(src)
 				if (!(interval++ % 5))
 					src.satchel_updateicon()
-					sleep(2)
+					sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (src.contents.len >= src.maxitems)
 					boutput(user, "<span style=\"color:blue\">\The [src] is now full!</span>")
@@ -239,10 +239,10 @@
 			if (open && icon_state == "figurinecase")
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
 				icon_state = "figurinecase-open"
-				sleep(4)
+				sleep(0.4 SECONDS)
 
 			else if (!open && icon_state == "figurinecase-open")
-				sleep(5)
+				sleep(0.5 SECONDS)
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 

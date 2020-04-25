@@ -244,19 +244,19 @@ PIPE BOMBS + CONSTRUCTION
 					else
 						src.smoke.start()
 
-					sleep(10)
+					sleep(1 SECOND)
 					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
-					sleep(10)
+					sleep(1 SECOND)
 					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
-					sleep(10)
+					sleep(1 SECOND)
 					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
@@ -315,7 +315,7 @@ PIPE BOMBS + CONSTRUCTION
 					if (F && F.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
 							F.smoke.start()
-							sleep(10)
+							sleep(1 SECOND)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
 			var/targetx = src.y - rand(-5,5)
 			var/targety = src.y - rand(-5,5)

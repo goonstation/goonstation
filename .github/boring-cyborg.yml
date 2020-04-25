@@ -10,6 +10,11 @@ labelPRBasedOnFilePath:
   mapping:
     - maps/**/*
     - '**/*.dmm'
+    
+  # Add 'sound' label to any changes within 'sound' folder or any subfolders
+  sound:
+    - sound/**/*
+    - '**/*.ogg'
 
   # Add 'documentation' label to any changes to a .md file
   documentation:

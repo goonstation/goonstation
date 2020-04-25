@@ -93,6 +93,8 @@
 
 	var/experimental_intents = 0
 
+	var/admin_intent = 0
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
@@ -131,7 +133,7 @@
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
-		sleep(50)
+		sleep(5 SECONDS)
 		del(src)
 		return
 
@@ -769,7 +771,7 @@ var/global/curr_day = null
 			stat( A )
 
 	if (!src.holder)//todo : maybe give admins a toggle
-		sleep(12) //and make this number larger
+		sleep(1.2 SECONDS) //and make this number larger
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))

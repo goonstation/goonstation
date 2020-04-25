@@ -426,7 +426,7 @@
 				var/datum/gang/G = hot_zone.gang_owners
 				G.score_event += hot_zone_score
 				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(100)
+				sleep(10 SECONDS)
 			process_hot_zones()
 
 //bleh
@@ -746,8 +746,6 @@
 			new/datum/gang_item/space/stims)
 
 	examine()
-		set src in oview(7)
-
 		..()
 
 		if(health == 0)
@@ -1048,7 +1046,7 @@
 			if (I in user)
 				continue
 			I.set_loc(src)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill) break
 
 		boutput(user, "<span style=\"color:blue\">You finish filling the [src]!</span>")

@@ -174,7 +174,7 @@
 				wiggle--
 				POT.pixel_x = rand(-2,2)
 				POT.pixel_y = rand(-2,2)
-				sleep(1)
+				sleep(0.1 SECONDS)
 			POT.pixel_x = 0
 			POT.pixel_y = 0
 

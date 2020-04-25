@@ -15,16 +15,16 @@
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/monitor/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
-/obj/machinery/power/monitor/proc/interact(mob/user)
+/obj/machinery/power/monitor/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
@@ -140,7 +140,7 @@
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
 
-/obj/machinery/power/monitor/smes/interact(mob/user)
+/obj/machinery/power/monitor/smes/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))

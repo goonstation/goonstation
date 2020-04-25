@@ -17,10 +17,11 @@ from github import Github
 labels_to_emoji = {
 	'ass-jam': '🍑',
 	'balance': '⚖',
+	'bug-critical': '🐛',
 	'bug-major': '🐛',
+	'bug': '🐛',
 	'bug-minor': '🐛',
 	'bug-trivial': '🐛',
-	'bug': '🐛',
 	'enhancement': '🆕',
 	'removal': '⛔',
 	'sprites': '🎨',

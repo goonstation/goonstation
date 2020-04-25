@@ -373,6 +373,10 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.disarm_RNG_result = "shoved"
+		var/obj/item/I = target.equipped()
+		if (I && I.temp_flags & IS_LIMB_ITEM)
+			msgs.disarm_RNG_result = "attack_self_with_item_shoved"
+
 		return msgs
 
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
@@ -424,6 +428,10 @@
 			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			msgs.disarm_RNG_result = "shoved_down"
+			var/obj/item/I = target.equipped()
+			if (I && I.temp_flags & IS_LIMB_ITEM)
+				msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
+
 			return msgs
 
 	if (is_shove) return msgs
@@ -616,6 +624,7 @@
 	msgs.valid = 1
 
 	var/crit_chance = STAMINA_CRIT_CHANCE
+	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -914,7 +923,7 @@
 						target.deliver_move_trigger("bump")
 						target.drop_item_throw()
 
-					if ("attack_self_with_item")
+					if ("attack_self_with_item", "attack_self_with_item_shoved_down", "attack_self_with_item_shoved")
 						var/obj/item/I = target.equipped()
 						if (I)
 							var/old_zone_sel = 0
@@ -933,6 +942,13 @@
 
 							if (prob(20))
 								I.attack_self(target)
+
+							//SORRY
+							if (src.disarm_RNG_result == "attack_self_with_item_shoved_down")
+								target.changeStatus("weakened", 1 SECONDS)
+								target.force_laydown_standup()
+							if (src.disarm_RNG_result == "attack_self_with_item_shoved")
+								step_away(target, owner, 1)
 
 					if ("shoved_down")
 						target.deliver_move_trigger("pushdown")
@@ -1228,7 +1244,7 @@
 			if (prob(20))
 				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				step_away(target,src,15)
 			else if (prob(20))				//what's this math, like 40% then with the if else? who cares
 

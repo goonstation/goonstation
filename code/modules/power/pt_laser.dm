@@ -166,7 +166,7 @@
 	if(autorefresh)
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
-				src.interact(M)
+				src.interacted(M)
 		AutoUpdateAI(src)
 
 /obj/machinery/power/pt_laser/proc/power_sold()
@@ -348,9 +348,9 @@
 
 	if(status & BROKEN) return
 
-	interact(user)
+	interacted(user)
 
-/obj/machinery/power/pt_laser/proc/interact(mob/user)
+/obj/machinery/power/pt_laser/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!isAI(user))
@@ -493,7 +493,7 @@
 
 	if(status & BROKEN) return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/pt_laser/ex_act(severity)
 	switch(severity)

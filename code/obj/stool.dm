@@ -467,14 +467,11 @@
 		..()
 		return
 
-	verb/rest_in()
-		set src in oview(1)
-		set name = "sleep in"
-		set category = "Local"
-
-		var/mob/living/carbon/user = usr
-		if (!istype(user))
+	proc/sleep_in(var/mob/M)
+		if (!ishuman(M))
 			return
+
+		var/mob/living/carbon/user = M
 
 		if (isdead(user))
 			boutput(user, "<span style=\"color:red\">Some would say that death is already the big sleep.</span>")
@@ -515,8 +512,6 @@
 		anchored = 0
 
 	New()
-		//if (src.anchored)
-			//src.verbs -= /atom/movable/verb/pull
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		..()
@@ -596,27 +591,31 @@
 					return
 				else
 					user.show_text("Seems like the buckle is firmly locked into place.", "red")
+					return
 
-		if (!src.buckledIn && src.foldable)
-			user.visible_message("<b>[user.name] folds [src].</b>")
-			if ((chump) && (chump != user))
-				chump.visible_message("<span style=\"color:red\"><b>[chump.name] falls off of [src]!</b></span>")
-				chump.on_chair = 0
-				chump.pixel_y = 0
-				chump.changeStatus("weakened", 1 SECOND)
-				chump.changeStatus("stunned", 2 SECONDS)
-				random_brute_damage(chump, 15)
-				playsound(chump.loc, "swing_hit", 50, 1)
+		if (!src.buckledIn)
+			if (src.foldable)
+				user.visible_message("<b>[user.name] folds [src].</b>")
+				if ((chump) && (chump != user))
+					chump.visible_message("<span style=\"color:red\"><b>[chump.name] falls off of [src]!</b></span>")
+					chump.on_chair = 0
+					chump.pixel_y = 0
+					chump.changeStatus("weakened", 1 SECOND)
+					chump.changeStatus("stunned", 2 SECONDS)
+					random_brute_damage(chump, 15)
+					playsound(chump.loc, "swing_hit", 50, 1)
 
-			var/obj/item/chair/folded/C = new/obj/item/chair/folded(src.loc)
-			if (src.material)
-				C.setMaterial(src.material)
-			if (src.icon_state)
-				C.c_color = src.icon_state
-				C.icon_state = "folded_[src.icon_state]"
-				C.item_state = C.icon_state
+				var/obj/item/chair/folded/C = new/obj/item/chair/folded(src.loc)
+				if (src.material)
+					C.setMaterial(src.material)
+				if (src.icon_state)
+					C.c_color = src.icon_state
+					C.icon_state = "folded_[src.icon_state]"
+					C.item_state = C.icon_state
 
-			qdel(src)
+				qdel(src)
+			else
+				src.rotate()
 		return
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
@@ -636,6 +635,11 @@
 				if (istype(A))
 					user.unlock_medal("Leave no man behind!", 1)
 		return
+
+	MouseDrop(atom/over_object as mob|obj)
+		if(get_dist(src,usr) <= 1)
+			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
+		..()
 
 	can_buckle(var/mob/M, var/mob/user)
 		if (!ticker)
@@ -761,13 +765,13 @@
 #endif
 		else return ..()
 
-	verb/rotate()
-		set name = "Rotate"
-		set category = "Local"
+	proc/rotate(var/face_dir = 0)
 		if (rotatable)
-			set src in oview(1)
+			if (!face_dir)
+				src.dir = turn(src.dir, 90)
+			else
+				src.dir = face_dir
 
-			src.dir = turn(src.dir, 90)
 			if (src.dir == NORTH)
 				src.layer = FLY_LAYER+1
 			else
@@ -1057,7 +1061,6 @@
 	var/arm_icon_state = null
 
 	New()
-		src.verbs -= /obj/stool/chair/verb/rotate
 		..()
 		if (arm_icon_state)
 			src.update_icon()
@@ -1120,7 +1123,6 @@
 	/obj/item/spacecash/buttcoin)
 
 	New()
-		src.verbs -= /obj/stool/chair/verb/rotate
 		..()
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)

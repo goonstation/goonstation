@@ -86,6 +86,7 @@
 	desc = "A replacement film cartridge for an instant camera."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "camera_film"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = 2.0
 	mats = 10
@@ -106,7 +107,8 @@
 	name = "photo"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "photo"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "paper"
 	w_class = 1.0
 	var/image/fullImage
 	var/icon/fullIcon

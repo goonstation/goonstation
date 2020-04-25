@@ -219,7 +219,7 @@
 			user.visible_message("<b>[user]</b> feeds [E] to [src]!",\
 			"You feed [E] to [src]. Fuck!")
 
-		sleep(20)
+		sleep(2 SECONDS)
 		E.icon_state = "gold"
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
@@ -879,20 +879,20 @@
 			user.visible_message("<b>[user]</b> feeds [E] to [src]!",\
 			"You feed [E] to [src]. Fuck!")
 
-		sleep(20)
+		sleep(2 SECONDS)
 		qdel(E)
 		src.visible_message("<b>[src]</b> burps.")
 
-		sleep(10)
+		sleep(1 SECOND)
 		src.visible_message("<b>[src]</b> bumbles happily!")
 		//src.dance()
 
-		sleep(170)
+		sleep(17 SECONDS)
 		if (get_dist(src, user) <= 7)
 			src.visible_message("<b>[src]</b> buzzes in a clueless manner as to why [user] looks so dejected.[prob(5)?" You can tell because you studied bee linguistics, ok?": null]")
 
 			//Is this a bad idea? It probably is a bad idea.
-			sleep(20)
+			sleep(2 SECONDS)
 			var/obj/item/dagger/D = new /obj/item/dagger/syndicate(src.loc)
 			D.name = "tiny switchblade"
 			D.desc = "Why would a bee even have this!?"
@@ -915,7 +915,7 @@
 		src.canmove = 0
 		animate(src, pixel_y = -6, time = 20, easing = BOUNCE_EASING)
 
-		sleep(20)
+		sleep(2 SECONDS)
 		src.pixel_y = 0
 		src.icon_state = "bubsbee"
 		src.sleeping = rand(10, 20)

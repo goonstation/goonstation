@@ -1108,7 +1108,7 @@
 
 	for(var/obj/decal/cleanable/O in src)
 		boutput(usr, "<span style=\"color:red\">You [pick(</span>"scrape","scrub","clean")] [O] out of [src].")
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/floor = get_turf(src)
 		O.set_loc(floor)
 
@@ -1120,7 +1120,7 @@
 	usr.make_shipcrewmember(src.weapon_class)
 	for(var/obj/item/shipcomponent/S in src.components)
 		S.mob_activate(usr)
-	sleep(5) //Make sure the verb gets added
+	sleep(0.5 SECONDS) //Make sure the verb gets added
 
 	src.passengers++
 	var/mob/M = usr
@@ -1739,9 +1739,9 @@
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)
 				D.open()
 				opened_door = 1
-			if(opened_door) sleep(20) //make sure it's fully open
+			if(opened_door) sleep(2 SECONDS) //make sure it's fully open
 			playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
 			while(!failing)
 				var/loc = src.loc
@@ -1754,7 +1754,7 @@
 					fail()
 				if (prob((steps_moved-7) * 4))
 					succeed()
-				sleep(4)
+				sleep(0.4 SECONDS)
 
 	proc/test()
 		boutput(world,"shuttle loc is [emergency_shuttle.location]")
@@ -1799,7 +1799,7 @@
 						boutput(pilot, "<span style=\"color:red\">You fall out of the rapidly disintegrating escape pod!</span>")
 						src.eject(pilot)
 					if(prob(10)) shipdeath()
-					sleep(4)
+					sleep(0.4 SECONDS)
 			if(4) //flies off course
 				pilot << sound('sound/machines/engine_alert1.ogg')
 				boutput(pilot, "<span style=\"color:red\">Your escape pod is veering out of control!</span>")
@@ -1810,7 +1810,7 @@
 					if(src.loc == loc) //we hit something
 						explosion(src, src.loc, 1, 1, 2, 3)
 						break
-					sleep(4)
+					sleep(0.4 SECONDS)
 			if(5)
 				boutput(pilot, "<span style=\"color:red\">Your escape pod sputters to a halt!</span>")
 			if(6)
@@ -1831,7 +1831,7 @@
 						explosion(src, src.loc, 1, 1, 2, 3)
 						break
 					else if(prob(2)) shipdeath()
-					sleep(4)
+					sleep(0.4 SECONDS)
 
 			if(7)
 				boutput(pilot, "<span style=\"color:red\">Your escape pod begins to accelerate!</span>")
@@ -1862,4 +1862,4 @@
 						break
 					if(prob(2)) //we don't want to do this forever so let's explode
 						shipdeath()
-					sleep(4)
+					sleep(0.4 SECONDS)

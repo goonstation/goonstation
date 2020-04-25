@@ -862,7 +862,7 @@
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 /*
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)

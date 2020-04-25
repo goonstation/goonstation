@@ -532,7 +532,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 				if (src.papers <= 0)
 					break
 				src.print_poster(usr)
-				sleep(10)
+				sleep(1 SECOND)
 			return
 
 		else if (href_list["entername"])

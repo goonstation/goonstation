@@ -4,7 +4,7 @@
 			var/t1 = 10 - src.speed
 			while(t1 > 0)
 				step(src, src.dir)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				t1--
 		else
 			var/t1 = round(src.speed / 5)

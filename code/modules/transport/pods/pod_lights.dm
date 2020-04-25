@@ -122,9 +122,9 @@
 			light1.enable()
 			while (weeoo_in_progress--)
 				light1.set_color(0.9, 0.1, 0.1)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				light1.set_color(0.1, 0.1, 0.9)
-				sleep(3)
+				sleep(0.3 SECONDS)
 			light1.disable()
 			light1.detach(ship)
 			weeoo_in_progress = 0

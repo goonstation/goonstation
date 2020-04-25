@@ -293,7 +293,7 @@ var/list/rollList = list()
 						if (!src.addPal(D, user))
 							break
 						else
-							sleep(2)
+							sleep(0.2 SECONDS)
 					return
 		else
 			return ..()

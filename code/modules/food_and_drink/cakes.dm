@@ -35,7 +35,7 @@
 	initial_volume = 100
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			if (src.sliced == 1)
 				boutput(user, "<span style=\"color:red\">This has already been sliced.</span>")
 				return

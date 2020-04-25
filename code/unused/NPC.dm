@@ -148,7 +148,7 @@
 				if (prob(10) && !special) emote("roar")
 				while(get_dist(src,target) > 2)
 					step_towards(src,target)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 			mainstate = 3
 

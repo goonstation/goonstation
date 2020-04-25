@@ -170,9 +170,9 @@
 				src.icon_state = "tractor-sec2"
 				while (weeoo_in_progress--)
 					light.set_color(0.9, 0.1, 0.1)
-					sleep(3)
+					sleep(0.3 SECONDS)
 					light.set_color(0.1, 0.1, 0.9)
-					sleep(3)
+					sleep(0.3 SECONDS)
 				light.disable()
 				src.icon_state = "tractor-sec"
 				weeoo_in_progress = 0 */
@@ -229,12 +229,12 @@
 			if (istype(src.loc, /turf/space))
 				return
 			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src) 
+			for (var/mob/M in src)
 				M.glide_size = src.glide_size
 				M.animate_movement = SYNC_STEPS
 			walk(src, dir, speed)
 			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src) 
+			for (var/mob/M in src)
 				M.glide_size = src.glide_size
 				M.animate_movement = SYNC_STEPS
 		else
@@ -362,11 +362,11 @@
 		if (!the_mob)
 			return
 		if (istype(the_mob.loc, /obj/vehicle/tug))
-			var/obj/vehicle/tug/T = the_mob.loc 
+			var/obj/vehicle/tug/T = the_mob.loc
 			if (T.speed == 2)
 				src.icon_state = "lo"
 				T.speed = 4
-			else 
+			else
 				T.speed = 2
 				src.icon_state = "hi"
 			T.relaymove(the_mob, T.dir)

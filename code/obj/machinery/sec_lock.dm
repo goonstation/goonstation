@@ -77,7 +77,7 @@
 					if (!( src.d1.density ))
 						src.d1.close()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (!( src.d2.density ))
 							src.d2.close()
@@ -89,7 +89,7 @@
 						if (src.d1.density)
 							src.d1.open()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (src.d2.density)
 							src.d2.open()

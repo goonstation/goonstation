@@ -2,7 +2,7 @@
 /client/proc/cmd_admin_gib(mob/M as mob in world)
 	set category = null
 	set name = "Gib"
-	set popup_menu = 1
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -320,7 +320,7 @@
 //						startx = 2
 				boutput(tysontarget, "Uh oh.")
 				tysontarget << sound('sound/misc/Boxingbell.ogg')
-				sleep(200)
+				sleep(20 SECONDS)
 				startx = tysontarget.x - rand(-11, 11)
 				starty = tysontarget.y - rand(-11, 11)
 //				pickedstarter = get_turf(pick(tysontarget:range(10)))
@@ -407,7 +407,7 @@
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -433,7 +433,7 @@
 				return
 			else
 				walk_towards(src, src.tysontarget2, tysonspeed)
-				sleep(10)
+				sleep(1 SECOND)
 				tysoncantreach++
 
 	proc/banproc()
@@ -490,7 +490,7 @@
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -504,17 +504,17 @@
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
 				icon_state = "punch"
-				sleep(5)
+				sleep(0.5 SECONDS)
 				icon_state = "idle"
 				gibproc()
 				return
 			else
 				walk_towards(src, src.tysontarget2, tysonspeed)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/gibproc()
 		// drsingh for various cannot read null.
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if (get_dist(src, src.tysontarget2) <= 1)
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span style=\"color:red\"><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
@@ -524,9 +524,9 @@
 				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
 				message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
-			sleep(5)
+			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(src)
 		else
 			process()

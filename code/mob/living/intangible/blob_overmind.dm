@@ -97,7 +97,7 @@
 			while (src)
 				if (src.client)
 					update_cooldown_costs()
-				sleep(10)
+				sleep(1 SECOND)
 
 	Move(NewLoc)
 		if (tutorial)
@@ -649,7 +649,7 @@
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else
-						sleep(20)
+						sleep(2 SECONDS)
 						user.upgrading = 0
 				if (!upgrade.take_upgrade())
 					upgrade.deduct_evo_points()

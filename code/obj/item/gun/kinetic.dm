@@ -714,6 +714,7 @@
 	contraband = 8
 	caliber = 1.58
 	max_ammo_capacity = 1
+	can_dual_wield = 0
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg

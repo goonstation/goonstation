@@ -12,6 +12,7 @@
 	anchored = 1
 	alpha = 180
 	stat = 0
+	suicide_can_succumb = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -94,7 +95,7 @@
 
 			src.homebooth = null
 		src.set_loc(get_turf(src.loc))
-		
+
 		src.removeAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/color)
 
@@ -259,7 +260,7 @@
 							wiggle--
 							src.pixel_x = rand(-3,3)
 							src.pixel_y = rand(-3,3)
-							sleep(1)
+							sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
 						src.invisibility = 10
@@ -291,7 +292,7 @@
 						wiggle--
 						src.pixel_x = rand(-2,2)
 						src.pixel_y = rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 					src.pixel_x = 0
 					src.pixel_y = 0
 
@@ -302,24 +303,21 @@
 			o.apply_looks_of(o.client)
 		qdel(src)
 
-	verb/suicide() //Poof!
-		set hidden = 1
-		var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-		if(confirm == "Yes")
-			if(!src.free)
-				the_zoldorf = list()
-			if(!istype(src.loc,(/obj/machinery/playerzoldorf)))
-				if(src.homebooth)
-					src.set_loc(homebooth)
-				else
-					src.visible_message("<span style=\"color:red\"><b>Poof!</b></span>")
-					src.gib(1)
-					return
-			var/obj/machinery/playerzoldorf/pz = src.loc
-			src.visible_message("<span style=\"color:red\"><b>Poof!</b></span>")
-			src.free()
-			src.set_loc(get_turf(src.loc))
-			pz.remove_simple_light("zoldorf")
+	do_suicide() //Poof!
+		if(!src.free)
+			the_zoldorf = list()
+		if(!istype(src.loc,(/obj/machinery/playerzoldorf)))
+			if(src.homebooth)
+				src.set_loc(homebooth)
+			else
+				src.visible_message("<span style=\"color:red\"><b>Poof!</b></span>")
+				src.gib(1)
+				return
+		var/obj/machinery/playerzoldorf/pz = src.loc
+		src.visible_message("<span style=\"color:red\"><b>Poof!</b></span>")
+		src.free()
+		src.set_loc(get_turf(src.loc))
+		pz.remove_simple_light("zoldorf")
 
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
@@ -415,7 +413,7 @@
 				var/obj/item/paper/thermal/playerfortune/fi = i
 				fi.icon = 'icons/obj/zoldorf.dmi'
 				fi.icon_state = "fortuneburn"
-				sleep(8)
+				sleep(0.8 SECONDS)
 				qdel(fi)
 			else
 				i.set_loc(Ta)

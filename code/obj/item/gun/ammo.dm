@@ -401,11 +401,12 @@
 	amount_left = 10
 	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/airzooka
+	caliber = 4.6
 
 /obj/item/ammo/bullets/airzooka/bad
-	name = "Airzooka Tactical Replacement Trashbag Xtreme Edition"
+	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
-	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma infusion."
+	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
@@ -413,7 +414,7 @@
 	amount_left = 10
 	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/airzooka/bad
-
+	caliber = 4.6
 
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm NATO"

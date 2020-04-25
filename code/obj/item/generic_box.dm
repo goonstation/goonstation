@@ -352,7 +352,7 @@
 			if (thing in user)
 				continue
 			src.add_to(thing, user, 0)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
 		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")

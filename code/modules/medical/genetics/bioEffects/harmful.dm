@@ -419,7 +419,7 @@
 				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
 				while (prob(80) && owner.bioHolder.HasEffect("funky_limb"))
 					owner.losebreath = max(owner.losebreath, 2)
-					sleep(10)
+					sleep(1 SECOND)
 				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
 			return
 

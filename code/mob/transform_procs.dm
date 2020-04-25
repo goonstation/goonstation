@@ -83,8 +83,7 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
-	..()
-	return
+	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
 	if (src.transforming)
@@ -289,7 +288,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
 	O.name = "alien"
@@ -323,7 +322,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
 	O.name = "alien queen"

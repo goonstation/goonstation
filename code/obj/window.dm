@@ -340,9 +340,9 @@
 				src.visible_message("<span style=\"color:red\"><b>[usr]</b> knocks on [src].</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
 				SPAWN_DBG(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
-					sleep(3)
+					sleep(0.3 SECONDS)
 					playsound(src.loc, src.hitsound, 100, 1)
-					sleep(3)
+					sleep(0.3 SECONDS)
 					playsound(src.loc, src.hitsound, 100, 1)
 				return
 
@@ -396,7 +396,7 @@
 			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
 			var/turf/T = get_turf(user)
 			boutput(user, "<span style=\"color:blue\">Now disassembling the window</span>")
-			sleep(40) // this should be a progressbar but other contruction / deconstruction things don't have them
+			sleep(4 SECONDS) // this should be a progressbar but other contruction / deconstruction things don't have them
 			// so I'll just leave it as sleep and hope someone else replaces all of these with progressbars
 			if(get_turf(user) == T)
 				boutput(user, "<span style=\"color:blue\">You dissasembled the window!</span>")
@@ -731,9 +731,9 @@
 	attack_hand()
 		src.visible_message("<span style=\"color:red\"><b>[usr]</b> knocks on [src].</span>")
 		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		playsound(src.loc, src.hitsound, 100, 1)
 		return
 

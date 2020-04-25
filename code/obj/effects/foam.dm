@@ -72,7 +72,7 @@
 		process()
 	SPAWN_DBG(12 SECONDS)
 		expand = 0 // stop expanding
-		sleep(30)
+		sleep(3 SECONDS)
 
 		if(metal)
 			var/obj/foamedmetal/M = new(src.loc)
@@ -83,7 +83,7 @@
 			flick("mfoam-disolve", src)
 		else
 			flick("foam-disolve", src)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		die()
 	return
 
@@ -162,7 +162,7 @@
 
 				F.update_icon()
 
-		sleep(15)
+		sleep(1.5 SECONDS)
 
 // foam disolves when heated
 // except metal foams

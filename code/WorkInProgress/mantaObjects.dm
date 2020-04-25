@@ -110,7 +110,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				user.show_text("<span style='color:blue'><b>You turn on the propellers.</b></span>")
 				on = 1
 				world << 'sound/effects/mantamoving.ogg'
-				sleep(70)
+				sleep(7 SECONDS)
 				updateIcon()
 				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
@@ -1347,7 +1347,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/obj/machinery/mantapropulsion/big/P = eligible[rand(1,eligible.len)]
 			P.Breakdown()
 			eligible.Remove(P)
-			sleep(10)
+			sleep(1 SECOND)
 
 		new /obj/effect/boommarker(bigboommark)
 #endif

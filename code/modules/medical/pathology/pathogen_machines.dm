@@ -259,12 +259,14 @@
 								P = path_list[uid]
 							user.show_message("<span style=\"color:blue\">Apparent features of the pathogen:</span>")
 							var/lines = 1
+							var/DNA = ""
 							user.show_message(P.suppressant.may_react_to())
 							for (var/datum/pathogeneffects/E in P.effects)
 								var/res = E.may_react_to()
 								if (res)
 									lines++
-									user.show_message("[res]")
+									DNA = pathogen_controller.symptom_to_UID[E.type]
+									user.show_message("([DNA]) [res]")
 							if (!lines)
 								user.show_message("You cannot see anything out of the ordinary.")
 							if (src.symptom_action_in.len)

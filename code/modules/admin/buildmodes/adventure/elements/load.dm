@@ -114,7 +114,7 @@
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
-								sleep(1)
+								sleep(0.1 SECONDS)
 					for (var/cy = basey, cy < basey + h, cy++)
 						var/rely = cy - basey
 						for (var/cx = basex, cx < basex + w, cx++)
@@ -138,7 +138,7 @@
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
-								sleep(1)
+								sleep(0.1 SECONDS)
 					for (var/obj/O in PP)
 						O:deserialize_postprocess()
 					if (this)
@@ -160,5 +160,5 @@
 						workgroup_curr++
 						if (workgroup_curr >= workgroup_size)
 							workgroup_curr = 0
-							sleep(1)
+							sleep(0.1 SECONDS)
 					message_admins("Adventure/loader: loading initiated by [paster] is complete.")
