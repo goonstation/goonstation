@@ -637,7 +637,8 @@
 		return
 
 	MouseDrop(atom/over_object as mob|obj)
-		src.rotate(get_dir(get_turf(src),get_turf(over_object)))
+		if(get_dist(over_object,usr) <= 1)
+			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 
 	can_buckle(var/mob/M, var/mob/user)
