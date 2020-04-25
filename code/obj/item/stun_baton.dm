@@ -579,7 +579,14 @@
 	New()
 		..()
 		BLOCK_ALL
+		c_flags &= ~BLOCK_TOOLTIP
 
+	block_prop_setup(source, obj/item/grab/block/B)
+		if(src.status)
+			B.setProperty("rangedprot", 0.5)
+			B.setProperty("exploprot", 1)
+			. = ..()
+			
 	proc/update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"
@@ -601,17 +608,19 @@
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
 				flick("barrier_a",src)
+				c_flags |= BLOCK_TOOLTIP
 
 				src.setItemSpecial(/datum/item_special/barrier)
 			else
 				w_class = 2
 				flags |= ONBELT
-				setProperty("meleeprot", 0)
-				setProperty("rangedprot", 0)
-				setProperty("movespeed", 0)
-				setProperty("disorient_resist", 0)
-				setProperty("disorient_resist_eye", 0)
-				setProperty("disorient_resist_ear", 0)
+				delProperty("meleeprot", 0)
+				delProperty("rangedprot", 0)
+				delProperty("movespeed", 0)
+				delProperty("disorient_resist", 0)
+				delProperty("disorient_resist_eye", 0)
+				delProperty("disorient_resist_ear", 0)
+				c_flags &= ~BLOCK_TOOLTIP
 
 				src.setItemSpecial(/datum/item_special/simple)
 
