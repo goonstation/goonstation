@@ -142,7 +142,7 @@
 							SPAWN_DBG(5 SECONDS)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
 									src.death_timer -= 1
-									sleep(50)
+									sleep(5 SECONDS)
 							*/
 
 		src.check_power()

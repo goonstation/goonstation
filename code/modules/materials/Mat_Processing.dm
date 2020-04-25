@@ -22,8 +22,9 @@
 				if(isSameMaterial(A.material, X.material))
 					matches.Add(A)
 
+			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
-			for(var/obj/item/material_piece/G in get_output_location())
+			for(var/obj/item/material_piece/G in output_location)
 				if(isSameMaterial(G.material, X.material))
 					exists_nearby = G
 					break
@@ -34,14 +35,22 @@
 			for(var/obj/item/M in matches)
 				totalAmount += M.amount
 
+			var/mat_id
+
 			if(exists_nearby)
 				exists_nearby.change_stack_amount(totalAmount)
+				mat_id = exists_nearby.material.mat_id
 			else
 				var/newType = getProcessedMaterialForm(X.material)
 				var/obj/item/material_piece/P = unpool(newType)
 				P.set_loc(get_output_location())
 				P.setMaterial(copyMaterial(X.material))
 				P.change_stack_amount(totalAmount - P.amount)
+				mat_id = P.material.mat_id
+
+			if (istype(output_location, /obj/machinery/manufacturer))
+				var/obj/machinery/manufacturer/M = output_location
+				M.update_resource_amount(mat_id, totalAmount * 10)
 
 			for(var/atom/movable/D in matches)
 				D.set_loc(null)
@@ -528,14 +537,14 @@
 			if(components.len == 1)
 				boutput(user, "<span style=\"color:red\">You activate the [src].</span>")
 				icon_state = "smelter1"
-				sleep(10)
+				sleep(1 SECOND)
 				var/atom/obj1 = components[1]
 				output = copyMaterial(obj1.material)
 				logTheThing("station", user, null, "creates a [output] bar (<b>Material:</b> <i>[output.mat_id]</i>) with the [src] at [log_loc(src)].") //  Re-added/fixed because of erebite, plasmastone etc. alloys (Convair880).
 				handleSlag()
 			else
 				icon_state = "smelter1"
-				sleep(10)
+				sleep(1 SECOND)
 				var/atom/obj1 = components[1]
 				var/atom/obj2 = components[2]
 
@@ -657,11 +666,15 @@
 /obj/item/slag_shovel
 	name = "slag shovel"
 	desc = "Used to remove slag from the arc smelter."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "pick"
+	item_state = "shovel"
 	w_class = 3
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
+
+	New()
+		..()
+		BLOCK_ROD

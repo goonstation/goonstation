@@ -29,7 +29,7 @@
 /obj/item/railgun
 	name = "Railgun"
 	desc = "Bzooom"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "railgun"
 	item_state = "gun"

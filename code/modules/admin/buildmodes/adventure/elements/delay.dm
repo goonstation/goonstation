@@ -57,7 +57,7 @@
 /obj/adventurepuzzle/triggerable/triggerer/delay
 	name = "delay"
 	invisibility = 20
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "timer0"
 	density = 0
 	opacity = 0
@@ -93,7 +93,7 @@
 							else
 								aborted = 1
 								return
-						sleep(1)
+						sleep(0.1 SECONDS)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

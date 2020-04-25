@@ -93,6 +93,8 @@
 
 	var/experimental_intents = 0
 
+	var/admin_intent = 0
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
@@ -131,7 +133,7 @@
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
-		sleep(50)
+		sleep(5 SECONDS)
 		del(src)
 		return
 
@@ -769,7 +771,7 @@ var/global/curr_day = null
 			stat( A )
 
 	if (!src.holder)//todo : maybe give admins a toggle
-		sleep(12) //and make this number larger
+		sleep(1.2 SECONDS) //and make this number larger
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))
@@ -1216,14 +1218,37 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "intent-test"
 
+	if (preferences)
+		if (!src.preferences.use_wasd)
+			boutput(src, "<B>Experimental intent switcher cannot be toggled on unless you enter WASD mode.</B>")
+			return
+	if (tg_controls)
+		boutput(src, "<B>Experimental intent switcher cannot be toggled when you are using TG controls.</B>")
+		return
+
+	if (!src.mob || !ishuman(mob))
+		boutput(src, "<B>Experimental intent switcher only works on humans right now.</B>")
+		return
+
 	experimental_intents = !experimental_intents
 	if (experimental_intents)
-		boutput(src, "<B>Experimental intent switcher ON.</B> I would reccomend you only test this out if you have a mouse with a middle-click.")
-		boutput(src, "Hold space to enter 'comabt' intent - blocks attacks passively just like Disarm intent does.")
-		boutput(src, "Hold space and left click to Harm.")
-		boutput(src, "Hold space and right click with an empty hand to Disarm.")
-		boutput(src, "Hold space and right click with an item held to Throw.")
-		boutput(src, "Hold space and middle click to Grab.")
+		boutput(src, "<br><B>Experimental intent switcher ON.</B>")
+		boutput(src, "Hold space to enter 'combat' intent, which will let you Harm/Disarm if you left or right click. If you are holding an item, Disarm turns into Throw")
+		boutput(src, "Hold ctrl to enter 'grab' intent. Left click tries Grab, right click Pull.")
+
+		boutput(src, "<br>Also, CTRL+WASD emotes have been moved to 1-2-3-4 keys (this lets you hold CTRL while moving around. Scream is 2, you're welcome.")
+		boutput(src, "If you want to turn this off, type `intent-test` in the command bar at the bottom.<br>")
+
+		//lazy control scheme test : remove all this later for real tho
+		if (keymap)
+			keymap.keys.Remove("4S")
+			keymap.keys.Remove("4D")
+			keymap.keys.Remove("4A")
+			keymap.keys.Remove("4W")
+			keymap.keys["01"] = "salute"
+			keymap.keys["02"] = "scream"
+			keymap.keys["03"] = "dance"
+			keymap.keys["04"] = "wink"
 	else
 		boutput(src, "Experimental intent switcher <B>OFF</B>.")
 

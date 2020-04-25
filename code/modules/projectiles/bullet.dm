@@ -345,8 +345,8 @@ toxic - poisons
 	ks_ratio = 1.0
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
-	dissipation_delay = 6
-	dissipation_rate = 5
+	dissipation_delay = 15
+	dissipation_rate = 2
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	icon_turf_hit = "bhole"
@@ -370,9 +370,9 @@ toxic - poisons
 	power = 15
 	ks_ratio = 1.0
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "crescent_white"
-	dissipation_delay = 6
-	dissipation_rate = 5
+	icon_state = "40mmgatling"
+	dissipation_delay = 15
+	dissipation_rate = 4
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	icon_turf_hit = "bhole"
@@ -381,12 +381,12 @@ toxic - poisons
 	cost = 2
 
 	on_hit(atom/hit, dirflag)
+		fireflash(get_turf(hit), 1)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
 			SPAWN_DBG(0)
 				if(!M.stat) M.emote("scream")
-				fireflash(get_turf(M), 2)
 				M.do_disorient(15, weakened = 25)
 				M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
@@ -976,6 +976,16 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 3
 	damage_type = D_KINETIC
+
+/datum/projectile/bullet/nails
+	name = "nails"
+	sname = "nails"
+	icon_state = "trace"
+	power = 4
+	dissipation_rate = 3
+	dissipation_delay = 4
+	damage_type = D_SLASHING
+	casing = /obj/item/casing/shotgun_gray
 
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"

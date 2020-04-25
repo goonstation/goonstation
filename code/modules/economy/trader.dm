@@ -506,7 +506,7 @@
 					for(N.comtype in view(1,user))
 						account.fields["current_money"] += N.price
 						qdel(N.comtype)
-						sleep(2)
+						sleep(0.2 SECONDS)
 						if (user.loc != staystill) break*/
 		if (istype(O, /obj/storage/crate/))
 			if (O:locked)

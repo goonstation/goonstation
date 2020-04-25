@@ -139,6 +139,7 @@ datum
 			overdose = 100 // ethanol poisoning
 			thirst_value = -0.02
 			bladder_value = -0.2
+			hygiene_value = 1
 			target_organs = list("liver")	//heart,  "stomach", "intestines", "left_kidney", "right_kidney"
 
 			on_add()

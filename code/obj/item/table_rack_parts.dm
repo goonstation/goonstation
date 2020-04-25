@@ -9,7 +9,7 @@ RACK PARTS
 /obj/item/furniture_parts
 	name = "furniture parts"
 	desc = "A collection of parts that can be used to make some kind of furniture."
-	icon = 'icons/obj/table.dmi'
+	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -27,6 +27,7 @@ RACK PARTS
 		if (storage_thing)
 			src.contained_storage = storage_thing
 			src.contained_storage.set_loc(src)
+		BLOCK_LARGE
 
 	proc/construct(mob/user as mob, turf/T as turf)
 		var/obj/newThing = null
@@ -102,40 +103,40 @@ RACK PARTS
 /obj/item/furniture_parts/table/desk
 	name = "desk parts"
 	desc = "A collection of parts that can be used to make a desk."
-	icon = 'icons/obj/table_desk.dmi'
+	icon = 'icons/obj/furniture/table_desk.dmi'
 	furniture_type = /obj/table/auto/desk
 	furniture_name = "desk"
 
 /obj/item/furniture_parts/table/wood
 	name = "wood table parts"
 	desc = "A collection of parts that can be used to make a wooden table."
-	icon = 'icons/obj/table_wood.dmi'
+	icon = 'icons/obj/furniture/table_wood.dmi'
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
 
 /obj/item/furniture_parts/table/wood/round
 	name = "round wood table parts"
 	desc = "A collection of parts that can be used to make a round wooden table."
-	icon = 'icons/obj/table_wood_round.dmi'
+	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	furniture_type = /obj/table/wood/round/auto
 
 /obj/item/furniture_parts/table/wood/desk
 	name = "wood desk parts"
 	desc = "A collection of parts that can be used to make a wooden desk."
-	icon = 'icons/obj/table_wood_desk.dmi'
+	icon = 'icons/obj/furniture/table_wood_desk.dmi'
 	furniture_type = /obj/table/wood/auto/desk
 	furniture_name = "wooden desk"
 
 /obj/item/furniture_parts/table/round
 	name = "round table parts"
 	desc = "A collection of parts that can be used to make a round table."
-	icon = 'icons/obj/table_round.dmi'
+	icon = 'icons/obj/furniture/table_round.dmi'
 	furniture_type = /obj/table/round/auto
 
 /obj/item/furniture_parts/table/folding
 	name = "folded folding table"
 	desc = "A collapsed table that can be deployed quickly."
-	icon = 'icons/obj/table_folding.dmi'
+	icon = 'icons/obj/furniture/table_folding.dmi'
 	furniture_type = /obj/table/folding
 	furniture_name = "folding table"
 	build_duration = 15
@@ -144,7 +145,7 @@ RACK PARTS
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"
 	desc = "A collection of parts that can be used to make a glass table."
-	icon = 'icons/obj/table_glass.dmi'
+	icon = 'icons/obj/furniture/table_glass.dmi'
 	mat_appearances_to_ignore = list("glass")
 	furniture_type = /obj/table/glass/auto
 	furniture_name = "glass table"
@@ -187,7 +188,7 @@ RACK PARTS
 /obj/item/furniture_parts/table/reinforced
 	name = "reinforced table parts"
 	desc = "A collection of parts that can be used to make a reinforced table."
-	icon = 'icons/obj/table_reinforced.dmi'
+	icon = 'icons/obj/furniture/table_reinforced.dmi'
 	reinforced = 1
 	stamina_damage = 40
 	stamina_cost = 40
@@ -198,27 +199,27 @@ RACK PARTS
 /obj/item/furniture_parts/table/reinforced/industrial
 	name = "industrial table parts"
 	desc = "A collection of parts that can be used to make an industrial looking table."
-	icon = 'icons/obj/table_industrial.dmi'
+	icon = 'icons/obj/furniture/table_industrial.dmi'
 	furniture_type = /obj/table/round/auto
 
 /obj/item/furniture_parts/table/reinforced/bar
 	name = "bar table parts"
 	desc = "A collection of parts that can be used to make a bar table."
-	icon = 'icons/obj/table_bar.dmi'
+	icon = 'icons/obj/furniture/table_bar.dmi'
 	furniture_type = /obj/table/reinforced/bar/auto
 	furniture_name = "bar table"
 
 /obj/item/furniture_parts/table/reinforced/roulette
 	name = "roulette table parts"
 	desc = "A collection of parts that can be used to make a roulette table."
-	icon = 'icons/obj/table_bar.dmi'
+	icon = 'icons/obj/furniture/table_bar.dmi'
 	furniture_type = /obj/table/reinforced/roulette
 	furniture_name = "roulette table"
 
 /obj/item/furniture_parts/table/reinforced/chemistry
 	name = "chemistry countertop parts"
 	desc = "A collection of parts that can be used to make a chemistry table."
-	icon = 'icons/obj/table_chemistry.dmi'
+	icon = 'icons/obj/furniture/table_chemistry.dmi'
 	furniture_type = /obj/table/reinforced/chemistry/auto
 	furniture_name = "chemistry countertop"
 
@@ -234,11 +235,25 @@ RACK PARTS
 	furniture_type = /obj/rack
 	furniture_name = "rack"
 
+//bookshelf part construction
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/plank))
+			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
+			if (!do_after(user, 20))
+				return
+			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			new /obj/item/furniture_parts/bookshelf(get_turf(src))
+			qdel(src)
+			qdel(W)
+		else
+			..()
+
 /* ---------- Stool Parts ---------- */
 /obj/item/furniture_parts/stool
 	name = "stool parts"
 	desc = "A collection of parts that can be used to make a stool."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "stool_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -248,7 +263,7 @@ RACK PARTS
 /obj/item/furniture_parts/woodenstool
 	name = "wooden stool parts"
 	desc = "A collection of parts that can be used to make a wooden stool."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "wstool_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -259,7 +274,7 @@ RACK PARTS
 /obj/item/furniture_parts/stool/bar
 	name = "bar stool parts"
 	desc = "A collection of parts that can be used to make a bar stool."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "bstool_parts"
 	furniture_type = /obj/stool/bar
 	furniture_name = "bar stool"
@@ -268,7 +283,7 @@ RACK PARTS
 /obj/item/furniture_parts/bench
 	name = "bench parts"
 	desc = "A collection of parts that can be used to make a bench."
-	icon = 'icons/obj/bench.dmi'
+	icon = 'icons/obj/furniture/bench.dmi'
 	icon_state = "bench_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -276,38 +291,38 @@ RACK PARTS
 	furniture_name = "bench"
 
 /obj/item/furniture_parts/bench/red
-	icon = 'icons/obj/bench_red.dmi'
+	icon = 'icons/obj/furniture/bench_red.dmi'
 	furniture_type = /obj/stool/bench/red/auto
 
 /obj/item/furniture_parts/bench/blue
-	icon = 'icons/obj/bench_blue.dmi'
+	icon = 'icons/obj/furniture/bench_blue.dmi'
 	furniture_type = /obj/stool/bench/blue/auto
 
 /obj/item/furniture_parts/bench/green
-	icon = 'icons/obj/bench_green.dmi'
+	icon = 'icons/obj/furniture/bench_green.dmi'
 	furniture_type = /obj/stool/bench/green/auto
 
 /obj/item/furniture_parts/bench/yellow
-	icon = 'icons/obj/bench_yellow.dmi'
+	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	furniture_type = /obj/stool/bench/yellow/auto
 
 /obj/item/furniture_parts/bench/wooden
 	name = "wooden bench parts"
 	desc = "A collection of parts that can be used to make a wooden bench."
-	icon = 'icons/obj/bench_wood.dmi'
+	icon = 'icons/obj/furniture/bench_wood.dmi'
 	furniture_type = /obj/stool/bench/wooden/auto
 
 /obj/item/furniture_parts/bench/pew
 	name = "pew parts"
 	desc = "A collection of parts that can be used to make a pew."
-	icon = 'icons/obj/bench_wood.dmi'
+	icon = 'icons/obj/furniture/bench_wood.dmi'
 	furniture_type = /obj/stool/chair/pew
 
 /* ---------- Chair Parts ---------- */
 /obj/item/furniture_parts/wood_chair
 	name = "wooden chair parts"
 	desc = "A collection of parts that can be used to make a wooden chair."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "wchair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -317,7 +332,7 @@ RACK PARTS
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
 	desc = "A collection of parts that can be used to make a wheelchair."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "whchair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -327,7 +342,7 @@ RACK PARTS
 /obj/item/furniture_parts/barber_chair
 	name = "barber chair parts"
 	desc = "A collection of parts that can be used to make a barber chair. You know, for cutting hair?"
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "barberchair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -337,7 +352,7 @@ RACK PARTS
 /obj/item/furniture_parts/office_chair
 	name = "office chair parts"
 	desc = "A collection of parts that can be used to make an office chair."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "ochair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -367,7 +382,7 @@ RACK PARTS
 /obj/item/furniture_parts/comfy_chair
 	name = "comfy chair parts"
 	desc = "A collection of parts that can be used to make a comfy chair."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "comf_chair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -398,7 +413,7 @@ RACK PARTS
 /obj/item/furniture_parts/bed
 	name = "bed parts"
 	desc = "A collection of parts that can be used to make a bed."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "bed_parts"
 	stamina_damage = 15
 	stamina_cost = 15
@@ -408,7 +423,7 @@ RACK PARTS
 /obj/item/furniture_parts/bed/roller
 	name = "roller bed parts"
 	desc = "A collection of parts that can be used to make a roller bed."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "rbed_parts"
 	furniture_type = /obj/stool/bed/moveable
 	furniture_name = "roller bed"

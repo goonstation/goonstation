@@ -91,7 +91,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 					blink(Q)// NO. NO MORE LAG.
 					if (workgroup > 8)
 						workgroup = 0
-						sleep(1)
+						sleep(0.1 SECONDS)
 				boutput(usr, "<span style=\"color:blue\">Copying complete!</span>")
 				update_button_text("Ready to paste.")
 				copying = 0

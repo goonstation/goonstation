@@ -59,7 +59,7 @@
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 			throw_impact(get_turf(src))
@@ -262,7 +262,7 @@
 			HYPpassplantgenes(DNA,PDNA)
 			qdel(W)
 			pool(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
+		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
 				boutput(user, "<span style=\"color:red\">You can't cut wedges into wedges! What kind of insanity is that!?</span>")
 				return
@@ -282,7 +282,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	initial_volume = 6
 	throwforce = 0
 	w_class = 1.0
@@ -368,7 +368,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	name = "grapefruit wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = 1.0
 	amount = 1
@@ -570,7 +570,7 @@
 				return
 			already_burst = 1
 			src.icon_state = "[base_icon_state]-burst"
-			sleep(1)
+			sleep(0.1 SECONDS)
 			var/n_slices = rand(1, 5)
 			var/amount_per_slice = 0
 			if(src.reagents)
@@ -597,7 +597,7 @@
 					SPAWN_DBG(0)
 						slice.throw_at(target, rand(0, 10), rand(1, 4))
 				n_slices--
-			sleep(1)
+			sleep(0.1 SECONDS)
 			qdel(src)
 		return
 
@@ -932,7 +932,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	name = "lime wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = 1.0
 	amount = 1
@@ -975,7 +975,7 @@
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	name = "lemon wedge"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = 1.0
 	amount = 1
@@ -1024,7 +1024,7 @@
 
 	/* drsingh todo: peanut shells and requiring roasting shelling
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1048,7 +1048,7 @@
 	brew_result = "vodka"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1091,7 +1091,7 @@
 	food_effects = list("food_bad_breath")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			user.visible_message("[user] chops up [src].", "You chop up [src].")
 			for (var/mob/living/carbon/M in range(user, 2))
 				if (prob(50) && !isdead(M))

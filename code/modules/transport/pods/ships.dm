@@ -878,37 +878,37 @@
 		//fucK ME
 		if (shoot_dir & (shoot_dir-1))
 			if (shoot_dir == SOUTHEAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
 				var/turf/E = get_step(get_turf(src), EAST)
-				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir)
+				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
 			if (shoot_dir == SOUTHWEST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir)
+				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHEAST)
 				var/turf/NE = get_step(get_turf(src), NORTHEAST)
 
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir)
+				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHWEST)
 				var/turf/N = get_step(get_turf(src), NORTH)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir)
+				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
 		else
@@ -919,21 +919,21 @@
 					P.pixel_x = H * -5
 					P.pixel_y = V * -5
 			if (shoot_dir == SOUTH || shoot_dir == EAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir, src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * -5
 			if (shoot_dir == NORTH || shoot_dir == WEST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir, src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * 5
 			if (shoot_dir == NORTH || shoot_dir == EAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir, src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
@@ -1108,7 +1108,7 @@
 
 	for(var/obj/decal/cleanable/O in src)
 		boutput(usr, "<span style=\"color:red\">You [pick(</span>"scrape","scrub","clean")] [O] out of [src].")
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/floor = get_turf(src)
 		O.set_loc(floor)
 
@@ -1120,7 +1120,7 @@
 	usr.make_shipcrewmember(src.weapon_class)
 	for(var/obj/item/shipcomponent/S in src.components)
 		S.mob_activate(usr)
-	sleep(5) //Make sure the verb gets added
+	sleep(0.5 SECONDS) //Make sure the verb gets added
 
 	src.passengers++
 	var/mob/M = usr
@@ -1739,9 +1739,9 @@
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)
 				D.open()
 				opened_door = 1
-			if(opened_door) sleep(20) //make sure it's fully open
+			if(opened_door) sleep(2 SECONDS) //make sure it's fully open
 			playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
 			while(!failing)
 				var/loc = src.loc
@@ -1754,7 +1754,7 @@
 					fail()
 				if (prob((steps_moved-7) * 4))
 					succeed()
-				sleep(4)
+				sleep(0.4 SECONDS)
 
 	proc/test()
 		boutput(world,"shuttle loc is [emergency_shuttle.location]")
@@ -1799,7 +1799,7 @@
 						boutput(pilot, "<span style=\"color:red\">You fall out of the rapidly disintegrating escape pod!</span>")
 						src.eject(pilot)
 					if(prob(10)) shipdeath()
-					sleep(4)
+					sleep(0.4 SECONDS)
 			if(4) //flies off course
 				pilot << sound('sound/machines/engine_alert1.ogg')
 				boutput(pilot, "<span style=\"color:red\">Your escape pod is veering out of control!</span>")
@@ -1810,7 +1810,7 @@
 					if(src.loc == loc) //we hit something
 						explosion(src, src.loc, 1, 1, 2, 3)
 						break
-					sleep(4)
+					sleep(0.4 SECONDS)
 			if(5)
 				boutput(pilot, "<span style=\"color:red\">Your escape pod sputters to a halt!</span>")
 			if(6)
@@ -1831,7 +1831,7 @@
 						explosion(src, src.loc, 1, 1, 2, 3)
 						break
 					else if(prob(2)) shipdeath()
-					sleep(4)
+					sleep(0.4 SECONDS)
 
 			if(7)
 				boutput(pilot, "<span style=\"color:red\">Your escape pod begins to accelerate!</span>")
@@ -1862,4 +1862,4 @@
 						break
 					if(prob(2)) //we don't want to do this forever so let's explode
 						shipdeath()
-					sleep(4)
+					sleep(0.4 SECONDS)

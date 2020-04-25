@@ -366,13 +366,13 @@
 		if (M.id == src.id)
 			M.open()
 
-	sleep(20)
+	sleep(2 SECONDS)
 
 	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(50)
+	sleep(5 SECONDS)
 
 	for(var/obj/machinery/door/poddoor/M in doors)
 		if (M.id == src.id)

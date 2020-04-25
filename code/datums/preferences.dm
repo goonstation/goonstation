@@ -213,7 +213,7 @@ datum/preferences
 
 		if(!user)
 			return
-			
+
 		if (!AH)
 			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
@@ -224,18 +224,7 @@ datum/preferences
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
 
 		var/display_gender = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)")
-/*
-		if (!AH.pronouns)
-			if (src.gender == MALE)
-				display_gender = "Male (he/him)"
-			else if (src.gender == FEMALE)
-				display_gender = "Female (she/her)"
-		else
-			if (src.gender == MALE)
-				display_gender = "Male (they/them)"
-			else if (src.gender == FEMALE)
-				display_gender = "Female (they/them)"
-*/
+
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
 		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
@@ -970,7 +959,7 @@ datum/preferences
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=2;job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
 					[JD.name]</a>
 				</div>
 				"}

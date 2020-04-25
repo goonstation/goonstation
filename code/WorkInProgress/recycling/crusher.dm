@@ -81,7 +81,7 @@
 		if(prob(osha_prob)) //RIP you.
 			user.canmove = 0
 			user.anchored = 1
-			sleep(5) //Give it a little time
+			sleep(0.5 SECONDS) //Give it a little time
 			if(user) //Gotta make sure they haven't moved since last time
 				poking_jerks -= user
 				user.visible_message("<span class='combat bold'>...and gets pulled in! SHIT!!</span>")
@@ -98,7 +98,7 @@
 			user.canmove = 0
 			user.anchored = 1
 			interact_particle(user,src)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			if(user) //Still here?
 				poking_jerks -= user
 				user.visible_message("<span class='combat bold'>[pick_string("descriptors.txt", "crusherbrave")]</span>")

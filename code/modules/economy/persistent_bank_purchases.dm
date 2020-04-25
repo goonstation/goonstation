@@ -46,7 +46,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/gold_that,\
 	new /datum/bank_purchaseable/dancin_shoes,\
 
-	new /datum/bank_purchaseable/alohamaton)
+	new /datum/bank_purchaseable/alohamaton,\
+	new /datum/bank_purchaseable/ai_hat)
 
 
 /datum/bank_purchaseable
@@ -579,3 +580,17 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_color("#EE0000")
 				return 1
 			return 0
+
+	ai_hat
+		name = "AI hat"
+		cost = 1000
+
+		Create(var/mob/living/M)
+			if (isAI(M))
+				var/mob/living/silicon/ai/A = M
+				var/picked = pick(childrentypesof(/obj/item/clothing/head))
+				A.set_hat(new picked())
+				return 1
+			return 0
+
+

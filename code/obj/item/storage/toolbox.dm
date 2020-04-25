@@ -3,10 +3,10 @@
 
 /obj/item/storage/toolbox
 	name = "toolbox"
-	icon = 'icons/obj/storage.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon = 'icons/obj/items/storage.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "red"
-	item_state = "toolbox_red"
+	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	force = 5.0
 	throwforce = 10.0
@@ -28,6 +28,7 @@
 		if (src.type == /obj/item/storage/toolbox)
 			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
 			qdel(src)
+		BLOCK_ROD
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -54,7 +55,7 @@
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"
-	item_state = "toolbox_red"
+	item_state = "toolbox-red"
 	desc = "A metal container designed to hold various tools. This variety holds supplies required for emergencies."
 	spawn_contents = list(/obj/item/crowbar,\
 	/obj/item/extinguisher,\
@@ -64,7 +65,7 @@
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
-	item_state = "toolbox_blue"
+	item_state = "toolbox-blue"
 	desc = "A metal container designed to hold various tools. This variety holds standard construction tools."
 	spawn_contents = list(/obj/item/screwdriver,\
 	/obj/item/wrench,\
@@ -76,7 +77,7 @@
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
-	item_state = "toolbox_yellow"
+	item_state = "toolbox-yellow"
 	desc = "A metal container designed to hold various tools. This variety holds electrical supplies."
 	spawn_contents = list(/obj/item/screwdriver,\
 	/obj/item/wirecutters,\
@@ -98,7 +99,7 @@
 	name = "artistic toolbox"
 	desc = "A metal container designed to hold various tools. This variety holds art supplies."
 	icon_state = "green"
-	item_state = "toolbox_green"
+	item_state = "toolbox-green"
 	spawn_contents = list(/obj/item/paint_can/random = 7)
 
 /* -------------------- Memetic Toolbox -------------------- */
@@ -107,7 +108,7 @@
 	name = "artistic toolbox"
 	desc = "His Grace."
 	icon_state = "green"
-	item_state = "toolbox_green"
+	item_state = "toolbox-green"
 	var/list/servantlinks = list()
 	var/hunger = 0
 	var/hunger_message_level = 0
@@ -205,7 +206,7 @@
 			if (G)
 				qdel(G)
 			if (we_need_to_die)
-				new /obj/item/storage/toolbox/emergency {name = "artistic toolbox"; desc = "It looks a lot duller than it used to."; icon_state = "green"; item_state = "toolbox_green";} (get_turf(src))
+				new /obj/item/storage/toolbox/emergency {name = "artistic toolbox"; desc = "It looks a lot duller than it used to."; icon_state = "green"; item_state = "toolbox-green";} (get_turf(src))
 				qdel(src)
 
 		return

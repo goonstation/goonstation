@@ -64,7 +64,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (src.stance == "defensive")
 			src.visible_message("<span style=\"color:red\"><B>[user] attempts to attack [src]!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			macho_parry(user)
 			return
 		..()
@@ -74,7 +74,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (src.stance == "defensive")
 			src.visible_message("<span style=\"color:red\"><B>[user] swings at [src] with the [W.name]!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			macho_parry(user, W)
 			return
 		..()
@@ -277,7 +277,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			else
 				src.visible_message("<span style=\"color:red\">[src] closes his eyes for a moment.</span>")
 				playsound(src.loc, "sound/voice/macho/macho_breathing18.ogg", 50, 0, 0, src.get_age_pitch())
-				sleep(40)
+				sleep(4 SECONDS)
 			src.set_density(0)
 			if (H)
 				src.dir = get_dir(src, H)
@@ -318,7 +318,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						if (WEST)
 							H.pixel_x = src.pixel_x + 8
 							H.layer = src.layer - 1
-				sleep(1)
+				sleep(0.1 SECONDS)
 			src.set_loc(pick(get_area_turfs(A, 1)))
 			if (H)
 				src.visible_message("<span style=\"color:red\">[src] suddenly descends from the ceiling with [H]!</span>")
@@ -345,7 +345,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						if (WEST)
 							H.pixel_x = src.pixel_x + 8
 							H.layer = src.layer - 1
-				sleep(1)
+				sleep(0.1 SECONDS)
 			if (G)
 				qdel(G)
 			playsound(src.loc, "explosion", 50)
@@ -417,7 +417,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							H.layer = src.layer - 1
 					for (var/i = 0, i < 5, i++)
 						H.pixel_y += 2
-						sleep(3)
+						sleep(0.3 SECONDS)
 					if (ishuman(H))
 						var/mob/living/carbon/human/HU = H
 						src.visible_message("<span style=\"color:red\"><B>[src] begins tearing [H] limb from limb!</B></span>")
@@ -427,24 +427,24 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 							HU.emote("scream")
 							HU.bioHolder.age += 10
-							sleep(10)
+							sleep(1 SECOND)
 						if (HU.limbs.r_arm)
 							HU.limbs.r_arm.sever()
 							playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 							HU.emote("scream")
 							HU.bioHolder.age += 10
-							sleep(10)
+							sleep(1 SECOND)
 						if (HU.limbs.l_leg)
 							HU.limbs.l_leg.sever()
 							playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 							HU.emote("scream")
 							HU.bioHolder.age += 10
-							sleep(10)
+							sleep(1 SECOND)
 						if (HU.limbs.r_leg)
 							HU.limbs.r_leg.sever()
 							playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 							HU.emote("scream")
-							sleep(10)
+							sleep(1 SECOND)
 						HU.bioHolder.age = original_age
 						HU.changeStatus("stunned", 10 SECONDS)
 						HU.changeStatus("weakened", 10 SECONDS)
@@ -481,7 +481,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				for (var/mob/living/M in oviewers(ring_radius + 4, get_turf(src)))
 					M.apply_sonic_stun(6, 3, stamina_damage = 0)
 
-				sleep(12)
+				sleep(1.2 SECONDS)
 				var/turf/Aloc = get_turf(src)
 				var/list/arenaropes = list()
 				for (var/turf/T in range(ring_radius, Aloc))
@@ -532,7 +532,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 								else
 									FF.dir = SOUTH
 							FF.alpha = 0
-				sleep(14)
+				sleep(1.4 SECONDS)
 				macho_arena_turfs = arenaropes
 				/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 				for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
@@ -599,10 +599,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							H.layer = src.layer - 1
 					for (var/i = 0, i < 5, i++)
 						H.pixel_y += 2
-						sleep(3)
+						sleep(0.3 SECONDS)
 
 					playsound(src.loc, "sound/voice/macho/macho_slimjim.ogg", 75) // SNAP INTO A SLIM JIM!
-					sleep(5)
+					sleep(0.5 SECONDS)
 					if (ishuman(H))
 						var/mob/living/carbon/human/HU = H
 						src.visible_message("<span style=\"color:red\"><B>[src] begins snapping [H]'s body!</B></span>")
@@ -615,7 +615,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							HU.Scale(1 + (rand(-30, 20) * 0.01), 1 + (rand(-20, 30) * 0.01))
 							HU.Turn(rand(-60, 90))
 							HU.bioHolder.age += 10
-							sleep(10)
+							sleep(1 SECOND)
 
 						playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(HU.loc)
@@ -674,13 +674,13 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							H.layer = src.layer - 1
 					for (var/i = 0, i < 5, i++)
 						H.pixel_y += 2
-						sleep(3)
+						sleep(0.3 SECONDS)
 					src.transforming = 0
 					src.bioHolder.AddEffect("fire_resist")
 					src.transforming = 1
 					playsound(src.loc, "sound/voice/chanting.ogg", 75, 0, 0, src.get_age_pitch())
 					src.visible_message("<span style=\"color:red\">[src] begins radiating with dark energy!</span>")
-					sleep(40)
+					sleep(4 SECONDS)
 					for (var/mob/N in viewers(src, null))
 						N.flash(3 SECONDS)
 						if (N.client)
@@ -708,7 +708,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.transforming = 1
 			src.visible_message("<span style=\"color:red\"><B>[src] begins glowing with ominous power!</B></span>")
 			playsound(src.loc, "sound/voice/chanting.ogg", 75, 0, 0, src.get_age_pitch())
-			sleep(40)
+			sleep(4 SECONDS)
 			for (var/mob/N in viewers(src, null))
 				N.flash(3 SECONDS)
 				if (N.client)
@@ -783,7 +783,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							if (WEST)
 								H.pixel_x = src.pixel_x + 8
 								H.layer = src.layer - 1
-						sleep(1)
+						sleep(0.1 SECONDS)
 					src.pixel_x = 0
 					src.pixel_y = 0
 					src.transforming = 0
@@ -861,7 +861,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					SPAWN_DBG(0)
 						if (H)
 							walk(H, target_dir, 1)
-							sleep(15)
+							sleep(1.5 SECONDS)
 							playsound(src.loc, "explosion", 50)
 							var/obj/overlay/O = new/obj/overlay(get_turf(H))
 							O.anchored = 1
@@ -913,7 +913,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							H.layer = src.layer - 1
 					for (var/i = 0, i < 5, i++)
 						H.pixel_y += 2
-						sleep(3)
+						sleep(0.3 SECONDS)
 					src.transforming = 0
 					src.bioHolder.AddEffect("fire_resist")
 					src.transforming = 1
@@ -928,7 +928,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				//	src.icon = composite
 					playsound(src.loc, "sound/voice/chanting.ogg", 75, 0, 0, src.get_age_pitch())
 					src.visible_message("<span style=\"color:red\"><b>[src] begins radiating with evil energies!</b></span>")
-					sleep(40)
+					sleep(4 SECONDS)
 					for (var/mob/N in viewers(src, null))
 						N.flash(3 SECONDS)
 						if (N.client)
@@ -994,13 +994,13 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							H.layer = src.layer - 1
 					for (var/i = 0, i < 5, i++)
 						H.pixel_y += 2
-						sleep(3)
+						sleep(0.3 SECONDS)
 					src.transforming = 0
 					src.bioHolder.AddEffect("fire_resist")
 					src.transforming = 1
 					playsound(src.loc, "sound/voice/heavenly.ogg", 75)
 					src.visible_message("<span style=\"color:red\"><b>[src] closes \his eyes in silent macho prayer!</b></span>")
-					sleep(40)
+					sleep(4 SECONDS)
 					for (var/mob/N in viewers(src, null))
 						N.flash(3 SECONDS)
 						if (N.client)
@@ -1058,17 +1058,17 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							H.layer = src.layer - 1
 					for (var/i = 0, i < 5, i++)
 						H.pixel_y += 2
-						sleep(3)
+						sleep(0.3 SECONDS)
 					src.transforming = 0
 					src.bioHolder.AddEffect("fire_resist")
 					src.transforming = 1
 					playsound(src.loc, "sound/weapons/phaseroverload.ogg", 100)
 					src.visible_message("<span style=\"color:red\"><b>[src] begins intensely staring [H] in the eyes!</b></span>")
 					boutput(H, "<span style=\"color:red\">You feel a horrible pain in your head!</span>")
-					sleep(5)
+					sleep(0.5 SECONDS)
 					H.make_jittery(1000)
 					H.visible_message("<span style=\"color:red\"><b>[H] starts violently convulsing!</b></span>")
-					sleep(40)
+					sleep(4 SECONDS)
 					playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 					qdel(G)
 					var/location = get_turf(H)
@@ -1180,7 +1180,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.verbs -= /mob/living/carbon/human/machoman/verb/macho_meteor
 			src.visible_message("<span style=\"color:red\">[src] pauses and curses for a moment.</span>")
 			playsound(src.loc, "sound/voice/macho/macho_alert26.ogg", 50)
-			sleep(40)
+			sleep(4 SECONDS)
 			src.visible_message("<span style=\"color:red\">[src] begins to hover mysteriously above the ground!</span>")
 			playsound(src.loc, "sound/effects/bionic_sound.ogg", 50)
 			playsound(src.loc, "sound/voice/macho/macho_moan07.ogg", 50)
@@ -1189,7 +1189,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			for (var/i = 0, i < 20, i++)
 				src.pixel_y += 1
 				src.dir = turn(src.dir, 90)
-				sleep(1)
+				sleep(0.1 SECONDS)
 			src.dir = SOUTH
 			var/sound/siren = sound('sound/misc/airraid_loop.ogg')
 			var/list/masters = new()
@@ -1207,12 +1207,12 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			siren.channel = 5
 			boutput(world, siren)
 			randomevent_meteorshower(16)
-			sleep(300)
+			sleep(30 SECONDS)
 			src.visible_message("<span style=\"color:red\">[src] falls back to the ground!</span>")
 			for (var/i = 0, i < 20, i++)
 				src.pixel_y -= 1
 				src.dir = turn(src.dir, -90)
-				sleep(1)
+				sleep(0.1 SECONDS)
 			if (istype(src.loc, /turf/simulated/floor))
 				src.loc:break_tile()
 			for (var/mob/M in viewers(src, 5))
@@ -1362,7 +1362,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 /obj/item/storage/belt/macho_belt
 	name = "Championship Belt"
 	desc = "Awarded to the best space wrestler of the year."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -1375,7 +1375,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 /obj/item/macho_coke
 	name = "unmarked white bag"
 	desc = "Contains columbian sugar."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cokebag"
 	item_state = "chefhat" // lol
 	w_class = 1
@@ -1384,7 +1384,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (istype(target, /mob/living/carbon/human/machoman))
 			target.visible_message("<span style=\"color:red\">[target] shoves \his face deep into [src] and breathes deeply!</span>")
 			playsound(target.loc, "sound/voice/macho/macho_breathing02.ogg", 50, 1)
-			sleep(25)
+			sleep(2.5 SECONDS)
 			playsound(target.loc, "sound/voice/macho/macho_freakout.ogg", 50, 1)
 			target.visible_message("<span style=\"color:red\">[target] appears visibly stronger!</span>")
 			if (target.reagents)

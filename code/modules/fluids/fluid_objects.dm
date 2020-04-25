@@ -36,7 +36,12 @@
 
 	New()
 		my_turf = get_turf(src)
+		START_TRACKING
 		..()
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	process()
 		if (!my_turf)
@@ -420,6 +425,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_LARGE
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))

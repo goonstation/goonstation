@@ -68,6 +68,7 @@
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
+	set popup_menu = 1
 
 	if( !src.holder || src.holder.level < LEVEL_PA )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to use view variables while being below PA.")
@@ -171,6 +172,25 @@
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
 	if (istype(D, /atom) || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
+
+	if (isobj(D))
+		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ReplaceExplosive=\ref[D]'>Replace with Explosive</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];Possess=\ref[D]'>Possess</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];AddPathogen=\ref[D]'>Add Random Pathogens Reagent</a>"
+
+
+		if (isitem(D))
+			html += "<br><a href='byond://?src=\ref[src];GiveProperty=\ref[D]'>Give Property</a>"
+			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
+	if (istype(D,/atom))
+		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
+
+	if (istype(D,/obj/critter))
+		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ReviveCritter=\ref[D]'>Revive Critter</a>"
+
+
 
 	html += {"
 		<br>Direction: <a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=L90'>&lt; 90&deg;</a> &middot;
@@ -431,7 +451,7 @@
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
-			sleep(1)
+			sleep(0.1 SECONDS)
 			boutput(src, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to display a flat icon of something all rude-like.")
@@ -452,6 +472,78 @@
 					doCallProc(C)
 		else
 			debug_variables(locate(href_list["Vars"]))
+	if (href_list["ReplaceExplosive"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/O = locate(href_list["ReplaceExplosive"])
+			O.replace_with_explosive()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
+		return
+	if (href_list["AddPathogen"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/O = locate(href_list["AddPathogen"])
+			O.addpathogens()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
+		return
+	if (href_list["KillCritter"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/critter/O = locate(href_list["KillCritter"])
+			O.kill_critter()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to kill critter all rude-like.")
+		return
+	if (href_list["ReviveCritter"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/critter/O = locate(href_list["ReviveCritter"])
+			O.revive_critter()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to revive critter all rude-like.")
+		return
+	if (href_list["GiveProperty"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/item/I = locate(href_list["GiveProperty"])
+			I.dbg_objectprop()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to give property all rude-like.")
+		return
+	if (href_list["GiveSpecial"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/item/I = locate(href_list["GiveSpecial"])
+			I.dbg_itemspecial()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to give special all rude-like.")
+		return
+	if (href_list["CheckReactions"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/atom/A = locate(href_list["CheckReactions"])
+			A.debug_check_possible_reactions()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to check reactions all rude-like.")
+		return
+	if (href_list["CreatePoster"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/atom/A = locate(href_list["CreatePoster"])
+			src.generate_poster(A)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to create poster all rude-like.")
+		return
+	if (href_list["Possess"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/O = locate(href_list["Possess"])
+			possess(O)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
+		return
 	else
 		..()
 

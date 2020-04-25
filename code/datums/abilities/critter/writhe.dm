@@ -37,5 +37,5 @@
 			ow.changeStatus("weakened", 3 SECONDS)
 			ow.dir = turn(ow.dir, pick(-90,90))
 
-			sleep(5)
+			sleep(0.5 SECONDS)
 

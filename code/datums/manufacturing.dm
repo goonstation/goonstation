@@ -34,7 +34,7 @@
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 			//A.quality -= rand(25,50)
 		if (src.apply_material && materials.len > 0)
-			A.setMaterial(getMaterial(materials[1]))
+			A.setMaterial(getMaterial(materials[materials[1]]))
 		return 1
 
 /datum/manufacture/mechanics
@@ -213,6 +213,16 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(30,24)
 	item_outputs = list(/obj/item/ammo/bullets/bullet_22)
+	time = 30
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/bullet_12g_nail
+	name = "12 gauge nailshot"
+	item_paths = list("MET-2","CON-1")
+	item_names = list("Sturdy Metal","Conductive Material")
+	item_amounts = list(40,30)
+	item_outputs = list(/obj/item/ammo/bullets/nails)
 	time = 30
 	create = 1
 	category = "Resource"
@@ -482,10 +492,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		if (materials.len > 1)
-			S.set_reinforcement(materials[2])
-		else
-			S.set_reinforcement(materials[1])
+		S.set_reinforcement(getMaterial(materials["MET-1"]))
 
 /datum/manufacture/glass
 	name = "Glass Panel"
@@ -512,7 +519,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		S.set_reinforcement(materials[2])
+		S.set_reinforcement(getMaterial(materials["CRY-1"]))
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
@@ -642,8 +649,8 @@
 		var/max_cond = 0
 		var/min_cond_mat = null
 		var/max_cond_mat = null
-		for (var/mat_id in materials)
-			var/datum/material/cand = getMaterial(mat_id)
+		for (var/pattern in materials)
+			var/datum/material/cand = getMaterial(materials[pattern])
 			if (!cand)
 				continue
 			if (cand.getProperty("electrical") < min_cond)

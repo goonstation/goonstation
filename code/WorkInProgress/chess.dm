@@ -3,7 +3,7 @@ ________  ___  ___  _______   ________   ________  _____ ______   ________  ____
 |\   ____\|\  \|\  \|\  ___ \ |\   ____\ |\   ____\|\   _ \  _   \|\   __  \|\   ____\|\___   ___\\  ___ \ |\   __  \    |\   ____\ |\   ____\  / __  \|\_____  \                     	*
 \ \  \___|\ \  \\\  \ \   __/|\ \  \___|_\ \  \___|\ \  \\\__\ \  \ \  \|\  \ \  \___|\|___ \  \_\ \   __/|\ \  \|\  \   \ \  \___|_\ \  \___|_|\/_|\  \|____|\ /_                    	*
  \ \  \    \ \   __  \ \  \_|/_\ \_____  \\ \_____  \ \  \\|__| \  \ \   __  \ \_____  \   \ \  \ \ \  \_|/_\ \   _  _\   \ \_____  \\ \_____  \|/ \ \  \    \|\  \                   	*
-  \ \  \____\ \  \ \  \ \  \_|\ \|____|\  \\|____|\  \ \  \    \ \  \ \  \ \  \|____|\  \   \ \  \ \ \  \_|\ \ \  \\  \| __\|____|\  \\|____|\  \   \ \  \  __\_\  \                  	*	
+  \ \  \____\ \  \ \  \ \  \_|\ \|____|\  \\|____|\  \ \  \    \ \  \ \  \ \  \|____|\  \   \ \  \ \ \  \_|\ \ \  \\  \| __\|____|\  \\|____|\  \   \ \  \  __\_\  \                  	*
    \ \_______\ \__\ \__\ \_______\____\_\  \ ____\_\  \ \__\    \ \__\ \__\ \__\____\_\  \   \ \__\ \ \_______\ \__\\ _\|\__\____\_\  \ ____\_\  \   \ \__\|\_______\                 	*
     \|_______|\|__|\|__|\|_______|\_________\\_________\|__|     \|__|\|__|\|__|\_________\   \|__|  \|_______|\|__|\|__\|__|\_________\\_________\   \|__|\|_______|                 	*
                                  \|_________\|_________|                       \|_________|                                 \|_________\|_________|                                   	*
@@ -25,12 +25,12 @@ var/chess_in_progress = 0
 
 turf/simulated/floor/chess
 
-	var/obj/item/chesspiece/enpassant = null 
-	
+	var/obj/item/chesspiece/enpassant = null
+
 	New()
 		..()
 		chessboard += src
-	
+
 	disposing()
 		chessboard -= src
 		..()
@@ -41,7 +41,7 @@ obj/chessbutton
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	var/confirm = 0
-	
+
 	attack_hand(mob/user as mob)
 		if(chess_in_progress && !confirm)
 			boutput(user, "<span style=\"color:red\">You are about to erase the board. Press again to confirm.</span>")
@@ -49,19 +49,19 @@ obj/chessbutton
 		else
 			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
 			logTheThing("diary", user, null, "has reset the chessboard. Hope nobody was playing chess.", "admin")
-			
+
 			for(var/turf/simulated/floor/chess/T in chessboard)
 				T.enpassant = null // almost forgot this, gotte get that sweet GC
 				for(var/obj/item/O in T)
 					qdel(O)
 				for(var/obj/landmark/chess/L in T)
 					L.lets_fuckin_start_this_party()
-				sleep(1)
-			
+				sleep(0.1 SECONDS)
+
 			chess_in_progress = 1
 			confirm = 0
-		
-	
+
+
 obj/landmark/chess
 
 	proc/lets_fuckin_start_this_party()
@@ -98,7 +98,7 @@ obj/item/chesspiece
 	icon = 'icons/misc/chess.dmi'
 	icon_state = "pawn_black"
 	anchored = 1
-	
+
 	var/chess_color = 0
 	var/isking = 0
 
@@ -122,8 +122,8 @@ obj/item/chesspiece
 	proc/gib()
 		//do some gib stuff here
 		qdel(src)
-				
-		
+
+
 	proc/validmove(turf/start_pos, turf/end_pos)
 		return 1
 
@@ -145,15 +145,15 @@ obj/item/chesspiece
 			for(var/turf/simulated/floor/chess/CB in chessboard)
 				CB.enpassant = null
 				chess_enpassant = 0
-			
-		
+
+
 
 /* specific pieces go here, the major differences are just their validmove() procs. Some might override chessmove() too
 
 _1____0_
 _B____W_
 
-so for real uhhhh some of these things are still being attrocious, not announcing their captures and shit. I dont know why 
+so for real uhhhh some of these things are still being attrocious, not announcing their captures and shit. I dont know why
 
 */
 
@@ -167,20 +167,20 @@ obj/item/chesspiece/pawn
 
 	black
 		chess_color = 1
-	
+
 	New()
 		..()
 		icon_state = (chess_color ? "pawn_black" : "pawn_white")
-		movdir = chess_color ? 1 : -1 
+		movdir = chess_color ? 1 : -1
 		promoteX = src.x + 6*movdir
 
 	validmove(turf/start_pos, turf/end_pos)
-		if(!opened && (start_pos.y==end_pos.y)) // do we allow you to move two spots? yes. yes we do. I love you. 
+		if(!opened && (start_pos.y==end_pos.y)) // do we allow you to move two spots? yes. yes we do. I love you.
 			if((end_pos.x - start_pos.x) == 2*movdir)
 				for(var/obj/item/chesspiece/C in locate(start_pos.x+movdir,src.y,src.z)) // intermediate blocking
 					return 0
 				EP = locate(start_pos.x+movdir,src.y,src.z)
-				return 1			
+				return 1
 		if(start_pos.y != end_pos.y)
 			if((abs(start_pos.y - end_pos.y) == 1) && (end_pos.x - start_pos.x) == movdir )
 				for(var/obj/item/chesspiece/C in end_pos)
@@ -197,22 +197,22 @@ obj/item/chesspiece/pawn
 			for(var/obj/item/chesspiece/C in end_pos)
 				return 0
 			return 1
-		
-	
+
+
 	chessmove()
 		opened = 1
 		..()
-		if(src.x == promoteX) // promote after youre done movin 
+		if(src.x == promoteX) // promote after youre done movin
 			if (src.chess_color)
-				new /obj/item/chesspiece/queen/black(src.loc) 
-			else 
-				new /obj/item/chesspiece/queen(src.loc) 
+				new /obj/item/chesspiece/queen/black(src.loc)
+			else
+				new /obj/item/chesspiece/queen(src.loc)
 			src.visible_message("<span style=\"color:blue\">[src] has been promoted.</span>")
 			qdel(src)
 		if (EP)
 			EP.enpassant = src
-			chess_enpassant = 1 
-			EP = null 
+			chess_enpassant = 1
+			EP = null
 
 obj/item/chesspiece/king
 	name = "king"
@@ -255,13 +255,13 @@ obj/item/chesspiece/king
 		opened = 1
 		if(!castling)
 			..()
-		else // i guess it should work? 
+		else // i guess it should work?
 			castling = 0 // in theory
 			if(chess_enpassant)
 				for(var/turf/simulated/floor/chess/CB in chessboard)
 					CB.enpassant = null
 					chess_enpassant = 0
-			
+
 
 obj/item/chesspiece/rook
 	name = "rook"
@@ -303,95 +303,95 @@ obj/item/chesspiece/rook
 obj/item/chesspiece/queen
 	name = "queen"
 	desc = "Subordinate in name only."
-	
+
 	black
 		chess_color = 1
-	
+
 	New()
 		..()
 		icon_state = (chess_color ? "queen_black" : "queen_white")
-	
+
 	validmove(turf/start_pos, turf/end_pos) // we need 4 cases here. two orthogonal, two diagonal.
 		var/minx = min(start_pos.x,end_pos.x)
 		var/miny = min(start_pos.y,end_pos.y)
 		var/maxx = max(start_pos.x,end_pos.x)
 		var/maxy = max(start_pos.y,end_pos.y)
-		
-		if(start_pos.x == end_pos.x) // vertical movement 
+
+		if(start_pos.x == end_pos.x) // vertical movement
 			var/i
 			for(i=miny+1, i < maxy, i++)
 				for(var/obj/item/chesspiece/C in locate(start_pos.x,i,src.z))
 					return 0
 			return 1
-			
+
 		else if(start_pos.y == end_pos.y) // horizontal movement
 			var/i
 			for(i=minx+1, i < maxx, i++)
 				for(var/obj/item/chesspiece/C in locate(i,start_pos.y,src.z))
 					return 0
 			return 1
-			
-		else if((start_pos.x - end_pos.x) == (start_pos.y - end_pos.y)) // coaxial diagonal 
+
+		else if((start_pos.x - end_pos.x) == (start_pos.y - end_pos.y)) // coaxial diagonal
 			var/i
 			for(i=1, i < (start_pos.x - end_pos.x), i++)
 				for(var/obj/item/chesspiece/C in locate(minx+i,miny+i,src.z))
 					return 0
 			return 1
-			
-		else if((start_pos.x - end_pos.x) == -(start_pos.y - end_pos.y)) // the other one 
+
+		else if((start_pos.x - end_pos.x) == -(start_pos.y - end_pos.y)) // the other one
 			var/i
 			for(i=1, i < (start_pos.x - end_pos.x), i++)
 				for(var/obj/item/chesspiece/C in locate(maxx-i,miny+i,src.z))
 					return 0
 			return 1
 		else return 0 // none of the 4 directions? too bad okay. Im annotating code that doesnt need notes just because I gotta look busy at work.
-	
+
 obj/item/chesspiece/bishop
 	name = "bishop"
 	desc = "Boneless queen"
-		
+
 	black
 		chess_color = 1
-		
+
 	New()
 		..()
 		icon_state = (chess_color ? "bishop_black" : "bishop_white")
-	
-	
+
+
 	validmove(turf/start_pos, turf/end_pos) // we need only 2 cases here. im copypasting from queen.
 		var/minx = min(start_pos.x,end_pos.x)
 		var/miny = min(start_pos.y,end_pos.y)
 		var/maxx = max(start_pos.x,end_pos.x)
-		
-		if((start_pos.x - end_pos.x) == (start_pos.y - end_pos.y)) // coaxial diagonal 
+
+		if((start_pos.x - end_pos.x) == (start_pos.y - end_pos.y)) // coaxial diagonal
 			var/i
 			for(i=1, i < (start_pos.x - end_pos.x), i++)
 				for(var/obj/item/chesspiece/C in locate(minx+i,miny+i,src.z))
 					return 0
 			return 1
-			
-		else if((start_pos.x - end_pos.x) == -(start_pos.y - end_pos.y)) // the other one 
+
+		else if((start_pos.x - end_pos.x) == -(start_pos.y - end_pos.y)) // the other one
 			var/i
 			for(i=1, i < (start_pos.x - end_pos.x), i++)
 				for(var/obj/item/chesspiece/C in locate(maxx-i,miny+i,src.z))
 					return 0
 			return 1
-		else return 0 // pee pee poo poo 
-	
-	
+		else return 0 // pee pee poo poo
+
+
 obj/item/chesspiece/knight
 	name = "knight"
 	desc = "Does anyone actually know why they move like that?"
-	
+
 	black
 		chess_color = 1
-	
+
 	New()
 		..()
 		icon_state = (chess_color ? "knight_black" : "knight_white")
 		if(prob(1))
 			name = "hoarse"
-	
+
 	validmove(turf/start_pos, turf/end_pos) // this is weird
 		var/dispx = abs(start_pos.x - end_pos.x)
 		var/dispy = abs(start_pos.y - end_pos.y)
@@ -399,7 +399,7 @@ obj/item/chesspiece/knight
 			return 1
 		else return 0
 
-	
-	
-	
-	
+
+
+
+

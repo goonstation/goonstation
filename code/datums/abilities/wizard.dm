@@ -3,7 +3,7 @@
 /proc/equip_wizard(mob/living/carbon/human/wizard_mob, var/robe = 0, var/vr = 0)
 	if (!ishuman(wizard_mob)) return
 
-	if (vr && wizard_mob.mind && wizard_mob.mind.is_wizard)
+	if (vr && wizard_mob.get_ability_holder(/datum/abilityHolder/wizard))
 		// you're already a wizard you shithead, get out of here
 		return
 
@@ -17,11 +17,6 @@
 	else
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
-
-
-
-	if (wizard_mob.mind)
-		wizard_mob.mind.is_wizard = H
 
 	SPAWN_DBG (25) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).

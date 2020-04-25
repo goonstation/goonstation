@@ -3,7 +3,7 @@
 	desc = "Cabinet for storing various things."
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/cabinet.dmi'
+	icon = 'icons/obj/furniture/cabinet.dmi'
 	icon_state = "cabinet"
 	flags = NOSPLASH
 	bound_height = 32
@@ -123,7 +123,7 @@
 				var/image/A = null
 
 				if(istype(I,/obj/item/reagent_containers/glass/bottle)) //Add your other icon states here.
-					A = image('icons/obj/cabinet.dmi',"slot_bottle")
+					A = image('icons/obj/furniture/cabinet.dmi',"slot_bottle")
 				else
 					A = image(cabinetGlassIcon(I))
 
@@ -132,7 +132,7 @@
 				A.mouse_opacity = 0
 				underlays.Add(A)
 			else
-				var/image/A = image('icons/obj/cabinet.dmi',src,"slot_empty")
+				var/image/A = image('icons/obj/furniture/cabinet.dmi',src,"slot_empty")
 				A.pixel_x = offsetX
 				A.pixel_y = offsetY
 				A.mouse_opacity = 0

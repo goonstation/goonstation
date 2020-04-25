@@ -125,7 +125,7 @@
 
 			src.visible_message("<span style=\"color:red\"><b>[src] begins to fade away!</b></span>")
 			animate_teleport_wiz(src)
-			sleep(40) // Animation.
+			sleep(4 SECONDS) // Animation.
 
 			var/mob/living/carbon/human/H = src
 			if (istype(H) && H.getStatusDuration("burning"))

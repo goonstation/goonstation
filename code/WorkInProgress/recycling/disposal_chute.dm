@@ -155,7 +155,7 @@
 			src.visible_message(msg)
 
 		if (target == user && !istype(src,/obj/machinery/disposal/transport))
-			src.interact(user)
+			src.interacted(user)
 
 		update()
 		return
@@ -181,7 +181,7 @@
 						var/in_x = I.pixel_x
 						for(var/d = 0; d < delay; d++)
 							if(I) I.pixel_x = in_x + rand(-1, 1)
-							sleep(1)
+							sleep(0.1 SECONDS)
 						if(I) I.pixel_x = in_x
 					sleep(delay)
 					if(I && I.loc == src.loc)
@@ -233,14 +233,14 @@
 
 	// ai as human but can't flush
 	attack_ai(mob/user as mob)
-		interact(user, 1)
+		interacted(user, 1)
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
-		interact(user, 0)
+		interacted(user, 0)
 		interact_particle(user,src)
 
-	proc/interact(mob/user, var/ai=0)
+	proc/interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
 			user.machine = null
@@ -470,9 +470,9 @@
 
 		air_contents.zero()
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -658,7 +658,7 @@
 			if (AM.anchored || AM.loc != target)
 				continue
 			AM.set_loc(src)
-			sleep(5)
+			sleep(0.5 SECONDS)
 		src.visible_message("[user] deposits [target]'s contents into [src].")
 		update()
 

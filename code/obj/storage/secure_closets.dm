@@ -69,6 +69,11 @@
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
+	/obj/item/clothing/shoes/swat/heavy,
+#if ASS_JAM
+	/obj/item/gun/kinetic/beepsky,
+	/obj/item/turret_deployer/riot,
+#endif
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/command/hop
@@ -652,24 +657,24 @@
 			bc1.pixel_x = 3
 			bc2.pixel_x = 3
 			p.pixel_x = 3
-		
+
 			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
 			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
 			e1.pixel_y = -4
 			e2.pixel_y = -4
-			
+
 			var/obj/item/reagent_containers/food/drinks/cola/c1 = new(src)
 			var/obj/item/reagent_containers/food/drinks/cola/c2 = new(src)
 			c1.pixel_x = -8
 			c2.pixel_x = -8
-			
+
 			var/obj/item/storage/box/cheese/cheese = new(src)
 			cheese.pixel_x = 3
-			
+
 			var/obj/item/storage/box/butter/butter = new(src)
 			butter.pixel_x = 2
 			butter.pixel_y = 4
-			
+
 			if (prob(25))
 				for (var/i = rand(2,10), i > 0, i--)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)

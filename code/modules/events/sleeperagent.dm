@@ -24,8 +24,8 @@
 			message_admins("Setup of previous sleeper agents hasn't finished yet, aborting.")
 			return
 
-		var/agents = input(usr, "How many sleeper agents to awaken?", "Sleeper Agents", 0) as num
-		if (!agents)
+		var/agents = input(usr, "How many sleeper agents to awaken?", "Sleeper Agents", 0) as num|null
+		if (isnull(agents))
 			return
 		else
 			src.num_agents = agents
@@ -67,7 +67,7 @@
 		if(!num_agents)
 			return
 
-		sleep(300) //30s to let the signal play
+		sleep(30 SECONDS) //30s to let the signal play
 		var/mob/living/carbon/human/H = null
 		num_agents = min(num_agents,candidates.len)
 		for(var/i = 0, i<num_agents,i++)
@@ -81,11 +81,11 @@
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
 		src.admin_override = initial(src.admin_override)
-#if ASS_JAM // no idea what this does or who did it 
+#if ASS_JAM // no idea what this does or who did it
 		var/list/sleepers = list()
 		for(var/mob/listener in listeners)
 			sleepers += new/obj/machinery/sleeper(get_turf(listener))
-		sleep(30)
+		sleep(3 SECONDS)
 		for(var/atom/sleeper in sleepers)
 			qdel(sleeper)
 #endif
@@ -159,7 +159,7 @@
 			broadcast_sound(period)
 			batch++
 			if (batch >= 3)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	proc/get_tens(var/n)
 		if (n >= 20)

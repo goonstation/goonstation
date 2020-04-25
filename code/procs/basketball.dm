@@ -30,7 +30,7 @@
 
 /obj/newmeteor/basketball
 	name = "basketball"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball_spin"
 	hits = 6
 
@@ -65,8 +65,8 @@
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
 		step_to(M, target)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_y = 0
 	M.set_loc(target.loc)
 	M.transforming = 0
@@ -127,8 +127,8 @@
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_y = 0
 	M.transforming = 0
 	M.layer = MOB_LAYER
@@ -211,8 +211,8 @@
 		M.pixel_y += 4
 		M.pixel_x = rand(-4, 4)
 		step_to(M, target)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_x = 0
 	M.pixel_y = 0
 	M.set_loc(target.loc)
@@ -339,7 +339,7 @@
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
 		M.dir = turn(M.dir, 90)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 	siren.repeat = 1
@@ -361,15 +361,15 @@
 				world << sound('sound/effects/thunder.ogg', volume = 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
-			sleep(5)
-	sleep(300)
+			sleep(0.5 SECONDS)
+	sleep(30 SECONDS)
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
 		M.dir = turn(M.dir, 90)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	siren.repeat = 0
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
@@ -407,11 +407,11 @@
 				N.changeStatus("stunned", 2 SECONDS)
 
 	M.dir = NORTH
-	sleep(1)
+	sleep(0.1 SECONDS)
 	M.dir = EAST
-	sleep(1)
+	sleep(0.1 SECONDS)
 	M.dir = SOUTH
-	sleep(1)
+	sleep(0.1 SECONDS)
 	M.dir = WEST
 
 	M.transforming = 0
@@ -422,7 +422,7 @@
 
 /obj/item/bball_uplink
 	name = "station bounced radio"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 4.0

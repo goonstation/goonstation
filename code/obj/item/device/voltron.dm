@@ -77,12 +77,12 @@
 
 			the_user.client.images += cableimgs
 
-			sleep(10)*/
+			sleep(1 SECOND)*/
 
 /obj/item/device/voltron
 	name = "Voltron"
 	desc = "Converts matter into energy and back. Needs to be used while standing on a cable."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "voltron"
 	item_state = "electronic"
 	var/active = 0
@@ -155,7 +155,7 @@
 
 		if(rebuild_overlay)
 			overlays.Cut()
-			overlays += image('icons/obj/device.dmi',src,power_icon)
+			overlays += image('icons/obj/items/device.dmi',src,power_icon)
 	var/overlay_state = 0//0: nothing visible; 1: there's some visible
 	var/client/prev_user
 	proc/check()
@@ -176,7 +176,7 @@
 						img.loc = null
 						img.alpha = 0
 					overlay_state = 0
-				sleep(10)
+				sleep(1 SECOND)
 			else
 				overlay_state = 1
 				for(var/image/img in cableimgs)
@@ -212,7 +212,7 @@
 					var/mob/old_trg = target
 					deactivate()
 					old_trg.changeStatus("stunned", 200)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/deactivate()
 		if(activating) return
@@ -234,7 +234,7 @@
 		target.transforming = 1
 		O.icon = 'icons/effects/effects.dmi'
 		O.icon_state = "energytwirlout"
-		sleep(5)
+		sleep(0.5 SECONDS)
 		target.transforming = 0
 		qdel(O)
 
@@ -263,7 +263,7 @@
 			usr:transforming = 1
 			O.icon = 'icons/effects/effects.dmi'
 			O.icon_state = "energytwirlin"
-			sleep(5)
+			sleep(0.5 SECONDS)
 			usr:transforming = 0
 			qdel(O)
 

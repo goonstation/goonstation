@@ -206,7 +206,7 @@
 		if (src.skull || src.brain)
 
 			// scalpel surgery
-			if (istype(W, /obj/item/scalpel) || istype(W, /obj/item/razor_blade) || istype(W, /obj/item/knife_butcher) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/raw_material/shard))
+			if (istype(W, /obj/item/scalpel) || istype(W, /obj/item/razor_blade) || istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/raw_material/shard))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span style=\"color:red\"><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\

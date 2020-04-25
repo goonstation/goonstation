@@ -57,7 +57,7 @@
 
 					src.reagents_internal.trans_to(P,src.pvol)
 					if (P && P.reagents)
-						P.color_overlay = image('icons/obj/pills.dmi', "pill0")
+						P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
 						P.color_overlay.color = src.average
 						P.color_overlay.alpha = P.color_overlay_alpha
 						P.overlays += P.color_overlay
@@ -134,7 +134,7 @@
 			P.set_loc(src)
 			P.dropped()
 			src.rebuild_desc()
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
 		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")

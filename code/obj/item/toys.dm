@@ -177,7 +177,7 @@
 
 /obj/item/toy/sword
 	name = "toy sword"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword1"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	desc = "A sword made of cheap plastic. Contains a colored LED. Collect all five!"
@@ -216,7 +216,7 @@
 /obj/item/toy/figure
 	name = "collectable figure"
 	desc = "<b><span style=\"color:red\">WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
-	icon = 'icons/obj/figures.dmi'
+	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
 	w_class = 1.0
 	throwforce = 1
@@ -799,7 +799,7 @@ var/list/figure_patreon_rarity = list(\
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
-	icon = 'icons/obj/figures.dmi'
+	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "cap-y"
 	uses_multiple_icon_states = 1
 	contained_item = /obj/item/toy/figure
@@ -835,7 +835,7 @@ var/list/figure_patreon_rarity = list(\
 	desc = "A little figure in every capsule, guaranteed*!"
 	pay = 1
 	vend_delay = 15
-	icon = 'icons/obj/figures.dmi'
+	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "machine1"
 	icon_panel = "machine-panel"
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
@@ -869,7 +869,7 @@ var/list/figure_patreon_rarity = list(\
 /obj/item/toy/judge_gavel
 	name = "judge's gavel"
 	desc = "A judge's best friend."
-	icon = 'icons/obj/courtroom.dmi'
+	icon = 'icons/obj/items/courtroom.dmi'
 	icon_state = "gavel"
 	w_class = 2
 	force = 5
@@ -894,7 +894,7 @@ var/list/figure_patreon_rarity = list(\
 /obj/item/toy/judge_block
 	name = "block"
 	desc = "bang bang bang Bang Bang Bang Bang BANG BANG BANG BANG BANG!!!"
-	icon = 'icons/obj/courtroom.dmi'
+	icon = 'icons/obj/items/courtroom.dmi'
 	icon_state = "block"
 	flags = SUPPRESSATTACK
 	w_class = 1
@@ -943,6 +943,7 @@ var/list/figure_patreon_rarity = list(\
 			L.visible_message("<span style=\"color:red\"><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
 			playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+
 
 
 /obj/item/toy/gooncode

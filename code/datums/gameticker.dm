@@ -79,7 +79,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	#endif
 
 	while(current_state <= GAME_STATE_PREGAME)
-		sleep(10)
+		sleep(1 SECOND)
 		if (!game_start_delayed)
 			pregame_timeleft--
 
@@ -99,6 +99,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
+
+	#if ASS_JAM //who the hell knows if this works, i can't be arsed to check.
+	if(prob(10))
+		src.mode = "assday"
+	#endif
 
 	if(hide_mode)
 		#ifdef RP_MODE
@@ -154,7 +159,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
 
 	// Give said clients time to animate the fadeout before we do this...
-	sleep(5)
+	sleep(0.5 SECONDS)
 
 	//Distribute jobs
 	distribute_jobs()
@@ -293,7 +298,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
-					player.AIize()
+					var/mob/living/silicon/ai/A = player.AIize()
+					A.Equip_Bank_Purchase(A.mind.purchased_bank_item)
 
 				else if (player.mind && player.mind.special_role == "wraith")
 					player.close_spawn_windows()
@@ -420,7 +426,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				boutput(world, "<span style=\"font-weight: bold; color: blue;\">A new round will begin soon.</span>")
 
-				sleep(600)
+				sleep(60 SECONDS)
 				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 
 				if (game_end_delayed == 1)
@@ -678,6 +684,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
 
+		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+			P.build_curr_contents()
+
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new
@@ -730,7 +739,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					spawn_meteors()
 				if (src.timeleft <= 0 && src.timing)
 					src.timeup()
-				sleep(10)
+				sleep(1 SECOND)
 			while(src.processing)
 			return
 //Standard extended process (incorporates most game modes).
@@ -739,7 +748,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			do
 				check_win()
 				ticker.AItime += 10
-				sleep(10)
+				sleep(1 SECOND)
 				if (ticker.AItime == 6000)
 					boutput(world, "<FONT size = 3><B>Cent. Com. Update</B> AI Malfunction Detected</FONT>")
 					boutput(world, "<span style=\"color:red\">It seems we have provided you with a malfunctioning AI. We're very sorry.</span>")
@@ -761,7 +770,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					spawn_meteors()
 				if (src.timeleft <= 0 && src.timing)
 					src.timeup()
-				sleep(10)
+				sleep(1 SECOND)
 			while(src.processing)
 			return
 //meteor mode!!! MORE METEORS!!!

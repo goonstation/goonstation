@@ -178,7 +178,7 @@
 				var/atom/wloc = W.loc
 				var/turf/ploc = loc
 				boutput(user, "You begin welding [src] in place.")
-				sleep(1)
+				sleep(0.1 SECONDS)
 				if(user.loc == uloc && wloc == W.loc)
 					// REALLY? YOU DON'T FUCKING CARE ABOUT THE LOCATION OF THE PIPE? GET FUCKED <CODER>
 					if (ploc != loc)

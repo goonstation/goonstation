@@ -51,7 +51,7 @@
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
 	heal_amt = 10
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "fried" // fix this
 	food_effects = list("food_warm")
 	use_bite_mask = 0
@@ -205,7 +205,7 @@
 	name = "sugar cookie"
 	desc = "Outside of North America, the Earth's Moon, and certain regions of Europa, these are referred to as biscuits."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "cookie_sugar"
+	icon_state = "cookie-sugar"
 	amount = 1
 	heal_amt = 1
 	var/frosted = 0
@@ -374,6 +374,7 @@
 	w_class = 2
 	initial_volume = 100
 	food_effects = list("food_warm")
+	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
@@ -1713,7 +1714,7 @@
 		src.reagents.add_reagent("love", 1)*/
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog_octo"))
+		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog-octo"))
 			src.visible_message("<span style=\"color:green\">[user.name] carves a cute little face on the [src]!</span>")
 			src.icon_state = "hotdog-octo2"
 			src.reagents.add_reagent("love", 1)
@@ -2008,7 +2009,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (wrapped)
-			if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
+			if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 				user.visible_message("<span style=\"color:red\">[user] performs an act of wonton destruction!</span>","You slice open the wrapper.")
 				wrapped.set_loc(get_turf(src))
 				src.reagents = null
@@ -2084,7 +2085,7 @@
 	food_effects = list("food_brute")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			boutput(user, "<span style=\"color:blue\">You cut [src] into halves</span>")
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
@@ -2111,9 +2112,9 @@
 
 /obj/item/reagent_containers/food/snacks/emuffin/butter
 	name = "buttered english muffin"
-	desc = "Just like the queen intended it."
+	desc = "Just like the Queen intended it."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "emuffin_butter"
+	icon_state = "emuffin-butter"
 	heal_amt = 2
 	food_color = "#6A532D"
 	initial_reagents = list("butter"=3)

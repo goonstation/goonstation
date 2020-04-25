@@ -68,7 +68,7 @@
 
 		world << siren
 
-		sleep(4)
+		sleep(0.4 SECONDS)
 
 
 		var/sound/blowoutsound = sound('sound/misc/blowout_short.ogg')
@@ -84,7 +84,7 @@
 		// Hit everyone every 2 seconds when they are not in the safe zone
 		// Everyone gets set more and more on fire the longer they arent in the safe area
 		for(var/i = 0, i < 20, i++)
-			sleep(10)
+			sleep(1 SECOND)
 			for(var/mob/living/M in mobs)
 				if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle) || inafterlife(M))
 					continue

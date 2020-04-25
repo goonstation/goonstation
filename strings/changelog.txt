@@ -1,4 +1,330 @@
-﻿
+
+(t)sat apr 25 20
+(u)Tarmunora
+(p)422
+(e)⚖🎨|balance, sprites
+(+)Security barriers have a slightly more robust block, but only when turned on
+(u)mbc
+(p)431
+(e)|
+(*)Moved all pod verbs to a multicontext menu (just click the pod) instead of rclick verbs
+(u)Kubius
+(p)429
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch twelve - more cargo pads and miscellaneous tuneups.
+(u)Tarmunora
+(p)410
+(e)⚖🆕|balance, enhancement
+(+)Added special block functionality to backpacks/satchels.
+(u)mbc
+(p)421
+(e)|
+(+)Click+Drag chairs in order to rotate them. They also rotate when you are buckled in and trying to move.
+(u)mbc
+(p)420
+(e)|
+(*)Shoving a person who is downed and using item limbs will cause them to attack themselves just like they would if they were standing upright.
+(+)Fixed bug where item limbs wouldn't show icons on your hud.
+(t)fri apr 24 20
+(u)Flourish
+(p)400
+(e)🐛🆕|bug, enhancement
+(*)Cloning and stable mutagen now properly copy blood DNA, fingerprints, and genetic effects. The advanced genetic analysis option on the cloning computer toggles copying active genetic effects (yes, that includes mutantraces).
+(u)Tarmunora
+(p)395
+(e)🐛|bug
+(+)Fixed issue where guns treated you as if you were always slightly drunk for the purposes of aiming.
+(u)AwkwardDryad
+(p)385
+(e)🎨|sprites
+(*)Added the Double-Part and Drill hairstyles.
+(u)UrsulaMajor
+(p)394
+(e)🆕|enhancement
+(+)You can now ladle soup back into the soup pot, if you want. Soups also now drop their bowls when eaten.
+(u)Erinexx
+(p)406
+(e)🆕🎨|enhancement, sprites
+(*)Glowsticks are now colored. You can buy their colored variants from QM. You can also change csaber blade colors by unscrewing them and swapping out the glowstick inside!
+(t)thu apr 23 20
+(u)Erinexx
+(p)335
+(e)🐛🎨|bug, sprites
+(+)Added a tonne of new and resprited inhands, including toolboxes, backpacks, and arms and legs!
+(t)wed apr 22 20
+(u)mbc
+(p)378
+(e)|
+(*)Reduced lag when you right click on objects. You shouldn't notice any significant changes to the menu functions, but I did move around and merge some commands.
+(u)Kubius
+(p)370
+(e)🐛🆕🗺|bug, enhancement, mapping
+(+)Atlas fixes and improvements, including lighting and powernet.
+(u)Kubius
+(p)374
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 11: Medbay bigger - and this time, the booth too!
+(t)tue apr 21 20
+(u)mbc:
+(*)Blocking will now grant you some minor resistance to Disorient(Body)
+(*)When someone is using an item limb, shoving them to the ground will cause them to attack themselves (same as when you 'disarm' them).
+(u)Flaborized
+(p)326
+(e)⚖🆕🎨|balance, enhancement, sprites
+(+)Added the security pouch, a small pocket pouch containing all the kit previously contained in the Security Starter Kit. Starts in security officers', vice officers' and the HoS' pocket. Can be used to hold extra small items.
+(u)Kubius
+(p)353
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch ten: Towels! And some other stuff.
+(u)Erinexx
+(p)302
+(e)🎨|sprites
+(*)Updated sprites for cigarettes, cigarette packets, zippos, cigar cases and ashtrays!
+(u)Somethings
+(p)342
+(e)|
+(+)You now see the expected messages for the Necrotic Detonation and Necrotic Resurrection symptoms on a pathogen when you look at the pathogen holding petri dish under a microscope after applying some synthflesh on it with a mechanical dropper.
+(t)mon apr 20 20
+(u)Gerhazo, Flaborized
+(p)329
+(e)🆕🎨|enhancement, sprites
+(*)Added heavy military boots with unique distinctive footstep sounds to the Head of Security's locker.
+(u)Flourish
+(p)331
+(e)🆕🔄|enhancement, rework
+(*)Made the floor health scanners in medbay more useful. Step on top of one of them to receive a readout of your health and trigger a PDA alert to medical if you're in crit.
+(u)Fautz0
+(p)327
+(e)⚖🆕|balance, enhancement
+(+)You can now blindfold monkeys and humans by attacking their head with a blindfold.
+(u)Erinexx
+(p)277
+(e)🍑🎨|ass-jam, sprites
+(+)Added new plate sprites and fixed a display bug.
+(u)Flaborized
+(p)303
+(e)🆕🎨|enhancement, sprites
+(*)You can now destroy chemical dispensers, ATMs and shrubs by smashing them with a weapon. ATMs will spew out small amounts of money if you do this, and can also be shot to destroy them! Also improved visual feedback when destroying fabricators through brute force.
+(u)Tarmunora
+(p)241
+(e)⚖|balance
+(+)MPRT-7 launcher no longer supports dual-wielding
+(u)Kubius
+(p)337
+(e)🗺|mapping
+(*)Kondaru FB9: significant reworks to Medbay and Security.
+(u)MarkNstein
+(p)339
+(e)🆕|enhancement
+(+)Similar to airlocks, APCs will now show their powernet address when unscrewed.
+(u)RichardGere
+(p)308
+(e)🐛|bug
+(+)Fixed an issue where players were able to equip items attached to limbs.
+(t)sun apr 19 20
+(u)Flourish
+(p)292
+(e)🆕|enhancement
+(*)Added hats as an AI spacebux reward.
+(u)ZeWaka
+(p)258
+(e)|
+(+)Reverted #203, crowbars on harm intent once again pry up floors.
+(u)Kubius
+(p)323
+(e)🆕🗺|enhancement, mapping
+(+)Assorted small improvements to Horizon.
+(u)Gerhazo
+(p)311
+(e)|
+(+)Fixed certain cuff types not breaking apart on removal as well as trying to remove silver handcuffs from your belt breaking that slot.
+(u)Awkward Dryad
+(p)299
+(e)|
+(+)Fixed plant layering in pots <3
+(t)sat apr 18 20
+(u)Kubius
+(p)316
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch eight - assorted QoL upgrades, including clown gear.
+(u)mbc
+(p)314
+(e)⚖|balance
+(*)Pods have improved braking and occupants get stunned for far less time when impacted by melee.
+(u)pali
+(p)256
+(e)🆕|enhancement
+(+)Turned on C-Sabers now actually emit light!
+(u)Gannets
+(p)300
+(e)🎨|sprites
+(+)Added missing pulse rifle in-hand sprites.
+(u)Kubius
+(p)306
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch seven: relocation/rework of test chamber, plus a bit.
+(t)fri apr 17 20
+(u)Kubius
+(p)301
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 6. Notable: QM import upgrades, Engine cold loop radiator.
+(u)Kubius
+(p)298
+(e)🆕🗺|enhancement, mapping
+(*)Kondaru fix batch 5, including bookshelf and a map image refresh.
+(u)Kubius
+(p)295
+(e)🗺|mapping
+(+)Kondaru Fixes IV: The Voyage Home (in an escape pod). PR #295
+(u)Tarmunora
+(p)217
+(e)🔄|rework
+(*)Cigarettes now have a fixed burn time, with the reagent/cycle adjusted to match
+(*)Pocket cigs no longer transfer reagents if you have on active internals or a gas mask
+(u)RichardGere
+(p)275
+(e)|
+(+)Fixed an issue that would let explosions destroy the nuclear bomb on certain floor types.
+(u)Enfaeutchie
+(p)273
+(e)🐛|bug
+(+)Click+dragging produce into crates won't overfill them, so you can ship and sell it more easily.
+(u)Kubius
+(p)274
+(e)🗺|mapping
+(*)Second batch of post-launch fixes to Kondaru. See pull request 274 for details.
+(t)thu apr 16 20
+(u)trerri
+(p)263
+(e)🗺|mapping
+(*)Added a windoor to Oshan sec
+(u)Kubius
+(p)267
+(e)🗺|mapping
+(*)First batch of post-launch fixes to Kondaru. See pull request 267 for details.
+(t)wed apr 15 20
+(u)Kubius
+(p)247
+(e)🆕🗺|enhancement mapping
+(*)Kondaru (Kubius Map 3: Third Time's the Charm) has moved into official rotation.
+(*)Please provide suggestions on <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14335">the official Kondaru thread</a> and please report bugs through the Bug Report button in the upper right corner.
+(u)mbc
+(p)252
+(e)⚖🆕🔄|balance, enhancement, rework
+(*)Added blocking. Replaced classic passive-disarm-intent-blocking with a new block function tied to Resist.
+(*)You can block barehanded OR with a weapon. Weapons have block properties attached (you can see them on the tooltip) to tell you what kinds of damage they are effective against. You get a small armor boost while blocking, which is increased when you have an effective item matchup.
+(*)Added Resist hotkey (Z on default controls, C on /tg/)
+(u)Erinexx
+(p)112
+(e)🐛🎨|bug spriting
+(*)New hydro tray sprite!
+(*)Hydro trays now properly update visual water level without having to have a plant growing!
+(*)Hydro trays now properly display reagent-colour in the trays water pool!
+(u)Kubius
+(p)250
+(e)🐛🗺|bug mapping
+(+)Fixed habitat dome prefab - no longer shrouded in shadow.
+(u)Tarmunora
+(p)244
+(e)⚖|balance
+(*)Power picks, hammers, shovels now use standard small power cells for their internal charge. This makes them charge more quickly, as an aside. Additionally, attacking things that aren't asteroids with them will drain their cell much more quickly - if using one as a weapon, keep an eye on your charge!
+(u)Tarmunora
+(p)242
+(*)Rebalanced meatcleaver to fumble far less often on hit and removes stun on throw
+(u)trerri
+(+)Added extra supplies to the Oshan locker room.
+(t)tue apr 14 20
+(u)comradef191
+(+)Fixed up Mushroom a lot.
+(u)adharainspace
+(+)Fixed weird photocopier bugs and makes them less painful to use.
+(t)mon apr 13 20
+(u)Kubius
+(+)Batch one of small improvements and fixes to Kondaru.
+(u)Erinexx
+(+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
+(u)ASS_JAM
+(*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
+(*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
+(*)Moonlol - New wizard spell: Timestop. "This very handy dandy feature surely wont cause any runtimes"
+(*)Polivilas - Disables zipgun, adds a slamgun. "I will pay out 100k spacebux for better sprites - contact 2027#2027 on discord for more details."
+(*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
+(*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
+(*)UrsulaMajor - Updated Density, map smol.
+(u)Flaborized
+(*)Added a few small items to the surplus crate!
+(u)Tarmunora
+(*)On ass day you can shoot as fast as you can click.
+(*)Guns have a little bit of extra spread when drunk. Alcohol immunity mitigates this, to an extent
+(+)Added the ability to refill/combine ammo boxes by hitting them with a box of the same type
+(+)Changed pointblanking to hit with all the projectiles in a burst, not just one
+(+)Fixes up gunpoint grabs a little bit (should shoot more consistently)
+(t)sun apr 12 20
+(u)Goonstation Administration Team
+(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
+(u)Enfaeutchie
+(+)The Lawgiver now comes with an instructional pamphlet.
+(+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
+(u)Flaborized
+(*)Resprited a bunch of the ore in the game!
+(u)adharainspace
+(*)finally added cross-round bookshelves to every map you can normally vote in! have fun!
+(+)minor qol changes to printing press
+(u)Moonlol
+(*)Soup is now serve-able in the afterlife bar!
+(t)sat apr 11 20
+(u)2027
+(+)Adds acquiring methods to old medals.
+(u)Gannets
+(+)Removed Nuclear Operative assault rifle, marksman's rifle and light machine gun as options for item-arm surgery.
+(u)Erinexx
+(*)New doughnuts sprites!
+(*)New bagel sprites!
+(*)New english muffin sprite!
+(+)Added new tool inhand sprites
+(+)Tweaked outline on fries sprite (what the fuck was i thinking before)
+(+)Crowbars no longer pry floortiles while on harm intent, hopefully now we won't uproot the entire station floor when trying to beat people to death
+(u)Tarmunora
+(*)Cloakers now deactivate on picking things up, throwing, and unarmed specials
+(+)Chopping weapons work properly on bolted doors
+(u)RichardGere
+(+)Fixed a bug that prevented players from swapping out the egun's power cell
+(*)Energy weapons can now have their power cells swapped out by clicking on the cells with an energy gun in hand
+(+)Fixed a bug that prevented players from swapping energy weapons to their other empty hand
+(u)SaccharineChampion
+(+)Added more cans to Atlas engineering storage, most notably its first empty cans.
+(u)adharainspace
+(+)Quantum telescope locations now work again
+(t)thu apr 10 20
+(u)Gannets
+(+)Nuclear operatives now pull their names from 6 callsign pools, nato alphabet, melee weapons, colors, birds, mammals and moons.
+(u)adharainspace
+(+)gives captains sabre a tooltip by making it use get_desc instead of examine
+(+)fixed radio host jumpsuit variants being invisible sometimes
+(u)trerri
+(+)Made some small sprite changes to the deconstruction device sprite.
+(+)Redid examine text for deconstruction device.
+(u)Tarmunora
+(*)Surgical tools now hit a bit harder and pierce a bit of armor
+(*)Chemical dipped scalpels no longer are foiled by having the reagents fall out of your target on the same stab that they were transferred in
+(*)Attaching a synthlimb will now fully attach it instead of leaving it at the last surgical stage
+(+)Fix messaging when repairing bleeding while having open surgical wounds
+(u)Scaltra
+(+)Adds the botanical mister as a valid transfer target for high capacity watering tanks
+(u)saccharineChampion
+(+)Additional argument in projectile code allows sounds to correctly play to drivers of large vehicles.
+(+)Large pod code changed to utilize this additional argument.
+(t)thu apr 09 20
+(u)TDHooligan
+(+)Sped up the chemicompiler significantly.
+(u)saccharineChampion
+(+)Corrected improper feedback on incorrect pod and secure safe lock guesses.
+(t)wed apr 08 20
+(u)mbc
+(*)High amounts of Brute and Burn damage will be weighted more heavily in deciding whether you die or not. In practice this means that you previously could take 600 brute/burn damage before dropping dead, and now you can take 400.
+(t)tue apr 07 20
+(u)Ryumi
+(+)Added a bit more lighting to the Afterlife Bar's garden.
 (t)mon apr 06 20
 (u)mbc
 (*)Fixed a number of assorted bugs where blood cleanables would get wrong unit amounts and bloody footprints were handling things improperly

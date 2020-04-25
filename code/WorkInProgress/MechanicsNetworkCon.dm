@@ -1,3 +1,4 @@
+
 //This is a big messy copy & paste job of several things and thus has been banished to its own file.
 //Shouldve probably done it like ibm and have based it on a networked thing instead of duplicating it all here.
 //im coder
@@ -18,6 +19,8 @@
 	var/net_number = 0 //A cute little bitfield (0-3 exposed) to allow multiple networks on one wirenet.  Differentiate between intended hosts, if they care
 
 	var/self_only = 1
+
+	var/register = 1 // Whether or not to automagically send command=register&data=MECHNET to connecting devices
 
 	var/ready = 1
 
@@ -44,10 +47,27 @@
 		boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
 		return
 
+	verb/toggleregister() //shameless copy from above verb
+		set src in view(1)
+		set name = "\[Toggle Mainframe registration\]"
+		set desc = "Toggles whether or not the component registers with the Mainframe when connected to by it."
+
+		if (!isliving(usr))
+			return
+		if (usr.stat)
+			return
+		if (!mechanics.allowChange(usr))
+			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+			return
+
+		register = !register
+		boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
+		return
+
 	proc/spacket(var/datum/mechanicsMessage/input)
 		if(!ready) return
 		ready = 0
-		SPAWN_DBG(2 SECONDS) ready = 1
+		SPAWN_DBG(0.4 SECONDS) ready = 1
 		post_raw(input.signal)
 		return
 
@@ -193,8 +213,9 @@
 					if(signal.data["data"] != "noreply")
 						src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 					src.updateUsrDialog()
-					SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
-						src.post_status(target,"command","term_message","data","command=register&data=MECHNET")
+					if(src.register)
+						SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+							src.post_status(target,"command","term_message","data","command=register&data=MECHNET")
 					return
 
 				if("term_ping")

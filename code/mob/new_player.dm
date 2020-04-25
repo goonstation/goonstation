@@ -307,11 +307,11 @@ mob/new_player
 				F.init_player(character, 0, 1)
 
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station in a nondescript container! Good luck!</h3>")
+				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You're a space diner patron!</h3>")
+				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && rp_latejoin && rp_latejoin.len)
@@ -648,6 +648,12 @@ a.latejoin-card:hover {
 
 		if(new_character && new_character.client)
 			new_character.client.loadResources()
+
+#if ASS_JAM
+			if(ass_mutation)
+				new_character.bioHolder.AddEffect(ass_mutation)
+				boutput(new_character.mind.current,"<span style=\"color:red\">A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
+#endif
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever

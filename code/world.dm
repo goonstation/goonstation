@@ -550,6 +550,9 @@ var/f_color_selector_handler/F_Color_Selector
 	build_syndi_buylist_cache()
 	build_camera_network()
 	clothingbooth_setup()
+#if ASS_JAM
+	ass_jam_init()
+#endif
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
@@ -654,7 +657,7 @@ var/f_color_selector_handler/F_Color_Selector
 		//game_stats.WriteToFile("data/game_stats.txt")
 #endif
 
-	sleep(50) // wait for sound to play
+	sleep(5 SECONDS) // wait for sound to play
 	if(config.update_check_enabled)
 		world.installUpdate()
 
@@ -1435,7 +1438,7 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["cpu"] = world.cpu
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
-				sleep(10)
+				sleep(1 SECOND)
 				ircmsg["time"] = (world.timeofday - curtime) / 10
 				return ircbot.response(ircmsg)
 
@@ -1561,7 +1564,7 @@ var/opt_inactive = null
 				//mysql.CleanQueries()
 			opt_inactive = world.timeofday
 
-		sleep(100)
+		sleep(10 SECONDS)
 
 
 

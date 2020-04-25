@@ -27,7 +27,7 @@ var/maniac_previous_victim = "Unknown"
 			else
 				walk_to(src, src.target, 0, 3)
 
-			sleep(10)
+			sleep(1 SECOND)
 			SPAWN_DBG(0.5 SECONDS)
 				process()
 
@@ -161,7 +161,7 @@ var/maniac_previous_victim = "Unknown"
 						if (!P.density)
 							SPAWN_DBG( 0 )
 								P.close()
-				sleep(50)
+				sleep(5 SECONDS)
 				if(id == "evilreaverbridge")
 					playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
 					var/obj/item/paper/PA = unpool(/obj/item/paper)

@@ -385,7 +385,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/uplink/syndicate
 	name = "station bounced radio"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	w_class = 2.0
@@ -482,7 +482,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.hostpda.attack_self(M)
 
 		return
-	
+
 	proc/refresh()
 		if(src.active)
 			src.generate_menu()
@@ -1061,6 +1061,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "This spell causes random effects to happen. Best used only by skilled wizards."
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/pandemonium
+
+#if ASS_JAM
+/datum/SWFuplinkspell/timestop
+	name = "Time Stop"
+	eqtype = "Utility"
+	desc = "This spell contains the power to rend time itself. Use sparingly and with caution, lest you cause a runtime!"
+	assoc_spell = /datum/targetable/spell/timestop
+#endif
 
 /obj/item/SWF_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)

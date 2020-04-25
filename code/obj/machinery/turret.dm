@@ -244,7 +244,7 @@
 	src.icon_state = "destroyed_target_prism"
 	if (cover!=null)
 		qdel(cover)
-	sleep(3)
+	sleep(0.3 SECONDS)
 	flick("explosion", src)
 	SPAWN_DBG(1.3 SECONDS)
 		qdel(src)
@@ -332,7 +332,7 @@
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "ai3"
 	anchored = 1
 	density = 0

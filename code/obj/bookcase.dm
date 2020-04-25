@@ -3,7 +3,7 @@
 /obj/bookshelf //these should be placed on ground
 	name = "bookshelf"
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
-	icon = 'icons/obj/bookshelf.dmi'
+	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_empty"
 	anchored = 1
 	density = 1
@@ -188,7 +188,9 @@
 		return shelf_overlay_list[book_count]
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/paper/book))
+		if(istype(W, /obj/item/storage/bible))
+			boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
+		else if (istype(W, /obj/item/paper/book))
 			if (!(bookshelf_contents.len >= capacity))
 				boutput(user, "You shelf the book.")
 				user.drop_item()
@@ -205,7 +207,7 @@
 				return
 			user.visible_message("[user] takes \the [src] apart.", "You take \the [src] apart.")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			new /obj/item/bookshelf_parts(src.loc)
+			new /obj/item/furniture_parts/bookshelf(src.loc)
 			qdel(src)
 		else
 			boutput(user, "You can't shelf that!")
@@ -338,8 +340,100 @@
 	list(1,3,27,8),\
 	list(1,3,31,8))
 
-/obj/item/bookshelf_parts  //these arent finished, but i dont know how to do all the construction stuff, theres 4 bookshelves, standalone, middle, left endcap, right endcap.
+/obj/bookshelf/persistent
+	desc = "This bookshelf doesn't get cleaned out between shifts. Neat!"
+//these two make em look good on maps
+	pixel_y = 24
+	density = 0
+
+	New()
+		..()
+		START_TRACKING
+		src.load_old_books()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	proc/load_old_books()
+		var/list/old_contents = list()
+		var/file_name = "data/persistent_bookshelf.json"
+		if (fexists(file_name))
+			old_contents = json_decode(file2text(file_name))
+			build_old_contents(old_contents)
+
+	proc/file_curr_books(var/list/curr_contents)
+		if (!curr_contents.len)
+			return
+		var/file_name = "data/persistent_bookshelf.json"
+		if(fexists(file_name))
+			fdel(file_name) //we rly dont want a duplicate, or to accidentally output twice to the file, it could screw the whole thing up
+		text2file(json_encode(curr_contents), file_name)
+
+	proc/build_old_contents(var/list/old_contents) //this goes and takes our giant weird list and makes it into books
+		for (var/list/book_vars in old_contents)
+			if (book_vars["custom_cover"] == 0) //0 means this isnt a custom book
+				var/obj/item/paper/book/B = new(get_turf(src))
+				B.name = book_vars["name"]
+				B.desc = book_vars["desc"]
+				// B.icon = icon(book_vars["icon"])
+				B.icon_state = book_vars["icon_state"]
+				B.info = book_vars["info"]
+				src.add_to_bookshelf(B)
+			else //so it has to be a custom book now
+				var/obj/item/paper/book/custom/B = new(get_turf(src))
+				B.name = book_vars["name"]
+				B.desc = book_vars["desc"]
+				// B.icon = icon(book_vars["icon"])
+				B.icon_state = book_vars["icon_state"]
+				B.info = book_vars["info"]
+				B.custom_cover = book_vars["custom_cover"]
+				B.ink_color = book_vars["ink_color"]
+				B.book_cover = book_vars["book_cover"]
+				B.cover_color = book_vars["cover_color"]
+				B.cover_symbol = book_vars["cover_symbol"]
+				B.symbol_color = book_vars["symbol_color"]
+				B.cover_flair = book_vars["cover_flair"]
+				B.flair_color = book_vars["flair_color"]
+				B.symbol_colorable = book_vars["symbol_colorable"]
+				B.flair_colorable = book_vars["flair_colorable"]
+				B.build_custom_book()
+				src.add_to_bookshelf(B)
+		src.update_icon()
+
+	proc/build_curr_contents() //this takes our books and makes it into a giant weird list
+		var/list/curr_contents = list()
+		if (src.contents.len)
+			for (var/i = 1, i <= src.contents.len, i++)
+				if (istype(src.contents[i], /obj/item/paper/book)) //just in case
+					var/obj/item/paper/book/B = src.contents[i]
+					var/list/book_vars = list()
+					book_vars["name"] = B.name
+					book_vars["desc"] = B.desc
+					// book_vars["icon"] = "[B.icon]"
+					book_vars["icon_state"] = B.icon_state
+					book_vars["info"] = B.info
+					if (istype(B, /obj/item/paper/book/custom))
+						var/obj/item/paper/book/custom/C = B
+						book_vars["custom_cover"] = C.custom_cover
+						book_vars["ink_color"] = C.ink_color
+						book_vars["book_cover"] = C.book_cover
+						book_vars["cover_color"] = C.cover_color
+						book_vars["cover_symbol"] = C.cover_symbol
+						book_vars["symbol_color"] = C.symbol_color
+						book_vars["cover_flair"] = C.cover_flair
+						book_vars["flair_color"] = C.flair_color
+						book_vars["symbol_colorable"] = C.symbol_colorable
+						book_vars["flair_colorable"] = C.flair_colorable
+					else
+						book_vars["custom_cover"] = 0 //this stops build_old_contents early
+					curr_contents.Add(list(book_vars))
+			file_curr_books(curr_contents)
+
+/obj/item/furniture_parts/bookshelf
 	name = "bookshelf parts"
-	desc = "All the pieces of wood needed to construct a genuine bookshelf."
-	icon = 'icons/obj/bookshelf.dmi'
+	desc = "A collection of parts that can be used to construct a bookshelf."
+	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_parts"
+	furniture_type = /obj/bookshelf
+	furniture_name = "bookshelf"

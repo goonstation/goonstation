@@ -115,5 +115,5 @@
         new spawn_path(src.loc)
         src.icon_state = "seed_dead"
         flick("seed_burst", src)
-        sleep(100)
+        sleep(10 SECONDS)
         qdel(src)

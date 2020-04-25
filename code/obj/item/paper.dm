@@ -5,6 +5,7 @@
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = null
 	var/stampable = 1
@@ -318,6 +319,7 @@
 
 		else if (issnippingtool(P))
 			boutput(user, "<span style=\"color:blue\">You cut the paper into a mask.</span>")
+			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
 			user.put_in_hand_or_drop(M)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
@@ -528,6 +530,7 @@ ASC: Aux. Solar Control<BR>
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	anchored = 1.0
 
@@ -882,6 +885,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "photo"
 	icon_state = "photo"
 	var/photo_id = 0.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 /obj/item/paper/photograph/New()
@@ -1300,3 +1304,94 @@ WHO DID THIS */
     <b>SPECIAL INSTRUCTIONS</b> WILL PAY DOUBLE IF SUB-BASEMENT 3 IS CLEARED OF ALL RESEARCH SPECIMENS AND SUBJECTS, ALL SPECIMENS AND SUBJECTS ARE EFFECTIVELY BRAINDEAD, SUPPLY OWN MEANS OF EXECUTION OF SUBJECTS.<br>
     <b>STATUS:</b> BEING CLEANED"}
 
+/obj/item/paper/lawgiver_pamphlet
+	name = "Your Lawgiver And You"
+	icon_state = "paper"
+	info = {"
+<h2>Your Lawgiver And You</h2>
+<i>A Nanotrasen Arms Division Instructional Publication</i>
+<hr>
+<p>Welcome, noble lawperson, to the greatest technological development in policing since the helmet: Your new <b>Lawgiver™</b>!<br>
+The Lawgiver™ is a multi-purpose self-recharging personal armament for our loyal Heads of Security.<br>
+Please take a moment to acquaint yourself with your new colleague's features, and to scan your fingerprints into the provided identity lock system.</p>
+
+<p>The Lawgiver™ is equipped with eight different Crime Pacification Projectile Synthesization Methods, or "Modes,"
+all of which draw from the central Self-Renewing Energy Capacitance Device, or "Cell."<br> The Cell has a capacity of
+300 Power Units ("PU"), and recharges at a rate of approximately 10 PU per 6 seconds;
+however, due to the exacting measurements used in the Lawgiver™'s foolproof* design, the Cell
+cannot be removed from the unit or externally recharged.<br>
+<small><i><b>*</b>The Lawgiver™ should not be exposed to fools. If this occurs, wash thoroughly under cold water.</i></small></p>
+
+<p>The greatest feature of the Lawgiver™ is its unique voice control system: To choose your desired Mode, simply speak its name!
+So long as your fingerprints† match those assigned to the identity lock (configured during device setup) the Lawgiver™ will
+automatically adopt your criminal control strategy of choice.<br>
+<small><i><b>†</b>The user is considered responsible for the protection of their own fingerprints and arms.</i></small></p>
+<hr>
+<h3>Provided: A table of all Modes, their power drains, and their purposes.</h3>
+
+<table border = "1" cellpadding = "3" cellspacing = "3">
+<tr>
+<td><b>"Detain"</b></td>
+<td>50 PU</td>
+<td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
+</tr>
+<tr>
+<td><b>"Execute"</b></td>
+<td>30 PU</td>
+<td>Turn your Lawgiver™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+</tr>
+<tr>
+<td><b>"Hotshot"</b></td>
+<td>60 PU</td>
+<td>This handy flare gun/flamethrower option is sure to heat things up! The Lawgiver™ is not certified fireproof. Do not set on fire.</td>
+</tr>
+<tr>
+<td><b>"Smokeshot"</b></td>
+<td>50 PU</td>
+<td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
+</tr>
+<tr>
+<td><b>"Knockout"</b></td>
+<td>60 PU</td>
+<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
+</tr>
+<tr>
+<td><b>"Bigshot"*</b></td>
+<td>170 PU</td>
+<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+</tr>
+<tr>
+<td><b>"Clownshot"</b></td>
+<td>15 PU</td>
+<td>Lawgiver™ warranty is voided if exposed to clowns. Keep them at bay.</td>
+</tr>
+<tr>
+<td><b>"Pulse"</b></td>
+<td>35 PU</td>
+<td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
+</tr>
+</table>
+<i><b>*</b>Also accepted for this Mode: "High Explosive," "HE."</i>
+<hr>
+<p><b>Disclaimer:</b> Nanotrasen Arms Division cannot be held liable in the case of inconvenience, failure or death,
+as per your Nanotrasen Employment Agreement. If any of the Modes are found to be ineffective, underpowered,
+minimally successful at their purpose, or otherwise useless; and in the event that the user survives to do so;
+Nanotrasen Arms Division requests that they submit a formal Suggestion to our company forums,
+so that the Lawgiver™ can be the best it can be. Do not place fingers in path of moving parts, as the Lawgiver™ device
+is solid-state and should not feature moving parts. Note that the Cell may experience spontaneous explosive overload when
+exposed to overconfident outbursts on the part of individuals unqualifed to embody the law; in event of such explosion, run.
+"}
+
+/obj/item/paper/postcard/mushroom
+	name = "Mushroom Station postcard"
+	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
+	icon_state = "postcard-mushroom"
+
+	//sizex = 1066
+	//sizey = 735
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"

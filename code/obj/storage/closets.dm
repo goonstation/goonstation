@@ -8,7 +8,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -75,7 +75,8 @@
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
-							/obj/item/caution = 6)
+							/obj/item/caution = 6,
+							/obj/item/clothing/gloves/long)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -166,7 +167,7 @@
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
 	..()
-	sleep(2)*/
+	sleep(0.2 SECONDS)*/
 
 /obj/storage/closet/thunderdome/red
 	icon_state = "syndicate"
@@ -175,7 +176,7 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
+	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2)
@@ -187,7 +188,7 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
+	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2)

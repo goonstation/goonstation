@@ -375,8 +375,27 @@ var/obj/item/dummy/click_dummy = new
 	if(src.ears) . += src.ears
 	if(src.wear_mask) . += src.wear_mask
 
-	if(src.l_hand && src.l_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.l_hand
-	if(src.r_hand && src.r_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.r_hand
+	if(src.l_hand)
+		if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD)
+			. += src.l_hand
+		else if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1)
+			. += src.l_hand
+
+		if (src.l_hand.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/G in src.l_hand)
+				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1))
+					. += G
+
+	if(src.r_hand)
+		if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD)
+			. += src.r_hand
+		else if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0)
+			. += src.r_hand
+
+		if (src.r_hand.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/G in src.r_hand)
+				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0))
+					. += G
 
 
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)

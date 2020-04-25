@@ -56,9 +56,10 @@
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
 
-		for(var/key in aiImages)
-			var/image/I = aiImages[key]
-			src.client.images -= I
+		if(src.last_client)
+			for(var/key in aiImages)
+				var/image/I = aiImages[key]
+				src.last_client.images -= I
 
 		.=..()
 
@@ -675,20 +676,24 @@ var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
 	if(aiDirty == 2)
+		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		ma.plane = PLANE_HUD
+		ma.layer = 100
+		ma.color = "#777777"
+		ma.dir = pick(alldirs)
+		ma.appearance_flags = TILE_BOUND | KEEP_APART
+		ma.name = " "
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue
 			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
 
-			t.aiImage = image('icons/misc/static.dmi', t, "static")
+			t.aiImage = new
+			t.aiImage.appearance = ma
 			t.aiImage.loc = t
-			t.aiImage.plane = PLANE_HUD
-			t.aiImage.layer = 100
-			t.aiImage.color = "#777777"
-			t.aiImage.name = " "
-			t.aiImage.dir = pick(alldirs)
-			t.aiImage.appearance_flags = TILE_BOUND | KEEP_APART
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
+
+			LAGCHECK(100)
 
 		aiDirty = 1
 	for(var/obj/machinery/camera/C in cameras)

@@ -11,7 +11,7 @@ Contains:
 
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/back.dmi'
 
@@ -37,6 +37,7 @@ Contains:
 		src.air_contents.temperature = T20C
 		if (!(src in processing_items))
 			processing_items.Add(src)
+		BLOCK_TANK
 		return
 
 	disposing()
@@ -317,7 +318,7 @@ Contains:
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
-	verb/toggle()
+	proc/toggle()
 		src.on = !( src.on )
 		src.icon_state = text("jetpack_mag[]", src.on)
 		if(src.on)
@@ -376,7 +377,7 @@ Contains:
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
-	verb/toggle()
+	proc/toggle()
 		src.on = !( src.on )
 		src.icon_state = text("jetpack[]", src.on)
 		if(src.on)
@@ -639,7 +640,7 @@ Contains:
 		src.icon_state = text("jetpack_mk2_[]", src.on)
 		if(src.on)
 			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
-			playsound(src.loc, "sound/misc/JetPackMK2on.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/JetpackMK2on.ogg", 50, 1)
 		else
 			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
 		return

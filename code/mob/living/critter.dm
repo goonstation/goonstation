@@ -73,11 +73,6 @@
 	var/yeet_chance = 1 //yeet
 
 	New()
-		src.abilityHolder = new /datum/abilityHolder/critter(src)
-		if (islist(src.add_abilities) && src.add_abilities.len)
-			for (var/abil in src.add_abilities)
-				if (ispath(abil))
-					abilityHolder.addAbility(abil)
 //		if (ispath(default_task))
 //			default_task = new default_task
 //		if (ispath(current_task))
@@ -92,9 +87,6 @@
 			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
 		count_healths()
 
-		hud = new custom_hud_type(src)
-		src.attach_hud(hud)
-		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 		SPAWN_DBG(0)
 			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 			src.attach_hud(zone_sel)
@@ -105,8 +97,6 @@
 		burning_image.icon = 'icons/misc/critter.dmi'
 		burning_image.icon_state = null
 
-		updatehealth()
-
 		src.old_canmove = src.canmove
 
 		if(!isnull(src.custom_organHolder_type))
@@ -114,6 +104,18 @@
 		else
 			src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 		..()
+
+		hud = new custom_hud_type(src)
+		src.attach_hud(hud)
+		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+
+		updatehealth()
+
+		src.abilityHolder = new /datum/abilityHolder/critter(src)
+		if (islist(src.add_abilities) && src.add_abilities.len)
+			for (var/abil in src.add_abilities)
+				if (ispath(abil))
+					abilityHolder.addAbility(abil)
 
 		SPAWN_DBG(0.5 SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
 			if (abilityHolder)
@@ -304,54 +306,47 @@
 		if (usr.stat)
 			return
 
-		var/atom/movable/item = src.equipped()
+		var/obj/item/I = src.equipped()
 
-		if (isitem(item) && item:cant_self_remove)
+		if (!I || !isitem(I) || I.cant_drop)
 			return
 
-		if (!item) return
+		u_equip(I)
 
-		u_equip(item)
+		if (istype(I, /obj/item/grab))
+			var/obj/item/grab/G = I
+			I = G.handle_throw(src,target)
+			if (G && !G.qdeled) //make sure it gets qdeled because our u_equip function sucks and doesnt properly call dropped()
+				qdel(G)
+			if (!I) return
 
-		if (istype(item, /obj/item/grab))
-			var/obj/item/grab/grab = item
-			var/mob/M = grab.affecting
-			if (grab.state < 1 && !(M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || M.stat))
-				src.visible_message("<span style='color:red'>[M] stumbles a little!</span>")
-				qdel(grab)
-				return
-			M.lastattacker = src
-			M.lastattackertime = world.time
-			item = M
-			qdel(grab)
+		I.set_loc(src.loc)
 
-		item.set_loc(src.loc)
-
-		if (isitem(item))
-			item:dropped(src) // let it know it's been dropped
+		if (isitem(I))
+			I.dropped(src) // let it know it's been dropped
 
 		//actually throw it!
-		if (item)
-			item.layer = initial(item.layer)
+		if (I)
+			I.layer = initial(I.layer)
 			if(prob(yeet_chance))
-				src.visible_message("<span style=\"color:red\">[src] yeets [item].</span>")
+				src.visible_message("<span style=\"color:red\">[src] yeets [I].</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[src] throws [item].</span>")
-			if (iscarbon(item))
-				var/mob/living/carbon/C = item
+				src.visible_message("<span style=\"color:red\">[src] throws [I].</span>")
+			if (iscarbon(I))
+				var/mob/living/carbon/C = I
 				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")
+				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
 				src.inertia_dir = get_dir(target, src)
 				step(src, inertia_dir)
-			if (istype(item.loc, /turf/space) && ismob(item))
-				var/mob/M = item
+			if (istype(I.loc, /turf/space) && ismob(I))
+				var/mob/M = I
 				M.inertia_dir = get_dir(src,target)
-			item.throw_at(target, item.throw_range, item.throw_speed, params)
+			I.throw_at(target, I.throw_range, I.throw_speed, params)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
@@ -1036,7 +1031,7 @@
 								wiggle--
 								container.pixel_x = rand(-3,3)
 								container.pixel_y = rand(-3,3)
-								sleep(1)
+								sleep(0.1 SECONDS)
 							container.pixel_x = 0
 							container.pixel_y = 0
 							if (prob(33))
@@ -1126,11 +1121,18 @@
 				armor_mod = max(C.getProperty("meleeprot"), armor_mod)
 		return armor_mod
 
-	get_melee_protection(zone)//critters and stuff, I suppose
+	get_melee_protection(zone, damage_type)//critters and stuff, I suppose
+		var/add = 0
+		var/obj/item/grab/block/G = src.check_block()
+		if (G)
+			add += 1
+			if (G.can_block(damage_type))
+				add += 2
+
 		if(zone=="head")
-			return get_head_armor_modifier()
+			return get_head_armor_modifier() + add
 		else
-			return get_chest_armor_modifier()
+			return get_chest_armor_modifier() + add
 
 	full_heal()
 		..()

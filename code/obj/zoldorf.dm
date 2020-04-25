@@ -259,7 +259,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		for(var/i=1,i<=loops,i++)
 			initialbright -= 0.1
 			src.add_simple_light("zoldorf", list(0.25 * 255, 0.51 * 255, 0.43 * 255, initialbright))
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 	proc/lightrfade(var/targetbright = 0.8) //fade in
 		var/initialbright = 0.0
@@ -267,7 +267,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		for(var/i=1,i<=loops,i++)
 			initialbright += 0.1
 			src.add_simple_light("zoldorf", list(0.25 * 255, 0.51 * 255, 0.43 * 255, initialbright))
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 	proc/omen(var/mob/zoldorf/z) //this proc is 100% animations and stuff for the omen ability. its bound to the booth to stop weird things from happening if something happens to the mob mid-animation
 		if(!src.omen)
@@ -276,7 +276,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			o1.layer = 6
 			src.vis_contents += o1
 			o1.icon_state = "crystalfade"
-			sleep(11)
+			sleep(1.1 SECONDS)
 
 			src.visible_message("<span style=\"color:green\"><b>The crystal ball emits a chilling ghost light!</b></span>")
 			src.lightrfade()
@@ -291,11 +291,11 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
 				o2.icon_state = "rcolorfade"
-				sleep(25)
+				sleep(2.5 SECONDS)
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
 				icon_state = "colorfade"
-				sleep(25)
+				sleep(2.5 SECONDS)
 
 			if(src)
 				if(z.loc == src)
@@ -306,7 +306,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				if(src.usurping)
 					return
 				o1.icon_state = "rcrystalfade"
-				sleep(11)
+				sleep(1.1 SECONDS)
 				if(src.usurping)
 					return
 				src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"crystalball"),"crystalball")
@@ -326,7 +326,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					if(src.usurping)
 						return
 					o1.icon_state = "rcrystalfade"
-					sleep(11)
+					sleep(1.1 SECONDS)
 					if(src.usurping)
 						return
 					src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"crystalball"),"crystalball")
@@ -345,7 +345,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					o2.icon = 'icons/obj/zoldorf.dmi'
 					o2.icon_state = "colorfade"
 					o2.color = src.smokecolor
-					sleep(25)
+					sleep(2.5 SECONDS)
 					if(src.usurping)
 						return
 					o2.icon = null
@@ -363,7 +363,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				src.vis_contents += o1
 				o1.icon_state = "crystalfade"
 				src.inuse = 1
-				sleep(11)
+				sleep(1.1 SECONDS)
 				if(src.usurping)
 					return
 
@@ -465,7 +465,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					else
 						return
 				else
-					boutput(usr,"<span style=\"color:red\"><b>You don't have a soul, silly :P</b></span>")
+					boutput(usr,"<span style=\"color:red\"><b>You don't have a soul, silly.</b></span>")
 					return
 			if(item.stock != "i")
 				if(item.stock == 0)

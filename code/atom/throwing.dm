@@ -260,6 +260,10 @@
 		var/turf/T = src.loc
 		while (target && ( (((src.x < target_true_x && dx == EAST) || (src.x > target_true_x && dx == WEST)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+#if ASS_JAM
+			while(src.throwing_paused)//timestop effect
+				sleep(1 SECOND)
+#endif
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -276,7 +280,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 			else
 				var/atom/step = get_step(src, dx)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -293,13 +297,17 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 			T = src.loc
 	else
 		var/error = dist_y/2 - dist_x
 		var/turf/T = src.loc
 		while (target && ( (((src.y < target_true_y && dy == NORTH) || (src.y > target_true_y && dy == SOUTH)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+#if ASS_JAM
+			while(src.throwing_paused)//timestop effect
+				sleep(1 SECOND)
+#endif
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -316,7 +324,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 			else
 				var/atom/step = get_step(src, dy)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -333,7 +341,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 			T = src.loc
 
 	//done throwing, either because it hit something or it finished moving

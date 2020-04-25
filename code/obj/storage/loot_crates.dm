@@ -634,7 +634,7 @@
 /obj/item/clothing/gloves/psylink_bracelet
 	name = "jewelled bracelet"
 	desc = "Some pretty jewellery."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bracelet"
 	material_prints = "patterned scratches"
 	w_class = 1
@@ -642,9 +642,9 @@
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
 
 	New()
-		src.gemstone = image('icons/obj/items.dmi',"bracelet-gem")
+		src.gemstone = image('icons/obj/items/items.dmi',"bracelet-gem")
 		var/obj/item/clothing/gloves/psylink_bracelet/two = new /obj/item/clothing/gloves/psylink_bracelet/secondary(src.loc)
-		two.gemstone = image('icons/obj/items.dmi',"bracelet-gem")
+		two.gemstone = image('icons/obj/items/items.dmi',"bracelet-gem")
 		src.twin = two
 		two.twin = src
 		var/picker = rand(1,3)

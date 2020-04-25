@@ -218,7 +218,7 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
-	synd_mob.equip_if_possible(new /obj/item/storage/backpack/satchel(synd_mob), synd_mob.slot_back)
+	synd_mob.equip_if_possible(new /obj/item/storage/backpack/satchel/syndie(synd_mob), synd_mob.slot_back)
 	synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/remote/syndicate_teleporter(synd_mob), synd_mob.slot_l_store)
@@ -231,7 +231,7 @@
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
 	I.icon_state = "id"
-	I.icon = 'icons/obj/card.dmi'
+	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
 
 	var/obj/item/implant/microbomb/M = new /obj/item/implant/microbomb(synd_mob)

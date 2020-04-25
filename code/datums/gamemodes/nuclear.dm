@@ -94,6 +94,12 @@
 	var/station_only = prob(40)
 	target_locations = list()
 	for(var/area/A in world)
+		var/has_turfs = 0
+		for (var/turf/T in A)
+			has_turfs = 1
+			break
+		if(!has_turfs)
+			break
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))
@@ -145,8 +151,9 @@
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
-	var/list/callsign_list = strings("agent_callsigns.txt", "nato") + strings("agent_callsigns.txt", "melee_weapons") + strings("agent_callsigns.txt", "colors")
+	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
@@ -322,11 +329,8 @@
 	var/opdeathcount = 0
 	for(var/datum/mind/M in syndicates)
 		opcount++
-		if(!M.current || isdead(M.current) || inafterlife(M.current))
+		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
 			opdeathcount++ // If they're dead
-			continue
-		else if(isrobot(M.current) || issmallanimal(M.current))
-			opdeathcount++
 			continue
 
 		var/turf/T = get_turf(M.current)

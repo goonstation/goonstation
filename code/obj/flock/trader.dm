@@ -280,7 +280,7 @@
 			SPAWN_DBG(0)
 				screen.show_icon("yes")
 			screen.say(pick_string("flockmind.txt", "flocktrader_friendly_greeting"))
-		sleep(10)
+		sleep(1 SECOND)
 		if(door)
 			door.open()
 	else
@@ -313,7 +313,7 @@
 					SPAWN_DBG(0)
 						screen.show_icon("yes")
 					screen.say(pick_string("flockmind.txt", "flocktrader_target_met_new_trader"))
-			sleep(10)
+			sleep(1 SECOND)
 			if(door)
 				door.open()
 	else if(screen)
@@ -336,9 +336,9 @@
 	if(!state)
 		return
 	icon_state = "screen-working"
-	sleep(20)
+	sleep(2 SECONDS)
 	icon_state = "screen-[state]"
-	sleep(40)
+	sleep(4 SECONDS)
 	icon_state = "screen-off"
 
 /obj/flock_screen/proc/say(var/message)
@@ -377,9 +377,9 @@
 	var/gained_resources = (W.health * 2) + 5
 	user.remove_item(W)
 	qdel(W)
-	sleep(10)
+	sleep(1 SECOND)
 	playsound(src.loc, "sound/impact_sounds/Energy_Hit_2.ogg", 70, 1)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(trader)
 		trader.donate(user, gained_resources)
 

@@ -5,7 +5,7 @@
 
 /obj/item/gun/syringe
 	name = "syringe gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
 	w_class = 3.0
@@ -74,7 +74,7 @@
 			boutput(usr, "You dump out the [src.name]'s stored reagents.")
 		else
 			boutput(usr, "<span style=\"color:red\">There's nothing loaded to drain!</span>")
-		
+
 
 	alter_projectile(var/obj/projectile/P)
 		if (!P.reagents)
@@ -84,7 +84,7 @@
 
 /obj/item/gun/syringe/NT
 	name = "NT syringe gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "syringegun-NT"
 	item_state = "syringegun-NT"
 	contraband = 1
@@ -95,7 +95,7 @@
 		..()
 		if (src.safe && islist(chem_whitelist) && chem_whitelist.len)
 			src.whitelist = chem_whitelist
-			
+
 	on_reagent_change(add)
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)

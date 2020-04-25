@@ -830,6 +830,20 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		maxDuration = 5 SECONDS
 
+	blocking
+		id = "blocking"
+		name = "Blocking"
+		desc = "You are currently blocking. Use Resist to stop blocking.<br>Slowed slightly, unable to sprint. This overrides the 'staggered' effect and does not stack."
+		icon_state = "blocking"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+
+		clicked(list/params)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.resist()
+
 	slowed
 		id = "slowed"
 		name = "Slowed"
@@ -1016,10 +1030,12 @@ var/list/statusGroupLimits = list("Food"=4)
 		duration = INFINITE_STATUS
 		maxDuration = null
 		var/mob/living/carbon/human/H
+		var/sleepcount = 5 SECONDS
 
 		onAdd(var/optional=null)
 			if (ishuman(owner))
 				H = owner
+				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
@@ -1027,9 +1043,17 @@ var/list/statusGroupLimits = list("Food"=4)
 			if(H.buckled)
 				H.buckled.attack_hand(H)
 
-		onUpdate()
+		onUpdate(var/timedPassed)
 			if (H && !H.buckled)
 				owner.delStatus("buckled")
+			else
+				if (sleepcount > 0)
+					sleepcount -= timedPassed
+					if (sleepcount <= 0)
+						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = H.buckled
+							B.sleep_in(H)
+
 			.=..()
 
 	resting

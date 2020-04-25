@@ -17,7 +17,7 @@
 		// shamelessly stolen from the SMES code, this is kinda stupid
 		for(var/mob/M in range(1, src))
 			if (M.client && M.machine == src)
-				src.interact(M)
+				src.interacted(M)
 		AutoUpdateAI(src)
 
 	attack_ai(mob/user)
@@ -25,14 +25,14 @@
 		if(status & BROKEN)
 			return
 
-		interact(user)
+		interacted(user)
 
 	attack_hand(mob/user)
 		add_fingerprint(user)
 		if(status & BROKEN)
 			return
 
-		interact(user)
+		interacted(user)
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/fuel_pellet))
@@ -57,7 +57,7 @@
 			updateicon()
 
 
-	proc/interact(mob/user)
+	proc/interacted(mob/user)
 		if (get_dist(src, user) > 1 && !isAI(user))
 			user.machine = null
 			user.Browse(null, "window=rtg")
@@ -91,7 +91,7 @@
 /obj/item/fuel_pellet
 	name = "fuel pellet"
 	desc = "A rather small fuel pellet for use in RTGs."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "fuelpellet"
 	throwforce = 5
 	w_class = 1

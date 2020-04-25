@@ -39,7 +39,7 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		for(var/atom/movable/AM in src.loc)
 			if(AM.anchored || AM == src) continue
 			if(trash && AM.delivery_destination != "Disposals")
@@ -140,7 +140,7 @@
 
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 
 		for(var/atom/movable/AM2 in src.loc)
 			if(AM2.anchored || AM2 == src) continue
@@ -353,7 +353,7 @@
 		if (href_list["print"] && !printing)
 			printing = 1
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 0)
-			sleep(28)
+			sleep(2.8 SECONDS)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			var/dest = strip_html(href_list["print"], 64)
 			B.name = "Barcode Sticker ([dest])"
@@ -416,6 +416,7 @@
 	desc = "A barcode sticker used in the cargo routing system."
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "barcode"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 	var/destination = "QM Dock"

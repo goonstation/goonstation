@@ -5,7 +5,7 @@
 /obj/item/cloak_gen
 	name = "cloaking field generator"
 	desc = "It's humming softly."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "cloakgen_off"
 	var/range = 3
 	var/maxrange = 5
