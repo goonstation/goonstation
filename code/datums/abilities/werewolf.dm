@@ -22,7 +22,6 @@
 		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction)	//not using for now, but could be fun later ish.
 		if (force)
 			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-			W.updateButtons()
 			boutput(src, "<span style=\"color:red\">You are a full werewolf, you can transform immediately!</span>")
 		else
 			SPAWN_DBG(W.awaken_time)

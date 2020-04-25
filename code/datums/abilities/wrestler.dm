@@ -35,7 +35,6 @@
 				C.abilityHolder.addAbility(/datum/targetable/wrestler/drop)
 				C.abilityHolder.addAbility(/datum/targetable/wrestler/throw)
 				C.abilityHolder.addAbility(/datum/targetable/wrestler/slam)
-				C.abilityHolder.updateButtons()
 
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src

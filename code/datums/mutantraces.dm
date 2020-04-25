@@ -375,10 +375,10 @@
 		..()
 		if(ishuman(mob))
 			mob.blood_color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
-			H.abilityHolder = new /datum/abilityHolder/virtual(H)
-			H.abilityHolder.owner = H
-			H.abilityHolder.addAbility(/datum/targetable/virtual/logout)
-
+//			H.abilityHolder = new /datum/abilityHolder/virtual(H)
+//			H.abilityHolder.owner = H
+//			H.abilityHolder.addAbility(/datum/targetable/virtual/logout)
+//commented out because breaks murderbox ability buttons
 
 /datum/mutantrace/blank
 	name = "blank"
