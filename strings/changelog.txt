@@ -1,5 +1,9 @@
 
 (t)sat apr 25 20
+(u)Tarmunora
+(p)422
+(e)⚖🎨|balance, sprites
+(+)Security barriers have a slightly more robust block, but only when turned on
 (u)mbc
 (p)431
 (e)|
