@@ -1844,7 +1844,7 @@ var/list/fun_images = list()
 		if("Swap Minds")
 			C.cmd_swap_minds(A)
 		if("Transfer Client To")
-			C.cmd_admin_polymorph(A)
+			C.cmd_transfer_client(A)
 		if("Shamecube")
 			C.cmd_shame_cube(A)
 

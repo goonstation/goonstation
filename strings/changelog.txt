@@ -1,6 +1,18 @@
 
 (t)sat apr 25 20
 (u)Tarmunora
+(p)422
+(e)⚖🎨|balance, sprites
+(+)Security barriers have a slightly more robust block, but only when turned on
+(u)mbc
+(p)431
+(e)|
+(*)Moved all pod verbs to a multicontext menu (just click the pod) instead of rclick verbs
+(u)Kubius
+(p)429
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch twelve - more cargo pads and miscellaneous tuneups.
+(u)Tarmunora
 (p)410
 (e)⚖🆕|balance, enhancement
 (+)Added special block functionality to backpacks/satchels.
