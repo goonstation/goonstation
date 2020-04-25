@@ -12,6 +12,8 @@ datum/pathogeneffects
 	var/rarity = RARITY_ABSTRACT
 	var/infect_message = null
 
+	var/beneficial = 0
+
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
 	// Mutexes cut the ENTIRE object tree - for example, if symptoms a/b, a/c and a/d all exist, then mutexing
@@ -1889,6 +1891,7 @@ datum/pathogeneffects/malevolent/farts/o2
 	name = "O2 Farts"
 	desc = "The infected individual occasionally farts. Pure oxygen."
 	rarity = RARITY_COMMON
+	beneficial = 1
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
 
@@ -2110,6 +2113,7 @@ datum/pathogeneffects/malevolent/mutation/beneficial
 	mutation_type = "good"
 	chrom_prob = 100 //guranteed chromosome application
 	chrom_types = list(/datum/dna_chromosome) //stabilizer, no instability caused
+	beneficial = 1
 
 	react_to(var/R, var/zoom)
 		if (R == "mutadone")
