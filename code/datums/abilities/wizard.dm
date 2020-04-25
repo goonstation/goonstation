@@ -14,9 +14,11 @@
 		H.addAbility(/datum/targetable/spell/phaseshift)
 		H.addAbility(/datum/targetable/spell/magicmissile)
 		H.addAbility(/datum/targetable/spell/clairvoyance)
+		H.updateButtons()
 	else
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
+		H.updateButtons()
 
 	SPAWN_DBG (25) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
