@@ -58,8 +58,11 @@
 	/////////////////////////////////////////////////////
 
 	New()
+		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+
 		. = ..()
 		START_TRACKING
+
 
 	remove_air(amount as num)
 		if(atmostank && atmostank.air_contents)
@@ -862,10 +865,7 @@
 ///////////////////////////////////////////////////////////////////////////
 ////////// Exit Ship Code /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/verb/exit_ship()
-	set src in oview(1)
-	set category = "Local"
-
+/obj/machinery/vehicle/proc/exit_ship()
 	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
@@ -938,10 +938,7 @@
 ///////////////////////////////////////////////////////////////////////
 /////////Board Code  (also eject code lol)		//////////////////////
 //////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/verb/board()
-	set src in oview(1)
-	set category = "Local"
-
+/obj/machinery/vehicle/proc/board()
 	src.board_pod(usr)
 	return
 
@@ -1013,10 +1010,7 @@
 
 	logTheThing("vehicle", M, src.name, "enters vehicle: <b>%target%</b>")
 
-/obj/machinery/vehicle/verb/eject_occupants()
-	set src in oview(1)
-	set category = "Local"
-
+/obj/machinery/vehicle/proc/eject_occupants()
 	if(locked)
 		boutput(usr, "<span style=\"color:red\">[src] is locked!</span>")
 		return
@@ -1519,13 +1513,7 @@
 	return
 */
 
-/obj/machinery/vehicle/verb/access_main_computer()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Access Main Computer"
-	set desc = "Access the ship's main computer"
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/access_main_computer()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1535,13 +1523,7 @@
 	else
 		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/fire_main_weapon()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Fire Main Weapon"
-	set desc = "Fires the ship's main weapon."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/fire_main_weapon()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1570,13 +1552,7 @@
 	else
 		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/use_external_speaker()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Use Comms System"
-	set desc = "Use your ship's communications system."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/use_external_speaker()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1592,13 +1568,7 @@
 	else
 		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
-	set src in view(0)
-	set category = "Ship"
-	set name = "Create Wormhole"
-	set desc = "Allows warp travel"
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1622,12 +1592,7 @@
 		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
 
 
-/obj/machinery/vehicle/verb/access_sensors()
-	set src in view(0)
-	set category = "Ship"
-	set desc = "Access your sensor system to scan your surroundings."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/access_sensors()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1646,13 +1611,7 @@
 
 
 
-/obj/machinery/vehicle/verb/use_secondary_system()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Use Secondary System"
-	set desc = "Allows the use of a secondary systems special function if it exists."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/use_secondary_system()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1671,13 +1630,7 @@
 	else
 		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/open_hangar()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Toggle Hangar Door"
-	set desc = "Toggles nearby hangar door controls remotely."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/open_hangar()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
@@ -1693,13 +1646,7 @@
 	else
 		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/return_to_station()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Return To Station"
-	set desc = "Uses the ship's comm system to locate the station's Space GPS beacon and plot a return course."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/return_to_station()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
 		return
