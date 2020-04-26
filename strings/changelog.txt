@@ -1,5 +1,9 @@
 
 (t)sun apr 26 20
+(u)saccharineChampion
+(p)415
+(e)🆕|enhancement
+(+)You can now load deep-fried (and grilled) stuff, as well as other particularly coal-like culinary mistakes, into the engine's furnaces. Credit to Studenterhue for the idea & Flourish and ZeWaka for code help!
 (u)mbc
 (p)443
 (e)🎨|sprites
