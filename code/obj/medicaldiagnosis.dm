@@ -90,3 +90,5 @@
 					user.visible_message("<span style=\"color:blue\"><b>[user]</b> stops listening to [(user != H) ? "[H]'s" : "their"] chest.</span>", "<span style=\"color:blue\">You stop listening to [(user != H) ? "[H]'s" : "your"] chest.</span>")
 			else
 				return ..()
+		else
+			return ..()
