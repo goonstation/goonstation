@@ -23,9 +23,9 @@
 	initial_volume = 25
 	initial_reagents = "yuck"
 
-/obj/item/reagent_containers/food/snacks/fry_holder
-	name = "physical manifestation of the very concept of fried foods"
-	desc = "Oh, the power of the deep fryer."
+/obj/item/reagent_containers/food/snacks/shell
+	name = "incinerated embodiment of culinary disaster"
+	desc = "Oh, the might of cooking."
 	heal_amt = 10
 	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "fried"
@@ -48,10 +48,15 @@
 				I.dispose()
 		..()
 
-	grill_holder
+/obj/item/reagent_containers/food/snacks/shell/deepfry
+	name = "physical manifestation of the very concept of fried foods"
+	desc = "Oh, the power of the deep fryer."
+	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
+	icon_state = "fried"
+
+/obj/item/reagent_containers/food/snacks/shell/grill
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
-	heal_amt = 10
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "fried" // fix this
 

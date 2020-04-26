@@ -242,10 +242,10 @@
 		else if (istype(W, /obj/item/clothing/under/)) fuel += 30
 		else if (istype(W, /obj/item/plank)) fuel += 100
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuckburn)) fuel += 120
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/fry_holder))
-			var/obj/item/reagent_containers/food/snacks/fry_holder/F = W
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/shell))
+			var/obj/item/reagent_containers/food/snacks/shell/F = W
 			fuel += F.charcoaliness
-			for(var/fried_content in W)
+			for(var/atom/movable/fried_content in W)
 				if(ismob(fried_content))
 					var/mob/M = fried_content
 					M.death(1)
@@ -257,7 +257,6 @@
 				else if(isitem(fried_content))
 					var/obj/item/O = fried_content
 					load_into_furnace(O, 0)
-			do_pool = 1
 		else if (istype(W, /obj/item/plant/herb/cannabis))
 			fuel += 30
 			stoked += 10
