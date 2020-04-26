@@ -923,13 +923,13 @@
 				src.output_location = over_object
 				boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
 
-		else if (istype(over_object,/obj/machinery/manufacturer/))
+		/*else if (istype(over_object,/obj/machinery/manufacturer/))
 			var/obj/machinery/manufacturer/M = over_object
 			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
 				boutput(usr, "<span style=\"color:red\">You can't use a non-functioning manufacturer as an output target.</span>")
 			else
 				src.output_location = M
-				boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")*/
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object

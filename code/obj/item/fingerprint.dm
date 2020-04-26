@@ -6,7 +6,8 @@
 	name = "Finger Print Case"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "fcardholder0"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "clipboard0"
 	stamina_damage = 2
 	stamina_cost = 2
 	stamina_crit_chance = 1
@@ -107,6 +108,7 @@
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "fingerprint0"
 	amount = 10.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throwforce = 1
 	w_class = 1.0

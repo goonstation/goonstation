@@ -707,7 +707,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
-		setProperty("disorient_resist", 15)
+		setProperty("I_disorient_resist", 15)
 
 	post_item_setup()
 		. = ..()
@@ -753,22 +753,10 @@
 			.= 0
 			var/obj/item/I = src.loc
 
-			var/prop = "block_blunt"
-			switch(hit_type)
-				if (DAMAGE_BLUNT)
-					prop = "block_blunt"
-				if (DAMAGE_CUT)
-					prop = "block_cut"
-				if (DAMAGE_STAB)
-					prop = "block_stab"
-				if (DAMAGE_BURN)
-					prop = "block_burn"
-
-					if (I.reagents)
-						I.reagents.temperature_reagents(2000,10)
-
-			if (src.hasProperty(prop))
-				.= 1
+			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
+			if(prop == "burn" && I && I.reagents)
+				I.reagents.temperature_reagents(2000,10)
+			.= src.getProperty("I_block_[prop]")
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 		switch(hit_type)

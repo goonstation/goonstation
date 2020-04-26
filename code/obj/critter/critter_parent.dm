@@ -239,7 +239,7 @@
 
 					user.visible_message("<span style=\"color:red\">[user] skins [src].</span>","You skin [src].")
 
-			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife_butcher)))
+			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
 				user.visible_message("<span style=\"color:red\">[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)

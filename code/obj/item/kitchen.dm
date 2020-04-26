@@ -114,7 +114,7 @@ TRAYS
 
 	proc/break_fork(mob/living/carbon/user as mob)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -190,7 +190,7 @@ TRAYS
 
 	proc/break_knife(mob/living/carbon/user as mob)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -311,7 +311,7 @@ TRAYS
 
 	proc/break_spoon(mob/living/carbon/user as mob)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -886,9 +886,9 @@ TRAYS
 				user.u_equip(FOOD)
 				qdel(FOOD)
 			else if(!src.seaweed)
-				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly :P</span>")
+				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly.</span>")
 			else
-				boutput(user,"<span style=\"color:red\">You need sticky rice tooooooo!</span>")
+				boutput(user,"<span style=\"color:red\">You need sticky rice!</span>")
 		else
 			..()
 

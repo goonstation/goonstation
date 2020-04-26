@@ -5,6 +5,7 @@
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = null
 	var/stampable = 1
@@ -529,6 +530,7 @@ ASC: Aux. Solar Control<BR>
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	anchored = 1.0
 
@@ -883,6 +885,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "photo"
 	icon_state = "photo"
 	var/photo_id = 0.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 /obj/item/paper/photograph/New()

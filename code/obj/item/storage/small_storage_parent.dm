@@ -6,7 +6,7 @@
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "box_blank"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	var/list/can_hold = null//new/list()
 	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
@@ -248,9 +248,10 @@
 		attack_hand(user)
 
 	proc/get_contents()
+		RETURN_TYPE(/list)
 		var/list/cont = src.contents.Copy()
 		for(var/atom/A in cont)
-			if(!istype(A, /obj/item))
+			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
 				cont.Remove(A)
 		return cont
 
@@ -386,6 +387,9 @@
 				I.throwforce -= 8
 
 		I.set_loc(get_turf(src.loc))
+		I.dropped()
+		src.hud.remove_item(I) //fix the funky UI stuff
+		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)

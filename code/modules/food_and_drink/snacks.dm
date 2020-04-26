@@ -23,14 +23,15 @@
 	initial_volume = 25
 	initial_reagents = "yuck"
 
-/obj/item/reagent_containers/food/snacks/fry_holder
-	name = "physical manifestation of the very concept of fried foods"
-	desc = "Oh, the power of the deep fryer."
+/obj/item/reagent_containers/food/snacks/shell
+	name = "incinerated embodiment of culinary disaster"
+	desc = "Oh, the might of cooking."
 	heal_amt = 10
 	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "fried"
 	food_effects = list("food_warm")
 	use_bite_mask = 0
+	var/charcoaliness = 0 // how long it cooked - can be used to quickly check grill level
 
 	on_finish(mob/eater)
 		..()
@@ -47,29 +48,17 @@
 				I.dispose()
 		..()
 
-/obj/item/reagent_containers/food/snacks/grill_holder
+/obj/item/reagent_containers/food/snacks/shell/deepfry
+	name = "physical manifestation of the very concept of fried foods"
+	desc = "Oh, the power of the deep fryer."
+	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
+	icon_state = "fried"
+
+/obj/item/reagent_containers/food/snacks/shell/grill
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
-	heal_amt = 10
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "fried" // fix this
-	food_effects = list("food_warm")
-	use_bite_mask = 0
-
-	on_finish(mob/eater)
-		..()
-		if(iscarbon(eater))
-			var/mob/living/carbon/C = eater
-			for(var/atom/movable/MO as mob|obj in src)
-				MO.set_loc(C)
-				C.stomach_contents += MO
-
-	disposing()
-		for (var/mob/M in src)
-			M.ghostize()
-			for (var/obj/item/I in M)
-				I.dispose()
-		..()
 
 /obj/item/reagent_containers/food/snacks/pizza
 	name = "pizza"
@@ -374,6 +363,7 @@
 	w_class = 2
 	initial_volume = 100
 	food_effects = list("food_warm")
+	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
@@ -2008,7 +1998,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (wrapped)
-			if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
+			if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 				user.visible_message("<span style=\"color:red\">[user] performs an act of wonton destruction!</span>","You slice open the wrapper.")
 				wrapped.set_loc(get_turf(src))
 				src.reagents = null
@@ -2084,7 +2074,7 @@
 	food_effects = list("food_brute")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			boutput(user, "<span style=\"color:blue\">You cut [src] into halves</span>")
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))

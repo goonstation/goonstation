@@ -32,6 +32,9 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword0"
 	var/active = 0.0
+	var/open = 0
+	var/use_glowstick = 1
+	var/obj/item/device/light/glowstick/loaded_glowstick = null
 	var/bladecolor = "G"
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
@@ -56,6 +59,7 @@
 	var/inactive_force = 1
 	var/state_name = "sword"
 	var/off_w_class = 2
+	var/datum/component/holdertargeting/simple_light/light_c
 
 	New()
 		..()
@@ -68,23 +72,45 @@
 		switch(src.bladecolor)
 			if("R")
 				r = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
 			if("O")
 				r = 255; g = 127
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
 			if("Y")
 				r = 255; g = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
 			if("G")
 				g = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
 			if("C")
 				b = 255; g = 200
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
 			if("B")
 				b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
 			if("P")
 				r = 153; b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
 			if("Pi")
 				r = 255; g = 121; b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
 			if("W")
 				r = 255; g = 255; b = 255
-		var/datum/component/holdertargeting/simple_light/light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
+
+		if (src.loaded_glowstick) //the glowstick needs to be on!
+			src.loaded_glowstick.turnon()
+
+		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		BLOCK_SWORD
@@ -147,6 +173,20 @@
 
 
 /obj/item/sword/attack_self(mob/user as mob)
+	if (use_glowstick)
+		if (open)
+			return
+
+		if (!loaded_glowstick)
+			boutput(user, "<span style=\"color:red\">The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
+			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			return
+
+		if (!loaded_glowstick.on)
+			boutput(user, "<span style=\"color:red\">The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
+			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			return
+
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
@@ -204,10 +244,87 @@
 			user.suiciding = 0
 	return 1
 
+/obj/item/sword/attackby(obj/item/W as obj, mob/user as mob, params)
+	if (!use_glowstick)
+		return ..()
+
+	if (isscrewingtool(W))
+		if (src.active)
+			boutput(user, "<span style=\"color:red\">The sword has to be off before you open it!</span>")
+			return
+
+		if (!src.open)
+			user.visible_message("<b>[user]</b> unscrews and opens [src].")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			src.open = 1
+			if (loaded_glowstick)
+				src.icon_state = "[state_name]-open-[bladecolor]"
+			else
+				src.icon_state = "[state_name]-open"
+			return
+		else
+			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			src.open = 0
+			src.icon_state = "[state_name]0"
+
+	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
+		if (!W:on)
+			boutput(user, "<span style=\"color:red\">The glowstick needs to be on to act as a beam focus for the sword!</span>")
+			return
+		else
+			user.visible_message("<b>[user]</b> loads a glowstick into [src].")
+			loaded_glowstick = W
+			user.u_equip(W)
+			W.set_loc(src)
+			switch(src.loaded_glowstick.color_name)
+				if("red")
+					src.update_simple_light_color(255, 0, 0)
+					src.bladecolor = "R"
+				if("orange")
+					src.update_simple_light_color(255, 127, 0)
+					src.bladecolor = "O"
+				if("yellow")
+					src.update_simple_light_color(255, 255, 0)
+					src.bladecolor = "Y"
+				if("green")
+					src.update_simple_light_color(0, 255, 0)
+					src.bladecolor = "G"
+				if("cyan")
+					src.update_simple_light_color(0, 200, 255)
+					src.bladecolor = "C"
+				if("blue")
+					src.update_simple_light_color(0, 0, 255)
+					src.bladecolor = "B"
+				if("purple")
+					src.update_simple_light_color(153, 0, 255)
+					src.bladecolor = "P"
+				if("pink")
+					src.update_simple_light_color(255, 121, 255)
+					src.bladecolor = "Pi"
+				if("white")
+					src.update_simple_light_color(255, 255, 255)
+					src.bladecolor = "W"
+			src.icon_state = "[state_name]-open-[bladecolor]"
+			return
+	else
+		return ..()
+
+/obj/item/sword/attack_hand(mob/user as mob)
+	if (src.open && src.loc == user)
+		if (src.loaded_glowstick)
+			user.put_in_hand(loaded_glowstick)
+			src.loaded_glowstick = null
+			src.bladecolor = null
+			src.icon_state = "[state_name]-open"
+			return
+	..()
+
 /obj/item/sword/vr
 	icon = 'icons/effects/VR.dmi'
 	inhand_image_icon = 'icons/effects/VR_csaber_inhand.dmi'
 	valid_colors = list("R","Y","G","C","B","P","W","Bl")
+	use_glowstick = 0
 
 /obj/item/sword/discount
 	name = "d-saber"
@@ -215,14 +332,12 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
-	valid_colors = list("R")
 	off_w_class = 3
 	active_force = 18
 	inactive_force = 8
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
-	valid_colors = list("R","O","Y","G","C","B","P")
 
 	examine()
 		set src in usr
@@ -422,7 +537,7 @@
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY 
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
@@ -470,9 +585,10 @@
 		setTwoHanded(0)
 		status = 0
 		..()
+
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
 
-/obj/item/knife_butcher //Idea stolen from the welder!
+/obj/item/knife/butcher //Idea stolen from the welder!
 	name = "Butcher's Knife"
 	desc = "A huge knife."
 	icon = 'icons/obj/kitchen.dmi'
@@ -488,11 +604,11 @@
 	hit_type = DAMAGE_STAB
 	var/makemeat = 1
 
-/obj/item/knife_butcher/New()
+/obj/item/knife/butcher/New()
 	..()
 	BLOCK_KNIFE
 
-/obj/item/knife_butcher/throw_impact(atom/A)
+/obj/item/knife/butcher/throw_impact(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if (ismob(usr))
@@ -505,8 +621,8 @@
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
-/obj/item/knife_butcher/attack(target as mob, mob/user as mob)
-	if (!istype(src,/obj/item/knife_butcher/predspear) && ishuman(target) && ishuman(user))
+/obj/item/knife/butcher/attack(target as mob, mob/user as mob)
+	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
 		if (scalpel_surgery(target,user))
 			return
 
@@ -541,8 +657,8 @@
 	..()
 	return
 
-/obj/item/knife_butcher/custom_suicide = 1
-/obj/item/knife_butcher/suicide(var/mob/user as mob)
+/obj/item/knife/butcher/custom_suicide = 1
+/obj/item/knife/butcher/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
 	user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
@@ -553,7 +669,7 @@
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
 
-/obj/item/knife_butcher/predspear
+/obj/item/knife/butcher/predspear
 	name = "Hunting Spear"
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -801,17 +917,19 @@
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SWORD
 
-/obj/item/katana/attack(mob/living/carbon/human/target as mob, mob/user as mob)
+/obj/item/katana/attack(mob/target as mob, mob/user as mob)
 	if(target == user) //Can't cut off your own limbs, dumbo
 		return ..()
+	if(!ishuman(target))
+		return ..()  //Only humans can currently be dismembered
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
 		return
 	switch(zoney)
 		if("head")
-			if(!target.limbs.r_arm && !target.limbs.l_arm && !target.limbs.l_leg && !target.limbs.r_leg) //Does the target not have all of their limbs?
-				target.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
+			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
+				H.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
 			return ..()
 		if("chest")
 			return ..()

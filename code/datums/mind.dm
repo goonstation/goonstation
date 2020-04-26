@@ -33,7 +33,6 @@ datum/mind
 	var/list/blob_absorb_victims = list()
 	var/list/spy_stolen_items = list()
 
-	var/welder_knife = null
 	var/datum/gang/gang = null //Associate a leader with their gang.
 
 	//Ability holders.

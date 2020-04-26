@@ -262,7 +262,7 @@
 			HYPpassplantgenes(DNA,PDNA)
 			qdel(W)
 			pool(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
+		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
 				boutput(user, "<span style=\"color:red\">You can't cut wedges into wedges! What kind of insanity is that!?</span>")
 				return
@@ -1024,7 +1024,7 @@
 
 	/* drsingh todo: peanut shells and requiring roasting shelling
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1048,7 +1048,7 @@
 	brew_result = "vodka"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1091,7 +1091,7 @@
 	food_effects = list("food_bad_breath")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			user.visible_message("[user] chops up [src].", "You chop up [src].")
 			for (var/mob/living/carbon/M in range(user, 2))
 				if (prob(50) && !isdead(M))

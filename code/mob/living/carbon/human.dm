@@ -1375,6 +1375,44 @@
 		return r_store
 	return null
 
+/mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
+	if (!(I in src.contents))
+		return null
+
+	//wanted the following to be a switch case but those expect constant expressions
+
+	if (src.w_uniform == I)
+		return slot_w_uniform
+	if (src.wear_id == I)
+		return slot_wear_id
+	if (src.gloves == I)
+		return slot_gloves
+	if (src.shoes == I)
+		return slot_shoes
+	if (src.wear_suit == I)
+		return slot_wear_suit
+	if (src.back == I)
+		return slot_back
+	if (src.glasses == I)
+		return slot_glasses
+	if (src.ears == I)
+		return ears
+	if (src.wear_mask == I)
+		return slot_wear_mask
+	if (src.head == I)
+		return slot_head
+	if (src.belt == I)
+		return slot_belt
+	if (src.l_store == I)
+		return slot_l_store
+	if (src.r_store == I)
+		return slot_r_store
+	if(src.l_hand == I)
+		return slot_l_hand
+	if(src.r_hand == I)
+		return slot_r_hand
+	return null
+
 /mob/living/carbon/human/is_in_hands(var/obj/O)
 	if (l_hand == O || r_hand == O)
 		return 1
@@ -2972,7 +3010,7 @@
 			continue
 		if (istype(A, /obj/screen)) // maybe people will stop gibbing out their stamina bars now  :|
 			continue
-		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/fry_holder)) //For dudes who got fried and eaten so they eject -ZeWaka
+		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/shell)) //For dudes who got fried and eaten so they eject -ZeWaka
 			ret += A
 	return ret
 

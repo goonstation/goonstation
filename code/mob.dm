@@ -2630,6 +2630,9 @@
 /mob/proc/find_in_equipment(var/eqtype)
 	return null
 
+/mob/proc/get_slot_from_item(var/obj/item/I)
+	return null
+
 /mob/proc/is_in_hands(var/obj/O)
 	return 0
 
@@ -2915,7 +2918,6 @@
 	if(src.mind.soul <= 0)
 		total_souls_sold++
 		total_souls_value++
-		src.mind.damned = 1
 
 	return 1
 
@@ -2967,5 +2969,5 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to do with [src]?") as anything in items
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)

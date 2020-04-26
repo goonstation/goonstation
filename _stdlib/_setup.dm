@@ -543,6 +543,8 @@
 #define ui_rest "CENTER+6, SOUTH"
 #define ui_abiltoggle "CENTER-6, SOUTH"
 #define ui_stats "CENTER+7, SOUTH"
+#define ui_legend "CENTER+7:16, SOUTH"
+
 
 #define ui_zone_sel "CENTER+4, SOUTH"
 #define ui_storage_area "1,8 to 1,1"
@@ -566,6 +568,7 @@
 #define tg_ui_ears "WEST+2:10,SOUTH+2:9"
 #define tg_ui_mask "WEST+1:8,SOUTH+2:9"
 #define tg_ui_head "WEST+1:8,SOUTH+3:11"
+#define tg_ui_legend "WEST+2:10, SOUTH+3:11"
 #define tg_ui_throwing "EAST-1:28,SOUTH+1:7"
 #define tg_ui_intent "EAST-3:24,SOUTH:5"
 #define tg_ui_mintent "EAST-2:26,SOUTH:5"
@@ -765,7 +768,7 @@
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
-
+#define DAMAGE_TYPE_TO_STRING(x) (x == DAMAGE_BLUNT ? "blunt" : x == DAMAGE_CUT ? "cut" : x == DAMAGE_STAB ? "stab" : x == DAMAGE_BURN ? "burn" : x == DAMAGE_CRUSH ? "crush" : "")
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
 #define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work

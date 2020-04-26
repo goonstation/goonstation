@@ -49,6 +49,7 @@
 	food_color = null
 	initial_volume = 40
 	var/flavor = ""
+	dropped_item = /obj/item/stick
 
 	New()
 		..()
@@ -114,11 +115,6 @@
 		..()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
 		return
-
-	on_finish(mob/eater, var/mob/user)
-		var/obj/item/stick/S = new
-		user.put_in_hand_or_drop(S)
-		..()
 
 	proc/melt(var/mob/user)
 		boutput(user,"<span style=\"color:blue\"><b>[src] has already melted! Damn!</b></span>")

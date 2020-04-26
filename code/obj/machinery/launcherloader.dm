@@ -416,6 +416,7 @@
 	desc = "A barcode sticker used in the cargo routing system."
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "barcode"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 	var/destination = "QM Dock"
