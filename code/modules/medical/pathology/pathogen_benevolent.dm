@@ -354,3 +354,38 @@ datum/pathogeneffects/benevolent/neuronrestoration
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
+
+
+datum/pathogeneffects/benevolent/genetictemplate
+	name = "Genetic Template"
+	desc = "Spreads a mutation from patient zero to other afflicted."
+	rarity = RARITY_VERY_RARE
+	infect_type = INFECT_NONE
+	var/list/mutationMap = list()
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic || !M.bioHolder)
+			return
+		var/datum/bioEffect/BE = mutationMap[origin.name]
+		if(BE == null) // if no mutation has been picked yet, go for a random one from this person
+			var/list/filtered = new/list()
+			for(var/T in M.bioHolder.effects)
+				var/datum/bioEffect/instance = M.bioHolder.effects[T]
+				if(!instance || istype(instance, /datum/bioEffect/hidden)) continue // hopefully this catches all non-mutation bioeffects?
+				filtered.Add(instance)
+			if(!filtered.len) return // wow, this nerd has no mutations, screw this
+			BE = pick(filtered)
+			mutationMap[origin.name] = BE
+
+		M.bioHolder.AddEffectInstance(BE)
+
+
+	react_to(var/R, var/zoom)
+		if (R == "mutadone")
+			if (zoom)
+				return "Approximately 82.7% of the individual microbodies appear to have returned to genetic normalcy."
+			else
+				return "The pathogen appears to have settled down significantly in the presence of the mutadone."
+
+	may_react_to()
+		return "The pathogen cells appear to be mimicking one another."
