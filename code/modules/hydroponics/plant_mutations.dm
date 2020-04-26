@@ -136,6 +136,7 @@
 	name = "Rainbow Melons"
 	name_prefix = "Rainbow "
 	crop = /obj/item/reagent_containers/food/snacks/plant/melon/george
+	iconmod = "RainbowMelon"
 	assoc_reagents = list("george_melonium")
 
 /datum/plantmutation/melon/balloon
@@ -156,6 +157,7 @@
 	name = "Bowling Melons"
 	name_prefix = "Bowling "
 	crop = /obj/item/reagent_containers/food/snacks/plant/melon/bowling
+	iconmod = "BowlingMelon"
 	ENrange = list(12,null)
 	chance = 20
 	special_proc_override = 1
