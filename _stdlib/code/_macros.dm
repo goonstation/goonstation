@@ -182,4 +182,4 @@ var/list/global_spawn_dbg = list()
 
 
 //used for pods
-#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > 32 || V.bound_height > 32) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
+#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )

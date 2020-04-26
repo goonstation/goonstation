@@ -1002,10 +1002,6 @@
 		var/floor = get_turf(src)
 		O.set_loc(floor)
 
-#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > 32 || V.bound_height > 32) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
-// potato ver
-//pod.x - 1 >= mob.x && pod.y - 1 >= mob.y && pod.x + (pod.bound_width/world.icon_size) <= mob.x && pod.y + (pod.bound_height/world.icon_size) <= mob.y)
-
 
 /datum/action/bar/icon/board_pod
 	duration = 20
