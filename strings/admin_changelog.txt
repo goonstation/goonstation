@@ -1,4 +1,7 @@
 
+(t)sat apr 25 20
+(u)kyle
+(*)Move the view variables, posess, and Modify icon down to PA in the player options panel.
 (t)wed apr 22 20
 (u)mbc
 (*)Moved all admin-specific right click verbs into a new menu. Press Tilde to turn on 'Admin Interact' mode, and then left click on an item to view options for that item (or right click a tile to select from a list of items on that tile).
