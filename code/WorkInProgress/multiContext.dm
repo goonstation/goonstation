@@ -886,7 +886,8 @@ var/list/globalContextActions = null
 			icon_state = "board"
 
 			checkRequirements(var/atom/target, var/mob/user)
-				.= ((user.loc != target) && (get_dist(target,user) <= 1))
+				var/obj/machinery/vehicle/V = target
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
 
 			execute(var/atom/target, var/mob/user)
 				..()
@@ -899,12 +900,43 @@ var/list/globalContextActions = null
 			icon_state = "exit"
 
 			checkRequirements(var/atom/target, var/mob/user)
-				.= ((user.loc != target) && (get_dist(target,user) <= 1))
+				var/obj/machinery/vehicle/V = target
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
 
 			execute(var/atom/target, var/mob/user)
 				..()
 				var/obj/machinery/vehicle/V = target
 				V.eject_occupants()
+
+		lock
+			name = "Show Lock Panel"
+			desc = "Unlock the ship."
+			icon_state = "lock"
+
+			checkRequirements(var/atom/target, var/mob/user)
+				var/obj/machinery/vehicle/V = target
+				if (V.locked && V.lock)
+					.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.lock.show_lock_panel(user,0)
+
+		parts
+			name = "Show Parts Panel"
+			desc = "Replace ship parts."
+			icon_state = "panel"
+
+			checkRequirements(var/atom/target, var/mob/user)
+				var/obj/machinery/vehicle/V = target
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.open_parts_panel(user)
+
 
 		exit_ship
 			name = "Exit Ship"
