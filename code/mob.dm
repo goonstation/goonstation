@@ -2918,7 +2918,6 @@
 	if(src.mind.soul <= 0)
 		total_souls_sold++
 		total_souls_value++
-		src.mind.damned = 1
 
 	return 1
 
