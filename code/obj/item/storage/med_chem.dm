@@ -107,23 +107,7 @@
 	/obj/item/reagent_containers/emergency_injector/lexorin,\
 	/obj/item/reagent_containers/emergency_injector/synaptizine,\
 	/obj/item/device/analyzer/healthanalyzer)
-/*
-/obj/item/storage/firstaid/diagnostickit
-	name = "diagnostic kit"
-	icon_state = "berserk1"
-	item_state = "berserk1"
-	desc = "This looks older than you, christ!"
-	kit_styles = list("berserk1", "berserk2", "berserk3") //placeholder
-	spawn_contents = list(/obj/item/medical/medicaldiagnosis/stethoscope,
-	// ecg
-	// otoscope
-	// bp cuff
-	// layrangoscope (spelling not good today aaa)
-	// what else???
-	// wound measuring scale?
-	// aaa
-	)WIP
-*/
+
 /obj/item/storage/firstaid/docbag
 	name = "doctor's bag"
 	icon_state = "docbag1"
