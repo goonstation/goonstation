@@ -1,5 +1,9 @@
 
 (t)sun apr 26 20
+(u)Tarmunora
+(p)239
+(e)⚖🆕|balance, enhancement
+(*)Changed pod(etc)seeking 40mmHE shells to have a high chance of not detonating on impact unless they have found a target to seek. Additionally boosted their direct-impact stats to compensate somewhat.
 (u)saccharineChampion
 (p)415
 (e)🆕|enhancement
