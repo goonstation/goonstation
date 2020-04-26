@@ -1159,8 +1159,8 @@
 // Gimmick Jumpsuits
 
 /obj/item/clothing/under/gimmick
-	name = "asian schoolgirl's uniform"
-	desc = "What's with these guys?! It's like one of my Japanese animes!"
+	name = "sailor uniform"
+	desc = "Do real sailors wear these? I dunno."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
