@@ -1,5 +1,9 @@
 
 (t)sun apr 26 20
+(u)mbc
+(p)443
+(e)🎨|sprites
+(*)You no longer need a crowbar to access a pod's maint/lock panel, just click it with free hand and use the multicontext buttons. Also fixed bugs where you could not hit a pod with an item.
 (u)Uta
 (p)426
 (e)🐛|bug
