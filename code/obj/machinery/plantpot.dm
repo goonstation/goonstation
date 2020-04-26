@@ -317,10 +317,11 @@
 		// This is entirely for updating the icon. Check how far the plant has grown and update
 		// if it's gone a level beyond what the tracking says it is.
 
-		//TODO: Update to use 4 Growth Levels instead of 3
 		if(src.growth >= growing.harvtime - DNA.harvtime && !growing.isgrass)
-			current_growth_level = 3
+			current_growth_level = 4
 		else if(src.growth >= growing.growtime - DNA.growtime)
+			current_growth_level = 3
+		else if(src.growth >= (growing.growtime - DNA.growtime) / 2)
 			current_growth_level = 2
 		else
 			current_growth_level = 1
