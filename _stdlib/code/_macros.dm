@@ -179,3 +179,7 @@ var/list/global_spawn_dbg = list()
 //some reliquary stuff - azungar
 
 #define isreliquary(x) (istype(x, /mob/living/critter/reliquary) || istype(x, /mob/living/critter/reliquarymonstrosity) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/reliquary_soldier))
+
+
+//used for pods
+#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > 32 || V.bound_height > 32) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
