@@ -326,7 +326,7 @@
 		//dat += "</div>"
 
 	//Coder options
-	if( src.level >= LEVEL_SHITGUY )
+	if( src.level >= LEVEL_PA )
 		dat += {"
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>
