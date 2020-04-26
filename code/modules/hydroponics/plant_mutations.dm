@@ -406,8 +406,8 @@
 	assoc_reagents = list("psilocybin")
 
 /datum/plantmutation/fungus/amanita
-	name = "White Fungus"
-	name_prefix = "White "
+	name = "Amanita"
+	name_prefix = "Amanita "
 	iconmod = "deathcap"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	ENrange = list(null,10)
@@ -579,7 +579,7 @@
 	name = "Peanutbutter Sandwich"
 	name_suffix = "butter Sandwich"
 	crop = /obj/item/reagent_containers/food/snacks/sandwich/pb
-	iconmod = "Peanut"
+	iconmod = "PeanutSandwich"
 
 //Tobacco mutations
 
