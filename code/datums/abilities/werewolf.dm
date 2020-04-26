@@ -59,7 +59,7 @@
 		var/mob/living/carbon/human/M = src
 		var/which_way = 0
 
-		if (!M.mutantrace || source_is_lycanthrophy == 1)
+		if ((!M.mutantrace || istype(M.mutantrace, /datum/mutantrace/virtual))|| source_is_lycanthrophy == 1)//the istype fixes you needing to transform twice in vr
 			M.jitteriness = 0
 			M.delStatus("stunned")
 			M.delStatus("weakened")

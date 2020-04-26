@@ -406,7 +406,17 @@
 
 		SPAWN_DBG(0)
 			for (var/obj/item/I in gunsim)
-				qdel(I)
+				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
+					continue
+				else
+					qdel(I)
+
+			for (var/obj/S in gunsim)
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal))
+					qdel(S)
+
+
+/*
 			for (var/obj/storage/S in gunsim)
 				qdel(S)
 			for (var/obj/artifact/A in gunsim)
@@ -417,7 +427,7 @@
 				qdel(B)
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
-
+*/
 		SPAWN_DBG(60 SECONDS)
 			active = 0
 			alpha = 255

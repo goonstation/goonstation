@@ -2,7 +2,7 @@
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
 	set category = null
-	set popup_menu = 0
+	set popup_menu = 1
 	if (src.holder)
 		src.holder.playeropt(M)
 	return
@@ -326,7 +326,7 @@
 		//dat += "</div>"
 
 	//Coder options
-	if( src.level >= LEVEL_SHITGUY )
+	if( src.level >= LEVEL_PA )
 		dat += {"
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>

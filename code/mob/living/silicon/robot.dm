@@ -3021,28 +3021,28 @@
 
 	if (this_hand)
 		if (this_hand == "right" || this_hand == 3)
-			if (src.module_states[3] && istype(I, src.module_states[3]))
+			if (src.module_states[3] && istype(src.module_states[3], I))
 				return 1
 			else
 				return 0
 		else if (this_hand == "middle" || this_hand == 2)
-			if (src.module_states[2] && istype(I, src.module_states[2]))
+			if (src.module_states[2] && istype(src.module_states[2], I))
 				return 1
 			else
 				return 0
 		else if (this_hand == "left" || this_hand == 1)
-			if (src.module_states[1] && istype(I, src.module_states[1]))
+			if (src.module_states[1] && istype(src.module_states[1], I))
 				return 1
 			else
 				return 0
 		else
 			return 0
 
-	if (src.module_states[3] && istype(I, src.module_states[3]))
+	if (src.module_states[3] && istype(src.module_states[3], I))
 		return src.module_states[3]
-	else if (src.module_states[2] && istype(I, src.module_states[2]))
+	else if (src.module_states[2] && istype(src.module_states[2], I))
 		return src.module_states[2]
-	else if (src.module_states[1] && istype(I, src.module_states[1]))
+	else if (src.module_states[1] && istype(src.module_states[1], I))
 		return src.module_states[1]
 	else
 		return 0

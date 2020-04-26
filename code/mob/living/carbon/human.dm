@@ -3010,7 +3010,7 @@
 			continue
 		if (istype(A, /obj/screen)) // maybe people will stop gibbing out their stamina bars now  :|
 			continue
-		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/fry_holder)) //For dudes who got fried and eaten so they eject -ZeWaka
+		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/shell)) //For dudes who got fried and eaten so they eject -ZeWaka
 			ret += A
 	return ret
 

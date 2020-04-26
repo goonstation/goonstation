@@ -38,7 +38,7 @@
 		if (src.grillitem)
 			boutput(user, "<span style=\"color:red\">There is already something on the grill!</span>")
 			return
-		if (istype(W, /obj/item/reagent_containers/food/snacks/grill_holder))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/shell/grill))
 			boutput(user, "<span style=\"color:red\">You wanna grill that again? Ask John how well that turns out.</span>")
 			return
 		if (src.grilltemp <= (200 + T0C))
@@ -242,7 +242,7 @@
 		//	UnsubscribeProcess()
 			return
 
-		var/obj/item/reagent_containers/food/snacks/grill_holder/shittysteak = new /obj/item/reagent_containers/food/snacks/grill_holder(src)
+		var/obj/item/reagent_containers/food/snacks/shell/grill/shittysteak = new /obj/item/reagent_containers/food/snacks/shell/grill(src)
 
 		if (src.cooktime >= 60)
 			if (ismob(src.grillitem))
@@ -292,6 +292,7 @@
 			else
 				shittysteak.color = ( rgb(33,19,9) )
 
+		shittysteak.charcoaliness = src.cooktime
 		shittysteak.icon = composite
 		shittysteak.overlays = grillitem.overlays
 		shittysteak.set_loc(get_turf(src))

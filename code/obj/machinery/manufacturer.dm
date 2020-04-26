@@ -29,9 +29,9 @@
 	var/dismantle_stage = 0
 	var/output_cap = 20
 	// 0 is =>, 1 is ==
-	var/base_material_class = /obj/item/material_piece/
+	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/list/cuttings = list()
+	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
 	var/list/materials_in_use = list()
@@ -48,7 +48,7 @@
 	var/image/work_display = null
 	var/image/activity_display = null
 	var/image/panel_sprite = null
-	var/list/free_resources = list()
+	var/list/obj/item/material_piece/free_resources = list() // please only material pieces
 	var/free_resource_amt = 0
 	var/list/nearby_turfs = list()
 	var/sound_happy = 'sound/machines/chime.ogg'
@@ -225,7 +225,6 @@
 
 		user.machine = src
 		var/list/dat = list("<B>[src.name]</B>")
-		//dat += "<A href='?src=\ref[src];shake=0'>(shake)</A>"
 
 		if (src.panelopen || isAI(user))
 			var/list/manuwires = list(
@@ -294,43 +293,28 @@
 			dat += "<small>"
 			if (src.category != "Downloaded")
 				for(var/datum/manufacture/A in src.available)
-					var/list/mats_used = material_check(A)
+					var/list/mats_used = get_materials_needed(A)
 
 					if (istext(src.search) && !findtext(A.name, src.search, 1, null))
 						continue
 					else if (istext(src.category) && src.category != A.category)
 						continue
 
-					if (isnull(mats_used))
+					if (mats_used.len < A.item_paths.len)
 						dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "		//change this name to red if can't be made
 					else
-						dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "		//change this name to normal if available
+						dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
 
 					if (istext(A.category))
 						dat += "([A.category])"
 					dat += "<br>"
 
-					var/list_count = 1
-					for (var/X in A.item_paths)
-						if (list_count != 1) dat += ", "
-						var/found = 0
-						var/list/usable_materials = get_mat_ids(A)
-
-						//get all mat_ids in this manufacturable	needed to get the actual material to use in the material pattern match
-						for (var/mat_id in usable_materials)
-							if (usable_materials[mat_id] < A.item_amounts[list_count])
-								continue
-							var/datum/material/mat = getMaterial(mat_id)
-							if (match_material_pattern(X, mat))
-								found = 1
-								break
-
-						if (found)
-							dat += "[A.item_amounts[list_count]] [A.item_names[list_count]]"		//change this line to red if mising <font color = "red">
+					for (var/i in 1 to A.item_paths.len)
+						if (i != 1) dat += ", "
+						if (mats_used[A.item_paths[i]])
+							dat += "[A.item_amounts[i]] [A.item_names[i]]"
 						else
-							dat += "<font color = 'red'>[A.item_amounts[list_count]] [A.item_names[list_count]]</font>"		//change this line to red if mising <font color = "red">
-
-						list_count++
+							dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
 
 					if (A.time == 0 || src.speed == 0)
 						dat += "<br><b>Time:</b> ERROR<br>"
@@ -339,39 +323,59 @@
 
 				if (src.hacked)
 					for(var/datum/manufacture/A in src.hidden)
+						var/list/mats_used = get_materials_needed(A)
+
 						if (istext(src.search) && !findtext(A.name, src.search, 1, null))
 							continue
 						else if (istext(src.category) && src.category != A.category)
 							continue
-						dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+
+						if (mats_used.len < A.item_paths.len)
+							dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "
+						else
+							dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+
 						if (istext(A.category))
 							dat += "([A.category]) "
 						dat += "(Secret)<br>"
-						var/list_count = 1
-						for (var/X in A.item_paths)
-							if (list_count != 1) dat += ", "
-							dat += "[A.item_amounts[list_count]] [A.item_names[list_count]]"
-							list_count++
+
+						for (var/i in 1 to A.item_paths.len)
+							if (i != 1) dat += ", "
+							if (mats_used[A.item_paths[i]])
+								dat += "[A.item_amounts[i]] [A.item_names[i]]"
+							else
+								dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
+
 						if (A.time == 0 || src.speed == 0)
 							dat += "<br><b>Time:</b> ERROR<br>"
 						else
 							dat += "<br><b>Time:</b> [round((A.time / src.speed))] Seconds<br>"
 
 			for(var/datum/manufacture/A in src.download)
+				var/list/mats_used = get_materials_needed(A)
+
 				if (istext(src.search) && !findtext(A.name, src.search, 1, null))
 					continue
 				else if (istext(src.category))
 					if (src.category != "Downloaded" && src.category != A.category)
 						continue
-				dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+
+				if (mats_used.len < A.item_paths.len)
+					dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "
+				else
+					dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+
 				if (istext(A.category))
 					dat += "([A.category]) "
 				dat += "(Downloaded)<br>"
-				var/list_count = 1
-				for (var/X in A.item_paths)
-					if (list_count != 1) dat += ", "
-					dat += "[A.item_amounts[list_count]] [A.item_names[list_count]]"
-					list_count++
+
+				for (var/i in 1 to A.item_paths.len)
+					if (i != 1) dat += ", "
+					if (mats_used[A.item_paths[i]])
+						dat += "[A.item_amounts[i]] [A.item_names[i]]"
+					else
+						dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
+
 				if (A.time == 0 || src.speed == 0)
 					dat += "<br><b>Time:</b> ERROR<br>"
 				else
@@ -445,28 +449,31 @@
 			if (src.malfunction && prob(10))
 				src.flip_out()
 
-			//if (href_list["shake"])
-			//	src.flip_out()
-
 			if (href_list["eject"])
 				if (src.mode != "ready")
 					boutput(usr, "<span style=\"color:red\">You cannot eject materials while the unit is working.</span>")
 				else
-					var/mat_name = href_list["eject"]
+					var/mat_id = href_list["eject"]
 					var/ejectamt = 0
 					var/turf/ejectturf = get_turf(usr)
 					for(var/obj/item/O in src.contents)
-						if (O.material && O.material.name == mat_name)
+						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many units do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
+								if (ejectamt > O.amount || ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
 									break
 							if (!ejectturf)
 								break
-							O.set_loc(get_output_location(O,1))
-							ejectamt--
-							if (ejectamt <= 0)
-								break
+							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
+							if (ejectamt == O.amount)
+								O.set_loc(get_output_location(O,1))
+							else
+								var/obj/item/material_piece/P = unpool(O.type)
+								P.setMaterial(copyMaterial(O.material))
+								P.change_stack_amount(ejectamt - P.amount)
+								O.change_stack_amount(-ejectamt)
+								P.set_loc(get_output_location(O,1))
+							break
 
 			if (href_list["speed"])
 				if (src.mode == "working")
@@ -529,7 +536,7 @@
 				if (src.queue.len < 1)
 					boutput(usr, "<span style=\"color:red\">Cannot find any items in queue to continue production.</span>")
 					return
-				if (isnull(material_check(src.queue[1])))
+				if (!check_enough_materials(src.queue[1]))
 					boutput(usr, "<span style=\"color:red\">Insufficient usable materials to manufacture first item in queue.</span>")
 				else
 					src.begin_work(0)
@@ -553,7 +560,7 @@
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
 					return
 
-				if (isnull(material_check(I)))
+				if (!check_enough_materials(I))
 					boutput(usr, "<span style=\"color:red\">Insufficient usable materials to manufacture that item.</span>")
 				else if (src.queue.len >= MAX_QUEUE_LENGTH)
 					boutput(usr, "<span style=\"color:red\">Manufacturer queue length limit reached.</span>")
@@ -862,14 +869,6 @@
 				src.output_target = over_object
 				boutput(usr, "<span style=\"color:blue\">You set the manufacturer to output to [over_object]!</span>")
 
-		else if (istype(over_object,/obj/machinery/manufacturer/))
-			var/obj/machinery/manufacturer/M = over_object
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span style=\"color:red\">You can't use a non-functioning manufacturer as an output target.</span>")
-			else
-				src.output_target = M
-				boutput(usr, "<span style=\"color:blue\">You set the manufacturer to output to [over_object]!</span>")
-
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
@@ -1123,64 +1122,45 @@
 			return 1
 		return 0
 
-	//return list of all mat_ids of a manufacturable
-	proc/get_mat_ids(datum/manufacture/M)
-		var/list/usable = src.contents
-		var/list/usable_materials = cuttings.Copy()
-		for (var/obj/item/I in usable)
-			if (istype(I, src.base_material_class) && I.material)
-				usable_materials[I.material.mat_id] += 10
+	proc/get_materials_needed(datum/manufacture/M) // returns associative list of item_paths with the mat_ids they're gonna use; does not guarantee all item_paths are satisfied
+		var/list/mats_used = list()
+		var/list/mats_available = src.resource_amounts.Copy()
 
-		return usable_materials
-
-	proc/material_check(datum/manufacture/M)
-		var/list/usable = src.contents
-		var/list/materials = list()
-		var/list/usable_materials = get_mat_ids(M)
-		materials.len = M.item_paths.len
-
-		for (var/i = 1; i <= M.item_paths.len; i++)
+		for (var/i in 1 to M.item_paths.len)
 			var/pattern = M.item_paths[i]
 			var/amount = M.item_amounts[i]
-			if (ispath(pattern))
-				for (var/j = 0; j < amount; j++)
-					var/obj/O = locate(pattern) in usable
-					if (O)
-						usable -= O
-					else
-						return
-			else
-				var/found = 0
-				for (var/mat_id in usable_materials)
-					var/available = usable_materials[mat_id]
-					if (available < amount)
-						continue
-					var/datum/material/mat = getMaterial(mat_id)
-					if (match_material_pattern(pattern, mat))
-						materials[i] = mat_id
-						found = 1
+			for (var/mat_id in mats_available)
+				if (mats_available[mat_id] < amount)
+					continue
+				var/datum/material/mat = getMaterial(mat_id)
+				if (match_material_pattern(pattern, mat)) // TODO: refactor proc cuz this is bad
+					mats_used[pattern] = mat_id
+					mats_available[mat_id] -= amount
+					break
+
+		return mats_used
+
+	proc/check_enough_materials(datum/manufacture/M)
+		var/list/mats_used = get_materials_needed(M)
+		if (mats_used.len == M.item_paths.len) // we have enough materials, so return the materials list, else return null
+			return mats_used
+
+	proc/remove_materials(datum/manufacture/M)
+		for (var/i = 1 to M.item_paths.len)
+			var/pattern = M.item_paths[i]
+			var/mat_id = src.materials_in_use[pattern]
+			if (mat_id)
+				var/amount = M.item_amounts[i]
+				src.update_resource_amount(mat_id, -amount)
+				for (var/obj/item/I in src.contents)
+					if (I.material && istype(I, src.base_material_class) && I.material.mat_id == mat_id)
+						var/target_amount = round(src.resource_amounts[mat_id] / 10)
+						if (!target_amount)
+							src.contents -= I
+							pool(I)
+						else if (I.amount != target_amount)
+							I.change_stack_amount(-(I.amount - target_amount))
 						break
-				if (!found)
-					return
-		return materials
-
-
-	proc/add_and_get_similar_materials(var/obj/item/material_piece/M,var/amount_needed)
-		if (!istype(M) || !M.material || !isnum(amount_needed))
-			return list()
-
-		var/list/mats = list()
-		mats += M
-		amount_needed++
-		for (var/obj/O in src.contents)
-			if (mats.len >= amount_needed)
-				break
-			if (O == M)
-				continue
-			if (O.name == M.name)
-				mats += O
-
-		return mats
 
 	proc/begin_work(var/new_production = 1)
 		if (status & NOPOWER || status & BROKEN)
@@ -1217,19 +1197,17 @@
 			src.flip_out()
 
 		if (new_production)
-			var/list/mats_used = src.material_check(M)
-			if (isnull(mats_used))
+			var/list/mats_used = check_enough_materials(M)
+
+			if (!mats_used)
 				src.mode = "halt"
 				src.error = "Insufficient usable materials to continue queue production."
 				src.visible_message("<span style=\"color:red\">[src] emits an angry buzz!</span>")
 				playsound(src.loc, src.sound_grump, 50, 1)
 				src.build_icon()
 				return
-
-			if (mats_used && mats_used.len)
+			else
 				src.materials_in_use = mats_used
-				//for (var/obj/item/O in mats_used)
-				//	del O
 
 			src.powconsumption = 1500
 			src.powconsumption *= src.speed * 1.5
@@ -1249,7 +1227,7 @@
 
 		if (M.item_outputs.len <= 0)
 			return
-		var/mcheck = material_check(M)
+		var/mcheck = check_enough_materials(M)
 		if(mcheck)
 			var/make = max(0,min(M.create,src.output_cap))
 			switch(M.randomise_output)
@@ -1268,41 +1246,7 @@
 							src.dispense_product(X,M)
 						make--
 
-			for (var/i = 1; i <= M.item_paths.len; i++)
-				var/pattern = M.item_paths[i]
-				var/amount = M.item_amounts[i]
-				if (ispath(pattern))
-					for (var/j = 0; j < amount; j++)
-						var/obj/O = locate(pattern) in src
-						src.contents -= O
-						qdel(O)
-
-			for (var/i = 1; i <= src.materials_in_use.len; i++)
-				if (i > src.materials_in_use.len)
-					break
-				var/mat_id = src.materials_in_use[i]
-				if (!M.item_amounts[i]) //Wire: Fix for list index out of bounds
-					continue
-				var/amount = M.item_amounts[i]
-				if (!mat_id)
-					continue
-				var/cutting_amount = src.cuttings[mat_id]
-				if (cutting_amount)
-					var/used = min(cutting_amount, amount)
-					src.cuttings[mat_id] -= used
-					amount -= used
-				if (amount == 0)
-					continue
-				for (var/obj/item/I in src)
-					if (I.material && istype(I, src.base_material_class) && I.material.mat_id == mat_id)
-						src.contents -= I
-						pool(I)
-						if (amount < 10)
-							src.cuttings[mat_id] += 10 - amount
-							amount = 0
-							break
-						else
-							amount -= 10
+			src.remove_materials(M)
 
 		if (src.repeat)
 			if (!mcheck)
@@ -1355,9 +1299,6 @@
 		else if (ismob(product))
 			var/mob/X = product
 			X.set_loc(get_output_location())
-
-		else
-			return
 
 	proc/flip_out()
 		if (status & BROKEN || status & NOPOWER || !src.malfunction)
@@ -1437,23 +1378,11 @@
 			src.UpdateOverlays(null, "panel")
 
 	proc/build_material_list()
-		var/dat = "<b>Available Materials & Reagents:</b><small><br>"
-		var/list/mat_amts = list()
-		for(var/obj/item/O in src.contents)
-			if (istype(O,/obj/item/reagent_containers/glass/beaker/))
-				if (O == src.beaker)
-					continue
-			if (istype(O,src.base_material_class) && O.material)
-				mat_amts[O.material.name] += 10 * O.amount
-		for (var/mat_id in cuttings)
-			var/amount = cuttings[mat_id]
+		var/list/dat = list("<b>Available Materials & Reagents:</b><small><br>")
+		for(var/mat_id in src.resource_amounts)
 			var/datum/material/mat = getMaterial(mat_id)
-			mat_amts[mat.name] += amount
-
-		if (mat_amts.len)
-			for(var/mat_type in mat_amts)
-				dat += "<A href='?src=\ref[src];eject=[mat_type]'><B>[mat_type]:</B></A> [mat_amts[mat_type]]<br>"
-		else
+			dat += "<A href='?src=\ref[src];eject=[mat_id]'><B>[mat]:</B></A> [src.resource_amounts[mat_id]]<br>"
+		if (dat.len == 1)
 			dat += "No materials currently loaded.<br>"
 
 		var/reag_list = ""
@@ -1464,10 +1393,10 @@
 		dat += reag_list
 		dat += "</small>"
 
-		return dat
+		return dat.Join()
 
 	proc/build_control_panel()
-		var/dat = "<small>"
+		var/list/dat = list("<small>")
 
 		if (src.page == 1)
 			dat += "<br><u><A href='?src=\ref[src];page=0'>Production List</A> | <b>Queue:</b> [src.queue.len]</u>"
@@ -1514,23 +1443,27 @@
 
 		dat += "</small>"
 
-		return dat
+		return dat.Join()
 
 	proc/load_item(var/obj/item/O,var/mob/living/user)
 		if (!O)
 			return
 
-		if (O.amount > 1)
-			var/amtCopy = O.amount //Need to run the loop on a copy or the loop will be shortened by us splitting the stack. (since that reduces O.amount)
-			for(var/i=0, i<(amtCopy - 1), i++)
-				var/obj/item/S = O.split_stack(1)
-				if(S) S.set_loc(src)
-
-		O.set_loc(src)
-
-		if (user && O)
+		if (user)
 			user.u_equip(O)
 			O.dropped()
+
+		if (istype(O, src.base_material_class) && O.material)
+			var/obj/item/material_piece/P = O
+			for(var/obj/item/material_piece/M in src.contents)
+				if (istype(M, P) && M.material && M.material.mat_id == P.material.mat_id)
+					M.change_stack_amount(P.amount)
+					src.update_resource_amount(M.material.mat_id, P.amount * 10)
+					pool(P)
+					return
+			src.update_resource_amount(P.material.mat_id, P.amount * 10)
+
+		O.set_loc(src)
 
 	proc/take_damage(var/damage_amount = 0)
 		if (!damage_amount)
@@ -1560,20 +1493,21 @@
 
 		src.build_icon()
 
+	proc/update_resource_amount(mat_id, amt)
+		src.resource_amounts[mat_id] = max(src.resource_amounts[mat_id] + amt, 0)
+
 	proc/claim_free_resources()
 		if (src.deconstruct_flags & DECON_BUILT)
 			free_resource_amt = 0
-		if (free_resources.len && free_resource_amt > 0)
-			var/looper = src.free_resource_amt
+		else if (free_resources.len && free_resource_amt > 0)
+			for (var/X in src.free_resources)
+				if (ispath(X))
+					var/obj/item/material_piece/P = unpool(X)
+					P.set_loc(src)
+					if (free_resource_amt > 1)
+						P.change_stack_amount(free_resource_amt - P.amount)
+					src.update_resource_amount(P.material.mat_id, free_resource_amt * 10)
 			free_resource_amt = 0
-
-			while (looper > 0)
-				looper--
-				for (var/X in src.free_resources)
-					if (ispath(X))
-						var/atom/movable/A = unpool(X)
-						A.set_loc(src)
-						LAGCHECK(LAG_HIGH)
 		else
 			logTheThing("debug", null, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
 
