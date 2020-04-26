@@ -1101,7 +1101,7 @@ var/global/noir = 0
 				if (picklist && picklist.len >= 1)
 					var/string_version
 					for(pick in picklist)
-						X.bioHolder.AddEffect(pick)
+						X.bioHolder.AddEffect(pick, magical = 1)
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""

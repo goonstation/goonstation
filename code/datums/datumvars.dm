@@ -68,7 +68,7 @@
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
-	set popup_menu = 0
+	set popup_menu = 1
 
 	if( !src.holder || src.holder.level < LEVEL_PA )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to use view variables while being below PA.")

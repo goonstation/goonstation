@@ -260,6 +260,12 @@
 			if (res >= 100)
 				return 100 //a singular item with resistance 100 or higher will block ALL
 			. += res
+		if(C.hasProperty("I_disorient_resist")) //cursed
+			res = C.getProperty("I_disorient_resist")
+			if (res >= 100)
+				return 100 //a singular item with resistance 100 or higher will block ALL
+			. += res
+
 
 	.= clamp(.,0,90) //0 to 90 range
 
