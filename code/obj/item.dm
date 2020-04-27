@@ -574,7 +574,7 @@
 
 
 		var/is_storage = istype(over_object,/obj/item/storage)
-		if ((!cant_drop || !cant_self_remove) && (is_storage || istype(over_object, /obj/screen/hud)))
+		if (is_storage || istype(over_object, /obj/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
 			else if (on_turf)
@@ -592,6 +592,8 @@
 			over_object = hud.master //If dragged into backpack HUD, change over_object to the backpack
 
 	if (istype(over_object,/obj/item/storage) && over_object != src)
+		if (src.cant_self_remove|| src.cant_drop)
+			return
 		var/obj/item/storage/storage = over_object
 		if (istype(storage.loc, /turf))
 			if (!(in_range(src,user) && in_range(storage,user)))
