@@ -121,7 +121,8 @@
 
 				//bleed
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">[P] pierces through your armor!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">[P] pierces through your armor!</span>", 4)
 					src.TakeDamage("chest", damage/max((armor_value_bullet/3), 1), 0, 0, DAMAGE_STAB)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/max(armor_value_bullet/3), 0, 0, target_organ)
@@ -166,7 +167,8 @@
 					src.stamina_stun()
 				//bleed
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_BLUNT)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/armor_value_bullet, 0, 0, target_organ)
@@ -187,7 +189,8 @@
 					src.stuttering = stun
 
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
@@ -208,7 +211,8 @@
 					return
 
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 					src.update_burning(damage/armor_value_bullet)
 					if (src.organHolder && prob(50))
@@ -236,7 +240,8 @@
 
 				if (P.proj_data.reagent_payload)
 					if (armor_value_bullet > 1)
-						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+						if (!P.proj_data.nomsg)
+							show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 						src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_STAB)
 					else
 						src.TakeDamage("chest", damage, 0, 0, DAMAGE_STAB)
