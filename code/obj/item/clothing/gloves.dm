@@ -103,7 +103,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			src.specialoverride = new /datum/item_special/stungloves()
-			src.overridespecial = 1
 			src.material_prints += ", electrically charged"
 			W:amount--
 			return
@@ -129,6 +128,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				C.use(2500)
 				src.icon_state = "stun"
 				src.item_state = "stun"
+				src.overridespecial = 1
 				C.updateicon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
 				user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span style=\"color:blue\">The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
@@ -431,7 +431,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if(slot != SLOT_GLOVES) return 0 
 
 		var/netnum = 0
-
+		..()
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents) //Needed because cables have invisibility 101. Making them disappear from most LISTS.
 				netnum = C.netnum
