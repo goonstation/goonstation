@@ -1,5 +1,9 @@
 
 (t)mon apr 27 20
+(u)zjdtmkhzt
+(p)423
+(e)⚖🆕|balance, enhancement
+(+)Minor pathology GUI improvements. You can now use the + and - buttons to select multiple segments when splicing.
 (u)Moonlol
 (p)447
 (e)🆕🗺|enhancement, mapping
