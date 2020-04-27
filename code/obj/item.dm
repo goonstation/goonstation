@@ -574,7 +574,7 @@
 
 
 		var/is_storage = istype(over_object,/obj/item/storage)
-		if (is_storage || istype(over_object, /obj/screen/hud))
+		if ((!cant_drop || !cant_self_remove) && (is_storage || istype(over_object, /obj/screen/hud)))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
 			else if (on_turf)
