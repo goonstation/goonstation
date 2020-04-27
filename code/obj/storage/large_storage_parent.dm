@@ -302,7 +302,7 @@
 		if (!src.is_acceptable_content(O))
 			return
 
-		if (isitem(O) && (O:cant_drop || (issilicon(user) && O.loc == user))) //For borg held items
+		if (isitem(O) && (O:cant_drop || (O:cant_self_remove && O.loc == user) || (issilicon(user) && O.loc == user))) //For borg held items
 			user.show_text("You can't put that in [src] when it's attached to you!", "red")
 			return
 
