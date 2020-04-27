@@ -2030,13 +2030,13 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2071,12 +2071,12 @@ datum
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
 					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
-				return
+				..()
 
 			on_remove()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 					holder.my_atom:remove_stam_mod_regen("caffeine rush")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()

@@ -831,11 +831,6 @@ datum
 			thirst_value = -0.2
 			stun_resist = 98
 
-			on_add()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-				..()
-
 			on_remove()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 					holder.my_atom:remove_stam_mod_regen("triplemeth")
