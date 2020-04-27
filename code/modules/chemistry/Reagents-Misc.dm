@@ -1852,7 +1852,7 @@ datum
 
 
 			on_add()
-				if if (ismob(holder.my_atom))
+				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
 						M.add_stun_resist_mod("reagent_martian_flesh", 15)
