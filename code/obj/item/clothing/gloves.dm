@@ -431,7 +431,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if(slot != SLOT_GLOVES) return 0 
 
 		var/netnum = 0
-		..()
+		if(src.overridespecial)
+			..()
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents) //Needed because cables have invisibility 101. Making them disappear from most LISTS.
 				netnum = C.netnum
@@ -504,7 +505,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			for(var/d in dummies)
 				qdel(d)
 
-			return 1
+		return 1
 
 /obj/item/clothing/gloves/water_wings
 	name = "water wings"
