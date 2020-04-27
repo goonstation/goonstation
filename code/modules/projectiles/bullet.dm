@@ -53,7 +53,7 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (ishuman(hit) && src.hit_type)
 			take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
-			hit.changeStatus("staggered", clamp(P.power, 5, 1) SECONDS)
+			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		..()//uh, what the fuck, call your parent
 		//return // BULLETS CANNOT BLEED, HAINE
 
