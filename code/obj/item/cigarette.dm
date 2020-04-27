@@ -16,11 +16,19 @@
 
 	New(var/obj/item/clothing/mask/cigarette/cig1, var/obj/item/clothing/mask/cigarette/cig2)
 		..()
-		cig1.set_loc(src)
-		cig2.set_loc(src)
-		if (cig1.on || cig2.on)
-			src.light()
-			src.visible_message("<span style='color:red'><b>[src] is set alight!</span>")
+
+		if (cig1 && cig2)
+			cig1.set_loc(src)
+			cig2.set_loc(src)
+			if (cig1.on || cig2.on)
+				src.light()
+				src.visible_message("<span style='color:red'><b>[src] is set alight!</span>")
+		else	//Spawned in by admins? random number of cigs
+			var/r_int = rand(3,8)
+			for (var/i = 0 to r_int)
+				contents += new/obj/item/clothing/mask/cigarette()
+
+		update_icon()
 
 	get_desc()
 		. += "There's [islist(contents) ? contents.len : "some unknown amount of"] cigarettes in there."
@@ -70,8 +78,8 @@
 			if (8 to 11) 	state_num = 6
 			if (12 to 15) 	state_num = 7
 			if (16 to 20) 	state_num = 8
-			if (21) 		state_num = 9
-
+			if (max_cigs) 	state_num = 9
+			else 			state_num = 9
 
 		if (on)
 			icon_state = "cig_bundle-[state_num]-o"	//9 is the amount of icon states
@@ -79,6 +87,13 @@
 			icon_state = "cig_bundle-[state_num]"
 
 	attack_hand(mob/user as mob)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.wear_mask != src)
+				..()
+				return
+
+
 		if (islist(contents) && contents.len > 0)
 			var/obj/item/clothing/mask/cigarette/C = pick(contents)
 			contents -= C
@@ -92,17 +107,20 @@
 			if (contents.len == 1)
 				var/obj/item/clothing/mask/cigarette/last_cig = contents[1]
 				if (istype(last_cig))
-					// if (last_cig.on && !(last_cig in processing_items))
-					// 	processing_items.Add(last_cig)
-					last_cig.set_loc(user)
+					// last_cig.set_loc(user)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.wear_mask == src)
+							last_cig.set_loc(user)
 							H.u_equip(src)
 							H.force_equip(last_cig, H.slot_wear_mask)
-							return
+						else
+							last_cig.set_loc(get_turf(src))
+
+
 				qdel(src)
-			update_icon()
+			else
+				update_icon()
 
 
 	dropped(mob/user as mob)
