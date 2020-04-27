@@ -46,6 +46,8 @@ datum
 		var/heat_capacity = 100 /* how much heat a reagent can hold */
 		var/blocks_sight_gas = 0 //opacity
 		var/pierces_outerwear = 0//whether or not this penetrates outerwear that may protect the victim(e.g. biosuit)
+		var/stun_resist = 0
+
 		New()
 			..()
 			if (src.viscosity == 0 && src.reagent_state == SOLID)
@@ -68,9 +70,17 @@ datum
 
 
 		proc/on_add()
+			if (stun_resist > 0)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_[src.id]", stun_resist)
 			return
 
 		proc/on_remove()
+			if (stun_resist > 0)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
 
 		proc/on_copy(var/datum/reagent/new_reagent)
