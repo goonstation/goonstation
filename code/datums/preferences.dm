@@ -224,18 +224,7 @@ datum/preferences
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
 
 		var/display_gender = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)")
-/*
-		if (!AH.pronouns)
-			if (src.gender == MALE)
-				display_gender = "Male (he/him)"
-			else if (src.gender == FEMALE)
-				display_gender = "Female (she/her)"
-		else
-			if (src.gender == MALE)
-				display_gender = "Male (they/them)"
-			else if (src.gender == FEMALE)
-				display_gender = "Female (they/them)"
-*/
+
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
 		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""

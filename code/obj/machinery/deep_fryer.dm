@@ -30,7 +30,7 @@
 		if (src.fryitem)
 			boutput(user, "<span style=\"color:red\">There is already something in the fryer!</span>")
 			return
-		if (istype(W, /obj/item/reagent_containers/food/snacks/fry_holder))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/shell/deepfry))
 			boutput(user, "<span style=\"color:red\">Your cooking skills are not up to the legendary Doublefry technique.</span>")
 			return
 
@@ -181,7 +181,7 @@
 			UnsubscribeProcess()
 			return
 
-		var/obj/item/reagent_containers/food/snacks/fry_holder/fryholder = new /obj/item/reagent_containers/food/snacks/fry_holder(src)
+		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new /obj/item/reagent_containers/food/snacks/shell/deepfry(src)
 
 		if (src.cooktime >= 60)
 			if (ismob(src.fryitem))
@@ -227,6 +227,7 @@
 				fryholder.reagents.maximum_volume += 25
 				fryholder.reagents.add_reagent("friedessence",25)
 
+		fryholder.charcoaliness = src.cooktime
 		fryholder.icon = composite
 		fryholder.overlays = fryitem.overlays
 		fryholder.set_loc(get_turf(src))

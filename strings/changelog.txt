@@ -1,4 +1,52 @@
 
+(t)mon apr 27 20
+(u)Moonlol
+(p)447
+(e)🆕🗺|enhancement, mapping
+(+)Murderbox now features test dummies.
+(t)sun apr 26 20
+(u)Tarmunora
+(p)239
+(e)⚖🆕|balance, enhancement
+(*)Changed pod(etc)seeking 40mmHE shells to have a high chance of not detonating on impact unless they have found a target to seek. Additionally boosted their direct-impact stats to compensate somewhat.
+(u)saccharineChampion
+(p)415
+(e)🆕|enhancement
+(+)You can now load deep-fried (and grilled) stuff, as well as other particularly coal-like culinary mistakes, into the engine's furnaces. Credit to Studenterhue for the idea & Flourish and ZeWaka for code help!
+(u)mbc
+(p)443
+(e)🎨|sprites
+(*)You no longer need a crowbar to access a pod's maint/lock panel, just click it with free hand and use the multicontext buttons. Also fixed bugs where you could not hit a pod with an item.
+(u)Uta
+(p)426
+(e)🐛|bug
+(*)Mediborg can now perform surgery on organs requiring L/R side selection. Use tool slot 1 for the left and slot 3 for the right
+(t)sat apr 25 20
+(u)Tarmunora
+(p)422
+(e)⚖🎨|balance, sprites
+(+)Security barriers have a slightly more robust block, but only when turned on
+(u)mbc
+(p)431
+(e)|
+(*)Moved all pod verbs to a multicontext menu (just click the pod) instead of rclick verbs
+(u)Kubius
+(p)429
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch twelve - more cargo pads and miscellaneous tuneups.
+(u)Tarmunora
+(p)410
+(e)⚖🆕|balance, enhancement
+(+)Added special block functionality to backpacks/satchels.
+(u)mbc
+(p)421
+(e)|
+(+)Click+Drag chairs in order to rotate them. They also rotate when you are buckled in and trying to move.
+(u)mbc
+(p)420
+(e)|
+(*)Shoving a person who is downed and using item limbs will cause them to attack themselves just like they would if they were standing upright.
+(+)Fixed bug where item limbs wouldn't show icons on your hud.
 (t)fri apr 24 20
 (u)Flourish
 (p)400
