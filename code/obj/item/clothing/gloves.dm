@@ -21,12 +21,14 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	var/material_prints = null
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
-
 	var/glove_ID = null
 
 	var/crit_override = 0 //overrides user's stamina crit chance, unless the user has some special limb attached
 	var/bonus_crit_chance = 0 //bonus stamina crit chance; used additively in melee_attack_procs if crit_override is 0, otherwise replaces existing crit chance
 	var/stamina_dmg_mult = 0 //used additively in melee_attack_procs
+
+	var/overridespecial = 0
+	var/datum/item_special/specialoverride = null
 
 	setupProperties()
 		..()
@@ -37,6 +39,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	New()
 		..() // your parents miss you
+		flags |= HAS_EQUIP_CLICK
 		SPAWN_DBG(2 SECONDS)
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
@@ -99,6 +102,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
 			src.stunready = 1
+			src.specialoverride = new /datum/item_special/stungloves()
+			src.overridespecial = 1
 			src.material_prints += ", electrically charged"
 			W:amount--
 			return
@@ -166,6 +171,12 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	proc/special_attack(var/mob/target)
 		boutput(usr, "Your gloves do nothing special")
 		return
+
+	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
+		if(target == user || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
+		if(slot != SLOT_GLOVES || !overridespecial) return 0
+		specialoverride.pixelaction(target,params,user)
+		return 1
 
 
 /obj/item/clothing/gloves/long // adhara stuff
@@ -416,8 +427,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		A.use_power(amount, ENVIRON)
 
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
-		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return
-		if(slot != SLOT_GLOVES) return
+		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
+		if(slot != SLOT_GLOVES) return 0 
 
 		var/netnum = 0
 
@@ -430,7 +441,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 			if(!netnum)
 				boutput(user, "<span style=\"color:red\">The gloves find no cable to draw power from.</span>")
-				return
+				return 1
 
 			spam_flag = 1
 			SPAWN_DBG(4 SECONDS) spam_flag = 0

@@ -452,6 +452,51 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
+
+	stungloves
+		cooldown = 10
+		staminaCost = 0
+		moveDelay = 0//5
+		moveDelayDuration = 0//4
+		damageMult = 1
+
+		image = "simple"
+		name = "stunner"
+		desc = "Attack in direction. No crits."
+
+		onAdd()
+			if(master)
+				overrideStaminaDamage = master.stamina_damage * 1
+			return
+
+		pixelaction(atom/target, params, mob/user, reach)
+			if(!isturf(target.loc) && !isturf(target)) return
+			if(!usable(user)) return
+			if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/direction = get_dir_pixel(user, target, params)
+				var/turf/turf = get_step(user, direction)
+
+				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				S.setup(turf)
+
+				var/hit = 0
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					for(var/atom/A in turf)
+						if(isTarget(A))
+							H.stun_glove_attack(A)
+							hit = 1
+							break
+
+				afterUse(user)
+
+				if (!hit)
+					playsound(get_turf(user), 'sound/effects/swoosh.ogg', 50, 0)
+			return
+
+
+
 	rangestab
 		cooldown = 0 //10
 		staminaCost = 5
