@@ -820,8 +820,14 @@
 			return
 
 		if (buckled && buckled.anchored)
-			canmove = 0
-			return
+			if (istype(src.buckled, /obj/stool/chair)) //this check so we can still rotate the chairs on their slower delay even if we are anchored
+				var/obj/stool/chair/chair = src.buckled
+				if (!chair.rotatable)
+					canmove = 0
+					return
+			else
+				canmove = 0
+				return
 
 		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
 			canmove = 0
@@ -1193,9 +1199,8 @@
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
 				protection += 1
-				if (G.can_block(damage_type))
-					if (G != src.equipped()) // bare handed block is less protective
-						protection += 1
+				if (G != src.equipped()) // bare handed block is less protective
+					protection += G.can_block(damage_type)
 
 		return protection
 

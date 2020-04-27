@@ -886,9 +886,9 @@ TRAYS
 				user.u_equip(FOOD)
 				qdel(FOOD)
 			else if(!src.seaweed)
-				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly :P</span>")
+				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly.</span>")
 			else
-				boutput(user,"<span style=\"color:red\">You need sticky rice tooooooo!</span>")
+				boutput(user,"<span style=\"color:red\">You need sticky rice!</span>")
 		else
 			..()
 

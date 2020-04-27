@@ -22,8 +22,9 @@
 				if(isSameMaterial(A.material, X.material))
 					matches.Add(A)
 
+			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
-			for(var/obj/item/material_piece/G in get_output_location())
+			for(var/obj/item/material_piece/G in output_location)
 				if(isSameMaterial(G.material, X.material))
 					exists_nearby = G
 					break
@@ -34,14 +35,22 @@
 			for(var/obj/item/M in matches)
 				totalAmount += M.amount
 
+			var/mat_id
+
 			if(exists_nearby)
 				exists_nearby.change_stack_amount(totalAmount)
+				mat_id = exists_nearby.material.mat_id
 			else
 				var/newType = getProcessedMaterialForm(X.material)
 				var/obj/item/material_piece/P = unpool(newType)
 				P.set_loc(get_output_location())
 				P.setMaterial(copyMaterial(X.material))
 				P.change_stack_amount(totalAmount - P.amount)
+				mat_id = P.material.mat_id
+
+			if (istype(output_location, /obj/machinery/manufacturer))
+				var/obj/machinery/manufacturer/M = output_location
+				M.update_resource_amount(mat_id, totalAmount * 10)
 
 			for(var/atom/movable/D in matches)
 				D.set_loc(null)

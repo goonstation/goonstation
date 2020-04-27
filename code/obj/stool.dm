@@ -636,6 +636,11 @@
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
+	MouseDrop(atom/over_object as mob|obj)
+		if(get_dist(src,usr) <= 1)
+			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
+		..()
+
 	can_buckle(var/mob/M, var/mob/user)
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
@@ -760,9 +765,13 @@
 #endif
 		else return ..()
 
-	proc/rotate()
+	proc/rotate(var/face_dir = 0)
 		if (rotatable)
-			src.dir = turn(src.dir, 90)
+			if (!face_dir)
+				src.dir = turn(src.dir, 90)
+			else
+				src.dir = face_dir
+
 			if (src.dir == NORTH)
 				src.layer = FLY_LAYER+1
 			else
