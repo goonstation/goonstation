@@ -129,7 +129,12 @@
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
-
+		if(istype(src, /obj/item/clothing/gloves))
+			var/obj/item/clothing/gloves/G = src
+			if(G.specialoverride && G.overridespecial)
+				var/content = resource("images/tooltips/[G.specialoverride.image].png")
+				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
+			. = jointext(., "")
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
