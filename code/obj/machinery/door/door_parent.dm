@@ -426,9 +426,12 @@
 			s.set_up(2, 1, src)
 			s.start()
 
-		if (user && src.health <= health_max / 2 && istype(src, /obj/machinery/door/airlock) )
+		if (user && src.health <= health_max * 0.55 && istype(src, /obj/machinery/door/airlock) )
 			var/obj/machinery/door/airlock/A = src
 			A.shock(user, 3)
+
+		if (prob(2) && src.health <= health_max * 0.35 && istype(src, /obj/machinery/door/airlock) )
+			src.open()
 
 
 /obj/machinery/door/bullet_act(var/obj/projectile/P)
