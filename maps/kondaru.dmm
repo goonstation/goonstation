@@ -2790,7 +2790,7 @@
 "bcn" = (/obj/disposalpipe/switch_junction/left/south{mail_tag = "kitchen"; name = "kitchen mail junction"},/turf/simulated/floor/specialroom/bar,/area/station/crew_quarters/cafeteria)
 "bco" = (/obj/stool/bar,/turf/simulated/floor/carpet/green/fancy/edge/west,/area/station/crew_quarters/cafeteria)
 "bcp" = (/obj/submachine/slot_machine,/turf/simulated/floor/carpet/green/fancy/edge/east,/area/station/crew_quarters/cafeteria)
-"bcq" = (/obj/stool/barber_chair,/obj/submachine/chef_sink/chem_sink{dir = 1},/turf/simulated/floor/wood,/area/station/crew_quarters/barber_shop)
+"bcq" = (/obj/submachine/chef_sink/chem_sink{dir = 1},/obj/stool/chair/comfy/barber_chair,/turf/simulated/floor/wood,/area/station/crew_quarters/barber_shop)
 "bcr" = (/obj/cable{icon_state = "2-4"},/turf/simulated/floor/wood/two,/area/station/crew_quarters/barber_shop)
 "bcs" = (/obj/table/auto,/obj/machinery/cashreg,/obj/machinery/power/apc/autoname_east,/obj/machinery/light,/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/carpet/red/fancy/edge/west,/area/station/crew_quarters/barber_shop)
 "bct" = (/obj/table/auto,/obj/item/reagent_containers/patch/mini/synthflesh,/obj/item/reagent_containers/patch/mini/synthflesh,/obj/item/storage/firstaid/oxygen,/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor/green/corner,/area/station/storage/emergency)
