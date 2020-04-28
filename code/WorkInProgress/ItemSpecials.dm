@@ -1125,7 +1125,7 @@
 				if (master)
 					if(istype(master,/obj/item/device/light/zippo))
 						var/obj/item/device/light/zippo/Z = master
-						if (Z.reagents.get_reagent_amount("fuel") > 0)
+						if (Z.reagents.get_reagent_amount("fuel"))
 							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
