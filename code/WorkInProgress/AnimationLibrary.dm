@@ -422,6 +422,88 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
+	if (!M || !M.attack_particle || !origin || !target || !muzzle_anim) return
+
+//just convenience when modifying how it looks, will prolly delete later
+	var/x_offset = 26
+	var/y_offset = 26
+	var/diag_x_offset = 18
+	var/diag_y_offset = 18
+
+	var/firing_dir = angle_to_dir(get_angle(origin, target)) //(arctan(target.x - origin.x, target.y - origin.y))
+	switch(firing_dir) //so we can figure out the correct pixel offset
+		if (NORTH)
+			M.attack_particle.pixel_y = y_offset
+			firing_dir = SOUTH //dont worry about it bandaid fixes for life
+		if (SOUTH)
+			M.attack_particle.pixel_y = -y_offset
+			firing_dir = NORTH //same as above
+		if (EAST)
+			M.attack_particle.pixel_x = x_offset
+		if (WEST)
+			M.attack_particle.pixel_x = -x_offset
+		if (NORTHEAST)
+			M.attack_particle.pixel_y = diag_y_offset
+			M.attack_particle.pixel_x = diag_x_offset
+		if (NORTHWEST)
+			M.attack_particle.pixel_y = diag_y_offset
+			M.attack_particle.pixel_x = -diag_x_offset
+		if (SOUTHEAST)
+			M.attack_particle.pixel_y = -diag_y_offset
+			M.attack_particle.pixel_x = diag_x_offset
+		if (SOUTHWEST)
+			M.attack_particle.pixel_y = -diag_y_offset
+			M.attack_particle.pixel_x = -diag_x_offset
+
+	var/matrix/start = matrix()//(I.transform)
+	M.attack_particle.transform = start
+
+	M.attack_particle.dir = firing_dir
+	M.attack_particle.set_loc(origin)
+	M.attack_particle.layer = MOB_EFFECT_LAYER //so it looks like its from the weapon maybe??
+
+	M.vis_contents.Add(M.attack_particle) //so it doesnt linger when we move
+	M.attack_particle.invisibility = M.invisibility
+	M.last_interact_particle = world.time
+	M.attack_particle.alpha = 255
+	M.attack_particle.icon = 'icons/mob/mob.dmi'
+	flick(muzzle_anim, M.attack_particle)
+
+	SPAWN_DBG(1.7 DECI SECONDS) //clear all the bs we had to do
+		M.attack_particle.alpha = 0
+		M.attack_particle.pixel_x = 0
+		M.attack_particle.pixel_y = 0
+		M.vis_contents.Remove(M.attack_particle)
+		M.attack_particle.layer = EFFECTS_LAYER_BASE
+
+/*						var/obj/effects/muzzle_flash/flash = unpool(/obj/effects/muzzle_flash)
+						flash.set_loc(origin_turf)
+						flash.icon_state = src.muzzle_flash_state
+						switch(firing_dir) //so we can figure out the correct pixel offset
+							if (NORTH)
+								flash.pixel_y += 32
+							if (SOUTH)
+								flash.pixel_y -= 32
+							if (EAST)
+								flash.pixel_x += 32
+							if (WEST)
+								flash.pixel_x -= 32
+							if (NORTHEAST)
+								flash.pixel_y += 32
+								flash.pixel_x += 32
+							if (NORTHWEST)
+								flash.pixel_y += 32
+								flash.pixel_x -= 32
+							if (SOUTHEAST)
+								flash.pixel_y -= 32
+								flash.pixel_x += 32
+							if (SOUTHWEST)
+								flash.pixel_y -= 32
+								flash.pixel_x -= 32
+						flash.dir = firing_dir //so it is at the correct angle
+*/
+
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation

@@ -351,7 +351,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	if (!process_ammo(user))
 		return
-	if (!istype(target, /turf) || !istype(start, /turf))
+	if (!isturf(target) || !isturf(start))
 		return
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return

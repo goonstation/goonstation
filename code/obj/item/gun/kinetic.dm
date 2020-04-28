@@ -15,6 +15,9 @@
 	var/allowReverseReload = 1 //Use gun on ammo to reload
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
+	var/muzzle_flash = 1 //set to 0 if you dont want any muzzle flash with this gun
+	var/muzzle_flash_state = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -185,6 +188,10 @@
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
+			if (src.muzzle_flash) //probably reinventing the wheel here as far as all of this goes, but idk
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash_state)
 		..()
 
 	proc/ejectcasings()
@@ -319,6 +326,7 @@
 	caliber = 0.41
 	max_ammo_capacity = 2
 	w_class = 2
+	muzzle_flash = 0 //small gun
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -619,6 +627,7 @@
 	max_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = 1
+	muzzle_flash = 0 //stealthy gun
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22
@@ -678,6 +687,7 @@
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
+	muzzle_flash = 0 //grenade launcher
 
 	New()
 		ammo = new/obj/item/ammo/bullets/smoke/single
@@ -715,6 +725,7 @@
 	caliber = 1.58
 	max_ammo_capacity = 1
 	can_dual_wield = 0
+	muzzle_flash = 0 //rocket launcher
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg
@@ -760,6 +771,7 @@
 	icon_state = "airzooka"
 	max_ammo_capacity = 10
 	caliber = 4.6 // I rolled a dice
+	muzzle_flash = 0 //it uses air not booms
 
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
@@ -822,6 +834,7 @@
 	max_ammo_capacity = 30
 	auto_eject = 0
 	hide_attack = 1
+	muzzle_flash = 0 //silenced + supressed likely
 
 	New()
 		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/pistol
@@ -1232,6 +1245,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
+	muzzle_flash = 0 //rocket launcher
 
 	New()
 		ammo = new /obj/item/ammo/bullets/antisingularity
