@@ -73,7 +73,7 @@
 			blood_slash(M, 3)
 			M.TakeDamage("head", 10, 0)
 			M.updatehealth()
-			boutput(M, "<span style=\"color:red\">The gaze seems to almost burrow into your skill. You feel like your head is going to split open.</span>")
+			boutput(M, "<span style=\"color:red\">The gaze seems to almost burrow into your skull. You feel like your head is going to split open.</span>")
 		else if(focus_level <= 5)
 			M.do_disorient(80, weakened = 3 SECONDS, stunned = 0, paralysis = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
 			blood_slash(M, 5)
@@ -141,7 +141,7 @@
 
 /datum/plant/artifact/dripper
 	name = "Dripper"
-	override_icon_state = "dripper"
+	override_icon_state = "Dripper"
 	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop
 	unique_seed = /obj/item/seed/alien/dripper
 	starthealth = 4
@@ -154,7 +154,7 @@
 
 /datum/plant/artifact/rocks
 	name = "Rock"
-	override_icon_state = "rocks"
+	override_icon_state = "Rocks"
 	crop = /obj/item/raw_material/rock
 	unique_seed = /obj/item/seed/alien/rocks
 	starthealth = 80
@@ -168,7 +168,7 @@
 
 /datum/plant/artifact/litelotus
 	name = "Light Lotus"
-	override_icon_state = "litelotus"
+	override_icon_state = "Litelotus"
 	crop = /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	unique_seed = /obj/item/seed/alien/litelotus
 	starthealth = 30
@@ -181,7 +181,7 @@
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
-	override_icon_state = "plasma"
+	override_icon_state = "Plasma"
 	crop = /obj/critter/spore
 	unique_seed = /obj/item/seed/alien/plasma
 	starthealth = 20
@@ -193,7 +193,7 @@
 
 /datum/plant/artifact/goldfish
 	name = "Goldfish"
-	override_icon_state = "goldfish"
+	override_icon_state = "Goldfish"
 	crop = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	unique_seed = /obj/item/seed/alien/goldfish
 	starthealth = 40
@@ -205,7 +205,7 @@
 
 /datum/plant/artifact/cat
 	name = "Synthetic Cat"
-	override_icon_state = "cat"
+	override_icon_state = "Cat"
 	crop = /obj/critter/cat/synth
 	unique_seed = /obj/item/seed/alien/cat
 	starthealth = 90 // 9 lives
