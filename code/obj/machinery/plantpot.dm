@@ -818,7 +818,7 @@
 				else if(MUT.name_prefix || MUT.name_suffix)
 					src.name = "\improper [MUT.name_prefix][growing.name][MUT.name_suffix] plant"
 			else
-				src.name = "\improper [growing.name] plant"
+				src.name = "\improper [growing.name] plant" //TODO: add optional suffix eg. "tree"
 		if(src.dead)
 			src.name = "dead " + src.name
 
@@ -1193,6 +1193,8 @@
 				boutput(user, "<span style=\"color:blue\">You harvested [cropcount] items and [seedcount] seeds.</span>")
 			else
 				boutput(user, "<span style=\"color:blue\">You harvested [cropcount] items.</span>")
+
+			playsound(src.loc, "rustle", 50, 1, -5, 2)
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
