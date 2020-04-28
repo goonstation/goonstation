@@ -756,7 +756,8 @@
 			var/dir = text2num(href_list["dir"])
 			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(manipulating))
 				manipulating = true
-				var/manip_cooldown = src.manip.loaded.reference.maliciousness<65? 1 DECI SECONDS : 20 DECI SECONDS
+				var/mal = src.manip.loaded.reference.maliciousness
+				var/manip_cooldown = mal < 15 ? 1 : mal < 65 ? 10 : 20
 				SPAWN_DBG(manip_cooldown)
 					var/act = src.manip.loaded.manipulate(mut_type, dir)
 					var/out
