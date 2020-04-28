@@ -75,6 +75,7 @@ datum/controller/process/items
 
 			return 1
 	return 0
+	..()
 
 
 /obj/item/proc/handle_katanaparry(mob/target, mob/user)
@@ -99,3 +100,37 @@ datum/controller/process/items
 
 			return 1
 	return 0
+	..()
+
+/obj/item/katana/handle_katanaparry(mob/target,mob/user)
+	..()
+	var/mob/living/carbon/human/H = target
+	if(handle_katanaparry(H,user))
+		if (H.job == "Janitor" && (H.find_type_in_hand(/obj/item/mop,"left")||H.find_type_in_hand(/obj/item/mop,"right")))
+			if (H.find_type_in_hand(/obj/item/mop,"left"))
+				var/obj/item/mop/mop = H.l_hand
+				if(prob(33))
+					H.u_equip(mop)
+					qdel(mop)
+			else if (H.find_type_in_hand(/obj/item/mop,"right"))
+				var/obj/item/mop/mop = H.r_hand
+				if(prob(33))
+					H.u_equip(mop)
+					qdel(mop)
+
+/obj/item/sword/handle_parry(mob/target,mob/user)
+	..()
+	var/mob/living/carbon/human/H = target
+	if(handle_parry(H,user))
+		if (H.job == "Janitor" && (H.find_type_in_hand(/obj/item/mop,"left")||H.find_type_in_hand(/obj/item/mop,"right")))
+			if (H.find_type_in_hand(/obj/item/mop,"left"))
+				var/obj/item/mop/mop = H.l_hand
+				if(prob(69))//haha funny sex number
+					H.u_equip(mop)
+					qdel(mop)
+			else if (H.find_type_in_hand(/obj/item/mop,"right"))
+				var/obj/item/mop/mop = H.r_hand
+				if(prob(69))
+					H.u_equip(mop)
+					qdel(mop)
+

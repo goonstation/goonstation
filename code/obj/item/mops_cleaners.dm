@@ -251,9 +251,8 @@ WET FLOOR SIGN
 
 /obj/item/mop/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if (ishuman(user))
-		if ((handle_katanaparry(target, user))||handle_parry(target, user))
+		if (handle_katanaparry(target, user)||handle_parry(target,user))
 			return 1
-
 		..()
 
 /obj/item/mop/New()
