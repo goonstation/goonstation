@@ -5,12 +5,13 @@
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
-	layer = OBJ_LAYER - 0.1
+	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 	dir = SOUTH
 
+/*	This was made for the old railing sprites that just didn't work out :c
 	proc/layerify()
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 1
@@ -29,7 +30,7 @@
 		SPAWN_DBG(1 DECI SECOND) // why are you like this why is this necessary
 		layerify()
 
-
+ */
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
 		if (O == null)
 			logTheThing("debug", src, O, "Target is null! CanPass failed.")
@@ -38,12 +39,20 @@
 			return 1
 		if(air_group || (height==0))
 			return 1
-		if (src.dir == NORTHWEST || src.dir == NORTHEAST)
-			return 0
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST)
-			return 1
 		if(get_dir(loc, O) == dir)
 			return !density
+		if (src.dir == NORTHWEST)
+			if(O.dir == WEST || O.dir == NORTH)
+				return !density
+		if (src.dir == NORTHEAST)
+			if(O.dir == EAST || O.dir == NORTH)
+				return !density
+		if (src.dir == SOUTHWEST)
+			if(O.dir == WEST || O.dir == SOUTH)
+				return !density
+		if (src.dir == SOUTHEAST)
+			if(O.dir == EAST || O.dir == SOUTH)
+				return !density
 		else
 			return 1
 
@@ -87,10 +96,12 @@
 			world.log << "CheckExit: Passed all checks! Pass!"
 			return 1
  */
+
+/*
 	Turn()
 		..()
 		layerify()
-
+ */
 	attackby(obj/item/W as obj, mob/user)
 		if (istype(W, /obj/item/weldingtool))
 			var/obj/item/weldingtool/WELD = W
@@ -119,6 +130,53 @@
 
 	blue
 		color = "#0026ff"
+
+	// Inner railings so you can make some weirder connections work!
+	inner
+		icon_state = "railing-inner"
+
+		CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
+			if (O == null)
+				..()
+			if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+				..()
+			if(air_group || (height==0))
+				..()
+			if (src.dir == NORTHWEST || src.dir == NORTHEAST || (src.dir == SOUTHWEST || src.dir == SOUTHEAST) )
+				return 1
+			if(get_dir(loc, O) == dir)
+				return !density
+			// If we're facing north or south (both east and west are covered in both railing sprite dirs)
+			if(src.dir == SOUTH || src.dir == NORTH)
+				if(O.dir == WEST || O.dir == EAST)
+					return !density
+			// ^ Same thing here but for east and west! v
+			if(src.dir == EAST || src.dir == WEST)
+				if(O.dir == NORTH || O.dir == SOUTH)
+					return !density
+			else
+				..()
+
+		orange
+			color = "#ff7b00"
+
+		red
+			color = "#ff0000"
+
+		green
+			color = "#09ff00"
+
+		yellow
+			color = "#ffe600"
+
+		cyan
+			color = "#00f7ff"
+
+		purple
+			color = "#cc00ff"
+
+		blue
+			color = "#0026ff"
 
 /datum/action/bar/icon/railingDeconstruct
 	duration = 30
