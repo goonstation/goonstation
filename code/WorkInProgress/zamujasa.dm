@@ -406,7 +406,17 @@
 
 		SPAWN_DBG(0)
 			for (var/obj/item/I in gunsim)
-				qdel(I)
+				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
+					continue
+				else
+					qdel(I)
+
+			for (var/atom/S in gunsim)
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+					qdel(S)
+
+
+/*
 			for (var/obj/storage/S in gunsim)
 				qdel(S)
 			for (var/obj/artifact/A in gunsim)
@@ -417,13 +427,37 @@
 				qdel(B)
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
-
+*/
 		SPAWN_DBG(60 SECONDS)
 			active = 0
 			alpha = 255
 			icon_state = "cleanbot1"
 
 
+/obj/death_button/create_dummy
+	name = "Button that creates a test dummy"
+	desc = "click this to create a test dummy"
+	icon = 'icons/mob/human.dmi'
+	icon_state = "ghost"
+	var/active = 0
+	alpha = 255
+
+	attack_hand(mob/user as mob)
+		if (active)
+			boutput(user, "did you already kill the dummy? either way wait a bit!")
+			return
+
+		active = 1
+		alpha = 128
+		user.visible_message("Creatin dummy for you, you dummy")
+
+		var/mob/living/carbon/human/tdummy/T = new(get_turf(src))
+		T.x = src.x + 1 // move it to the right
+
+
+		SPAWN_DBG(10 SECONDS)
+			active = 0
+			alpha = 255
 
 
 /proc/fancy_pressure_bar(var/pressure, var/max_pressure, var/width = 300)

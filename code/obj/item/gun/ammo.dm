@@ -627,6 +627,11 @@
 		name = "40mm HE pod-seeking shells"
 		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
 
+	knocker
+		sname = "40mm HE Knocker"
+		name = "40mm HE airlock-breaching shells"
+		ammo_type = new/datum/projectile/bullet/autocannon/knocker
+
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm HEDP"
 	name = "40mm HEDP shells"

@@ -26,7 +26,6 @@
 	var/maxhealth = 200
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
-	var/panel_status = 0 //Determines if parts can be added/removed
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
@@ -95,13 +94,6 @@
 	/////////////////////////////////////////////////////////
 	///////Attack Code									////
 	////////////////////////////////////////////////////////
-	attack_hand(mob/user as mob)
-		if(panel_status)
-			open_parts_panel(user)
-			return
-		else if (locked && lock)
-			lock.show_lock_panel(user,0)
-			return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		user.lastattacked = src
@@ -114,61 +106,43 @@
 			src.visible_message("<span style=\"color:red\">[user] has fixed some of the dents on [src]!</span>")
 			return
 
-		if (panel_status)
-			if (istype(W, /obj/item/shipcomponent))
-				Install(W)
-				return
-
-			if (ispryingtool(W))
-				panel_status = 0
-				boutput(user, "You close the maintenance panel.")
-				return
-
-			if (istype(W, /obj/item/ammo/bullets))
-				if (W.disposed)
-					return
-				if (src.m_w_system)
-					if (!src.m_w_system.uses_ammunition)
-						boutput(user, "<span style=\"color:red\">That weapon does not require ammunition.</span>")
-						return
-					if (src.m_w_system.remaining_ammunition >= 50)
-						boutput(user, "<span style=\"color:red\">The automated loader for the weapon cannot hold any more ammunition.</span>")
-						return
-					var/obj/item/ammo/bullets/ammo = W
-					if (!ammo.amount_left)
-						return
-					if (src.m_w_system.current_projectile.type != ammo.ammo_type.type)
-						boutput(user, "<span style=\"color:red\">The [m_w_system] cannot fire that kind of ammunition.</span>")
-						return
-					var/may_load = 50 - src.m_w_system.remaining_ammunition
-					if (may_load < ammo.amount_left)
-						ammo.amount_left -= may_load
-						src.m_w_system.remaining_ammunition += may_load
-						boutput(user, "<span style=\"color:blue\">You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
-						logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
-						return
-					else
-						src.m_w_system.remaining_ammunition += ammo.amount_left
-						ammo.amount_left = 0
-						boutput(user, "<span style=\"color:blue\">You load [ammo] into [m_w_system].</span>")
-						logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
-						qdel(ammo)
-						return
-				else
-					boutput(user, "<span style=\"color:red\">No main weapon system installed.</span>")
-					return
-
-		if (ispryingtool(W))
-			if (src.lock && src.locked)
-				boutput(usr, "<span style=\"color:red\">You can't open the maintenance panel while [src] is locked.</span>")
-				lock.show_lock_panel(usr, 0)
-				return
-			panel_status = 1
-			if (src.bound_width > 32 || src.bound_height > 32)
-				boutput(user, "You open the maintenance panel. It is on the lower left side of the ship, you must access the components from there.")
-			else
-				boutput(user, "You open the maintenance panel.")
+		if (istype(W, /obj/item/shipcomponent))
+			Install(W)
 			return
+
+		if (istype(W, /obj/item/ammo/bullets))
+			if (W.disposed)
+				return
+			if (src.m_w_system)
+				if (!src.m_w_system.uses_ammunition)
+					boutput(user, "<span style=\"color:red\">That weapon does not require ammunition.</span>")
+					return
+				if (src.m_w_system.remaining_ammunition >= 50)
+					boutput(user, "<span style=\"color:red\">The automated loader for the weapon cannot hold any more ammunition.</span>")
+					return
+				var/obj/item/ammo/bullets/ammo = W
+				if (!ammo.amount_left)
+					return
+				if (src.m_w_system.current_projectile.type != ammo.ammo_type.type)
+					boutput(user, "<span style=\"color:red\">The [m_w_system] cannot fire that kind of ammunition.</span>")
+					return
+				var/may_load = 50 - src.m_w_system.remaining_ammunition
+				if (may_load < ammo.amount_left)
+					ammo.amount_left -= may_load
+					src.m_w_system.remaining_ammunition += may_load
+					boutput(user, "<span style=\"color:blue\">You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
+					logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
+					return
+				else
+					src.m_w_system.remaining_ammunition += ammo.amount_left
+					ammo.amount_left = 0
+					boutput(user, "<span style=\"color:blue\">You load [ammo] into [m_w_system].</span>")
+					logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
+					qdel(ammo)
+					return
+			else
+				boutput(user, "<span style=\"color:red\">No main weapon system installed.</span>")
+				return
 
 		if (istype(W, /obj/item/device/key))
 			user.visible_message("<span style=\"color:red\"><B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B></span>", null,"<span style=\"color:red\">You hear a metallic scraping sound!</span>")
@@ -289,7 +263,7 @@
 		///////////////////////////////////////
 		///////Panel Code//////////////////////
 		///////////////////////////////////////
-		else if (panel_status && (get_dist(src, usr) <= 1) && isturf(src.loc))
+		else if (BOARD_DIST_ALLOWED(usr,src) && isturf(src.loc))
 			if (passengers)
 				boutput(usr, "<span style=\"color:red\">You can't modify parts with somebody inside.</span>")
 				return
@@ -421,10 +395,6 @@
 			myhud.update_systems()
 
 		else
-			if (panel_status)
-				usr.Browse(null, "window=ship_maint")
-				return
-
 			usr.Browse(null, "window=ship_main")
 			return
 		return
@@ -959,10 +929,6 @@
 		boutput(boarder, "<span style=\"color:red\">[src] is locked!</span>")
 		return
 
-	if(panel_status)
-		boutput(boarder, "<span style=\"color:red\">Close the maintenance panel first!</span>")
-		return
-
 	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
 		boutput(boarder, "<span style=\"color:red\">You can't enter a pod while incapacitated or restrained.</span>")
 		return
@@ -1035,10 +1001,6 @@
 		boutput(user, "<span style=\"color:red\">You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
 		var/floor = get_turf(src)
 		O.set_loc(floor)
-
-#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > 32 || V.bound_height > 32) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
-// potato ver
-//pod.x - 1 >= mob.x && pod.y - 1 >= mob.y && pod.x + (pod.bound_width/world.icon_size) <= mob.x && pod.y + (pod.bound_height/world.icon_size) <= mob.y)
 
 
 /datum/action/bar/icon/board_pod
@@ -1123,8 +1085,6 @@
 			return
 
 		V.eject_pod(owner)
-
-#undef BOARD_DIST_ALLOWED
 
 ///////////////////////////////////////////////////////////////////////////
 ///////// Find new pilot									////////////

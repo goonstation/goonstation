@@ -242,7 +242,7 @@ var/image/blob_icon_cache
 
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
-		if( iscritter(user) && user:ghost_spawned )
+		if(iscritter(user) && user:ghost_spawned || isghostdrone(user))
 			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )

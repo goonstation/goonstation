@@ -73,6 +73,7 @@
 	msgGain = "You feel kinda thin."
 	msgLose = "You've put on a bit more weight."
 	icon_state  = "skeleton"
+	isBad = 1
 
 /datum/bioEffect/mutantrace/ithillid
 	name = "Aquatic Genetics"

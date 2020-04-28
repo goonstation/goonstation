@@ -452,6 +452,7 @@
 		src.menu = text2num(href_list["menu"])
 	else if (href_list["set_analysis"])
 		pod1.gen_analysis = text2num(href_list["set_analysis"])
+		logTheThing("combat", usr, null, "toggles advanced genetic analysis [pod1.gen_analysis ? "on" : "off"] at [log_loc(src)].")
 	else if (href_list["set_mindwipe"])
 		pod1.mindwipe = text2num(href_list["set_mindwipe"])
 

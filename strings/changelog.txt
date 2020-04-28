@@ -1,5 +1,43 @@
 
+(t)tue apr 28 20
+(u)mbc
+(p)461
+(e)|
+(+)Doors have a small chance to open when taking damage at very low health.
+(u)Tarmunora
+(p)456
+(e)⚖|balance
+(+)Kinetic projectiles stagger on hit
+(u)Kubius
+(p)439
+(e)🆕|enhancement
+(+)QM's emergency crate now contains emergency-grade spacesuits and tanks.
+(t)mon apr 27 20
+(u)Kubius
+(p)453
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 13 - further minor tuneups and fixes, inc. fire alarms.
+(u)zjdtmkhzt
+(p)423
+(e)⚖🆕|balance, enhancement
+(+)Minor pathology GUI improvements. You can now use the + and - buttons to select multiple segments when splicing.
+(u)Moonlol
+(p)447
+(e)🆕🗺|enhancement, mapping
+(+)Murderbox now features test dummies.
 (t)sun apr 26 20
+(u)Tarmunora
+(p)239
+(e)⚖🆕|balance, enhancement
+(*)Changed pod(etc)seeking 40mmHE shells to have a high chance of not detonating on impact unless they have found a target to seek. Additionally boosted their direct-impact stats to compensate somewhat.
+(u)saccharineChampion
+(p)415
+(e)🆕|enhancement
+(+)You can now load deep-fried (and grilled) stuff, as well as other particularly coal-like culinary mistakes, into the engine's furnaces. Credit to Studenterhue for the idea & Flourish and ZeWaka for code help!
+(u)mbc
+(p)443
+(e)🎨|sprites
+(*)You no longer need a crowbar to access a pod's maint/lock panel, just click it with free hand and use the multicontext buttons. Also fixed bugs where you could not hit a pod with an item.
 (u)Uta
 (p)426
 (e)🐛|bug

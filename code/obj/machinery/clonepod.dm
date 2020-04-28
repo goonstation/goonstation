@@ -37,7 +37,7 @@
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
 
-	var/gen_analysis = 1 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
+	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 

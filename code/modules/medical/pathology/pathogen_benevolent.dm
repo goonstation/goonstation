@@ -3,6 +3,7 @@
 datum/pathogeneffects/benevolent
 	name = "Benevolent"
 	rarity = RARITY_ABSTRACT
+	beneficial = 1
 
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
@@ -271,6 +272,7 @@ datum/pathogeneffects/benevolent/brewery
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
 	rarity = RARITY_RARE
+	beneficial = 0
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
