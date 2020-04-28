@@ -102,7 +102,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.specialoverride = new /datum/item_special/stungloves()
+			src.specialoverride = new /datum/item_special/spark()
+			src.specialoverride.master = src
 			src.material_prints += ", electrically charged"
 			W:amount--
 			return
@@ -175,8 +176,11 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
 		if(target == user || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
 		if(slot != SLOT_GLOVES || !overridespecial) return 0
-		specialoverride.pixelaction(target,params,user)
-		return 1
+		if(ismob(user))
+			var/mob/M = user
+			specialoverride.pixelaction(target,params,M)
+			M.next_click = world.time+M.combat_click_delay
+			return 1
 
 
 /obj/item/clothing/gloves/long // adhara stuff
@@ -317,11 +321,18 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	material_prints = "insulative fibers, electrically charged"
 	stunready = 1
 	can_be_charged = 1
-	uses = 5
-	max_uses = 5
+	uses = 10
+	max_uses = 10
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
+	New()
+		..()
+		src.specialoverride = new /datum/item_special/spark()
+		src.specialoverride.master = src
+		src.overridespecial = 1
+
+		
 
 /obj/item/clothing/gloves/yellow
 	desc = "These gloves are electrically insulated."
@@ -330,7 +341,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	item_state = "ygloves"
 	material_prints = "insulative fibers"
 	can_be_charged = 1
-	max_uses = 1
+	max_uses = 4
 	permeability_coefficient = 0.5
 
 	setupProperties()
@@ -410,7 +421,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	item_state = "ygloves"
 	material_prints = "insulative fibers and nanomachines"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
-	max_uses = 1
+	max_uses = 4
 	flags = HAS_EQUIP_CLICK
 
 	var/spam_flag = 0
