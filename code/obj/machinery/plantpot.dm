@@ -958,7 +958,7 @@
 		getamount = max(getamount, 0)
 
 		if(getamount < 1)
-			boutput(user, "<span style=\"color:red\">You weren't able to harvest anything worth salvaging.</span>")
+			boutput(user, "<span style=\"color:red\">You aren't able to harvest anything worth salvaging.</span>")
 			// We just don't bother if the output is below one.
 		else if(!getitem)
 			boutput(user, "<span style=\"color:red\">You can't seem to find anything that looks harvestable.</span>")
@@ -1189,12 +1189,15 @@
 					seedcount++
 				getamount--
 
+			var/harvest_string = "You harvest [cropcount] item"
+			if (cropcount > 1)
+				harvest_string += "s"
 			if(seedcount)
-				boutput(user, "<span style=\"color:blue\">You harvested [cropcount] items and [seedcount] seeds.</span>")
-			else
-				boutput(user, "<span style=\"color:blue\">You harvested [cropcount] items.</span>")
-
-			playsound(src.loc, "rustle", 50, 1, -5, 2)
+				harvest_string += " and [seedcount] seed"
+				if (seedcount > 1)
+					harvest_string += "s"
+			harvest_string += ".</span>"
+			boutput(user, "<span style=\"color:blue\">[harvest_string]</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
@@ -1208,7 +1211,7 @@
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
 					if(SA.contents.len >= SA.maxitems)
-						boutput(user, "<span style=\"color:red\">Your satchel got filled up! You had to dump the rest on the floor.</span>")
+						boutput(user, "<span style=\"color:red\">Your satchel is full! You have to dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
@@ -1243,6 +1246,9 @@
 			// Vegetable-style plants always die after one harvest irregardless of harvests
 			// remaining, though they do get bonuses for having a good harvests gene.
 			HYPkillplant()
+
+		//do we have to run the next life tick manually? maybe
+		playsound(src.loc, "rustle", 50, 1, -5, 2) //TODO: replace with a real harvest sound
 		update_icon()
 		update_name()
 
@@ -1503,6 +1509,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 		generation = F.generation
 
+	//would it not be better to put this information in the scanner itself?
 	var/message = {"
 		<table style='border-collapse: collapse; border: 1px solid black; margin: 0 0.25em; width: 100%;'>
 			<caption>Analysis of \the <b>[scanned.name]</b></caption>
