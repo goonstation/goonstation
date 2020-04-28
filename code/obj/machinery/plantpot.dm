@@ -767,7 +767,7 @@
 			if(MUT.plant_icon)
 				iconname = MUT.plant_icon
 			else
-				iconname = 'icons/obj/hydroponics/plants_mutants.dmi'
+				iconname = growing.plant_icon
 
 		if(src.dead)
 			UpdateOverlays(hydro_controls.pot_death_display, "plantdeath")
