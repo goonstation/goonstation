@@ -1,5 +1,9 @@
 
 (t)tue apr 28 20
+(u)mbc
+(p)461
+(e)|
+(+)Doors have a small chance to open when taking damage at very low health.
 (u)Tarmunora
 (p)456
 (e)⚖|balance
