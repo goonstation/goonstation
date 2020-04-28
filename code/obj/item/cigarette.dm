@@ -1060,7 +1060,7 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
-				if (get_fuel() == 0)
+				if (reagents.get_reagent_amount("fuel") == 0)
 					user.show_text("Out of fuel.", "red")
 					return
 				src.on = 1
@@ -1130,12 +1130,12 @@
 				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
 				return
 
-			if (get_fuel() >= src.reagents.maximum_volume) //this could be == but just in case...
+			if (reagents.get_reagent_amount("fuel") >= src.reagents.maximum_volume) //this could be == but just in case...
 				boutput(user, "<span style='color:red'>[src] is full!</span>")
 				return
 
 			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, src.reagents.maximum_volume)
+				O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
 				boutput(user, "<span style=\"color:blue\">[src] has been refueled.</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
@@ -1150,8 +1150,8 @@
 
 	process()
 		if (src.on)
-			if (get_fuel() >= 0 && !infinite_fuel)
-				use_fuel(1)
+			if (reagents.get_reagent_amount("fuel") >= 0 && !infinite_fuel)
+				reagents.remove_reagent("fuel", 1)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1160,7 +1160,7 @@
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(700,5)
-			if (get_fuel() == 0)
+			if (reagents.get_reagent_amount("fuel") == 0)
 				src.on = 0
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
@@ -1188,17 +1188,6 @@
 				user.suiciding = 0
 		qdel(src)
 		return 1
-
-	//thanks whoever coded the welder ur the goat
-	proc/get_fuel()
-		if (reagents)
-			return reagents.get_reagent_amount("fuel")
-
-	proc/use_fuel(var/amount)
-		amount = min(get_fuel(), amount)
-		if (reagents)
-			reagents.remove_reagent("fuel", amount)
-		return
 
 /obj/item/device/light/zippo/gold
 	name = "golden zippo lighter"
