@@ -1,12 +1,15 @@
 
 (t)tue apr 28 20
+(u)mbc
+(e)⚖|balance
+(*)Disorient statuseffect will no longer randomly make you drop items. Increased the likelihood of a changeling or vampire scream forcing you to drop items to compensate.
 (u)Fosstar
 (p)450
 (e)🍑⚖🗺|ass-jam, balance, mapping
 (*)Modernized and fixed up Donut 2 a bunch. The map is available during Ass Jam!
 (u)mbc
 (p)461
-(e)|
+(e)⚖|balance
 (+)Doors have a small chance to open when taking damage at very low health.
 (u)Tarmunora
 (p)456
