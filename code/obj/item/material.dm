@@ -738,16 +738,21 @@
 				pool(M)
 
 			else if (istype(M, /obj/item/sheet))
-				output_bar_from_item(M, 10)
+				if (output_bar_from_item(M, 10))
+					qdel(M)
 
 			else if (istype(M, /obj/item/rods))
-				output_bar_from_item(M, 20)
+				if (output_bar_from_item(M, 20))
+					qdel(M)
 
 			else if (istype(M, /obj/item/tile))
-				output_bar_from_item(M, 40)
+				if (output_bar_from_item(M, 40))
+					qdel(M)
 
 			else if (istype(M, /obj/item/cable_coil))
-				output_bar_from_item(M, 30)
+				var/obj/item/cable_coil/C = M
+				if (output_bar_from_item(M, 30, C.conductor.mat_id))
+					qdel(C)
 
 			/*else if (istype(M, /obj/item/wizard_crystal))
 				W.create_bar(src)
@@ -802,32 +807,43 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_from_item(obj/item/O, var/amount_modifier)
+	proc/output_bar_from_item(obj/item/O, var/amount_modifier, var/extra_mat)
 		if (!O || !O.material)
 			return
-
-		var/datum/material/MAT = O.material
 
 		var/stack_amount = O.amount
 		if (amount_modifier)
 			var/divide = O.amount / amount_modifier
 			stack_amount = round(divide)
-
 			if (stack_amount != divide)
 				src.insufficient = 1
 				O.amount -= (stack_amount * amount_modifier)
 				O.set_loc(src.loc)
+				if (!stack_amount)
+					return
 			else
-				qdel(O)
+				. = 1
+
+		output_bar(O.material, stack_amount, O.quality)
+		if (extra_mat)
+			output_bar(extra_mat, stack_amount, O.quality)
+
+	proc/output_bar(material, amount, quality)
+
+		var/datum/material/MAT = material
+		if (!istype(MAT))
+			MAT = getMaterial(material)
+			if (!MAT)
+				return
 
 		var/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = unpool(bar_type)
+		BAR.quality = quality
+		BAR.name += getQualityName(quality)
 		BAR.setMaterial(MAT)
-		BAR.change_stack_amount(stack_amount - 1)
-		BAR.quality = O.quality
-		BAR.name += getQualityName(O.quality)
+		BAR.change_stack_amount(amount - 1)
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
