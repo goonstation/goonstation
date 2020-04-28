@@ -74,8 +74,9 @@ datum/controller/process/items
 				U.remove_stamina(15)
 
 			return 1
-	return 0
 	..()
+	return 0
+
 
 
 /obj/item/proc/handle_katanaparry(mob/target, mob/user)
@@ -99,8 +100,8 @@ datum/controller/process/items
 				U.remove_stamina(20)
 
 			return 1
-	return 0
 	..()
+	return 0
 
 /obj/item/katana/handle_katanaparry(mob/target,mob/user)
 	..()
