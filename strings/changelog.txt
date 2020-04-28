@@ -1,4 +1,9 @@
 
+(t)tue apr 28 20
+(u)Kubius
+(p)439
+(e)🆕|enhancement
+(+)QM's emergency crate now contains emergency-grade spacesuits and tanks.
 (t)mon apr 27 20
 (u)Kubius
 (p)453
