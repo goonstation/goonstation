@@ -1,5 +1,9 @@
 
 (t)tue apr 28 20
+(u)Tarmunora
+(p)456
+(e)⚖|balance
+(+)Kinetic projectiles stagger on hit
 (u)Kubius
 (p)439
 (e)🆕|enhancement
