@@ -70,7 +70,7 @@
 				boutput(HH, __blue("[M]'s scream only strengthens your resolve!"))
 				continue
 
-			HH.apply_sonic_stun(0, 0, 40, 0, 15, 8, 12)
+			HH.apply_sonic_stun(0, 0, 40, 0, 50, 8, 12)
 
 		sonic_attack_environmental_effect(M, 2, list("light", "window", "r_window"))
 
