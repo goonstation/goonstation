@@ -208,7 +208,7 @@
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking!</span>")
-
+		SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 		/*
@@ -238,7 +238,7 @@
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span style=\"color:red\">[src] starts blocking with [I]!</span>")
-
+		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 
