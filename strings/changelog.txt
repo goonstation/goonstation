@@ -1,5 +1,9 @@
 
 (t)wed apr 29 20
+(u)Ryumi
+(p)466
+(e)🗺|mapping
+(+)Added a pulse rifle rack to Manta's armory and fixed up some of its wiring.
 (u)mbc
 (p)479
 (e)|
