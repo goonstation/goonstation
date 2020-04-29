@@ -1,4 +1,9 @@
 
+(t)wed apr 29 20
+(u)Somethings
+(p)475
+(e)|
+(+)Mail chutes now show the expected UI when interacted with, and thus can be used again to mail items.
 (t)tue apr 28 20
 (u)Kubius
 (p)471
