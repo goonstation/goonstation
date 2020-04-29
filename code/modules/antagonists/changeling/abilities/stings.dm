@@ -31,7 +31,7 @@
 			target.reagents.add_reagent(venom_id, inject_amount)
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
 			return 0
-		
+
 
 		if (isobj(target))
 			target = get_turf(target)
@@ -77,7 +77,7 @@
 		desc = "Injects stable mutagen and the blood of the selected victim into your target."
 		icon_state = "stingdna"
 		venom_id = "dna_mutagen"
-		inject_amount = 15
+		inject_amount = 30
 		pointCost = 4
 		var/datum/targetable/changeling/dna_target_select/targeting = null
 
