@@ -72,37 +72,6 @@
 		invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
 		update()
 
-
-	// flip and rotate verbs
-	verb/rotate()
-		set name = "Rotate Pipe"
-		set src in view(1)
-		set category = "Local"
-
-		if(usr.stat)
-			return
-		if(anchored)
-			boutput(usr, "You must unfasten the pipe before rotating it.")
-		dir = turn(dir, -90)
-		update()
-
-	verb/flip()
-		set name = "Flip Pipe"
-		set src in view(1)
-		set category = "Local"
-		if(usr.stat)
-			return
-
-		if(anchored)
-			boutput(usr, "You must unfasten the pipe before flipping it.")
-
-		dir = turn(dir, 180)
-		if(ptype == 2)
-			ptype = 3
-		else if(ptype == 3)
-			ptype = 2
-		update()
-
 	// returns the type path of disposalpipe corresponding to this item dtype
 	proc/dpipetype()
 		switch(ptype)
@@ -131,6 +100,22 @@
 	// weldingtool: convert to real pipe
 
 	attackby(var/obj/item/I, var/mob/user)
+		if(ispryingtool(I))
+			if(!anchored)
+				var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Rotate","Flip")
+				if((user in range(1,src)) && (!anchored))
+					switch(input)
+						if("Rotate")
+							dir = turn(dir, -90)
+							update()
+						if("Flip")
+							dir = turn(dir, 180)
+							if(ptype == 2)
+								ptype = 3
+							else if(ptype == 3)
+								ptype = 2
+							update()
+				return
 		if(isscrewingtool(I))
 			boutput(user, "You take the pipe segment apart.")
 			// var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
