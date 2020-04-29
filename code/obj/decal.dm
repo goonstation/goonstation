@@ -624,7 +624,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide
 	name = "navigation guide"
 	desc = "A navigation guide to help people find the department they're looking for."
-	icon = 'icons/obj/floorguides.dmi'
+	icon = 'icons/obj/decals/floorguides.dmi'
 	icon_state = "endpiece_s"
 
 /obj/decal/tile_edge/floorguide/security

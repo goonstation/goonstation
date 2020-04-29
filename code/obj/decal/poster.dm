@@ -26,7 +26,7 @@
 
 	wallsign
 		desc = "A sign, on a wall. Wow!"
-		icon = 'icons/obj/decals.dmi'
+		icon = 'icons/obj/decals/wallsigns.dmi'
 		popup_win = 0
 		var/pixel_var = 0
 
@@ -39,7 +39,7 @@
 		stencil // font: "space frigate", free and adapted by cogwerks
 			name = "stencil"
 			desc = ""
-			icon = 'icons/obj/stencils.dmi'
+			icon = 'icons/obj/decals/stencils.dmi'
 			alpha = 200
 			pixel_y = 9
 			mouse_opacity = 0
