@@ -79,7 +79,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezone/3dimension.dmi'
 	icon_state = "skeleton_l"
 
 	decomposed_corpse
@@ -103,7 +103,7 @@
 		opacity = 0
 		density = 0
 		anchored = 1
-		icon = 'icons/effects/3dimension.dmi'
+		icon = 'icons/obj/adventurezone/3dimension.dmi'
 		icon_state = "skeleton_l"
 
 /obj/decal/floatingtiles
@@ -112,7 +112,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezone/3dimension.dmi'
 	icon_state = "floattiles1"
 
 /obj/decal/implo
