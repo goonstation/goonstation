@@ -1060,6 +1060,8 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
+				if (!reagents)
+					return
 				if (!reagents.get_reagent_amount("fuel"))
 					user.show_text("Out of fuel.", "red")
 					return
@@ -1126,22 +1128,24 @@
 
 	afterattack(atom/O, mob/user as mob)
 		if (!on && (istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)))
-			if (reagents) //I know...this is nested but adding it to the above looks super ugly.
-				if (infinite_fuel)
-					user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
-					return
-
-				if (reagents.get_reagent_amount("fuel") >= src.reagents.maximum_volume) //this could be == but just in case...
-					boutput(user, "<span style='color:red'>[src] is full!</span>")
-					return
-
-				if (O.reagents.total_volume)
-					O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
-					boutput(user, "<span style=\"color:blue\">[src] has been refueled.</span>")
-					playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
-				else
-					user.show_text("[O] is empty.", "red")
+			if (!reagents)
 				return
+			
+			if (infinite_fuel)
+				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
+				return
+
+			if (reagents.get_reagent_amount("fuel") >= src.reagents.maximum_volume) //this could be == but just in case...
+				boutput(user, "<span style='color:red'>[src] is full!</span>")
+				return
+
+			if (O.reagents.total_volume)
+				O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
+				boutput(user, "<span style=\"color:blue\">[src] has been refueled.</span>")
+				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+			else
+				user.show_text("[O] is empty.", "red")
+			return
 
 		else if (!ismob(O) && src.on && O.reagents)
 			user.show_text("You heat [O].", "blue")
@@ -1151,7 +1155,9 @@
 
 	process()
 		if (src.on)
-			if (reagents.get_reagent_amount("fuel") && !infinite_fuel)
+			if (!reagents)
+				return
+			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
 				reagents.remove_reagent("fuel", 1)
 			var/turf/location = src.loc
 			if (ismob(location))
