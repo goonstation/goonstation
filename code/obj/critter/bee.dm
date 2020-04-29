@@ -430,7 +430,7 @@
 			src.task = "thinking"
 			animate(src, pixel_y = -6, time = 20, easing = BOUNCE_EASING)
 
-			sleep(20)
+			sleep(2 SECONDS)
 			src.pixel_y = 0
 			src.icon_state = "bubsbee"
 			src.sleeping = rand(10, 20)
@@ -703,6 +703,13 @@
 		icon_body = "seabee"
 		sleeping_icon_state = "seabee-sleep"
 
+	sonic
+		name = "sonic bee"
+		desc = "OH GOD IT IS BACK, WE WERE SURE WE REMOVED IT FROM THE CODEBASE BUT IT KEEPS COMING BACK OH GOD"
+		icon_body = "sonicbee"
+		icon_state = "sonicbee-wings"
+		sleeping_icon_state = "sonicbee-sleep"
+
 /* -------------------- END -------------------- */
 
 /* -------------------- BASE BEE STUFF -------------------- */
@@ -723,6 +730,14 @@
 			src.update_icon()
 			if (src.alive && !src.sleeping)
 				animate_bumble(src)
+
+#if ASS_JAM
+		if(src.icon_body == "petbee" && prob(5))
+			src.icon_body = "sonicbee"
+			src.icon_state = "[src.icon_body]-wings"
+			src.sleeping_icon_state = "[src.icon_body]-sleep"
+			src.desc = "OH GOD IT IS BACK, WE WERE SURE WE REMOVED IT FROM THE CODEBASE BUT IT KEEPS COMING BACK OH GOD"
+#endif
 
 	process()
 		if(shorn && (world.time - shorn_time) >= 1800)
@@ -1500,9 +1515,9 @@
 			var/hatch_wiggle_counter = rand(3,8)
 			while (hatch_wiggle_counter-- > 0)
 				src.pixel_x++
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x--
-				sleep(10)
+				sleep(1 SECOND)
 
 			src.visible_message("[src] hatches!")
 			var/obj/critter/domestic_bee_larva/newLarva
@@ -1584,9 +1599,9 @@
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)
 					src.pixel_x++
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x--
-					sleep(10)
+					sleep(1 SECOND)
 
 				src.visible_message("[src] hatches!")
 				var/obj/critter/domestic_bee_larva/newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))

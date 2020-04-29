@@ -53,7 +53,7 @@
 
 /obj/stove
 	name = "stove"
-	desc = "A perfectly ordinary kitchen stove; not that you'll be doing anything ordinary with it."
+	desc = "A perfectly ordinary kitchen stove; not that you'll be doing anything ordinary with it.<br>It seems this model doesn't have a built in igniter, so you'll have to light it manually."
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "stove0"
 	anchored = 1
@@ -66,10 +66,13 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/soup_pot))
-			src.icon_state = "stove1"
-			src.pot = W
-			user.u_equip(W)
-			W.loc = src
+			if(src.pot)
+				boutput(user,"<span style=\"color:red\"><b>There's already a pot on the stove, dummy!</span>")
+			else
+				src.icon_state = "stove1"
+				src.pot = W
+				user.u_equip(W)
+				W.loc = src
 
 		if (!src.on && src.pot)
 
@@ -371,7 +374,13 @@
 					boutput(user,"<span style=\"color:red\"><b>There's nothing in there to serve!</span>")
 
 			else if (L.my_soup)
-				boutput(user,"<span style=\"color:red\"><b>There's still soup in the ladle. Serve that first!</span>")
+				if(L.my_soup == src.my_soup)
+					src.total_wclass++
+					L.my_soup = null
+					L.overlays = null
+					user.visible_message("[user] empties [L] into [src].", "You empty [L] into [src]")
+				else
+					boutput(user,"<span style=\"color:red\"><b>You can't mix soups! That'd be ridiculous!</span>")
 			else
 				src.total_wclass--
 				L.my_soup = src.my_soup
@@ -433,6 +442,9 @@
 	New()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "ladle-f")
+		if(prob(1))
+			src.name = "Soup sword" //https://discordapp.com/channels/182249960895545344/469379618168897538/698632230851051552
+			src.setItemSpecial(/datum/item_special/swipe)
 
 	proc/add_soup_overlay(var/new_color)
 		fluid_icon.color = new_color

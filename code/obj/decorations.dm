@@ -121,6 +121,7 @@
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
+	var/health = 50
 	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
 	var/spawn_chance = 0 // How likely is this shrub to spawn something?
@@ -139,11 +140,7 @@
 				loc = null
 				qdel(src)
 			else
-				if(prob(50))
-					loc = null
-					qdel(src)
-				else
-					destroyed = 1
+				src.take_damage(45)
 	attack_hand(mob/user as mob)
 		if (!user) return
 		if (destroyed) return ..()
@@ -159,7 +156,7 @@
 			while (wiggle > 0)
 				wiggle--
 				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
 
@@ -193,6 +190,23 @@
 						L.changeStatus("stunned", 2 SECONDS)
 
 		interact_particle(user,src)
+
+	attackby(var/obj/item/W as obj, mob/user as mob)
+		user.lastattacked = src
+		hit_twitch(src)
+		attack_particle(user,src)
+		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
+		src.take_damage(W.force)
+		user.visible_message("<span style='color:red'><b>[user] hacks at [src] with [W]!</b></span>")
+
+	proc/take_damage(var/damage_amount = 5)
+		src.health -= damage_amount
+		if (src.health <= 0)
+			src.visible_message("<span style=\"color:red\"><b>The [src.name] falls apart!</b></span>")
+			new /obj/decal/cleanable/leaves(get_turf(src))
+			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+			qdel(src)
+			return
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
@@ -502,7 +516,11 @@
 /obj/blind_switch/area
 	locate_blinds()
 		var/area/A = get_area(src)
-		for (var/obj/window_blinds/blind in A)
+		for (var/X in by_type[/obj/window_blinds])
+			var/obj/window_blinds/blind = X
+			var/area/blind_area = get_area(blind)
+			if(blind_area != A)
+				continue
 			LAGCHECK(LAG_LOW)
 			if (!(blind in src.myBlinds))
 				src.myBlinds += blind

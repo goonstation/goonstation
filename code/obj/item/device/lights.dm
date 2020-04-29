@@ -102,7 +102,8 @@
 
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "glowstick-off"
+	icon_state = "glowstick-green0"
+	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
 	w_class = 2
@@ -113,12 +114,18 @@
 	col_b = 0.1
 	brightness = 0.5
 	height = 0.75
+	var/color_name = "green"
 
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
 		make_cleanable( /obj/decal/cleanable/generic,T)
 		make_cleanable( /obj/decal/cleanable/greenglow,T)
 		qdel(src)
+
+	proc/turnon()
+		on = 1
+		icon_state = "[base_state][on]"
+		light.enable()
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -152,10 +159,8 @@
 	attack_self(mob/user as mob)
 		if (!on)
 			boutput(user, "<span style=\"color:blue\">You crack [src].</span>")
-			on = 1
-			icon_state = "glowstick-on"
 			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			light.enable()
+			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
 				user.visible_message("<span style=\"color:blue\"><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
@@ -168,6 +173,78 @@
 				burst()
 			else
 				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+
+/obj/item/device/light/glowstick/white
+	base_state = "glowstick-white"
+	icon_state = "glowstick-white0"
+	desc = "A regular emergency glowstick filtered for only the purest space light."
+	col_r = 0.9
+	col_g = 0.9
+	col_b = 0.9
+	color_name = "white"
+
+/obj/item/device/light/glowstick/yellow
+	base_state = "glowstick-yellow"
+	icon_state = "glowstick-yellow0"
+	desc = "A regular emergency glowstick full of lovely artificial sunshine!"
+	col_r = 0.9
+	col_g = 0.8
+	col_b = 0.1
+	color_name = "yellow"
+
+/obj/item/device/light/glowstick/blue
+	base_state = "glowstick-blue"
+	icon_state = "glowstick-blue0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow blue instead."
+	col_r = 0.1
+	col_g = 0.1
+	col_b = 0.9
+	color_name = "blue"
+
+/obj/item/device/light/glowstick/purple
+	base_state = "glowstick-purple"
+	icon_state = "glowstick-purple0"
+	desc = "A emergency glowstick, designed by the legendary Samuel L. Jackson."
+	col_r = 0.6
+	col_g = 0.1
+	col_b = 0.9
+	color_name = "purple"
+
+/obj/item/device/light/glowstick/pink
+	base_state = "glowstick-pink"
+	icon_state = "glowstick-pink0"
+	desc = "A regular emergency glowstick, 60% cuter!"
+	col_r = 0.9
+	col_g = 0.5
+	col_b = 0.9
+	color_name = "pink"
+
+/obj/item/device/light/glowstick/cyan
+	base_state = "glowstick-cyan"
+	icon_state = "glowstick-cyan0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow cyan instead."
+	col_r = 0.1
+	col_g = 0.9
+	col_b = 0.9
+	color_name = "cyan"
+
+/obj/item/device/light/glowstick/orange
+	base_state = "glowstick-orange"
+	icon_state = "glowstick-orange0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow orange instead."
+	col_r = 0.9
+	col_g = 0.6
+	col_b = 0.1
+	color_name = "orange"
+
+/obj/item/device/light/glowstick/red
+	base_state = "glowstick-red"
+	icon_state = "glowstick-red0"
+	desc = "A regular emergency glowstick edgy and red!"
+	col_r = 0.9
+	col_g = 0.1
+	col_b = 0.0
+	color_name = "red"
 
 /obj/item/device/light/candle
 	name = "candle"
@@ -227,7 +304,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
@@ -239,7 +316,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()

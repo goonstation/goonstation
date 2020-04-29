@@ -258,6 +258,7 @@ datum
 			transparency = 180
 			depletion_rate = 0.1
 			value = 2 // I think this is correct?
+			hygiene_value = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -268,11 +269,6 @@ datum
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),280)
 				..()
 				return
-
-			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
-				if (M.sims)
-					if (method == TOUCH)
-						M.sims.affectMotive("Hygiene", volume)
 
 		medical/calomel // COGWERKS CHEM REVISION PROJECT. marked for revision. should be a chelation agent
 			name = "calomel"
@@ -429,23 +425,18 @@ datum
 			overdose = 40
 			var/remove_buff = 0
 			value = 7
+			stun_resist = 27
 
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_synaptizine", 25)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_synaptizine")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -754,23 +745,18 @@ datum
 			overdose = 20
 			var/remove_buff = 0
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
+			stun_resist = 5
 
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("epinephrine", 3)
-				if (istype(holder) && ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_epinephrine", 3)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("epinephrine")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_epinephrine")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1058,6 +1044,7 @@ datum
 			addiction_min = 10
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
+			stun_resist = 10
 
 			pooled()
 				..()
@@ -1066,19 +1053,13 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_ephedrine", 10)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_ephedrine")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

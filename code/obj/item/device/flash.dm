@@ -123,7 +123,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
@@ -226,7 +226,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	// Flash target mobs.
@@ -391,6 +391,12 @@
 			boutput(user, "<span style=\"color:blue\">You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 			secure = !secure
 		return
+
+/obj/item/storage/box/turbo_flash_kit
+	name = "\improper Box of flash/cell assemblies."
+	desc = "A box filled with five dangerous looking flash/cell assemblies."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/device/flash/turbo = 5)
 
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"

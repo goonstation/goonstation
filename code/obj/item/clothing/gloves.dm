@@ -388,6 +388,10 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
+	New()
+		..()
+		BLOCK_ROPE
+
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
 	name = "power gloves"
@@ -560,7 +564,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			if(user:gloves != src) return
 
 			boutput(user, "<span style=\"color:red\"><B>You smack the [src] with the [W]. It makes a grumpy whirr. I don't think it liked that!</B></span>")
-			sleep(50)
+			sleep(5 SECONDS)
 			boutput(user, "<span style=\"color:red\"><B>The [src] suddenly sucks you inside and devours you. Next time don't go smacking dangerous artifacts with bricks!</B></span>")
 			user.implode()
 

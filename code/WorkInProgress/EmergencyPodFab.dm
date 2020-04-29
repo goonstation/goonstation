@@ -35,7 +35,7 @@
 					steps_moved++ // part of the decay only applies if you're in space (allows you some time to figure things out)
 				steps_moved++ // constant decay after launch
 				if(steps_moved + (rand(steps_moved) * 0.5) > 120) fail()
-				sleep(15)
+				sleep(1.5 SECONDS)
 
 	proc/fail()
 		failing = 1
@@ -53,7 +53,7 @@
 				playsound(src.loc, "explosion", 50, 1)
 				make_cleanable( /obj/decal/cleanable/machine_debris ,src.loc)
 				qdel(src)
-			sleep(4)
+			sleep(0.4 SECONDS)
 
 /obj/machinery/macrofab
 	name = "Macro-Fabricator"

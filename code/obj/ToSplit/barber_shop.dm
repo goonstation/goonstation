@@ -29,6 +29,8 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
+		AddComponent(/datum/component/transfer_on_attack)
+		BLOCK_KNIFE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -63,6 +65,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
+		BLOCK_KNIFE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -142,7 +145,7 @@
 		var/turf/TM = user.loc
 		boutput(user, "<span style=\"color:blue\">You begin dying [M]'s hair.</span>")
 		boutput(M, "<span style=\"color:blue\">[user] begins dying your hair.</span>")
-		sleep(30)
+		sleep(3 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return
 		*/
@@ -172,7 +175,6 @@
 
 	if (src.reagents && src.reagents.total_volume)
 		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-		src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 	else
 		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 
@@ -180,7 +182,7 @@
 		return ..()
 	else
 		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+			src.reagents.trans_to(M,5)
 		return
 
 
@@ -221,7 +223,7 @@
 		user, "<span style='color:blue'>You begin cutting [M]'s hair.</span>",\
 		M, "<span style='color:blue'>[user] begins cutting your hair.</span>")
 		playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
-		sleep(70)
+		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return  0
 
@@ -301,7 +303,7 @@
 		boutput(user, "<span style=\"color:blue\">You begin shaving [M].</span>")
 		boutput(M, "<span style=\"color:blue\">[user] begins shaving you.</span>")
 		//playsound(src.loc, "Scissor.ogg", 100, 1)
-		sleep(70)
+		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return
 

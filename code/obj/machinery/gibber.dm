@@ -59,7 +59,7 @@
 
 	user.visible_message("<span style=\"color:red\">[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
-	sleep(30)
+	sleep(3 SECONDS)
 	if(G && G.affecting)
 		user.visible_message("<span style=\"color:red\">[user] stuffs [G.affecting] into the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced %target% into a gibber at [log_loc(src)].")
@@ -240,13 +240,16 @@
 					G2.blood_DNA = bdna
 					G2.blood_type = btype
 				newmeat2.set_loc(T2)
+			else
+				newmeat2.set_loc(T1)
 			if (T3 && isturf(T3))
 				G2 = make_cleanable( /obj/decal/cleanable/blood/gibs,T3)
 				if (bdna && btype)
 					G2.blood_DNA = bdna
 					G2.blood_type = btype
 				newmeat3.set_loc(T3)
-
+			else
+				newmeat3.set_loc(T1)
 			if (src.dirty == 1)
 				src.overlays += image('icons/obj/kitchen.dmi', "grindbloody")
 

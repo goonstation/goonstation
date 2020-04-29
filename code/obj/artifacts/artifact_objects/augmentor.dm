@@ -89,7 +89,7 @@
 			H.changeStatus("paralysis", 40)
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			random_brute_damage(user, 10)
-			sleep(10)
+			sleep(1 SECOND)
 
 			var/obj/item/part_type = augment.get_part_type(part_loc)
 			var/obj/item/part = new part_type()

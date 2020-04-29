@@ -54,7 +54,7 @@ mob
 		if (src.move_dir)
 			var/running = 0
 			var/mob/living/carbon/human/H = src
-			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && H.getStatusDuration("staggered") < 1)
+			if ( (keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && (H.getStatusDuration("staggered") < 1 && !H.hasStatus("blocking")) )
 				running = 1
 			if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 				H.pushing = 0
@@ -105,6 +105,8 @@ mob
 					if (src.buckled && istype(src.buckled, /obj/stool/chair))
 						var/obj/stool/chair/C = src.buckled
 						delay += C.buckle_move_delay //GriiiiIIIND
+						if (C.rotatable)
+							C.rotate(src.move_dir)
 
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 						if (get_dist(src, G.affecting) > 1)
@@ -222,6 +224,7 @@ mob
 								else
 									pulling += src.pulling
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+								if (G.affecting == src) continue
 								pulling += G.affecting
 
 							for (var/atom/movable/A in pulling)

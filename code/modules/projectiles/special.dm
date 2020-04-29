@@ -131,6 +131,7 @@
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
 
@@ -141,6 +142,18 @@
 	on_hit(var/atom/A,var/obj/projectile/P)
 		if(split_type == 1)
 			split(P)
+
+	on_pointblank(obj/projectile/O, mob/target)
+		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
+			return
+		var/datum/projectile/F = new spread_projectile_type()
+		var/turf/PT = get_turf(O)
+		var/pellets = pellets_to_fire
+		while (pellets > 0)
+			pellets--
+			var/obj/projectile/FC = initialize_projectile(PT, F, O.xo, O.yo, O.shooter)
+			hit_with_existing_projectile(FC, target)
+
 
 	proc/new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		return
@@ -190,6 +203,17 @@
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.dissipation_ticker = rand(0,dissipation_variance)
 		FC.launch()
+
+/datum/projectile/special/spreader/buckshot_burst/nails
+	name = "nails"
+	sname = "nails"
+	cost = 1
+	pellets_to_fire = 8
+	spread_projectile_type = /datum/projectile/bullet/nails
+	casing = /obj/item/casing/shotgun_gray
+	spread_angle_variance = 10
+	damage_type = D_SPECIAL
+	power = 32
 
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
@@ -710,11 +734,10 @@
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	shot_number = 0
 	cost = 37.5
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/energy_bolt/tasershotgun
 	split_type = 0
@@ -729,10 +752,6 @@
 		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
-
-	on_hit(atom/A, angle, obj/projectile/P)
-		if(isliving(A))
-			stun_bullet_hit(P,A)
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
@@ -779,14 +798,3 @@
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
-
-	on_pointblank(var/obj/projectile/O, var/mob/target)
-		if (!O)
-			return
-		if (!target)
-			return
-		var/turf/T = get_turf(target)
-		if(T)
-			for(var/i=0, i < 4, i++)
-				throw_egg(T)
-		return

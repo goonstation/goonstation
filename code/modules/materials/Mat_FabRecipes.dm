@@ -650,7 +650,7 @@
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/cell_large
 	name = "Large energy cell"
@@ -669,7 +669,7 @@
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/infusion
 	name = "Infusion"
@@ -727,7 +727,7 @@
 			new_rod.setMaterial(fuel_1.material)
 			new_rod.sv_ratio = 1.22
 			new_rod.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/fuel_rod_4
 	name = "Advanced Nuclear Fuel Rod"

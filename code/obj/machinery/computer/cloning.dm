@@ -251,8 +251,8 @@
 		if(5) //Advanced genetics analysis
 			dat += {"<h4>Advanced Genetic Analysis</h4>
 					<a href='byond://?src=\ref[src];menu=1'>Back</a><br>
-					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to analyze the genetic makeup of the subject during cloning.
-					Data will then be sent to any nearby GeneTek scanners and be used to improve their efficiency. The cloning process will be slightly slower as a result.<BR><BR>"}
+					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.
+					The cloning process will be slightly slower as a result.<BR><BR>"}
 
 			if(pod1 && !pod1.operating)
 				if(pod1.gen_analysis)
@@ -375,90 +375,16 @@
 		src.updateUsrDialog()
 
 	else if (href_list["clone"])
-
-		//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-		// yes, i'm using goto here. this would be less of a cluster if this was a function,
-		// but i can't be bothered rn. someone else can fix it.
-		if (!src.pod1)
-			src.temp = "No cloning pod connected."
-			goto BailOutOfCloningAttempt
-		if (src.pod1.occupant)
-			src.temp = "Cloning pod in use."
-			goto BailOutOfCloningAttempt
-		if (src.pod1.mess)
-			src.temp = "Abnormal reading from cloning pod."
-			goto BailOutOfCloningAttempt
-
-		//Look for that player! They better be dead!
-		var/datum/data/record/C = locate(href_list["clone"])
-		if (!istype(C))
-			src.temp = "Invalid or corrupt record."
-			goto BailOutOfCloningAttempt
-
-		// Get our dead person
-		var/mob/selected = find_dead_player("[C.fields["ckey"]]")
-
-		if (!selected)
-			src.temp = "Can't clone: Unable to locate mind."
-			goto BailOutOfCloningAttempt
-
-		if (selected.mind && selected.mind.dnr)
-			// leave the goddamn dnr ghosts alone
-			src.temp = "Cannot clone: Subject has set DNR."
-			goto BailOutOfCloningAttempt
-		else
-			//for deleting the mob in the afterlife bar if cloning person from there.
-			var/mob/ALB_selection = selected
-			if (inafterlifebar(ALB_selection))
-				boutput(selected, "<span style=\"color:blue\">You are being returned to the land of the living!</span>")
-				selected = ALB_selection.ghostize()
-				qdel(ALB_selection)
-
-		// at this point selected = the dude we wanna revive.
-		// we should be good to start cloning.
-
-		if (wagesystem.clones_for_cash)
-			var/datum/data/record/Ba = FindBankAccountByName(C.fields["name"])
-			var/account_credit = 0
-
-			if (Ba && Ba.fields["current_money"])
-				account_credit = Ba.fields["current_money"]
-
-			if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-				// try cloning
-				if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
-					// deduct some dosh
-					var/from_account = min(wagesystem.clone_cost, account_credit)
-					if (from_account > 0)
-						Ba.fields["current_money"] -= from_account
-					src.held_credit -= (wagesystem.clone_cost - from_account)
-					src.temp = "Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated."
-					src.records.Remove(C)
-					qdel(C)
-					src.menu = 1
-				else
-					src.temp = "Unknown error when trying to start cloning process."
-			else
-				src.temp = "Insufficient funds to begin clone cycle."
-
-		else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
-			src.temp = "Cloning cycle activated."
-			src.records.Remove(C)
-			qdel(C)
-			JOB_XP(usr, "Medical Doctor", 15)
-			src.menu = 1
+		src.clone_record(locate(href_list["clone"]))
 
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
 	else if (href_list["set_analysis"])
 		pod1.gen_analysis = text2num(href_list["set_analysis"])
+		logTheThing("combat", usr, null, "toggles advanced genetic analysis [pod1.gen_analysis ? "on" : "off"] at [log_loc(src)].")
 	else if (href_list["set_mindwipe"])
 		pod1.mindwipe = text2num(href_list["set_mindwipe"])
 
-	// considered harmful
-	BailOutOfCloningAttempt:
-
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
 
@@ -544,6 +470,69 @@
 			selected_record = R
 			break
 	return selected_record
+
+/obj/machinery/computer/cloning/proc/clone_record(datum/data/record/C)
+	if (!istype(C))
+		src.temp = "Invalid or corrupt record."
+		return
+	if (!src.pod1)
+		src.temp = "No cloning pod connected."
+		return
+	if (src.pod1.occupant)
+		src.temp = "Cloning pod in use."
+		return
+	if (src.pod1.mess)
+		src.temp = "Abnormal reading from cloning pod."
+		return
+
+	var/mob/selected = find_dead_player("[C.fields["ckey"]]")
+
+	if (!selected)
+		src.temp = "Can't clone: Unable to locate mind."
+		return
+
+	if (selected.mind && selected.mind.dnr)
+		// leave the goddamn dnr ghosts alone
+		src.temp = "Cannot clone: Subject has set DNR."
+		return
+	else
+		//for deleting the mob in the afterlife bar if cloning person from there.
+		var/mob/ALB_selection = selected
+		if (inafterlifebar(ALB_selection))
+			boutput(selected, "<span style=\"color:blue\">You are being returned to the land of the living!</span>")
+			selected = ALB_selection.ghostize()
+			qdel(ALB_selection)
+
+	// at this point selected = the dude we wanna revive.
+
+	if (wagesystem.clones_for_cash)
+		var/datum/data/record/Ba = FindBankAccountByName(C.fields["name"])
+		var/account_credit = 0
+
+		if (Ba && Ba.fields["current_money"])
+			account_credit = Ba.fields["current_money"]
+
+		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
+			if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+				var/from_account = min(wagesystem.clone_cost, account_credit)
+				if (from_account > 0)
+					Ba.fields["current_money"] -= from_account
+				src.held_credit -= (wagesystem.clone_cost - from_account)
+				src.temp = "Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated."
+				src.records.Remove(C)
+				qdel(C)
+				src.menu = 1
+			else
+				src.temp = "Unknown error when trying to start cloning process."
+		else
+			src.temp = "Insufficient funds to begin clone cycle."
+
+	else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+		src.temp = "Cloning cycle activated."
+		src.records.Remove(C)
+		qdel(C)
+		JOB_XP(usr, "Medical Doctor", 15)
+		src.menu = 1
 
 /obj/machinery/computer/cloning/power_change()
 

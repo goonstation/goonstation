@@ -162,7 +162,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,35,500)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -284,26 +284,21 @@ datum
 			transparency = 200
 			value = 66 // vOv
 			//addiction_prob = 25
+			stun_resist = 1000
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					holder.my_atom:add_stam_mod_regen("stims", 500)
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
 					holder.my_atom:add_stam_mod_max("stims", 500)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_stimulants", 1000)
-				return
+				..()
 
 			on_remove()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 					holder.my_atom:remove_stam_mod_regen("stims")
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
 					holder.my_atom:remove_stam_mod_max("stims")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_stimulants")
-				return
+				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1076,10 +1071,8 @@ datum
 				T.clean_forensic()
 
 			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				..()
 				M.clean_forensic()
-				if (ishuman(M) && M.sims)
-					if (method == TOUCH)
-						M.sims.affectMotive("Hygiene", volume)
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"
@@ -1857,6 +1850,21 @@ datum
 			value = 5
 			hunger_value = 0.8
 
+
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					if (ismartian(M))
+						M.add_stun_resist_mod("reagent_martian_flesh", 15)
+				..()
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					if (ismartian(M))
+						M.remove_stun_resist_mod("reagent_martian_flesh")
+				..()
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(ismartian(M))
@@ -1869,8 +1877,6 @@ datum
 						M.HealDamage("All", 4, 0)
 						M.take_oxygen_deprivation(-4 * mult)
 						M.take_brain_damage(-4 * mult)
-						M.changeStatus("stunned", -40 * mult)
-						M.changeStatus("weakened", -40 * mult)
 				else
 					M.take_toxin_damage(1 * mult)
 					if(prob(10))
@@ -1898,7 +1904,7 @@ datum
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, "<span class='text-red'>Well, that was gross.</span>")
-
+/*
 		reliquary_blood
 			name = "blueish fluid"
 			id = "reliquary_blood"
@@ -1953,7 +1959,7 @@ datum
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, "<span class='text-red'>Well, that was gross.</span>")
-
+*/
 		flockdrone_fluid
 			name = "coagulated gnesis"
 			id = "flockdrone_fluid"
@@ -2140,6 +2146,7 @@ datum
 			var/dir_lock = 0
 			var/anim_lock = 0
 			var/speed = 3
+			stun_resist = 9
 
 			pooled()
 				..()
@@ -2208,20 +2215,15 @@ datum
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_fliptonium", 9)
-				return
+				..()
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_fliptonium")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
+				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
@@ -2266,6 +2268,7 @@ datum
 			overdose = 11
 			depletion_rate = 0.1
 			viscosity = 0.15
+			stun_resist = 60
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -2344,20 +2347,15 @@ datum
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 4)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_fliptonium", 60)
-				return
+				..()
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_fliptonium")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
+				..()
 
 		diluted_fliptonium
 			name = "diluted fliptonium"
@@ -3622,7 +3620,7 @@ datum
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span style=\"color:blue\"> <B> You feel a sense of dread and patriotism wash over you. </B>")
 						badmantarget << sound('sound/misc/american_patriot.ogg', volume = 50)
-						sleep(100)
+						sleep(10 SECONDS)
 						startx = badmantarget.x - rand(-11, 11)
 						starty = badmantarget.y - rand(-11, 11)
 						var/turf/pickedstart = locate(startx, starty, badmantarget.z)
@@ -3939,7 +3937,7 @@ datum
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -3952,20 +3950,21 @@ datum
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-				sleep(10)
+				sleep(1 SECOND)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Punch_4.ogg', 50, 1, -1)
 				deathtarget.emote("scream")
 				deathtarget.setStatus("stunned", max(deathtarget.getStatusDuration("stunned"), 50))
 				deathtarget.setStatus("weakened", max(deathtarget.getStatusDuration("weakened"), 50))
+				deathtarget.unlock_medal("OW! MY BALLS!", 1)
 				var/deathturf = get_turf(src)
 				animate_slide(deathturf, 0, -24, 25)
-				sleep(20)
+				sleep(2 SECONDS)
 				animate_slide(deathturf, 0, 0, 15)
 				qdel(src)
 				deathtarget.deathhunted = 0
 				return
 			else
 				walk_towards(src, src.deathtarget, deathspeed)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 

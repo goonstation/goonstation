@@ -1,6 +1,6 @@
 /obj/item/attackdummy
 	name = "attack dummy"
-	damtype = "brute"
+	hit_type = DAMAGE_BLUNT
 	force = 5
 	throwforce = 5
 

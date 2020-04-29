@@ -1,9 +1,9 @@
-/client/proc/dbg_itemspecial(var/obj/item/I in world)
+/obj/item/proc/dbg_itemspecial()
 	set name = "Give Special"
 	var/sel = input(usr,"Type:","Select type") in childrentypesof(/datum/item_special)
-	I.max_stack = INFINITY
-	I.amount = INFINITY
-	I.setItemSpecial(sel)
+	src.max_stack = INFINITY
+	src.amount = INFINITY
+	src.setItemSpecial(sel)
 	return
 
 /datum/limb/proc/dbg_itemspecial()
@@ -238,6 +238,9 @@
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
+			return 0
+
+		if (user.check_block())
 			return 0
 
 		if (!istype(user.loc, /turf))
@@ -621,7 +624,7 @@
 			if (istype(master,/obj/item/mining_tool))
 				var/obj/item/mining_tool/M = master
 				if (M.status)
-					M.process_charges(3)
+					M.process_charges(30)
 
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
@@ -1122,15 +1125,15 @@
 				if (master)
 					if(istype(master,/obj/item/device/light/zippo))
 						var/obj/item/device/light/zippo/Z = master
-						if (Z.fuel > 0)
-							Z.fuel--
+						if (Z.reagents.get_reagent_amount("fuel"))
+							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
 					if (istype(master,/obj/item/weldingtool))
 						var/obj/item/weldingtool/WT = master
-						if (WT.get_fuel())
-							WT.use_fuel(1)
+						if (WT.reagents.get_reagent_amount("fuel"))
+							WT.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
@@ -1308,16 +1311,16 @@
 				K.start.loc = T1
 				K.start.dir = direction
 				flick(K.start.icon_state, K.start)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				if (T4)
 					K.mid1.loc = T2
 					K.mid1.dir = direction
 					flick(K.mid1.icon_state, K.mid1)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.mid2.loc = T3
 					K.mid2.dir = direction
 					flick(K.mid2.icon_state, K.mid2)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.end.loc = T4
 					K.end.dir = direction
 					flick(K.end.icon_state, K.end)
@@ -1325,7 +1328,7 @@
 					K.mid1.loc = T2
 					K.mid1.dir = direction
 					flick(K.mid1.icon_state, K.mid1)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.end.loc = T3
 					K.end.dir = direction
 					flick(K.end.icon_state, K.end)
@@ -1667,7 +1670,7 @@
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected(P, src)
+				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
 				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")

@@ -58,7 +58,7 @@
 					playsound(src.loc, "rustle", 50, 1)
 					random_brute_damage(src.target, rand(1,2))//it's all over you
 					M.reagents.add_reagent("[venom1]", 2)
-				sleep(4)
+				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
 			if(spazzing < 0)
@@ -179,7 +179,7 @@
 				if(isunconscious(M)) // kill KOd people faster
 					src.set_loc(M.loc)
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> jumps onto [src.target]!</span>")
-					sleep(5)
+					sleep(0.5 SECONDS)
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> sinks its fangs into [src.target]!</span>")
 					playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
 					src.reagents.add_reagent("[venom1]", 5) // doing this instead of directly adding reagents to M should give people the correct messages
@@ -197,18 +197,18 @@
 						src.spiderspaz(src.target)
 						src.visible_message("<span style=\"color:red\"><B>[src]</B> starts draining the fluids out of [T]!</span>")
 						src.set_loc(T.loc)
-						sleep(20)
+						sleep(2 SECONDS)
 						playsound(src.loc, "sound/misc/pourdrink.ogg", 50, 1)
-						sleep(50)
+						sleep(5 SECONDS)
 						if(src.target && T.stat && src.loc == T.loc) // check to see if the target is still passed out and under the spider
 							src.visible_message("<span style=\"color:red\"><B>[src]</B> drains [T] dry!</span>")
 							T.death(0)
 							T.real_name = "Unknown"
 							T.bioHolder.AddEffect("husk")
-							sleep(2)
+							sleep(0.2 SECONDS)
 							playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
 							src.set_loc(get_step(src, pick(alldirs))) // get the fuck out of the way of the ice cube
-							sleep(2)
+							sleep(0.2 SECONDS)
 							var/obj/icecube/cube = new /obj/icecube(get_turf(M), M)
 							M.set_loc(cube)
 							switch (src.encase_in_web)
@@ -292,7 +292,7 @@
 								M:compborg_take_critter_damage("r_leg", rand(2,4))
 							if(4)
 								M:compborg_take_critter_damage("l_leg", rand(2,4))
-				sleep(4)
+				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
 			if(spazzing < 0)
@@ -314,7 +314,7 @@
 	proc/streak(var/list/directions)
 		SPAWN_DBG (0)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(3)
+				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, pick(directions)), 0))
 					break
 
@@ -486,17 +486,17 @@
 				src.task = "chasing corpse"
 			src.visible_message("<span style=\"color:red\"><B>[src]</B> starts draining the fluids out of [C]!</span>")
 			src.set_loc(C.loc)
-			sleep(20)
+			sleep(2 SECONDS)
 			playsound(src.loc, "sound/misc/pourdrink.ogg", 50, 1)
-			sleep(50)
+			sleep(5 SECONDS)
 			if(src.corpse_target && src.loc == C.loc)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> drains [C] dry!</span>")
 				C.real_name = "Unknown"
 				C.bioHolder.AddEffect("husk")
-				sleep(2)
+				sleep(0.2 SECONDS)
 				playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
 				src.set_loc(get_step(src, pick(alldirs))) // get the fuck out of the way of the ice cube
-				sleep(2)
+				sleep(0.2 SECONDS)
 				var/obj/icecube/cube = new /obj/icecube(get_turf(C), C)
 				C.set_loc(cube)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> encases [src.target] in web!</span>")

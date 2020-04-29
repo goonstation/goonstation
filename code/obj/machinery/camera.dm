@@ -81,7 +81,7 @@
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "cameraSecure"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/camera/television/cam
 	var/secstate
@@ -373,7 +373,7 @@
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
 		boutput(user, text("<span style=\"color:blue\">[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
-		sleep(100)
+		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
 			boutput(user, text("<span style=\"color:blue\">The access hatch is now [].</span>", (locked) ? "closed" : "open"))

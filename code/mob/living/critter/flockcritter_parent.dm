@@ -121,7 +121,7 @@
 						pool(F)
 			playsound(get_turf(src), "sound/effects/spray.ogg", 50, 1, -3)
 			update_burning(-100)
-			sleep(20)
+			sleep(2 SECONDS)
 			src.extinguishing = 0
 
 // all flock bots should have the ability to rally somewhere (it's applicable to anything with flock AI)

@@ -1,4 +1,4 @@
-/client/proc/dbg_objectprop(var/obj/item/I in world)
+/obj/item/proc/dbg_objectprop()
 	set name = "Give Property"
 	var/list/ids = list()
 	propListCheck()
@@ -11,7 +11,7 @@
 
 	var/value = input(usr,"Value:","") as num
 
-	I.setProperty(sel, value)
+	src.setProperty(sel, value)
 	return
 
 /obj/var/list/properties = null
@@ -164,9 +164,9 @@ var/list/globalPropList = null
 			return "[propOwner.force] to [propOwner.force*propVal] dmg"
 
 	block
-		name = "Block"
+		name = "Block (Passive)"
 		id = "block"
-		desc = "Gives a chance to block melee attacks." //Value is extra block chance.
+		desc = "Passive chance to block melee attacks." //Value is extra block chance.
 		tooltipImg = "block.png"
 		defaultValue = 5
 		getTooltipDesc(var/obj/propOwner, var/propVal)
@@ -349,3 +349,48 @@ var/list/globalPropList = null
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
+
+	inline //Seriously, if anyone has a better idea, tell me.
+		disorient_resist
+			name = "Body Insulation (Disorient Resist)"
+			id = "I_disorient_resist"
+			desc = "Reduces disorient effects on the wearer." //Value is % protection.
+			tooltipImg = "protdisorient.png"
+			defaultValue = 0
+			getTooltipDesc(var/obj/propOwner, var/propVal)
+				return "[propVal]%"
+		block_blunt
+			name = "Block"
+			id = "I_block_blunt"
+			desc = "This item could be held to block blunt damage. Use RESIST to block." //Value is % protection.
+			tooltipImg = "bluntprot.png"
+			defaultValue = 0
+			getTooltipDesc(var/obj/propOwner, var/propVal)
+				return "Blunt Damage"
+
+		block_cut
+			name = "Block"
+			id = "I_block_cut"
+			desc = "This item could be held to block slashing damage. Use RESIST to block." //Value is % protection.
+			tooltipImg = "cutprot.png"
+			defaultValue = 0
+			getTooltipDesc(var/obj/propOwner, var/propVal)
+				return "Slash Damage"
+
+		block_stab
+			name = "Block"
+			id = "I_block_stab"
+			desc = "This item could be held to block stabbing damage. Use RESIST to block." //Value is % protection.
+			tooltipImg = "stabprot.png"
+			defaultValue = 0
+			getTooltipDesc(var/obj/propOwner, var/propVal)
+				return "Stab Damage"
+
+		block_burn
+			name = "Block"
+			id = "I_block_burn"
+			desc = "This item could be held to block burn damage. Use RESIST to block." //Value is % protection.
+			tooltipImg = "burnprot.png"
+			defaultValue = 0
+			getTooltipDesc(var/obj/propOwner, var/propVal)
+				return "Burn Damage"

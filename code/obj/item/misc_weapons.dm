@@ -19,19 +19,22 @@
 /* unused now
 /obj/item/weapon
 	name = "weapon"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 */
 /////////////////////////////////////////////// Esword /////////////////////////////////////////
 
 /obj/item/sword
 	name = "cyalume saber"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword0"
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword0"
 	var/active = 0.0
+	var/open = 0
+	var/use_glowstick = 1
+	var/obj/item/device/light/glowstick/loaded_glowstick = null
 	var/bladecolor = "G"
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
@@ -56,13 +59,61 @@
 	var/inactive_force = 1
 	var/state_name = "sword"
 	var/off_w_class = 2
+	var/datum/component/holdertargeting/simple_light/light_c
 
 	New()
 		..()
 		src.bladecolor = pick(valid_colors)
+		var/r = 0
+		var/g = 0
+		var/b = 0
 		if (prob(1))
 			src.bladecolor = null
+		switch(src.bladecolor)
+			if("R")
+				r = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
+			if("O")
+				r = 255; g = 127
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
+			if("Y")
+				r = 255; g = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
+			if("G")
+				g = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
+			if("C")
+				b = 255; g = 200
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
+			if("B")
+				b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
+			if("P")
+				r = 153; b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
+			if("Pi")
+				r = 255; g = 121; b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
+			if("W")
+				r = 255; g = 255; b = 255
+				if (use_glowstick)
+					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
+
+		if (src.loaded_glowstick) //the glowstick needs to be on!
+			src.loaded_glowstick.turnon()
+
+		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
+		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
+		BLOCK_SWORD
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(ishuman(user))
@@ -122,12 +173,28 @@
 
 
 /obj/item/sword/attack_self(mob/user as mob)
+	if (use_glowstick)
+		if (open)
+			return
+
+		if (!loaded_glowstick)
+			boutput(user, "<span style=\"color:red\">The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
+			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			return
+
+		if (!loaded_glowstick.on)
+			boutput(user, "<span style=\"color:red\">The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
+			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			return
+
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
 	src.active = !( src.active )
 	if (src.active)
+		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		light_c.update(1)
 		boutput(user, "<span style=\"color:blue\">The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
@@ -144,6 +211,8 @@
 		src.w_class = 4
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
+		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		light_c.update(0)
 		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
@@ -175,10 +244,87 @@
 			user.suiciding = 0
 	return 1
 
+/obj/item/sword/attackby(obj/item/W as obj, mob/user as mob, params)
+	if (!use_glowstick)
+		return ..()
+
+	if (isscrewingtool(W))
+		if (src.active)
+			boutput(user, "<span style=\"color:red\">The sword has to be off before you open it!</span>")
+			return
+
+		if (!src.open)
+			user.visible_message("<b>[user]</b> unscrews and opens [src].")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			src.open = 1
+			if (loaded_glowstick)
+				src.icon_state = "[state_name]-open-[bladecolor]"
+			else
+				src.icon_state = "[state_name]-open"
+			return
+		else
+			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			src.open = 0
+			src.icon_state = "[state_name]0"
+
+	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
+		if (!W:on)
+			boutput(user, "<span style=\"color:red\">The glowstick needs to be on to act as a beam focus for the sword!</span>")
+			return
+		else
+			user.visible_message("<b>[user]</b> loads a glowstick into [src].")
+			loaded_glowstick = W
+			user.u_equip(W)
+			W.set_loc(src)
+			switch(src.loaded_glowstick.color_name)
+				if("red")
+					src.update_simple_light_color(255, 0, 0)
+					src.bladecolor = "R"
+				if("orange")
+					src.update_simple_light_color(255, 127, 0)
+					src.bladecolor = "O"
+				if("yellow")
+					src.update_simple_light_color(255, 255, 0)
+					src.bladecolor = "Y"
+				if("green")
+					src.update_simple_light_color(0, 255, 0)
+					src.bladecolor = "G"
+				if("cyan")
+					src.update_simple_light_color(0, 200, 255)
+					src.bladecolor = "C"
+				if("blue")
+					src.update_simple_light_color(0, 0, 255)
+					src.bladecolor = "B"
+				if("purple")
+					src.update_simple_light_color(153, 0, 255)
+					src.bladecolor = "P"
+				if("pink")
+					src.update_simple_light_color(255, 121, 255)
+					src.bladecolor = "Pi"
+				if("white")
+					src.update_simple_light_color(255, 255, 255)
+					src.bladecolor = "W"
+			src.icon_state = "[state_name]-open-[bladecolor]"
+			return
+	else
+		return ..()
+
+/obj/item/sword/attack_hand(mob/user as mob)
+	if (src.open && src.loc == user)
+		if (src.loaded_glowstick)
+			user.put_in_hand(loaded_glowstick)
+			src.loaded_glowstick = null
+			src.bladecolor = null
+			src.icon_state = "[state_name]-open"
+			return
+	..()
+
 /obj/item/sword/vr
 	icon = 'icons/effects/VR.dmi'
 	inhand_image_icon = 'icons/effects/VR_csaber_inhand.dmi'
 	valid_colors = list("R","Y","G","C","B","P","W","Bl")
+	use_glowstick = 0
 
 /obj/item/sword/discount
 	name = "d-saber"
@@ -186,12 +332,12 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
-	valid_colors = list("R")
 	off_w_class = 3
 	active_force = 18
 	inactive_force = 8
+	active_stamina_dmg = 65
+	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
-	valid_colors = list("R","O","Y","G","C","B","P")
 
 	examine()
 		set src in usr
@@ -212,7 +358,7 @@
 		return
 
 	if (active)
-		target.do_disorient(65, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 
 		if (prob(30))
 			boutput(user, "<span style=\"color:red\">The sword shorted out! The laser turned off!</span>")
@@ -232,7 +378,7 @@
 
 /obj/item/dagger
 	name = "sacrificial dagger"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
@@ -249,6 +395,10 @@
 	stamina_cost = 15
 	stamina_crit_chance = 50
 	pickup_sfx = "sound/items/blade_pull.ogg"
+
+	New()
+		..()
+		BLOCK_KNIFE
 
 /obj/item/dagger/throw_impact(atom/A)
 	if(iscarbon(A))
@@ -294,7 +444,7 @@
 
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
-	// icon = 'icons/obj/weapons.dmi'
+	// icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "throwing_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
@@ -333,7 +483,7 @@
 	name = "shuriken"
 	desc = "A cheap replica of an ancient japanese throwing star."
 	w_class = 1.0
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuriken"
 	throw_spin = 1
 	throw_speed = 4
@@ -353,7 +503,7 @@
 
 /obj/item/nunchucks
 	name = "nunchucks"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "nunchucks"
 	item_state = "nunchucks"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
@@ -373,10 +523,11 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/nunchucks)
+		BLOCK_ROPE
 
 /obj/item/quarterstaff
 	name = "quarterstaff"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "quarterstaff"
 	item_state = "quarterstaff"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -387,6 +538,7 @@
 	hit_type = DAMAGE_BLUNT
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
 	stamina_cost = 35
@@ -402,6 +554,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/simple)
+		BLOCK_ROD
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -432,9 +585,10 @@
 		setTwoHanded(0)
 		status = 0
 		..()
+
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
 
-/obj/item/knife_butcher //Idea stolen from the welder!
+/obj/item/knife/butcher //Idea stolen from the welder!
 	name = "Butcher's Knife"
 	desc = "A huge knife."
 	icon = 'icons/obj/kitchen.dmi'
@@ -450,7 +604,11 @@
 	hit_type = DAMAGE_STAB
 	var/makemeat = 1
 
-/obj/item/knife_butcher/throw_impact(atom/A)
+/obj/item/knife/butcher/New()
+	..()
+	BLOCK_KNIFE
+
+/obj/item/knife/butcher/throw_impact(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if (ismob(usr))
@@ -463,8 +621,8 @@
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
-/obj/item/knife_butcher/attack(target as mob, mob/user as mob)
-	if (!istype(src,/obj/item/knife_butcher/predspear) && ishuman(target) && ishuman(user))
+/obj/item/knife/butcher/attack(target as mob, mob/user as mob)
+	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
 		if (scalpel_surgery(target,user))
 			return
 
@@ -499,8 +657,8 @@
 	..()
 	return
 
-/obj/item/knife_butcher/custom_suicide = 1
-/obj/item/knife_butcher/suicide(var/mob/user as mob)
+/obj/item/knife/butcher/custom_suicide = 1
+/obj/item/knife/butcher/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
 	user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
@@ -511,10 +669,10 @@
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
 
-/obj/item/knife_butcher/predspear
+/obj/item/knife/butcher/predspear
 	name = "Hunting Spear"
 	desc = "A very large, sharp spear."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "predspear"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife_b"
@@ -529,7 +687,7 @@
 /obj/item/axe
 	name = "Axe"
 	desc = "An energised battle axe."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "axe0"
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -546,6 +704,12 @@
 	stamina_damage = 50
 	stamina_cost = 45
 	stamina_crit_chance = 5
+
+
+	New()
+		..()
+		BLOCK_ROD
+
 
 // vvv what the heck why?? vvv
 //obj/item/axe/attack(target as mob, mob/user as mob)
@@ -587,13 +751,12 @@
 /obj/item/fireaxe
 	name = "fire axe"
 	desc = "An axe with a pick-shaped end on the back, intended to be used to get through doors and windows in an emergency."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
-	damtype = "brute"
 	hit_type = DAMAGE_CUT
 	click_delay = 10
 	two_handed = 0
@@ -648,13 +811,14 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "baseballbat"
 	item_state = "baseballbat"
@@ -668,12 +832,13 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 /obj/item/ratstick
 	name = "rat stick"
 	desc = "Used for killing rats... Among other things."
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "ratstick"
 	item_state = "ratstick"
 	hit_type = DAMAGE_BLUNT
@@ -686,12 +851,12 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 	attack(var/atom/A as mob|obj|turf, var/mob/user as mob)
 		if (prob(50))
 			hit_type = DAMAGE_BLUNT
 			hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
-
 		else
 			hit_type = DAMAGE_CUT
 			hitsound = "sound/impact_sounds/Blade_Small_Bloody.ogg"
@@ -721,7 +886,7 @@
 /obj/item/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_CUT
@@ -750,18 +915,21 @@
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
 		src.setItemSpecial(/datum/item_special/katana_dash)
+		BLOCK_SWORD
 
-/obj/item/katana/attack(mob/living/carbon/human/target as mob, mob/user as mob)
+/obj/item/katana/attack(mob/target as mob, mob/user as mob)
 	if(target == user) //Can't cut off your own limbs, dumbo
 		return ..()
+	if(!ishuman(target))
+		return ..()  //Only humans can currently be dismembered
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
 		return
 	switch(zoney)
 		if("head")
-			if(!target.limbs.r_arm && !target.limbs.l_arm && !target.limbs.l_leg && !target.limbs.r_leg) //Does the target not have all of their limbs?
-				target.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
+			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
+				H.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
 			return ..()
 		if("chest")
 			return ..()
@@ -847,7 +1015,7 @@
 /obj/item/katana/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
-	desc = null
+	desc = ""
 
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 16 //not awful but not amazing
@@ -855,12 +1023,11 @@
 	delimb_prob = 1
 	contraband = 4
 
-	examine()
-		set src in usr
-		if (usr.mind && usr.mind.assigned_role == "Captain")
-			boutput(usr, "An ornate and finely crafted blade designed only for the most competent and highly respected of NT's chain of command. Like you!")
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Captain")
+			. = "An ornate and finely crafted blade designed only for the most competent and highly respected of NT's chain of command. Like you!"
 		else
-			boutput(usr, "Looks like some sort of cheap historical recreation sword. You'd have to be a total dork to own this thing.")
+			. = "Looks like some sort of cheap historical recreation sword. You'd have to be a total dork to own this thing."
 
 	New()
 		..()
@@ -913,7 +1080,7 @@
 /obj/item/katana_sheath
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -939,6 +1106,7 @@
 		var/obj/item/katana/K = new sword_path()
 		sword_inside = K
 		K.set_loc(src)
+		BLOCK_ROD
 
 	attack_hand(mob/living/carbon/human/user as mob)
 		if(user.r_hand == src || user.l_hand == src || user.belt == src)
@@ -1008,12 +1176,11 @@
 			return
 		..()
 
-	examine()
-		set src in usr
-		if (usr.mind && usr.mind.assigned_role == "Captain")
-			boutput(usr, "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard.")
+	get_desc(var/dist, var/mob/user)
+		if (user.mind && user.mind.assigned_role == "Captain")
+			. = "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard."
 		else
-			boutput(usr, "A tacky container for a sword. Hey! This thing's actually just plastic painted to look like metal! What a ripoff!")
+			. = "A tacky container for a sword. Hey! This thing's actually just plastic painted to look like metal! What a ripoff!"
 
 	blue //for NTSO medal reward
 		icon_state = "blue_cap_sword_scabbard"
@@ -1063,7 +1230,7 @@
 /obj/item/bloodthirsty_blade
 	name = "Bloodthirsty Blade"
 	desc = "A mysterious blade that hungers for blood & revels in strife. Grows stronger when used for malicious means."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
 	icon_state = "claymore"
@@ -1085,6 +1252,8 @@
 		..()
 		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("T'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SWORD
+
 
 	/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
 		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
@@ -1106,7 +1275,7 @@
 obj/item/fragile_sword
 	name = "fragile sword"
 	desc = "This great blade has seen many battles, as such it dulls quickly when used."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fragile_sword"
 	item_state = "fragile_sword"
@@ -1121,6 +1290,10 @@ obj/item/fragile_sword
 	pickup_sfx = "sound/items/blade_pull.ogg"
 	var/minimum_force = 5
 	var/maximum_force = 70
+
+	New()
+		..()
+		BLOCK_SWORD
 
 	attack(target as mob, mob/user as mob)
 		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
@@ -1159,7 +1332,7 @@ obj/item/whetstone
 /obj/item/heavy_power_sword
 	name = "crusader heavy power-sword mkII"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple stance types."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
 	icon_state = "claymore" //todo new sprite
@@ -1182,6 +1355,7 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SWORD
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(istype (M) | !isdead(M))
@@ -1218,13 +1392,12 @@ obj/item/whetstone
 /obj/item/breaching_hammer
 	name = "airlock breaching sledgehammer"
 	desc = "A heavy metal hammer designed to crumple space station airlocks."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "breaching_sledgehammer"
 	item_state = "breaching_sledgehammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
-	damtype = "brute"
 	hit_type = DAMAGE_BLUNT
 	w_class = 3
 	two_handed = 1
@@ -1233,3 +1406,7 @@ obj/item/whetstone
 	force = 25 //this number is multiplied by 4 when attacking doors.
 	stamina_damage = 10
 	stamina_cost = 20
+
+	New()
+		..()
+		BLOCK_ROD

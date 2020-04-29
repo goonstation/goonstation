@@ -6,7 +6,7 @@
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.do_pressurize()
-			sleep(10)
+			sleep(1 SECOND)
 			qdel(src)
 
 	proc/do_pressurize()

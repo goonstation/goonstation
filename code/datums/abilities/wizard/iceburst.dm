@@ -78,7 +78,7 @@
 							M.visible_message("<span style=\"color:red\">[M] is frozen solid!</span>")
 							new /obj/icecube(M.loc, M)
 						return
-					sleep(5)
+					sleep(0.5 SECONDS)
 				qdel(A)
 
 // /obj/decal/icefloor moved to decal.dm

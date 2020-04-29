@@ -170,7 +170,7 @@ Returns:
 	addGlobalImage(R.lineImage, globalImageKey)
 	// for(var/atom/A in R.crossed)
 	// 	A.color = "#32a867"
-	sleep(70)
+	sleep(7 SECONDS)
 	removeGlobalImage(globalImageKey)
 	return
 
@@ -336,8 +336,8 @@ var/list/electiles = list()
 		I.Scale(iconSize*scalingFactor, iconSize*scalingFactor)
 		I.Shift(EAST,((sizeX * scalingFactor) / 2) / 2)
 
-	var/icon/backGlass = icon('icons/obj/cabinet.dmi', "slot_empty")
-	var/icon/glass = icon('icons/obj/cabinet.dmi', "slot_transparent")
+	var/icon/backGlass = icon('icons/obj/furniture/cabinet.dmi', "slot_empty")
+	var/icon/glass = icon('icons/obj/furniture/cabinet.dmi', "slot_transparent")
 	I.Blend(backGlass, ICON_UNDERLAY)
 	I.Blend(glass, ICON_OVERLAY)
 
@@ -363,7 +363,7 @@ var/list/electiles = list()
 
 /obj/item/permmarker
 	name = "Permanent Marker"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "marker"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	color = "#0099ff"
@@ -828,7 +828,7 @@ var/list/electiles = list()
 	if(!istype(source, /mob/cinematicCamera))
 		C =	new/mob/cinematicCamera(get_turf(source))
 		C.start(source, remove_source, freeze_source)
-		sleep(3)
+		sleep(0.3 SECONDS)
 	else
 		C = source
 
@@ -851,7 +851,7 @@ var/list/electiles = list()
 	if(!istype(source, /mob/cinematicCamera))
 		C =	new/mob/cinematicCamera(get_turf(source))
 		C.start(source, remove_source, freeze_source)
-		sleep(3)
+		sleep(0.3 SECONDS)
 	else
 		C = source
 
@@ -1035,7 +1035,7 @@ var/list/electiles = list()
 /obj/item/experimental/ranged
 	name = "test"
 	desc = ""
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
@@ -1090,7 +1090,7 @@ var/list/electiles = list()
 /obj/item/experimental/melee
 	name = "melee weapon"
 	desc = ""
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
@@ -1127,7 +1127,7 @@ var/list/electiles = list()
 /datum/action/bar/private/icon/daggerStab
 	id = "daggerStab"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"
 	var/obj/item/experimental/melee/dagger/dagger
 	var/mob/user
@@ -1202,7 +1202,7 @@ var/list/electiles = list()
 /obj/item/experimental/melee/dagger
 	name = "Dagger"
 	desc = "A dagger. Perfect for back-stabbing. Only good for back-stabbing, actually."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "dagger"
@@ -1294,7 +1294,7 @@ var/list/electiles = list()
 	force = 10
 	throwforce = 20
 	color = "#ffffff"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "staff_crystal"
@@ -1350,14 +1350,14 @@ var/list/electiles = list()
 	proc/buildOverlays()
 		overlays.Cut()
 		if(shaft)
-			var/image/imgShaft = image('icons/obj/weapons.dmi',icon_state = "spear")
+			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
 			imgShaft.color = shaft.color
 			imgShaft.alpha = shaft.alpha
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
-			var/image/imgHead = image('icons/obj/weapons.dmi',icon_state = "spearhead")
+			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
 			imgHead.color = head.color
 			imgHead.alpha = head.alpha
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
@@ -1687,6 +1687,7 @@ var/list/electiles = list()
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+		BLOCK_ROD
 
 	rebuild()
 		..()
@@ -1833,9 +1834,10 @@ var/list/electiles = list()
 /obj/item/ghostboard
 	name = "Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lboard"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "ouijaboard"
 	w_class = 3.0
 	var/ready = 1
 	var/list/users = list()
@@ -1844,6 +1846,7 @@ var/list/electiles = list()
 	New()
 		. = ..()
 		START_TRACKING
+		BLOCK_BOOK
 
 	disposing()
 		. = ..()
@@ -2150,7 +2153,7 @@ var/list/electiles = list()
 /obj/item/teslacannon
 	desc = "An experimental piece of syndicate technology."
 	name = "Tesla cannon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2187,8 +2190,8 @@ var/list/electiles = list()
 						else
 							T:burn_tile()
 			SPAWN_DBG(0.6 SECONDS) qdel(B)
-			sleep(3)
-		sleep(1)
+			sleep(0.3 SECONDS)
+		sleep(0.1 SECONDS)
 
 		user.canmove = 1
 		firing = 0
@@ -2375,7 +2378,7 @@ var/list/electiles = list()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/obj/beam_dummy/B = showLine(get_turf(src), get_turf(target), "beam", 10)
-		sleep(30)
+		sleep(3 SECONDS)
 		qdel(B)
 		return
 
@@ -2534,7 +2537,7 @@ var/list/electiles = list()
 /obj/shuttle_cannon
 	name = "Shuttle Cannon"
 	desc = "Pew Pew"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuttlecannonthing"
 	anchored = 1
 	density = 1
@@ -2870,7 +2873,7 @@ var/list/electiles = list()
 	anchored = 1
 	contraband = 4
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "boomerang"
 	item_state = "boomerang"
 
@@ -2880,6 +2883,10 @@ var/list/electiles = list()
 	throw_return = 1
 
 	var/prob_clonk = 0
+
+	New()
+		..()
+		BLOCK_LARGE
 
 	throw_begin(atom/target)
 		icon_state = "boomerang1"
@@ -3013,6 +3020,8 @@ var/list/electiles = list()
 /client/proc/create_portal()
 	set category = null
 	set name = "Create Portal"
+	set popup_menu = 0
+
 	admin_only
 
 	var/mob/M = src.mob
@@ -3275,30 +3284,30 @@ var/list/electiles = list()
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
 			user.buckled = src
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -3
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -6
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -9
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_x = -12
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_y = 25
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 15
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			user.start_chair_flip_targeting(extrarange = 2)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 15
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			playsound(user, "sound/effects/brrp.ogg", 15, 1)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if(range == 1) boutput(user, "<span style=\"color:red\">You slip...</span>")
 			user.layer = MOB_LAYER
 			user.buckled = null
@@ -3366,7 +3375,7 @@ var/list/lag_list = new/list()
 
 /proc/lag_loop()
 	var/before = world.timeofday
-	sleep(1)
+	sleep(0.1 SECONDS)
 	add_and_average( (world.timeofday - before) )
 	SPAWN_DBG(0.5 SECONDS) lag_loop()
 
@@ -3405,7 +3414,7 @@ var/list/lag_list = new/list()
 		break_it()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		M:transforming = 1
-		sleep(30)
+		sleep(3 SECONDS)
 		var/obj/screen/creepy = new /obj/screen()
 		creepy.name = "GARHLGHARLHGARHGL"
 		creepy.icon = 'icons/creepy.png'
@@ -3415,14 +3424,14 @@ var/list/lag_list = new/list()
 		var/client/the_client = M.client
 		creepy.add_to_client(the_client)
 		playsound(src, "sound/effects/ghost2.ogg", 100, 0)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		if(!M)
 			the_client.screen -= creepy
 			return
 		M:gib()
-		sleep(5)
+		sleep(0.5 SECONDS)
 		the_client.screen -= creepy
-		sleep(30)
+		sleep(3 SECONDS)
 
 	New()
 		build_base()
@@ -3564,12 +3573,12 @@ var/list/lag_list = new/list()
 			playsound(L, 'sound/vox/ghost.ogg', 5, 0)
 		else
 			playsound(L, 'sound/effects/ghost.ogg', 5, 0)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
 		src.invisibility = 0
 		flick("apparition",src)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		src.invisibility = 100
 		src.set_loc(startloc)
 		walk(src,0)
@@ -3832,7 +3841,7 @@ var/list/lag_list = new/list()
 /obj/item/engibox
 	name = "Engineer-in-a-box"
 	desc = "The concentrated power of a whole team of engineers. In a box."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "engi"
 	var/list/modes = new/list()
 	var/datum/engibox_mode/active_mode = null
@@ -3927,7 +3936,7 @@ var/list/lag_list = new/list()
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2)
 					sound_fx_2 = pick('sound/ambience/nature/Seagulls1.ogg','sound/ambience/nature/Seagulls2.ogg','sound/ambience/nature/Seagulls3.ogg')

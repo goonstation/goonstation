@@ -43,13 +43,11 @@
 				H.visible_message("<span style='color:red'>[H] seems to be warded from the effects!</span>")
 				return 1
 
-			// NPCs should always be cluwnable, I guess (Convair880)?
-			if (H.mind && (H.mind.assigned_role != "Cluwne") || (!H.mind || !H.client))
+			if (H.job != "Cluwne")
 				boutput(H, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
 				H.take_brain_damage(50)
 				H.stuttering = 120
-				if (H.mind)
-					H.mind.assigned_role = "Cluwne"
+				H.job = "Cluwne"
 				H.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
 				H.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne,null,null,1)
 				playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))

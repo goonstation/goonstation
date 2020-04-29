@@ -6,7 +6,7 @@
 /obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "a pill."
-	icon = 'icons/obj/pills.dmi'
+	icon = 'icons/obj/items/pills.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "pill0"
 	item_state = "pill"
@@ -51,7 +51,7 @@
 			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				reagents.trans_to(user, reagents.total_volume)
 			user.u_equip(src)
 			pool(src)
@@ -88,7 +88,7 @@
 			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes %target% swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(M, INGEST)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				reagents.trans_to(M, reagents.total_volume)
 			user.u_equip(src)
 			pool(src)
@@ -330,6 +330,15 @@
 
 		var/primaries = rand(1,3)
 		var/adulterants = rand(2,4)
+
+#if ASS_JAM
+		primaries--
+		adulterants--
+		var/the_spicy_stuff = rand(2, 4)
+		while(the_spicy_stuff > 0)
+			the_spicy_stuff--
+			reagents.add_reagent(pick(all_functional_reagent_ids), 3)
+#endif
 
 		while(primaries > 0)
 			primaries--

@@ -591,7 +591,7 @@ var/list/mechanics_telepads = new/list()
 		air_contents.zero()
 
 		flick("comp_flush1", src)
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
 
 		H.start(src) // start the holder processing movement
@@ -926,7 +926,7 @@ var/list/mechanics_telepads = new/list()
 					active = 1
 					SPAWN_DBG(0) drivecurrent()
 					SPAWN_DBG(0.5 SECONDS) drivecurrent()
-				sleep(30)
+				sleep(3 SECONDS)
 				if(src)
 					icon_state = "[under_floor ? "u":""]comp_accel"
 					active = 0
@@ -1923,15 +1923,15 @@ var/list/mechanics_telepads = new/list()
 
 	proc/selitemplus(var/datum/mechanicsMessage/input)
 		if(!input) return
-		
+
 		if(signals.Find(input.signal))
 			current_index = signals.Find(input.signal)
 		else
 			return // Don't send out a signal if not found
-		
+
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
-		
+
 		input.signal = signals[current_index]
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)

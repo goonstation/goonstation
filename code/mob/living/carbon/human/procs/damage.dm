@@ -121,7 +121,8 @@
 
 				//bleed
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">[P] pierces through your armor!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">[P] pierces through your armor!</span>", 4)
 					src.TakeDamage("chest", damage/max((armor_value_bullet/3), 1), 0, 0, DAMAGE_STAB)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/max(armor_value_bullet/3), 0, 0, target_organ)
@@ -166,7 +167,8 @@
 					src.stamina_stun()
 				//bleed
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_BLUNT)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/armor_value_bullet, 0, 0, target_organ)
@@ -187,7 +189,8 @@
 					src.stuttering = stun
 
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
@@ -208,7 +211,8 @@
 					return
 
 				if (armor_value_bullet > 1)
-					show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+					if (!P.proj_data.nomsg)
+						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 					src.update_burning(damage/armor_value_bullet)
 					if (src.organHolder && prob(50))
@@ -236,7 +240,8 @@
 
 				if (P.proj_data.reagent_payload)
 					if (armor_value_bullet > 1)
-						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+						if (!P.proj_data.nomsg)
+							show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
 						src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_STAB)
 					else
 						src.TakeDamage("chest", damage, 0, 0, DAMAGE_STAB)
@@ -533,7 +538,12 @@
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
-
+#if ASS_JAM //pausing damage in timestop
+	if (src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
+#endif
 	brute = max(0, brute)
 	burn = max(0, burn)
 	//tox = max(0, burn)
@@ -585,7 +595,7 @@
 	if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 		a_zone = "chest"
 
-	armor_mod = get_melee_protection(zone)
+	armor_mod = get_melee_protection(zone, damage_type)
 	/*switch (zone)
 		if ("l_arm")
 			z_name = "left arm"

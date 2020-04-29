@@ -78,12 +78,7 @@
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
-		hud = new(src)
-		src.attach_hud(hud)
 
-		src.zone_sel = new(src, "CENTER+3, SOUTH")
-		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
-		src.attach_hud(zone_sel)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
@@ -142,6 +137,13 @@
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
 		. = ..()
+
+		hud = new(src)
+		src.attach_hud(hud)
+
+		src.zone_sel = new(src, "CENTER+3, SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
+		src.attach_hud(zone_sel)
 
 		if (src.shell)
 			if (!(src in available_ai_shells))
@@ -437,7 +439,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -449,7 +451,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -809,13 +811,13 @@
 
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
-				shoot_reflected(P, src)
+				shoot_reflected_to_sender(P, src)
 				src.cell.use(damage * 30)
 				boutput(src, "<span style=\"color:blue\">Your force shield deflects the shot!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				return
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated && dmgtype == 1)
-				shoot_reflected(P, src)
+				shoot_reflected_to_sender(P, src)
 				src.cell.use(damage * 20)
 				boutput(src, "<span style=\"color:blue\">Your fire shield deflects the shot!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
@@ -3019,28 +3021,28 @@
 
 	if (this_hand)
 		if (this_hand == "right" || this_hand == 3)
-			if (src.module_states[3] && istype(I, src.module_states[3]))
+			if (src.module_states[3] && istype(src.module_states[3], I))
 				return 1
 			else
 				return 0
 		else if (this_hand == "middle" || this_hand == 2)
-			if (src.module_states[2] && istype(I, src.module_states[2]))
+			if (src.module_states[2] && istype(src.module_states[2], I))
 				return 1
 			else
 				return 0
 		else if (this_hand == "left" || this_hand == 1)
-			if (src.module_states[1] && istype(I, src.module_states[1]))
+			if (src.module_states[1] && istype(src.module_states[1], I))
 				return 1
 			else
 				return 0
 		else
 			return 0
 
-	if (src.module_states[3] && istype(I, src.module_states[3]))
+	if (src.module_states[3] && istype(src.module_states[3], I))
 		return src.module_states[3]
-	else if (src.module_states[2] && istype(I, src.module_states[2]))
+	else if (src.module_states[2] && istype(src.module_states[2], I))
 		return src.module_states[2]
-	else if (src.module_states[1] && istype(I, src.module_states[1]))
+	else if (src.module_states[1] && istype(src.module_states[1], I))
 		return src.module_states[1]
 	else
 		return 0

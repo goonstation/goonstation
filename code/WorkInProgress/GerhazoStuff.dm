@@ -62,7 +62,7 @@
 			if(my_ability_holder.points > 0) // we didn't run out of ability holder points, deflect successful
 				if(P.proj_data.damage_type == D_ENERGY || P.proj_data.damage_type == D_BURNING || P.proj_data.damage_type == D_TOXIC || P.proj_data.damage_type == D_RADIOACTIVE) // energy-related damage types
 					src.visible_message("<span style=\"color:red\">[src] deflects the [P.name] with his [deflecting_sword]!</span>")
-					shoot_reflected(P, src)
+					shoot_reflected_to_sender(P, src)
 					P.die()
 					playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 60, 0.1, 0, 2.6)
 					return
@@ -223,7 +223,7 @@
 				else
 					my_mob.visible_message("<span style=\"color:red\"><b>[sword] lands at [my_mob]'s feet!</b></span>")
 				i=100
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 /datum/projectile/force_wave
 	name = "force wave"
@@ -434,13 +434,13 @@
 		mob_target.changeStatus("stunned", 150)
 		mob_target.force_laydown_standup()
 
-		sleep(15)
+		sleep(1.5 SECONDS)
 		M.visible_message("<span style=\"color:red\"><b>[M] begins lifting his hand, with [mob_target] following!</b></span>")
 		var/i
 		for(i = 0; i < 12; i++)
 			mob_target.pixel_y += 2
-			sleep(1)
-		sleep(5)
+			sleep(0.1 SECONDS)
+		sleep(0.5 SECONDS)
 		M.visible_message("<span style=\"color:red\"><b>[M] closes his grip!</b></span>")
 		mob_target.losebreath += 10
 

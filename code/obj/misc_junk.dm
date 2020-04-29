@@ -3,7 +3,7 @@
 /obj/item/aplate
 	name = "armor plates"
 	desc = "A bunch of armor plates."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "armorplate"
 	amount = 1
 	throwforce = 1
@@ -13,7 +13,7 @@
 /obj/item/gears
 	name = "gears"
 	desc = "A bunch of gears. Not very useful like this."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gears"
 	amount = 1
 	throwforce = 1
@@ -23,7 +23,7 @@
 /obj/item/lens
 	name = "Lens"
 	desc = "A lens of some sort. Not super useful on its own."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lens"
 	amount = 1
 	throwforce = 1
@@ -41,7 +41,7 @@
 
 /obj/item/coil
 	desc = "A coil. Not really useful without additional components."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	amount = 1
 
 	small
@@ -73,7 +73,8 @@
 		..()
 		processing_items.Add(src)
 		START_TRACKING
-	
+		BLOCK_TANK
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -105,7 +106,7 @@
 
 /obj/item/c_tube
 	name = "cardboard tube"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "c_tube"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	throwforce = 1
@@ -120,6 +121,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(issnippingtool(W))
@@ -137,7 +139,7 @@
 
 /obj/item/c_sheet
 	name = "cardboard sheet"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "c_sheet"
 	throwforce = 1
 	w_class = 1.0
@@ -150,12 +152,12 @@
 
 	attack_self(mob/user as mob)
 		boutput(user, __blue("You deftly fold [src] into a party hat!."))
-		user.put_in_hand_or_drop(new /obj/item/clothing/head/party(src.loc))
+		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
 /obj/item/disk
 	name = "disk"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	mats = 8
 
 /obj/item/dummy
@@ -192,7 +194,7 @@
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
 	desc = "A rubber chicken, isn't that hilarious?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
 	w_class = 2.0
@@ -466,7 +468,7 @@
 /obj/item/emeter
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "forensic0"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -549,10 +551,14 @@
 /obj/item/rubber_hammer
 	name = "rubber hammer"
 	desc = "Looks like one of those fair toys."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 0
+
+	New()
+		..()
+		BLOCK_ALL
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
@@ -574,8 +580,8 @@
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
-	icon = 'icons/obj/cigarettes.dmi'
-	inhand_image_icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
+	inhand_image_icon = 'icons/obj/items/cigarettes.dmi'
 	initial_volume = 50
 	initial_reagents = "nicotine"
 	item_state = "ecig"
@@ -679,7 +685,7 @@
 			src.smoke.attach(target_loc)
 			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
-				sleep(10)
+				sleep(1 SECOND)
 
 			if(!PH)
 				usr.visible_message("<span style='color:red'><B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
@@ -726,8 +732,8 @@
 /obj/item/reagent_containers/ecig_refill_cartridge
 	name = "e-cigarette refill cartridge"
 	desc = "A small black box full of nicotine"
-	icon = 'icons/obj/cigarettes.dmi'
-	inhand_image_icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/items/cigarettes.dmi'
+	inhand_image_icon = 'icons/obj/items/cigarettes.dmi'
 	initial_volume = 50
 	initial_reagents = "nicotine"
 	item_state = "ecigrefill"
@@ -760,7 +766,7 @@
 	icon_state = "trophy"
 
 /obj/item/battlepass
-	icon = 'icons/obj/card.dmi'
+	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
 	name = "Battle Pass"
 	desc = "Lets you know in advance where supply drops are happening. Also allows you to use 3 10 second long shields by clicking it in you hand"

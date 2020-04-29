@@ -377,7 +377,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 			SPAWN_DBG(1 SECOND)
 				say("Well hot dog! [pick(JOHN_insults)], you wouldn't believe it but I use to work there!")
 				johnbill_shuttle_fartnasium_active = 1
-				sleep(20)
+				sleep(2 SECONDS)
 				say("Yer dag right we can go Juicin around in there! Pack yer shit we're doin a B&E ! ! ! ")
 				emote("dance")
 			return
@@ -401,31 +401,31 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 
 				if (istype(W, /obj/item/clothing/mask/cigarette/cigarillo/juicer))
 					gotsmokes = 1
-					sleep(30)
+					sleep(3 SECONDS)
 					say(pick("Listen bud, I don't know who sold you these, but they ain't your pal.","Y'know these ain't legal in any NT facilities, right?","Maybe you ain't so dumb as ya look, brud."))
 					var/obj/item/clothing/mask/cigarette/cigarillo/juicer/J = W
 					src.u_equip(wear_mask)
 					src.equip_if_possible(J, slot_wear_mask)
 					J.cant_other_remove = 0
-					sleep(30)
+					sleep(3 SECONDS)
 					J.light(src, "<span style='color:red'><b>[src]</b> casually lights [J] and takes a long draw.</span>")
-					sleep(50)
+					sleep(5 SECONDS)
 #if BUILD_TIME_DAY >= 28 // this block controls whether or not it is the right time to smoke a fat doink with Big J
 					say("You know a little more than you let on, don't you?")
-					sleep(70)
+					sleep(7 SECONDS)
 					say("See but I been away long enough that I don't know much about you.")
 					emote("cough")
-					sleep(150)
+					sleep(15 SECONDS)
 					particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(src.loc, src.dir))
 					say("Other than you 'trasies really did me and my bro a solid, back when there was that whole business with the bee n' all that. A real solid. But by now you're wonderin' why we were involved with her anyhow.")
-					sleep(70)
+					sleep(7 SECONDS)
 					say("All in due time.")
 					emote("cough")
-					sleep(90)
+					sleep(9 SECONDS)
 					J.put_out(src, "<b>[src]</b> distractedly drops and treads on the lit [J.name], putting it out instantly.")
 					src.u_equip(J)
 					J.set_loc(src.loc)
-					sleep(20)
+					sleep(2 SECONDS)
 					say("These just don't taste the same without him...")
 #else // it is not time
 					say(pick("This ain't the time, but we should have a talk. A long talk.","Under better circumstances, I'd like to smoke a few of these and reminesce with ya.","We'll have to do this again some time. When the time is right."))
@@ -437,9 +437,9 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 					var/obj/item/clothing/mask/cigarette/cig = W
 					src.u_equip(wear_mask)
 					src.equip_if_possible(cig, slot_wear_mask)
-					sleep(30)
+					sleep(3 SECONDS)
 					cig.light(src, "<span style='color:red'><b>[src]</b> cautiously lights [cig] and takes a short draw.</span>")
-					sleep(50)
+					sleep(5 SECONDS)
 					say(pick("Yeah that's ol' Dan's stuff...","But hey, thanks for the smokes, bruddo.","Smooth. Too smooth."))
 			return
 		..()
@@ -563,24 +563,24 @@ var/bombini_saved = 0
 					T = get_turf(B)
 					SPAWN_DBG(1 DECI SECOND)
 						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
-						sleep(30)
+						sleep(3 SECONDS)
 						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
 						src.visible_message("<span style=\"color:red\">The shuttle is making a hell of a racket!</span>")
-						sleep(50)
+						sleep(5 SECONDS)
 						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
 							shake_camera(M, 5, 2)
 
-						sleep(20)
+						sleep(2 SECONDS)
 						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
-						sleep(30)
+						sleep(3 SECONDS)
 						src.visible_message("<span style=\"color:red\">The shuttle engine alarms start blaring!</span>")
 						playsound(T, "sound/machines/pod_alarm.ogg", 60, 1)
 						var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(src)
 						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 						smoke.set_up(5, 0, smokyEngine)
 						smoke.start()
-						sleep(40)
+						sleep(4 SECONDS)
 						playsound(T, "sound/machines/boost.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
 							shake_camera(M, 10, 4)
@@ -780,7 +780,7 @@ Urs' Hauntdog critter
 	proc/flip()
 		src.visible_message("<b>[src]</b> does a flip!",2)
 		flick("hauntdog-flip",src)
-		sleep(13)
+		sleep(1.3 SECONDS)
 
 	CritterDeath()
 		if (!src.alive) return
@@ -827,10 +827,11 @@ Urs' Hauntdog critter
 	on_pet(mob/user)
 		if (..())
 			return 1
-		if (prob(25))
+		if (prob(ASS_JAM?50:25))
 			var/turf/T = get_turf(src)
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
+
 

@@ -117,7 +117,7 @@
 			T.changeStatus("stunned", 7 SECONDS)
 			T.visible_message("<span style=\"color:red\">[T] was struck by the batarang!</span>", "<span style=\"color:red\">You were struck by a batarang!</span>")
 			qdel(A)
-		sleep(2)
+		sleep(0.2 SECONDS)
 	qdel(A)
 	return
 
@@ -206,7 +206,7 @@
 		usr.visible_message("<span style=\"color:red\"><B>[usr] leaps into the air, shocking [T]!</B></span>", "<span style=\"color:red\"><B>You leap into the air, shocking [T]!</B></span>")
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y += 4
-			sleep(1)
+			sleep(0.1 SECONDS)
 		usr.visible_message("<span style=\"color:red\"><B>[usr] begins kicking [T] in the face rapidly!</B></span>", "<span style=\"color:red\"><B>You begin kicking [T] in the face rapidly!</B></span>")
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y -= 4
@@ -215,19 +215,19 @@
 			T.updatehealth()
 			usr.visible_message("<span style=\"color:red\"><B>[usr] kicks [T] in the face!</B></span>", "<span style=\"color:red\"><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
-			sleep(1)
+			sleep(0.1 SECONDS)
 			usr.dir = EAST
 			T.TakeDamage("head", 1, 0)
 			T.updatehealth()
 			usr.visible_message("<span style=\"color:red\"><B>[usr] kicks [T] in the face!</B></span>", "<span style=\"color:red\"><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
-			sleep(1)
+			sleep(0.1 SECONDS)
 			usr.dir = SOUTH
 			T.TakeDamage("head", 1, 0)
 			T.updatehealth()
 			usr.visible_message("<span style=\"color:red\"><B>[usr] kicks [T] in the face!</B></span>", "<span style=\"color:red\"><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
-			sleep(1)
+			sleep(0.1 SECONDS)
 			usr.dir = WEST
 			T.TakeDamage("head", 1, 0)
 			T.updatehealth()
@@ -235,31 +235,31 @@
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 		usr.dir = get_dir(usr, T)
 		usr.visible_message("<span style=\"color:red\"><B>[usr] stares deeply at [T]!</B></span>", "<span style=\"color:red\"><B>You stares deeply at [T]!</B></span>")
-		sleep(8)
+		sleep(0.8 SECONDS)
 		usr.visible_message("<span style=\"color:red\"><B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B></span>", "<span style=\"color:red\"><B>You unleash a tremendous kick to the jaw towards [T]!</B></span>")
 		playsound(T.loc, "swing_hit", 25, 1, -1)
 		batman_pow(T.loc)
 		//flick("e_flash", T.flash)
 		T.setStatus("weakened", T.getStatusDuration("weakened") + 6 SECONDS)
 		step_away(T,usr,15)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		step_away(T,usr,15)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		step_away(T,usr,15)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		step_away(T,usr,15)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		step_away(T,usr,15)
 		T.TakeDamage("head", 10, 0)
 		T.updatehealth()
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y += 10
-			sleep(1)
+			sleep(0.1 SECONDS)
 		usr.set_loc(T.loc)
 		usr.setStatus("weakened", 10)
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y -= 8
-			sleep(1)
+			sleep(0.1 SECONDS)
 		usr.pixel_y = 0
 		usr.visible_message("<span style=\"color:red\"><B>[usr] elbow drops [T] into oblivion!</B></span>", "<span style=\"color:red\"><B>You elbow drop [T] into oblivion!</B></span>")
 		batman_pow(T.loc)
@@ -282,37 +282,37 @@
 		T.u_equip(r_hand)
 		T.setStatus("stunned", T.getStatusDuration("stunned") + 15 SECONDS)
 		T.force_laydown_standup()
-		sleep(10)
+		sleep(1 SECOND)
 		usr.visible_message("<span style=\"color:red\"><B>[usr] starts spinning [T] around!</B></span>", "<span style=\"color:red\"><B>You start spinning [T] around!</B></span>")
 		playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
 		for(var/i = 0, i < 2, i++)
 			T.dir = NORTH
-			sleep(5)
+			sleep(0.5 SECONDS)
 			T.dir = EAST
-			sleep(5)
+			sleep(0.5 SECONDS)
 			T.dir = SOUTH
-			sleep(5)
+			sleep(0.5 SECONDS)
 			T.dir = WEST
-			sleep(5)
+			sleep(0.5 SECONDS)
 		for(var/i = 0, i < 1, i++)
 			T.dir = NORTH
-			sleep(2)
+			sleep(0.2 SECONDS)
 			T.dir = EAST
-			sleep(2)
+			sleep(0.2 SECONDS)
 			T.dir = SOUTH
-			sleep(2)
+			sleep(0.2 SECONDS)
 			T.dir = WEST
-			sleep(2)
+			sleep(0.2 SECONDS)
 		boutput(T, "<span style=\"color:red\">YOU'RE GOING TOO FAST!!!</span>")
 		for(var/i = 0, i < 10, i++)
 			T.dir = NORTH
-			sleep(1)
+			sleep(0.1 SECONDS)
 			T.dir = EAST
-			sleep(1)
+			sleep(0.1 SECONDS)
 			T.dir = SOUTH
-			sleep(1)
+			sleep(0.1 SECONDS)
 			T.dir = WEST
-			sleep(1)
+			sleep(0.1 SECONDS)
 		playsound(usr.loc, "sound/weapons/rocket.ogg", 50)
 		usr.visible_message("<span style=\"color:red\"><B>[src] flings [T] with all of his might!</B></span>")
 		T.force_laydown_standup()
@@ -320,7 +320,7 @@
 		SPAWN_DBG(0)
 			if (T)
 				walk(T, target_dir, 1)
-				sleep(5)
+				sleep(0.5 SECONDS)
 				walk(T, 0)
 				playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 				random_brute_damage(T, 30)
@@ -341,7 +341,7 @@
 		playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
 		usr.setStatus("weakened", 8 SECONDS)
 		usr.force_laydown_standup()
-		sleep(15)
+		sleep(1.5 SECONDS)
 		usr.visible_message("<span style=\"color:red\"><B>[usr] launches towards [T]</B>!</span>", "<span style=\"color:red\"><B>You launch towards [T]</B>!</span>")
 		for(var/i=0, i<100, i++)
 			step_to(usr,T,0)
@@ -358,5 +358,5 @@
 				if(tturf && isturf(tturf))
 					SPAWN_DBG(0)
 						T.throw_at(tturf, 4, 2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 

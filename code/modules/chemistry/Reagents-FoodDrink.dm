@@ -927,15 +927,12 @@ datum
 			//decays into sugar/some sort of stimulant, maybe gives unique stimulant effect/messages, like bold red GOTTA GO FASTs? Makes you take damage when you run into a wall?
 			taste = "FAST"
 			bladder_value = -5
+			stun_resist = 6
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2)
 				M.drowsyness = max(M.drowsyness-5, 0)
-				if(prob(25))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 				if(prob(8))
 					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
 					var/speed_message = pick("Gotta go fast!", "Time to speed, keed!", "I feel a need for speed!", "Let's juice.", "Juice time.", "Way Past Cool!")
@@ -1023,7 +1020,7 @@ datum
 							//Roast up the player
 							if (M)
 								boutput(M, "<span style=\"color:red\"><b>IT BURNS!!!!</b></span>")
-								sleep(2)
+								sleep(0.2 SECONDS)
 								M.visible_message("<span style=\"color:red\">[M] is consumed in flames!</span>")
 								M.firegib()
 
@@ -1209,18 +1206,7 @@ datum
 			alch_strength = 0.35
 			description = "Mmm, tastes like heart attacks."
 			reagent_state = LIQUID
-
-			on_add()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_bull", 8)
-				return
-
-			on_remove()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_bull")
-				return
+			stun_resist = 8
 
 
 		fooddrink/alcoholic/longisland
@@ -2035,6 +2021,7 @@ datum
 			thirst_value = 0.3
 			bladder_value = -0.1
 			energy_value = 0.3
+			stun_resist = 7
 
 			pooled()
 				..()
@@ -2043,13 +2030,13 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2060,10 +2047,6 @@ datum
 					if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 						M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 					M.make_jittery(3)
-					if(prob(50))
-						M.changeStatus("paralysis", -10 * mult)
-						M.changeStatus("stunned", -10 * mult)
-						M.changeStatus("weakened", -10 * mult)
 
 		fooddrink/coffee/fresh
 			name = "freshly brewed coffee"
@@ -2083,29 +2066,27 @@ datum
 			energy_value = 0.8
 			var/caffeine_rush = 3
 			var/caffeine_jitters = 10
+			stun_resist = 10
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
 					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
-				return
+				..()
 
 			on_remove()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 					holder.my_atom:remove_stam_mod_regen("caffeine rush")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.make_jittery(1)
-				if(prob(src.caffeine_jitters))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 
 		fooddrink/coffee/espresso/expresso // the stupid stuff
 			name = "expresso"
 			id = "expresso"
 			description = "An expresso is a strong black coffee with more stupid."
+			stun_resist = 25
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.take_brain_damage(2 * mult)
@@ -2136,6 +2117,7 @@ datum
 			thirst_value = 0.055
 			bladder_value = 0.04
 			energy_value = 1
+			stun_resist = 8
 
 			pooled()
 				..()
@@ -2147,11 +2129,6 @@ datum
 					tickcounter++
 
 				..()
-				// basically, make it twice as effective
-				if (prob(50))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 
 			on_mob_life_complete(var/mob/M)
 				if(M)
@@ -3608,7 +3585,7 @@ datum
 							//Roast up the player
 							if (M)
 								boutput(M, "<span style=\"color:red\"><b>IT BURNS!!!!</b></span>")
-								sleep(2)
+								sleep(0.2 SECONDS)
 								M.visible_message("<span style=\"color:red\">[M] is consumed in flames!</span>")
 								M.firegib()
 				..()

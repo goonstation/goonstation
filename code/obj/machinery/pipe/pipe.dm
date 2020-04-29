@@ -1463,11 +1463,11 @@ var/linenums = 0
 	if(!open)		// now opening
 		flick("valve01", src)
 		icon_state = "valve1"
-		sleep(10)
+		sleep(1 SECOND)
 	else			// now closing
 		flick("valve10", src)
 		icon_state = "valve0"
-		sleep(10)
+		sleep(1 SECOND)
 	open = !open
 
 // Digital Valve
@@ -1607,11 +1607,11 @@ var/linenums = 0
 	if(!open)		// now opening
 		flick("dvalve01", src)
 		icon_state = "dvalve1"
-		sleep(10)
+		sleep(1 SECOND)
 	else			// now closing
 		flick("dvalve10", src)
 		icon_state = "dvalve0"
-		sleep(10)
+		sleep(1 SECOND)
 	open = !open
 
 // one way pipe

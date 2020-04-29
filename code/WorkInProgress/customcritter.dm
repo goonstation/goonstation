@@ -1613,7 +1613,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			previous += M
 		SPAWN_DBG(0)
 			while (chain_depth > 0)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				curr_W /= 2
 				chain_depth--
 				var/previous_copy = previous.Copy()

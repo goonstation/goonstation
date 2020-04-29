@@ -26,6 +26,7 @@ TRAYS
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_ROD
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
@@ -51,8 +52,12 @@ TRAYS
 	New()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
+		BLOCK_KNIFE
 		return
 
+
+	//mbc disabling for now bc this can be done other ways without a verb and obj verbs slow down rclick menu
+	/*
 	verb/rotate()
 		set name = "Rotate"
 		set category = "Local"
@@ -61,6 +66,7 @@ TRAYS
 
 			src.dir = turn(src.dir, 90)
 		return
+	*/
 
 /obj/item/kitchen/utensil/fork
 	name = "fork"
@@ -108,7 +114,7 @@ TRAYS
 
 	proc/break_fork(mob/living/carbon/user as mob)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -184,7 +190,7 @@ TRAYS
 
 	proc/break_knife(mob/living/carbon/user as mob)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -204,7 +210,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
-		if(prob(20))
+		if(prob(5))
 			user.changeStatus("weakened", 4 SECONDS)
 			user.visible_message("<span style='color:red'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
 			random_brute_damage(user, 20)
@@ -220,8 +226,6 @@ TRAYS
 			if(ismob(usr))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			C.changeStatus("weakened", 2 SECONDS)
-			C.force_laydown_standup()
 			random_brute_damage(C, 15, 1)
 			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
@@ -307,7 +311,7 @@ TRAYS
 
 	proc/break_spoon(mob/living/carbon/user as mob)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -467,7 +471,7 @@ TRAYS
 				F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
@@ -481,7 +485,7 @@ TRAYS
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
-			sleep(3)
+			sleep(0.3 SECONDS)
 			qdel(src)
 
 	throw_impact(var/turf/T)
@@ -520,13 +524,12 @@ TRAYS
 			return
 		else if(istype(W, /obj/item/platestack))
 			var/obj/item/platestack/stack = W
-			if(stack.platenum >= 7)
+			if(stack.platenum >= stack.platemax)
 				boutput(user,"<span style=\"color:red\"><b>The plates are piled too high!</b></span>")
 				return
 			src.set_loc(user)
 			stack.platenum++
-			stack.icon_state = "platestack[stack.platenum]"
-			stack.item_state = "platestack[stack.platenum]"
+			stack.update_icon(user)
 			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
 			qdel(src)
 			return
@@ -823,6 +826,10 @@ TRAYS
 	var/list/toppingdata = list() //(food_color)
 	var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll//= new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 
+	New()
+		..()
+		BLOCK_BOOK
+
 	attackby(obj/item/W as obj, mob/user as mob)
 
 		if(!(locate(/obj/item/reagent_containers/food/snacks/sushi_roll/custom) in src))
@@ -879,9 +886,9 @@ TRAYS
 				user.u_equip(FOOD)
 				qdel(FOOD)
 			else if(!src.seaweed)
-				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly :P</span>")
+				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly.</span>")
 			else
-				boutput(user,"<span style=\"color:red\">You need sticky rice tooooooo!</span>")
+				boutput(user,"<span style=\"color:red\">You need sticky rice!</span>")
 		else
 			..()
 
@@ -977,20 +984,30 @@ TRAYS
 /obj/item/platestack
 	name = "Stack of Plates"
 	desc = "It's a stack of plates"
-	icon = 'icons/obj/foodNdrink/platestack.dmi' //temporary in case of the dmi being different on the live version :)
+	icon = 'icons/obj/foodNdrink/platestack.dmi'
 	inhand_image_icon = 'icons/obj/foodNdrink/platestackinhand.dmi'
 	icon_state = "platestack1"
 	item_state = "platestack1"
-	var/platenum = 1 //used for targeting icon_states
+	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
+	var/platenum = 1 // used for targeting icon_states
+#if ASS_JAM
+	var/platemax = 13
+#else
+	var/platemax = 8
+#endif
+
+	proc/update_icon(mob/user as mob)
+		src.icon_state = "platestack[src.platenum]"
+		src.item_state = "platestack[src.platenum]"
+		user.update_inhands()
 
 	attackby(obj/item/weapon as obj,mob/user as mob)
 		if(istype(weapon,/obj/item/plate) && !(istype(weapon,/obj/item/plate/tray)))
 			var/obj/item/plate/p = weapon
 			if(!p.ordered_contents.len)
-				if(!(platenum >= 7))
+				if(!(platenum >= platemax))
 					src.platenum++
-					src.icon_state = "platestack[src.platenum]"
-					src.item_state = "platestack[src.platenum]"
+					src.update_icon(user)
 					user.u_equip(p)
 					qdel(p)
 				else
@@ -1001,21 +1018,18 @@ TRAYS
 		else if(istype(weapon,/obj/item/platestack))
 			var/obj/item/platestack/p = weapon
 			var/keeptrigger = 0
-			if(((src.platenum + (p.platenum+1)) > 7) && (src.platenum != 7))
+			if(((src.platenum + (p.platenum+1)) > platemax) && (src.platenum != platemax))
 				keeptrigger = 1
-				p.platenum = (p.platenum - (7 - src.platenum))
-				p.icon_state = "platestack[p.platenum]"
-				p.item_state = "platestack[p.platenum]"
-				src.platenum = 7
-				src.icon_state = "platestack[src.platenum]"
-				src.item_state = "platestack[src.platenum]"
-			else if(src.platenum == 7)
+				p.platenum = (p.platenum - (platemax - src.platenum))
+				p.update_icon(user)
+				src.platenum = platemax
+				src.update_icon(user)
+			else if(src.platenum == platemax)
 				boutput(user,"<span style=\"color:red\"><b>The plates are piled too high!</b></span>")
 				return
 			else
 				src.platenum += (p.platenum+1)
-				src.icon_state = "platestack[src.platenum]"
-				src.item_state = "platestack[src.platenum]"
+				src.update_icon(user)
 			if(keeptrigger != 1)
 				user.u_equip(p)
 				qdel(p)
@@ -1023,8 +1037,7 @@ TRAYS
 	attack_hand(mob/user as mob)
 		if(src in user.contents)
 			platenum--
-			src.icon_state = "platestack[src.platenum]"
-			src.item_state = "platestack[src.platenum]"
+			src.update_icon(user)
 			user.put_in_hand_or_drop(new /obj/item/plate)
 			if(platenum <= 0)
 				user.u_equip(src)
@@ -1054,8 +1067,7 @@ TRAYS
 	attack_self(mob/user as mob)
 		if(src.platenum > 1)
 			src.platenum--
-			src.icon_state = "platestack[src.platenum]"
-			src.item_state = "platestack[src.platenum]"
+			src.update_icon(user)
 			user.put_in_hand_or_drop(new /obj/item/plate)
 		else if(src.platenum <= 1)
 			user.u_equip(src)
@@ -1065,7 +1077,7 @@ TRAYS
 
 	MouseDrop_T(atom/movable/a as mob|obj, mob/user as mob)
 		if(istype(a, /obj/item/plate))
-			if(src.platenum >= 7)
+			if(src.platenum >= platemax)
 				boutput(user,"<span style=\"color:red\"><b>The plates are piled too high!</b></span>")
 				return
 			SPAWN_DBG(2)
@@ -1083,18 +1095,17 @@ TRAYS
 						message = 0
 					qdel(p)
 					src.platenum++
-					src.icon_state = "platestack[src.platenum]"
-					src.item_state = "platestack[src.platenum]"
-					if(src.platenum == 7)
+					src.update_icon(user)
+					if(src.platenum == platemax)
 						break
 					else
-						sleep(2)
+						sleep(0.2 SECONDS)
 				return
 		else
 			return ..()
 
 	proc/MouseDropRelay(var/obj/item/a,mob/user as mob)
-		if(src.platenum >= 7)
+		if(src.platenum >= platemax)
 			boutput(user,"<span style=\"color:red\"><b>The plates are piled too high!</b></span>")
 			return
 		SPAWN_DBG(2)
@@ -1120,11 +1131,9 @@ TRAYS
 					first = 0
 					continue
 				src.platenum++
-				src.icon_state = "platestack[src.platenum]"
-				src.item_state = "platestack[src.platenum]"
-				if(src.platenum == 7)
+				src.update_icon()
+				if(src.platenum == platemax)
 					break
 				else
-					sleep(2)
+					sleep(0.2 SECONDS)
 			return
-

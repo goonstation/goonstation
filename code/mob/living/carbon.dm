@@ -260,6 +260,12 @@
 			if (res >= 100)
 				return 100 //a singular item with resistance 100 or higher will block ALL
 			. += res
+		if(C.hasProperty("I_disorient_resist")) //cursed
+			res = C.getProperty("I_disorient_resist")
+			if (res >= 100)
+				return 100 //a singular item with resistance 100 or higher will block ALL
+			. += res
+
 
 	.= clamp(.,0,90) //0 to 90 range
 
@@ -534,7 +540,11 @@
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
-
+#if ASS_JAM //pausing damage for timestop
+	if(paused)
+		src.pausedbrain = max(0,src.pausedbrain + amount)
+		return
+#endif
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
@@ -551,7 +561,11 @@
 /mob/living/carbon/take_toxin_damage(var/amount)
 	if (..())
 		return
-
+#if ASS_JAM //pausing damage for timestop
+	if(paused)
+		src.pausedtox = max(0,src.pausedtox + amount)
+		return
+#endif
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
@@ -569,7 +583,10 @@
 	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
 		src.oxyloss = 0
 		return
-
+#if ASS_JAM //pausing damage for timestop
+	if(paused)
+		src.pausedoxy = max(0,src.pausedoxy + amount)
+#endif
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 

@@ -1,6 +1,6 @@
 /obj/item/gun/energy
 	name = "energy weapon"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
@@ -120,6 +120,8 @@
 				src.cell = null
 				update_icon()
 				src.add_fingerprint(user)
+			else
+				return ..()
 		else
 			return ..()
 		return
@@ -322,6 +324,7 @@
 	force = 5.0
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
+	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -345,6 +348,11 @@
 		..()
 		update_icon()
 		M.update_inhands()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/electronics/scanner))
+			nojobreward = 1
+		..()
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -452,7 +460,7 @@
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
 	uses_multiple_icon_states = 1
@@ -472,7 +480,7 @@
 	update_icon()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
-			ratio = round(ratio, 0.25) * 100	
+			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/wavegun)
 				src.icon_state = "wavegun[ratio]"
 				item_state = "wave"
@@ -491,7 +499,7 @@
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
 	name = "BFG 9000"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "bfg"
 	m_amt = 4000
 	force = 6.0
@@ -510,7 +518,7 @@
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
-			sleep(9)
+			sleep(0.9 SECONDS)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/bfg/vr
@@ -658,7 +666,7 @@
 /obj/item/gun/energy/blaster_pistol
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = 3.0
 	force = 5.0
@@ -722,14 +730,14 @@
 	/*proc/generate_overlays()
 		src.overlays = null
 		if(extension_mod)
-			src.overlays += icon('icons/obj/gun_mod.dmi',extension_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun_mod.dmi',extension_mod.overlay_name)
 		if(converter_mod)
-			src.overlays += icon('icons/obj/gun_mod.dmi',converter_mod.overlay_name)*/
+			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
 /obj/item/gun/energy/blaster_smg
 	name = "burst blaster"
 	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = 3.0
@@ -757,7 +765,7 @@
 /obj/item/gun/energy/blaster_cannon
 	name = "blaster cannon"
 	desc = "A heavily overcharged blaster weapon, modified for extreme firepower. It's self-charging by a larger radioactive power cell."
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
 	can_dual_wield = 0
@@ -788,7 +796,7 @@
 	desc = "Components for building custom sidearms."
 	item_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/gun_mod.dmi'
+	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "frame" // todo: make more item icons
 	mats = 0
 
@@ -929,7 +937,7 @@
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
 	name = "Glitch Gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "airzooka"
 	m_amt = 4000
 	force = 0.0
@@ -947,7 +955,7 @@
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
-			sleep(1)
+			sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
@@ -1111,17 +1119,17 @@
 			return
 
 ///////////////////////////////////////////////////
-/obj/item/gun/energy/lawgiver/old
-	name = "Antique Lawgiver"
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "old-lawgiver0"
+/obj/item/gun/energy/lawbringer/old
+	name = "Antique Lawbringer"
+	icon = 'icons/obj/items/gun.dmi'
+	icon_state = "old-lawbringer0"
 	old = 1
 
-/obj/item/gun/energy/lawgiver
-	name = "Lawgiver"
-	icon = 'icons/obj/gun.dmi'
+/obj/item/gun/energy/lawbringer
+	name = "Lawbringer"
+	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
-	icon_state = "lawgiver0"
+	icon_state = "lawbringer0"
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
@@ -1132,12 +1140,12 @@
 	can_swap_cell = 0
 
 	New(var/mob/M)
-		cell = new/obj/item/ammo/power_cell/self_charging/lawgiver
+		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
 		current_projectile = new/datum/projectile/energy_bolt/aoe
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawgiver, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
-		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawgiver,new/datum/projectile/bullet/clownshot)
+		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
-		src.indicator_display = image('icons/obj/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
 		update_icon()
@@ -1162,14 +1170,14 @@
 			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		else
-			boutput(user, "<span style=\"color:blue\">There don't see to be any buttons on [src] to press.</span>")
+			boutput(user, "<span style=\"color:blue\">There don't seem to be any buttons on [src] to press.</span>")
 
 	proc/asign_name(var/mob/M)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
 				owner_prints = md5(H.bioHolder.Uid)
-				src.name = "HoS [H.real_name]'s Lawgiver"
+				src.name = "HoS [H.real_name]'s Lawbringer"
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
@@ -1233,7 +1241,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(4)
+					sleep(0.4 SECONDS)
 					playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
@@ -1269,7 +1277,7 @@
 				if (M.job != "Head of Security")
 					src.cant_self_remove = 1
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
-					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawgiver.")
+					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN_DBG(2 SECONDS)
 						explosion_new(null, get_turf(src), 15)
@@ -1277,9 +1285,9 @@
 				else
 					return 1
 
-	//all gun modes use the same base sprite icon "lawgiver0" depending on the current projectile/current mode, we apply a coloured overlay to it.
+	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
-		src.icon_state = "[old ? "old-" : ""]lawgiver0"
+		src.icon_state = "[old ? "old-" : ""]lawbringer0"
 		src.overlays = null
 
 		if(cell)
@@ -1288,7 +1296,7 @@
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "[old ? "old-" : ""]lawgiver-d[ratio]"
+			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
@@ -1300,7 +1308,7 @@
 				indicator_display.color = "#008000"
 			else if (current_projectile.type == /datum/projectile/bullet/flare)			//hotshot - red
 				indicator_display.color = "#FF0000"
-			else if (current_projectile.type == /datum/projectile/bullet/aex/lawgiver)	//bigshot - purple
+			else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)	//bigshot - purple
 				indicator_display.color = "#551A8B"
 			else if (current_projectile.type == /datum/projectile/bullet/clownshot)		//clownshot - pink
 				indicator_display.color = "#FFC0CB"
@@ -1369,11 +1377,11 @@
 			gun_setting_name = "execute"
 		else if (current_projectile.type == /datum/projectile/bullet/smoke)
 			gun_setting_name = "smokeshot"
-		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart)
+		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)
 			gun_setting_name = "knockout"
 		else if (current_projectile.type == /datum/projectile/bullet/flare)
 			gun_setting_name = "hotshot"
-		else if (current_projectile.type == /datum/projectile/bullet/aex/lawgiver)
+		else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)
 			gun_setting_name = "bigshot"
 		else if (current_projectile.type == /datum/projectile/bullet/clownshot)
 			gun_setting_name = "clownshot"
@@ -1383,24 +1391,24 @@
 		src.desc = "It is set to [gun_setting_name]."
 		if(src.cell)
 				//[src.projectiles ? "It will use the projectile: [src.current_projectile.sname]. " : ""]
-			src.desc += "There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+			src.desc += " There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 		else
-			src.desc += "There is no cell loaded!"
+			src.desc += " There is no cell loaded!"
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += " <span style=\"color:red\">*ERROR* No output selected!</span>"
 		return
 
 
-/obj/item/gun/energy/lawgiver/emag_act(var/mob/user, var/obj/item/card/emag/E)
+/obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
 		boutput(user, "<span style=\"color:red\">Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
 	return 0
 
 //stolen from firebreath in powers.dm
-/obj/item/gun/energy/lawgiver/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
+/obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
 	var/list/affected_turfs = getline(get_turf(start), get_turf(target))
 	var/range = 6
 	playsound(user.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
@@ -1420,13 +1428,14 @@
 		tfireflash(F,0.5,2400)
 
 // Pulse Rifle //
-// An energy gun that uses the lawgiver's Pulse setting, to beef up the current armory.
+// An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
 
 /obj/item/gun/energy/pulse_rifle
 	name = "pulse rifle"
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
+	item_state = "pulse_rifle"
 	force = 5
 	two_handed = 1
 	can_dual_wield = 0

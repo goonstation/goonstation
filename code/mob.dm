@@ -6,7 +6,7 @@
 
 	flags = FPRINT | FLUID_SUBMERGE
 	event_handler_flags = USE_CANPASS
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND | LONG_GLIDE
 
 	var/datum/mind/mind
 
@@ -23,7 +23,7 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = list()
+	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
 	var/last_resist = 0
 
@@ -70,8 +70,8 @@
 	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
-	var/bodytemperature = 310.055 // 98.7F / 37C
-	var/base_body_temp = 310.055
+	var/bodytemperature = T0C + 37
+	var/base_body_temp = T0C + 37
 	var/temp_tolerance = 15 // iterations between each temperature state
 	var/thermoregulation_mult = 0.025 // how quickly the body's temperature tries to correct itself, higher = faster
 	var/innate_temp_resistance = 0.16  // how good the body is at resisting environmental temperature, lower = more resistant
@@ -112,10 +112,10 @@
 
 	var/obj/hud/hud_used = null
 
-	var/list/organs = list(  )
-	var/list/grabbed_by = list(  )
+	var/list/organs = null
+	var/list/grabbed_by = null
 
-	var/datum/traitHolder/traitHolder
+	var/datum/traitHolder/traitHolder = null
 
 	var/inertia_dir = 0
 	var/footstep = 1
@@ -155,8 +155,8 @@
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
-	var/list/resistances = list()
-	var/list/ailments = list()
+	var/list/resistances = null
+	var/list/ailments = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -170,7 +170,7 @@
 
 	var/icon/cursor = null
 
-	var/list/datum/hud/huds = list()
+	var/list/datum/hud/huds = null
 
 	var/client/last_client // actually the current client, used by Logout due to BYOND
 	var/joined_date = null
@@ -200,10 +200,19 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-
+//start of needed for timestop
+#if ASS_JAM
+	var/paused = FALSE
+	var/pausedbrute = 0
+	var/pausedburn = 0
+	var/pausedtox = 0
+	var/pausedoxy = 0
+	var/pausedbrain = 0
+#endif
+//end of needed for timestop
 	var/dir_locked = FALSE
 
-	var/cooldowns = list()
+	var/list/cooldowns = null
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -211,9 +220,16 @@
 
 // mob procs
 /mob/New()
-	traitHolder = new(src)
-	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
+	hallucinations = new
+	organs = new
+	grabbed_by = new
+	resistances = new
+	ailments = new
+	huds = new
 	render_special = new
+	traitHolder = new(src)
+	cooldowns = new
+	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
@@ -338,6 +354,7 @@
 	ghost = null
 	resistances = null
 	ailments = null
+	cooldowns = null
 	..()
 
 /mob/Login()
@@ -361,12 +378,7 @@
 	src.update_cursor()
 	src.update_keymap()
 
-	SPAWN_DBG(3 SECONDS)
-		if (src && src.client) //Wire: fix for runtime error: Cannot execute null.setup macros().
-			src.client.setup_macros()
-
-	if (src.client)
-		src.client.mouse_pointer_icon = src.cursor
+	src.client.mouse_pointer_icon = src.cursor
 
 	logTheThing("diary", null, src, "Login: %target% from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
@@ -564,7 +576,7 @@
 						if(M.anchored || M == source) continue
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(50)
+					sleep(5 SECONDS)
 					src.now_pushing = 0
 
 					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
@@ -612,13 +624,13 @@
 				// so yeah, i copy+pasted this from process_move.
 				if (src.pulling != AM && old_loc != src.loc) //causes infinite pull loop without these checks. lol
 					var/list/pulling = list()
-					if (src.pulling)
-						if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
-							src.pulling = null
-							//hud.update_pulling() // FIXME
-						else
-							pulling += src.pulling
+					if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+						src.pulling = null
+						//hud.update_pulling() // FIXME
+					else
+						pulling += src.pulling
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+						if (G.affecting == src) continue
 						pulling += G.affecting
 					for (var/atom/movable/A in pulling)
 						if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
@@ -715,12 +727,12 @@
 		src.client.mouse_pointer_icon = cursor
 
 /mob/proc/update_cursor()
-	if (src.targeting_ability)
-		if(client)
+	if (client)
+		if (src.targeting_ability)
 			src.set_cursor(cursors_selection[client.preferences.target_cursor])
 			return
-		else
-			src.set_cursor('icons/cursors/target/default.dmi')
+		if (src.client.admin_intent)
+			src.set_cursor('icons/cursors/admin.dmi')
 			return
 	src.set_cursor(null)
 
@@ -941,12 +953,18 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch(src)
+#if ASS_JAM//pausing damage for timestop
+	if(src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
+#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone), burn-get_melee_protection(zone))
+	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -1176,7 +1194,8 @@
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
-
+		if ("admin_interact")
+			src.admin_interact_verb()
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)
@@ -2247,7 +2266,7 @@
 			client.pixel_x = amplitude * sin(0.008 * dizziness * world.time)
 			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_dizzy = 0
 	if (client)
@@ -2283,7 +2302,7 @@
 		pixel_x = old_x + rand(-amplitude, amplitude)
 		pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
 	pixel_x = old_x
@@ -2611,6 +2630,9 @@
 /mob/proc/find_in_equipment(var/eqtype)
 	return null
 
+/mob/proc/get_slot_from_item(var/obj/item/I)
+	return null
+
 /mob/proc/is_in_hands(var/obj/O)
 	return 0
 
@@ -2896,6 +2918,56 @@
 	if(src.mind.soul <= 0)
 		total_souls_sold++
 		total_souls_value++
-		src.mind.damned = 1
 
 	return 1
+
+/mob/proc/get_id()
+	if(istype(src.equipped(), /obj/item/card/id))
+		return src.equipped()
+	if(istype(src.equipped(), /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = src.equipped()
+		return pda.ID_card
+
+
+
+
+
+
+
+// http://www.byond.com/forum/post/1326139&page=2
+//MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
+// ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
+
+/mob/verb/point(atom/A as mob|obj|turf in view())
+	set name = "Point"
+	src.point_at(A)
+
+/mob/proc/point_at(var/atom/target) //overriden by living and dead
+	.=0
+
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+	set name = "Pull"
+	set category = "Local"
+	A.pull()
+
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+	set name = "Examine"
+	set category = "Local"
+	A.examine()
+
+/mob/verb/interact_verb(obj/A as obj in view(1))
+	set name = "Pick Up / Interact"
+	set category = "Local"
+	A.interact(src)
+
+/mob/verb/pickup_verb()
+	set name = "Pick Up"
+	set hidden = 1
+
+	var/list/items = list()
+	for(var/obj/item/I in view(1,src))
+		if (I.loc == get_turf(I))
+			items += I
+	if (items.len)
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
+		A.interact(src)

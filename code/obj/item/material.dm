@@ -707,15 +707,13 @@
 	anchored = 0
 	density = 1
 	var/active = 0
+	var/reject = 0
+	var/insufficient = 0
 	var/smelt_interval = 5
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 	var/atom/output_location = null
-
-	/*onMaterialChanged()
-		..()
-		if (istype(src.material))*/
 
 	attack_hand(var/mob/user as mob)
 		if (active)
@@ -729,69 +727,40 @@
 		anchored = 1
 		icon_state = "reclaimer-on"
 
-		var/reject_counter = 0
 		for (var/obj/item/M in src.contents)
-			if (istype(M,/obj/item/cable_coil))
-				// haaaaaaaaaaaaaaack
-				continue
-			if (!istype(M.material))
-				M.set_loc(get_output_location())
-				reject_counter++
-				continue
-			if (!(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL))
-				M.set_loc(get_output_location())
-				reject_counter++
+			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
+				M.set_loc(src.loc)
+				src.reject = 1
 				continue
 
-		if (reject_counter > 0)
-			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
-			playsound(src.loc, sound_grump, 40, 1)
+			else if (istype(M, /obj/item/raw_material))
+				output_bar_from_item(M)
+				pool(M)
 
-		for (var/obj/item/raw_material/M in src.contents)
-			output_bar_from_item(M)
-			pool(M)
+			else if (istype(M, /obj/item/sheet))
+				if (output_bar_from_item(M, 10))
+					qdel(M)
+
+			else if (istype(M, /obj/item/rods))
+				if (output_bar_from_item(M, 20))
+					qdel(M)
+
+			else if (istype(M, /obj/item/tile))
+				if (output_bar_from_item(M, 40))
+					qdel(M)
+
+			else if (istype(M, /obj/item/cable_coil))
+				var/obj/item/cable_coil/C = M
+				if (output_bar_from_item(M, 30, C.conductor.mat_id))
+					qdel(C)
+
+			/*else if (istype(M, /obj/item/wizard_crystal))
+				W.create_bar(src)
+				qdel(W)*/
+
 			sleep(smelt_interval)
 
-		var/insufficient_counter = 0
-		for (var/obj/item/sheet/S in src.contents)
-			while(S.amount >= 10)
-				output_bar_from_item(S)
-				S.amount -= 10
-				sleep(smelt_interval)
-			if (!S.amount)
-				qdel(S)
-			else
-				insufficient_counter += S.amount
-				S.set_loc(get_output_location())
-
-		for (var/obj/item/rods/R in src.contents)
-			while(R.amount >= 20)
-				output_bar_from_item(R)
-				R.amount -= 20
-				sleep(smelt_interval)
-			if (!R.amount)
-				qdel(R)
-			else
-				insufficient_counter += R.amount
-				R.set_loc(get_output_location())
-
-		for (var/obj/item/tile/T in src.contents)
-			while(T.amount >= 40)
-				output_bar_from_item(T)
-				T.amount -= 40
-				sleep(smelt_interval)
-			if (!T.amount)
-				qdel(T)
-			else
-				insufficient_counter += T.amount
-				T.set_loc(get_output_location())
-
-		for (var/obj/item/wizard_crystal/W in src.contents)
-			W.create_bar(src)
-			qdel(W)
-			sleep(smelt_interval)
-
-		var/list/cable_materials = list()
+		/*var/list/cable_materials = list()
 		var/list/quality_sum = list()
 		for (var/obj/item/cable_coil/C in src.contents)
 			if (!(C.conductor.mat_id in cable_materials))
@@ -821,10 +790,15 @@
 					bad_flag = 1
 
 		if (bad_flag)
-			src.visible_message("<b>[src]</b> emits a grumpy buzz.")
+			src.visible_message("<b>[src]</b> emits a grumpy buzz.")*/
+
+		if (reject)
+			src.reject = 0
+			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
 			playsound(src.loc, sound_grump, 40, 1)
 
-		if (insufficient_counter > 0)
+		if (insufficient)
+			src.insufficient = 0
 			src.visible_message("<b>[src]</b> emits a grumpy buzz and ejects some leftovers.")
 			playsound(src.loc, sound_grump, 40, 1)
 
@@ -833,50 +807,51 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_with_quality(var/quality,var/default_material)
-		var/datum/material/MAT = null
-		if (istext(default_material))
-			MAT = getMaterial(default_material)
+	proc/output_bar_from_item(obj/item/O, var/amount_modifier, var/extra_mat)
+		if (!O || !O.material)
+			return
+
+		var/stack_amount = O.amount
+		if (amount_modifier)
+			var/divide = O.amount / amount_modifier
+			stack_amount = round(divide)
+			if (stack_amount != divide)
+				src.insufficient = 1
+				O.amount -= (stack_amount * amount_modifier)
+				O.set_loc(src.loc)
+				if (!stack_amount)
+					return
+			else
+				. = 1
+
+		output_bar(O.material, stack_amount, O.quality)
+		if (extra_mat)
+			output_bar(extra_mat, stack_amount, O.quality)
+
+	proc/output_bar(material, amount, quality)
+
+		var/datum/material/MAT = material
+		if (!istype(MAT))
+			MAT = getMaterial(material)
 			if (!MAT)
-				return null
-		else
-			return null
+				return
+
+		var/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = unpool(bar_type)
-		BAR.set_loc(get_output_location())
-
 		BAR.quality = quality
 		BAR.name += getQualityName(quality)
 		BAR.setMaterial(MAT)
+		BAR.change_stack_amount(amount - 1)
+
+		if (istype(output_location, /obj/machinery/manufacturer))
+			var/obj/machinery/manufacturer/M = output_location
+			M.load_item(BAR)
+		else
+			BAR.set_loc(output_location)
+
 		playsound(src.loc, sound_process, 40, 1)
-
-		return BAR
-
-	proc/output_bar_from_item(var/obj/O,var/default_material)
-		if (!O)
-			return null
-
-		var/datum/material/MAT = O.material
-		if (!O.material)
-			if (istext(default_material))
-				MAT = getMaterial(default_material)
-				SPAWN_DBG(0)
-					if (!O.material)
-						return null
-			else
-				return null
-
-		var/bar_type = getProcessedMaterialForm(MAT)
-		var/obj/item/material_piece/BAR = unpool(bar_type)
-		BAR.set_loc(get_output_location())
-
-		BAR.quality = O.quality
-		BAR.name += getQualityName(O.quality)
-		BAR.setMaterial(MAT)
-		playsound(src.loc, sound_process, 40, 1)
-
-		return BAR
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil))
@@ -941,7 +916,6 @@
 			boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
 
 		else
-
 			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
 		return
 
@@ -953,11 +927,11 @@
 			boutput(user, "<span style=\"color:red\">Only living mobs are able to use the reclaimer's quick-load feature.</span>")
 			return
 
-		if (!istype(O,/obj/))
+		if (!isobj(O))
 			boutput(user, "<span style=\"color:red\">You can't quick-load that.</span>")
 			return
 
-		if(get_dist(O,user) > 1)
+		if(!DIST_CHECK(O, user, 1))
 			boutput(user, "<span style=\"color:red\">You are too far away!</span>")
 			return
 
@@ -999,10 +973,10 @@
 		return
 
 	proc/get_output_location()
-		if (isnull(output_location))
+		if (!output_location)
 			return src.loc
 
-		if (get_dist(src.output_location,src) > 1)
+		if (!DIST_CHECK(src.output_location, src, 1))
 			output_location = null
 			return src.loc
 
@@ -1012,15 +986,10 @@
 				return M.loc
 			return M
 
-		else if (istype(output_location,/obj/storage/crate))
-			var/obj/storage/crate/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
+		if (istype(output_location,/obj/storage))
+			var/obj/storage/S = output_location
+			if (S.locked || S.welded || S.open)
+				return S.loc
+			return S
 
-		else if (istype(output_location,/obj/storage/cart))
-			var/obj/storage/cart/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
 		return output_location

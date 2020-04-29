@@ -258,7 +258,7 @@
 	if(src.emagged)
 		boutput(M, "You feel a terrible pain in your head, and everything goes black...")
 		M.paralysis += 5
-		sleep(5)
+		sleep(0.5 SECONDS)
 		M.set_loc(pick(mazewarp))
 		return
 	*/
@@ -409,7 +409,7 @@
 	var/list/programs = list()		//loaded programs
 
 
-/obj/machinery/sim/programcomp/proc/interact(mob/user)
+/obj/machinery/sim/programcomp/proc/interacted(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
 			user.machine = null
@@ -474,14 +474,14 @@
 //	add_fingerprint(user)
 //	if(status & (BROKEN|NOPOWER))
 //		return
-//	interact(user)
+//	interacted(user)
 
 
 /obj/machinery/sim/programcomp/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 
 

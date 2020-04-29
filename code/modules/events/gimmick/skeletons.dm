@@ -57,7 +57,7 @@
 						wiggle--
 						temp.pixel_x = rand(-3,3)
 						temp.pixel_y = rand(-3,3)
-						sleep(1)
+						sleep(0.1 SECONDS)
 					temp.pixel_x = 0
 					temp.pixel_y = 0
 					new/obj/critter/magiczombie(temp)

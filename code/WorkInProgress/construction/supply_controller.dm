@@ -520,7 +520,7 @@
 		SPAWN_DBG(0)
 			while (charge < 100)
 				charge++
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	examine()
 		..()

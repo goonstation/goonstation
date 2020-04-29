@@ -5,6 +5,7 @@
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
@@ -13,17 +14,30 @@
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
+	New()
+		..()
+		BLOCK_LARGE
+		AddComponent(/datum/component/itemblock/backpackblock)
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/NT
 	name = "\improper NT backpack"
+	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "NTbackpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/syndie
+	name = "\improper Syndicate backpack"
+	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
+	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
-	icon_state = "bp_medic"
+	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
+	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel
@@ -31,6 +45,11 @@
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "satchel"
 
+/obj/item/storage/backpack/satchel/syndie
+	name = "\improper Syndicate Satchel"
+	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
+	icon_state = "Syndiesatchel"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
@@ -62,7 +81,7 @@
 /obj/item/storage/fanny
 	name = "fanny pack"
 	desc = "No, 'fanny' as in 'butt.' Not the other thing."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -73,6 +92,10 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
+
+	New()
+		..()
+		BLOCK_ROPE
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -92,7 +115,7 @@
 
 /obj/item/storage/belt
 	name = "belt"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
@@ -101,6 +124,10 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
+
+	New()
+		..()
+		BLOCK_ROPE
 
 	proc/can_use()
 		.= 1
@@ -300,8 +327,8 @@
 	/obj/item/gun/energy/phaser_gun,
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawgiver,
-	/obj/item/gun/energy/lawgiver/old,
+	/obj/item/gun/energy/lawbringer,
+	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun)
@@ -350,7 +377,7 @@
 
 /obj/item/storage/belt/syndicate_medic_belt
 	name = "medical lifesaver bag"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	desc = "A canvas duffel bag full of medicines."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
@@ -362,10 +389,10 @@
 	/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol)
 
-/obj/item/storage/backpack/syndicate_medic_satchel
+/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel
 	name = "medical shoulder pack"
 	desc = "A satchel containing larger medical supplies and instruments."
-	icon_state = "NTsatchel"
+	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
 	/obj/item/extinguisher,
@@ -396,7 +423,7 @@
 /obj/item/inner_tube
 	name = "inner tube"
 	desc = "An inflatable torus for your waist!"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT

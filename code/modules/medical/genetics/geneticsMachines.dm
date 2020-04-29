@@ -77,23 +77,6 @@ var/list/genetics_computers = list()
 				var/datum/dna_chromosome/C = new type_to_make(src)
 				src.saved_chromosomes += C
 
-			/*
-			// Old rewards
-			var/rewardpicker = rand(1,3)
-			switch(rewardpicker)
-				if(1)
-					boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded materials.")
-					genResearch.researchMaterial += 40
-				if(2)
-					boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded the ability to break one encryption automatically.")
-					genResearch.lock_breakers += 1
-				if(3)
-					boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded a new chromosome.")
-					var/type_to_make = pick(typesof(/datum/dna_chromosome))
-					var/datum/dna_chromosome/C = new type_to_make(src)
-					src.saved_chromosomes += C
-			*/
-
 		else
 			src.attack_hand(user)
 	else
@@ -616,7 +599,6 @@ var/list/genetics_computers = list()
 		var/datum/bioEffect/E = locate(href_list["send_booth"])
 		if (bioEffect_sanity_check(E,0)) return
 		var/mob/living/L = get_scan_subject()
-		//if (!L.bioHolder.HasEffect(E.id) && !saved_mutations.Find(E))
 		if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
 			message_admins("[key_name(usr)] tried to create a [E.id] injector but failed href validation (maybe they're a dirty cheat)!")
 			logTheThing("debug", usr, null, "tried to create a [E.id] injector but failed href validation.")
@@ -667,13 +649,6 @@ var/list/genetics_computers = list()
 					GB.just_pick_anything()
 				boutput(usr, "<span style=\"color:blue\">Sent 5 of '[NEW.name]' to gene booth.</span>")
 				GB.reload_contexts()
-
-
-		//var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
-		//I.name = "dna injector - [E.name]"
-		//var/datum/bioEffect/NEW = newa E.type(I)
-		//copy_datum_vars(E,NEW)
-		//I.BE = NEW // valid. still, wtf
 
 		SPAWN_DBG(0)
 			if (backpage == "storedmuts")
@@ -1216,14 +1191,14 @@ var/list/genetics_computers = list()
 						if (research_time)
 							research_time = round(research_time / 10)
 
-						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>• [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
+						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>ï¿½ [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
 
 			if("resrunning")
 				backpage = "research"
 				topbotbutton_html = "<p><b>Research in Progress</b></p>"
 				html_list += "<p>"
 				for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
-					html_list += "• [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
+					html_list += "ï¿½ [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
 					if (R != src.tracked_research)
 						html_list += " <small><a href='?src=\ref[src];track_research=\ref[R]'>(Track)</a></small>"
 					html_list += "<br>"
@@ -1314,7 +1289,7 @@ var/list/genetics_computers = list()
 
 					for(var/datum/geneticsResearchEntry/C in tierList)
 						if(C.isResearched == 0 || C.isResearched == -1) continue
-						html_list += "• [C.name]<br>"
+						html_list += "ï¿½ [C.name]<br>"
 				html_list += "</p>"
 
 			if("dna_samples")
@@ -1485,7 +1460,7 @@ var/list/genetics_computers = list()
 	if (genResearch.cost_discount)
 		research_cost -= round(research_cost * genResearch.cost_discount)
 
-	var/list/build = ""
+	var/list/build = list()
 	var/datum/bioEffect/global_BE = E.get_global_instance()
 	if (!global_BE)
 		build += "<p>Genetic structure unknown. Research currently impossible.</p>"
@@ -1512,7 +1487,7 @@ var/list/genetics_computers = list()
 		else
 			build += "<p>[E.desc]</p>"
 
-	return build
+	return build.Join()
 
 /obj/machinery/computer/genetics/proc/ui_build_sequence(var/datum/bioEffect/E, var/screen = "pool")
 	if (!E)

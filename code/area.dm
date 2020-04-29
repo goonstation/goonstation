@@ -862,7 +862,7 @@
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 /*
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -944,6 +944,15 @@
 /area/abandonedship
 	name = "Abandoned ship"
 	icon_state = "yellow"
+
+/area/spacehabitat
+	name = "Habitat Dome"
+	icon_state = "green"
+
+/area/spacehabitat/beach
+	name = "Habitat Dome Beach"
+	icon_state = "yellow"
+	force_fullbright = 1
 
 /area/salyut
 	name = "Soviet derelict"

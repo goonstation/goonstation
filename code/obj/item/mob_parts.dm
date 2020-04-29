@@ -231,6 +231,7 @@
 				boutput(attacher, "<span style=\"color:red\">You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
 			else
 				boutput(attacher, "<span style=\"color:red\">You attach a [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
+			src.remove_stage = 0
 		else
 			if(attachee != attacher)
 				boutput(attachee, "<span style=\"color:red\">[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
@@ -305,7 +306,7 @@
 		if (istype(direction, /list))
 			direction = pick(direction)
 		for (var/i = 0, i < rand(1,3), i++)
-			LAGCHECK(LAG_LOW)//sleep(3)
+			LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 			if (i > 0 && ispath(streak_splatter))
 				make_cleanable(streak_splatter,src.loc)
 			if (!step_to(src, get_step(src, direction), 0))

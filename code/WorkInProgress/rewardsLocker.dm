@@ -28,7 +28,7 @@
 		if (istype(activator.back, /obj/item/storage/backpack/medic))
 			var/obj/item/storage/backpack/medic/M = activator.back
 			var/prev1 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -43,7 +43,7 @@
 		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev2 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -58,7 +58,7 @@
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev3 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -396,6 +396,21 @@
 				H.set_clothing_icon_dirty()
 		return
 
+/datum/achievementReward/clown_college
+	title = "Clown College Regalia"
+	desc = "Spawns you your clown college graduation cap and diploma."
+	required_medal = "Unlike the director, I went to college"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.mind.assigned_role == "Clown")
+				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
+				H.put_in_hand_or_drop(new /obj/item/toy/diploma)
+			else
+				boutput(H, "You're not a honking clown, you imposter!")
+		return
+
 /datum/achievementReward/inspectorscloths
 	title = "(Skin set) Inspector's Clothes"
 	desc = "Requires that you wear something in your suit and jumpsuit slots."
@@ -458,16 +473,7 @@
 
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
-				if (istype(M, /obj/item/clothing/under/rank/captain/dress))
-					var/prev = M.name
-					M.icon_state = "captain-dress-blue"
-					M.item_state = "captain-dress-blue"
-					M.name = "commander's uniform"
-					M.real_name = "commander's uniform"
-					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
-
-				else if (istype(M, /obj/item/clothing/under/rank/captain))
+				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
 					M.name = "commander's uniform"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
@@ -484,10 +490,14 @@
 
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
-					M.name = "commander's uniform"
+					M.name = "\improper Commander's suit"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					M.icon_state = "suit-capB"
-					M.item_state = "suit-capB"
+					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+						M.icon_state = "suit-capB-dress"
+						M.item_state = "suit-capB-dress"
+					else
+						M.icon_state = "suit-capB"
+						M.item_state = "suit-capB"
 					H.set_clothing_icon_dirty()
 
 			if (H.wear_suit)

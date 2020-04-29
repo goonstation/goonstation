@@ -21,13 +21,13 @@
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/operating/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/operating/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
@@ -63,7 +63,7 @@
 		src.attack_hand(user)
 	return
 
-/obj/machinery/computer/operating/proc/interact(mob/user)
+/obj/machinery/computer/operating/proc/interacted(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isAI(user))
 			user.machine = null
@@ -105,7 +105,7 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		usr.machine = src
 //		if (href_list["update"])
-//			src.interact(usr)
+//			src.interacted(usr)
 	return
 
 /obj/machinery/computer/operating/process()

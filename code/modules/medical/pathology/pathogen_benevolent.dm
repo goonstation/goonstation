@@ -3,6 +3,7 @@
 datum/pathogeneffects/benevolent
 	name = "Benevolent"
 	rarity = RARITY_ABSTRACT
+	beneficial = 1
 
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
@@ -263,7 +264,7 @@ datum/pathogeneffects/benevolent/resurrection
 				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
 
 	react_to(var/R, var/zoom)
-		if (R == "Synthflesh")
+		if (R == "synthflesh")
 			return "Dead parts of the synthflesh seem to still be transferring blood."
 
 
@@ -271,6 +272,7 @@ datum/pathogeneffects/benevolent/brewery
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
 	rarity = RARITY_RARE
+	beneficial = 0
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)

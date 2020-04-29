@@ -15,7 +15,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -531,7 +531,7 @@
 			src.operating = 1
 			flick("[icon_base]c0", src)
 			src.icon_state = "[icon_base]0"
-			sleep(15)
+			sleep(1.5 SECONDS)
 			src.set_density(0)
 			if (ignore_light_or_cam_opacity)
 				src.opacity = 0
@@ -559,7 +559,7 @@
 	SPAWN_DBG(-1)
 		flick("[icon_base]c0", src)
 		src.icon_state = "[icon_base]0"
-		sleep(10)
+		sleep(1 SECOND)
 		src.set_density(0)
 		if (ignore_light_or_cam_opacity)
 			src.opacity = 0
@@ -594,7 +594,7 @@
 				src.RL_SetOpacity(1)
 		update_nearby_tiles()
 
-		sleep(10)
+		sleep(1 SECOND)
 		src.operating = 0
 
 	return
@@ -640,7 +640,7 @@
 			src.operating = 1
 			flick("[icon_base][doordir]c0", src)
 			src.icon_state = "[icon_base][doordir]0"
-			sleep(15)
+			sleep(1.5 SECONDS)
 			src.set_density(0)
 			if (ignore_light_or_cam_opacity)
 				src.opacity = 0
@@ -667,7 +667,7 @@
 	SPAWN_DBG(-1)
 		flick("[icon_base][doordir]c0", src)
 		src.icon_state = "[icon_base][doordir]0"
-		sleep(10)
+		sleep(1 SECOND)
 		src.set_density(0)
 		if (ignore_light_or_cam_opacity)
 			src.opacity = 0
@@ -700,7 +700,7 @@
 				src.RL_SetOpacity(1)
 		update_nearby_tiles()
 
-		sleep(10)
+		sleep(1 SECOND)
 		src.operating = 0
 	return
 

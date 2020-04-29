@@ -72,10 +72,9 @@
 /proc/heuristic(turf/start, turf/goal)
 	if(!start || !goal)
 		return null // yes, null, not a number, i need to track down why nulls are being passed in as turfs so i'm throwing this up the stack
-	// let's just do manhattan for now
-	return abs(start.x - goal.x) + abs(start.y - goal.y)
+	return GET_MANHATTAN_DIST(start, goal)
 
-/proc/distance(turf/start, turf/goal)
+/proc/distance(turf/start, turf/goal) //get_dist??
 	if(!start || !goal)
 		return null
 	var/dx = goal.x - start.x
@@ -92,8 +91,6 @@
 			if(score < lowestScore)
 				lowestScore = score
 				. = option
-		else
-			continue // if we have no score for an option, ignore it
 
 /proc/reconstructPath(list/cameFrom, turf/current)
 	var/list/totalPath = list(current)
@@ -201,6 +198,7 @@
 			if(!LinkBlockedWithAccess(src, T, ID))
 				L.Add(T)
 	return L
+
 /turf/proc/AllDirsTurfsWithAccess(var/obj/item/card/id/ID)
 	var/L[] = new()
 
@@ -213,7 +211,6 @@
 			if(!LinkBlockedWithAccess(src, T, ID))
 				L.Add(T)
 	return L
-
 
 /turf/proc/CardinalTurfsSpace()
 	var/L[] = new()
@@ -274,32 +271,28 @@
 // Checks doors against access with given ID
 /proc/DirWalkableWithAccess(turf/loc,var/dir,var/obj/item/card/id/ID, var/exiting_this_tile = 0)
 	.= 1
-
-	for (var/atom in loc)
-		if (!isobj(atom)) continue
-		var/obj/D = atom
-
-		if (D.density)
-			if (D.object_flags & BOTS_DIRBLOCK)
-				if (D.flags & ON_BORDER && dir == D.dir)//windoors and directional windows
-					if (D.has_access_requirements())
-						if (D.check_access(ID) == 0)
+	for (var/obj/O in loc)
+		if (O.density)
+			if (O.object_flags & BOTS_DIRBLOCK)
+				if (O.flags & ON_BORDER && dir == O.dir)//windoors and directional windows
+					if (O.has_access_requirements())
+						if (O.check_access(ID) == 0)
 							return 0
 						else
 							return 2
 					else
 						return 2
 				else if (!exiting_this_tile)		//other solid objects. dont bother checking if we are EXITING this tile
-					if (D.has_access_requirements())
-						if (D.check_access(ID) == 0)
+					if (O.has_access_requirements())
+						if (O.check_access(ID) == 0)
 							return 0
 						else
 							return 2
 					else
 						return 2
 			else
-				if (D.flags & ON_BORDER)
-					if (dir == D.dir)
+				if (O.flags & ON_BORDER)
+					if (dir == O.dir)
 						return 0
 				else if (!exiting_this_tile) //dont bother checking if we are EXITING this tile
 					return 0

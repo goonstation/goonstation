@@ -161,7 +161,7 @@ var/sound/iomoon_alarm_sound = null
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -744,10 +744,14 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"
 	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "yoyo"
 	item_state = "yoyo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_ROPE
 
 /obj/spawner/ancient_robot_artifact
 	name = "robot artifact spawn"
@@ -770,7 +774,7 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/unkill_shield
 	name = "Shield of Souls"
 	desc = "It appears to be a metal shield with blue LEDs glued to it."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "magic"
 
 	pickup(mob/user)
@@ -917,7 +921,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			src.icon_state = "boss_button1"
 
 			playsound(src.loc,"sound/machines/lavamoon_alarm1.ogg", 70,0)
-			sleep(50)
+			sleep(5 SECONDS)
 			event_iomoon_blowout()
 
 	bot_spawner
@@ -941,10 +945,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				event_iomoon_blowout()
 				return
 
-			if (I.damtype == "brute")
-				src.health -= I.force * 0.50
-			else
+			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
+			else
+				src.health -= I.force * 0.50
 
 
 			if (src.health <= 0 && active != -1)
@@ -968,7 +972,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					dir = 2
 					return
 				src.dir = 4
-				sleep(10)
+				sleep(1 SECOND)
 				if (health <= 0)
 					dir = 2
 					return
@@ -1008,9 +1012,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		default_click()
 			SPAWN_DBG(0)
 				activate()
-				sleep(200)
+				sleep(20 SECONDS)
 				//world << zap_somebody(usr)
-				//sleep(50)
+				//sleep(5 SECONDS)
 				death()
 */
 		New()
@@ -1038,10 +1042,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return
 
 			user.lastattacked = src
-			if (I.damtype == "brute")
-				src.health -= I.force * 0.50
-			else
+			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
+			else
+				src.health -= I.force * 0.50
 
 			user.visible_message("<span style=\"color:red\"><b>[user] bonks [src] with [I]!</b></span>","<span style=\"color:red\"><b>You hit [src] with [I]!</b></span>")
 			if (src.health <= 0)
@@ -1217,7 +1221,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					sleep (50)
 					if (rotors)
 						rotors.icon_state = "powercore_rotors_off"
-					sleep(25)
+					sleep(2.5 SECONDS)
 					src.icon_state = "powercore_core_dead"
 					if (base)
 						base.icon_state = "powercore_base_off"
@@ -1231,7 +1235,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					O.icon = 'icons/effects/214x246.dmi'
 					O.icon_state = "explosion"
 					playsound(src.loc, "explosion", 75, 1)
-					sleep(25)
+					sleep(2.5 SECONDS)
 					//qdel(rotors)
 					src.invisibility = 100
 
@@ -1244,7 +1248,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						portalOut.layer = 4 // TODO layer
 						portalOut.set_loc(src.loc)
 
-					sleep(10)
+					sleep(1 SECOND)
 					if (O)
 						O.dispose()
 					qdel(src)
@@ -1831,7 +1835,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				src.icon_state = "ancient_button_timer_slow"
 				SPAWN_DBG ((timer - 3) * 10)
 					src.icon_state = "ancient_button_timer_fast"
-					sleep(30)
+					sleep(3 SECONDS)
 					src.deactivate()
 
 			else

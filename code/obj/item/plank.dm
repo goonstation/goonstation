@@ -14,6 +14,10 @@
 	stamina_cost = 40
 	stamina_crit_chance = 10
 
+	New()
+		..()
+		BLOCK_ALL
+
 	attack_self(mob/user as mob)
 		var/turf/T = get_turf(user)
 		if (locate(/obj/structure/woodwall) in T)

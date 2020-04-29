@@ -23,6 +23,9 @@
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
 
+	var/static/list/admin_interact_verbs
+	var/static/list/admin_interact_atom_verbs
+
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -30,6 +33,69 @@
 				var/client/C = src.owner
 				C.chatOutput.getContextFlag()
 				src.load_admin_prefs()
+
+		if (!admin_interact_atom_verbs || admin_interact_atom_verbs.len <= 0)
+			admin_interact_atom_verbs = list(\
+			"Spin",\
+			"Rotate",\
+			"Scale",\
+			"Emag",\
+			)
+
+		if (!admin_interact_verbs || admin_interact_verbs.len <= 0)
+			admin_interact_verbs = list()
+			admin_interact_verbs["obj"] = list(\
+			"Get Thing",\
+			"Follow Thing",\
+			"Add Reagents",\
+			"Check Reagents",\
+			"View Variables",\
+			"View Fingerprints",\
+			"Delete",\
+			"Possess",\
+			"Create Poster"\
+			)
+			admin_interact_verbs["mob"] = list(\
+			"Player Options",\
+			"Private Message",\
+			"Subtle Message",\
+			"Check Health",\
+			"Heal",\
+
+			"Add Reagents",\
+			"Check Reagents",\
+			"View Variables",\
+			"Get Thing",\
+			"Follow Thing",\
+			"Possess",\
+			"Create Poster",\
+
+			"Gib",\
+			"Polymorph",\
+			"Modify Organs",\
+			"Modify Parts",\
+			"Modify Module",\
+			"Swap Minds",\
+			"Transfer Client To",\
+			"Shamecube",\
+			"Create Poster"\
+			)
+			admin_interact_verbs["turf"] = list(\
+			"Jump To Turf",\
+			"Air Status",\
+			"Create Explosion",\
+			"Create Fluid",\
+			"Create Smoke",\
+			"Create Portal",\
+			"Get Telesci Coords",\
+
+			"View Variables",\
+			"View Fingerprints",\
+			"Delete",\
+			"Create Poster"\
+			)
+
+
 
 	proc/show_pref_window(mob/user)
 		var/HTML = "<html><head><title>Admin Preferences</title></head><body>"
@@ -133,7 +199,7 @@
 		if (isnull(saved_hear_prayers))
 			saved_hear_prayers = 0
 		hear_prayers = saved_hear_prayers
-		
+
 		var/saved_audible_prayers
 		AP["[ckey]_audible_prayers"] >> saved_audible_prayers
 		if (isnull(saved_audible_prayers))

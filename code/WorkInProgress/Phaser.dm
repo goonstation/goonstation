@@ -43,7 +43,7 @@ var/const/PHASER_SNIPER = 256
 	desc = "For use with phasers"
 	item_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	var/proj_mod = null
 	var/proj_sound = null
 	var/proj_sound_impact = null
@@ -131,7 +131,7 @@ var/const/PHASER_SNIPER = 256
 
 /obj/item/oldgun
 	name = "gun"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	item_state = "gun"
@@ -220,9 +220,9 @@ var/const/PHASER_SNIPER = 256
 	proc/generate_overlays()
 		src.overlays = null
 		if(extension_mod)
-			src.overlays += icon('icons/obj/gun.dmi',extension_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun.dmi',extension_mod.overlay_name)
 		if(converter_mod)
-			src.overlays += icon('icons/obj/gun.dmi',converter_mod.overlay_name)
+			src.overlays += icon('icons/obj/items/gun.dmi',converter_mod.overlay_name)
 
 	attackby(obj/O as obj, mob/user as mob)
 		if (istype(O,/obj/item/gun_ext))
@@ -427,7 +427,7 @@ var/const/PHASER_SNIPER = 256
 							if(M == O.origin) continue
 							SPAWN_DBG(0)
 								step_towards(M,myloc)
-								sleep(5)
+								sleep(0.5 SECONDS)
 								step_towards(M,myloc)
 
 					var/obj/projectile/PBul = unpool(/obj/projectile)
@@ -444,7 +444,7 @@ var/const/PHASER_SNIPER = 256
 							var/dir_old = O.dir
 							SPAWN_DBG(0)
 								step(B,dir_old)
-								sleep(3)
+								sleep(0.3 SECONDS)
 								step(B,dir_old)
 
 					for(var/obj/critter/C in view(O.range,O.loc))
@@ -453,7 +453,7 @@ var/const/PHASER_SNIPER = 256
 							var/dir_old = O.dir
 							SPAWN_DBG(0)
 								step(C,dir_old)
-								sleep(3)
+								sleep(0.3 SECONDS)
 								step(C,dir_old)
 
 					qdel(PBul)
@@ -487,7 +487,7 @@ var/const/PHASER_SNIPER = 256
 							SPAWN_DBG(0)
 								M.weakened += 2
 								step(M,dir_old)
-								sleep(3)
+								sleep(0.3 SECONDS)
 								step(M,dir_old)
 
 					switch(O.power)
@@ -524,7 +524,7 @@ var/const/PHASER_SNIPER = 256
 
 					qdel(O)
 					return
-				sleep(1)
+				sleep(0.1 SECONDS)
 			return
 
 	Topic(href, href_list)

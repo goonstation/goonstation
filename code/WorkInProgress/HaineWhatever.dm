@@ -203,7 +203,7 @@
 
 /obj/item/feather
 	name = "feather"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "feather"
 	w_class = 1
 	p_class = 1
@@ -1151,7 +1151,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.activated = 1
 			for (var/i = 0, i < 4, i++)
 				usagi.dir = turn(usagi.dir, -90)
-				sleep(2)
+				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
 			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
 			luna.name = "Luna"
@@ -1271,6 +1271,10 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_cost = 5
 	stamina_crit_chance = 35
 
+	New()
+		..()
+		BLOCK_KNIFE
+
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (!ismob(M) || !M.contents.len)
 			return ..()
@@ -1382,7 +1386,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /obj/item/pen/crayon/lipstick // every time I think I've made the stupidest path I could, there's nowhere to go from here, I surpass my own expectations
 	name = "lipstick"
 	desc = "A tube of wax, oil and pigment that is intended to be used to color a person's lips."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
@@ -1434,7 +1438,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "apply_makeup"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick1"
 	var/mob/living/carbon/human/target
 	var/obj/item/pen/crayon/lipstick/makeup
@@ -1504,7 +1508,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "gun"
 
@@ -1752,7 +1756,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						src.verbs += /mob/proc/kali_ma_placeholder
 						src.verbs -= /mob/proc/kali_ma
 						src.say("Bali Mangthi Kali Ma.")
-						sleep(10)
+						sleep(1 SECOND)
 						var/mob/living/H = G.affecting
 						if(H.lying)
 							H.lying = 0
@@ -1781,11 +1785,11 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 								H.layer = src.layer - 1
 						for(var/i = 0, i < 5, i++)
 							H.pixel_y += 2
-							sleep(3)
+							sleep(0.3 SECONDS)
 						src.say("Kali Ma...")
-						sleep(20)
+						sleep(2 SECONDS)
 						src.say("Kali Ma...")
-						sleep(20)
+						sleep(2 SECONDS)
 						if (ishuman(H))
 							var/mob/living/carbon/human/HU = H
 							src.visible_message("<span style=\"color:red\"><B>[src] shoves \his hand into [H]'s chest!</B></span>")
@@ -1797,13 +1801,13 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 								heart.donor = HU
 								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 								HU.emote("scream")
-								sleep(20)
+								sleep(2 SECONDS)
 								src.say("Ab, uski jan meri mutti me hai! AB, USKI JAN MERI MUTTI ME HAI!")
 							else
 								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 								HU.emote("scream")
 								src.visible_message("<span style=\"color:red\"><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
-								sleep(20)
+								sleep(2 SECONDS)
 							HU.stunned += 10
 							HU.weakened += 12
 							var/turf/target = get_edge_target_turf(src, src.dir)

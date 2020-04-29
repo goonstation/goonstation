@@ -78,7 +78,7 @@
 		S.in_rush = i
 		T = get_step(T, charge_dir)
 		src.Move(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	S.in_rush = 0
 
@@ -164,7 +164,7 @@
 /obj/item/football
 	name = "football"
 	desc = "A pigskin. An oblate leather spheroid. For tossing around."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "football"
 	uses_multiple_icon_states = 1
 	item_state = "football"

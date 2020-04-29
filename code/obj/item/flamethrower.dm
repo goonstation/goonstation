@@ -8,7 +8,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 /obj/item/flamethrower
 	name = "flamethrower"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
@@ -37,6 +37,10 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	stamina_cost = 5
 	stamina_crit_chance = 1
 	move_triggered = 1
+
+	New()
+		..()
+		BLOCK_LARGE
 
 /obj/item/flamethrower/loaded/
 	icon_state = "flamethrower_oxy_fuel"
@@ -253,7 +257,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		user.u_equip(W)
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/fuel = "_no_fuel"
 		if(src.part5)
 			fuel = "_fuel"
@@ -268,7 +272,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		user.u_equip(W)
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/oxy = "_no_oxy"
 		if(src.part4)
 			oxy = "_oxy"
@@ -329,13 +333,13 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			icon_state = "flamethrower_ignite_on"
 			item_state = "flamethrower1"
 			force = 10
-			damtype = "fire"
+			hit_type = DAMAGE_BURN
 			if (!(src in processing_items))
 				processing_items.Add(src)
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
-			damtype = "brute"
+			hit_type = DAMAGE_BLUNT
 	if (href_list["removeair"])
 		if(!src.part4)	return
 		var/obj/item/tank/A = src.part4
@@ -344,7 +348,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part4 = null
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/fuel = "_no_fuel"
 		if(src.part5)
 			fuel = "_fuel"
@@ -360,7 +364,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part5 = null
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/oxy = "_no_oxy"
 		if(src.part4)
 			oxy = "_oxy"
@@ -519,7 +523,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 		if(halt)
 			break
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	operating = 0
 	for(var/mob/M in viewers(1, src.loc))

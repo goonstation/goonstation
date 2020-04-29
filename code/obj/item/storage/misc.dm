@@ -9,7 +9,8 @@
 	name = "tabletop gaming kit"
 	desc = "It's the famous carmine box starter set for Syndicates & Stations, Fifth Edition."
 	icon_state = "nerdkit"
-	item_state = "box_red"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "box-red"
 	spawn_contents = list(
 		/obj/item/paper/book/monster_manual,
 		/obj/item/dice,

@@ -323,7 +323,14 @@
 #define SLEEVELESS 64			// ain't got no sleeeeeves
 #define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
 #define IS_JETPACK 256
-#define EQUIPPED_WHILE_HELD 512	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
+#define BLOCK_TOOLTIP 4096				//whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_CUT 8192					//block an extra point of cut damage when used to block
+#define BLOCK_STAB 16384				//block an extra point of stab damage when used to block
+#define BLOCK_BURN 32768				//block an extra point of burn damage when used to block
+#define BLOCK_BLUNT 65536				//block an extra point of blunt damage when used to block
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -536,6 +543,8 @@
 #define ui_rest "CENTER+6, SOUTH"
 #define ui_abiltoggle "CENTER-6, SOUTH"
 #define ui_stats "CENTER+7, SOUTH"
+#define ui_legend "CENTER+7:16, SOUTH"
+
 
 #define ui_zone_sel "CENTER+4, SOUTH"
 #define ui_storage_area "1,8 to 1,1"
@@ -559,6 +568,7 @@
 #define tg_ui_ears "WEST+2:10,SOUTH+2:9"
 #define tg_ui_mask "WEST+1:8,SOUTH+2:9"
 #define tg_ui_head "WEST+1:8,SOUTH+3:11"
+#define tg_ui_legend "WEST+2:10, SOUTH+3:11"
 #define tg_ui_throwing "EAST-1:28,SOUTH+1:7"
 #define tg_ui_intent "EAST-3:24,SOUTH:5"
 #define tg_ui_mintent "EAST-2:26,SOUTH:5"
@@ -758,6 +768,19 @@
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
+#define DAMAGE_TYPE_TO_STRING(x) (x == DAMAGE_BLUNT ? "blunt" : x == DAMAGE_CUT ? "cut" : x == DAMAGE_STAB ? "stab" : x == DAMAGE_BURN ? "burn" : x == DAMAGE_CRUSH ? "crush" : "")
+
+//some different generalized block weapon shapes that i can re use instead of copy paste
+#define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work
+#define BLOCK_ALL		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_LARGE		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_SWORD		BLOCK_LARGE 
+#define BLOCK_ROD 		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT)
+#define BLOCK_TANK		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_BURN)
+#define BLOCK_SOFT		BLOCK_SETUP; src.c_flags |= (BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_KNIFE		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_STAB)
+#define BLOCK_ROPE		BLOCK_BOOK 
 
 // Process Scheduler defines
 // Process status defines

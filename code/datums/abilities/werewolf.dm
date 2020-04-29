@@ -36,7 +36,7 @@
 /mob/proc/handle_natural_werewolf(var/datum/abilityHolder/werewolf/W)
 	src.emote("shiver")
 	boutput(src, "<span style=\"color:red\"><b>You feel feral!</b></span>")
-	sleep(50)
+	sleep(5 SECONDS)
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		boutput(src, "<span style=\"color:red\"><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")
@@ -59,7 +59,7 @@
 		var/mob/living/carbon/human/M = src
 		var/which_way = 0
 
-		if (!M.mutantrace || source_is_lycanthrophy == 1)
+		if ((!M.mutantrace || istype(M.mutantrace, /datum/mutantrace/virtual))|| source_is_lycanthrophy == 1)//the istype fixes you needing to transform twice in vr
 			M.jitteriness = 0
 			M.delStatus("stunned")
 			M.delStatus("weakened")

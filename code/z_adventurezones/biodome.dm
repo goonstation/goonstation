@@ -117,7 +117,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2 && prob(10))
 					sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
@@ -471,7 +471,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	proc/go()
 		while(!disposed)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			var/turf/next = get_step(src, SOUTH)
 			if(prob(30))
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 60, 1) // having some noise might be rad
@@ -687,15 +687,18 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/shovel
 	name = "rusty old shovel"
 	desc = "It's seen better days."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "pick"
+	item_state = "shovel"
 	w_class = 3
 	flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
+	New()
+		..()
+		BLOCK_ROD
 
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
@@ -936,16 +939,16 @@ SYNDICATE DRONE FACTORY AREAS
 				activated = 1
 				boutput(usr, "<span style=\"color:green\">The Circle begins to vibrate and glow.</span>")
 				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
-				sleep(10)
+				sleep(1 SECOND)
 				shake_camera(usr, 15, 1, 0.2)
-				sleep(10)
+				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
-				sleep(10)
+				sleep(1 SECOND)
 				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
 				shake_camera(usr, 15, 1, 0.5)
 				new/obj/item/alchemy/stone(middle)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				var/obj/graveyard/loose_rock/R = locate("loose_rock_[target_id]")
 				if(istype(R))
 					SPAWN_DBG(1 DECI SECOND)
@@ -1011,7 +1014,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/device/sat_crash_caller
 	name = "satellite transceiver"
 	desc = "A hand-held device for communicating with some sort of satellite."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "satcom"
 	w_class = 1
 
@@ -1083,7 +1086,7 @@ var/satellite_crash_event_status = -1
 		light.enable()
 		playsound(src.loc, "sound/machines/satcrash.ogg", 50, 0)
 
-		sleep(50)
+		sleep(5 SECONDS)
 		if (!satellite)
 			satellite_crash_event_status = -1
 			return
@@ -1094,10 +1097,10 @@ var/satellite_crash_event_status = -1
 			var/obj/effects/expl_particles/EP = new /obj/effects/expl_particles {pixel_y = 600; name = "space debris";} (pick(orange(src,3)))
 			animate(EP, pixel_y = 0, time=15, easing = SINE_EASING, transform = matrix(rand(-180, 180), MATRIX_ROTATE))
 
-		sleep(15)
+		sleep(1.5 SECONDS)
 		var/oldTransform = satellite.transform
 		animate(satellite, pixel_y = 0, time = 10, easing = SINE_EASING, transform = matrix(rand(5, 30), MATRIX_ROTATE))
-		sleep(10)
+		sleep(1 SECOND)
 		var/datum/effects/system/explosion/explode = new /datum/effects/system/explosion
 		explode.set_up( src.loc )
 		explode.start()
@@ -1107,14 +1110,14 @@ var/satellite_crash_event_status = -1
 		for (var/mob/living/L in range(src.loc, 2))
 			L.ex_act(get_dist(src.loc, L))
 
-		sleep(5)
+		sleep(0.5 SECONDS)
 		satellite.icon_state = "syndsat-crashed"
 		satellite.set_density(1)
 		satellite.transform = oldTransform
 		satellite.color = "#FFFFFF"
 		light.disable()
 		light.detach()
-		sleep(45)
+		sleep(4.5 SECONDS)
 		qdel(explode)
 
 		var/image/projection = image('icons/effects/64x64.dmi', "syndsat-projection")

@@ -4,7 +4,7 @@
 /obj/item/storage/firstaid
 	name = "first aid"
 	icon_state = "firstaid1"
-	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
 	max_wclass = 2

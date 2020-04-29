@@ -663,7 +663,7 @@
 			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (P.type == O.type)
 					if (istype(O, /obj/item/seed/)) src.seeds.Add(P)
@@ -873,6 +873,7 @@
 			else
 				if (src.inserted == src.extract_to) src.extract_to = null
 				src.inserted.set_loc(src.output_target)
+				usr.put_in_hand_or_eject(inserted)
 				src.inserted = null
 			src.updateUsrDialog()
 
@@ -958,6 +959,10 @@
 			src.updateUsrDialog()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		if (isrobot(user))
+			boutput(user, "This machine is not compatible with mechanical users.")
+			return
+
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
 				boutput(user, "<span style=\"color:red\">A container is already loaded into the machine.</span>")
@@ -1033,7 +1038,7 @@
 			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (P.type == O.type)
 					src.ingredients.Add(P)

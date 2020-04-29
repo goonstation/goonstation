@@ -758,7 +758,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			myProj = /datum/projectile/bullet/a12
 			ammo = 40
 			abstract = 0
-			icon = 'icons/obj/gun.dmi'
+			icon = 'icons/obj/items/gun.dmi'
 			icon_state = "shotgun"
 
 		aex
@@ -920,7 +920,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				myProj = /datum/projectile/bullet/rifle_3006
 				ammo = 6
 				abstract = 0
-				icon = 'icons/obj/gun.dmi'
+				icon = 'icons/obj/items/gun.dmi'
 				icon_state = "hunting_rifle"
 				rarity_class = 1
 
@@ -1425,7 +1425,7 @@ proc/get_colosseum_message(var/name, var/message)
 			new /obj/effects/explosion (src.loc)
 			var/sound/expl_sound = sound('sound/effects/Explosion1.ogg')
 			do_sound(expl_sound)
-			sleep(30)
+			sleep(3 SECONDS)
 			if (health > 0)
 				dying = 0
 				return
@@ -1433,13 +1433,13 @@ proc/get_colosseum_message(var/name, var/message)
 			if (piloting)
 				piloting.update_burning(35)
 			do_sound(sound('sound/machines/engine_alert1.ogg'))
-			sleep(25)
+			sleep(2.5 SECONDS)
 			if (health > 0)
 				dying = 0
 				return
 			do_sound(sound('sound/machines/pod_alarm.ogg'))
 			do_sound(expl_sound)
-			sleep(15)
+			sleep(1.5 SECONDS)
 			if (health > 0)
 				dying = 0
 				return
@@ -1457,7 +1457,7 @@ proc/get_colosseum_message(var/name, var/message)
 					var/turf/T = locate(Q.x + dx, Q.y + dy, Q.z)
 					if (T && M)
 						M.throw_at(T, 10, 2)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			var/turf/T = get_turf(src.loc)
 			if(T)
 				src.visible_message("<b>[src] explodes!</b>")
@@ -1710,7 +1710,7 @@ proc/get_colosseum_message(var/name, var/message)
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

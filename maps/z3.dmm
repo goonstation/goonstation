@@ -481,7 +481,7 @@
 "ajm" = (/obj/machinery/light{dir = 4},/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/mining/dock)
 "ajn" = (/obj/disposalpipe/segment/transport,/turf/simulated/floor/plating/airless,/area/mining/manufacturing)
 "ajo" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/dock)
-"ajp" = (/obj/storage/secure/closet/kitchen,/obj/item/gun/kinetic/ak47/vr,/obj/item/device/radio,/turf/simulated/floor/wood/two,/area)
+"ajp" = (/obj/storage/secure/closet/kitchen,/obj/item/device/radio,/turf/simulated/floor/wood/two,/area)
 "ajq" = (/obj/item/tank/air,/turf/space,/area)
 "ajr" = (/obj/decal/cleanable/fungus,/turf/simulated/wall/auto/supernorn,/area/mining/dock)
 "ajs" = (/obj/disposalpipe/segment/transport{dir = 4},/turf/simulated/wall/auto/supernorn,/area/mining/miningoutpost)

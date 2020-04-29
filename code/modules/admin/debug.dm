@@ -203,7 +203,6 @@ var/global/debug_messages = 0
 	set name = "Call Proc"
 	set desc = "Calls a proc associated with the targeted atom"
 	set category = null
-	set popup_menu = 1
 	admin_only
 	if (!target)
 		return
@@ -539,6 +538,8 @@ var/global/debug_messages = 0
 // GO AWAY
 /client/proc/cmd_explosion(var/turf/T in world)
 	set name = "Create Explosion"
+	set popup_menu = 0
+
 	var/esize = input("Enter POWER of Explosion\nPlease use decimals for greater accuracy!)","Explosion Power",null) as num|null
 	if (!esize)
 		return
@@ -735,22 +736,22 @@ body
 	T += "</table>"
 	usr.Browse(T, "window=browse_reagents;size=800x400")
 
-/client/proc/debug_check_possible_reactions(var/atom/O as mob|obj|turf)
+/atom/proc/debug_check_possible_reactions()
 	set category = "Debug"
 	set name = "Check Possible Reactions"
 	set desc = "Checks which things could possibly be made from reagents in this thing."
 
-	if(O.reagents && O.reagents.total_volume)
-		var/T = "<TT><h1>Possible Reactions</h1><center>for reagents inside<BR><B>[O]</b></center><hr>"
-		if(O.reagents.possible_reactions.len)
-			for(var/datum/chemical_reaction/CR in O.reagents.possible_reactions)
+	if(src.reagents && src.reagents.total_volume)
+		var/T = "<TT><h1>Possible Reactions</h1><center>for reagents inside<BR><B>[src]</b></center><hr>"
+		if(src.reagents.possible_reactions.len)
+			for(var/datum/chemical_reaction/CR in src.reagents.possible_reactions)
 				T += "  -  [CR.type]<br>"
 		else
 			T += "Nothing at all!"
 
 		usr.Browse(T, "window=possible_chem_reactions_in_thing")
 	else
-		usr.show_text("\The [O] does not have a reagent holder or is empty.", "red")
+		usr.show_text("\The [src] does not have a reagent holder or is empty.", "red")
 
 /client/proc/showMyCoords(var/x, var/y, var/z)
 	return replacetext(showCoords(x,y,z), "%admin_ref%", "\ref[src.holder]")
@@ -1265,7 +1266,7 @@ var/datum/flock/testflock
 /proc/debugAddComponent(var/datum/target = null)
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
-		return
+		pathpart = "/"
 	var/comptype = get_one_match(pathpart, /datum/component)
 	if(!comptype)
 		return

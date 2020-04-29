@@ -354,6 +354,10 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (prob(final_repair_chance))
 		H.bleeding -= repair_amount
+		//BLOOD_DEBUG("[H]'s bleeding repaired by [repair_amount], now [H.bleeding]")
+		if (H.bleeding < 0)
+			H.bleeding = 0
+			//BLOOD_DEBUG("[H]'s bleeding dropped below 0 and was reset to 0")
 		if (!H.bleeding && H.get_surgery_status())
 			H.bleeding ++
 		switch (H.bleeding)
@@ -378,10 +382,6 @@ this is already used where it needs to be used, you can probably ignore it.
 			if (9 to INFINITY)
 				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
 */
-		//BLOOD_DEBUG("[H]'s bleeding repaired by [repair_amount], now [H.bleeding]")
-		if (H.bleeding < 0)
-			H.bleeding = 0
-			//BLOOD_DEBUG("[H]'s bleeding dropped below 0 and was reset to 0")
 
 	//else
 		//BLOOD_DEBUG("[H] rolled no repair")
@@ -400,7 +400,9 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (!blood_system) // we're here because we want to create a decal, so create it anyway
 
 
-		var/obj/decal/cleanable/blood/dynamic/B = locate(/obj/decal/cleanable/blood/dynamic) in T
+		var/obj/decal/cleanable/blood/dynamic/B = null
+		if (T.messy > 0)
+			B = locate(/obj/decal/cleanable/blood/dynamic) in T
 		var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
 
 		if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
@@ -426,10 +428,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			B.blood_DNA = "--unidentified substance--"
 			B.blood_type = "--unidentified substance--"
 
-		B.add_volume(blood_color_to_pass, vis_amount)
-		if (some_idiot.blood_id)
-			B.reagents.add_reagent(some_idiot.blood_id, num_amount)
-
+		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount)
 		return
 
 	BLOOD_DEBUG("[some_idiot] begins bleed")
@@ -451,12 +450,14 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if ((!isvampire(H) && H.blood_volume > 0) || (isvampire(H) && H.get_vampire_blood() > 0)) // you shouldn't bleed unless you have blood okay
 		//BLOOD_DEBUG("[H] blood level [H.blood_volume]")
-		var/obj/decal/cleanable/blood/dynamic/B = locate(/obj/decal/cleanable/blood/dynamic) in T
+		var/obj/decal/cleanable/blood/dynamic/B = null
+		if (T.messy > 0)
+			B = locate(/obj/decal/cleanable/blood/dynamic) in T
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
 			if (H.blood_id)
-				B.set_sample_reagent_custom(H.blood_id)
+				B.set_sample_reagent_custom(H.blood_id,0)
 			if (H.blood_color)
 				B.color = H.blood_color
 
@@ -477,14 +478,12 @@ this is already used where it needs to be used, you can probably ignore it.
 				H.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		B.add_volume(H.blood_color, vis_amount)
+		B.add_volume(H.blood_color, H.blood_id, num_amount, vis_amount)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
-		if (H.bleeding > 4 && B && B.reagents && B.reagents.total_volume < 90 && H.reagents && H.reagents.total_volume)
+		if (B && B.reagents && H.reagents && H.reagents.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			H.reagents.trans_to(B, min(round(H.bleeding / 2, 1), 5))
-
-
+			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
 	else
 		return
 
@@ -517,9 +516,10 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (!isvampire(some_human_idiot) && (some_human_idiot.blood_volume < blood_to_transfer))
 			blood_to_transfer = some_human_idiot.blood_volume
 
-		bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(some_idiot.bioHolder)
-		bloodHolder.ownerName = some_idiot.real_name
+		if (!A.reagents.get_reagent("bloodc") && !A.reagents.get_reagent("blood")) // if it doesn't have blood with blood bioholder data already, only then create this
+			bloodHolder = new/datum/bioHolder(null)
+			bloodHolder.CopyOther(some_idiot.bioHolder)
+			bloodHolder.ownerName = some_idiot.real_name
 
 	var/datum/reagent/R = null
 
@@ -853,7 +853,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	name = "test dagger"
 	desc = "this is for testing bleeding stuff"
 	w_class = 1.0
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
@@ -862,6 +862,10 @@ this is already used where it needs to be used, you can probably ignore it.
 	throw_range = 16
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1
+
+	New()
+		..()
+		BLOCK_KNIFE
 
 	throw_impact(atom/A)
 		if(iscarbon(A))

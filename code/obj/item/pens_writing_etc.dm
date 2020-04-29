@@ -600,7 +600,8 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "clipboard00"
 	var/obj/item/pen/pen = null
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "clipboard0"
 	throwforce = 0
 	w_class = 3.0
 	throw_speed = 3
@@ -609,6 +610,10 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
+
+	New()
+		..()
+		BLOCK_BOOK
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -713,6 +718,7 @@
 			else
 				return
 		src.update()
+		user.update_inhands()
 		SPAWN_DBG(0)
 			attack_self(user)
 			return
@@ -720,6 +726,7 @@
 
 	proc/update()
 		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
 		return
 
 /obj/item/clipboard/with_pen
@@ -819,14 +826,13 @@
 		src.add_fingerprint(user)
 		return
 
-	attack_self(var/mob/user as mob, var/page = 1 )
+	proc/display_booklet_contents(var/mob/user as mob, var/page = 1)
 		var/obj/item/paper/cur_page = pages[page]
 		var/next_page = ""
 		var/prev_page = "     "
 		set src in view()
 		set category = "Local"
 
-		..()
 		if(!user.literate)
 			. = html_encode(illiterateGarbleText(cur_page.info)) // deny them ANY useful information
 		else
@@ -845,14 +851,18 @@
 		if (page < pages.len)
 			next_page = "<a href='byond://?src=\ref[src];action=next_page;page=[page]'>Next</a>"
 
-		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=/ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
+		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
 		onclose(usr, "[src.name]")
 		return null
 
+	attack_self(var/mob/user)
+		..()
+		src.display_booklet_contents(user,1)
+
 	examine()
 		..()
-		attack_self(usr, 1)
+		src.display_booklet_contents(usr, 1)
 
 	Topic(href, href_list)
 		..()
@@ -865,22 +875,22 @@
 
 		switch (href_list["action"])
 			if ("next_page")
-				src.attack_self(usr,page_num + 1)
+				src.display_booklet_contents(usr,page_num + 1)
 			if ("prev_page")
-				src.attack_self(usr,page_num - 1)
+				src.display_booklet_contents(usr,page_num - 1)
 			if ("write")
 				if (istype(usr.equipped(), /obj/item/pen))
 					cur_page.attackby(usr.equipped(),usr)
-					src.attack_self(usr,page_num)
+					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
 					cur_page.attack_self(usr)
 			if ("title_book")
 				src.give_title(usr)
 			if ("first_page")
-				src.attack_self(usr,1)
+				src.display_booklet_contents(usr,1)
 			if ("last_page")
-				src.attack_self(usr,pages.len)
+				src.display_booklet_contents(usr,pages.len)
 
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/paper))

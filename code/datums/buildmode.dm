@@ -259,7 +259,7 @@ var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH 
 	SPAWN_DBG(0)//WHY DOUBLE SPAWN AND NEW IMAGE EVERY BLINK IT MAKES SOMEPOTATO SAD
 
 		T.overlays += buildmodeBlink
-		sleep(5)
+		sleep(0.5 SECONDS)
 		T.overlays -= buildmodeBlink
 
 	//kinda gross

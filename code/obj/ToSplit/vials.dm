@@ -87,11 +87,11 @@
 		for(i=0, i<5, i++)
 			for(var/mob/living/carbon/H in view(5, sourceloc))
 				H.contract_disease(src.contained,null,null,0)
-			sleep(20)
+			sleep(2 SECONDS)
 
 	flick("greenshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 	qdel(O)
 	return
 
@@ -134,10 +134,10 @@
 
 	liquify(user)
 
-	sleep(20)
+	sleep(2 SECONDS)
 	flick("blueshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 	qdel(O)
 
 /obj/item/reagent_containers/glass/vial/blue/shatter()
@@ -164,10 +164,10 @@
 	for(var/mob/living/carbon/human/H in view(1, sourceloc))
 		liquify(H)
 
-	sleep(20)
+	sleep(2 SECONDS)
 	flick("blueshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 
 	qdel(O)
 
@@ -200,7 +200,7 @@
 		animation.master = holder
 		flick("liquify",animation)
 		H.canmove = 0
-		sleep(4)
+		sleep(0.4 SECONDS)
 		H.set_loc(holder)
 		H.canmove = 1
 		SPAWN_DBG(0)
@@ -214,7 +214,7 @@
 					water1.icon = 'icons/effects/water.dmi'
 					water1.icon_state = "extinguish"
 					for(i=0, i<pick(1,2,3), i++)
-						sleep(5)
+						sleep(0.5 SECONDS)
 						step(water1,direction)
 					SPAWN_DBG(2 SECONDS)
 						qdel(water1)
@@ -236,12 +236,12 @@
 				water2.icon = 'icons/effects/water.dmi'
 				water2.icon_state = "extinguish"
 				walk_to(water2,mobloc,-1,5)
-				sleep(20)
+				sleep(2 SECONDS)
 				qdel(water2)
 
-		sleep(20)
+		sleep(2 SECONDS)
 		flick("reappear",animation)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
 		H.canmove = 1
 		qdel(animation)
@@ -292,7 +292,7 @@
 /*
 /obj/testtuberack
 	name = "test tube rack"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "clipboard00"
 
 	attackby(obj/item/W, mob/user as mob)

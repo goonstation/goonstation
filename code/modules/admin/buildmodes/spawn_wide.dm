@@ -64,18 +64,18 @@ change the direction of created objects.<br>
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = new objpath(Q)
+								A = Q.ReplaceWith(objpath, 1, 0, 1)
 							else
 								A = new objpath(Q)
 
-							if (isobj(A) || ismob(A) || isturf(A))
+							if (isobj(A) || ismob(A))
 								A.dir = holder.dir
 								A.onVarChanged("dir", SOUTH, A.dir)
-							sleep(5)
+							sleep(0.5 SECONDS)
 							mtx.Reset()
 							mtx.Translate(0,64)
 							animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-							sleep(5)
+							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
 							pool(swirl)
@@ -98,18 +98,18 @@ change the direction of created objects.<br>
 
 								var/atom/A = 0
 								if(ispath(objpath, /turf))
-									A = new objpath(Q)
+									A = Q.ReplaceWith(objpath, 1, 0, 1)
 								else
 									A = new objpath(Q)
 
-								if (isobj(A) || ismob(A) || isturf(A))
+								if (isobj(A) || ismob(A))
 									A.dir = holder.dir
 									A.onVarChanged("dir", SOUTH, A.dir)
-								sleep(5)
+								sleep(0.5 SECONDS)
 								mtx.Reset()
 								mtx.Translate(0,64)
 								animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-								sleep(5)
+								sleep(0.5 SECONDS)
 								swirl.mouse_opacity = 1
 								pad.mouse_opacity = 1
 								pool(swirl)
@@ -118,28 +118,28 @@ change the direction of created objects.<br>
 					if("Blink")
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = new objpath(Q)
+							A = Q.ReplaceWith(objpath, 1, 0, 1)
 						else
 							A = new objpath(Q)
 
-						if (isobj(A) || ismob(A) || isturf(A))
+						if (isobj(A) || ismob(A))
 							A.dir = holder.dir
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = new objpath(Q)
+							A = Q.ReplaceWith(objpath, 1, 0, 1)
 						else
 							A = new objpath(Q)
 
-						if (isobj(A) || ismob(A) || isturf(A))
+						if (isobj(A) || ismob(A))
 							A.dir = holder.dir
 							A.onVarChanged("dir", SOUTH, A.dir)
 				cnt++
 				if (cnt > 499)
 					cnt = 0
-					sleep(2)
+					sleep(0.2 SECONDS)
 			A = null
 			update_button_text(objpath)
 

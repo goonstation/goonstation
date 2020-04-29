@@ -12,6 +12,8 @@ datum/pathogeneffects
 	var/rarity = RARITY_ABSTRACT
 	var/infect_message = null
 
+	var/beneficial = 0
+
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
 	// Mutexes cut the ENTIRE object tree - for example, if symptoms a/b, a/c and a/d all exist, then mutexing
@@ -1594,7 +1596,7 @@ datum/pathogeneffects/malevolent/ultimatefever
 						var/IC = M.loc
 						M.set_loc(get_turf(M))
 						qdel(IC)
-				if (prob(1))
+				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("fire_resist","thermal_resist"))
 					M.show_message("<span style=\"color:red\">You completely burn up!</span>")
 					logTheThing("pathology", M, null, " is firegibbed due to symptom [src].")
 					M.firegib()
@@ -1767,7 +1769,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 						M.show_message("<span style=\"color:red\">[pick("You're freezing!", "You're getting cold...", "So very cold...", "You feel your skin turning into ice...")]</span>")
 						M.changeStatus("stunned", 3 SECONDS)
 						M.emote("shiver")
-				if (prob(1))
+				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span style=\"color:red\">You freeze completely!</span>")
 					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
 					M:become_ice_statue()
@@ -1871,6 +1873,7 @@ datum/pathogeneffects/malevolent/farts/co2
 		if (T)
 			T.assume_air(gas)
 
+	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
 		..()
@@ -1888,6 +1891,7 @@ datum/pathogeneffects/malevolent/farts/o2
 	name = "O2 Farts"
 	desc = "The infected individual occasionally farts. Pure oxygen."
 	rarity = RARITY_COMMON
+	beneficial = 1
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
 
@@ -2109,6 +2113,7 @@ datum/pathogeneffects/malevolent/mutation/beneficial
 	mutation_type = "good"
 	chrom_prob = 100 //guranteed chromosome application
 	chrom_types = list(/datum/dna_chromosome) //stabilizer, no instability caused
+	beneficial = 1
 
 	react_to(var/R, var/zoom)
 		if (R == "mutadone")
@@ -2321,6 +2326,6 @@ datum/pathogeneffects/malevolent/detonation
 		explosion_new(M, get_turf(M), origin.stage*5, origin.stage/2.5)
 
 	react_to(var/R, var/zoom)
-		if (R == "Synthflesh")
+		if (R == "synthflesh")
 			return "There are stray synthflesh pieces all over the dish."
 

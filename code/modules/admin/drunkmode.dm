@@ -46,12 +46,10 @@ var/list/dangerousVerbs = list(\
 /client/proc/ticklag,\
 /client/proc/cmd_debug_vox,\
 /client/proc/mapWorld,\
-/client/proc/call_proc_atom,\
 /client/proc/haine_blood_debug,\
 /client/proc/debug_messages,\
 /client/proc/debug_reaction_list,\
 /client/proc/debug_reagents_cache,\
-/client/proc/debug_check_possible_reactions,\
 /client/proc/set_admin_level,\
 /client/proc/show_camera_paths, \
 /*/client/proc/remove_camera_paths_verb, \*/

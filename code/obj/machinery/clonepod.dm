@@ -37,7 +37,7 @@
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
 
-	var/gen_analysis = 1 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
+	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 
@@ -174,7 +174,7 @@
 
 	if (istype(oldholder))
 		oldholder.clone_generation++
-		src.occupant.bioHolder.CopyOther( oldholder )
+		src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = gen_analysis)
 	else
 		logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
@@ -200,7 +200,6 @@
 	src.occupant.take_oxygen_deprivation(40)
 	src.occupant.take_brain_damage(90)
 	src.occupant.changeStatus("paralysis", 60)
-	src.occupant.bioHolder.AddEffect("premature_clone")
 	if(src.occupant.bioHolder.clone_generation > 1)
 		src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
 		//src.occupant.max_health -= (src.occupant.bioHolder.clone_generation - 1) * 15 //Genetic degradation! Oh no!!
@@ -552,11 +551,8 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	for (var/obj/O in src)
 		O.set_loc(get_turf(src))
 
-	if ((src.occupant.health >= heal_level - 50) && src.occupant.bioHolder) // this seems to often not work right, changing 20 to 50
-		src.occupant.bioHolder.RemoveEffect("premature_clone")
-		src.occupant.update_face()
-		src.occupant.update_body()
-		src.occupant.update_clothing()
+	if ((src.occupant.health < heal_level - 50) && src.occupant.bioHolder) // this seems to often not work right, changing 20 to 50
+		src.occupant.bioHolder.AddEffect("premature_clone")
 	if (src.occupant.get_oxygen_deprivation())
 		src.occupant.take_oxygen_deprivation(-INFINITY)
 		src.occupant.updatehealth()

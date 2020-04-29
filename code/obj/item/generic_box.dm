@@ -2,7 +2,7 @@
 /obj/item/item_box // for when you want something that "contains" a certain amount of an item
 	name = "box"
 	desc = "A little cardboard box for keeping stuff in. Woah! We're truly in the future with technology like this."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "item_box"
 	force = 1
 	throwforce = 1
@@ -352,7 +352,7 @@
 			if (thing in user)
 				continue
 			src.add_to(thing, user, 0)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
 		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")

@@ -3,9 +3,9 @@
 
 /obj/item/parts/human_parts
 	name = "human parts"
-	icon = 'icons/obj/human_parts.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "buildpipe"
+	icon = 'icons/obj/items/human_parts.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	item_state = "arm-left"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	var/skin_tone = "#FFCC99"
 	var/mob/living/original_holder = null
@@ -210,12 +210,14 @@
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
 	icon_state = "arm_left"
+	item_state = "arm-left"
 	slot = "l_arm"
 	handlistPart = "hand_left"
 
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
 	icon_state = "arm_right"
+	item_state = "arm-right"
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
@@ -251,6 +253,7 @@
 /obj/item/parts/human_parts/leg/left
 	name = "left leg"
 	icon_state = "leg_left"
+	item_state = "leg-left"
 	slot = "l_leg"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
@@ -258,6 +261,7 @@
 /obj/item/parts/human_parts/leg/right
 	name = "right leg"
 	icon_state = "leg_right"
+	item_state = "leg-right"
 	slot = "r_leg"
 	side = "right"
 	partlistPart = "foot_right"
@@ -379,6 +383,7 @@
 				//H.update_clothing()
 				H.update_body()
 				H.update_inhands()
+				H.hud.add_other_object(H.l_hand,H.hud.layouts[H.hud.layout_style]["lhand"])
 
 
 	proc/remove_from_mob(delete = 0)
@@ -508,6 +513,7 @@
 				H.update_body()
 				H.set_body_icon_dirty()
 				H.update_inhands()
+				H.hud.add_other_object(H.r_hand,H.hud.layouts[H.hud.layout_style]["rhand"])
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))

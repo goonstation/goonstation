@@ -420,10 +420,10 @@ var/reverse_mode = 0
 							src.invisibility = 101
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
-							sleep(5)
+							sleep(0.5 SECONDS)
 							E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
-							sleep(5)
+							sleep(0.5 SECONDS)
 							E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
 							qdel(src)
@@ -534,7 +534,7 @@ var/reverse_mode = 0
 		A.onVarChanged(varname, oldVal, A.vars[varname])
 		if (thetype == "random-color")
 			thevalue = rgb(rand(0,255),rand(0,255),rand(0,255))
-		sleep(1)
+		sleep(0.1 SECONDS)
 /*
 	if (minrnd != null || maxrnd != null)
 		logTheThing("admin", usr, null, "randomized all [type]s [varname] from [minrnd] to [maxrnd].")

@@ -221,18 +221,7 @@ datum
 			bladder_value = -0.1
 			hunger_value = -0.05
 			thirst_value = -0.05
-
-			on_add()
-				if (holder && ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_crank", 50)
-				return
-
-			on_remove()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_crank")
-				return
+			stun_resist = 60
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -475,6 +464,7 @@ datum
 			var/remove_buff = 0
 			value = 3
 			thirst_value = -0.07
+			stun_resist = 5
 
 			pooled()
 				..()
@@ -483,20 +473,13 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 1)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_nicotine", 4)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_nicotine")
-				return
-
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(ishuman(M))
@@ -560,23 +543,18 @@ datum
 			description = "A highly addictive stimulant derived from the twobacco plant."
 			addiction_prob = 100
 			overdose = 70
+			stun_resist = 11
 
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("nicotine2", 3)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_nicotine2", 6)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("nicotine2")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_nicotine2")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(ishuman(M))
@@ -851,11 +829,7 @@ datum
 			bladder_value = -0.1
 			hunger_value = -0.3
 			thirst_value = -0.2
-
-			on_add()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_triplemeth", 98)
+			stun_resist = 98
 
 			on_remove()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
@@ -863,11 +837,7 @@ datum
 
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
-
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_triplemeth")
-				return
+				..()
 
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -940,6 +910,7 @@ datum
 			bladder_value = -0.09
 			hunger_value = -0.09
 			thirst_value = -0.09
+			stun_resist = 50
 
 			pooled()
 				..()
@@ -948,22 +919,15 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 3)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_meth", 50)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_meth")
-
 				if(holder && ismob(holder.my_atom))
 					holder.del_reagent("triplemeth")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

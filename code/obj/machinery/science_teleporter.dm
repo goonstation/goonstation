@@ -244,7 +244,7 @@ var/ZSUBTRACT = 0
 
 			src.linked_pad.icon_state = "pad1"
 			linked_pad.recharging = 1
-			sleep(10)
+			sleep(1 SECOND)
 
 			var/turf/turfcheck = doturfcheck(1)
 			if(!turfcheck)
@@ -253,10 +253,10 @@ var/ZSUBTRACT = 0
 				boutput(usr, "Unknown interference prevents teleportation to that location!")
 			else
 				src.send(turfcheck)
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			src.linked_pad.icon_state = "pad0"
-			sleep(35)
+			sleep(3.5 SECONDS)
 
 			linked_pad.recharging = 0
 
@@ -273,7 +273,7 @@ var/ZSUBTRACT = 0
 
 			src.linked_pad.icon_state = "pad1"
 			linked_pad.recharging = 1
-			sleep(10)
+			sleep(1 SECOND)
 
 			var/turf/turfcheck = doturfcheck(1)
 			if(!turfcheck)
@@ -282,7 +282,7 @@ var/ZSUBTRACT = 0
 				boutput(usr, "Unknown interference prevents teleportation from that location!")
 			else
 				src.receive(turfcheck)
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			src.linked_pad.icon_state = "pad0"
 			SPAWN_DBG(3.5 SECONDS)
@@ -302,7 +302,7 @@ var/ZSUBTRACT = 0
 
 			src.linked_pad.icon_state = "pad1"
 			linked_pad.recharging = 1
-			sleep(10)
+			sleep(1 SECOND)
 
 			var/turf/turfcheck = doturfcheck(1)
 			if(!turfcheck)
@@ -311,7 +311,7 @@ var/ZSUBTRACT = 0
 				boutput(usr, "Unknown interference prevents creation of a portal to or from that location!")
 			else
 				src.doubleportal(turfcheck)
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			src.linked_pad.icon_state = "pad0"
 			SPAWN_DBG(3.5 SECONDS)

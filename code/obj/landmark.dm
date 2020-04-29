@@ -435,3 +435,17 @@ obj/landmark/interesting
 		var/turf/T = src.loc
 		T.interesting = src.interesting
 
+obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
+	name = "lrt landmark"
+	var/turf/held_turf = null //a reference to the turf its on
+
+	New()
+		..()
+		if (get_turf(src))
+			src.held_turf = get_turf(src)
+
+/obj/landmark/lrt/gemv
+	name = "Geminorum V"
+
+/obj/landmark/lrt/workshop
+	name = "Hidden Workshop"

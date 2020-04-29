@@ -86,7 +86,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 						i -= 5
 
 				program_counter += 2
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	attack_hand(mob/user as mob)
 		if (!istype(src.loc, /turf/)) return

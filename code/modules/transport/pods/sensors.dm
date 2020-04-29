@@ -192,7 +192,7 @@
 		src.tracking_target = O
 		boutput(usr, "<span style=\"color:blue\">Attempting to pinpoint energy source...</span>")
 		playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
-		sleep(10)
+		sleep(1 SECOND)
 		if (src.tracking_target && get_dist(src,src.tracking_target) <= seekrange)
 			scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
 			boutput(usr, "<span style=\"color:blue\">Tracking target: [src.tracking_target.name]</span>")
@@ -237,7 +237,7 @@
 
 			boutput(usr, "<span style=\"color:blue\">Attempting to pinpoint: <b>X</b>: [x], <b>Y</b>: [y], Z</b>: [z]</span>")
 			playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
-			sleep(10)
+			sleep(1 SECOND)
 			var/turf/T = locate(x,y,z)
 
 			//Set located turf to be the tracking_target
@@ -247,7 +247,7 @@
 				scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
 				SPAWN_DBG(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 					begin_tracking(1)
-		sleep(10)
+		sleep(1 SECOND)
 		scanning = 0
 		#undef DEFAULT_Z_VALUE
 
@@ -290,7 +290,7 @@
 			M << sound('sound/machines/signal.ogg')
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
 		boutput(usr, "<span style=\"color:blue\">Scanning...</span>")
-		sleep(30)
+		sleep(3 SECONDS)
 		boutput(usr, "<span style=\"color:blue\">Scan complete.</span>")
 		for (var/mob/living/M in mobs)
 			if (!isturf(M.loc))	// || ship.Find(M)
@@ -335,7 +335,7 @@
 					break
 
 		src.updateDialog()
-		sleep(10)
+		sleep(1 SECOND)
 		scanning = 0
 		return
 

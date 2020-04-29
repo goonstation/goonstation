@@ -104,7 +104,7 @@
 				poorSob.TakeDamage("All", 4, 4, 0, DAMAGE_BLUNT)
 			poorSob.changeStatus("weakened", 2 SECONDS)
 			step_away(poorSob, owner, 15)
-			sleep(3)
+			sleep(0.3 SECONDS)
 			step_away(poorSob, owner, 15)
 
 
@@ -384,7 +384,7 @@
 								NN[C] = right_dir
 				next = NN
 				NN = list()
-				sleep(3)
+				sleep(0.3 SECONDS)
 		return 0
 
 /datum/targetable/revenantAbility/touchOfEvil
@@ -512,7 +512,7 @@
 					H.visible_message("<span style=\"color:red\">[H]'s body gives in to the telekinetic grip!</span>", "<span style=\"color:red\">You are completely crushed.</span>")
 					H.gib()
 					return
-				sleep(7)
+				sleep(0.7 SECONDS)
 			holder.owner.show_message("<span style=\"color:red\">You were interrupted!</span>")
 		return 0
 

@@ -73,11 +73,11 @@
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
 					break
-				sleep(3)
+				sleep(0.3 SECONDS)
 				user.pixel_y = -2
-				sleep(3)
+				sleep(0.3 SECONDS)
 				user.pixel_y = -4
-				sleep(3)
+				sleep(0.3 SECONDS)
 				playsound(user, 'sound/effects/spring.ogg', 60, 1)
 
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
@@ -128,14 +128,14 @@
 					break
 
 				for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
-					sleep(3)
+					sleep(0.3 SECONDS)
 					user.pixel_y = (user.pixel_y == 3) ? 5 : 3
 
 				playsound(user, 'sound/effects/spring.ogg', 60, 1)
 
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_y = 2
-			sleep(3)
+			sleep(0.3 SECONDS)
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
@@ -153,7 +153,7 @@
 /obj/item/rubberduck
 	name = "rubber duck"
 	desc = "Awww, it squeaks!"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1
@@ -178,10 +178,10 @@
 			playsound(src.loc, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
 			var/wacka = 0
 			while (wacka++ < 50)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				pixel_x = rand(-6,6)
 				pixel_y = rand(-6,6)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)

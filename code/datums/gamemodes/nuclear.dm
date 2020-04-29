@@ -94,6 +94,12 @@
 	var/station_only = prob(40)
 	target_locations = list()
 	for(var/area/A in world)
+		var/has_turfs = 0
+		for (var/turf/T in A)
+			has_turfs = 1
+			break
+		if(!has_turfs)
+			break
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))
@@ -143,9 +149,11 @@
 	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	//var/agent_callsigns = list("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
-	var/agent_callsigns = list("Axe", "Baselard", "Cutlass", "Dagger", "Estoc", "Falchion", "Gladius", "Hatchet", "Ice-pick", "Javelin", "Katana", "Longsword", "Machete", "Nodachi", "Odachi", "Partisan", "Quarterstaff", "Rapier", "Scimitar", "Tomahawk", "Uchigatana", "Voulge", "Warhammer", "Xiphos", "Yumi", "Zweihander")
 	var/leader_selected = 0
+
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
+	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
+	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
@@ -173,9 +181,9 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
-			var/callsign = pick(agent_callsigns)
+			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
-			agent_callsigns -= callsign
+			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
 		boutput(synd_mind.current, "<span style=\"color:red\">Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
@@ -321,11 +329,8 @@
 	var/opdeathcount = 0
 	for(var/datum/mind/M in syndicates)
 		opcount++
-		if(!M.current || isdead(M.current) || inafterlife(M.current))
+		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
 			opdeathcount++ // If they're dead
-			continue
-		else if(isrobot(M.current) || issmallanimal(M.current))
-			opdeathcount++
 			continue
 
 		var/turf/T = get_turf(M.current)

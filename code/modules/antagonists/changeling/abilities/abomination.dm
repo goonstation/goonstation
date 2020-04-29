@@ -84,6 +84,6 @@
 		for (var/mob/living/O in viewers(holder.owner, null))
 			if (O == holder.owner)
 				continue
-			O.apply_sonic_stun(0, 0, 0, 10, 35, rand(0, 2))
+			O.apply_sonic_stun(0, 0, 0, 10, 70, rand(0, 2))
 
 		return 0

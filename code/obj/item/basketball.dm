@@ -3,7 +3,7 @@
 /obj/item/basketball
 	name = "basketball"
 	desc = "If you can't slam with the best, then jam with the rest."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball"
 	item_state = "bball"
 	w_class = 3.0
@@ -97,6 +97,10 @@
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
+
+	New()
+		..()
+		BLOCK_ALL
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && mounted)
@@ -205,7 +209,7 @@
 /obj/item/plutonium_core
 	name = "plutonium core"
 	desc = "A payload from a nuclear warhead. Comprised of weapons-grade plutonium."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "plutonium"
 	item_state = "egg3"
 	w_class = 3.0
@@ -238,7 +242,7 @@
 /obj/item/bloodbowlball
 	name = "spiked ball"
 	desc = "An american football studded with sharp spikes and serrated blades. Looks dangerous."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bloodbowlball"
 	item_state = "bloodbowlball"
 	w_class = 3.0

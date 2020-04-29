@@ -101,7 +101,12 @@
 /obj/martianBiotech/attackby(obj/item/W as obj, mob/user as mob)
   src.visible_message("<span class='text-red'><b>[user]</b> attacks [src] with [W]!</span>")
   playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_2.ogg', 80, 1)
-  takeDamage(W.damtype, W.force)
+
+  var/damtype = "brute"
+  if (W.hit_type == DAMAGE_BURN)
+    damtype = "fire"
+
+  takeDamage(damtype, W.force)
 
 // shamelessly stolen from blob
 /obj/martianBiotech/ex_act(severity)

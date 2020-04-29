@@ -20,7 +20,7 @@
 /obj/stool
 	name = "stool"
 	desc = "A four-legged padded stool for crewmembers to relax on."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "stool"
 	flags = FPRINT | FLUID_SUBMERGE
 	throwforce = 10
@@ -82,7 +82,7 @@
 			return ..()
 
 	proc/can_buckle(var/mob/M, var/mob/user)
-		.= 1
+		.= 0
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
 		if (!can_buckle(to_buckle,user)) return
@@ -148,7 +148,7 @@
 /obj/stool/bench
 	name = "bench"
 	desc = "It's a bench! You can sit on it!"
-	icon = 'icons/obj/bench.dmi'
+	icon = 'icons/obj/furniture/bench.dmi'
 	icon_state = "0"
 	anchored = 1
 	var/auto = 0
@@ -192,7 +192,7 @@
 /* ---------- Red ---------- */
 
 /obj/stool/bench/red
-	icon = 'icons/obj/bench_red.dmi'
+	icon = 'icons/obj/furniture/bench_red.dmi'
 	parts_type = /obj/item/furniture_parts/bench/red
 
 /obj/stool/bench/red/auto
@@ -202,7 +202,7 @@
 /* ---------- Blue ---------- */
 
 /obj/stool/bench/blue
-	icon = 'icons/obj/bench_blue.dmi'
+	icon = 'icons/obj/furniture/bench_blue.dmi'
 	parts_type = /obj/item/furniture_parts/bench/blue
 
 /obj/stool/bench/blue/auto
@@ -212,7 +212,7 @@
 /* ---------- Green ---------- */
 
 /obj/stool/bench/green
-	icon = 'icons/obj/bench_green.dmi'
+	icon = 'icons/obj/furniture/bench_green.dmi'
 	parts_type = /obj/item/furniture_parts/bench/green
 
 /obj/stool/bench/green/auto
@@ -222,7 +222,7 @@
 /* ---------- Yellow ---------- */
 
 /obj/stool/bench/yellow
-	icon = 'icons/obj/bench_yellow.dmi'
+	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	parts_type = /obj/item/furniture_parts/bench/yellow
 
 /obj/stool/bench/yellow/auto
@@ -232,7 +232,7 @@
 /* ---------- Wooden ---------- */
 
 /obj/stool/bench/wooden
-	icon = 'icons/obj/bench_wood.dmi'
+	icon = 'icons/obj/furniture/bench_wood.dmi'
 	parts_type = /obj/item/furniture_parts/bench/wooden
 
 /obj/stool/bench/wooden/auto
@@ -242,7 +242,7 @@
 /* ---------- Sauna ---------- */
 
 /obj/stool/bench/sauna
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "saunabench"
 
 /* ============================================== */
@@ -467,14 +467,11 @@
 		..()
 		return
 
-	verb/rest_in()
-		set src in oview(1)
-		set name = "sleep in"
-		set category = "Local"
-
-		var/mob/living/carbon/user = usr
-		if (!istype(user))
+	proc/sleep_in(var/mob/M)
+		if (!ishuman(M))
 			return
+
+		var/mob/living/carbon/user = M
 
 		if (isdead(user))
 			boutput(user, "<span style=\"color:red\">Some would say that death is already the big sleep.</span>")
@@ -515,8 +512,6 @@
 		anchored = 0
 
 	New()
-		//if (src.anchored)
-			//src.verbs -= /atom/movable/verb/pull
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		..()
@@ -596,27 +591,31 @@
 					return
 				else
 					user.show_text("Seems like the buckle is firmly locked into place.", "red")
+					return
 
-		if (!src.buckledIn && src.foldable)
-			user.visible_message("<b>[user.name] folds [src].</b>")
-			if ((chump) && (chump != user))
-				chump.visible_message("<span style=\"color:red\"><b>[chump.name] falls off of [src]!</b></span>")
-				chump.on_chair = 0
-				chump.pixel_y = 0
-				chump.changeStatus("weakened", 1 SECOND)
-				chump.changeStatus("stunned", 2 SECONDS)
-				random_brute_damage(chump, 15)
-				playsound(chump.loc, "swing_hit", 50, 1)
+		if (!src.buckledIn)
+			if (src.foldable)
+				user.visible_message("<b>[user.name] folds [src].</b>")
+				if ((chump) && (chump != user))
+					chump.visible_message("<span style=\"color:red\"><b>[chump.name] falls off of [src]!</b></span>")
+					chump.on_chair = 0
+					chump.pixel_y = 0
+					chump.changeStatus("weakened", 1 SECOND)
+					chump.changeStatus("stunned", 2 SECONDS)
+					random_brute_damage(chump, 15)
+					playsound(chump.loc, "swing_hit", 50, 1)
 
-			var/obj/item/chair/folded/C = new/obj/item/chair/folded(src.loc)
-			if (src.material)
-				C.setMaterial(src.material)
-			if (src.icon_state)
-				C.c_color = src.icon_state
-				C.icon_state = "folded_[src.icon_state]"
-				C.item_state = C.icon_state
+				var/obj/item/chair/folded/C = new/obj/item/chair/folded(src.loc)
+				if (src.material)
+					C.setMaterial(src.material)
+				if (src.icon_state)
+					C.c_color = src.icon_state
+					C.icon_state = "folded_[src.icon_state]"
+					C.item_state = C.icon_state
 
-			qdel(src)
+				qdel(src)
+			else
+				src.rotate()
 		return
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
@@ -636,6 +635,11 @@
 				if (istype(A))
 					user.unlock_medal("Leave no man behind!", 1)
 		return
+
+	MouseDrop(atom/over_object as mob|obj)
+		if(get_dist(src,usr) <= 1)
+			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
+		..()
 
 	can_buckle(var/mob/M, var/mob/user)
 		if (!ticker)
@@ -761,13 +765,13 @@
 #endif
 		else return ..()
 
-	verb/rotate()
-		set name = "Rotate"
-		set category = "Local"
+	proc/rotate(var/face_dir = 0)
 		if (rotatable)
-			set src in oview(1)
+			if (!face_dir)
+				src.dir = turn(src.dir, 90)
+			else
+				src.dir = face_dir
 
-			src.dir = turn(src.dir, 90)
 			if (src.dir == NORTH)
 				src.layer = FLY_LAYER+1
 			else
@@ -811,7 +815,7 @@
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
 	w_class = 4.0
@@ -826,6 +830,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_LARGE
 
 /obj/item/chair/folded/attack_self(mob/user as mob)
 	if(cant_drop == 1)
@@ -1056,7 +1061,6 @@
 	var/arm_icon_state = null
 
 	New()
-		src.verbs -= /obj/stool/chair/verb/rotate
 		..()
 		if (arm_icon_state)
 			src.update_icon()
@@ -1119,7 +1123,6 @@
 	/obj/item/spacecash/buttcoin)
 
 	New()
-		src.verbs -= /obj/stool/chair/verb/rotate
 		..()
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)

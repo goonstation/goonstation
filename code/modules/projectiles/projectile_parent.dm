@@ -52,8 +52,9 @@
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-
-
+#if ASS_JAM
+	var/projectile_paused = FALSE //for time stopping
+#endif
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -86,6 +87,10 @@
 			src.setup()
 		is_processing = 1
 		while (!disposed)
+#if ASS_JAM //dont move while in timestop
+			while(src.projectile_paused)
+				sleep(1 SECOND)
+#endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -536,7 +541,7 @@ datum/projectile
 		cost = 1                 // How much ammo this costs
 		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles. 
+		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
 		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
@@ -778,18 +783,18 @@ datum/projectile/snowball
 			P.proj_data.on_pointblank(P, T)
 	P.collide(T) // The other immunity check is in there (Convair880).
 
-/proc/shoot_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T)
+/proc/shoot_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
 	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, target)
+	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, target, remote_sound_source)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay(S, DATA, target)
+				shoot_projectile_relay(S, DATA, target, remote_sound_source)
 	return Q
 
 /proc/shoot_projectile_ST_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
@@ -820,22 +825,22 @@ datum/projectile/snowball
 				shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
 	return Q
 
-/proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir)
+/proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
 	var/turf/T = get_step(get_turf(S), dir)
 	if (T)
-		return shoot_projectile_ST(S, DATA, T)
+		return shoot_projectile_ST(S, DATA, T, remote_sound_source)
 	return null
 
-/proc/shoot_projectile_relay(var/atom/movable/S, var/datum/projectile/DATA, var/T)
+/proc/shoot_projectile_relay(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/P = initialize_projectile_ST(S, DATA, T)
+	var/obj/projectile/P = initialize_projectile_ST(S, DATA, T, remote_sound_source)
 	if (P)
 		P.launch()
 	return P
@@ -883,14 +888,14 @@ datum/projectile/snowball
 		P.launch()
 	return P
 
-/proc/initialize_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T)
+/proc/initialize_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
-	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S)
+	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source)
 
 /proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
 	if (!S)
@@ -910,7 +915,7 @@ datum/projectile/snowball
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null)
+/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source)
 	if (!S)
 		return
 	var/obj/projectile/P = unpool(/obj/projectile)
@@ -927,6 +932,9 @@ datum/projectile/snowball
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
+
+	if(remote_sound_source)
+		shooter = remote_sound_source
 
 	if (narrator_mode)
 		playsound(S, 'sound/vox/shoot.ogg', 50, 1)
@@ -952,7 +960,7 @@ datum/projectile/snowball
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 
-/proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
@@ -962,7 +970,7 @@ datum/projectile/snowball
 	Q.launch()
 	return Q
 
-/proc/shoot_cardinal_normal_reflected(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector)
 	if (!P.incidence || !(P.incidence in cardinal))
 		return null
 

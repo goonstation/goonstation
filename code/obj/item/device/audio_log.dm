@@ -1,7 +1,7 @@
 /obj/item/audio_tape
 	name = "compact tape"
 	desc = "A small audio tape.  You could make some rad mix-tapes with this!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recordertape"
 	w_class = 1.0
 	mats = 3

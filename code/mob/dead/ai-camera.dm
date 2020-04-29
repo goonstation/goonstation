@@ -48,10 +48,19 @@
 		src.client.show_popup_menus = 1
 		//if (src.client)
 		//	src.client.show_popup_menus = 0
+		for(var/key in aiImages)
+			var/image/I = aiImages[key]
+			src.client << I
 
 	Logout()
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
+
+		if(src.last_client)
+			for(var/key in aiImages)
+				var/image/I = aiImages[key]
+				src.last_client.images -= I
+
 		.=..()
 
 	isAIControlled()
@@ -388,7 +397,7 @@
 			mainframe.ai_alerts()
 
 //---TURF---//
-/turf/var/obj/overlay/tile_effect/camstatic/aiImage
+/turf/var/image/aiImage
 /turf/var/list/cameras = null
 
 /turf/proc/addCameraCoverage(var/obj/machinery/camera/C) //copy pasted for use below in updatecoverage to reduce heavy proc calls. dont change one without the other!
@@ -411,7 +420,7 @@
 
 	if (cam_amount < src.cameras.len)
 		if (src.aiImage)
-			src.aiImage.alpha = 0
+			src.aiImage.loc = null
 
 	return
 
@@ -428,7 +437,7 @@
 		src.cameras = null
 
 		if (src.aiImage)
-			src.aiImage.alpha = 255
+			src.aiImage.loc = src
 
 	return
 
@@ -436,9 +445,9 @@
 	if(!istype(src.aiImage)) return
 
 	if( src.cameras.len >= 1 )
-		src.aiImage.alpha = 0
+		src.aiImage.loc = null
 	else if( src.cameras == null )
-		src.aiImage.alpha = 255
+		src.aiImage.loc = src
 	return
 
 //slow
@@ -487,7 +496,7 @@
 				O.cameras = null
 
 				if (O.aiImage)
-					O.aiImage.alpha = 255
+					O.aiImage.loc = O
 
 			LAGCHECK(LAG_HIGH)
 			//copy paste end!
@@ -519,7 +528,7 @@
 
 		if (cam_amount < t.cameras.len)
 			if (t.aiImage)
-				t.aiImage.alpha = 0
+				t.aiImage.loc = null
 		//copy paste end!
 
 
@@ -528,9 +537,9 @@
 		if(!istype(t.aiImage)) continue
 
 		if( t.cameras.len >= 1 )
-			t.aiImage.alpha = 0
+			t.aiImage.loc = null
 		else if( t.cameras == null )
-			t.aiImage.alpha = 255
+			t.aiImage.loc = t
 
 		LAGCHECK(LAG_HIGH)
 		//copy paste end!
@@ -663,32 +672,29 @@ var/list/camImages = list()
 //---MISC---//
 
 
-/obj/overlay/tile_effect/camstatic
-	icon = 'icons/misc/static.dmi'
-	icon_state = "static"
-	//blend_mode = BLEND_ADD
-	layer = 100
-	color = "#777777"
-	name = " "
-	plane = PLANE_AICAMERA
-
-	New()
-		..()
-		src.dir = pick(alldirs)
-
-	disposing()
-		var/turf/T = get_turf(src)
-		if (T)
-			T.aiImage = null
-		..()
-
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
 	if(aiDirty == 2)
+		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		ma.plane = PLANE_HUD
+		ma.layer = 100
+		ma.color = "#777777"
+		ma.dir = pick(alldirs)
+		ma.appearance_flags = TILE_BOUND | KEEP_APART
+		ma.name = " "
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue
-			t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
+			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
+
+			t.aiImage = new
+			t.aiImage.appearance = ma
+			t.aiImage.loc = t
+
+			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
+
+			LAGCHECK(100)
+
 		aiDirty = 1
 	for(var/obj/machinery/camera/C in cameras)
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
@@ -696,9 +702,9 @@ world/proc/updateCameraVisibility()
 			if (!t.aiImage) continue
 			//var/dist = get_dist(t, C)
 			if (t.cameras && t.cameras.len)
-				t.aiImage.alpha = 0
+				t.aiImage.loc = null
 			else
-				t.aiImage.alpha = 255
+				t.aiImage.loc = t
 	aiDirty = 0
 
 /obj/machinery/camera/proc/remove_from_turfs() //check if turf cameras is 0 . Maybe loop through each affected turf's cameras, and update static on them here instead of going thru updateCameraVisibility()?
@@ -706,7 +712,7 @@ world/proc/updateCameraVisibility()
 	for(var/turf/t in view(CAM_RANGE,get_turf(src)))
 		LAGCHECK(LAG_HIGH)
 		if(t.aiImage)
-			t.aiImage.alpha = 255
+			t.aiImage.loc = t
 	aiDirty = 1
 
 	world.updateCameraVisibility()

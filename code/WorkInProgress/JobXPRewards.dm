@@ -160,14 +160,14 @@ mob/verb/checkrewards()
 //JANITOR END
 
 /datum/jobXpReward/head_of_security_LG
-	name = "The Lawgiver"
+	name = "The Lawbringer"
 	desc = "Gain access to a voice activated weapon of the future-past by sacrificing your egun."
 	required_levels = list("Head of Security"=0)
 	claimable = 1
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/energy/egun 		//Don't go lower than obj/item/gun/energy/egun
-	var/reward_path = /obj/item/gun/energy/lawgiver
+	var/reward_path = /obj/item/gun/energy/lawbringer
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -188,7 +188,8 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/energy/lawgiver/LG = new reward_path()
+		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
+		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
@@ -200,14 +201,16 @@ mob/verb/checkrewards()
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
+		C.mob.put_in_hand_or_drop(LGP)
+		boutput(C.mob, "<span style='color:#605b59'>A pamphlet flutters out.</span>")
 		return
 
 /datum/jobXpReward/head_of_security_LG/old
-	name = "The Antique Lawgiver"
-	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawgiver."
-	sacrifice_path = /obj/item/gun/energy/lawgiver
-	reward_path = /obj/item/gun/energy/lawgiver/old
-	sacrifice_name = "Lawgiver"
+	name = "The Antique Lawbringer"
+	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
+	sacrifice_path = /obj/item/gun/energy/lawbringer
+	reward_path = /obj/item/gun/energy/lawbringer/old
+	sacrifice_name = "Lawbringer"
 	required_levels = list("Head of Security"=5)
 
 //Captain
@@ -225,10 +228,17 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		var/found = 0
-
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/egun/K = O
+			if (K.nojobreward) // Checks to see if it was scanned by a device analyzer
+				boutput(C.mob, "This [sacrifice_name] has forever been ruined by a device analyzer's magnets. It can't turn into a sword ever again!!")
+				src.claimedNumbers[usr.key] --
+				return
+			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
+				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
+				src.claimedNumbers[usr.key] --
+				return
 			C.mob.remove_item(K)
 			found = 1
 			qdel(K)

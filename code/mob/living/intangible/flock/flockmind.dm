@@ -8,7 +8,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
 
-	var/started = 0	
+	var/started = 0
 	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
 
 /mob/living/intangible/flock/flockmind/New()
@@ -97,7 +97,7 @@
 	src.canmove = 0
 	flick("flockmind-death", src)
 	src.ghostize()
-	sleep(20) // wait for the animation to finish	
+	sleep(2 SECONDS) // wait for the animation to finish
 	qdel(src)
 
 /mob/living/intangible/flock/flockmind/ghostize()
@@ -133,7 +133,7 @@
 		if(O && O.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
-		SPAWN_DBG (10) 
+		SPAWN_DBG (10)
 			boutput(src, "<span class='text-red'>Unable to partition, please try again later.</span>")
 		return
 	// pick a random ghost

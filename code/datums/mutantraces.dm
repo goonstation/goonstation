@@ -375,10 +375,12 @@
 		..()
 		if(ishuman(mob))
 			mob.blood_color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
-			H.abilityHolder = new /datum/abilityHolder/virtual(H)
-			H.abilityHolder.owner = H
-			H.abilityHolder.addAbility(/datum/targetable/virtual/logout)
-
+			var/datum/abilityHolder/virtual/A = H.get_ability_holder(/datum/abilityHolder/virtual)
+			if (A && istype(A))
+				return
+			var/datum/abilityHolder/virtual/W = H.add_ability_holder(/datum/abilityHolder/virtual)
+			W.addAbility(/datum/targetable/virtual/logout)
+//for sure didnt steal code from ww. no siree
 
 /datum/mutantrace/blank
 	name = "blank"
@@ -1043,13 +1045,13 @@
 					SPAWN_DBG(0)
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x+= 1
-							sleep(1)
+							sleep(0.1 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.mob.dir = turn(src.mob.dir, -90)
-							sleep(2)
+							sleep(0.2 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x-= 1
-							sleep(1)
+							sleep(0.1 SECONDS)
 					SPAWN_DBG(0.5 SECONDS)
 						var/beeMax = 15
 						for (var/obj/critter/domestic_bee/responseBee in range(7, src.mob))
@@ -1628,35 +1630,36 @@
 		var/obj/item/storage/toilet/toilet = locate() in mob.loc
 		var/obj/item/reagent_containers/glass/beaker = locate() in mob.loc
 
-		if (mob.urine < 1)
+		var/can_output = 0
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if (H.blood_volume > 250)
+				can_output = 1
+
+		if (!can_output)
 			.= "<B>[mob]</B> strains, but fails to output milk!"
-		else if (toilet && (mob.buckled != null) && (mob.urine >= 2))
+		else if (toilet && (mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in mob.loc)
 				.= "<B>[mob]</B> dispenses milk into the toilet. What a waste."
-				mob.urine = 0
 				T.clogged += 0.10
 				break
-		else if (beaker && (mob.urine >= 1))
+		else if (beaker)
 			.= pick("<B>[mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[mob]</B> takes aim and dispenses milk into the beaker!", "<B>[mob]</B> fills the beaker with milk!")
-			beaker.reagents.add_reagent("milk", mob.urine * 4)
-			mob.urine = 0
+			transfer_blood(mob, beaker, 10)
 		else
-			mob.urine--
-
-			var/obj/item/reagent_containers/pee_target = mob.equipped()
-			if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [pee_target].</B></span>")
+			var/obj/item/reagent_containers/milk_target = mob.equipped()
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
+				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [milk_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
-				pee_target.reagents.add_reagent("milk", 20)
+				transfer_blood(mob, milk_target, 10)
 				return
 
 			// possibly change the text colour to the gray emote text
 			.= (pick("<B>[mob]</B> milk fall out.", "<B>[mob]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(mob)
-			T.fluid_react_single("milk", 5)
-
-
+			bleed(mob, 10, 3, T)
+			T.react_all_cleanables()
 
 
 #undef OVERRIDE_ARM_L

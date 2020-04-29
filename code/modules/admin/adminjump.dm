@@ -2,6 +2,8 @@
 	set desc = "Area to jump to"
 	set category = "Special Verbs"
 	set name = "Jump"
+	set popup_menu = 0
+
 	admin_only
 
 	if(config.allow_admin_jump)
@@ -22,6 +24,8 @@
 /client/proc/jumptoturf(var/turf/T in world)
 	set category = null
 	set name = "Jump To Turf"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		//Wire note: attempted fix for: Cannot read null.x (I guess the target turf...disappeared?)
@@ -48,7 +52,7 @@
 /client/proc/jumptomob(var/mob/M in world)
 	set category = null
 	set name = "Jump to Mob"
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	if(config.allow_admin_jump)
@@ -71,6 +75,7 @@
 /client/proc/jumptokey(var/client/ckey in clients)
 	set category = "Special Verbs"
 	set name = "Jump to Key"
+	set popup_menu = 0
 
 	admin_only
 
@@ -162,6 +167,8 @@
 /client/proc/sendhmobs(var/area/A in world)
 	set category = "Special Verbs"
 	set name = "Send all Human Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		for(var/mob/living/carbon/human/H in mobs)
@@ -176,6 +183,8 @@
 /client/proc/sendmobs(var/area/A in world)
 	set category = "Special Verbs"
 	set name = "Send all Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		for(var/mob/living/M in mobs)
@@ -190,6 +199,8 @@
 /client/proc/gethmobs()
 	set category = "Special Verbs"
 	set name = "Get all Human Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -208,6 +219,8 @@
 /client/proc/getmobs()
 	set category = "Special Verbs"
 	set name = "Get all Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -227,6 +240,8 @@
 	set category = "Special Verbs"
 	set name = "Get all Clients"
 	set desc = "Teleports any mob with a client to you."
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -247,6 +262,8 @@
 /client/proc/gettraitors()
 	set category = "Special Verbs"
 	set name = "Get all Traitors"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -266,6 +283,8 @@
 /client/proc/getnontraitors()
 	set category = "Special Verbs"
 	set name = "Get all Non-Traitors"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -285,7 +304,7 @@
 
 /client/proc/cmd_admin_get_mobject(var/atom/target as mob|obj in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Get Thing"
 	set desc = "Gets either a mob or an object, bringing it right to you! Wow!"
 	admin_only
