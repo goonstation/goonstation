@@ -2262,11 +2262,9 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 			broken = 0
 			if (helditems_maximum < 4)
 				helditems_maximum = 4
+			return
 
-	//attacking rider on forklift
-	if(rider && rider_visible && I.force)
-		..()
-	return
+	return ..() // attacking rider on forklift
 
 /obj/vehicle/forklift/proc/break_forklift()
 	broken = 1
