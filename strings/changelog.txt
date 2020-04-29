@@ -1,6 +1,10 @@
 
 (t)wed apr 29 20
 (u)mbc
+(p)479
+(e)|
+(+)Improved the range and fixed the knockback effect of the SPES-12 and SPES-6 guns.
+(u)mbc
 (p)478
 (e)|
 (+)Hivemind members can leave at will.
