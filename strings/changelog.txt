@@ -1,5 +1,9 @@
 
 (t)wed apr 29 20
+(u)mbc
+(p)478
+(e)|
+(+)Hivemind members can leave at will.
 (u)Somethings
 (p)475
 (e)|
