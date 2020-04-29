@@ -79,7 +79,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/obj/adventurezones/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
 
 	decomposed_corpse
