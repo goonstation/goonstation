@@ -16,7 +16,7 @@
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
 	var/muzzle_flash = 1 //set to 0 if you dont want any muzzle flash with this gun
-	var/muzzle_flash_state = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired
+	var/muzzle_flash_state = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
 	// caliber list: update as needed
 	// 0.22 - pistols
