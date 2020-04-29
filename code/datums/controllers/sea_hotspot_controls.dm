@@ -1107,7 +1107,7 @@
 /obj/item/trench_map
 	name = "sea trench map"
 	desc = null
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_trench"
 	throwforce = 0
 	w_class = 1.0

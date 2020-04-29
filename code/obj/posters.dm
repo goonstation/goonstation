@@ -3,7 +3,7 @@
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
 // so things don't have to grab a new instance of this every time they need it
-var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unknown")
+var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wanted-unknown")
 
 // admin poster generation thing
 /proc/gen_poster(var/target)
