@@ -4,7 +4,6 @@
 (p)437
 (e)🗺|mapping
 (*)Added freezers to Cog1 engine, and additional valves.
-(t)wed apr 29 20
 (u)Flourish
 (p)463
 (e)🐛|bug
