@@ -74,6 +74,7 @@
 			"Polymorph",\
 			"Modify Organs",\
 			"Modify Parts",\
+			"Modify Module",\
 			"Swap Minds",\
 			"Transfer Client To",\
 			"Shamecube",\

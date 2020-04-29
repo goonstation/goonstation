@@ -463,6 +463,8 @@
 
 		src.abilityHolder.onLife((life_time_passed / tick_spacing))
 
+
+		/*
 		//move this to changeling onlife pls
 		//Dumb changeling inactivity stuff
 		//Allow hivemind members to Boot themselves if the changeling is inactive
@@ -475,6 +477,7 @@
 							O.can_exit_hivemind = 1
 							O.verbs += /mob/dead/target_observer/hivemind_observer/verb/exit_hivemind
 							boutput(O, __blue("<b>Your master seems to be inactive. You are permitted to use the Exit-Hivemind command.</b>"))
+		*/
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 	src.UpdateDamage()
@@ -1682,7 +1685,7 @@
 		parent.setLastTask("status_updates health calcs", src)
 
 		if (prob(50) && src.hasStatus("disorient"))
-			src.drop_item()
+			//src.drop_item()
 			src.emote("twitch")
 
 		var/is_chg = is_changeling()
