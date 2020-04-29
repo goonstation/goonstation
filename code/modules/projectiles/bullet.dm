@@ -302,7 +302,7 @@ toxic - poisons
 	power = 70
 	ks_ratio = 1.0
 	dissipation_delay = 3//2
-	dissipation_rate = 20
+	dissipation_rate = 15
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72 // roughly
@@ -313,22 +313,21 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			if(proj.power > 30)
-#ifdef USE_STAMINA_DISORIENT
+			if(proj.power >= 30)
 				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
-#else
-				M.changeStatus("stunned", 50)
-				M.changeStatus("weakened", 5 SECONDS)
-#endif
-			if(proj.power > 70)
+
+			if(proj.power >= 40)
+				var/throw_range = (proj.power > 50) ? 6 : 3
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
-					M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
+					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+					M.update_canmove()
 			..()
 
 	weak
 		power = 30
+
 
 /datum/projectile/bullet/airzooka
 	name = "airburst"
@@ -695,7 +694,7 @@ toxic - poisons
 					M.do_disorient(stunned = 40)
 					if (!M.stat)
 						M.emote("scream")
-				
+
 
 		on_launch(var/obj/projectile/P)
 			var/D = locate(type_to_seek) in range(15, P)
