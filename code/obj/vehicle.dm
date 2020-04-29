@@ -40,10 +40,10 @@ Contains:
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(rider && rider_visible && W.force)
-			eject_rider()
 			W.attack(rider, user)
 			user.lastattacked = src
-			return
+			eject_rider()
+			W.visible_message("<span style=\"color:red\">[user] swings at [rider] with [W]!</span>")
 		return
 
 	proc/eject_rider(var/crashed, var/selfdismount)
@@ -2266,7 +2266,6 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//attacking rider on forklift
 	if(rider && rider_visible && I.force)
 		..()
-		I.visible_message("<span style=\"color:red\">[user] swings at [rider] with [I]!</span>")
 	return
 
 /obj/vehicle/forklift/proc/break_forklift()
