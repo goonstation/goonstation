@@ -2770,7 +2770,7 @@ var/list/electiles = list()
 	opacity = 0
 	density = 1
 	anchored = 1
-	icon = 'icons/obj/adventurezones/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
@@ -2794,7 +2794,7 @@ var/list/electiles = list()
 	opacity = 0
 	density = 1
 	anchored = 1
-	icon = 'icons/obj/adventurezones/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
