@@ -35,7 +35,7 @@ var/list/mechanics_telepads = new/list()
 	proc/isTrue() //Thanks for not having bools , byond.
 		if(istext(signal))
 			if(lowertext(signal) == "true" || lowertext(signal) == "1" || lowertext(signal) == "one") return 1
-		else if(isnum(signal))
+		else if (isnum(signal))
 			if(signal == 1) return 1
 		return 0
 
@@ -85,18 +85,18 @@ var/list/mechanics_telepads = new/list()
 		var/fired = 0
 		for(var/atom/M in connected_outgoing)
 			if(M.mechanics)
-				if(filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
+				if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
 					continue
 				M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
 				fired = 1
 		return fired
 
 	proc/allowFiltered(var/signal, var/list/filters)
-		for(var/filter in filters)
+		for (var/filter in filters)
 			var/text_found = findtext(signal, filter)
-			if(exact_match)
-				text_found = text_found &&(length(signal) == length(filter))
-			if(text_found)
+			if (exact_match)
+				text_found = text_found && (length(signal) == length(filter))
+			if (text_found)
 				return 1
 		return 0
 
@@ -117,7 +117,7 @@ var/list/mechanics_telepads = new/list()
 		for(var/atom/M in connected_incoming)
 			if(M.mechanics)
 				M.mechanics.connected_outgoing.Remove(master)
-				if(M.mechanics.outgoing_filters.Find(master)) M.mechanics.outgoing_filters.Remove(master)
+				if (M.mechanics.outgoing_filters.Find(master)) M.mechanics.outgoing_filters.Remove(master)
 			connected_incoming.Remove(M)
 		return
 
@@ -150,10 +150,10 @@ var/list/mechanics_telepads = new/list()
 					O.mechanics.connected_incoming.Add(master)
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
-					if(filtered)
-						var/filter = input(usr, "Add filters for this connection?(Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
-						if(length(filter))
-							if(!outgoing_filters[O]) outgoing_filters[O] = list()
+					if (filtered)
+						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+						if (length(filter))
+							if (!outgoing_filters[O]) outgoing_filters[O] = list()
 							outgoing_filters.Add(O)
 							outgoing_filters[O] = splittext(filter, ",")
 							boutput(usr, "<span style=\"color:green\">Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
@@ -175,7 +175,7 @@ var/list/mechanics_telepads = new/list()
 					connected_incoming.Add(O)
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
-					if(O.mechanics.filtered)
+					if (O.mechanics.filtered)
 						var/filter = input(usr, "Add filters for this connection?(Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
 						if(length(filter))
 							if(!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
@@ -208,7 +208,7 @@ var/list/mechanics_telepads = new/list()
 	New()
 		mechanics = new(src)
 		mechanics.master = src
-		if(!(src in processing_items))
+		if (!(src in processing_items))
 			processing_items.Add(src)
 		return ..()
 
@@ -276,9 +276,9 @@ var/list/mechanics_telepads = new/list()
 		src.dir = turn(src.dir, -90)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(ispryingtool(W))
-			if(can_rotate)
-				if(!anchored)
+		if (ispryingtool(W))
+			if (can_rotate)
+				if (!anchored)
 					rotate()
 				else
 					boutput(user, "You must unsecure the [src] in order to rotate it.")
@@ -297,14 +297,14 @@ var/list/mechanics_telepads = new/list()
 						return 0
 					//var/turf/T = src.loc
 					//var/can_deploy = 1
-					/*if(T.density) // a wall or something
+					/*if (T.density) // a wall or something
 						can_deploy = 0
-					else if(T.z == 2)
-						for(var/obj/O in T)
-							if(O.density)
+					else if (T.z == 2)
+						for (var/obj/O in T)
+							if (O.density)
 								can_deploy = 0
 								break
-					if(!can_deploy)
+					if (!can_deploy)
 						boutput(usr, "<span style=\"color:red\">There's something in the way of [src], it can't be attached here!</span>")
 						return 0*///why. why.
 					boutput(user, "You attach the [src] to the underfloor and activate it.")
@@ -340,7 +340,7 @@ var/list/mechanics_telepads = new/list()
 		if(!isliving(usr))
 			return
 
-		if(level == 2 ||(istype(O, /obj/item/mechanics) && O.level == 2))
+		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
 			boutput(usr, "<span style=\"color:red\">Both components need to be secured into place before they can be connected.</span>")
 			return
 
@@ -360,7 +360,7 @@ var/list/mechanics_telepads = new/list()
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 
 	hide(var/intact)
-		under_floor =(intact && level==1)
+		under_floor = (intact && level==1)
 		updateIcon()
 		return
 
@@ -403,54 +403,54 @@ var/list/mechanics_telepads = new/list()
 			switch(src.modify_configs())
 				if(0)
 					return
-				if("Set Price")
-					if(code)
+				if ("Set Price")
+					if (code)
 						var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
-						if(codecheck != code)
+						if (codecheck != code)
 							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
 							return
 					var/inp = input(user,"Enter new price:","Price setting", price) as num
-					if(inp)
-						if(inp < 0)
+					if (inp)
+						if (inp < 0)
 							user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
 							return
-						if(inp == 0)
+						if (inp == 0)
 							user.show_text("Please set a price higher than zero.", "red")
 							return
-						if(inp > 1000000) // ...and just to be on the safe side. Should be plenty.
+						if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
 							inp = 1000000
 							user.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
 						price = inp
 						boutput(user, "Price set to [inp]")
-				if("Set Code")
-					if(code)
+				if ("Set Code")
+					if (code)
 						var/codecheck = adminscrub(input(user,"Please enter current code:","Code check","") as text)
-						if(codecheck != code)
+						if (codecheck != code)
 							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
 							return
 					var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
-					if(length(inp))
+					if (length(inp))
 						code = inp
 						boutput(user, "Code set to [inp]")
-				if("Set Thank-String")
+				if ("Set Thank-String")
 					thank_string = adminscrub(input(user,"Please enter string:","string","Thanks for using this mechcomp service!") as text)
-				if("Eject Money")
+				if ("Eject Money")
 					if(code)
 						var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
-						if(codecheck != code)
+						if (codecheck != code)
 							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
 							return
 					ejectmoney()
-		else if(istype(W, /obj/item/spacecash) && ready)
+		else if (istype(W, /obj/item/spacecash) && ready)
 			ready = 0
 			current_buffer += W.amount
-			if(src.price <= 0)
+			if (src.price <= 0)
 				src.price = initial(src.price)
-			if(current_buffer >= price)
-				if(length(thank_string))
+			if (current_buffer >= price)
+				if (length(thank_string))
 					componentSay("[thank_string]")
 
-				if(current_buffer > price)
+				if (current_buffer > price)
 					componentSay("Here is your change!")
 					var/obj/item/spacecash/C = new /obj/item/spacecash(user.loc, current_buffer - price)
 					user.put_in_hand_or_drop(C)
@@ -470,7 +470,7 @@ var/list/mechanics_telepads = new/list()
 
 
 	proc/ejectmoney()
-		if(collected)
+		if (collected)
 			var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 			S.setup(get_turf(src), collected)
 			collected = 0
@@ -504,14 +504,14 @@ var/list/mechanics_telepads = new/list()
 				if(trunk)
 					trunk.linked = src
 					air_contents = unpool(/datum/gas_mixture)
-			else if(src.level == 2) //loose
-				if(trunk) //ZeWaka: Fix for null.linked
+			else if (src.level == 2) //loose
+				if (trunk) //ZeWaka: Fix for null.linked
 					trunk.linked = null
 				if(air_contents)
 					pool(air_contents)
 				air_contents = null
 				trunk = null
-		else if(ispulsingtool(W))
+		else if (ispulsingtool(W))
 			src.modify_configs()
 
 	proc/flushp(var/datum/mechanicsMessage/input)
@@ -583,11 +583,11 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
 					return
-				if("Set Paper Name")
+				if ("Set Paper Name")
 					var/inp = input(user,"Please enter name:","name setting", paper_name) as text
 					paper_name = adminscrub(inp)
 					boutput(user, "String set to [paper_name]")
@@ -621,17 +621,17 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
 					return
-				if("Toggle Paper Consumption")
+				if ("Toggle Paper Consumption")
 					del_paper = !del_paper
 					boutput(user, "[del_paper ? "Now consuming paper":"Now NOT consuming paper"]")
-				if("Toggle Thermal Paper Mode")
+				if ("Toggle Thermal Paper Mode")
 					thermal_only = !thermal_only
 					boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
-		else if(istype(W, /obj/item/paper) && ready)
+		else if (istype(W, /obj/item/paper) && ready)
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span style=\"color:red\">This scanner only accepts thermal paper.</span>")
 				return
@@ -663,14 +663,14 @@ var/list/mechanics_telepads = new/list()
 	var/obj/item/mechanics/triplaser/holder
 
 	proc/tripped()
-		if(!holder)
+		if (!holder)
 			qdel(src)
 		else
 			holder.tripped()
 
 	HasEntered(atom/movable/AM as mob|obj)
-		if(isobserver(AM) || !AM.density) return
-		if(!istype(AM, /obj/mechbeam))
+		if (isobserver(AM) || !AM.density) return
+		if (!istype(AM, /obj/mechbeam))
 			SPAWN_DBG(0) tripped()
 
 /obj/item/mechanics/triplaser
@@ -774,7 +774,7 @@ var/list/mechanics_telepads = new/list()
 				SPAWN_DBG(3 SECONDS) ready = 1
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
-				var/sendstr =(send_name ? user.real_name : md5(user.bioHolder.Uid))
+				var/sendstr = (send_name ? user.real_name : md5(user.bioHolder.Uid))
 				var/datum/mechanicsMessage/msg = mechanics.newSignal(sendstr)
 				mechanics.fireOutgoing(msg)
 			else
@@ -1287,7 +1287,7 @@ var/list/mechanics_telepads = new/list()
 					boutput(user, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if (level == 2) return
 		var/sent = mechanics.fireOutgoing(input) //Filtering is handled by mechanics_holder based on filtered flag
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
@@ -1490,7 +1490,7 @@ var/list/mechanics_telepads = new/list()
 		if(!signal || signal.encryption || level == 2)
 			return
 
-		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed ||(signal.data["address_1"] == "ping"))
+		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
 
 			if(send_full)
 				var/datum/mechanicsMessage/msg = mechanics.newSignal(html_decode(list2params_noencode(signal.data)))
@@ -1555,7 +1555,7 @@ var/list/mechanics_telepads = new/list()
 		[announce ? "Announcing Changes.":"Not announcing Changes."]<br>
 		Current Selection: [(!current_index || current_index > signals.len ||!signals.len) ? "Empty":"[current_index] -> [signals[current_index]]"]<br>
 		Currently contains [signals.len] Items:<br></span>"}
-		for(var/x in signals)
+		for (var/x in signals)
 			. += "- [x]<br>[(signals[signals.len] == x) ? "</span>" : null]"
 
 	New()
@@ -1823,7 +1823,7 @@ var/list/mechanics_telepads = new/list()
 	proc/toggle(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		on = !on
-		input.signal =(on ? signal_on : signal_off)
+		input.signal = (on ? signal_on : signal_off)
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1831,7 +1831,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/state(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		input.signal =(on ? signal_on : signal_off)
+		input.signal = (on ? signal_on : signal_off)
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
 		return
@@ -1900,13 +1900,13 @@ var/list/mechanics_telepads = new/list()
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP
-			if(!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
+			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
 				if(T.z != src.z) continue
 #else
-			if(T.z != src.z) continue
+			if (T.z != src.z) continue
 #endif
 
-			if(T.teleID == src.teleID)
+			if (T.teleID == src.teleID)
 				destinations.Add(T)
 
 		if(destinations.len)
@@ -2003,7 +2003,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/turnon(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(usr && usr.stat)
+		if (usr && usr.stat)
 			return
 		active = 1
 		light.enable()
@@ -2012,7 +2012,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/turnoff(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(usr && usr.stat)
+		if (usr && usr.stat)
 			return
 		active = 0
 		light.disable()
@@ -2021,7 +2021,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/toggle(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(usr && usr.stat)
+		if (usr && usr.stat)
 			return
 		if(active)
 			turnoff(input)
@@ -2061,7 +2061,7 @@ var/list/mechanics_telepads = new/list()
 			message = msg[1]
 		message = strip_html(html_decode(message))
 		var/heardname = M.name
-		if(real_name)
+		if (real_name)
 			heardname = real_name
 		var/datum/mechanicsMessage/sigmsg = mechanics.newSignal((add_sender ? "[heardname] : [message]":"[message]"))
 		mechanics.fireOutgoing(sigmsg)
@@ -2116,11 +2116,11 @@ var/list/mechanics_telepads = new/list()
 			src.modify_configs()
 
 	Crossed(atom/movable/AM as mob|obj)
-		if(level == 2)
+		if (level == 2)
 			return
-		if(isobserver(AM))
+		if (isobserver(AM))
 			return
-		if(limiter &&(ticker.round_elapsed_ticks < limiter))
+		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
 
 		limiter = ticker.round_elapsed_ticks + 10
@@ -2224,14 +2224,14 @@ var/list/mechanics_telepads = new/list()
 
 	get_desc()
 		. += "<br><span style=\"color:blue\">Buttons:</span>"
-		for(var/button in src.active_buttons)
+		for (var/button in src.active_buttons)
 			. += "<br><span style=\"color:blue\">Label: [button], Value: [src.active_buttons[button]]</span>"
 
 	attack_hand(mob/user as mob)
-		if(level == 1)
-			if(src.active_buttons.len)
+		if (level == 1)
+			if (src.active_buttons.len)
 				var/selected_button = input(usr, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
-				if(!selected_button || selected_button == "*CANCEL*" || !in_range(src, usr)) return
+				if (!selected_button || selected_button == "*CANCEL*" || !in_range(src, usr)) return
 				flick(icon_down, src)
 				mechanics.fireOutgoing(mechanics.newSignal(src.active_buttons[selected_button]))
 			else
@@ -2250,7 +2250,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 
-// Updated these things for pixel bullets. Also improved user feedback and added log entries here and there(Convair880).
+// Updated these things for pixel bullets. Also improved user feedback and added log entries here and there (Convair880).
 /obj/item/mechanics/gunholder
 	name = "Gun Component"
 	desc = ""
@@ -2357,15 +2357,15 @@ var/list/mechanics_telepads = new/list()
 		var/obj/item/gun/energy/E = Gun
 
 		// Can't recharge the crossbow. Same as the other recharger.
-		if(!E.rechargeable)
+		if (!E.rechargeable)
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
 			updateIcon()
 			return
 
-		if(E.cell)
-			if(E.cell.charge(15) != 1) // Same as other recharger.
+		if (E.cell)
+			if (E.cell.charge(15) != 1) // Same as other recharger.
 				src.charging = 0
 				src.updateIcon()
 
@@ -2411,11 +2411,11 @@ var/list/mechanics_telepads = new/list()
 		src.append_default_configs()
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !ready || !instrument) return
+		if (level == 2 || !ready || !instrument) return
 		ready = 0
 		SPAWN_DBG(delay) ready = 1
 		var/signum = text2num(input.signal)
-		if(signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
+		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
 			flick("comp_instrument1", src)
 			playsound(src.loc, sounds, volume, 0, 0, signum)
 		else
@@ -2428,12 +2428,12 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return // I don't know what this does but I'm copying it blindly. I guess it checks if there's a predefined action for hitting this with that?
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
+		if (..(W, user)) return // I don't know what this does but I'm copying it blindly. I guess it checks if there's a predefined action for hitting this with that?
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
 					return
-				if("Remove Instrument")
+				if ("Remove Instrument")
 					if(instrument)
 						logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
 						instrument.loc = get_turf(src)
@@ -2441,26 +2441,26 @@ var/list/mechanics_telepads = new/list()
 					else
 						boutput(user, "<span style=\"color:red\">There is no instrument inside this component.</span>")
 			return
-		else if(instrument) // Already got one, chief!
+		else if (instrument) // Already got one, chief!
 			boutput(usr, "There is already \a [instrument] inside the [src].")
 			return
-		else if(istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
+		else if (istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
 			var/obj/item/instrument/I = W
 			instrument = I
 			sounds = I.sounds_instrument
 			volume = I.volume
 			delay = I.spam_timer
-		else if(istype(W, /obj/item/clothing/head/butt))
+		else if (istype(W, /obj/item/clothing/head/butt))
 			instrument = W
 			sounds = 'sound/voice/farts/poo2.ogg'
 			volume = 100
 			delay = 5
-		else if(istype(W, /obj/item/clothing/shoes/clown_shoes))
+		else if (istype(W, /obj/item/clothing/shoes/clown_shoes))
 			instrument = W
 			sounds = list('sound/misc/clownstep1.ogg','sound/misc/clownstep2.ogg')
 			volume = 50
 			delay = 5
-		else if(istype(W, /obj/item/artifact/instrument))
+		else if (istype(W, /obj/item/artifact/instrument))
 			var/obj/item/artifact/instrument/I = W
 			instrument = I
 			sounds = islist(I.sounds_instrument) ? I.sounds_instrument : list(I.sounds_instrument)
@@ -2469,7 +2469,7 @@ var/list/mechanics_telepads = new/list()
 		else // IT DON'T FIT
 			user.show_text("\The [W] isn't compatible with this component.", "red")
 
-		if(instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
+		if (instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
 			boutput(usr, "You put [W] inside [src].")
 			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 			usr.drop_item()
@@ -2516,10 +2516,11 @@ var/list/mechanics_telepads = new/list()
 					mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
 
 	proc/setA(var/datum/mechanicsMessage/input)
-		if(!isnull(text2num(input.signal)))
+		if (!isnull(text2num(input.signal)))
 			A = text2num(input.signal)
+
 	proc/setB(var/datum/mechanicsMessage/input)
-		if(!isnull(text2num(input.signal)))
+		if (!isnull(text2num(input.signal)))
 			B = text2num(input.signal)
 
 	proc/evaluate()
@@ -2529,7 +2530,7 @@ var/list/mechanics_telepads = new/list()
 			if("sub")
 				. = A - B
 			if("div")
-				if(B == 0)
+				if (B == 0)
 					src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Attempted division by zero!\"</span>")
 					return
 				. = A / B
