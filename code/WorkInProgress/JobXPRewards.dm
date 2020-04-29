@@ -160,14 +160,14 @@ mob/verb/checkrewards()
 //JANITOR END
 
 /datum/jobXpReward/head_of_security_LG
-	name = "The Lawgiver"
+	name = "The Lawbringer"
 	desc = "Gain access to a voice activated weapon of the future-past by sacrificing your egun."
 	required_levels = list("Head of Security"=0)
 	claimable = 1
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/energy/egun 		//Don't go lower than obj/item/gun/energy/egun
-	var/reward_path = /obj/item/gun/energy/lawgiver
+	var/reward_path = /obj/item/gun/energy/lawbringer
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -188,8 +188,8 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/energy/lawgiver/LG = new reward_path()
-		var/obj/item/paper/lawgiver_pamphlet/LGP = new/obj/item/paper/lawgiver_pamphlet()
+		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
+		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
@@ -206,11 +206,11 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/head_of_security_LG/old
-	name = "The Antique Lawgiver"
-	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawgiver."
-	sacrifice_path = /obj/item/gun/energy/lawgiver
-	reward_path = /obj/item/gun/energy/lawgiver/old
-	sacrifice_name = "Lawgiver"
+	name = "The Antique Lawbringer"
+	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
+	sacrifice_path = /obj/item/gun/energy/lawbringer
+	reward_path = /obj/item/gun/energy/lawbringer/old
+	sacrifice_name = "Lawbringer"
 	required_levels = list("Head of Security"=5)
 
 //Captain

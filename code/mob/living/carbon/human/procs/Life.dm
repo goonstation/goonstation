@@ -1682,7 +1682,7 @@
 		parent.setLastTask("status_updates health calcs", src)
 
 		if (prob(50) && src.hasStatus("disorient"))
-			src.drop_item()
+			//src.drop_item()
 			src.emote("twitch")
 
 		var/is_chg = is_changeling()

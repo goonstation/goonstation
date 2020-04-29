@@ -400,8 +400,8 @@ toxic - poisons
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 1)
 
-	lawgiver
-		name = "lawgiver"
+	lawbringer
+		name = "lawbringer"
 		power = 1
 		cost = 150
 

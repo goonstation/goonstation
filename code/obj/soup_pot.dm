@@ -442,6 +442,9 @@
 	New()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "ladle-f")
+		if(prob(1))
+			src.name = "Soup sword" //https://discordapp.com/channels/182249960895545344/469379618168897538/698632230851051552
+			src.setItemSpecial(/datum/item_special/swipe)
 
 	proc/add_soup_overlay(var/new_color)
 		fluid_icon.color = new_color

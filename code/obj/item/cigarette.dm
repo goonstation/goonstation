@@ -1039,25 +1039,30 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	var/fuel = 30 // -1 means infinite fuel
 	icon_off = "zippo"
 	icon_on = "zippoon"
 	brightness = 0.4
 	col_r = 0.94
 	col_g = 0.69
 	col_b = 0.27
+	var/infinite_fuel = 0 //1 is infinite fuel. Borgs use this apparently.
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/flame)
+		var/datum/reagents/R = new/datum/reagents(100) //this is the max volume
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("fuel", 100)
 
-	borg
-		fuel = -1
+		src.setItemSpecial(/datum/item_special/flame)
+		return
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
-				if (fuel == 0)
+				if (!reagents)
+					return
+				if (!reagents.get_reagent_amount("fuel"))
 					user.show_text("Out of fuel.", "red")
 					return
 				src.on = 1
@@ -1121,32 +1126,39 @@
 		user.visible_message("<span style='color:red'><b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]</span>")
 		return
 
-	afterattack(atom/target, mob/user as mob)
-		if (!on && istype(target, /obj/reagent_dispensers/fueltank))
-			if (src.fuel == -1)
+	afterattack(atom/O, mob/user as mob)
+		if (!on && (istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)))
+			if (!reagents)
+				return
+			
+			if (infinite_fuel)
 				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
 				return
-			var/obj/reagent_dispensers/fueltank/O = target
-			var/fuelamt = O.reagents.get_reagent_amount("fuel")
-			if (fuelamt)
-				var/removed = min(fuelamt, 50)
-				O.reagents.remove_reagent("fuel", removed)
-				fuel += removed
-				user.show_text("[src] refueled.", "blue")
-				playsound(user.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+
+			if (reagents.get_reagent_amount("fuel") >= src.reagents.maximum_volume) //this could be == but just in case...
+				boutput(user, "<span style='color:red'>[src] is full!</span>")
+				return
+
+			if (O.reagents.total_volume)
+				O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
+				boutput(user, "<span style=\"color:blue\">[src] has been refueled.</span>")
+				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
 				user.show_text("[O] is empty.", "red")
 			return
-		else if (!ismob(target) && src.on && target.reagents)
-			user.show_text("You heat [target].", "blue")
-			target.reagents.temperature_reagents(1500,10)
+
+		else if (!ismob(O) && src.on && O.reagents)
+			user.show_text("You heat [O].", "blue")
+			O.reagents.temperature_reagents(1500,10)
 		else
 			return ..()
 
 	process()
 		if (src.on)
-			if (src.fuel >= 0)
-				fuel--
+			if (!reagents)
+				return
+			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
+				reagents.remove_reagent("fuel", 1)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1155,7 +1167,7 @@
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(700,5)
-			if (fuel == 0)
+			if (!reagents.get_reagent_amount("fuel"))
 				src.on = 0
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
@@ -1207,3 +1219,6 @@
 	col_r = 0.45
 	col_g = 0.22
 	col_b = 1
+
+/obj/item/device/light/zippo/borg
+	infinite_fuel = 1

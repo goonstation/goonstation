@@ -42,7 +42,7 @@
 		..()
 
 	// user interaction
-	interact(mob/user, var/ai=0)
+	interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
 			user.machine = null
