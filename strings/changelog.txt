@@ -1,5 +1,9 @@
 
 (t)wed apr 29 20
+(u)zjdtmkhzt
+(p)470
+(e)⚖|balance
+(+)Readded the old delay to the pathogen manipulator when adjusting pathogens with >65 maliciousness.
 (u)Uta
 (p)474
 (e)🐛|bug
