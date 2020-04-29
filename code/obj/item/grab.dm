@@ -713,14 +713,14 @@
 		. = ..()
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
-			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, src)
 
 	disposing()
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
-
+		else
+			SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_END)
 		if (assailant)
 			assailant.delStatus("blocking")
 		..()
