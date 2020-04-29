@@ -1910,7 +1910,7 @@ var/list/electiles = list()
 	anchored = 1
 	density = 0
 	opacity = 0
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2101,7 +2101,7 @@ var/list/electiles = list()
 
 /obj/decal/nothing
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	anchored = 1
 	density = 0
@@ -2110,7 +2110,7 @@ var/list/electiles = list()
 
 /obj/decal/nothingplug
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank-plug"
 	anchored = 1
 	density = 0
@@ -2119,7 +2119,7 @@ var/list/electiles = list()
 
 /obj/decal/hfireplug
 	name = "fire"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfireplug"
 	anchored = 1
 	density = 0
@@ -2127,7 +2127,7 @@ var/list/electiles = list()
 
 /obj/decal/hfire
 	name = "fire"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfire"
 	anchored = 1
 	density = 0
@@ -2135,7 +2135,7 @@ var/list/electiles = list()
 
 /obj/decal/tileswish
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tileswish"
 	anchored = 1
 	density = 0

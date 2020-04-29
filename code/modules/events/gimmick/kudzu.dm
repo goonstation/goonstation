@@ -318,7 +318,7 @@
 /obj/spacevine/alien/flower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 
 	New()
@@ -361,7 +361,7 @@
 					icon_state = "bulb-closed"
 
 				sleep(bulb_complete)
-				
+
 				if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
