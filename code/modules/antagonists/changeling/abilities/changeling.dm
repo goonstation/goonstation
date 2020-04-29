@@ -245,6 +245,7 @@
 
 			original_controller_name = null
 			original_controller_real_name = null
+		obs.can_exit_hivemind_time = world.time + 1 MINUTE
 		return obs
 
 	proc/return_control_to_master()
