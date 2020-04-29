@@ -8,7 +8,6 @@
 (p)463
 (e)🐛|bug
 (+)Fixed a bug with portable reclaimers outputting fewer processed materials than inputted.
-(t)tue apr 28 20
 (u)mbc
 (e)⚖|balance
 (*)Disorient statuseffect will no longer randomly make you drop items. Increased the likelihood of a changeling or vampire scream forcing you to drop items to compensate.
