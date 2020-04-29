@@ -1,5 +1,11 @@
 
 (t)wed apr 29 20
+(u)AwkwardDryad
+(p)407
+(e)🆕|enhancement
+(*)All MechComp components can be modified by clicking them with a multitool.
+(*)Most object rotation is handled with a crowbar instead of right clicking (windows,pipes,etc.)
+(+)Atmosphere shields can be clicked while activated and their range and power settings are accessed by clicking them with a multitool.
 (u)zjdtmkhzt
 (p)470
 (e)⚖|balance
