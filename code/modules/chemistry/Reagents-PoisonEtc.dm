@@ -1588,6 +1588,7 @@ datum
 						boutput(M, "<span style=\"color:blue\">You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
 					else if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
+						M.UpdateName()
 
 				..()
 				return
