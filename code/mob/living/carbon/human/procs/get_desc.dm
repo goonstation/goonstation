@@ -137,7 +137,7 @@
 						if (!oH.skull)
 							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head and [t_his] skull is gone!</B></span>"
 						else if (!oH.brain)
-							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head and [t_his] brain is gone!!</B></span>"
+							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head and [t_his] brain is gone!</B></span>"
 						else
 							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head!</B></span>"
 					else if (src.organHolder.head.scalp_op_stage >= 4.0)
