@@ -1,4 +1,9 @@
 
+(t)wed apr 29 20
+(u)Flourish
+(p)463
+(e)🐛|bug
+(+)Fixed a bug with portable reclaimers outputting fewer processed materials than inputted.
 (t)tue apr 28 20
 (u)mbc
 (e)⚖|balance
