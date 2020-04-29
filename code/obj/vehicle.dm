@@ -42,6 +42,7 @@ Contains:
 		if(rider && rider_visible && W.force)
 			eject_rider()
 			W.attack(rider, user)
+			user.lastattacked = src
 			return
 		return
 
@@ -1256,6 +1257,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/clowncar/cluwne/attackby(var/obj/item/W, var/mob/user)
 	eject_rider()
 	W.attack(rider, user)
+	user.lastattacked = src
 
 /obj/vehicle/clowncar/cluwne/eject_rider(var/crashed, var/selfdismount)
 	..(crashed, selfdismount)
@@ -2263,7 +2265,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 
 	//attacking rider on forklift
 	if(rider && rider_visible && I.force)
-		I.attack(rider, user)
+		..()
 		I.visible_message("<span style=\"color:red\">[user] swings at [rider] with [I]!</span>")
 	return
 
