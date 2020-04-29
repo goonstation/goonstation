@@ -4710,7 +4710,7 @@
 "bOP" = (/obj/stool/bench/red/auto,/obj/disposalpipe/segment/brig,/obj/landmark/start{name = "Security Officer"},/turf/simulated/floor/red/side{dir = 1},/area/station/security/main)
 "bOQ" = (/obj/stool/bench/red/auto,/obj/landmark/start{name = "Security Officer"},/turf/simulated/floor/red/side{dir = 1},/area/station/security/main)
 "bOR" = (/obj/item/storage/wall/medical{dir = 1; pixel_y = 32},/obj/disposalpipe/segment/brig,/obj/cable{icon_state = "2-4"},/turf/simulated/floor/red/side{dir = 5},/area/station/security/main)
-"bOS" = (/obj/storage/closet/wardrobe/red/security_gimmick,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc/autoname_east,/obj/item/device/radio/intercom/security,/obj/item/clothing/head/helmet/siren,/turf/simulated/floor/redblack{dir = 8},/area/station/security/main)
+"bOS" = (/obj/storage/closet/wardrobe/red/security_gimmick,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc/autoname_east,/obj/item/device/radio/intercom/security,/obj/item/clothing/head/helmet/siren,/obj/item/clothing/head/helmet/siren,/turf/simulated/floor/redblack{dir = 8},/area/station/security/main)
 "bOT" = (/obj/wingrille_spawn/auto,/obj/disposalpipe/segment/transport,/obj/cable{d2 = 4; icon_state = "0-4"},/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/station/security/brig)
 "bOU" = (/obj/machinery/door/airlock/pyro/glass{name = "General Population"},/obj/access_spawn/brig,/obj/machinery/secscanner{pixel_y = 10},/obj/cable{icon_state = "2-4"},/obj/cable{icon_state = "2-8"},/turf/simulated/floor/red/side,/area/station/security/brig)
 "bOV" = (/obj/machinery/door/airlock/pyro,/obj/disposalpipe/segment/brig{dir = 1},/turf/simulated/floor/grey/blackgrime,/area/station/security/brig)
