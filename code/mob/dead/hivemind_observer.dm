@@ -1,6 +1,6 @@
 /mob/dead/target_observer/hivemind_observer
 	var/datum/abilityHolder/changeling/hivemind_owner
-	var/can_exit_hivemind = 0
+	var/can_exit_hivemind = 1
 	var/last_attack = 0
 
 	say_understands(var/other)
@@ -128,4 +128,4 @@
 		boutput(src, __red("You have parted with the hivemind."))
 		src.boot()
 	else
-		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave if your master goes inactive or chooses to release you of their own will."))
+		boutput(src, __red("You are not able to part from the hivemind. Ask your master to boot you, and if that doesn't work this may be a bug."))
