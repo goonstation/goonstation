@@ -446,7 +446,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/one_cost = analysis.cure_cost
 			var/five_cost = analysis.cure_cost * 4
 			var/ten_cost = analysis.cure_cost * 7
-			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=1'>1 batch for [one_cost] credits</a></td>td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=5'>5 batches for [five_cost] credits</a></td>td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=10'>10 batches for [ten_cost] credits</a></td></tr>"
+			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "1"))]'>1 batch for [one_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "5"))]'>5 batches for [five_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "10"))]'>10 batches for [ten_cost] credits</a></td></tr>"
 			src.temp += "<tr><td colspan='4' style='font-style:italic'>[analysis.desc]</td></tr>"
 			src.temp += "<tr><td colspan='4'>&nbsp;</td></tr>"
 		src.temp += "</table><br>"
@@ -688,7 +688,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			else if (wagesystem.shipping_budget < 100)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">You cannot afford to start a new analysis.</span>"
 			else
-				var/datum/cdc_contact_analysis/C = locate(href_list["cdc_analyze_me"])
+				var/datum/cdc_contact_analysis/C = locate(subaction)
 				if (!(C in QM_CDC.ready_to_analyze))
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to analyze right now.</span>"
 				else
@@ -713,7 +713,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (signal_loss >= 75)
 				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			var/datum/cdc_contact_analysis/C = locate(href_list["batch_cure"])
+			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
 			var/count = text2num(href_list["count"])
