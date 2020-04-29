@@ -1,5 +1,9 @@
 
 (t)wed apr 29 20
+(u)Uta
+(p)474
+(e)🐛|bug
+(+)Forklifts now eject rider when attacked to prevent an attack spam bug.
 (u)Ryumi
 (p)466
 (e)🗺|mapping
