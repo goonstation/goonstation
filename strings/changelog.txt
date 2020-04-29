@@ -1,5 +1,9 @@
 
 (t)tue apr 28 20
+(u)Fautz0
+(p)358
+(e)|
+(+)Zippo lighters now have a limited capacity of 100 fuel units. You can refill them with handheld or regular welding fuel tanks.
 (u)MarkNstein
 (p)437
 (e)🗺|mapping
