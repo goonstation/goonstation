@@ -2370,7 +2370,7 @@ var/list/electiles = list()
 /obj/item/beamtest
 	desc = "beamtest thingamobob"
 	name = "beamtest thingamobob"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2425,7 +2425,7 @@ var/list/electiles = list()
 		return
 
 /obj/candle_light_2spoopy
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
@@ -2451,7 +2451,7 @@ var/list/electiles = list()
 
 //Really sorry about the shitty code below. I couldn't be arsed to do it properly.
 /obj/candle_light
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "candle"
 	desc = "It's a big candle"

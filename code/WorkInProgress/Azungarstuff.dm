@@ -623,7 +623,7 @@
 		light.enable()
 
 /obj/decal/fakeobjects/Azarakcandles
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "candle"
 	desc = "TEMP"
