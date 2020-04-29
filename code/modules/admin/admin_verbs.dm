@@ -213,7 +213,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_advview,
 		/client/proc/cmd_swap_minds,
 		/client/proc/cmd_transfer_client,
-		//client/proc/edit_module,
+		/client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
 		/client/proc/toggle_camera_network_reciprocity,
@@ -1841,6 +1841,8 @@ var/list/fun_images = list()
 			C.modify_organs(A)
 		if("Modify Parts")
 			C.modify_parts(A)
+		if("Modify Module")
+			C.edit_module(A)
 		if("Swap Minds")
 			C.cmd_swap_minds(A)
 		if("Transfer Client To")
