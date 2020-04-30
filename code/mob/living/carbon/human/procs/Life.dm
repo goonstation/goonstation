@@ -1534,7 +1534,7 @@
 			if (src.bleeding < 0) //INVERSE BLOOD LOSS was a fun but ultimately easily fixed bug
 				src.bleeding = 0
 
-		else if (!src.bleeding && src.get_surgery_status())
+		else if (src.bleeding && src.get_surgery_status())
 			src.bleeding += 1 * mult
 
 		if (src.bleeding && src.blood_volume)
