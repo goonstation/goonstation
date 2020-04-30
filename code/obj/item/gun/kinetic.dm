@@ -295,8 +295,8 @@
 		setProperty("movespeed", 0.4)
 
 /obj/item/gun/kinetic/revolver
-	desc = "There are 0 bullets left. Uses .357"
-	name = "revolver"
+	name = "CPA Predator MKII"
+	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
 	force = 8.0
@@ -312,8 +312,8 @@
 	icon = 'icons/effects/VR.dmi'
 
 /obj/item/gun/kinetic/derringer
-	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	name = "derringer"
+	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	icon_state = "derringer"
 	force = 5.0
 	caliber = 0.41
@@ -336,8 +336,8 @@
 		..()
 
 /obj/item/gun/kinetic/detectiverevolver
-	desc = "An old surplus police-issue revolver. Uses .38-Special rounds."
-	name = ".38 revolver"
+	name = "CPA Detective Special"
+	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
 	icon_state = "detective"
 	item_state = "detective"
 	w_class = 2.0
@@ -399,6 +399,7 @@
 			icon_state = "colt_saa-c"
 			boutput(user, "<span style=\"color:red\">You cock the hammer!</span>")
 			playsound(user.loc, "sound/weapons/gun_cocked_colt45.ogg", 70, 1)
+
 /obj/item/gun/kinetic/clock_188
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
@@ -608,8 +609,8 @@
 			return
 
 /obj/item/gun/kinetic/silenced_22
-	name = "Suppressed .22 Pistol"
-	desc = "A small pistol with an integrated flash and noise suppressor."
+	name = "STL Orion"
+	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = 2
 	silenced = 1
