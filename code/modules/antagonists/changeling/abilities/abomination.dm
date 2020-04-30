@@ -36,6 +36,13 @@
 			H.update_body()
 			H.update_clothing()
 			H.abilityHolder.transferOwnership(H)
+
+			H.delStatus("paralysis")
+			H.delStatus("stunned")
+			H.delStatus("weakened")
+			H.delStatus("disorient")
+			H.force_laydown_standup()
+
 			logTheThing("combat", H, null, "enters horror form as a changeling, [log_loc(H)].")
 			return 0
 
