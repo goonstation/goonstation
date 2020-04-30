@@ -387,8 +387,8 @@
 		..()
 
 	click(atom/target, params)
-		if (params["alt"])
-			target.examine() // in theory, usr should be us, this is shit though
+		if (src.client && src.client.check_key(KEY_EXAMINE))
+			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
 		if (src.in_point_mode)
@@ -409,7 +409,7 @@
 			item.attack_self(src)
 			return
 
-		if (params["ctrl"])
+		if (src.client && src.client.check_key(KEY_PULL))
 			var/atom/movable/movable = target
 			if (istype(movable))
 				movable.pull()

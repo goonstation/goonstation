@@ -196,7 +196,7 @@
 				t = sign_name(t, usr)
 				src.info = copytext(src.info, 1, form_startpoints[.]) + "" + t + "" + copytext(src.info, form_startpoints[.] + length(t))
 				build_formpoints()
-				src.examine()
+				usr.examine_verb(src)
 
 		if (istype(usr.equipped(), /obj/item/stamp))
 			var/obj/item/stamp/S = usr.equipped()
@@ -215,7 +215,7 @@
 						src.info = copytext(src.info, 1, form_startpoints[.]) + "" + T + "" + copytext(src.info, form_endpoints[.])
 						src.icon_state = "paper_stamped"
 						build_formpoints()
-						src.examine()
+						usr.examine_verb(src)
 
 	src.add_fingerprint(usr)
 

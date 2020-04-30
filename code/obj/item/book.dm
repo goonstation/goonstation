@@ -16,10 +16,10 @@
 	stamina_cost = 2
 	stamina_crit_chance = 0
 
-	attack_self(mob/user as mob)
-		return src.examine()
+	attack_self(mob/user)
+		return user.examine_verb(src)
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		src.add_fingerprint(user)
 		return
 
