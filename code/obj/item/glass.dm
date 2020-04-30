@@ -93,11 +93,8 @@ SHARDS
 				return
 
 	examine()
-		set src in view(1)
-
-		..()
-		boutput(usr, text("There are [] glass sheet\s on the stack.", src.amount))
-		return
+		. = ..()
+		. += "There are [src.amount] glass sheet\s on the stack."
 
 	attack_self(mob/user as mob)
 
