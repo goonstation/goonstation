@@ -26,17 +26,16 @@
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
 	examine()
-		set src in usr
+		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
 			var/datum/projectile/ammo_type = src.ammo
-			src.desc = "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
-			src.desc = "There are 0 bullets left!"
+			. += "There are 0 bullets left!"
 		if (current_projectile)
-			src.desc += "<br>Each shot will currently use [src.current_projectile.cost] bullets!"
+			. += "Each shot will currently use [src.current_projectile.cost] bullets!"
 		else
-			src.desc += "<br><span style=\"color:red\">*ERROR* No output selected!</span>"
-		..()
+			. += "<span style=\"color:red\">*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0

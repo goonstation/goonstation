@@ -904,20 +904,19 @@
 		..()
 
 
-	examine()
-		..()
-		if (usr.bioHolder.HasEffect("accent_swedish"))
+	examine(mob/user)
+		. = ..()
+		if (user.bioHolder.HasEffect("accent_swedish"))
 			if (src.icon_state == "surs_closed")
-				boutput(usr, "Oooh, a can of surströmming! It's been a while since you've seen one of these. It looks like it's ready to eat.")
+				. += "Oooh, a can of surströmming! It's been a while since you've seen one of these. It looks like it's ready to eat."
 			else
-				boutput(usr, "Oooh, a can of surströmming! It's been a while since you've seen one of these. It smells heavenly!")
+				. += "Oooh, a can of surströmming! It's been a while since you've seen one of these. It smells heavenly!"
 			return
 		else
 			if (src.icon_state == "surs_closed")
-				boutput(usr, "The fuck is this? The label's written in some sort of gibberish, and you're pretty sure cans aren't supposed to bulge like that.")
+				. += "The fuck is this? The label's written in some sort of gibberish, and you're pretty sure cans aren't supposed to bulge like that."
 			else
-				boutput(usr, "<b>AAAAAAAAAAAAAAAAUGH AAAAAAAAAAAUGH IT SMELLS LIKE FERMENTED SKUNK EGG BUTTS MAKE IT STOP</b>")
-			return
+				. += "<b>AAAAAAAAAAAAAAAAUGH AAAAAAAAAAAUGH IT SMELLS LIKE FERMENTED SKUNK EGG BUTTS MAKE IT STOP</b>"
 
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "surs_closed")
@@ -2235,22 +2234,15 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	return
 
 /obj/item/kitchen/everyflavor_box/examine()
-	set src in oview(1)
-	set category = "Local"
-
-	src.amount = round(src.amount)
-	var/n = src.amount
-	for(var/obj/item/reagent_containers/food/snacks/donut/P in src)
-		n++
+	. = ..()
+	var/n = round(src.amount)
 	if (n <= 0)
-		n = 0
-		boutput(usr, "There are no beans left in the bag.")
+		. += "There are no beans left in the bag."
 	else
 		if (n == 1)
-			boutput(usr, "There is one bean left in the bag.")
+			. += "There is one bean left in the bag."
 		else
-			boutput(usr, "There are [n] beans in the bag.")
-	return
+			. += "There are [n] beans in the bag."
 
 //#endif
 
@@ -2365,15 +2357,16 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
 
-	examine()
-		boutput(usr, "This is a [src.name].")
+	examine(mob/user)
+		. = list("This is a [src.name].")
+
 		if(isbutt)
-			boutput(usr, "A dire misunderstanding of how haggis works.")
+			. += "A dire misunderstanding of how haggis works."
 		else
-			if (usr.bioHolder.HasEffect("accent_scots"))
-				boutput(usr, "Fair fa' your honest, sonsie face, great chieftain o the puddin'-race!")
+			if (user.bioHolder.HasEffect("accent_scots"))
+				. += "Fair fa' your honest, sonsie face, great chieftain o the puddin'-race!"
 			else
-				boutput(usr, "A big ol' meat pudding, wrapped up in a synthetic stomach stuffed nearly to bursting. Gusty!")
+				. += "A big ol' meat pudding, wrapped up in a synthetic stomach stuffed nearly to bursting. Gusty!"
 
 	heal(var/mob/M)
 		if (M.bioHolder.HasEffect("accent_scots"))
@@ -2706,7 +2699,3 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	get_desc(dist)
 		. = "<br><span style='color: blue'>It says: [phrase]</span>"
-
-
-
-

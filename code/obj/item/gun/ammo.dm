@@ -852,12 +852,11 @@
 
 	examine()
 		if (src.artifact)
-			boutput(usr, text("You have no idea what this thing is!"))
+			return list("You have no idea what this thing is!")
+		. = ..()
+		if (src.unusualCell)
 			return
-		..()
-		if (src.unusualCell) return
-		boutput(usr, "There are [src.charge]/[src.max_charge] PU left!")
-		return
+		. += "There are [src.charge]/[src.max_charge] PU left!"
 
 	use(var/amt = 0)
 		if (src.charge <= 0)

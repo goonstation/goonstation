@@ -143,7 +143,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 	else
 		if (get_dist(src, target) > 0)
 			dir = get_dir(src, target)
-		target.examine()
+		src.examine_verb(target)
 
 /mob/living/intangible/flock/say_quote(var/text)
 	var/speechverb = pick("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")

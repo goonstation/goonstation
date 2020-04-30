@@ -713,9 +713,8 @@
 			interact_particle(user,src)
 
 	examine()
-		..()
-		boutput(usr, "Home turf: [get_area(src.homeloc)].")
-		return
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
 	MouseDrop(over_object, src_location, over_location)

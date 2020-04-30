@@ -90,19 +90,16 @@
 					src.updateOverlaysClient(x.client)
 
 	examine()
-		..()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return
-
+		. = ..()
 		if (src.controller)
-			boutput(usr, "It is currently active and being controlled by someone.")
+			. += "It is currently active and being controlled by someone."
 		else
-			boutput(usr, "It is currently shut down and not being used.")
+			. += "It is currently shut down and not being used."
 		if (src.health < 100)
 			if (src.health < 50)
-				boutput(usr, "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>")
+				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				boutput(usr, "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>")
+				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	movement_delay()
 		var/tally = 0
@@ -371,23 +368,22 @@
 			overlays += part_propulsion.drone_overlay
 
 	examine()
-		..()
+		. = ..()
 		switch(construct_stage)
 			if(0)
-				boutput(usr, "It's nothing but a pile of scrap right now. Wrench the parts together to build it up or weld it back down to metal sheets.")
+				. += "It's nothing but a pile of scrap right now. Wrench the parts together to build it up or weld it back down to metal sheets."
 			if(1)
-				boutput(usr, "It's still a bit rickety. Weld it to make it more secure or wrench it to take it apart.")
+				. += "It's still a bit rickety. Weld it to make it more secure or wrench it to take it apart."
 			if(2)
-				boutput(usr, "It needs cabling. Add some to build it up or take the circuit board out to deconstruct it.")
+				. += "It needs cabling. Add some to build it up or take the circuit board out to deconstruct it."
 			if(3)
-				boutput(usr, "A radio needs to be added, or you could take the cabling out to deconstruct it.")
+				. += "A radio needs to be added, or you could take the cabling out to deconstruct it."
 			if(4)
-				boutput(usr, "A power cell needs to be added, or you could remove the radio to deconstruct it.")
+				. += "A power cell needs to be added, or you could remove the radio to deconstruct it."
 			if(5)
-				boutput(usr, "It needs a propulsion system, or you could remove the power cell to deconstruct it.")
+				. += "It needs a propulsion system, or you could remove the power cell to deconstruct it."
 			if(6)
-				boutput(usr, "It looks almost finished, all that's left to add is extra optional components.")
-				boutput(usr, "Wrench it together to activate it, or remove all parts and the power cell to deconstruct it.")
+				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
 	attack_hand(var/mob/user as mob)
 		switch(construct_stage)

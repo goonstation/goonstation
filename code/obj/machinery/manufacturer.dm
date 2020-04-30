@@ -122,23 +122,25 @@
 		..()
 
 	examine()
-		..()
+		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				boutput(usr, "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>")
+				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				boutput(usr, "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>")
+				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
+
 		if	(status & BROKEN)
-			boutput(usr, "<span style=\"color:red\">It seems to be damaged beyond the point of operability.</span>")
+			. += "<span style=\"color:red\">It seems to be damaged beyond the point of operability.</span>"
 		if	(status & NOPOWER)
-			boutput(usr, "<span style=\"color:red\">It seems to be offline.</span>")
+			. += "<span style=\"color:red\">It seems to be offline.</span>"
+
 		switch(src.dismantle_stage)
 			if(1)
-				boutput(usr, "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.</span>")
+				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.</span>"
 			if(2)
-				boutput(usr, "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.</span>")
+				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.</span>"
 			if(3)
-				boutput(usr, "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>")
+				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
 
 	process()
 		if (status & NOPOWER)

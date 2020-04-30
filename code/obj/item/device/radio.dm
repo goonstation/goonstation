@@ -334,7 +334,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	if (src.protected_radio != 1 && isnull(src.traitorradio))
 		for (var/mob/living/L in radio_brains)
 			receive += L
-			
+
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
@@ -531,22 +531,17 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			SPAWN_DBG(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
-/obj/item/device/radio/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if ((in_range(src, usr) || src.loc == usr))
+/obj/item/device/radio/examine(mob/user)
+	. = ..()
+	if ((in_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			usr.show_message("<span style=\"color:blue\">\the [src] can be attached and modified!</span>")
+			. += "<span style=\"color:blue\">\the [src] can be attached and modified!</span>"
 		else
-			usr.show_message("<span style=\"color:blue\">\the [src] can not be modified or attached!</span>")
+			. += "<span style=\"color:blue\">\the [src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
-		var/o = "Supplementary Channels:"
+		. += "Supplementary Channels:"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
-			o += "<br>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
-		boutput(usr, o)
-	return
+			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
 /obj/item/device/radio/attackby(obj/item/W as obj, mob/user as mob)
 	user.machine = src
@@ -1008,14 +1003,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	boutput(usr, "[src] is[src.broadcasting ? " " : " not "]active!")
-	boutput(usr, "It is tuned to [format_frequency(src.frequency)]Hz.")
-
-	return
+	. = ..()
+	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
 /obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
 	if (!broadcasting)

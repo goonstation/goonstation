@@ -16,10 +16,10 @@
 	stamina_cost = 2
 	stamina_crit_chance = 0
 
-	attack_self(mob/user as mob)
-		return src.examine()
+	attack_self(mob/user)
+		return user.examine_verb(src)
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		src.add_fingerprint(user)
 		return
 
@@ -977,10 +977,9 @@
 		..()
 		BLOCK_BOOK
 
-	examine()
-		set src in view()
-		if (!issilicon(usr))
-			boutput(usr, "What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
+	examine(mob/user)
+		if (!issilicon(user))
+			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
 			var/mob/living/carbon/jerk = usr
 			if (!istype(jerk))
 				return
@@ -991,11 +990,8 @@
 						if (S.fields["id"] == R.fields["id"])
 							S.fields["criminal"] = "*Arrest*"
 							S.fields["mi_crim"] = "Reading highly-confidential private information."
-
-			return
-
 		else
-			boutput(usr, "It appears to be heavily encrypted information.")
+			return list("It appears to be heavily encrypted information.")
 
 /obj/item/storage/photo_album/beepsky
 	name = "Beepsky's photo album"

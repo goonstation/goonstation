@@ -28,10 +28,9 @@
 		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.suppress_flavourtext != 1)
-			boutput(usr, "It appears to be [src.armed == 1 ? "armed" : "disarmed"].")
-		return
+			. += "It appears to be [src.armed == 1 ? "armed" : "disarmed"]."
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)

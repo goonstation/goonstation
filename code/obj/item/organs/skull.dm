@@ -41,13 +41,9 @@
 		key = null
 
 	examine() // For the hunter-specific objective (Convair880).
-		set src in usr
+		. = ..()
 		if (ishunter(usr))
-			var/trophy = "This is [src.name]<br>[src.preddesc]<br>This trophy has a value of [src.value]."
-			boutput(usr, trophy)
-		else
-			..()
-		return
+			. += "[src.preddesc]\nThis trophy has a value of [src.value]."
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/leg))

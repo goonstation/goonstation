@@ -175,16 +175,15 @@
 		set_range(user)
 
 	examine()
-		..()
-		if(usr.client)
-			var/charge_percentage = 0
-			if(PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
-				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
-				boutput(usr, "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left.")
-				boutput(usr, "The range setting is set to [src.range].")
-				boutput(usr, "The unit will consume [30 * src.range] power a second, and [60 * src.range] per meteor strike against the projected shield.")
-			else
-				boutput(usr, "It seems to be missing a usable battery.")
+		. = ..()
+		var/charge_percentage = 0
+		if(PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
+			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
+			. += "The range setting is set to [src.range]."
+			. += "The unit will consume [30 * src.range] power a second, and [60 * src.range] per meteor strike against the projected shield."
+		else
+			. += "It seems to be missing a usable battery."
 
 	attack_hand(mob/user as mob)
 		if(src.coveropen && src.PCEL)

@@ -127,13 +127,11 @@
 			actions.stopId("magpickerhold", usr)
 
 	examine()
-		..()
-		var/msg = "<span style='color: blue;'>"
+		. = ..()
 		if (src.highpower)
-			msg += "The [src] has HPM enabled!<br>"
+			. += "<span style='color: blue;'>The [src] has HPM enabled!</span>"
 		if (src.holding)
-			msg += "\The [src.holding] is enveloped in the magnetic field.<br>"
-		out(usr, "[msg]</span>")
+			. += "<span style='color: blue;'>\The [src.holding] is enveloped in the magnetic field.</span>"
 
 	proc/releaseItem()
 		set src in usr

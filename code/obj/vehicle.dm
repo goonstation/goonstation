@@ -2015,8 +2015,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	actual_light.attach(src)
 
 /obj/vehicle/forklift/examine()
-	..()
-	var/examine_text	//Shows who is driving it and also the items being carried
+	. = ..()
+	var/list/examine_text = list()	//Shows who is driving it and also the items being carried
 	var/obj/HI
 	if(src.rider)
 		examine_text += "[src.rider] is using it. "
@@ -2033,8 +2033,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				HI = helditems[helditems.len]
 			examine_text += " and \a [HI.name]"
 		examine_text += "."
-	boutput(usr, "[examine_text]")
-	return
+	. += examine_text.Join("")
 
 /obj/vehicle/forklift/verb/enter_forklift()
 	set src in oview(1)

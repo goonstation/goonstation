@@ -23,7 +23,7 @@ obj/decal/floor/displays/owlsign
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/postcard_Owlery.png")]'></body></html>"
 
 	examine()
-		..()
+		return ..()
 
 	attackby()
 		return
@@ -1552,7 +1552,3 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		if(prob(10))
 			usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\"")
 			return
-
-
-
-

@@ -42,19 +42,17 @@ var/list/genescanner_addresses = list()
 		return 0
 
 	examine()
-		set src in oview(7)
-
-		..()
+		. = ..()
 		if (src.occupant)
-			boutput(usr, "[src.occupant.name] is inside the scanner.")
+			. += "[src.occupant.name] is inside the scanner."
 		else
-			boutput(usr, "There is nobody currently inside the scanner.")
+			. += "There is nobody currently inside the scanner."
 		if (src.locked)
-			boutput(usr, "The scanner is currently locked.")
+			. += "The scanner is currently locked."
 		else
-			boutput(usr, "The scanner is not currently locked.")
+			. += "The scanner is not currently locked."
 
-	mob_flip_inside(var/mob/user)
+	mob_flip_inside(mob/user)
 		..(user)
 		if (prob(33))
 			user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")

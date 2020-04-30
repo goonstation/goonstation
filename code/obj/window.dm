@@ -914,10 +914,6 @@
 	New()
 		return
 
-	examine()
-		set src in oview()
-		boutput(usr, desc)
-
 	smash()
 		if(health <= 0)
 			qdel(src)

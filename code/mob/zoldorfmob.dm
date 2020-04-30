@@ -158,7 +158,7 @@
 			src.invisibility = 0
 			qdel(target)
 		else
-			target.examine()
+			src.examine_verb(target)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 1

@@ -115,20 +115,16 @@
 	var/original_owner = null
 	cant_other_remove = 1
 
-	examine()
-		set src in view()
-		var/mob/living/carbon/human/H = usr
+	examine(mob/user)
+		. = ..()
+		var/mob/living/carbon/human/H = user
 		if(!istype(H))
-			boutput(H, "It almost hurts to look at that, it's all out of focus.")
+			. += "It almost hurts to look at that, it's all out of focus."
 			return
-		if (H.find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-			..()
-			return
-		else
+		if (!H.find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			H.contract_memetic_madness(src)
 			if (!original_owner)
 				original_owner = H
-		return
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!ishuman(usr) || !usr:find_ailment_by_type(/datum/ailment/disability/memetic_madness))

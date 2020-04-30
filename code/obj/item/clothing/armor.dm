@@ -100,13 +100,11 @@
 		return
 
 	examine()
-		set src in oview(2)
-		..()
+		. = ..()
 		if (src.payload)
-			boutput(usr, "<span style=\"color:red\">Looks like the payload is a [src.payload].</span>")
+			. += "<span style=\"color:red\">Looks like the payload is a [src.payload].</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">There doesn't appear to be a payload attached.</span>")
-		return
+			. += "<span style=\"color:red\">There doesn't appear to be a payload attached.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		src.add_fingerprint(user)

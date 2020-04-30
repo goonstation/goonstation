@@ -123,8 +123,8 @@
 	anchored = 1
 
 	examine()
-		..()
-		boutput(usr, "Your keen skills of observation tell you that [expected.len - unlocked.len] out of the [expected.len] locks are locked.")
+		. = ..()
+		. += "Your keen skills of observation tell you that [expected.len - unlocked.len] out of the [expected.len] locks are locked."
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/device/key))
@@ -370,11 +370,11 @@
 		return 1
 
 	examine()
-		..()
+		. = ..()
 		if (amount > 1)
-			boutput(usr, "<span style='color:blue'>This is a stack of [amount] arrows.")
+			. += "<span style='color:blue'>This is a stack of [amount] arrows."
 		if (reagents.total_volume)
-			boutput(usr, "<span style='color:blue'>The tip of the arrow is coated with reagents.</span>")
+			. += "<span style='color:blue'>The tip of the arrow is coated with reagents.</span>"
 
 	clone(var/newloc = null)
 		var/obj/item/arrow/O = new(loc)
@@ -495,8 +495,8 @@
 	icon_state = "arrowhead"
 
 	examine()
-		..()
-		boutput(usr, "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack.")
+		. = ..()
+		. += "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack."
 
 /obj/item/implant/projectile/arrow
 	name = "arrow"

@@ -37,10 +37,8 @@
 		return
 
 	examine()
-		set src in usr
-		set category = "Local"
-		boutput(usr, "[bicon(src)] [src.name] contains [get_fuel()] units of fuel left!")
-		return
+		. = ..()
+		. += "It has [get_fuel()] units of fuel left!"
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!src.welding)

@@ -98,20 +98,18 @@
 			return 1
 		inertia_dir = 0
 
-	examine()
-		..()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return
+	examine(mob/user)
+		. = ..()
 		var/perc = get_health_percentage()
 		switch(perc)
 			if(75 to 100)
 				return
 			if(50 to 74)
-				boutput(usr, "[src] looks lightly [pick("dented", "burned", "scorched", "scratched")].")
+				. += "[src] looks lightly [pick("dented", "burned", "scorched", "scratched")]."
 			if(25 to 49)
-				boutput(usr, "[src] looks [pick("quite", "pretty", "rather")] [pick("dented", "busted", "messed up", "burned", "scorched", "haggard")].")
+				. += "[src] looks [pick("quite", "pretty", "rather")] [pick("dented", "busted", "messed up", "burned", "scorched", "haggard")]."
 			if(0 to 24)
-				boutput(usr, "[src] looks [pick("really", "totally", "very", "all sorts of", "super")] [pick("mangled", "busted", "messed up", "burned", "broken", "haggard", "smashed up", "trashed")].")
+				. += "[src] looks [pick("really", "totally", "very", "all sorts of", "super")] [pick("mangled", "busted", "messed up", "burned", "broken", "haggard", "smashed up", "trashed")]."
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears/intercom(src)

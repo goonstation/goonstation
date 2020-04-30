@@ -27,17 +27,15 @@
 
 
 	examine()
-		set src in usr
+		. = ..()
 		if(src.cell)
-			src.desc = "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+			. += "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 		else
-			src.desc = "There is no cell loaded!"
+			. += "There is no cell loaded!"
 		if(current_projectile)
-			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
+			. += "Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
-		..()
-		return
+			. += "<span style=\"color:red\">*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0
