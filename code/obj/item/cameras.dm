@@ -196,8 +196,7 @@
 			..()
 		if(enchant_power == 0)
 			boutput(user,"<span style=\"color:red\"><b>[src]</b> crumbles away to dust!</span>")
-			SPAWN_DBG(0)
-				qdel(src)
+			qdel(src)
 		return
 
 	throw_begin(atom/target)
@@ -208,8 +207,7 @@
 			if(enchant_power > 0) enchant_power--
 		if(enchant_power == 0)
 			src.visible_message("<span style=\"color:red\"><b>[src]</b> crumbles away to dust!</span>")
-			SPAWN_DBG(0)
-				qdel(src)
+			qdel(src)
 		return ..(target)
 
 
