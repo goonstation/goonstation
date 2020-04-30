@@ -3086,7 +3086,7 @@
 "bhr" = (/turf/space,/obj/grille/catwalk,/obj/cable{icon_state = "1-2"},/turf/simulated/floor/airless/plating/catwalk,/area/station/solar/south)
 "bhs" = (/turf/space,/obj/grille/catwalk,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/disposalpipe/segment/ejection,/turf/simulated/floor/airless/plating/catwalk,/area/station/solar/south)
 "bht" = (/turf/space,/obj/grille/catwalk{dir = 4},/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/airless/plating/catwalk{dir = 4},/area/station/solar/small_backup2)
-"bhu" = (/obj/item/ritualChalk/randomColor,/turf/simulated/floor/plating/random,/area/ghostdrone_factory)
+"bhu" = (/turf/simulated/floor/plating/random,/area/ghostdrone_factory)
 "bhv" = (/turf/space,/obj/grille/catwalk{dir = 6},/obj/cable{icon_state = "1-8"},/obj/cable{icon_state = "1-4"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/airless/plating/catwalk{icon_state = "catwalk_cross"},/area/station/solar/small_backup2)
 "bhw" = (/turf/space,/obj/grille/catwalk{dir = 4},/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/airless/plating/catwalk{dir = 4},/area/station/solar/small_backup2)
 "bhx" = (/turf/space,/obj/grille/catwalk{dir = 4},/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/cable{icon_state = "4-8"},/obj/cable{d1 = 2; d2 = 4; icon_state = "5-8"},/turf/simulated/floor/airless/plating/catwalk{dir = 4},/area/station/solar/small_backup2)
