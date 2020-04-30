@@ -24,16 +24,16 @@
 		if (icon_state == "brain2")
 			desc = "A human brain. It looks [pick("small", "big", "normal", "rotten", "healthy", "tasty", "like it should be flushed down disposals", "bloody")]."
 
-/obj/item/brain/examine()
-	..()
-	if (usr.job == "Roboticist" || usr.job == "Medical Doctor" || usr.job == "Geneticist" || usr.job == "Medical Director")
+/obj/item/brain/examine(mob/user)
+	. = ..()
+	if (user.job == "Roboticist" || user.job == "Medical Doctor" || user.job == "Geneticist" || user.job == "Medical Director")
 		if (src.owner)
 			if (src.owner.current)
-				boutput(usr, "<span style=\"color:blue\">This brain is still warm.</span>")
+				. += "<span style=\"color:blue\">This brain is still warm.</span>"
 			else
-				boutput(usr, "<span style=\"color:red\">This brain has gone cold.</span>")
+				. += "<span style=\"color:red\">This brain has gone cold.</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">This brain has gone cold.</span>")
+			. += "<span style=\"color:red\">This brain has gone cold.</span>"
 
 /obj/item/brain/throw_impact(var/turf/T)
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)

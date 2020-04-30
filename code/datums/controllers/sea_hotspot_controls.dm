@@ -1121,9 +1121,9 @@
 	health = 100
 	var/can_put_up = 1
 
-	examine()
-		if (usr.client && hotspot_controller)
-			hotspot_controller.show_map(usr.client)
+	examine(mob/user)
+		if (user.client && hotspot_controller)
+			hotspot_controller.show_map(user.client)
 		else
 			return ..()
 

@@ -11,6 +11,7 @@
 	min_range = 1
 	max_range = 4
 	direction = "dir"
+	layer = 3
 
 	New()
 		..()
@@ -18,16 +19,15 @@
 		src.power_usage = 5
 
 	examine()
-		if(usr.client)
-			var/charge_percentage = 0
-			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
-				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
-				boutput(usr, "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left.")
-			else
-				boutput(usr, "It seems to be missing a usable battery.")
-			boutput(usr, "The unit will consume [30 * src.range * (src.power_level * src.power_level)] power a second.")
-			boutput(usr, "The range setting is set to [src.range].")
-			boutput(usr, "The power setting is set to [src.power_level].")
+		var/charge_percentage = 0
+		if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
+			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
+		else
+			. += "It seems to be missing a usable battery."
+		. += "The unit will consume [30 * src.range * (src.power_level * src.power_level)] power a second."
+		. += "The range setting is set to [src.range]."
+		. += "The power setting is set to [src.power_level]."
 
 	shield_on()
 		if (!PCEL)
@@ -42,6 +42,26 @@
 			if (PCEL.charge > 0)
 				generate_shield()
 				return
+
+	pulse(var/mob/user)
+		if(active)
+			boutput(usr, "<span style=\"color:red\">You can't change the power level or range while the generator is active.</span>")
+			return
+		var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Set Range","Set Power Level")
+		if(input && (user in range(1,src)))
+			switch(input)
+				if("Set Range")
+					src.set_range(user)
+				if("Set Power Level")
+					var/the_level = input("Enter a power level from [src.MIN_POWER_LEVEL]-[src.MAX_POWER_LEVEL]. Higher levels use more power.","[src.name]",1) as null|num
+					if(!the_level)
+						return
+					if(get_dist(usr,src) > 1)
+						boutput(usr, "<span style=\"color:red\">You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
+						return
+					the_level = max(MIN_POWER_LEVEL,min(the_level,MAX_POWER_LEVEL))
+					src.power_level = the_level
+					boutput(usr, "<span style=\"color:blue\">You set the power level to [src.power_level].</span>")
 
 	//Code for placing the shields and adding them to the generator's shield list
 	proc/generate_shield()
@@ -90,6 +110,7 @@
 	//this is so long because I wanted the tiles to look like one seamless object. Otherwise it could just be a single line
 	proc/createForcefieldObject(var/xa as num, var/ya as num)
 		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (locate((src.x + xa),(src.y + ya),src.z), src, 1 ) //1 update tiles
+		S.layer = 2
 		if (xa == -range)
 			S.dir = SOUTHWEST
 		else if (xa == range)
@@ -106,72 +127,3 @@
 		src.deployed_shields += S
 
 		return S
-
-	//This is needed since the generator can be drawn beneath the forcefield so you can't easily left-click it
-	//change to just call attack hand
-	verb/toggle()
-		set name = "Toggle"
-		set category = "Local"
-		set src in oview(1)
-		if (!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Your ghostly arms phase right through the [src.name] and you sadly contemplate the state of your existence.</span>")
-			boutput(usr, "<span style=\"color:red\">That's what happens when you try to be a smartass, you dead sack of crap.</span>")
-			return
-
-		if (get_dist(usr,src) > 1)
-			boutput(usr, "<span style=\"color:red\">You need to be closer to do that.</span>")
-			return
-
-		attack_hand(usr)
-	verb/rotate()
-		set name = "Rotate"
-		set category = "Local"
-		set src in oview(1)
-
-		if (!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Your ghostly arms phase right through the [src.name] and you sadly contemplate the state of your existence.</span>")
-			boutput(usr, "<span style=\"color:red\">That's what happens when you try to be a smartass, you dead sack of crap.</span>")
-			return
-
-		if (get_dist(usr,src) > 1)
-			boutput(usr, "<span style=\"color:red\">You need to be closer to do that.</span>")
-			return
-
-		if (src.active)
-			boutput(usr, "<span style=\"color:red\">You can't turn [src] while it is active!</span>")
-		else
-			src.dir = turn(src.dir, 90)
-			update_orientation()
-			
-
-			return
-		boutput(usr, "<span style=\"color:blue\">Orientation set to : [orientation ? "Horizontal" : "Vertical"]</span>")
-
-	verb/set_power_level()
-		set name = "Set Power Level"
-		set category = "Local"
-		set src in view(1)
-
-		if (!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Your ghostly arms phase right through the [src.name] and you sadly contemplate the state of your existence.</span>")
-			boutput(usr, "<span style=\"color:red\">That's what happens when you try to be a smartass, you dead sack of crap.</span>")
-			return
-
-		if (get_dist(usr,src) > 1)
-			boutput(usr, "<span style=\"color:red\">You need to be closer to do that.</span>")
-			return
-
-		if (active)
-			boutput(usr, "<span style=\"color:red\">You can't change the power level while the generator is active.</span>")
-			return
-
-		var/the_level = input("Enter a power level from [src.MIN_POWER_LEVEL]-[src.MAX_POWER_LEVEL]. Higher levels use more power.","[src.name]",1) as null|num
-		if (!the_level)
-			return
-		if (get_dist(usr,src) > 1)
-			boutput(usr, "<span style=\"color:red\">You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
-			return
-		the_level = max(MIN_POWER_LEVEL,min(the_level,MAX_POWER_LEVEL))
-		src.power_level = the_level
-		boutput(usr, "<span style=\"color:blue\">You set the power level to [src.power_level].</span>")
-

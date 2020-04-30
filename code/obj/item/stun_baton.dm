@@ -67,13 +67,12 @@
 		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
 			if (!src.cell || !istype(src.cell))
-				boutput(usr, "<span style=\"color:red\">No power cell installed.</span>")
+				. += "<span style=\"color:red\">No power cell installed.</span>"
 			else
-				boutput(usr, "The baton is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs.")
-		return
+				. += "The baton is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
 
 	emp_act()
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
@@ -586,7 +585,7 @@
 			B.setProperty("rangedprot", 0.5)
 			B.setProperty("exploprot", 1)
 			. = ..()
-			
+
 	proc/update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"

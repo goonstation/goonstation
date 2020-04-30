@@ -270,6 +270,10 @@ var/list/globalContextActions = null
 			var/mob/dead/observer/GO = usr
 			if(istype(GO)) GO.hud.remove_screen(C)
 			contextButtons.Remove(C)
+			if(C.overlays)
+				C.overlays = list()
+			if(C.underlays)
+				C.underlays = list()
 
 			pool(C)
 		return

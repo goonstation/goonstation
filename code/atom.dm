@@ -640,45 +640,38 @@
 /atom/proc/special_desc(dist, mob/user)
 	return null
 
-/atom/proc/examine()
-	set name = "Examine"
-	set category = "Local"
-	set src in view(12)	//make it work from farther away
-
-	if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+/atom/proc/examine(mob/user)
+	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
 		return
 
-	var/dist = get_dist(src, usr)
-	if (istype(usr, /mob/dead/target_observer))
-		dist = get_dist(src, usr:target)
+	var/dist = get_dist(src, user)
+	if (istype(user, /mob/dead/target_observer))
+		var/mob/dead/target_observer/target_observer_user = user
+		dist = get_dist(src, target_observer_user.target)
 
 	// added for custom examine behaviour override - cirr
-	var/special_description = src.special_desc(dist, usr)
+	var/special_description = src.special_desc(dist, user)
 
 	if(special_description)
-		boutput(usr, special_description)
-		return
+		return list(special_description)
 	//////////////////////////////
 
-	var/output = "This is \an [src.name]."
+	. = list("This is \an [src.name].")
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
-		output = "<span style='color:red'>This is a bloody [src.name].</span>"
+		. = list("<span style='color:red'>This is a bloody [src.name].</span>")
 		if (src.desc)
 			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in an odd azure liquid!</span>"
+				. += "<br>[src.desc] <span style='color:red'>It seems to be covered in an odd azure liquid!</span>"
 			else
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in blood!</span>"
+				. += "<br>[src.desc] <span style='color:red'>It seems to be covered in blood!</span>"
 	else if (src.desc)
-		output += "<br>[src.desc]"
+		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, usr)
 	if (extra)
-		output += " [extra]"
-
-	if (output)
-		boutput(usr, output)
+		. += " [extra]"
 
 /atom/proc/MouseDrop_T()
 	return
@@ -1046,4 +1039,3 @@
 
 	if (user.client)
 		user.client.Click(src,get_turf(src))
-

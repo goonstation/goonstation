@@ -1,5 +1,32 @@
 
+(t)thu apr 30 20
+(u)Naksu
+(p)498
+(e)|
+(+)Refactored examine-code to pass and eventually join a list instead of sending separate browser output for every line of text.
+(u)Gannets
+(p)489
+(e)🆕🎨|enhancement, sprites
+(+)New sprites for the revolver, detective revolver, .22 pistol and derringer.
+(u)zjdtmkhzt
+(p)491
+(e)|
+(+)Hopefully fixed the CDC.
 (t)wed apr 29 20
+(u)AwkwardDryad
+(p)407
+(e)🆕|enhancement
+(*)All MechComp components can be modified by clicking them with a multitool.
+(*)Most object rotation is handled with a crowbar instead of right clicking (windows,pipes,etc.)
+(+)Atmosphere shields can be clicked while activated and their range and power settings are accessed by clicking them with a multitool.
+(u)zjdtmkhzt
+(p)470
+(e)⚖|balance
+(+)Readded the old delay to the pathogen manipulator when adjusting pathogens with >65 maliciousness.
+(u)Uta
+(p)474
+(e)🐛|bug
+(+)Forklifts now eject rider when attacked to prevent an attack spam bug.
 (u)Ryumi
 (p)466
 (e)🗺|mapping

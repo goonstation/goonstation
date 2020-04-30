@@ -31,11 +31,8 @@ TILES
 		return
 
 	examine()
-		set src in view(1)
-
-		..()
-		boutput(usr, text("There are [] tile\s left on the stack.", src.amount))
-		return
+		. = ..()
+		. += "There are [src.amount] tile\s left on the stack."
 
 	attack_hand(mob/user as mob)
 

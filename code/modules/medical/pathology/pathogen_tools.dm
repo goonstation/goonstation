@@ -59,26 +59,27 @@
 
 	examine()
 		if (src.dirty || src.dirty_reason)
-			..()
-			boutput(usr, "<span style=\"color:red\">The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span>")
+			. = ..()
+			. += "<span style=\"color:red\">The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span>"
 			return
-		boutput(usr, "This is [src]")
+			
+		. = list("This is [src]")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			boutput(usr, "<span style=\"color:blue\">It contains [P.volume] units of harvestable pathogen.</span>")
+			. += "<span style=\"color:blue\">It contains [P.volume] units of harvestable pathogen.</span>"
 		if (src.medium)
-			boutput(usr, "<span style=\"color:blue\">The petri dish is coated with [src.medium.name].</span>")
-		boutput(usr, "Nutrients in the dish:")
+			. += "<span style=\"color:blue\">The petri dish is coated with [src.medium.name].</span>"
+		. += "Nutrients in the dish:"
 		var/count = 0
 		for (var/N in nutrition)
 			if (nutrition[N])
 				if (nutrition[N] != 1)
-					boutput(usr, "<span style=\"color:blue\">[nutrition[N]] units of [N]</span>")
+					. += "<span style=\"color:blue\">[nutrition[N]] units of [N]</span>"
 				else
-					boutput(usr, "<span style=\"color:blue\">[nutrition[N]] unit of [N]</span>")
+					. += "<span style=\"color:blue\">[nutrition[N]] unit of [N]</span>"
 				count++
 		if (!count)
-			boutput(usr, "<span style=\"color:blue\">None.</span>")
+			. += "<span style=\"color:blue\">None.</span>"
 
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))

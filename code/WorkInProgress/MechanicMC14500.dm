@@ -14,11 +14,11 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
  *	5 (OR) sets RR to the logical OR of RR and the input
  *	6 (ORC) sets RR to the logical OR of RR and the complement of the input
  *	7 (XNOR) essentially equates RR and the input, with RR set to the result of the test.
- *	8 (STO) store RR in either a RAM addess (High 8 bits) or one of 8 outputs (Low 8 bits).
+ *	8 (STO) store RR in either a RAM addess(High 8 bits) or one of 8 outputs(Low 8 bits).
  *	9 (STOC) store complement of RR in the same was as STO.
  *	A (IEN) sets IEN to the input
  *	B (OEN) sets OEN to the input
- *	C (JMP) will adjust the program counter by up to 32 addresses, forward or backward from the current instruction. Arguments 8+ will subtract 7 and then jump 4x that value forward, less than that will jump back 4x (that value + 1)
+ *	C (JMP) will adjust the program counter by up to 32 addresses, forward or backward from the current instruction. Arguments 8+ will subtract 7 and then jump 4x that value forward, less than that will jump back 4x(that value + 1)
  *	D (RTN) skip next instruction.  For some reason.
  *	E (SKZ) skip next instruction if RR is zero.
  */
@@ -45,7 +45,6 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 	New()
 		..()
-		verbs -= /obj/item/mechanics/verb/setvalue
 		mechanics.addInput("input 1", "fire1")
 		mechanics.addInput("input 2", "fire2")
 		mechanics.addInput("input 3", "fire3")
@@ -54,8 +53,37 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 		mechanics.addInput("input 6", "fire6")
 		mechanics.addInput("input 7", "fire7")
 		//mechanics.addInput("input 8", "fire8")
+		configs.Add(list("Set ROM","Toggle Active"))
+		src.append_default_configs(2)
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (..(W, user)) return
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
+					return
+				if ("Set ROM")
+					. = adminscrub(strip_html(input(user, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
+					if (user.stat || get_dist(user, src) > 2)
+						return
 
+					if (!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
+						boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+						return
+
+					. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
+					if (length(.)%2 || !is_hex(.))
+						boutput(user, "<span style=\"color:red\">Invalid ROM values.  Great job, knucklehead!!</span>")
+
+					ROM = .
+				if ("Toggle Active")
+					src.running = !src.running && src.level
+					IEN = 0
+					OEN = 0
+					RR = 0
+					program_counter = 0
+					src.ioPins = 1 //All zero except the !RR section.
+					src.icon_state = "genericsmall[src.running ? 1 : 0]"
 
 	process()
 		if (..() || !running || !level)
@@ -69,7 +97,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 		updateUsrDialog()
 
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			for (var/i = INSTRUCTIONS_PER_PROCESS, i > 0, i--)
 				if (!running || !level)
 					break
@@ -104,7 +132,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 			onclose(user, "mcu14500b")
 
 	proc/user_interface(mob/user as mob)
-		if (!user || user.stat || (iscarbon(user) && get_dist(user, src) > 1))
+		if (!user || user.stat ||(iscarbon(user) && get_dist(user, src) > 1))
 			return
 
 		user.machine = src
@@ -118,12 +146,12 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 		<tr>"}
 
 		for (var/bit = 7, bit >= 0, bit--)
-			. += "<td id='bit[bit]'> <div align=left style='background-color=[ioPins & (1<<bit) ? "#33FF00" : "#F80000"]'>[bit]</div></td>"
+			. += "<td id='bit[bit]'> <div align=left style='background-color=[ioPins &(1<<bit) ? "#33FF00" : "#F80000"]'>[bit]</div></td>"
 
 		. += "</tr></table><b>RAM STATUS</b><table border='1' style ='color:#FFFFFF'><tr>"
 
 		for (var/bit = 15, bit >= 8, bit--)
-			. += "<td id='bit[bit]'> <div align=left style='background-color=[ioPins & (1<<bit) ? "#33FF00" : "#F80000"]'>[bit-8]</div></td>"
+			. += "<td id='bit[bit]'> <div align=left style='background-color=[ioPins &(1<<bit) ? "#33FF00" : "#F80000"]'>[bit-8]</div></td>"
 
 		. += {"</tr></table></center>
 <script type="text/javascript">
@@ -140,7 +168,7 @@ function update_indicators(active, rr, ien, oen)
 	}
 	document.getElementById("ind_rr").innerHTML = "<font style='background-color:" + (rr == 1 ? "#33FF00" : "#F80000") + "'>RR</font>"
 	document.getElementById("ind_ien").innerHTML = "<font style='background-color:" + (ien == 1 ? "#33FF00" : "#F80000") + "'>Input ENable</font>"
-	document.getElementById("ind_oen").innerHTML = "<font style='background-color:" + (oen == 1 ? "#33FF00" : "#F80000") + "'>Output ENable</font>"
+	document.getElementById("ind_oen").innerHTML = "<font style='background-color:" +(oen == 1 ? "#33FF00" : "#F80000") + "'>Output ENable</font>"
 
 }
 
@@ -161,56 +189,7 @@ function update_mem_lights(mem)
 
 		//WIP
 
-	verb/goofy_rom_debug()
-		set src in view(1)
-		set name = "\[Set ROM\]"
-		set desc = "Configure the ROM by thinking really hard at the floating-gate transistors inside.  Really, really hard."
-		set category = "Local"
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		. = adminscrub(strip_html(input(usr, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
-		if (usr.stat || get_dist(usr, src) > 2)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
-		if (length(.)%2 || !is_hex(.))
-			boutput(usr, "<span style=\"color:red\">Invalid ROM values.  Great job, knucklehead!!</span>")
-
-		ROM = .
-
-
-	verb/goofy_power_debug()
-		set src in view(1)
-		set name = "\[Toggle Active\]"
-		set desc = "Toggle whether this is on or not.  Doing stuff."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		src.running = !src.running && src.level
-		IEN = 0
-		OEN = 0
-		RR = 0
-		program_counter = 0
-		src.ioPins = 1 //All zero except the !RR section.
-		src.icon_state = "genericsmall[src.running ? 1 : 0]"
-
-	desc = {"*	Instructions: Word size in this setup is one byte, one nibble is the instruction and the other is the operand. In that order. A0 is opcode A operand 0.<br>
+	/*desc = {"*	Instructions: Word size in this setup is one byte, one nibble is the instruction and the other is the operand. In that order. A0 is opcode A operand 0.<br>
  *	0 and F are NOPs<br>
  *	1 (LD) loads an input value into the accumulator, RR.  Input 0 is !RR.<br>
  *	2 (LDC) acts like 1, but with the complement of the input<br>
@@ -219,15 +198,15 @@ function update_mem_lights(mem)
  *	5 (OR) sets RR to the logical OR of RR and the input<br>
  *	6 (ORC) sets RR to the logical OR of RR and the complement of the input<br>
  *	7 (XNOR) essentially equates RR and the input, with RR set to the result of the test.<br>
- *	8 (STO) store RR in either a RAM addess (High 8 bits) or one of 8 outputs (Low 8 bits).<br>
+ *	8 (STO) store RR in either a RAM addess(High 8 bits) or one of 8 outputs(Low 8 bits).<br>
  *	9 (STOC) store complement of RR in the same was as STO.<br>
  *	A (IEN) sets IEN to the input.  IEN is Input ENable.<br>
  *	B (OEN) sets OEN to the input.  OEN is Output ENable.<br>
- *	C (JMP) will adjust the program counter by up to 32 addresses, forward or backward from the current instruction. Arguments 8+ will subtract 7 and then jump 4x that value forward, less than that will jump back 4x (that value + 1)<br>
+ *	C (JMP) will adjust the program counter by up to 32 addresses, forward or backward from the current instruction. Arguments 8+ will subtract 7 and then jump 4x that value forward, less than that will jump back 4x(that value + 1)<br>
  *	D (RTN) skip next instruction.  For some reason.<br>
  *	E (SKZ) skip next instruction if RR is zero.<br>
  Output signals have the value \"PIN:VALUE\" i.e \"2:1\" to output true on pin 2.  You can filter this with OR gate triggers, ok.<br>
- Example program: \"30A0B01181\" Will AND RR with 0 on the first iteration (As IEN is zero) and AND it with !RR on subsequent loops (Both set it to zero), load !RR (1) into IEN and OEN, then load input 1 and send it to output 1.  This will repeat without end."}
+ Example program: \"30A0B01181\" Will AND RR with 0 on the first iteration (As IEN is zero) and AND it with !RR on subsequent loops(Both set it to zero), load !RR(1) into IEN and OEN, then load input 1 and send it to output 1.  This will repeat without end."}*/
 
 
 	proc/interpret_instruction(instruction, argument)
@@ -243,39 +222,39 @@ function update_mem_lights(mem)
 			if ("0","F")//NOP
 				return 0
 
-			if ("1")	//LD, RR = (DATA & IEN)
-				RR = (IEN && (ioPins & argument))
+			if ("1")	//LD, RR =(DATA & IEN)
+				RR =(IEN &&(ioPins & argument))
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
 			if ("2")	//LDC, RR = !(DATA & IEN)
-				RR = !(IEN && (ioPins & argument))
+				RR = !(IEN &&(ioPins & argument))
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
-			if ("3")	//AND, RR = RR & (DATA & IEN)
-				RR = RR && (IEN && (ioPins & argument))
+			if ("3")	//AND, RR = RR &(DATA & IEN)
+				RR = RR &&(IEN &&(ioPins & argument))
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
 			if ("4")	//ANDC, RR = RR & !(DATA & IEN)
-				RR = RR && !(IEN && (ioPins & argument))
+				RR = RR && !(IEN &&(ioPins & argument))
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
-			if ("5")	//OR, RR = RR | (DATA & IEN)
-				RR = RR || (IEN && (ioPins & argument))
+			if ("5")	//OR, RR = RR |(DATA & IEN)
+				RR = RR ||(IEN &&(ioPins & argument))
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
 			if ("6")	//ORC, RR = RR | !(DATA & IEN).  Waugh.
-				RR = RR || !(IEN && (ioPins & argument))
+				RR = RR || !(IEN &&(ioPins & argument))
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
-			if ("7")	//XNOR, RR = RR == (DATA & IEN)
-				RR = (RR && 1) == ((IEN && (ioPins & argument)) && 1) //The &&1 is so we can compare them both as booleans instead of tripping over two bitfields with ones in different places
+			if ("7")	//XNOR, RR = RR ==(DATA & IEN)
+				RR =(RR && 1) ==((IEN &&(ioPins & argument)) && 1) //The &&1 is so we can compare them both as booleans instead of tripping over two bitfields with ones in different places
 				ioPins = (ioPins & 65534 & (~argument | 65280)) | !RR
 
 			if ("8")	//STO, DATA = RR
 
 				if (argument > 128)
 					if (OEN)
-						ioPins = RR ? (ioPins | argument) : (ioPins & ~argument)
+						ioPins = RR ?(ioPins | argument) : (ioPins & ~argument)
 
 					return 0
 
@@ -298,7 +277,7 @@ function update_mem_lights(mem)
 			if ("9")	//STOC, DATA = !RR
 				if (argument > 128)
 					if (OEN)
-						ioPins = RR ? (ioPins & ~argument) : (ioPins | argument)
+						ioPins = RR ?(ioPins & ~argument) : (ioPins | argument)
 
 					return 0
 
@@ -319,10 +298,10 @@ function update_mem_lights(mem)
 
 
 			if ("A")	//IEN, IEN = DATA
-				IEN = (ioPins & argument)
+				IEN =(ioPins & argument)
 
 			if ("B")	//OEN, OEN = DATA
-				OEN = (ioPins & argument)
+				OEN =(ioPins & argument)
 
 			if ("C")	//JMP
 				. = hex_digit_values[.]
@@ -330,10 +309,10 @@ function update_mem_lights(mem)
 					return -1
 
 				if (. > 7)
-					program_counter += (4 * (. - 7)) - 2
+					program_counter += (4 *(. - 7)) - 2
 
 				else
-					program_counter -= (4 * (. + 1)) + 2
+					program_counter -= (4 *(. + 1)) + 2
 
 				. = length(ROM)
 				if (program_counter < 0)

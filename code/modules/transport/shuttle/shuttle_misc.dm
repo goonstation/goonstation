@@ -91,9 +91,9 @@
 
 /obj/machinery/shuttle/engine/propulsion/examine()
 	if (src.stat1 == 1 && src.stat2 == 1)
-		boutput(usr, "<span style=\"color:blue\">The propulsion engine is working properly!</span>")
+		return list("<span style=\"color:blue\">The propulsion engine is working properly!</span>")
 	else
-		boutput(usr, "<span style=\"color:red\">The propulsion engine is not functioning.</span>")
+		return list("<span style=\"color:red\">The propulsion engine is not functioning.</span>")
 
 /obj/machinery/shuttle/engine/propulsion/ex_act()
 	if(src.stat1 == 0 && src.stat2 == 0) // don't break twice, that'd be silly

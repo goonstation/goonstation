@@ -410,7 +410,6 @@
 	var/datum/pathobank/db = new
 	var/predictive_data = ""
 	var/datum/spyGUI/gui = null
-	var/manip_cooldown = 4 DECI SECONDS // was 20
 	var/manipulating = false //are we currently irradiating the pathogen?
 	New()
 		..()
@@ -757,6 +756,8 @@
 			var/dir = text2num(href_list["dir"])
 			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(manipulating))
 				manipulating = true
+				var/mal = src.manip.loaded.reference.maliciousness
+				var/manip_cooldown = mal < 15 ? 1 : mal < 65 ? 10 : 20
 				SPAWN_DBG(manip_cooldown)
 					var/act = src.manip.loaded.manipulate(mut_type, dir)
 					var/out

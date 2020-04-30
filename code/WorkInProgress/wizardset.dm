@@ -796,12 +796,12 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	desc = "A book laid out neatly on a pedestal."
 	var/written = null
 
-	examine()
-		..()
+	examine(mob/user)
+		. = ..()
 		if (!written)
-			boutput(usr, "<span style=\"color:red\">You cannot decipher the runes written in the book.</span>")
+			. += "<span style=\"color:red\">You cannot decipher the runes written in the book.</span>"
 		else
-			usr.Browse(written, "window=tome;size=200x400")
+			user.Browse(written, "window=tome;size=200x400")
 
 /obj/bookcase
 	name = "bookcase"

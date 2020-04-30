@@ -319,7 +319,7 @@
 //#endif
 
 		if (src.client && src.client.check_key(KEY_EXAMINE))
-			target.examine() // in theory, usr should be us, this is shit though
+			src.examine_verb(target)
 			return
 
 		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))

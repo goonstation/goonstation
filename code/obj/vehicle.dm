@@ -40,9 +40,10 @@ Contains:
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(rider && rider_visible && W.force)
-			eject_rider()
 			W.attack(rider, user)
-			return
+			user.lastattacked = src
+			eject_rider()
+			W.visible_message("<span style=\"color:red\">[user] swings at [rider] with [W]!</span>")
 		return
 
 	proc/eject_rider(var/crashed, var/selfdismount)
@@ -1256,6 +1257,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/clowncar/cluwne/attackby(var/obj/item/W, var/mob/user)
 	eject_rider()
 	W.attack(rider, user)
+	user.lastattacked = src
 
 /obj/vehicle/clowncar/cluwne/eject_rider(var/crashed, var/selfdismount)
 	..(crashed, selfdismount)
@@ -2013,8 +2015,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	actual_light.attach(src)
 
 /obj/vehicle/forklift/examine()
-	..()
-	var/examine_text	//Shows who is driving it and also the items being carried
+	. = ..()
+	var/list/examine_text = list()	//Shows who is driving it and also the items being carried
 	var/obj/HI
 	if(src.rider)
 		examine_text += "[src.rider] is using it. "
@@ -2031,8 +2033,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				HI = helditems[helditems.len]
 			examine_text += " and \a [HI.name]"
 		examine_text += "."
-	boutput(usr, "[examine_text]")
-	return
+	. += examine_text.Join("")
 
 /obj/vehicle/forklift/verb/enter_forklift()
 	set src in oview(1)
@@ -2260,12 +2261,9 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 			broken = 0
 			if (helditems_maximum < 4)
 				helditems_maximum = 4
+			return
 
-	//attacking rider on forklift
-	if(rider && rider_visible && I.force)
-		I.attack(rider, user)
-		I.visible_message("<span style=\"color:red\">[user] swings at [rider] with [I]!</span>")
-	return
+	return ..() // attacking rider on forklift
 
 /obj/vehicle/forklift/proc/break_forklift()
 	broken = 1

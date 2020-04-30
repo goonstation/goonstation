@@ -221,20 +221,15 @@
 		return
 
 /obj/item/cable_coil/examine()
-	set src in view(1)
-	set category = "Local"
-
 	if (amount == 1)
-		boutput(usr, "A short piece of [base_name].")
-	else if (amount == 1)
-		boutput(usr, "A piece of [base_name].")
+		. = list("A short piece of [base_name].")
 	else
-		boutput(usr, "A coil of [base_name]. There's [amount] length[s_es(amount)] of cable in the coil.")
+		. = list("A coil of [base_name]. There's [amount] length[s_es(amount)] of cable in the coil.")
 
 	if (insulator)
-		boutput(usr, "It is insulated with [insulator].")
+		. += "It is insulated with [insulator]."
 	if (conductor)
-		boutput(usr, "Its conductive layer is made out of [conductor].")
+		. += "Its conductive layer is made out of [conductor]."
 
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)

@@ -592,38 +592,43 @@
 		return
 
 	examine()
-		set src in oview()
-
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return
+			return list()
 
 		if (isghostdrone(usr))
-			return
-		var/rendered = "<span style=\"color:blue\">*---------*</span><br>"
-		rendered += "<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span><br>"
-		if (isdead(src)) rendered += "<span style=\"color:red\">[src.name] is powered-down.</span><br>"
+			return list()
+		. += "<span style=\"color:blue\">*---------*</span>"
+		. += "<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>"
+
+		if (isdead(src))
+			. += "<span style=\"color:red\">[src.name] is powered-down.</span>"
+
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
 		if (brute)
-			if (brute < 75) rendered += "<span style=\"color:red\">[src.name] looks slightly dented</span><br>"
-			else rendered += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span><br>"
+			if (brute < 75)
+				. += "<span style=\"color:red\">[src.name] looks slightly dented</span>"
+			else
+				. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span>"
 		if (burn)
-			if (burn < 75) rendered += "<span style=\"color:red\">[src.name] has slightly burnt wiring!</span><br>"
-			else rendered += "<span style=\"color:red\"><B>[src.name] has severely burnt wiring!</B></span><br>"
-		if (src.health <= 50) rendered += "<span style=\"color:red\">[src.name] is twitching and sparking!</span><br>"
-		if (isunconscious(src)) rendered += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span><br>"
+			if (burn < 75)
+				. += "<span style=\"color:red\">[src.name] has slightly burnt wiring!</span>"
+			else
+				. += "<span style=\"color:red\"><B>[src.name] has severely burnt wiring!</B></span>"
+		if (src.health <= 50)
+			. += "<span style=\"color:red\">[src.name] is twitching and sparking!</span>"
+		if (isunconscious(src))
+			. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
 
-		rendered += "The cover is [opened ? "open" : "closed"].<br>"
-		rendered += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
+		. += "The cover is [opened ? "open" : "closed"]."
+		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]"
 
 		if (src.module)
-			rendered += "[src.name] has a [src.module.name] installed.<br>"
+			. += "[src.name] has a [src.module.name] installed."
 		else
-			rendered += "[src.name] does not appear to have a module installed.<br>"
+			. += "[src.name] does not appear to have a module installed."
 
-		rendered += "<span style=\"color:blue\">*---------*</span>"
-		out(usr, rendered)
-		return
+		. += "<span style=\"color:blue\">*---------*</span>"
 
 	choose_name(var/retries = 3)
 		var/newname

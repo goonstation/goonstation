@@ -39,9 +39,8 @@
 
 
 	examine()
-		..()
-		boutput(usr, "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!")
-		return
+		. = ..()
+		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/camera_film))
@@ -98,9 +97,8 @@
 		mats = 15
 
 	examine()
-		..()
-		boutput(usr, "It is good for [src.pictures] pictures.")
-		return
+		. = ..()
+		. += "It is good for [src.pictures] pictures."
 
 
 /obj/item/photo

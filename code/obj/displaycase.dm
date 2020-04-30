@@ -131,30 +131,29 @@
 		..()
 		return
 
-	examine()
-		set src in usr
-		if (usr.mind && usr.mind.assigned_role == "Captain")
-			boutput(usr, "It's your laser gun! It's really just for show and made of plastic but man it looks cool. Everybody thinks you're awesome, and you know it.")
+	examine(mob/user)
+		. = ..()
+		if (user.mind && user.mind.assigned_role == "Captain")
+			. += "It's your laser gun! It's really just for show and made of plastic but man it looks cool. Everybody thinks you're awesome, and you know it."
 		else
-			boutput(usr, "On closer inspection, it looks like it's just a display model...? What a cheapskate. Fuck our captain.")
+			. += "On closer inspection, it looks like it's just a display model...? What a cheapskate. Fuck our captain."
 
 		if (src.repair_stage > 0)
 			switch (src.repair_stage)
 				if (1)
-					boutput(usr, "<br><span style=\"color:blue\">The maintenance panel is open, revealing a largely empty circuit board.</span>")
+					. += "<span style=\"color:blue\">The maintenance panel is open, revealing a largely empty circuit board.</span>"
 				if (2)
-					boutput(usr, "<br><span style=\"color:blue\">The wiring has been replaced, but there's still an empty spot in the circuit board.</span>")
+					. += "<span style=\"color:blue\">The wiring has been replaced, but there's still an empty spot in the circuit board.</span>"
 				if (3)
-					boutput(usr, "<br><span style=\"color:blue\">A new coil has been inserted, but not secured yet.</span>")
+					. += "<span style=\"color:blue\">A new coil has been inserted, but not secured yet.</span>"
 				if (4)
-					boutput(usr, "<br><span style=\"color:blue\">The coil has been soldered into place, but there's nothing to focus the laser beam.</span>")
+					. += "<span style=\"color:blue\">The coil has been soldered into place, but there's nothing to focus the laser beam.</span>"
 				if (5)
-					boutput(usr, "<br><span style=\"color:blue\">A lens has been installed, but the control circuits aren't set up yet.</span>")
+					. += "<span style=\"color:blue\">A lens has been installed, but the control circuits aren't set up yet.</span>"
 				if (6)
-					boutput(usr, "<br><span style=\"color:blue\">The gun appears to be missing a power cell.</span>")
+					. += "<span style=\"color:blue\">The gun appears to be missing a power cell.</span>"
 				if (7)
-					boutput(usr, "<br><span style=\"color:blue\">Power cell installed. The maintenance panel is open.</span>")
-		return
+					. += "<span style=\"color:blue\">Power cell installed. The maintenance panel is open.</span>"
 
 	attack()
 		..()

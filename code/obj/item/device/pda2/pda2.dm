@@ -481,11 +481,10 @@
 				boutput(user, "<span style=\"color:blue\">You insert [ID] into [src].</span>")
 
 /obj/item/device/pda2/examine()
-	..()
-	boutput(usr, "The back cover is [src.closed ? "closed" : "open"].")
+	. = ..()
+	. += "The back cover is [src.closed ? "closed" : "open"]."
 	if (src.ID_card)
-		boutput(usr, "[ID_card] has been inserted into it.")
-	return
+		. += "[ID_card] has been inserted into it."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return

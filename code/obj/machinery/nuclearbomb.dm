@@ -66,30 +66,29 @@
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
 		return
 
-	examine()
-		..()
-		if(usr.client)
+	examine(mob/user)
+		. = ..()
+		if(user.client)
 			if (src.armed)
-				boutput(usr, "It is currently counting down to detonation. Ohhhh shit.")
-				boutput(usr, "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]")
+				. += "It is currently counting down to detonation. Ohhhh shit."
+				. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
 			else
-				boutput(usr, "It is not armed. That's a relief.")
+				. += "It is not armed. That's a relief."
 				if (src.disk && istype(src.disk))
-					boutput(usr, "The authenticaion disk has been inserted.")
+					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				boutput(usr, "<br>The floor bolts have been unsecured. The bomb can be moved around.")
+				. += "The floor bolts have been unsecured. The bomb can be moved around."
 			else
-				boutput(usr, "<br>It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them.")
+				. += "It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them."
 
 			switch(src.health)
 				if(80 to 125)
-					boutput(usr, "<span style=\"color:red\">It is a little bit damaged.</span>")
+					. += "<span style=\"color:red\">It is a little bit damaged.</span>"
 				if(40 to 79)
-					boutput(usr, "<span style=\"color:red\">It looks pretty beaten up.</span>")
+					. += "<span style=\"color:red\">It looks pretty beaten up.</span>"
 				if(1 to 39)
-					boutput(usr, "<span style=\"color:red\"><b>It seems to be on the verge of falling apart!</b></span>")
-		return
+					. += "<span style=\"color:red\"><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
 	attack_hand(mob/user as mob)

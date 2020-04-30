@@ -157,17 +157,6 @@
 			if(src.hat)
 				src.overlays += image('icons/obj/aibots.dmi', "hat-[src.hat]")
 
-	examine()
-		set src in view()
-		..()
-
-		if (src.health < initial(health))
-			if (src.health > 15)
-				boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-			else
-				boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-		return
-
 	attack_hand(mob/user as mob, params)
 		var/dat
 

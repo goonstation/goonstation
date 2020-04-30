@@ -263,34 +263,28 @@
 
 	New()
 		..()
-		items = list("bodybag" = /obj/item/body_bag, \
-									"scanner" = /obj/item/device/detective_scanner, \
-									"lighter" = /obj/item/device/light/zippo/, \
-									"spray" = /obj/item/spraybottle, \
-									"monitor" = /obj/item/device/camera_viewer, \
-									"camera" = /obj/item/camera_test, \
-									"audiolog" = /obj/item/device/audio_log , \
-									"flashlight" = /obj/item/device/light/flashlight, \
+		items = list("bodybag" = /obj/item/body_bag,
+									"scanner" = /obj/item/device/detective_scanner,
+									"lighter" = /obj/item/device/light/zippo/,
+									"spray" = /obj/item/spraybottle,
+									"monitor" = /obj/item/device/camera_viewer,
+									"camera" = /obj/item/camera_test,
+									"audiolog" = /obj/item/device/audio_log ,
+									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses)
 		cigs = list()
 	examine()
-		set src in view()
-		set category = "Local"
-
-		..()
-		var/str = "<span style=\"color:blue\">Current activation phrase is <b>\"[phrase]\"</b>.</span>"
+		. = ..()
+		. += "<span style=\"color:blue\">Current activation phrase is <b>\"[phrase]\"</b>.</span>"
 		for (var/name in items)
 			var/type = items[name]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				str += "<br><span style=\"color:blue\">[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br><span style=\"color:blue\">[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
 			else
-				str += "<br>There is no [name]!"
+				. += "<br>There is no [name]!"
 		if (cigs.len)
-			str += "<br><span style=\"color:blue\">It contains <b>[cigs.len]</b> cigarettes!</span>"
-
-		usr.show_message(str)
-		return
+			. += "<br><span style=\"color:blue\">It contains <b>[cigs.len]</b> cigarettes!</span>"
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
@@ -1014,10 +1008,9 @@
 		item_state = "sunhatg"
 
 	examine()
-		..()
+		. = ..()
 		if (src.stunready)
-			boutput(usr, "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]")
-		return
+			. += "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))

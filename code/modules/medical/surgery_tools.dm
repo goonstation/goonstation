@@ -233,9 +233,8 @@ CONTAINS:
 
 	// Every bit of usability helps (Convair880).
 	examine()
-		src.desc = "A medical staple gun for securely reattaching limbs. There are [src.ammo] staples left."
-		..()
-		return
+		. = ..()
+		. += "There are [src.ammo] staples left."
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ismob(M))

@@ -152,14 +152,10 @@
 
 	return
 
-/obj/item/device/igniter/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if ((in_range(src, usr) || src.loc == usr))
+/obj/item/device/igniter/examine(mob/user)
+	. = ..()
+	if ((in_range(src, user) || src.loc == user))
 		if (src.status)
-			usr.show_message("The igniter is ready!")
+			. += "The igniter is ready!"
 		else
-			usr.show_message("The igniter can be attached!")
-	return
+			. += "The igniter can be attached!"
