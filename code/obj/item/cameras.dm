@@ -201,7 +201,7 @@
 		return
 
 	throw_begin(atom/target)
-		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
+		if (enchant_power && world.time > src.enchant_delay && cursed_dude && ismob(cursed_dude))
 			cursed_dude.visible_message("<span style=\"color:red\"><b>[cursed_dude] is violently thrown by an unseen force!</b></span>")
 			cursed_dude.throw_at(get_edge_cheap(src, get_dir(src, target)), 20, 1)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
