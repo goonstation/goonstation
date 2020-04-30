@@ -245,52 +245,55 @@
 	set name = "Create Blueprint"
 	set desc = "Allows creation of blueprints of any user."
 	set category = "Special Verbs"
-
+	
 	var/list/bps = new/list()
 	var/savefile/save = new/savefile("data/blueprints.dat")
 	save.cd = "/"
 
-	for(var/curr in save.dir)
-		save.cd = "/[curr]"
-		bps.Add("[curr];[save["roomname"]]")
+	for(var/currckey in save.dir)
+		save.cd = "/[currckey]"
+		for(var/currroom in save.dir)
+			save.cd = "/[currckey]/[currroom]"
+			bps.Add("[currckey]/[currroom]")
 
 	save.cd = "/"
 
 	var/input = input(usr,"Select save:","Blueprints") in bps
-	var/list/split = splittext(input, ";")
-	var/key = split[1]
+	var/list/split = splittext(input, "/")
+	var/key = input
+	if(save.dir.Find("[split[1]]"))
+		save.cd = "/[split[1]]"
+		if(save.dir.Find("[split[2]]"))
+			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
 
-	if(save.dir.Find("[key]"))
-		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
+			save.cd = "/[key]"
+			boutput(usr, "<span style=\"color:blue\">Printed Blueprint for '[save["roomname"]]'</span>")
+			var/roomname = save["roomname"]
+			bp.size_x = save["sizex"]
+			bp.size_y = save["sizey"]
 
-		save.cd = "/[key]"
-		boutput(usr, "<span style=\"color:blue\">Printed Blueprint for '[save["roomname"]]'</span>")
-		var/roomname = save["roomname"]
-		bp.size_x = save["sizex"]
-		bp.size_y = save["sizey"]
-
-		for (var/A in save.dir)
-			if(A == "sizex" || A == "sizey" || A == "roomname") continue
-			save.cd = "/[key]/[A]"
-			var/list/coords = splittext(A, ",")
-			var/datum/tileinfo/tf = new/datum/tileinfo()
-			tf.posx = coords[1]
-			tf.posy = coords[2]
-			tf.tiletype = save["type"]
-			tf.state = save["state"]
-			tf.direction = save["dir"]
-			for (var/B in save.dir)
-				if(B == "type" || B == "state") continue
-				save.cd = "/[key]/[A]/[B]"
-				var/datum/objectinfo/O = new/datum/objectinfo()
-				O.objecttype = save["type"]
-				O.direction = save["dir"]
-				O.layer = save["layer"]
-				O.px = save["pixelx"]
-				O.py = save["pixely"]
-				tf.objects.Add(O)
-			bp.roominfo.Add(tf)
-			bp.name = "Blueprint '[roomname]'"
+			for (var/A in save.dir)
+				if(A == "sizex" || A == "sizey" || A == "roomname") continue
+				save.cd = "/[key]/[A]"
+				var/list/coords = splittext(A, ",")
+				var/datum/tileinfo/tf = new/datum/tileinfo()
+				tf.posx = coords[1]
+				tf.posy = coords[2]
+				tf.tiletype = save["type"]
+				tf.state = save["state"]
+				tf.direction = save["dir"]
+				for (var/B in save.dir)
+					if(B == "type" || B == "state") continue
+					save.cd = "/[key]/[A]/[B]"
+					var/datum/objectinfo/O = new/datum/objectinfo()
+					O.objecttype = save["type"]
+					O.direction = save["dir"]
+					O.layer = save["layer"]
+					O.px = save["pixelx"]
+					O.py = save["pixely"]
+					tf.objects.Add(O)
+				bp.roominfo.Add(tf)
+				bp.name = "Blueprint '[roomname]'"
 
 
 /obj/item/blueprint
@@ -476,14 +479,15 @@
 		return
 
 	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
+		name = roomname
 		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]" + name))
-			save.dir.Remove("[usr.client.ckey]" + name)
-			save.dir.Add("[usr.client.ckey]" + name)
-			save.cd = "/[usr.client.ckey]" + name
+		if(save.dir.Find("[usr.client.ckey]/" + name))
+			save.dir.Remove("[usr.client.ckey]/" + name)
+			save.dir.Add("[usr.client.ckey]/" + name)
+			save.cd = "/[usr.client.ckey]/" + name
 		else
-			save.dir.Add("[usr.client.ckey]" + name)
-			save.cd = "/[usr.client.ckey]" + name
+			save.dir.Add("[usr.client.ckey]/" + name)
+			save.cd = "/[usr.client.ckey]/" + name
 
 		var/minx = 100000000
 		var/miny = 100000000
@@ -510,9 +514,9 @@
 			var/posx = (curr.x - minx)
 			var/posy = (curr.y - miny)
 
-			save.cd = "/[usr.client.ckey]" + name
+			save.cd = "/[usr.client.ckey]/" + name
 			save.dir.Add("[posx],[posy]")
-			save.cd = "/[usr.client.ckey][name]/[posx],[posy]"
+			save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
 			save["type"] << curr.type
 			save["dir"] << curr.dir
 			save["state"] << curr.icon_state
@@ -528,11 +532,11 @@
 						break
 				if(permitted || !applyWhitelist)
 					var/id = "\ref[o]"
-					save.cd = "/[usr.client.ckey][name]/[posx],[posy]"
+					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
 					while(save.dir.Find(id))
 						id = id + "I"
 					save.dir.Add("[id]")
-					save.cd = "/[usr.client.ckey][name]/[posx],[posy]/[id]"
+					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]/[id]"
 					save["dir"] << o.dir
 					save["type"] << o.type
 					save["layer"] << o.layer
@@ -541,12 +545,13 @@
 		return
 
 	proc/printSaved(var/name = "")
-		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]" + name))
+		name = roomname
+		save.cd = "/[usr.client.ckey]/"
+		if(save.dir.Find(name))
 			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
 			prints_left--
 
-			save.cd = "/[usr.client.ckey]" + name
+			save.cd = "/[usr.client.ckey]/" + name
 			boutput(usr, "<span style=\"color:blue\">Printed Blueprint for '[save["roomname"]]'</span>")
 			var/roomname = save["roomname"]
 			bp.size_x = save["sizex"]
@@ -554,7 +559,7 @@
 
 			for (var/A in save.dir)
 				if(A == "sizex" || A == "sizey" || A == "roomname") continue
-				save.cd = "/[usr.client.ckey][name]/[A]"
+				save.cd = "/[usr.client.ckey]/[name]/[A]"
 				var/list/coords = splittext(A, ",")
 				var/datum/tileinfo/tf = new/datum/tileinfo()
 				tf.posx = coords[1]
@@ -566,7 +571,7 @@
 				bp.req_glass += 0.5
 				for (var/B in save.dir)
 					if(B == "type" || B == "state") continue
-					save.cd = "/[usr.client.ckey][name]/[A]/[B]"
+					save.cd = "/[usr.client.ckey]/[name]/[A]/[B]"
 					var/datum/objectinfo/O = new/datum/objectinfo()
 					O.objecttype = save["type"]
 					O.direction = save["dir"]
