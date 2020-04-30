@@ -1,5 +1,9 @@
 
 (t)thu apr 30 20
+(u)Gannets
+(p)489
+(e)🆕🎨|enhancement, sprites
+(+)New sprites for the revolver, detective revolver, .22 pistol and derringer.
 (u)zjdtmkhzt
 (p)491
 (e)|
