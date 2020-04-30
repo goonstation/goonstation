@@ -1526,6 +1526,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\simroom.dm"
 #include "code\WorkInProgress\sniper.dm"
 #include "code\WorkInProgress\SomepotatosStuff.dm"
+#include "code\WorkInProgress\spatial_disassociator.dm"
 #include "code\WorkInProgress\SpoogemonstersStuff.dm"
 #include "code\WorkInProgress\SpyGuyStuff.dm"
 #include "code\WorkInProgress\StationMap.dm"

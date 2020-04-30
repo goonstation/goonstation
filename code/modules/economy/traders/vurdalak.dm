@@ -10,7 +10,11 @@
 	chance_arrive = 10
 
 	max_goods_buy = 3
+	#if ASS_JAM
+	max_goods_sell = 2
+	#else
 	max_goods_sell = 1
+	#endif
 
 	base_goods_buy = list(/datum/commodity/trader/vurdalak/meat,
 	/datum/commodity/trader/vurdalak/brains,
@@ -18,7 +22,12 @@
 	/datum/commodity/trader/vurdalak/toxicvenne,
 	/datum/commodity/trader/vurdalak/amanita,
 	/datum/commodity/trader/vurdalak/roburger)
+	#if ASS_JAM
+	base_goods_sell = list(/datum/commodity/trader/vurdalak/artifact,
+	/datum/commodity/trader/vurdalak/spatial)
+	#else
 	base_goods_sell = list(/datum/commodity/trader/vurdalak/artifact)
+	#endif
 
 	dialogue_greet = list("Well met. We have several items for sale, as well as several desired articles.",
 	"Greetings. We believe it would be mutually profitable for the both of us to engage in commerce.",
@@ -78,6 +87,15 @@
 	alt_type_chance = 95
 	possible_names = list("We are selling artifacts of alien origin. We cannot verify their purpose.",
 	"We have a collection of alien artifacts you may be interested in.")
+
+//spatial disassociator acquisition method: for activation during assjam only
+/datum/commodity/trader/vurdalak/spatial
+	comname = "Strange Device"
+	comtype = /obj/spatial_disassociator
+	amount = 1
+	price_boundary = list(5000,6500)
+	possible_names = list("We have acquired a device that reveals fragments of a realm known to us. We have no use for it, but perhaps you may find it enlightening.")
+
 
 // Vurdalak wants these things
 
