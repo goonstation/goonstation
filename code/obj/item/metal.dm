@@ -175,12 +175,8 @@ MATERIAL
 		boutput(user, "<span style=\"color:blue\">You finish stacking metal.</span>")
 
 	metal/examine()
-		set src in view(1)
-		set category = "Local"
-
-		..()
-		boutput(usr, text("There are [] metal sheet\s on the stack.", src.amount))
-		return
+		. = ..()
+		. += "There are [src.amount] metal sheet\s on the stack."
 
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)

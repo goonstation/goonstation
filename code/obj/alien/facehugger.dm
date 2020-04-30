@@ -49,17 +49,15 @@
 		src.process()
 
 	examine()
-		set src in view()
-		..()
+		. = ..()
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			boutput(usr, text("<span style=\"color:red\"><B>the alien is not moving</B></span>"))
+			. += "<span style=\"color:red\"><B>the alien is not moving</B></span>"
 		else if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\"><B>the alien looks fresh, just out of the egg</B></span>"))
+			. += "<span style=\"color:red\"><B>the alien looks fresh, just out of the egg</B></span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>the alien looks pretty beat up</B></span>"))
-		return
+			. += "<span style=\"color:red\"><B>the alien looks pretty beat up</B></span>"
 
 
 	attack_hand(user as mob)
@@ -384,4 +382,3 @@
 	proc/healthcheck()
 		if (src.health <= 0)
 			src.death()
-

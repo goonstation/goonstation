@@ -118,14 +118,9 @@
 
 
 /obj/item/f_card/examine()
-	set src in view(2)
-	set category = "Local"
-
-	..()
-	boutput(usr, text("<span style=\"color:blue\">There are [] on the stack!</span>", src.amount))
-	usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, display()), text("window=[]", src.name))
-	onclose(usr, "[src.name]")
-	return
+	. = ..()
+	. += "<span style=\"color:blue\">There are [src.amount] on the stack!</span>"
+	. += src.display()
 
 /obj/item/f_card/proc/display()
 

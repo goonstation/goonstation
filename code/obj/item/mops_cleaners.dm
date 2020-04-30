@@ -263,11 +263,9 @@ WET FLOOR SIGN
 	STOP_TRACKING
 
 /obj/item/mop/examine()
-	set src in view()
-	set category = "Local"
-	..()
+	. = ..()
 	if(reagents && reagents.total_volume)
-		boutput(usr, "<span style=\"color:blue\">[src] is wet!</span>")
+		. += "<span style=\"color:blue\">[src] is wet!</span>"
 
 /obj/item/mop/afterattack(atom/A, mob/user as mob)
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
@@ -433,11 +431,9 @@ WET FLOOR SIGN
 	..()
 
 /obj/item/sponge/examine()
-	set src in view()
-	set category = "Local"
-	..()
+	. = ..()
 	if(reagents && reagents.total_volume)
-		boutput(usr, "<span style=\"color:blue\">The sponge is wet!</span>")
+		. += "<span style=\"color:blue\">[src] is wet!</span>"
 
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)

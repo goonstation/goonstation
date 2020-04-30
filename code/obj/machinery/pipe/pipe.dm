@@ -1354,10 +1354,7 @@ var/linenums = 0
 	icon_state = "valve[open]"
 
 /obj/machinery/valve/mvalve/examine()
-	set src in oview(1)
-	set category = "Local"
-
-	boutput(usr, "[desc] It is [ open? "open" : "closed"].")
+	return list("[desc] It is [ open? "open" : "closed"].")
 
 
 
@@ -1489,13 +1486,9 @@ var/linenums = 0
 	icon_state = "dvalve[open]"
 
 /obj/machinery/valve/dvalve/examine()
-	set src in oview(1)
-	set category = "Local"
 	if(NOPOWER)
-		boutput(usr, "[desc] It is unpowered! It is [ open? "open" : "closed"].")
-		return
-	boutput(usr, "[desc] It is [ open? "open" : "closed"].")
-
+		return list("[desc] It is unpowered! It is [ open? "open" : "closed"].")
+	return list("[desc] It is [ open? "open" : "closed"].")
 
 
 /obj/machinery/valve/dvalve/buildnodes()

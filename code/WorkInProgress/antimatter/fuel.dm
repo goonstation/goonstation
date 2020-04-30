@@ -66,10 +66,9 @@
 	return
 
 
-/obj/item/fuel/examine()
-	set src in view(1)
-	if(usr && !usr.stat)
-		boutput(usr, "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].")
+/obj/item/fuel/examine(mob/user)
+	if(user && !user.stat)
+		return list("A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].")
 
 /obj/item/fuel/proc/injest(mob/M as mob)
 	switch(content)

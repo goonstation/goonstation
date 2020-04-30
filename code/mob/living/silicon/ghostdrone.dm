@@ -241,35 +241,32 @@
 		return
 
 	examine()
-		..()
+		. = ..()
 
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return
-
-		var/msg = "*---------*<br>"
+		. += "*---------*"
 
 		if (isdead(src))
-			msg += "<span style'color:red'>It looks dead and lifeless.</span><br>"
-			msg += "*---------*"
-			return out(usr, msg)
+			. += "<span style'color:red'>It looks dead and lifeless.</span>\n*---------*"
+			return
 
-		msg += "<span style='color: blue;'>"
+
+		var/msg = list("<span style='color: blue;'>")
 		if (src.active_tool)
 			msg += "[src] is holding a little [bicon(src.active_tool)] [src.active_tool.name]"
 			if (istype(src.active_tool, /obj/item/magtractor) && src.active_tool:holding)
 				msg += ", containing \an [src.active_tool:holding]"
 			msg += "<br>"
-		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]<br>"
-		msg += "</span>"
+		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
+
+		. += msg.Join("")
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))
-				msg += "<span style='color:red'>It's rather badly damaged. It probably needs some wiring replaced inside.</span><br>"
+				. += "<span style='color:red'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				msg += "<span style='color:red'>It's a bit damaged. It looks like it needs some welding done.</span><br>"
+				. += "<span style='color:red'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
-		msg += "*---------*"
-		out(usr, msg)
+		. += "*---------*"
 
 	Login()
 		..()

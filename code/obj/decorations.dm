@@ -976,7 +976,7 @@ obj/decoration/ceilingfan
 	mouse_opacity = 0
 
 	examine()
-		return
+		return list()
 
 /obj/decoration/plasmabullethole
 	anchored = 2
@@ -985,4 +985,4 @@ obj/decoration/ceilingfan
 	mouse_opacity = 0
 
 	examine()
-		return
+		return list()

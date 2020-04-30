@@ -746,25 +746,25 @@
 			new/datum/gang_item/space/stims)
 
 	examine()
-		..()
+		. = ..()
 
 		if(health == 0)
-			boutput(usr, "It is completely destroyed!")
+			. += "It is completely destroyed!"
 			return
 
 		switch(round(100*health/max_health))
 			if(1 to 25)
-				boutput(usr, "It is almost destroyed!")
+				. += "It is almost destroyed!"
 			if(26 to 50)
-				boutput(usr, "It is badly damaged!")
+				. += "It is badly damaged!"
 			if(51 to 75)
-				boutput(usr, "It is somewhat damaged.")
+				. += "It is somewhat damaged."
 			if(76 to 99)
-				boutput(usr, "It is slightly damaged.")
+				. += "It is slightly damaged."
 			if(100)
-				boutput(usr, "It is undamaged.")
+				. += "It is undamaged."
 
-		boutput(usr, "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\"")
+		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
 		if(!isalive(user))

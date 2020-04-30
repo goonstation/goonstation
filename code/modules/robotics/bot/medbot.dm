@@ -142,18 +142,6 @@
 			src.update_icon()
 	return
 
-/obj/machinery/bot/medbot/examine()
-	set src in view()
-	set category = "Local"
-	..()
-
-	if (src.health < 20)
-		if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-	return
-
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 

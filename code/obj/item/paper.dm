@@ -97,41 +97,34 @@
 
 	return
 
-/obj/item/paper/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if(ismob(usr) && !usr.literate)
-		. = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
+/obj/item/paper/examine(mob/user)
+	. = ..()
+	var/windowtext
+	if(!user.literate)
+		windowtext = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
 	else
-		. = src.info
+		windowtext = src.info
 		if (src.form_startpoints && src.form_endpoints)
 			for (var/x = src.form_startpoints.len, x > 0, x--)
-				. = copytext(., 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(., src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(., src.form_endpoints[src.form_endpoints[x]])
+				windowtext = copytext(., 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(., src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(., src.form_endpoints[src.form_endpoints[x]])
 
 	var/font_junk = ""
 	for (var/i in src.fonts)
 		font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
 
-	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[.]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
+	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[windowtext]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
 	onclose(usr, "[src.name]")
-	return null
 
 //[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
-/obj/item/paper/Map/examine()
-	set src in view()
-	set category = "Local"
+/obj/item/paper/Map/examine(mob/user)
+	. = ..()
 
-	..()
-
-	if (!( ishuman(usr) || isobserver(usr) || issilicon(usr) ))
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
+	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
+		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
+		onclose(user, "[src.name]")
 	else
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
+		onclose(user, "[src.name]")
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
@@ -1137,8 +1130,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/stamp/examine()
-	..()
-	boutput(usr, "It is set to '[current_mode]' mode.")
+	. = ..()
+	. += "It is set to '[current_mode]' mode."
 
 /obj/item/stamp/reagent_act(reagent_id, volume)
 	if (..())
@@ -1253,9 +1246,9 @@ WHO DID THIS */
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		boutput(usr, desc)
+		return list(desc)
 	else
-		..()
+		return ..()
 
 /obj/item/paper/folded/plane
 	name = "paper plane"
