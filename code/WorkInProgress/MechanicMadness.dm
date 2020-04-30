@@ -129,12 +129,6 @@ var/list/mechanics_telepads = new/list()
 		outgoing_filters.Cut()
 		return
 
-	//Helper proc to check if a mob is allowed to change connections. Right now you only need a multitool.
-	proc/allowChange(var/mob/M)
-		if (istype(M) && M.find_tool_in_hand(TOOL_PULSING))
-			return 1
-		return 0
-
 	//Called when a component is dragged onto another one.
 	proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 		if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics
@@ -182,9 +176,9 @@ var/list/mechanics_telepads = new/list()
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (O.mechanics.filtered)
-						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
-						if (length(filter))
-							if (!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
+						var/filter = input(usr, "Add filters for this connection?(Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+						if(length(filter))
+							if(!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
 							O.mechanics.outgoing_filters.Add(master)
 							O.mechanics.outgoing_filters[master] = splittext(filter, ",")
 							boutput(usr, "<span style=\"color:green\">Only passing messages that [O.mechanics.exact_match ? "match" : "contain"] [filter] to the [master.name]</span>")
@@ -207,7 +201,9 @@ var/list/mechanics_telepads = new/list()
 	w_class = 1.0
 	level = 2
 	var/under_floor = 0
+	var/can_rotate = 0
 	var/list/particles = new/list()
+	var/list/configs = list()
 
 	New()
 		mechanics = new(src)
@@ -244,8 +240,50 @@ var/list/mechanics_telepads = new/list()
 		return src.attack_hand(user)
 	proc/secure()
 	proc/loosen()
+	proc/append_default_configs(var/modifier) //no modifier adds all, 1 = add "Set Send-Signal", 2 = add "Disconnect All"
+		if(modifier == 1)
+			configs.Add(list("Set Send-Signal"))
+		else if(modifier == 2)
+			configs.Add(list("Disconnect All"))
+		else
+			configs.Add(list("Set Send-Signal","Disconnect All"))
+	proc/modify_configs()
+		if(!isliving(usr))
+			return
+		if(usr.stat)
+			return
+		if(src.configs.len)
+			var/input = input("Select a config to modify!", "Config", null) as null|anything in src.configs
+			if(input && (usr in range(1,src)))
+				switch(input)
+					if("Set Send-Signal")
+						var/inp = input(usr,"Please enter Signal:","Signal setting","1") as text
+						inp = trim(adminscrub(inp), 1)
+						if(length(inp))
+							mechanics.outputSignal = inp
+							boutput(usr, "Signal set to [inp]")
+						return 0
+					if("Disconnect All")
+						mechanics.wipeIncoming()
+						mechanics.wipeOutgoing()
+						boutput(usr, "<span style=\"color:blue\">You disconnect [src].</span>")
+						return 0
+				return input
+			else
+				return 0
+
+	proc/rotate()
+		src.dir = turn(src.dir, -90)
+
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (iswrenchingtool(W))
+		if (ispryingtool(W))
+			if (can_rotate)
+				if (!anchored)
+					rotate()
+				else
+					boutput(user, "You must unsecure the [src] in order to rotate it.")
+			return 1
+		else if(iswrenchingtool(W))
 			switch(level)
 				if(1) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the underfloor and deactivate it.")
@@ -309,7 +347,7 @@ var/list/mechanics_telepads = new/list()
 		if(usr.stat)
 			return
 
-		if(!mechanics.allowChange(usr))
+		if(!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
 			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
 			return
 
@@ -320,46 +358,6 @@ var/list/mechanics_telepads = new/list()
 		string = trim(sanitize(html_encode(string)), 1)
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
-
-	verb/wipe()
-		set src in view(1)
-		set name = "\[Disconnect All\]"
-		set desc = "Disconnects all devices connected to this device."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		mechanics.wipeIncoming()
-		mechanics.wipeOutgoing()
-		boutput(usr, "<span style=\"color:blue\">You disconnect [src].</span>")
-		return
-
-	verb/setvalue()
-		set src in view(1)
-		set name = "\[Set Send-Signal\]"
-		set desc = "Sets the signal that is sent when this device is triggered."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Signal:","Signal setting","1") as text
-		inp = trim(adminscrub(inp), 1)
-		if(length(inp))
-			mechanics.outputSignal = inp
-			boutput(usr, "Signal set to [inp]")
-		return
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
@@ -388,9 +386,9 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
+		configs.Add(list("Set Price","Set Code","Set Thank-String","Eject Money"))
+		src.append_default_configs()
 		mechanics.addInput("eject money", "emoney")
-		return
-
 
 	proc/emoney(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -401,16 +399,58 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if ("Set Price")
+					if (code)
+						var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+						if (codecheck != code)
+							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
+							return
+					var/inp = input(user,"Enter new price:","Price setting", price) as num
+					if (inp)
+						if (inp < 0)
+							user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
+							return
+						if (inp == 0)
+							user.show_text("Please set a price higher than zero.", "red")
+							return
+						if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
+							inp = 1000000
+							user.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
+						price = inp
+						boutput(user, "Price set to [inp]")
+				if ("Set Code")
+					if (code)
+						var/codecheck = adminscrub(input(user,"Please enter current code:","Code check","") as text)
+						if (codecheck != code)
+							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
+							return
+					var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
+					if (length(inp))
+						code = inp
+						boutput(user, "Code set to [inp]")
+				if ("Set Thank-String")
+					thank_string = adminscrub(input(user,"Please enter string:","string","Thanks for using this mechcomp service!") as text)
+				if ("Eject Money")
+					if(code)
+						var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+						if (codecheck != code)
+							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
+							return
+					ejectmoney()
 		else if (istype(W, /obj/item/spacecash) && ready)
 			ready = 0
 			current_buffer += W.amount
 			if (src.price <= 0)
 				src.price = initial(src.price)
-			if(current_buffer >= price)
-				if(length(thank_string))
+			if (current_buffer >= price)
+				if (length(thank_string))
 					componentSay("[thank_string]")
 
-				if(current_buffer > price)
+				if (current_buffer > price)
 					componentSay("Here is your change!")
 					var/obj/item/spacecash/C = new /obj/item/spacecash(user.loc, current_buffer - price)
 					user.put_in_hand_or_drop(C)
@@ -430,108 +470,10 @@ var/list/mechanics_telepads = new/list()
 
 
 	proc/ejectmoney()
-		if(collected)
+		if (collected)
 			var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 			S.setup(get_turf(src), collected)
 			collected = 0
-		return
-
-	verb/setprice()
-		set src in view(1)
-		set name = "\[Set Price\]"
-		set desc = "Sets the price."
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		if(code)
-			var/codecheck = strip_html(input(usr,"Please enter current code:","Code check","") as text)
-			if(codecheck != code)
-				boutput(usr, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
-				return
-
-		var/inp = input(usr,"Enter new price:","Price setting", price) as num
-		if(inp)
-			if (inp < 0)
-				usr.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
-				return
-			if (inp == 0)
-				usr.show_text("Please set a price higher than zero.", "red")
-				return
-			if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
-				inp = 1000000
-				usr.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
-			price = inp
-			boutput(usr, "Price set to [inp]")
-		return
-
-	verb/ejectmoneyverb()
-		set src in view(1)
-		set name = "\[Eject money\]"
-		set desc = "Ejects the collected money."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-
-		if(code)
-			var/codecheck = strip_html(input(usr,"Please enter current code:","Code check","") as text)
-			if(codecheck != code)
-				boutput(usr, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
-				return
-
-		ejectmoney()
-
-		return
-
-	verb/setcode()
-		set src in view(1)
-		set name = "\[Set Code\]"
-		set desc = "Sets code that is required to eject money and set prices."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		if(code)
-			var/codecheck = adminscrub(input(usr,"Please enter current code:","Code check","") as text)
-			if(codecheck != code)
-				boutput(usr, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
-				return
-
-		var/inp = adminscrub(input(usr,"Please enter new code:","Code setting","dosh") as text)
-		if(length(inp))
-			code = inp
-			boutput(usr, "Code set to [inp]")
-		return
-
-	verb/setthankstr()
-		set src in view(1)
-		set name = "\[Set Thank-string\]"
-		set desc = "Sets the Thank-string."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		thank_string = adminscrub(input(usr,"Please enter string:","string","Thanks for using this mechcomp service!") as text)
 		return
 
 /obj/item/mechanics/flushcomp
@@ -545,8 +487,8 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		. = ..()
-		verbs -= /obj/item/mechanics/verb/setvalue
 		mechanics.addInput("flush", "flushp")
+		src.append_default_configs(2)
 
 	disposing()
 		if(air_contents)
@@ -569,7 +511,8 @@ var/list/mechanics_telepads = new/list()
 					pool(air_contents)
 				air_contents = null
 				trunk = null
-		return
+		else if (ispulsingtool(W))
+			src.modify_configs()
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -623,7 +566,8 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("print", "print")
-		return
+		src.configs.Add("Set Paper Name")
+		src.append_default_configs()
 
 	proc/print(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
@@ -637,30 +581,22 @@ var/list/mechanics_telepads = new/list()
 			P.name = paper_name
 		return
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
+					return
+				if ("Set Paper Name")
+					var/inp = input(user,"Please enter name:","name setting", paper_name) as text
+					paper_name = adminscrub(inp)
+					boutput(user, "String set to [paper_name]")
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && get_dist(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.loc = target
-		return
-
-	verb/setthprintstr()
-		set src in view(1)
-		set name = "\[Set paper name\]"
-		set desc = "Sets the name of the printed paper."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter name:","name setting", paper_name) as text
-		paper_name = adminscrub(inp)
-		boutput(usr, "String set to [paper_name]")
 		return
 
 /obj/item/mechanics/pscan
@@ -673,7 +609,8 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		return
+		configs.Add(list("Toggle Paper Consumption","Toggle Thermal Paper Mode"))
+		src.append_default_configs()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && get_dist(src, target) == 1)
@@ -684,6 +621,16 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
+					return
+				if ("Toggle Paper Consumption")
+					del_paper = !del_paper
+					boutput(user, "[del_paper ? "Now consuming paper":"Now NOT consuming paper"]")
+				if ("Toggle Thermal Paper Mode")
+					thermal_only = !thermal_only
+					boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		else if (istype(W, /obj/item/paper) && ready)
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span style=\"color:red\">This scanner only accepts thermal paper.</span>")
@@ -698,43 +645,6 @@ var/list/mechanics_telepads = new/list()
 			mechanics.fireOutgoing(msg)
 			if(del_paper)
 				del(W)
-		return
-
-	verb/togglepsdel()
-		set src in view(1)
-		set name = "\[Toggle Paper consumption\]"
-		set desc = "Sets whether the scanner consumes the paper used on it or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		del_paper = !del_paper
-		boutput(usr, "[del_paper ? "Now consuming paper":"Now NOT consuming paper"]")
-		return
-
-	verb/togglepstherm()
-		set src in view(1)
-		set name = "\[Toggle thermal paper mode\]"
-		set desc = "Sets whether the scanner only accepts thermal paper or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		thermal_only = !thermal_only
-		boutput(usr, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
-		return
 
 //todo: merge with the secscanner?
 /obj/mechbeam
@@ -753,14 +663,14 @@ var/list/mechanics_telepads = new/list()
 	var/obj/item/mechanics/triplaser/holder
 
 	proc/tripped()
-		if( !holder )
-			qdel( src )
+		if (!holder)
+			qdel(src)
 		else
 			holder.tripped()
 
 	HasEntered(atom/movable/AM as mob|obj)
-		if( isobserver(AM) || !AM.density ) return
-		if(!istype( AM, /obj/mechbeam ))
+		if (isobserver(AM) || !AM.density) return
+		if (!istype(AM, /obj/mechbeam))
 			SPAWN_DBG(0) tripped()
 
 /obj/item/mechanics/triplaser
@@ -768,13 +678,31 @@ var/list/mechanics_telepads = new/list()
 	desc = "Fires a signal when someone passes through the beam."
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "secdetector0"
+	can_rotate = 1
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0
 	var/sendstr = "1"
+
 	New()
 		..()
 		mechanics.addInput("toggle", "toggle")
+		configs.Add("Set Range")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Range")
+					var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
+					range = CLAMP(rng, 1, 5)
+					boutput(user, "<span style='color:blue'>Range set to [range]!</span>")
+					if(level == 1)
+						rebeam()
+
 	proc/toggle()
 		if(active)
 			loosen()
@@ -786,27 +714,13 @@ var/list/mechanics_telepads = new/list()
 			qdel(beam)
 	secure()
 		rebeam()
+
+	rotate()
+		if(level == 1)
+			rebeam()
+
 	disposing()
 		loosen()
-	verb/setrange()
-		set src in view(1)
-		set name = "\[Set Range\]"
-		set desc = "Sets the beam range. Probably."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
-		range = CLAMP(rng, 1, 5)
-		boutput( usr, "<span style='color:blue'>Range set to [range]!</span>" )
-		if( level == 1 )
-			rebeam()
 
 	proc/tripped()
 		mechanics.fireOutgoing(mechanics.newSignal(mechanics.outputSignal))
@@ -817,29 +731,20 @@ var/list/mechanics_telepads = new/list()
 				user.drop_item()
 				src.loc = target
 		return
-	verb/setdir()
-		set src in view(1)
-		set name = "\[Rotate\]"
-		set desc = "Rotates the object"
-		set category = "Local"
-		if (usr.stat)
-			return
-		src.dir = turn(src.dir, 90)
-		if( level == 1 )
-			rebeam()
-		return
+
 	proc/rebeam()
 		loosen()
 		active = 1
 		beamobjs = list()
-		var/turf/lastturf = get_step( get_turf(src), dir )
+		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if( lastturf.opacity || !lastturf.canpass() )
+			if(lastturf.opacity || !lastturf.canpass())
 				break
-			var/obj/mechbeam/newbeam = new( lastturf, src )
+			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.dir = src.dir
 			beamobjs[++beamobjs.len] = newbeam
-			lastturf = get_step( lastturf, dir )
+			lastturf = get_step(lastturf, dir)
+
 /obj/item/mechanics/hscan
 	name = "Hand scanner"
 	desc = ""
@@ -849,7 +754,18 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		return
+		configs.Add("Toggle Signal Type")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Toggle Signal Type")
+					send_name = !send_name
+					boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 
 	attack_hand(mob/user as mob)
 		if(level != 2 && ready)
@@ -873,36 +789,23 @@ var/list/mechanics_telepads = new/list()
 				src.loc = target
 		return
 
-	verb/togglehssig()
-		set src in view(1)
-		set name = "\[Toggle Signal type\]"
-		set desc = "Toggles between the different signal modes."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		send_name = !send_name
-		boutput(usr, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
-		return
-
-
 /obj/item/mechanics/accelerator
 	name = "Graviton accelerator"
 	desc = ""
 	icon_state = "comp_accel"
+	can_rotate = 1
 	var/active = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		..()
 		mechanics.addInput("activate", "activateproc")
-		return
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			src.modify_configs()
 
 	proc/drivecurrent()
 		if(level == 2) return
@@ -945,16 +848,6 @@ var/list/mechanics_telepads = new/list()
 			throwstuff(AM)
 		return
 
-	verb/setdir()
-		set src in view(1)
-		set name = "\[Rotate\]"
-		set desc = "Rotates the object"
-		set category = "Local"
-		if (usr.stat)
-			return
-		src.dir = turn(src.dir, 90)
-		return
-
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
@@ -972,7 +865,21 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("delay", "delayproc")
-		return
+		configs.Add("Set Delay")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Delay")
+					var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", 10) as num
+					inp = max(inp, 10)
+					if(inp)
+						delay = inp
+						boutput(user, "Set delay to [inp]")
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -987,27 +894,6 @@ var/list/mechanics_telepads = new/list()
 					mechanics.fireOutgoing(input)
 					icon_state = "[under_floor ? "u":""]comp_wait"
 					active = 0
-		return
-
-	verb/setdelay()
-		set src in view(1)
-		set name = "\[Set Delay\]"
-		set desc = "Sets the delay"
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr, "Enter delay in 10ths of a second:", "Set delay", 10) as num
-		inp = max(inp, 10)
-		if(inp)
-			delay = inp
-			boutput(usr, "Set delay to [inp]")
 		return
 
 	updateIcon()
@@ -1029,7 +915,20 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.addInput("input 1", "fire1")
 		mechanics.addInput("input 2", "fire2")
-		return
+		configs.Add("Set Time Frame")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Time Frame")
+					var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
+					if(inp)
+						timeframe = inp
+						boutput(user, "Set Time Frame to [inp]")
 
 	proc/fire1(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1067,26 +966,6 @@ var/list/mechanics_telepads = new/list()
 
 		return
 
-	verb/settframe()
-		set src in view(1)
-		set name = "\[Set Time Frame\]"
-		set desc = "Sets the Time Frame during which the second Signal needs to arrive."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
-		if(inp)
-			timeframe = inp
-			boutput(usr, "Set Time Frame to [inp]")
-		return
-
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_and"
 		return
@@ -1108,34 +987,27 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("input 8", "fire")
 		mechanics.addInput("input 9", "fire")
 		mechanics.addInput("input 10", "fire")
-		return
+		configs.Add("Set Trigger-Signal")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Trigger-Signal")
+					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+					if(length(inp))
+						inp = strip_html(html_decode(inp))
+						mechanics.triggerSignal = inp
+						boutput(user, "Signal set to [inp]")
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		if(input.signal == mechanics.triggerSignal)
 			input.signal = mechanics.outputSignal
 			mechanics.fireOutgoing(input)
-		return
-
-	verb/settvalue()
-		set src in view(1)
-		set name = "\[Set Trigger-Signal\]"
-		set desc = "Sets the signal that causes this component to fire."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Signal:","Signal setting","1") as text
-		if(length(inp))
-			inp = strip_html(html_decode(inp))
-			mechanics.triggerSignal = inp
-			boutput(usr, "Signal set to [inp]")
 		return
 
 	updateIcon()
@@ -1153,7 +1025,21 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("split", "split")
-		return
+		configs.Add("Set Trigger Field")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Trigger Field")
+					var/inp = input(user,"Please enter Trigger Field:","Trigger Field setting","1") as text
+					if(length(inp))
+						inp = strip_html(html_decode(inp))
+						mechanics.triggerSignal = inp
+						boutput(user, "Trigger Field set to [inp]")
 
 	proc/split(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1162,27 +1048,6 @@ var/list/mechanics_telepads = new/list()
 			if(converted.Find(mechanics.triggerSignal))
 				input.signal = converted[mechanics.triggerSignal]
 				mechanics.fireOutgoing(input)
-		return
-
-	verb/settvalue2()
-		set src in view(1)
-		set name = "\[Set Trigger Field\]"
-		set desc = "Sets the Trigger Field that causes this component to forward the Value of that Field."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Trigger Field:","Trigger Field setting","1") as text
-		if(length(inp))
-			inp = strip_html(html_decode(inp))
-			mechanics.triggerSignal = inp
-			boutput(usr, "Trigger Field set to [inp]")
 		return
 
 	updateIcon()
@@ -1201,7 +1066,7 @@ var/list/mechanics_telepads = new/list()
 	get_desc()
 		. += "<span style=\"color:blue\">Current Expression: [html_encode(expression)]</span><br/>"
 		. += "<span style=\"color:blue\">Current Replacement: [html_encode(expressionrepl)]</span><br/>"
-		. += "Your replacement string can contain $0-$9 to insert that matched group (things between parenthesis)<br/>"
+		. += "Your replacement string can contain $0-$9 to insert that matched group(things between parenthesis)<br/>"
 		. += "$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>"
 		. += "$0 or $& will be the entire matched string."
 
@@ -1210,7 +1075,45 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("replace string", "checkstr")
 		mechanics.addInput("set regex", "setregex")
 		mechanics.addInput("set regex replacement", "setregexreplace")
-		return
+		configs.Add(list("Set Pattern","Set Replacement","Set Flags","Set Regular Expression Replacement"))
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Pattern")
+					var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
+					if(inp != null)
+						//var/regex/R = new(inp) // How would you even check this anymore?
+						//if(!R)
+						//	boutput(user, "<span style=\"color:red\">Bad regex</span>")
+						//else
+						expressionpatt = inp
+						inp = sanitize(html_encode(inp))
+						expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
+						boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+				if("Set Replacement")
+					var/inp = input(user,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
+					if(inp != null)
+						expressionrepl = inp
+						inp = sanitize(html_encode(inp))
+						expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
+						boutput(user, "Expression Replacement set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+				if("Set Flags")
+					var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
+					if(inp != null)
+						expressionflag = inp
+						inp = sanitize(html_encode(inp))
+						expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
+						boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+				if("Set Regular Expression Replacement")
+					var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
+					if(length(inp))
+						expressionrepl = inp
+						boutput(user, "Replacement set to [html_encode(inp)]")
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
@@ -1231,97 +1134,6 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setregexreplace(var/datum/mechanicsMessage/input)
 		expressionrepl = input.signal
-
-	verb/setregexr1()
-		set src in view(1)
-		set name = "\[Set Pattern\]"
-		set desc = "Sets the expression pattern for searching and replacing"
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
-		if(inp != null)
-			//var/regex/R = new(inp) // How would you even check this anymore?
-			//if(!R)
-			//	boutput(usr, "<span style=\"color:red\">Bad regex</span>")
-			//else
-			expressionpatt = inp
-			inp = sanitize(html_encode(inp))
-			expression = ("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(usr, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-		return
-
-	verb/setregexr2()
-		set src in view(1)
-		set name = "\[Set Replacement\]"
-		set desc = "Sets the expression replacement for searching and replacing"
-		set category = "Local"
-
-		if (!istype(usr, /mob/living))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
-		if(inp != null)
-			expressionrepl = inp
-			inp = sanitize(html_encode(inp))
-			expression = ("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(usr, "Expression Replacement set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-		return
-
-	verb/setregexr3()
-		set src in view(1)
-		set name = "\[Set Flags\]"
-		set desc = "Sets the expression flags for searching and replacing"
-		set category = "Local"
-
-		if (!istype(usr, /mob/living))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Expression Flags:","Expression setting", expressionflag) as text
-		if(inp != null)
-			expressionflag = inp
-			inp = sanitize(html_encode(inp))
-			expression = ("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(usr, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-		return
-
-
-	verb/setregexrepl()
-		set src in view(1)
-		set name = "\[Set Regular Expression Replacement\]"
-		set desc = "Sets the replacement string"
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Replacement:","Replacement setting", expressionrepl) as text
-		if(length(inp))
-			expressionrepl = inp
-			boutput(usr, "Replacement set to [html_encode(inp)]")
-		return
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
@@ -1344,7 +1156,33 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.addInput("check string", "checkstr")
 		mechanics.addInput("set regex", "setregex")
-		return
+		configs.Add(list("Set Expression Pattern","Set Expression Flags","Toggle Signal replacing"))
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Expression Pattern")
+					var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
+					if(inp != null)
+						expressionpatt = inp
+						expression =("[expressionpatt]/[expressionflag]")
+						inp = sanitize(html_encode(inp))
+						boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+				if("Set Expression Flags")
+					var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
+					if(inp != null)
+						expressionflag = inp
+						expression =("[expressionpatt]/[expressionflag]")
+						inp = sanitize(html_encode(inp))
+						boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+				if("Toggle Signal replacing")
+					replacesignal = !replacesignal
+					boutput(user, "[replacesignal ? "Now forwarding own Signal":"Now forwarding found String"]")
+
 	proc/setregex(var/datum/mechanicsMessage/input)
 		expression = input.signal
 	proc/checkstr(var/datum/mechanicsMessage/input)
@@ -1360,68 +1198,6 @@ var/list/mechanics_telepads = new/list()
 				input.signal = R.match
 			mechanics.fireOutgoing(input)
 
-		return
-
-	verb/setregexf1()
-		set src in view(1)
-		set name = "\[Set Expression Pattern\]"
-		set desc = "Sets the expression pattern that the component will look for."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
-		if(inp != null)
-			expressionpatt = inp
-			expression = ("[expressionpatt]/[expressionflag]")
-			inp = sanitize(html_encode(inp))
-			boutput(usr, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-		return
-
-	verb/setregexf2()
-		set src in view(1)
-		set name = "\[Set Expression Flags\]"
-		set desc = "Sets the expression that the component will look for."
-		set category = "Local"
-
-		if (!istype(usr, /mob/living))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Expression Flags:","Expression setting", expressionflag) as text
-		if(inp != null)
-			expressionflag = inp
-			expression = ("[expressionpatt]/[expressionflag]")
-			inp = sanitize(html_encode(inp))
-			boutput(usr, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-		return
-
-	verb/toggleregfrep()
-		set src in view(1)
-		set name = "\[Toggle Signal replacing\]"
-		set desc = "Toggles whether the component will send its own signal or the found string."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		replacesignal = !replacesignal
-		boutput(usr, "[replacesignal ? "Now forwarding own Signal":"Now forwarding found String"]")
 		return
 
 	updateIcon()
@@ -1444,7 +1220,27 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.addInput("check string", "checkstr")
 		mechanics.addInput("set trigger", "settrigger")
-		return
+		src.configs.Add(list("Set Trigger-String","Invert Trigger","Toggle Replace Signal"))
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Trigger-String")
+					var/inp = input(user,"Please enter String:","String setting","1") as text
+					if(length(inp))
+						inp = adminscrub(inp)
+						mechanics.triggerSignal = inp
+						boutput(user, "String set to [inp]")
+				if("Invert Trigger")
+					not = !not
+					boutput(user, "[not ? "Component will now trigger when the String is NOT found.":"Component will now trigger when the String IS found."]")
+				if("Toggle Replace Signal")
+					changesig = !changesig
+					boutput(user, "Signal changing now [changesig ? "on":"off"]")
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1460,63 +1256,6 @@ var/list/mechanics_telepads = new/list()
 
 	proc/settrigger(var/datum/mechanicsMessage/input)
 		mechanics.triggerSignal = input.signal
-
-	verb/setscsig()
-		set src in view(1)
-		set name = "\[Set Trigger-String\]"
-		set desc = "Sets the string that causes this component to fire."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter String:","String setting","1") as text
-		if(length(inp))
-			inp = adminscrub(inp)
-			mechanics.triggerSignal = inp
-			boutput(usr, "String set to [inp]")
-		return
-
-	verb/togglenot()
-		set src in view(1)
-		set name = "\[Invert Trigger\]"
-		set desc = "Switches between triggering on a Match or triggering when it can NOT find the string."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		not = !not
-		boutput(usr, "[not ? "Component will now trigger when the String is NOT found.":"Component will now trigger when the String IS found."]")
-		return
-
-	verb/togglesigchange2()
-		set src in view(1)
-		set name = "\[Toggle Replace Signal\]"
-		set desc = "Toggles whether the Component will change the Signal to its own or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		changesig = !changesig
-		boutput(usr, "Signal changing now [changesig ? "on":"off"]")
-		return
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_check"
@@ -1534,31 +1273,23 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.filtered = 1
 		mechanics.addInput("dispatch", "dispatch")
-		verbs -= /obj/item/mechanics/verb/setvalue
-		return
+		configs.Add("Toggle Exact Match")
+		src.append_default_configs(2)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Toggle Exact Match")
+					mechanics.exact_match = !mechanics.exact_match
+					boutput(user, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if (level == 2) return
 		var/sent = mechanics.fireOutgoing(input) //Filtering is handled by mechanics_holder based on filtered flag
-		if (sent) animate_flash_color_fill(src,"#00FF00",2, 2)
-		return
-
-	verb/toggleexactmatch()
-		set src in view(1)
-		set name = "\[Toggle Exact Match\]"
-		set desc = "In exact match mode, signals must match the filter exactly in order to be passed (case insensitive)"
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		mechanics.exact_match = !mechanics.exact_match
-		boutput(usr, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
+		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
 	updateIcon()
@@ -1584,7 +1315,25 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("add to string + send", "addstrsend")
 		mechanics.addInput("send", "sendstr")
 		mechanics.addInput("clear buffer", "clrbff")
-		return
+		configs.Add(list("Set starting String","Set ending String"))
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set starting String")
+					var/inp = input(user,"Please enter String:","String setting", bstr) as text
+					inp = strip_html(inp)
+					bstr = inp
+					boutput(user, "String set to [inp]")
+				if("Set ending String")
+					var/inp = input(user,"Please enter String:","String setting", astr)
+					inp = strip_html(inp)
+					astr = inp
+					boutput(user, "String set to [inp]")
 
 	proc/clrbff(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1611,46 +1360,6 @@ var/list/mechanics_telepads = new/list()
 		sendstr(input)
 		return
 
-	verb/setbdefbuild()
-		set src in view(1)
-		set name = "\[Set starting String\]"
-		set desc = "Sets an optional string that will be put at the beginning of each new String before everything else."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter String:","String setting", bstr) as text
-		inp = strip_html(inp)
-		bstr = inp
-		boutput(usr, "String set to [inp]")
-		return
-
-	verb/setadefbuild()
-		set src in view(1)
-		set name = "\[Set ending String\]"
-		set desc = "Sets an optional string that will be put at the end of each String before sending it."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter String:","String setting", astr)
-		inp = strip_html(inp)
-		astr = inp
-		boutput(usr, "String set to [inp]")
-		return
-
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_builder"
 		return
@@ -1668,7 +1377,18 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("relay", "relay")
-		return
+		configs.Add("Toggle Signal Changing")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Toggle Signal Changing")
+					changesig = !changesig
+					boutput(user, "Signal changing now [changesig ? "on":"off"]")
 
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
@@ -1683,24 +1403,6 @@ var/list/mechanics_telepads = new/list()
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_relay"
-		return
-
-	verb/togglesigchange()
-		set src in view(1)
-		set name = "\[Toggle Signal changing\]"
-		set desc = "Toggles whether the relay component will change the Signal to its own or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		changesig = !changesig
-		boutput(usr, "Signal changing now [changesig ? "on":"off"]")
 		return
 
 /obj/item/mechanics/wificomp
@@ -1728,13 +1430,31 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.addInput("send radio message", "send")
 		mechanics.addInput("set frequency", "setfreq")
+		configs.Add(list("Set Frequency","Toggle NetID Filtering","Toggle Forward All"))
+		src.append_default_configs()
 
 		if(radio_controller)
 			set_frequency(frequency)
 
 		src.net_id = format_net_id("\ref[src]")
 
-		return
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Frequency")
+					var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
+					if(inp)
+						set_frequency(inp)
+						boutput(user, "Frequency set to [inp]")
+				if("Toggle NetID Filtering")
+					only_directed = !only_directed
+					boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
+				if("Toggle Forward All")
+					send_full = !send_full
+					boutput(user, "[send_full ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		var/newfreq = text2num(input.signal)
@@ -1816,63 +1536,6 @@ var/list/mechanics_telepads = new/list()
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
 
-	verb/setfreqv()
-		set src in view(1)
-		set name = "\[Set Frequency\]"
-		set desc = "Sets the frequency."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Frequency:","Frequency setting", frequency) as num
-		if(inp)
-			set_frequency(inp)
-			boutput(usr, "Frequency set to [inp]")
-		return
-
-
-	verb/toggleidf()
-		set src in view(1)
-		set name = "\[Toggle NetID filtering\]"
-		set desc = "Toggles whether the Component will only react to Radio Messages directed at it or to *all* Messages on the Frequency."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		only_directed = !only_directed
-		boutput(usr, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
-		return
-
-	verb/togglefall()
-		set src in view(1)
-		set name = "\[Toggle Forward All\]"
-		set desc = "Toggles whether the Component will forward ALL radio Messages without processing them or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		send_full = !send_full
-		boutput(usr, "[send_full ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
-		return
-
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
 		return
@@ -1908,8 +1571,63 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("previous + send", "previousplus")
 		mechanics.addInput("send selected", "sendCurrent")
 		mechanics.addInput("send random", "sendRand")
-		verbs -= /obj/item/mechanics/verb/setvalue
-		return
+		configs.Add(list("Set Signal List","Set Signal List(Delimeted)","Toggle Announcements","Toggle Random"))
+		src.append_default_configs(2)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Signal List")
+					var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
+					numsig = round(numsig)
+					if(numsig > 10) //Needs a limit because nerds are nerds
+						boutput(user, "<span style=\"color:red\">This component can't handle more than 10 signals!</span>")
+						return
+					if(numsig)
+						signals.Cut()
+						boutput(user, "Defining [numsig] Signals ...")
+						for(var/i=0, i<numsig, i++)
+							var/signew = input(user,"Content of Signal #[i]","Content:", "signal[i]") as text
+							signew = adminscrub(signew) //SANITIZE THAT SHIT! FUCK!!!!
+							if(length(signew))
+								signals.Add(signew)
+							else
+								signals.Cut()
+								return
+						boutput(user, "Set [numsig] Signals!")
+						for(var/a in signals)
+							boutput(user, a)
+				if("Set Signal List(Delimeted)")
+					var/newsigs = ""
+					while(1)
+						newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
+						if(!newsigs)
+							boutput(user, "<span style='color:blue'>Signals remain unchanged!</span>")
+							break
+						if(length(newsigs) >= 2048)
+							alert(user, "That's far too long. Trim it down some!")
+							continue
+						var/list/built = splittext(newsigs, ";")
+						var/done = 1
+						for(var/i = 1, i <= built.len, i++)
+							if(!built[i])
+								done = 0
+								alert(user, "You have an empty signal in there, try again!(todo, just remove these)")
+								break
+						if(done)
+							signals = built
+							current_index = 1
+							boutput(user, "<span style='color:blue'>There are now [signals.len] signals in the list.</span>")
+							break
+				if("Toggle Announcements")
+					announce = !announce
+					boutput(user, "Announcements now [announce ? "on":"off"]")
+				if("Toggle Random")
+					random = !random
+					boutput(user, "[random ? "Now picking Items at random.":"Now using selected Items."]")
 
 	proc/selitem(var/datum/mechanicsMessage/input)
 		if(!input) return
@@ -2039,111 +1757,6 @@ var/list/mechanics_telepads = new/list()
 		sendCurrent(input)
 		return
 
-	verb/setsignals()
-		set src in view(1)
-		set name = "\[Set Signal List\]"
-		set desc = "Defines the List of Signals to be used by this Component."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/numsig = input(usr,"How many Signals would you like to define?","# Signals:", 3) as num
-		numsig = round(numsig)
-		if(numsig > 10) //Needs a limit because nerds are nerds
-			boutput(usr, "<span style=\"color:red\">This component can't handle more than 10 signals!</span>")
-			return
-		if(numsig)
-			signals.Cut()
-			boutput(usr, "Defining [numsig] Signals ...")
-			for(var/i=0, i<numsig, i++)
-				var/signew = input(usr,"Content of Signal #[i]","Content:", "signal[i]") as text
-				signew = adminscrub(signew) //SANITIZE THAT SHIT! FUCK!!!!
-				if(length(signew))
-					signals.Add(signew)
-				else
-					signals.Cut()
-					return
-			boutput(usr, "Set [numsig] Signals!")
-			for(var/a in signals)
-				boutput(usr, a)
-		return
-
-	verb/setsignals2()
-		set src in view(1)
-		set name = "\[Set Signal List (Delimeted)\]"
-		set desc = "Defines the List of Signals to be used by this Component via a Delimited string."//whats with This Case like This
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-		var/newsigs = ""
-		while(1)
-			newsigs = input(usr, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
-			if( !newsigs )
-				boutput( usr, "<span style='color:blue'>Signals remain unchanged!</span>" )
-				break
-			if(length( newsigs ) >= 2048)
-				alert( usr, "That's far too long. Trim it down some!" )
-				continue
-			var/list/built = splittext( newsigs, ";" )
-			var/done = 1
-			for( var/i = 1, i <= built.len, i++ )
-				if( !built[i] )
-					done = 0
-					alert( usr, "You have an empty signal in there, try again! (todo, just remove these)" )
-					break
-			if( done )
-				signals = built
-				current_index = 1
-				boutput( usr, "<span style='color:blue'>There are now [signals.len] signals in the list.</span>" )
-				break
-	verb/toggleannouncement()
-		set src in view(1)
-		set name = "\[Toggle Announcements\]"
-		set desc = "Toggles wether the Component will say its selected item out loud or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		announce = !announce
-		boutput(usr, "Announcements now [announce ? "on":"off"]")
-		return
-
-	verb/togglerndsel()
-		set src in view(1)
-		set name = "\[Toggle random\]"
-		set desc = "Toggles whether the Component will pick an Item at random or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		random = !random
-		boutput(usr, "[random ? "Now picking Items at random.":"Now using selected Items."]")
-		return
-
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_selector"
 		return
@@ -2167,8 +1780,27 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("deactivate", "deactivate")
 		mechanics.addInput("toggle", "toggle")
 		mechanics.addInput("output state", "state")
-		verbs -= /obj/item/mechanics/verb/setvalue
-		return
+		configs.Add(list("Set On-Signal","Set Off-Signal"))
+		src.append_default_configs(2)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set On-Signal")
+					var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
+					if(length(inp))
+						inp = adminscrub(inp)
+						signal_on = inp
+						boutput(user, "On-Signal set to [inp]")
+				if("Set Off-Signal")
+					var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
+					if(length(inp))
+						inp = adminscrub(inp)
+						signal_off = inp
+						boutput(user, "Off-Signal set to [inp]")
 
 	proc/activate(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -2208,48 +1840,6 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_toggle[on ? "1":""]"
 		return
 
-	verb/setsignalon()
-		set src in view(1)
-		set name = "\[Set On-Signal\]"
-		set desc = "Sets the Signal that is sent when the Component is on."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Signal:","Signal setting",signal_on) as text
-		if(length(inp))
-			inp = adminscrub(inp)
-			signal_on = inp
-			boutput(usr, "On-Signal set to [inp]")
-		return
-
-	verb/setsignaloff()
-		set src in view(1)
-		set name = "\[Set Off-Signal\]"
-		set desc = "Sets the Signal that is sent when the Component is off."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Signal:","Signal setting",signal_off) as text
-		if(length(inp))
-			inp = adminscrub(inp)
-			signal_off = inp
-			boutput(usr, "Off-Signal set to [inp]")
-		return
-
 /obj/item/mechanics/telecomp
 	name = "Teleport Component"
 	desc = ""
@@ -2267,7 +1857,28 @@ var/list/mechanics_telepads = new/list()
 		mechanics_telepads.Add(src)
 		mechanics.addInput("activate", "activate")
 		mechanics.addInput("setID", "setidmsg")
-		return
+		configs.Add(list("Set Teleporter ID","Toggle Send-only Mode"))
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Teleporter ID")
+					var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
+					if(length(inp))
+						inp = adminscrub(inp)
+						teleID = inp
+						boutput(user, "ID set to [inp]")
+				if("Toggle Send-only Mode")
+					send_only = !send_only
+					if(send_only)
+						src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
+					else
+						src.overlays.Cut()
+					boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -2290,12 +1901,12 @@ var/list/mechanics_telepads = new/list()
 
 #ifdef UNDERWATER_MAP
 			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
-				if (T.z != src.z) continue
+				if(T.z != src.z) continue
 #else
 			if (T.z != src.z) continue
 #endif
 
-			if(T.teleID == src.teleID)
+			if (T.teleID == src.teleID)
 				destinations.Add(T)
 
 		if(destinations.len)
@@ -2317,52 +1928,6 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_tele"
 		return
 
-	verb/setid()
-		set src in view(1)
-		set name = "\[Set Teleporter ID\]"
-		set desc = "Sets the ID of the Telepad."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter ID:","ID setting",teleID) as text
-		if(length(inp))
-			inp = adminscrub(inp)
-			teleID = inp
-			boutput(usr, "ID set to [inp]")
-
-		return
-
-	verb/togglesendonly()
-		set src in view(1)
-		set name = "\[Toggle Send-only Mode\]"
-		set desc = "Toggles Send-only Mode."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		send_only = !send_only
-
-		if(send_only)
-			src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
-		else
-			src.overlays.Cut()
-
-		boutput(usr, "Send-only Mode now [send_only ? "on":"off"]")
-		return
-
 /obj/item/mechanics/ledcomp
 	name = "LED Component"
 	desc = ""
@@ -2382,10 +1947,45 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("activate", "turnon")
 		mechanics.addInput("deactivate", "turnoff")
 		mechanics.addInput("set rgb", "setrgb")
-		verbs -= /obj/item/mechanics/verb/setvalue
+		configs.Add(list("Set Color","Set Range"))
+		src.append_default_configs(2)
 		light = new /datum/light/point
 		light.attach(src)
-		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set Color")
+					var/red = input(user,"Red Color(0.0 - 1.0):","Color setting", 1.0) as num
+					red = max(red, 0.0)
+					red = min(red, 1.0)
+
+					var/green = input(user,"Green Color(0.0 - 1.0):","Color setting", 1.0) as num
+					green = max(green, 0.0)
+					green = min(green, 1.0)
+
+					var/blue = input(user,"Blue Color(0.0 - 1.0):","Color setting", 1.0) as num
+					blue = max(blue, 0.0)
+					blue = min(blue, 1.0)
+
+					selcolor = rgb(red * 255, green * 255, blue * 255)
+
+					light.set_color(red, green, blue)
+				if("Set Range")
+					var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
+					if(get_dist(user, src) > 1 || user.stat)
+						return
+
+					inp = round(inp)
+					inp = max(inp, 1)
+					inp = min(inp, 7)
+
+					boutput(user, "Range set to [inp]")
+
+					light.set_brightness(inp / 7)
 
 	pickup()
 		active = 0
@@ -2429,66 +2029,6 @@ var/list/mechanics_telepads = new/list()
 			turnon(input)
 		return
 
-	verb/setcolor()
-		set src in view(1)
-		set name = "\[Set Color\]"
-		set desc = "Sets the color of the light."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/red = input(usr,"Red Color (0.0 - 1.0):","Color setting", 1.0) as num
-		red = max(red, 0.0)
-		red = min(red, 1.0)
-
-		var/green = input(usr,"Green Color (0.0 - 1.0):","Color setting", 1.0) as num
-		green = max(green, 0.0)
-		green = min(green, 1.0)
-
-		var/blue = input(usr,"Blue Color (0.0 - 1.0):","Color setting", 1.0) as num
-		blue = max(blue, 0.0)
-		blue = min(blue, 1.0)
-
-		selcolor = rgb(red * 255, green * 255, blue * 255)
-
-		light.set_color(red, green, blue)
-
-		return
-
-	verb/setrange()
-		set src in view(1)
-		set name = "\[Set Range\]"
-		set desc = "Sets the range of the light."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		var/inp = input(usr,"Please enter Range (1 - 7):","Range setting", light_level) as num
-		if (get_dist(usr, src) > 1 || usr.stat)
-			return
-
-		inp = round(inp)
-		inp = max(inp, 1)
-		inp = min(inp, 7)
-
-		boutput(usr, "Range set to [inp]")
-
-		light.set_brightness(inp / 7)
-
-		return
-
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_led"
 		return
@@ -2501,14 +2041,25 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		return
+		configs.Add("Toggle Show-Source")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Toggle Show-Source")
+					add_sender = !add_sender
+					boutput(user, "Show-Source now [add_sender ? "on":"off"]")
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		if(level == 2) return
 		var/message = msg[2]
 		if(lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html( html_decode(message) )
+		message = strip_html(html_decode(message))
 		var/heardname = M.name
 		if (real_name)
 			heardname = real_name
@@ -2521,25 +2072,6 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_mic"
 		return
 
-	verb/togglesender()
-		set src in view(1)
-		set name = "\[Toggle Show-Source\]"
-		set desc = "Toggles whether the component adds the source of the message to the Signal or not."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		add_sender = !add_sender
-
-		boutput(usr, "Show-Source now [add_sender ? "on":"off"]")
-		return
-
 /obj/item/mechanics/synthcomp
 	name = "Sound Synthesizer"
 	desc = ""
@@ -2549,8 +2081,12 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("input", "fire")
-		src.verbs -= /obj/item/mechanics/verb/setvalue
-		return
+		src.append_default_configs(2)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			src.modify_configs()
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
@@ -2569,6 +2105,15 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_pressure"
 	var/tmp/limiter = 0
+
+	New()
+		..()
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			src.modify_configs()
 
 	Crossed(atom/movable/AM as mob|obj)
 		if (level == 2)
@@ -2594,6 +2139,17 @@ var/list/mechanics_telepads = new/list()
 	var/icon_down = "comp_button1"
 	density = 1
 
+	New()
+		..()
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			src.modify_configs()
+			return
+		attack_hand(user)
+
 	get_desc()
 		. += "<br><span style=\"color:blue\">Current Signal: [html_encode(sanitize(mechanics.outputSignal))].</span>"
 
@@ -2605,10 +2161,6 @@ var/list/mechanics_telepads = new/list()
 			..(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		attack_hand(user)
-		return
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && get_dist(src, target) == 1)
 			if(isturf(target))
@@ -2636,7 +2188,39 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		verbs -= /obj/item/mechanics/verb/setvalue
+		configs.Add(list("Add Button","Remove Button"))
+		src.append_default_configs(2)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Add Button")
+					if(src.active_buttons.len >= 10)
+						boutput(user, "<span style=\"color:red\">There's no room to add another button - the panel is full</span>")
+						return
+
+					var/new_label = input(user, "Button label", "Button Panel") as text
+					var/new_signal = input(user, "Button signal", "Button Panel") as text
+					if(length(new_label) && length(new_signal))
+						new_label = adminscrub(new_label)
+						new_signal = adminscrub(new_signal)
+						if(src.active_buttons.Find(new_label))
+							boutput(user, "There's already a button with that label.")
+							return
+						src.active_buttons.Add(new_label)
+						src.active_buttons[new_label] = new_signal
+						boutput(user, "Added button with label: [new_label] and value: [new_signal]")
+				if("Remove Button")
+					if(!src.active_buttons.len)
+						boutput(user, "<span style=\"color:red\">[src] has no active buttons - there's nothing to remove!</span>")
+					else
+						var/to_remove = input(user, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
+						if(!to_remove || to_remove == "*CANCEL*") return
+						src.active_buttons.Remove(to_remove)
+						boutput(user, "Removed button labeled [to_remove]")
 
 	get_desc()
 		. += "<br><span style=\"color:blue\">Buttons:</span>"
@@ -2661,58 +2245,6 @@ var/list/mechanics_telepads = new/list()
 				src.loc = target
 		return
 
-	verb/add_button()
-		set src in view(1)
-		set name = "\[Add Button\]"
-		set desc = "Adds a button"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		if (src.active_buttons.len >= 10)
-			boutput(usr, "<span style=\"color:red\">There's no room to add another button - the panel is full</span>")
-			return
-
-		var/new_label = input(usr, "Button label", "Button Panel") as text
-		var/new_signal = input(usr, "Button signal", "Button Panel") as text
-		if (length(new_label) && length(new_signal))
-			new_label = adminscrub(new_label)
-			new_signal = adminscrub(new_signal)
-			if (src.active_buttons.Find(new_label))
-				boutput(usr, "There's already a button with that label.")
-				return
-			src.active_buttons.Add(new_label)
-			src.active_buttons[new_label] = new_signal
-			boutput(usr, "Added button with label: [new_label] and value: [new_signal]")
-		return
-
-	verb/remove_button()
-		set src in view(1)
-		set name = "\[Remove Button\]"
-		set desc = "Removes a button"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		if (!src.active_buttons.len)
-			boutput(usr, "<span style=\"color:red\">[src] has no active buttons - there's nothing to remove!</span>")
-		else
-			var/to_remove = input(usr, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
-			if (!to_remove || to_remove == "*CANCEL*") return
-			src.active_buttons.Remove(to_remove)
-			boutput(usr, "Removed button labeled [to_remove]")
-		return
-
 	updateIcon()
 		icon_state = icon_up
 		return
@@ -2724,6 +2256,7 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_gun"
 	density = 0
+	can_rotate = 1
 	var/obj/item/gun/Gun = null
 	var/compatible_guns = /obj/item/gun/kinetic
 
@@ -2733,7 +2266,33 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("fire", "fire")
-		return
+		configs.Add("Remove Gun")
+		src.append_default_configs()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Remove Gun")
+					if(Gun)
+						logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
+						Gun.loc = get_turf(src)
+						Gun = null
+					else
+						boutput(user, "<span style=\"color:red\">There is no gun inside this component.</span>")
+		else if(istype(W, src.compatible_guns))
+			if(!Gun)
+				boutput(usr, "You put the [W] inside the [src].")
+				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
+				usr.drop_item()
+				Gun = W
+				Gun.loc = src
+			else
+				boutput(usr, "There is already a [Gun] inside the [src]")
+		else
+			user.show_text("The [W.name] isn't compatible with this component.", "red")
 
 	proc/getTarget()
 		var/atom/trg = get_turf(src)
@@ -2761,55 +2320,8 @@ var/list/mechanics_telepads = new/list()
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if (istype(W, src.compatible_guns))
-			if(!Gun)
-				boutput(usr, "You put the [W] inside the [src].")
-				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
-				usr.drop_item()
-				Gun = W
-				Gun.loc = src
-			else
-				boutput(usr, "There is already a [Gun] inside the [src]")
-		else
-			user.show_text("The [W.name] isn't compatible with this component.", "red")
-		return
-
 	updateIcon()
 		icon_state = "comp_gun"
-		return
-
-	verb/removegun()
-		set src in view(1)
-		set name = "\[Remove Gun\]"
-		set desc = "Removes the gun."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		if(Gun)
-			logTheThing("station", usr, null, "removes [Gun] from [src] at [log_loc(src)].")
-			Gun.loc = get_turf(src)
-			Gun = null
-		else
-			boutput(usr, "<span style=\"color:red\">There is no gun inside this component.</span>")
-		return
-
-	verb/setdir()
-		set src in view(1)
-		set name = "\[Rotate\]"
-		set desc = "Rotates the object"
-		set category = "Local"
-		if (usr.stat)
-			return
-		src.dir = turn(src.dir, 90)
 		return
 
 /obj/item/mechanics/gunholder/recharging
@@ -2828,7 +2340,6 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("recharge", "recharge")
-		return
 
 	process()
 		..()
@@ -2896,14 +2407,15 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		mechanics.addInput("play", "fire")
-		return
+		configs.Add("Remove Instrument")
+		src.append_default_configs()
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || !ready || !instrument) return
 		ready = 0
 		SPAWN_DBG(delay) ready = 1
 		var/signum = text2num(input.signal)
-		if (signum && ((signum >= 0.4 && signum <= 2) || (signum <= -0.4 && signum >= -2) || pitchUnlocked))
+		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
 			flick("comp_instrument1", src)
 			playsound(src.loc, sounds, volume, 0, 0, signum)
 		else
@@ -2917,7 +2429,19 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user)) return // I don't know what this does but I'm copying it blindly. I guess it checks if there's a predefined action for hitting this with that?
-		if (instrument) // Already got one, chief!
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
+					return
+				if ("Remove Instrument")
+					if(instrument)
+						logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
+						instrument.loc = get_turf(src)
+						instrument = null
+					else
+						boutput(user, "<span style=\"color:red\">There is no instrument inside this component.</span>")
+			return
+		else if (instrument) // Already got one, chief!
 			boutput(usr, "There is already \a [instrument] inside the [src].")
 			return
 		else if (istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
@@ -2950,29 +2474,7 @@ var/list/mechanics_telepads = new/list()
 			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 			usr.drop_item()
 			instrument.loc = src
-		return
 
-	verb/removeInstrument()
-		set src in view(1)
-		set name = "\[Remove Instrument\]"
-		set desc = "Removes the instrument."
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		if(instrument)
-			logTheThing("station", usr, null, "removes [instrument] from [src] at [log_loc(src)].")
-			instrument.loc = get_turf(src)
-			instrument = null
-		else
-			boutput(usr, "<span style=\"color:red\">There is no instrument inside this component.</span>")
-		return
 /obj/item/mechanics/math
 	name = "Arithmetic Component"
 	desc = "Do number things! Component list<br/>rng: Generates a random number from A to B<br/>add: Adds A + B<br/>sub: Subtracts A - B<br/>mul: Multiplies A * B<br/>div: Divides A / B<br/>pow: Power of A ^ B<br/>mod: Modulos A % B<br/>eq|neq|gt|lt|gte|lte: Equal/NotEqual/GreaterThan/LessThan/GreaterEqual/LessEqual -- will output 1 if true. Example: A GT B = 1 if A is larger than B"
@@ -2990,46 +2492,33 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "comp_arith"
 	New()
 		..()
-		verbs -= /obj/item/mechanics/verb/setvalue
 		mechanics.addInput("Set A", "setA")
 		mechanics.addInput("Set B", "setB")
 		mechanics.addInput("Evaluate", "evaluate")
+		configs.Add(list("Set A","Set B","Set Mode"))
+		src.append_default_configs(2)
 
-	verb/setAV()
-		set src in view(1)
-		set name = "\[Set A\]"
-		set desc = "Sets the value of A"
-		set category = "Local"
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(..(W, user)) return
+		else if(ispulsingtool(W))
+			switch(src.modify_configs())
+				if(0)
+					return
+				if("Set A")
+					var/input = input("Set A to what?", "A", A) as num
+					if(!isnull(input))
+						A = input
+				if("Set B")
+					var/input = input("Set B to what?", "B", B) as num
+					if(!isnull(input))
+						B = input
+				if("Set Mode")
+					mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
 
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-		var/input = input( "Set A to what?", "A", A ) as num
-		if (!isnull(input))
-			A = input
-	verb/setBV()
-		set src in view(1)
-		set name = "\[Set B\]"
-		set desc = "Sets the value of B"
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-		var/input = input( "Set B to what?", "B", B ) as num
-		if (!isnull(input))
-			B = input
 	proc/setA(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			A = text2num(input.signal)
+
 	proc/setB(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			B = text2num(input.signal)
@@ -3041,7 +2530,7 @@ var/list/mechanics_telepads = new/list()
 			if("sub")
 				. = A - B
 			if("div")
-				if( B == 0 )
+				if (B == 0)
 					src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Attempted division by zero!\"</span>")
 					return
 				. = A / B
@@ -3052,7 +2541,7 @@ var/list/mechanics_telepads = new/list()
 			if("pow")
 				. = A ** B
 			if("rng")
-				. = rand( A, B )
+				. = rand(A, B)
 			if("gt")
 				. = A > B
 			if("lt")
@@ -3067,27 +2556,8 @@ var/list/mechanics_telepads = new/list()
 				. = A != B
 			else
 				return
-		if( . == . )
+		if(. == .)
 			mechanics.fireOutgoing(mechanics.newSignal("[.]"))
-
-
-
-	verb/lowerbound()
-		set src in view(1)
-		set name = "\[Set Mode\]"
-		set desc = "Sets the maths mode"
-		set category = "Local"
-
-		if (!isliving(usr))
-			return
-		if (usr.stat)
-			return
-		if (!mechanics.allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
-			return
-
-		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
-
 
 /obj/mecharrow
 	name = ""
