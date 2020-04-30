@@ -915,9 +915,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	examine()
 		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		..()
-		return
-
+		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"

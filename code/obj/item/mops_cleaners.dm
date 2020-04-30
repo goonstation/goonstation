@@ -33,11 +33,10 @@ WET FLOOR SIGN
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("luminol", 100)
+
 	examine()
-		set src in usr
-		boutput(usr, "[bicon(src)] [src.reagents.total_volume] units of luminol left!")
-		..()
-		return
+		. = ..()
+		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!")
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner bottle"

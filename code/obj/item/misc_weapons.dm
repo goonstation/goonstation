@@ -340,10 +340,8 @@
 	hit_type = DAMAGE_BLUNT
 
 	examine()
-		set src in usr
-		src.desc = "It is set to [src.active ? "on" : "off"]."
 		..()
-		return
+		. += "It is set to [src.active ? "on" : "off"]."
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = 0)
 	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
