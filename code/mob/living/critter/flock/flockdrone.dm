@@ -748,8 +748,7 @@
 			actions.start(new/datum/action/bar/flock_convert(target), user)
 	if(user.a_intent == INTENT_HARM)
 		if(istype(target, /obj/table/flock))
-			var/obj/item/wrench/w //god this is jank - moonlol
-			actions.start(new /datum/action/bar/icon/table_tool_interact(target, w, TABLE_DISASSEMBLE), user)
+			actions.start(new /datum/action/bar/icon/table_tool_interact(target, null, TABLE_DISASSEMBLE), user)
 		else if(istype(target, /obj/storage/closet/flock))
 			//soap
 			actions.start(new /datum/action/bar/flock_locker_decon(target), user)
