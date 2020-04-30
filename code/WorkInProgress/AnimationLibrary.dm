@@ -430,9 +430,9 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/firing_dir = angle_to_dir(firing_angle)
 	switch(firing_dir) //so we apply the correct offset
 		if (NORTH)
-			M.attack_particle.pixel_y = offset
+			M.attack_particle.pixel_y = 32
 		if (SOUTH)
-			M.attack_particle.pixel_y = -offset
+			M.attack_particle.pixel_y = -32
 		if (EAST)
 			M.attack_particle.pixel_x = offset
 		if (WEST)
@@ -442,13 +442,13 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 			M.attack_particle.pixel_x = offset
 		if (NORTHWEST)
 			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = offset
+			M.attack_particle.pixel_x = -offset
 		if (SOUTHEAST)
-			M.attack_particle.pixel_y = offset
+			M.attack_particle.pixel_y = -offset
 			M.attack_particle.pixel_x = offset
 		if (SOUTHWEST)
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = offset
+			M.attack_particle.pixel_y = -offset
+			M.attack_particle.pixel_x = -offset
 
 	var/matrix/start = matrix()
 	M.attack_particle.transform = start
