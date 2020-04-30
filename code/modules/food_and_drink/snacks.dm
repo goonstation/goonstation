@@ -2237,12 +2237,12 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	. = ..()
 	var/n = round(src.amount)
 	if (n <= 0)
-		. = "There are no beans left in the bag.")
+		. += "There are no beans left in the bag."
 	else
 		if (n == 1)
-			. = list("There is one bean left in the bag.")
+			. += "There is one bean left in the bag."
 		else
-			. = list("There are [n] beans in the bag.")
+			. += "There are [n] beans in the bag."
 
 //#endif
 

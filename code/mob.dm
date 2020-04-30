@@ -2954,7 +2954,7 @@
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
-	to_chat(src, result.Join("\n"))
+	boutput(src, result.Join("\n"))
 
 
 /mob/verb/interact_verb(obj/A as obj in view(1))

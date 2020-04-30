@@ -398,8 +398,9 @@
 /mob/living/silicon/hivebot/examine(mob/user)
 	if (isghostdrone(user))
 		return list()
-	. = list({"<span style=\"color:blue\">*---------*</span>
-							<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>"}
+
+	. = list("<span style=\"color:blue\">*---------*</span>\n<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>")
+
 	if (isdead(src))
 		. += "<span style=\"color:red\">[src.name] is powered-down.</span>"
 	if (src.bruteloss)

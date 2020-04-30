@@ -18,13 +18,13 @@
 
 	examine(mob/user)
 		. = list("<span style=\"color:blue\">*---------*</span>")
-		. += "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>")
+		. += "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>"
 		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
-			. += "<span style=\"color:red\">You can't help but laugh at it.</span>")
+			. += "<span style=\"color:red\">You can't help but laugh at it.</span>"
 			user.emote("laugh")
 		else
-			. += "<span style=\"color:red\">It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>")
-		. += "<span style=\"color:blue\">*---------*</span>") // the fact this was missing bugged me - cirr
+			. += "<span style=\"color:red\">It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>"
+		. += "<span style=\"color:blue\">*---------*</span>" // the fact this was missing bugged me - cirr
 
 	say_understands(var/other)
 		if (ishuman(other) || isrobot(other) || isAI(other))

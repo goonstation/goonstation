@@ -2016,7 +2016,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/examine()
 	. = ..()
-	var/examine_text = list()	//Shows who is driving it and also the items being carried
+	var/list/examine_text = list()	//Shows who is driving it and also the items being carried
 	var/obj/HI
 	if(src.rider)
 		examine_text += "[src.rider] is using it. "

@@ -759,11 +759,12 @@ td, th {
 		src.controller = ctrl
 
 	examine()
+		. = ..()
 		if (!controller || !card)
-			return ..()
+			return
 		else
-			boutput(usr, "Area card in effect: <i>[card.card_name]</i>")
-			boutput(usr, card.card_desc)
+			. += "Area card in effect: <i>[card.card_name]</i>"
+			. += card.card_desc
 
 /obj/griffening_hologram
 	name = "hologram"

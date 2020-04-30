@@ -618,7 +618,7 @@
 		if (src.health <= 50)
 			. += "<span style=\"color:red\">[src.name] is twitching and sparking!</span>"
 		if (isunconscious(src))
-	 		. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
+			. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
 
 		. += "The cover is [opened ? "open" : "closed"]."
 		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]"

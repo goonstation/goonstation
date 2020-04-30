@@ -72,7 +72,7 @@ var/image/blob_icon_cache
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 
 	proc/right_click_action()
-		examine_verb()
+		usr.examine_verb()
 
 	Click(location, control, params)
 		if (usr != overmind)
@@ -666,10 +666,10 @@ var/image/blob_icon_cache
 		if (user == overmind)
 			if (movable)
 				. += "<span style=\"color:blue\">Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
-			+= "<span style=\"color:blue\">It contains:</span>"
+			. += "<span style=\"color:blue\">It contains:</span>"
 			for (var/id in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[id]
-				+= "<span style=\"color:blue\">- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
+				. += "<span style=\"color:blue\">- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
 
 	proc/update_reagent_overlay()
 		if (disposed)

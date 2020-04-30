@@ -250,7 +250,7 @@
 			return
 
 
-		var/msg = list("<span style='color: blue;'>")
+		var/list/msg = list("<span style='color: blue;'>")
 		if (src.active_tool)
 			msg += "[src] is holding a little [bicon(src.active_tool)] [src.active_tool.name]"
 			if (istype(src.active_tool, /obj/item/magtractor) && src.active_tool:holding)

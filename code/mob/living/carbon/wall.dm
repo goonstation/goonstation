@@ -17,7 +17,7 @@
 		//return
 
 	examine(mob/user)
-		. = list("<span style=\"color:blue\">*---------*</span>"
+		. = list("<span style=\"color:blue\">*---------*</span>")
 		. += "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>"
 		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
 			. += "<span style=\"color:red\">You can't help but laugh at it.</span>"

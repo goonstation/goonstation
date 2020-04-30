@@ -36,7 +36,7 @@ WET FLOOR SIGN
 
 	examine()
 		. = ..()
-		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!")
+		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!"
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner bottle"

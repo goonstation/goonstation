@@ -38,7 +38,7 @@
 
 	examine()
 		. = ..()
-		. += "It has [get_fuel()] units of fuel left!")
+		. += "It has [get_fuel()] units of fuel left!"
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!src.welding)
