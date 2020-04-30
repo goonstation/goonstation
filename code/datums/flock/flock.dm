@@ -46,7 +46,7 @@
 	for(var/name in src.enemies)
 		var/list/enemy_stats = src.enemies[name]
 		var/mob/living/M = enemy_stats["mob"]
-		if(istype(M)) // fix runtime: Cannot read null.name 
+		if(istype(M)) // fix runtime: Cannot read null.name
 			var/list/enemy = list()
 			enemy["name"] = M.name
 			enemy["area"] = enemy_stats["last_seen"]

@@ -711,10 +711,10 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	message_admins("[target] target pre")
+//	message_admins("[target] target pre")//debugmessages
 	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
-		target = get_turf(target) //breaks stuff like deconning with harm. a tad more annoying to hit the turfs but a small price to pay for ~~salvation~~ deconning stuff
-	message_admins("[target] target post")
+		target = get_turf(target) 
+//	message_admins("[target] target post")//debugmessages
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='text-red'>Something about this structure prevents it from being assimilated.</span>")

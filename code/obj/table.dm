@@ -282,7 +282,6 @@
 			return
 
 		else if (istype(W) && src.place_on(W, user, params))
-			message_admins("[W] is W. in table.dm")
 			return
 
 		else
@@ -868,11 +867,11 @@
 
 	onUpdate()
 		..()
-		if ((the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1) && !istype(owner, /mob/living/critter/flock/drone))
+		if ((the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1) && !istype(owner, /mob/living/critter/flock/drone)) //allows flock drones to decon flock tables
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && the_tool != source.equipped() && !istype(owner, /mob/living/critter/flock/drone))
+		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)
