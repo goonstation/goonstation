@@ -436,8 +436,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+		if (target == null || owner == null || get_dist(owner, target) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -481,8 +480,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+		if (target == null || owner == null || get_dist(owner, target) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -519,8 +517,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+		if (target == null || owner == null || get_dist(owner, target) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
