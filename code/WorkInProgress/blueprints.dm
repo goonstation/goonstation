@@ -245,7 +245,7 @@
 	set name = "Create Blueprint"
 	set desc = "Allows creation of blueprints of any user."
 	set category = "Special Verbs"
-	
+
 	var/list/bps = new/list()
 	var/savefile/save = new/savefile("data/blueprints.dat")
 	save.cd = "/"
@@ -479,7 +479,6 @@
 		return
 
 	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
-		name = roomname
 		save.cd = "/"
 		if(save.dir.Find("[usr.client.ckey]/" + name))
 			save.dir.Remove("[usr.client.ckey]/" + name)
@@ -545,7 +544,6 @@
 		return
 
 	proc/printSaved(var/name = "")
-		name = roomname
 		save.cd = "/[usr.client.ckey]/"
 		if(save.dir.Find(name))
 			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
@@ -613,11 +611,11 @@
 				if(prints_left <= 0)
 					boutput(user, "<span style=\"color:red\">Out of energy.</span>")
 					return
-				printSaved()
+				printSaved(roomname)
 				return
 
 			if("Save Blueprint")
-				saveMarked()
+				saveMarked(roomname)
 				return
 
 			if("Information")
