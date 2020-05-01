@@ -1,4 +1,6 @@
 #define PLANE_FLOOR -10
+#define PLANE_WALL -5
+#define PLANE_WINDOW -4
 #define PLANE_NOSHADOW_BELOW -1
 #define PLANE_DEFAULT 0
 #define PLANE_NOSHADOW_ABOVE 1
@@ -34,6 +36,8 @@ client
 
 	New()
 		plane_parents += new /obj/screen/plane_parent(PLANE_FLOOR, name = "floor_plane")
+		plane_parents += new /obj/screen/plane_parent(PLANE_WALL, name = "wall_plane")
+		plane_parents += new /obj/screen/plane_parent(PLANE_WINDOW, name = "window_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_DEFAULT, name = "game_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane")
