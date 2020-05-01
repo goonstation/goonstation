@@ -1,5 +1,9 @@
 
 (t)thu apr 30 20
+(u)Kubius
+(p)502
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 15: wide swath of minor improvements, from eggnog to wardrobes.
 (u)adharainspace
 (p)488
 (e)🆕🎨|enhancement, sprites
