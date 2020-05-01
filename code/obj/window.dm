@@ -8,7 +8,6 @@
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
-	plane = PLANE_WINDOW
 	var/health = 30
 	var/health_max = 30
 	var/health_multiplier = 1
