@@ -34,6 +34,7 @@ client
 	var/list/plane_parents = list()
 
 	New()
+		Z_LOG_DEBUG("Cient/New", "[src.ckey] - Adding plane_parents")
 		plane_parents += new /obj/screen/plane_parent(PLANE_FLOOR, name = "floor_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_WALL, name = "wall_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_DEFAULT, name = "game_plane")
@@ -59,7 +60,6 @@ client
 					P.add_depth_shadow()
 				else
 					P.filters = null
-				break
 
 	proc/setup_special_screens()
 		for (var/atom in plane_parents)
