@@ -6,6 +6,7 @@
 	name = "eyeball"
 	organ_name = "eye"
 	desc = "Here's lookin' at you! Er, maybe not so much, anymore."
+	organ_holder_location = "head"
 	icon_state = "eye"
 	var/change_iris = 1
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
@@ -42,50 +43,53 @@
 				iris_image.color = AH.e_color
 		src.overlays += iris_image
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "head")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for attaching eyes.
+		Note that eyes don't appear to track op_stage on the head container, like chest organs do. */
 		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
+		if (!src.can_attach_organ(H, user))
+			return 0
 
 		if (!headSurgeryCheck(H))
 			user.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
-			return
+			return null
 
-		if (user.find_in_hand(src) == user.r_hand && !H.organHolder.right_eye)
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
+		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
+		var/target_organ_location = null
 
+		if (user.find_in_hand(src, "right"))
+			target_organ_location = "right"
+		else if (user.find_in_hand(src, "left"))
+			target_organ_location = "left"
+		else if (!user.find_in_hand(src))
+			// Organ is not in the attackers hand. This was likely a drag and drop. If you're just tossing an organ at a body, where it lands will be imprecise
+			target_organ_location = pick("right", "left")
+
+		if (target_organ_location == "right" && !H.organHolder.right_eye)
 			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!</span>",\
 			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] right eye socket!</span>",\
 			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right eye socket!</span>")
 
-			user.u_equip(src)
+			if (user.find_in_hand(src))
+				user.u_equip(src)
 			H.organHolder.receive_organ(src, "right_eye", 2.0)
 			H.update_body()
-
-		else if (user.find_in_hand(src) == user.l_hand && !H.organHolder.left_eye)
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-
+		else if (target_organ_location == "left" && !H.organHolder.left_eye)
 			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left eye socket!</span>",\
 			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] left eye socket!</span>",\
 			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left eye socket!</span>")
 
-			user.u_equip(src)
+			if (user.find_in_hand(src))
+				user.u_equip(src)
 			H.organHolder.receive_organ(src, "left_eye", 2.0)
 			H.update_body()
-
 		else
-			..()
-		return
+			H.tri_message("<span style=\"color:red\"><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\
+			user, "<span style=\"color:red\">You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\
+			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right eye socket!<br>But there's something already there!</span>")
+			return 0
+
+		return 1
 
 /obj/item/organ/eye/left
 	name = "left eye"
