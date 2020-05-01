@@ -466,6 +466,9 @@
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
 /obj/item/dagger/throwing_knife/tele
+	name = "portable knife"
+	icon_state = "teleport_knife"
+		
 	throw_impact(atom/A)
 		..()
 		usr.set_loc(get_turf(src))
