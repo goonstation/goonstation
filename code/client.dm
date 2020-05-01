@@ -800,7 +800,7 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("pm", ircmsg)
 
@@ -832,7 +832,7 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("mentorpm", ircmsg)
 
