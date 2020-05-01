@@ -774,7 +774,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 
 	bullet_22HP
 		name = ".22 hollow point round"
-		desc = "A small calibre hollowpoint bullet for use against unarmored targets. Wait, aren't these a war crime?"
+		desc = "A small calibre hollow point bullet for use against unarmored targets. Wait, aren't these a war crime?"
 
 	bullet_41
 		name = ".41 round"
