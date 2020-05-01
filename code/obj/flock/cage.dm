@@ -164,7 +164,7 @@
 		special_desc += "<br><span class='bold'>ID:</span> Matter Reprocessor"
 		special_desc += "<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]"
 		special_desc += "<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]"
- 		special_desc += "<br><span class='bold'>###=-</span></span>"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else
 		return null // give the standard description

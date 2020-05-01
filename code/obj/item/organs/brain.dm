@@ -140,7 +140,7 @@
 	if(isflock(user))
 		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
 		special_desc += "<br><span class='bold'>ID:</span> Computational core"
- 		special_desc += "<br><span class='bold'>###=-</span></span>"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else
 		return null // give the standard description

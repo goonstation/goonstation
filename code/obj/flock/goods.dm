@@ -78,7 +78,7 @@
 		special_desc += "<br><span class='bold'>ID:</span> Incapacitor"
 		special_desc += "<br><span class='bold'>Energy:</span> [src.cell.charge]"
 		special_desc += "<br><span class='bold'>Max Energy:</span> [src.cell.max_charge]"
- 		special_desc += "<br><span class='bold'>###=-</span></span>"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else
 		return null // give the standard description
