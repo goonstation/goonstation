@@ -1,5 +1,7 @@
 
 (t)thu apr 30 20
+(u)mbc
+(*)This isn't my change, but download the newest BYOND version (513.1521)! Coupled with our recent verb changes, it fixes right click menu lag.
 (u)Kubius
 (p)502
 (e)🆕🗺|enhancement, mapping
