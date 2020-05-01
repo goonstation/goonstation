@@ -5,7 +5,7 @@
 (e)🆕🔄|enhancement, rework
 (*)You can now transplant organs via drag and drop, including mediborgs. L/R organs will randomly pick a side. Can only drag organs, so you still need a human doc to staple that nuke disc to your bleeding stump arm.
 (*)Skulls can now be re-inserted into an empty head. A skull must be present for a brain to be inserted into a human head.
-(*)Descriptions via look updated for current operation status. Same for decapitated heads.
+(+)Added additional examine text for the process of decapitating heads and other operations.
 (+)Added stapler to medical borg module.
 (t)thu apr 30 20
 (u)mbc
