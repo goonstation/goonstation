@@ -22,6 +22,7 @@ Contains:
 	var/rider_visible =	1
 	var/list/ability_buttons = null//new/list()
 	var/throw_dropped_items_overboard = 0 // See /mob/proc/drop_item() in mob.dm.
+	var/attacks_fast_eject = 1
 	layer = MOB_LAYER
 
 	New()
@@ -42,7 +43,8 @@ Contains:
 		if(rider && rider_visible && W.force)
 			W.attack(rider, user)
 			user.lastattacked = src
-			eject_rider()
+			if (attacks_fast_eject || rider.getStatusDuration("weakened") || rider.getStatusDuration("stunned") || rider.getStatusDuration("paralysis"))
+				eject_rider()
 			W.visible_message("<span style=\"color:red\">[user] swings at [rider] with [W]!</span>")
 		return
 
@@ -2006,6 +2008,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/image/image_panel = null
 	var/image/image_crate = null
 	var/image/image_under = null
+	attacks_fast_eject = 0
 
 /obj/vehicle/forklift/New()
 	..()
