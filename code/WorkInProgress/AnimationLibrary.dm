@@ -462,7 +462,9 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	M.last_interact_particle = world.time
 	M.attack_particle.alpha = 255
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	flick(muzzle_anim, M.attack_particle)
+	if (M.attack_particle.icon_state == muzzle_anim)
+		flick(muzzle_anim,M.attack_particle)
+	M.attack_particle.icon_state = muzzle_anim
 
 	SPAWN_DBG(1.7 DECI SECONDS) //clears all the bs we had to do
 		M.attack_particle.alpha = 0
