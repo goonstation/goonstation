@@ -66,17 +66,14 @@
 		. = list("This is [src]<br/>")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			. += "<span style=\"color:blue\">It contains [P.volume] units of harvestable pathogen.</span><br/>"
+			. += "<span style=\"color:blue\">It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
 		if (src.medium)
 			. += "<span style=\"color:blue\">The petri dish is coated with [src.medium.name].</span><br/>"
 		. += "Nutrients in the dish:<br/>"
 		var/count = 0
 		for (var/N in nutrition)
 			if (nutrition[N])
-				if (nutrition[N] != 1)
-					. += "<span style=\"color:blue\">[nutrition[N]] units of [N]</span><br/>"
-				else
-					. += "<span style=\"color:blue\">[nutrition[N]] unit of [N]</span><br/>"
+				. += "<span style=\"color:blue\">[nutrition[N]] unit\s of [N]</span><br/>"
 				count++
 		if (!count)
 			. += "<span style=\"color:blue\">None.</span><br/>"
