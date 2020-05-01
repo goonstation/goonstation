@@ -970,46 +970,16 @@
 	var/table_hide = 0
 
 	New(var/mob/living/carbon/human/M)
-		if (M)
-			if (M.flags & TABLEPASS)
-				had_tablepass = 1
-			else
-				M.flags ^= TABLEPASS
 		M.add_stam_mod_max("monkey", -50)
 		..()
 
 	disposing()
-		if(mob && !had_tablepass)
-			mob.flags ^= TABLEPASS
-
 		if (ishuman(mob))
 			mob:remove_stam_mod_max("monkey")
 		..()
 
 	say_verb()
 		return "chimpers"
-
-	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
-		if(istype(target, /obj/machinery/optable/))
-			do_table_hide(target)
-		if(istype(target, /obj/table/))
-			do_table_hide(target)
-		if(istype(target, /obj/stool/bed/))
-			do_table_hide(target)
-		return target.attack_hand(mob)
-
-	proc
-		do_table_hide(obj/target)
-			step(mob, get_dir(mob, target))
-			if (mob.loc == target.loc)
-				if (table_hide)
-					table_hide = 0
-					mob.layer = MOB_LAYER
-					mob.visible_message("[mob] crawls on top of [target]!")
-				else
-					table_hide = 1
-					mob.layer = target.layer - 0.01
-					mob.visible_message("[mob] hides under [target]!")
 
 	emote(var/act)
 		. = null
