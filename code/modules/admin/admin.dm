@@ -1153,7 +1153,7 @@ var/global/noir = 0
 				var/atom/A = locate(href_list["target"])
 				if (A)
 					usr.client.cmd_admin_check_health(A)
-
+					return
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
