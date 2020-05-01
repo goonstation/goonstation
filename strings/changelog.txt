@@ -1,5 +1,9 @@
 
 (t)fri may 01 20
+(u)UrsulaMajor
+(p)509
+(e)🗺🎨|mapping, sprites
+(+)Renovated the Afterlife Bar, splitting it into a sanctuary lounge and a basement bar
 (u)Uta
 (p)449
 (e)🆕🔄|enhancement, rework
