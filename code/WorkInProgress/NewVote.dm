@@ -178,7 +178,7 @@ var/const/recently_time = 6000 // 10 mins
 		if(!(C.ckey in may_vote))
 			boutput(C, "<span style=\"color:red\"><BIG>You may not vote as you were not present when the vote was started.</BIG></span>")
 			return
-		if(C.ckey in voted_ckey || C.computer_id in voted_id)
+		if((C.ckey in voted_ckey) || (C.computer_id in voted_id))
 			boutput(C, "<span style=\"color:red\"><BIG>You have already voted. Current winner : [curr_win]</BIG></span>")
 			return
 		open_votes += C
@@ -238,8 +238,8 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span style=\"color:green\"><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 3)
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mode votes not reached (3)</B></BIG></span>")
+			if(get_winner_num() < round(clients.len * 0.5))
+				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mode votes not reached (~50% of players).</B></BIG></span>")
 				qdel(src)
 				return
 			if(current_state == GAME_STATE_PREGAME)
@@ -261,14 +261,14 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span style=\"color:green\"><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 5)
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum restart votes not reached (5).</B></BIG></span>")
+			if(get_winner_num() < round(clients.len * 0.5))
+				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum restart votes not reached (~50% of players).</B></BIG></span>")
 				qdel(src)
 				return
 			Reboot_server()
 		qdel(src)
 		return
-
+/*
 /datum/vote_new/ban
 	options = list("Yes","No")
 	details = ""
@@ -294,8 +294,8 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span style=\"color:green\"><BIG><B>Vote ban result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 5)
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum ban votes not reached (5) - Player not banned.</B></BIG></span>")
+			if(get_winner_num() < round(clients.len * 0.7))
+				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum ban votes not reached (~70% of players) - Player not banned.</B></BIG></span>")
 				qdel(src)
 				return
 			if(data)
@@ -333,8 +333,8 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span style=\"color:green\">Vote mute result: [get_winner()]</span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 3)
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mute votes not reached (3) - Player not muted.</B></BIG></span>")
+			if(get_winner_num() < round(clients.len * 0.5))
+				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mute votes not reached (~50% of players) - Player not muted.</B></BIG></span>")
 				qdel(src)
 				return
 			if(data)
@@ -345,3 +345,4 @@ var/const/recently_time = 6000 // 10 mins
 				AddBan(backup_ckey, backup_computerid, backup_ip, "VOTE MUTE - Logged out while vote was in progress - 15 minutes", "VOTEMUTE", 1, 15)
 		qdel(src)
 		return
+*/
