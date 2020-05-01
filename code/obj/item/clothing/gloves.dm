@@ -102,8 +102,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.specialoverride = new /datum/item_special/spark()
-			src.specialoverride.master = src
+			src.setSpecialOverride(/datum/item_special/spark, 0)
 			src.material_prints += ", electrically charged"
 			W:amount--
 			return
@@ -172,6 +171,25 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	proc/special_attack(var/mob/target)
 		boutput(usr, "Your gloves do nothing special")
 		return
+
+	proc/setSpecialOverride(var/type = null, active = 1)
+		if(!ispath(type))
+			if(isnull(type))
+				if(src.specialoverride)
+					src.specialoverride.onRemove()
+				src.specialoverride = null
+			return null
+
+		if(src.specialoverride)
+			src.specialoverride.onRemove()
+
+		var/datum/item_special/S = new type
+		S.master = src
+		src.overridespecial = active
+		S.onAdd()
+		src.specialoverride = S
+		return S
+
 
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
 		if(target == user || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
@@ -328,11 +346,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		setProperty("conductivity", 0)
 	New()
 		..()
-		src.specialoverride = new /datum/item_special/spark()
-		src.specialoverride.master = src
-		src.overridespecial = 1
+		setSpecialOverride(/datum/item_special/spark)
 
-		
 
 /obj/item/clothing/gloves/yellow
 	desc = "These gloves are electrically insulated."
