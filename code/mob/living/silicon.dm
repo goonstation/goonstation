@@ -445,6 +445,7 @@ var/global/list/module_editors = list()
 	set name = "Edit Module"
 	set desc = "Module editor! Woo!"
 	set category = "Special Verbs"
+	set popup_menu = 0
 	admin_only
 
 	if (!istype(M))

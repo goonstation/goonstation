@@ -47,6 +47,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -91,6 +97,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/offX = round(dist*cos(anglePer*count)) + additionalX
 				var/offY = round(dist*sin(anglePer*count))	+ additionalY
@@ -119,6 +131,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -150,6 +168,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -205,6 +229,12 @@ var/list/globalContextActions = null
 				if(istype(W)) W.hud.add_screen(C)
 				var/mob/dead/observer/GO = usr
 				if(istype(GO)) GO.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -269,6 +299,13 @@ var/list/globalContextActions = null
 			if(istype(W)) W.hud.remove_screen(C)
 			var/mob/dead/observer/GO = usr
 			if(istype(GO)) GO.hud.remove_screen(C)
+			if (isrobot(src))
+				var/mob/living/silicon/robot/robot = src
+				robot.hud.remove_screen(C)
+			if (ishivebot(src))
+				var/mob/living/silicon/hivebot/hivebot = src
+				hivebot.hud.remove_screen(C)
+
 			contextButtons.Remove(C)
 			if(C.overlays)
 				C.overlays = list()
