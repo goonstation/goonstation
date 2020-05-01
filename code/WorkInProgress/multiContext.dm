@@ -38,7 +38,7 @@ var/list/globalContextActions = null
 			screenX += offsetX
 			screenY += offsetY
 
-			for(var/obj/screen/contextButton/C in buttons)
+			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 				var/mob/living/carbon/human/H = usr
@@ -290,7 +290,7 @@ var/list/globalContextActions = null
 		return
 
 	proc/closeContextActions()
-		for(var/obj/screen/contextButton/C in contextButtons)
+		for(var/obj/screen/contextButton/C in contextButtons)//todo : stop typechecking per context
 			var/mob/living/carbon/human/H = src
 			if(istype(H)) H.hud.remove_screen(C)
 			var/mob/living/critter/R = src
