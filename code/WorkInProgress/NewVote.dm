@@ -238,7 +238,7 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span style=\"color:green\"><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 1)
+			if(get_winner_num() < 3)
 				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mode votes not reached (3)</B></BIG></span>")
 				qdel(src)
 				return
