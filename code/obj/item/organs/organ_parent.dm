@@ -6,6 +6,9 @@
 	name = "organ"
 	var/organ_name = "organ" // so you can refer to the organ by a simple name and not end up telling someone "Your Lia Alliman's left lung flies out your mouth!"
 	desc = "What does this thing even do? Is it something you need?"
+	var/organ_holder_name = "organ"
+	var/organ_holder_location = "chest"
+	var/organ_holder_required_op_stage = 0.0
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -48,6 +51,20 @@
 	rand_pos = 1
 
 	var/made_from = "flesh" //Material this organ will produce.
+
+	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		if (!ismob(M))
+			return
+
+		src.add_fingerprint(user)
+
+		var/attach_result = src.attach_organ(M, user)
+		if (attach_result == 1) // success
+			return
+		else if (isnull(attach_result)) // failure but don't attack
+			return
+		else // failure and attack them with the organ
+			return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))
@@ -282,3 +299,47 @@
 
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
+
+	proc/can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Checks if an organ can be attached to a target mob */
+		if (istype(/obj/item/organ/chest/, src))
+			// We can't transplant a chest
+			return 0
+
+		if (user.zone_sel.selecting != src.organ_holder_location)
+			return 0
+
+		if (!surgeryCheck(M, user))
+			return 0
+
+		var/mob/living/carbon/human/H = M
+		if (!H.organHolder)
+			return 0
+
+		return 1
+
+	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Attempts to attach this organ to the target mob M, if sucessful, displays surgery notifications and updates states in both user and target.
+		Expected returns are 1 for success, 0 for a critical failure and null if a non-critical failure
+		null is mostly used in the attack code to indicate that we failed to attach the organ but should not attack */
+		var/mob/living/carbon/human/H = M
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
+		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
+
+		if (!H.organHolder.get_organ(src.organ_holder_name) && organ_location && organ_location.op_stage == src.organ_holder_required_op_stage)
+
+			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
+			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
+			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!</span>")
+
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			H.organHolder.receive_organ(src, src.organ_holder_name, organ_location.op_stage)
+			H.update_body()
+
+			return 1
+		else
+			return 0
