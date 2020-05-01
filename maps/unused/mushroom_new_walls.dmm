@@ -3666,7 +3666,7 @@
 "bsZ" = (/obj/cable{icon_state = "1-8"},/turf/simulated/floor,/area/station/engine/engineering)
 "bta" = (/obj/table/auto,/turf/simulated/floor/specialroom/cafeteria{dir = 8},/area/station/crew_quarters/kitchen)
 "btb" = (/obj/table/auto,/obj/machinery/recharger,/obj/item/shipcomponent/mainweapon/laser,/obj/item/shipcomponent/mainweapon/laser,/obj/item/shipcomponent/mainweapon/laser,/turf/simulated/floor,/area/station/security/armory)
-"btc" = (/obj/machinery/camera{step_y = 9},/turf/space,/area/station/turret_protected/ai)
+"btc" = (/obj/machinery/camera{pixel_y = 9},/turf/space,/area/station/turret_protected/ai)
 "btd" = (/obj/cable{icon_state = "1-2"},/turf/simulated/floor/caution/west,/area/station/security/armory)
 "bte" = (/obj/storage/secure/crate/plasma/armory/anti_biological,/turf/simulated/floor,/area/station/security/armory)
 "btf" = (/obj/cable{icon_state = "4-8"},/turf/simulated/floor/red/side{dir = 4},/area/station/security/brig)
