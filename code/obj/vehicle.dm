@@ -2008,7 +2008,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/image/image_panel = null
 	var/image/image_crate = null
 	var/image/image_under = null
-	var/attacks_fast_eject = 0
+	attacks_fast_eject = 0
 
 /obj/vehicle/forklift/New()
 	..()
