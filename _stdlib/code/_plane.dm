@@ -54,7 +54,7 @@ client
 	proc/apply_depth_filter()
 		var/shadows_checked = winget( src, "menu.set_shadow", "is-checked" ) == "true"
 		for (var/obj/screen/plane_parent/P in plane_parents)
-			if (P.name == "game_plane" || P.name = "wall_plane")
+			if (P.name == "game_plane" || P.name == "wall_plane")
 				if (shadows_checked)
 					P.add_depth_shadow()
 				else
