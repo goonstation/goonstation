@@ -1,4 +1,35 @@
 
+(t)fri may 01 20
+(u)Uta
+(p)449
+(e)🆕🔄|enhancement, rework
+(*)You can now transplant organs via drag and drop, including mediborgs. L/R organs will randomly pick a side. Can only drag organs, so you still need a human doc to staple that nuke disc to your bleeding stump arm.
+(*)Skulls can now be re-inserted into an empty head. A skull must be present for a brain to be inserted into a human head.
+(+)Added additional examine text for the process of decapitating heads and other operations.
+(+)Added stapler to medical borg module.
+(t)thu apr 30 20
+(u)mbc
+(*)This isn't my change, but download the newest BYOND version (513.1521)! Coupled with our recent verb changes, it fixes right click menu lag.
+(u)Kubius
+(p)502
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 15: wide swath of minor improvements, from eggnog to wardrobes.
+(u)adharainspace
+(p)488
+(e)🆕🎨|enhancement, sprites
+(*)Added a muzzle flash when you fire (most) bullet based weapons!
+(u)Naksu
+(p)498
+(e)|
+(+)Refactored examine-code to pass and eventually join a list instead of sending separate browser output for every line of text.
+(u)Gannets
+(p)489
+(e)🆕🎨|enhancement, sprites
+(+)New sprites for the revolver, detective revolver, .22 pistol and derringer.
+(u)zjdtmkhzt
+(p)491
+(e)|
+(+)Hopefully fixed the CDC.
 (t)wed apr 29 20
 (u)AwkwardDryad
 (p)407

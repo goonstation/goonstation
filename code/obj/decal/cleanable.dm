@@ -38,7 +38,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	layer = DECAL_LAYER
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
-	//plane = PLANE_NOSHADOW_BELOW - BAD IDEA, STUFF GOES BELOW WALLS
+	plane = PLANE_NOSHADOW_BELOW
 
 	New(var/loc,var/list/viral_list)
 		if (!pooled)

@@ -805,6 +805,7 @@ var/global/client/ff_debugger = null
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"
@@ -814,6 +815,7 @@ var/global/client/ff_debugger = null
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+	plane = PLANE_WALL
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"

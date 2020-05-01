@@ -77,10 +77,8 @@
 	boutput(user, "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].")
 
 /obj/item/disk/data/floppy/examine()
-	set src in oview(5)
-	..()
-	boutput(usr, text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."))
-	return
+	. = ..()
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 /obj/item/disk/data/floppy/demo
 	name = "data disk - 'Farmer Jeff'"

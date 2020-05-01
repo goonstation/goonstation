@@ -351,7 +351,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	if (!process_ammo(user))
 		return
-	if (!istype(target, /turf) || !istype(start, /turf))
+	if (!isturf(target) || !isturf(start))
 		return
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return
@@ -408,15 +408,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/examine()
-	set src in usr
-	set category = "Local"
-
 	if (src.artifact)
-		boutput(usr, "You have no idea what the hell this thing is!")
-		return
-
-	..()
-	return
+		return list("You have no idea what the hell this thing is!")
+	return ..()
 
 /obj/item/gun/proc/update_icon()
 	return 0

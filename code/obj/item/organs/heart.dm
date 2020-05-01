@@ -6,6 +6,9 @@
 	name = "heart"
 	organ_name = "heart"
 	desc = "Offal, just offal."
+	organ_holder_name = "heart"
+	organ_holder_location = "chest"
+	organ_holder_required_op_stage = 9.0
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
@@ -61,38 +64,20 @@
 				src.diseases.Add(HD)
 		return
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "chest")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for attaching heads. */
 		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
+		if (!src.can_attach_organ(H, user))
+			return 0
 
-		if (!H.organHolder.heart && H.organHolder.chest.op_stage == 9.0)
+		var/success = ..(H, user)
 
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] chest!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] chest!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your chest!</span>")
-
-			user.u_equip(src)
-			H.organHolder.receive_organ(src, "heart", 3.0)
-			H.update_body()
+		if (success)
 			if (!isdead(H))
-				JOB_XP(user, "Medical Doctor", H.health > 0 ? transplant_XP*2 : transplant_XP)
-
+				JOB_XP(user, "Medical Doctor", src.health > 0 ? transplant_XP*2 : transplant_XP)
+			return 1
 		else
-			..()
-		return
+			return 0
 
 /obj/item/organ/heart/synth
 	name = "synthheart"

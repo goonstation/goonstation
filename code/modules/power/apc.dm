@@ -206,18 +206,18 @@ var/zapLimiter = 0
 	terminal = null
 	..()
 
-/obj/machinery/power/apc/examine()
-	set src in oview(1)
-	set category = "Local"
+/obj/machinery/power/apc/examine(mob/user)
+	. = ..()
 
-	if(status & BROKEN) return
+	if(status & BROKEN)
+		return
 
-	if(usr && !usr.stat)
-		boutput(usr, "A control terminal for the area electrical systems.")
+	if(user && !user.stat)
+		. += "A control terminal for the area electrical systems."
 		if(opened)
-			boutput(usr, "The cover is open and the power cell is [ cell ? "installed" : "missing"].")
+			. += "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The cover is closed.")
+			. += "The cover is closed."
 
 
 /obj/machinery/power/apc/proc/getMaxExcess()

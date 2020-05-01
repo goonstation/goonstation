@@ -27,17 +27,22 @@
 	stamina_crit_chance = 5
 
 	examine()
-		set src in oview()
-		..()
+		. = ..()
 		switch(ropart_get_damage_percentage(1))
-			if(15 to 29) boutput(usr, "<span style=\"color:red\">It looks a bit dented and worse for wear.</span>")
-			if(29 to 59) boutput(usr, "<span style=\"color:red\">It looks somewhat bashed up.</span>")
-			if(60 to INFINITY) boutput(usr, "<span style=\"color:red\">It looks badly mangled.</span>")
+			if(15 to 29)
+				. += "<span style=\"color:red\">It looks a bit dented and worse for wear.</span>"
+			if(29 to 59)
+				. += "<span style=\"color:red\">It looks somewhat bashed up.</span>"
+			if(60 to INFINITY)
+				. += "<span style=\"color:red\">It looks badly mangled.</span>"
 
 		switch(ropart_get_damage_percentage(2))
-			if(15 to 29) boutput(usr, "<span style=\"color:red\">It has some light scorch marks.</span>")
-			if(29 to 59) boutput(usr, "<span style=\"color:red\">Parts of it are kind of melted.</span>")
-			if(60 to INFINITY) boutput(usr, "<span style=\"color:red\">It looks terribly burnt up.</span>")
+			if(15 to 29)
+				. += "<span style=\"color:red\">It has some light scorch marks.</span>"
+			if(29 to 59)
+				. += "<span style=\"color:red\">Parts of it are kind of melted.</span>"
+			if(60 to INFINITY)
+				. += "<span style=\"color:red\">It looks terribly burnt up.</span>"
 
 	getMobIcon(var/lying)
 		if (src.standImage)
@@ -161,14 +166,13 @@
 		icon_state = "head-" + src.appearanceString
 
 	examine()
-		set src in oview()
-		..()
+		. = ..()
 		if (src.brain)
-			boutput(usr, "<span style=\"color:blue\">This head unit has [src.brain] inside. Use a wrench if you want to remove it.</span>")
+			. += "<span style=\"color:blue\">This head unit has [src.brain] inside. Use a wrench if you want to remove it.</span>"
 		else if (src.ai_interface)
-			boutput(usr, "<span style=\"color:blue\">This head unit has [src.ai_interface] inside. Use a wrench if you want to remove it.</span>")
+			. += "<span style=\"color:blue\">This head unit has [src.ai_interface] inside. Use a wrench if you want to remove it.</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">This head unit is empty.</span>")
+			. += "<span style=\"color:red\">This head unit is empty.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W)
@@ -390,12 +394,17 @@
 	var/obj/item/cell/cell = null
 
 	examine()
-		set src in oview()
-		..()
-		if (src.cell) boutput(usr, "<span style=\"color:blue\">This chest unit has a [src.cell] installed. Use a wrench if you want to remove it.</span>")
-		else boutput(usr, "<span style=\"color:red\">This chest unit has no power cell.</span>")
-		if (src.wires) boutput(usr, "<span style=\"color:blue\">This chest unit has had wiring installed.</span>")
-		else boutput(usr, "<span style=\"color:red\">This chest unit has not yet been wired up.</span>")
+		. = ..()
+
+		if (src.cell)
+			. += "<span style=\"color:blue\">This chest unit has a [src.cell] installed. Use a wrench if you want to remove it.</span>"
+		else
+			. += "<span style=\"color:red\">This chest unit has no power cell.</span>"
+
+		if (src.wires)
+			. += "<span style=\"color:blue\">This chest unit has had wiring installed.</span>"
+		else
+			. += "<span style=\"color:red\">This chest unit has not yet been wired up.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/cell))

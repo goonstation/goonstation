@@ -6,6 +6,10 @@
 	name = "head"
 	organ_name = "head"
 	desc = "Well, shit."
+	organ_holder_name = "head"
+	organ_holder_location = "head"
+	organ_holder_required_op_stage = 0.0
+	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "head"
 	edible = 0
@@ -87,13 +91,17 @@
 				else
 					. += "<br><span style=\"color:blue\">[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.</span>"
 
-		if (src.brain)
-			if (src.brain.op_stage > 0.0)
-				. += "<br><span style=\"color:red\"><B>[src.name] has an open incision on it!</B></span>"
-		else if (!src.brain && src.skull)
-			. += "<br><span style=\"color:red\"><B>[src.name] has been cut open and its brain is gone!</B></span>"
-		else if (!src.skull)
+		if (!src.skull  && src.scalp_op_stage >= 3)
 			. += "<br><span style=\"color:red\"><B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B></span>"
+
+		if (!src.skull && src.scalp_op_stage >= 5)
+			. += "<br><span style=\"color:red\"><B>[src.name] has been cut open and its skull is gone!</B></span>"
+		else if (!src.brain && src.scalp_op_stage >= 4)
+			. += "<br><span style=\"color:red\"><B>[src.name] has been cut open and its brain is gone!</B></span>"
+		else if (src.scalp_op_stage >= 3)
+			. += "<br><span style='color:red'><B>[src.name]'s head has been cut open!</B></span>"
+		else if (src.scalp_op_stage > 0)
+			. += "<br><span style=\"color:red\"><B>[src.name] has an open incision on it!</B></span>"
 
 		if (!src.right_eye)
 			. += "<br><span style=\"color:red\"><B>[src.name]'s right eye is missing!</B></span>"
@@ -164,43 +172,6 @@
 
 	do_missing()
 		..()
-
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "head")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
-		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
-
-		if (!H.get_organ("head"))
-
-			var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
-
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
-
-			user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", 3.0)
-
-			SPAWN_DBG(rand(50,500))
-				if (H && H.organHolder && H.organHolder.head && H.organHolder.head == src) // aaaaaa
-					if (src.op_stage != 0.0)
-						H.visible_message("<span style=\"color:red\"><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-						"<span style=\"color:red\"><b>Your head comes loose and tumbles off of your neck!</b></span>")
-						H.organHolder.drop_organ("head") // :I
-
-		else
-			..()
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
 		if (src.skull || src.brain)
@@ -294,3 +265,31 @@
 				return ..()
 		else
 			return ..()
+
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for attaching heads. */
+		var/mob/living/carbon/human/H = M
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
+		if (!H.get_organ("head"))
+
+			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
+			user, "<span style=\"color:red\">You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
+			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			H.organHolder.receive_organ(src, "head", 3.0)
+
+			SPAWN_DBG(rand(50,500))
+				if (H && H.organHolder && H.organHolder.head && H.organHolder.head == src) // aaaaaa
+					if (src.op_stage != 0.0)
+						H.visible_message("<span style=\"color:red\"><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
+						"<span style=\"color:red\"><b>Your head comes loose and tumbles off of your neck!</b></span>")
+						H.organHolder.drop_organ("head") // :I
+
+			return 1
+		else
+			return 0

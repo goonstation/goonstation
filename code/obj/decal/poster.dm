@@ -15,6 +15,7 @@
 	examine()
 		if (usr.client && src.popup_win)
 			src.show_popup_win(usr)
+			return list()
 		else
 			return ..()
 

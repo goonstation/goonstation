@@ -44,17 +44,17 @@
 		teleport_jammers -= src
 		..()
 
-	examine()
-		..()
-		if(usr.client)
+	examine(mob/user)
+		. = ..()
+		if(user.client)
 			var/charge_percentage = 0
 			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
 				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
-				boutput(usr, "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left.")
-				boutput(usr, "The jammer's range is [src.range] units of distance.")
-				boutput(usr, "The unit will consume [5 * src.range] power a second.")
+				. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
+				. += "The jammer's range is [src.range] units of distance."
+				. += "The unit will consume [5 * src.range] power a second."
 			else
-				boutput(usr, "It seems to be missing a usable battery.")
+				. += "It seems to be missing a usable battery."
 
 	process()
 		if (src.active)

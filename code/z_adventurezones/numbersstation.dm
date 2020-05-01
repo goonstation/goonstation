@@ -63,7 +63,7 @@ Thanks to our agents inside the organization, we were able to identify two infil
 		info = "<html><body style='margin:0px'><img src='[resource("images/bloody_numbers_note.png")]'></body></html>"
 
 	examine()
-		..()
+		return ..()
 
 	attackby()
 		return

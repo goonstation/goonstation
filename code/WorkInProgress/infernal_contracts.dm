@@ -335,12 +335,12 @@
 
 	New()
 		src.color = random_color()
-	examine()
-		if ((ishuman(usr) && istype(usr:w_uniform, /obj/item/clothing/under/misc/lawyer/red/demonic)) || isobserver(usr))
-			..()
+
+	examine(mob/user)
+		if ((ishuman(user) && istype(user:w_uniform, /obj/item/clothing/under/misc/lawyer/red/demonic)) || isobserver(user))
+			return ..()
 		else
-			boutput(usr, "A strange piece of old crinkled paper, covered in mysterious gibberish legalese.")
-			return
+			return list("A strange piece of old crinkled paper, covered in mysterious gibberish legalese.")
 
 	get_desc(dist)
 		if (src.limiteduse == 0)

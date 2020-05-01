@@ -19,16 +19,15 @@
 		src.power_usage = 5
 
 	examine()
-		if(usr.client)
-			var/charge_percentage = 0
-			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
-				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
-				boutput(usr, "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left.")
-			else
-				boutput(usr, "It seems to be missing a usable battery.")
-			boutput(usr, "The unit will consume [30 * src.range * (src.power_level * src.power_level)] power a second.")
-			boutput(usr, "The range setting is set to [src.range].")
-			boutput(usr, "The power setting is set to [src.power_level].")
+		var/charge_percentage = 0
+		if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
+			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
+		else
+			. += "It seems to be missing a usable battery."
+		. += "The unit will consume [30 * src.range * (src.power_level * src.power_level)] power a second."
+		. += "The range setting is set to [src.range]."
+		. += "The power setting is set to [src.power_level]."
 
 	shield_on()
 		if (!PCEL)
@@ -128,4 +127,3 @@
 		src.deployed_shields += S
 
 		return S
-

@@ -523,12 +523,12 @@
 				sleep(0.1 SECONDS)
 
 	examine()
-		..()
-		boutput(usr, "<span style=\"color:blue\">The pad is currently at [charge]% charge.</span>")
+		. = ..()
+		. += "<span style=\"color:blue\">The pad is currently at [charge]% charge.</span>"
 		if (has_crystal)
-			boutput(usr, "<span style=\"color:blue\">The pad is complete with a telecrystal.</span>")
+			. += "<span style=\"color:blue\">The pad is complete with a telecrystal.</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">The pad's telecrystal socket is empty!</span>")
+			. += "<span style=\"color:red\">The pad's telecrystal socket is empty!</span>"
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if (istype(I, /obj/item/raw_material/telecrystal))

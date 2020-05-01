@@ -89,17 +89,6 @@
 				src.toggle_power(1)
 		return
 
-	examine()
-		set src in view()
-		..()
-
-		if (src.health < initial(health))
-			if (src.health > (initial(src.health) / 2))
-				boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-			else
-				boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-		return
-
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user && ismob(user))

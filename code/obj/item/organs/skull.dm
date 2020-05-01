@@ -41,13 +41,24 @@
 		key = null
 
 	examine() // For the hunter-specific objective (Convair880).
-		set src in usr
+		. = ..()
 		if (ishunter(usr))
-			var/trophy = "This is [src.name]<br>[src.preddesc]<br>This trophy has a value of [src.value]."
-			boutput(usr, trophy)
-		else
-			..()
-		return
+			. += "[src.preddesc]\nThis trophy has a value of [src.value]."
+
+	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Override so we can check to see if we want to reinsert a skull into a corpse/body */
+		if (!ismob(M))
+			return ..()
+
+		src.add_fingerprint(user)
+
+		var/attach_result = src.attach_organ(M, user)
+		if (attach_result == 1) // success
+			return
+		else if (isnull(attach_result)) // failure but don't attack
+			return
+		else // failure and attack them with the organ
+			return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
@@ -126,6 +137,51 @@
 				user.say("Alas, poor Yorick! I knew him, [length(nerdlist) != 0 ? pick(nerdlist) : "Horatio"], a fellow of infinite jest, of most excellent fancy.")
 			last_use = world.time
 			// Now cracks a noble heart.—Good night, sweet prince, And flights of angels sing thee to thy rest.
+
+	proc/can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Impliments organ functions for skulls. Checks if a skull can be attached to a target mob */
+		if (!(user.zone_sel.selecting == "head"))
+			return 0
+
+		if (!surgeryCheck(M, user))
+			return 0
+
+		var/mob/living/carbon/human/H = M
+		if (!H.organHolder || !ishuman(H))
+			return 0
+
+		return 1
+
+	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Impliments organ functions for skulls, just in case you wanted to put it back for some reason. */
+		var/mob/living/carbon/human/H = M
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
+
+		if (!organ_location)
+			boutput(user, "<span style=\"color:blue\">Where are you putting that again? You need a head to hold the skull.</span>")
+			return null
+
+		if (!headSurgeryCheck(H))
+			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			return null
+
+		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
+			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
+
+			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			H.organHolder.receive_organ(src, "skull", 1.0)
+			return 1
+
+		return 0
+
 
 /obj/item/skull/strange // Hunters get this one (Convair880).
 	name = "strange skull"

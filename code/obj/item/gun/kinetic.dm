@@ -15,6 +15,9 @@
 	var/allowReverseReload = 1 //Use gun on ammo to reload
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
+	var/muzzle_flash = 1 //set to 0 if you dont want any muzzle flash with this gun
+	var/muzzle_flash_state = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -26,17 +29,16 @@
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
 	examine()
-		set src in usr
+		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
 			var/datum/projectile/ammo_type = src.ammo
-			src.desc = "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
-			src.desc = "There are 0 bullets left!"
+			. += "There are 0 bullets left!"
 		if (current_projectile)
-			src.desc += "<br>Each shot will currently use [src.current_projectile.cost] bullets!"
+			. += "Each shot will currently use [src.current_projectile.cost] bullets!"
 		else
-			src.desc += "<br><span style=\"color:red\">*ERROR* No output selected!</span>"
-		..()
+			. += "<span style=\"color:red\">*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0
@@ -185,6 +187,10 @@
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
+			if (src.muzzle_flash) //probably reinventing the wheel here as far as all of this goes, but idk
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash_state)
 		..()
 
 	proc/ejectcasings()
@@ -295,8 +301,8 @@
 		setProperty("movespeed", 0.4)
 
 /obj/item/gun/kinetic/revolver
-	desc = "There are 0 bullets left. Uses .357"
-	name = "revolver"
+	name = "CPA Predator MKII"
+	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
 	force = 8.0
@@ -312,13 +318,14 @@
 	icon = 'icons/effects/VR.dmi'
 
 /obj/item/gun/kinetic/derringer
-	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	name = "derringer"
+	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	icon_state = "derringer"
 	force = 5.0
 	caliber = 0.41
 	max_ammo_capacity = 2
 	w_class = 2
+	muzzle_flash = 0 //small gun
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -336,8 +343,8 @@
 		..()
 
 /obj/item/gun/kinetic/detectiverevolver
-	desc = "An old surplus police-issue revolver. Uses .38-Special rounds."
-	name = ".38 revolver"
+	name = "CPA Detective Special"
+	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
 	icon_state = "detective"
 	item_state = "detective"
 	w_class = 2.0
@@ -399,6 +406,7 @@
 			icon_state = "colt_saa-c"
 			boutput(user, "<span style=\"color:red\">You cock the hammer!</span>")
 			playsound(user.loc, "sound/weapons/gun_cocked_colt45.ogg", 70, 1)
+
 /obj/item/gun/kinetic/clock_188
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
@@ -608,8 +616,8 @@
 			return
 
 /obj/item/gun/kinetic/silenced_22
-	name = "Suppressed .22 Pistol"
-	desc = "A small pistol with an integrated flash and noise suppressor."
+	name = "STL Orion"
+	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = 2
 	silenced = 1
@@ -619,6 +627,7 @@
 	max_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = 1
+	muzzle_flash = 0 //stealthy gun
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22
@@ -678,6 +687,7 @@
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
+	muzzle_flash = 0 //grenade launcher
 
 	New()
 		ammo = new/obj/item/ammo/bullets/smoke/single
@@ -715,6 +725,7 @@
 	caliber = 1.58
 	max_ammo_capacity = 1
 	can_dual_wield = 0
+	muzzle_flash = 0 //rocket launcher
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg
@@ -760,6 +771,7 @@
 	icon_state = "airzooka"
 	max_ammo_capacity = 10
 	caliber = 4.6 // I rolled a dice
+	muzzle_flash = 0 //it uses air not booms
 
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
@@ -822,6 +834,7 @@
 	max_ammo_capacity = 30
 	auto_eject = 0
 	hide_attack = 1
+	muzzle_flash = 0 //silenced + supressed likely
 
 	New()
 		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/pistol
@@ -1232,6 +1245,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
+	muzzle_flash = 0 //rocket launcher
 
 	New()
 		ammo = new /obj/item/ammo/bullets/antisingularity

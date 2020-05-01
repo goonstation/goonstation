@@ -54,7 +54,7 @@
 				info = "<html><body style='margin:0px'><img src='[resource("images/charts/AtlasSurvey_PlasmaGiant.png")]'></body></html>"
 
 			examine()
-				..()
+				return ..()
 
 			attackby()
 				return
