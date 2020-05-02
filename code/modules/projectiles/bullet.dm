@@ -69,6 +69,12 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 
+/datum/projectile/bullet/bullet_22/HP
+	power = 35
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_22HP
+
 /datum/projectile/bullet/bullet_9mm
 	name = "bullet"
 	power = 25

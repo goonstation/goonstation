@@ -322,6 +322,15 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	caliber = 0.22
 
+/obj/item/ammo/bullets/bullet_22HP
+	sname = ".22 Hollow Point"
+	name = ".22 HP magazine"
+	icon_state = "pistol_clip_hp"
+	amount_left = 10.0
+	max_amount = 10.0
+	ammo_type = new/datum/projectile/bullet/bullet_22/HP
+	caliber = 0.22
+
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
 	name = ".357 speedloader"
