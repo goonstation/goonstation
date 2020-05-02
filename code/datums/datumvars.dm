@@ -456,22 +456,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to display a flat icon of something all rude-like.")
 		return
-	if (href_list["Vars"])
-		usr_admin_only
-		if (href_list["varToEdit"])
-			modify_variable(locate(href_list["Vars"]), href_list["varToEdit"])
-		else if (href_list["varToEditAll"])
-			modify_variable(locate(href_list["Vars"]), href_list["varToEditAll"], 1)
-		else if (href_list["setAll"])
-			set_all(locate(href_list["Vars"]), href_list["setAll"])
-		else if (href_list["procCall"])
-			var/datum/D = locate(href_list["Vars"])
-			if (D)
-				var/datum/C = D.vars[href_list["procCall"]]
-				if (istype(C, /datum))
-					doCallProc(C)
-		else
-			debug_variables(locate(href_list["Vars"]))
 	if (href_list["ReplaceExplosive"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -544,6 +528,22 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
 		return
+	if (href_list["Vars"])
+		usr_admin_only
+		if (href_list["varToEdit"])
+			modify_variable(locate(href_list["Vars"]), href_list["varToEdit"])
+		else if (href_list["varToEditAll"])
+			modify_variable(locate(href_list["Vars"]), href_list["varToEditAll"], 1)
+		else if (href_list["setAll"])
+			set_all(locate(href_list["Vars"]), href_list["setAll"])
+		else if (href_list["procCall"])
+			var/datum/D = locate(href_list["Vars"])
+			if (D)
+				var/datum/C = D.vars[href_list["procCall"]]
+				if (istype(C, /datum))
+					doCallProc(C)
+		else
+			debug_variables(locate(href_list["Vars"]))
 	else
 		..()
 
