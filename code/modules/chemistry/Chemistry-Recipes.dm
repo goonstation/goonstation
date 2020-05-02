@@ -256,7 +256,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -280,7 +279,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -304,7 +302,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -329,7 +326,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -353,7 +349,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -1631,7 +1626,6 @@ datum
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -1658,7 +1652,6 @@ datum
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -1685,7 +1678,6 @@ datum
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -2463,7 +2455,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -2487,7 +2478,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -3211,7 +3201,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom // if you heat this stuff in your hand, you'll die! heh!
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -3467,7 +3456,7 @@ datum
 			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				if (holder.my_atom)
 					new /obj/critter/fermid(get_turf(holder.my_atom))
 				else
@@ -3485,7 +3474,7 @@ datum
 			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				var/result = 0
 				var/roll = rand(1,100)
 				if(roll + created_volume > 100) result = rand(95,100)
@@ -3658,7 +3647,7 @@ datum
 			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				var/turf/T = holder.my_atom ? get_turf(holder.my_atom) : pick(holder.covered_cache.len)
 				if (prob(1) && !already_a_dominic)
 					new /obj/critter/parrot/eclectus/dominic(T)
@@ -4012,5 +4001,3 @@ datum
 			mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
-
-#undef get_fucked_clarks

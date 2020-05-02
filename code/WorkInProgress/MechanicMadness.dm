@@ -858,6 +858,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_wait"
 	var/active = 0
 	var/delay = 10
+	var/changesig = 0
 
 	get_desc()
 		. += "<br><span style=\"color:blue\">Current Delay: [delay]</span>"
@@ -866,6 +867,7 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.addInput("delay", "delayproc")
 		configs.Add("Set Delay")
+		configs.Add("Toggle Signal Changing")
 		src.append_default_configs()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -880,6 +882,9 @@ var/list/mechanics_telepads = new/list()
 					if(inp)
 						delay = inp
 						boutput(user, "Set delay to [inp]")
+				if("Toggle Signal Changing")
+					changesig = !changesig
+					boutput(user, "Signal changing now [changesig ? "on":"off"]")
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -891,6 +896,8 @@ var/list/mechanics_telepads = new/list()
 					active = 1
 				sleep(delay)
 				if(src)
+					if(changesig)
+						input.signal = mechanics.outputSignal
 					mechanics.fireOutgoing(input)
 					icon_state = "[under_floor ? "u":""]comp_wait"
 					active = 0

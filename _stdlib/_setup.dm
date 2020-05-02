@@ -1035,8 +1035,7 @@ var/ZLOG_START_TIME
 #endif
 
 #define CRITTER_REACTION_LIMIT 50
-#define fucking_critter_bullshit_fuckcrap_limiter(x) if (x > CRITTER_REACTION_LIMIT) return; else x += 1
-#define get_fucked_clarks if (istype(my_atom, "/obj/critter/domestic_bee")) return my_atom.visible_message("<span class='alert'>[my_atom] burps.</span>"); if (istype(my_atom, "/obj/item/reagent_containers/food/snacks/ingredient/honey")) return
+#define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
 //Activates the viscontents warps
 #define NON_EUCLIDEAN 1

@@ -1579,7 +1579,7 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				var/turf/simulated/target = T
 				if (istype(target) && volume >= 5)
 					if (!locate(/obj/reagent_dispensers/spiders) in target)
@@ -2526,7 +2526,7 @@ datum
 				createSomeBirds(T, volume)
 
 			proc/createSomeBirds(var/turf/T as turf, var/volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				if (!T)
 					return
 				if (volume < 5)
