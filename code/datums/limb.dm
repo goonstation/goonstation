@@ -1052,6 +1052,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 
 
+//hey maybe later standardize this into flags per obj so we dont search this huge list every click ok??
 var/list/ghostcritter_blocked = list(/obj/item/device/flash,\
 /obj/item/reagent_containers/glass/beaker,\
 /obj/item/reagent_containers/glass/bottle,\
@@ -1076,7 +1077,8 @@ var/list/ghostcritter_blocked = list(/obj/item/device/flash,\
 /obj/machinery/light,\
 /obj/machinery/vending,\
 /obj/machinery/nuclearbomb,\
-/obj/item/gun/kinetic/airzooka) //Items that ghostcritters simply cannot interact, regardless of w_class
+/obj/item/gun/kinetic/airzooka,\
+/obj/machinery/computer/genetics) //Items that ghostcritters simply cannot interact, regardless of w_class
 
 //little critters with teeth, like mice! can pick up small items only.
 /datum/limb/small_critter
