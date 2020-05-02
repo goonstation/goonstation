@@ -71,7 +71,7 @@
 		var/maxlines
 
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		var/list/zoldorflist = list("<span style=\"color:blue\">[pz] makes a mystical gesture!</b></span>","<span style=\"color:blue\">[pz] rocks back and forth!</span>")
@@ -219,7 +219,7 @@
 					if(!speechinput) break
 					sentence += "[speechinput]."
 			if(sentence)
-				boutput(holder.owner,"<span style=\"color:green\">[sentence]</span>")
+				boutput(holder.owner,"<span style=\"success\">[sentence]</span>")
 				sentences.Add(sentence)
 				sentence = ""
 
@@ -255,7 +255,7 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return
 		var/obj/machinery/playerzoldorf/pz = user.loc
 
@@ -272,7 +272,7 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return
 		var/obj/machinery/playerzoldorf/pz = user.loc
 
@@ -289,7 +289,7 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.omen = 1
@@ -305,13 +305,13 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		if(istype(target,/obj/item/paper/thermal/playerfortune))
 			var/obj/item/paper/thermal/playerfortune/f = target
 			if(f.branded)
-				boutput(holder.owner,"<span style=\"color:red\"><b>This fortune is already branded!</b></span>")
+				boutput(holder.owner,"<span class='alert'><b>This fortune is already branded!</b></span>")
 				return 1
 			else
 				f.icon = 'icons/obj/zoldorf.dmi'
@@ -320,9 +320,9 @@
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz
-				boutput(holder.owner,"<span style=\"color:green\"><b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b></span>")
+				boutput(holder.owner,"<span class=\"success\"><b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b></span>")
 		else
-			boutput(holder.owner,"<span style=\"color:red\"><b>You must target a fortune!</b></span>")
+			boutput(holder.owner,"<span class='alert'><b>You must target a fortune!</b></span>")
 			return 1
 
 /datum/targetable/zoldorfAbility/astral
@@ -373,12 +373,12 @@
 		var/mob/zoldorf/user = holder.owner
 		var/obj/machinery/playerzoldorf/pz = user.homebooth
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		if(!pz.omen)
 			pz.omen(user)
 		else
-			boutput(user,"<span style=\"color:red\"><b>You must disable your current omen in order to activate the ghost light!</b></span>")
+			boutput(user,"<span class='alert'><b>You must disable your current omen in order to activate the ghost light!</b></span>")
 			return 1
 
 /datum/targetable/zoldorfAbility/manifest //spooky time
@@ -393,7 +393,7 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.storedsouls--
@@ -426,7 +426,7 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span style=\"color:red\"><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.storedsouls--
@@ -497,7 +497,7 @@
 			switch(selection)
 				if("Read Notes")
 					if(!pz.notes.len)
-						boutput(user,"<span style=\"color:red\"><b>You have no saved notes!</b></span>")
+						boutput(user,"<span class='alert'><b>You have no saved notes!</b></span>")
 						return
 					var/aaa //modified list data
 					for(var/i=1,i<=pz.notes.len,i++)
@@ -518,10 +518,10 @@
 					logTheThing("say", user, null, "[user] has created a Zoldorf note: [note]")
 					if(pz)
 						pz.notes.Add(note)
-						boutput(user,"<span style=\"color:green\"><b>Note added!</b></span>")
+						boutput(user,"<span class='success'><b>Note added!</b></span>")
 				if("Remove Note")
 					if(!pz.notes.len)
-						boutput(user,"<span style=\"color:red\"><b>You have no saved notes!</b></span>")
+						boutput(user,"<span class='alert'><b>You have no saved notes!</b></span>")
 						return
 					var/select
 					select = input("Which note would you like to remove?", "Notes", null) as null|anything in pz.notes
@@ -529,7 +529,7 @@
 						return
 					if(pz)
 						pz.notes -= select
-						boutput(user,"<span style=\"color:green\"><b>Note removed!</b></span>")
+						boutput(user,"<span class='success'><b>Note removed!</b></span>")
 
 /datum/targetable/zoldorfAbility/jar //where else would you store fragments of peoples' souls?
 	name = "Soul Jar"
@@ -543,7 +543,7 @@
 		var/mob/zoldorf/user = holder.owner
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
-			boutput(user,"<span style=\"color:green\"><b>You have accumulated [pz.partialsouls]% of a soul!</b></span>")
+			boutput(user,"<span class='success'><b>You have accumulated [pz.partialsouls]% of a soul!</b></span>")
 
 /datum/targetable/zoldorfAbility/help //pretty much a copy paste of wraith help just in case the tooltips dont take over on merge
 	name = "Toggle Help Mode"
@@ -563,8 +563,8 @@
 		else
 			holder.help_mode = 1
 			src.object.icon_state = "helpon"
-			boutput(holder.owner, "<span style=\"color:green\"><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
-			boutput(holder.owner, "<span style=\"color:green\">Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-			boutput(holder.owner, "<span style=\"color:green\">You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-			boutput(holder.owner, "<span style=\"color:green\">Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
+			boutput(holder.owner, "<span class='success'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='success'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
+			boutput(holder.owner, "<span class='success'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
+			boutput(holder.owner, "<span class='success'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
 		holder.updateButtons()

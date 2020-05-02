@@ -95,7 +95,7 @@
     if(INTENT_HARM)
       action = pick("smacks", "punches", "kicks", "attacks", "jabs")
       response = pick("angry", "hostile", "throbbing", "jerky", "wriggly", "vengeful")
-  src.visible_message("<span style=\"color:red\"><b>[user]</b> [futility] [action] [src]! It seems vaguely [response].</span>")
+  src.visible_message("<span class='alert'><b>[user]</b> [futility] [action] [src]! It seems vaguely [response].</span>")
   playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 80, 1)
 
 /obj/martianBiotech/attackby(obj/item/W as obj, mob/user as mob)
@@ -158,7 +158,7 @@
   var/damage = rand(modifier, 12 + 8 * modifier)
 
   takeDamage("mixed", damage)
-  src.visible_message("<span style=\"color:red\">[src] is hit by the blob!/span>")
+  src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
 
 /obj/martianBiotech/proc/describeCondition()

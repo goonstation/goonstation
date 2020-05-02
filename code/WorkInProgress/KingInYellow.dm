@@ -124,7 +124,7 @@
 				. += "The second act seems incomplete but ... It is horrifying."
 
 				for(var/mob/M in readers)
-					boutput(M, "<span style=\"color:red\">You feel the irresistible urge to read the \"The King In Yellow\" again.</span>")
+					boutput(M, "<span class='alert'>You feel the irresistible urge to read the \"The King In Yellow\" again.</span>")
 					readers -= M
 
 				readers += reader
@@ -150,7 +150,7 @@
 
 	proc/farty_doom(var/mob/living/victim)
 		if(istype(victim) && victim.loc == src.loc)
-			victim.visible_message("<span style='color:red'>[victim] farts on [src].<br><b>A mysterious force sucks [victim] into the Book!!</b></span>")
+			victim.visible_message("<span class='alert'>[victim] farts on [src].<br><b>A mysterious force sucks [victim] into the Book!!</b></span>")
 			victim.emote("scream")
 			victim.implode()
 			return 1

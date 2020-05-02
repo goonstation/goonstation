@@ -110,7 +110,7 @@
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
 				SK.set_loc(get_turf(user))
-				SK.visible_message("<span style=\"color:red\"><B>A key clatters out of \the [src]!</B></span>")
+				SK.visible_message("<span class='alert'><B>A key clatters out of \the [src]!</B></span>")
 				src.key = null
 
 			smask.set_loc(get_turf(user))
@@ -161,11 +161,11 @@
 		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
 
 		if (!organ_location)
-			boutput(user, "<span style=\"color:blue\">Where are you putting that again? You need a head to hold the skull.</span>")
+			boutput(user, "<span class='notice'>Where are you putting that again? You need a head to hold the skull.</span>")
 			return null
 
 		if (!headSurgeryCheck(H))
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return null
 
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)

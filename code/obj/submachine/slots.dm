@@ -26,9 +26,9 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/card/id))
 			if(src.scan)
-				boutput(user, "<span style=\"color:red\">There is a card already in the slot machine.</span>")
+				boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert your ID card.</span>")
+				boutput(user, "<span class='notice'>You insert your ID card.</span>")
 				usr.drop_item()
 				I.set_loc(src)
 				src.scan = I
@@ -185,9 +185,9 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/card/id))
 			if(src.scan)
-				boutput(user, "<span style=\"color:red\">There is a card already in the slot machine.</span>")
+				boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert your ID card.</span>")
+				boutput(user, "<span class='notice'>You insert your ID card.</span>")
 				usr.drop_item()
 				I.set_loc(src)
 				src.scan = I
@@ -415,7 +415,7 @@
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/spacecash/))
-			boutput(user, "<span style=\"color:blue\">You insert the cash into [src].</span>")
+			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
 			if(istype(I, /obj/item/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")

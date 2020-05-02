@@ -13,7 +13,7 @@
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
 	if (src.bioHolder.HasEffect("revenant"))
-		src.visible_message("<span style=\"color:red\">[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
+		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
 	if (findtext(act, " ", 1, null))
@@ -897,7 +897,7 @@
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
-						src.visible_message("<span style=\"color:red\"><B>[src] pulls a derringer out of \the [C]!</B></span>")
+						src.visible_message("<span class='alert'><B>[src] pulls a derringer out of \the [C]!</B></span>")
 						playsound(src.loc, "rustle", 60, 1)
 						break
 
@@ -1088,7 +1088,7 @@
 								src.reagents.del_reagent("ants")
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
-								boutput(src, "<span style=\"color:blue\">The ants arachnify.</span>")
+								boutput(src, "<span class='notice'>The ants arachnify.</span>")
 								playsound(get_turf(src), "sound/effects/bubbles.ogg", 80, 1)
 
 			if ("flip")
@@ -1113,7 +1113,7 @@
 
 					if (!iswrestler(src))
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
-							boutput(src, "<span style=\"color:red\">You fall over, panting and wheezing.</span>")
+							boutput(src, "<span class='alert'>You fall over, panting and wheezing.</span>")
 							message = "<span style=\"color:red\"><B>[src]</b> falls over, panting and wheezing.</span>"
 							src.changeStatus("weakened", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
@@ -1313,7 +1313,7 @@
 							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 							s.set_up(3, 1, src)
 							s.start()
-							boutput(M, "<span style=\"color:blue\">BZZZZZZZZZZZT!</span>")
+							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1
 							if (narrator_mode)
@@ -1466,7 +1466,7 @@
 							for(var/mob/living/H in mobs)
 								if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 								if(locate(/obj/item/storage/bible) in get_turf(H))
-									src.visible_message("<span style=\"color:red\"><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
+									src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
 									src.gib()
 								else
 									H.emote("fart")
@@ -1514,7 +1514,7 @@
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
 						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
 						if (bladder > 75)
-							boutput(src, "<span style=\"color:blue\">You don't need to go right now.</span>")
+							boutput(src, "<span class='notice'>You don't need to go right now.</span>")
 							return
 						else if (bladder > 50)
 							if(toilet)
@@ -1526,11 +1526,11 @@
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
-								boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss in the beaker.</span>")
+								boutput(src, "<span class='alert'>You don't feel desperate enough to piss in the beaker.</span>")
 							else if(wear_suit || w_uniform)
-								boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+								boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
 							else
-								boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss on the floor.</span>")
+								boutput(src, "<span class='alert'>You don't feel desperate enough to piss on the floor.</span>")
 							return
 						else if (bladder > 25)
 							if(toilet)
@@ -1551,7 +1551,7 @@
 								sims.affectMotive("Hygiene", -25)
 							else
 								if(wear_suit || w_uniform)
-									boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+									boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
 									return
 								else
 									src.urinate()

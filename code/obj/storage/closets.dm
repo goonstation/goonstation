@@ -310,7 +310,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -333,7 +333,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		src.open = 0
@@ -415,10 +415,10 @@
 				return
 			if (!src.welded)
 				src.weld(1, welder, user)
-				src.visible_message("<span style='color:red'>[user] welds [src] closed with [welder].</span>")
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [welder].</span>")
 			else
 				src.weld(0, welder, user)
-				src.visible_message("<span style='color:red'>[user] unwelds [src] with [welder].</span>")
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [welder].</span>")
 			return
 
 		if (src.secure)

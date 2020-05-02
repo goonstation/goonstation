@@ -703,7 +703,7 @@
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
 		// Taking a res out
 		if(!usr.equipped())
-			boutput(usr, "<span style=\"color:blue\">You remove the [reservoirs[resId]] from the [src.holder].</span>")
+			boutput(usr, "<span class='notice'>You remove the [reservoirs[resId]] from the [src.holder].</span>")
 			usr.put_in_hand_or_drop(reservoirs[resId])
 			reservoirs[resId] = null
 		else
@@ -715,7 +715,7 @@
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
 			//putting a reagent container in
-			boutput(usr, "<span style=\"color:blue\">You place the [I] into the [src.holder].</span>")
+			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
 			usr.drop_item()
 			I.set_loc(holder)
 			reservoirs[resId] = I

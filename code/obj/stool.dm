@@ -286,7 +286,7 @@
 			src.tuck_sheet(W, user)
 			return
 		if (iswrenchingtool(W) && !src.deconstructable)
-			boutput(user, "<span style='color:red'>You briefly ponder how to go about disassembling a featureless slab using a wrench. You quickly give up.</span>")
+			boutput(user, "<span class='alert'>You briefly ponder how to go about disassembling a featureless slab using a wrench. You quickly give up.</span>")
 			return
 		else
 			return ..()
@@ -474,11 +474,11 @@
 		var/mob/living/carbon/user = M
 
 		if (isdead(user))
-			boutput(user, "<span style=\"color:red\">Some would say that death is already the big sleep.</span>")
+			boutput(user, "<span class='alert'>Some would say that death is already the big sleep.</span>")
 			return
 
 		if ((get_turf(user) != src.loc) || (!user.lying))
-			boutput(user, "<span style=\"color:red\">You must be lying down on [src] to sleep on it.</span>")
+			boutput(user, "<span class='alert'>You must be lying down on [src] to sleep on it.</span>")
 			return
 
 		user.setStatus("resting", INFINITE_STATUS)
@@ -597,7 +597,7 @@
 			if (src.foldable)
 				user.visible_message("<b>[user.name] folds [src].</b>")
 				if ((chump) && (chump != user))
-					chump.visible_message("<span style=\"color:red\"><b>[chump.name] falls off of [src]!</b></span>")
+					chump.visible_message("<span class='alert'><b>[chump.name] falls off of [src]!</b></span>")
 					chump.on_chair = 0
 					chump.pixel_y = 0
 					chump.changeStatus("weakened", 1 SECOND)
@@ -625,7 +625,7 @@
 				if(climbable)
 					buckle_in(M, user, 1)
 				else
-					boutput(user, "<span style=\"color:red\">[src] isn't climbable.</span>")
+					boutput(user, "<span class='alert'>[src] isn't climbable.</span>")
 			else
 				buckle_in(M,user)
 		else
@@ -804,7 +804,7 @@
 
 	HasProximity(atom/movable/AM as mob|obj)
 		if (ishuman(AM) && prob(40))
-			src.visible_message("<span style=\"color:red\">[src] trips [AM]!</span>", "<span style=\"color:red\">You hear someone fall.</span>")
+			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
 			AM:changeStatus("weakened", 2 SECONDS)
 		return
 
@@ -997,16 +997,16 @@
 			var/mob/living/M = src.buckled_guy
 			src.unbuckle()
 			if (M && !src.buckled_guy)
-				M.visible_message("<span style='color:red'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
+				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
 				"<span style='color:red'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 5, 1)
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
 			else
-				src.visible_message("<span style='color:red'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
+				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
 		else
-			src.visible_message("<span style='color:red'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
+			src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
 		src.lying = 1
 		animate_rest(src, !src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
@@ -1385,7 +1385,7 @@
 		A.updateicon()
 
 		for (var/mob/M in AIviewers(src, null))
-			M.show_message("<span style=\"color:red\">The electric chair went off!</span>", 3)
+			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
 			if (lethal)
 				playsound(src.loc, "sound/effects/electric_shock.ogg", 100, 0)
 			else

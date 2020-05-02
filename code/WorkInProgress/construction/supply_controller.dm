@@ -534,7 +534,7 @@
 		if (istype(I, /obj/item/raw_material/telecrystal))
 			qdel(I)
 			has_crystal++
-			boutput(user, "<span style=\"color:blue\">You plug the telecrystal into the teleportation pad.</span>")
+			boutput(user, "<span class='notice'>You plug the telecrystal into the teleportation pad.</span>")
 
 	ex_act()
 		return
@@ -721,7 +721,7 @@
 							if (!istype(Q))
 								Q.set_loc(T)
 								for (var/mob/M in viewers(Q))
-									boutput(M, "<span style=\"color:blue\">[Q] pops out of [CR]!</span>")
+									boutput(M, "<span class='notice'>[Q] pops out of [CR]!</span>")
 							else
 								profit += do_sell(Q)
 								qdel(Q)

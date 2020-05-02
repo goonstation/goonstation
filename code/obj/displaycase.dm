@@ -99,7 +99,7 @@
 		update_icon()
 		return
 	else
-		user.visible_message("<span style=\"color:red\">[user] kicks the display case.</span>")
+		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
 		src.health -= 2
 		healthcheck()
 		return
@@ -165,7 +165,7 @@
 		if (!src) return
 		if (src.stability <= 0)
 			if (user && ismob(user))
-				boutput(user, "<span style=\"color:red\">The laser gun snaps in half!</span>")
+				boutput(user, "<span class='alert'>The laser gun snaps in half!</span>")
 				user.u_equip(src)
 			qdel(src)
 		return

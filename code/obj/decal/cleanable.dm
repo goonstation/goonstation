@@ -133,7 +133,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				return
 			if (prob(src.slippery))
 				M.pulling = null
-				M.visible_message("<span style='color:red'><b>[M]</b> slips on [src]!</span>",\
+				M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
 				"<span style='color:red'>You slip on [src]!</span>")
 				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 				M.changeStatus("stunned", 3 SECONDS)
@@ -759,7 +759,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	real_name = "writing"
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br><span style='color:[src.font_color]'>[words]</span>"
+		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br><span style='color:[src.font_color]'>[words]</span>"
 		//. = "[src.webfont ? "<link href='http://fonts.googleapis.com/css?family=[src.font]' rel='stylesheet' type='text/css'>" : null]<span style='color: blue'>It says:</span><br><span style='[src.font ? "font-family: [src.font][src.webfont ? ", cursive" : null];" : null]color: [src.font_color]'>[words]</span>"
 
 	UpdateName()
@@ -811,12 +811,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "<br>\[[S.current_mode]\]<br>"
-			boutput(user, "<span style=\"color:blue\">You stamp \the [src].</span>")
+			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
 
 
 		else if (istype(W, /obj/item/pen))
 			if(!user.literate)
-				boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+				boutput(user, "<span class='alert'>You don't know how to write.</span>")
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1
@@ -1006,7 +1006,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				var/that_is = " that is the [pick("worst", "most vile", "most utterly horrendous", "grodiest", "most horrific")] thing you've seen[pick(" in your entire life", " this week", " today", "", "!")]"
 				fluff2 = " [swear1] [swear2][prob(50) ? "[that_is]" : null][pick(".", "!", "!!")]"
 
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> is sticking their fingers into [src] and pushing it into [W].<span style=\"color:red\">It [fluff] a bit.[fluff2]</span></span>",\
+			user.visible_message("<span style=\"color:blue\"><b>[user]</b> is sticking their fingers into [src] and pushing it into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>",\
 			"<span style=\"color:blue\">You [src.sample_verb] some of the puke into [W].<span style=\"color:red\">It [fluff] a bit.[fluff2]</span></span>")
 			W.reagents.handle_reactions()
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
@@ -1061,9 +1061,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					if (O != user)
 						O.show_message("<span style=\"color:blue\"><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's all slimy and stringy. Oh god.</span>", 1)
 						if (prob(33) && ishuman(O))
-							O.show_message("<span style=\"color:red\">You feel ill from watching that.</span>")
+							O.show_message("<span class='alert'>You feel ill from watching that.</span>")
 							for (var/mob/V in viewers(O, null))
-								V.show_message("<span style=\"color:red\">[O] pukes all over \himself. Thanks, [user].</span>", 1)
+								V.show_message("<span class='alert'>[O] pukes all over \himself. Thanks, [user].</span>", 1)
 								O.vomit()
 
 				W.reagents.handle_reactions()
@@ -1498,7 +1498,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		if (istype(AM, /obj/critter/slug))
 			var/obj/critter/slug/S = AM
-			S.visible_message("<span style='color:red'>[S] shrivels up!</span>")
+			S.visible_message("<span class='alert'>[S] shrivels up!</span>")
 			S.CritterDeath()
 			return
 		else if (!isliving(AM) || isobj(AM) || isintangible(AM))
@@ -1507,7 +1507,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/oopschance = 0
 		if (ismob(AM))
 			if (istype(AM, /mob/living/critter/small_animal/slug)) // slugs are not good with salt
-				M.visible_message("<span style='color:red'>[M] shrivels up!</span>",\
+				M.visible_message("<span class='alert'>[M] shrivels up!</span>",\
 				"<span style='color:red'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 				M.TakeDamage(null, 15, 15)
 				pool(src)
@@ -1519,7 +1519,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (prob(oopschance))
 				health -= 5
 				if (health <= 0)
-					M.visible_message("<span style='color:red'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
+					M.visible_message("<span class='alert'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
 					pool(src)
 				else
 
@@ -1611,7 +1611,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (on_fire)
 			return
 		on_fire = image('icons/effects/fire.dmi', "2old")
-		visible_message("<span style='color:red'>[src] ignites!</span>")
+		visible_message("<span class='alert'>[src] ignites!</span>")
 		src.overlays += on_fire
 		SPAWN_DBG(0)
 			var/turf/T = get_turf(src)
@@ -1693,7 +1693,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (src.dry)
 			src.bang()
 		else
-			boutput(user, "<span style=\"color:blue\">You poke the mess. It's slightly viscous and smells strange. [prob(25) ? pick("Ew.", "Grody.", "Weird.") : null]</span>")
+			boutput(user, "<span class='notice'>You poke the mess. It's slightly viscous and smells strange. [prob(25) ? pick("Ew.", "Grody.", "Weird.") : null]</span>")
 
 	proc/bang()
 		src.visible_message("<b>The dust emits a loud bang!</b>")

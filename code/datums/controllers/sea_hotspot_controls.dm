@@ -1135,7 +1135,7 @@
 				hotspot_controller.show_map(usr.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> rips down [src] from [T]!</span>",\
+		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
 		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster, T)
 		decal.icon_state = "[src.icon_state]-rip2"

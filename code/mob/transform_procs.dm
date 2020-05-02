@@ -73,7 +73,7 @@
 	if (src.transforming || !src.bioHolder)
 		return
 	if (iswizard(src))
-		src.visible_message("<span style=\"color:red\"><b>[src] magically resists being transformed!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] magically resists being transformed!</b></span>")
 		return
 
 	src.unequip_all()
@@ -426,7 +426,7 @@
 
 		if (src.mind)
 			if (shitty)
-				boutput(src, "<span style=\"color:blue\">You are being bombarded by energetic macho waves!</span>")
+				boutput(src, "<span class='notice'>You are being bombarded by energetic macho waves!</span>")
 				src.mind.transfer_to(W)
 				W.mind.special_role = "faustian macho man"
 				ticker.mode.Agimmicks.Add(W)
@@ -469,10 +469,10 @@
 					) //they can keep macho heal
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
-			boutput(W, "<span style=\"color:blue\">You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
+			boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
 
 		else
-			boutput(W, "<span style=\"color:blue\">You are now a macho man!</span>")
+			boutput(W, "<span class='notice'>You are now a macho man!</span>")
 
 		return W
 	return 0

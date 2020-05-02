@@ -229,7 +229,7 @@
 			return
 		if (user)
 			user.show_text("You disable the safety limiters on [src].", "red")
-		src.visible_message("<span style=\"color:red\"><B>[src] sparks and shudders oddly!</B></span>", 1)
+		src.visible_message("<span class='alert'><B>[src] sparks and shudders oddly!</B></span>", 1)
 		src.emagged = 1
 		return 1
 

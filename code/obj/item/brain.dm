@@ -76,7 +76,7 @@
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
-		boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 		return
 
 //since these people will be dead M != usr
@@ -84,7 +84,7 @@
 	if(M:brain_op_stage == 4.0)
 
 		var/fluff = pick("insert[M == user ? "" : "s"]", "shove[M == user ? "" : "s"]", "place[M == user ? "" : "s"]", "drop[M == user ? "" : "s"]", "smooshes[M == user ? "" : "s"]", "squishes[M == user ? "" : "s"]")
-		M.visible_message("<span style=\"color:red\"><b>[user]</b> [fluff] [src] into [M == user ? </span>"[M.gender == "male" ? "his" : "her"]" : "[M]'s"] head!", \
+		M.visible_message("<span class='alert'><b>[user]</b> [fluff] [src] into [M == user ? </span>"[M.gender == "male" ? "his" : "her"]" : "[M]'s"] head!", \
 		"<span style=\"color:red\">[M == user ? </span>"You" : "<b>[user]</b>"] [fluff] [src] into your head!")
 
 		if(M.client)

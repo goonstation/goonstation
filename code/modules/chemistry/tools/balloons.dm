@@ -61,23 +61,23 @@
 		if (prob(ohshit))
 			smash()
 			if (user)
-				user.visible_message("<span style='color:red'>[src] bursts in [user]'s hands!</span>", \
+				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
 				"<span style='color:red'>[src] bursts in your hands! <b>[curse]!</b></span>")
 				user.update_inhands()
 			else
 				var/turf/T = get_turf(src)
 				if (T)
-					T.visible_message("<span style='color:red'>[src] bursts!</span>")
+					T.visible_message("<span class='alert'>[src] bursts!</span>")
 			return
 /*		if (src.reagents.total_volume > 30)
 			if (prob(50))
-				user.visible_message("<span style='color:red'>[src] is overfilled and bursts! <b>[curse]</b></span>")
+				user.visible_message("<span class='alert'>[src] is overfilled and bursts! <b>[curse]</b></span>")
 				smash()
 				return
 */
 	attack_self(var/mob/user as mob)
 		if (!ishuman(user))
-			boutput(user, "<span style='color:blue'>You don't know what to do with the balloon.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with the balloon.</span>")
 			return
 		var/mob/living/carbon/human/H = user
 
@@ -103,7 +103,7 @@
 //					user.update_inhands()
 				else
 					if (user.losebreath)
-						boutput(user, "<span style='color:red'>You need to catch your breath first!</span>")
+						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
 						return
 					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
 					if (!animal_types || animal_types.len <= 0)
@@ -149,13 +149,13 @@
 					qdel(src)
 
 			if ("Inhale")
-				H.visible_message("<span style='color:red'><B>[H] inhales the contents of [src]!</B></span>",\
+				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
 				"<span style='color:red'><b>You inhale the contents of [src]!</b></span>")
 				src.reagents.trans_to(H, 40)
 				return
 
 			if ("Pee in it")
-				H.visible_message("<span style='color:red'><B>[H] pees in [src]!</B></span>",\
+				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>",\
 				"<span style='color:red'><b>You pee in [src]!</b></span>")
 				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 				H.urine -= 2
@@ -190,7 +190,7 @@
 		if (ismob(T))
 			T = get_turf(T)
 		if (T)
-			T.visible_message("<span style='color:red'>[src] bursts!</span>")
+			T.visible_message("<span class='alert'>[src] bursts!</span>")
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,T)
 		decal.icon_state = "balloon_[src.balloon_color]_pop"

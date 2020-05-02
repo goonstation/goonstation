@@ -128,7 +128,7 @@
 	if (!msg)
 		return
 	if (src && src.holder)
-		boutput(Mclient.mob, "<span style=\"color:red\">[msg]</span>")
+		boutput(Mclient.mob, "<span class='alert'>[msg]</span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged %target%: [html_encode(msg)]")
 	logTheThing("diary", src.mob, Mclient.mob, ": Plain Messaged %target%: [html_encode(msg)]", "admin")
@@ -656,7 +656,7 @@
 	smoke.attach(M)
 	smoke.start()
 
-	boutput(M, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
+	boutput(M, "<span class='alert'><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
 	M.job = "Cluwne"
@@ -1026,7 +1026,7 @@
 
 		switch(src.cinematic)
 			if("Changeling") //Heh
-				target_mob.visible_message("<span style=\"color:red\"><b>[target_mob] transforms!</b></span>")
+				target_mob.visible_message("<span class='alert'><b>[target_mob] transforms!</b></span>")
 
 			if("Wizard") //Heh 2: Merlin Edition
 				qdel(target_mob.wear_suit)
@@ -1043,7 +1043,7 @@
 				smoke.attach(target_mob)
 				smoke.start()
 
-				target_mob.visible_message("<span style=\"color:red\"><b>The glamour around [old_name] drops!</b></span>")
+				target_mob.visible_message("<span class='alert'><b>The glamour around [old_name] drops!</b></span>")
 				target_mob.say("DISPEL!")
 
 			if("Smoke")
@@ -1230,7 +1230,7 @@
 	set popup_menu = 0
 	M.oldmob = usr
 	M.oldmind = M.mind
-	boutput(M, "<span style=\"color:red\">Your soul is forced out of your body!</span>")
+	boutput(M, "<span class='alert'>Your soul is forced out of your body!</span>")
 	M.ghostize()
 	var/ckey = usr.key
 	M.mind = usr.mind
@@ -1248,7 +1248,7 @@
 	M.mind = M.oldmind
 	if(M.mind)
 		M.ckey = M.mind.key
-	boutput(M, "<span style=\"color:red\">Your soul is sucked back into your body!</span>")
+	boutput(M, "<span class='alert'>Your soul is sucked back into your body!</span>")
 
 /client/proc/cmd_whois(target as text)
 	set name = "Whois"
@@ -1283,7 +1283,7 @@
 	admin_only
 
 	SPAWN_DBG(0)
-		boutput(usr, "<span style=\"color:red\">Generating reward list.</span>")
+		boutput(usr, "<span class='alert'>Generating reward list.</span>")
 		var/list/eligible = list()
 		for (var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -1291,7 +1291,7 @@
 			eligible[D.title] = D
 
 		if (!length(eligible))
-			boutput(usr, "<span style=\"color:red\">Sorry, you don't have any rewards available.</span>")
+			boutput(usr, "<span class='alert'>Sorry, you don't have any rewards available.</span>")
 			return
 
 		var/selection = input(usr,"Please select your reward", "VIP Rewards","CANCEL") as null|anything in eligible
@@ -1308,7 +1308,7 @@
 				break
 
 		if (S == null)
-			boutput(usr, "<span style=\"color:red\">Invalid Rewardtype after selection. Please inform a coder.</span>")
+			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		if (M == "Yes")
@@ -1349,7 +1349,7 @@
 			if (F.group && F.group.reagents)
 				reagents = F.group.reagents
 		if (!reagents)
-			boutput(usr, "<span style=\"color:blue\"><b>[target] contains no reagents.</b></span>")
+			boutput(usr, "<span class='notice'><b>[target] contains no reagents.</b></span>")
 			return
 	else
 		reagents = target.reagents
@@ -1458,7 +1458,7 @@
 		log_reagents = "(nothing)"
 
 	if(!refresh)
-		boutput(usr, "<span style=\"color:blue\"><b>[target]'s reagents</b> ([reagents.total_volume] / [reagents.maximum_volume])<br>[log_reagents]</span><br>Temp: <i>[reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)</i>") // Added temperature (Convair880).
+		boutput(usr, "<span class='notice'><b>[target]'s reagents</b> ([reagents.total_volume] / [reagents.maximum_volume])<br>[log_reagents]</span><br>Temp: <i>[reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)</i>") // Added temperature (Convair880).
 	usr.Browse(final_report, "window=reagent_report")
 
 	logTheThing("admin", usr, null, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]")
@@ -1523,7 +1523,7 @@
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P
 
-	boutput(usr, "<span style=\"color:green\">Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
+	boutput(usr, "<span class='success'>Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
 
 /client/proc/addreagents(var/atom/A in world)
 	set category = null
@@ -1558,7 +1558,7 @@
 	if(!amount) return
 
 	A.reagents.add_reagent(reagent.id, amount)
-	boutput(usr, "<span style=\"color:green\">Added [amount] units of [reagent.id] to [A.name]</span>")
+	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name]</span>")
 
 	// Brought in line with adding reagents via the player panel (Convair880).
 	logTheThing("admin", src, A, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
@@ -1605,7 +1605,7 @@
 			Bee.set_density(initial(Bee.density))
 			Bee.update_icon()
 			Bee.on_revive()
-			Bee.visible_message("<span style=\"color:red\">[Bee] seems to rise from the dead!</span>")
+			Bee.visible_message("<span class='alert'>[Bee] seems to rise from the dead!</span>")
 			revived ++
 	for (var/obj/critter/domestic_bee_larva/Larva in world)
 		LAGCHECK(LAG_LOW)
@@ -1615,7 +1615,7 @@
 			Larva.icon_state = initial(Larva.icon_state)
 			Larva.set_density(initial(Larva.density))
 			Larva.on_revive()
-			Larva.visible_message("<span style=\"color:red\">[Larva] seems to rise from the dead!</span>")
+			Larva.visible_message("<span class='alert'>[Larva] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing("admin", src, null, "revived [revived] bee[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] bee[revived == 1 ? "" : "s"]!")
@@ -1634,7 +1634,7 @@
 			Cat.icon_state = initial(Cat.icon_state)
 			Cat.set_density(initial(Cat.density))
 			Cat.on_revive()
-			Cat.visible_message("<span style=\"color:red\">[Cat] seems to rise from the dead!</span>")
+			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing("admin", src, null, "revived [revived] cat[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] cat[revived == 1 ? "" : "s"]!")
@@ -1653,7 +1653,7 @@
 			Bird.icon_state = Bird.species
 			Bird.set_density(initial(Bird.density))
 			Bird.on_revive()
-			Bird.visible_message("<span style=\"color:red\">[Bird] seems to rise from the dead!</span>")
+			Bird.visible_message("<span class='alert'>[Bird] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing("admin", src, null, "revived [revived] parrot[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] parrot[revived == 1 ? "" : "s"]!")
@@ -2044,7 +2044,7 @@
 		player_pool += M
 
 	if (!player_pool.len)
-		boutput(src, "<span style=\"color:red\">Error: no valid mobs found via selected options.</span>")
+		boutput(src, "<span class='alert'>Error: no valid mobs found via selected options.</span>")
 		return
 
 	var/chosen_player = pick(player_pool)
@@ -2115,7 +2115,7 @@ var/global/night_mode_enabled = 0
 	admin_only
 
 	if (!istype(H))
-		boutput(usr, "<span style=\"color:red\">This can only be used on humans!</span>")
+		boutput(usr, "<span class='alert'>This can only be used on humans!</span>")
 		return
 	if (!H.organHolder)
 		if (alert(usr, "[H] lacks an organHolder! Create a new one?", "Error", "Yes", "No") == "Yes")
@@ -2201,13 +2201,13 @@ var/global/night_mode_enabled = 0
 			var/obj/item/created_organ = new new_organ
 			created_organ:donor = H
 			H.organHolder.receive_organ(created_organ, organ)
-			boutput(usr, "<span style=\"color:blue\">[H]'s [lowertext(organ)] replaced with [created_organ].</span>")
+			boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] replaced with [created_organ].</span>")
 			logTheThing("admin", usr, H, "replaced %target%'s [lowertext(organ)] with [created_organ]")
 			logTheThing("diary", usr, H, "replaced %target%'s [lowertext(organ)] with [created_organ]", "admin")
 		if ("Drop")
 			if (alert(usr, "Are you sure you want [H] to drop their [lowertext(organ)]?", "Confirmation", "Yes", "No") == "Yes")
 				H.organHolder.drop_organ(organ)
-				boutput(usr, "<span style=\"color:blue\">[H]'s [lowertext(organ)] dropped.</span>")
+				boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] dropped.</span>")
 				logTheThing("admin", usr, H, "dropped %target%'s [lowertext(organ)]")
 				logTheThing("diary", usr, H, "dropped %target%'s [lowertext(organ)]", "admin")
 			else
@@ -2216,7 +2216,7 @@ var/global/night_mode_enabled = 0
 			if (alert(usr, "Are you sure you want to delete [H]'s [lowertext(organ)]?", "Confirmation", "Yes", "No") == "Yes")
 				var/organ2del = H.organHolder.drop_organ(organ)
 				qdel(organ2del)
-				boutput(usr, "<span style=\"color:blue\">[H]'s [lowertext(organ)] deleted.</span>")
+				boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] deleted.</span>")
 				logTheThing("admin", usr, H, "deleted %target%'s [lowertext(organ)]")
 				logTheThing("diary", usr, H, "deleted %target%'s [lowertext(organ)]", "admin")
 			else

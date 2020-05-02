@@ -105,7 +105,7 @@
 					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
-					boutput(mob, "<span style=\"color:red\"><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
 					if (W)
 						W.set_loc(mob.loc)
 						W.dropped(mob)
@@ -226,7 +226,7 @@
 					if (W.compatible_species.Find("human"))
 						continue
 					mob.u_equip(W)
-					boutput(mob, "<span style=\"color:red\"><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
 					if (W)
 						W.set_loc(mob.loc)
 						W.dropped(mob)
@@ -589,7 +589,7 @@
 
 
 					mob.emote("scream")
-					mob.visible_message("<span style=\"color:red\"><B>[mob]</B> rises from the dead!</span>")
+					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
 
 		return 1
 
@@ -1086,7 +1086,7 @@
 							src.mob.reagents.del_reagent("ants")
 							src.mob.reagents.del_reagent("mutagen")
 							src.mob.reagents.add_reagent("spiders", ant_amt + mut_amt)
-							boutput(src.mob, "<span style=\"color:blue\">The ants arachnify.</span>")
+							boutput(src.mob, "<span class='notice'>The ants arachnify.</span>")
 							playsound(get_turf(src.mob), "sound/effects/bubbles.ogg", 80, 1)*/
 			if("roll")
 				if (!mob.restrained())
@@ -1220,7 +1220,7 @@
 	onDeath()
 		SPAWN_DBG(2 SECONDS)
 			if (mob)
-				mob.visible_message("<span style=\"color:red\"><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
+				mob.visible_message("<span class='alert'><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 				mob.changeStatus("weakened", 150)
 				mob.make_jittery(1000)
 				sleep(rand(40, 120))
@@ -1396,7 +1396,7 @@
 	// ignore_missing_limbs = OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
 		if(ishuman(target))
-			mob.visible_message("<span style=\"color:red\"><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
+			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
 		else
 			return target.attack_hand(mob)
 

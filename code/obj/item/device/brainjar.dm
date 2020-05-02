@@ -327,7 +327,7 @@
 	set src = usr.loc
 
 	if(!istype(src.master, /obj/item/device/transfer_valve))
-		boutput(usr, "<span style='color:red;'>Interface failure with the valve controls!</span>")
+		boutput(usr, "<span class='alert'>Interface failure with the valve controls!</span>")
 		return
 
 	var/obj/item/device/transfer_valve/TV = src.master

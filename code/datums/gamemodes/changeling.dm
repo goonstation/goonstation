@@ -11,7 +11,7 @@
 
 /datum/game_mode/changeling/announce()
 	boutput(world, "<B>The current game mode is - Changeling!</B>")
-	boutput(world, "<B>There is a <span style=\"color:red\">CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
+	boutput(world, "<B>There is a <span class='alert'>CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
 
 /datum/game_mode/changeling/pre_setup()
 	var/num_players = 0
@@ -52,7 +52,7 @@
 			bestow_objective(changeling,/datum/objective/escape)
 
 			//HRRFM horror form stuff goes here
-			boutput(changeling.current, "<B><span style=\"color:red\">You feel... HUNGRY!</span></B><br>")
+			boutput(changeling.current, "<B><span class='alert'>You feel... HUNGRY!</span></B><br>")
 
 			// Moved antag help pop-up to changeling.dm (Convair880).
 

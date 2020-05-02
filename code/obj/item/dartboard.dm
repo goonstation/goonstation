@@ -19,7 +19,7 @@
 			playsound(src.loc, "sound/effects/syringeproj.ogg", 100, 1)
 			src.visible_message("<span style=\"color:blue\">Score: [last_score].</span>")
 		if (src.last_score == 50)
-			src.visible_message("<span style=\"color:red\">It's a bullseye!</span>")
+			src.visible_message("<span class='alert'>It's a bullseye!</span>")
 
 /obj/item/storage/box/lawndart_kit
 	name = "Lawn Darts box"

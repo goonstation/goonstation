@@ -596,7 +596,7 @@ todo: add more small animals!
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span style='color:red'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
+				src.visible_message("<span class='alert'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
 				"<span style='color:red'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
@@ -607,7 +607,7 @@ todo: add more small animals!
 			src.set_density(1)
 			src.full_heal()
 			src.visible_message("<span style='color:blue'><b>[src]</b> wags [his_or_her(src)] tail and gets back up!</span>")
-			boutput(src, "<span style='color:blue'><b>You wag your tail and get back up!</b></span>") // visible_message doesn't go through when this triggers
+			boutput(src, "<span class='notice'><b>You wag your tail and get back up!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -983,12 +983,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
-			boutput(M, "<span style=\"color:red\"><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN_DBG(1 MINUTE)
-				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -1016,12 +1016,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
-			boutput(M, "<span style=\"color:red\"><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN_DBG(1 MINUTE)
-				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -1535,7 +1535,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span style='color:red'><b>[src]</b> dies!</span>",\
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span style='color:red'><b>You play dead!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
@@ -1546,7 +1546,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.set_density(1)
 			src.full_heal()
 			src.visible_message("<span style='color:blue'><b>[src]</b> stops playing dead and gets back up!</span>")
-			boutput(src, "<span style='color:blue'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
+			boutput(src, "<span class='notice'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -1606,7 +1606,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if (..())
 			return 1
-		src.visible_message("<span style='color:red'>You feel uncomfortable now.</span>")
+		src.visible_message("<span class='alert'>You feel uncomfortable now.</span>")
 
 /* ============================================= */
 /* -------------------- Pig -------------------- */

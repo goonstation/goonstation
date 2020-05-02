@@ -8,7 +8,7 @@
 	heal_amt = 0
 
 	heal(var/mob/M)
-		boutput(M, "<span style=\"color:red\">It's just not good enough on its own...</span>")
+		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
 		if (!src.reagents || src.qdeled || src.pooled) return //how
@@ -188,7 +188,7 @@
 						src.shakes ++
 						return
 		else if (istype(M, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
-			M.visible_message("<span style='color:red'><b>[user]</b> [myVerb]s some salt onto [M] and it shrivels up!</span>",\
+			M.visible_message("<span class='alert'><b>[user]</b> [myVerb]s some salt onto [M] and it shrivels up!</span>",\
 			"<span style='color:red'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 			M.TakeDamage(null, 15, 15)
 			src.shakes ++

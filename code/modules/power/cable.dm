@@ -117,7 +117,7 @@
 			num = "fourth"
 		if (cuts == 5)
 			num = "fifth"
-		src.visible_message("<span style=\"color:red\">[user] cuts through the [num] section of [src].</span>")
+		src.visible_message("<span class='alert'>[user] cuts through the [num] section of [src].</span>")
 
 		if (cuts >= cuts_required)
 			..()
@@ -205,7 +205,7 @@
 			C.iconmod = src.iconmod
 			C.updateicon()
 
-	src.visible_message("<span style=\"color:red\">[user] cuts the cable.</span>")
+	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)
 
 	shock(user, 50)
@@ -235,10 +235,10 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 
 		if(PN && (PN.avail > 0))		// is it powered?
-			boutput(user, "<span style=\"color:red\">[PN.avail]W in power network.</span>")
+			boutput(user, "<span class='alert'>[PN.avail]W in power network.</span>")
 
 		else
-			boutput(user, "<span style=\"color:red\">The cable is not powered.</span>")
+			boutput(user, "<span class='alert'>The cable is not powered.</span>")
 
 		if(prob(40))
 			shock(user, 10)

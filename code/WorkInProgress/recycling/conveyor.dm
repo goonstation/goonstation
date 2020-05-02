@@ -185,7 +185,7 @@
 				if(M.lying)
 					user.visible_message("<span style=\"color:blue\">[M] has been tied to the conveyor by [user].</span>", "<span style=\"color:blue\">You tie [M] to the converyor!</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">[M] must be lying down to be tied to the converyor!</span>")
+					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
 			M.buckled = src.loc

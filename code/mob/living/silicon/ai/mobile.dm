@@ -255,7 +255,7 @@
 
 	return_mainframe()
 		if(!isAI(src.mainframe) || !src.mind)
-			boutput(src, "<span style=\"color:red\">--Host System Error</span>")
+			boutput(src, "<span class='alert'>--Host System Error</span>")
 			return 1
 
 		src.mind.transfer_to(src.mainframe)

@@ -265,9 +265,9 @@
 /obj/item/record/attack(mob/M as mob, mob/user as mob) // copied plate code
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
-			boutput(user, "<span style=\"color:red\"><B>You smash the record over your own head!</b></span>")
+			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
-			M.visible_message("<span style=\"color:red\"><B>[user] smashes [src] over [M]'s head!</B></span>")
+			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
@@ -279,7 +279,7 @@
 			O.setMaterial(copyMaterial(src.material))
 		qdel(src)
 	else
-		M.visible_message("<span style=\"color:red\">[user] taps [M] over the head with [src].</span>")
+		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps %target% over the head with [src].")
 
 /obj/item/record/random/adventure_1
@@ -413,7 +413,7 @@
 
 /obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
 	if (istype(P, /obj/item/magnifying_glass))
-		boutput(user, "<span style=\"color:blue\">You examine the record with the magnifying glass.</span>")
+		boutput(user, "<span class='notice'>You examine the record with the magnifying glass.</span>")
 		sleep(2 SECONDS)
 		boutput(user, "The scratch on the record, upon close examination, is actually tiny lettering. It says, <i>Fuck Discount Dan's. I hope more of your factories go under and you all drown in your toxic sewage.</i>")
 

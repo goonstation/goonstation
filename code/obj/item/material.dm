@@ -44,12 +44,12 @@
 			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
 				var/oreamt = W.contents.len
-				boutput(user, "<span style=\"color:blue\">You put [src] in [W].</span>")
+				boutput(user, "<span class='notice'>You put [src] in [W].</span>")
 				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
-				if (oreamt == W:maxitems) boutput(user, "<span style=\"color:blue\">[W] is now full!</span>")
+				if (oreamt == W:maxitems) boutput(user, "<span class='notice'>[W] is now full!</span>")
 				W:satchel_updateicon()
 			else
-				boutput(user, "<span style=\"color:red\">[W] is full!</span>")
+				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
 
 	HasEntered(AM as mob|obj)
@@ -62,7 +62,7 @@
 				src.loc = S.satchel
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
-					boutput(H, "<span style=\"color:red\">Your ore scoop's satchel is full!</span>")
+					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
 					playsound(get_turf(H), "sound/machines/chime.ogg", 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
@@ -72,7 +72,7 @@
 					return
 				src.loc = SCOOP
 				if (SCOOP.contents.len >= SCOOP.capacity)
-					boutput(V.pilot, "<span style=\"color:red\">Your pod's ore scoop hold is full!</span>")
+					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
 					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
 			return
 		else
@@ -80,15 +80,15 @@
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
-			boutput(usr, "<span style=\"color:red\">Quit that! You're dead!</span>")
+			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
 		if(!istype(over_object, /obj/screen/hud))
 			if (get_dist(usr,src) > 1)
-				boutput(usr, "<span style=\"color:red\">You're too far away from it to do that.</span>")
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 			if (get_dist(usr,over_object) > 1)
-				boutput(usr, "<span style=\"color:red\">You're too far away from it to do that.</span>")
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
 		if(istype(over_object, /obj/machinery/power/furnace))
@@ -570,7 +570,7 @@
 				if(isabomination(H))
 					return
 				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
-					boutput(H, "<span style=\"color:red\"><B>You step on [src]! Ouch!</B></span>")
+					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					playsound(src.loc, src.sound_stepped, 50, 1)
 					var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 					H.changeStatus("weakened", 3 SECONDS)
@@ -585,7 +585,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
@@ -717,10 +717,10 @@
 
 	attack_hand(var/mob/user as mob)
 		if (active)
-			boutput(user, "<span style=\"color:red\">It's already working! Give it a moment!</span>")
+			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
 			return
 		if (src.contents.len < 1)
-			boutput(user, "<span style=\"color:red\">There's nothing inside to reclaim.</span>")
+			boutput(user, "<span class='alert'>There's nothing inside to reclaim.</span>")
 			return
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
@@ -866,57 +866,57 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Get your filthy dead fingers off that!</span>")
+			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return
 
 		if(over_object == src)
 			output_location = null
-			boutput(usr, "<span style=\"color:blue\">You reset the reclaimer's output target.</span>")
+			boutput(usr, "<span class='notice'>You reset the reclaimer's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The reclaimer is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The reclaimer is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
 				src.output_location = over_object
-				boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable cart as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
 			else
 				src.output_location = over_object
-				boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/machinery/manufacturer/))
 			var/obj/machinery/manufacturer/M = over_object
 			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span style=\"color:red\">You can't use a non-functioning manufacturer as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
 			else
 				src.output_location = M
-				boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_location = O.loc
-			boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output on top of [O]!</span>")
+			boutput(usr, "<span class='notice'>You set the reclaimer to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_location = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the reclaimer to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -924,15 +924,15 @@
 			return
 
 		if(!isliving(user))
-			boutput(user, "<span style=\"color:red\">Only living mobs are able to use the reclaimer's quick-load feature.</span>")
+			boutput(user, "<span class='alert'>Only living mobs are able to use the reclaimer's quick-load feature.</span>")
 			return
 
 		if (!isobj(O))
-			boutput(user, "<span style=\"color:red\">You can't quick-load that.</span>")
+			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
 		if(!DIST_CHECK(O, user, 1))
-			boutput(user, "<span style=\"color:red\">You are too far away!</span>")
+			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
@@ -941,8 +941,8 @@
 			for (var/obj/item/raw_material/M in O.contents)
 				M.set_loc(src)
 				amtload++
-			if (amtload) boutput(user, "<span style=\"color:blue\">[amtload] materials loaded from [O]!</span>")
-			else boutput(user, "<span style=\"color:red\">No material loaded!</span>")
+			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
+			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
 		else if (istype(O, /obj/item/raw_material/) || istype(O, /obj/item/sheet/) || istype(O, /obj/item/rods/) || istype(O, /obj/item/tile/) || istype(O, /obj/item/cable_coil))
 			quickload(user,O)
@@ -969,7 +969,7 @@
 			playsound(get_turf(src), sound_load, 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
-		boutput(user, "<span style=\"color:blue\">You finish stuffing [O] into [src]!</span>")
+		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
 	proc/get_output_location()

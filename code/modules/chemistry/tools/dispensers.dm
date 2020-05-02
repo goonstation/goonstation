@@ -69,7 +69,7 @@
 			return ..()
 
 		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
-			boutput(usr, "<span style=\"color:red\">That's too far!</span>")
+			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
 		src.transfer_all_reagents(over_object, usr)
@@ -329,7 +329,7 @@
 			return 0
 		if (!src.reagents.has_reagent("fuel",20))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
 		src.reagents.remove_any(20)
 		playsound(src.loc, "sound/items/drink.ogg", 50, 1, -6)
 		user.TakeDamage("chest", 0, 150)
@@ -391,7 +391,7 @@
 		else load = 0
 
 		if(load)
-			boutput(user, "<span style=\"color:blue\">[src] mulches up [W].</span>")
+			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 			user.u_equip(W)
 			W.dropped()
@@ -401,13 +401,13 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span style=\"color:red\">Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
 		if (get_dist(user,src) > 1)
-			boutput(user, "<span style=\"color:red\">You need to move closer to [src] to do that.</span>")
+			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
 		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
-			boutput(user, "<span style=\"color:red\">[O] is too far away to load into [src]!</span>")
+			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
 			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O] into [src]!</span>")
@@ -415,7 +415,7 @@
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
 				if (src.reagents.total_volume >= src.reagents.maximum_volume)
-					boutput(user, "<span style=\"color:red\">[src] is full!</span>")
+					boutput(user, "<span class='alert'>[src] is full!</span>")
 					break
 				if (user.loc != staystill) break
 				if (P.type != itemtype) continue
@@ -430,7 +430,7 @@
 				src.reagents.add_reagent("poo", amount)
 				pool( P )
 				sleep(0.3 SECONDS)
-			boutput(user, "<span style=\"color:blue\">You finish stuffing [O] into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		else ..()
 
 /obj/reagent_dispensers/still

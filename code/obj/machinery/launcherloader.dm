@@ -329,18 +329,18 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(user, "<span style=\"color:blue\">You swipe the ID card.</span>")
+			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 			account = FindBankAccountByName(I:registered)
 			if(account)
 				var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
 				if (enterpin == I:pin)
-					boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 		else src.attack_hand(user)
 		return
@@ -439,7 +439,7 @@
 					var/obj/storage/crate/C = target
 					C.scan = src.scan
 					C.account = src.account
-					boutput(usr, "<span style=\"color:blue\">[target] has been marked with your account routing information.</span>")
+					boutput(usr, "<span class='notice'>[target] has been marked with your account routing information.</span>")
 					C.desc = "[C] belongs to [scan.registered]."
 				var/obj/storage/crate/C = target
 				C.update_icon()

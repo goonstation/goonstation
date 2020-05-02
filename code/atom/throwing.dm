@@ -56,11 +56,11 @@
 						A.throw_at(get_edge_target_turf(C,get_dir(C, U)), 50, 60)
 						playsound(T, 'sound/items/woodbat.ogg', 50, 1)
 						playsound(T, 'sound/items/batcheer.ogg', 50, 1)
-						C.visible_message("<span style=\"color:red\">[C] hits the [src.name] with the bat and scores a HOMERUN! Woah!!!!</span>")
+						C.visible_message("<span class='alert'>[C] hits the [src.name] with the bat and scores a HOMERUN! Woah!!!!</span>")
 					else
 						A.throw_at(get_edge_target_turf(C,get_dir(C, U)), 50, 25)
 						playsound(T, 'sound/items/woodbat.ogg', 50, 1)
-						C.visible_message("<span style=\"color:red\">[C] hits the [src.name] with the bat!</span>")
+						C.visible_message("<span class='alert'>[C] hits the [src.name] with the bat!</span>")
 
 					return 1
 
@@ -83,7 +83,7 @@
 		if (!ismob(src))
 			if (C.juggling())
 				if (prob(40))
-					C.visible_message("<span style=\"color:red\"><b>[C]<b> gets hit in the face by [src]!</span>")
+					C.visible_message("<span class='alert'><b>[C]<b> gets hit in the face by [src]!</span>")
 					if (hasvar(src, "throwforce"))
 						C.TakeDamageAccountArmor("head", src:throwforce, 0)
 				else
@@ -95,7 +95,7 @@
 
 		if(((C.in_throw_mode && C.a_intent == "help") || (C.client && C.client.check_key(KEY_THROW))) && !C.equipped())
 			if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.hasStatus("handcuffed") || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
-				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>") //you're all thumbs!!!
+				C.visible_message("<span class='alert'>[C] has been hit by [src].</span>") //you're all thumbs!!!
 				// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
 				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 				if(src.vars.Find("throwforce"))
@@ -113,7 +113,7 @@
 
 			else
 				src.attack_hand(C)	// nice catch, hayes. don't ever fuckin do it again
-				C.visible_message("<span style=\"color:red\">[C] catches the [src.name]!</span>")
+				C.visible_message("<span class='alert'>[C] catches the [src.name]!</span>")
 				logTheThing("combat", C, null, "catches [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 				C.throw_mode_off()
 			#ifdef DATALOGGER
@@ -122,9 +122,9 @@
 
 		else  //normmal thingy hit me
 			if (src.throwing & THROW_CHAIRFLIP)
-				C.visible_message("<span style=\"color:red\">[src] slams into [C] midair!</span>")
+				C.visible_message("<span class='alert'>[src] slams into [C] midair!</span>")
 			else
-				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>")
+				C.visible_message("<span class='alert'>[C] has been hit by [src].</span>")
 				if(src.vars.Find("throwforce"))
 					random_brute_damage(C, src:throwforce,1)
 
@@ -150,7 +150,7 @@
 
 	else if(issilicon(hit_atom))
 		var/mob/living/silicon/S = hit_atom
-		S.visible_message("<span style=\"color:red\">[S] has been hit by [src].</span>")
+		S.visible_message("<span class='alert'>[S] has been hit by [src].</span>")
 		logTheThing("combat", S, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(S)].")
 		if(src.vars.Find("throwforce"))
 			random_brute_damage(S, src:throwforce,1)

@@ -198,7 +198,7 @@
 			H.u_equip(src)
 			src.set_loc(get_turf(H))
 
-			for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">[H.name] disappears in a flash of light!!</span>", 1)
+			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 			playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 			for (var/mob/N in viewers(src, null))
 				if (get_dist(N, src) <= 6)
@@ -264,7 +264,7 @@
 					if (clear)
 						L += T3
 
-		for(var/mob/O in AIviewers(H, null)) O.show_message("<span style=\"color:red\">[H.name] disappears in a flash of light!!</span>", 1)
+		for(var/mob/O in AIviewers(H, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
 		for (var/mob/N in viewers(H, null))
@@ -598,12 +598,12 @@
 /*
 /obj/item/ursium/attack(mob/M as mob, mob/user as mob)
 	if (user != M)
-		user.visible_message("<span style=\"color:red\">[user] is trying to force [M] to eat the [src.content]!</span>")
+		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
 		if (do_mob(user, M, 40))
-			user.visible_message("<span style=\"color:red\">[user] forced [M] to eat the [src.content]!</span>")
+			user.visible_message("<span class='alert'>[user] forced [M] to eat the [src.content]!</span>")
 			src.injest(M)
 	else
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span style=\"color:red\">[M] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)
 */

@@ -100,7 +100,7 @@
 		else
 			t = "<span style=\"color:red\"><B>Results: Connection Error!</B></span>"
 	else
-		boutput(usr, "<span style=\"color:blue\"><B>You are too far away.</B></span>")
+		boutput(usr, "<span class='notice'><B>You are too far away.</B></span>")
 
 	boutput(usr, t)
 	return

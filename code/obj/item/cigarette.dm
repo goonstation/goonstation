@@ -129,12 +129,12 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > T0C+200)
-				src.visible_message("<span style='color:red'>The [src] ignites!</span>", group = "cig_ignite")
+				src.visible_message("<span class='alert'>The [src] ignites!</span>", group = "cig_ignite")
 				src.light()
 
 	ex_act(severity)
 		if (src.on == 0)
-			src.visible_message("<span style='color:red'>The [src] ignites!</span>", group = "cig_ignite")
+			src.visible_message("<span class='alert'>The [src] ignites!</span>", group = "cig_ignite")
 			src.light()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -181,7 +181,7 @@
 					src.light(user, "<span style='color:red'><b>[user]</b> lights [his_or_her(user)] [src.name] with [M]'s flaming body. That's cold, man. That's real cold.</span>")
 				return
 			else if (src.on == 1)
-				src.put_out(user, "<span style='color:red'><b>[user]</b> puts [src] out on [target].</span>")
+				src.put_out(user, "<span class='alert'><b>[user]</b> puts [src] out on [target].</span>")
 				if (ishuman(target))
 					var/mob/living/carbon/human/chump = target
 					if (!chump.stat)
@@ -224,7 +224,7 @@
 				if (7) message_append = " That's cold."
 				if (8) message_append = " How rude."
 				if (9) message_append = " Wow!"
-			user.visible_message("<span style='color:red'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
+			user.visible_message("<span class='alert'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
 
 			var/mob/living/carbon/human/human_target = target
 			if (human_target && rand(1,5) == 1)
@@ -242,7 +242,7 @@
 				if (8) message = "<B>[user]</B> takes a drag of [his_or_her(user)] [src.name]."
 				if (9) message = "<B>[user]</B> pulls on [his_or_her(user)] [src.name]."
 				if (10) message = "<B>[user]</B> blows out some smoke in the shape of a [pick("butt","bee","shelterfrog","heart","burger","gun","cube","face","dog","star")]!"
-			user.visible_message("<span style='color:red'>[message]</span>", group = "blow_smoke")
+			user.visible_message("<span class='alert'>[message]</span>", group = "blow_smoke")
 			src.cycle = 0 //do the transfer on the next cycle. Also means we get the lung damage etc rolls
 
 		src.puff_ready = 0
@@ -287,7 +287,7 @@
 					trick_explode()
 				return
 			else
-				src.put_out(M, "<span style='color:red'><b>[M]</b>'s [src.name] goes out.</span>")
+				src.put_out(M, "<span class='alert'><b>[M]</b>'s [src.name] goes out.</span>")
 				return
 
 		//if (istype(location, /turf)) //start a fire if possible
@@ -301,10 +301,10 @@
 		if (!isturf(src.loc))
 			return
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
-			src.put_out(user, "<span style='color:red'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
+			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
 		else
-			user.visible_message("<span style='color:red'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
 
 
@@ -317,7 +317,7 @@
 			s.set_up(5, 1, src)
 			s.start()
 			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
-		src.visible_message("<span style='color:red'>The [src] explodes!</span>")
+		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
 		// Added (Convair880).
 		if (ismob(src.loc))
@@ -424,7 +424,7 @@
 				B.flavor = src.flavor
 				B.name = "[reagent_id_to_name(src.flavor)]-flavoured blunt wrap"
 			src.reagents.trans_to(B, 20)
-			boutput(user, "<span style=\"color:red\">You cut [src] open to make a blunt wrapper.</span>")
+			boutput(user, "<span class='alert'>You cut [src] open to make a blunt wrapper.</span>")
 			qdel(src)
 			user.put_in_hand_or_drop(B)
 
@@ -867,7 +867,7 @@
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc) && src.on > 0)
-			user.visible_message("<span style='color:red'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			src.put_out(user)
 			return
 		SPAWN_DBG(0)
@@ -926,12 +926,12 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > T0C+200)
-				src.visible_message("<span style='color:red'>The [src] ignites!</span>")
+				src.visible_message("<span class='alert'>The [src] ignites!</span>")
 				src.light()
 
 	ex_act(severity)
 		if (src.on == 0)
-			src.visible_message("<span style='color:red'>The [src] ignites!</span>")
+			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)
@@ -1007,7 +1007,7 @@
 					src.cautery_surgery(fella, user, 5, src.on)
 					return ..()
 				else
-					user.visible_message("<span style='color:red'><b>[user]</b> puts out [src] on [fella]!</span>",\
+					user.visible_message("<span class='alert'><b>[user]</b> puts out [src] on [fella]!</span>",\
 					"<span style='color:red'>You put out [src] on [fella]!</span>")
 					fella.TakeDamage("All", 0, rand(1,5))
 					if (!fella.stat)
@@ -1068,7 +1068,7 @@
 				src.on = 1
 				set_icon_state(src.icon_on)
 				src.item_state = "zippoon"
-				user.visible_message("<span style='color:red'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
+				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 				playsound(get_turf(user), 'sound/items/zippo_open.ogg', 30, 1)
 				light.enable()
 
@@ -1078,7 +1078,7 @@
 				src.on = 0
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
-				user.visible_message("<span style='color:red'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
+				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
 				playsound(get_turf(user), 'sound/items/zippo_close.ogg', 30, 1)
 				light.disable()
 
@@ -1098,9 +1098,9 @@
 						fella.TakeDamage("chest",0,10)
 						fella.limbs.l_arm_bleed = max(0,fella.limbs.l_arm_bleed-5)
 						if (fella.limbs.l_arm_bleed == 0)
-							user.visible_message("<span style='color:red'>[user] completely cauterises [fella]'s left stump with [src]!</span>")
+							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s left stump with [src]!</span>")
 						else
-							user.visible_message("<span style='color:red'>[user] partially cauterises [fella]'s left stump with [src]!</span>")
+							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s left stump with [src]!</span>")
 						return
 
 				if (user.zone_sel.selecting == "r_arm")
@@ -1108,9 +1108,9 @@
 						fella.TakeDamage("chest",0,10)
 						fella.limbs.r_arm_bleed = max(0,fella.limbs.r_arm_bleed-5)
 						if (fella.limbs.r_arm_bleed == 0)
-							user.visible_message("<span style='color:red'>[user] completely cauterises [fella]'s right stump with [src]!</span>")
+							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s right stump with [src]!</span>")
 						else
-							user.visible_message("<span style='color:red'>[user] partially cauterises [fella]'s right stump with [src]!</span>")
+							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s right stump with [src]!</span>")
 						return
 
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
@@ -1123,7 +1123,7 @@
 				if (src.cautery_surgery(target, user, 10, src.on))
 					return
 
-		user.visible_message("<span style='color:red'><b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]</span>")
 		return
 
 	afterattack(atom/O, mob/user as mob)
@@ -1136,12 +1136,12 @@
 				return
 
 			if (reagents.get_reagent_amount("fuel") >= src.reagents.maximum_volume) //this could be == but just in case...
-				boutput(user, "<span style='color:red'>[src] is full!</span>")
+				boutput(user, "<span class='alert'>[src] is full!</span>")
 				return
 
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
-				boutput(user, "<span style=\"color:blue\">[src] has been refueled.</span>")
+				boutput(user, "<span class='notice'>[src] has been refueled.</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
 				user.show_text("[O] is empty.", "red")
@@ -1184,8 +1184,8 @@
 			user.suiciding = 0
 			return 0
 		if (!src.on) // don't need to do more than just show the message since the lighter is deleted in a moment anyway
-			user.visible_message("<span style='color:red'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
-		user.visible_message("<span style='color:red'><b>[user] swallows the on [src.name]!</b></span>")
+			user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
+		user.visible_message("<span class='alert'><b>[user] swallows the on [src.name]!</b></span>")
 		user.take_oxygen_deprivation(75)
 		user.TakeDamage("chest", 0, 100)
 		user.emote("scream")

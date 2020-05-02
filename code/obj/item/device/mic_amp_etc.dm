@@ -19,7 +19,7 @@
 			if (locate(/obj/loudspeaker) in range(2, user))
 				for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
 					if(!DIST_CHECK(S, user, 7)) continue
-					S.visible_message("<span style=\"color:red\">[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
+					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 	attack_hand(mob/user as mob)
@@ -61,7 +61,7 @@
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
 				if(!DIST_CHECK(S, T, 7)) continue
-				S.visible_message("<span style=\"color:red\">[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
+				S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 /obj/mic_stand

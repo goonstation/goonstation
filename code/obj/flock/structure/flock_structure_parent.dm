@@ -169,4 +169,4 @@
 	var/damage = rand(modifier, 12 + 8 * modifier)
 
 	takeDamage("mixed", damage)
-	src.visible_message("<span style=\"color:red\">[src] is hit by the blob!/span>")
+	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")

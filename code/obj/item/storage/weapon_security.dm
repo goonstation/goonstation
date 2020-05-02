@@ -265,7 +265,7 @@
 			src.icon_state = W.icon_state
 			src.item_state = W.item_state
 			src.inhand_image = W.inhand_image
-			boutput(user, "<span style=\"color:blue\">The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
+			boutput(user, "<span class='notice'>The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
 			src.cloaked = 1
 			return
 
@@ -281,7 +281,7 @@
 			src.icon_state = initial(src.icon_state)
 			src.item_state = initial(src.item_state)
 			src.inhand_image = initial(src.inhand_image)
-			boutput(usr, "<span style=\"color:red\">You reset the [src.name].</span>")
+			boutput(usr, "<span class='alert'>You reset the [src.name].</span>")
 			src.cloaked = 0
 			src.add_fingerprint(usr)
 

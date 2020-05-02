@@ -53,5 +53,5 @@
       s.set_up(5, 1, holder.owner)
       s.start()
     playsound(T, "sound/effects/ghost2.ogg", 100, 1)
-    holder.owner.visible_message("<span style='color: blue;'><b>[holder.owner]</b> summons [martian.name]!</span>", "<span class='color: blue;'>You pull [martian.real_name] through space to you!</span>")
+    holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> summons [martian.name]!</span>", "<span class='notice'>You pull [martian.real_name] through space to you!</span>")
     holder.owner.say("SUMMON!", 1)

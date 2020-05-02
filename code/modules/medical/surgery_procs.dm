@@ -96,7 +96,7 @@ limbs are their own thing not included here.
 		patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
 		take_bleeding_damage(patient, surgeon, damage)
 
-		patient.visible_message("<span style='color:red'><b>Blood gushes from the incision!</b> That can't have been the correct thing to do!</span>")
+		patient.visible_message("<span class='alert'><b>Blood gushes from the incision!</b> That can't have been the correct thing to do!</span>")
 		return
 
 	else
@@ -296,7 +296,7 @@ limbs are their own thing not included here.
 		return 0
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span style='color:red'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
 		"<span style='color:red'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
 		surgeon.changeStatus("weakened", 4 SECONDS)
@@ -334,7 +334,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -356,7 +356,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 					patient.TakeDamage("head", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_high)
 					return 1
@@ -378,7 +378,7 @@ limbs are their own thing not included here.
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
-				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
 				return 1
@@ -400,7 +400,7 @@ limbs are their own thing not included here.
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
-				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
 				return 1
@@ -423,7 +423,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -445,7 +445,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 					patient.TakeDamage("head", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_high)
 					return 1
@@ -472,7 +472,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -509,7 +509,7 @@ limbs are their own thing not included here.
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
-				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
 				return 1
@@ -531,7 +531,7 @@ limbs are their own thing not included here.
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
-				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 				patient.TakeDamage("chest", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_high)
 				return 1
@@ -693,7 +693,7 @@ limbs are their own thing not included here.
 				if (0.0)
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -718,7 +718,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -745,7 +745,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -774,7 +774,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -799,7 +799,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -828,7 +828,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -855,7 +855,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff2]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high)
 						return 1
@@ -908,7 +908,7 @@ limbs are their own thing not included here.
 		return 0
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span style='color:red'><b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!</span>",\
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!</span>",\
 		"<span style='color:red'>You mishandle [src] and cut yourself!</span>")
 		surgeon.changeStatus("weakened", 1 SECOND)
 		var/damage = rand(10, 20)
@@ -946,7 +946,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -968,7 +968,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -997,7 +997,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -1024,7 +1024,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -1055,7 +1055,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -1065,7 +1065,7 @@ limbs are their own thing not included here.
 					surgeon, "<span style='color:red'>You saw [surgeon == patient ? "your" : "[patient]'s"] skull out with [src]!</span>",\
 					patient, "<span style='color:red'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] your skull out with [src]!</span>")
 
-					patient.visible_message("<span style='color:red'><b>[patient]</b>'s head collapses into a useless pile of skin with no skull to keep it in its proper shape!</span>",\
+					patient.visible_message("<span class='alert'><b>[patient]</b>'s head collapses into a useless pile of skin with no skull to keep it in its proper shape!</span>",\
 					"<span style='color:red'>Your head collapses into a useless pile of skin with no skull to keep it in its proper shape!</span>")
 					patient.organHolder.drop_organ("skull")
 				else
@@ -1098,7 +1098,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -1120,7 +1120,7 @@ limbs are their own thing not included here.
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
-					surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low)
 					return 1
@@ -1153,7 +1153,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1176,7 +1176,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1201,7 +1201,7 @@ limbs are their own thing not included here.
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff2]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high)
 						return 1
@@ -1249,7 +1249,7 @@ limbs are their own thing not included here.
 		return 0
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
-		surgeon.visible_message("<span style='color:red'><b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [src]!</span>",\
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [src]!</span>",\
 		"<span style='color:red'>You prick your finger with [src]</span>")
 
 		//surgeon.bioHolder.AddEffect("blind") // oh my god I'm the biggest idiot ever I forgot to get rid of this part
@@ -1409,7 +1409,7 @@ limbs are their own thing not included here.
 		return 0
 
 	if (patient.is_heat_resistant())
-		patient.visible_message("<span style='color:red'><b>Nothing happens!</b></span>")
+		patient.visible_message("<span class='alert'><b>Nothing happens!</b></span>")
 		return 0
 
 	if (!surgeon)
@@ -1419,7 +1419,7 @@ limbs are their own thing not included here.
 		damage = rand(5, 15)
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
-		surgeon.visible_message("<span style='color:red'><b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!</span>",\
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!</span>",\
 		"<span style='color:red'>You burn yourself with [src]</span>")
 
 		surgeon.changeStatus("weakened", 4 SECONDS)
@@ -1570,7 +1570,7 @@ limbs are their own thing not included here.
 		return 0
 /* gunna think on this part
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span style='color:red'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
 		"<span style='color:red'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
 		surgeon.weakened += 4
@@ -1619,7 +1619,7 @@ limbs are their own thing not included here.
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
-				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff]!</b></span>")
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low)
 				return 1
@@ -1641,7 +1641,7 @@ limbs are their own thing not included here.
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
-				surgeon.visible_message("<span style='color:red'><b>[surgeon][fluff2]!</b></span>")
+				surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_high)
 				return 1
@@ -1681,7 +1681,7 @@ limbs are their own thing not included here.
 		return 0
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span style=\"color:red\"><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
 		"<span style=\"color:red\">You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
 		patient.changeStatus("weakened", 4)
@@ -1714,7 +1714,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1738,7 +1738,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1774,7 +1774,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff2]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high)
 						return 1
@@ -1808,7 +1808,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1838,7 +1838,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1864,7 +1864,7 @@ limbs are their own thing not included here.
 					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1892,7 +1892,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
@@ -1931,7 +1931,7 @@ limbs are their own thing not included here.
 						return 1
 
 					if (prob(screw_up_prob))
-						surgeon.visible_message("<span style=\"color:red\"><b>[surgeon][fluff2]!</b></span>")
+						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff2]!</b></span>")
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1

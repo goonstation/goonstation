@@ -373,7 +373,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (!holder)
 			return 1
 
-		boutput(holder.owner, "<span style=\"color:red\">You exert some force to levitate [target]!</span>")
+		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
 		SPAWN_DBG(rand(30,50))
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents
 			//only doing chair. doing the bed levatate moves the mobs on it in a weird way, and I don't wanna spend the time to fix it
@@ -382,12 +382,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 					if (L.buckled)
 						animate_levitate(L, 1, 10)
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, "<span style=\"color:red\">You levitate[target] and its occupant(s)!</span>")
+				boutput(holder.owner, "<span class='alert'>You levitate[target] and its occupant(s)!</span>")
 			else if (istype(target, /obj/item))
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, "<span style=\"color:red\">You levitate[target]!</span>")
+				boutput(holder.owner, "<span class='alert'>You levitate[target]!</span>")
 			else
-				boutput(holder.owner, "<span style=\"color:red\">But it's beyond your power!</span>")
+				boutput(holder.owner, "<span class='alert'>But it's beyond your power!</span>")
 
 
 /datum/targetable/ghost_observer/spooky_sounds
@@ -410,7 +410,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/turf/T = get_turf(holder.owner)
 		var/S = pick("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg", "sound/effects/glitchy1.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg", "sound/effects/kaboom.ogg")
 		playsound(T, S, 30, 0, -1)
-		boutput(holder.owner, "<span style=\"color:red\">You make a spooky sound!</span>")
+		boutput(holder.owner, "<span class='alert'>You make a spooky sound!</span>")
 
 
 /datum/targetable/ghost_observer/decorate
@@ -451,7 +451,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 
-			boutput(usr, "<span style=\"color:blue\">Matter from your realm appears near the designated location!</span>")
+			boutput(usr, "<span class='notice'>Matter from your realm appears near the designated location!</span>")
 
 
 /datum/targetable/ghost_observer/spooktober_writing
@@ -530,8 +530,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			P.setup(T)
 			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
-			boutput(holder.owner, "<span style=\"color:red\">You call forth a bat!</span>")
+			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else
-			boutput(holder.owner, "<span style=\"color:red\">You can't put a bat there!</span>")
+			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
 
 #endif

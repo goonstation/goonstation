@@ -19,7 +19,7 @@
 	SPAWN_DBG(30 SECONDS)
 		M.verbs += /mob/proc/bball_nova
 
-	M.visible_message("<span style=\"color:red\">A swarm of basketballs erupts from [M]!</span>")
+	M.visible_message("<span class='alert'>A swarm of basketballs erupts from [M]!</span>")
 
 	for(var/turf/T in orange(1, M))
 		if(!T.density)
@@ -59,7 +59,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] takes a mighty leap towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 
 	for(var/i = 0, i < 10, i++)
@@ -93,7 +93,7 @@
 				random_brute_damage(N, 10)
 		if(N.client)
 			shake_camera(N, 6, 5)
-			N.show_message("<span style=\"color:red\">[M] showboat slams [target] to the ground!</span>", 1)
+			N.show_message("<span class='alert'>[M] showboat slams [target] to the ground!</span>", 1)
 	random_brute_damage(target, 40)
 
 /mob/proc/holy_jam()
@@ -121,7 +121,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] takes a divine leap towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
 
 	playsound(M.loc, "sound/voice/heavenly.ogg", 50, 1)
 
@@ -144,7 +144,7 @@
 					N.gib()
 		if(N.client)
 			shake_camera(N, 6, 4)
-			N.show_message("<span style=\"color:red\">[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
+			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
 	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
@@ -204,7 +204,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] comically leaps towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 
 	for(var/i = 0, i < 10, i++)
@@ -225,7 +225,7 @@
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
 			shake_camera(N, 6, 4)
-			N.show_message("<span style=\"color:red\">[M] clown jams [target]!</span>", 1)
+			N.show_message("<span class='alert'>[M] clown jams [target]!</span>", 1)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball"
@@ -240,7 +240,7 @@
 	smoke.start()
 
 	if(target.job != "Clown")
-		boutput(target, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
+		boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 		target.take_brain_damage(80)
 		target.stuttering = 120
 		target.job = "Clown"
@@ -263,7 +263,7 @@
 		var/mob/living/carbon/human/H = target
 		if(!istype(H))
 			return
-		boutput(H, "<span style=\"color:red\"><b>You don't feel very funny.</b></span>")
+		boutput(H, "<span class='alert'><b>You don't feel very funny.</b></span>")
 		H.take_brain_damage(-120)
 		H.stuttering = 0
 		H.job = "Lawyer"
@@ -333,7 +333,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] flies through the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 
 	for(var/i = 0, i < 50, i++)
@@ -374,7 +374,7 @@
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message("<span style=\"color:red\">[M] successfully executes a Chaos Dunk!</span>")
+	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
 	explosion_new(src, get_turf(M), 1500, 22.78)
 
@@ -401,7 +401,7 @@
 
 	for(var/mob/N in AIviewers(M, null))
 		if(N.client)
-			N.show_message("<span style=\"color:red\">[M] does a quick spin, knocking you off guard!</span>", 1)
+			N.show_message("<span class='alert'>[M] does a quick spin, knocking you off guard!</span>", 1)
 		if(get_dist(N, M) <= 2)
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)

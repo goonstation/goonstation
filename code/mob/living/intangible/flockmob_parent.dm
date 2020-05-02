@@ -134,7 +134,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 
 /mob/living/intangible/flock/bullet_act(var/obj/projectile/P)
 	// HAAAAA
-	src.visible_message("<span style=\"color:red\">[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span style=\"color:blue\">You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
+	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span style=\"color:blue\">You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
 // C&P'd from dead.dm until I think of something better to do
 /mob/living/intangible/flock/click(atom/target, params)

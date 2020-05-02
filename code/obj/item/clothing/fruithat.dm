@@ -9,7 +9,7 @@
 	attack(mob/M as mob, mob/user as mob) //edible hats? why not
 		if (M == user)
 			if (!src.bites)
-				boutput(user, "<span style=\"color:red\">No more bites of \the [src] left, oh no!</span>")
+				boutput(user, "<span class='alert'>No more bites of \the [src] left, oh no!</span>")
 				user.u_equip(src)
 				qdel(src)
 			else
@@ -19,7 +19,7 @@
 				M.nutrition += 20
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.bites)
-					M.visible_message("<span style=\"color:red\">[M] finishes eating [src].</span>",\
+					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 					"<span style=\"color:red\">You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
@@ -27,13 +27,13 @@
 				boutput(M, voidSpeak(pick(youarebad)))
 				random_brute_damage(user, 5)
 		else if(check_target_immunity(M))
-			user.visible_message("<span style='color:red'>You try to feed [M] [src], but fail!</span>")
+			user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
 		else
 			user.tri_message("<span style=\"color:red\"><b>[user]</b> tries to feed [M] [src]!</span>",\
 			user, "<span style=\"color:red\">You try to feed [M] [src]!</span>",\
 			M, "<span style=\"color:red\"><b>[user]</b> tries to feed you [src]!</span>")
 			if (!do_after(user, 10))
-				boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return ..()
 			else
 				user.tri_message("<span style=\"color:red\"><b>[user]</b> feeds [M] [src]!</span>",\
@@ -43,7 +43,7 @@
 				M.nutrition += 20
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
-					M.visible_message("<span style=\"color:red\">[M] finishes eating [src].</span>",\
+					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 					"<span style=\"color:red\">You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
@@ -77,9 +77,9 @@
 			if (C.amount <= 7)
 				boutput(user, "You don't have enough cable to add to \the [src.name]")
 			else
-				boutput(user, "<span style=\"color:blue\">You begin adding \the [C.name] to \the [src.name].</span>")
+				boutput(user, "<span class='notice'>You begin adding \the [C.name] to \the [src.name].</span>")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return ..()
 				else
 					C.amount -= 8

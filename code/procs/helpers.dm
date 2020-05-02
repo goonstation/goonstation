@@ -1945,13 +1945,13 @@ proc/countJob(rank)
 			return
 
 	if (removal_type == "death")
-		boutput(M, "<h2><span style=\"color:red\">Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
+		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
 		SHOW_MINDSLAVE_DEATH_TIPS(M)
 	else if (removal_type == "override")
-		boutput(M, "<h2><span style=\"color:red\">Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
+		boutput(M, "<h2><span class='alert'>Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
 		SHOW_MINDSLAVE_OVERRIDE_TIPS(M)
 	else
-		boutput(M, "<h2><span style=\"color:red\">Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
+		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
 		SHOW_MINDSLAVE_EXPIRED_TIPS(M)
 
 	return
@@ -2425,7 +2425,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			var/mob/M = TA.loc
 			M.show_text("[TA] identifies and removes a harmful substance.", "red")
 		else
-			TA.visible_message("<span style=\"color:red\">[TA] identifies and removes a harmful substance.</span>")
+			TA.visible_message("<span class='alert'>[TA] identifies and removes a harmful substance.</span>")
 
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)

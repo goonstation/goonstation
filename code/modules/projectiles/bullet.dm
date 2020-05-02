@@ -690,7 +690,7 @@ toxic - poisons
 				new /obj/effects/rendersparks(hit.loc)
 				if(ishuman(hit))//copypasted shamelessly from singbuster rockets
 					var/mob/living/carbon/human/M = hit
-					boutput(M, "<span style=\"color:red\">You are struck by an autocannon round! Thankfully it was not armed.</span>")
+					boutput(M, "<span class='alert'>You are struck by an autocannon round! Thankfully it was not armed.</span>")
 					M.do_disorient(stunned = 40)
 					if (!M.stat)
 						M.emote("scream")
@@ -792,13 +792,13 @@ toxic - poisons
 			for (var/mob/living/carbon/human/M in view(hit, 2))
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				if (M.get_ranged_protection()>=1.5)
-					boutput(M, "<span style=\"color:red\">Your armor blocks the shrapnel!</span>")
+					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 					implanted.owner = M
 					M.implant += implanted
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
+					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 					if (!M.stat)
 						M.emote("scream")
 
@@ -1165,7 +1165,7 @@ toxic - poisons
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
-				boutput(M, "<span style=\"color:red\">You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
 				M.do_disorient(stunned = 40)
 				if (!M.stat)
 					M.emote("scream")

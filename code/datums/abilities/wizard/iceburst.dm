@@ -28,19 +28,19 @@
 		..()
 
 		if(!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		for (var/mob/living/M as mob in oview())
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span style=\"color:red\">[M] has divine protection! The spell refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target \him!</span>")
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span style=\"color:red\">[M] has arcane protection! The spell refuses to target \him!</span>")
+				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target \him!</span>")
 				continue
 			else if(check_target_immunity( M ))
-				boutput(holder.owner, "<span style='color:red'>[M] seems to be warded from the effects!</span>" )
+				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
 				continue
 
 			playsound(holder.owner.loc, "sound/effects/mag_iceburstlaunch.ogg", 25, 1, -1)
@@ -68,14 +68,14 @@
 					step_to(A,M,0)
 					if (get_dist(A,M) == 0)
 						boutput(M, text("<span style=\"color:blue\">You are chilled by a burst of magical ice!</span>"))
-						M.visible_message("<span style=\"color:red\">[M] is struck by magical ice!</span>")
+						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
 						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
 						M.bodytemperature = 0
 						M.lastattacker = holder.owner
 						M.lastattackertime = world.time
 						qdel(A)
 						if(prob(40))
-							M.visible_message("<span style=\"color:red\">[M] is frozen solid!</span>")
+							M.visible_message("<span class='alert'>[M] is frozen solid!</span>")
 							new /obj/icecube(M.loc, M)
 						return
 					sleep(0.5 SECONDS)
@@ -105,7 +105,7 @@
 
 			if (add_underlay)
 				src.underlays += iced
-			boutput(iced, "<span style=\"color:red\">You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
+			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
 
 			iced.last_cubed = world.time
 
@@ -119,7 +119,7 @@
 		for(var/atom/movable/AM in src)
 			if(ismob(AM))
 				var/mob/M = AM
-				M.visible_message("<span style=\"color:red\"><b>[M]</b> breaks out of [src]!</span>","<span style=\"color:red\">You break out of [src]!</span>")
+				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 				M.last_cubed = world.time
 			AM.set_loc(src.loc)
 

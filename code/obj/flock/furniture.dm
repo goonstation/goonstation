@@ -239,7 +239,7 @@
 			qdel(C)
 		qdel(src)
 	if (istype(C, /obj/item/weldingtool) && C:welding)
-		boutput(user, "<span style=\"color:blue\">The fibres burn away in the same way glass doesn't. Huh.</span>")
+		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
 
 /////////////

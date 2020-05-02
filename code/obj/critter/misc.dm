@@ -571,7 +571,7 @@
 				src.health = initial(src.health)
 				src.icon_state = initial(src.icon_state)
 				for(var/mob/O in viewers(src, null))
-					O.show_message("<span style=\"color:red\"><b>[src]</b> re-assembles and is ready to fight once more!</span>")
+					O.show_message("<span class='alert'><b>[src]</b> re-assembles and is ready to fight once more!</span>")
 		return
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton

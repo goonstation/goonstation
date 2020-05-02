@@ -26,7 +26,7 @@
 
 	process_ammo(var/mob/user)
 		if (!canshoot())
-			boutput(user, "<span style=\"color:red\">The syringe gun's internal reservoir does not contain enough reagents to fire it!</span>")
+			boutput(user, "<span class='alert'>The syringe gun's internal reservoir does not contain enough reagents to fire it!</span>")
 			return 0
 		return 1
 
@@ -64,7 +64,7 @@
 		set src in usr
 
 		if (!reagents)
-			boutput(usr, "<span style=\"color:red\">The little cap on the fluid container is stuck. Uh oh.</span>")
+			boutput(usr, "<span class='alert'>The little cap on the fluid container is stuck. Uh oh.</span>")
 			return
 
 		if (reagents.total_volume)
@@ -73,7 +73,7 @@
 			reagents.clear_reagents()
 			boutput(usr, "You dump out the [src.name]'s stored reagents.")
 		else
-			boutput(usr, "<span style=\"color:red\">There's nothing loaded to drain!</span>")
+			boutput(usr, "<span class='alert'>There's nothing loaded to drain!</span>")
 
 
 	alter_projectile(var/obj/projectile/P)

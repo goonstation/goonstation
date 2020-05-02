@@ -253,7 +253,7 @@
 
 /obj/npc/trader/flock/anger()
 	for(var/mob/M in AIviewers(src))
-		boutput(M, "<span style=\"color:red\"><B>[src.name]</B> becomes angry!</span>")
+		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "Looks absolutely furious, as far as you can read the expressions of holographic alien heads."
 	src.icon_state = "totem-angry"
 	SPAWN_DBG(rand(1000,3000))

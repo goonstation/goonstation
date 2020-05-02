@@ -94,7 +94,7 @@
 				if (attack_amt)
 					playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 				else
-					boutput(user, "<span style=\"color:red\"><b>[O]</b> crackles with electricity for a moment. Perhaps it couldn't find a target?</span>")
+					boutput(user, "<span class='alert'><b>[O]</b> crackles with electricity for a moment. Perhaps it couldn't find a target?</span>")
 
 			if("sonic")
 				playsound(T, "sound/effects/screech.ogg", 100, 1, 0)

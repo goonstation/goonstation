@@ -66,7 +66,7 @@ chui/window/dj_panel //global panel
 				return
 			if ("toggleanndj")
 				who.djmode = !who.djmode
-				boutput(who, "<span style=\"color:blue\">DJ mode now [(who.djmode ? "On" : "Off")].</span>")
+				boutput(who, "<span class='notice'>DJ mode now [(who.djmode ? "On" : "Off")].</span>")
 
 				logTheThing("admin", who, null, "set their DJ mode to [(who.djmode ? "On" : "Off")]")
 				logTheThing("diary", who, null, "set their DJ mode to [(who.djmode ? "On" : "Off")]", "admin")
@@ -128,5 +128,5 @@ proc/toggledj(var/client/C, var/client/who)
 	logTheThing("admin", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for %target% to DJ and use dectalk.")
 	logTheThing("diary", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for %target% to DJ and use dectalk.", "admin")
 	message_admins("[key_name(who)] has [C.non_admin_dj ? "given" : "removed"] the ability for [key_name(C)] to DJ and use dectalk.")
-	boutput(C, "<span style=\"color:red\"><b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b></span>")
+	boutput(C, "<span class='alert'><b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b></span>")
 	return

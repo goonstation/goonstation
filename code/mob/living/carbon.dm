@@ -218,7 +218,7 @@
 		#endif
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
 		if(!src.getStatusDuration("weakened"))
-			src.visible_message("<span style=\"color:red\">[src] collapses!</span>")
+			src.visible_message("<span class='alert'>[src] collapses!</span>")
 			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME)*10)
 		#endif
 	stamina_stun() //Just in case.
@@ -237,7 +237,7 @@
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
 		if(prob(chance))
 			if(!src.getStatusDuration("weakened"))
-				src.visible_message("<span style=\"color:red\">[src] collapses!</span>")
+				src.visible_message("<span class='alert'>[src] collapses!</span>")
 				src.changeStatus("weakened", (STAMINA_STUN_TIME)*10)
 				src.force_laydown_standup()
 	return
@@ -397,7 +397,7 @@
 							SPAWN_DBG(0) // this stops the entire server from crashing when SOMEONE (read: wonk) space lubes the entire station
 								step(src, src.dir)
 								src.throwing = 0
-							boutput(src, "<span style=\"color:blue\">You slipped on the wet floor!</span>")
+							boutput(src, "<span class='notice'>You slipped on the wet floor!</span>")
 							playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 							src.changeStatus("stunned", 2 SECONDS)
 							src.changeStatus("weakened", 2 SECONDS)
@@ -409,7 +409,7 @@
 					if (2) //lube
 						src.pulling = null
 						src.changeStatus("weakened", 35)
-						boutput(src, "<span style=\"color:blue\">You slipped on the floor!</span>")
+						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						/*
 						SPAWN_DBG(0)
@@ -425,7 +425,7 @@
 						src.pulling = null
 						src.changeStatus("weakened", 6 SECONDS)
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
-						boutput(src, "<span style=\"color:blue\">You slipped on the floor!</span>")
+						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						SPAWN_DBG(0) src.throw_at(target, 30, 1)
 						random_brute_damage(src, 10)
@@ -435,14 +435,14 @@
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
 				if(M.client)
-					M.show_message(text("<span style=\"color:red\">You hear something rumbling inside [src]'s stomach...</span>"), 2)
+					M.show_message(text("<span class='alert'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.equipped()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
 				src.TakeDamage("chest", d, 0)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
-						M.show_message(text("<span style=\"color:red\"><B>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
+						M.show_message(text("<span class='alert'><B>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
 				playsound(user.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
 
 				if(prob(get_brute_damage() - 50))
@@ -453,7 +453,7 @@
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
 		if (!isobserver(M))
-			src.visible_message("<span style=\"color:red\"><B>[M] bursts out of [src]!</B></span>")
+			src.visible_message("<span class='alert'><B>[M] bursts out of [src]!</B></span>")
 		else if (istype(M, /mob/dead/target_observer))
 			M.cancel_camera()
 
@@ -464,7 +464,7 @@
 	SPAWN_DBG(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
-			src.visible_message("<span style=\"color:red\"><B>[src] pees in [pee_target]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
 			playsound(get_turf(src), "sound/misc/pourdrink.ogg", 50, 1)
 			pee_target.reagents.add_reagent("urine", 20)
 			return
@@ -552,7 +552,7 @@
 
 	if (src.brainloss >= 120)
 		// instant death, we can assume a brain this damaged is no longer able to support life
-		src.visible_message("<span style=\"color:red\"><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
+		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()
 		return
 

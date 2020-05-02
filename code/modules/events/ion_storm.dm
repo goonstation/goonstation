@@ -90,13 +90,13 @@
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 			if(!isdead(M) && M.see_in_dark != 0)
-				boutput(M, "<span style=\"color:red\"><b>PROGRAM EXCEPTION AT 0x30FC50B</b></span>")
-				boutput(M, "<span style=\"color:red\"><b>Law ROM data corrupted. Attempting to restore...</b></span>")
+				boutput(M, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x30FC50B</b></span>")
+				boutput(M, "<span class='alert'><b>Law ROM data corrupted. Attempting to restore...</b></span>")
 		for (var/mob/living/silicon/S in mobs)
 			if (isrobot(S))
 				var/mob/living/silicon/robot/R = S
 				if (R.emagged)
-					boutput(R, "<span style=\"color:red\">Erroneous law data detected. Ignoring.</span>")
+					boutput(R, "<span class='alert'>Erroneous law data detected. Ignoring.</span>")
 				else
 					R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 					ticker.centralized_ai_laws.show_laws(R)

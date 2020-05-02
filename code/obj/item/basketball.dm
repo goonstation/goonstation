@@ -22,7 +22,7 @@
 		src.icon_state = "bball"
 
 /obj/item/basketball/suicide(var/mob/user as mob)
-	user.visible_message("<span style=\"color:red\"><b>[user] fouls out, permanently.</b></span>")
+	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
 	user.updatehealth()
 	SPAWN_DBG(30 SECONDS)
@@ -58,7 +58,7 @@
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
-		boutput(user, "<span style=\"color:blue\">You insert the [W.name] into the [src.name].</span>")
+		boutput(user, "<span class='notice'>You insert the [W.name] into the [src.name].</span>")
 		user.u_equip(W)
 		W.dropped(user)
 		W.layer = initial(W.layer)
@@ -118,7 +118,7 @@
 				user.changeStatus("weakened", 5 SECONDS)
 			if (!src.shoot(W, user))
 				SPAWN_DBG(1 SECOND)
-					src.visible_message("<span style=\"color:red\">[user] whiffs the dunk.</span>")
+					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
 	attack_hand(mob/user as mob)
@@ -171,7 +171,7 @@
 				src.visible_message("<span style=\"color:blue\">[O] lands cleanly in [src]!</span>")
 				src.basket(O)
 			else // Aaaa the tension!
-				src.visible_message("<span style=\"color:red\">[O] teeters on the edge of [src]!</span>")
+				src.visible_message("<span class='alert'>[O] teeters on the edge of [src]!</span>")
 				var/delay = rand(5, 15)
 				animate_horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
 				SPAWN_DBG(delay)
@@ -180,7 +180,7 @@
 							src.visible_message("<span style=\"color:blue\">[O] slips into [src]!</span>")
 							src.basket(O)
 						else
-							src.visible_message("<span style=\"color:red\">[O] slips off of the edge of [src]!</span>")
+							src.visible_message("<span class='alert'>[O] slips off of the edge of [src]!</span>")
 							src.active = 0
 					else
 						src.active = 0

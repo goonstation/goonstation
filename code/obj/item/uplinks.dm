@@ -345,7 +345,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (src.is_VR_uplink == 0)
 				if (src.uses < I.cost)
-					boutput(usr, "<span style=\"color:red\">The uplink doesn't have enough [syndicate_currency] left for that!</span>")
+					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
@@ -546,7 +546,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (src.is_VR_uplink == 0)
 				if (src.uses < I.cost)
-					boutput(usr, "<span style=\"color:red\">The uplink doesn't have enough [syndicate_currency] left for that!</span>")
+					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
@@ -1082,7 +1082,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/SWF_uplink/attack_self(mob/user as mob)
 	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
-		boutput(user, "<span style=\"color:red\"><b>The spellbook is magically attuned to someone else!</b></span>")
+		boutput(user, "<span class='alert'><b>The spellbook is magically attuned to someone else!</b></span>")
 		return
 	user.machine = src
 	var/html = {"
@@ -1193,10 +1193,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (href_list["buyspell"])
 			var/datum/SWFuplinkspell/SP = locate(href_list["buyspell"])
 			switch(SP.SWFspell_CheckRequirements(usr,src))
-				if(1) boutput(usr, "<span style=\"color:red\">You have no more magic points to spend.</span>")
-				if(2) boutput(usr, "<span style=\"color:red\">You already have this spell.</span>")
-				if(3) boutput(usr, "<span style=\"color:red\">This spell isn't availble in VR.</span>")
-				if(999) boutput(usr, "<span style=\"color:red\">Unknown Error.</span>")
+				if(1) boutput(usr, "<span class='alert'>You have no more magic points to spend.</span>")
+				if(2) boutput(usr, "<span class='alert'>You already have this spell.</span>")
+				if(3) boutput(usr, "<span class='alert'>This spell isn't availble in VR.</span>")
+				if(999) boutput(usr, "<span class='alert'>Unknown Error.</span>")
 				else
 					SP.SWFspell_Purchased(usr,src)
 

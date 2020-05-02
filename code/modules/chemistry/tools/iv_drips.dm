@@ -144,7 +144,7 @@
 
 		if ((!src.stand && get_dist(src, src.patient) > 1) || (src.stand && get_dist(src.stand, src.patient) > 1))
 			var/fluff = pick("pulled", "yanked", "ripped")
-			src.patient.visible_message("<span style='color:red'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
+			src.patient.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
 			"<span style='color:red'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
 			src.stop_transfusion()
 			return
@@ -156,7 +156,7 @@
 				src.stop_transfusion()
 				return
 			if (!src.reagents.total_volume)
-				src.patient.visible_message("<span style='color:red'>[src] runs out of fluid!</span>")
+				src.patient.visible_message("<span class='alert'>[src] runs out of fluid!</span>")
 				src.stop_transfusion()
 				return
 
@@ -174,7 +174,7 @@
 			// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
 			// Also ignore that second container of blood entirely if it's a vampire (Convair880).
 			if ((isvampire(src.patient) && (src.patient.get_vampire_blood() <= 0)) || (!isvampire(src.patient) && !src.patient.reagents.total_volume && !src.patient.blood_volume))
-				src.patient.visible_message("<span style='color:red'>[src] can't seem to draw anything more out of [src.patient]!</span>",\
+				src.patient.visible_message("<span class='alert'>[src] can't seem to draw anything more out of [src.patient]!</span>",\
 				"<span style='color:red'>Your veins feel utterly empty!</span>")
 				src.stop_transfusion()
 				return

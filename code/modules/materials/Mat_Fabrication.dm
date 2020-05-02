@@ -99,41 +99,41 @@
 	
 	MouseDrop(over_object, src_location, over_location)
 		if(over_object == src)
-			boutput(usr, "<span style=\"color:blue\">You reset the output location of [src]!</span>")
+			boutput(usr, "<span class='notice'>You reset the output location of [src]!</span>")
 			src.output_target = src.loc
 			return
 
 		if(!istype(usr,/mob/living/))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the output target for [src].</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">[src] is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
 				src.output_target = over_object
-				boutput(usr, "<span style=\"color:blue\">You set [src] to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
-			boutput(usr, "<span style=\"color:blue\">You set [src] to output on top of [O]!</span>")
+			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf) && !over_object:density)
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set [src] to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 	
 	proc/get_output_location()
@@ -336,7 +336,7 @@
 			return
 
 		if(isExploitableObject(W))
-			boutput(user, "<span style=\"color:red\">\the [src] grumps at you and refuses to use [W].</span>")
+			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
 			return
 
 		user.visible_message("<span style=\"color:blue\">[user] puts \the [W] in \the [src].</span>")
@@ -347,7 +347,7 @@
 			if( W.material )
 				addMaterial(W, user)
 			else
-				boutput(user, "<span style=\"color:red\">The fabricator can only use material-based objects.</span>")
+				boutput(user, "<span class='alert'>The fabricator can only use material-based objects.</span>")
 				return
 		*/
 		return

@@ -352,10 +352,10 @@ var/zapLimiter = 0
 					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 					return
 				if (2)
-					boutput(user, "<span style=\"color:red\">Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
+					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
 					return
 				if (3)
-					boutput(user, "<span style=\"color:red\">The control board must be reset before connection to the autotransformer..</span>")
+					boutput(user, "<span class='alert'>The control board must be reset before connection to the autotransformer..</span>")
 					return
 				if (4)
 					src.repair_status = 0
@@ -386,14 +386,14 @@ var/zapLimiter = 0
 		else if (istype(W, /obj/item/cable_coil))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span style=\"color:red\">The control board must be disconnected before you can repair the autotransformer.</span>")
+					boutput(user, "<span class='alert'>The control board must be disconnected before you can repair the autotransformer.</span>")
 					return
 				if (1) //Repair the transformer with a cable.
 					var/obj/item/cable_coil/theCoil = W
 					if (theCoil.amount >= 4)
 						boutput(user, "You unravel some cable..<br>Now repairing the autotransformer's windings.  This could take some time.")
 					else
-						boutput(user, "<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>")
+						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
 						return
 					if(!do_after(user, 100))
 						return
@@ -413,9 +413,9 @@ var/zapLimiter = 0
 		else if (iswrenchingtool(W))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span style=\"color:red\">You must disconnect the control board prior to working on the autotransformer.</span>")
+					boutput(user, "<span class='alert'>You must disconnect the control board prior to working on the autotransformer.</span>")
 				if (1)
-					boutput(user, "<span style=\"color:red\">You must repair the autotransformer's windings prior to tuning it.</span>")
+					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
 					if (!do_after(user, 60))
@@ -431,12 +431,12 @@ var/zapLimiter = 0
 		else if (ispulsingtool(W))
 			switch(src.repair_status)
 				if (3)
-					boutput(user, "<span style=\"color:red\">You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
+					boutput(user, "<span class='alert'>You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
 					src.repair_status = 4
 				if (4)
 					boutput(user, "The control board has already been reset. It just needs to be reconnected now.")
 				else
-					boutput(user, "<span style=\"color:red\">You need to repair and tune the autotransformer before resetting the control board.</span>")
+					boutput(user, "<span class='alert'>You need to repair and tune the autotransformer before resetting the control board.</span>")
 			return
 
 		return
@@ -486,10 +486,10 @@ var/zapLimiter = 0
 				recipient_cell = S.cell
 
 			var/overspill = 250 - recipient_cell.charge
-			if (!donor_cell) boutput(user, "<span style=\"color:red\">You have no cell installed!</span>")
-			else if (!recipient_cell) boutput(user, "<span style=\"color:red\">[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
-			else if (recipient_cell.charge >= recipient_cell.maxcharge) boutput(user, "<span style=\"color:blue\">[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
-			else if (donor_cell.charge <= 250) boutput(user, "<span style=\"color:red\">You do not have enough charge left to do this!</span>")
+			if (!donor_cell) boutput(user, "<span class='alert'>You have no cell installed!</span>")
+			else if (!recipient_cell) boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
+			else if (recipient_cell.charge >= recipient_cell.maxcharge) boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
+			else if (donor_cell.charge <= 250) boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
 			else if (overspill >= 250)
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill
@@ -525,7 +525,7 @@ var/zapLimiter = 0
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				updateicon()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 
 
 /obj/machinery/power/apc/attack_ai(mob/user)
@@ -800,14 +800,14 @@ var/zapLimiter = 0
 		healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
-		boutput(user, "<span style=\"color:blue\">You absorb the electrical shock, healing your body!</span>")
+		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
 	else if (user.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(user, "<span style=\"color:blue\">You feel electricity course through you harmlessly!</span>")
+		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -825,7 +825,7 @@ var/zapLimiter = 0
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
-		M.show_message("<span style=\"color:red\">[user.name] was shocked by the [src.name]!</span>", 3, "<span style=\"color:red\">You hear a heavy electrical crack</span>", 2)
+		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 	return 1
 
 
@@ -1312,7 +1312,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
 		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
@@ -1321,7 +1321,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/ex_act(severity)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
 		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
@@ -1342,7 +1342,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
 		SPAWN_DBG(1 DECI SECOND)
 			qdel (src)

@@ -34,7 +34,7 @@
 		return
 
 	if (!ishuman(usr))
-		boutput(usr, "<span style=\"color:red\">You must be a human to use this!</span>")
+		boutput(usr, "<span class='alert'>You must be a human to use this!</span>")
 		return
 
 	var/mob/living/carbon/human/H = usr

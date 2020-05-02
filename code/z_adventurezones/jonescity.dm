@@ -29,7 +29,7 @@ JONES CITY TURFS
 		Entered(atom/movable/O)
 			..()
 			if (isliving(O))
-				boutput(O, "<span style=\"color:red\"> Wow, it stinks in here! </span>")
+				boutput(O, "<span class='alert'> Wow, it stinks in here! </span>")
 
 	complex
 		name = "Meowment Complex"
@@ -121,7 +121,7 @@ JONES CITY TURFS
 			if (src.givenfish == 0)
 				qdel(W)
 				givenfish++
-				boutput(user, "<span style=\"color:red\">You feed \the [W] to the [src]</span>")
+				boutput(user, "<span class='alert'>You feed \the [W] to the [src]</span>")
 				playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
 				src.visible_message("<span class='combat'><b>[src]</b> hisses!</span>")
 				SPAWN_DBG(12 SECONDS)
@@ -173,9 +173,9 @@ JONES CITY TURFS
 
 /obj/item/hairball/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/hairball))
-		boutput(user, "<span style=\"color:blue\">You begin adding \the [W.name] to \the [src.name].</span>")
+		boutput(user, "<span class='notice'>You begin adding \the [W.name] to \the [src.name].</span>")
 		if (!do_after(user, 30))
-			boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else
 			if (!user) return
@@ -225,7 +225,7 @@ JONES CITY TURFS
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/device/key/hairball))
-			boutput(user, "<span style='color:blue'>You insert the [I.name] into the door and turn it. The door emits a loud click.</span>")
+			boutput(user, "<span class='notice'>You insert the [I.name] into the door and turn it. The door emits a loud click.</span>")
 			user.drop_item()
 			qdel(I)
 			playsound(src.loc, "sound/machines/door_open.ogg", 50, 1)
@@ -255,7 +255,7 @@ JONES CITY TURFS
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (issnippingtool(I) && !given)
-			boutput(user, "<span style='color:blue'>You trim the [src] with the [I]. A wad of hair tumbles out.</span>")
+			boutput(user, "<span class='notice'>You trim the [src] with the [I]. A wad of hair tumbles out.</span>")
 			icon_state = "garland-snipped"
 			new /obj/item/hairball/three(src.loc)
 			given++

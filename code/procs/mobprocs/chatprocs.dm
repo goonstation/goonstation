@@ -10,8 +10,8 @@
 	if (!message)
 		return
 	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
-		boutput(src, "<span style=\"color:blue\"><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span style=\"color:red\">&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
@@ -103,7 +103,7 @@
 		var/text = input("", "Speaking to [choice] frequency")
 		src.say_verb(token + " " + text)
 	else
-		boutput(src, "<span style=\"color:blue\">You must put a headset on your ear slot to speak on the radio.</span>")
+		boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
 
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
@@ -115,8 +115,8 @@
 	set name = "me"
 
 	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
-		boutput(src, "<span style=\"color:blue\"><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span style=\"color:red\">&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 
 	src.emote(message, 1)
@@ -125,7 +125,7 @@
 		src.emote(message, 1)
 		logTheThing("say", src, null, "EMOTE: [message]")
 	else
-		boutput(src, "<span style=\"color:blue\">You can't emote when you're dead! How would that even work!?</span>")
+		boutput(src, "<span class='notice'>You can't emote when you're dead! How would that even work!?</span>")
 */
 /mob/proc/say_dead(var/message, wraith = 0)
 	var/name = src.real_name
@@ -450,9 +450,9 @@
 	if (src.client)
 		src.client.preferences.listen_ooc = !src.client.preferences.listen_ooc
 		if (src.client.preferences.listen_ooc)
-			boutput(src, "<span style=\"color:blue\">You are now listening to messages on the OOC channel.</span>")
+			boutput(src, "<span class='notice'>You are now listening to messages on the OOC channel.</span>")
 		else
-			boutput(src, "<span style=\"color:blue\">You are no longer listening to messages on the OOC channel.</span>")
+			boutput(src, "<span class='notice'>You are no longer listening to messages on the OOC channel.</span>")
 
 /mob/verb/ooc(msg as text)
 	if (IsGuestKey(src.key))
@@ -536,9 +536,9 @@
 	if (src.client)
 		src.client.preferences.listen_looc = !src.client.preferences.listen_looc
 		if (src.client.preferences.listen_looc)
-			boutput(src, "<span style=\"color:blue\">You are now listening to messages on the LOOC channel.</span>")
+			boutput(src, "<span class='notice'>You are now listening to messages on the LOOC channel.</span>")
 		else
-			boutput(src, "<span style=\"color:blue\">You are no longer listening to messages on the LOOC channel.</span>")
+			boutput(src, "<span class='notice'>You are no longer listening to messages on the LOOC channel.</span>")
 
 /mob/verb/looc(msg as text)
 	if (IsGuestKey(src.key))
@@ -702,7 +702,7 @@
 		return
 
 	usr.client.local_deadchat = !usr.client.local_deadchat
-	boutput(usr, "<span style=\"color:blue\">[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	boutput(usr, "<span class='notice'>[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
@@ -712,7 +712,7 @@
 		return
 
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
-	boutput(usr, "<span style=\"color:blue\">[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
+	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
 
 /mob/proc/show_message(msg, type, alt, alt_type, group = "", var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)

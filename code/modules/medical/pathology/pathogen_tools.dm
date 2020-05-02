@@ -27,7 +27,7 @@
 			else if (reagents.has_reagent("bloodc"))
 				blood = reagents.get_reagent("bloodc")
 			if (blood == null)
-				boutput(usr, "<span style=\"color:red\">Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS.</span>")
+				boutput(usr, "<span class='alert'>Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS.</span>")
 				return
 		else
 			desc = "This blood slide is contaminated and useless."
@@ -422,12 +422,12 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (used)
-			boutput(user, "<span style=\"color:red\">The [src.name] is empty.</span>")
+			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
 			return
 		if (ishuman(M))
 			if (M != user)
 				for (var/mob/V in viewers(M))
-					boutput(V, "<span style=\"color:red\"><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
+					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
 				SPAWN_DBG (30)
@@ -436,14 +436,14 @@
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)
 						used = 1
 						for (var/mob/V in viewers(M))
-							boutput(V, "<span style=\"color:red\"><b>[user] is injects [M] with the [src.name]!</b></span>")
+							boutput(V, "<span class='alert'><b>[user] is injects [M] with the [src.name]!</b></span>")
 						src.name = "empty [src.name]"
 						icon_state = "serum0"
 						inject(M, user)
 			else
 				used = 1
 				for (var/mob/V in viewers(M))
-					boutput(V, "<span style=\"color:red\"><b>[user] injects [M] with the [src.name]!</b></span>")
+					boutput(V, "<span class='alert'><b>[user] injects [M] with the [src.name]!</b></span>")
 				icon_state = "serum0"
 				src.name = "empty [src.name]"
 				inject(user, user)

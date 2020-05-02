@@ -480,11 +480,11 @@ var/datum/action_controller/actions
 
 		if(item)
 			if(!target.can_equip(item, slot))
-				boutput(source, "<span style=\"color:red\">[item] can not be put there.</span>")
+				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(!isturf(target.loc))
-				boutput(source, "<span style=\"color:red\">You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(issilicon(source))
@@ -493,21 +493,21 @@ var/datum/action_controller/actions
 				return
 			logTheThing("combat", source, target, "tries to put \an [item] on %target% at at [log_loc(target)].")
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span style=\"color:red\"><B>[source] tries to put [item] on [target]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
 		else
 			var/obj/item/I = target.get_slot(slot)
 
 			if(!I)
-				boutput(source, "<span style=\"color:red\">There's nothing in that slot.</span>")
+				boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(!isturf(target.loc))
-				boutput(source, "<span style=\"color:red\">You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			/* Some things use handle_other_remove to do stuff (ripping out staples, wiz hat probability, etc) should only be called once per removal.
 			if(!I.handle_other_remove(source, target))
-				boutput(source, "<span style=\"color:red\">[I] can not be removed.</span>")
+				boutput(source, "<span class='alert'>[I] can not be removed.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			*/
@@ -515,7 +515,7 @@ var/datum/action_controller/actions
 			logTheThing("combat", source, target, "tries to remove \an [I] from %target% at [log_loc(target)].")
 
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span style=\"color:red\"><B>[source] tries to remove something from [target]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[source] tries to remove something from [target]!</B></span>", 1)
 
 	onEnd()
 		..()
@@ -531,27 +531,27 @@ var/datum/action_controller/actions
 				if(target.can_equip(item, slot))
 					logTheThing("combat", source, target, "successfully puts \an [item] on %target% at at [log_loc(target)].")
 					for(var/mob/O in AIviewers(owner))
-						O.show_message("<span style=\"color:red\"><B>[source] puts [item] on [target]!</B></span>", 1)
+						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
 					target.force_equip(item, slot)
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
 				logTheThing("combat", source, target, "successfully removes \an [I] from %target% at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
-					O.show_message("<span style=\"color:red\"><B>[source] removes [I] from [target]!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
 
 				// Re-added (Convair880).
 				if (istype(I, /obj/item/mousetrap/))
 					var/obj/item/mousetrap/MT = I
 					if (MT && MT.armed)
 						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span style=\"color:red\"><B>...and triggers it accidentally!</B></span>", 1)
+							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
 				else if (istype(I, /obj/item/mine))
 					var/obj/item/mine/M = I
 					if (M.armed && M.used_up != 1)
 						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span style=\"color:red\"><B>...and triggers it accidentally!</B></span>", 1)
+							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						M.triggered(source)
 
 				target.u_equip(I)
@@ -560,7 +560,7 @@ var/datum/action_controller/actions
 				I.layer = initial(I.layer)
 				I.add_fingerprint(source)
 			else
-				boutput(source, "<span style=\"color:red\">You fail to remove [I] from [target].</span>")
+				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 	onUpdate()
 		..()
 		if(get_dist(source, target) > 1 || target == null || source == null)
@@ -601,10 +601,10 @@ var/datum/action_controller/actions
 
 		for(var/mob/O in AIviewers(owner))
 			if(target.internal)
-				O.show_message("<span style=\"color:red\"><B>[owner] attempts to remove [target]'s internals!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s internals!</B></span>", 1)
 				remove_internals = 1
 			else
-				O.show_message("<span style=\"color:red\"><B>[owner] attempts to set [target]'s internals!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[owner] attempts to set [target]'s internals!</B></span>", 1)
 				remove_internals = 0
 	onEnd()
 		..()
@@ -615,7 +615,7 @@ var/datum/action_controller/actions
 					T.icon_state = "airoff"
 				target.internal = null
 				for(var/mob/O in AIviewers(owner))
-					O.show_message("<span style=\"color:red\"><B>[owner] removes [target]'s internals!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[owner] removes [target]'s internals!</B></span>", 1)
 			else
 				if (!istype(target.wear_mask, /obj/item/clothing/mask))
 					interrupt(INTERRUPT_ALWAYS)
@@ -665,7 +665,7 @@ var/datum/action_controller/actions
 				duration = round(duration / 2)
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span style=\"color:red\"><B>[owner] attempts to handcuff [target]!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[owner] attempts to handcuff [target]!</B></span>", 1)
 
 	onEnd()
 		..()
@@ -680,11 +680,11 @@ var/datum/action_controller/actions
 				if (cuffs.amount >= 2)
 					cuffs2 = new /obj/item/handcuffs/tape
 					cuffs.amount--
-					boutput(ownerMob, "<span style=\"color:blue\">The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
+					boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
 				else if (cuffs.amount == 1 && cuffs.delete_on_last_use == 1)
 					cuffs2 = new /obj/item/handcuffs/tape
 					ownerMob.u_equip(cuffs)
-					boutput(ownerMob, "<span style=\"color:red\">You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
+					boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
 					qdel(cuffs)
 				else
 					ownerMob.u_equip(cuffs)
@@ -704,7 +704,7 @@ var/datum/action_controller/actions
 			target.update_clothing()
 
 			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span style=\"color:red\"><B>[owner] handcuffs [target]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
@@ -735,7 +735,7 @@ var/datum/action_controller/actions
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span style=\"color:red\"><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
 
 	onEnd()
 		..()
@@ -743,7 +743,7 @@ var/datum/action_controller/actions
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
-				O.show_message("<span style=\"color:red\"><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
 	duration = 600
@@ -759,11 +759,11 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:red\"><B>[] attempts to remove the handcuffs!</B></span>", owner), 1)
+			O.show_message(text("<span class='alert'><B>[] attempts to remove the handcuffs!</B></span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style=\"color:red\">Your attempt to remove your handcuffs was interrupted!</span>")
+		boutput(owner, "<span class='alert'>Your attempt to remove your handcuffs was interrupted!</span>")
 
 	onEnd()
 		..()
@@ -771,8 +771,8 @@ var/datum/action_controller/actions
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
-				O.show_message("<span style=\"color:red\"><B>[H] manages to remove the handcuffs!</B></span>", 1)
-			boutput(H, "<span style=\"color:blue\">You successfully remove your handcuffs.</span>")
+				O.show_message("<span class='alert'><B>[H] manages to remove the handcuffs!</B></span>", 1)
+			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
 	duration = 450
@@ -788,11 +788,11 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:red\"><B>[] attempts to remove the shackles!</B></span>", owner), 1)
+			O.show_message(text("<span class='alert'><B>[] attempts to remove the shackles!</B></span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style=\"color:red\">Your attempt to remove the shackles was interrupted!</span>")
+		boutput(owner, "<span class='alert'>Your attempt to remove the shackles was interrupted!</span>")
 
 	onEnd()
 		..()
@@ -806,7 +806,7 @@ var/datum/action_controller/actions
 				if (SH)
 					SH.layer = initial(SH.layer)
 				for(var/mob/O in AIviewers(H))
-					O.show_message("<span style=\"color:red\"><B>[H] manages to remove the shackles!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
 
 
@@ -972,14 +972,14 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span style=\"color:red\"><B>[owner] begins to butcher [target].</B></span>", 1)
+			O.show_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>", 1)
 
 	onEnd()
 		..()
 		if(owner && target)
 			target.butcher(owner)
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span style=\"color:red\"><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
+				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
 
 /datum/action/bar/icon/rev_flash
 	duration = 13 SECONDS
@@ -1161,10 +1161,10 @@ var/datum/action_controller/actions
 			if (istype(H))
 				H.hud.update_resting()
 			for (var/mob/O in AIviewers(M))
-				O.show_message("<span style=\"color:red\"><B>[M] throws themselves onto the floor!</B></span>", 1, group = "resist")
+				O.show_message("<span class='alert'><B>[M] throws themselves onto the floor!</B></span>", 1, group = "resist")
 		else
 			for (var/mob/O in AIviewers(M))
-				O.show_message("<span style=\"color:red\"><B>[M] rolls around on the floor, trying to extinguish the flames.</B></span>", 1, group = "resist")
+				O.show_message("<span class='alert'><B>[M] rolls around on the floor, trying to extinguish the flames.</B></span>", 1, group = "resist")
 		M.update_burning(-1.5)
 
 		M.unlock_medal("Through the fire and flames", 1)

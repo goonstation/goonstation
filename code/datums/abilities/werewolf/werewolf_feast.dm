@@ -70,7 +70,7 @@
 		// It's okay when the victim expired half-way through the feast, but plain corpses are too cheap.
 		if (target.stat == 2)
 			boutput(M, __red("Urgh, this cadaver tasted horrible. Better find some fresh meat."))
-			//target.visible_message("<span style=\"color:red\"><B>[M] completely rips [target]'s corpse to pieces!</B></span>")
+			//target.visible_message("<span class='alert'><B>[M] completely rips [target]'s corpse to pieces!</B></span>")
 			//target.gib()
 			//nah this sucks for the guy being eaten.
 			interrupt(INTERRUPT_ALWAYS)
@@ -78,7 +78,7 @@
 
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span style=\"color:red\"><B>[M] lunges at [target]!</b></span>")
+		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
 
 	onUpdate()
 		..()

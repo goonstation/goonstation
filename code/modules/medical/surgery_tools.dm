@@ -68,7 +68,7 @@ CONTAINS:
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -134,7 +134,7 @@ CONTAINS:
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -199,7 +199,7 @@ CONTAINS:
 		if (!src.user_can_suicide(user))
 			return 0
 		var/hisher = his_or_her(user)
-		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -249,7 +249,7 @@ CONTAINS:
 
 		if (user.a_intent != "help" && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.visible_message("<span style='color:red'><B>[user] shoots [H] point-blank with [src]!</B></span>")
+			H.visible_message("<span class='alert'><B>[user] shoots [H] point-blank with [src]!</B></span>")
 			hit_with_projectile(user, staple, H)
 			src.ammo--
 			if (H && isalive(H))
@@ -269,9 +269,9 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message("<span style='color:red'><b>[user] staples \the [B.name] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]</span>")
+					user.visible_message("<span class='alert'><b>[user] staples \the [B.name] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]</span>")
 				else
-					user.visible_message("<span style='color:red'><b>[user] staples \the [B.name] to [H.name]'s head!</span>")
+					user.visible_message("<span class='alert'><b>[user] staples \the [B.name] to [H.name]'s head!</span>")
 				if (H.stat!=2)
 					H.emote(pick("cry", "wail", "weep", "sob", "shame", "twitch"))
 				src.ammo--
@@ -284,9 +284,9 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message("<span style='color:red'><b>[user] staples [K] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]</span>")
+					user.visible_message("<span class='alert'><b>[user] staples [K] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]</span>")
 				else
-					user.visible_message("<span style='color:red'><b>[user] staples [K] to [H]'s head!</span>")
+					user.visible_message("<span class='alert'><b>[user] staples [K] to [H]'s head!</span>")
 				if (H.stat!=2)
 					H.emote(pick("shake", "flinch", "tremble", "shudder", "twitch_v", "twitch"))
 				src.ammo--
@@ -451,7 +451,7 @@ CONTAINS:
 			shockcure = 1
 			break
 
-	user.visible_message("<span style='color:red'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
+	user.visible_message("<span class='alert'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
 	"<span style='color:red'>You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>")
 
 	if (emagged || (patient.health < 0 && !faulty) || (shockcure && !faulty) || (faulty && prob(25 + suiciding)) || (suiciding && prob(44)))
@@ -460,18 +460,18 @@ CONTAINS:
 			// shit done didnt work dangit
 			return 0
 
-		user.visible_message("<span style='color:red'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
+		user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
 		"<span style='color:red'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
 		logTheThing("combat", patient, user, "was defibrillated by %target% with [src] [log_loc(patient)]")
 
 
 		if (patient.bioHolder.HasEffect("resist_electric"))
-			patient.visible_message("<span style='color:red'><b>[patient]</b> doesn't respond at all!</span>",\
+			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>",\
 			"<span style='color:blue'>You resist the shock!</span>")
 			return 1
 
 		else if (isdead(patient))
-			patient.visible_message("<span style='color:red'><b>[patient]</b> doesn't respond at all!</span>")
+			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
 			return 1
 
 		else
@@ -489,7 +489,7 @@ CONTAINS:
 						patient.get_organ("heart").heal_damage(10,10,10)
 					patient.updatehealth()
 				else
-					patient.visible_message("<span style='color:red'><b>[patient]</b> doesn't respond!</span>")
+					patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
 			if (cell)
 				var/adjust = cell.charge
@@ -617,7 +617,7 @@ CONTAINS:
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
 		user.take_oxygen_deprivation(160)
 		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
@@ -744,7 +744,7 @@ CONTAINS:
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style='color:red'>You were interrupted!</span>")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 		if (tool)
 			tool:in_use = 0
 
@@ -768,8 +768,8 @@ CONTAINS:
 		var/mob/ownerMob = owner
 		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && get_dist(owner, target) <= 1)
 			if (zone && surgery_status)
-				target.visible_message("<span style='color:green'>[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",\
-				"<span style='color:green'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
+				target.visible_message("<span class='success'>[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",
+				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
 				if (target.organHolder)
 					if (zone == "chest")
 						if (target.organHolder.heart)
@@ -789,8 +789,8 @@ CONTAINS:
 				if (target.bleeding)
 					repair_bleeding_damage(target, 100, repair_amount)
 			else
-				target.visible_message("<span style='color:green'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
-				"<span style='color:green'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
+				target.visible_message("<span class='success'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
+				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
 				repair_bleeding_damage(target, 100, repair_amount)
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
@@ -865,12 +865,12 @@ CONTAINS:
 						src.in_use = 0
 						break
 					if (src.volume <= 0)
-						H.visible_message("<span style='color:red'><b>[src] runs out of blood!</b></span>")
+						H.visible_message("<span class='alert'><b>[src] runs out of blood!</b></span>")
 						src.in_use = 0
 						break
 					if (get_dist(src, H) > 1)
 						var/fluff = pick("pulled", "yanked", "ripped")
-						H.visible_message("<span style='color:red'><b>[src]'s needle gets [fluff] out of [H]'s arm!</b></span>", \
+						H.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [H]'s arm!</b></span>", \
 						"<span style='color:red'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
 						src.in_use = 0
 						break
@@ -1014,7 +1014,7 @@ CONTAINS:
 				M.show_text("<FONT size=[max(0, 5 - get_dist(src, M))]>...rustle...</FONT>")
 			return
 		src.open()
-		src.visible_message("<span style='color:red'><b>[user]</b> unzips themselves from [src]!</span>")
+		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
 	MouseDrop(mob/user as mob)
 		..()
@@ -1098,7 +1098,7 @@ CONTAINS:
 		H, "<span style='color:red'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
 		if (!do_mob(user, H, CLAMP(surgery_status * 4, 0, 100)))
-			user.visible_message("<span style='color:red'><b>[user]</b> was interrupted!</span>",\
+			user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
 			"<span style='color:red'>You were interrupted!</span>")
 			return
 

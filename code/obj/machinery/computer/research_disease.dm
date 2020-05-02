@@ -159,9 +159,9 @@ Confirm Identity: <A href='?src=\ref[src];scan=1'>[src.scan ? src.scan.name : "-
 		if(href_list["res"])
 			var/datum/ailment/researched_item = locate(href_list["res"])
 			if(disease_research.start_research(disease_research.tier*1000, researched_item))
-				boutput(usr, "<span style=\"color:blue\">Commencing research</span>")
+				boutput(usr, "<span class='notice'>Commencing research</span>")
 			else
-				boutput(usr, "<span style=\"color:blue\">Could not start research</span>")
+				boutput(usr, "<span class='notice'>Could not start research</span>")
 
 //		if(href_list["read"])
 

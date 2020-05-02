@@ -26,7 +26,7 @@
 	var/list/possible_syndicates = list()
 
 	if (!the_spawn)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	var/num_players = 0
@@ -39,7 +39,7 @@
 	possible_syndicates = get_possible_syndicates(num_synds)
 
 	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
@@ -110,13 +110,13 @@
 
 	target_location_name = pick(target_locations)
 	if (!target_location_name)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
 		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
 		return 0
 
 	target_location_type = target_locations[target_location_name]
 	if (!target_location_type)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
 		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
 		return 0
 
@@ -162,7 +162,7 @@
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
-		boutput(synd_mind.current, "<span style=\"color:blue\">You are a [syndicate_name()] agent!</span>")
+		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 		for(var/datum/objective/objective in synd_mind.objectives)
 			boutput(synd_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -185,7 +185,7 @@
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
-		boutput(synd_mind.current, "<span style=\"color:red\">Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
+		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd_mind.current)

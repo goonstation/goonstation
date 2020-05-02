@@ -122,7 +122,7 @@
 		if (!src.babyspider || !ispath(src.adultpath))
 			return 0
 		src.unequip_all()
-		src.visible_message("<span style='color:red'><b>[src] grows up!</b></span>",\
+		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span style='color:blue'><b>You grow up!</b></span>")
 		SPAWN_DBG(0)
 			src.make_critter(src.adultpath)

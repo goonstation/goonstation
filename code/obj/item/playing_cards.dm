@@ -210,10 +210,10 @@
 		if (!target)
 			return
 		if (isdead(usr) && !src.spooky)
-			boutput(usr, "<span style=\"color:red\">Ghosts dealing cards? That's too spooky!</span>")
+			boutput(usr, "<span class='alert'>Ghosts dealing cards? That's too spooky!</span>")
 			return
 		if (get_dist(usr, src) > 1)
-			boutput(usr, "<span style=\"color:red\">You're too far from [src] to draw a card!</span>")
+			boutput(usr, "<span class='alert'>You're too far from [src] to draw a card!</span>")
 			return
 		if (get_dist(usr, target) > 1)
 			if (istype(target, /obj/screen/hud))
@@ -223,13 +223,13 @@
 					if (h_hud.master && h_hud.master == usr) // or their face, I guess.  it'll apply to any attempts to deal to your hud
 						target = usr
 					else
-						boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
+						boutput(usr, "<span class='alert'>You're too far away from [target] to deal a card!</span>")
 						return
 				else
-					boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
+					boutput(usr, "<span class='alert'>You're too far away from [target] to deal a card!</span>")
 					return
 			else
-				boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
+				boutput(usr, "<span class='alert'>You're too far away from [target] to deal a card!</span>")
 				return
 
 		var/deal_face_up = 0
@@ -243,7 +243,7 @@
 			var/list/availableCards = list()
 			for (var/datum/playing_card/listCard in src.cards)
 				availableCards += "[listCard.card_name]"
-			boutput(usr, "<span style=\"color:blue\">What card would you like to deal from [src]?</span>")
+			boutput(usr, "<span class='notice'>What card would you like to deal from [src]?</span>")
 			availableCards = sortList(availableCards)
 			var/chosenCard = input("Select a card to deal.", "Choose Card") as null|anything in availableCards
 			if (!chosenCard)
@@ -282,7 +282,7 @@
 				"<span style=\"color:blue\">You take [stupid_var] and add it to [target].</span>")
 				src.draw_card(target, null, deal_face_up, Card)
 			else
-				boutput(usr, "<span style=\"color:red\">What exactly are you trying to accomplish by giving [target] a card? [target] can't use it!</span>")
+				boutput(usr, "<span class='alert'>What exactly are you trying to accomplish by giving [target] a card? [target] can't use it!</span>")
 				return
 
 		else
@@ -300,7 +300,7 @@
 				"<span style=\"color:blue\">You draw [other_stupid_var] from [src] and add it to [target].</span>")
 				src.draw_card(target, null, deal_face_up, Card)
 			else
-				boutput(usr, "<span style=\"color:red\">What exactly are you trying to accomplish by dealing [target] a card? [target] can't use it!</span>")
+				boutput(usr, "<span class='alert'>What exactly are you trying to accomplish by dealing [target] a card? [target] can't use it!</span>")
 				return
 
 	attack_hand(mob/user as mob)
@@ -315,7 +315,7 @@
 					var/list/availableCards = list()
 					for (var/datum/playing_card/Card in src.cards)
 						availableCards += "[Card.card_name]"
-					boutput(user, "<span style=\"color:blue\">What card would you like to draw from [src]?</span>")
+					boutput(user, "<span class='notice'>What card would you like to draw from [src]?</span>")
 					var/chosenCard = input("Select a card to draw.", "Choose Card") as null|anything in availableCards
 					if (!chosenCard)
 						return
@@ -891,7 +891,7 @@
 		else if (!src.open)
 			src.open = 1
 		else
-			boutput(user, "<span style=\"color:red\">[src] is already open!</span>")
+			boutput(user, "<span class='alert'>[src] is already open!</span>")
 		src.update_icon()
 		return
 
@@ -900,20 +900,20 @@
 			if (istype(W, /obj/item/playing_cards))
 				var/obj/item/playing_cards/C = W
 				if (!src.open)
-					boutput(user, "<span style=\"color:red\">[src] isn't open, you goof!</span>")
+					boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
 					return
 
 				if (src.Cards)
 					if (src.Cards.cards.len + C.cards.len > 120)
-						boutput(user, "<span style=\"color:red\">You try your best to stuff more cards into [src], but there's just not enough room!</span>")
+						boutput(user, "<span class='alert'>You try your best to stuff more cards into [src], but there's just not enough room!</span>")
 						return
 					else
-						boutput(user, "<span style=\"color:blue\">You add [C] to the cards in [src].</span>")
+						boutput(user, "<span class='notice'>You add [C] to the cards in [src].</span>")
 						src.Cards.add_cards(C)
 						return
 
 				if (C.cards.len > 60)
-					boutput(user, "<span style=\"color:red\">You try your best to stuff the cards into [src], but there's just not enough room for all of them!</span>")
+					boutput(user, "<span class='alert'>You try your best to stuff the cards into [src], but there's just not enough room for all of them!</span>")
 					return
 
 				user.u_equip(W)

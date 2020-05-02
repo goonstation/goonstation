@@ -1096,7 +1096,7 @@
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
 					for (var/i=3, i>0, i--)
@@ -1111,7 +1111,7 @@
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 30))
-				boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return
 			else
 				for (var/i=3, i>0, i--)
