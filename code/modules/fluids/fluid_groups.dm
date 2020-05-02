@@ -415,6 +415,9 @@
 		if (!(src in processing_fluid_spreads))
 			processing_fluid_spreads.Add(src)
 
+	proc/update_required_to_spread()
+		return
+
 	proc/update_once(force = 0) //this would be called every time the fluid.dm process procs.
 		if (src.qdeled || !can_update) return 1
 		if (!members || !members.len)
@@ -424,7 +427,7 @@
 		var/fluids_to_create = 0 //try to create X amount of new tiles (based on how much fluid and tiles we currently hold)
 
 		src.update_viscosity()
-
+		src.update_required_to_spread()
 		if (SPREAD_CHECK(src) || force)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return 1

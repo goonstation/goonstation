@@ -10,10 +10,13 @@ var/list/ban_from_airborne_fluid = list()
 
 	//max_alpha = 200
 
-	required_to_spread = 15
+	required_to_spread = 5
 
 	drains_floor = 0
-
+#if ASS_JAM
+	update_required_to_spread()
+		required_to_spread = min(15, max(0.1, (src.contained_amt**0.8)/30)+0.1) //wowowow magic numbers
+#endif
 //What follows is not for the faint of heart.
 // I have done a shitton of copy paste from the base obj/fluid type.
 // This is messy as fuck, but its the fastest solution i could think of CPU wise

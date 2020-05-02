@@ -1048,8 +1048,11 @@ datum
 			if (classic)
 				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
 			else
+#if ASS_JAM
+				smoke_reaction(src, 0, location = my_atom ? get_turf(my_atom) : 0)
+#else
 				smoke_reaction(src, 5, location = my_atom ? get_turf(my_atom) : 0)
-
+#endif
 ///////////////////////////////////////////////////////////////////////////////////
 
 
