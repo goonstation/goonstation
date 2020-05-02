@@ -1,5 +1,9 @@
 
 (t)fri may 01 20
+(u)Kyle
+(p)508
+(e)⚖🆕|balance, enhancement
+(+)Blob Bridge ability now much more useful and usable.
 (u)UrsulaMajor
 (p)509
 (e)🗺🎨|mapping, sprites
