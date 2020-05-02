@@ -208,13 +208,13 @@
 	var/obj/machinery/mining_magnet/construction/magnet = null
 
 	examine()
-		..()
+		. = ..()
 		if (loaded)
-			boutput(usr, "<span style=\"color:blue\">The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>")
-			boutput(usr, "<span style=\"color:blue\">The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>")
-			boutput(usr, "<span style=\"color:blue\">A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>")
+			. += "<span style=\"color:blue\">The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>"
+			. += "<span style=\"color:blue\">The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>"
+			. += "<span style=\"color:blue\">A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">The magnetizer must be loaded with a chunk of plasmastone to use.</span>")
+			. += "<span style=\"color:red\">The magnetizer must be loaded with a chunk of plasmastone to use.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
@@ -438,12 +438,12 @@
 		..()
 
 	examine()
-		..()
+		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				boutput(usr, "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>")
+				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				boutput(usr, "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>")
+				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	ex_act(severity)
 		switch(severity)
@@ -1458,12 +1458,13 @@
 		BLOCK_ROD
 
 	// Seems like a basic bit of user feedback to me (Convair880).
-	examine()
-		..()
-		if (!src.cell) return
-		if (isrobot(usr)) return // Drains battery instead.
-		boutput(usr, "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!")
-		return
+	examine(mob/user)
+		. = ..()
+		if (!src.cell)
+			return
+		if (isrobot(user))
+			return // Drains battery instead.
+		. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 
 	proc/process_charges(var/use)
 		if (!isnum(use) || use < 0)
@@ -1866,11 +1867,11 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	mats = 4
 
-	examine()
-		..()
-		if (isrobot(usr)) return // Drains battery instead.
-		boutput(usr, "There are [src.charges]/[src.maximum_charges] charges left!")
-		return
+	examine(mob/user)
+		. = ..()
+		if (isrobot(user))
+			return // Drains battery instead.
+		. += "There are [src.charges]/[src.maximum_charges] charges left!"
 
 	attack_self() // Fixed --melon
 		if (src.charges < 1)

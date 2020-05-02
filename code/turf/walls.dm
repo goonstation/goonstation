@@ -2,7 +2,7 @@
 	name = "wall"
 	desc = "Looks like a regular wall."
 	icon = 'icons/turf/walls.dmi'
-	plane = PLANE_DEFAULT
+	plane = PLANE_WALL
 	opacity = 1
 	density = 1
 	blocks_air = 1

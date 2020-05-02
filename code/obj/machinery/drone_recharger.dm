@@ -56,11 +56,9 @@
 			src.turnOff()
 
 	examine()
-		..()
-		var/msg = "<span style='color: blue;'>"
+		. = ..()
 		if (src.occupant)
-			msg += "[src.occupant] is currently using it."
-		out(usr, "[msg]</span>")
+			. += "<span style='color: blue;'>[src.occupant] is currently using it.</span>"
 
 	proc/turnOn(mob/living/silicon/ghostdrone/G)
 		if (!G || G.getStatusDuration("stunned")) return 0

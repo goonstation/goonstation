@@ -40,18 +40,6 @@
 			src.botcard.access = get_access(src.access_lookup)
 			src.camera = new /obj/item/camera_test(src)
 			src.icon_state = "cambot[src.on]"
-	return
-
-/obj/machinery/bot/cambot/examine()
-	set src in view()
-	set category = "Local"
-	..()
-	if (src.health < 20)
-		if (src.health > 15)
-			boutput(usr, text("<span style='color:red'>[src]'s parts look loose.</span>"))
-		else
-			boutput(usr, text("<span style='color:red'><B>[src]'s parts look very loose!</B></span>"))
-	return
 
 /obj/machinery/bot/cambot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)

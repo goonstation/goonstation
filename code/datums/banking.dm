@@ -626,6 +626,7 @@
 	var/obj/item/card/id/scan = null
 	var/health = 70
 	var/broken = 0
+	var/afterlife = 0
 
 	var/state = STATE_LOGGEDOFF
 	var/const
@@ -644,6 +645,9 @@
 			src.scan = I
 			return
 		if(istype(I, /obj/item/spacecash/))
+			if (afterlife)
+				boutput(user, "<span style=\"color:red\">On closer inspection, this ATM doesn't seem to have a deposit slot for credits!</span>")
+				return
 			if (src.accessed_record)
 				boutput(user, "<span style=\"color:blue\">You insert the cash into the ATM.</span>")
 				src.accessed_record.fields["current_money"] += I.amount
@@ -705,7 +709,10 @@
 			if(STATE_LOGGEDOFF)
 				if (src.scan)
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Logout</A> \]"
-					dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
+					if(afterlife)
+						dat += "<BR><BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
+					else
+						dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
 
 				else dat += "Please swipe your card to begin."
 
@@ -723,7 +730,8 @@
 						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
+						if(!afterlife)
+							dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
 
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -775,6 +783,12 @@
 						boutput(usr, "<span style=\"color:red\">Cannot find a bank record for this card.</span>")
 				else
 					boutput(usr, "<span style=\"color:red\">Incorrect pin number.</span>")
+
+			if("login")
+				if(TryToFindRecord())
+					src.state = STATE_LOGGEDIN
+				else
+					boutput(usr, "<span style=\"color:red\">Cannot find a bank record for this card.</span>")
 
 			if("logout")
 				src.state = STATE_LOGGEDOFF
@@ -899,6 +913,13 @@
 	atm_alt
 		icon_state = "atm_alt"
 		layer = EFFECTS_LAYER_UNDER_1
+
+/obj/submachine/ATM/afterlife
+	afterlife = 1
+
+	take_damage(var/damage_amount = 5, var/mob/user as mob)
+		return
+
 
 /obj/item/lotteryTicket
 	name = "Lottery Ticket"

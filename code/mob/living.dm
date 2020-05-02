@@ -281,6 +281,21 @@
 			W.onMouseUp(object,location,control,params)
 	return
 
+/mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
+	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
+		// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
+		var/obj/item/organ/dropping_organ = dropped
+		var/success = dropping_organ.attach_organ(src, dropping_user)
+		if (success)
+			return
+	else if (istype(dropped, /obj/item/parts/human_parts/))
+		var/obj/item/parts/dropping_limb = dropped
+		dropping_limb.attach(src, dropping_user)
+	else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+		var/obj/item/parts/robot_parts/dropping_limb = dropped
+		dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+	return ..()
+
 /mob/living/hotkey(name)
 	switch (name)
 		if ("togglepoint")
@@ -319,7 +334,7 @@
 //#endif
 
 		if (src.client && src.client.check_key(KEY_EXAMINE))
-			target.examine() // in theory, usr should be us, this is shit though
+			src.examine_verb(target)
 			return
 
 		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))

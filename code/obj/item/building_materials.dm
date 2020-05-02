@@ -227,11 +227,8 @@ MATERIAL
 		return 1
 
 	examine()
-		set src in view(1)
-
-		..()
-		boutput(usr, text("There are [] sheet\s on the stack.", src.amount))
-		return
+		. = ..()
+		. += "There are [src.amount] sheet\s on the stack."
 
 	attack_self(mob/user as mob)
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
@@ -622,11 +619,8 @@ MATERIAL
 		boutput(user, "<span style=\"color:blue\">You finish gathering rods.</span>")
 
 	examine()
-		set src in view(1)
-
-		..()
-		boutput(usr, text("There are [amount] rods in this stack."))
-		return
+		. = ..()
+		. += "There are [src.amount] rod\s on this stack."
 
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)

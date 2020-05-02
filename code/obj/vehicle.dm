@@ -22,6 +22,7 @@ Contains:
 	var/rider_visible =	1
 	var/list/ability_buttons = null//new/list()
 	var/throw_dropped_items_overboard = 0 // See /mob/proc/drop_item() in mob.dm.
+	var/attacks_fast_eject = 1
 	layer = MOB_LAYER
 
 	New()
@@ -42,7 +43,8 @@ Contains:
 		if(rider && rider_visible && W.force)
 			W.attack(rider, user)
 			user.lastattacked = src
-			eject_rider()
+			if (attacks_fast_eject || rider.getStatusDuration("weakened") || rider.getStatusDuration("stunned") || rider.getStatusDuration("paralysis"))
+				eject_rider()
 			W.visible_message("<span style=\"color:red\">[user] swings at [rider] with [W]!</span>")
 		return
 
@@ -2006,6 +2008,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/image/image_panel = null
 	var/image/image_crate = null
 	var/image/image_under = null
+	attacks_fast_eject = 0
 
 /obj/vehicle/forklift/New()
 	..()
@@ -2015,8 +2018,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	actual_light.attach(src)
 
 /obj/vehicle/forklift/examine()
-	..()
-	var/examine_text	//Shows who is driving it and also the items being carried
+	. = ..()
+	var/list/examine_text = list()	//Shows who is driving it and also the items being carried
 	var/obj/HI
 	if(src.rider)
 		examine_text += "[src.rider] is using it. "
@@ -2033,8 +2036,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				HI = helditems[helditems.len]
 			examine_text += " and \a [HI.name]"
 		examine_text += "."
-	boutput(usr, "[examine_text]")
-	return
+	. += examine_text.Join("")
 
 /obj/vehicle/forklift/verb/enter_forklift()
 	set src in oview(1)

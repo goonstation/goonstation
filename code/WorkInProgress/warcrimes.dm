@@ -42,9 +42,9 @@ var/fartcount = 0
 	examine()
 		. = ..()
 		if(stapled)
-			return "Two thongs stapled together, to make a MEGA VELOCITY boomarang."
+			. += "Two thongs stapled together, to make a MEGA VELOCITY boomarang."
 		else
-			return "These cheap [pick(possible_names)] don't even look legal."
+			. += "These cheap [pick(possible_names)] don't even look legal."
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/staple_gun) && !stapled)
@@ -833,5 +833,3 @@ Urs' Hauntdog critter
 			"You screams!")
 			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
 			playsound(T, hogg, 60, 1)
-
-

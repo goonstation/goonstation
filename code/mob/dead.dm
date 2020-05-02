@@ -24,7 +24,7 @@
 	else
 		if (get_dist(src, target) > 0)
 			dir = get_dir(src, target)
-		target.examine()
+		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
 	if (!istype(src.loc,/turf)) //Pop observers and Follow-Thingers out!!

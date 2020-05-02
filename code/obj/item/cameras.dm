@@ -39,9 +39,8 @@
 
 
 	examine()
-		..()
-		boutput(usr, "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!")
-		return
+		. = ..()
+		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/camera_film))
@@ -81,6 +80,11 @@
 	desc = "There's some sort of faint writing etched into the casing."
 	takes_voodoo_pics = 1
 
+	ultimate
+		name = "soul-binding camera"
+		desc = "No one cam should have all this power."
+		takes_voodoo_pics = 2
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -98,9 +102,8 @@
 		mats = 15
 
 	examine()
-		..()
-		boutput(usr, "It is good for [src.pictures] pictures.")
-		return
+		. = ..()
+		. += "It is good for [src.pictures] pictures."
 
 
 /obj/item/photo
@@ -177,22 +180,32 @@
 
 /obj/item/photo/voodoo //kubius: voodoo "doll" photograph
 	var/mob/cursed_dude = null //set at photo creation
-	var/enchant_power = 66 //how long the photo's magic lasts, negative values make it infinite
+	var/enchant_power = 13 //how long the photo's magic lasts, negative values make it infinite
+	var/enchant_delay = 0 //rolling counter to prevent spam utilization
 
 	//farting is handled in human.dm
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (enchant_power && cursed_dude && istype(cursed_dude, /mob))
+		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
 			cursed_dude.attackby(W,user)
+			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		else
 			..()
+		if(enchant_power == 0)
+			boutput(user,"<span style=\"color:red\"><b>[src]</b> crumbles away to dust!</span>")
+			qdel(src)
 		return
 
 	throw_begin(atom/target)
-		if (enchant_power && cursed_dude && istype(cursed_dude, /mob))
+		if (enchant_power && world.time > src.enchant_delay && cursed_dude && ismob(cursed_dude))
+			cursed_dude.visible_message("<span style=\"color:red\"><b>[cursed_dude] is violently thrown by an unseen force!</b></span>")
 			cursed_dude.throw_at(get_edge_cheap(src, get_dir(src, target)), 20, 1)
+			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
+		if(enchant_power == 0)
+			src.visible_message("<span style=\"color:red\"><b>[src]</b> crumbles away to dust!</span>")
+			qdel(src)
 		return ..(target)
 
 
@@ -349,6 +362,8 @@
 	if(src.takes_voodoo_pics)
 		P = new/obj/item/photo/voodoo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
+		if(src.takes_voodoo_pics == 2) //unlimited photo uses
+			P:enchant_power = -1
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 

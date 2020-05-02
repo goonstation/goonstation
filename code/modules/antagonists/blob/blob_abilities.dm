@@ -318,6 +318,18 @@
 		if (!T)
 			T = get_turf(owner)
 
+		if (istype(T, /turf/space))
+			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
+			
+			if (B)
+				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
+				if (success)
+					boutput(owner, "<span style=\"color:blue\">You create a bridge on [T].</span>")
+				else
+					boutput(owner, "<span style=\"color:red\">You were unable to place a bridge on [T].</span>")
+
+				return 1
+
 		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
 		if (!istype(B1))
 			return 1
@@ -745,8 +757,8 @@
 	name = "Build Bridge"
 	icon_state = "blob-bridge"
 	desc = "Creates a floor that you can cross through in space. The floor can be destroyed by fire or weldingtools, and does not act as a blob tile."
-	bio_point_cost = 15
-	cooldown_time = 200
+	bio_point_cost = 5
+	cooldown_time = 5 SECONDS
 
 	onUse(var/turf/T)
 		if (..())
@@ -1320,7 +1332,7 @@
 	name = "Structure: Bridge"
 	icon_state = "blob-bridge"
 	desc = "Unlocks the Bridge blob bit, which can be placed on space tiles. Bridges are floor tiles, you still need to spread onto them, and cannot spread from them."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	initially_disabled = 0
 	upgradename = "bridge"
 

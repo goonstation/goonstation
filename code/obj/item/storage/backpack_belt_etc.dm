@@ -272,9 +272,8 @@
 		return ..()
 
 	examine()
-		..()
-		boutput(usr, "There are [src.charge]/[src.maxCharge] PU left.")
-		return
+		. = ..()
+		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
 		var/content = ..()

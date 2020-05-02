@@ -22,10 +22,9 @@
 		strength = 1
 
 /obj/item/handcuffs/examine()
-	..()
+	. = ..()
 	if (src.delete_on_last_use)
-		boutput(usr, "There are [src.amount] lengths of [istype(src, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left!")
-	return
+		. += "There are [src.amount] lengths of [istype(src, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left!"
 
 /obj/item/handcuffs/suicide(var/mob/living/carbon/human/user as mob) //brutal
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))

@@ -586,11 +586,10 @@
 	return
 
 
-/obj/item/ursium/examine()
-	set src in view(1)
-	if(usr && !usr.stat)
-		boutput(usr, "A magnetic storage ring, it contains [ursium]kg of [content ? content : "nothing"].")
-	..()
+/obj/item/ursium/examine(mob/user)
+	. = ..()
+	if(user && !user.stat)
+		. += "A magnetic storage ring, it contains [ursium]kg of [content ? content : "nothing"]."
 
 /obj/item/ursium/proc/injest(mob/M as mob)
 	M.gib(1)

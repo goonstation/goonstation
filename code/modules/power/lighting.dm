@@ -512,19 +512,21 @@
 	update()
 
 // examine verb
-/obj/machinery/light/examine()
-	set src in oview(1)
-	set category = "Local"
-	if(usr && !usr.stat)
-		switch(light_status)
-			if(LIGHT_OK)
-				boutput(usr, "[desc] It is turned [on? "on" : "off"].")
-			if(LIGHT_EMPTY)
-				boutput(usr, "[desc] The [fitting] has been removed.")
-			if(LIGHT_BURNED)
-				boutput(usr, "[desc] The [fitting] is burnt out.")
-			if(LIGHT_BROKEN)
-				boutput(usr, "[desc] The [fitting] has been smashed.")
+/obj/machinery/light/examine(mob/user)
+	. = ..()
+
+	if(!user || user.stat)
+		return
+
+	switch(light_status)
+		if(LIGHT_OK)
+			. += "[desc] It is turned [on? "on" : "off"]."
+		if(LIGHT_EMPTY)
+			. += "[desc] The [fitting] has been removed."
+		if(LIGHT_BURNED)
+			. += "[desc] The [fitting] is burnt out."
+		if(LIGHT_BROKEN)
+			. += "[desc] The [fitting] has been smashed."
 
 
 

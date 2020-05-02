@@ -230,7 +230,8 @@
 
 	get_desc()
 		if (src.IV)
-			return src.IV.examine()
+			var/list/examine_list = src.IV.examine()
+			return examine_list.Join("\n")
 
 	proc/update_icon()
 		src.overlays = null

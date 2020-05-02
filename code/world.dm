@@ -517,7 +517,7 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up occupations list...")
 	SetupOccupationsList()
 
-	Z_LOG_DEBUG("World/Init", "Notifying IRC of new round")
+	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker && ticker.hide_mode) ? "secret" : master_mode))
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 
@@ -824,7 +824,7 @@ var/f_color_selector_handler/F_Color_Selector
 		s["map_name"] = getMapNameFromID(map_setting)
 		return list2params(s)
 
-	else // IRC bot communication (or callbacks)
+	else // Discord bot communication (or callbacks)
 
 #ifdef TWITCH_BOT_ALLOWED
 		//boutput(world,"addres : [addr]     twitchbotaddr : [TWITCH_BOT_ADDR]")
@@ -1119,7 +1119,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 
-				logTheThing("ooc", null, null, "IRC OOC: [nick]: [msg]")
+				logTheThing("ooc", null, null, "Discord OOC: [nick]: [msg]")
 
 				if (nick == "buttbot")
 					for (var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
@@ -1166,8 +1166,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
-				logTheThing("admin", null, null, "IRC ASAY: [nick]: [msg]")
-				logTheThing("diary", null, null, "IRC ASAY: [nick]: [msg]", "admin")
+				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
+				logTheThing("diary", null, null, "Discord ASAY: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
@@ -1227,8 +1227,8 @@ var/f_color_selector_handler/F_Color_Selector
 						</div>
 						"})
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-					logTheThing("admin_help", null, M, "IRC: [nick] PM'd %target%: [msg]")
-					logTheThing("diary", null, M, "IRC: [nick] PM'd %target%: [msg]", "ahelp")
+					logTheThing("admin_help", null, M, "Discord: [nick] PM'd %target%: [msg]")
+					logTheThing("diary", null, M, "Discord: [nick] PM'd %target%: [msg]", "ahelp")
 					for (var/mob/K in mobs)
 						if (K && K.client && K.client.holder && K.key != M.key)
 							if (K.client.player_mode && !K.client.player_mode_ahelp)
@@ -1255,8 +1255,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/mob/M = whois_ckey_to_mob_reference(who)
 				if (M.client)
 					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
-					logTheThing("admin", null, M, "IRC: [nick] Mentor PM'd %target%: [msg]")
-					logTheThing("diary", null, M, "IRC: [nick] Mentor PM'd %target%: [msg]", "admin")
+					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
+					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]", "admin")
 					for (var/mob/K in mobs)
 						if (K && K.client && K.client.can_see_mentor_pms() && K.key != M.key)
 							if(K.client.holder)
@@ -1265,7 +1265,7 @@ var/f_color_selector_handler/F_Color_Selector
 								else
 									boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
 							else
-								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (IRC) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1342,7 +1342,7 @@ var/f_color_selector_handler/F_Color_Selector
 						M.full_heal()
 						logTheThing("admin", nick, M, "healed / revived %target%")
 						logTheThing("diary", nick, M, "healed / revived %target%", "admin")
-						message_admins("<span style=\"color:red\">Admin [nick] healed / revived [key_name(M)] from IRC!</span>")
+						message_admins("<span style=\"color:red\">Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
 
 						var/ircmsg[] = new()
 						ircmsg["type"] = "heal"
@@ -1466,9 +1466,9 @@ var/f_color_selector_handler/F_Color_Selector
 				if (game_end_delayed == 0)
 					game_end_delayed = 1
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from IRC.")
-					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from IRC.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] delayed the server restart from IRC.</font>")
+					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
+					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
+					message_admins("<font color='blue'>[game_end_delayer] delayed the server restart from Discord.</font>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -1485,18 +1485,18 @@ var/f_color_selector_handler/F_Color_Selector
 				else if (game_end_delayed == 1)
 					game_end_delayed = 0
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from IRC.")
-					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from IRC.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from IRC.</font>")
+					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
+					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
+					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from Discord.</font>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)
 
 				else if (game_end_delayed == 2)
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.")
-					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.</font>")
+					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
+					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
+					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</font>")
 					ircmsg["msg"] = "Removed the restart delay."
 
 					SPAWN_DBG(1 DECI SECOND)
@@ -1544,9 +1544,9 @@ var/f_color_selector_handler/F_Color_Selector
 				catch (var/exception/e)
 					ircmsg["msg"] = e.name
 
-				logTheThing("admin", nick, null, "set the next round's map to [mapName] from IRC")
-				logTheThing("diary", nick, null, "set the next round's map to [mapName] from IRC", "admin")
-				message_admins("[nick] set the next round's map to [mapName] from IRC")
+				logTheThing("admin", nick, null, "set the next round's map to [mapName] from Discord")
+				logTheThing("diary", nick, null, "set the next round's map to [mapName] from Discord", "admin")
+				message_admins("[nick] set the next round's map to [mapName] from Discord")
 
 				return ircbot.response(ircmsg)
 

@@ -53,22 +53,10 @@
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.icon_state = "firebot[src.on]"
-	return
 
 //		if(radio_connection)
 //			radio_controller.add_object(src, "[beacon_freq]")
 
-/obj/machinery/bot/firebot/examine()
-	set src in view()
-	set category = "Local"
-	..()
-
-	if (src.health < 20)
-		if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-	return
 
 /obj/machinery/bot/firebot/attack_ai(mob/user as mob, params)
 	var/dat
@@ -85,8 +73,6 @@
 			"title" = "Firebot v1.0 controls",
 			"content" = dat,
 		))
-
-	return
 
 /obj/machinery/bot/firebot/attack_hand(mob/user as mob, params)
 	var/dat

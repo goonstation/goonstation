@@ -307,9 +307,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 
 	examine()
-		..()
-		boutput(usr, "Home turf: [get_area(src.homeloc)]. The interface is [src.locked ? "locked" : "unlocked"].")
-		return
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]. The interface is [src.locked ? "locked" : "unlocked"]."
 
 	SubscribeToProcess()
 		..()
@@ -672,9 +671,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 
 	examine()
-		..()
-		boutput(usr, "Home turf: [get_area(src.homeloc)].")
-		return
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]."
 
 	// This thing isn't z-level-restricted except for the homeloc.
 	// Somebody WILL find an exploit otherwise (Convair880).
@@ -864,9 +862,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 
 	examine()
-		..()
-		boutput(usr, "Home turf: [get_area(src.homeloc)].")
-		return
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
 	MouseDrop(over_object, src_location, over_location)

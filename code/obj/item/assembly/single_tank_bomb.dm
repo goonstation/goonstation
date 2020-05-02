@@ -60,8 +60,8 @@
 	return
 
 /obj/item/assembly/proximity_bomb/examine()
-	..()
-	src.part3.examine()
+	. = ..()
+	. += src.part3.examine()
 
 /obj/item/assembly/proximity_bomb/disposing()
 	qdel(part1)
@@ -189,8 +189,8 @@
 	return
 
 /obj/item/assembly/time_bomb/examine()
-	..()
-	src.part3.examine()
+	. = ..()
+	. += src.part3.examine()
 
 /obj/item/assembly/time_bomb/disposing()
 	qdel(part1)
@@ -273,8 +273,8 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/assembly/radio_bomb/examine()
-	..()
-	src.part3.examine()
+	. = ..()
+	. += src.part3.examine()
 
 /obj/item/assembly/radio_bomb/disposing()
 

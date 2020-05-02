@@ -39,12 +39,9 @@
 				return
 
 	examine()
-		set src in oview(12)
-		set category = "Local"
-		..()
+		. = ..()
 		if (src.armed)
-			boutput(usr, "<span style=\"color:red\">It looks like it's armed.</span>")
-		return
+			. += "<span style=\"color:red\">It looks like it's armed.</span>"
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
