@@ -160,6 +160,6 @@
 /mob/dead/vomit(var/nutrition=0, var/specialType=null)
 	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
 	playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1)
-	src.visible_message("<span style='color: red;'>Ectoplasm splats onto the ground from nowhere!</span>",
-		"<span style='color: red;>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
-		"<span style='color: red;'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")
+	src.visible_message("<span class='alert'>Ectoplasm splats onto the ground from nowhere!</span>",
+		"<span class='alert'>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
+		"<span class='alert'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")

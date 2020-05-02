@@ -131,7 +131,7 @@
 /obj/item/device/flockblocker/attack_self(mob/user as mob)
 	active = !active
 	icon_state = "[base_state]-[active ? "on" : "off"]"
-	boutput(user, "<span class='text-blue'>You fumble with [src] until you [active ? "turn it on. Space suddenly feels more thick." : "turn it off. You feel strangely exposed."]</span>")
+	boutput(user, "<span class='notice'>You fumble with [src] until you [active ? "turn it on. Space suddenly feels more thick." : "turn it off. You feel strangely exposed."]</span>")
 
 
 ////////////////
@@ -362,18 +362,18 @@
 	if(!user)
 		return
 	if(!trader)
-		boutput(user, "<span class='text-red'>Nothing happens.</span>")
+		boutput(user, "<span class='alert'>Nothing happens.</span>")
 		return
-	src.visible_message("<span class='text-blue'>[user.name] waves their hand over [src.name].</span>")
+	src.visible_message("<span class='notice'>[user.name] waves their hand over [src.name].</span>")
 	trader.greet(user)
 
 /obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
 	if(!W || !user)
 		return
 	if(istype(W, /obj/item/grab))
-		boutput(user, "<span class='text-red'>You can't fit them into this, sadly.</span>")
+		boutput(user, "<span class='alert'>You can't fit them into this, sadly.</span>")
 		return
-	src.visible_message("<span class='text-red'>[user.name] puts [W] in [src].</span>")
+	src.visible_message("<span class='alert'>[user.name] puts [W] in [src].</span>")
 	var/gained_resources = (W.health * 2) + 5
 	user.remove_item(W)
 	qdel(W)

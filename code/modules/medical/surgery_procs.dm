@@ -577,7 +577,7 @@ limbs are their own thing not included here.
 				var/location = get_turf(patient)
 				var/obj/item/outChestItem = patient.chest_item
 				outChestItem.set_loc(location)
-				patient.visible_message("<span class='text-red'>\The [outChestItem] flops out onto the table.</span>")
+				patient.visible_message("<span class='alert'>\The [outChestItem] flops out onto the table.</span>")
 				patient.chest_item = null
 				patient.chest_item_sewn = 0 //There's no longer an item to be sewn!
 			return 1

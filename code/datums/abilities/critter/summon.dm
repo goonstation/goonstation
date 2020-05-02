@@ -15,7 +15,7 @@
   var/turf/T = get_turf(holder.owner)
   var/list/adjacentTurfs = T.AdjacentTurfs()
   if(length(adjacentTurfs) < 1)
-    boutput(holder.owner, "<span class='text-red'>There's no space to summon anyone! Get to a more open area first.</span>")
+    boutput(holder.owner, "<span class='alert'>There's no space to summon anyone! Get to a more open area first.</span>")
     return 1
   else
     T = pick(adjacentTurfs)
@@ -38,7 +38,7 @@
       martianNames |= name
 
   if(length(otherMartians) < 1)
-    boutput(holder.owner, "<span class='text-red'>There are no other martians to summon. You're on your own!</span>")
+    boutput(holder.owner, "<span class='alert'>There are no other martians to summon. You're on your own!</span>")
     return 1
 
   martianNames = sortList(martianNames)

@@ -22,7 +22,7 @@
 			for (var/mob/living/M in psource)
 				logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
 				M.TakeDamage("All", damage, 0)
-				boutput(M, "<span style='color: red;'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
+				boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
 			if (created_volume >= 10)
 				for (var/atom/movable/O in psource)

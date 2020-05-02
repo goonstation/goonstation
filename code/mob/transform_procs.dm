@@ -591,7 +591,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	// get the mind
@@ -620,7 +620,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='text-red'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
 		if (alert(src, "Are you sure you want to respawn as an animal? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
@@ -675,12 +675,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!(src.client.player.mentor || src.client.holder))
-		boutput(src, "<span class='text-red'>You aren't even a mentor, how did you get here?!</span>")
+		boutput(src, "<span class='alert'>You aren't even a mentor, how did you get here?!</span>")
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	// get the mind
@@ -710,7 +710,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		else
 			time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='text-red'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
 		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
@@ -721,7 +721,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		// you can be an animal
 		var/turf/spawnpoint = get_turf(src)
 		if(spawnpoint.density)
-			boutput(src, "<span class='text-red'>The wall is in the way.</span>")
+			boutput(src, "<span class='alert'>The wall is in the way.</span>")
 			return
 		// be critter
 
@@ -749,12 +749,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!src.client.holder)
-		boutput(src, "<span class='text-red'>You aren't even an admin, how did you get here?!</span>")
+		boutput(src, "<span class='alert'>You aren't even an admin, how did you get here?!</span>")
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	if (alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", "Yes", "No") != "Yes")
@@ -950,6 +950,6 @@ var/respawn_arena_enabled = 0
 		boutput(O, "<span class='bold'>Your loyalty is to the flock and to the flockmind. Spread drones, convert the station, aid in the construction of the Relay.</span>")
 		boutput(O, "<span class='bold'>In this form, you cannot be harmed, but you can't do anything to the world at large.</span>")
 		boutput(O, "<span class='italic'>Tip: click-drag yourself onto unoccupied drones to take direct control of them.</span>")
-		boutput(O, "<span class='text-blue'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
+		boutput(O, "<span class='notice'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
 		return O
 	return null

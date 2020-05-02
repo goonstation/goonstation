@@ -133,7 +133,7 @@
       src.reagents.del_reagent(reagentId)
 
 /obj/martianBiotech/biomassPool/martianInteract(var/mob/user)
-  boutput(user, "<span class='text-blue'>Pool contents: [src.meatAmount] meat, [src.biomatterAmount] biomatter.</span>")
+  boutput(user, "<span class='notice'>Pool contents: [src.meatAmount] meat, [src.biomatterAmount] biomatter.</span>")
 
 /////////////////////////////////////////////////////////////////////////////////
 // PUT-INTO-POOL ACTION

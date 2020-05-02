@@ -4033,7 +4033,7 @@ var/global/noir = 0
 					if(istype(G))
 						G.generate_gang(M.mind)
 					else
-						boutput(usr, "<span class='text-red'>The game mode isn't gang (or something is deeply fucked up).</span>")
+						boutput(usr, "<span class='alert'>The game mode isn't gang (or something is deeply fucked up).</span>")
 						return
 
 				boutput(M, "<h1><font color=red>You are the leader of the [M.mind.gang.gang_name] gang!</font></h1>")

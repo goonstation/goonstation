@@ -138,13 +138,13 @@
     var/mob/living/M = src.occupant
     var/health_percent = round((M.health / M.max_health) * 100)
     if(src.growing)
-      boutput(user, "<span class='text-blue'>Current occupant is [health_percent]% grown.</span>")
+      boutput(user, "<span class='notice'>Current occupant is [health_percent]% grown.</span>")
     else
-      boutput(user, "<span class='text-blue'>Current occupant is [100 - health_percent]% consumed.</span>")
+      boutput(user, "<span class='notice'>Current occupant is [100 - health_percent]% consumed.</span>")
   else if(src.cooldown > 0)
-    boutput(user, "<span class='text-blue'>Cloner is resting. Normal function will resume shortly.</span>")
+    boutput(user, "<span class='notice'>Cloner is resting. Normal function will resume shortly.</span>")
   else
-    boutput(user, "<span class='text-blue'>This device processes Martian bodies that are placed into it or next to it.</span>")
+    boutput(user, "<span class='notice'>This device processes Martian bodies that are placed into it or next to it.</span>")
 
 /obj/martianBiotech/cloner/attackby(obj/item/W as obj, mob/user as mob)
   var/obj/item/grab/G = W

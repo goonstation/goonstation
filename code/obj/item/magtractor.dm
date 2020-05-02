@@ -58,15 +58,15 @@
 		if (!W) return 0
 
 		if (get_dist(get_turf(src), get_turf(W)) > 1)
-			out(user, "<span style='color: red;'>\The [W] is too far away!</span>")
+			out(user, "<span class='alert'>\The [W] is too far away!</span>")
 			return 0
 
 		if (src.holding)
-			out(user, "<span style='color: red;'>\The [src] is already holding \the [src.holding]!</span>")
+			out(user, "<span class='alert'>\The [src] is already holding \the [src.holding]!</span>")
 			return 0
 
 		if (W.anchored || W.w_class >= 4) //too bulky for backpacks, too bulky for this
-			out(user, "<span style='color: blue;'>\The [src] can't possibly hold that heavy an item!</span>")
+			out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 			return 0
 
 		if (istype(W, /obj/item/magtractor))
@@ -95,7 +95,7 @@
 		if (!src.holding)
 			if (!isitem(A)) return 0
 			if (get_dist(get_turf(src), get_turf(A)) > 1)
-				out(user, "<span style='color: red;'>\The [A] is too far away!</span>")
+				out(user, "<span class='alert'>\The [A] is too far away!</span>")
 				return 0
 			var/obj/item/target = A
 

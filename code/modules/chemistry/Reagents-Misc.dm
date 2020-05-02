@@ -1873,14 +1873,14 @@ datum
 					M.take_toxin_damage(-1 * mult)
 					M.take_brain_damage(-1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-blue'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
+						boutput(M, "<span class='notice'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
 						M.HealDamage("All", 4, 0)
 						M.take_oxygen_deprivation(-4 * mult)
 						M.take_brain_damage(-4 * mult)
 				else
 					M.take_toxin_damage(1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-red'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
+						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
 				M.updatehealth()
@@ -1893,17 +1893,17 @@ datum
 					return
 				if(ismartian(M))
 					// no matter what the method is, it's just gonna start doing weird freaky alien melding so whatever
-					boutput(M, "<span class='text-blue'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
+					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
 					M.updatehealth()
 				else
 					if(method == INGEST)
-						boutput(M, "<span class='text-red bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
+						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
 						M.emote("scream")
 					if(method == TOUCH)
-						boutput(M, "<span class='text-red'>Well, that was gross.</span>")
+						boutput(M, "<span class='alert'>Well, that was gross.</span>")
 /*
 		reliquary_blood
 			name = "blueish fluid"
@@ -1926,7 +1926,7 @@ datum
 					M.take_toxin_damage(-1 * mult)
 					M.take_brain_damage(-1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-blue'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
+						boutput(M, "<span class='notice'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
 						M.HealDamage("All", 4, 0)
 						M.take_oxygen_deprivation(-4 * mult)
 						M.take_brain_damage(-4 * mult)
@@ -1935,7 +1935,7 @@ datum
 				else
 					M.take_toxin_damage(1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-red'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
+						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
 				M.updatehealth()
@@ -1948,17 +1948,17 @@ datum
 					return
 				if(ismartian(M))
 					// no matter what the method is, it's just gonna start doing weird freaky alien melding so whatever
-					boutput(M, "<span class='text-blue'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
+					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
 					M.updatehealth()
 				else
 					if(method == INGEST)
-						boutput(M, "<span class='text-red bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
+						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
 						M.emote("scream")
 					if(method == TOUCH)
-						boutput(M, "<span class='text-red'>Well, that was gross.</span>")
+						boutput(M, "<span class='alert'>Well, that was gross.</span>")
 */
 		flockdrone_fluid
 			name = "coagulated gnesis"
@@ -2012,7 +2012,7 @@ datum
 					if(holder.get_reagent_amount(src.id) > 300)
 						// oh no
 						if(prob(1)) // i hate you all, players
-							H.visible_message("<span class='text-red bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
+							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
 							B.loc = get_turf(H)
 							H.gib()
@@ -2038,21 +2038,21 @@ datum
 				if(!volume_passed)
 					return
 				if(method == INGEST)
-					boutput(M, "<span class='text-red'>Tastes oily and unpleasant, with a weird sweet aftertaste. It's like eating children's modelling clay.</span>")
+					boutput(M, "<span class='alert'>Tastes oily and unpleasant, with a weird sweet aftertaste. It's like eating children's modelling clay.</span>")
 				if(method == TOUCH)
-					boutput(M, "<span class='text-blue'>It feels like you got smudged with oil paints.</span>")
+					boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
 					M.color = col
 					SPAWN_DBG(3 SECONDS)
-						boutput(M, "<span class='text-red'>Oh god it's not coming off! You're tinted like this forever!</span>")
+						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if (!istype(T, /turf/space))
 					if (volume >= 50 && (istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/wall)))
-						T.visible_message("<span class='text-blue'>The substance flows out and sinks into [T], forming new shapes.</span>")
+						T.visible_message("<span class='notice'>The substance flows out and sinks into [T], forming new shapes.</span>")
 						flock_convert_turf(T)
 					if (volume >= 10)
-						T.visible_message("<span class='text-blue'>The substance flows out and takes a solid form.</span>")
+						T.visible_message("<span class='notice'>The substance flows out and takes a solid form.</span>")
 						if(prob(50))
 							var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
 							B.set_loc(T)
@@ -2065,7 +2065,7 @@ datum
 							B.setMaterial(mat)
 						return
 				// otherwise we didn't have enough
-				T.visible_message("<span class='text-blue'>The substance flows out, spread too thinly.</span>")
+				T.visible_message("<span class='notice'>The substance flows out, spread too thinly.</span>")
 
 		black_goop
 			name = "gross black goop"
@@ -3964,5 +3964,3 @@ datum
 			else
 				walk_towards(src, src.deathtarget, deathspeed)
 				sleep(0.1 SECONDS)
-
-

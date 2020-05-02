@@ -268,8 +268,8 @@ a.popt {text-decoration: none;}
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
 /* OUTPUT COLORS */
-.text-red {color: #ff0000;}
-.text-blue {color: #0000ff;}
+.hint {color: #0000ff;}
+.notice {color: #0000ff;}
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}

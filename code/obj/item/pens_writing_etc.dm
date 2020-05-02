@@ -59,7 +59,7 @@
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
 			return
 		if(!user.literate)
-			boutput(user, "<span class='text-red'>You don't know how to write.</span>")
+			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
