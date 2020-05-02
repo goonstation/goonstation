@@ -592,41 +592,42 @@
 		return
 
 	examine()
+		. = list()
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return list()
+			return
 
 		if (isghostdrone(usr))
-			return list()
-		. += "<span style=\"color:blue\">*---------*</span>"
-		. += "<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>"
+			return
+		. += "<span style=\"color:blue\">*---------*</span><br>"
+		. += "<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span><br>"
 
 		if (isdead(src))
-			. += "<span style=\"color:red\">[src.name] is powered-down.</span>"
+			. += "<span style=\"color:red\">[src.name] is powered-down.</span><br>"
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
 		if (brute)
 			if (brute < 75)
-				. += "<span style=\"color:red\">[src.name] looks slightly dented</span>"
+				. += "<span style=\"color:red\">[src.name] looks slightly dented</span><br>"
 			else
-				. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span>"
+				. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span><br>"
 		if (burn)
 			if (burn < 75)
-				. += "<span style=\"color:red\">[src.name] has slightly burnt wiring!</span>"
+				. += "<span style=\"color:red\">[src.name] has slightly burnt wiring!</span><br>"
 			else
-				. += "<span style=\"color:red\"><B>[src.name] has severely burnt wiring!</B></span>"
+				. += "<span style=\"color:red\"><B>[src.name] has severely burnt wiring!</B></span><br>"
 		if (src.health <= 50)
-			. += "<span style=\"color:red\">[src.name] is twitching and sparking!</span>"
+			. += "<span style=\"color:red\">[src.name] is twitching and sparking!</span><br>"
 		if (isunconscious(src))
-			. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
+			. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span><br>"
 
-		. += "The cover is [opened ? "open" : "closed"]."
-		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]"
+		. += "The cover is [opened ? "open" : "closed"].<br>"
+		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
 
 		if (src.module)
-			. += "[src.name] has a [src.module.name] installed."
+			. += "[src.name] has a [src.module.name] installed.<br>"
 		else
-			. += "[src.name] does not appear to have a module installed."
+			. += "[src.name] does not appear to have a module installed.<br>"
 
 		. += "<span style=\"color:blue\">*---------*</span>"
 
