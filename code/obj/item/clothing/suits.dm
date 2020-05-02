@@ -1564,3 +1564,21 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/security_badge
+	name = "Security Badge"
+	desc = "An official badge for a Nanotrasen Security Worker."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = 1.0
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "security_badge"
+	item_state = "security_badge"
+	var/badge_owner_name = null
+	var/badge_owner_job = null
+
+	get_desc()
+		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
+
+	attack_self(mob/user as mob)
+		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
