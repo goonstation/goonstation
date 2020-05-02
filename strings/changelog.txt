@@ -1,5 +1,9 @@
 
 (t)sat may 02 20
+(u)UrsulaMajor
+(p)516
+(e)⚖🎨|balance, sprites
+(+)Adjusted the .22 Suppressed Pistol Box to have 2 mags of hollow point rounds and 2 mags of regular ammo
 (u)glassofmilk
 (p)538
 (e)|
