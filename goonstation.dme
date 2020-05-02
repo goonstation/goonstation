@@ -342,6 +342,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gamemodes\construction.dm"
 #include "code\datums\gamemodes\disaster.dm"
 #include "code\datums\gamemodes\extended.dm"
+#include "code\datums\gamemodes\flock.dm"
 #include "code\datums\gamemodes\football.dm"
 #include "code\datums\gamemodes\gangwar.dm"
 #include "code\datums\gamemodes\gm_parent.dm"
