@@ -330,6 +330,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
 
+	for (var/obj/item/mechanics/radioscanner/I in connection.devices) //MechComp radio scanner
+		I.hear_radio(M, messages, lang_id)
+
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
 	if (src.protected_radio != 1 && isnull(src.traitorradio))
 		for (var/mob/living/L in radio_brains)
