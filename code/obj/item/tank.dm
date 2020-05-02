@@ -237,13 +237,13 @@ Contains:
 			integrity++
 
 	examine()
-		set category = "Local"
-		var/obj/item/icon = src
 		if (istype(src.loc, /obj/item/assembly))
+			var/obj/item/icon = src
+			. = list()
 			icon = src.loc
 			if (!in_range(src, usr))
 				if (icon == src)
-					boutput(usr, "<span style=\"color:blue\">It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>")
+					. += "<span style=\"color:blue\">It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
 
 			var/celsius_temperature = src.air_contents.temperature-T0C
@@ -262,12 +262,9 @@ Contains:
 			else
 				descriptive = "furiously hot"
 
-			boutput(usr, "<span style=\"color:blue\">The [bicon(icon)] feels [descriptive]</span>")
-
+			. += "<span style=\"color:blue\">The [bicon(icon)] feels [descriptive]</span>"
 		else
-			..()
-
-		return
+			return ..()
 
 
 	attackby(obj/item/W as obj, mob/user as mob)

@@ -141,12 +141,6 @@
 		store_type = null
 		..()
 
-/obj/item/electronics/frame/verb/rotate()
-	set src in view(1)
-	if (!isliving(usr))
-		return
-	src.dir = turn(src.dir, 90)
-
 /obj/item/electronics/frame/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
@@ -174,7 +168,11 @@
 				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
 				//deploy()
 			return
-	if (iswrenchingtool(W))
+	if (ispryingtool(W))
+		if (!anchored)
+			src.dir = turn(src.dir, 90)
+			return
+	else if (iswrenchingtool(W))
 		boutput(user, "<span style=\"color:red\">You deconstruct [src] into its base materials!</span>")
 		src.drop_resources(W,user)
 	..()

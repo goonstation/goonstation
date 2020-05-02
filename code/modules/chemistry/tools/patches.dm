@@ -390,13 +390,13 @@
 			name = initial(src.name)
 
 	examine()
-		..()
+		. = ..()
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
 			if (P)
-				boutput(usr, "The topmost patch is a [P.name]; [patches.len] patch(es) on the stack.")
+				. += "The topmost patch is a [P.name]; [patches.len] patch(es) on the stack."
 		else
-			boutput(usr, "0 patches on the stack.")
+			. += "0 patches on the stack."
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (patches.len)

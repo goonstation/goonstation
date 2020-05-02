@@ -114,18 +114,12 @@
 
 	if (src.organHolder)
 		var/datum/organHolder/oH = src.organHolder
-		if (oH.brain)
-			if (oH.brain.op_stage > 0.0)
-				. += "<br><span style='color:red'><B>[src.name] has an open incision on [t_his] head!</B></span>"
-		else if (!oH.brain && oH.skull && oH.head)
-			. += "<br><span style='color:red'><B>[src.name]'s head has been cut open and [t_his] brain is gone!</B></span>"
-		else if (!oH.skull && oH.head)
-			. += "<br><span style='color:red'><B>[src.name] no longer has a skull in [t_his] head, [t_his] face is just empty skin mush!</B></span>"
-		else if (!oH.head)
-			. += "<br><span style='color:red'><B>[src.name] has been decapitated!</B></span>"
 
 		if (oH.head)
 			if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
+				if (!oH.skull)
+					. += "<br><span style='color:red'><B>[src.name] no longer has a skull in [t_his] head, [t_his] face is just empty skin mush!</B></span>"
+
 				if (!oH.right_eye && !oH.left_eye)
 					. += "<br><span style='color:red'><B>[src.name]'s eyes are missing!</B></span>"
 				else
@@ -138,14 +132,39 @@
 					else if (oH.right_eye.show_on_examine)
 						. += "<br><span style='color:blue'>[src.name] has [bicon(oH.right_eye)] \an [oH.right_eye.organ_name] in their right eye socket.</span>"
 
-		if (src.organHolder.heart)
-			if (src.organHolder.heart.op_stage > 0.0)
-				. += "<br><span style='color:red'><B>[src.name] has an open incision on [t_his] chest!</B></span>"
+				if (src.organHolder.head.scalp_op_stage > 0)
+					if (src.organHolder.head.scalp_op_stage >= 5.0)
+						if (!oH.skull)
+							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head and [t_his] skull is gone!</B></span>"
+						else if (!oH.brain)
+							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head and [t_his] brain is gone!</B></span>"
+						else
+							. += "<br><span style='color:red'><B>There's a gaping hole in [src.name]'s head!</B></span>"
+					else if (src.organHolder.head.scalp_op_stage >= 4.0)
+						if (!oH.brain)
+							. += "<br><span style='color:red'><B>[src.name]'s head has been cut open and [t_his] brain is gone!</B></span>"
+						else
+							. += "<br><span style='color:red'><B>[src.name]'s head has been cut open!</B></span>"
+					else
+						. += "<br><span style='color:red'><B>[src.name] has an open incision on [t_his] head!</B></span>"
+
+				if (src.organHolder.head.op_stage > 0.0)
+					if (src.organHolder.head.op_stage >= 3.0)
+						. += "<br><span style='color:red'><B>[src.name]'s head is barely attached!</B></span>"
+					else
+						. += "<br><span style='color:red'><B>[src.name] has a huge incision across their neck!</B></span>"
+
 		else
-			. += "<br><span style='color:red'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
+			. += "<br><span style='color:red'><B>[src.name] has been decapitated!</B></span>"
 
 		if (src.organHolder.chest.op_stage > 0.0)
-			. += "<br><span style='color:red'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
+			if (src.organHolder.chest.op_stage >= 9.0)
+				if (src.organHolder.heart)
+					. += "<br><span style='color:red'><B>[src.name]'s chest is cut wide open!</B></span>"
+				else
+					. += "<br><span style='color:red'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
+			else
+				. += "<br><span style='color:red'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
 
 		if (src.butt_op_stage > 0)
 			if (src.butt_op_stage >= 4)

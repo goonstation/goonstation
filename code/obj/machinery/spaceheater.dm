@@ -66,18 +66,12 @@
 
 
 	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
-		boutput(usr, "This is [bicon(src)] \an [src.name].")
-		boutput(usr, src.desc)
-
-		boutput(usr, "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"].")
+		. = ..()
+		. += "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			boutput(usr, "The power cell is [cell ? "installed" : "missing"].")
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The charge meter reads [cell ? round(cell.percent(),1) : 0]%")
-		return
+			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 
 	attackby(obj/item/I, mob/user)
@@ -296,18 +290,13 @@
 		return
 
 	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
-		boutput(usr, "This is [bicon(src)] \an [src.name].")
-		boutput(usr, src.desc)
+		. = ..()
 
-		boutput(usr, "The stove is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"].")
+		. += "The stove is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			boutput(usr, "The power cell is [cell ? "installed" : "missing"].")
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The charge meter reads [cell ? round(cell.percent(),1) : 0]%")
-		return
+			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 
 	attackby(obj/item/I, mob/user)

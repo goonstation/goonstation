@@ -6,6 +6,8 @@
 	name = "brain"
 	organ_name = "brain"
 	desc = "A human brain, gross."
+	organ_holder_name = "brain"
+	organ_holder_location = "head"
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
@@ -32,28 +34,26 @@
 			else
 				. += "<br><span style='color:red'>This brain has gone cold.</span>"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "head")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for brains. */
 		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
+
+		if (!organ_location)
+			boutput(user, "<span style=\"color:blue\">Where are you putting that again? There's no head.</span>")
+			return null
 
 		if (!headSurgeryCheck(H))
 			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
-			return
+			return null
 
-		//since these people will be dead M != usr
-
-		if (!H.organHolder.brain)
+		if (!H.organHolder.get_organ("brain") && H.organHolder.head.scalp_op_stage >= 4.0)
+			if (!H.organHolder.get_organ("skull"))
+				boutput(user, "<span style=\"color:blue\">There's no skull in there to hold the brain in place.</span>")
+				return null
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
@@ -61,12 +61,13 @@
 			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
 			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
-			user.u_equip(src)
+			if (user.find_in_hand(src))
+				user.u_equip(src)
 			H.organHolder.receive_organ(src, "brain", 3.0)
+			H.organHolder.head.scalp_op_stage = 3.0
+			return 1
 
-		else
-			..()
-		return
+		return 0
 
 	proc/setOwner(var/datum/mind/mind)
 		if (!mind)

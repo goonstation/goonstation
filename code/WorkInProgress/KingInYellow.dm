@@ -106,24 +106,22 @@
 		SPAWN_DBG(3 SECONDS) work()
 		return
 
-	examine()
-		set src in view()
-		if (!issilicon(usr))
-			var/mob/living/carbon/reader = usr
-			if(!istype(reader)) return
+	examine(mob/user)
+		. = list()
+		if (!issilicon(user))
+			var/mob/living/carbon/reader = user
+			if(!istype(reader))
+				return
 
-			if(usr in readers)
-				var/message = "This appears to be an ancient Book containing a Play.<br><br>"
-				message += "You frantically read the play again ...<br>"
-				message += "You feel as if you're about to faint."
-				boutput(usr, message)
+			. = "This appears to be an ancient Book containing a Play.<br>"
 
+			if(user in readers)
+				. += "You frantically read the play again ..."
+				. += "You feel as if you're about to faint."
 				reader.drowsyness += 3
 			else
-				var/message = "This appears to be an ancient Book containing a Play.<br><br>"
-				message += "The first act tells of a city named Carcosa, and a mysterious \"King in Yellow\"<br>"
-				message += "The second act seems incomplete but ... It is horrifying.<br>"
-				boutput(usr, message)
+				. += "The first act tells of a city named Carcosa, and a mysterious \"King in Yellow\""
+				. += "The second act seems incomplete but ... It is horrifying."
 
 				for(var/mob/M in readers)
 					boutput(M, "<span style=\"color:red\">You feel the irresistible urge to read the \"The King In Yellow\" again.</span>")
@@ -132,7 +130,7 @@
 				readers += reader
 			return
 		else
-			boutput(usr, "This ancient data storage medium appears to contain data used for entertainment purposes.")
+			. += "This ancient data storage medium appears to contain data used for entertainment purposes."
 
 	custom_suicide = 1
 	suicide_distance = 0

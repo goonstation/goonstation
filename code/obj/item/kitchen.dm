@@ -433,6 +433,10 @@ TRAYS
 	var/list/throw_targets = list()
 	var/throw_dist = 3
 
+	New()
+		..()
+		BLOCK_BOOK
+
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
 
@@ -658,6 +662,10 @@ TRAYS
 	var/y_counter = 0
 	var/y_mod = 0
 	var/tray_health = 5 //number of times u can smash with a tray + 1, get_desc values are hardcoded so please adjust them (i know im a bad coder)
+
+	New()
+		..()
+		BLOCK_ALL
 
 	proc/update_inhand_icon()
 		var/weighted_num = round(ordered_contents.len / 5) //6 inhand sprites, 30 possible foods on the tray

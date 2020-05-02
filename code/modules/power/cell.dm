@@ -165,17 +165,17 @@
 	if (genrate > 0) give(genrate)
 	if (!genrate) ..()
 
-/obj/item/cell/examine()
-	set src in view(1)
-	set category = "Local"
+/obj/item/cell/examine(mob/user)
+	. = ..()
+
 	if (src.artifact || src.unusualCell)
-		..()
 		return
-	if(usr && !usr.stat)
+
+	if(user && !user.stat)
 		if(maxcharge <= 2500)
-			boutput(usr, "[desc]<br>The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.<br>The charge meter reads [round(src.percent() )]%.")
+			. += "The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.<br>The charge meter reads [round(src.percent() )]%."
 		else
-			boutput(usr, "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!<br>The charge meter reads [round(src.percent() )]%.")
+			. += "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!<br>The charge meter reads [round(src.percent() )]%."
 
 /obj/item/cell/attackby(obj/item/W, mob/user) // Moved the stungloves stuff to gloves.dm (Convair880).
 	if (istype(W, /obj/item/reagent_containers/syringe))

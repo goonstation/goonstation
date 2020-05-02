@@ -463,6 +463,8 @@
 
 		src.abilityHolder.onLife((life_time_passed / tick_spacing))
 
+
+		/*
 		//move this to changeling onlife pls
 		//Dumb changeling inactivity stuff
 		//Allow hivemind members to Boot themselves if the changeling is inactive
@@ -475,6 +477,7 @@
 							O.can_exit_hivemind = 1
 							O.verbs += /mob/dead/target_observer/hivemind_observer/verb/exit_hivemind
 							boutput(O, __blue("<b>Your master seems to be inactive. You are permitted to use the Exit-Hivemind command.</b>"))
+		*/
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 	src.UpdateDamage()
@@ -1534,8 +1537,8 @@
 			if (src.bleeding < 0) //INVERSE BLOOD LOSS was a fun but ultimately easily fixed bug
 				src.bleeding = 0
 
-		else if (!src.bleeding && src.get_surgery_status())
-			src.bleeding += 1 * mult
+			if (src.get_surgery_status())
+				src.bleeding += 1 * mult
 
 		if (src.bleeding && src.blood_volume)
 

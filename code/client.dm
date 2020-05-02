@@ -272,12 +272,6 @@
 			return
 */
 
-	//if (((world.address == src.address || !(src.address)) && !(host)))
-		//host = src.key
-		//src.holder = new /datum/admins(src)
-		//src.holder.rank = "Host"
-		//world.update_status()
-
 	if(player_capa)
 		var/howmany = 0
 		for(var/mob/M in mobs)
@@ -350,7 +344,7 @@
 			if(!preferences.savefile_load(src))
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
-				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
+				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
 
@@ -362,8 +356,7 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog)
 				if (!cdn)
-					src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
-					src << browse_rsc(file("browserassets/images/changelog/somerights20.png"))
+					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
 				changes()
 
@@ -384,9 +377,9 @@
 					return
 
 
-			if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-				if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-					src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
+			// if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
+			// 	if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
+			// 		src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
 
 
 		else
@@ -514,7 +507,7 @@
 */
 
 /client/proc/init_admin()
-	if(!address)
+	if(!address || (world.address == src.address))
 		admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
 		src.holder = new /datum/admins(src)
@@ -772,6 +765,8 @@ var/global/curr_day = null
 
 	if (!src.holder)//todo : maybe give admins a toggle
 		sleep(1.2 SECONDS) //and make this number larger
+	else
+		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))
@@ -800,7 +795,7 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("pm", ircmsg)
 
@@ -832,7 +827,7 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("mentorpm", ircmsg)
 

@@ -48,7 +48,7 @@
 		..()*/
 
 	click(atom/target)
-		target.examine()
+		src.examine_verb(target)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 1

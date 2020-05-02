@@ -2953,7 +2953,9 @@
 /mob/verb/examine_verb(atom/A as mob|obj|turf in view())
 	set name = "Examine"
 	set category = "Local"
-	A.examine()
+	var/list/result = A.examine(src)
+	boutput(src, result.Join("\n"))
+
 
 /mob/verb/interact_verb(obj/A as obj in view(1))
 	set name = "Pick Up / Interact"

@@ -253,9 +253,10 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 			src.pixel_y = rand(-9,9)
 			src.pixel_x = rand(-8,8)
 
-	examine()
-		if (usr.client && src.popup_win)
+	examine(mob/user)
+		if (src.popup_win)
 			src.show_popup_win(usr)
+			return list()
 		else
 			return ..()
 

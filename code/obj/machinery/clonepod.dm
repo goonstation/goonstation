@@ -216,6 +216,7 @@
 			src.occupant.real_name = clonename
 	else
 		src.occupant.real_name = "clone"  //No null names!!
+	src.occupant.name = src.occupant.real_name
 
 	if ((mindref) && (istype(mindref))) //Move that mind over!!
 		mindref.transfer_to(src.occupant)

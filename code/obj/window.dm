@@ -383,6 +383,22 @@
 				return 1
 
 		else if (ispryingtool(W) && state <= 1)
+			if(!anchored)
+				if (!(src.dir in cardinal))
+					return
+				update_nearby_tiles(need_rebuild=1) //Compel updates before
+				src.dir = turn(src.dir, -90)
+				/*var/action = input(usr,"Rotate it which way?","Window Rotation",null) in list("Clockwise ->","Anticlockwise <-","180 Degrees")
+				if (!action) return*/
+
+				/*switch(action)
+					if ("Clockwise ->") src.dir = turn(src.dir, -90)
+					if ("Anticlockwise <-") src.dir = turn(src.dir, 90)
+					if ("180 Degrees") src.dir = turn(src.dir, 180)*/
+				update_nearby_tiles(need_rebuild=1)
+				src.ini_dir = src.dir
+				src.set_layer_from_settings()
+				return
 			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
 			if (deconstruct_time)
 				user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
@@ -491,34 +507,6 @@
 			source.selftilenotify() //for fluids
 
 		return 1
-
-	verb/rotate()
-		set name = "Rotate Window"
-		set src in oview(1)
-		set category = "Local"
-
-		if (!(src.dir in cardinal))
-			return
-		if (src.anchored)
-			boutput(usr, "It is fastened to the floor; therefore, you can't rotate it!")
-			return 0
-
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
-
-		var/action = input(usr,"Rotate it which way?","Window Rotation",null) in list("Clockwise ->","Anticlockwise <-","180 Degrees")
-		if (!action) return
-
-		switch(action)
-			if ("Clockwise ->") src.dir = turn(src.dir, -90)
-			if ("Anticlockwise <-") src.dir = turn(src.dir, 90)
-			if ("180 Degrees") src.dir = turn(src.dir, 180)
-
-		update_nearby_tiles(need_rebuild=1)
-
-		src.ini_dir = src.dir
-
-		src.set_layer_from_settings()
-		return
 
 /obj/window/pyro
 	icon_state = "pyro"
@@ -659,7 +647,6 @@
 		explosion_resistance = 3
 	New()
 		..()
-		src.verbs -= /obj/window/verb/rotate
 
 		if (map_setting && ticker)
 			src.update_neighbors()
@@ -926,10 +913,6 @@
 
 	New()
 		return
-
-	examine()
-		set src in oview()
-		boutput(usr, desc)
 
 	smash()
 		if(health <= 0)

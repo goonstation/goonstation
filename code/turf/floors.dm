@@ -1062,7 +1062,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "bridge"
 	default_melt_cap = 80
-
+	allows_vehicles = 1
+	
 	New()
 		..()
 		setMaterial(getMaterial("blob"))

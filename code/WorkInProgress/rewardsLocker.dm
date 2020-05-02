@@ -800,10 +800,15 @@
 	required_medal = "Original Sin"
 
 	rewardActivate(var/mob/activator)
+		if (isdead(activator))
+			boutput(activator, "<span style=\"color:red\">You uh, yeah no- you already popped, buddy.</span>")
+			return
+		activator.suiciding = 1
 		var/turf/T = get_turf(activator)
 		T.fluid_react_single("blood",5000)
 		activator.gib()
-
+		SPAWN_DBG(20 SECONDS)
+			activator.suiciding = 0
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
 /chui/window/contributorrewards

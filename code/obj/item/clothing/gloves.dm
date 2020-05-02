@@ -44,10 +44,9 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.stunready)
-			boutput(usr, "It seems to have some wires attached to it.[src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]")
-		return
+			. += "It seems to have some wires attached to it.[src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
 
 	// reworked this proc a bit so it can't run more than 5 times, just in case
 	proc/CreateID()

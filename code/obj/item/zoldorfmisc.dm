@@ -37,9 +37,7 @@
 	var/referencedorf
 
 	examine()
-		set src in oview()
-
-		..()
+		. = ..()
 
 		if((src.branded)&&(src.referencedorf))
 			if(istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/living/carbon/human)))
@@ -49,13 +47,13 @@
 					pz.brandlist.Add(user)
 					src.icon_state = ("fortunepaper")
 					user.visible_message("<span style=\"color:green\"><b>[user.name]'s skin seems to glow faintly.</b></span>","<span style=\"color:green\"><b>You feel an otherworldly presence coursing through you!</b></span>")
-					boutput(user,"<span style=\"color:green\"><b>Tip:</b> This will allow the zoldorf player to observe you like a ghost, if you wish to remain unseen, splashing yourself with holy water will clear the brand.</span>")
+					. += "<span style=\"color:green\"><b>Tip:</b> This will allow the zoldorf player to observe you like a ghost, if you wish to remain unseen, splashing yourself with holy water will clear the brand.</span>"
 					if(the_zoldorf.len)
 						boutput(the_zoldorf[1],"<span style=\"color:blue\"><b>[user.name] has been branded!</b> You may now observe them via Astral Projection.</span>")
 					src.branded = 0
 
 			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/zoldorf)))
-				boutput(usr,"<span style=\"color:green\"><b>This fortune is branded!</b></span>")
+				. += "<span style=\"color:green\"><b>This fortune is branded!</b></span>"
 
 //Totally Normal Deck of Cards (TM)
 /obj/item/zoldorfdeck //deck of many things code is a bit messy, but the deck stores the card information and player interaction, the card item stores the effects passed to them by the deck

@@ -357,7 +357,7 @@
 		if (. == 100)
 			return 100
 		if (!density)
-			target.examine()
+			src.examine_verb(target)
 
 	say(var/message)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))

@@ -860,9 +860,9 @@
 		..()
 		src.display_booklet_contents(user,1)
 
-	examine()
-		..()
-		src.display_booklet_contents(usr, 1)
+	examine(mob/user)
+		. = ..()
+		src.display_booklet_contents(user, 1)
 
 	Topic(href, href_list)
 		..()

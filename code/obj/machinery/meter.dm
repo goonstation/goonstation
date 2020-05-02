@@ -73,21 +73,15 @@
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/examine()
-	set src in oview(1)
-	set category = "Local"
-
-	var/t = "A gas flow meter. "
+	. = list("A gas flow meter. ")
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			t += text("The pressure gauge reads [] kPa", round(environment.return_pressure(), 0.1))
+			. += text("The pressure gauge reads [] kPa", round(environment.return_pressure(), 0.1))
 		else
-			t += "The sensor error light is blinking."
+			. += "The sensor error light is blinking."
 	else
-		t += "The connect error light is blinking."
-
-	boutput(usr, t)
-
+		. += "The connect error light is blinking."
 
 
 /obj/machinery/meter/Click()

@@ -751,33 +751,27 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 #endif
 	return ..(gibbed)
 
-/mob/living/silicon/ai/examine()
-	set src in oview()
-	set category = "Local"
+/mob/living/silicon/ai/examine(mob/user)
+	if (isghostdrone(user))
+		return list()
 
-	if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-		return
-
-	if (isghostdrone(usr))
-		return
-	boutput(usr, "<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>")
+	. = list("<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>")
 
 	if (isdead(src))
-		boutput(usr, text("<span style=\"color:red\">[] is nonfunctional...</span>", src.name))
+		. += "<span style=\"color:red\">[src.name] is nonfunctional...</span>"
 	else if (isunconscious(src))
-		boutput(usr, text("<span style=\"color:red\">[] doesn't seem to be responding.</span>", src.name))
+		. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
 
 	if (src.bruteloss)
 		if (src.bruteloss < 30)
-			boutput(usr, text("<span style=\"color:red\">[] looks slightly dented.</span>", src.name))
+			. += "<span style=\"color:red\">[src.name] looks slightly dented.</span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>[] looks severely dented!</B></span>", src.name))
+			. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span>"
 	if (src.fireloss)
 		if (src.fireloss < 30)
-			boutput(usr, text("<span style=\"color:red\">[] looks slightly burnt!</span>", src.name))
+			. += "<span style=\"color:red\">[src.name] looks slightly burnt!</span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>[] looks severely burnt!</B></span>", src.name))
-	return
+			. += "<span style=\"color:red\"><B>[src.name] looks severely burnt!</B></span>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	var/param = null

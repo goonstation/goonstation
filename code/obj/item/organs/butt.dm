@@ -5,6 +5,9 @@
 /obj/item/clothing/head/butt
 	name = "butt"
 	desc = "It's a butt. It goes on your head."
+	var/organ_holder_name = "butt"
+	var/organ_holder_location = "chest"
+	var/organ_holder_required_op_stage = 4.0
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "butt_nc"
 	force = 1.0
@@ -55,42 +58,62 @@
 					if (src.s_tone)
 						src.color = src.s_tone
 
-	attack(mob/living/carbon/human/H as mob, mob/living/carbon/user as mob)
-		if (!ismob(H))
+	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (!ismob(M))
 			return
 
 		src.add_fingerprint(user)
 
-		if (!(user.zone_sel.selecting == "chest") || !ishuman(H))
-			return ..()
-
-		if (!surgeryCheck(H, user))
-			return ..()
-
-		if (!H.organHolder)
-			return ..()
-
-		if (H.butt_op_stage >= 4.0)
-			var/fluff = pick("shove", "place", "drop")
-			var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
-
-			if (H.butt_op_stage == 5.0)
-				H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
-				return
-
-			else
-				H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
-				user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
-				H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
-
-				user.u_equip(src)
-				H.organHolder.receive_organ(src, "butt")
-				H.butt_op_stage = 3.0
-		else
+		var/attach_result = src.attach_organ(M, user)
+		if (attach_result == 1) // success
+			return
+		else if (isnull(attach_result)) // failure but don't attack
+			return
+		else // failure and attack them with the organ
 			..()
-		return
+
+	proc/can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Impliments organ functions for butts. Checks if a butt can be attached to a target mob */
+		if (!(user.zone_sel.selecting == "chest"))
+			return 0
+
+		if (!surgeryCheck(M, user))
+			return 0
+
+		var/mob/living/carbon/human/H = M
+		if (!H.organHolder || !ishuman(H))
+			return 0
+
+		return 1
+
+	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Impliments organ functions for butts. For butt reattachment. */
+		var/mob/living/carbon/human/H = M
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/fluff = pick("shove", "place", "drop")
+		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
+
+		if (H.butt_op_stage == 4.0)
+			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
+			user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
+			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
+
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			H.organHolder.receive_organ(src, "butt", 3.0)
+			H.butt_op_stage = 3.0
+			return 1
+		else if (H.butt_op_stage == 5.0)
+			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			return null
+		else
+			return 0
 
 	proc/staple()
 		if (src.stapled <=0)

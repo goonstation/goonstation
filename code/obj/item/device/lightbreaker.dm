@@ -1,5 +1,6 @@
 /obj/item/lightbreaker
 	name = "compact tape"
+	desc = "A casette player loaded with a casette of a vampire's screech."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recorder"
 	var/active = 0.0
@@ -16,12 +17,11 @@
 	var/ammo = 4
 
 	examine()
+		. = ..()
 		if(src.ammo > 0)
-			src.desc = "A casette player loaded with a casette of a vampire's screech. It has [src.ammo] uses left out of 4."
+			. += "It has [src.ammo] uses left out of [initial(src.ammo)]."
 		else
-			src.desc = "A casette player loaded with a casette of a vampire's screech. The tape has worn out!"
-		..()
-		return
+			. += "The tape has worn out!"
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)

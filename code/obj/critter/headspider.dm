@@ -14,16 +14,15 @@
 	var/datum/mind/owner = null
 
 	examine()
-		set src in view()
-		..()
+		. = ..()
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			boutput(usr, text("<span style=\"color:red\"><B>the disgusting creature is not moving</B></span>"))
+			. += "<span style=\"color:red\"><B>the disgusting creature is not moving</B></span>"
 		else if (src.health > 40)
-			boutput(usr, text("<span style=\"color:red\"><B>the spindly-legged head looks healthy and strong</B></span>"))
+			. += "<span style=\"color:red\"><B>the spindly-legged head looks healthy and strong</B></span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>the ugly thing is missing several limbs</B></span>"))
+			. += "<span style=\"color:red\"><B>the ugly thing is missing several limbs</B></span>"
 		return
 
 	filter_target(var/mob/living/C)
