@@ -156,8 +156,6 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		if(retain_cache) //Keep the cached image available?
 			prev_data[P_INDEX] = 0	//Clear the index
 			prev_data[P_ISTATE] = 0	//Clear the ref
-
-			//overlay_refs[key] = prev_data //Update our list <- Pointers, dumbass /Spy
 		else
 			overlay_refs -= key
 	return 1
