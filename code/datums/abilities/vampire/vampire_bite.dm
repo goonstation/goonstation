@@ -19,6 +19,7 @@
 
 /datum/abilityHolder/vampire/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
 	var/datum/abilityHolder/vampire/holder = src
+	var/mob/living/carbon/human/X = target
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampire/H = holder
 
@@ -63,7 +64,7 @@
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (istype(X, /mob/living/carbon/human/npc/monkey))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -168,7 +169,7 @@
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
-			
+
 /datum/abilityHolder/vampiric_zombie/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
 	if (!src.blood_tally)
 		src.blood_tally = list()
@@ -180,6 +181,7 @@
 
 /datum/abilityHolder/vampiric_zombie/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
 	var/datum/abilityHolder/vampiric_zombie/holder = src
+	var/mob/living/carbon/human/X = target
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampiric_zombie/H = holder
 
@@ -227,7 +229,7 @@
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (istype(X, /mob/living/carbon/human/npc/monkey))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
