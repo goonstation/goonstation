@@ -1577,6 +1577,8 @@
 	var/badge_owner_name = null
 	var/badge_owner_job = null
 
+	setupProperties()
+
 	get_desc()
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
