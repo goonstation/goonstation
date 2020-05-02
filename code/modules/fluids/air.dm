@@ -104,7 +104,7 @@ var/list/ban_from_airborne_fluid = list()
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
-		var/react_volume = min(1,src.amt)
+		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20)
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
@@ -126,7 +126,7 @@ var/list/ban_from_airborne_fluid = list()
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
-		var/react_volume = src.amt > 10 ? max(6,src.amt / 3) : (src.amt)
+		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20)
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
