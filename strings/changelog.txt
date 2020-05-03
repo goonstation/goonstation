@@ -1,5 +1,9 @@
 
 (t)sun may 03 20
+(u)Naksu
+(p)534
+(e)|
+(+)Changed most chat outputs to use contextual CSS classes over hardcoded colors. This enables chat window theming later.
 (u)Tarmunora
 (p)544
 (e)⚖|balance
