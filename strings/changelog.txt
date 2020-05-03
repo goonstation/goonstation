@@ -1,6 +1,10 @@
 
 (t)sun may 03 20
 (u)Tarmunora
+(p)544
+(e)⚖|balance
+(+)Changed the damage type of crafted spears from blunt to stabbing.
+(u)Tarmunora
 (p)547
 (e)⚖|balance
 (+)Made sarin grenades more concentrated and changed the delivery mechanism of capsaicin grenades
