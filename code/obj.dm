@@ -245,39 +245,32 @@
 	return
 
 /obj/proc/updateUsrDialog()
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			if(istype(src, /obj/npc/trader)) //This is not great. But making dialogues and trader windows work together is tricky. Needs a better solution.
-				var/obj/npc/trader/T = src
-				T.openTrade(M)
+	for(var/client/C)
+		if (C.mob.machine == src)
+			if (get_dist(C.mob,src) <= 1)
+				if(istype(src, /obj/npc/trader)) //This is not great. But making dialogues and trader windows work together is tricky. Needs a better solution.
+					var/obj/npc/trader/T = src
+					T.openTrade(C.mob)
+				else
+					src.attack_hand(C.mob)
 			else
-				src.attack_hand(M)
-	if (issilicon(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.attack_ai(usr)
-	if (isAIeye(usr))
-		var/mob/dead/aieye/E = usr
-		if (E.client)
-			src.attack_ai(E)
+				if (issilicon(C.mob))
+					src.attack_ai(usr)
+				else if (isAIeye(C.mob))
+					var/mob/dead/aieye/E = C.mob
+					src.attack_ai(E)
 
 /obj/proc/updateDialog()
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			src.attack_hand(M)
+	for(var/client/C)
+		if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
+			src.attack_hand(C.mob)
 	AutoUpdateAI(src)
 
 /obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
-	var/list/nearby = viewers(1, get_turf(src))
-	for(var/mob/M in nearby)
-		if (isAI(M)) //Eyecam handling
-			var/mob/living/silicon/ai/AI = M
-			if (AI.deployed_to_eyecam)
-				M = AI.eyecam
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+
+	for(var/client/C)
+		if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
+			src.attack_self(C.mob)
 
 	for(var/mob/living/silicon/ai/M in AIs)
 		var/mob/AI = M
