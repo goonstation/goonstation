@@ -119,12 +119,12 @@
 		var/pr = 20
 		if(src.focused)
 			pr += 10
-		
+
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
-			
+
 			var/extreme_start = prob(1 + max(0, DNA.potency / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
@@ -229,7 +229,7 @@
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
 			var/obj/critter/cat/synth/C = new(POT.loc)
 			C.health = POT.health
-			POT.visible_message("<span style=\"color:blue\">The synthcat climbs out of the tray!</span>")
+			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return
 
@@ -272,7 +272,7 @@
 			var/obj/critter/maneater/ME = new(POT.loc)
 			ME.health = POT.health * 3
 			ME.friends = ME.friends | POT.contributors
-			POT.visible_message("<span style=\"color:blue\">The man-eating plant climbs out of the tray!</span>")
+			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return
 

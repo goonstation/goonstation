@@ -72,7 +72,7 @@
 					boutput(O, "<font color='green'> [bicon(src)] Wake up, Neo...</font>")
 				else
 					boutput(O, "<font color='blue'> [bicon(src)] *beep* *beep*</font>")
-			src.visible_message("<span style='color:blue'>The [src.name]'s occupant alarm clock dings!</span>")
+			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
 			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 		return
 
@@ -224,7 +224,7 @@
 					usr.show_text("The occupant is dead.", "red")
 				else
 					src.timing = text2num(href_list["time"])
-					src.visible_message("<span style='color:blue'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
+					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
 					if (src.timing)
 						src.time_started = world.timeofday//realtime
 						// People do use sleepers for grief from time to time.
@@ -739,7 +739,7 @@
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return

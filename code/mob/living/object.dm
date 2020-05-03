@@ -109,9 +109,9 @@
 
 	examine()
 		. = ..()
-		. += "<span style=\"color:red\">It seems to be alive.</span>"
+		. += "<span class='alert'>It seems to be alive.</span>"
 		if (health < 25)
-			. += "<span style=\"color:blue\">The ethereal grip on this object appears to be weak.</span>"
+			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
 
 	meteorhit(var/obj/O as obj)
 		src.death(1)
@@ -328,6 +328,6 @@
 
 	item_attack_message(var/mob/T, var/obj/item/S, var/d_zone)
 		if (d_zone)
-			return "<span style=\"color:red\"><B>[src] attacks [T] in the [d_zone]!</B></span>"
+			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
 		else
-			return "<span style=\"color:red\"><B>[src] attacks [T]!</B></span>"
+			return "<span class='alert'><B>[src] attacks [T]!</B></span>"

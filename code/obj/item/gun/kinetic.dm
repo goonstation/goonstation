@@ -38,7 +38,7 @@
 		if (current_projectile)
 			. += "Each shot will currently use [src.current_projectile.cost] bullets!"
 		else
-			. += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0

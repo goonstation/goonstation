@@ -30,19 +30,19 @@
 		. = ..()
 		switch(ropart_get_damage_percentage(1))
 			if(15 to 29)
-				. += "<span style=\"color:red\">It looks a bit dented and worse for wear.</span>"
+				. += "<span class='alert'>It looks a bit dented and worse for wear.</span>"
 			if(29 to 59)
-				. += "<span style=\"color:red\">It looks somewhat bashed up.</span>"
+				. += "<span class='alert'>It looks somewhat bashed up.</span>"
 			if(60 to INFINITY)
-				. += "<span style=\"color:red\">It looks badly mangled.</span>"
+				. += "<span class='alert'>It looks badly mangled.</span>"
 
 		switch(ropart_get_damage_percentage(2))
 			if(15 to 29)
-				. += "<span style=\"color:red\">It has some light scorch marks.</span>"
+				. += "<span class='alert'>It has some light scorch marks.</span>"
 			if(29 to 59)
-				. += "<span style=\"color:red\">Parts of it are kind of melted.</span>"
+				. += "<span class='alert'>Parts of it are kind of melted.</span>"
 			if(60 to INFINITY)
-				. += "<span style=\"color:red\">It looks terribly burnt up.</span>"
+				. += "<span class='alert'>It looks terribly burnt up.</span>"
 
 	getMobIcon(var/lying)
 		if (src.standImage)
@@ -168,11 +168,11 @@
 	examine()
 		. = ..()
 		if (src.brain)
-			. += "<span style=\"color:blue\">This head unit has [src.brain] inside. Use a wrench if you want to remove it.</span>"
+			. += "<span class='notice'>This head unit has [src.brain] inside. Use a wrench if you want to remove it.</span>"
 		else if (src.ai_interface)
-			. += "<span style=\"color:blue\">This head unit has [src.ai_interface] inside. Use a wrench if you want to remove it.</span>"
+			. += "<span class='notice'>This head unit has [src.ai_interface] inside. Use a wrench if you want to remove it.</span>"
 		else
-			. += "<span style=\"color:red\">This head unit is empty.</span>"
+			. += "<span class='alert'>This head unit is empty.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W)
@@ -397,14 +397,14 @@
 		. = ..()
 
 		if (src.cell)
-			. += "<span style=\"color:blue\">This chest unit has a [src.cell] installed. Use a wrench if you want to remove it.</span>"
+			. += "<span class='notice'>This chest unit has a [src.cell] installed. Use a wrench if you want to remove it.</span>"
 		else
-			. += "<span style=\"color:red\">This chest unit has no power cell.</span>"
+			. += "<span class='alert'>This chest unit has no power cell.</span>"
 
 		if (src.wires)
-			. += "<span style=\"color:blue\">This chest unit has had wiring installed.</span>"
+			. += "<span class='notice'>This chest unit has had wiring installed.</span>"
 		else
-			. += "<span style=\"color:red\">This chest unit has not yet been wired up.</span>"
+			. += "<span class='alert'>This chest unit has not yet been wired up.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/cell))
@@ -1098,7 +1098,7 @@
 				if(O.brain.owner.current.client)
 					O.lastKnownIP = O.brain.owner.current.client.address
 			if(istype(get_area(O.brain.owner.current),/area/afterlife/bar))
-				boutput("<span style=\"color:blue\">,You feel yourself being pulled out of the afterlife!</span>")
+				boutput("<span class='notice'>,You feel yourself being pulled out of the afterlife!</span>")
 				var/mob/old = O.brain.owner.current
 				O.brain.owner = O.brain.owner.current.ghostize().mind
 				qdel(old)

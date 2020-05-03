@@ -119,7 +119,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 			boutput(usr, "<span class='alert'>Proc returned: [e] ([e.file]:[e.line])</span>")
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		var/info2print = "<span style='color:blue'>***********************************************************</span>"
+		var/info2print = "<span class='notice'>***********************************************************</span>"
 		var/modkey = null
 		var/proc2list = null
 		var/targeted = 0
@@ -153,18 +153,18 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 				args2list = listargs_n
 
 		if (proc2list)
-			info2print += "<br><span style='color:blue'>Modifier key: [modkey ? modkey : "None"]</span>"
-			info2print += "<br><span style='color:blue'>Proc name: [proc2list]</span>"
-			info2print += "<br><span style='color:blue'>Global: [targeted ? "NO" : "YES"] (will [targeted ? null : " not"]be called on the clicked target)</span>"
+			info2print += "<br><span class='notice'>Modifier key: [modkey ? modkey : "None"]</span>"
+			info2print += "<br><span class='notice'>Proc name: [proc2list]</span>"
+			info2print += "<br><span class='notice'>Global: [targeted ? "NO" : "YES"] (will [targeted ? null : " not"]be called on the clicked target)</span>"
 			if (islist(args2list) && args2list.len)
 				var/argnum = 0
 				for (var/thing in args2list)
 					argnum++
-					info2print += "<br><span style='color:blue'>Arg#[argnum]:</span> [thing]"
+					info2print += "<br><span class='notice'>Arg#[argnum]:</span> [thing]"
 			else
 				info2print += "<br>No arguments defined."
 		else
-			info2print += "<br><span style='color:red'>No proc defined[modkey ? " for [modkey]" : null]! Please right click the buildmode button[modkey ? " with [modkey] held down" : null] to enter a proc.</span>"
+			info2print += "<br><span class='alert'>No proc defined[modkey ? " for [modkey]" : null]! Please right click the buildmode button[modkey ? " with [modkey] held down" : null] to enter a proc.</span>"
 
-		info2print += "<br><span style='color:blue'>***********************************************************</span>"
+		info2print += "<br><span class='notice'>***********************************************************</span>"
 		boutput(usr, info2print)

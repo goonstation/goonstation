@@ -1415,7 +1415,7 @@ datum
 				if(M.bodytemperature > 0)
 					M.bodytemperature=max(M.bodytemperature-(10 * mult),0)
 				if(prob(10))
-					boutput(M, pick("<span style=\"color:blue\"><i>Brrr...</i></span>","<span style=\"color:blue\"><i>Isn't it a bit chilly in here?</i></span>","<span style=\"color:blue\"><i>Who left an airlock open?</i></span>"))
+					boutput(M, pick("<span class='notice'><i>Brrr...</i></span>","<span class='notice'><i>Isn't it a bit chilly in here?</i></span>","<span class='notice'><i>Who left an airlock open?</i></span>"))
 				if(prob(15))
 					M.emote(pick("cough","sneeze","gasp"))
 				if(prob(20))
@@ -2481,7 +2481,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if (istype(M, /mob/living/critter/small_animal/slug))
-					M.show_text("<span style='color:red'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
+					M.show_text("<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 					M.TakeDamage(null, volume, volume)
 				return
 
@@ -2499,7 +2499,7 @@ datum
 				if (!M)
 					M = holder.my_atom
 				if (istype(M, /mob/living/critter/small_animal/slug))
-					M.show_text("<span style='color:red'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
+					M.show_text("<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 					M.TakeDamage(null, src.depletion_rate * mult, src.depletion_rate * mult)
 				..()
 				return

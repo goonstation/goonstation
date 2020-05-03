@@ -431,7 +431,7 @@
 				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7)
 				for (var/mob/living/M in oview(src, 7))
 					M.apply_sonic_stun(0, 5, 3, 12, 40, rand(0,3))
-				return "<span style='color:red'><b>[src]</b> lets out an eerie wail.</span>"
+				return "<span class='alert'><b>[src]</b> lets out an eerie wail.</span>"
 		if ("dance")
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
@@ -445,13 +445,13 @@
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
-				return "<span style='color:red'><b>[src]</b> does a sinister dance.</span>"
+				return "<span class='alert'><b>[src]</b> does a sinister dance.</span>"
 		if ("snap")
 			if (src.emote_check(voluntary, 300))
 				src.changeStatus("paralysis", -300)
 				src.changeStatus("stunned", -300)
 				src.changeStatus("weakened", -300)
-				return "<span style='color:red'><b>[src]</b> clacks menacingly.</span>"
+				return "<span class='alert'><b>[src]</b> clacks menacingly.</span>"
 		if ("flex")
 			if (src.emote_check(voluntary, 300))
 				src.health_brute_vuln = 0.1
@@ -460,7 +460,7 @@
 					if (src)
 						src.health_brute_vuln = 0.5
 						src.health_burn_vuln = 3
-				return "<span style='color:red'><b>[src]'s</b> chitin gleams.</span>"
+				return "<span class='alert'><b>[src]'s</b> chitin gleams.</span>"
 	return null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -544,7 +544,7 @@
 	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
-	msgs.base_attack_message = "<b><span style='color:red'>[user] [action] [target] with their [src.holder]!</span></b>"
+	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
 	msgs.played_sound = "sound/impact_sounds/Glub_1.ogg"
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)

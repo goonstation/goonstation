@@ -60,23 +60,23 @@
 	examine()
 		if (src.dirty || src.dirty_reason)
 			. = ..()
-			. += "<span style=\"color:red\">The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
+			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
 			return
 
 		. = list("This is [src]<br/>")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			. += "<span style=\"color:blue\">It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
+			. += "<span class='notice'>It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
 		if (src.medium)
-			. += "<span style=\"color:blue\">The petri dish is coated with [src.medium.name].</span><br/>"
+			. += "<span class='notice'>The petri dish is coated with [src.medium.name].</span><br/>"
 		. += "Nutrients in the dish:<br/>"
 		var/count = 0
 		for (var/N in nutrition)
 			if (nutrition[N])
-				. += "<span style=\"color:blue\">[nutrition[N]] unit\s of [N]</span><br/>"
+				. += "<span class='notice'>[nutrition[N]] unit\s of [N]</span><br/>"
 				count++
 		if (!count)
-			. += "<span style=\"color:blue\">None.</span><br/>"
+			. += "<span class='notice'>None.</span><br/>"
 
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))

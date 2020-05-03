@@ -258,4 +258,4 @@
 		if (corrupt >= 2100)
 			. += "<br><span class='success'><b>The Corruption</b> is at [percentage]%!</span>"
 		else
-			. += "<br><span style=\"color:red\"><b>The Corruption</b> is at [percentage]%!</span>"*/
+			. += "<br><span class='alert'><b>The Corruption</b> is at [percentage]%!</span>"*/

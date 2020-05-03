@@ -1266,7 +1266,7 @@ WHO DID THIS */
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span style='color:blue'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		src = null

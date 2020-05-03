@@ -95,7 +95,7 @@
 			return
 		if (!reagents)
 			return
-		. = "<br><span style=\"color:blue\">[reagents.get_description(user,rc_flags)]</span>"
+		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 		return
 
 	MouseDrop(atom/over_object as obj)
@@ -267,7 +267,7 @@
 			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
-		
+
 		else if (istype(target, /turf/space/fluid)) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")

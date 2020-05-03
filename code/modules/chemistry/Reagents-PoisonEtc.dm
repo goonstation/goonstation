@@ -588,7 +588,7 @@ datum
 								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 								take_bleeding_damage(H, null, rand(10,30) * mult, DAMAGE_STAB)
 								H.visible_message("<span class='alert'><B>A bee bursts out of [H]'s chest! Oh fuck!</B></span>", \
-								"<span style=\"color:red\"><b>A bee bursts out of your chest! OH FUCK!</b></span>")
+								"<span class='alert'><b>A bee bursts out of your chest! OH FUCK!</b></span>")
 								qdel(H.organHolder.heart)
 
 						H.updatehealth()

@@ -187,7 +187,7 @@
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
 						if( blocked && !exitingM.client.holder )
 							blockedTimers[ exitingM.client.key ] = world.time + 300
-							boutput( exitingM, "<b style='color:red'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
+							boutput( exitingM, "<b class='alert'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
 
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)

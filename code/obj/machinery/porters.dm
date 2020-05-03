@@ -335,7 +335,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		var/req = src.process()
 		if (req)
-			user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds.</span>")
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds.</span>")
 
 
 	// Could be useful (Convair880).
@@ -359,7 +359,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -553,7 +553,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -700,7 +700,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -886,7 +886,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief...well, if it wouldn't be the NanoMed.
 			//logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return

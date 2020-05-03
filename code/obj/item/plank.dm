@@ -93,11 +93,11 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] begins constructing a wooden barricade!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins constructing a wooden barricade!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] constructs a wooden barricade!</span>")
+		owner.visible_message("<span class='notice'>[owner] constructs a wooden barricade!</span>")
 		plank.construct(owner)
 
 
@@ -133,9 +133,9 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] begins constructing a wooden door!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins constructing a wooden door!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] constructs a wooden door!</span>")
+		owner.visible_message("<span class='notice'>[owner] constructs a wooden door!</span>")
 		plank.construct_door(otherplank, owner)

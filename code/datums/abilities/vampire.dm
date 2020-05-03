@@ -187,7 +187,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Vampire"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	var/vamp_blood = 0
 	points = 0 // Replaces the old vamp_blood_remaining var.
 	var/vamp_blood_tracking = 1

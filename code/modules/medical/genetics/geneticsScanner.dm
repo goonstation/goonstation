@@ -55,7 +55,7 @@ var/list/genescanner_addresses = list()
 	mob_flip_inside(mob/user)
 		..(user)
 		if (prob(33))
-			user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 			src.togglelock(1)
 
 

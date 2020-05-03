@@ -58,8 +58,8 @@
 						getItem = src.search_through(user)
 
 					else
-						user.visible_message("<span style=\"color:blue\"><b>[user]</b> rummages through \the [src].</span>",\
-						"<span style=\"color:blue\">You rummage through \the [src].</span>")
+						user.visible_message("<span class='notice'><b>[user]</b> rummages through \the [src].</span>",\
+						"<span class='notice'>You rummage through \the [src].</span>")
 
 						getItem = pick(src.contents)
 
@@ -67,8 +67,8 @@
 					getItem = src.contents[1]
 
 				if (getItem)
-					user.visible_message("<span style=\"color:blue\"><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
-					"<span style=\"color:blue\">You take \a [getItem.name] from [src].</span>")
+					user.visible_message("<span class='notice'><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
+					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
 
 		return ..(user)
@@ -79,8 +79,8 @@
 			return
 
 		// attack_hand does all the checks for if you can do this
-		user.visible_message("<span style=\"color:blue\"><b>[user]</b> looks through through \the [src]...</span>",\
-		"<span style=\"color:blue\">You look through \the [src].</span>")
+		user.visible_message("<span class='notice'><b>[user]</b> looks through through \the [src]...</span>",\
+		"<span class='notice'>You look through \the [src].</span>")
 		var/list/satchel_contents = list()
 		var/list/has_dupes = list()
 		var/temp = ""
@@ -116,7 +116,7 @@
 			return
 
 		if (src.contents.len < src.maxitems)
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly filling \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly filling \the [src].</span>")
 			var/staystill = user.loc
 			var/interval = 0
 			for(var/obj/item/I in view(1,user))

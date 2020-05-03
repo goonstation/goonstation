@@ -538,11 +538,11 @@
 			..()
 
 	onDeath()
-		mob.show_message("<span style=\"color:blue\">You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
+		mob.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
 		SPAWN_DBG(45 SECONDS)
 			if (mob)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
-					mob.show_message("<span style=\"color:blue\">You fail to rise, your brain has been destroyed.</span>")
+					mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
 				else
 					// ha ha nope. Instead we copy paste a bunch of shit from full_heal but leave out select bits such as : limb regeneration, reagent clearing
 					//mob.full_heal()
@@ -794,7 +794,7 @@
 			if ("scream")
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
-					message = "<span style=\"color:red\"><B>[mob] screeches!</B></span>"
+					message = "<span class='alert'><B>[mob] screeches!</B></span>"
 					playsound(get_turf(mob), "sound/voice/creepyshriek.ogg", 60, 1)
 					SPAWN_DBG (30)
 						if (mob) mob.emote_allowed = 1
@@ -883,7 +883,7 @@
 			if("howl", "scream")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
-					message = "<span style=\"color:red\"><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
+					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
 					SPAWN_DBG(3 SECONDS)
 						mob.emote_allowed = 1
@@ -1114,7 +1114,7 @@
 					for(var/mob/living/M in mob.loc)
 						if(M == src || !M.lying)
 							continue
-						. = "<span style=\"color:red\"><B>[mob]</B> farts in [M]'s face!</span>"
+						. = "<span class='alert'><B>[mob]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
 						break
 					if(!fart_on_other)
@@ -1334,7 +1334,7 @@
 			if ("scream","howl","laugh")
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
-					message = "<span style=\"color:red\"><B>[mob] makes an awful noise!</B></span>"
+					message = "<span class='alert'><B>[mob] makes an awful noise!</B></span>"
 					playsound(get_turf(mob), pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1)
 					SPAWN_DBG (30)
 						if (mob) mob.emote_allowed = 1
@@ -1649,7 +1649,7 @@
 		else
 			var/obj/item/reagent_containers/milk_target = mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [milk_target].</B></span>")
+				.= ("<span class='alert'><B>[mob] dispenses milk into [milk_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(mob, milk_target, 10)
 				return

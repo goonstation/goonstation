@@ -408,7 +408,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 					src.equip_if_possible(J, slot_wear_mask)
 					J.cant_other_remove = 0
 					sleep(3 SECONDS)
-					J.light(src, "<span style='color:red'><b>[src]</b> casually lights [J] and takes a long draw.</span>")
+					J.light(src, "<span class='alert'><b>[src]</b> casually lights [J] and takes a long draw.</span>")
 					sleep(5 SECONDS)
 #if BUILD_TIME_DAY >= 28 // this block controls whether or not it is the right time to smoke a fat doink with Big J
 					say("You know a little more than you let on, don't you?")
@@ -438,7 +438,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 					src.u_equip(wear_mask)
 					src.equip_if_possible(cig, slot_wear_mask)
 					sleep(3 SECONDS)
-					cig.light(src, "<span style='color:red'><b>[src]</b> cautiously lights [cig] and takes a short draw.</span>")
+					cig.light(src, "<span class='alert'><b>[src]</b> cautiously lights [cig] and takes a short draw.</span>")
 					sleep(5 SECONDS)
 					say(pick("Yeah that's ol' Dan's stuff...","But hey, thanks for the smokes, bruddo.","Smooth. Too smooth."))
 			return

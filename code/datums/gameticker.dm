@@ -208,10 +208,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		if (istype(random_events,/datum/event_controller/))
 			SPAWN_DBG(random_events.minor_events_begin)
-				message_admins("<span style=\"color:blue\">Minor Event cycle has been started.</span>")
+				message_admins("<span class='notice'>Minor Event cycle has been started.</span>")
 				random_events.minor_event_cycle()
 			SPAWN_DBG(random_events.events_begin)
-				message_admins("<span style=\"color:blue\">Random Event cycle has been started.</span>")
+				message_admins("<span class='notice'>Random Event cycle has been started.</span>")
 				random_events.event_cycle()
 			random_events.next_event = random_events.events_begin
 			random_events.next_minor_event = random_events.minor_events_begin

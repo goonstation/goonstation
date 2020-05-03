@@ -400,7 +400,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += "<span class='alert'>*ERROR* No output selected!</span>"
 		..()
 		return
 

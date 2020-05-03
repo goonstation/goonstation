@@ -126,7 +126,7 @@
 			user.show_text("\The [src] can't hold anything but pills!", "red")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly filling [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
 			if (P in user)

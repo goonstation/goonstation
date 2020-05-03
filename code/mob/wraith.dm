@@ -446,7 +446,7 @@
 
 		makeIncorporeal()
 			if (src.density)
-				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span style=\"color:blue\">The ectoplasm around you dissipates!</span>", "<span style=\"color:blue\">You fade into the aether!</span>"))
+				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
 				src.invisibility = 10
 				src.alpha = 160

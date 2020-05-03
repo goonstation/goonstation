@@ -410,7 +410,7 @@
 				on_grump()
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-			src.visible_message("<span style=\"color:blue\"><b>[user]</b> [pet_verb] [src]!</span>", 1)
+			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]!</span>", 1)
 			on_pet()
 
 	proc/patrol_step()
@@ -1093,7 +1093,7 @@
 
 		else if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
 			user.visible_message("<span class='alert'><b>[user]</b> warms [src] with [W].</span>",\
-			"<span style=\"color:red\">You warm [src] with [W].</span>")
+			"<span class='alert'>You warm [src] with [W].</span>")
 			src.warm_count -= 2
 			src.warm_count = max(src.warm_count, 0)
 			src.hatch_check(0, user)

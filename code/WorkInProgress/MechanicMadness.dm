@@ -381,7 +381,7 @@ var/list/mechanics_telepads = new/list()
 	var/thank_string = ""
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Collected money: [collected]<br>
+		. += {"<br><span class='notice'>Collected money: [collected]<br>
 		Current price: [price] credits</span>"}
 
 	New()
@@ -861,7 +861,7 @@ var/list/mechanics_telepads = new/list()
 	var/changesig = 0
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Delay: [delay]</span>"
+		. += "<br><span class='notice'>Current Delay: [delay]</span>"
 
 	New()
 		..()
@@ -916,7 +916,7 @@ var/list/mechanics_telepads = new/list()
 	var/inp2 = 0
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Time Frame: [timeframe]</span>"
+		. += "<br><span class='notice'>Current Time Frame: [timeframe]</span>"
 
 	New()
 		..()
@@ -1027,7 +1027,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_split"
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Trigger Field: [mechanics.triggerSignal]</span>"
+		. += "<br><span class='notice'>Current Trigger Field: [mechanics.triggerSignal]</span>"
 
 	New()
 		..()
@@ -1071,8 +1071,8 @@ var/list/mechanics_telepads = new/list()
 	var/expressionflag = "g"
 
 	get_desc()
-		. += "<span style=\"color:blue\">Current Expression: [html_encode(expression)]</span><br/>"
-		. += "<span style=\"color:blue\">Current Replacement: [html_encode(expressionrepl)]</span><br/>"
+		. += "<span class='notice'>Current Expression: [html_encode(expression)]</span><br/>"
+		. += "<span class='notice'>Current Replacement: [html_encode(expressionrepl)]</span><br/>"
 		. += "Your replacement string can contain $0-$9 to insert that matched group(things between parenthesis)<br/>"
 		. += "$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>"
 		. += "$0 or $& will be the entire matched string."
@@ -1156,7 +1156,7 @@ var/list/mechanics_telepads = new/list()
 	var/expressionflag
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Current Expression: [sanitize(html_encode(expression))]<br>
+		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expression))]<br>
 		Replace Signal is [replacesignal ? "on.":"off."]</span>"}
 
 	New()
@@ -1219,7 +1219,7 @@ var/list/mechanics_telepads = new/list()
 	var/changesig = 0
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">[not ? "Component triggers when Signal is NOT found.":"Component triggers when Signal IS found."]<br>
+		. += {"<br><span class='notice'>[not ? "Component triggers when Signal is NOT found.":"Component triggers when Signal IS found."]<br>
 		Replace Signal is [changesig ? "on.":"off."]<br>
 		Currently checking for: [sanitize(html_encode(mechanics.triggerSignal))]</span>"}
 
@@ -1274,7 +1274,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_disp"
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Exact match mode: [mechanics.exact_match ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [mechanics.exact_match ? "on" : "off"]</span>"
 
 	New()
 		..()
@@ -1312,7 +1312,7 @@ var/list/mechanics_telepads = new/list()
 	var/astr = ""
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Current Buffer Contents: [html_encode(sanitize(buffer))]<br>"
+		. += {"<br><span class='notice'>Current Buffer Contents: [html_encode(sanitize(buffer))]<br>"
 		Current starting String: [html_encode(sanitize(bstr))]<br>"
 		Current ending String: [html_encode(sanitize(astr))]</span>"}
 
@@ -1379,7 +1379,7 @@ var/list/mechanics_telepads = new/list()
 	var/changesig = 0
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Replace Signal is [changesig ? "on.":"off."]</span>"
+		. += "<br><span class='notice'>Replace Signal is [changesig ? "on.":"off."]</span>"
 
 	New()
 		..()
@@ -1428,7 +1428,7 @@ var/list/mechanics_telepads = new/list()
 	var/datum/radio_frequency/radio_connection
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">[send_full ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
+		. += {"<br><span class='notice'>[send_full ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
 		Current NetID: [net_id]</span>"}
@@ -1558,7 +1558,7 @@ var/list/mechanics_telepads = new/list()
 	var/random = 0
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">[random ? "Sending random Signals.":"Sending selected Signals."]<br>
+		. += {"<br><span class='notice'>[random ? "Sending random Signals.":"Sending selected Signals."]<br>
 		[announce ? "Announcing Changes.":"Not announcing Changes."]<br>
 		Current Selection: [(!current_index || current_index > signals.len ||!signals.len) ? "Empty":"[current_index] -> [signals[current_index]]"]<br>
 		Currently contains [signals.len] Items:<br></span>"}
@@ -1777,7 +1777,7 @@ var/list/mechanics_telepads = new/list()
 	var/signal_off = "0"
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Currently [on ? "ON":"OFF"].<br>
+		. += {"<br><span class='notice'>Currently [on ? "ON":"OFF"].<br>
 		Current ON Signal: [signal_on]<br>
 		Current OFF Signal: [signal_off]</span>"}
 
@@ -1856,7 +1856,7 @@ var/list/mechanics_telepads = new/list()
 	var/send_only = 0
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Current ID: [teleID].<br>
+		. += {"<br><span class='notice'>Current ID: [teleID].<br>
 		Send only Mode: [send_only ? "On":"Off"].</span>"}
 
 	New()
@@ -1946,7 +1946,7 @@ var/list/mechanics_telepads = new/list()
 	color = "#AAAAAA"
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Color: [selcolor].</span>"
+		. += "<br><span class='notice'>Current Color: [selcolor].</span>"
 
 	New()
 		..()
@@ -2158,7 +2158,7 @@ var/list/mechanics_telepads = new/list()
 		attack_hand(user)
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Signal: [html_encode(sanitize(mechanics.outputSignal))].</span>"
+		. += "<br><span class='notice'>Current Signal: [html_encode(sanitize(mechanics.outputSignal))].</span>"
 
 	attack_hand(mob/user as mob)
 		if(level == 1)
@@ -2230,9 +2230,9 @@ var/list/mechanics_telepads = new/list()
 						boutput(user, "Removed button labeled [to_remove]")
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Buttons:</span>"
+		. += "<br><span class='notice'>Buttons:</span>"
 		for (var/button in src.active_buttons)
-			. += "<br><span style=\"color:blue\">Label: [button], Value: [src.active_buttons[button]]</span>"
+			. += "<br><span class='notice'>Label: [button], Value: [src.active_buttons[button]]</span>"
 
 	attack_hand(mob/user as mob)
 		if (level == 1)
@@ -2268,7 +2268,7 @@ var/list/mechanics_telepads = new/list()
 	var/compatible_guns = /obj/item/gun/kinetic
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
 	New()
 		..()
@@ -2342,7 +2342,7 @@ var/list/mechanics_telepads = new/list()
 
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += charging ? "<br><span style=\"color:blue\">Component is charging.</span>" : null
+		. += charging ? "<br><span class='notice'>Component is charging.</span>" : null
 
 	New()
 		..()
@@ -2409,7 +2409,7 @@ var/list/mechanics_telepads = new/list()
 	var/volume = 50
 
 	get_desc()
-		. += "<br><span style='color:blue'>Current Instrument: [instrument ? "[instrument]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Instrument: [instrument ? "[instrument]" : "None"]</span>"
 
 	New()
 		..()
@@ -2492,7 +2492,7 @@ var/list/mechanics_telepads = new/list()
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span style=\"color:blue\">Current Mode: [mode] | A = [A] | B = [B]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()

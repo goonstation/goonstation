@@ -119,7 +119,7 @@
 						boutput(usr, "<span class='alert'>You cannot begin isolation without a target receptacle.</span>")
 						maybegin = 0
 				if (maybegin)
-					src.visible_message("<span style=\"color:blue\">The centrifuge powers up and begins the isolation process.</span>", "<span style=\"color:blue\">You hear a machine powering up.</span>")
+					src.visible_message("<span class='notice'>The centrifuge powers up and begins the isolation process.</span>", "<span class='notice'>You hear a machine powering up.</span>")
 					src.on = 1
 					src.icon_state = "centrifuge1"
 					var/obj/item/bloodslide/S = src.source
@@ -179,7 +179,7 @@
 		if (counter <= 0)
 			processing_items.Remove(src)
 			var/datum/reagent/blood/pathogen/P = src.process_pathogen
-			src.visible_message("<span style=\"color:blue\">The centrifuge beeps and discards the disfigured bloodslide.</span>", "<span style=\"color:blue\">You hear a machine powering down.</span>")
+			src.visible_message("<span class='notice'>The centrifuge beeps and discards the disfigured bloodslide.</span>", "<span class='notice'>You hear a machine powering down.</span>")
 			if (src.target.reagents.has_reagent("pathogen"))
 				var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
 				for (var/uid in P.pathogens)
@@ -230,11 +230,11 @@
 			if (get_dist(user.loc, src.loc) <= 1)
 				if (action == "View [target]")
 					if (zoom)
-						user.show_message("<span style=\"color:blue\">You look at the [target] through the microscope.</span>")
+						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
 						if (istype(src.target, /obj/item/reagent_containers/glass/petridish))
 							var/obj/item/reagent_containers/glass/petridish/PD = target
 							if (PD.dirty)
-								user.show_message("<span style=\"color:blue\">The petri dish cannot be used for cultivating pathogens, due to: </span>")
+								user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
 								user.show_message(PD.dirty_reason)
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
 						var/pcount = path_list.len
@@ -257,7 +257,7 @@
 							else
 								uid = path_list[1]
 								P = path_list[uid]
-							user.show_message("<span style=\"color:blue\">Apparent features of the pathogen:</span>")
+							user.show_message("<span class='notice'>Apparent features of the pathogen:</span>")
 							var/lines = 1
 							var/DNA = ""
 							user.show_message(P.suppressant.may_react_to())
@@ -270,7 +270,7 @@
 							if (!lines)
 								user.show_message("You cannot see anything out of the ordinary.")
 							if (src.symptom_action_in.len)
-								user.show_message("<span style=\"color:blue\">You can observe in the [target]:</span>")
+								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
 								for (var/act in src.symptom_action_in)
 									var/list/actl = message_parts(act)
 									if (actl[1] == P.name)
@@ -281,7 +281,7 @@
 							user.show_message("The [target] is empty.")
 					else
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						user.show_message("<span style=\"color:blue\">You look at the [target] through the microscope.</span>")
+						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
 						var/pcount = path_list.len
 						if (pcount > 0)
 							var/uid
@@ -302,10 +302,10 @@
 							else
 								uid = path_list[1]
 								P = path_list[uid]
-							user.show_message("<span style=\"color:blue\">The pathogen appears to be consistent with the strain [P.name_base]</span>")
+							user.show_message("<span class='notice'>The pathogen appears to be consistent with the strain [P.name_base]</span>")
 							user.show_message("The pathogen appears to be composed of [P.desc].")
 							if (src.symptom_action_out.len)
-								user.show_message("<span style=\"color:blue\">You can observe in the [target]:</span>")
+								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
 								for (var/act in src.symptom_action_out)
 									var/list/actl = message_parts(act)
 									if (actl[1] == P.name)
@@ -323,7 +323,7 @@
 					icon_state = "microscope3"
 					user.show_message("The microscope is now zoomed in.")
 				else if (action == "Remove [target]")
-					user.show_message("<span style=\"color:blue\">You remove the [target] from the microscope.</span>")
+					user.show_message("<span class='notice'>You remove the [target] from the microscope.</span>")
 					src.target.loc = src.loc
 					src.target.layer = initial(src.target.layer)
 					src.target.master = null
@@ -563,7 +563,7 @@
 				src.manip.analysis_list = sortList(src.manip.analysis_list)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
-				visible_message("<span style=\"color:blue\">The manipulator ejects the empty vial.</span>")
+				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
 				new /obj/item/reagent_containers/glass/vial(get_turf(src.manip))
 
 				SEND_SLOT_LOAD_INFO
@@ -964,7 +964,7 @@
 				src.manip.slots[src.manip.splicesource] = null
 				src.manip.splicesource = 0
 				src.manip.machine_state = PATHOGEN_MANIPULATOR_STATE_MAIN
-				visible_message("<span style=\"color:blue\">The manipulator ejects the empty vial.</span>")
+				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
 				new /obj/item/reagent_containers/glass/vial(get_turf(src.manip))
 				var/datum/pathogendna/PDNA = src.manip.loaded
 				if(success && PDNA)
@@ -1086,7 +1086,7 @@
 		O.reagents.del_reagent("pathogen")
 		user.u_equip(O)
 		qdel(O)
-		user.show_message("<span style=\"color:blue\">You insert the vial into the machine.</span>")
+		user.show_message("<span class='notice'>You insert the vial into the machine.</span>")
 		icon_state = "manipulatore"
 
 		if (comp)

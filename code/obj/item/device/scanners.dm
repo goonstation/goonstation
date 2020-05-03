@@ -39,12 +39,12 @@ Contains:
 			if(A.interesting && src.on)
 				animate_scanning(A, "#7693d3")
 				user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
-				boutput(user, "<br><i>Historical analysis:</i><br><span style='color:blue'>[A.interesting]</span>")
+				boutput(user, "<br><i>Historical analysis:</i><br><span class='notice'>[A.interesting]</span>")
 				return
 		else if (istype(A, /obj) && A.interesting)
 			animate_scanning(A, "#7693d3")
 			user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
-			boutput(user, "<br><i>Analysis failed:</i><br><span style='color:blue'>Unable to determine signature</span>")
+			boutput(user, "<br><i>Analysis failed:</i><br><span class='notice'>Unable to determine signature</span>")
 
 	process()
 		if(!on)
@@ -277,14 +277,14 @@ that cannot be itched
 	attack(mob/M as mob, mob/user as mob)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
-			user.show_message("Analyzing Results for <span style=\"color:blue\">The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
+			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
 			user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
-			user.show_message("<span style=\"color:blue\">Body Temperature: ???</span>", 1)
+			user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
-		"<span style=\"color:red\">You have analyzed [M]'s vitals.</span>")
+		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 		update_medical_record(M)
 
@@ -297,7 +297,7 @@ that cannot be itched
 			var/obj/machinery/clonepod/P = A
 			if(P.occupant)
 				user.visible_message("<span class='alert'><b>[user]</b> has analyzed [P.occupant]'s vitals.</span>",\
-					"<span style=\"color:red\">You have analyzed [P.occupant]'s vitals.</span>")
+					"<span class='alert'>You have analyzed [P.occupant]'s vitals.</span>")
 				boutput(user, scan_health(P.occupant, src.reagent_scan, src.disease_detection, src.organ_scan))
 				update_medical_record(P.occupant)
 				return
@@ -361,8 +361,8 @@ that cannot be itched
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\"><b>[user]</b> scans [A] with [src]!</span>",\
-		"<span style=\"color:blue\">You scan [A] with [src]!</span>")
+		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
+		"<span class='notice'>You scan [A] with [src]!</span>")
 
 		src.scan_results = scan_reagents(A, visible = 1)
 
@@ -388,7 +388,7 @@ that cannot be itched
 	get_desc(dist)
 		if (dist < 3)
 			if (!isnull(src.scan_results))
-				. += "<br><span style=\"color:blue\">Previous scan's results:<br>[src.scan_results]</span>"
+				. += "<br><span class='notice'>Previous scan's results:<br>[src.scan_results]</span>"
 
 /////////////////////////////////////// Atmos analyzer /////////////////////////////////////
 
@@ -412,7 +412,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span style=\"color:blue\"><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -428,7 +428,7 @@ that cannot be itched
 			user.show_text("Unable to obtain a reading.", "red")
 			return
 
-		user.visible_message("<span style=\"color:blue\"><b>[user]</b> takes an atmospheric reading of [location].</span>")
+		user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [location].</span>")
 		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		return
 
@@ -440,7 +440,7 @@ that cannot be itched
 			return
 
 		if (istype(A, /obj) || isturf(A))
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> takes an atmospheric reading of [A].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [A].</span>")
 			boutput(user, scan_atmospheric(A, visible = 1))
 		src.add_fingerprint(user)
 		return

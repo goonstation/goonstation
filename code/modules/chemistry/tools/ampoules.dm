@@ -40,7 +40,7 @@
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return
 		user.visible_message("<span class='alert'>[user] forces [M] to inhale [src]!</span>", \
-								"<span style=\"color:red\">You force [M] to inhale [src]!</span>")
+								"<span class='alert'>You force [M] to inhale [src]!</span>")
 	logTheThing("combat", user, M, "[user == M ? "inhales" : "makes %target% inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
 	reagents.trans_to(M, 5)
 	reagents.reaction(M, INGEST)

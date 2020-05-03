@@ -1879,7 +1879,7 @@ var/list/electiles = list()
 						if(src && selected)
 							animate_float(src, 1, 5, 1)
 							for (var/mob/O in observersviewers(7, src))
-								O.show_message("<B><span style=\"color:blue\">The board spells out a message ... \"[selected]\"</span></B>", 1)
+								O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
 #ifdef HALLOWEEN
 							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
 								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
@@ -1953,7 +1953,7 @@ var/list/electiles = list()
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
-				C.light(user, "<span style=\"color:red\">[user] lights the [C] with [src]. That seems appropriate.</span>")
+				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
 
 /*
 
@@ -2420,7 +2420,7 @@ var/list/electiles = list()
 				sleep(rand(2, 15))
 
 			for(var/mob/O in oviewers(world.view, src))
-				O.show_message("<span style=\"color:blue\">The box of fireworks magically disappears.</span>", 1)
+				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
 
 			qdel(src)
 		return

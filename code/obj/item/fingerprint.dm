@@ -119,7 +119,7 @@
 
 /obj/item/f_card/examine()
 	. = ..()
-	. += "<span style=\"color:blue\">There are [src.amount] on the stack!</span>"
+	. += "<span class='notice'>There are [src.amount] on the stack!</span>"
 	. += src.display()
 
 /obj/item/f_card/proc/display()

@@ -383,7 +383,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 							H.limbs.l_leg.delete()
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
-						boutput( H, "<span style='color:blue'><b>Your limbs magically disappear! Oh, no!</b></span>" )
+						boutput( H, "<span class='notice'><b>Your limbs magically disappear! Oh, no!</b></span>" )
 				return 1
 			return 0
 

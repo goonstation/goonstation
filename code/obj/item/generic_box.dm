@@ -342,7 +342,7 @@
 			boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
 			return
 
-		user.visible_message("<span style='color:blue'>[user] begins quickly filling [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/thing in view(1,user))
 			if (src.item_amount >= src.max_item_amount && !(src.max_item_amount == -1))

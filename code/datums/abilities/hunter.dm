@@ -251,7 +251,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Hunter"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 
 /////////////////////////////////////////////// Hunter spell parent ////////////////////////////
 

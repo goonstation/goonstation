@@ -422,7 +422,7 @@
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
 				if (show_message)
-					src.holder.show_message("<span style=\"color:blue\"><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
+					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
 					logTheThing("admin", user, src.holder, "replaced %target%'s left arm with [new_type]")
 				. ++
@@ -437,7 +437,7 @@
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
 				if (show_message)
-					src.holder.show_message("<span style=\"color:blue\"><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
+					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
 					logTheThing("admin", user, src.holder, "replaced %target%'s right arm with [new_type]")
 				. ++
@@ -447,7 +447,7 @@
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
 					if (show_message)
-						src.holder.show_message("<span style=\"color:blue\"><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
+						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
 						logTheThing("admin", user, src.holder, "replaced %target%'s left leg with [new_type]")
 					. ++
@@ -457,7 +457,7 @@
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
 					if (show_message)
-						src.holder.show_message("<span style=\"color:blue\"><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
+						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
 						logTheThing("admin", user, src.holder, "replaced %target%'s right leg with [new_type]")
 					. ++
@@ -1252,7 +1252,7 @@
 				for (var/obj/item/cloaking_device/I in src)
 					if (I.active)
 						I.deactivate(src)
-						src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+						src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 				src.throw_item(target, params)
 				return
 
@@ -2766,7 +2766,7 @@
 			src.update_clothing()
 			src.show_text("You briefly shrink your legs to remove the shackles.", "blue")
 		else if (src.is_hulk() || ishunter(src) || iswerewolf(src))
-			src.visible_message("<span class='alert'>[src] rips apart the shackles with pure brute strength!</b></span>", "<span style=\"color:blue\">You rip apart the shackles.</span>")
+			src.visible_message("<span class='alert'>[src] rips apart the shackles with pure brute strength!</b></span>", "<span class='notice'>You rip apart the shackles.</span>")
 			var/obj/item/clothing/shoes/NEW = new SH.type
 			// Fallback if type is chained by default. Don't think we can check without spawning a pair first.
 			if (NEW.chained)
@@ -2777,7 +2777,7 @@
 			src.update_clothing()
 			qdel(SH)
 		else if (src.limbs && (istype(src.limbs.l_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/light)) && (istype(src.limbs.r_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/light))) // Light cyborg legs don't count.
-			src.visible_message("<span class='alert'>[src] rips apart the shackles with pure machine-like strength!</b></span>", "<span style=\"color:blue\">You rip apart the shackles.</span>")
+			src.visible_message("<span class='alert'>[src] rips apart the shackles with pure machine-like strength!</b></span>", "<span class='notice'>You rip apart the shackles.</span>")
 			var/obj/item/clothing/shoes/NEW2 = new SH.type
 			if (NEW2.chained)
 				qdel(NEW2)
@@ -3365,12 +3365,12 @@
 				src.show_text("You poop out <B>[src.chest_item]</B>! Your butt aches a bit.")
 			else if (src.chest_item.w_class == 3 )
 				poopingDamage = 20
-				src.show_text("<span style=\"color:red\"><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
+				src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 				src.changeStatus("stunned", 2 SECONDS)
 				take_bleeding_damage(src, src, 5)
 			else if (src.chest_item.w_class == 4 || src.chest_item.w_class == 5)
 				poopingDamage = 50
-				src.show_text("<span style=\"color:red\"><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
+				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
 				src.changeStatus("stunned", 50)
 				take_bleeding_damage(src, src, 20)
 
@@ -3388,12 +3388,12 @@
 			if (cutOffButt)
 				src.TakeDamage("chest", 15, 0, 0, src.chest_item.hit_type)
 				take_bleeding_damage(src, src, 15)
-				src.show_text("<span style=\"color:red\"><B>[src.chest_item] cut your butt off on the way out!</B></span>")
+				src.show_text("<span class='alert'><B>[src.chest_item] cut your butt off on the way out!</B></span>")
 				src.organHolder.drop_organ("butt")
 		// Other object is pooped out
 		else
 			// If it's not an "item", deal medium damage
-			src.show_text("<span style=\"color:red\"><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
+			src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 			src.changeStatus("stunned", 1 SECOND)
 			src.TakeDamage("chest", 20, 0, 0, DAMAGE_BLUNT)
 			take_bleeding_damage(src, src, 5)

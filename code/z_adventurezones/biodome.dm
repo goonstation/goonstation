@@ -779,7 +779,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	New()
 		..()
-		src.visible_message("<span style=\"color:blue\"><b>[src] appears out of thin air!</b></span>")
+		src.visible_message("<span class='notice'><b>[src] appears out of thin air!</b></span>")
 		new /obj/effects/shockwave {name = "mystical energy";} (src.loc)
 		light = new /datum/light/point
 		light.attach(src)

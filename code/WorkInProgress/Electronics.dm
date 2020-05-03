@@ -192,7 +192,7 @@
 	if (!src.secured)
 		var/turf/source_turf = get_turf(O)
 		if(!source_turf) return
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly adding components to [src]!</span>", "<span style=\"color:blue\">You begin to quickly add components to [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly adding components to [src]!</span>", "<span class='notice'>You begin to quickly add components to [src]!</span>")
 		var/staystill = user.loc
 
 		for(var/obj/item/electronics/I in source_turf)

@@ -162,7 +162,7 @@
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [O]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [O].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if(!M.material)
@@ -199,7 +199,7 @@
 	proc/quickload(var/mob/living/user,var/obj/item/O)
 		if (!user || !O || !istype(O))
 			return
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O] into [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		O.set_loc(src)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
@@ -403,7 +403,7 @@
 				boutput(user, "<span class='alert'>This material can not be used in \the [src].</span>")
 				return
 
-			user.visible_message("<span style=\"color:blue\">[user] puts \the [W] in \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
 			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
 				addMaterial(W, user)
 			else
@@ -599,7 +599,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/slag_shovel))
 			if(slag_level)
-				src.visible_message("<span style=\"color:blue\">[user] removes slag from the [src]</span>")
+				src.visible_message("<span class='notice'>[user] removes slag from the [src]</span>")
 				slag_level = 0
 				var/obj/item/material_piece/slag/S = unpool(/obj/item/material_piece/slag)
 				S.set_loc(src.loc)
@@ -618,7 +618,7 @@
 
 			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material)) )
 				if(components.len < 2)
-					src.visible_message("<span style=\"color:blue\">[user] puts [W] into [src]</span>")
+					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
 					user.drop_item()
 					components.Add(W)
 					W.loc = src

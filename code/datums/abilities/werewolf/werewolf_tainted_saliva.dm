@@ -61,5 +61,5 @@
 
 		W.tainted_saliva_reservior.clear_reagents()
 		boutput(M, __blue("<B>You no longer will spread saliva when you attack!</B>"))
-		M.visible_message("<span style=\"color:blue\"><B>[M] stops dripping its disgusting saliva!</B></span>")
+		M.visible_message("<span class='notice'><B>[M] stops dripping its disgusting saliva!</B></span>")
 		return

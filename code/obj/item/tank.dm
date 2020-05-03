@@ -243,7 +243,7 @@ Contains:
 			icon = src.loc
 			if (!in_range(src, usr))
 				if (icon == src)
-					. += "<span style=\"color:blue\">It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
+					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
 
 			var/celsius_temperature = src.air_contents.temperature-T0C
@@ -262,7 +262,7 @@ Contains:
 			else
 				descriptive = "furiously hot"
 
-			. += "<span style=\"color:blue\">The [bicon(icon)] feels [descriptive]</span>"
+			. += "<span class='notice'>The [bicon(icon)] feels [descriptive]</span>"
 		else
 			return ..()
 

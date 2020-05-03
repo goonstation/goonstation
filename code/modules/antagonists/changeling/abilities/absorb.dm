@@ -33,7 +33,7 @@
 			return
 
 		var/mob/ownerMob = owner
-		ownerMob.show_message("<span style=\"color:blue\">We must hold still for a moment...</span>", 1)
+		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
 
 	onEnd()
 		..()
@@ -139,7 +139,7 @@
 
 		var/mob/ownerMob = owner
 		target.vamp_beingbitten = 1
-		ownerMob.show_message("<span style=\"color:blue\">We must hold still...</span>", 1)
+		ownerMob.show_message("<span class='notice'>We must hold still...</span>", 1)
 
 		if (ishuman(target))
 			target:was_harmed(owner, special = "ling")

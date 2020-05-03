@@ -190,7 +190,7 @@
 			src.extra_try_timestamp = 0
 			src.current_try++
 			src.reset()
-			out(src, "<span style=\"color:blue\"><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
+			out(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
 
 		//no grace, go die scrub
 		else
@@ -211,7 +211,7 @@
 		//debuff active
 		if (src.debuff_timestamp && gen_rate_bonus > 0)
 			var/genBonus = round(gen_rate_bonus / 2)
-			stat("Generation Rate:", "[base_gen_rate + genBonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP <span style='color: red;'>(WEAKENED)</span>")
+			stat("Generation Rate:", "[base_gen_rate + genBonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP <span class='alert'>(WEAKENED)</span>")
 
 		else
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")

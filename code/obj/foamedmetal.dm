@@ -66,7 +66,7 @@
 			return
 
 		if(prob(I.force*20 - metal*25))
-			user.visible_message( "<span class='alert'>[user] smashes through the foamed metal.</span>", "<span style=\"color:blue\">You smash through the foamed metal with \the [I].</span>")
+			user.visible_message( "<span class='alert'>[user] smashes through the foamed metal.</span>", "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
 			dispose()
 		else
 			boutput(user, "<span class='notice'>You hit the metal foam to no effect.</span>")

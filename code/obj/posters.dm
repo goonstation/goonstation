@@ -272,7 +272,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 			return
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		"<span class='alert'>You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster,T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x
@@ -294,9 +294,9 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
-			user.tri_message("<span style=\"color:red\"><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
-			user, "<span style=\"color:red\">You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
-			M, "<span style=\"color:red\">[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
+			user.tri_message("<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
+			user, "<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
+			M, "<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
 				src.show_popup_win(M.client)
 			src.no_spam = ticker.round_elapsed_ticks

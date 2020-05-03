@@ -40,7 +40,7 @@
 
 			else
 				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
-				src.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
@@ -77,7 +77,7 @@
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
-		src.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped()
@@ -106,7 +106,7 @@
 			boutput(user, "<span class='alert'>Frying things takes time! Be patient!</span>")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] removes [src.fryitem] from [src]!</span>", "<span style=\"color:blue\">You remove [src.fryitem] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] removes [src.fryitem] from [src]!</span>", "<span class='notice'>You remove [src.fryitem] from [src].</span>")
 		src.eject_food()
 		return
 
@@ -141,7 +141,7 @@
 
 			if (src.cooktime == 30)
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				src.visible_message("<span style=\"color:blue\">[src] dings!</span>")
+				src.visible_message("<span class='notice'>[src] dings!</span>")
 			else if (src.cooktime == 60) //Welp!
 				src.visible_message("<span class='alert'>[src] emits an acrid smell!</span>")
 		else if(src.cooktime >= 120)

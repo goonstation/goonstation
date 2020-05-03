@@ -194,7 +194,7 @@ var/global/list/playersSeen = list()
 			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
 			logTheThing("admin", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
 			logTheThing("diary", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
-			var/adminMsg = "<span style=\"color:blue\">"
+			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This is a permanent ban.</span>"
 			message_admins(adminMsg)
@@ -202,7 +202,7 @@ var/global/list/playersSeen = list()
 			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
 			logTheThing("admin", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].")
 			logTheThing("diary", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].", "admin")
-			var/adminMsg = "<span style=\"color:blue\">"
+			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This will be removed in [expiry].</span>"
 			message_admins(adminMsg)
@@ -380,7 +380,7 @@ var/global/list/playersSeen = list()
 
 		logTheThing("admin", adminC, target, "edited %target%'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]")
 		logTheThing("diary", adminC, target, "edited %target%'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
-		message_admins("<span style=\"color:blue\">[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
+		message_admins("<span class='notice'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
@@ -505,11 +505,11 @@ var/global/list/playersSeen = list()
 		if (expired)
 			logTheThing("admin", null, null, "[row["ckey"]]'s ban expired.")
 			logTheThing("diary", null, null, "[row["ckey"]]'s ban expired.", "admin")
-			message_admins("<span style=\"color:blue\">Ban expired for [target]</span>")
+			message_admins("<span class='notice'>Ban expired for [target]</span>")
 		else
 			logTheThing("admin", adminC, null, "unbanned [row["ckey"]]")
 			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
-			message_admins("<span style=\"color:blue\">[key_name(adminC)] unbanned [target]</span>")
+			message_admins("<span class='notice'>[key_name(adminC)] unbanned [target]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
@@ -576,11 +576,11 @@ var/global/list/playersSeen = list()
 		if (expired)
 			logTheThing("admin", null, null, "[row["ckey"]]'s ban expired.")
 			logTheThing("diary", null, null, "[row["ckey"]]'s ban expired.", "admin")
-			message_admins("<span style=\"color:blue\">Ban expired for [target]</span>")
+			message_admins("<span class='notice'>Ban expired for [target]</span>")
 		else
 			logTheThing("admin", adminC, null, "unbanned [row["ckey"]]")
 			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
-			message_admins("<span style=\"color:blue\">[key_name(adminC)] unbanned [target]</span>")
+			message_admins("<span class='notice'>[key_name(adminC)] unbanned [target]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
@@ -731,7 +731,7 @@ var/global/list/playersSeen = list()
 			logTheThing("debug", null, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
 			logTheThing("diary", null, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
 			if (returnData["showAdmins"])
-				message_admins("<span style=\"color:blue\"><b>Failed for route [type]BanApiFallback</b>: [returnData["error"]]</span>")
+				message_admins("<span class='notice'><b>Failed for route [type]BanApiFallback</b>: [returnData["error"]]</span>")
 
 			return 0
 
@@ -757,7 +757,7 @@ var/global/list/playersSeen = list()
 			logTheThing("debug", null, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
 			logTheThing("diary", null, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
 			if (returnData["showAdmins"])
-				message_admins("<span style=\"color:blue\"><b>Failed for route [type]BanApiFallback</b>: [returnData[</span>"error"]]")
+				message_admins("<span class='notice'><b>Failed for route [type]BanApiFallback</b>: [returnData[</span>"error"]]")
 
 			return 0
 	*/

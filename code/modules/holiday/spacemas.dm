@@ -467,7 +467,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	proc/change_fire_state(var/burning = 0)
 		if (src.on_fire && burning == 0)
 			src.on_fire = 0
-			src.visible_message("<span style=\"color:blue\">[src] is extinguished. Phew!</span>")
+			src.visible_message("<span class='notice'>[src] is extinguished. Phew!</span>")
 		else if (!src.on_fire && burning == 1)
 			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
 			src.on_fire = 1
@@ -530,13 +530,13 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		M.bodytemperature -= rand(1, 10)
 		if (message)
 			M.visible_message("<span class='alert'><b>[M]</b> is hit by [src]!</span>",\
-			"<span style='color:red'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
+			"<span class='alert'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
 		src.amount -= rand(1, 2)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
-			"<span style='color:red'>You plaster the snowball over your face.</span>")
+			"<span class='alert'>You plaster the snowball over your face.</span>")
 			src.hit(user, 0)
 			return
 
@@ -550,11 +550,11 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		else if (user.a_intent == "harm")
 			if (M == user)
 				M.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
-				"<span style='color:red'><b>You smush [src] into your own face!</b></span>")
+				"<span class='alert'><b>You smush [src] into your own face!</b></span>")
 			else if ((user != M && iscarbon(M)))
-				M.tri_message("<span style='color:red'><b>[user] smushes [src] into [M]'s face!</b></span>",\
-				user, "<span style='color:red'><b>You smush [src] into [M]'s face!</b></span>",\
-				M, "<span style='color:red'><b>[user] smushes [src] in your face!</b></span>")
+				M.tri_message("<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
+				user, "<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
+				M, "<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
 			src.hit(M, 0)
 
 		else return ..()
@@ -1217,7 +1217,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			if (dangerous)
 				user.visible_message("<span class='combat'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='combat'>You take [gift] out of [src]!<br>This looks dangerous...</span>")
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span style=\"color:blue\">You take [gift] out of [src]!</span>")
+				user.visible_message("<span class='notice'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='notice'>You take [gift] out of [src]!</span>")
 		return
 
 /obj/decal/tile_edge/stripe/xmas

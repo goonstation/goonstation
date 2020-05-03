@@ -385,7 +385,7 @@
 				var/dump_dir = turn(dir, dump_angle)
 				var/turf/T = get_step(loc, dump_dir)
 				for (var/atom/movable/AM in src)
-					visible_message("<span style='color:blue'><b>[src] dumps out [AM].</b></span>")
+					visible_message("<span class='notice'><b>[src] dumps out [AM].</b></span>")
 					AM.set_loc(T)
 
 		on_end_path()

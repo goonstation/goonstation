@@ -35,7 +35,7 @@
 		if(current_projectile)
 			. += "Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			. += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0
@@ -1354,11 +1354,11 @@
 		var/output = "This is \an [src.name]."
 		// Added for forensics (Convair880).
 		if (isitem(src) && src.blood_DNA)
-			output = "<span style='color:red'>This is a bloody [src.name].</span>"
+			output = "<span class='alert'>This is a bloody [src.name].</span>"
 			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in an odd azure liquid!</span>"
+				output += "<br>[src.desc] <span class='alert'>It seems to be covered in an odd azure liquid!</span>"
 			if (src.desc)
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in blood!</span>"
+				output += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
 		else if (src.desc)
 			output += "<br>[src.desc]"
 		var/dist = get_dist(src, usr)
@@ -1395,7 +1395,7 @@
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += " <span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += " <span class='alert'>*ERROR* No output selected!</span>"
 		return
 
 

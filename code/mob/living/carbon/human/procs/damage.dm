@@ -610,9 +610,9 @@
 	burn = max(0, burn - armor_mod)
 	/*
 	if (brute + burn == 0)
-		show_message("<span style='color:blue'>You have been completely protected from damage on your [z_name]!</span>")
+		show_message("<span class='notice'>You have been completely protected from damage on your [z_name]!</span>")
 	else if (armor_mod != 0)
-		show_message("<span style='color:blue'>You have been partly protected from damage on your [z_name]!</span>")
+		show_message("<span class='notice'>You have been partly protected from damage on your [z_name]!</span>")
 	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 

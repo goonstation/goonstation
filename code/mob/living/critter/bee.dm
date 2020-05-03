@@ -150,8 +150,8 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 		if (prob(10))
-			user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>",\
-			"<span style='color:blue'>[src] hugs you back!</span>")
+			user.visible_message("<span class='notice'>[src] hugs [user] back!</span>",\
+			"<span class='notice'>[src] hugs you back!</span>")
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 
@@ -719,7 +719,7 @@
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
-				"<span style='color:red'><b>You die!</b></span>")
+				"<span class='alert'><b>You die!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
@@ -728,7 +728,7 @@
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span style='color:blue'><b>[src]</b> seems to rise from the dead!</span>")
+			src.visible_message("<span class='notice'><b>[src]</b> seems to rise from the dead!</span>")
 			boutput(src, "<span class='notice'><b>You rise from the dead!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
@@ -775,8 +775,8 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 		if (prob(10))
-			user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>",\
-			"<span style='color:blue'>[src] hugs you back!</span>")
+			user.visible_message("<span class='notice'>[src] hugs [user] back!</span>",\
+			"<span class='notice'>[src] hugs you back!</span>")
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 		switch (src.hug_count++)
@@ -921,7 +921,7 @@
 		src.sleeping = rand(10, 20)
 		src.setStatus("paralysis", 2 SECONDS)
 		src.update_icon()
-		src.visible_message("<span style='color:blue'>[src] gets tired from all that work and takes a nap!</span>")
+		src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 		src.is_dancing = 0
 
 /mob/living/critter/small_animal/bee/queen

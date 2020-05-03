@@ -430,16 +430,16 @@
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
 		if(get_dist(get_turf(target), get_turf(src)) <= 1 && istype(target, /atom/movable))
-			if(target==loc && target != usr) return //Backpack or something
+			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
-			usr.visible_message("<span style=\"color:blue\">[usr] sticks a [src.name] on [target].</span>")
+			user.visible_message("<span class='notice'>[user] sticks a [src.name] on [target].</span>")
 			user.u_equip(src)
 			if(istype(target, /obj/storage/crate))
 				if (scan && account)
 					var/obj/storage/crate/C = target
 					C.scan = src.scan
 					C.account = src.account
-					boutput(usr, "<span class='notice'>[target] has been marked with your account routing information.</span>")
+					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
 					C.desc = "[C] belongs to [scan.registered]."
 				var/obj/storage/crate/C = target
 				C.update_icon()

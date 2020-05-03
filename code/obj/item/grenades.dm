@@ -84,11 +84,11 @@ PIPE BOMBS + CONSTRUCTION
 		if (isscrewingtool(W))
 			if (src.det_time == src.org_det_time)
 				src.det_time = src.alt_det_time
-				user.show_message("<span style=\"color:blue\">You set [src] for a [det_time/10] second detonation time.</span>")
+				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			else
 				src.det_time = src.org_det_time
-				user.show_message("<span style=\"color:blue\">You set [src] for a [det_time/10] second detonation time.</span>")
+				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			src.add_fingerprint(user)
 		return

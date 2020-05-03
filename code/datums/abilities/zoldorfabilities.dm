@@ -3,7 +3,7 @@
 	topBarRendered = 1
 	pointName = "Souls"
 	regenRate = 0
-	notEnoughPointsMessage = "<span style=\"color:red\">You do not have enough souls to use that ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You do not have enough souls to use that ability.</span>"
 	cast_while_dead = 1
 
 /obj/screen/ability/topBar/zoldorf
@@ -74,7 +74,7 @@
 			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
 			return 1
 		var/obj/machinery/playerzoldorf/pz = user.loc
-		var/list/zoldorflist = list("<span style=\"color:blue\">[pz] makes a mystical gesture!</b></span>","<span style=\"color:blue\">[pz] rocks back and forth!</span>")
+		var/list/zoldorflist = list("<span class='notice'>[pz] makes a mystical gesture!</b></span>","<span class='notice'>[pz] rocks back and forth!</span>")
 		if((user.abilityHolder.points <= 3)&&(user.abilityHolder.points > 0))
 			maxlines = user.abilityHolder.points
 		else if(user.abilityHolder.points > 3)
@@ -90,7 +90,7 @@
 		fortune_adjectives = sortList(fortune_adjectives)
 		sentencesShort = sortList(sentencesShort)
 
-		pz.visible_message("<span style=\"color:blue\">[pz] wakes up!</span>")
+		pz.visible_message("<span class='notice'>[pz] wakes up!</span>")
 		playsound(pz.loc, 'sound/machines/fortune_riff.ogg', 60, 1)
 
 		if(user.firstfortune == 1)

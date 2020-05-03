@@ -104,14 +104,14 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && mounted)
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes [src].</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
 			src.pixel_x = 0
 			src.anchored = 0
 			src.mounted = 0
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
-			src.visible_message("<span style=\"color:blue\"><b>[user]</b> jumps up and tries to dunk [W] into [src]!</span>")
+			src.visible_message("<span class='notice'><b>[user]</b> jumps up and tries to dunk [W] into [src]!</span>")
 			user.u_equip(W)
 			if (user.bioHolder.HasEffect("clumsy") && prob(50)) // clowns are not good at basketball I guess
 				user.visible_message("<span class='combat'><b>[user] knocks their head into the rim of [src]!</b></span>")
@@ -132,7 +132,7 @@
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)
-					src.visible_message("<span style=\"color:blue\"><b>[user] mounts [src] on [target].</b></span>")
+					src.visible_message("<span class='notice'><b>[user] mounts [src] on [target].</b></span>")
 					user.drop_item()
 					src.loc = get_turf(user)
 					src.mounted = 1
@@ -168,7 +168,7 @@
 		O.set_loc(get_turf(src))
 		if (prob(src.probability)) // It might land!
 			if (prob(30)) // It landed cleanly!
-				src.visible_message("<span style=\"color:blue\">[O] lands cleanly in [src]!</span>")
+				src.visible_message("<span class='notice'>[O] lands cleanly in [src]!</span>")
 				src.basket(O)
 			else // Aaaa the tension!
 				src.visible_message("<span class='alert'>[O] teeters on the edge of [src]!</span>")
@@ -177,7 +177,7 @@
 				SPAWN_DBG(delay)
 					if (O && O.loc == src.loc)
 						if (prob(40)) // It goes in!
-							src.visible_message("<span style=\"color:blue\">[O] slips into [src]!</span>")
+							src.visible_message("<span class='notice'>[O] slips into [src]!</span>")
 							src.basket(O)
 						else
 							src.visible_message("<span class='alert'>[O] slips off of the edge of [src]!</span>")

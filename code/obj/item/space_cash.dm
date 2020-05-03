@@ -77,7 +77,7 @@
 		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking cash!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking cash!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='notice'>You finish stacking cash.</span>")
@@ -91,7 +91,7 @@
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 				return
 
-			user.visible_message("<span style='color:blue'>[user] stacks some cash.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some cash.</span>")
 			stack_item(I)
 		else
 			..(I, user)
@@ -345,7 +345,7 @@
 			src.desc = initial(src.desc)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking spacebux!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking spacebux!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='notice'>You finish stacking spacebux.</span>")
@@ -355,7 +355,7 @@
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/spacebux) && src.spent == 0)
-			user.visible_message("<span style='color:blue'>[user] stacks some spacebux.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)
 		else
 			..(I, user)

@@ -67,7 +67,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Grinch"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 
 /////////////////////////////////////////////// Grinch spell parent ////////////////////////////
 

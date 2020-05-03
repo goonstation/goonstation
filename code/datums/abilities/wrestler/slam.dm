@@ -34,7 +34,7 @@
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.set_loc(M.loc)
 		M.dir = get_dir(M, HH)

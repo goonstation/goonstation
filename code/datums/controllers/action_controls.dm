@@ -337,11 +337,11 @@ var/datum/action_controller/actions
 			if(H.traitHolder.hasTrait("carpenter"))
 				duration = round(duration / 2)
 
-		owner.visible_message("<span style=\"color:blue\">[owner] begins assembling [objname]!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style=\"color:blue\">[owner] assembles [objname]!</span>")
+		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
 		var/obj/item/R = new objtype(get_turf(spot || owner))
 		R.setMaterial(mat)
 		if (istype(R))
@@ -382,11 +382,11 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		owner.visible_message("<span style=\"color:blue\">[owner] begins repairing [repairing]!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins repairing [repairing]!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style=\"color:blue\">[owner] successfully repairs [repairing]!</span>")
+		owner.visible_message("<span class='notice'>[owner] successfully repairs [repairing]!</span>")
 		repairing.adjustHealth(repairing.health_max)
 
 /datum/action/bar/private //This subclass is only visible to the owner of the action
@@ -889,7 +889,7 @@ var/datum/action_controller/actions
 		else
 			picker.working = 1
 			playsound(picker.loc, "sound/machines/whistlebeep.ogg", 50, 1)
-			out(owner, "<span style='color: blue;'>\The [picker.name] starts to pick up \the [target].</span>")
+			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
 			if (picker.highpower && owner:cell)
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
@@ -1019,7 +1019,7 @@ var/datum/action_controller/actions
 					qdel(found_imp)
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					target.visible_message("<span style=\"color:blue\">The loyalty implant inside [target] shatters into one million pieces!</span>")
+					target.visible_message("<span class='notice'>The loyalty implant inside [target] shatters into one million pieces!</span>")
 
 				flash.flash_mob(target, owner)
 

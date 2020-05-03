@@ -270,11 +270,11 @@
 		for (var/obj/item/cloaking_device/C in src)
 			if (C.active)
 				C.deactivate(src)
-				src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+				src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 		for (var/obj/item/device/disguiser/D in src)
 			if (D.on)
 				D.disrupt(src)
-				src.visible_message("<span style=\"color:blue\"><b>[src]'s disguiser is disrupted!</b></span>")
+				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
 
 	return
 
@@ -993,7 +993,7 @@
 		if (S == "window" && istype(target, /obj/window))
 			var/obj/window/W = target
 			if (show_message)
-				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span style=\"color:blue\">You smash through the window.</span>")
+				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span class='notice'>You smash through the window.</span>")
 			W.health = 0
 			W.smash()
 			return 1

@@ -348,7 +348,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Werewolf"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
 	var/datum/reagents/tainted_saliva_reservior = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.

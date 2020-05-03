@@ -545,7 +545,7 @@ datum
 						M.updatehealth()
 						setalive(M)
 					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-						M.ghost.show_text("<span style=\"color:red\"><B>You feel yourself being dragged out of the afterlife!</B></span>")
+						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 						M.ghost.mind.transfer_to(M)
 						qdel(M.ghost)
 					if (ishuman(M))
@@ -558,9 +558,9 @@ datum
 							SPAWN_DBG(rand(20, 100))
 								H.gib()
 						else
-							H.visible_message("<span class='alert'>[H] seems to rise from the dead!</span>","<span style=\"color:red\">You feel hungry...</span>")
+							H.visible_message("<span class='alert'>[H] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 					else
-						M.visible_message("<span class='alert'>[M] seems to rise from the dead!</span>","<span style=\"color:red\">You feel hungry...</span>")
+						M.visible_message("<span class='alert'>[M] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -1381,7 +1381,7 @@ datum
 					M.updatehealth()
 				else if (our_amt < 10)
 					if (prob(8))
-						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span style=\"color:red\">You puke all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1423,7 +1423,7 @@ datum
 					M.updatehealth()
 				else if (our_amt < 20)
 					if (prob(8))
-						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span style=\"color:red\">You hoot all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span class='alert'>You hoot all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1616,20 +1616,20 @@ datum
 					random_brute_damage(M, 2 * mult)
 					M.emote(pick("twitch", "twitch_s", "grumble"))
 					M.visible_message("<span class='alert'><b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under their skin", "their skin")]!</span>",\
-					"<span style=\"color:red\"><b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b></span>")
+					"<span class='alert'><b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b></span>")
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
 					M.emote("scream")
 					M.emote("twitch")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 20 * mult))
 					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\
-					"<span style=\"color:red\"><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
+					"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
 				else if (prob(10))
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))
 						M.visible_message("<span class='alert'><b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]</span>",\
-						"<span style=\"color:red\"><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+						"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 						if (prob(33))
 							var/obj/critter/spider/baby/S = new /obj/critter/spider/baby(M)
 							if (prob(5))
@@ -2201,14 +2201,14 @@ datum
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
 				animate_spin(M, dir_temp, speed_temp)
-				DEBUG_MESSAGE("<span style=\"color:blue\"><b>Spun [M]: [dir_temp], [speed_temp]</b></span>") // <- What's this?
+				DEBUG_MESSAGE("<span class='notice'><b>Spun [M]: [dir_temp], [speed_temp]</b></span>") // <- What's this?
 
 /*			reaction_obj(var/obj/O, var/volume)
 				if (volume >= 10)
 					var/dir_temp = pick("L", "R")
 					var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
 					animate_spin(O, dir_temp, speed_temp)
-					DEBUG_MESSAGE("<span style=\"color:blue\"><b>Spun [O]: [dir_temp], [speed_temp]</b></span>")
+					DEBUG_MESSAGE("<span class='notice'><b>Spun [O]: [dir_temp], [speed_temp]</b></span>")
 */
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
@@ -3764,7 +3764,7 @@ datum
 		cloak_juice
 			name = "cloaked panellus extract"
 			id = "cloak_juice"
-			description = "<br><span style=\"color:red\">ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+			description = "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 			reagent_state = LIQUID
 			fluid_r = 50
 			fluid_g = 50

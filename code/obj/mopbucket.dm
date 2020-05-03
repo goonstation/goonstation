@@ -24,13 +24,13 @@
 		return
 	if (!reagents)
 		return
-	. = "<br><span style=\"color:blue\">It contains:</span>"
+	. = "<br><span class='notice'>It contains:</span>"
 	if(reagents.reagent_list.len)
 		for(var/current_id in reagents.reagent_list)
 			var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-			. += "<br><span style=\"color:blue\">[current_reagent.volume] units of [current_reagent.name]</span>"
+			. += "<br><span class='notice'>[current_reagent.volume] units of [current_reagent.name]</span>"
 	else
-		. += "<br><span style=\"color:blue\">Nothing. The answer is nothing.</span>"
+		. += "<br><span class='notice'>Nothing. The answer is nothing.</span>"
 
 /obj/mopbucket/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/mop))
@@ -75,7 +75,7 @@
 					break
 		if (no_go)
 			user.visible_message("<span class='alert'><b>[user]</b> scoots around [src], right into [no_go]!</span>",\
-			"<span style=\"color:red\">You scoot around [src], right into [no_go]!</span>")
+			"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
 			if (!user.hasStatus("weakened"))
 				user.changeStatus("weakened", 4 SECONDS)
 			if (prob(25))
@@ -87,7 +87,7 @@
 			var/mob/living/carbon/M = user
 			if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(40))
 				user.visible_message("<span class='alert'><b>[user]</b> trips over [src]!</span>",\
-				"<span style=\"color:red\">You trip over [src]!</span>")
+				"<span class='alert'>You trip over [src]!</span>")
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 				user.set_loc(src.loc)
 				user.changeStatus("weakened", 1 SECOND)

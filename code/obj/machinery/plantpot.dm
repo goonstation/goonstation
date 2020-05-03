@@ -499,7 +499,7 @@
 			if(src.current)
 				boutput(user, "<span class='alert'>Something is already in that tray.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] plants a seed in the [src].</span>")
+			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			user.u_equip(SEED)
 			SEED.set_loc(src)
 			if(SEED.planttype)
@@ -521,7 +521,7 @@
 			if(!SP.selected)
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] plants a seed in the [src].</span>")
+			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			var/obj/item/seed/WS = unpool(/obj/item/seed)
 			WS.set_loc(src)
 			WS.generic_seed_setup(SP.selected)
@@ -537,7 +537,7 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
@@ -550,7 +550,7 @@
 		else if(istype(W, /obj/item/raw_material/shard/plasmacrystal) && !current)
 			// Planting a crystal shard simply puts a crystal seed inside the plant pot for
 			// a moment, spawns a new plant from it, then deletes both the seed and the shard.
-			user.visible_message("<span style=\"color:blue\">[user] plants [W] in the tray.</span>")
+			user.visible_message("<span class='notice'>[user] plants [W] in the tray.</span>")
 			var/obj/item/seed/crystal/WS = unpool(/obj/item/seed/crystal)
 			WS.set_loc(src)
 			HYPnewplant(WS)
@@ -1753,7 +1753,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")

@@ -150,8 +150,8 @@
 			return
 		*/
 		user.tri_message("[user] dyes [M]'s hair.",\
-		user, "<span style='color:blue'>You dye [M]'s hair.</span>",\
-		M, "<span style='color:blue'>[user] dyes your hair.</span>")
+		user, "<span class='notice'>You dye [M]'s hair.</span>",\
+		M, "<span class='notice'>[user] dyes your hair.</span>")
 		M.bioHolder.mobAppearance.customization_first_color = src.customization_first_color
 		M.bioHolder.mobAppearance.customization_second_color = src.customization_first_color
 		M.set_face_icon_dirty()
@@ -220,8 +220,8 @@
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
 		user.tri_message("[user] begins cutting [M]'s hair.",\
-		user, "<span style='color:blue'>You begin cutting [M]'s hair.</span>",\
-		M, "<span style='color:blue'>[user] begins cutting your hair.</span>")
+		user, "<span class='notice'>You begin cutting [M]'s hair.</span>",\
+		M, "<span class='notice'>[user] begins cutting your hair.</span>")
 		playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
 		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
@@ -233,8 +233,8 @@
 
 		M.bioHolder.mobAppearance.customization_first = new_style
 		user.tri_message("[user] cuts [M]'s hair.",\
-		M, "<span style='color:blue'>[user] cuts your hair.</span>",\
-		user, "<span style='color:blue'>You cut [M]'s hair.</span>")
+		M, "<span class='notice'>[user] cuts your hair.</span>",\
+		user, "<span class='notice'>You cut [M]'s hair.</span>")
 
 		M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing

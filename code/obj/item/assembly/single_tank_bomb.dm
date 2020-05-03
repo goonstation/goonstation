@@ -99,7 +99,7 @@
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span style=\"color:blue\">A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
 		boutput(user, "<span class='notice'>The hole has been closed.</span>")
@@ -228,7 +228,7 @@
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span style=\"color:blue\">A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
 		boutput(user, "<span class='notice'>The hole has been closed.</span>")
@@ -313,7 +313,7 @@
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span style=\"color:blue\">A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
 		boutput(user, "<span class='notice'>The hole has been closed.</span>")

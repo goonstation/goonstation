@@ -326,14 +326,14 @@
 	examine()
 		. = ..()
 		if (metal)
-			. += "<span style=\"color:blue\">Metal: [metal_count] units of [metal.name].</span>"
+			. += "<span class='notice'>Metal: [metal_count] units of [metal.name].</span>"
 		else
-			. += "<span style=\"color:red\">Metal: 0 units.</span>"
+			. += "<span class='alert'>Metal: 0 units.</span>"
 
 		if (glass)
-			. += "<span style=\"color:blue\">Glass: [glass_count] units of [glass.name].</span>"
+			. += "<span class='notice'>Glass: [glass_count] units of [glass.name].</span>"
 		else
-			. += "<span style=\"color:red\">Glass: 0 units</span>"
+			. += "<span class='alert'>Glass: 0 units</span>"
 
 	attack_self(mob/user as mob)
 		mode = !mode
@@ -406,7 +406,7 @@
 				processing = 0
 				return
 
-			user.visible_message("<span style=\"color:blue\">[user] begins stuffing materials into [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins stuffing materials into [src].</span>")
 
 			for (var/obj/item/material_piece/M in over_object.loc)
 				if (user.loc != procloc)
@@ -424,7 +424,7 @@
 					pool(M)
 					sleep(0.1 SECONDS)
 			processing = 0
-			user.visible_message("<span style=\"color:blue\">[user] finishes stuffing materials into [src].</span>")
+			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
 /obj/item/room_planner
 	name = "\improper Floor and Wall Planner"

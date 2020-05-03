@@ -13,14 +13,14 @@
 				user.u_equip(src)
 				qdel(src)
 			else
-				M.visible_message("<span style=\"color:blue\">[M] takes a bite of [src]!</span>",\
-				"<span style=\"color:blue\">You take a bite of [src]!</span>")
+				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
+				"<span class='notice'>You take a bite of [src]!</span>")
 				src.bites--
 				M.nutrition += 20
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.bites)
 					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span style=\"color:red\">You finish eating [src].</span>")
+					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -29,22 +29,22 @@
 		else if(check_target_immunity(M))
 			user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
 		else
-			user.tri_message("<span style=\"color:red\"><b>[user]</b> tries to feed [M] [src]!</span>",\
-			user, "<span style=\"color:red\">You try to feed [M] [src]!</span>",\
-			M, "<span style=\"color:red\"><b>[user]</b> tries to feed you [src]!</span>")
+			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+			user, "<span class='alert'>You try to feed [M] [src]!</span>",\
+			M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 			if (!do_after(user, 10))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return ..()
 			else
-				user.tri_message("<span style=\"color:red\"><b>[user]</b> feeds [M] [src]!</span>",\
-				user, "<span style=\"color:red\">You feed [M] [src]!</span>",\
-				M, "<span style=\"color:red\"><b>[user]</b> feeds you [src]!</span>")
+				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+				user, "<span class='alert'>You feed [M] [src]!</span>",\
+				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 				src.bites--
 				M.nutrition += 20
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
 					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span style=\"color:red\">You finish eating [src].</span>")
+					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -62,7 +62,7 @@
 	checkifdone()
 		if (src.contents.len >= 8)
 			src.product = 1
-			src.desc += "<BR><span style=\"color:blue\">It looks like this assembly can be secured with a screwdriver.</span>"
+			src.desc += "<BR><span class='notice'>It looks like this assembly can be secured with a screwdriver.</span>"
 
 	createproduct(mob/user)
 		if (product == 1)

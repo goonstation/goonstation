@@ -35,7 +35,7 @@
 /mob/proc/help_put_out_fire(var/mob/living/M)
 	M.update_burning(-1.2)
 	playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0 , 0.7)
-	src.visible_message("<span style=\"color:blue\">[src] pats down [M] wildly, trying to put out the fire!</span>")
+	src.visible_message("<span class='notice'>[src] pats down [M] wildly, trying to put out the fire!</span>")
 
 	if (prob(50))
 		if (ishuman(src))
@@ -77,13 +77,13 @@
 			var/item = src.get_random_equipped_thing_name()
 			if (item)
 				var/v = pick("tidies","adjusts","brushes off", "flicks a piece of lint off", "tousles", "fixes", "readjusts","fusses with", "sweeps off")
-				src.visible_message("<span style=\"color:blue\">[src] [v] [his_or_her(src)] [item]!</span>")
+				src.visible_message("<span class='notice'>[src] [v] [his_or_her(src)] [item]!</span>")
 			else
-				src.visible_message("<span style=\"color:blue\">[src] pats themselves on the back. Feel better, [src].</span>")
+				src.visible_message("<span class='notice'>[src] pats themselves on the back. Feel better, [src].</span>")
 
 	else
 		if (target.lying)
-			src.visible_message("<span style=\"color:blue\">[src] shakes [target], trying to wake them up!</span>")
+			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
@@ -112,9 +112,9 @@
 						src.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
 						src.stuttering = max(target.stuttering,5)
 					else
-						src.visible_message("<span style=\"color:blue\">[src] gently pats [target] on the head.</span>")
+						src.visible_message("<span class='notice'>[src] gently pats [target] on the head.</span>")
 					return
-			src.visible_message("<span style=\"color:blue\">[src] shakes [target], trying to grab their attention!</span>")
+			src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
 	hit_twitch(target)
 
 
@@ -371,7 +371,7 @@
 
 	if (ishuman(target) && target.lying == 1) //roll lying bodies
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.disarm_RNG_result = "shoved"
 		var/obj/item/I = target.equipped()
 		if (I && I.temp_flags & IS_LIMB_ITEM)
@@ -412,10 +412,10 @@
 			mult *= H.sims.getMoodActionMultiplier()
 		var/stampart = round( ((STAMINA_MAX - target_stamina) / 3) )
 		if (is_shove)
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			if (prob((stampart + 70) * mult))
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 				msgs.disarm_RNG_result = "shoved"
 
 		if (prob((stampart + 5) * mult))
@@ -423,9 +423,9 @@
 				var/datum/pathogen/P = H.pathogens[uid]
 				var/ret = P.ondisarm(target, 1)
 				if (!ret)
-					msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+					msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
 					return msgs
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			msgs.disarm_RNG_result = "shoved_down"
 			var/obj/item/I = target.equipped()
@@ -440,18 +440,18 @@
 	if (I)
 		if (I.temp_flags & IS_LIMB_ITEM)
 			if (prob(37 * mult))
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [I.loc] and forces [target]'s to hit themselves[DISARM_WITH_ITEM_TEXT]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [I.loc] and forces [target]'s to hit themselves[DISARM_WITH_ITEM_TEXT]!</B></span>"
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 				msgs.disarm_RNG_result = "attack_self_with_item"
 			else
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves at [I.loc][DISARM_WITH_ITEM_TEXT]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [I.loc][DISARM_WITH_ITEM_TEXT]!</B></span>"
 				msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 
 		else if (I.cant_other_remove)
 			msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] vainly tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.show_self.Add("<span style=\"color:red\">Something is binding [I] to [target]. You won't be able to disarm [him_or_her(target)].</span>")
-			msgs.show_target.Add("<span style=\"color:red\">Something is binding [I] to you. It cannot be knocked out of your hands.</span>")
+			msgs.base_attack_message = "<span class='alert'><B>[src] vainly tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.show_self.Add("<span class='alert'>Something is binding [I] to [target]. You won't be able to disarm [him_or_her(target)].</span>")
+			msgs.show_target.Add("<span class='alert'>Something is binding [I] to you. It cannot be knocked out of your hands.</span>")
 
 		else if (prob(37 * mult))
 			if (ishuman(src))
@@ -460,16 +460,16 @@
 					var/datum/pathogen/P = H2.pathogens[uid]
 					var/ret = P.ondisarm(target, 1)
 					if (!ret)
-						msgs.base_attack_message = "<span style=\"color:red\"><B>[src] tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
+						msgs.base_attack_message = "<span class='alert'><B>[src] tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
 						return msgs
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] knocks [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[src] knocks [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			msgs.disarm_RNG_result = "drop_item"
 		else
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[src] tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[src] tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
 			msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 	else
-		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 
 	return msgs
@@ -672,7 +672,7 @@
 
 	if (!target.canmove && target.lying)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] [src.kickMessage] [target]!</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [target]!</B></span>"
 		msgs.logs = list("[src.kickMessage] %target%")
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
@@ -686,7 +686,7 @@
 		msgs.played_sound = "punch"
 
 		if (src != target && iswrestler(src) && prob(66))
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[src]</b> winds up and delivers a backfist to [target], sending them flying!</span>"
+			msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [target], sending them flying!</span>"
 			damage += 4
 			msgs.after_effects += /proc/wrestler_backfist
 
@@ -713,7 +713,7 @@
 			msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	var/attack_resistance = target.check_attack_resistance()
 	if (attack_resistance)
@@ -1185,12 +1185,12 @@
 
 /mob/living/silicon/robot/check_attack_resistance(var/obj/item/I)
 	if (!I)
-		return "<span style=\"color:red\">Sensors indicate no damage from external impact.</span>"
+		return "<span class='alert'>Sensors indicate no damage from external impact.</span>"
 	return null
 
 /mob/living/carbon/human/check_attack_resistance(var/obj/item/I)
 	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
-		return "<span style=\"color:red\">You drunkenly shrug off the blow!</span>"
+		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
 /mob/proc/get_melee_protection(zone, damage_type = 0)

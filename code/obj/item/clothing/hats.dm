@@ -275,16 +275,16 @@
 		cigs = list()
 	examine()
 		. = ..()
-		. += "<span style=\"color:blue\">Current activation phrase is <b>\"[phrase]\"</b>.</span>"
+		. += "<span class='notice'>Current activation phrase is <b>\"[phrase]\"</b>.</span>"
 		for (var/name in items)
 			var/type = items[name]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				. += "<br><span style=\"color:blue\">[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
 			else
 				. += "<br>There is no [name]!"
 		if (cigs.len)
-			. += "<br><span style=\"color:blue\">It contains <b>[cigs.len]</b> cigarettes!</span>"
+			. += "<br><span class='notice'>It contains <b>[cigs.len]</b> cigarettes!</span>"
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
@@ -716,7 +716,7 @@
 			src.throw_source = null
 		else
 			if (user)
-				user.visible_message("<span style='color:blue'><b>[user]'s hat's blades retract.</b></span>")
+				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
 			src.hit_type = DAMAGE_BLUNT
 			src.hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
 			src.force = 1
@@ -948,7 +948,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:blue\"><b>[H] becomes one with the [src.name]!</b></span>")
+				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
@@ -1045,7 +1045,7 @@
 			src.item_state = text("[]-stun",src.item_state)
 			C.updateicon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
-			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span style=\"color:blue\">The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return
 
 		..()

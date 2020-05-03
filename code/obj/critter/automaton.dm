@@ -293,7 +293,7 @@ var/global/the_automaton = null
 		else if (istype(W, /obj/item/skull))
 			if (keycount != AUTOMATON_MAX_KEYS)
 				user.visible_message("<span class='alert'><b>[src]</b> ignores [user].  Perhaps it's not time for that?</span>",\
-				"<span style=\"color:red\"><b>[src]</b> ignores you.  Perhaps it's not time for that?</span>")
+				"<span class='alert'><b>[src]</b> ignores you.  Perhaps it's not time for that?</span>")
 				return
 
 			if (!istype(W, /obj/item/skull/crystal) || W.icon_state != "skull_crystal")
@@ -306,7 +306,7 @@ var/global/the_automaton = null
 
 		else if (istype(W, /obj/item/iomoon_key))
 			user.visible_message("<span class='alert'><b>[src]</b> totally ignores [user]. Maybe this is the wrong puzzle for [W] or something, sheesh.</span>",\
-			"<span style=\"color:red\">Okay, no. Good thought, but this is totally the wrong puzzle for that.</span>")
+			"<span class='alert'>Okay, no. Good thought, but this is totally the wrong puzzle for that.</span>")
 
 		else if (istype(W, /obj/item/alchemy/stone))
 			src.visible_message("<span class='alert'>[src] studies [W] intently. It looks impressed, but hands [W] back. Perhaps it's not the right time for this yet?</span>")
@@ -314,7 +314,7 @@ var/global/the_automaton = null
 		#ifdef SECRETS_ENABLED
 		else if (istype(W, /obj/item/onyxphoto))
 			if (!W:used)
-				src.visible_message("<span style=\"color:blue\"><b>[src]</b> studies [W] intently, then hands it back after a short pause.</span>")
+				src.visible_message("<span class='notice'><b>[src]</b> studies [W] intently, then hands it back after a short pause.</span>")
 
 				W:used = 1
 				W.name = "empty photo"
@@ -356,7 +356,7 @@ var/global/the_automaton = null
 		else if (istype(W, /obj/item/book_kinginyellow))
 			if (keycount < AUTOMATON_MAX_KEYS || derelict_mode)
 				user.visible_message("<span class='alert'><b>[src]</b> ignores [user]'s attempts to hand over the book, even if \he waves it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>",\
-				"<span style=\"color:red\"><b>[src]</b> ignores your attempts to hand over the book, even if you wave it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>")
+				"<span class='alert'><b>[src]</b> ignores your attempts to hand over the book, even if you wave it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>")
 				return
 
 			user.visible_message("<span class='alert'>[user] hands [W] to [src]!</span>", "You hand [W] to [src].")

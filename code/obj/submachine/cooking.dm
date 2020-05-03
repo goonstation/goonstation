@@ -57,11 +57,11 @@
 			var/mob/living/carbon/human/H = user
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 			if (H.gloves)
-				user.visible_message("<span style=\"color:blue\">[user] cleans [his_or_her(user)] gloves.</span>")
+				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				user.visible_message("<span style=\"color:blue\">[user] washes [his_or_her(user)] hands.</span>")
+				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
 				if (H.sims)
 					H.sims.affectMotive("Hygiene", 2)
 				H.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
@@ -736,7 +736,7 @@ table#cooktime a#start {
 		if (!proceed)
 			boutput(user, "<span class='alert'>You can't put that in [src]!</span>")
 			return
-		user.visible_message("<span style='color:blue'>[user] loads [W] into [src].</span>")
+		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped()
@@ -906,7 +906,7 @@ table#cooktime a#start {
 			var/obj/item/satchel/S = W
 			if (S.contents.len < 1) boutput(usr, "<span class='alert'>There's nothing in the satchel!</span>")
 			else
-				user.visible_message("<span style=\"color:blue\">[user] loads [S]'s contents into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/reagent_containers/food/F in S.contents)
 					F.set_loc(src)
@@ -927,7 +927,7 @@ table#cooktime a#start {
 			if (!proceed)
 				boutput(user, "<span class='alert'>You can't put that in the processor!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped()
@@ -943,7 +943,7 @@ table#cooktime a#start {
 			for(var/obj/item/P in src.contents)
 				P.set_loc(get_turf(src))
 			for(var/mob/O in AIviewers(usr, null))
-				O.show_message("<span style=\"color:blue\">[usr] empties the [src].</span>")
+				O.show_message("<span class='notice'>[usr] empties the [src].</span>")
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -956,7 +956,7 @@ table#cooktime a#start {
 			if (O:locked)
 				boutput(user, "<span class='alert'>You need to unlock it first!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] loads [O]'s contents into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] loads [O]'s contents into [src]!</span>")
 			var/amtload = 0
 			for (var/obj/item/reagent_containers/food/M in O.contents)
 				M.set_loc(src)
@@ -967,7 +967,7 @@ table#cooktime a#start {
 			if (amtload) boutput(user, "<span class='notice'>[amtload] items of food loaded from [O]!</span>")
 			else boutput(user, "<span class='alert'>No food loaded!</span>")
 		else if (istype(O, /obj/item/reagent_containers/food/) || istype(O, /obj/item/plant/))
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing food into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing food into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/reagent_containers/food/M in view(1,user))
 				M.set_loc(src)
@@ -1033,7 +1033,7 @@ var/list/mixer_recipes = list()
 		if (!proceed)
 			boutput(user, "<span class='alert'>You can't put that in the mixer!</span>")
 			return
-		user.visible_message("<span style=\"color:blue\">[user] puts [W] into the [src].</span>")
+		user.visible_message("<span class='notice'>[user] puts [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped()

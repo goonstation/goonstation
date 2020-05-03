@@ -37,7 +37,7 @@
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		var/turf/T = get_turf(M)
 		if (T && isturf(T) && target && isturf(target.loc))

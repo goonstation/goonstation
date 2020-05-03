@@ -157,7 +157,7 @@
 
 	on_revive()
 		..()
-		src.visible_message("<span style=\"color:blue\"><b>[src]</b> stops playing dead and gets back up!</span>")
+		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
 		src.alive = 1
 		src.set_density(1)
 		src.health = initial(src.health)
@@ -511,7 +511,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			if(prob(30))
 				src.icon_state = "[src.doggy]-lying"
 				for(var/mob/O in hearers(src, null))
-					O.show_message("<span style=\"color:blue\"><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
+					O.show_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
 				SPAWN_DBG(3 SECONDS)
 				src.icon_state = "[src.doggy]"
 			return
@@ -529,7 +529,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:blue\"><b>[src]</b> wags his tail and gets back up!</span>")
+				O.show_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
 			src.alive = 1
 			set_density(1)
 			src.health = 100
@@ -1069,7 +1069,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if (prob(src.chatter_chance) && !src.muted)
 				src.chatter()
 			if (prob(5) && !src.muted)
-				src.visible_message("<span style='color:blue'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
+				src.visible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
 			if (prob(15))
 				flick("[src.species]-flaploop", src)
 			//if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)
@@ -1176,7 +1176,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			else
 				src.visible_message("<b>[user]</b> [pick("gives [src] a scritch", "pets [src]", "cuddles [src]", "snuggles [src]")]!")
 				if (prob(15))
-					src.visible_message("<span style='color:blue'><b>[src]</b> chirps happily!</span>")
+					src.visible_message("<span class='notice'><b>[src]</b> chirps happily!</span>")
 				return
 		else
 			..()
@@ -1320,7 +1320,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<span class='combat'>[src] is distracted by [src.being_offered_treasure] and ignores [user]!</span>")
 				return
 			else
-				src.visible_message("<span style='color:blue'><b>[user]</b> offers [W] to [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> offers [W] to [src]!</span>")
 				var/turf/T = get_turf(src) // we'll path back here to grab it if we have to
 				src.wanderer = 0
 				src.being_offered_treasure = "[user]'s [W]"
@@ -1341,7 +1341,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 									src.treasure_loc = null
 									src.impatience = 0
 								walk_to(src, 0)
-								src.visible_message("<span style='color:blue'>\The [src] takes [W] from [user]!</span>")
+								src.visible_message("<span class='notice'>\The [src] takes [W] from [user]!</span>")
 		else
 			return ..()
 
@@ -1349,10 +1349,10 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (!src.alive || src.sleeping)
 			return
 		if (prob(20))
-			src.visible_message("<span style='color:blue'>\The [src] responds with a dance of its own!</span>")
+			src.visible_message("<span class='notice'>\The [src] responds with a dance of its own!</span>")
 			src.dance()
 		else
-			src.visible_message("<span style='color:blue'>\The [src] flaps and bobs [pick("to the beat", "in tune", "approvingly", "happily")].</span>")
+			src.visible_message("<span class='notice'>\The [src] flaps and bobs [pick("to the beat", "in tune", "approvingly", "happily")].</span>")
 			flick("[src.species]-flaploop", src)
 		if (prob(3))
 			src.create_feather()

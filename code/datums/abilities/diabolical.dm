@@ -45,7 +45,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Souls"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more souls to use this ability!</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more souls to use this ability!</span>"
 
 	onAbilityStat() // In the "Souls" tab.
 		..()

@@ -86,7 +86,7 @@
 		var/obj/item/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
-		user.show_text("<span style=\"color:blue\">You add [cash] to the credit in [src].</span>")
+		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
 		user.u_equip(W)
 		pool(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
@@ -753,11 +753,11 @@
 		if(lock_status && !locked)
 			locked = 1
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span style='color:red'>\The [src] locks shut!</span>")
+			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span style='color:blue'>\The [src] unlocks!</span>")
+			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (air_group || (height==0))
@@ -811,7 +811,7 @@
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		bo(occupant, "<span style='color:red'>Hatches open and tiny, grabby claws emerge!</span>")
+		bo(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
 
 		SubscribeToProcess()
 
@@ -863,7 +863,7 @@
 
 		if(to_remove)
 			if(prob(70))
-				bo(occupant, "<span style='color:red'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
 				playsound(get_turf(src), "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else

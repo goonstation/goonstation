@@ -322,7 +322,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					return 0
 			if(inuse)
 				if(omencolor == "none")
-					src.visible_message("<span style=\"color:blue\"><b>The smoke clears and the orb returns to its inert state.</b></span>")
+					src.visible_message("<span class='notice'><b>The smoke clears and the orb returns to its inert state.</b></span>")
 					if(src.usurping)
 						return
 					o1.icon_state = "rcrystalfade"
@@ -338,7 +338,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					src.omen = 0
 					return
 				else
-					src.visible_message("<span style=\"color:blue\"><b>The color of the smoke within the crystal ball begins to shift and change color!</b></span>")
+					src.visible_message("<span class='notice'><b>The color of the smoke within the crystal ball begins to shift and change color!</b></span>")
 					src.messagethrottle = 1
 					if(src.usurping)
 						return
@@ -376,7 +376,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					src.smokecolor = src.colorinputbuffer
 
 			if(!src.messagethrottle)
-				src.visible_message("<span style=\"color:blue\"><b>The crystal ball begins to rapidly fill with colored smoke!</b></span>")
+				src.visible_message("<span class='notice'><b>The crystal ball begins to rapidly fill with colored smoke!</b></span>")
 
 			if(src.usurping)
 				return
@@ -395,7 +395,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				user << output(list2params(list("add",null,null,weapon.amount)),"Zoldorf.browser:updatecredits")
 			updateui(user)
 			weapon.amount = 0
-			usr.visible_message("<span style=\"color:blue\"><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span style=\"color:blue\"><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
+			usr.visible_message("<span class='notice'><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span class='notice'><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
 			usr.u_equip(weapon)
 			weapon.dropped()
 			qdel(weapon)

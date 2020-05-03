@@ -115,10 +115,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/declare_completion()
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(living_battlers.len == 1)
-		boutput(world,"<h2 style=\"color:red\">[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
-		boutput(living_battlers[1].current,"<h1 style=\"color:blue\">Holy shit you won!!!</h1>")
+		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
+		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
-		boutput(world,"<h2 style=\"color:red\">Literally everyone died. wow.</h2>")
+		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 
 
 

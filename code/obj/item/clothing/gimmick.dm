@@ -586,14 +586,14 @@
 // Sweet Bro and Hella Jeff
 
 /obj/item/clothing/under/gimmick/sbahj
-	name = "<font face='Comic Sans MS' size='3'><span style=\"color:blue\">blue janpsuit...</font>"
+	name = "<font face='Comic Sans MS' size='3'><span class='notice'>blue janpsuit...</font>"
 	desc = "<font face='Comic Sans MS' size='3'>looks like somethein to wear.........<br><br>in spca</font>"
 	icon_state = "sbahjB"
 	item_state = "sbahjB"
 
 	red
-		name = "<font face='Comic Sans MS' size='3'><span style=\"color:red\"><b><u>read</u></b></span><span style=\"color:blue\"> jumsut</span></font>"
-		desc = "<font face='Comic Sans MS' size='3'>\"samething to ware for <span style=\"color:red\"><i><u>studid fuckasses</u></i></span></font>"
+		name = "<font face='Comic Sans MS' size='3'><span class='alert'><b><u>read</u></b></span><span class='notice'> jumsut</span></font>"
+		desc = "<font face='Comic Sans MS' size='3'>\"samething to ware for <span class='alert'><i><u>studid fuckasses</u></i></span></font>"
 		icon_state = "sbahjR"
 		item_state = "sbahjR"
 
@@ -1043,7 +1043,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
 			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
-			"<span style='color:red'><b>You fumble and drop [src]!</b></span>")
+			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
 			user.u_equip(src)
 			src.set_loc(get_turf(user))
 			src.oh_no_the_ring()

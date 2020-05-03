@@ -410,10 +410,10 @@ obj/item/gnomechompski/elf
 
 	proc/reload_gun(mob/user as mob)
 		if(src.shotsLeft <= 0)
-			user.visible_message("<span style=\"color:blue\">[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span style=\"color:blue\">You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
+			user.visible_message("<span class='notice'>[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span class='notice'>You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
 			src.shotsLeft = rand(1, shotsMax)
 		else if(src.shotsLeft >= 1)
-			user.visible_message("<span style=\"color:blue\">[user] spins the cylinder.</span>", "<span style=\"color:blue\">You spin the cylinder.</span>")
+			user.visible_message("<span class='notice'>[user] spins the cylinder.</span>", "<span class='notice'>You spin the cylinder.</span>")
 			src.shotsLeft = rand(1, shotsMax)
 
 /obj/item/plutonium_core/hootonium_core
@@ -1527,11 +1527,11 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 			cantalk = 0
 			if(prob(5))
 				playsound(src.loc, "sound/ambience/owlzone/owlsfx[rand(1,5)].ogg", 50, 1)
-				usr.visible_message("<span style=\"color:blue\">Greg Jr emits a haunting hoot as you pull the string on their back.")
+				usr.visible_message("<span class='notice'>Greg Jr emits a haunting hoot as you pull the string on their back.")
 				cantalk = 1
 			else
 				playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 50, 1)
-				usr.visible_message("<span style=\"color:blue\">[usr] pull the string located at the back of Greg Jr.")
+				usr.visible_message("<span class='notice'>[usr] pull the string located at the back of Greg Jr.")
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
 					usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")

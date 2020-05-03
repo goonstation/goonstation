@@ -836,7 +836,7 @@ datum
 					. += get_exact_description(user)
 
 			else
-				. += "<span style=\"color:blue\">Nothing in it.</span>"
+				. += "<span class='notice'>Nothing in it.</span>"
 			return
 
 
@@ -867,15 +867,15 @@ datum
 				if("cloak_juice" in reagent_list)
 					var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 					if(cloaker.volume >= 5)
-						. += "<br><span style=\"color:red\">ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+						. += "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 						return
 
 
-				. += "<br><span style=\"color:red\">Spectroscopic analysis:</span>"
+				. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 
 				for(var/current_id in reagent_list)
 					var/datum/reagent/current_reagent = reagent_list[current_id]
-					. += "<br><span style=\"color:red\">[current_reagent.volume] units of [current_reagent.name]</span>"
+					. += "<br><span class='alert'>[current_reagent.volume] units of [current_reagent.name]</span>"
 			return
 
 		proc/get_reagents_fullness()
@@ -894,7 +894,7 @@ datum
 
 			if(full_text == "empty")
 				if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-					desc = "<span style=\"color:blue\">It is empty.</span>"
+					desc = "<span class='notice'>It is empty.</span>"
 				return desc
 
 			var/datum/color/c = get_average_color()
@@ -916,15 +916,15 @@ datum
 
 			if(rc_flags & RC_VISIBLE)
 				if(rc_flags & RC_SCALE)
-					desc += "<span style=\"color:blue\">It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+					desc += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
 				else
-					desc += "<span style=\"color:blue\">It is [full_text] of \a [t]-colored [state_text].</span>"
+					desc += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
 				if(rc_flags & RC_SCALE)
-					desc += "<span style=\"color:blue\">It contains [total_volume] units.</span>"
+					desc += "<span class='notice'>It contains [total_volume] units.</span>"
 				else
 					if(rc_flags & RC_FULLNESS)
-						desc += "<span style=\"color:blue\">It is [full_text].</span>"
+						desc += "<span class='notice'>It is [full_text].</span>"
 
 			return desc
 

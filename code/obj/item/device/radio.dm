@@ -535,9 +535,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	. = ..()
 	if ((in_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			. += "<span style=\"color:blue\">\the [src] can be attached and modified!</span>"
+			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
-			. += "<span style=\"color:blue\">\the [src] can not be modified or attached!</span>"
+			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
 		. += "Supplementary Channels:"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
@@ -549,9 +549,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		return
 	src.b_stat = !( src.b_stat )
 	if (src.b_stat)
-		user.show_message("<span style=\"color:blue\">The radio can now be attached and modified!</span>")
+		user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
 	else
-		user.show_message("<span style=\"color:blue\">The radio can no longer be modified or attached!</span>")
+		user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
 		src.attack_self(M)
@@ -784,9 +784,9 @@ Code:
 	..()
 	if ((in_range(src, usr) || src.loc == usr))
 		if (src.b_stat)
-			usr.show_message("<span style=\"color:blue\">The signaler can be attached and modified!</span>")
+			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
 		else
-			usr.show_message("<span style=\"color:blue\">The signaler can not be modified or attached!</span>")
+			usr.show_message("<span class='notice'>The signaler can not be modified or attached!</span>")
 	return
 */
 

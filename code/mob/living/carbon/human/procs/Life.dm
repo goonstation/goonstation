@@ -965,7 +965,7 @@
 				if (prob(15) && (FARD_pp > fart_smell_min))
 					boutput(src, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 					if ((FARD_pp > fart_vomit_min) && prob(50))
-						src.visible_message("<span style=\"color:blue\">[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+						src.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
 						src.vomit()
 				if (FARD_pp > fart_choke_min)
 					take_oxygen_deprivation(6.9 * mult)
@@ -1588,7 +1588,7 @@
 			if (oH.head)
 				src.death()
 				src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
-				"<span style=\"color:red\">Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
+				"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
 
 		//Wire note: Fix for Cannot read null.loc
 		if (oH.skull && oH.skull.loc != src)

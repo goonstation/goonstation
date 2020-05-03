@@ -555,7 +555,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (!reagent)
 			boutput(user, "<span class='alert'>The potion flask is empty.</span>")
 		if (user == target)
-			user.visible_message("<span style=\"color:blue\">[user] uncorks the potion and pours it down \his throat.</span>")
+			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down \his throat.</span>")
 			logTheThing("combat", user, null, "drinks [src] ([potion_name] -- [reagent])")
 			drink(user)
 		else if (ishuman(target))
@@ -799,7 +799,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	examine(mob/user)
 		. = ..()
 		if (!written)
-			. += "<span style=\"color:red\">You cannot decipher the runes written in the book.</span>"
+			. += "<span class='alert'>You cannot decipher the runes written in the book.</span>"
 		else
 			user.Browse(written, "window=tome;size=200x400")
 

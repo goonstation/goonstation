@@ -139,7 +139,7 @@
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
+			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return
 
@@ -154,13 +154,13 @@
 		for (var/obj/item/mousetrap/MT in src)
 			if (MT.armed)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a mousetrap!</B></span>",\
-				"<span style='color:red'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
+				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
 		for (var/obj/item/mine/M in src)
 			if (M.armed && M.used_up != 1)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
-				"<span style='color:red'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
+				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
 				M.triggered(user)
 				. = 1
 

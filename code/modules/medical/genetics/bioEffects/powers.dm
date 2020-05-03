@@ -172,7 +172,7 @@
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text("<span style=\"color:red\">Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
+			owner.show_text("<span class='alert'>Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
 			using = 0
 			return 1
 
@@ -236,7 +236,7 @@
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text("<span style=\"color:red\">Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
+			owner.show_text("<span class='alert'>Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
 			using = 0
 			return 1
 

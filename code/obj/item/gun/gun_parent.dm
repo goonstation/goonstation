@@ -283,7 +283,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (O.client)
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
-		user.show_text("<span style=\"color:red\">You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
+		user.show_text("<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
 
 	if (!process_ammo(user))
 		return
@@ -391,7 +391,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				O.show_message("<span class='alert'><B>[user] fires [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a gunshot</span>", 2)
 		else
 			if (ismob(user)) // Fix for: undefined proc or verb /obj/item/mechanics/gunholder/show text().
-				user.show_text("<span style=\"color:red\">You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
+				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
 
 		var/turf/T = target
 		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")

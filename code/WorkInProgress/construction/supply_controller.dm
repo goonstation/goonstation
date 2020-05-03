@@ -524,11 +524,11 @@
 
 	examine()
 		. = ..()
-		. += "<span style=\"color:blue\">The pad is currently at [charge]% charge.</span>"
+		. += "<span class='notice'>The pad is currently at [charge]% charge.</span>"
 		if (has_crystal)
-			. += "<span style=\"color:blue\">The pad is complete with a telecrystal.</span>"
+			. += "<span class='notice'>The pad is complete with a telecrystal.</span>"
 		else
-			. += "<span style=\"color:red\">The pad's telecrystal socket is empty!</span>"
+			. += "<span class='alert'>The pad's telecrystal socket is empty!</span>"
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if (istype(I, /obj/item/raw_material/telecrystal))

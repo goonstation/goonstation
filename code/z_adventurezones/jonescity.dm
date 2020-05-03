@@ -149,7 +149,7 @@ JONES CITY TURFS
 		if (special)
 			if (istype(W, /obj/item/fish/mahimahi))
 				boutput(user, "You slap the [src] with the [W]!")
-				src.visible_message("<span style=\"color:blue\"><b>[src] crumbles into dust!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
 				src.ReplaceWithSpace()
 
 ////////////////////////////////////////////hairball key parts
@@ -179,7 +179,7 @@ JONES CITY TURFS
 			return ..()
 		else
 			if (!user) return
-			user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>")
+			user.visible_message("<span class='notice'><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>")
 			user.u_equip(W)
 			user.u_equip(src)
 			var/obj/item/dynassembly/hairball/A = new /obj/item/dynassembly/hairball(get_turf(src))
@@ -206,7 +206,7 @@ JONES CITY TURFS
 				three++
 		if (one && two && three)
 			src.product = 1
-			src.desc += "<BR><span style=\"color:blue\">It looks like this assembly can be secured with a screwdriver.</span>"
+			src.desc += "<BR><span class='notice'>It looks like this assembly can be secured with a screwdriver.</span>"
 
 	createproduct(mob/user)
 		if (product == 1)

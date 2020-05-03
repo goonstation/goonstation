@@ -123,11 +123,11 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 			user.show_text("[src] is empty.", "red")
 			return
 		if(check_target_immunity(M))
-			user.show_text("<span style='color:red'>You can't seem to inject [M]!</span>")
+			user.show_text("<span class='alert'>You can't seem to inject [M]!</span>")
 			return
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
-		user.visible_message("<span style='color:blue'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
-		"<span style='color:blue'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
+		user.visible_message("<span class='notice'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
+		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
 		logTheThing("combat", user, M, "uses a hypospray [log_reagents(src)] to inject %target% at [log_loc(user)].")
 
 		src.reagents.trans_to(M, amt_prop)

@@ -213,7 +213,7 @@
 		return
 #else
 	equipped(var/mob/user, var/slot)
-		user.visible_message("<span style=\"color:blue\">[user] puts on the goggles, but nothing particularly special happens!</span>")
+		user.visible_message("<span class='notice'>[user] puts on the goggles, but nothing particularly special happens!</span>")
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		return
@@ -501,7 +501,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/shovel))
-			user.visible_message("<span style=\"color:blue\">[user] digs in [src] with [W]!</span>")
+			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
 			src.open()
 		return
 

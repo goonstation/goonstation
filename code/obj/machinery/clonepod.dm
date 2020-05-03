@@ -478,7 +478,7 @@
 
 	else if(istype(W, /obj/item/screwdriver) && cloneslave == 1) // Wait nevermind the clone wars were a terrible idea
 		if(src.occupant)
-			boutput(user, "<space style=\"color:red\">You must wait for the current cloning cycle to finish before you can remove the mindslave module.</span>")
+			boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindslave module.</span>")
 			return
 		boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -736,7 +736,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 			return 0
 		emagged = 0
 		if (user)
-			boutput(user, "<span style ='color:blue'>You repair the reclaimer's safety mechanism.</span>")
+			boutput(user, "<span class='notice'>You repair the reclaimer's safety mechanism.</span>")
 		return 1
 
 	attack_hand(mob/user as mob)

@@ -117,7 +117,7 @@
 			return
 		if (!reagents)
 			return
-		. += "<br><span style=\"color:blue\">[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]</span>"
+		. += "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]</span>"
 		return
 
 	on_reagent_change()

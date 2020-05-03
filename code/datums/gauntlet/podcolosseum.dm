@@ -1476,7 +1476,7 @@ proc/get_colosseum_message(var/name, var/message)
 				boutput(user, "<span class='alert'>That putt is already at full health!</span>")
 				return
 			if (T.try_weld(user, 1))
-				visible_message("<span style=\"color:blue\"><b>[user]</b> repairs some dents on [src]!</span>")
+				visible_message("<span class='notice'><b>[user]</b> repairs some dents on [src]!</span>")
 				message_pilot("<b>[user]</b> repairs some dents on [src]!")
 				repair_by(10)
 

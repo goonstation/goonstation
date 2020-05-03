@@ -330,7 +330,7 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span style=\"color:red\">[src] [pick("bends","shakes","groans")].</span>")
+		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
 		if (prob(8))
 			src.eject_occupant(add_power = 0)
 

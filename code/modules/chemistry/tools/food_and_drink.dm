@@ -222,11 +222,11 @@
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
 					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						M.visible_message("<span style='color:blue'>[M] tries to take a bite of [src], but can't swallow!</span>",\
-						"<span style='color:blue'>You try to take a bite of [src], but can't swallow!</span>")
+						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
+						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
-				M.visible_message("<span style='color:blue'>[M] takes a bite of [src]!</span>",\
-				"<span style='color:blue'>You take a bite of [src]!</span>")
+				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
+				"<span class='notice'>You take a bite of [src]!</span>")
 				logTheThing("combat", user, M, "takes a bite of [src] [log_reagents(src)] at [log_loc(user)].")
 
 				src.amount--
@@ -238,7 +238,7 @@
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
 					//M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					//"<span style='color:red'>You finish eating [src].</span>")
+					//"<span class='alert'>You finish eating [src].</span>")
 					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
@@ -267,8 +267,8 @@
 										if (issaved(stored.vars[V]) && V != "holder")
 											hybrid.vars[V] = stored.vars[V]
 									S.planttype = hybrid
-								user.visible_message("<span style='color:blue'><b>[user]</b> spits out a seed.</span>",\
-								"<span style='color:blue'>You spit out a seed.</span>")
+								user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
+								"<span class='notice'>You spit out a seed.</span>")
 					if(src.dropped_item)
 						drop_item(dropped_item)
 					user.u_equip(src)
@@ -281,9 +281,9 @@
 			else if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
 			else
-				user.tri_message("<span style='color:red'><b>[user]</b> tries to feed [M] [src]!</span>",\
-				user, "<span style='color:red'>You try to feed [M] [src]!</span>",\
-				M, "<span style='color:red'><b>[user]</b> tries to feed you [src]!</span>")
+				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
+				M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 				logTheThing("combat", user, M, "attempts to feed %target% [src] [log_reagents(src)] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
@@ -295,14 +295,14 @@
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
 					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						user.tri_message("<span style='color:red'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						user, "<span style='color:red'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						M, "<span style='color:red'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
+						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
+						user, "<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
+						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
 						return 0
 
-				user.tri_message("<span style='color:red'><b>[user]</b> feeds [M] [src]!</span>",\
-				user, "<span style='color:red'>You feed [M] [src]!</span>",\
-				M, "<span style='color:red'><b>[user]</b> feeds you [src]!</span>")
+				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+				user, "<span class='alert'>You feed [M] [src]!</span>",\
+				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 				logTheThing("combat", user, M, "feeds %target% [src] [log_reagents(src)] at [log_loc(user)].")
 
 
@@ -313,7 +313,7 @@
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
 					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span style='color:red'>You finish eating [src].</span>")
+					"<span class='alert'>You finish eating [src].</span>")
 					if(src.dropped_item)
 						drop_item(dropped_item)
 					user.u_equip(src)
@@ -480,7 +480,7 @@
 
 		if (iscarbon(M) || iscritter(M))
 			if (M == user)
-				M.visible_message("<span style='color:blue'>[M] takes a sip from [src].</span>")
+				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
 			else if (M.mob_flags & IS_RELIQUARY)
 				boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to make them drink.</span>")
 				return 0
@@ -1036,7 +1036,7 @@
 			if (src.reagents.total_volume >= (src.reagents.maximum_volume - 5))
 				if (user.bioHolder.HasEffect("clumsy") && prob(50))
 					user.visible_message("[user] adds [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>",\
-					"You add [W] to [src].<br><span style='color:red'>[src] is too full and spills!</span>")
+					"You add [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>")
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
 					src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 					pool(W)
@@ -1056,7 +1056,7 @@
 				boutput(user, "<span class='alert'>You can't add another wedge to [src], that would just look silly!!</span>")
 				return
 			user.visible_message("[user] adds [W] to the lip of [src].",\
-			"<span style='color:blue'>You add [W] to the lip of [src].</span>")
+			"<span class='notice'>You add [W] to the lip of [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wedge = W
@@ -1068,7 +1068,7 @@
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 			user.visible_message("[user] squeezes [W] into [src].",\
-			"<span style='color:blue'>You squeeze [W] into [src].</span>")
+			"<span class='notice'>You squeeze [W] into [src].</span>")
 			W.reagents.trans_to(src, W.reagents.total_volume)
 			qdel(W)
 			return
@@ -1078,7 +1078,7 @@
 				boutput(user, "<span class='alert'>There's not enough room to put that in [src]!</span>")
 				return
 			user.visible_message("[user] adds [W] to [src].",\
-			"<span style='color:blue'>You add [W] to [src].</span>")
+			"<span class='notice'>You add [W] to [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.in_glass = W
@@ -1186,17 +1186,17 @@
 
 		if (remove_thing)
 			H.visible_message("[H] removes [remove_thing] from [src].",\
-			"<span style='color:blue'>You remove [remove_thing] from [src].</span>")
+			"<span class='notice'>You remove [remove_thing] from [src].</span>")
 			H.put_in_hand_or_drop(remove_thing)
 			src.update_icon()
 			return
 
 		if (eat_thing)
 			H.visible_message("[H] plucks [eat_thing] out of [src] and eats it.",\
-			"<span style='color:blue'>You pluck [eat_thing] out of [src] and eat it.</span>")
+			"<span class='notice'>You pluck [eat_thing] out of [src] and eat it.</span>")
 			if (istype(eat_thing, /obj/item/cocktail_stuff/drink_umbrella) && !(H.bioHolder && H.bioHolder.HasEffect("mattereater")))
 				H.visible_message("<span class='alert'><b>[H] chokes on [eat_thing]!</b></span>",\
-				"<span style='color:red'>You choke on [eat_thing]! <b>That was a terrible idea!</b></span>")
+				"<span class='alert'>You choke on [eat_thing]! <b>That was a terrible idea!</b></span>")
 				H.losebreath += max(H.losebreath, 5)
 			else if (eat_thing.reagents && eat_thing.reagents.total_volume)
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)

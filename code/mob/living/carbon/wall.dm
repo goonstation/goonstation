@@ -17,13 +17,13 @@
 		//return
 
 	examine(mob/user)
-		. = list("<span style=\"color:blue\">*---------*</span>")
-		. += "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>"
+		. = list("<span class='notice'>*---------*</span>")
+		. += "<span class='notice'>This is a [bicon(src)] <B>[src.name]</B>!</span>"
 		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
-			. += "<span style=\"color:red\">You can't help but laugh at it.</span>"
+			. += "<span class='alert'>You can't help but laugh at it.</span>"
 			user.emote("laugh")
 		else
-			. += "<span style=\"color:red\">It looks pretty disturbing.</span>"
+			. += "<span class='alert'>It looks pretty disturbing.</span>"
 
 	say_understands(var/other)
 		if (ishuman(other) || isrobot(other) || isAI(other))

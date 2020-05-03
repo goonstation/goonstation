@@ -164,7 +164,7 @@
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 	else
 		switch(W.hit_type)
 			if (DAMAGE_BURN)

@@ -344,7 +344,7 @@
 			if (S.contents.len < 1)
 				boutput(usr, "<span class='alert'>There's nothing in [S]!</span>")
 			else
-				user.visible_message("<span style='color:blue'>[user] dumps out [S]'s contents onto [src]!</span>")
+				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
 				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
@@ -919,7 +919,7 @@
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
 				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] begins [verbing] [the_table].</span>")
+		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_table].</span>")
 
 	onEnd()
 		..()
@@ -943,7 +943,7 @@
 				if (the_table.desk_drawer)
 					the_table.desk_drawer.locked = 0
 				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] [verbens] [the_table].</span>")
+		owner.visible_message("<span class='notice'>[owner] [verbens] [the_table].</span>")
 
 /datum/action/bar/icon/fold_folding_table
 	id = "fold_folding_table"
@@ -980,10 +980,10 @@
 			playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
 		else
 			playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] begins disassembling [the_table].</span>")
+		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_table].</span>")
 
 	onEnd()
 		..()
 		playsound(get_turf(the_table), "sound/items/Deconstruct.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_table].</span>")
+		owner.visible_message("<span class='notice'>[owner] disassembles [the_table].</span>")
 		the_table.deconstruct()

@@ -53,10 +53,10 @@
 
 	proc/reload_gun(mob/user as mob)
 		if(src.shotsLeft <= 0)
-			user.visible_message("<span style=\"color:blue\">[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span style=\"color:blue\">You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
+			user.visible_message("<span class='notice'>[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span class='notice'>You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
 			src.shotsLeft = rand(1, shotsMax)
 		else if(src.shotsLeft >= 1)
-			user.visible_message("<span style=\"color:blue\">[user] spins the cylinder.</span>", "<span style=\"color:blue\">You spin the cylinder.</span>")
+			user.visible_message("<span class='notice'>[user] spins the cylinder.</span>", "<span class='notice'>You spin the cylinder.</span>")
 			src.shotsLeft = rand(1, shotsMax)
 
 /obj/item/gun/russianrevolver/fake357

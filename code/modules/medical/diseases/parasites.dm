@@ -33,11 +33,11 @@
 			var/self_msg = ""
 			var/success = 0
 			if (prob(50))
-				around_msg = "<span style=\"color:blue\"><b>[surgeon] cuts open [affected_mob] and removes some [name].</b></span>"
-				self_msg = "<span style=\"color:blue\">You remove some [name] from [affected_mob]. You can still see some of it in there, though.</span>"
+				around_msg = "<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes some [name].</b></span>"
+				self_msg = "<span class='notice'>You remove some [name] from [affected_mob]. You can still see some of it in there, though.</span>"
 			else
-				around_msg = "<span style=\"color:blue\"><b>[surgeon] cuts open [affected_mob] and removes the remaining [name].</b></span>"
-				self_msg = "<span style=\"color:blue\">You remove the remaining [name] from [affected_mob].</span>"
+				around_msg = "<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes the remaining [name].</b></span>"
+				self_msg = "<span class='notice'>You remove the remaining [name] from [affected_mob].</span>"
 				success = 1
 			surgeon.visible_message(around_msg, self_msg)
 			if (!numb)
@@ -46,7 +46,7 @@
 				affected_mob.updatehealth()
 			return success
 		if (61 to INFINITY)
-			surgeon.visible_message("<span style=\"color:blue\"><b>[surgeon] cuts open [affected_mob] and removes all traces of [name]</b></span>", "<span style=\"color:blue\">You masterfully remove the [name] from [affected_mob].</span>")
+			surgeon.visible_message("<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes all traces of [name]</b></span>", "<span class='notice'>You masterfully remove the [name] from [affected_mob].</span>")
 			if (!numb)
 				affected_mob.show_message("<span class='alert'><b>You feel a mild stabbing pain in your chest!</b></span>")
 				affected_mob.TakeDamage("chest", 10, 0, 0, DAMAGE_STAB)

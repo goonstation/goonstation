@@ -93,7 +93,7 @@
 				W.layer = initial(src.layer)
 				src.part_t = W
 				src.add_fingerprint(user)
-				user.show_message("<span style=\"color:blue\">You insert the [W.name] into the slot.</span>")
+				user.show_message("<span class='notice'>You insert the [W.name] into the slot.</span>")
 			else if (issnippingtool(W))
 				src.part_ig.loc = user.loc
 				src.part_mt.loc = user.loc
@@ -103,7 +103,7 @@
 				src.part_mt = null
 				user.u_equip(src)
 				del(src)
-				user.show_message("<span style=\"color:blue\">You sever the connection between the multitool and the igniter. The assembly falls apart.</span>")
+				user.show_message("<span class='notice'>You sever the connection between the multitool and the igniter. The assembly falls apart.</span>")
 			else
 				user.show_message("<span class='alert'>The [W.name] doesn't seem to fit into the slot!</span>")
 
@@ -115,10 +115,10 @@
 				src.part_t.loc = user.loc
 				src.part_t.master = null
 				src.part_t = null
-				user.show_message("<span style=\"color:blue\">You pry the plasma tank out of the assembly.</span>")
+				user.show_message("<span class='notice'>You pry the plasma tank out of the assembly.</span>")
 			else if (isscrewingtool(W))
 				src.setDetState(2)
-				user.show_message("<span style=\"color:blue\">You secure the plasma tank to the assembly.</span>")
+				user.show_message("<span class='notice'>You secure the plasma tank to the assembly.</span>")
 
 		if (2)
 			if (istype(W, /obj/item/cable_coil))
@@ -127,14 +127,14 @@
 					C.use(6)
 					src.setDetState(3)
 					src.add_fingerprint(user)
-					user.show_message("<span style=\"color:blue\">You add the wiring to the assembly.</span>")
+					user.show_message("<span class='notice'>You add the wiring to the assembly.</span>")
 				else
 					user.show_message("<span class='alert'>This cable coil isn't long enough!</span>")
 			else if (ispryingtool(W))
 				user.show_message("<span class='alert'>The plasma tank is firmly secured to the assembly and won't budge.</span>")
 			else if (isscrewingtool(W))
 				src.setDetState(1)
-				user.show_message("<span style=\"color:blue\">You unsecure the plasma tank from the assembly.</span>")
+				user.show_message("<span class='notice'>You unsecure the plasma tank from the assembly.</span>")
 
 		if (3)
 			if (istype(W, /obj/item/device/timer))
@@ -146,12 +146,12 @@
 				src.part_fs = W
 				src.part_fs.time = 90 //Minimum det time
 				src.add_fingerprint(user)
-				user.show_message("<span style=\"color:blue\">You wire the timer failsafe to the assembly, disabling its external controls.</span>")
+				user.show_message("<span class='notice'>You wire the timer failsafe to the assembly, disabling its external controls.</span>")
 			else if (issnippingtool(W))
 				src.setDetState(2)
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(user, 6)
 				C.loc = user.loc
-				user.show_message("<span style=\"color:blue\">You cut the wiring on the assembly.</span>")
+				user.show_message("<span class='notice'>You cut the wiring on the assembly.</span>")
 		if (4)
 			if (issnippingtool(W))
 				src.setDetState(3)
@@ -170,7 +170,7 @@
 					src.clear_attachment(a)
 					user.show_message("<span class='alert'>The [a] falls off the assembly.</span>")
 				src.attachments.Cut()
-				user.show_message("<span style=\"color:blue\">You disconnect the timer from the assembly, and reenable its external controls.</span>")
+				user.show_message("<span class='notice'>You disconnect the timer from the assembly, and reenable its external controls.</span>")
 			if (isscrewingtool(W))
 				if (!src.trigger && !src.attachments.len)
 					user.show_message("<span class='alert'>You cannot remove any attachments, as there are none attached.</span>")
@@ -183,7 +183,7 @@
 					src.trigger.loc = user.loc
 					src.trigger.master = null
 					src.trigger = null
-					user.show_message("<span style=\"color:blue\">You remove the triggering device from the assembly.</span>")
+					user.show_message("<span class='notice'>You remove the triggering device from the assembly.</span>")
 				else if (target == "cancel")
 					return
 				else
@@ -194,7 +194,7 @@
 					src.clear_attachment(target)
 					src.attachments.Remove(target)
 					setDescription()
-					user.show_message("<span style=\"color:blue\">You remove the [target] from the assembly.</span>")
+					user.show_message("<span class='notice'>You remove the [target] from the assembly.</span>")
 				setDescription()
 			else if (istype(W, /obj/item/device/radio/signaler))
 				if (src.trigger)
@@ -205,7 +205,7 @@
 					W.layer = initial(W.layer)
 					user.u_equip(W)
 					src.trigger = W
-					user.show_message("<span style=\"color:blue\">You attach the [W.name] to the trigger slot.</span>")
+					user.show_message("<span class='notice'>You attach the [W.name] to the trigger slot.</span>")
 					setDescription()
 			else if (istype(W, /obj/item/paper))
 				src.note = W:info
@@ -213,7 +213,7 @@
 				W.master = null
 				W.layer = null
 				user.u_equip(W)
-				user.show_message("<span style=\"color:blue\">You stick the note onto the detonator assembly.</span>")
+				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
 				pool(W)
 			else if (W.is_detonator_attachment())
 				if (src.attachments.len < 3)
@@ -231,7 +231,7 @@
 					src.WireNames.Insert(pos, N)
 					src.WireFunctions.Insert(pos, W)
 
-					user.show_message("<span style=\"color:blue\">You attach the [W.name] to an attachment slot.</span>")
+					user.show_message("<span class='notice'>You attach the [W.name] to an attachment slot.</span>")
 					setDescription()
 				else
 					user.show_message("<span class='alert'>There are no more free attachment slots on the device!</span>")
@@ -296,9 +296,9 @@
 	src.desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 
 	if (src.trigger)
-		src.desc += "<br><span style=\"color:blue\">There is \an [src.trigger.name] as a detonation trigger.</span>"
+		src.desc += "<br><span class='notice'>There is \an [src.trigger.name] as a detonation trigger.</span>"
 	for (var/obj/item/a in src.attachments)
-		src.desc += "<br><span style=\"color:blue\">There is \an [a] wired onto the assembly as an attachment.</span>"
+		src.desc += "<br><span class='notice'>There is \an [a] wired onto the assembly as an attachment.</span>"
 
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)

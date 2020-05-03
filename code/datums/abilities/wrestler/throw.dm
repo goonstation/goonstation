@@ -39,7 +39,7 @@
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.changeStatus("stunned", 4 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")

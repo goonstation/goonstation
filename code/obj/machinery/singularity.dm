@@ -253,7 +253,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
-			C.light(user, "<span style=\"color:red\"><b>[user]</b> lights [C] on [src]. Holy fucking shit!</span>")
+			C.light(user, "<span class='alert'><b>[user]</b> lights [C] on [src]. Holy fucking shit!</span>")
 		else
 			return ..()
 	else
@@ -303,7 +303,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				return
 		M.changeStatus("stunned", 3 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
-		"<B>You look directly into [src]!<br><span style=\"color:red\">You feel weak!</span></B>")
+		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	for (var/turf/T in orange(6,get_turf(src)))

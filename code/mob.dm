@@ -1061,7 +1061,7 @@
 /mob/proc/death(gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
-		message_admins("<span style=\"color:red\">Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
+		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
 	if(src.mind && !gibbed)
 		src.mind.death_icon = getFlatIcon(src,SOUTH)
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
@@ -1597,11 +1597,11 @@
 			else
 				src.changeStatus("weakened", (stun/2)*15)
 			src.set_clothing_icon_dirty()
-			src.show_text("<span style=\"color:red\">You are shocked by the impact of [P]!</span>")
+			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
 			src.stuttering += stun
 			src.drowsyness += stun/10
-			src.show_text("<span style=\"color:red\">You feel a wave of sickness as [P] impacts [src.loc]!</span>")
+			src.show_text("<span class='alert'>You feel a wave of sickness as [P] impacts [src.loc]!</span>")
 
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)

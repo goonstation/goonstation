@@ -1028,7 +1028,7 @@ datum/pathogeneffects/malevolent/fluent
 	desc = "The infection has a serious excess of saliva."
 	infect_type = INFECT_AREA
 	spread = SPREAD_FACE
-	infect_message = "<span style=\"color:red\">A drop of saliva lands on your face.</span>"
+	infect_message = "<span class='alert'>A drop of saliva lands on your face.</span>"
 	rarity = RARITY_UNCOMMON
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		return
@@ -1103,7 +1103,7 @@ datum/pathogeneffects/malevolent/capacitor
 			for (var/mob/V in orange(1, M))
 				electrocute(V, load / 10)
 		else if (load > 0)
-			M.show_message("<span style=\"color:blue\">You feel discharged.</span>")
+			M.show_message("<span class='notice'>You feel discharged.</span>")
 		origin.symptom_data["capacitor"] = 0
 
 	proc/load_check(var/mob/M as mob, var/datum/pathogen/origin)
@@ -1127,11 +1127,11 @@ datum/pathogeneffects/malevolent/capacitor
 			origin.symptom_data["capacitor"] += wattage
 			amt /= 2
 			ret.skipsupp = 1
-			M.show_message("<span style=\"color:blue\">You absorb a portion of the electric shock!</span>")
+			M.show_message("<span class='notice'>You absorb a portion of the electric shock!</span>")
 		else
 			amt = 0
 			ret.skipsupp = 1
-			M.show_message("<span style=\"color:blue\">You absorb the electric shock!</span>")
+			M.show_message("<span class='notice'>You absorb the electric shock!</span>")
 		load_check(M, origin)
 		return ret
 
@@ -1139,7 +1139,7 @@ datum/pathogeneffects/malevolent/capacitor
 		var/load = origin.symptom_data["capacitor"]
 		if (load > 1e6 && isPushDown)
 			if (prob(25))
-				M.visible_message("<span class='alert'>[M]'s hands are glowing in a blue color.</span>", "<span style=\"color:blue\">You discharge yourself onto your opponent with your hands!</span>", "<span class='alert'>You hear someone getting defibrillated.</span>")
+				M.visible_message("<span class='alert'>[M]'s hands are glowing in a blue color.</span>", "<span class='notice'>You discharge yourself onto your opponent with your hands!</span>", "<span class='alert'>You hear someone getting defibrillated.</span>")
 				electrocute(V, load / 10)
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
@@ -1151,7 +1151,7 @@ datum/pathogeneffects/malevolent/capacitor
 		var/load = origin.symptom_data["capacitor"]
 		if (load > 2e6)
 			if (prob(25))
-				M.visible_message("<span class='alert'>[M]'s fists are covered in electric arcs.</span>", "<span style=\"color:blue\">You supercharge your punch.</span>", "<span class='alert'>You hear a huge electric crackle.</span>")
+				M.visible_message("<span class='alert'>[M]'s fists are covered in electric arcs.</span>", "<span class='notice'>You supercharge your punch.</span>", "<span class='alert'>You hear a huge electric crackle.</span>")
 				electrocute(V, load / 10)
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
@@ -1159,7 +1159,7 @@ datum/pathogeneffects/malevolent/capacitor
 				origin.symptom_data["capacitor"] /= 2
 		else if (load > 500000)
 			if (prob(20))
-				M.visible_message("<span class='alert'>[M]'s fists spark electric arcs.</span>", "<span style=\"color:blue\">You overcharge your punch.</span>", "<span class='alert'>You hear a large electric crackle.</span>")
+				M.visible_message("<span class='alert'>[M]'s fists spark electric arcs.</span>", "<span class='notice'>You overcharge your punch.</span>", "<span class='alert'>You hear a large electric crackle.</span>")
 				electrocute(V, load / 10)
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
@@ -1167,7 +1167,7 @@ datum/pathogeneffects/malevolent/capacitor
 				origin.symptom_data["capacitor"] /= 2
 		else if (load > 200000)
 			if (prob(15))
-				M.visible_message("<span class='alert'>[M]'s fists throw sparks.</span>", "<span style=\"color:blue\">You charge your punch.</span>", "<span class='alert'>You hear an electric crackle.</span>")
+				M.visible_message("<span class='alert'>[M]'s fists throw sparks.</span>", "<span class='notice'>You charge your punch.</span>", "<span class='alert'>You hear an electric crackle.</span>")
 				electrocute(V, load / 10)
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
@@ -1215,7 +1215,7 @@ datum/pathogeneffects/malevolent/capacitor
 						PN.newload -= amt
 						origin.symptom_data["capacitor"] += amt
 						if (amt > 2500 && load > 5000)
-							M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
 				else if (prob(6))
 					if (load > 0)
@@ -1237,7 +1237,7 @@ datum/pathogeneffects/malevolent/capacitor
 						PN.newload -= amt
 						origin.symptom_data["capacitor"] += amt
 						if (amt > 5000 && load > 5000)
-							M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
 				else if (prob(6))
 					if (load > 0)
@@ -1256,7 +1256,7 @@ datum/pathogeneffects/malevolent/capacitor
 						S.charge -= amt
 						origin.symptom_data["capacitor"] += amt
 						if (amt > 5000 && load > 5000)
-							M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
 					else
 						var/obj/machinery/power/apc/A = locate() in view(4, M)
@@ -1270,7 +1270,7 @@ datum/pathogeneffects/malevolent/capacitor
 							A.cell.charge -= amt
 							origin.symptom_data["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
-								M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+								M.show_message("<span class='notice'>You feel energized.</span>")
 							load_check(M, origin, origin)
 						else
 							var/obj/cable/C = locate() in range(4, M)
@@ -1287,7 +1287,7 @@ datum/pathogeneffects/malevolent/capacitor
 								PN.newload -= amt
 								origin.symptom_data["capacitor"] += amt * 2
 								if (amt > 5000 && load > 5000)
-									M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+									M.show_message("<span class='notice'>You feel energized.</span>")
 								load_check(M, origin)
 				else if (prob(6))
 					if (load > 0)
@@ -1305,7 +1305,7 @@ datum/pathogeneffects/malevolent/capacitor
 						S.charge -= amt
 						origin.symptom_data["capacitor"] += amt
 						if (amt > 5000 && load > 5000)
-							M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
 					else
 						var/obj/machinery/power/apc/A = locate() in view(4, M)
@@ -1319,7 +1319,7 @@ datum/pathogeneffects/malevolent/capacitor
 							A.cell.charge -= amt
 							origin.symptom_data["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
-								M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+								M.show_message("<span class='notice'>You feel energized.</span>")
 							load_check(M, origin)
 						else // Then a power cable if not found
 							var/obj/cable/C = locate() in range(4, M)
@@ -1336,7 +1336,7 @@ datum/pathogeneffects/malevolent/capacitor
 								PN.newload += amt
 								origin.symptom_data["capacitor"] += amt * 3
 								if (amt > 5000 && load > 5000)
-									M.show_message("<span style=\"color:blue\">You feel energized.</span>")
+									M.show_message("<span class='notice'>You feel energized.</span>")
 								load_check(M, origin)
 				else if (prob(1))
 					if (load > 0)
@@ -1372,7 +1372,7 @@ datum/pathogeneffects/malevolent/sunglass
 	rarity = RARITY_UNCOMMON
 
 	proc/glasses(var/mob/living/carbon/human/M as mob)
-		M.show_message("<span style=\"color:blue\">[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")]</span>")
+		M.show_message("<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")]</span>")
 		var/obj/item/clothing/glasses/G = M.glasses
 		if (G)
 			M.u_equip(G)
@@ -2000,7 +2000,7 @@ datum/pathogeneffects/malevolent/beesneeze
 		var/turf/T = get_turf(M)
 		var/flyroll = rand(10)
 		var/turf/target = locate(M.x,M.y,M.z)
-		var/chosen_phrase = pick("<B><span style=\"color:red\">W</span><span style=\"color:blue\">H</span>A<span style=\"color:red\">T</span><span style=\"color:blue\">.</span></B>","<span style=\"color:red\"><B>What the [pick("hell","fuck","christ","shit")]?!</B></span>","<span style=\"color:red\"><B>Uhhhh. Uhhhhhhhhhhhhhhhhhhhh.</B></span>","<span style=\"color:red\"><B>Oh [pick("no","dear","god","dear god","sweet merciful [pick("neptune","poseidon")]")]!</B></span>")
+		var/chosen_phrase = pick("<B><span class='alert'>W</span><span class='notice'>H</span>A<span class='alert'>T</span><span class='notice'>.</span></B>","<span class='alert'><B>What the [pick("hell","fuck","christ","shit")]?!</B></span>","<span class='alert'><B>Uhhhh. Uhhhhhhhhhhhhhhhhhhhh.</B></span>","<span class='alert'><B>Oh [pick("no","dear","god","dear god","sweet merciful [pick("neptune","poseidon")]")]!</B></span>")
 		switch (M.dir)
 			if (NORTH)
 				target = locate(M.x, M.y+flyroll, M.z)
@@ -2167,7 +2167,7 @@ datum/pathogeneffects/malevolent/snaps
 	desc = "The infection forces its host's fingers to occasionally snap."
 	infect_type = INFECT_AREA
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
-	infect_message = "<span style=\"color:red\">That's a pretty catchy groove...</span>" //you might even say it's infectious
+	infect_message = "<span class='alert'>That's a pretty catchy groove...</span>" //you might even say it's infectious
 	rarity = RARITY_COMMON
 
 	proc/snap(var/mob/M, var/datum/pathogen/origin)
@@ -2196,7 +2196,7 @@ datum/pathogeneffects/malevolent/snaps/jazz
 	rarity = RARITY_RARE
 
 	proc/jazz(var/mob/living/carbon/human/H as mob)
-		H.show_message("<span style=\"color:blue\">[pick("You feel cooler!", "You feel smooth and laid-back!", "You feel jazzy!", "A sudden soulfulness fills your spirit!")]</span>")
+		H.show_message("<span class='notice'>[pick("You feel cooler!", "You feel smooth and laid-back!", "You feel jazzy!", "A sudden soulfulness fills your spirit!")]</span>")
 		if (!(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/misc/syndicate)))
 			var/obj/item/clothing/under/misc/syndicate/T = new /obj/item/clothing/under/misc/syndicate(H)
 			T.name = "Jazzy Turtleneck"

@@ -485,8 +485,8 @@ todo: add more small animals!
 			src.setStatus("paralysis", 100)
 			src.setStatus("stunned", 100)
 			src.setStatus("weakened", 100)
-			src.visible_message("<span style='color:blue'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
-			"<span style='color:blue'>You flop on your back!</span>")
+			src.visible_message("<span class='notice'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
+			"<span class='notice'>You flop on your back!</span>")
 			SPAWN_DBG(3 SECONDS)
 				if (src && !isdead(src))
 					src.delStatus("paralysis")
@@ -597,7 +597,7 @@ todo: add more small animals!
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
 				src.visible_message("<span class='alert'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
-				"<span style='color:red'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
+				"<span class='alert'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
@@ -606,7 +606,7 @@ todo: add more small animals!
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span style='color:blue'><b>[src]</b> wags [his_or_her(src)] tail and gets back up!</span>")
+			src.visible_message("<span class='notice'><b>[src]</b> wags [his_or_her(src)] tail and gets back up!</span>")
 			boutput(src, "<span class='notice'><b>You wag your tail and get back up!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
@@ -1536,7 +1536,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
-				"<span style='color:red'><b>You play dead!</b></span>")
+				"<span class='alert'><b>You play dead!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
@@ -1545,7 +1545,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span style='color:blue'><b>[src]</b> stops playing dead and gets back up!</span>")
+			src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
 			boutput(src, "<span class='notice'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
@@ -2292,7 +2292,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/figure
 	name = "collectable figure"
 	real_name = "collectable figure"
-	desc = "<b><span style=\"color:red\">WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
+	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 2

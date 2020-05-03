@@ -145,9 +145,9 @@
 	if (M.buckled)	return
 
 	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[user] buckles in!</span>")
+		user.visible_message("<span class='notice'>[user] buckles in!</span>")
 	else
-		M.visible_message("<span style=\"color:blue\">[M] is buckled in by [user]!</span>")
+		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
 
 	M.anchored = 1
 	M.buckled = src
@@ -163,9 +163,9 @@
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
-			M.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>")
+			M.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>")
 		else
-			M.visible_message("<span style=\"color:blue\">[M] is unbuckles.</span>")
+			M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
 
 		M.anchored = 0
 		M.buckled = null

@@ -1739,10 +1739,10 @@ proc/countJob(rank)
 			if (text_messages.len >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
-		text_chat_alert = "<span style=\"color:blue\"><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_added = "<span style=\"color:blue\"><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_failed = "<span style=\"color:red\"><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
-		text_chat_toolate = "<span style=\"color:red\"><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
+		text_chat_added = "<span class='notice'><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
+		text_chat_failed = "<span class='alert'><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_toolate = "<span class='alert'><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
@@ -2211,7 +2211,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (M.mind.special_role)
 			var/special = uppertext(copytext(M.mind.special_role, 1, 2)) + copytext(M.mind.special_role, 2)
 			if (!strip)
-				special = "<span style='color: red;'>[special]</span>"
+				special = "<span class='alert'>[special]</span>"
 
 			role += " \[[special]]"
 

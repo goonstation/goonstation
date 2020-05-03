@@ -272,7 +272,7 @@ var/list/cached_colors = new/list()
 
 		boutput(user, "You paint \the [target].")
 		for(var/mob/O in oviewers(world.view, user))
-			O.show_message("<span style=\"color:blue\">[user] paints \the [target].</span>", 1)
+			O.show_message("<span class='notice'>[user] paints \the [target].</span>", 1)
 
 		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 
@@ -384,7 +384,7 @@ var/list/cached_colors = new/list()
 
 		boutput(user, "You paint \the [target].")
 		for(var/mob/O in oviewers(world.view, user))
-			O.show_message("<span style=\"color:blue\">[user] paints \the [target].</span>", 1)
+			O.show_message("<span class='notice'>[user] paints \the [target].</span>", 1)
 
 		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 

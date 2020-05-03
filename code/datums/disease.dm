@@ -118,7 +118,7 @@
 		return 0
 
 	proc/scan_info()
-		var/text = "<span style='color:red'><b>"
+		var/text = "<span class='alert'><b>"
 		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
 			text += "[src.state] "
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"

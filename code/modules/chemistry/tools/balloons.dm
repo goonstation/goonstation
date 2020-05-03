@@ -62,7 +62,7 @@
 			smash()
 			if (user)
 				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
-				"<span style='color:red'>[src] bursts in your hands! <b>[curse]!</b></span>")
+				"<span class='alert'>[src] bursts in your hands! <b>[curse]!</b></span>")
 				user.update_inhands()
 			else
 				var/turf/T = get_turf(src)
@@ -98,7 +98,7 @@
 			if ("Make balloon animal")
 				if (src.reagents.total_volume > 0)
 					user.visible_message("<b>[user]</b> fumbles with [src]!", \
-					"<span style='color:red'>You fumble with [src]!</span>")
+					"<span class='alert'>You fumble with [src]!</span>")
 					src.burst_chance(user, 100)
 //					user.update_inhands()
 				else
@@ -150,13 +150,13 @@
 
 			if ("Inhale")
 				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
-				"<span style='color:red'><b>You inhale the contents of [src]!</b></span>")
+				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
 				src.reagents.trans_to(H, 40)
 				return
 
 			if ("Pee in it")
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>",\
-				"<span style='color:red'><b>You pee in [src]!</b></span>")
+				"<span class='alert'><b>You pee in [src]!</b></span>")
 				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 				H.urine -= 2
 				src.reagents.add_reagent("urine", 20)

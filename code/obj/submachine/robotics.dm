@@ -257,7 +257,7 @@
 				var/mob/living/silicon/robot/R = user
 				if (R.cell) R.cell.charge -= 100
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			user.visible_message("<span style=\"color:blue\">[user] dispenses a [src.vend_this]!</span>", "<span style=\"color:blue\">You dispense a [src.vend_this]!</span>")
+			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time
 			return
 

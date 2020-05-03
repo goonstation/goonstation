@@ -345,7 +345,7 @@
 		src.desc = "It appears to be broken."
 		src.update_overlays()
 		if (user)
-			user.visible_message("<span style=\"color:blue\">The locker has been broken by [user] with an electromagnetic card!</span>")
+			user.visible_message("<span class='notice'>The locker has been broken by [user] with an electromagnetic card!</span>")
 		return 1
 	return 0
 
@@ -363,7 +363,7 @@
 		if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
-			user.visible_message("<span style=\"color:blue\">The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+			user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
 			src.update_overlays()
 			if (!src.registered)
 				src.registered = I.registered
@@ -1072,7 +1072,7 @@
 		src.locked = 0
 		src.update_overlays()
 		if (user)
-			user.visible_message("<span style=\"color:blue\">The locker has been broken by [user] with an electromagnetic card!</span>")
+			user.visible_message("<span class='notice'>The locker has been broken by [user] with an electromagnetic card!</span>")
 		return 1
 	return 0
 
@@ -1097,7 +1097,7 @@
 	if(src.allowed(user))
 		if(!src.opened)
 			src.locked = !src.locked
-			user.visible_message("<span style=\"color:blue\">The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+			user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
 			src.update_overlays()
 			return
 		else
@@ -1152,7 +1152,7 @@
 	else
 		if (src.locked && src.allowed(usr))
 			src.locked = !src.locked
-			src.visible_message("<span style=\"color:blue\">The locker has been [src.locked ? null : "un"]locked by [usr].</span>")
+			src.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [usr].</span>")
 			src.update_overlays()
 
 		if (src.open())

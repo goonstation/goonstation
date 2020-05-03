@@ -66,7 +66,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Thrall"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
 
 	var/mob/vamp_isbiting = null

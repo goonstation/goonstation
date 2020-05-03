@@ -78,7 +78,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Changeling"
-	notEnoughPointsMessage = "<span style=\"color:red\">We are not strong enough to do this.</span>"
+	notEnoughPointsMessage = "<span class='alert'>We are not strong enough to do this.</span>"
 	var/list/absorbed_dna = list()
 	var/in_fakedeath = 0
 	var/absorbtions = 0

@@ -51,7 +51,7 @@ obj/structure/ex_act(severity)
 				if (N.client)
 					shake_camera(N, 4, 1, 0.5)
 		if (prob(80))
-			boutput(user, text("<span style=\"color:blue\">You smash through the girder.</span>"))
+			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
 			if (istype(src, /obj/structure/girder/reinforced))
 				var/atom/A = new /obj/structure/girder(src)
 				if (src.material)
@@ -72,7 +72,7 @@ obj/structure/ex_act(severity)
 					del(src)
 
 		else
-			boutput(user, text("<span style=\"color:blue\">You punch the [src.name].</span>"))
+			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
 			return
 	..()
 
@@ -214,11 +214,11 @@ obj/structure/ex_act(severity)
 					shake_camera(N, 4, 1, 0.5)
 
 		if (prob(70))
-			boutput(user, text("<span style=\"color:blue\">You smash through the girder.</span>"))
+			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
 			qdel(src)
 			return
 		else
-			boutput(user, text("<span style=\"color:blue\">You punch the [src.name].</span>"))
+			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
 			return
 	..()
 

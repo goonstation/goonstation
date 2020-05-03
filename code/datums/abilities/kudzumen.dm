@@ -43,7 +43,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "kudzu"
-	// notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
 	pointName = "nutrients"
 	var/stealthed = 0
@@ -183,7 +183,7 @@
 			else
 				//remove kudzu from the marked tile.
 				if (T.temp_flags & HAS_KUDZU)
-					T.visible_message("<span style=\"color:blue\">The Kudzu shifts off of [T].</span>")
+					T.visible_message("<span class='notice'>The Kudzu shifts off of [T].</span>")
 					for (var/obj/spacevine/K in T.contents)
 						qdel(K)
 				else

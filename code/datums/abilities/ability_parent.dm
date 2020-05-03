@@ -12,7 +12,7 @@
 
 	var/usesPoints = 1
 	var/pointName = ""
-	var/notEnoughPointsMessage = "<span style=\"color:red\">You do not have enough points to use that ability.</span>"
+	var/notEnoughPointsMessage = "<span class='alert'>You do not have enough points to use that ability.</span>"
 	var/points = 0 //starting points
 	var/regenRate = 1 //starting regen
 	var/bonus = 0

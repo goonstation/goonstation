@@ -282,8 +282,8 @@
 		return 0
 
 	if (M == user)
-		M.visible_message("<span style=\"color:blue\">[M] takes a bite of [src]!</span>",\
-		"<span style=\"color:blue\">You take a bite of [src]!</span>")
+		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
+		"<span class='notice'>You take a bite of [src]!</span>")
 
 		if (src.material && src.material.edible)
 			src.material.triggerEat(M, src)
@@ -303,7 +303,7 @@
 				M.HealDamage("All", 5, 5)
 
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-			"<span style=\"color:red\">You finish eating [src].</span>")
+			"<span class='alert'>You finish eating [src].</span>")
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -312,9 +312,9 @@
 		if(M.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
 			return 0
-		user.tri_message("<span style=\"color:red\"><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span style=\"color:red\">You try to feed [M] [src]!</span>",\
-		M, "<span style=\"color:red\"><b>[user]</b> tries to feed you [src]!</span>")
+		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
+		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 		logTheThing("combat", user, M, "attempts to feed %target% [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
@@ -322,9 +322,9 @@
 		if (get_dist(user,M) > 1)
 			return 0
 
-		user.tri_message("<span style=\"color:red\"><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span style=\"color:red\">You feed [M] [src]!</span>",\
-		M, "<span style=\"color:red\"><b>[user]</b> feeds you [src]!</span>")
+		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+		user, "<span class='alert'>You feed [M] [src]!</span>",\
+		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing("combat", user, M, "feeds %target% [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
@@ -345,7 +345,7 @@
 				M.HealDamage("All", 5, 5)
 
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-			"<span style=\"color:red\">You finish eating [src].</span>")
+			"<span class='alert'>You finish eating [src].</span>")
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -477,7 +477,7 @@
 	return added
 
 /obj/item/proc/before_stack(atom/movable/O as obj, mob/user as mob)
-	user.visible_message("<span style=\"color:blue\">[user] begins quickly stacking [src]!</span>")
+	user.visible_message("<span class='notice'>[user] begins quickly stacking [src]!</span>")
 
 /obj/item/proc/after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 	boutput(user, "<span class='notice'>You finish stacking [src].</span>")
@@ -860,7 +860,7 @@
 	for (var/obj/item/cloaking_device/I in M)
 		if (I.active)
 			I.deactivate(M)
-			M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+			M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 

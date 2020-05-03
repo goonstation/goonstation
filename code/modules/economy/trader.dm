@@ -505,11 +505,11 @@
 			boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
 			return
 		/*if (isitem(O))
-			user.visible_message("<span style=\"color:blue\">[src] rummages through [user]'s goods.</span>")
+			user.visible_message("<span class='notice'>[src] rummages through [user]'s goods.</span>")
 			var/staystill = user.loc
 			for(var/datum/commodity/N in goods_buy)
 				if (N.comtype == O.type)
-					user.visible_message("<span style=\"color:blue\">[src] is willing to buy all of [O].</span>")
+					user.visible_message("<span class='notice'>[src] is willing to buy all of [O].</span>")
 					for(N.comtype in view(1,user))
 						account.fields["current_money"] += N.price
 						qdel(N.comtype)
@@ -520,7 +520,7 @@
 				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
 			SPAWN_DBG(1 DECI SECOND)
-				user.visible_message("<span style=\"color:blue\">[src] rummages through [user]'s [O].</span>")
+				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
 				for (var/obj/M in O.contents)

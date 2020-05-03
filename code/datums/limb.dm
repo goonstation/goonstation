@@ -67,7 +67,7 @@
 				for (var/obj/item/cloaking_device/I in user)
 					if (I.active)
 						I.deactivate(user)
-						user.visible_message("<span style=\"color:blue\"><b>[user]'s cloak is disrupted!</b></span>")
+						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
@@ -75,7 +75,7 @@
 				for (var/obj/item/cloaking_device/I in user)
 					if (I.active)
 						I.deactivate(user)
-						user.visible_message("<span style=\"color:blue\"><b>[user]'s cloak is disrupted!</b></span>")
+						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else
@@ -99,7 +99,7 @@
 	attack_range(atom/target, var/mob/user, params)
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
-		user.visible_message("<b style='color:red'>[user] fires at [target] with the [holder.name]!</b>")
+		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 		playsound(user.loc, "sound/weapons/lasermed.ogg", 100, 1)
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 		if (ismob(target))
@@ -212,7 +212,7 @@
 			var/pox = text2num(params["icon-x"]) - 16
 			var/poy = text2num(params["icon-y"]) - 16
 			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
-			user.visible_message("<b style='color:red'>[user] fires at [target] with the [holder.name]!</b>")
+			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
@@ -309,7 +309,7 @@
 				var/spread_angle = 15
 				playsound(user.loc, "sound/misc/reliquary/Rel-vortex-firing.ogg", 70, 1)
 				flick("guardian_gunlift", user)
-				user.visible_message("<b style='color:red'>[user] fires at [target] with the [holder.name]!</b>")
+				user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 				next_shot_at = ticker.round_elapsed_ticks + cooldown
 				SPAWN_DBG (3)
 					shoot_projectile_ST_pixel_spread(user, proj, target, pox, poy, spread_angle)
@@ -435,7 +435,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b><span style='color:red'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -494,7 +494,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
-		msgs.base_attack_message = "<b><span style='color:red'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = "sound/effects/sawhit.ogg"
 		boutput(target, "<span class='alert'>You can feel the saw slicing your body apart!</span>")
 		target.emote("scream")
@@ -572,7 +572,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b><span style='color:red'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -729,7 +729,7 @@
 
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			user.werewolf_audio_effects(target, "disarm")
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[user] [pick("clocks", "strikes", "smashes")] [target] with a [pick("fierce", "fearsome", "supernatural", "wild", "beastly")] punch, forcing them to the ground!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[user] [pick("clocks", "strikes", "smashes")] [target] with a [pick("fierce", "fearsome", "supernatural", "wild", "beastly")] punch, forcing them to the ground!</B></span>"
 
 			if (prob(35))
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
@@ -774,7 +774,7 @@
 					HH.emote("scream")
 
 				msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] whips [HH] with the sharp edge of a chitinous tendril, shearing off their [limb_name]!</span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] whips [HH] with the sharp edge of a chitinous tendril, shearing off their [limb_name]!</span>"
 				msgs.damage_type = DAMAGE_CUT // We just lost a limb.
 
 				msgs.damage = rand(1,5)
@@ -787,7 +787,7 @@
 					target.drop_item() // Shamblers get a guaranteed disarm.
 
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 				msgs.damage = rand(1,2)
 
 		logTheThing("combat", user, target, "diarms %target% with [src.weak == 1 ? "werewolf" : "abomination"] arms at [log_loc(user)].")
@@ -847,12 +847,12 @@
 			user.werewolf_tainted_saliva_transfer(target)
 
 			if (send_flying == 2)
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] delivers a supernatural punch, sending [target] flying!</b></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] delivers a supernatural punch, sending [target] flying!</b></span>"
 			else
 				if (prob(25))
-					msgs.base_attack_message = "<span style=\"color:red\"><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+					msgs.base_attack_message = "<span class='alert'><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 				else
-					msgs.base_attack_message = "<span style=\"color:red\"><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+					msgs.base_attack_message = "<span class='alert'><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 					target.add_fingerprint(user)
 
 			if (prob(33) && !isdead(target) && !issilicon(target))
@@ -865,12 +865,12 @@
 
 		else if (src.weak == 2)
 			if (send_flying == 2)
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] delivers a coil of tentacles at [target], sending them flying!</b></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] delivers a coil of tentacles at [target], sending them flying!</b></span>"
 			else
 				if (prob(25))
-					msgs.base_attack_message = "<span style=\"color:red\"><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+					msgs.base_attack_message = "<span class='alert'><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 				else
-					msgs.base_attack_message = "<span style=\"color:red\"><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+					msgs.base_attack_message = "<span class='alert'><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 					target.add_fingerprint(user)
 
 			if (prob(33) && !isdead(target) && !issilicon(target))
@@ -883,9 +883,9 @@
 
 		else
 			if (send_flying == 2)
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] delivers a savage blow, sending [target] flying!</b></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] delivers a savage blow, sending [target] flying!</b></span>"
 			else
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 
 			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
 			msgs.damage = rand(6, 13)
@@ -1014,7 +1014,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 2, 7, rand(1,3) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
-		msgs.base_attack_message = "<b><span style='color:red'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1046,7 +1046,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 4, rand(1,3) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("kick", "stomp", "boot")
-		msgs.base_attack_message = "<b><span style='color:red'>[user] [action]s [target]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1123,7 +1123,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && ghostcritter_blocked[target.type])
-						user.show_text("<span style=\"color:red\"><b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b></span>")
+						user.show_text("<span class='alert'><b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b></span>")
 						return
 
 
@@ -1144,7 +1144,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, rand(dam_low, dam_high) * quality, stam_damage_mult, !isghostcritter(user))
 		user.attack_effects(target, affecting)
-		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span style='color:red'>[user] [pick(src.actions)] [target]!</span></b>"
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='alert'>[user] [pick(src.actions)] [target]!</span></b>"
 		if (src.sound_attack)
 			msgs.played_sound = src.sound_attack
 		msgs.damage_type = src.dmg_type
@@ -1336,7 +1336,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				HH.emote("scream")
 
 				msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] slams [HH] with the edge of their enormous claw, shearing off their [limb_name]!</span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] slams [HH] with the edge of their enormous claw, shearing off their [limb_name]!</span>"
 				msgs.damage_type = DAMAGE_CUT // We just lost a limb.
 
 				msgs.damage = rand(1,5)
@@ -1349,7 +1349,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 					target.drop_item() // Shamblers get a guaranteed disarm.
 
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] attack[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] attack[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 				msgs.damage = rand(1,2)
 
 		logTheThing("combat", user, target, "disarms %target% with Reliquary Guardian Fist at [log_loc(user)].")
@@ -1404,21 +1404,21 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 
 		if (send_flying == 2)
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[user] delivers a supernatural punch, sending [target] flying!</b></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[user] delivers a supernatural punch, sending [target] flying!</b></span>"
 		else
 			if (prob(25))
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 			else
-				msgs.base_attack_message = "<span style=\"color:red\"><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+				msgs.base_attack_message = "<span class='alert'><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 				target.add_fingerprint(user)
 
 		if (prob(33) && !isdead(target) && !issilicon(target))
 			target.emote("scream")
 
 		if (send_flying == 2)
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 		else
-			msgs.base_attack_message = "<span style=\"color:red\"><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
+			msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 
 			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
 			msgs.damage = rand(6, 13)

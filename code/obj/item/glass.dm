@@ -26,7 +26,7 @@ SHARDS
 	burn_type = 1
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins stacking glass sheets!</span>")
+		user.visible_message("<span class='notice'>[user] begins stacking glass sheets!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='notice'>You finish stacking glass.</span>")

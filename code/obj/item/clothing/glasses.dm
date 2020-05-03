@@ -322,7 +322,7 @@
 				pinhole = 1
 				block_eye = null
 				appearance_flags |= RESET_COLOR
-				user.show_message("<span style='color:blue'>You poke a tiny pinhole into [src]!</span>")
+				user.show_message("<span class='notice'>You poke a tiny pinhole into [src]!</span>")
 				if (!pinhole)
 					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return

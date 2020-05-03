@@ -27,7 +27,7 @@ MATERIAL
 	stamina_crit_chance = 25
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins gathering up metal rods!</span>")
+		user.visible_message("<span class='notice'>[user] begins gathering up metal rods!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='notice'>You finish gathering rods.</span>")
@@ -125,7 +125,7 @@ MATERIAL
 			if (src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> begins building a grille.</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.weakened && !usr.getStatusDuration("stunned"))
@@ -166,7 +166,7 @@ MATERIAL
 	burn_type = 1
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins stacking metal sheets!</span>")
+		user.visible_message("<span class='notice'>[user] begins stacking metal sheets!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='notice'>You finish stacking metal.</span>")

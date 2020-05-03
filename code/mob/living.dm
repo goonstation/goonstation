@@ -395,7 +395,7 @@
 					for (var/obj/item/cloaking_device/I in src)
 						if (I.active)
 							I.deactivate(src)
-							src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+							src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -1204,7 +1204,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/turf/T = get_turf(src)
 	if (T.active_liquid && src.lying)
 		T.active_liquid.HasEntered(src, T)
-		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
+		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
 	if (!src.stat && !src.restrained())
 		var/struggled_grab = 0

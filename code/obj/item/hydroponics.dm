@@ -210,7 +210,7 @@
 			H.organHolder.drop_organ("appendix")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
+				"<span class='alert'><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -219,7 +219,7 @@
 			H.organHolder.drop_organ("left_kidney")
 			playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+				"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -228,7 +228,7 @@
 			H.organHolder.drop_organ("left_lung")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+				"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -237,7 +237,7 @@
 			H.organHolder.drop_organ("right_kidney")
 			playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+				"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -246,7 +246,7 @@
 			H.organHolder.drop_organ("right_lung")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+				"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -255,7 +255,7 @@
 			H.organHolder.drop_organ("liver")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
+				"<span class='alert'><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 
@@ -265,7 +265,7 @@
 			H.organHolder.drop_organ("heart")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
+				"<span class='alert'><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -275,7 +275,7 @@
 			H.organHolder.drop_organ("spleen")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
+				"<span class='alert'><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -284,7 +284,7 @@
 			H.organHolder.drop_organ("pancreas")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
+				"<span class='alert'><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()

@@ -102,11 +102,11 @@ datum/v_space
 			V.body = user
 			user.mind.transfer_to(V)
 			character = V
-			character.visible_message("<span style=\"color:blue\"><b>[user.name] logs in!</b></span>")
+			character.visible_message("<span class='notice'><b>[user.name] logs in!</b></span>")
 		else
 			character = create_Vcharacter(user, network_device, network)
 			character.set_loc(B.loc)
-			character.visible_message("<span style=\"color:blue\"><b>[character.name] logs in!</b></span>")
+			character.visible_message("<span class='notice'><b>[character.name] logs in!</b></span>")
 		users.Add(character)
 		// Made much more prominent due to frequent a- and mhelps (Convair880).
 		character.show_text("<h2><font color=red><B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B></font></h2>", "red")

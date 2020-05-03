@@ -103,7 +103,7 @@
 			return
 
 		if (istype(W, /obj/item/circular_saw))
-			user.visible_message("<span style=\"color:blue\">[user] hollows out [src].</span>")
+			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
 
@@ -130,7 +130,7 @@
 				if (M == user || user.loc != get_turf(user))
 					continue
 				nerdlist += M
-			user.visible_message("<span style=\"color:blue\">[user] holds out [src] and stares into it.</span>")
+			user.visible_message("<span class='notice'>[user] holds out [src] and stares into it.</span>")
 			if(src.donor || src.donor_name)
 				user.say("Alas, poor [src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"]! I knew him, [length(nerdlist) != 0 ? pick(nerdlist) : "Horatio"], a fellow of infinite jest, of most excellent fancy.")
 			else
@@ -171,9 +171,9 @@
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

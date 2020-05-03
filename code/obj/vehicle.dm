@@ -2164,7 +2164,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span style=\"color:blue\"><B>[src] picks up the [A.name].</B></span>", 1)
+			C.show_message("<span class='notice'><B>[src] picks up the [A.name].</B></span>", 1)
 		return
 
 	//Very funny
@@ -2218,11 +2218,11 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		if(helditems.len == 1)
 			var/obj/O = helditems[1]
 			for (var/mob/C in AIviewers(src))
-				C.show_message("<span style=\"color:blue\"><B>[src] leaves the [O.name] on [src.loc].</B></span>", 1)
+				C.show_message("<span class='notice'><B>[src] leaves the [O.name] on [src.loc].</B></span>", 1)
 			boutput(usr, "<span class='notice'><B>You leave the [O.name] on [src.loc].</B></span>")
 		if(helditems.len > 1)
 			for (var/mob/C in AIviewers(src))
-				C.show_message("<span style=\"color:blue\"><B>[src] leaves [helditems.len] crates on [src.loc].</B></span>", 1)
+				C.show_message("<span class='notice'><B>[src] leaves [helditems.len] crates on [src.loc].</B></span>", 1)
 			boutput(usr, "<span class='notice'><B>You leave [helditems.len] crates on [src.loc].</B></span>")
 
 		for (var/obj/HI in helditems)

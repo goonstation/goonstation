@@ -94,7 +94,7 @@
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
-			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span style=\"color:blue\">Your faith protects you from [owner]'s ethereal force!</span>")
+			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
 			return
 		else
 			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
@@ -134,7 +134,7 @@
 			src.wraith.client.mob = owner
 
 		owner.visible_message("<span class='alert'><strong>[pick("[owner] suddenly rises from the floor!", "[owner] suddenly looks a lot less dead!", "A dark light shines from [owner]'s eyes!")]</strong></span>",\
-			                  "<span style=\"color:blue\">[pick("You force your will into [owner]'s corpse.", "Your dark will forces [owner] to rise.", "You assume direct control of [owner].")]</span>")
+			                  "<span class='notice'>[pick("You force your will into [owner]'s corpse.", "Your dark will forces [owner] to rise.", "You assume direct control of [owner].")]</span>")
 
 		src.addRevenantVerbs()
 
@@ -402,7 +402,7 @@
 			RH.channeling = 0
 			var/datum/bioEffect/hidden/revenant/R = RH.revenant
 			R.ghoulTouchActive = 4
-			holder.owner.visible_message("<span class='alert'>[holder.owner] glows with ethereal power!</span>", "<span style=\"color:blue\">You feel ghostly strength pulsing through you.</span>")
+			holder.owner.visible_message("<span class='alert'>[holder.owner] glows with ethereal power!</span>", "<span class='notice'>You feel ghostly strength pulsing through you.</span>")
 			return 0
 		holder.owner.show_message("<span class='alert'>You cannot cast that ability!</span>")
 
@@ -436,11 +436,11 @@
 				holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")
 				return 1
 			else
-				holder.owner.show_message("<span style=\"color:blue\">You hurl [target] away from you!</span>")
+				holder.owner.show_message("<span class='notice'>You hurl [target] away from you!</span>")
 				T.throw_at(throwat, 32, 2)
 				T.show_message("<span class='alert'>An unknown force hurls you away!</span>")
 		else
-			holder.owner.show_message("<span style=\"color:blue\">You hurl [target] away from you!</span>")
+			holder.owner.show_message("<span class='notice'>You hurl [target] away from you!</span>")
 			M.throw_at(throwat, 32, 2)
 
 		return 0
@@ -474,7 +474,7 @@
 
 		var/location = holder.owner.loc
 
-		holder.owner.visible_message("<span class='alert'>[holder.owner] reaches out towards [H], making a crushing motion.</span>", "<span style=\"color:blue\">You reach out towards [H].</span>")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] reaches out towards [H], making a crushing motion.</span>", "<span class='notice'>You reach out towards [H].</span>")
 		H.changeStatus("weakened", 2 SECONDS)
 
 		var/datum/abilityHolder/revenant/RH

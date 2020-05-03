@@ -39,7 +39,7 @@ var/list/all_toilets = null
 		return
 	if (istype(W, /obj/item/grab))
 		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)
-		user.visible_message("<span style='color:blue'>[user] gives [W:affecting] a swirlie!</span>", "<span style='color:blue'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
+		user.visible_message("<span class='notice'>[user] gives [W:affecting] a swirlie!</span>", "<span class='notice'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
 		return
 
 	return ..()
@@ -59,7 +59,7 @@ var/list/all_toilets = null
 	if (M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/mario) && istype(H.head, /obj/item/clothing/head/mario))
-			user.visible_message("<span style='color:blue'>[user] dives into [src]!</span>", "<span style='color:blue'>You dive into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] dives into [src]!</span>", "<span class='notice'>You dive into [src]!</span>")
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(src.loc))
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 
@@ -78,13 +78,13 @@ var/list/all_toilets = null
 				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(picked.loc))
 				M.set_loc(picked.loc)
 				playsound(picked.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
-				user.visible_message("<span style='color:blue'>[user] emerges from [src]!</span>", "<span style='color:blue'>You emerge from [src]!</span>")
+				user.visible_message("<span class='notice'>[user] emerges from [src]!</span>", "<span class='notice'>You emerge from [src]!</span>")
 			return
 
 	if (M == user)
-		user.visible_message("<span style='color:blue'>[user] sits on [src].</span>", "<span style='color:blue'>You sit on [src].</span>")
+		user.visible_message("<span class='notice'>[user] sits on [src].</span>", "<span class='notice'>You sit on [src].</span>")
 	else
-		user.visible_message("<span style='color:blue'>[M] is seated on [src] by [user]!</span>")
+		user.visible_message("<span class='notice'>[M] is seated on [src] by [user]!</span>")
 	M.anchored = 1
 	M.buckled = src
 	M.set_loc(src.loc)
@@ -103,15 +103,15 @@ var/list/all_toilets = null
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)
-				user.visible_message("<span style='color:blue'>[M] is zipped up by [user]. That's... that's honestly pretty creepy.</span>")
+				user.visible_message("<span class='notice'>[M] is zipped up by [user]. That's... that's honestly pretty creepy.</span>")
 			else
-				user.visible_message("<span style='color:blue'>[M] zips up.</span>", "<span style='color:blue'>You zip up.</span>")
+				user.visible_message("<span class='notice'>[M] zips up.</span>", "<span class='notice'>You zip up.</span>")
 //			boutput(world, "[M] is no longer buckled to [src]")
 			M.anchored = 0
 			M.buckled = null
 			src.add_fingerprint(user)
 	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))
-		user.visible_message("<span style='color:blue'>[user] flushes [src].</span>", "<span style='color:blue'>You flush [src].</span>")
+		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
 		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)
 
 
@@ -126,7 +126,7 @@ var/list/all_toilets = null
 		src.contents.len = 0
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
-		src.visible_message("<span style='color:blue'>The toilet is clogged!</span>")
+		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
 
 /obj/item/storage/toilet/custom_suicide = 1
 /obj/item/storage/toilet/suicide_in_hand = 0
@@ -139,11 +139,11 @@ var/list/all_toilets = null
 	if (src.clogged >= 1 || src.contents.len >= 7 || !(islist(all_toilets) && all_toilets.len))
 		head.set_loc(src.loc)
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
-		src.visible_message("<span style='color:blue'>[head] floats up out of the clogged [src.name]!</span>")
+		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
 				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
-				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
+				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 	else
 		var/list/emergeplaces = list()
@@ -154,11 +154,11 @@ var/list/all_toilets = null
 			var/atom/picked = pick(emergeplaces)
 			head.set_loc(picked.loc)
 			playsound(picked.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
-			head.visible_message("<span style='color:blue'>[head] emerges from [picked]!</span>")
+			head.visible_message("<span class='notice'>[head] emerges from [picked]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
 				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
-				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
+				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)

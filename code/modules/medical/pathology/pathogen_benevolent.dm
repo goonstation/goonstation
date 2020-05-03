@@ -63,7 +63,7 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 				if(H.bleeding)
 					repair_bleeding_damage(M, 80, 2)
 			if (prob(50))
-				M.show_message("<span style=\"color:blue\">You feel your wounds closing by themselves.</span>")
+				M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -160,7 +160,7 @@ datum/pathogeneffects/benevolent/cleansing
 			M.take_toxin_damage(-origin.stage / 2)
 			M.updatehealth()
 			if (prob(12))
-				M.show_message("<span style=\"color:blue\">You feel cleansed.</span>")
+				M.show_message("<span class='notice'>You feel cleansed.</span>")
 
 	react_to(var/R, var/zoom)
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
@@ -253,7 +253,7 @@ datum/pathogeneffects/benevolent/resurrection
 			M.stuttering = 15
 			M.updatehealth()
 			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-				M.ghost.show_text("<span style=\"color:red\"><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				M.ghost.mind.transfer_to(M)
 				qdel(M.ghost)
 			if (ishuman(M))

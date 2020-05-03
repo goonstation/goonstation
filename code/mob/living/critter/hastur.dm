@@ -233,7 +233,7 @@ var/HasturPresent = 0
 			H.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms and manifests into shape!</span>"), pick("<span class='alert'>Void manifests around you, giving you your physical form back.</span>", "<span class='alert'>Energies of the void allow you to manifest back in a physical form.</span>"))
 			stage = 0
 		else
-			H.visible_message(pick("<span class='alert'>[H] vanishes from sight!</span>", "<span class='alert'>[H] dissolves into the void!</span>"), pick("<span style=\"color:blue\">You are enveloped by the void, hiding your physical manifestation.</span>", "<span style=\"color:blue\">You fade into the void!</span>"))
+			H.visible_message(pick("<span class='alert'>[H] vanishes from sight!</span>", "<span class='alert'>[H] dissolves into the void!</span>"), pick("<span class='notice'>You are enveloped by the void, hiding your physical manifestation.</span>", "<span class='notice'>You fade into the void!</span>"))
 			H.set_density(0)
 			H.invisibility = 10
 			H.alpha = 160

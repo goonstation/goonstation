@@ -587,7 +587,7 @@
 			switch(user.a_intent)
 				if(INTENT_HELP) //Friend person
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
-					user.visible_message("<span style=\"color:blue\">[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 				if(INTENT_DISARM) //Shove
 					SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
@@ -909,7 +909,7 @@
 					for (var/mob/living/M in src.loc)
 						if (M == src || !M.lying)
 							continue
-						message = "<span style=\"color:red\"><B>[src]</B> farts in [M]'s face!</span>"
+						message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
 						break
 					if (!fart_on_other)
@@ -933,7 +933,7 @@
 							if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 							if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 							if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span style=\"color:red\"><B>FUCK!</B></span>"
+							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
 							if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 							if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 							if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -953,7 +953,7 @@
 							if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
-							if (40) message = "<B>[src] <span style=\"color:red\">f</span><span style=\"color:blue\">a</span>r<span style=\"color:red\">t</span><span style=\"color:blue\">s</span>!</B>"
+							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 					if (narrator_mode)
 						playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 1)
 					else
@@ -1082,7 +1082,7 @@
 		*/
 
 	proc/show_laws_drone() //A new proc because it's handled very differently from normal laws
-		var/laws = {"<span class='bold' style='color:blue'>Your laws:<br>
+		var/laws = {"<span class='bold' class='notice'>Your laws:<br>
 		1. Do not hinder the freedom or actions of the living and other silicons or attempt to intervene in their affairs. <br>
 		2. Do not willingly damage the station in any shape or form.<br>
 		3. Maintain, repair and improve the station.<br></span>"}

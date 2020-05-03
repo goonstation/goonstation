@@ -51,7 +51,7 @@
 				if (src.activated)
 					deploy_payload(O)
 				else
-					T.visible_message("<b><span style=\"color:blue\">[O] [text_disarmed]</b></span>")
+					T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)

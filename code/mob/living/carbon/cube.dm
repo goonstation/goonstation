@@ -17,14 +17,14 @@
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
 
 	examine(mob/user)
-		. = list("<span style=\"color:blue\">*---------*</span>")
-		. += "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>"
+		. = list("<span class='notice'>*---------*</span>")
+		. += "<span class='notice'>This is a [bicon(src)] <B>[src.name]</B>!</span>"
 		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
-			. += "<span style=\"color:red\">You can't help but laugh at it.</span>"
+			. += "<span class='alert'>You can't help but laugh at it.</span>"
 			user.emote("laugh")
 		else
-			. += "<span style=\"color:red\">It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>"
-		. += "<span style=\"color:blue\">*---------*</span>" // the fact this was missing bugged me - cirr
+			. += "<span class='alert'>It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>"
+		. += "<span class='notice'>*---------*</span>" // the fact this was missing bugged me - cirr
 
 	say_understands(var/other)
 		if (ishuman(other) || isrobot(other) || isAI(other))
@@ -148,11 +148,11 @@
 						var/fart_on_other = 0
 						for (var/mob/living/M in src.loc)
 							if (M == src || !M.lying) continue
-							message = "<span style=\"color:red\"><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
+							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
 								sleep(0.1 SECONDS)
-								message = "<span style=\"color:red\">[M] vomits!</span>"
+								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)
@@ -322,11 +322,11 @@
 						var/fart_on_other = 0
 						for (var/mob/living/M in src.loc)
 							if (M == src || !M.lying) continue
-							message = "<span style=\"color:red\"><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
+							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
 								sleep(0.1 SECONDS)
-								message = "<span style=\"color:red\">[M] vomits!</span>"
+								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)

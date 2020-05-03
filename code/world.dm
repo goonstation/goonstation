@@ -1342,7 +1342,7 @@ var/f_color_selector_handler/F_Color_Selector
 						M.full_heal()
 						logTheThing("admin", nick, M, "healed / revived %target%")
 						logTheThing("diary", nick, M, "healed / revived %target%", "admin")
-						message_admins("<span style=\"color:red\">Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
+						message_admins("<span class='alert'>Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
 
 						var/ircmsg[] = new()
 						ircmsg["type"] = "heal"

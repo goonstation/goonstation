@@ -79,7 +79,7 @@
 			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
 			logTheThing("admin", usr, M, "sent %target% to the prison zone.")
 			logTheThing("diary", usr, M, "%target% to the prison zone.", "admin")
-			message_admins("<span style=\"color:blue\">[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
+			message_admins("<span class='notice'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
 
 	return
 
@@ -107,7 +107,7 @@
 	var/subtle_href = null
 	if(src.holder && M.client)
 		subtle_href = "?src=\ref[src.holder];action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins("<span style=\"color:blue\"><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
+	message_admins("<span class='notice'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	set category = null
@@ -132,7 +132,7 @@
 
 	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged %target%: [html_encode(msg)]")
 	logTheThing("diary", src.mob, Mclient.mob, ": Plain Messaged %target%: [html_encode(msg)]", "admin")
-	message_admins("<span style=\"color:blue\"><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
+	message_admins("<span class='notice'><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
 
 /client/proc/cmd_admin_plain_message_all()
 	set category = "Special Verbs"
@@ -154,7 +154,7 @@
 
 	logTheThing("admin", src.mob, null, "Plain Messaged All: [html_encode(msg)]")
 	logTheThing("diary", src.mob, null, "Plain Messaged All: [html_encode(msg)]", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(src.mob)] showed a plain message to all</span>")
+	message_admins("<span class='notice'>[key_name(src.mob)] showed a plain message to all</span>")
 
 /client/proc/cmd_admin_pm(mob/M as mob in world)
 	set category = null
@@ -305,11 +305,11 @@
 	for (var/mob/living/silicon/O in mobs)
 		if (isghostdrone(O))
 			continue
-		boutput(O, "<h3><span style=\"color:blue\">New law uploaded by Centcom: [input]</span></h3>")
+		boutput(O, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
 	for (var/mob/dead/aieye/E in mobs)
-		boutput(E, "<h3><span style=\"color:blue\">New law uploaded by Centcom: [input]</span></h3>")
+		boutput(E, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
 
@@ -354,11 +354,11 @@
 	for (var/mob/living/silicon/O in mobs)
 		if (isghostdrone(O))
 			continue
-		boutput(O, "<h3><span style=\"color:blue\">New laws were uploaded by CentCom:</span></h3>")
+		boutput(O, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
 	for (var/mob/dead/aieye/E in mobs)
-		boutput(E, "<h3><span style=\"color:blue\">New laws were uploaded by CentCom:</span></h3>")
+		boutput(E, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
 
@@ -400,7 +400,7 @@
 		for(var/mob/living/silicon/O in mobs)
 			if (isghostdrone(O)) continue
 			if (O.emagged || O.syndicate) continue
-			boutput(O, "<h3><span style=\"color:blue\">Behavior safety chip activated. Laws reset.</span></h3>")
+			boutput(O, "<h3><span class='notice'>Behavior safety chip activated. Laws reset.</span></h3>")
 			O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 			O.show_laws()
 
@@ -423,7 +423,7 @@
 
 		logTheThing("admin", usr, M, "healed / revived %target%")
 		logTheThing("diary", usr, M, "healed / revived %target%", "admin")
-		message_admins("<span style=\"color:red\">Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
+		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 	else
 		alert("Admin revive disabled")
 
@@ -447,7 +447,7 @@
 
 		logTheThing("admin", usr, null, "healed / revived [healed] mobs via Heal All")
 		logTheThing("diary", usr, null, "healed / revived [healed] mobs via Heal All", "admin")
-		message_admins("<span style=\"color:red\">Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!</span>")
+		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!</span>")
 
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
@@ -641,7 +641,7 @@
 
 	logTheThing("admin", selection, "set %target%'s viewport orientation to [rotation].")
 	logTheThing("diary", usr, selection, "set %target%'s viewport orientation to [rotation].", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
+	message_admins("<span class='notice'>[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
 
 /client/proc/cmd_admin_clownify(mob/living/M as mob in world)
 	set category = null
@@ -1260,7 +1260,7 @@
 	target = trim(lowertext(target))
 	if (!target) return 0
 
-	var/msg = "<span style='color:blue'>"
+	var/msg = "<span class='notice'>"
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
@@ -2255,7 +2255,7 @@ var/global/night_mode_enabled = 0
 			if (alert(usr, "Boot [M]?", "Confirmation", "Yes", "No") == "Yes")
 				logTheThing("admin", usr, M, "booted %target%.")
 				logTheThing("diary", usr, M, "booted %target%.", "admin")
-				message_admins("<span style=\"color:blue\">[key_name(usr)] booted [key_name(M)].</span>")
+				message_admins("<span class='notice'>[key_name(usr)] booted [key_name(M)].</span>")
 				del(M.client)
 	else
 		alert("You need to be at least a Moderator to kick players.")

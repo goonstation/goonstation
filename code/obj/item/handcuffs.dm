@@ -58,7 +58,7 @@
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
 				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
-				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
+				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
 		SPAWN_DBG(0.5 SECONDS)

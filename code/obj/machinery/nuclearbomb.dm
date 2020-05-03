@@ -84,11 +84,11 @@
 
 			switch(src.health)
 				if(80 to 125)
-					. += "<span style=\"color:red\">It is a little bit damaged.</span>"
+					. += "<span class='alert'>It is a little bit damaged.</span>"
 				if(40 to 79)
-					. += "<span style=\"color:red\">It looks pretty beaten up.</span>"
+					. += "<span class='alert'>It looks pretty beaten up.</span>"
 				if(1 to 39)
-					. += "<span style=\"color:red\"><b>It seems to be on the verge of falling apart!</b></span>"
+					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
 	attack_hand(mob/user as mob)

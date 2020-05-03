@@ -228,7 +228,7 @@
 			boutput(usr, "<span class='alert'>[C]'s dead, Jim! You're a miracle-worker, not...uh...look, it ain't gonna work.</span>")
 			return 1
 
-		usr.visible_message("<span style=\"color:blue\">[src.holder.owner] lays hands upon [C], murmuring a soft prayer to [religiousHolder.god_name]!</span>")
+		usr.visible_message("<span class='notice'>[src.holder.owner] lays hands upon [C], murmuring a soft prayer to [religiousHolder.god_name]!</span>")
 		boutput(C, "<span class='notice'>You feel less terrible!</span>")
 		playsound(usr.loc, "sound/voice/heavenly.ogg", 50, 1)
 		var/datum/ailment_data/disease/D
@@ -380,10 +380,10 @@
 			return 1
 
 		var/obj/machinery/power/generatorTemp/E = T
-		usr.visible_message("<span style=\"color:blue\">[usr] places a hand on the [E] and mumbles something.</span>")
+		usr.visible_message("<span class='notice'>[usr] places a hand on the [E] and mumbles something.</span>")
 		playsound(usr.loc, "sound/voice/heavenly.ogg", 50, 1)
 		E.grump = 0
-		E.visible_message("<span style=\"color:blue\"><b>The [E] suddenly seems very chill!</b></span>")
+		E.visible_message("<span class='notice'><b>The [E] suddenly seems very chill!</b></span>")
 
 		return 0
 

@@ -94,7 +94,7 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
@@ -102,7 +102,7 @@
 
 	onEnd()
 		..()
-		owner.visible_message("<span style=\"color:blue\">[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
+		owner.visible_message("<span class='notice'>[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
 		cam.securedstate = (secstate == 2) ? 1 : 2
 		if (cam.securedstate != 2)
 			cam.UnsubscribeProcess()
@@ -372,11 +372,11 @@
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
-		boutput(user, text("<span style=\"color:blue\">[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
+		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
 		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
-			boutput(user, text("<span style=\"color:blue\">The access hatch is now [].</span>", (locked) ? "closed" : "open"))
+			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
 
 	..() // call the parent to (de|re)activate
 

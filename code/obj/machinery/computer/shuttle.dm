@@ -182,7 +182,7 @@
 				src.authorized -= W:registered
 				src.authorized += W:registered
 				if (src.auth_need - src.authorized.len > 0)
-					boutput(world, text("<span style=\"color:blue\"><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
@@ -192,7 +192,7 @@
 
 			if("Repeal")
 				src.authorized -= W:registered
-				boutput(world, text("<span style=\"color:blue\"><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 
 			if("Abort")
 				boutput(world, "<span class='notice'><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")

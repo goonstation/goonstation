@@ -404,7 +404,7 @@
 		else if (isscrewingtool(W))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+				src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 
 		else if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
@@ -469,12 +469,12 @@
 	get_desc(dist)
 		..()
 		if (src.on && src.idle)
-			. = "<br><span style=\"color:blue\">[src] appears to be sleeping.</span>"
+			. = "<br><span class='notice'>[src] appears to be sleeping.</span>"
 		if (src.health < initial(health))
 			if (src.health > 10)
-				. += "<br><span style=\"color:red\">[src]'s parts look loose.</span>"
+				. += "<br><span class='alert'>[src]'s parts look loose.</span>"
 			else
-				. += "<br><span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"
+				. += "<br><span class='alert'><B>[src]'s parts look very loose!</B></span>"
 
 
 	attack_ai(mob/user as mob)
@@ -485,7 +485,7 @@
 			return
 		if(user.a_intent == "help" && user.machine != src && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
-			user.visible_message("<span style=\"color:blue\">[user] [affection]s [src]!</span>","<span style=\"color:blue\">You [affection] [src]!</span>")
+			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
 			if(src.task)
 				src.task.task_input("hugged")
 			return
@@ -1323,7 +1323,7 @@
 						master.set_emotion("love")
 					if("joy","love")
 						if (prob(25))
-							master.visible_message("<span style=\"color:blue\">[master.name] reciprocates the hug!</span>")
+							master.visible_message("<span class='notice'>[master.name] reciprocates the hug!</span>")
 				return 1
 
 			return 0

@@ -977,7 +977,7 @@
 		health = min(200,health+amount)
 		if(health > 0 && broken == 1)
 			repair_broken()
-			src.visible_message("<span style=\"color:blue\"><b>The door to [src] swings shut and switches back on!<b></span>")
+			src.visible_message("<span class='notice'><b>The door to [src] swings shut and switches back on!<b></span>")
 
 	ex_act(severity)
 		take_damage(250-50*severity)
@@ -995,7 +995,7 @@
 			if(welder.welding)
 				if(welder.try_weld(user, 4))
 					repair_damage(20)
-					user.visible_message("<span style=\"color:blue\">[user] repairs the [src] with [welder]!</span>")
+					user.visible_message("<span class='notice'>[user] repairs the [src] with [welder]!</span>")
 					return
 
 		if (health <= 0)
@@ -1007,7 +1007,7 @@
 
 		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
 			if (insert_item(W,user))
-				user.visible_message("<span style=\"color:blue\">[user] puts [W] into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
 			return
 
 		if(istype(W,/obj/item/satchel))
@@ -1039,7 +1039,7 @@
 			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly filling the [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling the [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/I in view(1,user))
 			if (!istype(I, O)) continue

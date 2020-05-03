@@ -466,7 +466,7 @@
 			wear_image.overlays = list()
 			boutput( user, "You pry out the crystal." )
 			if(prob(src.crystal.total_pressure / 45))
-				boutput( user, "<b style='color:red'>It shatters!</b>" )
+				boutput( user, "<b class='alert'>It shatters!</b>" )
 				qdel(src.crystal)
 				return
 			src.crystal.set_loc(user.loc)

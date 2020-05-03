@@ -206,7 +206,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		qdel(src)
 		return
 	if (isscrewingtool(W))
-		user.show_message("<span style=\"color:blue\">The igniter is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The igniter is now secured!</span>", 1)
 		var/obj/item/flamethrower/R = new /obj/item/flamethrower(src.loc)
 		var/obj/item/assembly/w_r_ignite/S = src
 		R.part1 = S.part1

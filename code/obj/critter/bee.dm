@@ -255,7 +255,7 @@
 		attack_hand(mob/user as mob)
 			if (src.alive)
 				if (user.a_intent == INTENT_HELP)
-					src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 					karma_update(1, "SAINT", user)
 
 					if (masked == 1)
@@ -271,7 +271,7 @@
 							for(var/mob/O in hearers(src, null))
 								O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 						if (prob(10))
-							user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>", "<span style='color:blue'>[src] hugs you back!</span>")
+							user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
 							if (user.reagents)
 								user.reagents.add_reagent("hugs", 10)
 							karma_update(2, "SAINT", user)
@@ -386,8 +386,8 @@
 				cleaned = 1
 				W.reagents.clear_reagents()
 				playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
-				user.visible_message("<span style='color:blue'><b>[user]</b> washes [src]!</span>", "<span style='color:blue'>You clean the HECK out of [src]!</span>")
-				src.visible_message("<span style='color:blue'>[src] bumbles really happily!  Also, a little squeakily.</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> washes [src]!</span>", "<span class='notice'>You clean the HECK out of [src]!</span>")
+				src.visible_message("<span class='notice'>[src] bumbles really happily!  Also, a little squeakily.</span>")
 				//todo: splash visual effect
 				src.dance()
 				user.unlock_medal("Remember to Wash Behind the Antennae", 1)
@@ -436,7 +436,7 @@
 			src.sleeping = rand(10, 20)
 			src.task = "sleeping"
 			src.on_sleep()
-			src.visible_message("<span style='color:blue'>[src] gets tired from all that work and takes a nap!</span>")
+			src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 			src.is_dancing = 0
 
 	overbee
@@ -555,7 +555,7 @@
 
 				else
 
-					src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 					switch (++hug_count)
 						if (10)
 							src.visible_message("<b>[src]</b> burps!  It smells like beeswax.")
@@ -610,7 +610,7 @@
 		attack_hand(mob/user as mob)
 			if (src.alive && user.a_intent == "help")
 
-				src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " in a comforted manner" : ""].",2)
@@ -752,7 +752,7 @@
 				for (var/mob/maybeOurMom in hearers(src, null))
 					if (!isdead(maybeOurMom) && beeMomCkey == maybeOurMom.ckey)
 						beeMom = maybeOurMom
-						src.visible_message("<span style='color:blue'><b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!</span>")
+						src.visible_message("<span class='notice'><b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!</span>")
 						break
 
 			else if ((beeMom in hearers(src, null)))
@@ -830,12 +830,12 @@
 
 			else
 
-				src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 				if (prob(10))
-					user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>", "<span style='color:blue'>[src] hugs you back!</span>")
+					user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
 					if (user.reagents)
 						user.reagents.add_reagent("hugs", 10)
 
@@ -1237,8 +1237,8 @@
 
 			hat_that_bee(src.hat)
 			src.update_icon()
-			user.visible_message("<span style='color:blue'><b>[user]</b> puts a hat on [src]!</span>",\
-			"<span style='color:blue'>You put a hat on [src]!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> puts a hat on [src]!</span>",\
+			"<span class='notice'>You put a hat on [src]!</span>")
 			return
 		else
 			return ..()

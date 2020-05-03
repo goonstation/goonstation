@@ -202,7 +202,7 @@
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
 			boutput(user, "You insert the record into the record player.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] inserts the record into the record player.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
@@ -233,7 +233,7 @@
 	if(has_record)
 		if(!is_playing)
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes the record from the record player.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes the record from the record player.</b></span>")
 			user.put_in_hand_or_drop(src.record_inside)
 			src.record_inside = null
 			src.has_record = 0
@@ -532,7 +532,7 @@
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
 		else if(!is_playing)
-			src.visible_message("<span style=\"color:blue\"><b>[user] inserts the compact tape into the tape deck.</b></span>",
+			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
 			user.drop_item()
 			W.set_loc(src)
@@ -555,7 +555,7 @@
 	if(has_tape)
 		if(!is_playing)
 			boutput(user, "You remove the tape from the tape deck.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes the tape from the tape deck.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
 			user.put_in_hand_or_drop(src.tape_inside)
 			src.tape_inside = null
 			src.has_tape = 0

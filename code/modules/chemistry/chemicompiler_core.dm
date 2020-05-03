@@ -139,7 +139,7 @@
 	if(!istype(src.holder))
 		del(src)
 		return
-	message = "<span style=\"color:red\">[message]</span>"
+	message = "<span class='alert'>[message]</span>"
 	if(messageCallback)
 		return call(src.holder, messageCallback)(message)
 
@@ -748,7 +748,7 @@
 	if(!istype(holder))
 		del(src)
 		return
-	message = "<span style=\"color:red\">[message]</span>"
+	message = "<span class='alert'>[message]</span>"
 	if(istype(holder:loc, /mob))
 		boutput(holder:loc, message)
 	else

@@ -70,7 +70,7 @@
 		. = ..()
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
 			if (!src.cell || !istype(src.cell))
-				. += "<span style=\"color:red\">No power cell installed.</span>"
+				. += "<span class='alert'>No power cell installed.</span>"
 			else
 				. += "The baton is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
 

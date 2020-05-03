@@ -269,7 +269,7 @@
 
 	ex_act(severity)
 		if(severity)
-			src.visible_message("<span style=\"color:blue\"><B>[src]</B> crumbles away into dust!</span>")
+			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
 			qdel (src)
 		return
 
@@ -298,7 +298,7 @@
 				src.timeleft = 10
 
 		if (src.health <= 0)
-			src.visible_message("<span style=\"color:blue\"><B>[src]</B> crumbles away into dust!</span>")
+			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
 			qdel (src)
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -309,5 +309,5 @@
 				O.show_message("<span class='alert'><B>[src]</B> begins buzzing loudly!</span>", 1)
 			src.timeleft = 10
 		if (src.health <= 0)
-			src.visible_message("<span style=\"color:blue\"><B>[src]</B> crumbles away into dust!</span>")
+			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
 			qdel (src)

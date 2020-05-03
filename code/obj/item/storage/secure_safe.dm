@@ -58,7 +58,7 @@
 		if (isscrewingtool(W) && (src.locked == 1))
 			sleep(0.6 SECONDS)
 			src.open =! src.open
-			user.show_message("<span style=\"color:blue\">You [src.open ? "open" : "close"] the service panel.</span>")
+			user.show_message("<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 
 		if (ispulsingtool(W) && (src.open == 1) && (!src.locked) && (!src.l_hacking))

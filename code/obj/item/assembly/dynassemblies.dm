@@ -136,7 +136,7 @@ For hairball DynAssemblies see: jonescity.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins securing \the [assembly].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins securing \the [assembly].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
@@ -144,7 +144,7 @@ For hairball DynAssemblies see: jonescity.dm
 
 	onEnd()
 		..()
-		user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
+		user.visible_message("<span class='notice'><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
 		user.hand = !user.hand
 		user.drop_item()
 		user.hand = !user.hand
@@ -169,7 +169,7 @@ For hairball DynAssemblies see: jonescity.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins unsecuring \the [assembly].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins unsecuring \the [assembly].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
@@ -324,7 +324,7 @@ For hairball DynAssemblies see: jonescity.dm
 			return ..()
 		else
 			if (!user) return
-			user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>", "<span style=\"color:blue\">You drop the objects in your hands to create an assembly.</span>")
+			user.visible_message("<span class='notice'><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>", "<span class='notice'>You drop the objects in your hands to create an assembly.</span>")
 			user.u_equip(P)
 			user.u_equip(src)
 			var/obj/item/dynassembly/instrument/A = new /obj/item/dynassembly/instrument(get_turf(src))

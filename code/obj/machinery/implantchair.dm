@@ -19,9 +19,9 @@
 		return
 	if (M.buckled)	return
 	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[M] buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
+		user.visible_message("<span class='notice'>[M] buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 	else
-		user.visible_message("<span style=\"color:blue\">[M] is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [M].</span>")
+		user.visible_message("<span class='notice'>[M] is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
 	M.anchored = 1
 	M.buckled = src
 	M.set_loc(src.loc)
@@ -35,9 +35,9 @@
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)
-				user.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>", "<span style=\"color:blue\">You unbuckle [M].</span>")
+				user.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
 			else
-				user.visible_message("<span style=\"color:blue\">[M] unbuckles.</span>", "<span style=\"color:blue\">You unbuckle.</span>")
+				user.visible_message("<span class='notice'>[M] unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
 			M.anchored = 0
 			M.buckled = null
 			src.add_fingerprint(user)

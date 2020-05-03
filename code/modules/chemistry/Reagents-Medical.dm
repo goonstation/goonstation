@@ -1171,7 +1171,7 @@ datum
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
 					M.drowsyness++
-					M.visible_message("<span style=\"color:blue\"><b>[M.name]<b> looks a bit dazed.</span>")
+					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return
 

@@ -1010,7 +1010,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			boutput(user, "If you got really close, you could probably compare foot sizes.")
 			return
 
-		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span style=\"color:blue\">You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
+		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span class='notice'>You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
 		if (!somebody_fucked_up)
 			desc += " There's some total idiot fucker's footprint smooshed into the center."
 			boutput(user, "<span class='alert'>OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!</span>")
@@ -1215,7 +1215,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 				src.locked = !src.locked
 				updateUsrDialog()
 			else
-				boutput(user, "<font style='color: red;'>Access denied.</font>")
+				boutput(user, "<font class='alert'>Access denied.</font>")
 
 		else
 			return ..()

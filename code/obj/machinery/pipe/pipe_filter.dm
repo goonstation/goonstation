@@ -212,7 +212,7 @@
 				src.f_mask ^= text2num(href_list["tg"])
 				src.updateicon()
 		else
-			usr.see("<span style=\"color:red\">Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
+			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)

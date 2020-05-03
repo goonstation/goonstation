@@ -88,9 +88,9 @@
 		if (!can_buckle(to_buckle,user)) return
 
 		if (to_buckle == user)
-			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
+			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 		else
-			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [to_buckle].</span>")
+			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return
@@ -329,9 +329,9 @@
 		if (M.buckled && !user.restrained())
 			if (allow_unbuckle)
 				if (M != user)
-					user.visible_message("<span style=\"color:blue\"><b>[M]</b> is unbuckled by [user].</span>", "<span style=\"color:blue\">You unbuckle [M].</span>")
+					user.visible_message("<span class='notice'><b>[M]</b> is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
 				else
-					user.visible_message("<span style=\"color:blue\"><b>[M]</b> unbuckles.</span>", "<span style=\"color:blue\">You unbuckle.</span>")
+					user.visible_message("<span class='notice'><b>[M]</b> unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
 				unbuckle()
 			else
 				user.show_text("Seems like the buckle is firmly locked into place.", "red")
@@ -345,9 +345,9 @@
 			return
 
 		if (to_buckle == user)
-			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span style=\"color:blue\">You lie down and buckle yourself in.</span>")
+			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
 		else
-			user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [to_buckle].</span>")
+			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 		to_buckle.lying = 1
 		if (src.anchored)
@@ -395,14 +395,14 @@
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody && somebody.lying)
-				user.tri_message("<span style=\"color:blue\"><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
-				user, "<span style=\"color:blue\">You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
-				somebody, "<span style=\"color:blue\">[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
+				user.tri_message("<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
+				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
+				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
 				newSheet.layer = EFFECTS_LAYER_BASE-1
 				return
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> tucks [newSheet] into [src].</span>",\
-				"<span style=\"color:blue\">You tuck [newSheet] into [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> tucks [newSheet] into [src].</span>",\
+				"<span class='notice'>You tuck [newSheet] into [src].</span>")
 				return
 
 	proc/untuck_sheet(var/mob/user as mob)
@@ -418,13 +418,13 @@
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody && somebody.lying)
-				user.tri_message("<span style=\"color:blue\"><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
-				user, "<span style=\"color:blue\">You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
-				somebody, "<span style=\"color:blue\">[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
+				user.tri_message("<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
+				user, "<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
+				somebody, "<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
 				oldSheet.layer = initial(oldSheet.layer)
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> untucks [oldSheet] from [src].</span>",\
-				"<span style=\"color:blue\">You untuck [oldSheet] from [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> untucks [oldSheet] from [src].</span>",\
+				"<span class='notice'>You untuck [oldSheet] from [src].</span>")
 
 		if (oldSheet.Bed == src) // just in case it's somehow not us
 			oldSheet.Bed = null
@@ -573,7 +573,7 @@
 				chump = null
 			if (H.on_chair)// == 1)
 				if (M == user)
-					user.visible_message("<span style=\"color:blue\"><b>[M]</b> steps off [H.on_chair].</span>", "<span style=\"color:blue\">You step off [src].</span>")
+					user.visible_message("<span class='notice'><b>[M]</b> steps off [H.on_chair].</span>", "<span class='notice'>You step off [src].</span>")
 					src.add_fingerprint(user)
 					unbuckle()
 					return
@@ -583,9 +583,9 @@
 					if(user.restrained())
 						return
 					if (M != user)
-						user.visible_message("<span style=\"color:blue\"><b>[M]</b> is unbuckled by [user].</span>", "<span style=\"color:blue\">You unbuckle [M].</span>")
+						user.visible_message("<span class='notice'><b>[M]</b> is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
 					else
-						user.visible_message("<span style=\"color:blue\"><b>[M]</b> unbuckles.</span>", "<span style=\"color:blue\">You unbuckle.</span>")
+						user.visible_message("<span class='notice'><b>[M]</b> unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
 					src.add_fingerprint(user)
 					unbuckle()
 					return
@@ -661,7 +661,7 @@
 
 		if(stand)
 			if(ishuman(to_buckle))
-				user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
+				user.visible_message("<span class='notice'><b>[to_buckle]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 
 				var/mob/living/carbon/human/H = to_buckle
 				to_buckle.set_loc(src.loc)
@@ -676,9 +676,9 @@
 				H.start_chair_flip_targeting()
 		else
 			if (to_buckle == usr)
-				user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
+				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[to_buckle]</b> is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [to_buckle].</span>")
+				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 			if (src.anchored)
 				to_buckle.anchored = 1
@@ -998,7 +998,7 @@
 			src.unbuckle()
 			if (M && !src.buckled_guy)
 				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
-				"<span style='color:red'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
+				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 5, 1)
 				M.changeStatus("stunned", 80)
@@ -1162,17 +1162,17 @@
 				if (istype(thing, /obj/critter/meatslinky)) //slink slink
 					user.emote("scream")
 					random_brute_damage(user, 10)
-					user.visible_message("<span style='color:blue'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \his hand out in pain! \An [thing] slithers out of \the [src]!</span>",\
-					"<span style='color:blue'>You rummage through the seams and behind the cushions of [src] and your hand gets bit by \an [thing]!</span>")
+					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \his hand out in pain! \An [thing] slithers out of \the [src]!</span>",\
+					"<span class='notice'>You rummage through the seams and behind the cushions of [src] and your hand gets bit by \an [thing]!</span>")
 				else
-					user.visible_message("<span style='color:blue'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \an [thing] out of it!</span>",\
-					"<span style='color:blue'>You rummage through the seams and behind the cushions of [src] and you find \an [thing]!</span>")
+					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \an [thing] out of it!</span>",\
+					"<span class='notice'>You rummage through the seams and behind the cushions of [src] and you find \an [thing]!</span>")
 				last_use = world.time
 				max_uses--
 
 		else
-			user.visible_message("<span style='color:blue'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
-			"<span style='color:blue'>You rummage through the seams and behind the cushions of [src]!</span>")
+			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
+			"<span class='notice'>You rummage through the seams and behind the cushions of [src]!</span>")
 
 	blue
 		name = "comfy blue couch"

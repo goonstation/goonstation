@@ -33,11 +33,11 @@
 			var/self_msg = ""
 			var/success = 0
 			if (prob(50))
-				around_msg = "<span style=\"color:blue\"><b>[surgeon] cuts open [affected_mob] and removes a part of the headspider.</b></span>"
-				self_msg = "<span style=\"color:blue\">You remove some bits of the headspider from [affected_mob], but it quickly regrows them.</span>"
+				around_msg = "<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes a part of the headspider.</b></span>"
+				self_msg = "<span class='notice'>You remove some bits of the headspider from [affected_mob], but it quickly regrows them.</span>"
 			else
-				around_msg = "<span style=\"color:blue\"><b>[surgeon] cuts open [affected_mob] and removes the entire headspider.</b></span>"
-				self_msg = "<span style=\"color:blue\">You remove the remaining headspider from [affected_mob].</span>"
+				around_msg = "<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes the entire headspider.</b></span>"
+				self_msg = "<span class='notice'>You remove the remaining headspider from [affected_mob].</span>"
 				success = 1
 				move_spider_out(surgeon, affected_mob)
 			surgeon.visible_message(around_msg, self_msg)
@@ -47,7 +47,7 @@
 				affected_mob.updatehealth()
 			return success
 		if (61 to INFINITY)
-			surgeon.visible_message("<span style=\"color:blue\"><b>[surgeon] cuts open [affected_mob] and removes all traces of the headspider.</b></span>", "<span style=\"color:blue\">You masterfully remove the headspider from [affected_mob].</span>")
+			surgeon.visible_message("<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes all traces of the headspider.</b></span>", "<span class='notice'>You masterfully remove the headspider from [affected_mob].</span>")
 			if (!numb)
 				affected_mob.show_message("<span class='alert'><b>You feel a mild stabbing pain in your chest!</b></span>")
 				affected_mob.TakeDamage("chest", 10, 0, 0, DAMAGE_STAB)

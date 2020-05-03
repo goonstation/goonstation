@@ -109,14 +109,14 @@
 
 		R.setDetState(0)
 		src.add_fingerprint(user)
-		user.show_message("<span style=\"color:blue\">You hook up the igniter to the multitool's panel.</span>")
+		user.show_message("<span class='notice'>You hook up the igniter to the multitool's panel.</span>")
 
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The igniter is ready!</span>")
+			user.show_message("<span class='notice'>The igniter is ready!</span>")
 		else
-			user.show_message("<span style=\"color:blue\">The igniter can now be attached!</span>")
+			user.show_message("<span class='notice'>The igniter can now be attached!</span>")
 		src.add_fingerprint(user)
 
 	return

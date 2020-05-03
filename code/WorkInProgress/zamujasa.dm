@@ -364,7 +364,7 @@
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))

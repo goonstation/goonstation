@@ -63,17 +63,17 @@
 
 	afterattack(atom/target, mob/user, flag) // copied from the propuffs
 		if (istype(target, /obj/item/reagent_containers/))
-			user.visible_message("<span style='color:blue'><b>[user]</b> crushes up [src] in the [target].</span>",\
-			"<span style='color:blue'>You crush up the [src] in the [target].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] in the [target].</span>",\
+			"<span class='notice'>You crush up the [src] in the [target].</span>")
 
 			if (src.reagents) //Wire: Fix for: Cannot execute null.trans to()
 				src.reagents.trans_to(target, 5)
 
 			qdel (src)
 		else if (istype(target, /obj/item/match) && src.on)
-			target:light(user, "<span style='color:red'><b>[user]</b> lights [target] with [src].</span>")
+			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
-			src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [target]. Goddamn.</span>")
+			src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [target]. Goddamn.</span>")
 			return
 		else
 			return ..()
@@ -140,25 +140,25 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.on == 0)
 			if (istype(W, /obj/item/weldingtool) && W:welding)
-				src.light(user, "<span style='color:red'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				return
 			else if (istype(W, /obj/item/sword) && W:active)
-				src.light(user, "<span style='color:red'><b>[user]</b> swishes [W] alarmingly close to [his_or_her(user)] face and lights [src] ablaze.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> swishes [W] alarmingly close to [his_or_her(user)] face and lights [src] ablaze.</span>")
 				return
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span style='color:red'>Did [user] just light [his_or_her(user)] [src.name] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src.name] with [W]? Holy Shit.</span>")
 				return
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span style='color:red'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				return
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span style='color:red'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				return
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/clothing/mask/cigarette) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W].</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
 				return
 			else if (W.burning)
-				src.light(user, "<span style='color:red'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				return
 			else
 				return ..()
@@ -176,9 +176,9 @@
 						return
 			if (M.getStatusDuration("burning") && src.on == 0)
 				if (M == user)
-					src.light(user, "<span style='color:red'><b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body. That's dedication! Or crippling addiction.</span>")
+					src.light(user, "<span class='alert'><b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body. That's dedication! Or crippling addiction.</span>")
 				else
-					src.light(user, "<span style='color:red'><b>[user]</b> lights [his_or_her(user)] [src.name] with [M]'s flaming body. That's cold, man. That's real cold.</span>")
+					src.light(user, "<span class='alert'><b>[user]</b> lights [his_or_her(user)] [src.name] with [M]'s flaming body. That's cold, man. That's real cold.</span>")
 				return
 			else if (src.on == 1)
 				src.put_out(user, "<span class='alert'><b>[user]</b> puts [src] out on [target].</span>")
@@ -1000,7 +1000,7 @@
 				var/mob/living/carbon/human/fella = M
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
-					smoke.light(user, "<span style='color:red'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
+					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
 					fella.set_clothing_icon_dirty()
 					return
 				else if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
@@ -1008,7 +1008,7 @@
 					return ..()
 				else
 					user.visible_message("<span class='alert'><b>[user]</b> puts out [src] on [fella]!</span>",\
-					"<span style='color:red'>You put out [src] on [fella]!</span>")
+					"<span class='alert'>You put out [src] on [fella]!</span>")
 					fella.TakeDamage("All", 0, rand(1,5))
 					if (!fella.stat)
 						fella.emote("scream")
@@ -1115,7 +1115,7 @@
 
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
-					smoke.light(user, "<span style='color:red'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
+					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
 					fella.set_clothing_icon_dirty()
 					return
 
@@ -1130,7 +1130,7 @@
 		if (!on && (istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)))
 			if (!reagents)
 				return
-			
+
 			if (infinite_fuel)
 				user.show_text("You can't seem to find any way to add more fuel to [src]. It's probably fine.", "blue")
 				return

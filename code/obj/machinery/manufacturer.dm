@@ -125,22 +125,22 @@
 		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 		if	(status & BROKEN)
-			. += "<span style=\"color:red\">It seems to be damaged beyond the point of operability.</span>"
+			. += "<span class='alert'>It seems to be damaged beyond the point of operability.</span>"
 		if	(status & NOPOWER)
-			. += "<span style=\"color:red\">It seems to be offline.</span>"
+			. += "<span class='alert'>It seems to be offline.</span>"
 
 		switch(src.dismantle_stage)
 			if(1)
-				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.</span>"
+				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.</span>"
 			if(2)
-				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.</span>"
+				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.</span>"
 			if(3)
-				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
+				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
 
 	process()
 		if (status & NOPOWER)
@@ -159,7 +159,7 @@
 					if (src.queue.len < 1)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
-						src.visible_message("<span style=\"color:blue\">[src] finishes its production queue.</span>")
+						src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
 						src.mode = "ready"
 						src.build_icon()
 
@@ -693,7 +693,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel))
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [W]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [W].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [W]!</span>", "<span class='notice'>You use [src]'s automatic loader on [W].</span>")
 			var/amtload = 0
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
@@ -719,7 +719,7 @@
 				if (alert(user,"What do you want to do with [WELD]?","[src.name]","Repair","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span style=\"color:blue\">[user] loads [WELD] into the [src].</span>", "<span style=\"color:blue\">You load [WELD] into the [src].</span>")
+				user.visible_message("<span class='notice'>[user] loads [WELD] into the [src].</span>", "<span class='notice'>You load [WELD] into the [src].</span>")
 				src.load_item(WELD,user)
 			else
 				if (src.health < 50)
@@ -737,7 +737,7 @@
 				if (alert(user,"What do you want to do with [C]?","[src.name]","Repair","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span style=\"color:blue\">[user] loads [C] into the [src].</span>", "<span style=\"color:blue\">You load [C] into the [src].</span>")
+				user.visible_message("<span class='notice'>[user] loads [C] into the [src].</span>", "<span class='notice'>You load [C] into the [src].</span>")
 				src.load_item(C,user)
 			else
 				if (src.health >= 50)
@@ -756,7 +756,7 @@
 				if (alert(user,"What do you want to do with [W]?","[src.name]","Dismantle/Construct","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>", "<span style=\"color:blue\">You load [W] into the [src].</span>")
+				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 				src.load_item(W,user)
 			else
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
@@ -818,7 +818,7 @@
 					W.dropped()
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
-			user.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>", "<span style=\"color:blue\">You load [W] into the [src].</span>")
+			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
 		else
@@ -909,7 +909,7 @@
 				boutput(user, "<span class='alert'>You cannot load from a container that cannot open!</span>")
 				return
 
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [O]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [O].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
@@ -920,7 +920,7 @@
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
 		else if (isitem(O) && src.accept_loading(user,1))
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing materials into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/M in view(1,user))
 				if (!O)

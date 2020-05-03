@@ -53,11 +53,11 @@
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			. += "<span style=\"color:red\"><B>the alien is not moving</B></span>"
+			. += "<span class='alert'><B>the alien is not moving</B></span>"
 		else if (src.health > 15)
-			. += "<span style=\"color:red\"><B>the alien looks fresh, just out of the egg</B></span>"
+			. += "<span class='alert'><B>the alien looks fresh, just out of the egg</B></span>"
 		else
-			. += "<span style=\"color:red\"><B>the alien looks pretty beat up</B></span>"
+			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
 
 
 	attack_hand(user as mob)
@@ -144,7 +144,7 @@
 		if(state != 2 || health < maxhealth)
 			boutput(usr, text("<span class='alert'><B>The alien is too busy to follow you.</B></span>"))
 			return
-		boutput(usr, text("<span style=\"color:green\"><B>The alien will now try to follow you.</B></span>"))
+		boutput(usr, text("<span class='success'><B>The alien will now try to follow you.</B></span>"))
 		trg_idle = usr
 		path_idle = new/list()
 		return
@@ -159,7 +159,7 @@
 		if(state != 2)
 			boutput(usr, text("<span class='alert'><B>The alien is too busy to follow you.</B></span>"))
 			return
-		boutput(usr, text("<span style=\"color:green\"><B>The alien stops following you.</B></span>"))
+		boutput(usr, text("<span class='success'><B>The alien stops following you.</B></span>"))
 		set_null()
 		return
 */

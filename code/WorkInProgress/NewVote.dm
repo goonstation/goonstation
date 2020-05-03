@@ -112,7 +112,7 @@ var/const/recently_time = 6000 // 10 mins
 				if(!picked) return 0
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/mute(picked.client)
-				boutput(world, "<span style=\"color:green\"><BIG><B>Vote Mute ([player]) initiated by [C.ckey]</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Vote Mute ([player]) initiated by [C.ckey]</B></BIG></span>")
 				show_vote(C)
 				return 1*/
 		return 0

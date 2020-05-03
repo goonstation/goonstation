@@ -100,7 +100,7 @@
 		firevuln = 0.5
 		icon_state = "turtle-shell"
 
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> retreats into their shell!")
+		src.visible_message("<span class='alert'><b>[src]</b> retreats into their shell!")
 		return 1
 
 	//sets shellcount to 0 and changes task to "thinking". changes icon state and protections.
@@ -113,7 +113,7 @@
 		firevuln = 1
 		icon_state = "turtle"
 
-		src.visible_message("<span style=\"color:blue\"><b>[src]</b> comes out of their shell!")
+		src.visible_message("<span class='notice'><b>[src]</b> comes out of their shell!")
 		return 1
 
 	//Just completely override this to change values of severity. Kinda ugly, but it's what I want!

@@ -273,7 +273,7 @@ var/global/debug_messages = 0
 			LAGCHECK(LAG_LOW)
 
 		boutput(usr, "<span class='notice'>'[procname]' called on [counter] instances of '[typename]'</span>")
-		message_admins("<span style=\"color:red\">Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
+		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
 		logTheThing("admin", src, null, "called [procname] on all instances of [typename]")
 		logTheThing("diary", src, null, "called [procname] on all instances of [typename]")
 	else
@@ -421,7 +421,7 @@ var/global/debug_messages = 0
 			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
 			M.set_loc(S.loc)
 			M.buckled = null
-		message_admins("<span style=\"color:red\">Admin [key_name(src)] AIized [key_name(M)]!</span>")
+		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
 		logTheThing("admin", src, M, "AIized %target%")
 		logTheThing("diary", src, M, "AIized %target%", "admin")
 		return H.AIize()

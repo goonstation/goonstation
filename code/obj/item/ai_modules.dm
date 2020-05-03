@@ -250,7 +250,7 @@ AI MODULES
 			if (isAI(S) && isdead(S))
 				setalive(S)
 				if (S.ghost && S.ghost.mind)
-					S.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
+					S.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
 					S.ghost.mind.transfer_to(S)
 					qdel(S.ghost)
 					do_admin_logging(" revived the AI", sender)

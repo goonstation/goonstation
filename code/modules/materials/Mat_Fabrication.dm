@@ -96,7 +96,7 @@
 	attack_hand(mob/user as mob)
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
-	
+
 	MouseDrop(over_object, src_location, over_location)
 		if(over_object == src)
 			boutput(usr, "<span class='notice'>You reset the output location of [src]!</span>")
@@ -135,7 +135,7 @@
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
-	
+
 	proc/get_output_location()
 		if (!src.output_target)
 			return src.loc
@@ -339,11 +339,11 @@
 			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] puts \the [W] in \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
 		addMaterial(W, user)
 		/*
 		if(W.material != null)
-			user.visible_message("<span style=\"color:blue\">[user] puts \the [W] in \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
 			if( W.material )
 				addMaterial(W, user)
 			else

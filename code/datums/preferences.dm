@@ -1599,7 +1599,7 @@ datum/preferences
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile saved!</span>" )
+					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
@@ -1612,19 +1612,19 @@ datum/preferences
 						if( istext( ret ) )
 							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
-							boutput( user, "<span style=\"color:blue\">Savefile saved!</span>" )
+							boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile deleted!</span>" )
+					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
 			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
 				var/ret = src.cloudsave_load( user.client, link_tags["cloudload"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to load savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile loaded!</span>" )
+					boutput( user, "<span class='notice'>Savefile loaded!</span>" )
 
 			else if (link_tags["save"])
 				src.savefile_save(user, (isnum(text2num(link_tags["save"])) ? text2num(link_tags["save"]) : 1))

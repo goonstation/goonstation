@@ -114,7 +114,7 @@ var/list/clothingbooth_items = list()
 	if(istype(weapon, /obj/item/spacecash))
 		src.money += weapon.amount
 		weapon.amount = 0
-		user.visible_message("<span style=\"color:blue\">[user.name] inserts credits into the- Wait, was that a hand?</span>","<span style=\"color:blue\">A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
+		user.visible_message("<span class='notice'>[user.name] inserts credits into the- Wait, was that a hand?</span>","<span class='notice'>A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
 		user.u_equip(weapon)
 		weapon.dropped()
 		qdel(weapon)

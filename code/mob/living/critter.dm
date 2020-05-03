@@ -570,8 +570,8 @@
 		if (!user)
 			return 1 // so things can do if (..())
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-		src.visible_message("<span style='color:blue'><b>[user] [pmsg] [src]!</b></span>",\
-		"<span style='color:blue'><b>[user] [pmsg] you!</b></span>")
+		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
+		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
 		return
 
 	proc/get_active_hand()

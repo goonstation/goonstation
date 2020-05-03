@@ -97,9 +97,9 @@
 			. += "It is currently shut down and not being used."
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	movement_delay()
 		var/tally = 0

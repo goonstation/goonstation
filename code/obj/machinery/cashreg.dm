@@ -35,7 +35,7 @@
 					boutput(user, "<span class='alert'>Unable to find bank account!</span>")
 					return
 
-				user.visible_message("<span style=\"color:blue\">[user] swipes [src] with [W].</span>")
+				user.visible_message("<span class='notice'>[user] swipes [src] with [W].</span>")
 				return
 
 			if (card.registered in FrozenAccounts)
@@ -62,7 +62,7 @@
 				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [target_account.fields["current_money"]] credits.</span>")
 				return
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
-			user.visible_message("<span style=\"color:blue\">[user] swipes [src] with [W].</span>")
+			user.visible_message("<span class='notice'>[user] swipes [src] with [W].</span>")
 			target_account.fields["current_money"] -= amount
 			mainaccount.fields["current_money"] += amount
 			user.visible_message("<b>[src]</b> beeps, \"[mainaccount.fields["name"]] now holds [mainaccount.fields["current_money"]] credits. Thank you for your service!\"")

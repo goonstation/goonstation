@@ -44,10 +44,10 @@ var/datum/event_controller/random_events
 		if (events_enabled && (num_players >= minimum_population))
 			do_random_event(events)
 		else
-			message_admins("<span style=\"color:blue\">A random event would have happened now, but they are disabled!</span>")
+			message_admins("<span class='notice'>A random event would have happened now, but they are disabled!</span>")
 		var/event_timer = rand(time_between_events_lower,time_between_events_upper)
 		next_event = ticker.round_elapsed_ticks + event_timer
-		message_admins("<span style=\"color:blue\">Next event will occur at [round(next_event / 600)] minutes into the round.</span>")
+		message_admins("<span class='notice'>Next event will occur at [round(next_event / 600)] minutes into the round.</span>")
 		SPAWN_DBG(event_timer)
 			event_cycle()
 

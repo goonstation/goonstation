@@ -137,11 +137,11 @@
 
 			open = !open
 			if(open)
-				src.visible_message("[user] opens the maintenance hatch of [src]", "<span style=\"color:blue\">You open [src]'s maintenance hatch.</span>")
+				src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 				on = 0
 				icon_state="mulebot-hatch"
 			else
-				src.visible_message("[user] closes the maintenance hatch of [src]", "<span style=\"color:blue\">You close [src]'s maintenance hatch.</span>")
+				src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
 				icon_state = "mulebot0"
 
 			updateDialog()
@@ -307,7 +307,7 @@
 						cell.updateicon()
 						cell = null
 
-						usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from [src].</span>", "<span style=\"color:blue\">You remove the power cell from [src].</span>")
+						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 
 				if("cellinsert")
 					if(open && !cell)
@@ -318,7 +318,7 @@
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span style=\"color:blue\">[usr] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 
 				if("stop")
 					if(mode >=2)

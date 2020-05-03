@@ -55,7 +55,7 @@
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	var/obj/critter/C = new animal_to_spawn(get_turf(src))
 	var/turf/T = get_turf(src)
-	T.visible_message("<span style=\"color:blue\">What was once [src] has become [C.name]!</span>")
+	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
 	qdel(src)
 
 /obj/item/toy/sponge_capsule/EnteredFluid(obj/fluid/F as obj, atom/oldloc)

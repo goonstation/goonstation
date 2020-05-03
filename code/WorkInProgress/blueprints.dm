@@ -616,12 +616,12 @@
 				return
 
 			if("Information")
-				var/message = "<span style=\"color:blue\">Blueprint Marker Tool Usage Information:</span><br><br>"
-				message += "<span style=\"color:blue\">Reset: Resets the tools and clears all marked areas.</span><br>"
-				message += "<span style=\"color:blue\">Set Blueprint Name: Allows you to set the name that will appear on the blueprint.</span><br>"
-				//message += "<span style=\"color:blue\">Create Clone Blueprint: Creates a blueprint for an exact copy of the marked area. This type of blueprint can not be saved and costs slightly more to build.</span><br>"
-				message += "<span style=\"color:blue\">Print Saved Blueprint: Prints a previously saved blueprint.</span><br>"
-				message += "<span style=\"color:blue\">Save Blueprint: Saves a blueprint of the marked area to the server. This type of blueprint can be saved but it can not save all types of objects.</span>"
+				var/message = "<span class='notice'>Blueprint Marker Tool Usage Information:</span><br><br>"
+				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
+				message += "<span class='notice'>Set Blueprint Name: Allows you to set the name that will appear on the blueprint.</span><br>"
+				//message += "<span class='notice'>Create Clone Blueprint: Creates a blueprint for an exact copy of the marked area. This type of blueprint can not be saved and costs slightly more to build.</span><br>"
+				message += "<span class='notice'>Print Saved Blueprint: Prints a previously saved blueprint.</span><br>"
+				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. This type of blueprint can be saved but it can not save all types of objects.</span>"
 				boutput(user, message)
 				return
 

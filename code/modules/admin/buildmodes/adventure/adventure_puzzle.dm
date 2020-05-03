@@ -38,7 +38,7 @@
 			boutput(usr, "<span class='notice'>The wizard is finished.</span>")
 
 	selected()
-		boutput(usr, {"<span style=\"color:blue\">Right click the button to select the type of adventure wizard.<br>
+		boutput(usr, {"<span class='notice'>Right click the button to select the type of adventure wizard.<br>
 While in wizard mode, you can use the following additional hotkeys:<br>
 CTRL + SHIFT + RMB on adventure element object: Decrease layer by 0.1.<br>
 CTRL + ALT + SHIFT + RMB on anything: Reset all adventure element layers on that turf.<br>

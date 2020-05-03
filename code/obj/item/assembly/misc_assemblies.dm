@@ -182,9 +182,9 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The timer is now secured!</span>", 1)
+			user.show_message("<span class='notice'>The timer is now secured!</span>", 1)
 		else
-			user.show_message("<span style=\"color:blue\">The timer is now unsecured!</span>", 1)
+			user.show_message("<span class='notice'>The timer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 		return
@@ -406,9 +406,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.add_fingerprint(user)
 
@@ -584,9 +584,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The radio is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span class='notice'>The radio is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The radio is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span class='notice'>The radio is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
@@ -696,9 +696,9 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The analyzer is now secured!</span>", 1)
+			user.show_message("<span class='notice'>The analyzer is now secured!</span>", 1)
 		else
-			user.show_message("<span style=\"color:blue\">The analyzer is now unsecured!</span>", 1)
+			user.show_message("<span class='notice'>The analyzer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 	return
@@ -786,9 +786,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The signaler is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The signaler is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The signaler is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The signaler is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -857,9 +857,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return

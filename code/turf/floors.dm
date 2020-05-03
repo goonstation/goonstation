@@ -1063,7 +1063,7 @@
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
-	
+
 	New()
 		..()
 		setMaterial(getMaterial("blob"))
@@ -1625,7 +1625,7 @@
 		attackby(obj/item/W as obj, mob/user as mob)
 			if (istype(W, /obj/item/device/key))
 				playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] slides away!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 
 	hive

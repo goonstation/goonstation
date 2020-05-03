@@ -257,7 +257,7 @@
 	onStart()
 		..()
 		playsound(get_turf(owner), 'sound/effects/bow_aim.ogg', 75, 1)
-		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span style='color:blue'>You pull the string on [bow]!</span>")
+		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
 		if (bow)
@@ -372,9 +372,9 @@
 	examine()
 		. = ..()
 		if (amount > 1)
-			. += "<span style='color:blue'>This is a stack of [amount] arrows."
+			. += "<span class='notice'>This is a stack of [amount] arrows."
 		if (reagents.total_volume)
-			. += "<span style='color:blue'>The tip of the arrow is coated with reagents.</span>"
+			. += "<span class='notice'>The tip of the arrow is coated with reagents.</span>"
 
 	clone(var/newloc = null)
 		var/obj/item/arrow/O = new(loc)

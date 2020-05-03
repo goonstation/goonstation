@@ -24,12 +24,12 @@
 	..(hit_atom)
 	var/p = rand(100)
 	if(p < 50)
-		src.visible_message("<span style='color:blue'>The coin comes up heads</span>")
+		src.visible_message("<span class='notice'>The coin comes up heads</span>")
 
 	else if(p < 99)
-		src.visible_message("<span style='color:blue'>The coin comes up tails</span>")
+		src.visible_message("<span class='notice'>The coin comes up tails</span>")
 	else
-		src.visible_message("<span style='color:blue'>The coin lands on its side</span>")
+		src.visible_message("<span class='notice'>The coin lands on its side</span>")
 
 /obj/item/coin_bot
 	name = "Probability Disc"

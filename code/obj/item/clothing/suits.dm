@@ -1322,8 +1322,8 @@
 
 	attack_hand(mob/user as mob)
 		if (user.a_intent == INTENT_HARM)
-			user.visible_message("<span style='color:blue'>[user] taps [src].</span>",\
-			"<span style='color:blue'>You tap [src].</span>")
+			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
+			"<span class='notice'>You tap [src].</span>")
 		else
 			return ..()
 
@@ -1332,14 +1332,14 @@
 			if (src.eyeholes)
 				user.show_text("\The [src] already has eyeholes cut out of it!", "red")
 				return
-			user.visible_message("<span style='color:blue'>[user] begins cutting eyeholes out of [src].</span>",\
-			"<span style='color:blue'>You begin cutting eyeholes out of [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins cutting eyeholes out of [src].</span>",\
+			"<span class='notice'>You begin cutting eyeholes out of [src].</span>")
 			if (!do_after(user, 20))
 				user.show_text("You were interrupted!", "red")
 				return
 			playsound(get_turf(src), "sound/items/Scissor.ogg", 100, 1)
-			user.visible_message("<span style='color:blue'>[user] cuts eyeholes out of [src].</span>",\
-			"<span style='color:blue'>You cut eyeholes out of [src].</span>")
+			user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
+			"<span class='notice'>You cut eyeholes out of [src].</span>")
 			src.eyeholes = 1
 			src.icon_state = "[initial(src.icon_state)]e"
 			return
@@ -1348,8 +1348,8 @@
 			src.UpdateOverlays(image(src.icon, "c_box-moustache"), "moustache")
 			if (src.wear_image)
 				src.wear_image.overlays += image(src.wear_image_icon, "c_box-moustache")
-			user.visible_message("<span style='color:blue'>[user] adds [W] to [src]!</span>",\
-			"<span style='color:blue'>You add [W] to [src]!</span>")
+			user.visible_message("<span class='notice'>[user] adds [W] to [src]!</span>",\
+			"<span class='notice'>You add [W] to [src]!</span>")
 			user.u_equip(W)
 			qdel(W)
 			return

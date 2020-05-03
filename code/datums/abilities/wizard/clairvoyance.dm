@@ -50,7 +50,7 @@
 			var/spellstring = "<B>[M.real_name]</B> is "
 			if (!istype(target_loc, /turf))
 				if (target_loc.loc.name == "Chapel")
-					spellstring = "<span style=\"color:red\">Your scrying spell fails! It just can't seem to find [M.real_name].</span>"
+					spellstring = "<span class='alert'>Your scrying spell fails! It just can't seem to find [M.real_name].</span>"
 					boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
 					return
 				if(ismob(target_loc))

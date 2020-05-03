@@ -414,7 +414,7 @@
 
 /obj/item/trumpet/dootdoot/proc/dootize(var/mob/living/carbon/human/S)
 	if (istype(S.mutantrace, /datum/mutantrace/skeleton))
-		S.visible_message("<span style=\"color:blue\"><b>[S.name]</b> claks in appreciation!</span>")
+		S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
 		playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
 		return
 	else
@@ -488,7 +488,7 @@
 	var/text2speech = 1
 
 	attack_hand(mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] taps [src].</span>")
+		user.visible_message("<span class='notice'>[user] taps [src].</span>")
 
 	New()
 		..()
@@ -520,7 +520,7 @@
 	icon_state = "box_captain"
 
 	attack_hand(mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] taps [src].</span>")
+		user.visible_message("<span class='notice'>[user] taps [src].</span>")
 */
 /obj/item/hell_horn
 	name = "decrepit instrument"
@@ -566,8 +566,8 @@
 		playsound(get_turf(M), "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)
 		playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
-							"<span style='color:red'><B>You bonk [M] on the head with [src]!</B></span>",\
-							"<span style='color:red'>You hear something squeak.</span>")
+							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
+							"<span class='alert'>You hear something squeak.</span>")
 
 
 	earthquake
@@ -689,10 +689,10 @@
 
 			if(!PH)
 				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
-				"<span style='color:red'>You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
+				"<span class='alert'>You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
 			else
 				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
-				"<span style='color:red'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
+				"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
 				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
 					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 

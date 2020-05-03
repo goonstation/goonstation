@@ -210,11 +210,11 @@
 	examine()
 		. = ..()
 		if (loaded)
-			. += "<span style=\"color:blue\">The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>"
-			. += "<span style=\"color:blue\">The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>"
-			. += "<span style=\"color:blue\">A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>"
+			. += "<span class='notice'>The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>"
+			. += "<span class='notice'>The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>"
+			. += "<span class='notice'>A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>"
 		else
-			. += "<span style=\"color:red\">The magnetizer must be loaded with a chunk of plasmastone to use.</span>"
+			. += "<span class='alert'>The magnetizer must be loaded with a chunk of plasmastone to use.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
@@ -441,9 +441,9 @@
 		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	ex_act(severity)
 		switch(severity)
@@ -1082,7 +1082,7 @@
 				else
 					. = "Doesn't look like there's any valuable ore here."
 				if (src.event)
-					. += "<br><span style=\"color:red\">There's something not quite right here...</span>"
+					. += "<br><span class='alert'>There's something not quite right here...</span>"
 
 	attack_hand(var/mob/user as mob)
 		if(ishuman(user))
@@ -1128,7 +1128,7 @@
 				message += "The rock here has been weakened.<br>"
 			if (E)
 				if (E.analysis_string)
-					message += "<span style=\"color:red\">[E.analysis_string]</span><br>"
+					message += "<span class='alert'>[E.analysis_string]</span><br>"
 			message += "----------------------------------"
 			boutput(user, message)
 
@@ -1926,7 +1926,7 @@ obj/item/clothing/gloves/concussive
 				var/turf/t = get_turf(src.target)
 				if(isrestrictedz(t.z))
 					if(user)
-						user.show_text("<span style='color:red'>The [src] fails to power on!")
+						user.show_text("<span class='alert'>The [src] fails to power on!")
 						logTheThing("station", user, null, "tried to cargo transport to a restricted z-level: [log_loc(src.target)].")
 					return
 			if (ismob(T.loc) && T.loc == user)

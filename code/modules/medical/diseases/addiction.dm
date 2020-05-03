@@ -54,11 +54,11 @@
 				if (prob(6))
 					if (affected_mob.nutrition > 10)
 						affected_mob.visible_message("<span class='alert'>[affected_mob] vomits on the floor profusely!</span>",\
-						"<span style='color:red'>You vomit all over the floor!</span>")
+						"<span class='alert'>You vomit all over the floor!</span>")
 						affected_mob.vomit(rand(3,5))
 					else
 						affected_mob.visible_message("<span class='alert'>[affected_mob] gags and retches!</span>",\
-						"<span style='color:red'>Your stomach lurches painfully!</span>")
+						"<span class='alert'>Your stomach lurches painfully!</span>")
 						affected_mob.changeStatus("stunned", 2 SECONDS)
 						affected_mob.changeStatus("weakened", 2 SECONDS)
 			if (prob(8))

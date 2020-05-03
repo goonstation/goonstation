@@ -91,23 +91,23 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
 		if (locked == 1)
-			user.show_text("<span style='color:red'><b>You must first unlock the lever console with an ID to be able to use it.</b></span>")
+			user.show_text("<span class='alert'><b>You must first unlock the lever console with an ID to be able to use it.</b></span>")
 			return
 
 		if(mantaIsBroken() && !on)
-			user.show_text("<span style='color:red'><b>Too many propellers are damaged; you can not move NSS Manta.</b></span>")
+			user.show_text("<span class='alert'><b>Too many propellers are damaged; you can not move NSS Manta.</b></span>")
 			return
 
 		if(diff > 3000)
 			lastuse = world.timeofday
 			if(on)
-				user.show_text("<span style='color:blue'><b>You turn off the propellers.</b></span>")
+				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
 				updateIcon()
 				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			else
-				user.show_text("<span style='color:blue'><b>You turn on the propellers.</b></span>")
+				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
 				on = 1
 				world << 'sound/effects/mantamoving.ogg'
 				sleep(7 SECONDS)
@@ -116,7 +116,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				mantaSetMove(on)
 			return
 		else
-			user.show_text("<span style='color:red'><b>The engine is still busy.</b></span>")
+			user.show_text("<span class='alert'><b>The engine is still busy.</b></span>")
 
 
 	attack_ai(mob/user as mob)
@@ -456,11 +456,11 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (!src.open)
 			src.open = 1
 			update_icon()
-			user.show_text("<span style='color:blue'><b>You open junction box's outer door.</b></span>")
+			user.show_text("<span class='notice'><b>You open junction box's outer door.</b></span>")
 		else
 			src.open = 0
 			update_icon()
-			user.show_text("<span style='color:blue'><b>You close junction box's outer door.</b></span>")
+			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		if (broken == 1 && open == 1)
@@ -1016,31 +1016,31 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (propeller.repairstate == 1)
 			playsound(get_turf(propeller), "sound/items/Ratchet.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to loosen the outer bolts.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to loosen the outer bolts.</span>")
 		if (propeller.repairstate == 2)
 			playsound(get_turf(propeller), "sound/items/Screwdriver.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to unscrew the casings screws..</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to unscrew the casings screws..</span>")
 		if (propeller.repairstate == 3)
-			owner.visible_message("<span style='color:blue'>[owner] begins prying the outer casing.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins prying the outer casing.</span>")
 			playsound(get_turf(propeller), "sound/items/Crowbar.ogg", 60, 1)
 		if (propeller.repairstate == 4)
 			playsound(get_turf(propeller), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins reconnecting and replacing the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (propeller.repairstate == 5)
 			playsound(get_turf(propeller), "sound/items/Welder.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to weld the connection points and soldering the control board.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to weld the connection points and soldering the control board.</span>")
 		if (propeller.repairstate == 6)
 			playsound(get_turf(propeller), "sound/items/Ratchet.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins securing the bolts to the casing.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins securing the bolts to the casing.</span>")
 		if (propeller.repairstate == 7)
 			playsound(get_turf(propeller), "sound/items/Screwdriver.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] places the casing back on and begins securing the casing and its screws back on.</span>")
+			owner.visible_message("<span class='notice'>[owner] places the casing back on and begins securing the casing and its screws back on.</span>")
 		if (propeller.repairstate == 8)
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins constructing replacements for the propellers..</span>")
+			owner.visible_message("<span class='notice'>[owner] begins constructing replacements for the propellers..</span>")
 		if (propeller.repairstate == 9)
 			playsound(get_turf(propeller), "sound/items/Welder.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to weld the replacement propellers on.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to weld the replacement propellers on.</span>")
 	onEnd()
 		..()
 		if (propeller.repairstate == 1)
@@ -1155,19 +1155,19 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (box.repairstate == 1)
 			playsound(get_turf(box), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to unscrew the casings screws.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to unscrew the casings screws.</span>")
 		if (box.repairstate == 2)
 			playsound(get_turf(box), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the damaged cables.</span>")
 		if (box.repairstate == 3)
 			playsound(get_turf(box), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins reconnecting and replacing the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (box.repairstate == 4)
 			playsound(get_turf(box), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the excess bits of cable.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the excess bits of cable.</span>")
 		if (box.repairstate == 5)
 			playsound(get_turf(box), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to screw the casings screws back on.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to screw the casings screws back on.</span>")
 	onEnd()
 		..()
 		if (box.repairstate == 1)
@@ -1247,19 +1247,19 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (magnet.repairstate == 1)
 			playsound(get_turf(magnet), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to unscrew the casings screws.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to unscrew the casings screws.</span>")
 		if (magnet.repairstate == 2)
 			playsound(get_turf(magnet), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the damaged cables.</span>")
 		if (magnet.repairstate == 3)
 			playsound(get_turf(magnet), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins reconnecting and replacing the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (magnet.repairstate == 4)
 			playsound(get_turf(magnet), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the excess bits of cable.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the excess bits of cable.</span>")
 		if (magnet.repairstate == 5)
 			playsound(get_turf(magnet), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to screw the casings screws back on.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to screw the casings screws back on.</span>")
 	onEnd()
 		..()
 		if (magnet.repairstate == 1)
@@ -1315,7 +1315,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (random_events.announce_events)
 				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
 			else
-				message_admins("<span style=\"color:blue\">Manta Comms event ceasing.</span>")
+				message_admins("<span class='notice'>Manta Comms event ceasing.</span>")
 
 
 /datum/random_event/major/electricmalfunction
@@ -1522,7 +1522,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 	if (used == 0)
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
-			user.visible_message("<span style=\"color:blue\">The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
+			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 			for (var/obj/machinery/door/airlock/M in doors)
 				if (M.id == src.id)
@@ -1540,7 +1540,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
-				user.visible_message("<span style=\"color:blue\">The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
+				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 
 				for (var/obj/machinery/door/poddoor/M in doors)
 					if (M.id == src.id)

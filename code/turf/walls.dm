@@ -283,11 +283,11 @@
 				if (N.client)
 					shake_camera(N, 4, 1, 0.5)
 		if (prob(40))
-			boutput(user, text("<span style=\"color:blue\">You smash through the [src.name].</span>"))
+			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
 			dismantle_wall(1)
 			return
 		else
-			boutput(user, text("<span style=\"color:blue\">You punch the [src.name].</span>"))
+			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
 			return
 
 	if(src.material)

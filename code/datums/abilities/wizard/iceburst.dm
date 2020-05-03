@@ -67,7 +67,7 @@
 								qdel (B)
 					step_to(A,M,0)
 					if (get_dist(A,M) == 0)
-						boutput(M, text("<span style=\"color:blue\">You are chilled by a burst of magical ice!</span>"))
+						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
 						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
 						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
 						M.bodytemperature = 0
@@ -163,7 +163,7 @@
 				takeDamage(1)
 
 	attack_hand(mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span style=\"color:blue\">You kick [src].</span>")
+		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span class='notice'>You kick [src].</span>")
 		takeDamage(2)
 
 	bullet_act(var/obj/projectile/P)
@@ -185,7 +185,7 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")
+		user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 		src.takeDamage(6)
 
 	ex_act(severity)

@@ -127,7 +127,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1)
-					return "<b><span style='color:red'>[src] screams!</span></b>"
+					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
@@ -359,7 +359,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7)
-					return "<b><span style='color:red'>[src] screams!</span></b>"
+					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -479,7 +479,7 @@
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src),"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7)
-					return "<b><span style='color:red'>[src] farts!</span></b>"
+					return "<b><span class='alert'>[src] farts!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -542,7 +542,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7)
-					return "<b><span style='color:red'>[src] screams!</span></b>"
+					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
 	specific_emote_type(var/act)

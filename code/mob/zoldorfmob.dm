@@ -149,7 +149,7 @@
 		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > 0))
 			if(src.emoting)
 				return
-			src.visible_message("<span style=\"color:blue\"><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
+			src.visible_message("<span class='notice'><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
 			if (prob(50))
 				animate_spin(src, "R", 1, 0)
 			else

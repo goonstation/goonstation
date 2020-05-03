@@ -26,7 +26,7 @@
 		return 1
 
 	animate_movement = 2
-//	desc = "<span style=\"color:red\">HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
+//	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
 //heh no not really
 
 	var/_health = 100
@@ -605,7 +605,7 @@
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
-	user.show_text("<span style=\"color:red\">You leap and slam against the inside of [src]! Ouch!</span>")
+	user.show_text("<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
 	user.changeStatus("paralysis", 40)
 	user.changeStatus("weakened", 4 SECONDS)
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")

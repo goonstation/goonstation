@@ -128,7 +128,7 @@
 
 /obj/item/pen/red // we didn't have one of these already??
 	name = "red pen"
-	desc = "The horrible, the unspeakable, the dreaded <span style='color:red'><b>RED PEN!!</b></span>"
+	desc = "The horrible, the unspeakable, the dreaded <span class='alert'><b>RED PEN!!</b></span>"
 	color = "red"
 	font_color = "red"
 
@@ -549,8 +549,8 @@
 		if (A.name_suffixes.len)
 			A.remove_suffixes(1)
 			A.UpdateName()
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> removes the label from [A].</span>",\
-			"<span style=\"color:blue\">You remove the label from [A].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> removes the label from [A].</span>",\
+			"<span class='notice'>You remove the label from [A].</span>")
 			return
 
 	proc/Label(var/atom/A, var/mob/user, var/no_message = 0)
@@ -562,8 +562,8 @@
 				return
 
 		if (user && !no_message)
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> labels [A] with \"[src.label]\".</span>",\
-			"<span style=\"color:blue\">You label [A] with \"[src.label]\".</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> labels [A] with \"[src.label]\".</span>",\
+			"<span class='notice'>You label [A] with \"[src.label]\".</span>")
 		if (istype(A, /obj/item/paper))
 			A.name = "'[src.label]'"
 		else

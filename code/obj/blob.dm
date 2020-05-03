@@ -248,9 +248,9 @@ var/image/blob_icon_cache
 		if( istype(W,/obj/item/clothing/head) && overmind )
 			user.drop_item()
 			overmind.setHat(W)
-			user.visible_message( "<span style='color:blue'>[user] places the [W] on the blob!</span>" )
-			user.visible_message( "<span style='color:blue'>The blob disperses the hat!</span>" )
-			overmind.show_message( "<span style='color:blue'>[user] places the [W] on you!</span>" )
+			user.visible_message( "<span class='notice'>[user] places the [W] on the blob!</span>" )
+			user.visible_message( "<span class='notice'>The blob disperses the hat!</span>" )
+			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
 		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
@@ -665,11 +665,11 @@ var/image/blob_icon_cache
 		. = ..()
 		if (user == overmind)
 			if (movable)
-				. += "<span style=\"color:blue\">Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
-			. += "<span style=\"color:blue\">It contains:</span>"
+				. += "<span class='notice'>Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
+			. += "<span class='notice'>It contains:</span>"
 			for (var/id in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[id]
-				. += "<span style=\"color:blue\">- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
+				. += "<span class='notice'>- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
 
 	proc/update_reagent_overlay()
 		if (disposed)

@@ -359,13 +359,13 @@
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
 				shake_camera(M, 4, 0.1)
-				M.show_text("<span style='color:red'><b>The ground rumbles softly.</b></span>")
+				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
 
 			if (phenomena_flags & PH_QUAKE)
 				shake_camera(M, 5, 0.5)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
-				M.show_text("<span style='color:red'><b>The ground quakes and rumbles violently!</b></span>")
+				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
 			LAGCHECK(LAG_HIGH)
 
@@ -879,13 +879,13 @@
 				cell.updateicon()
 				cell = null
 
-				usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
 			update_icon()
-			user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
 		on = !on
@@ -925,13 +925,13 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (ispryingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
 		else
 			..()
@@ -1136,7 +1136,7 @@
 			return
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		"<span class='alert'>You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster, T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x

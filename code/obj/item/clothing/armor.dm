@@ -102,9 +102,9 @@
 	examine()
 		. = ..()
 		if (src.payload)
-			. += "<span style=\"color:red\">Looks like the payload is a [src.payload].</span>"
+			. += "<span class='alert'>Looks like the payload is a [src.payload].</span>"
 		else
-			. += "<span style=\"color:red\">There doesn't appear to be a payload attached.</span>"
+			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		src.add_fingerprint(user)

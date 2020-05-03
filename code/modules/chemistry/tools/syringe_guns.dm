@@ -39,13 +39,13 @@
 	get_desc(dist)
 		if (dist > 2)
 			return
-		. = "<br>[round(reagents.total_volume/15)] / [round(reagents.maximum_volume/15)] shots available.<br><span style=\"color:blue\">The internal reservoir contains:</span>"
+		. = "<br>[round(reagents.total_volume/15)] / [round(reagents.maximum_volume/15)] shots available.<br><span class='notice'>The internal reservoir contains:</span>"
 		if (src.reagents.reagent_list.len)
 			for (var/current_id in src.reagents.reagent_list)
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-				. += "<br><span style=\"color:blue\">&emsp; [current_reagent.volume] units of [current_reagent.name]</span>"
+				. += "<br><span class='notice'>&emsp; [current_reagent.volume] units of [current_reagent.name]</span>"
 		else
-			. += "<br><span style=\"color:blue\">&emsp; Nothing</span>"
+			. += "<br><span class='notice'>&emsp; Nothing</span>"
 
 
 	attackby(obj/item/I as obj, mob/user as mob)

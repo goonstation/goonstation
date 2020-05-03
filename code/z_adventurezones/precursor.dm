@@ -261,7 +261,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
 			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
-			src.visible_message("<span style=\"color:blue\"><b>Something activates inside [src]!</b></span>")
+			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
 
 			if (id)
 				if (istype(id, /list))
@@ -361,7 +361,7 @@
 				src.icon_state = "orb_activated"
 				src.assembled = 1
 				sleep(0.5 SECONDS)
-				src.visible_message("<span style=\"color:blue\"><b>[src] makes a strange noise!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] makes a strange noise!</b></span>")
 				playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 60, 1)
 				src.ready = 1
 				return
@@ -369,7 +369,7 @@
 				boutput(user, "<span class='notice'><b>[src] don't seem to quite fit together with [O].</span>")
 
 		else if(istype(W, /obj/item/basketball) && !src.assembled) // sailor dave thinks the bball is the orb, this will really fuck with his day
-			user.visible_message("<span style=\"color:blue\"><b>[user] slams [W] down onto [src]'s central spike.</b></span>")
+			user.visible_message("<span class='notice'><b>[user] slams [W] down onto [src]'s central spike.</b></span>")
 			sleep(0.1 SECONDS)
 			user.visible_message("<span class='alert'><b>[W] violently pops! Way to go, jerk!</span>")
 			user.drop_item(W)
@@ -408,7 +408,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/hell_sax) && !src.opened)
 			..()
-			user.visible_message("<span style=\"color:blue\"><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
+			user.visible_message("<span class='notice'><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
 			var/door_note = 'sound/musical_instruments/WeirdChime_0.ogg'
 
 			switch(src.pitch) // heh
@@ -662,7 +662,7 @@
 		if(src.active)	return
 		src.active = 1
 
-		src.visible_message("<span style=\"color:blue\"><b>[user] turns [src].</b></span>")
+		src.visible_message("<span class='notice'><b>[user] turns [src].</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 60, 1)
 		src.icon = 'icons/obj/artifacts/puzzles.dmi'
 		src.icon_state = "column_spin"
@@ -799,15 +799,15 @@
 
 			if(src.linked_shields.len)
 				if(setting_red == target_red)
-					src.visible_message("<span style=\"color:blue\"><b>[src]</b> beeps oddly.</span>")
+					src.visible_message("<span class='notice'><b>[src]</b> beeps oddly.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
 					sleep(0.2 SECONDS)
 				if(setting_green == target_green)
-					src.visible_message("<span style=\"color:blue\"><b>[src]</b> beeps strangely.</span>")
+					src.visible_message("<span class='notice'><b>[src]</b> beeps strangely.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
 					sleep(0.2 SECONDS)
 				if(setting_blue == target_blue)
-					src.visible_message("<span style=\"color:blue\"><b>[src] beeps curiously.</span>")
+					src.visible_message("<span class='notice'><b>[src] beeps curiously.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
 					sleep(0.2 SECONDS)
 
@@ -863,7 +863,7 @@
 				src.invisibility = 0
 				changing_state = 1
 				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] powers up!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
 				SPAWN_DBG(0.4 SECONDS)
@@ -878,7 +878,7 @@
 				src.set_density(0)
 				src.invisibility = 100
 				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] powers down!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
 				light.disable()
 

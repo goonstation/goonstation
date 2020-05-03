@@ -53,11 +53,11 @@ var/global/the_sun = null
 	attackby(obj/item/O as obj, mob/user as mob)
 		if (istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
-				O:light(user, "<span style=\"color:red\"><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
+				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
 				if (!user.is_heat_resistant())
 					SPAWN_DBG (10)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
-						"<span style=\"color:red\"><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
 						user.firegib()
 				else
 					user.unlock_medal("Helios", 1)
@@ -89,7 +89,7 @@ var/global/derelict_mode = 0
 		..()
 		if (server_kicked_over && istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
-				O:light(user, "<span style=\"color:red\">[user] lights the [O] with [src]. That's pretty meta.</span>")
+				O:light(user, "<span class='alert'>[user] lights the [O] with [src]. That's pretty meta.</span>")
 				user.unlock_medal("Nero", 1)
 
 		if (!O || !O.force)

@@ -115,7 +115,7 @@
 			if (src.fuel >= src.maxfuel)
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] uses the [src]'s automatic ore loader on [O]!</span>", "<span style=\"color:blue\">You use the [src]'s automatic ore loader on [O].</span>")
+			user.visible_message("<span class='notice'>[user] uses the [src]'s automatic ore loader on [O]!</span>", "<span class='notice'>You use the [src]'s automatic ore loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if (istype(M,/obj/item/raw_material/char))
@@ -137,7 +137,7 @@
 			if (src.fuel >= src.maxfuel)
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing ore into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/char/M in view(1,user))
 				src.fuel += 60 * M.amount
@@ -154,7 +154,7 @@
 			if (src.fuel >= src.maxfuel)
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing weed into [src]!</span>") // four fuckin twenty all day
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing weed into [src]!</span>") // four fuckin twenty all day
 			var/staystill = user.loc
 			for(var/obj/item/plant/herb/cannabis/M in view(1,user))
 				src.fuel += 30
@@ -172,7 +172,7 @@
 			if (src.fuel >= src.maxfuel)
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing ore into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/plasmastone/M in view(1,user))
 				src.fuel += 800 * M.amount
@@ -193,7 +193,7 @@
 			if (C.alive)
 				boutput(user, "<span class='alert'>This would work a lot better if you killed it first!</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] [pick("crams", "shoves", "pushes", "forces")] [O] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] [pick("crams", "shoves", "pushes", "forces")] [O] into [src]!</span>")
 			src.fuel += initial(C.health) * 8
 			src.stoked += max(C.quality / 2, 0)
 			qdel(O)

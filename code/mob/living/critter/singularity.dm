@@ -80,7 +80,7 @@
   if (istype(I, /obj/item/clothing/mask/cigarette))
     var/obj/item/clothing/mask/cigarette/C = I
     if (!C.on)
-      C.light(user, "<span style=\"color:red\"><b>[user]</b> lights [C] on [src]. Mildly impressive!</span>")
+      C.light(user, "<span class='alert'><b>[user]</b> lights [C] on [src]. Mildly impressive!</span>")
     else
       return ..()
   else

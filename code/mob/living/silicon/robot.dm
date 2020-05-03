@@ -524,7 +524,7 @@
 					var/fart_on_other = 0
 					for (var/mob/living/M in src.loc)
 						if (M == src || !M.lying) continue
-						message = "<span style=\"color:red\"><B>[src]</B> farts in [M]'s face!</span>"
+						message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
 						break
 					if (!fart_on_other)
@@ -548,7 +548,7 @@
 							if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 							if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 							if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span style=\"color:red\"><B>FUCK!</B></span>"
+							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
 							if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 							if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 							if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -568,7 +568,7 @@
 							if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
-							if (40) message = "<B>[src] <span style=\"color:red\">f</span><span style=\"color:blue\">a</span>r<span style=\"color:red\">t</span><span style=\"color:blue\">s</span>!</B>"
+							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
 					else
@@ -598,28 +598,28 @@
 
 		if (isghostdrone(usr))
 			return
-		. += "<span style=\"color:blue\">*---------*</span><br>"
-		. += "<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span><br>"
+		. += "<span class='notice'>*---------*</span><br>"
+		. += "<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>"
 
 		if (isdead(src))
-			. += "<span style=\"color:red\">[src.name] is powered-down.</span><br>"
+			. += "<span class='alert'>[src.name] is powered-down.</span><br>"
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
 		if (brute)
 			if (brute < 75)
-				. += "<span style=\"color:red\">[src.name] looks slightly dented</span><br>"
+				. += "<span class='alert'>[src.name] looks slightly dented</span><br>"
 			else
-				. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span><br>"
+				. += "<span class='alert'><B>[src.name] looks severely dented!</B></span><br>"
 		if (burn)
 			if (burn < 75)
-				. += "<span style=\"color:red\">[src.name] has slightly burnt wiring!</span><br>"
+				. += "<span class='alert'>[src.name] has slightly burnt wiring!</span><br>"
 			else
-				. += "<span style=\"color:red\"><B>[src.name] has severely burnt wiring!</B></span><br>"
+				. += "<span class='alert'><B>[src.name] has severely burnt wiring!</B></span><br>"
 		if (src.health <= 50)
-			. += "<span style=\"color:red\">[src.name] is twitching and sparking!</span><br>"
+			. += "<span class='alert'>[src.name] is twitching and sparking!</span><br>"
 		if (isunconscious(src))
-			. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span><br>"
+			. += "<span class='alert'>[src.name] doesn't seem to be responding.</span><br>"
 
 		. += "The cover is [opened ? "open" : "closed"].<br>"
 		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
@@ -629,7 +629,7 @@
 		else
 			. += "[src.name] does not appear to have a module installed.<br>"
 
-		. += "<span style=\"color:blue\">*---------*</span>"
+		. += "<span class='notice'>*---------*</span>"
 
 	choose_name(var/retries = 3)
 		var/newname
@@ -1133,7 +1133,7 @@
 			else
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
-				user.visible_message("<span style=\"color:blue\">[user] inserts [W] into [src]'s head.</span>")
+				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
 				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
 					src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 					B.combust()
@@ -1171,7 +1171,7 @@
 			else
 				var/obj/item/ai_interface/I = W
 				user.drop_item()
-				user.visible_message("<span style=\"color:blue\">[user] inserts [W] into [src]'s head.</span>")
+				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
 				W.set_loc(src)
 				src.ai_interface = I
 				if (src.part_head)
@@ -1448,7 +1448,7 @@
 				switch(user.a_intent)
 					if(INTENT_HELP) //Friend person
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
-						user.visible_message("<span style=\"color:blue\">[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+						user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 					if(INTENT_DISARM) //Shove
 						SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 						user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")

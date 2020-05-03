@@ -548,7 +548,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.UpdateOverlays(src.image_pip, "pip")
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking [src.real_name]s!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking [src.real_name]s!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='notice'>You finish stacking [src.real_name]s.</span>")
@@ -558,7 +558,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
-			user.visible_message("<span style='color:blue'>[user] stacks some [src.real_name]s.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
 		else
 			..(I, user)

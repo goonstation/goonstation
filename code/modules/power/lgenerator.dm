@@ -39,7 +39,7 @@
 			if (src.check_tank(W) == 0)
 				user.show_text("The tank doesn't contain any plasma.", "red")
 				return
-			src.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.P = W
@@ -48,7 +48,7 @@
 			if (src.CL)
 				user.show_text("There appears to be a power cell inserted already.", "red")
 				return
-			src.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.CL = W
@@ -332,7 +332,7 @@
 							usr.show_text("There's no cell to charge.", "red")
 							return
 			src.active = !src.active
-			src.visible_message("<span style=\"color:blue\">[usr] [src.active ? "activates" : "deactivates"] the [src].</span>")
+			src.visible_message("<span class='notice'>[usr] [src.active ? "activates" : "deactivates"] the [src].</span>")
 
 		src.updateUsrDialog()
 		return

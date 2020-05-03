@@ -111,7 +111,7 @@
 		if (A)
 			if (user)
 				user.visible_message("\An [A] falls out of [user]'s [src.name]!",\
-				"<span style='color:red'>\An [A] falls out of your [src.name]!</span>")
+				"<span class='alert'>\An [A] falls out of your [src.name]!</span>")
 			else
 				src.loc.visible_message("\An [A] falls out of [src]!")
 			A.set_loc(get_turf(src))

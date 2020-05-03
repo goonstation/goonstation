@@ -19,7 +19,7 @@
 				glass_amt += 2
 			else
 				glass_amt += 1
-			user.visible_message("<span style='color:blue'>[user] inserts [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 			qdel(W)
 			return 1
@@ -28,7 +28,7 @@
 				glass_amt += 2
 			else
 				glass_amt += 1
-			user.visible_message("<span style='color:blue'>[user] inserts [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 			qdel(W)
 			return 1
@@ -38,7 +38,7 @@
 				if (!B.broken) glass_amt += 1
 			else
 				glass_amt += 1
-			user.visible_message("<span style='color:blue'>[user] inserts [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 
 			if (istype(W, /obj/item/raw_material))
@@ -157,7 +157,7 @@
 				return
 
 		if(G)
-			src.visible_message("<span style='color:blue'>[src] manufactures \a [G]!</span>")
+			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
@@ -204,5 +204,5 @@
 				return
 
 		if(G)
-			src.visible_message("<span style='color:blue'>[src] manufactures \a [G]!</span>")
+			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return

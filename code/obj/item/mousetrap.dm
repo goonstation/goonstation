@@ -41,7 +41,7 @@
 	examine()
 		. = ..()
 		if (src.armed)
-			. += "<span style=\"color:red\">It looks like it's armed.</span>"
+			. += "<span class='alert'>It looks like it's armed.</span>"
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -55,7 +55,7 @@
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
 				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally trigger the mousetrap!</B></span>")
+				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
 			user.show_text("You disarm the mousetrap.", "blue")
 
@@ -71,7 +71,7 @@
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
 				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally trigger the mousetrap!</B></span>")
+				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
 		..()
 		return
@@ -213,13 +213,13 @@
 			if (H.m_intent == "run")
 				src.triggered(H)
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally step on the mousetrap!</B></span>")
+				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
 		else if ((iscritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
 			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally trigger the mousetrap!</B></span>")
+				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 
 		else if (istype(AM, /obj/critter/mouse) && (src.armed))
 			var/obj/critter/mouse/M = AM
@@ -293,7 +293,7 @@
 		else if (src.pie && src.arm)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message("<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
-			"<span style=\"color:red\"><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
+			"<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))

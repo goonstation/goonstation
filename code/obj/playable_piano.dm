@@ -183,7 +183,7 @@
 	proc/clean_input(var/list/input) //breaks our big input string into chunks
 		is_busy = 1
 		piano_notes = list()
-//		src.visible_message("<span style=\"color:blue\">\The [src] starts humming and rattling as it processes!</span>")
+//		src.visible_message("<span class='notice'>\The [src] starts humming and rattling as it processes!</span>")
 		var/list/split_input = splittext("[note_input]", "|")
 		for (var/string in split_input)
 			if (string)
@@ -249,7 +249,7 @@
 				is_busy = 0
 				update_icon(0)
 				return
-		src.visible_message("<span style=\"color:blue\">\The [src] starts playing music!</span>")
+		src.visible_message("<span class='notice'>\The [src] starts playing music!</span>")
 		update_icon(1)
 		if (is_linked)
 			play_notes(0)
@@ -270,7 +270,7 @@
 					return
 				is_busy = 0
 				curr_note = 0
-				src.visible_message("<span style=\"color:blue\">\The [src] stops playing music.</span>")
+				src.visible_message("<span class='notice'>\The [src] stops playing music.</span>")
 				update_icon(0)
 				return
 			sleep((timing * 10)) //to get delay into 10ths of a second
@@ -324,4 +324,4 @@
 		new /obj/item/paper/book/player_piano(get_turf(src))
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
-		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank 
+		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank

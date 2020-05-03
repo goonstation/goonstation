@@ -68,7 +68,7 @@
 					if (get_dist(A,M) == 0)
 						M.changeStatus("weakened", (5 - (min(mob_count2,4)))*10)
 						M.force_laydown_standup()
-						boutput(M, text("<span style=\"color:blue\">The magic missile SLAMS into you!</span>"))
+						boutput(M, text("<span class='notice'>The magic missile SLAMS into you!</span>"))
 						M.visible_message("<span class='alert'>[M] is struck by a magic missile!</span>")
 						playsound(M.loc, "sound/effects/mag_magmisimpact.ogg", 25, 1, -1)
 						M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)

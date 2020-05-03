@@ -128,13 +128,13 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 		if (health <= 0)
-			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span style=\"color:blue\">You smash through the concrete wall with \the [I].</span>")
+			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall with \the [I].</span>")
 			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
 			qdel(src)
 			return
 		health -= I.force
 		if (health <= 0)
-			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span style=\"color:blue\">You smash through the concrete wall with \the [I].</span>")
+			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall with \the [I].</span>")
 			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
 			qdel(src)
 			return
@@ -162,4 +162,4 @@
 			return
 		if (health / max_health >= 0)
 			. += "The wall is almost in pieces."
-			return 
+			return

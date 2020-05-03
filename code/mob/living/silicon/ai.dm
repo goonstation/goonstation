@@ -383,8 +383,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	else if( istype(W,/obj/item/clothing/head))
 		user.drop_item()
 		src.set_hat(W, user)
-		user.visible_message( "<span style='color:blue'>[user] places the [W] on the [src]!</span>" )
-		src.show_message( "<span style='color:blue'>[user] places the [W] on you!</span>" )
+		user.visible_message( "<span class='notice'>[user] places the [W] on the [src]!</span>" )
+		src.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 		return
 
 	else ..()
@@ -463,7 +463,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.health >= 50 && isdead(src))
 		setalive(src)
 		if (src.ghost && src.ghost.mind)
-			src.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
+			src.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
 			src.ghost.mind.transfer_to(src)
 			qdel(src.ghost)
 		return 1
@@ -755,23 +755,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>")
+	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>")
 
 	if (isdead(src))
-		. += "<span style=\"color:red\">[src.name] is nonfunctional...</span>"
+		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
 	else if (isunconscious(src))
-		. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
+		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
 
 	if (src.bruteloss)
 		if (src.bruteloss < 30)
-			. += "<span style=\"color:red\">[src.name] looks slightly dented.</span>"
+			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
 		else
-			. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span>"
+			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
 	if (src.fireloss)
 		if (src.fireloss < 30)
-			. += "<span style=\"color:red\">[src.name] looks slightly burnt!</span>"
+			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
 		else
-			. += "<span style=\"color:red\"><B>[src.name] looks severely burnt!</B></span>"
+			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	var/param = null
@@ -1008,7 +1008,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/fart_on_other = 0
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying) continue
-					message = "<span style=\"color:red\"><B>[src]</B> farts in [M]'s face!</span>"
+					message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
@@ -1032,7 +1032,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span style=\"color:red\"><B>FUCK!</B></span>"
+						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
 						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -1052,7 +1052,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
-						if (40) message = "<B>[src] <span style=\"color:red\">f</span><span style=\"color:blue\">a</span>r<span style=\"color:red\">t</span><span style=\"color:blue\">s</span>!</B>"
+						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
 				else
@@ -1567,7 +1567,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (deployed_to_eyecam)
 		messageTarget = src.eyecam
 
-	boutput( messageTarget, "<b style='color:red'>Your AI core/room is taking damage!</b>" )
+	boutput( messageTarget, "<b class='alert'>Your AI core/room is taking damage!</b>" )
 
 /mob/living/silicon/ai/proc/return_to(var/mob/user)
 	if (user.mind)

@@ -197,8 +197,8 @@
 					break
 			active = 1
 			work()
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> scans [A] with [src]!</span>",\
-			"<span style=\"color:blue\">You scan [A] with [src]!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
+			"<span class='notice'>You scan [A] with [src]!</span>")
 
 	proc/work(var/turf/T)
 		if(!active) return

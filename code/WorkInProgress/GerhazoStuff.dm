@@ -134,7 +134,7 @@
 	usesPoints = 1
 	regenRate = 3
 	tabName = "Cyalume Knight"
-	// notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 100
 	pointName = "force"
 	//var/obj/screen/kudzu/meter/nutrients_meter = null

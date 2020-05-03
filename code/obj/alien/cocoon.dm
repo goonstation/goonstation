@@ -25,7 +25,7 @@ they're trapped
 			return
 		for(var/mob/O in viewers(user, null))
 			if ((O.client && !( O.blinded )))
-				boutput(O, text("<span style=\"color:blue\">[M] is absorbed by the cocoon!</span>"))
+				boutput(O, text("<span class='notice'>[M] is absorbed by the cocoon!</span>"))
 		M.anchored = 1
 		M.buckled = src
 		M.set_loc(src.loc)
@@ -36,7 +36,7 @@ they're trapped
 		if(health <= 0)
 			for(var/mob/M in src.loc)
 				if (M.buckled)
-					src.visible_message("<span style=\"color:blue\">[M] appears from the cocoon.</span>")
+					src.visible_message("<span class='notice'>[M] appears from the cocoon.</span>")
 		//			boutput(world, "[M] is no longer buckled to [src]")
 					M.anchored = 0
 					M.buckled = null

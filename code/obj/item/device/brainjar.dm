@@ -318,7 +318,7 @@
 			det.failsafe_engage()
 
 			if(timing)
-				AIviewers(get_turf(src)) << "<span style=\"color:red\"><B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B></span>"
+				AIviewers(get_turf(src)) << "<span class='alert'><B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B></span>"
 
 /obj/item/device/brainjar/proc/detonate_tank_transfer_valve()
 	set name = "Detonate bomb!"

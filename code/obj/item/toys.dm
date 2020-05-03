@@ -78,7 +78,7 @@
 	CM.busy = 0
 	CM.icon_state = "claw"
 	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
-	M.visible_message("<span style=\"color:blue\">[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
+	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
 	var/obj/item/P = pick(prob(10) ? (prob(10) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
 	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
@@ -215,7 +215,7 @@
 
 /obj/item/toy/figure
 	name = "collectable figure"
-	desc = "<b><span style=\"color:red\">WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
+	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
 	w_class = 1.0

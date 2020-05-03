@@ -686,7 +686,7 @@ var/list/rollList = list()
 
 /obj/item/diceholder/dicecup
 	name = "dice cup"
-	desc = "<span>A cup for rolling your dice!</span><br><span style=\"color:blue\">- Click a floor tile to roll your dice.</span><br><span style=\"color:blue\">- Click a table or drop on a non-help intent to flip the cup, concealing your roll.</span><br><span style=\"color:blue\">- Help Intent: view hidden roll</span><br><span style=\"color:blue\">- Non-help Intent: reveal dice</span><br>"
+	desc = "<span>A cup for rolling your dice!</span><br><span class='notice'>- Click a floor tile to roll your dice.</span><br><span class='notice'>- Click a table or drop on a non-help intent to flip the cup, concealing your roll.</span><br><span class='notice'>- Help Intent: view hidden roll</span><br><span class='notice'>- Non-help Intent: reveal dice</span><br>"
 	icon_state = "dicecup"
 
 	afterattack(atom/target, mob/user as mob)
@@ -704,7 +704,7 @@ var/list/rollList = list()
 	attack_self(mob/user as mob)
 		if(src.icon_state == "dicecup")
 			if(diceposition != 0)
-				user.visible_message("<span style=\"color:blue\">[user] shakes the dice cup!</span>","<span style=\"color:blue\">You shake the dice cup!</span>")
+				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
 	attack_hand(mob/user as mob)
@@ -713,7 +713,7 @@ var/list/rollList = list()
 		else if(src.icon_state == "dicecupf")
 			if(user.a_intent == "help")
 				if(user.name == diceowner)
-					user.visible_message("<span style=\"color:blue\">[user] peeks at their dice. </span>","<b>Your roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
+					user.visible_message("<span class='notice'>[user] peeks at their dice. </span>","<b>Your roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
 				else
 					user.visible_message("<span class='alert'>[user] peeks at [diceowner]'s dice!</span>","<b>[src.diceowner]'s roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
 			else

@@ -14,7 +14,7 @@
 
 	. = ""
 	if (isalive(usr))
-		. += "<br><span style='color:blue'>You look closely at <B>[src.name]</B>.</span>"
+		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
 		sleep(get_dist(usr.client.eye, src) + 1)
 	if (!istype(usr, /mob/dead/target_observer))
 		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
@@ -25,7 +25,7 @@
 	catch
 		//nop
 
-	. +=  "<br><span style='color:blue'>*---------*</span>"
+	. +=  "<br><span class='notice'>*---------*</span>"
 
 	// crappy hack because you can't do \his[src] etc
 	var/t_his = his_or_her(src)
@@ -43,7 +43,7 @@
 				H.contract_memetic_madness(MM.progenitor)
 				return
 
-			. += "<br><span style='color:blue'>A servant of His Grace...</span>"
+			. += "<br><span class='notice'>A servant of His Grace...</span>"
 
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
@@ -51,7 +51,7 @@
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "red" : "blue"]'>[src.name] is wearing [bicon(src.w_uniform)] [src.w_uniform.blood_DNA ? "a bloody [src.w_uniform.name]" : "\an [src.w_uniform.name]"].</span>"
 
 	if (src.hasStatus("handcuffed"))
-		. +=  "<br><span style='color:blue'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
+		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.wear_suit)
 		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] [src.wear_suit.blood_DNA ? "a bloody [src.wear_suit.name]" : "\an [src.wear_suit.name]"] on.</span>"
@@ -96,12 +96,12 @@
 			if (src.wear_id:registered != src.real_name && in_range(src, usr) && prob(10))
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] yet doesn't seem to be that person!!!</span>"
 			else
-				. += "<br><span style='color:blue'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name].</span>"
+				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name].</span>"
 		else if (istype(src.wear_id, /obj/item/device/pda2) && src.wear_id:ID_card)
 			if (src.wear_id:ID_card:registered != src.real_name && in_range(src, usr) && prob(10))
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
 			else
-				. += "<br><span style='color:blue'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
+				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -126,11 +126,11 @@
 					if (!oH.left_eye)
 						. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 					else if (oH.left_eye.show_on_examine)
-						. += "<br><span style='color:blue'>[src.name] has [bicon(oH.left_eye)] \an [oH.left_eye.organ_name] in their left eye socket.</span>"
+						. += "<br><span class='notice'>[src.name] has [bicon(oH.left_eye)] \an [oH.left_eye.organ_name] in their left eye socket.</span>"
 					if (!oH.right_eye)
 						. += "<br><span class='alert'><B>[src.name]'s right eye is missing!</B></span>"
 					else if (oH.right_eye.show_on_examine)
-						. += "<br><span style='color:blue'>[src.name] has [bicon(oH.right_eye)] \an [oH.right_eye.organ_name] in their right eye socket.</span>"
+						. += "<br><span class='notice'>[src.name] has [bicon(oH.right_eye)] \an [oH.right_eye.organ_name] in their right eye socket.</span>"
 
 				if (src.organHolder.head.scalp_op_stage > 0)
 					if (src.organHolder.head.scalp_op_stage >= 5.0)
@@ -178,30 +178,30 @@
 		else
 			var/limbtxt = src.limbs.l_arm.on_holder_examine()
 			if (limbtxt)
-				. += "<br><span style='color:blue'>[src.name] [limbtxt] left arm.</span>"
+				. += "<br><span class='notice'>[src.name] [limbtxt] left arm.</span>"
 
 		if (!src.limbs.r_arm)
 			. += "<br><span class='alert'><B>[src.name]'s right arm is completely severed!</B></span>"
 		else
 			var/limbtxt = src.limbs.r_arm.on_holder_examine()
 			if (limbtxt)
-				. += "<br><span style='color:blue'>[src.name] [limbtxt] right arm.</span>"
+				. += "<br><span class='notice'>[src.name] [limbtxt] right arm.</span>"
 
 		if (!src.limbs.l_leg)
 			. += "<br><span class='alert'><B>[src.name]'s left leg is completely severed!</B></span>"
 		else
 			var/limbtxt = src.limbs.l_leg.on_holder_examine()
 			if (limbtxt)
-				. += "<br><span style='color:blue'>[src.name] [limbtxt] left leg.</span>"
+				. += "<br><span class='notice'>[src.name] [limbtxt] left leg.</span>"
 
 		if (!src.limbs.r_leg)
 			. += "<br><span class='alert'><B>[src.name]'s right leg is completely severed!</B></span>"
 		else
 			var/limbtxt = src.limbs.r_leg.on_holder_examine()
 			if (limbtxt)
-				. += "<br><span style='color:blue'>[src.name] [limbtxt] right leg.</span>"
+				. += "<br><span class='notice'>[src.name] [limbtxt] right leg.</span>"
 	if (src.chest_cavity_open)
-		. += "<br><span style=\"color:red\"><B>[src.name] has a large gaping hole down their chest!</B></span>"
+		. += "<br><span class='alert'><B>[src.name] has a large gaping hole down their chest!</B></span>"
 	if (src.bleeding && !isdead(src))
 		switch (src.bleeding)
 			if (1 to 2)
@@ -283,12 +283,12 @@
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && src.traitHolder.traits.len)
-			. += "<br><span style='color:blue'>[src] has the following traits:</span>"
+			. += "<br><span class='notice'>[src] has the following traits:</span>"
 			for(var/X in src.traitHolder.traits)
 				var/obj/trait/T = getTraitById(X)
-				. += "<br><span style='color:blue'>[T.cleanName]</span>"
+				. += "<br><span class='notice'>[T.cleanName]</span>"
 		else
-			. += "<br><span style='color:blue'>[src] does not appear to possess any special traits.</span>"
+			. += "<br><span class='notice'>[src] does not appear to possess any special traits.</span>"
 
 	if (src.juggling())
 		var/items = ""
@@ -300,9 +300,9 @@
 				continue
 			items += ", [O]"
 		items = copytext(items, 3)
-		. += "<br><span style='color:blue'>[src] is juggling [items]!</span>"
+		. += "<br><span class='notice'>[src] is juggling [items]!</span>"
 
-	. += "<br><span style='color:blue'>*---------*</span>"
+	. += "<br><span class='notice'>*---------*</span>"
 
 	if (get_dist(usr, src) < 4 && ishuman(usr))
 		var/mob/living/carbon/human/H = usr

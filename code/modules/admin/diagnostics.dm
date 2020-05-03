@@ -704,7 +704,7 @@ proc/debug_color_of(var/thing)
 		qdel(activeOverlay)
 	else
 		activeOverlay = new name()
-		boutput( src, "<span style='color:blue'>[activeOverlay.help]</span>" )
+		boutput( src, "<span class='notice'>[activeOverlay.help]</span>" )
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()

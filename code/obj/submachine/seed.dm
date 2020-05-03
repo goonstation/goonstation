@@ -660,7 +660,7 @@
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
 			return src.attackby(O, user)
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/seed/))
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
 				sleep(0.2 SECONDS)
@@ -1035,7 +1035,7 @@
 				break
 		if (!proceed) ..()
 		else
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
 				sleep(0.2 SECONDS)

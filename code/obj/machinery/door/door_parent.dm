@@ -726,7 +726,7 @@
 				boutput(user, "<span class='alert'>[src]'s keyhole isn't on this side!</span>")
 				return
 		src.locked = !src.locked
-		src.visible_message("<span style='color:blue'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+		src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 		return
 	else if (isscrewingtool(I) && src.locked)
 		actions.start(new /datum/action/bar/icon/door_lockpick(src, I, src.simple_lock ? 40 : 80), user)
@@ -772,7 +772,7 @@
 			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
 	src.locked = !src.locked
-	src.visible_message("<span style='color:blue'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
 /datum/action/bar/icon/door_lockpick

@@ -78,12 +78,12 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if (ismob(target))
 			target.visible_message(
 				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
-				"<span style=\"color:red\"><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
+				"<span class='alert'><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
 			)
 			logTheThing("combat", challenger, target, "glove-slapped %target%")
 		else
 			target.visible_message(
-				"<span style=\"color:red\"><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
+				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
 			)
 		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, 1)
 
@@ -125,7 +125,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				src.item_state = "stun"
 				C.updateicon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
-				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span style=\"color:blue\">The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span class='notice'>The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
 			else
 				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
@@ -446,7 +446,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			for (var/obj/item/cloaking_device/I in user)
 				if (I.active)
 					I.deactivate(user)
-					user.visible_message("<span style=\"color:blue\"><b>[user]'s cloak is disrupted!</b></span>")
+					user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)

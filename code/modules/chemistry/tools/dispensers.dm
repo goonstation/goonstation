@@ -30,7 +30,7 @@
 
 	get_desc(dist, mob/user)
 		if (dist <= 2 && reagents)
-			. += "<br><span style=\"color:blue\">[reagents.get_description(user,RC_SCALE)]</span>"
+			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 	proc/smash()
 		var/turf/T = get_turf(src)
@@ -223,7 +223,7 @@
 	get_desc(dist, mob/user)
 		. += "There's [cup_amount] paper cup[s_es(src.cup_amount)] in [src]'s cup dispenser."
 		if (dist <= 2 && reagents)
-			. += "<br><span style=\"color:blue\">[reagents.get_description(user,RC_SCALE)]</span>"
+			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 	attackby(obj/W as obj, mob/user as mob)
 		if (has_tank)
@@ -379,7 +379,7 @@
 			return
 		if (!reagents)
 			return
-		. = "<br><span style=\"color:blue\">[reagents.get_description(user,RC_FULLNESS)]</span>"
+		. = "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS)]</span>"
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -410,7 +410,7 @@
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 			var/itemtype = O.type
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
@@ -465,7 +465,7 @@
 			src.reagents.add_reagent(W:brew_result, 20)
 			//brewed_name = reagent_id_to_name(W:brew_result)
 
-		src.visible_message("<span style=\"color:blue\">[src] brews up [W]!</span>")// into [brewed_name]!")
+		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")// into [brewed_name]!")
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -496,8 +496,8 @@
 			return
 
 		if (istype(O, /obj/storage/crate/))
-			user.visible_message("<span style=\"color:blue\">[user] loads [O]'s contents into [src]!</span>",\
-			"<span style=\"color:blue\">You load [O]'s contents into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] loads [O]'s contents into [src]!</span>",\
+			"<span class='notice'>You load [O]'s contents into [src]!</span>")
 			var/amtload = 0
 			for (var/obj/item/P in O.contents)
 				if (src.reagents.is_full())
@@ -513,8 +513,8 @@
 			else
 				user.show_text("Nothing was loaded!", "red")
 		else if (istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/plant))
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> begins quickly stuffing items into [src]!</span>",\
-			"<span style=\"color:blue\">You begin quickly stuffing items into [src]!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> begins quickly stuffing items into [src]!</span>",\
+			"<span class='notice'>You begin quickly stuffing items into [src]!</span>")
 			var/staystill = user.loc
 			for (O in view(1,user))
 				if (src.reagents.is_full())
@@ -527,8 +527,8 @@
 					pool(O)
 				else
 					continue
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> finishes stuffing items into [src].</span>",\
-			"<span style=\"color:blue\">You finish stuffing items into [src].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> finishes stuffing items into [src].</span>",\
+			"<span class='notice'>You finish stuffing items into [src].</span>")
 		else
 			return ..()
 

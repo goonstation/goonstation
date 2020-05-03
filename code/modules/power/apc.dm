@@ -493,17 +493,17 @@ var/zapLimiter = 0
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill
 				if (jumper.positive)
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of their power to [src]!</span>", "<span style=\"color:blue\">You transfer [overspill] charge. The APC is now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of the power from [src] to yourself!</span>", "<span style=\"color:blue\">You transfer [overspill] charge. You are now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
 
 			else
 				donor_cell.charge -= 250
 				recipient_cell.charge += 250
 				if (jumper.positive)
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of their power to [src]!</span>", "<span style=\"color:blue\">You transfer 250 charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 				else
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of the power from [src] to yourself!</span>", "<span style=\"color:blue\">You transfer 250 charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 
 		else return src.attack_hand(user)
 

@@ -933,9 +933,9 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
 		else
-			M.tri_message("<span style=\"color:red\">[M] has been implanted by [user].</span>",\
-			M, "<span style=\"color:red\">You have been implanted by [user].</span>",\
-			user, "<span style=\"color:red\">You implanted the implant into [M].</span>")
+			M.tri_message("<span class='alert'>[M] has been implanted by [user].</span>",\
+			M, "<span class='alert'>You have been implanted by [user].</span>",\
+			user, "<span class='alert'>You implanted the implant into [M].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

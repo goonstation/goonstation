@@ -100,10 +100,10 @@
 		if (istype(over_object,/obj/item/raw_material)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
 			targetObject.stack_item(src)
-			usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [src]!</span>")
+			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
-				usr.visible_message("<span style=\"color:blue\">[usr.name] splits the stack of [src]!</span>")
+				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 				var/toSplit = round(amount / 2)
 				var/atom/movable/splitStack = split_stack(toSplit)
 				if(splitStack)
@@ -117,7 +117,7 @@
 					if (!src.check_valid_stack(I))
 						continue
 					src.stack_item(I)
-				usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [src]!</span>")
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(istype(over_object, /obj/screen/hud))
 			var/obj/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
@@ -128,12 +128,12 @@
 						else if (istype(dude.l_hand, /obj/item/raw_material))
 							var/obj/item/raw_material/DP = dude.l_hand
 							DP.stack_item(src)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
 					else
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 1)
 				if("rhand")
@@ -142,12 +142,12 @@
 						else if (istype(dude.r_hand, /obj/item/raw_material))
 							var/obj/item/raw_material/DP = dude.r_hand
 							DP.stack_item(src)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
 					else
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
 
@@ -404,12 +404,12 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)//spyguy apologizes in advance -- not somepotato i promise
 		if(M == user)
-			boutput(M, "<b style='color:red'>You eat the [html_encode(src)]!</b>")
+			boutput(M, "<b class='alert'>You eat the [html_encode(src)]!</b>")
 			boutput(M, "Nothing happens, though.")
 			qdel(src)
 		else if(istype(M))
-			boutput(user, "<b style='color:red'>You feed [html_encode(M)] the [html_encode(src)]!</b>")
-			boutput(M, "<b style='color:red'>[html_encode(user)] feeds you the [html_encode(src)]!</b>")
+			boutput(user, "<b class='alert'>You feed [html_encode(M)] the [html_encode(src)]!</b>")
+			boutput(M, "<b class='alert'>[html_encode(user)] feeds you the [html_encode(src)]!</b>")
 			boutput(M, "Nothing happens, though.")
 			boutput(user, "Nothing happens, though.")
 			qdel(src)
@@ -418,7 +418,7 @@
 	var/emagged = 0
 	emag_act()
 		if(emagged) return
-		src.visible_message( "<b style='color:blue'>\the [src] turns blue!</b>" )
+		src.visible_message( "<b class='notice'>\the [src] turns blue!</b>" )
 		emagged = 1
 		src.color = "#00f"
 		name = "Blue Telecrystal"
@@ -936,7 +936,7 @@
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [O]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [O].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				M.set_loc(src)
@@ -952,7 +952,7 @@
 	proc/quickload(var/mob/living/user,var/obj/item/O)
 		if (!user || !O)
 			return
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O] into [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M)
