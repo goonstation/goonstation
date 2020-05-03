@@ -1396,8 +1396,8 @@ limbs are their own thing not included here.
 			return 0
 	else
 
-		if (user.zone_sel.selecting in H.limbs.vars) //ugly copy paste from stapler
-			var/obj/item/parts/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
+		if (surgeon.zone_sel.selecting in patient.limbs.vars) //ugly copy paste from stapler
+			var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 			if (istype(surgery_limb) && surgery_limb.remove_stage)
 				surgery_limb.surgery(src)
 			return
