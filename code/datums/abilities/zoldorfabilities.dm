@@ -219,7 +219,7 @@
 					if(!speechinput) break
 					sentence += "[speechinput]."
 			if(sentence)
-				boutput(holder.owner,"<span style=\"success\">[sentence]</span>")
+				boutput(holder.owner,"<span class=\"success\">[sentence]</span>")
 				sentences.Add(sentence)
 				sentence = ""
 
