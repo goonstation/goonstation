@@ -150,9 +150,8 @@
 	icon_state = "turtle"		//I kinda wanna make sylvester stand out a bit amongs other turtles, even without the hat.
 	health = 100
 	generic = 0
-	var/wearing_beret = 0	//Don't really need this var, but I like it better than checking contents every time we wanna see if he's got the beret
-	var/search_frequency = 30	//number of cycles between searches
 
+	
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
 	wearing_beret = 1
