@@ -232,10 +232,10 @@
 						user.show_text("The [src.name] is out of charge!", "red")
 				return
 
-			if ("failed_harm")
-				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
-				logTheThing("combat", user, victim, "unsuccessfully tries to beat %target% with the [src.name] at [log_loc(victim)].")
+//			if ("failed_harm")
+//				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
+//				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
+//				logTheThing("combat", user, victim, "unsuccessfully tries to beat %target% with the [src.name] at [log_loc(victim)].")
 
 			if ("stun", "stun_classic")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
@@ -357,7 +357,7 @@
 							playsound(get_turf(src), "swing_hit", 50, 1, -1)
 							..()
 					else
-						src.do_stun(user, M, "failed_harm", 1)
+						src.do_stun(user, M, "stun", 2)
 
 			else
 				if (src.uses_electricity == 0)
