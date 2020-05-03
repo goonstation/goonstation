@@ -1060,6 +1060,12 @@
 	cycle = 0
 	recharge_rate = 10.0
 
+/obj/item/ammo/power_cell/self_charging/howitzer
+	name = "Miniaturized SMES"
+	desc = "This thing is huge! How did you even lift it put it into the gun?"
+	charge = 2500.0
+	max_charge = 2500.0
+
 /obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
 	sname = ".58 Flintlock"
 	name = ".58 Flintlock"
