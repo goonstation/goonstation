@@ -211,7 +211,7 @@
 		SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
-		src.next_click = world.time + (COMBAT_CLICK_DELAY/2)
+		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 		/*
 		RIP
 		else
