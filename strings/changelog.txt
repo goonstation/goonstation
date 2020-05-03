@@ -1,5 +1,10 @@
 
 (t)sun may 03 20
+(u)mbc
+(p)559
+(e)|
+(*)Bonus protection when blocking incoming damage with a proper weapon raised to give +2 protection instead of +1.
+(+)Fixed bug where chair flips could be executed while lying/stunned
 (u)Tarmunora
 (p)544
 (e)⚖|balance
