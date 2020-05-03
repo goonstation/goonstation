@@ -717,11 +717,14 @@
 			I.c_flags &= ~HAS_GRAB_EQUIP
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
-			SEND_SIGNAL(src.assailant, COMSIG_UNARMED_BLOCK_END, src)
+			if (assailant)
+				SEND_SIGNAL(src.assailant, COMSIG_UNARMED_BLOCK_END, src)
+
+
 		if (assailant)
 			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
 			assailant.delStatus("blocking")
-			assailant.last_resist = max(assailant.last_resist, world.time + 4)
+			assailant.last_resist = world.time + (COMBAT_CLICK_DELAY/2)
 		..()
 
 	attack(atom/target, mob/user)
