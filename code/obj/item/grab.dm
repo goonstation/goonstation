@@ -16,7 +16,7 @@
 	var/resist_count = 0
 	var/item_grab_overlay_state = "grab_small"
 	var/can_pin = 1
-
+	var/dropped = 0
 
 	New(atom/loc)
 		..()
@@ -44,7 +44,7 @@
 			I.chokehold = null
 
 		if(assailant)	//drop that grab to avoid the sticky behavior
-			if (src in assailant.equipped_list())
+			if (src in assailant.equipped_list() && !dropped)
 				if (assailant.equipped() == src)
 					assailant.drop_item()
 				else
@@ -82,6 +82,7 @@
 		..()
 
 	dropped()
+		dropped += 1
 		qdel(src)
 
 	process(var/mult = 1)
@@ -702,6 +703,7 @@
 	can_pin = 0
 	hide_attack = 1
 
+
 	New()
 		..()
 		if (isitem(src.loc))
@@ -715,19 +717,20 @@
 			I.c_flags &= ~HAS_GRAB_EQUIP
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
-			SEND_SIGNAL(src.assailant, COMSIG_UNARMED_BLOCK_END, src)
+			if (assailant)
+				SEND_SIGNAL(src.assailant, COMSIG_UNARMED_BLOCK_END, src)
+
+
 		if (assailant)
+			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
 			assailant.delStatus("blocking")
+			assailant.last_resist = world.time + (COMBAT_CLICK_DELAY/2)
 		..()
 
 	attack(atom/target, mob/user)
-		if (assailant)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
 		qdel(src)
 
-	attack_self()
-		if (assailant)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
+	attack_self(mob/user)
 		qdel(src)
 
 	update_icon()
@@ -736,9 +739,7 @@
 	do_resist()
 		.= 0
 		if (assailant)
-			assailant.last_resist = world.time + 5
 			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
 		qdel(src)
 
 

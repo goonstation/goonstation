@@ -211,6 +211,7 @@
 		SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
+		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 		/*
 		RIP
 		else
@@ -241,6 +242,7 @@
 		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
+		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)

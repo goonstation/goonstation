@@ -386,7 +386,8 @@
 				return
 		else
 			var/reach = can_reach(src, target)
-
+			if (src.pre_attack_modify())
+				equipped = src.equipped() //might have changed from successful modify
 			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
@@ -430,6 +431,14 @@
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
 			src.next_click += grace_penalty
+
+/mob/living/proc/pre_attack_modify()
+	.=0
+	var/obj/item/grab/block/G = src.check_block()
+	if (G)
+		qdel(G)
+		.= 1
+
 
 /mob/living/update_cursor()
 	..()
@@ -1227,9 +1236,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))
-
 					if (src.grab_block())
-						src.last_resist = world.time + 5
+						src.last_resist = world.time + (COMBAT_CLICK_DELAY/2)
 					else
 						for (var/mob/O in AIviewers(src, null))
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
