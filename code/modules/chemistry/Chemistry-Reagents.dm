@@ -46,6 +46,8 @@ datum
 		var/heat_capacity = 100 /* how much heat a reagent can hold */
 		var/blocks_sight_gas = 0 //opacity
 		var/pierces_outerwear = 0//whether or not this penetrates outerwear that may protect the victim(e.g. biosuit)
+		var/stun_resist = 0
+
 		New()
 			..()
 			if (src.viscosity == 0 && src.reagent_state == SOLID)
@@ -68,9 +70,17 @@ datum
 
 
 		proc/on_add()
+			if (stun_resist > 0)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_[src.id]", stun_resist)
 			return
 
 		proc/on_remove()
+			if (stun_resist > 0)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
 
 		proc/on_copy(var/datum/reagent/new_reagent)
@@ -132,7 +142,7 @@ datum
 							addProb = round(addProb / 2)
 					if(prob(addProb) && ishuman(M) && !AD)
 						// i would set up a proc for this but this is the only place that adds addictions
-						boutput(M, "<span style=\"color:red\"><B>You suddenly feel invigorated and guilty...</B></span>")
+						boutput(M, "<span class='alert'><B>You suddenly feel invigorated and guilty...</B></span>")
 						AD = new
 						AD.associated_reagent = src.name
 						AD.last_reagent_dose = world.timeofday
@@ -141,7 +151,7 @@ datum
 						AD.max_severity = src.max_addiction_severity
 						M.ailments += AD
 					else */if (AD)
-						boutput(M, "<span style='color:blue'><b>You feel slightly better, but for how long?</b></span>")
+						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
 /*					if (ishuman(M) && thirst_value)
@@ -280,7 +290,7 @@ datum
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && ishuman(M) && prob(addProb) && prob(addiction_prob2))
-				boutput(M, "<span style='color:red'><b>You suddenly feel invigorated and guilty...</b></span>")
+				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
 				AD = new
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday

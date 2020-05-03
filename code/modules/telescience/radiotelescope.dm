@@ -23,7 +23,7 @@
 			using = null
 
 		if(using && using != user)
-			boutput(user, "<span style=\"color:red\">Somebody is already using that machine.</span>")
+			boutput(user, "<span class='alert'>Somebody is already using that machine.</span>")
 			return
 
 		using = user

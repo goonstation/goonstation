@@ -58,7 +58,7 @@
 				if (issilicon(M) || isintangible(M))
 					continue
 				if (!M.ears_protected_from_sound())
-					boutput(M, "<span style=\"color:red\">The loud, horrible noises painfully batter your eardrums!</span>")
+					boutput(M, "<span class='alert'>The loud, horrible noises painfully batter your eardrums!</span>")
 				else
 					continue
 

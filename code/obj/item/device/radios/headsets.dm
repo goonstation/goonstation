@@ -18,7 +18,7 @@
 	attackby(obj/item/R as obj, mob/user as mob)
 		if (istype(R, /obj/item/device/radio_upgrade))
 			if (haswiretap)
-				boutput(user, "<span style=\"color:red\">This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
+				boutput(user, "<span class='alert'>This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
 				return
 			src.haswiretap = 1
 			src.secure_frequencies = list(
@@ -37,7 +37,7 @@
 				"m" = RADIOC_MEDICAL,
 				"c" = RADIOC_CIVILIAN,
 				)
-			boutput(user, "<span style=\"color:blue\">Wiretap Radio Upgrade successfully installed in the [src].</span>")
+			boutput(user, "<span class='notice'>Wiretap Radio Upgrade successfully installed in the [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 			set_secure_frequencies(src)
 			qdel(R)

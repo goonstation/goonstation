@@ -86,7 +86,7 @@
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
-				boutput(user, "<span style=\"color:red\">There's already a tape inside!</span>")
+				boutput(user, "<span class='alert'>There's already a tape inside!</span>")
 				return
 
 			if(!ai.on)
@@ -94,7 +94,7 @@
 				return
 
 			else if(!ai.ready_for_tapes)
-				boutput(user, "<span style=\"color:red\">The databank refuses to load the tape!</span>")
+				boutput(user, "<span class='alert'>The databank refuses to load the tape!</span>")
 				return
 			user.u_equip(W)
 			W.loc = src

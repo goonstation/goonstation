@@ -20,19 +20,19 @@
 	if(used)
 		return
 	playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-	boutput(user, "<span style=\"color:red\">You reach your hand into the crevice.</span>")
+	boutput(user, "<span class='alert'>You reach your hand into the crevice.</span>")
 
 	if(id)
 		for(var/obj/machinery/door/unpowered/martian/D in doors)
 			D.locked = !D.locked
-		boutput(user, "<span style=\"color:blue\">You push down on something.</span>")
+		boutput(user, "<span class='notice'>You push down on something.</span>")
 		return
 	else if(prob(10))
-		boutput(user, "<span style=\"color:red\"><B>Something has clamped down on your hand!</B></span>")
+		boutput(user, "<span class='alert'><B>Something has clamped down on your hand!</B></span>")
 		user.changeStatus("stunned", 10 SECONDS)
 		SPAWN_DBG(3 SECONDS)
 			if(prob(25))
-				boutput(user, "<span style=\"color:red\"><B>You fail to break free!</B></span>")
+				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
 				var/mob/dead/observer/newmob
 				if (user.client)
 					newmob = new/mob/dead/observer(user)
@@ -52,7 +52,7 @@
 				used = 1
 				return
 			else
-				boutput(user, "<span style=\"color:red\">You manage to pull out your hand!</span>")
+				boutput(user, "<span class='alert'>You manage to pull out your hand!</span>")
 				user.changeStatus("stunned", -100)
 				user.TakeDamage("All", 20, 0, DAMAGE_STAB)
 				user.updatehealth()
@@ -60,13 +60,13 @@
 				gib.streak(user.dir)
 
 	else if(prob(45))
-		boutput(user, "<span style=\"color:red\">You pull something out!</span>")
+		boutput(user, "<span class='alert'>You pull something out!</span>")
 		var/itemtype = pick(/obj/item/gun/energy/laser_gun,/obj/critter/cat,/obj/item/skull)
 		new itemtype(src.loc)
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 		gib.streak(user.dir)
 	else
-		boutput(user, "<span style=\"color:red\">There doesn't appear to be anything inside</span>")
+		boutput(user, "<span class='alert'>There doesn't appear to be anything inside</span>")
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 		gib.streak(user.dir)
 	icon_state = "crevice1"

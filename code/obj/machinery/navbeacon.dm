@@ -129,7 +129,7 @@
 					src.locked = !src.locked
 					boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				else
-					boutput(user, "<span style=\"color:red\">Access denied.</span>")
+					boutput(user, "<span class='alert'>Access denied.</span>")
 				updateDialog()
 			else
 				boutput(user, "You must open the cover first!")

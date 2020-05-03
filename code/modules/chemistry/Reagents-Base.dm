@@ -187,7 +187,7 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(prob(6))
-								H.visible_message("<span style=\"color:red\">[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
@@ -270,7 +270,7 @@ datum
 				if(prob(5))
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
-							O.show_message(text("<span style=\"color:red\">[] vomits on the floor profusely!</span>", M), 1)
+							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
 						playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
 						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
 						M.nutrition -= rand(3,5)
@@ -527,6 +527,7 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			var/remove_buff = 0
+			stun_resist = 5
 
 			pooled()
 				..()
@@ -535,19 +536,13 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_sugar", 4)
-				return
+				..()
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_sugar")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -587,7 +582,7 @@ datum
 
 				else
 					if (!M.getStatusDuration("paralysis"))
-						boutput(M, "<span style=\"color:red\">You pass out from hyperglycemic shock!</span>")
+						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
 						M.changeStatus("weakened", ((4 * severity)*15) * mult)
@@ -826,14 +821,14 @@ datum
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
 							pz.brandlist -= M
-							boutput(M,"<span style=\"color:green\"><b>The feeling of an otherworldly presence passes...</b></span>")
+							boutput(M,"<span class='success'><b>The feeling of an otherworldly presence passes...</b></span>")
 						for(var/mob/zoldorf/Z in M)
 							Z.set_loc(Z.homebooth)
 					if (isvampire(M))
 						M.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
-							O.show_message(text("<span style=\"color:red\"><b>[] begins to crisp and burn!</b></span>", M), 1)
-						boutput(M, "<span style=\"color:red\">Holy Water! It burns!</span>")
+							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
+						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = volume * 1.25
 						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
@@ -841,7 +836,7 @@ datum
 						M.updatehealth()
 						reacted = 1
 					else if (method == TOUCH)
-						boutput(M, "<span style=\"color:blue\">You feel somewhat purified... but mostly just wet.</span>")
+						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
 						M.take_brain_damage(-10)
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))

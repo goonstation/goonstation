@@ -9,6 +9,7 @@ import datetime
 import sys
 import re
 import time
+import pytz
 import random
 import traceback
 from collections import OrderedDict
@@ -28,6 +29,8 @@ labels_to_emoji = {
 	'mapping': '🗺',
 	'rework': '🔄'
 }
+
+local_tz = pytz.timezone('US/Eastern')
 
 def parse_pr_changelog(pr):
 	entries = []
@@ -94,6 +97,10 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
 		tries -= 1
 	return completed
 
+def utc_to_local(utc_dt):
+	local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
+	return local_tz.normalize(local_dt)
+
 def main():
 	g = Github(os.environ["TOKEN"])
 	repo = g.get_repo(os.environ["REPO"])
@@ -104,9 +111,11 @@ def main():
 		print("Not a PR.")
 		return
 	pr = pulls[0]
-
+	
 	pr_data = parse_pr_changelog(pr)
-	date_string = '(t)' + pr.merged_at.strftime("%a %b %d %y").lower()
+	pr_mergetime_local = utc_to_local(pr.merged_at)
+
+	date_string = '(t)' + pr_mergetime_local.strftime("%a %b %d %y").lower()
 	if pr_data is None: # no changelog
 		print("No changelog provided.")
 		return

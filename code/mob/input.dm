@@ -82,7 +82,7 @@ mob
 				if (src.restrained())
 					for(var/mob/M in range(src, 1))
 						if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)
-							boutput(src, "<span style=\"color:blue\">You're restrained! You can't move!</span>")
+							boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 							return
 
 				var/misstep_angle = 0

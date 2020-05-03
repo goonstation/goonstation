@@ -444,7 +444,7 @@ obj/decal/fakeobjects/teleport_pad
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		if (can_buckle(M,user))
 			M.set_loc(src.loc)
-			user.visible_message("<span style=\"color:blue\"><b>[M]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
+			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 			buckle_in(M, user, 1)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
@@ -523,14 +523,14 @@ obj/decal/fakeobjects/teleport_pad
 			return
 
 		M.pulling = null
-		boutput(M, "<span style=\"color:red\">You slipped on [src]!</span>")
+		boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 		playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
 		if (prob(5))
 			M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> hits their head on [src]!</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).

@@ -44,7 +44,7 @@
 
 					else
 
-						boutput(user, "<span style=\"color:red\">The [src] couldn't be attached here!</span>")
+						boutput(user, "<span class='alert'>The [src] couldn't be attached here!</span>")
 						return
 
 				else

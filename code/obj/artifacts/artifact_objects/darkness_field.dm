@@ -21,7 +21,7 @@
 	effect_activate(var/obj/O)
 		if (..())
 			return
-		O.visible_message("<span style=\"color:red\"><b>[O]</b> emits a wave of absolute darkness!</span>")
+		O.visible_message("<span class='alert'><b>[O]</b> emits a wave of absolute darkness!</span>")
 		O.anchored = 1
 		for(var/turf/T in circular_range(O,field_radius))
 			new /obj/darkness_field(T,field_time)

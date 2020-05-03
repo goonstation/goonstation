@@ -24,7 +24,7 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -45,7 +45,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Souls"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more souls to use this ability!</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more souls to use this ability!</span>"
 
 	onAbilityStat() // In the "Souls" tab.
 		..()
@@ -215,12 +215,12 @@
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		holder.owner.visible_message("<span style=\"color:red\"><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
 		playsound(holder.owner.loc, "sound/effects/fingersnap.ogg", 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span style=\"color:red\">[H] has divine protection from magic.</span>")
-			H.visible_message("<span style=\"color:red\">The spell has no effect on [H]!</span>")
+			boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
+			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
 			return
 
 		holder.owner.say("See you in hell.")

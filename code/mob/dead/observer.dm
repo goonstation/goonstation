@@ -159,7 +159,7 @@
 		return
 
 	src.icon_state = "doubleghost"
-	src.visible_message("<span style=\"color:red\"><b>[src] is busted!</b></span>","<span style=\"color:red\">You are demateralized into a state of further death!</span>")
+	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
 		wig.loc = src.loc
@@ -398,7 +398,7 @@
 	set category = "Ghost"
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	if(!ticker || !ticker.centralized_ai_laws)
@@ -538,7 +538,7 @@
 	// ooooo its a secret, oooooo!!
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	var/x = input("Enter view width in tiles: (Capped at 59)", "Width", 15)

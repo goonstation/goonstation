@@ -13,7 +13,7 @@
 			return 1
 		var/mob/ow = holder.owner
 
-		ow.visible_message(text("<span style=\"color:red\"><B>[ow.name] spazms and writhes violently!</B></span>"))
+		ow.visible_message(text("<span class='alert'><B>[ow.name] spazms and writhes violently!</B></span>"))
 		ow.emote("flip")
 
 		var/found_target = 0
@@ -29,7 +29,7 @@
 					M.changeStatus("weakened", 3 SECONDS)
 					M.changeStatus("stunned", 3 SECONDS)
 					playsound(ow.loc, "swing_hit", 60, 1)
-					ow.visible_message("<span style=\"color:red\"><B>[ow.name] kicks [M]!</B></span>")
+					ow.visible_message("<span class='alert'><B>[ow.name] kicks [M]!</B></span>")
 
 			if (!found_target)
 				playsound(ow.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 30, 1)

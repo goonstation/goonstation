@@ -256,7 +256,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -280,7 +279,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -304,7 +302,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -329,7 +326,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -353,7 +349,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -666,7 +661,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(8, location))
-					boutput(M, "<span style=\"color:blue\">A faint cheesy smell drifts through the air...</span>")
+					boutput(M, "<span class='notice'>A faint cheesy smell drifts through the air...</span>")
 				return
 
 		gcheese
@@ -680,7 +675,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(8, location))
-					boutput(M, "<span style=\"color:red\">A horrible smell assaults your nose! What in space is it?</span>")
+					boutput(M, "<span class='alert'>A horrible smell assaults your nose! What in space is it?</span>")
 				return
 
 		lemonade
@@ -1631,7 +1626,6 @@ datum
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -1658,7 +1652,6 @@ datum
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -1685,7 +1678,6 @@ datum
 					return
 				holder.last_basic_explosion = ticker.round_elapsed_ticks
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -1794,7 +1786,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
-					boutput(M, "<span style=\"color:red\">The solution generates a strong vapor!</span>")
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				for(var/mob/living/carbon/human/H in range(location, 1))
 					if(ishuman(H))
 						if(!H.wear_mask)
@@ -1813,7 +1805,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
-					boutput(M, "<span style=\"color:red\">The solution generates a strong vapor!</span>")
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 
 				// A slightly less stupid way of smoking contents. Maybe.
 				var/datum/reagents/smokeContents = new/datum/reagents/
@@ -1938,7 +1930,7 @@ datum
 				for (var/mob/living/carbon/human/H in location)
 					if (ishuman(H))
 						if (!H.wear_mask)
-							boutput(H, "<span style=\"color:red\">The acidic vapors burn you!</span>")
+							boutput(H, "<span class='alert'>The acidic vapors burn you!</span>")
 							H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN) // why are the acids doing brute????
 							H.emote("scream")
 				return
@@ -1956,7 +1948,7 @@ datum
 				for(var/mob/living/carbon/human/H in location)
 					if(ishuman(H))
 						if(!H.wear_mask)
-							boutput(H, "<span style=\"color:red\">The acidic vapors burn you!</span>")
+							boutput(H, "<span class='alert'>The acidic vapors burn you!</span>")
 							H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN) // WHY??
 							H.emote("scream")
 				return
@@ -1974,10 +1966,10 @@ datum
 				for(var/mob/living/carbon/human/H in location)
 					if(ishuman(H))
 						if(!H.wear_mask)
-							boutput(H, "<span style=\"color:red\">Your face comes into contact with the acidic vapors!</span>")
+							boutput(H, "<span class='alert'>Your face comes into contact with the acidic vapors!</span>")
 							H.TakeDamage("head", 0, created_volume * 3, 0, DAMAGE_BURN) // IT'S ACID IT BURNS
 							H.emote("scream")
-							boutput(H, "<span style=\"color:red\">Your face has become disfigured!</span>")
+							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
 							H.real_name = "Unknown"
 							H.changeStatus("weakened", 80)
 							H:unlock_medal("Red Hood", 1)
@@ -2191,7 +2183,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
-					boutput(M, "<span style=\"color:red\">The solution generates a strong vapor!</span>")
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				for(var/mob/living/carbon/human/H in range(location, 1))
 					if(ishuman(H))
 						if(!H.wear_mask)
@@ -2292,7 +2284,7 @@ datum
 				if(prob(90))		// high chance of not working to piss them off
 					var/location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(null, location))
-						boutput(M, "<span style=\"color:red\">The solution bubbles rapidly but dissipates into nothing!</span>")
+						boutput(M, "<span class='alert'>The solution bubbles rapidly but dissipates into nothing!</span>")
 					holder.clear_reagents()
 				return
 
@@ -2408,7 +2400,7 @@ datum
 						if (isintangible(M))
 							continue
 						if (!M.ears_protected_from_sound())
-							boutput(M, "<span style=\"color:red\"><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
 						else
 							continue
 
@@ -2438,7 +2430,7 @@ datum
 							if (isintangible(M))
 								continue
 							if (!M.ears_protected_from_sound())
-								boutput(M, "<span style=\"color:red\"><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
 							else
 								continue
 
@@ -2463,7 +2455,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -2487,7 +2478,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -2516,24 +2506,24 @@ datum
 				if(!reaction_loc) return
 
 				if( (locate(/obj/alchemy/circle) in range(3,reaction_loc)) )
-					reaction_loc.visible_message("<span style=\"color:red\">[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle.</span>")
+					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle.</span>")
 					var/gathered = 0
 					for(var/mob/living/M in view(5,reaction_loc))
-						boutput(M, "<span style=\"color:red\">You feel a wracking pain as some of your life is ripped out.</span>")
+						boutput(M, "<span class='alert'>You feel a wracking pain as some of your life is ripped out.</span>")
 						gathered += M.max_health - round(M.max_health / 2)
 						//M.max_health = round(M.max_health / 2)
 						M.setStatus("maxhealth-", null, -round(M.max_health / 2))
 						if(hascall(M,"add_stam_mod_max"))
 							M:add_stam_mod_max("anima_drain", -25)
 					if(gathered >= 80)
-						reaction_loc.visible_message("<span style=\"color:red\">[bicon(my_atom)] As the alchemy circle rips the life out of everyone close to it, energies escape it and settle in the [my_atom].</span>")
+						reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] As the alchemy circle rips the life out of everyone close to it, energies escape it and settle in the [my_atom].</span>")
 						holder.add_reagent("anima",50)
 						if (!particleMaster.CheckSystemExists(/datum/particleSystem/swoosh, my_atom))
 							particleMaster.SpawnSystem(new /datum/particleSystem/swoosh(my_atom))
 					else
-						reaction_loc.visible_message("<span style=\"color:red\">[bicon(my_atom)] The alchemy circle briefly glows before fading back to normal. It seems like it couldn't gather enough energy.</span>")
+						reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The alchemy circle briefly glows before fading back to normal. It seems like it couldn't gather enough energy.</span>")
 				else
-					reaction_loc.visible_message("<span style=\"color:red\">[bicon(my_atom)] The mixture turns into pure energy which quickly disperses. It needs to be channeled somehow.</span>")
+					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The mixture turns into pure energy which quickly disperses. It needs to be channeled somehow.</span>")
 				return
 
 		phlogiston
@@ -2607,7 +2597,7 @@ datum
 				if (holder.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">You feel the air around you spark with electricity!</span>")
+						boutput(M, "<span class='alert'>You feel the air around you spark with electricity!</span>")
 
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume, location, holder, 0)
@@ -2730,7 +2720,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
-					boutput(M, "<span style=\"color:red\">The solution generates a strong vapor!</span>")
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				for(var/mob/living/carbon/human/H in range(location, 1))
 					if(ishuman(H))
 						if(!H.wear_mask)
@@ -2821,7 +2811,7 @@ datum
 				for (var/mob/living/carbon/human/H in location)
 					if (ishuman(H))
 						if (!H.wear_mask)
-							boutput(H, "<span style=\"color:red\">The acidic vapors burn you!</span>")
+							boutput(H, "<span class='alert'>The acidic vapors burn you!</span>")
 							H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN) // why are the acids doing brute????
 							H.emote("scream")
 				return
@@ -2970,12 +2960,12 @@ datum
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">The solution violently bubbles!</span>")
+						boutput(M, "<span class='alert'>The solution violently bubbles!</span>")
 
 					location = get_turf(holder.my_atom)
 
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">The solution spews out foam!</span>")
+						boutput(M, "<span class='alert'>The solution spews out foam!</span>")
 
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume, location, holder, 0)
@@ -3005,7 +2995,7 @@ datum
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">The solution spews out a metalic foam!</span>")
+						boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")
 
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/2, location, holder, 1)
@@ -3034,7 +3024,7 @@ datum
 				if (holder.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">The solution spews out a metalic foam!</span>")
+						boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")
 
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/2, location, holder, 2)
@@ -3211,7 +3201,6 @@ datum
 			mix_sound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/atom/my_atom = holder.my_atom // if you heat this stuff in your hand, you'll die! heh!
-				get_fucked_clarks
 
 				var/turf/location = 0
 				if (my_atom)
@@ -3273,7 +3262,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
-					boutput(M, "<span style=\"color:red\">The solution boils up into a choking cloud!</span>")
+					boutput(M, "<span class='alert'>The solution boils up into a choking cloud!</span>")
 				src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
 				src.mustard_gas.attach(src)
 				src.mustard_gas.set_up(5, 0, usr.loc)
@@ -3467,7 +3456,7 @@ datum
 			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				if (holder.my_atom)
 					new /obj/critter/fermid(get_turf(holder.my_atom))
 				else
@@ -3485,7 +3474,7 @@ datum
 			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				var/result = 0
 				var/roll = rand(1,100)
 				if(roll + created_volume > 100) result = rand(95,100)
@@ -3571,7 +3560,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
 				if (!(time2text(world.realtime, "MMM DD") in full_moon_days_2053))
-					holder.my_atom.visible_message("<span style=\"color:red\">The solution bubbles even more rapidly and dissipates into nothing!</span>")
+					holder.my_atom.visible_message("<span class='alert'>The solution bubbles even more rapidly and dissipates into nothing!</span>")
 					holder.remove_reagent("werewolf_serum",created_volume + 1)
 				return
 
@@ -3658,7 +3647,7 @@ datum
 			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				var/turf/T = holder.my_atom ? get_turf(holder.my_atom) : pick(holder.covered_cache.len)
 				if (prob(1) && !already_a_dominic)
 					new /obj/critter/parrot/eclectus/dominic(T)
@@ -4012,5 +4001,3 @@ datum
 			mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
-
-#undef get_fucked_clarks

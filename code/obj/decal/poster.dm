@@ -15,6 +15,7 @@
 	examine()
 		if (usr.client && src.popup_win)
 			src.show_popup_win(usr)
+			return list()
 		else
 			return ..()
 
@@ -722,7 +723,7 @@
 					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
 					user.u_equip(W)
 					user.put_in_hand_or_drop(newbook)
-					boutput(user, "<span style=\"color:red\">Beepsky's private journal transforms into Space Law 1st Print.</span>")
+					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
 					qdel(W)
 
 				if (src.usageState == 2)

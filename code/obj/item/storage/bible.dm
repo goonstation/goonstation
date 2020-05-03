@@ -29,7 +29,7 @@ var/list/bible_contents = list()
 
 	proc/bless(mob/M as mob)
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
-			M.visible_message("<span style=\"color:red\"><B>[M] burns!</span>", 1)
+			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
 			if (usr.zone_sel)
 				zone = usr.zone_sel.selecting
@@ -55,11 +55,11 @@ var/list/bible_contents = list()
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
 		if (!chaplain)
-			boutput(user, "<span style=\"color:red\">The book sizzles in your hands.</span>")
+			boutput(user, "<span class='alert'>The book sizzles in your hands.</span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 10)
 			return
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles and drops [src] on \his foot.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on \his foot.</span>")
 			random_brute_damage(user, 10)
 			user.changeStatus("stunned", 3 SECONDS)
 			return
@@ -68,9 +68,9 @@ var/list/bible_contents = list()
 	//		return
 
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
-			M.visible_message("<span style=\"color:red\"><B>[user] smites [M] with the [src]!</B></span>")
+			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
 			bless(M)
-			boutput(M, "<span_style=\"color:red\"><B>IT BURNS!</B></span>")
+			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
@@ -82,8 +82,8 @@ var/list/bible_contents = list()
 			// ******* Check
 			if ((ishuman(H) && prob(60)))
 				bless(M)
-				M.visible_message("<span style=\"color:red\"><B>[user] heals [M] with the power of Christ!</B></span>")
-				boutput(M, "<span style=\"color:red\">May the power of Christ compel you to be healed!</span>")
+				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
+				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
@@ -92,15 +92,15 @@ var/list/bible_contents = list()
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 					M.take_brain_damage(10)
-					boutput(M, "<span style=\"color:red\">You feel dazed from the blow to the head.</span>")
+					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
 				logTheThing("combat", user, M, "was biblically injured by %target%")
-				M.visible_message("<span style=\"color:red\"><B>[user] beats [M] over the head with [src]!</B></span>")
+				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
 		else if (isdead(M))
-			M.visible_message("<span style=\"color:red\"><B>[user] smacks [M]'s lifeless corpse with [src].</B></span>")
+			M.visible_message("<span class='alert'><B>[user] smacks [M]'s lifeless corpse with [src].</B></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
@@ -109,7 +109,7 @@ var/list/bible_contents = list()
 
 	attack_hand(var/mob/user as mob)
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
-			user.visible_message("<span style=\"color:red\"><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span style=\"color:red\"><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
+			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
 			user.changeStatus("stunned", 150)
 			user.changeStatus("weakened", 150)
@@ -150,10 +150,10 @@ var/list/bible_contents = list()
 			return 0
 
 		if (farty_party)
-			user.visible_message("<span style='color:red'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
 			return 0
 
-		user.visible_message("<span style='color:red'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		user.gib()
 		return 0
 
@@ -186,9 +186,9 @@ var/list/bible_contents = list()
 		if (!farting_allowed)
 			return 0
 		if (farty_party)
-			user.visible_message("<span style='color:red'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
 			return 0
-		user.visible_message("<span style='color:red'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
@@ -206,9 +206,9 @@ var/list/bible_contents = list()
 		return 1
 	farty_heresy(var/mob/user)
 		if (farty_party)
-			user.visible_message("<span style='color:red'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
 			return 0
-		user.visible_message("<span style='color:red'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)

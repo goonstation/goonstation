@@ -139,13 +139,13 @@
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				if (do_after(user, 20))
-					boutput(user, "<span style=\"color:blue\">You wrench the frame into place.</span>")
+					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
 			if (istype(P, /obj/item/weldingtool))
 				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
 				if (do_after(user, 20))
-					boutput(user, "<span style=\"color:blue\">You deconstruct the frame.</span>")
+					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 					A.amount = 5
 					if (src.material)
@@ -158,24 +158,24 @@
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				if (do_after(user, 20))
-					boutput(user, "<span style=\"color:blue\">You unfasten the frame.</span>")
+					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
 			if (istype(P, /obj/item/circuitboard) && !circuit)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You place the circuit board inside the frame.</span>")
+				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				src.icon_state = "1"
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You screw the circuit board into place.</span>")
+				boutput(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 			if (ispryingtool(P) && circuit)
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the circuit board.</span>")
+				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "0"
 				circuit.set_loc(src.loc)
@@ -183,7 +183,7 @@
 		if (2)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You unfasten the circuit board.</span>")
+				boutput(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
@@ -192,16 +192,16 @@
 					if (do_after(user, 20) && P) //Wire: fix for Cannot read null.amount (&& P)
 						//my_cable = P:take(5, src) // Haine: fix for Cannot execute null.set loc()
 						P:use(5)
-						boutput(user, "<span style=\"color:blue\">You add cables to the frame.</span>")
+						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 						src.state = 3
 						src.icon_state = "3"
 				else
-					boutput(user, "<span style=\"color:red\">You need at least five pieces of cable to wire the computer.</span>")
+					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
 
 		if (3)
 			if (issnippingtool(P))
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the cables.</span>")
+				boutput(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
 				//my_cable.set_loc(src.loc) // Haine: fix for Cannot execute null.set loc()
@@ -218,24 +218,24 @@
 							if (S) S.amount -= 2
 							if (P && P.amount < 1)
 								qdel(P)
-							boutput(user, "<span style=\"color:blue\">You put in the glass panel.</span>")
+							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"
 					else
-						boutput(user, "<span style=\"color:red\">You need at least two sheets of glass to install the screen.</span>")
+						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
+					boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
 		if (4)
 			if (ispryingtool(P))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the glass panel.</span>")
+				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass( src.loc )
 				A.amount = 2
 			if (isscrewingtool(P))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You connect the monitor.</span>")
+				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/B = new src.circuit.computertype ( src.loc )
 				if (circuit.powernet) B:powernet = circuit.powernet
 				if (circuit.id) B:id = circuit.id

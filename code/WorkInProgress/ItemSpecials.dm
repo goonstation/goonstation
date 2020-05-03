@@ -1138,15 +1138,15 @@
 				if (master)
 					if(istype(master,/obj/item/device/light/zippo))
 						var/obj/item/device/light/zippo/Z = master
-						if (Z.fuel > 0)
-							Z.fuel--
+						if (Z.reagents.get_reagent_amount("fuel"))
+							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
 					if (istype(master,/obj/item/weldingtool))
 						var/obj/item/weldingtool/WT = master
-						if (WT.get_fuel())
-							WT.use_fuel(1)
+						if (WT.reagents.get_reagent_amount("fuel"))
+							WT.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
@@ -1487,7 +1487,7 @@
 						var/obj/item/tile = F.pry_tile(master, user, params)
 						if (tile)
 							hit = 1
-							user.visible_message("<span style='color:red'><b>[user] flings a tile from [turf] into the air!</b></span>")
+							user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
 							logTheThing("combat", user, "fling throws a floor tile ([F]) from [turf].")
 
 							user.lastattacked = user //apply combat click delay
@@ -1686,7 +1686,7 @@
 				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
-				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")
+				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

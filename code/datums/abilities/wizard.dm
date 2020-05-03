@@ -154,7 +154,7 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(usr.loc))
@@ -222,16 +222,16 @@
 			return 1
 		var/datum/abilityHolder/wizard/H = holder
 		if (H.locked && src.ignore_holder_lock != 1)
-			boutput(holder.owner, "<span style=\"color:red\">You're already casting an ability.</span>")
+			boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
 			return 1 // ASSHOLES
 		if (src.last_cast > world.time)
 			return 1
 		if (isunconscious(holder.owner))
-			boutput(holder.owner, "<span style=\"color:red\">You cannot cast this ability while you are unconscious.</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are unconscious.</span>")
 			src.holder.locked = 0
 			return 999
 		if (!holder.cast_while_dead && isdead(holder.owner))
-			boutput(holder.owner, "<span style=\"color:red\">You cannot cast this ability while you are dead.</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 			src.holder.locked = 0
 			return 999
 		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck()) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
@@ -239,10 +239,10 @@
 			return 999
 		var/turf/T = get_turf(holder.owner)
 		if( offensive && T.loc:sanctuary )
-			boutput(holder.owner, "<span style='color:red'>You cannot cast offensive spells on someone in a sanctuary.</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot cast offensive spells on someone in a sanctuary.</span>")
 		if (src.restricted_area_check)
 			if (!T || !isturf(T))
-				boutput(holder.owner, "<span style=\"color:red\">That ability doesn't seem to work here.</span>")
+				boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 				return 1
 
 			switch (src.restricted_area_check)
@@ -250,17 +250,17 @@
 					if (isrestrictedz(T.z))
 						var/area/Arr = get_area(T)
 						if (!istype(Arr, /area/wizard_station))
-							boutput(holder.owner, "<span style=\"color:red\">That ability doesn't seem to work here.</span>")
+							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 							return 1
 				if (2)
 					var/area/A = get_area(T)
 					if (A && istype(A, /area/sim))
-						boutput(holder.owner, "<span style=\"color:red\">You can't use this ability in virtual reality.</span>")
+						boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
 						return 1
 		if (src.dont_lock_holder != 1)
 			H.locked = 1
 		if (src.cooldown_staff && !holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Your spell takes longer to recharge without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
 		var/val = cast(target)
 		H.locked = 0
 		return val

@@ -49,8 +49,8 @@
 					random_brute_damage(M, 3, 1)//slight bump to damage to account for everyone having 1 armor from jumpsuit
 					if (prob(20)) M.changeStatus("weakened", 3 SECONDS)
 
-				if (POT.health <= P.starthealth / 2) POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> weakly slaps [M] with a vine!</span>")
-				else POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> slashes [M] with thorny vines!</span>")
+				if (POT.health <= P.starthealth / 2) POT.visible_message("<span class='alert'><b>[POT.name]</b> weakly slaps [M] with a vine!</span>")
+				else POT.visible_message("<span class='alert'><b>[POT.name]</b> slashes [M] with thorny vines!</span>")
 
 	HYPattacked_proc(var/obj/machinery/plantpot/POT,var/mob/user,var/obj/item/W)
 		..()
@@ -61,10 +61,10 @@
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
 		// It's not big enough to be violent yet, so nothing happens
 
-		POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> violently retaliates against [user.name]!</span>")
+		POT.visible_message("<span class='alert'><b>[POT.name]</b> violently retaliates against [user.name]!</span>")
 		random_brute_damage(user, 4, 1)//see above
 		if (W && prob(50))
-			boutput(user, "<span style=\"color:red\">The lasher grabs and smashes your [W]!</span>")
+			boutput(user, "<span class='alert'>The lasher grabs and smashes your [W]!</span>")
 			W.dropped()
 			qdel(W)
 		return 1
@@ -73,7 +73,7 @@
 		..()
 		if (.) return
 		if (POT.health > src.starthealth / 2)
-			boutput(user, "<span style=\"color:red\">The lasher flails at you violently! You might need to weaken it first...</span>")
+			boutput(user, "<span class='alert'>The lasher flails at you violently! You might need to weaken it first...</span>")
 			return 1
 		else return 0
 
@@ -204,18 +204,18 @@
 
 		if (POT.growth >= (P.harvtime + DNA.harvtime + 50) && prob(10) && !src.exploding)
 			src.exploding = 1
-			POT.visible_message("<span style=\"color:red\"><b>[POT]</b> begins to bubble and expand!</span>")
+			POT.visible_message("<span class='alert'><b>[POT]</b> begins to bubble and expand!</span>")
 			playsound(POT.loc, "sound/effects/bubbles.ogg", 50, 1)
 
 			SPAWN_DBG(5 SECONDS)
-				POT.visible_message("<span style=\"color:red\"><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
+				POT.visible_message("<span class='alert'><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
 				playsound(POT.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
 				for (var/mob/living/carbon/human/M in view(3,POT))
 					if(istype(M.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))
-						boutput(M, "<span style=\"color:blue\">You are splashed by toxic goop, but your biosuit protects you!</span>")
+						boutput(M, "<span class='notice'>You are splashed by toxic goop, but your biosuit protects you!</span>")
 						continue
-					boutput(M, "<span style=\"color:red\">You are splashed by toxic goop!</span>")
+					boutput(M, "<span class='alert'>You are splashed by toxic goop!</span>")
 					M.reagents.add_reagent("toxic_slurry", rand(5,20))
 				for (var/obj/machinery/plantpot/C in view(3,POT)) C.reagents.add_reagent("toxic_slurry", rand(5,10))
 

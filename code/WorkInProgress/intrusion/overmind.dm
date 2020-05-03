@@ -426,7 +426,7 @@ var/global/datum/critterDataAccess/intruderCritterDefinitions = new()
 	proc/giveCommand(var/atom/target, var/command="move")
 		if(!src.selected) return // not sure how we got here, but better safe than sorry
 		if(!src.spire)
-			boutput(src, "<span class='text-red'>Your presence is too weak to command anything, you must place a spire first.</span>")
+			boutput(src, "<span class='alert'>Your presence is too weak to command anything, you must place a spire first.</span>")
 			return
 		var/datum/critterData/CD = intruderCritterDefinitions.getCritterData(src.selected.type)
 		switch(command)
@@ -470,16 +470,16 @@ var/global/datum/critterDataAccess/intruderCritterDefinitions = new()
 		if(I.type == structure_path)
 			count++
 	if(count >= initial(structure_path:max)) // if you can figure out how to typecast a type, let me know ok
-		boutput(src, "<span class='text-red'>You can't bring any more of these into this reality.</span>")
+		boutput(src, "<span class='alert'>You can't bring any more of these into this reality.</span>")
 		return 0
 
 	// check tile is clear
 	if (T.density)
-		boutput(src, "<span class='text-red'>The [T] is too solid to forge through.</span>")
+		boutput(src, "<span class='alert'>The [T] is too solid to forge through.</span>")
 		return 0
 	for (var/obj/O in T)
 		if (O.density)
-			boutput(src, "<span class='text-red''>The [O] is too solid to forge through.</span>")
+			boutput(src, "<span class='alert''>The [O] is too solid to forge through.</span>")
 			return 0
 	return 1
 

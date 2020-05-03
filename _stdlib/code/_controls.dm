@@ -382,20 +382,26 @@ var/list/key_names = list(
 				if (src.preferences.use_azerty)
 					return new /datum/keymap(list(
 							"B" = KEY_POINT,
+							"ALT" = KEY_EXAMINE,
+							"CTRL" = KEY_PULL,
 							"C" = "attackself",
-							"A" = "unequip"
+							"A" = "unequip",
 						))
 				else if (src.tg_controls)
 					return new /datum/keymap(list(
 							"B" = KEY_POINT,
+							"SHIFT" = KEY_EXAMINE,
+							"CTRL" = KEY_PULL,
 							"Z" = "attackself",
-							"Q" = "unequip"
+							"Q" = "unequip",
 						))
 				else
 					return new /datum/keymap(list(
 							"B" = KEY_POINT,
+							"ALT" = KEY_EXAMINE,
+							"CTRL" = KEY_PULL,
 							"C" = "attackself",
-							"Q" = "unequip"
+							"Q" = "unequip",
 						))
 			if ("pod")
 				return new /datum/keymap(list(

@@ -89,7 +89,7 @@
 			return
 		if (owner.holder.owner) //how even
 			if (!isturf(owner.holder.owner.loc))
-				boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+				boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 				return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -113,7 +113,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Wrestler"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
