@@ -1,5 +1,9 @@
 
 (t)sun may 03 20
+(u)mbc
+(p)566
+(e)|
+(*)You can chain a block into an attack directly now (instead of needing to swap hands / drop the block). To balance this utility, beginning a block now applies combat click delay just like a punch or a throw would.
 (u)Tarmunora
 (p)560
 (e)⚖|balance
