@@ -38,10 +38,10 @@
 	var/blockplus = 1 + round(I.get_contents().len/3) //a bit of bonus protection. 1 point bonus per 3 items in the bag
 	for (var/obj/item/grab/block/B in I.contents)
 		if(I.c_flags & BLOCK_CUT) //only increase the types we're actually blocking
-			B.setProperty("block_cut", blockplus)
+			B.setProperty("I_block_cut", blockplus)
 		if(I.c_flags & BLOCK_STAB)
-			B.setProperty("block_stab", blockplus)
+			B.setProperty("I_block_stab", blockplus)
 		if(I.c_flags & BLOCK_BURN)
-			B.setProperty("block_burn", blockplus)
+			B.setProperty("I_block_burn", blockplus)
 		if(I.c_flags & BLOCK_BLUNT)
-			B.setProperty("block_blunt", blockplus)
+			B.setProperty("I_block_blunt", blockplus)
