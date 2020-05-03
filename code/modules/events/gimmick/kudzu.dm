@@ -140,6 +140,10 @@
 			qdel(src)
 			return 1
 		..()
+		//Add kudzu flag to new turf.
+		var/turf/T2 = get_turf(newloc)
+		if (T2)
+			T2.temp_flags |= HAS_KUDZU
 
 	Move()
 		var/turf/T = get_turf(src)
