@@ -1,5 +1,9 @@
 
 (t)sun may 03 20
+(u)Naksu
+(p)557
+(e)🆕|enhancement
+(+)Added preliminary chat window theming support
 (u)mbc
 (p)559
 (e)|
