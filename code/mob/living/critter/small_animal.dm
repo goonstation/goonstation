@@ -2474,8 +2474,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
-			boutput(src, "<span class='game' style='color:[mentorhelp_text_color]'>You poke [target] in a way that clearly indicates you want to help them.</span>")
-			boutput(target, "<span class='game' style='color:[mentorhelp_text_color]'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
+			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help them.</span>")
+			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)
 				flick(src.icon_state_exclaim, src)

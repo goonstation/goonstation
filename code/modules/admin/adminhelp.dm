@@ -91,16 +91,16 @@
 			if (M.client.player_mode && !M.client.player_mode_mhelp)
 				continue
 			else
-				var/rendered = "<span style='color:[mentorhelp_text_color]'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
+				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
 				boutput(M,  "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>")
 		else if (M.client && M.client.can_see_mentor_pms())
 			if(istype(M, /mob/dead/observer) || M.type == /mob/dead/target_observer || M.type == /mob/dead/target_observer/mentor_mouse_observer || istype(M, /mob/living/critter/small_animal/mouse/weak/mentor))
-				var/rendered = "<span style='color:[mentorhelp_text_color]'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span></b>: <span class='message'>[msg]</span></span>"
+				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span></b>: <span class='message'>[msg]</span></span>"
 				boutput(M, "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>")
 			else
-				boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+				boutput(M, "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
-	boutput(client.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTORHELP: You</b>: [msg]</span>")
+	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
 	var/ircmsg[] = new()
@@ -113,7 +113,7 @@
 	set category = "Commands"
 	set name = "pray"
 	set desc = "Attempt to gain the attention of a divine being. Note that it's not necessarily the kind of attention you want."
-	
+
 	var/client/client = src.client
 
 	if(!client)
