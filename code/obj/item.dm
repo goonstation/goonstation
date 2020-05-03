@@ -235,13 +235,13 @@
 	if(!src.c_flags)
 		return
 	if(src.c_flags & BLOCK_CUT)
-		B.setProperty("I_block_cut", max(1, B.getProperty("I_block_cut")))
+		B.setProperty("I_block_cut", max(DEFAULT_BLOCK_PROTECTION_BONUS, B.getProperty("I_block_cut")))
 	if(src.c_flags & BLOCK_STAB)
-		B.setProperty("I_block_stab", max(1, B.getProperty("I_block_stab")))
+		B.setProperty("I_block_stab", max(DEFAULT_BLOCK_PROTECTION_BONUS, B.getProperty("I_block_stab")))
 	if(src.c_flags & BLOCK_BURN)
-		B.setProperty("I_block_burn", max(1, B.getProperty("I_block_burn")))
+		B.setProperty("I_block_burn", max(DEFAULT_BLOCK_PROTECTION_BONUS, B.getProperty("I_block_burn")))
 	if(src.c_flags & BLOCK_BLUNT)
-		B.setProperty("I_block_blunt", max(1, B.getProperty("I_block_blunt")))
+		B.setProperty("I_block_blunt", max(DEFAULT_BLOCK_PROTECTION_BONUS, B.getProperty("I_block_blunt")))
 
 /obj/item/proc/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(special && !special.manualTriggerOnly)

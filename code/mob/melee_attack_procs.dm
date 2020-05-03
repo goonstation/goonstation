@@ -197,7 +197,7 @@
 		return
 
 	var/obj/stool/S = (locate(/obj/stool) in src.loc)
-	if (S)
+	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src)
