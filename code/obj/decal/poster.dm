@@ -11,6 +11,7 @@
 	var/imgh = 400
 	var/popup_win = 1
 	layer = EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_BELOW
 
 	examine()
 		if (usr.client && src.popup_win)

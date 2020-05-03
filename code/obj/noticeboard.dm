@@ -3,6 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	flags = FPRINT
+	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
 	anchored = 1

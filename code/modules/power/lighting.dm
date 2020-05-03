@@ -79,18 +79,19 @@
 	icon_state = "tube1"
 	desc = "A lighting fixture."
 	anchored = 1
-	layer = EFFECTS_LAYER_UNDER_1  					// They were appearing under mobs which is a little weird - Ostaf
-	var/on = 0					// 1 if on, 0 if off
-	var/brightness = 1.6			// luminosity when on, also used in power calculation
-	var/light_status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_BELOW
+	var/on = 0 // 1 if on, 0 if off
+	var/brightness = 1.6 // luminosity when on, also used in power calculation
+	var/light_status = LIGHT_OK	// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 
-	var/obj/item/light/light_type = /obj/item/light/tube		// the type of the inserted light item
-	var/allowed_type = /obj/item/light/tube					// the type of allowed light items
+	var/obj/item/light/light_type = /obj/item/light/tube // the type of the inserted light item
+	var/allowed_type = /obj/item/light/tube // the type of allowed light items
 	var/light_name = "light tube"				// the name of the inserted light item
 
 	var/fitting = "tube"
-	var/switchcount = 0			// count of number of times switched on/off
-								// this is used to calc the probability the light burns out
+	var/switchcount = 0	// count of number of times switched on/off
+											// this is used to calc the probability the light burns out
 
 	var/wallmounted = 1
 	var/nostick = 1 //If set to true, overrides the autopositioning.

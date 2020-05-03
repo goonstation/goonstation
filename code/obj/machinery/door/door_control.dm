@@ -7,6 +7,7 @@
 	var/timer = 0
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_BELOW
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
