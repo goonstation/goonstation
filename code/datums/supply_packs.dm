@@ -286,13 +286,14 @@
 
 /datum/supply_packs/janitor
 	name = "Janitorial Supplies"
-	desc = "x3 Buckets, x1 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket"
+	desc = "x3 Buckets, x3 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket, x1 Rubber Gloves"
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/glass/bucket = 3,
-					/obj/item/mop,
+					/obj/item/mop = 3,
 					/obj/item/caution = 3,
 					/obj/item/chem_grenade/cleaner = 3,
-					/obj/mopbucket)
+					/obj/mopbucket,
+					/obj/item/clothing/gloves/long)
 	cost = 500
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
@@ -432,17 +433,20 @@
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
-	desc = "x4 Floor Bot, x5 Air Tank, x5 Gas Mask"
+	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
-	/obj/item/tank/air = 5,
-	/obj/item/clothing/mask/gas = 5)
+	/obj/item/clothing/mask/gas = 4,
+	/obj/item/tank/emergency_oxygen = 2,
+	/obj/item/tank/air = 2,
+	/obj/item/clothing/head/emerg = 4,
+	/obj/item/clothing/suit/space/emerg = 4)
 	cost = 1500
 	containertype = /obj/storage/crate/internals
 	containername = "Emergency Equipment"
 
 /datum/supply_packs/alcohol
 	name = "Alcohol Crate"
-	desc = "x8 Assorted Liquor"
+	desc = "x9 Assorted Liquor"
 	category = "Civilian Department"
 	contains = list(/obj/item/storage/box/beer,
 					/obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -451,8 +455,10 @@
 					/obj/item/reagent_containers/food/drinks/bottle/cider,
 					/obj/item/reagent_containers/food/drinks/bottle/rum,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka,
-					/obj/item/reagent_containers/food/drinks/bottle/tequila)
-	cost = 300
+					/obj/item/reagent_containers/food/drinks/bottle/tequila,
+					/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+					/obj/item/reagent_containers/food/drinks/curacao)
+	cost = 400
 	containertype = /obj/storage/crate
 	containername = "Alcohol Crate"
 
@@ -526,6 +532,23 @@
 	cost = 750
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
+
+/datum/supply_packs/glowsticks
+	name = "Emergency Glowsticks Crate - 4 pack"
+	desc = "x4 Glowsticks Box (28 glowsticks total)"
+	category = "Civilian Department"
+	contains = list(/obj/item/storage/box/glowstickbox = 4)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Emergency Glowsticks Crate - 4 pack"
+
+/datum/supply_packs/glowsticksassorted
+	name = "Assorted Glowsticks Crate - 4 pack"
+	desc = "Everything you need for your very own DIY rave!"
+	contains = list(/obj/item/storage/box/glowstickbox/assorted = 4)
+	cost = 600
+	containertype = /obj/storage/crate
+	containername = "Assorted Glowsticks Crate - 4 pack"
 
 /datum/supply_packs/fueltank
 	name = "Welding Fuel tank"

@@ -43,22 +43,22 @@
 		UnsubscribeProcess()
 
 	attack_ai(mob/user)
-		boutput(user, "<span style=\"color:red\">This machine is not linked to your network.</span>")
+		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/blueprint))
 			if(currentBp)
-				boutput(user, "<span style=\"color:red\">Theres already a blueprint in the machine.</span>")
+				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
 				return
 			else
-				boutput(user, "<span style=\"color:blue\">You insert the blueprint into the machine.</span>")
+				boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
 				user.drop_item()
 				W.set_loc(src)
 				currentBp = W
 				return
 		else if (istype(W, /obj/item/sheet))
-			boutput(user, "<span style=\"color:blue\">You insert the sheet into the machine.</span>")
+			boutput(user, "<span class='notice'>You insert the sheet into the machine.</span>")
 			user.drop_item()
 			W.set_loc(src)
 			return
@@ -66,7 +66,7 @@
 
 	attack_hand(mob/user as mob)
 		if(building)
-			boutput(user, "<span style=\"color:red\">The machine is currently constructing something. Best not touch it until it's done.</span>")
+			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
 			return
 
 		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
@@ -74,31 +74,31 @@
 		switch(input)
 			if("Unlock")
 				if(!locked || building) return
-				boutput(user, "<span style=\"color:blue\">The machine unlocks and shuts down.</span>")
+				boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
 				deactivate()
 
 			if("Lock")
 				if(locked || building) return
 				if(!currentBp)
-					boutput(user, "<span style=\"color:red\">The machine requires a blueprint before it can be locked</span>")
+					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked</span>")
 					return
-				boutput(user, "<span style=\"color:blue\">The machine locks into place and begins humming softly.</span>")
+				boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
 				activate()
 
 			if("Begin Building")
 				if(building) return
 				if(!locked)
-					boutput(user, "<span style=\"color:red\">The machine must be locked into place before activating it.</span>")
+					boutput(user, "<span class='alert'>The machine must be locked into place before activating it.</span>")
 					return
 				if(!currentBp)
-					boutput(user, "<span style=\"color:red\">The machine requires a blueprint before it can build anything.</span>")
+					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
 				build()
 
 			if("Eject Blueprint")
 				if(building) return
 				if(locked)
-					boutput(user, "<span style=\"color:red\">Can not eject blueprint while machine is locked.</span>")
+					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked.</span>")
 					return
 				currentBp.set_loc(src.loc)
 				currentBp = null
@@ -124,9 +124,9 @@
 							if (S.material.material_flags & MATERIAL_CRYSTAL)
 								glass_cnt += S.amount
 
-				boutput(user, "<span style=\"color:blue\">Currently loaded :</span>")
-				boutput(user, "<span style=\"color:blue\">[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
-				boutput(user, "<span style=\"color:blue\">[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>")
+				boutput(user, "<span class='notice'>Currently loaded :</span>")
+				boutput(user, "<span class='notice'>[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
+				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>")
 		return
 
 	proc/deactivate()
@@ -151,7 +151,7 @@
 				invalidCount++
 
 			markers.Add(O)
-		boutput(usr, "<span style=\"color:blue\">Building this will require [currentBp.req_metal] metal and [currentBp.req_glass] glass sheets.</span>")
+		boutput(usr, "<span class='notice'>Building this will require [currentBp.req_metal] metal and [currentBp.req_glass] glass sheets.</span>")
 		return
 
 	proc/build()
@@ -159,7 +159,7 @@
 		var/glass_cnt = 0
 
 		if(invalidCount)
-			boutput(usr, "<span style=\"color:red\">The machine can not build on anything but empty space. Check for red markers.</span>")
+			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
 			return
 
 		for(var/obj/O in src)
@@ -173,10 +173,10 @@
 						glass_cnt += S.amount
 
 		if(metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass)
-			boutput(usr, "<span style=\"color:red\">The machine buzzes in protest. Seems like it doesn't have enough material to work with.</span>")
+			boutput(usr, "<span class='alert'>The machine buzzes in protest. Seems like it doesn't have enough material to work with.</span>")
 			return
 
-		boutput(usr, "<span style=\"color:blue\">The machine starts to buzz and vibrate.</span>")
+		boutput(usr, "<span class='notice'>The machine starts to buzz and vibrate.</span>")
 
 		building = 1
 		icon_state = "builder1"
@@ -194,7 +194,7 @@
 				V.set_density(0)
 				V.layer = EFFECTS_LAYER_BASE
 
-				sleep(15)
+				sleep(1.5 SECONDS)
 
 				qdel(V)
 
@@ -264,7 +264,7 @@
 		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
 
 		save.cd = "/[key]"
-		boutput(usr, "<span style=\"color:blue\">Printed Blueprint for '[save["roomname"]]'</span>")
+		boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
 		var/roomname = save["roomname"]
 		bp.size_x = save["sizex"]
 		bp.size_y = save["sizey"]
@@ -333,7 +333,7 @@
 /obj/item/blueprint_marker
 	name = "Blueprint Marker"
 	desc = "A tool used to map rooms for the creation of blueprints."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 
 	icon_state = "blueprintmarker"
 	item_state = "gun"
@@ -422,7 +422,7 @@
 				break
 
 		if(!permitted)
-			boutput(user, "<span style=\"color:red\">Unsupported Tile type detected.</span>")
+			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
 		for(var/a in roomList)
@@ -442,7 +442,7 @@
 		if(target.y > maxy) maxy = target.y
 
 		if(abs(minx - maxx) >= maxSize || abs(miny - maxy) >= maxSize)
-			boutput(user, "<span style=\"color:red\">Tile exceeds maximum size of blueprint.</span>")
+			boutput(user, "<span class='alert'>Tile exceeds maximum size of blueprint.</span>")
 			return
 
 		if(roomList.Find(target))
@@ -547,7 +547,7 @@
 			prints_left--
 
 			save.cd = "/[usr.client.ckey]" + name
-			boutput(usr, "<span style=\"color:blue\">Printed Blueprint for '[save["roomname"]]'</span>")
+			boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
 			var/roomname = save["roomname"]
 			bp.size_x = save["sizex"]
 			bp.size_y = save["sizey"]
@@ -582,7 +582,7 @@
 				bp.req_glass = round(bp.req_glass)
 			return
 		else
-			boutput(usr, "<span style=\"color:red\">No blueprint found for user.</span>")
+			boutput(usr, "<span class='alert'>No blueprint found for user.</span>")
 			return
 
 	attack_self(mob/user as mob)
@@ -591,13 +591,13 @@
 
 		switch(input)
 			if("Reset")
-				boutput(user, "<span style=\"color:blue\">Resetting ...</span>")
+				boutput(user, "<span class='notice'>Resetting ...</span>")
 				removeOverlays()
 				roomList.Cut()
 
 			if("Set Blueprint Name")
 				roomname = copytext(strip_html(input(user,"Set Blueprint Name:","Setup",roomname) as text), 1, 257)
-				boutput(user, "<span style=\"color:blue\">Name set to '[roomname]'</span>")
+				boutput(user, "<span class='notice'>Name set to '[roomname]'</span>")
 
 			//if("Create Clone Blueprint")
 			//	saveMarked("_temp", 1)
@@ -606,7 +606,7 @@
 
 			if("Print Saved Blueprint")
 				if(prints_left <= 0)
-					boutput(user, "<span style=\"color:red\">Out of energy.</span>")
+					boutput(user, "<span class='alert'>Out of energy.</span>")
 					return
 				printSaved()
 				return
@@ -616,12 +616,12 @@
 				return
 
 			if("Information")
-				var/message = "<span style=\"color:blue\">Blueprint Marker Tool Usage Information:</span><br><br>"
-				message += "<span style=\"color:blue\">Reset: Resets the tools and clears all marked areas.</span><br>"
-				message += "<span style=\"color:blue\">Set Blueprint Name: Allows you to set the name that will appear on the blueprint.</span><br>"
-				//message += "<span style=\"color:blue\">Create Clone Blueprint: Creates a blueprint for an exact copy of the marked area. This type of blueprint can not be saved and costs slightly more to build.</span><br>"
-				message += "<span style=\"color:blue\">Print Saved Blueprint: Prints a previously saved blueprint.</span><br>"
-				message += "<span style=\"color:blue\">Save Blueprint: Saves a blueprint of the marked area to the server. This type of blueprint can be saved but it can not save all types of objects.</span>"
+				var/message = "<span class='notice'>Blueprint Marker Tool Usage Information:</span><br><br>"
+				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
+				message += "<span class='notice'>Set Blueprint Name: Allows you to set the name that will appear on the blueprint.</span><br>"
+				//message += "<span class='notice'>Create Clone Blueprint: Creates a blueprint for an exact copy of the marked area. This type of blueprint can not be saved and costs slightly more to build.</span><br>"
+				message += "<span class='notice'>Print Saved Blueprint: Prints a previously saved blueprint.</span><br>"
+				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. This type of blueprint can be saved but it can not save all types of objects.</span>"
 				boutput(user, message)
 				return
 

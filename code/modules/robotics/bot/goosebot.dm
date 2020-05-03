@@ -61,11 +61,7 @@
 
 /obj/machinery/bot/goosebot/attackby(obj/item/W as obj, mob/user as mob)
 	src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
-	switch(W.damtype)
-		if("fire")
-			src.health -= W.force * 0.5
-		if("brute")
-			src.health -= W.force * 0.5
+	src.health -= W.force * 0.5
 	if (src.health <= 0)
 		src.explode()
 

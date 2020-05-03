@@ -14,13 +14,13 @@
       return 1
 
     if (ismartian(target))
-      boutput(holder.owner, "<span style=\"color:red\">They can hear you just fine without the use of your abilities.</span>")
+      boutput(holder.owner, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
     else if (isliving(target))
       var/mob/living/T = target
       if(!T)
         return
       if (isdead(T))
-        boutput(holder.owner, "<span style=\"color:red\">You can't talk to dead brains!</span>")
+        boutput(holder.owner, "<span class='alert'>You can't talk to dead brains!</span>")
         return 1
       else
         var/message = html_encode(input("What would you like to communicate to [target]?", "Telepathy", "") as text)
@@ -43,5 +43,5 @@
             var/thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
             M.show_message(thisR, 2)
     else
-      boutput(holder.owner, "<span style=\"color:red\">You can't sense a mind to contact.</span>")
+      boutput(holder.owner, "<span class='alert'>You can't sense a mind to contact.</span>")
       return 1

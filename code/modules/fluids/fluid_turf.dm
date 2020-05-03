@@ -18,8 +18,8 @@
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	fullbright = 0
-	luminosity = 3
+	fullbright = 1
+	luminosity = 1
 	intact = 0 //allow wire laying
 	throw_unlimited = 0
 	//todo fix : cannot flip.
@@ -104,7 +104,7 @@
 	proc/bake_light()
 
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 		for(var/obj/overlay/tile_effect/lighting/L in src)
 			src.icon = getFlatIcon(L)
 			qdel(L)
@@ -273,7 +273,7 @@
 		if (L && L.len)
 			SPAWN_DBG(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
-					visible_message("<span style=\"color:red\">[AM] falls down [src]!</span>")
+					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
 					if (ismob(AM))
 						var/mob/M = AM
 						random_brute_damage(M, 6)
@@ -306,7 +306,8 @@
 /turf/space/fluid/trench
 	name = "trench floor"
 	temperature = TRENCH_TEMP
-	luminosity = 2
+	fullbright = 0
+	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT
 
@@ -328,7 +329,7 @@
 
 //Manta
 /turf/space/fluid/manta
-	luminosity = 2
+	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_PLANTSMANTA
 	turf_flags = CAN_BE_SPACE_SAMPLE | MANTA_PUSH
@@ -391,7 +392,7 @@
 		if (icefall.len)
 			var/turf/T = pick(seafall)
 			if (isturf(T))
-				visible_message("<span style=\"color:red\">[A] falls down [src]!</span>")
+				visible_message("<span class='alert'>[A] falls down [src]!</span>")
 				if (ismob(A))
 					var/mob/M = A
 					random_brute_damage(M, 25)
@@ -438,7 +439,7 @@
 			if(!active)
 				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
+					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
@@ -472,7 +473,7 @@
 
 	for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The elevator has moved.</span>")
+		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
 
 	return

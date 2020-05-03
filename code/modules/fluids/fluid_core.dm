@@ -15,6 +15,7 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"ash",\
 	"blackpowder",\
 	"reliquary_blood",\
+	"leaves",\
 )
 
 ///////////////////
@@ -24,6 +25,8 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 var/global/waterflow_enabled = 1
 
 var/list/depth_levels = list(2,50,100,200)
+
+var/mutable_appearance/fluid_ma
 
 /obj/fluid
 	name = "fluid"
@@ -102,6 +105,9 @@ var/list/depth_levels = list(2,50,100,200)
 		for (var/dir in cardinal)
 			blocked_perspective_objects["[dir]"] = 0
 
+		if (!fluid_ma)
+			fluid_ma = new(src)
+
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
@@ -152,12 +158,13 @@ var/list/depth_levels = list(2,50,100,200)
 			src.loc:active_liquid = 0
 
 		name = "fluid"
-		icon_state = "15"
+		fluid_ma.icon_state = "15"
+		fluid_ma.alpha = 255
+		fluid_ma.color = "#ffffff"
+		src.appearance = fluid_ma
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
-		alpha = 255
-		color = "#ffffff"
 		amt = 0
 		avg_viscosity = initial(avg_viscosity)
 		movement_speed_mod = 0
@@ -194,7 +201,7 @@ var/list/depth_levels = list(2,50,100,200)
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. = "<br><span style=\"color:blue\">[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
+		. = "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -634,7 +641,7 @@ var/list/depth_levels = list(2,50,100,200)
 			F = C[i]
 			F.finalcolor = c
 			animate( F, color = F.finalcolor, alpha = finalalpha, time = 5 )
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 
 
@@ -725,8 +732,8 @@ var/list/depth_levels = list(2,50,100,200)
 						if (checks <= 0) break
 					if (prob(slippery))
 						src.pulling = null
-						src.visible_message("<span style='color:red'><b>[src]</b> slips on [F]!</span>",\
-						"<span style='color:red'>You slip on [F]!</span>")
+						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+						"<span class='alert'>You slip on [F]!</span>")
 						src.changeStatus("stunned", 2 SECONDS)
 						src.changeStatus("weakened", 2 SECONDS)
 						src.force_laydown_standup()
@@ -743,8 +750,8 @@ var/list/depth_levels = list(2,50,100,200)
 								break
 
 					random_brute_damage(src, 4)
-					src.visible_message("<span style='color:red'><b>[src]</b> slips on [F]!</span>",\
-					"<span style='color:red'>You slip on [F]!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+					"<span class='alert'>You slip on [F]!</span>")
 					src.changeStatus("weakened", 7 SECONDS)
 					playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
 

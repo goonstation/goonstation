@@ -12,7 +12,7 @@
 			var/datum/reagent/S = R.get_reagent("silver_sulfadiazine")
 			if (S)
 				holder.emote("scream")
-				boutput(holder, "<span style=\"color:blue\">The silver sulfadiazine soothes your burns.</span>")
+				boutput(holder, "<span class='notice'>The silver sulfadiazine soothes your burns.</span>")
 				HealDamage(fract * S.volume * 2)
 			S = R.get_reagent("synthflesh")
 			if (S)

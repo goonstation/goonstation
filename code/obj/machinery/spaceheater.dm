@@ -66,18 +66,12 @@
 
 
 	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
-		boutput(usr, "This is [bicon(src)] \an [src.name].")
-		boutput(usr, src.desc)
-
-		boutput(usr, "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"].")
+		. = ..()
+		. += "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			boutput(usr, "The power cell is [cell ? "installed" : "missing"].")
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The charge meter reads [cell ? round(cell.percent(),1) : 0]%")
-		return
+			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 
 	attackby(obj/item/I, mob/user)
@@ -95,13 +89,13 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (isscrewingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
 			if(!open && user.machine == src)
 				user.Browse(null, "window=spaceheater")
@@ -147,7 +141,7 @@
 				user.show_text("The button seems to be stuck!", "red")
 			else
 				on = !on
-				user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+				user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 				update_icon()
 
 
@@ -188,7 +182,7 @@
 						cell.updateicon()
 						cell = null
 
-						usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 
 				if("cellinstall")
@@ -200,7 +194,7 @@
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span style=\"color:blue\">[usr] inserts a power cell into \the [src].</span>", "<span style=\"color:blue\">You insert the power cell into \the [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 			updateDialog()
 		else
@@ -296,18 +290,13 @@
 		return
 
 	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
-		boutput(usr, "This is [bicon(src)] \an [src.name].")
-		boutput(usr, src.desc)
+		. = ..()
 
-		boutput(usr, "The stove is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"].")
+		. += "The stove is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			boutput(usr, "The power cell is [cell ? "installed" : "missing"].")
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The charge meter reads [cell ? round(cell.percent(),1) : 0]%")
-		return
+			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 
 	attackby(obj/item/I, mob/user)
@@ -325,13 +314,13 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (isscrewingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
 			if(!open && user.machine == src)
 				user.Browse(null, "window=saunastove")
@@ -369,7 +358,7 @@
 
 		else
 			on = !on
-			user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 			update_icon()
 
 			if (on)
@@ -399,7 +388,7 @@
 						cell.updateicon()
 						cell = null
 
-						usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 
 				if("cellinstall")
@@ -411,7 +400,7 @@
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span style=\"color:blue\">[usr] inserts a power cell into \the [src].</span>", "<span style=\"color:blue\">You insert the power cell into \the [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 			updateDialog()
 		else

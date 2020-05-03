@@ -25,7 +25,7 @@
 /obj/flock_structure/egg/process()
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= build_time)
-		src.visible_message("<span class='text-blue'>[src] breaks open!</span>")
+		src.visible_message("<span class='notice'>[src] breaks open!</span>")
 		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
 		src.loc = null
 		SPAWN_DBG(1 SECOND)

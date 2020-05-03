@@ -78,9 +78,9 @@
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
-			user.visible_message("<span style=\"color:red\">[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 		else
-			user.visible_message("<span style=\"color:red\">[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 	else if (src.icon_state == "fire0")
 		src.alarm()
 	else

@@ -42,7 +42,7 @@
 			..()
 		if(status & (NOPOWER|BROKEN) || !anchored)
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You are automatically ejected from [src]!</span>")
+				boutput(src.occupant, "<span class='alert'>You are automatically ejected from [src]!</span>")
 				src.go_out()
 				build_icon()
 			return
@@ -56,10 +56,10 @@
 
 	relaymove(mob/user as mob)
 		if(src.conversion_chamber && !isrobot(user))
-			boutput(user, "<span style=\"color:red\">You're trapped inside!</span>")
+			boutput(user, "<span class='alert'>You're trapped inside!</span>")
 			return
 		//if(user.stat) // Trapping cell-less (thus deaf and mute) robots inside is not fun. It's very easy to rip their cell out, too.
-		//	boutput(user, "<span style=\"color:red\">You are incapacitated and cannot currently leave [src].</span>")
+		//	boutput(user, "<span class='alert'>You are incapacitated and cannot currently leave [src].</span>")
 		//	return
 		src.go_out()
 		return
@@ -70,10 +70,10 @@
 
 	attack_hand(mob/user)
 		if(status & BROKEN)
-			boutput(usr, "<span style=\"color:red\">[src] is broken and cannot be used.</span>")
+			boutput(usr, "<span class='alert'>[src] is broken and cannot be used.</span>")
 			return
 		if(status & NOPOWER)
-			boutput(usr, "<span style=\"color:red\">[src] is out of power and cannot be used.</span>")
+			boutput(usr, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 			return
 
 		if(!anchored)
@@ -268,28 +268,28 @@
 
 			if (isrobot(usr))
 				if (usr != src.occupant)
-					boutput(usr, "<span style=\"color:red\">You must be inside the docking station to use the functions.</span>")
+					boutput(usr, "<span class='alert'>You must be inside the docking station to use the functions.</span>")
 					src.updateUsrDialog()
 					return
 				else
 					if (!src.allow_self_service)
-						boutput(usr, "<span style=\"color:red\">Self-service is disabled at this docking station.</span>")
+						boutput(usr, "<span class='alert'>Self-service is disabled at this docking station.</span>")
 						src.updateUsrDialog()
 						return
 			else
 				if (usr == src.occupant)
-					boutput(usr, "<span style=\"color:red\">Non-cyborgs cannot use the docking station functions.</span>")
+					boutput(usr, "<span class='alert'>Non-cyborgs cannot use the docking station functions.</span>")
 					src.updateUsrDialog()
 					return
 
 			if (src.occupant && !isrobot(occupant))
-				boutput(usr, "<span style=\"color:red\">The docking station functions are not compatible with non-cyborg occupants.</span>")
+				boutput(usr, "<span class='alert'>The docking station functions are not compatible with non-cyborg occupants.</span>")
 				src.updateUsrDialog()
 				return
 
 			if (href_list["rename"])
 				if (usr == src.occupant)
-					boutput(usr, "<span style=\"color:red\">You may not rename yourself!</span>")
+					boutput(usr, "<span class='alert'>You may not rename yourself!</span>")
 					src.updateUsrDialog()
 					return
 				var/mob/living/silicon/robot/R = occupant
@@ -297,8 +297,8 @@
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !newname)
 					return
 				if (url_regex && url_regex.Find(newname))
-					boutput(usr, "<span style=\"color:blue\"><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-					boutput(usr, "<span style=\"color:red\">&emsp;<b>\"[newname]</b>\"</span>")
+					boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+					boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 					return
 				logTheThing("combat", usr, R, "uses a docking station to rename %target% to [newname].")
 				R.name = newname
@@ -308,7 +308,7 @@
 
 			if (href_list["selfservice"])
 				if (isrobot(usr))
-					boutput(usr, "<span style=\"color:red\">Cyborgs are not allowed to toggle this option.</span>")
+					boutput(usr, "<span class='alert'>Cyborgs are not allowed to toggle this option.</span>")
 					src.updateUsrDialog()
 					return
 				else src.allow_self_service = !src.allow_self_service
@@ -339,7 +339,7 @@
 					for(var/obj/item/parts/robot_parts/RP in C.contents) RP.ropart_mend_damage(0,usage)
 					src.cabling -= usage
 					if (src.cabling < 0) src.cabling = 0
-				else boutput(usr, "<span style=\"color:red\">[C] has no damage to repair.</span>")
+				else boutput(usr, "<span class='alert'>[C] has no damage to repair.</span>")
 				R.update_appearance()
 
 			if (href_list["install"])
@@ -410,32 +410,32 @@
 						src.cells.Add(R.cell)
 						C.set_loc(src)
 						R.cell = null
-						boutput(R, "<span style=\"color:blue\">Your power cell is being swapped...</span>")
+						boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 
 					src.cells.Remove(O)
 					O.set_loc(R)
 					R.cell = O
-					boutput(R, "<span style=\"color:blue\">Power cell installed: [O].</span>")
+					boutput(R, "<span class='notice'>Power cell installed: [O].</span>")
 					R.hud.update_charge()
 
 				if (istype(O,/obj/item/roboupgrade))
 					if (R.upgrades.len >= R.max_upgrades)
-						boutput(usr, "<span style=\"color:red\">[R] has no room for further upgrades.</span>")
+						boutput(usr, "<span class='alert'>[R] has no room for further upgrades.</span>")
 						src.updateUsrDialog()
 						return
 					if (locate(O.type) in R.upgrades)
-						boutput(usr, "<span style=\"color:red\">[R] already has that upgrade.</span>")
+						boutput(usr, "<span class='alert'>[R] already has that upgrade.</span>")
 						src.updateUsrDialog()
 						return
 					src.upgrades.Remove(O)
 					R.upgrades.Add(O)
 					O.set_loc(R)
 					//O.icon_state = null  //What the FUCK
-					boutput(R, "<span style=\"color:blue\">You recieved [O]! It can be activated from your panel.</span>")
+					boutput(R, "<span class='notice'>You recieved [O]! It can be activated from your panel.</span>")
 					R.hud.update_upgrades()
 				if (istype(O,/obj/item/robot_module/))
 					if (R.module)
-						boutput(usr, "<span style=\"color:red\">[R] already has a module installed!</span>")
+						boutput(usr, "<span class='alert'>[R] already has a module installed!</span>")
 					else
 						var/obj/item/robot_module/RM = O
 						R.set_module(RM)
@@ -458,14 +458,14 @@
 							R.clothes.Remove(x)
 							break
 
-					boutput(R, "<span style=\"color:red\">\the [O.name] was removed!</span>")
+					boutput(R, "<span class='alert'>\the [O.name] was removed!</span>")
 
 				if (istype(O,/obj/item/roboupgrade))
 					var/obj/item/roboupgrade/U = O
 					if (!U.removable)
-						boutput(usr, "<span style=\"color:red\">This upgrade cannot be removed.</span>")
+						boutput(usr, "<span class='alert'>This upgrade cannot be removed.</span>")
 					else
-						boutput(R, "<span style=\"color:red\">[U] was removed!</span>")
+						boutput(R, "<span class='alert'>[U] was removed!</span>")
 						U.upgrade_deactivate(R)
 						src.upgrades.Add(U)
 						R.upgrades.Remove(U)
@@ -487,7 +487,7 @@
 				src.cells.Add(R.cell)
 				C.set_loc(src)
 				R.cell = null
-				boutput(R, "<span style=\"color:red\">Your power cell was removed!</span>")
+				boutput(R, "<span class='alert'>Your power cell was removed!</span>")
 				logTheThing("combat", usr, R, "removes %target%'s power cell at [log_loc(usr)].") // Renders them mute and helpless (Convair880).
 				R.hud.update_charge()
 
@@ -508,7 +508,7 @@
 				var/datum/robot_cosmetic/C = null
 				if (R.cosmetic_mods) C = R.cosmetic_mods
 				else
-					boutput(usr, "<span style=\"color:red\">ERROR: Cannot find cyborg's decorations.</span>")
+					boutput(usr, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 					src.updateUsrDialog()
 					return
 				switch(selection)
@@ -548,7 +548,7 @@
 				var/datum/robot_cosmetic/C = null
 				if (R.cosmetic_mods) C = R.cosmetic_mods
 				else
-					boutput(usr, "<span style=\"color:red\">ERROR: Cannot find cyborg's decorations.</span>")
+					boutput(usr, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 					src.updateUsrDialog()
 					return
 				switch(selection)
@@ -567,7 +567,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing) && allow_clothes)
 			if(!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
-				boutput(user, "<span style=\"color:red\">This type of is not compatible.</span>")
+				boutput(user, "<span class='alert'>This type of is not compatible.</span>")
 				return
 			if(user.contents.Find(W)) user.drop_item()
 			if (W in src.clothes)
@@ -614,16 +614,16 @@
 			return
 		if (istype(W, /obj/item/reagent_containers/glass/))
 			if (!W.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">There is nothing in [W] to pour!</span>")
+				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			if (!src.reagents.has_reagent("fuel"))
-				boutput(user, "<span style=\"color:red\">There's no fuel in [W]. It would be pointless to pour it in.</span>")
+				boutput(user, "<span class='alert'>There's no fuel in [W]. It would be pointless to pour it in.</span>")
 				return
 			else
-				user.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				if (!W.reagents.total_volume) boutput(user, "<span style=\"color:red\"><b>[W] is now empty.</b></span>")
+				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 				src.reagents.isolate_reagent("fuel")
 				return
 		..()
@@ -637,13 +637,13 @@
 			return
 
 		if (isliving(O) && src.occupant)
-			boutput(user, "<span style=\"color:red\">The cell is already occupied!</span>")
+			boutput(user, "<span class='alert'>The cell is already occupied!</span>")
 			return
 
 		if (isrobot(O))
 			var/mob/living/silicon/robot/R = O
 			if (isdead(R))
-				boutput(user, "<span style=\"color:red\">[R] is dead and cannot enter the docking station.</span>")
+				boutput(user, "<span class='alert'>[R] is dead and cannot enter the docking station.</span>")
 				return // Don't want them going in there and then blowing up anyway
 			if (user != R)
 				if (isunconscious(user)) // Allow out-of-charge robots to recharge themselves, but nothing else.
@@ -660,7 +660,7 @@
 		if (isshell(O))
 			var/mob/living/silicon/hivebot/H = O
 			if (isdead(H))
-				boutput(user, "<span style=\"color:red\">[H] is dead and cannot enter the docking station.</span>")
+				boutput(user, "<span class='alert'>[H] is dead and cannot enter the docking station.</span>")
 				return // Don't want them going in there and then blowing up anyway
 			if (user != H)
 				if (isunconscious(user)) // Allow out-of-charge robots to recharge themselves, but nothing else.
@@ -677,11 +677,11 @@
 
 		else if (ishuman(O) && !user.stat)
 			if (!src.conversion_chamber)
-				boutput(user, "<span style=\"color:red\">Humans cannot enter recharging stations.</span>")
+				boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
 			else
 				var/mob/living/carbon/human/H = O
 				if (isdead(H))
-					boutput(user, "<span style=\"color:red\">[H] is dead and cannot be forced inside.</span>")
+					boutput(user, "<span class='alert'>[H] is dead and cannot be forced inside.</span>")
 					return
 				var/delay = 0
 				if (user != H)
@@ -757,7 +757,7 @@
 				var/mob/living/carbon/human/H = occupant
 				if (prob(80))
 					playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_spaz.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
-					if (prob(15)) src.visible_message("<span style=\"color:red\">[src] [pick("whirs","grinds","rumbles","clatters","clangs")] [pick("horribly","in a grisly manner","horrifyingly","scarily")]!</span>")
+					if (prob(15)) src.visible_message("<span class='alert'>[src] [pick("whirs","grinds","rumbles","clatters","clangs")] [pick("horribly","in a grisly manner","horrifyingly","scarily")]!</span>")
 					if (prob(25))
 						SPAWN_DBG(0.3 SECONDS)
 							playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Generic_Snap_1.ogg','sound/impact_sounds/Generic_Hit_1.ogg'), 100, 1)
@@ -766,10 +766,10 @@
 								playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1)
 							else
 								playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1)
-							src.visible_message("<span style=\"color:red\">A muffled scream comes from within [src]!</span>")
+							src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
 
 				if(H.health <= 2)
-					boutput(H, "<span style=\"color:red\">You feel... different.</span>")
+					boutput(H, "<span class='alert'>You feel... different.</span>")
 					go_out()
 
 					var/bdna = null // For forensics (Convair880).
@@ -787,7 +787,7 @@
 					random_brute_damage(H, 3)
 					H.changeStatus("weakened", 5 SECONDS)
 					if (prob(15))
-						boutput(H, "<span style=\"color:red\">[pick("You feel chunks of your flesh being ripped off!","Something cold and sharp skewers you!","You feel your organs being pulped and mashed!","Machines shred you from every direction!")]</span>")
+						boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!","Something cold and sharp skewers you!","You feel your organs being pulped and mashed!","Machines shred you from every direction!")]</span>")
 
 				src.updateUsrDialog()
 
@@ -806,7 +806,7 @@
 			return
 		if (ishuman(usr))
 			if (src.conversion_chamber && src.occupant == usr)
-				boutput(usr, "<span style=\"color:red\">You're trapped inside!</span>")
+				boutput(usr, "<span class='alert'>You're trapped inside!</span>")
 				return
 		src.go_out()
 		add_fingerprint(usr)
@@ -818,10 +818,10 @@
 		if (isdead(usr) || status & (NOPOWER|BROKEN))
 			return
 		if (!isrobot(usr) && !src.conversion_chamber)
-			boutput(usr, "<span style=\"color:red\">Only cyborgs may enter the recharger!</span>")
+			boutput(usr, "<span class='alert'>Only cyborgs may enter the recharger!</span>")
 			return
 		if (src.occupant)
-			boutput(usr, "<span style=\"color:red\">The cell is already occupied!</span>")
+			boutput(usr, "<span class='alert'>The cell is already occupied!</span>")
 			return
 		usr.pulling = null
 		usr.set_loc(src)

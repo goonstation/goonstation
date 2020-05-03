@@ -20,7 +20,7 @@
 
 	attack_hand(mob/user as mob)
 		if(mode)
-			src.interact(user)
+			src.interacted(user)
 			return
 
 		else
@@ -44,7 +44,7 @@
 
 					else
 
-						boutput(user, "<span style=\"color:red\">The [src] couldn't be attached here!</span>")
+						boutput(user, "<span class='alert'>The [src] couldn't be attached here!</span>")
 						return
 
 				else
@@ -63,9 +63,9 @@
 			..()
 
 	attack_self(mob/user as mob)
-		return interact(user)
+		return interacted(user)
 
-	proc/interact(mob/user as mob)
+	proc/interacted(mob/user as mob)
 
 		var/dat = "<html><head><title>Packet Sniffer</title></head><body>"
 

@@ -1,12 +1,11 @@
 /obj/item
 	name = "item"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
-	var/damtype = "brute"
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1//4
 	var/r_speed = 1.0
@@ -108,11 +107,28 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg, [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
-				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+				if(!istype(P, /datum/objectProperty/inline))
+					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+
+		//itemblock tooltip additions
+		if(src.c_flags & HAS_GRAB_EQUIP)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			for(var/obj/item/grab/block/B in src)
+				if(B.properties && B.properties.len)
+					for(var/datum/objectProperty/inline/P in B.properties)
+						. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					for(var/datum/objectProperty/P in B.properties)
+						if(!istype(P, /datum/objectProperty/inline))
+							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
+			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
+				. += jointext(C.getTooltipDesc(), "")
+		else if(src.c_flags & BLOCK_TOOLTIP)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
+
 
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
@@ -213,6 +229,20 @@
 	else
 		..()
 
+//set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
+/obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
+	SHOULD_CALL_PARENT(1)
+	if(!src.c_flags)
+		return
+	if(src.c_flags & BLOCK_CUT)
+		B.setProperty("I_block_cut", max(1, B.getProperty("I_block_cut")))
+	if(src.c_flags & BLOCK_STAB)
+		B.setProperty("I_block_stab", max(1, B.getProperty("I_block_stab")))
+	if(src.c_flags & BLOCK_BURN)
+		B.setProperty("I_block_burn", max(1, B.getProperty("I_block_burn")))
+	if(src.c_flags & BLOCK_BLUNT)
+		B.setProperty("I_block_blunt", max(1, B.getProperty("I_block_blunt")))
+
 /obj/item/proc/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(special && !special.manualTriggerOnly)
 		if(istype(usr, /mob/living/carbon/human))
@@ -252,8 +282,8 @@
 		return 0
 
 	if (M == user)
-		M.visible_message("<span style=\"color:blue\">[M] takes a bite of [src]!</span>",\
-		"<span style=\"color:blue\">You take a bite of [src]!</span>")
+		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
+		"<span class='notice'>You take a bite of [src]!</span>")
 
 		if (src.material && src.material.edible)
 			src.material.triggerEat(M, src)
@@ -272,19 +302,19 @@
 				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
 				M.HealDamage("All", 5, 5)
 
-			M.visible_message("<span style=\"color:red\">[M] finishes eating [src].</span>",\
-			"<span style=\"color:red\">You finish eating [src].</span>")
+			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
+			"<span class='alert'>You finish eating [src].</span>")
 			user.u_equip(src)
 			qdel(src)
 		return 1
 
 	else
 		if(M.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span style='color:red'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
+			boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
 			return 0
-		user.tri_message("<span style=\"color:red\"><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span style=\"color:red\">You try to feed [M] [src]!</span>",\
-		M, "<span style=\"color:red\"><b>[user]</b> tries to feed you [src]!</span>")
+		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
+		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 		logTheThing("combat", user, M, "attempts to feed %target% [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
@@ -292,9 +322,9 @@
 		if (get_dist(user,M) > 1)
 			return 0
 
-		user.tri_message("<span style=\"color:red\"><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span style=\"color:red\">You feed [M] [src]!</span>",\
-		M, "<span style=\"color:red\"><b>[user]</b> feeds you [src]!</span>")
+		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+		user, "<span class='alert'>You feed [M] [src]!</span>",\
+		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing("combat", user, M, "feeds %target% [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
@@ -314,8 +344,8 @@
 				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
 				M.HealDamage("All", 5, 5)
 
-			M.visible_message("<span style=\"color:red\">[M] finishes eating [src].</span>",\
-			"<span style=\"color:red\">You finish eating [src].</span>")
+			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
+			"<span class='alert'>You finish eating [src].</span>")
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -355,7 +385,7 @@
 			var/my_range = 3
 			SPAWN_DBG(my_time) qdel(C)
 			for(var/b=0, b<my_range, b++)
-				sleep(15)
+				sleep(1.5 SECONDS)
 				if (!C) break
 				step(C,my_dir)
 				C.expose()
@@ -367,7 +397,7 @@
 
 /obj/item/proc/combust() // cogwerks- flammable items project
 	if (!src.burning)
-		src.visible_message("<span style=\"color:red\">[src] catches on fire!</span>")
+		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		if (src.burn_output >= 1000)
 			src.overlays += image('icons/effects/fire.dmi', "2old")
@@ -376,7 +406,7 @@
 		processing_items.Add(src)
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
-			//boutput(world, "<span style=\"color:red\"><b>[src] is releasing chemsmoke!</b></span>")
+			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
 			//cogwerks note for drsingh: this was causing infinite server-killing problems
 			//someone brought a couple pieces of cheese into chemistry
 			//chlorine trifluoride foam set the cheese on fire causing it to releasee cheese smoke
@@ -406,7 +436,7 @@
 					var/my_range = 3
 					SPAWN_DBG(my_time) qdel(C)
 					for(var/b=0, b<my_range, b++)
-						sleep(15)
+						sleep(1.5 SECONDS)
 						if (!C) break
 						step(C,my_dir)
 						C.expose()
@@ -447,13 +477,13 @@
 	return added
 
 /obj/item/proc/before_stack(atom/movable/O as obj, mob/user as mob)
-	user.visible_message("<span style=\"color:blue\">[user] begins quickly stacking [src]!</span>")
+	user.visible_message("<span class='notice'>[user] begins quickly stacking [src]!</span>")
 
 /obj/item/proc/after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-	boutput(user, "<span style=\"color:blue\">You finish stacking [src].</span>")
+	boutput(user, "<span class='notice'>You finish stacking [src].</span>")
 
 /obj/item/proc/failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-	boutput(user, "<span style=\"color:blue\">You can't hold any more [name] than that!</span>")
+	boutput(user, "<span class='notice'>You can't hold any more [name] than that!</span>")
 
 /obj/item/proc/check_valid_stack(atom/movable/O as obj)
 
@@ -501,7 +531,7 @@
 			if (!stack_result)
 				continue
 			else
-				sleep(3)
+				sleep(0.3 SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
 				if (src.amount >= max_stack)
@@ -714,9 +744,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
-	if (special_grab)
-		if(chokehold)
-			chokehold.attack_self(user)
+	if(chokehold)
+		chokehold.attack_self(user)
 
 	return
 
@@ -794,6 +823,8 @@
 		src.ArtifactStimulus("carbtouch", 1)
 	return
 
+//nah
+/*
 /obj/item/verb/move_to_top()
 	set name = "Move to Top"
 	set src in oview(1)
@@ -807,16 +838,10 @@
 	src.set_loc(null)
 
 	src.set_loc(T)
+*/
 
-/obj/item/interact_verb()
-	set hidden = 1
-
-/obj/item/verb/pick_up()
-	set name = "Pick Up"
-	set src in oview(1)
-	set category = "Local"
-
-	src.pick_up_by(usr)
+/obj/item/interact(mob/user)
+	src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
 	if (world.time < M.next_click)
@@ -831,6 +856,11 @@
 	if (!can_reach(M, src))
 		return
 
+	.= 1
+	for (var/obj/item/cloaking_device/I in M)
+		if (I.active)
+			I.deactivate(M)
+			M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 
@@ -887,7 +917,7 @@
 		if (!cant_self_remove || (!cant_drop && (user.l_hand == src || user.r_hand == src)) || in_pocket == 1)
 			user.u_equip(src)
 		else
-			boutput(user, "<span style=\"color:red\">You can't remove this item.</span>")
+			boutput(user, "<span class='alert'>You can't remove this item.</span>")
 			return 0
 	else
 		//src.pickup(user) //This is called by the later put_in_hand() call
@@ -901,7 +931,7 @@
 	var/area/MA = get_area(user)
 	var/area/OA = get_area(src)
 	if( OA && MA && OA != MA && OA.blocked )
-		boutput( user, "<span style='color:red'>You cannot pick up items from outside a restricted area.</span>" )
+		boutput( user, "<span class='alert'>You cannot pick up items from outside a restricted area.</span>" )
 		return 0
 
 	var/atom/oldloc = src.loc
@@ -938,15 +968,15 @@
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		insertChestItem(M, user)	// Puting item in patient's chest
-		return
+		if(insertChestItem(M, user))	// Puting item in patient's chest
+			return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on %target%")
 		return
 
 	if (user.mind && user.mind.special_role == "vampthrall" && isvampire(M) && user.is_mentally_dominated_by(M))
-		boutput(user, "<span style=\"color:red\">You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
+		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 
 	if(user.traitHolder && !user.traitHolder.hasTrait("glasscannon"))
@@ -954,14 +984,13 @@
 			logTheThing("combat", user, M, "tries to attack %target% with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
-	if (special_grab)
-		if (chokehold)
-			chokehold.attack(M, user, def_zone, is_special)
+	if (chokehold)
+		chokehold.attack(M, user, def_zone, is_special)
+		return
+	else if (special_grab)
+		if (user.a_intent == INTENT_GRAB)
+			src.try_grab(M, user)
 			return
-		else
-			if (user.a_intent == INTENT_GRAB)
-				src.try_grab(M, user)
-				return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
 	var/hit_area
@@ -978,7 +1007,7 @@
 		hit_area = parse_zone(affecting)
 		d_zone = affecting
 
-	if (!M.melee_attack_test(user, d_zone))
+	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks %target% with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
@@ -986,7 +1015,7 @@
 		SPAWN_DBG(0)
 			var/frenzy = getProperty("frenzy")
 			click_delay -= frenzy
-			sleep(30)
+			sleep(3 SECONDS)
 			click_delay += frenzy
 /*
 	if(hasProperty("Momentum"))
@@ -1016,12 +1045,13 @@
 	msgs.logs = list()
 	msgs.logc("attacks %target% with [src] ([type], object name: [initial(name)])")
 
+	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
 		msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
 		//moved to item_attack_message
-		//msgs.visible_message_target("<span style='color:red'><B><I>... and lands a devastating hit!</B></I></span>")
+		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
 	if (can_disarm)
 		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
@@ -1042,7 +1072,7 @@
 		if (istext(attack_resistance))
 			msgs.show_message_target(attack_resistance)
 
-	if (damtype == "fire" || damtype == "burn" || hasProperty("searing"))
+	if (hasProperty("searing"))
 		msgs.damage_type = DAMAGE_BURN
 	else
 		msgs.damage_type = hit_type
@@ -1052,7 +1082,7 @@
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	armor_mod=M.get_melee_protection(d_zone)
+	armor_mod = M.get_melee_protection(d_zone, src.hit_type)
 
 	var/pierce_prot = 0
 	if (d_zone == "head")
@@ -1068,6 +1098,12 @@
 	if (is_special && src.special)
 		if (src.special.damageMult > 0 && src.special.damageMult != 1)
 			power *= src.special.damageMult
+
+	if(user.traitHolder && user.traitHolder.hasTrait("glasscannon"))
+		power *= 2
+
+	if(user.is_hulk())
+		power *= 1.5
 
 	power -= armor_mod
 
@@ -1085,7 +1121,6 @@
 		else
 			stam_power = max(  stam_power / 4, stam_power * ( power / (power + armor_mod) )  )
 
-
 		//stam_power -= armor_mod
 
 		msgs.stamina_target -= max(stam_power, 0)
@@ -1094,20 +1129,14 @@
 		if(src.special.overrideCrit >= 0)
 			stam_crit_pow = src.special.overrideCrit
 
-	if(user.is_hulk())
-		power *= 1.5
-
 	if(M.traitHolder && M.traitHolder.hasTrait("deathwish"))
-		power *= 2
-
-	if(user.traitHolder && user.traitHolder.hasTrait("glasscannon"))
 		power *= 2
 
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.ensure_bp_list()
 		if (H.blood_pressure["total"] > 585)
-			msgs.visible_message_self("<span style='color:red'><I>[user] gasps and wheezes from the exertion!</I></span>")
+			msgs.visible_message_self("<span class='alert'><I>[user] gasps and wheezes from the exertion!</I></span>")
 			user.losebreath += rand(1,2)
 			msgs.stamina_self -= 10
 
@@ -1115,9 +1144,13 @@
 		var/turf/T = get_edge_target_turf(M, get_dir(user, M))
 		M.throw_at(T, 2, getProperty("impact"))
 
+
 	msgs.damage = power
 	msgs.flush()
 	src.add_fingerprint(user)
+	#ifdef COMSIG_ITEM_ATTACK_POST
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power, armor_mod)
+	#endif
 	return
 
 /obj/item/onVarChanged(variable, oldval, newval)
@@ -1151,7 +1184,7 @@
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
 	if (src.object_flags & NO_ARM_ATTACH)
-		boutput(attacher, "<span style=\"color:red\">You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
+		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 
 	var/obj/item/parts/human_parts/arm/new_arm = null
@@ -1174,15 +1207,15 @@
 		if (O == (attacher || attachee))
 			continue
 		if (attacher == attachee)
-			O.show_message("<span style=\"color:red\">[attacher] attaches [src] to \his own stump!</span>", 1)
+			O.show_message("<span class='alert'>[attacher] attaches [src] to \his own stump!</span>", 1)
 		else
-			O.show_message("<span style=\"color:red\">[attachee] has [src] attached to \his stump by [attacher].</span>", 1)
+			O.show_message("<span class='alert'>[attachee] has [src] attached to \his stump by [attacher].</span>", 1)
 
 	if (attachee != attacher)
-		boutput(attachee, "<span style=\"color:red\">[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
-		boutput(attacher, "<span style=\"color:red\">You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
+		boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
+		boutput(attacher, "<span class='alert'>You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
 	else
-		boutput(attacher, "<span style=\"color:red\">You attach [src] to your own stump. It doesn't look very secure!</span>")
+		boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
 
 	attachee.set_body_icon_dirty()
 
@@ -1229,14 +1262,14 @@
 			if (M.trinket == src)
 				M.trinket = null
 
-	if (special_grab)
+	if (special_grab || chokehold)
 		drop_grab()
 
 	..()
 
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-		user.visible_message("<span style=\"color:red\"><b>[user] fumbles [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
 		src.throw_impact(user)
 	return
 
@@ -1278,7 +1311,7 @@
 	hide_buttons()
 	clear_mob()
 
-	if (special_grab)
+	if (special_grab || chokehold)
 		drop_grab()
 	return
 

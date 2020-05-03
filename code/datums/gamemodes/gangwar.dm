@@ -86,13 +86,13 @@
 		//ToDo: One of those goofy popup windows?
 		// boutput(leaderMind.current, "<h1><font color=red>You are the leader of the [leaderMind.gang.gang_name] gang!</font></h1>")
 		boutput(leaderMind.current, "<h1><font color=red>You are the leader of a gang!</font></h1>")
-		boutput(leaderMind.current, "<span style=\"color:red\">You must recruit people to your gang and compete for wealth and territory!</span>")
-		boutput(leaderMind.current, "<span style=\"color:red\">You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
-		boutput(leaderMind.current, "<span style=\"color:red\">To set your gang's home turf and spawn your locker, use the Set Gang Base command. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
-		boutput(leaderMind.current, "<span style=\"color:red\">Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
-		boutput(leaderMind.current, "<span style=\"color:red\">Use recruitment flyers obtained from the locker to invite new members, up to a limit of [current_max_gang_members].</span>")
-//		boutput(leaderMind.current, "<span style=\"color:red\">Once all active gangs are at the current maximum size, the member cap will increase, up to an absolute maximum of [absolute_max_gang_members].</span>")
-		boutput(leaderMind.current, "<span style=\"color:red\"><b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b></span>")
+		boutput(leaderMind.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
+		boutput(leaderMind.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
+		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base command. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
+		boutput(leaderMind.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
+		boutput(leaderMind.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [current_max_gang_members].</span>")
+//		boutput(leaderMind.current, "<span class='alert'>Once all active gangs are at the current maximum size, the member cap will increase, up to an absolute maximum of [absolute_max_gang_members].</span>")
+		boutput(leaderMind.current, "<span class='alert'><b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b></span>")
 
 		equip_leader(leaderMind.current)
 		// uniform_prompt(leaderMind)
@@ -154,7 +154,7 @@
 	var/temp_item1 = input(leaderMind.current, "Select your gang uniform jumpsuit slot item","Gang Jumpsuit")in under_list
 	leaderMind.gang.item1 = under_list[temp_item1]
 	while(leaderMind.gang.item1 in item1_used)
-		boutput(leaderMind.current , "<h4><span style=\"color:red\">That item has been claimed by another gang.</span></h4>")
+		boutput(leaderMind.current , "<h4><span class='alert'>That item has been claimed by another gang.</span></h4>")
 		temp_item1 = input(leaderMind.current, "Select jumpsuit slot item","Gang Jumpsuit")in under_list
 		leaderMind.gang.item1 = under_list[temp_item1]
 	item1_used += leaderMind.gang.item1
@@ -166,7 +166,7 @@
 		leaderMind.gang.item2 = headwear_list[temp_item2]
 
 	while(leaderMind.gang.item2 in item2_used)
-		boutput(leaderMind.current , "<h4><span style=\"color:red\">That item has been claimed by another gang.</span></h4>")
+		boutput(leaderMind.current , "<h4><span class='alert'>That item has been claimed by another gang.</span></h4>")
 		var/temp_item2 = input(leaderMind.current, "Select jumpsuit slot item","Gang Headwear")in headwear_list
 		leaderMind.gang.item2 = headwear_list[temp_item2]
 
@@ -370,14 +370,14 @@
 				//make sure no other gangs have this name
 				if (fullchosen)
 					if (locate(fullchosen) in fullnames_used)
-						boutput(leaderMind.current, "<span style=\"color:red\">Another gang has this name.</span>")
+						boutput(leaderMind.current, "<span class='alert'>Another gang has this name.</span>")
 						continue
 					fullnames_used += fullchosen
 
 				else if (part1chosen && part2chosen)
 				//make sure no other gangs have this name
 					if (locate(part1chosen) in part1_used && locate(part2chosen) in part2_used)
-						boutput(leaderMind.current, "<h3><span style=\"color:red\">Another gang has this name. Sorry, you have to roll again!</span></h3>")
+						boutput(leaderMind.current, "<h3><span class='alert'>Another gang has this name. Sorry, you have to roll again!</span></h3>")
 						continue
 					part1_used += part1chosen
 					part2_used += part2chosen
@@ -426,7 +426,7 @@
 				var/datum/gang/G = hot_zone.gang_owners
 				G.score_event += hot_zone_score
 				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(100)
+				sleep(10 SECONDS)
 			process_hot_zones()
 
 //bleh
@@ -525,11 +525,11 @@
 	var/area/area = get_area(usr)
 
 	if(area.gang_base)
-		boutput(usr, "<span style=\"color:red\">Another gang's base is in this area!</span>")
+		boutput(usr, "<span class='alert'>Another gang's base is in this area!</span>")
 		return
 
 	if(usr.stat)
-		boutput(usr, "<span style=\"color:red\">Not when you're incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you're incapacitated.</span>")
 		return
 
 	// if (istype(ticker.mode, /datum/game_mode/gang))
@@ -540,7 +540,7 @@
 		var/datum/game_mode/gang/mode = ticker.mode
 		mode.uniform_prompt(usr.mind)
 	else
-		boutput(usr, "<span style=\"color:red\">The round's mode isn't Gang, you can't place a locker here!.</span>")
+		boutput(usr, "<span class='alert'>The round's mode isn't Gang, you can't place a locker here!.</span>")
 		return
 
 	usr.mind.gang.base = area
@@ -570,7 +570,7 @@
 /obj/item/spray_paint
 	name = "Spraypaint Can"
 	desc = "A can of spray paint."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -584,7 +584,7 @@
 			return
 
 		if(in_use)
-			boutput(user, "<span style=\"color:red\">You are already tagging an area!</span>")
+			boutput(user, "<span class='alert'>You are already tagging an area!</span>")
 			return
 
 		var/turf/turftarget = get_turf(target)
@@ -592,42 +592,42 @@
 		if(turftarget == loc || get_dist(src,target) > 1) return
 
 		if(!user.mind || !user.mind.gang)
-			boutput(user, "<span style=\"color:red\">You aren't in a gang, why would you do that?</span>")
+			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
 			return
 
 		var/area/getarea = get_area(turftarget)
 		if(!getarea)
-			boutput(user, "<span style=\"color:red\">You can't claim this place!</span>")
+			boutput(user, "<span class='alert'>You can't claim this place!</span>")
 			return
 		if(getarea.name == "Space")
-			boutput(user, "<span style=\"color:red\">You can't claim space!</span>")
+			boutput(user, "<span class='alert'>You can't claim space!</span>")
 			return
 		if(getarea.name == "Ocean")
-			boutput(user, "<span style=\"color:red\">You can't claim the entire ocean!</span>")
+			boutput(user, "<span class='alert'>You can't claim the entire ocean!</span>")
 			return
 		if((getarea.teleport_blocked) || istype(getarea, /area/supply) || istype(getarea, /area/shuttle/))
-			boutput(user, "<span style=\"color:red\">You can't claim this place!</span>")
+			boutput(user, "<span class='alert'>You can't claim this place!</span>")
 			return
 		if(!ishuman(user))
-			boutput(user, "<span style=\"color:red\">You don't have the dexterity to spray paint a gang tag!</span>")
+			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
 		if(getarea.gang_owners && getarea.gang_owners != user.mind.gang && !turftarget.tagged)
-			boutput(user, "<span style=\"color:red\">[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
+			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
 			return
 		if(getarea.being_captured)
-			boutput(user, "<span style=\"color:red\">Somebody is already tagging that area!</span>")
+			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
 			return
 		if(getarea.gang_owners == user.mind.gang)
-			boutput(user, "<span style=\"color:red\">This place is already owned by your gang!</span>")
+			boutput(user, "<span class='alert'>This place is already owned by your gang!</span>")
 			return
 
-		user.visible_message("<span style=\"color:red\">[user] begins to paint a gang tag on the [turftarget.name]!</span>")
+		user.visible_message("<span class='alert'>[user] begins to paint a gang tag on the [turftarget.name]!</span>")
 		actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
 
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
 	id = "spray_tag"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
 	var/area/target_area
@@ -680,7 +680,7 @@
 			playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)
 
 	onInterrupt(var/flag)
-		boutput(owner, "<span style=\"color:red\">You were interrupted!</span>")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 		if (target_area)
 			target_area.being_captured = 0
 		if (S)
@@ -703,7 +703,7 @@
 		T.delete_same_tags()
 		target_turf.tagged = 1
 		target_area.gang_owners = M.mind.gang
-		boutput(M, "<span style=\"color:blue\">You have claimed this area for your gang!</span>")
+		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
 
 /obj/ganglocker
 	desc = "Gang locker."
@@ -746,37 +746,35 @@
 			new/datum/gang_item/space/stims)
 
 	examine()
-		set src in oview(7)
-
-		..()
+		. = ..()
 
 		if(health == 0)
-			boutput(usr, "It is completely destroyed!")
+			. += "It is completely destroyed!"
 			return
 
 		switch(round(100*health/max_health))
 			if(1 to 25)
-				boutput(usr, "It is almost destroyed!")
+				. += "It is almost destroyed!"
 			if(26 to 50)
-				boutput(usr, "It is badly damaged!")
+				. += "It is badly damaged!"
 			if(51 to 75)
-				boutput(usr, "It is somewhat damaged.")
+				. += "It is somewhat damaged."
 			if(76 to 99)
-				boutput(usr, "It is slightly damaged.")
+				. += "It is slightly damaged."
 			if(100)
-				boutput(usr, "It is undamaged.")
+				. += "It is undamaged."
 
-		boutput(usr, "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\"")
+		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
 		if(!isalive(user))
-			boutput(user, "<span style=\"color:red\">Not when you're incapacitated.</span>")
+			boutput(user, "<span class='alert'>Not when you're incapacitated.</span>")
 			return
 
 		add_fingerprint(user)
 
 		if(health == 0)
-			boutput(user, "<span style=\"color:red\">The locker is broken, it needs to be repaired first!</span>")
+			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
 			return
 
 		// if (!src.HTML)
@@ -833,20 +831,20 @@
 			handle_gang_gear(usr)
 		if (href_list["buy_item"])
 			if (usr.mind && usr.mind.gang != src.gang)
-				boutput(usr, "<span style=\"color:red\">You are not a member of this gang, you cannot purchase items from it.</span>")
+				boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot purchase items from it.</span>")
 				return
 			var/datum/gang_item/GI = locate(href_list["buy_item"])
 			if (locate(GI) in buyable_items)
 				if (GI.price <= gang.spendable_points)
 					gang.spendable_points -= GI.price
 					new GI.item_path(src.loc)
-					boutput(usr, "<span style=\"color:blue\">You purchase [GI.name] for [GI.price]. Remaining balance = [gang.spendable_points] points.</span>")
+					boutput(usr, "<span class='notice'>You purchase [GI.name] for [GI.price]. Remaining balance = [gang.spendable_points] points.</span>")
 					gang.items_purchased[GI.name]++
 					if (istype(GI, /datum/gang_item/misc/janktank))
 						ticker.mode:increase_janktank_price()
 						updateDialog()
 				else
-					boutput(usr, "<span style=\"color:red\">Insufficient funds.</span>")
+					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 
 
 	//Okay, this is fucked up. I don't know why get_gang_gear is a global proc and I don't care. - Kyle
@@ -855,17 +853,17 @@
 		if(user.mind.gang == src.gang)
 			switch(get_gang_gear(user))
 				if(0)
-					boutput(user, "<span style=\"color:red\">The locker's screen briefly displays the message \"Access Denied\".</span>")
+					boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 					overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 				if(1)
-					boutput(user, "<span style=\"color:red\">The locker's screen briefly displays the message \"Access Denied\".</span>")
+					boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 					boutput(user, "You may only receive one set of gang gear every five minutes.")
 					overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 				if(2)
-					boutput(user, "<span style=\"color:red\">The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot.</span>")
+					boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot.</span>")
 					overlay = image('icons/obj/large_storage.dmi', "gang_overlay_green")
 		else
-			boutput(user, "<span style=\"color:red\">The locker's screen briefly displays the message \"Access Denied\".</span>")
+			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
 		src.overlays -= default_screen_overlay
@@ -892,14 +890,14 @@
 		if(!user)
 			return 0
 		if (user.mind && user.mind.gang != src.gang)
-			boutput(usr, "<span style=\"color:red\">You are not a member of this gang, you cannot add items to it.</span>")
+			boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
 			return 0
 
 		//cash score
 		if (istype(item, /obj/item/spacecash))
 			var/obj/item/spacecash/S = item
 			if (S.amount > 500)
-				boutput(user, "<span style=\"color:red\"><b>[src.name] beeps, it don't accept bills larger than $500!<b></span>")
+				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than $500!<b></span>")
 				return 0
 
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
@@ -973,13 +971,13 @@
 			if(istype(ticker.mode,/datum/game_mode/gang))
 				gang.spendable_points = round(gang.spendable_points*0.8)
 				ticker.mode:broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!",src.gang)
-			src.visible_message("<span style=\"color:red\"><b>[src.name] bursts open, spilling its contents!<b></span>")
+			src.visible_message("<span class='alert'><b>[src.name] bursts open, spilling its contents!<b></span>")
 
 	proc/repair_damage(var/amount)
 		health = min(200,health+amount)
 		if(health > 0 && broken == 1)
 			repair_broken()
-			src.visible_message("<span style=\"color:blue\"><b>The door to [src] swings shut and switches back on!<b></span>")
+			src.visible_message("<span class='notice'><b>The door to [src] swings shut and switches back on!<b></span>")
 
 	ex_act(severity)
 		take_damage(250-50*severity)
@@ -990,18 +988,18 @@
 			user.lastattacked = src
 
 			if(health == max_health)
-				boutput(user, "<span style=\"color:blue\">The locker isn't damaged!</span>")
+				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
 				return
 
 			var/obj/item/weldingtool/welder = W
 			if(welder.welding)
 				if(welder.try_weld(user, 4))
 					repair_damage(20)
-					user.visible_message("<span style=\"color:blue\">[user] repairs the [src] with [welder]!</span>")
+					user.visible_message("<span class='notice'>[user] repairs the [src] with [welder]!</span>")
 					return
 
 		if (health <= 0)
-			boutput(user, "<span style=\"color:red\">The locker is broken, it needs to be repaired first!</span>")
+			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
 			return
 
 		if (W.cant_drop)
@@ -1009,7 +1007,7 @@
 
 		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
 			if (insert_item(W,user))
-				user.visible_message("<span style=\"color:blue\">[user] puts [W] into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
 			return
 
 		if(istype(W,/obj/item/satchel))
@@ -1022,35 +1020,36 @@
 				hadcannabis = 1
 
 			if(hadcannabis)
-				boutput(user, "<span style=\"color:blue\">You empty the cannabis from [S] into the [src].</span>")
+				boutput(user, "<span class='notice'>You empty the cannabis from [S] into the [src].</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">[S] doesn't contain any cannabis.</span>")
+				boutput(user, "<span class='notice'>[S] doesn't contain any cannabis.</span>")
 			return
 
 		user.lastattacked = src
 
-		if (W.damtype == "brute")
-			take_damage(W.force)
-			user.visible_message("<span style=\"color:red\"><b>[user] hits the [src] with [W]!<b></span>")
-		else
-			user.visible_message("<span style=\"color:red\">[user] ineffectually hits the [src] with [W]!</span>")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
+			else
+				take_damage(W.force)
+				user.visible_message("<span class='alert'><b>[user] hits the [src] with [W]!<b></span>")
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
-			boutput(user, "<span style=\"color:red\">[src] cannot hold that kind of item!</span>")
+			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly filling the [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling the [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/I in view(1,user))
 			if (!istype(I, O)) continue
 			if (I in user)
 				continue
 			I.set_loc(src)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill) break
 
-		boutput(user, "<span style=\"color:blue\">You finish filling the [src]!</span>")
+		boutput(user, "<span class='notice'>You finish filling the [src]!</span>")
 
 	proc/break_open()
 		broken = 1
@@ -1083,7 +1082,7 @@
 	attack(mob/target as mob, mob/user as mob)
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
-				user.visible_message("<span style=\"color:red\"><b>[user] shows [src] to [target]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
 			induct_to_gang(target)
 			return
 		else
@@ -1103,7 +1102,7 @@
 			return ..()
 
 		var/turf/T = src.loc
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> rips down [src] from [T]!</span>", "<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>", "<span class='alert'>You rip down [src] from [T]!</span>")
 		src.anchored = 0
 		user.put_in_hand_or_drop(src)
 
@@ -1112,41 +1111,41 @@
 
 	proc/induct_to_gang(var/mob/living/carbon/human/target)
 		if(gang == null)
-			boutput(target, "<span style=\"color:red\">The flyer doesn't specify which gang it's advertising!</span>")
+			boutput(target, "<span class='alert'>The flyer doesn't specify which gang it's advertising!</span>")
 			return
 
 		if(!ishuman(target))
-			boutput(target, "<span style=\"color:red\">Only humans can join a gang!</span>")
+			boutput(target, "<span class='alert'>Only humans can join a gang!</span>")
 			return
 
 		if(!isalive(target))
-			boutput(target, "<span style=\"color:red\">Not when you're incapacitated.</span>")
+			boutput(target, "<span class='alert'>Not when you're incapacitated.</span>")
 			return
 
 		if (issmallanimal(target))
 			var/mob/living/critter/small_animal/C = target
 			if (C.ghost_spawned)
-				boutput(target, "<span style=\"color:red\">Your spectral brain can't comprehend the concept of a gang!</span>")
+				boutput(target, "<span class='alert'>Your spectral brain can't comprehend the concept of a gang!</span>")
 				return
 
 		if(target.mind.gang == gang)
-			boutput(target, "<span style=\"color:red\">You're already in that gang!</span>")
+			boutput(target, "<span class='alert'>You're already in that gang!</span>")
 			return
 
 		if(target.mind.gang != null)
-			boutput(target, "<span style=\"color:red\">You're already in a gang, you can't switch sides!</span>")
+			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
 		if(target.mind.assigned_role in list("Security Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative")) //Let detectives join gangs, they don't get tasers etc anyway
-			boutput(target, "<span style=\"color:red\">You are too responsible to join a gang!</span>")
+			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
 		if(target.mind in ticker.mode:leaders)
-			boutput(target, "<span style=\"color:red\">You can't join a gang, you run your own!</span>")
+			boutput(target, "<span class='alert'>You can't join a gang, you run your own!</span>")
 			return
 
 		if(src.gang.members.len >= ticker.mode:current_max_gang_members)
-			boutput(target, "<span style=\"color:red\">That gang is full!</span>")
+			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
 		var/joingang = alert(target,"Do you wish to join [src.gang.gang_name]?", "Gang", "Yes", "No")
@@ -1161,18 +1160,18 @@
 		gangObjective.owner = target.mind
 		gangObjective.explanation_text = "Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!"
 		target.mind.objectives += gangObjective
-		boutput(target, "<span style=\"color:blue\">You are now a member of [src.gang.gang_name]!</span>")
-		boutput(target, "<span style=\"color:blue\">Your boss has the blue G and your fellow gang members have the red G! Work together and do some crime!</span>")
-		boutput(target, "<span style=\"color:blue\">You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
-		boutput(target, "<span style=\"color:blue\">You should only use bombs if you have a good reason to, and also run any bombings past your gang!</span>")
-		boutput(target, "<span style=\"color:blue\">Capture areas for your gang by using spraypaint on other gangs' tags (or on any turf if the area is unclaimed).</span>")
-		boutput(target, "<span style=\"color:blue\">You can get spraypaint, an outfit and a gang headset from your locker.</span>")
-		boutput(target, "<span style=\"color:blue\">Your gang will earn points for cash, drugs and guns stored in your locker.</span>")
-		boutput(target, "<span style=\"color:blue\">Make sure to defend your locker, as other gangs can break it open to loot it!</span>")
+		boutput(target, "<span class='notice'>You are now a member of [src.gang.gang_name]!</span>")
+		boutput(target, "<span class='notice'>Your boss has the blue G and your fellow gang members have the red G! Work together and do some crime!</span>")
+		boutput(target, "<span class='notice'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
+		boutput(target, "<span class='notice'>You should only use bombs if you have a good reason to, and also run any bombings past your gang!</span>")
+		boutput(target, "<span class='notice'>Capture areas for your gang by using spraypaint on other gangs' tags (or on any turf if the area is unclaimed).</span>")
+		boutput(target, "<span class='notice'>You can get spraypaint, an outfit and a gang headset from your locker.</span>")
+		boutput(target, "<span class='notice'>Your gang will earn points for cash, drugs and guns stored in your locker.</span>")
+		boutput(target, "<span class='notice'>Make sure to defend your locker, as other gangs can break it open to loot it!</span>")
 		if(gang.base == null)
-			boutput(target, "<span style=\"color:blue\">Your gang doesn't have a base or locker yet.</span>")
+			boutput(target, "<span class='notice'>Your gang doesn't have a base or locker yet.</span>")
 		else
-			boutput(target, "<span style=\"color:blue\">Your gang's base is located in [gang.base], along with your locker.</span>")
+			boutput(target, "<span class='notice'>Your gang's base is located in [gang.base], along with your locker.</span>")
 
 		//add gang channel to headset
 		if(target.ears != null && istype(target.ears,/obj/item/device/radio/headset))
@@ -1586,7 +1585,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 // /obj/item/chem_grenade/incendiary
 // 	name = "incendiary grenade"
 // 	desc = "A rather volatile grenade that creates a small fire."
-// 	icon = 'icons/obj/grenade.dmi'
+// 	icon = 'icons/obj/items/grenade.dmi'
 // 	icon_state = "incendiary"
 // 	icon_state_armed = "incendiary1"
 // 	stage = 2

@@ -29,7 +29,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
-			boutput(user, "<span style=\"color:blue\">You add [W] to the metal casing.</span>")
+			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
 			playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
 			icon_state = "chemg2"
@@ -37,34 +37,34 @@
 			stage = 1
 		else if (isscrewingtool(W) && stage == 1)
 			if (beakers.len)
-				boutput(user, "<span style=\"color:blue\">You lock the assembly.</span>")
+				boutput(user, "<span class='notice'>You lock the assembly.</span>")
 				playsound(get_turf(src), "sound/items/Screwdriver.ogg", 25, -3)
 				name = "grenade"
 				icon_state = "chemg3"
 				stage = 2
 			else
-				boutput(user, "<span style=\"color:red\">You need to add at least one beaker before locking the assembly.</span>")
+				boutput(user, "<span class='alert'>You need to add at least one beaker before locking the assembly.</span>")
 		else if (istype(W,/obj/item/reagent_containers/glass) && stage == 1)
 			if (beakers.len == 2)
-				boutput(user, "<span style='color:red'>The grenade can not hold more containers.</span>")
+				boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
 				return
 			var/obj/item/reagent_containers/glass/G = W
 			if (G.initial_volume > 50) // anything bigger than a regular beaker, but someone could varedit their reagent holder beyond this for admin nonsense
-				boutput(user, "<span style='color:red'>This beaker is too large!</span>")
+				boutput(user, "<span class='alert'>This beaker is too large!</span>")
 				return
 			else
 				if (G.reagents && G.reagents.total_volume)
-					boutput(user, "<span style='color:blue'>You add \the [G] to the assembly.</span>")
+					boutput(user, "<span class='notice'>You add \the [G] to the assembly.</span>")
 					user.drop_item()
 					G.set_loc(src)
 					beakers += G
 				else
-					boutput(user, "<span style='color:red'>\The [G] is empty.</span>")
+					boutput(user, "<span class='alert'>\The [G] is empty.</span>")
 		else if (stage == 2 && (istype(W, /obj/item/assembly/rad_ignite) || istype(W, /obj/item/assembly/prox_ignite) || istype(W, /obj/item/assembly/time_ignite)))
 			var/obj/item/assembly/S = W
 			if (!S || !S:status)
 				return
-			boutput(user, "<span style=\"color:blue\">You attach the [src.name] to the [S.name]!</span>")
+			boutput(user, "<span class='notice'>You attach the [src.name] to the [S.name]!</span>")
 			logTheThing("bombing", user, null, "made a chemical bomb with a [S.name].")
 			message_admins("[key_name(user)] made a chemical bomb with a [S.name].")
 
@@ -146,7 +146,7 @@
 		message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 		logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
-		boutput(user, "<span style='color:red'>You prime the grenade! 3 seconds!</span>")
+		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
 		src.icon_state = icon_state_armed
 		playsound(get_turf(src), "sound/weapons/armbomb.ogg", 75, 1, -3)
@@ -192,7 +192,7 @@
 /obj/item/grenade_fuse
 	name = "grenade fuse"
 	desc = "A fuse mechanism with a safety lever."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "grenade_fuse"
 	item_state = "pen"
 	force = 0
@@ -209,7 +209,7 @@
 /obj/item/chem_grenade/metalfoam
 	name = "metal foam grenade"
 	desc = "Used for emergency sealing of air breaches."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "metal_foam"
 	icon_state_armed = "metal_foam1"
 	stage = 2
@@ -229,7 +229,7 @@
 /obj/item/chem_grenade/firefighting
 	name = "fire fighting grenade"
 	desc = "Can help to put out dangerous fires from a distance."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "fire_fighting"
 	icon_state_armed = "fire_fighting1"
 	stage = 2
@@ -248,7 +248,7 @@
 /obj/item/chem_grenade/cleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
@@ -268,7 +268,7 @@
 /obj/item/chem_grenade/fcleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
@@ -290,7 +290,7 @@
 /obj/item/chem_grenade/flashbang
 	name = "flashbang"
 	desc = "A standard stun grenade."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "flashbang"
 	icon_state_armed = "flashbang1"
 	stage = 2
@@ -344,7 +344,7 @@
 								qdel(found_imp)
 
 								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-								H.visible_message("<span style=\"color:blue\">The loyalty implant inside [H] shatters into one million pieces!</span>")
+								H.visible_message("<span class='notice'>The loyalty implant inside [H] shatters into one million pieces!</span>")
 
 							if (can_convert && !(H.mind in R.revolutionaries))
 								R.add_revolutionary(H.mind)
@@ -355,7 +355,7 @@
 /obj/item/chem_grenade/cryo
 	name = "cryo grenade"
 	desc = "An experimental non-lethal grenade using cryogenic technologies."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cryo"
 	icon_state_armed = "cryo1"
 	stage = 2
@@ -371,7 +371,7 @@
 /obj/item/chem_grenade/incendiary
 	name = "incendiary grenade"
 	desc = "A rather volatile grenade that creates a small fire."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
 	stage = 2
@@ -385,7 +385,7 @@
 /obj/item/chem_grenade/very_incendiary
 	name = "high range incendiary grenade"
 	desc = "A rather volatile grenade that creates a large fire."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "high_range_incendiary"
 	icon_state_armed = "high_range_incendiary1"
 	stage = 2
@@ -404,7 +404,7 @@
 /obj/item/chem_grenade/shock
 	name = "shock grenade"
 	desc = "An arc flashing grenade that shocks everyone close by."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "shock"
 	icon_state_armed = "shock1"
 	stage = 2
@@ -418,7 +418,7 @@
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
 	desc = "An non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"
 	stage = 2
@@ -427,19 +427,19 @@
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
+		B1.reagents.maximum_volume=75 //dumb hack, but it works
+		B1.reagents.add_reagent("capsaicin", 50)
+		B1.reagents.add_reagent("sugar",25)
 
-		B1.reagents.add_reagent("capsaicin", 25)
-		B1.reagents.add_reagent("water",25)
-
-		B2.reagents.add_reagent("fluorosurfactant", 25)
-
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
 		beakers += B1
 		beakers += B2
 
 /obj/item/chem_grenade/sarin
 	name = "sarin gas grenade"
 	desc = "A smoke grenade containing an extremely lethal nerve agent. Use of this mixture constitutes a war crime, so... try not to leave any witnesses."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "sarin"
 	icon_state_armed = "sarin1"
 	stage = 2
@@ -448,8 +448,8 @@
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
-
-		B1.reagents.add_reagent("sarin", 25)
+		B1.reagents.maximum_volume=100 //dumb hack, but it works
+		B1.reagents.add_reagent("sarin", 75)
 		B1.reagents.add_reagent("sugar",25)
 
 		B2.reagents.add_reagent("phosphorus", 25)
@@ -457,11 +457,11 @@
 
 		beakers += B1
 		beakers += B2
-		
+
 /obj/item/chem_grenade/luminol
 	name = "luminol smoke grenade"
 	desc = "A smoke grenade containing a compound that reveals traces of blood."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
@@ -483,7 +483,7 @@
 /obj/item/chem_grenade/fog
 	name = "fog grenade"
 	desc = "A specialized smoke grenade that releases a fog that blocks vision, but is not irritating to inhale."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2

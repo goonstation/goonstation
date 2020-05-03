@@ -39,7 +39,7 @@
 			if (src.check_tank(W) == 0)
 				user.show_text("The tank doesn't contain any plasma.", "red")
 				return
-			src.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.P = W
@@ -48,7 +48,7 @@
 			if (src.CL)
 				user.show_text("There appears to be a power cell inserted already.", "red")
 				return
-			src.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.CL = W
@@ -125,7 +125,7 @@
 
 		if (src.active)
 			if (!src.anchored)
-				src.visible_message("<span style=\"color:red\">[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
+				src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
 				src.active = 0
 				src.update_icon()
@@ -133,7 +133,7 @@
 				return
 
 			if (!istype(src.loc, /turf/simulated/floor/))
-				src.visible_message("<span style=\"color:red\">[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
+				src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
 				src.anchored = 0 // It might have happened, I guess?
 				src.active = 0
@@ -142,7 +142,7 @@
 				return
 
 			if (src.check_tank(src.P) == 0)
-				src.visible_message("<span style=\"color:red\">[src] runs out of fuel and shuts down! [src.P] is ejected!</span>")
+				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.P] is ejected!</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
 				src.eject_tank(null)
 				src.updateDialog()
@@ -151,7 +151,7 @@
 			switch (src.mode)
 				if (1)
 					if (!src.our_APC)
-						src.visible_message("<span style=\"color:red\">[src] doesn't detect a local APC and shuts down!</span>")
+						src.visible_message("<span class='alert'>[src] doesn't detect a local APC and shuts down!</span>")
 						playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
 						src.active = 0
 						src.our_APC = null
@@ -160,7 +160,7 @@
 						return
 					if (src.last_APC_check && world.time > src.last_APC_check + 50)
 						if (src.APC_check() != 1)
-							src.visible_message("<span style=\"color:red\">[src] can't charge the local APC and shuts down!</span>")
+							src.visible_message("<span class='alert'>[src] can't charge the local APC and shuts down!</span>")
 							playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
 							src.active = 0
 							src.our_APC = null
@@ -184,7 +184,7 @@
 
 				if (2)
 					if (!src.CL)
-						src.visible_message("<span style=\"color:red\">[src] doesn't have a cell to charge and shuts down!</span>")
+						src.visible_message("<span class='alert'>[src] doesn't have a cell to charge and shuts down!</span>")
 						playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
 						src.active = 0
 						src.CL = null
@@ -197,7 +197,7 @@
 					if (src.CL.charge > src.CL.maxcharge)
 						src.CL.charge = src.CL.maxcharge
 					if (src.CL.charge == src.CL.maxcharge)
-						src.visible_message("<span style=\"color:red\">[src.CL] is fully charged. [src] ejects the cell and shuts down!</span>")
+						src.visible_message("<span class='alert'>[src.CL] is fully charged. [src] ejects the cell and shuts down!</span>")
 						playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 						src.eject_cell(null)
 						src.updateDialog()
@@ -257,7 +257,7 @@
 				usr.show_text("Turn the generator off first!", "red")
 				return
 			if (src.P)
-				src.visible_message("<span style=\"color:red\">[usr] ejects [src.P] from the [src]!</span>")
+				src.visible_message("<span class='alert'>[usr] ejects [src.P] from the [src]!</span>")
 				src.eject_tank(usr ? usr : null)
 			else
 				usr.show_text("There's no tank to eject.", "red")
@@ -267,7 +267,7 @@
 				usr.show_text("Turn the generator off first!", "red")
 				return
 			if (src.CL)
-				src.visible_message("<span style=\"color:red\">[usr] ejects [src.CL] from the [src]!</span>")
+				src.visible_message("<span class='alert'>[usr] ejects [src.CL] from the [src]!</span>")
 				src.eject_cell(usr ? usr : null)
 			else
 				usr.show_text("There's no cell to eject.", "red")
@@ -299,7 +299,7 @@
 					src.our_APC = null // It's just gonna cause trouble otherwise.
 				else
 					src.anchored = 1
-				src.visible_message("<span style=\"color:red\">[usr] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
+				src.visible_message("<span class='alert'>[usr] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
 			else
 				usr.show_text("Turn the generator off first!", "red")
 				return
@@ -332,7 +332,7 @@
 							usr.show_text("There's no cell to charge.", "red")
 							return
 			src.active = !src.active
-			src.visible_message("<span style=\"color:blue\">[usr] [src.active ? "activates" : "deactivates"] the [src].</span>")
+			src.visible_message("<span class='notice'>[usr] [src.active ? "activates" : "deactivates"] the [src].</span>")
 
 		src.updateUsrDialog()
 		return

@@ -1,4 +1,14 @@
 
+(t)mon apr 27 20
+(u)kyle
+(*)Add back player original job to player options next to mob name. This was removed a while ago for no reason afaik, so I'm adding it back. It was helpful to me when I added it originally.
+(t)sat apr 25 20
+(u)kyle
+(*)Move the view variables, posess, and Modify icon down to PA in the player options panel.
+(t)wed apr 22 20
+(u)mbc
+(*)Moved all admin-specific right click verbs into a new menu. Press Tilde to turn on 'Admin Interact' mode, and then left click on an item to view options for that item (or right click a tile to select from a list of items on that tile).
+(*)Apologies for switching things up - this is actually a super important change to reduce lag that players experience when they use right-click.
 (t)fri mar 20 20
 (u)pali
 (*)A bunch of debug-overlay stuff. Specifically:

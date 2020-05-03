@@ -93,7 +93,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-		M.visible_message("<span style=\"color:red\"><B>[M] unsheaths [his_or_her(M)] claws and begins to cut into [target]!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] unsheaths [his_or_her(M)] claws and begins to cut into [target]!</B></span>")
 		A.locked = 1
 
 	onUpdate()
@@ -122,7 +122,7 @@
 		var/tvalue = 0
 		var/no_of_skulls = 0
 
-		M.visible_message("<span style=\"color:red\"><b>[M] completely rips [target] apart!</b></span>")
+		M.visible_message("<span class='alert'><b>[M] completely rips [target] apart!</b></span>")
 
 		// Assign_gimmick_skull() takes care of skull replacements.
 		if (ismob(target))

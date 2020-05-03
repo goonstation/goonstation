@@ -1,7 +1,7 @@
 /obj/item/audio_tape
 	name = "compact tape"
 	desc = "A small audio tape.  You could make some rad mix-tapes with this!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recordertape"
 	w_class = 1.0
 	mats = 3
@@ -355,7 +355,7 @@
 
 			if (ismob(src.loc))
 				var/mob/M = src.loc
-				M.show_message("<span style=\"color:red\">Your [src] explodes!</span>", 1)
+				M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
 
 			if(T)
 				T.hotspot_expose(700,125)

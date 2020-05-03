@@ -126,9 +126,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		//aaaa we were holding up a reboot, go go go!
 		if (src.holdingReboot)
 			if (mapID == "FAILED")
-				out(world, "<span style='color: blue;'><b>Map switch failed, continuing restart. Shed a tear for the map that was never to be.</b></span>")
+				out(world, "<span class='bold notice'>Map switch failed, continuing restart. Shed a tear for the map that was never to be.</span>")
 			else
-				out(world, "<span style='color: blue;'><b>Map switch complete, continuing restart</b></span>")
+				out(world, "<span class='bold notice'>Map switch complete, continuing restart</span>")
 
 			Reboot_server()
 		else if (src.queuedVoteCompile)
@@ -247,7 +247,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.passiveVotes[C.ckey] = C.preferences.preferred_map
 
 		//announce vote
-		var/msg = "<br><span style='font-size: 1.25em; color: blue;'>"
+		var/msg = "<br><span class='bold notice'>"
 		msg += "A vote for next round's map has started! Click the 'Map Vote' button in your status window, or use the 'Map-Vote' verb."
 		if (duration)
 			msg += " It will end in [duration / 10] seconds."
@@ -528,6 +528,6 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			boutput(user, "Map vote successful???")*/
 
 	examine()
-		return
+		return list()
 
 var/global/mapVoteLinkStat = new /obj/mapVoteLink

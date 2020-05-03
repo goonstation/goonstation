@@ -12,8 +12,8 @@
 		if ((input("Is this trap invisible?", "Invisibility", "yes") in list("yes", "no")) == "no")
 			invisibility = 0
 		proj_type = input("Projectile type?", "Projectile type", null) in childrentypesof(/datum/projectile)
-		boutput(usr, "<span style=\"color:blue\">Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">Special note: If no target is set, the projectile will launch at a random mob in view.</span>")
+		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Special note: If no target is set, the projectile will launch at a random mob in view.</span>")
 
 	disposing()
 		if (target)

@@ -26,7 +26,7 @@
 		if (!escape_vr)
 			var/area/A = get_area(src)
 			if ((T && !(T.z == 2)) || (A && !A.virtual))
-				boutput(src, "<span style=\"color:red\">Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
+				boutput(src, "<span class='alert'>Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
 				src.gib()
 				return
 

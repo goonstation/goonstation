@@ -22,7 +22,7 @@
 	if(f_ngas)
 		pool(f_ngas)
 	..()
-	
+
 /obj/machinery/pipefilter/buildnodes()
 	var/turf/T = src.loc
 
@@ -120,34 +120,34 @@
 		return ..()
 	if (isscrewingtool(W))
 		if(bypassed)
-			user.show_message(text("<span style=\"color:red\">Remove the foreign wires first!</span>"), 1)
+			user.show_message(text("<span class='alert'>Remove the foreign wires first!</span>"), 1)
 			return
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
-		sleep(30)
+		user.show_message(text("<span class='alert'>Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
+		sleep(3 SECONDS)
 		locked =! locked
-		user.show_message(text("<span style=\"color:red\">Done!</span>"),1)
+		user.show_message(text("<span class='alert'>Done!</span>"),1)
 		src.updateicon()
 		return
 	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
 		if(src.locked)
-			user.show_message(text("<span style=\"color:red\">You must remove the panel first!</span>"),1)
+			user.show_message(text("<span class='alert'>You must remove the panel first!</span>"),1)
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.use(4))
-			user.show_message(text("<span style=\"color:red\">You unravel some cable..</span>"),1)
+			user.show_message(text("<span class='alert'>You unravel some cable..</span>"),1)
 		else
-			user.show_message(text("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>"),1)
+			user.show_message(text("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>"),1)
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
-		sleep(100)
+		user.show_message(text("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
+		sleep(10 SECONDS)
 		bypassed = 1
 		src.updateicon()
 		return
 	if (issnippingtool(W) && bypassed)
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
-		sleep(50)
+		user.show_message(text("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
+		sleep(5 SECONDS)
 		bypassed = 0
 		src.updateicon()
 		return
@@ -155,9 +155,9 @@
 		emagged++
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
+			O.show_message(text("<span class='alert'>[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('pipes2.dmi', "filter-spark")
-		sleep(6)
+		sleep(0.6 SECONDS)
 		src.updateicon()
 		return src.attack_hand(user)
 	return src.attack_hand(user)
@@ -212,7 +212,7 @@
 				src.f_mask ^= text2num(href_list["tg"])
 				src.updateicon()
 		else
-			usr.see("<span style=\"color:red\">Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
+			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)

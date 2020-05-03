@@ -164,7 +164,7 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bottlewater"
 	item_state = "contliquid"
 	initial_volume = 50
@@ -243,7 +243,7 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
-			boutput(user, "<span style=\"color:red\">You can't drink out of a sealed can!</span>") //idiot
+			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
 		..()
 
@@ -257,7 +257,7 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
 			if (zone == "head")
-				user.visible_message("<span style=\"color:red\"><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
+				user.visible_message("<span class='alert'><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
 				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit, bro!")]", "You crush the can against your forehead! You feel super cool.")
 				drop_this_shit = 1
 			else
@@ -274,7 +274,7 @@
 /obj/item/crushed_can
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 
 	proc/set_stuff(var/name, var/icon_state)
 		src.name = "crushed [name]"
@@ -292,7 +292,7 @@
 /obj/item/reagent_containers/food/drinks/cola/random
 	name = "space cola"
 	desc = "You don't recognise this cola brand at all."
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50

@@ -537,118 +537,123 @@ proc/get_airlock_types()
 //technically you can skip both
 // technically neat but fuck making this work currently
 // i do not feel like unfuckling a three-dimensional switch statement -- zamujasa
-proc/fetchAirlock(access,variant)
-	var/chroma = colorAirlock(access)
-	switch(variant)
-		if("Glass")
-			if(chroma == "com")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass/command"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass/command/alt"
-					else return "/obj/machinery/door/airlock/glass/command"
-			else if(chroma == "eng")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass/engineering"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass/engineering/alt"
-					else return "/obj/machinery/door/airlock/glass/engineering"
-			else if(chroma == "sec")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass/security/alt"
-					else return "/obj/machinery/door/airlock/glass"
-			else if(chroma == "med")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass/medical"
-					else return "/obj/machinery/door/airlock/glass/medical"
-			else if(chroma == "sci")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass/chemistry"
-					else return "/obj/machinery/door/airlock/glass"
-			else if(chroma == "maint")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass/maintenance"
-					else return "/obj/machinery/door/airlock/glass"
-			else
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/glass"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/glass"
-					else return "/obj/machinery/door/airlock/glass"
-		if("Alternate")
-			if(chroma == "com")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/command/alt"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/command/alt"
-					else return "/obj/machinery/door/airlock/command"
-			else if(chroma == "eng")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/engineering/alt"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/engineering/alt"
-					else return "/obj/machinery/door/airlock/engineering"
-			else if(chroma == "sec")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/security/alt"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/security/alt"
-					else return "/obj/machinery/door/airlock/security"
-			else if(chroma == "med")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/medical/alt"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/medical"
-					else return "/obj/machinery/door/airlock/medical"
-			else if(chroma == "sci")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/medical/alt"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/toxins"
-					else return "/obj/machinery/door/airlock/medical"
-			else if(chroma == "maint")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/classic"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/maintenance"
-					else return "/obj/machinery/door/airlock/classic"
-			else
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets"
-					else return "/obj/machinery/door/airlock"
-		else
-			if(chroma == "com")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/command"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/command"
-					else return "/obj/machinery/door/airlock/command"
-			else if(chroma == "eng")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/engineering"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/engineering"
-					else return "/obj/machinery/door/airlock/engineering"
-			else if(chroma == "sec")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/security"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/security"
-					else return "/obj/machinery/door/airlock/security"
-			else if(chroma == "med")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/medical"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/medical"
-					else return "/obj/machinery/door/airlock/medical"
-			else if(chroma == "sci")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/medical"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/chemistry"
-					else return "/obj/machinery/door/airlock/medical"
-			else if(chroma == "maint")
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro/maintenance"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets/maintenance"
-					else return "/obj/machinery/door/airlock/maintenance"
-			else
-				switch(map_setting)
-					if("COG2") return "/obj/machinery/door/airlock/pyro"
-					if("DESTINY") return "/obj/machinery/door/airlock/gannets"
-					else return "/obj/machinery/door/airlock"
 
+//hello zamujasa it is kubius i am here to at least slightly unfuckle
+
+proc/fetchAirlock(access,variant)
+	if (map_settings)
+		var/chroma = colorAirlock(access)
+		switch(variant)
+			if("Glass")
+				if(chroma == "com")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass/command"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass/command/alt"
+						else return "/obj/machinery/door/airlock/glass/command"
+				else if(chroma == "eng")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass/engineering"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass/engineering/alt"
+						else return "/obj/machinery/door/airlock/glass/engineering"
+				else if(chroma == "sec")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass/security/alt"
+						else return "/obj/machinery/door/airlock/glass"
+				else if(chroma == "med")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass/medical"
+						else return "/obj/machinery/door/airlock/glass/medical"
+				else if(chroma == "sci")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass/chemistry"
+						else return "/obj/machinery/door/airlock/glass"
+				else if(chroma == "maint")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass/maintenance"
+						else return "/obj/machinery/door/airlock/glass"
+				else
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/glass"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/glass"
+						else return "/obj/machinery/door/airlock/glass"
+			if("Alternate")
+				if(chroma == "com")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/command/alt"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/command/alt"
+						else return "/obj/machinery/door/airlock/command"
+				else if(chroma == "eng")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/engineering/alt"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/engineering/alt"
+						else return "/obj/machinery/door/airlock/engineering"
+				else if(chroma == "sec")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/security/alt"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/security/alt"
+						else return "/obj/machinery/door/airlock/security"
+				else if(chroma == "med")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/medical/alt"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/medical"
+						else return "/obj/machinery/door/airlock/medical"
+				else if(chroma == "sci")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/medical/alt"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/toxins"
+						else return "/obj/machinery/door/airlock/medical"
+				else if(chroma == "maint")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/classic"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/maintenance"
+						else return "/obj/machinery/door/airlock/classic"
+				else
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro"
+						if("gannets") return "/obj/machinery/door/airlock/gannets"
+						else return "/obj/machinery/door/airlock"
+			else
+				if(chroma == "com")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/command"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/command"
+						else return "/obj/machinery/door/airlock/command"
+				else if(chroma == "eng")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/engineering"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/engineering"
+						else return "/obj/machinery/door/airlock/engineering"
+				else if(chroma == "sec")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/security"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/security"
+						else return "/obj/machinery/door/airlock/security"
+				else if(chroma == "med")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/medical"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/medical"
+						else return "/obj/machinery/door/airlock/medical"
+				else if(chroma == "sci")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/medical"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/chemistry"
+						else return "/obj/machinery/door/airlock/medical"
+				else if(chroma == "maint")
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro/maintenance"
+						if("gannets") return "/obj/machinery/door/airlock/gannets/maintenance"
+						else return "/obj/machinery/door/airlock/maintenance"
+				else
+					switch(map_settings.airlock_style)
+						if("pyro") return "/obj/machinery/door/airlock/pyro"
+						if("gannets") return "/obj/machinery/door/airlock/gannets"
+						else return "/obj/machinery/door/airlock"
+	else
+		return "/obj/machinery/door/airlock"
 
 /obj/proc/set_access_list(var/list/L)
 	src.req_access = L.Copy()

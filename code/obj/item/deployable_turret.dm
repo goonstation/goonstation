@@ -23,7 +23,7 @@
 		icon_state = "[src.icon_tag]_deployer"
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 
 	attack_self(mob/user as mob)
@@ -48,7 +48,7 @@
 			return
 		src.emagged = 1
 		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span style='color: red'>Its safety indicator is off!</span>"
+		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from)
@@ -120,7 +120,7 @@
 
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -182,7 +182,7 @@
 
 			if(src.anchored)
 				user.show_message("You start to unweld the turret from the floor.")
-				sleep(30)
+				sleep(3 SECONDS)
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You unweld the turret from the floor.")
@@ -196,7 +196,7 @@
 
 			else
 				user.show_message("You start to weld the turret to the floor.")
-				sleep(30)
+				sleep(3 SECONDS)
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You weld the turret to the floor.")
@@ -211,14 +211,14 @@
 		else if (istype(W, /obj/item/weldingtool) && (src.active))
 			var/turf/T = user.loc
 			if (src.health >= max_health)
-				user.show_message("<span style=\"color:blue\">The turret is already fully repaired!.</span>")
+				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
 				return
 
 			if(!W:try_weld(user, 1))
 				return
 
 			user.show_message("You start to repair the turret.")
-			sleep(20)
+			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
 				W:eyecheck(user)
@@ -230,7 +230,7 @@
 
 			if(src.anchored)
 
-				user.show_message("<span style=\"color:blue\">Click where you want to aim the turret!</span>")
+				user.show_message("<span class='notice'>Click where you want to aim the turret!</span>")
 				var/datum/targetable/deployable_turret_aim/A = new()
 				user.targeting_ability = A
 				user.update_cursor()
@@ -243,7 +243,7 @@
 				user.show_message("You begin to disassemble the turret.")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 
-				sleep(20)
+				sleep(2 SECONDS)
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You disassemble the turret.")
@@ -261,18 +261,18 @@
 		else if (istype(W, /obj/item/screwdriver))
 
 			if(!src.anchored)
-				user.show_message("<span style=\"color:blue\">The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+				user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
 				return
 
 			var/turf/T = user.loc
 
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 
-			sleep(10)
+			sleep(1 SECOND)
 
 			if ((user.loc == T && user.equipped() == W))
 				if(src.active)
-					user.show_message("<span style=\"color:blue\">You power off the turret.</span>")
+					user.show_message("<span class='notice'>You power off the turret.</span>")
 					src.icon_state = "[src.icon_tag]_off"
 					src.active = 0
 					src.shooting = 0
@@ -280,13 +280,13 @@
 					src.target = null
 
 				else
-					user.show_message("<span style=\"color:blue\">You power on the turret.</span>")
+					user.show_message("<span class='notice'>You power on the turret.</span>")
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
 			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
 				if(src.active)
-					user.show_message("<span style=\"color:blue\">You power off the turret.</span>")
+					user.show_message("<span class='notice'>You power off the turret.</span>")
 					src.icon_state = "[src.icon_tag]_off"
 					src.active = 0
 					src.shooting = 0
@@ -294,7 +294,7 @@
 					src.target = null
 
 				else
-					user.show_message("<span style=\"color:blue\">You power on the turret.</span>")
+					user.show_message("<span class='notice'>You power on the turret.</span>")
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
@@ -309,7 +309,7 @@
 		if(!(src.quick_deploy_fuel > 0))
 			return
 		src.quick_deploy_fuel--
-		src.visible_message("<span style='color: red'>[src]'s quick deploy system engages, automatically securing it!</span>")
+		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
 		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
 		src.anchored = 1
 		src.active = 1
@@ -318,11 +318,12 @@
 
 
 	bullet_act(var/obj/projectile/P)
-		if(istype(P.proj_data,/datum/projectile/energy_bolt)) // fuck tasers
+		var/damage = 0
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
 			return
-		else
-			src.health = src.health - max(P.power/2,0) // staples have a power of 5, .22 bullets have a power of 35
-			src.check_health()
+		src.health = src.health - max(P.power/2,0) // staples have a power of 5, .22 bullets have a power of 35
+		src.check_health()
 
 
 	proc/check_health()
@@ -346,7 +347,7 @@
 
 		/*
 		if(src.emagged)
-			damage_words += "<br><span style='color: red'>Its safety indicator is off!</span>"
+			damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 		*/
 
 
@@ -453,11 +454,7 @@
 		if (src.emagged)
 			return 0 // NO FRIENDS :'[
 		*/
-		if (istype(C,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = C
-			if (istype(H.wear_id,/obj/item/card/id/syndicate))
-				return 1
-		return 0
+		return istype(C.get_id(), /obj/item/card/id/syndicate)
 
 
 	proc/shoot(var/turf/target, var/start, var/user, var/bullet = 0)
@@ -520,7 +517,7 @@
 			return
 		src.emagged = 1
 		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span style='color: red'>Its safety indicator is off!</span>"
+		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
 
@@ -575,8 +572,8 @@
 /////////////////////////////
 
 /obj/item/turret_deployer/riot
-	name = "N.A.R.C.S."
-	desc = "A Nanotrasen Automatic Riot Control System."
+	name = "N.A.R.C.S. Deployer"
+	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	icon_state = "st_deployer"
 	w_class = 4
 	health = 125
@@ -592,8 +589,8 @@
 		return turret
 
 /obj/deployable_turret/riot
-	name = "N.A.R.C.S. Deployer"
-	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
+	name = "N.A.R.C.S."
+	desc = "A Nanotrasen Automatic Riot Control System."
 	health = 125
 	max_health = 125
 	wait_time = 20 //wait if it can't find a target
@@ -625,20 +622,18 @@
 		if (src.emagged)
 			return 0
 		*/
-		if (istype(C,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = C
-			if (istype(H.wear_id,/obj/item/card/id)) //This goes off appearance because people can change jobs mid-round... but that also means agent ids are a pretty hard counter. TODO: Fix?
-				var/obj/item/card/id/I = H.wear_id
-				switch(I.icon_state)
-					if("id_sec")
-						return 1
-					if("id_com")
-						return 1
-					if("gold")
-						return 1
-					else
-						return 0
-		return 0
+		var/obj/item/card/id/I = C.get_id()
+		if(!istype(I))
+			return 0
+		switch(I.icon_state)
+			if("id_sec")
+				return 1
+			if("id_com")
+				return 1
+			if("gold")
+				return 1
+			else
+				return 0
 
 	spawn_deployer()
 		var/obj/item/turret_deployer/riot/deployer = new /obj/item/turret_deployer/riot(src.loc)

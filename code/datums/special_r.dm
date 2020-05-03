@@ -126,33 +126,6 @@ datum/special_respawn
 				break
 		message_admins("[r_number] players spawned.")
 
-	proc/spawn_welder(var/number = 1)
-		var/list/landlist = new/list()
-		var/obj/landmark/B
-		var/trashstation = "No"
-		for (var/obj/landmark/A in landmarks)//world)
-			if (A.name == "SR Welder")
-				landlist.Add(A)
-		B = pick(landlist)
-		if(!B)	return
-		var/player = input(usr,"Who?","Spawn Welder",) as mob in world
-		if(station_creepified == 0)
-			trashstation = alert("Make the station creepy and dark?","Spawn Welder","Yes","No")
-		if(player)
-			var/check = 0
-			check = spawn_character_human("The Welder",player,B,"Welder")
-			if(!check)
-				return
-			SPAWN_DBG(5 SECONDS)
-				if(trashstation == "Yes")
-					creepify_station()
-					bust_lights()
-					station_creepified = 1
-				if(player && !player:client)
-					del(player)
-
-			message_admins("A Welder has spawned.", 1)
-
 /*
 	proc/spawn_commandos(var/number = 3)
 		var/r_number = 0
@@ -247,8 +220,6 @@ datum/special_respawn
 			return 0
 		var/mob/living/carbon/human/mob
 
-		if(rname == "The Welder")
-			mob = new /mob/living/carbon/human/welder(spawn_landmark.loc)
 		if(rname == "The Smiling Man")
 			mob = new /mob/living/carbon/human(spawn_landmark.loc)
 			mob.equip_if_possible(new /obj/item/device/radio/headset(mob), mob.slot_ears)
@@ -344,23 +315,6 @@ EndNote
 				//S.implanted(user)
 				//S.owner = user
 				//user.implant.Add(S)
-
-			if ("Welder")
-				var/obj/item/device/radio/R = new /obj/item/device/radio/headset(user)
-				user.equip_if_possible(R, user.slot_ears)
-				user.equip_if_possible(new /obj/item/clothing/gloves/black(user), user.slot_gloves)
-				var/obj/item/clothing/head/helmet/welding/W = new/obj/item/clothing/head/helmet/welding(user)
-				W.cant_self_remove = 1
-				W.cant_other_remove = 1
-				user.equip_if_possible(W, user.slot_head)
-				user.equip_if_possible(new /obj/item/clothing/shoes/black(user), user.slot_shoes)
-				user.equip_if_possible(new /obj/item/clothing/suit/armor/vest(user), user.slot_wear_suit)
-				user.equip_if_possible(new /obj/item/clothing/under/color(user), user.slot_w_uniform)
-				user.mind.welder_knife = "[pick(rand(1, 999))]"
-				var/obj/item/knife/K = new/obj/item/knife(user)
-				K.tag = user.mind.welder_knife
-				user.equip_if_possible(K, user.slot_r_hand)
-				user.make_welder()
 
 			if ("T.U.R.D.S.")
 				var/obj/item/device/radio/R = new /obj/item/device/radio/headset/security(user)

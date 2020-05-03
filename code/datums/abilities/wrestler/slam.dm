@@ -28,26 +28,26 @@
 
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
-			M.visible_message("<span style='color:red'>You seem to attack [M]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [M]!</span>")
 			return 1
 		if (M.invisibility > 0)
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.set_loc(M.loc)
 		M.dir = get_dir(M, HH)
 		HH.dir = get_dir(HH, M)
 
-		M.visible_message("<span style=\"color:red\"><B>[M] lifts [HH] up!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] lifts [HH] up!</B></span>")
 
 		SPAWN_DBG (0)
 			if (HH)
 				animate(HH, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 				sleep (15)
 				if (HH)
-					animate(transform = null, time = 1, loop = 0)
+					animate(HH, transform = null, time = 1, loop = 0)
 
 		var/GT = G.state // Can't include a possibly non-existent item in the loop before we can run the check.
 		for (var/i = 0, i < (GT * 3), i++)
@@ -148,7 +148,7 @@
 					playsound(M.loc, "sound/effects/explosionfar.ogg", 60, 1)
 
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-			M.visible_message("<span style=\"color:red\"><B>[M] [fluff] [HH]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] [fluff] [HH]!</B></span>")
 
 			if (!isdead(HH))
 				HH.emote("scream")

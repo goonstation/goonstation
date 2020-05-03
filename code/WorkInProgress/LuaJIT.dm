@@ -422,8 +422,8 @@ var/global/lua/L = new
 
 	admin_only
 	if( !IsSecureAuthorized() )
-		boutput( usr, "<span style='color:red'>You are not authorized to use this command.</span>" )
+		boutput( usr, "<span class='alert'>You are not authorized to use this command.</span>" )
 	try//
 		L.RunString("local me = locate(\"\ref[usr]\");local client=locate('\ref[src]');local function print(str) BYOND.CallProc('boutput', me, tostring(str)) end;local function printf(s,...)world(s:format(...))end;[code]")
 	catch(var/exception/e)
-		boutput( usr, "<span style='color:red'>Error: [e.name]</span>" )
+		boutput( usr, "<span class='alert'>Error: [e.name]</span>" )

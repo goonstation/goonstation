@@ -19,7 +19,7 @@
 				user.show_text("[M] cannot absorb any chemicals.", "red")
 				return
 
-			boutput(user, "<span style=\"color:red\">You stab [M] with the pen.</span>")
+			boutput(user, "<span class='alert'>You stab [M] with the pen.</span>")
 			logTheThing("combat", user, M, "stabs %target% with the sleepy pen [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(M, 50)
 
