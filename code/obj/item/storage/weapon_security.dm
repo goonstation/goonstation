@@ -139,7 +139,7 @@
 	/obj/item/old_grenade/smoke = 1,\
 	/obj/item/old_grenade/stinger/frag,\
 	/obj/item/chem_grenade/flashbang,\
-	/obj/item/old_grenade/gravaton)
+	/obj/item/old_grenade/graviton)
 
 /obj/item/storage/box/f_grenade_kit
 	name = "cleaner grenade box"

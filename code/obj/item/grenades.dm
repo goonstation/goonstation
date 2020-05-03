@@ -171,18 +171,18 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state_armed = "banana1-old"
 	payload = /obj/critter/spacebee
 
-/obj/item/old_grenade/gravaton
+/obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
-	name = "gravaton grenade"
+	name = "graviton grenade"
 	det_time = 100
 	org_det_time = 100
 	alt_det_time = 60
-	icon_state = "gravaton"
-	item_state = "emp"
+	icon_state = "graviton"
+	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
 	mats = 12
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "gravaton1"
+	icon_state_armed = "graviton1"
 
 	prime()
 		var/turf/T = ..()
