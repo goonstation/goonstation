@@ -176,11 +176,6 @@
 
 		checkhealth()
 
-	updateDialog()
-		for(var/client/C)
-			if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
-				src.open_parts_panel(C.mob)
-
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
 			return
