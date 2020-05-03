@@ -1126,8 +1126,8 @@
 		var/obj/item/grab/block/G = src.check_block()
 		if (G)
 			add += 1
-			if (G.can_block(damage_type))
-				add += 2
+			if (G != src.equipped())
+				add += G.can_block(damage_type)
 
 		if(zone=="head")
 			return get_head_armor_modifier() + add
