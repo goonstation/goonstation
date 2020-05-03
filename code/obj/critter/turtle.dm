@@ -151,21 +151,7 @@
 	health = 100
 	generic = 0
 
-	
+
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
-	wearing_beret = 1
-	icon_state = "turtle-beret"
-
-	New()
-		..()
-		//Make the beret
-		var/obj/item/clothing/head/helmet/HoS/beret = new/obj/item/clothing/head/helmet/HoS(src)
-		//fold it
-		beret.folds = 1
-		beret.name = "HoS Beret"
-		beret.icon_state = "hosberet"
-		beret.item_state = "hosberet"
-
-		set_loc(beret)
 
