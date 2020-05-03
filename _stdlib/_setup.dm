@@ -782,6 +782,8 @@
 #define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
 #define BLOCK_ROPE		BLOCK_BOOK
 
+#define DEFAULT_BLOCK_PROTECTION_BONUS 2 //blocking to match damage type correctly gives you a -2 bonus on protection (unless this item grants Even More protection, that overrides this)
+
 // Process Scheduler defines
 // Process status defines
 #define PROCESS_STATUS_IDLE 1
