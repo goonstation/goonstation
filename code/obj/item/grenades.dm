@@ -167,8 +167,8 @@ PIPE BOMBS + CONSTRUCTION
 
 /obj/item/old_grenade/banana/wasp
 	name = "suspicious looking grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
+	icon_state = "wasp"
+	icon_state_armed = "wasp1"
 	payload = /obj/critter/spacebee
 
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
@@ -183,6 +183,35 @@ PIPE BOMBS + CONSTRUCTION
 	mats = 12
 	sound_armed = "sound/weapons/armbomb.ogg"
 	icon_state_armed = "graviton1"
+	var/icon_state_exploding = "graviton2"
+
+	attack_self(mob/user as mob)
+		if (!src.state)
+			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			if (!isturf(user.loc))
+				src.state = 0
+				return
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			if (user && user.bioHolder.HasEffect("clumsy"))
+				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src) prime()
+					return
+			else
+				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(src.det_time)
+					if (src) prime()
+					return
+		return
 
 	prime()
 		var/turf/T = ..()
