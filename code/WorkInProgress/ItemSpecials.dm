@@ -1358,6 +1358,9 @@
 			return
 
 		proc/on_hit(var/mob/hit)
+			if (ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				H.do_disorient(src.stamina_damage, stunned = 10)
 			return
 
 	katana_dash/reverse
