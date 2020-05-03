@@ -322,7 +322,7 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "fragnade"
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
-	icon_state_armed = "fragnade_1"
+	icon_state_armed = "fragnade1"
 
 	prime()
 		var/turf/T = ..()
@@ -360,7 +360,7 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/stinger/frag
 	name = "frag grenade"
 	icon_state = "fragnade-alt"
-	icon_state_armed = "fragnade-alt_1"
+	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
 	New()
@@ -374,7 +374,7 @@ PIPE BOMBS + CONSTRUCTION
 	name = "HE grenade"
 	desc = "A high-explosive grenade. It is set to detonate in 3 seconds."
 	icon_state = "fragnade-alt"
-	icon_state_armed = "fragnade-alt_1"
+	icon_state_armed = "fragnade-alt1"
 	det_time = 30.0
 	org_det_time = 30
 	alt_det_time = 60
