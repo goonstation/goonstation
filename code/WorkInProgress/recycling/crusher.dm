@@ -127,3 +127,18 @@
 	..()
 	if(status & (NOPOWER|BROKEN))	return
 	use_power(500)
+
+/obj/machinery/crusher/New()
+	..()
+	var/counter = 0
+	var/turf/T = get_turf(src)
+	for(var/obj/thing in T)
+		if (counter > 100) //how many times will we loop thru stuff in the turf before we give up? (if someone deploys a crusher on a huge pile of produce, it might lag?)
+			src.visible_message("<span style='color:red'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
+			qdel(src)
+			return
+		if (istype(thing, /obj/machinery/crusher) && thing != src)
+			src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
+			qdel(src)
+			return
+		counter++
