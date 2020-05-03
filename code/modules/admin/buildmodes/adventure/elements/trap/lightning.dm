@@ -11,8 +11,8 @@
 		selection = unpool(/obj/adventurepuzzle/marker)
 		damage = input("Trap damage? (500+ to gib instantly)", "Trap damage", 20) as num
 		stun = input("Stun time?", "Stun time", 6) as num
-		boutput(usr, "<span style=\"color:blue\">Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">Special note: If no target is set, all mobs within 6 tiles in the line of sight of the trap will be shocked.</span>")
+		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Special note: If no target is set, all mobs within 6 tiles in the line of sight of the trap will be shocked.</span>")
 
 	disposing()
 		if (target)

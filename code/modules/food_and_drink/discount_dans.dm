@@ -270,7 +270,7 @@
 			return
 
 		if (prob(10) || user.is_hulk())
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> snaps the burrito in half!</span>", "<span style=\"color:red\">You accidentally snap the burrito apart. Fuck!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> snaps the burrito in half!</span>", "<span class='alert'>You accidentally snap the burrito apart. Fuck!</span>")
 			src.splat()
 			return
 
@@ -291,7 +291,7 @@
 	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -353,7 +353,7 @@
 	/*heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny platinum ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny platinum ticket in this bite!</span>")
 				new /obj/item/ticket/platinum(get_turf(M))
 			else
 				M.emote("choke")*/
@@ -552,7 +552,7 @@
 	heal(var/mob/M)
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -580,7 +580,7 @@
 	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")

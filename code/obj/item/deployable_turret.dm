@@ -23,7 +23,7 @@
 		icon_state = "[src.icon_tag]_deployer"
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 
 	attack_self(mob/user as mob)
@@ -120,7 +120,7 @@
 
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -309,7 +309,7 @@
 		if(!(src.quick_deploy_fuel > 0))
 			return
 		src.quick_deploy_fuel--
-		src.visible_message("<span style='color: red'>[src]'s quick deploy system engages, automatically securing it!</span>")
+		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
 		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
 		src.anchored = 1
 		src.active = 1

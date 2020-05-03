@@ -105,11 +105,11 @@
 				del(src)
 				user.show_message("<span style=\"color:blue\">You sever the connection between the multitool and the igniter. The assembly falls apart.</span>")
 			else
-				user.show_message("<span style=\"color:red\">The [W.name] doesn't seem to fit into the slot!</span>")
+				user.show_message("<span class='alert'>The [W.name] doesn't seem to fit into the slot!</span>")
 
 		if (1)
 			if (istype(W, /obj/item/cable_coil))
-				user.show_message("<span style=\"color:red\">The plasma tank must be firmly secured to the assembly first.</span>")
+				user.show_message("<span class='alert'>The plasma tank must be firmly secured to the assembly first.</span>")
 			else if (ispryingtool(W))
 				src.setDetState(0)
 				src.part_t.loc = user.loc
@@ -129,9 +129,9 @@
 					src.add_fingerprint(user)
 					user.show_message("<span style=\"color:blue\">You add the wiring to the assembly.</span>")
 				else
-					user.show_message("<span style=\"color:red\">This cable coil isn't long enough!</span>")
+					user.show_message("<span class='alert'>This cable coil isn't long enough!</span>")
 			else if (ispryingtool(W))
-				user.show_message("<span style=\"color:red\">The plasma tank is firmly secured to the assembly and won't budge.</span>")
+				user.show_message("<span class='alert'>The plasma tank is firmly secured to the assembly and won't budge.</span>")
 			else if (isscrewingtool(W))
 				src.setDetState(1)
 				user.show_message("<span style=\"color:blue\">You unsecure the plasma tank from the assembly.</span>")
@@ -162,18 +162,18 @@
 					src.trigger.loc = user.loc
 					src.trigger.master = null
 					src.trigger = null
-					user.show_message("<span style=\"color:red\">The triggering device falls off the assembly.</span>")
+					user.show_message("<span class='alert'>The triggering device falls off the assembly.</span>")
 				for (var/obj/item/a in src.attachments)
 					a.loc = user.loc
 					a.master = null
 					a.layer = initial(a.layer)
 					src.clear_attachment(a)
-					user.show_message("<span style=\"color:red\">The [a] falls off the assembly.</span>")
+					user.show_message("<span class='alert'>The [a] falls off the assembly.</span>")
 				src.attachments.Cut()
 				user.show_message("<span style=\"color:blue\">You disconnect the timer from the assembly, and reenable its external controls.</span>")
 			if (isscrewingtool(W))
 				if (!src.trigger && !src.attachments.len)
-					user.show_message("<span style=\"color:red\">You cannot remove any attachments, as there are none attached.</span>")
+					user.show_message("<span class='alert'>You cannot remove any attachments, as there are none attached.</span>")
 					return
 				var/list/options = list(src.trigger)
 				options += src.attachments
@@ -198,7 +198,7 @@
 				setDescription()
 			else if (istype(W, /obj/item/device/radio/signaler))
 				if (src.trigger)
-					user.show_message("<span style=\"color:red\">There is a trigger already screwed onto the assembly.</span>")
+					user.show_message("<span class='alert'>There is a trigger already screwed onto the assembly.</span>")
 				else
 					W.loc = src
 					W.master = src
@@ -234,7 +234,7 @@
 					user.show_message("<span style=\"color:blue\">You attach the [W.name] to an attachment slot.</span>")
 					setDescription()
 				else
-					user.show_message("<span style=\"color:red\">There are no more free attachment slots on the device!</span>")
+					user.show_message("<span class='alert'>There are no more free attachment slots on the device!</span>")
 					setDescription()
 
 /obj/item/assembly/detonator/proc/clear_attachment(var/obj/item/T)
@@ -256,17 +256,17 @@
 	src.attachedTo.anchored = 0
 	src.remove_simple_light("canister")
 	if (src.defused)
-		src.attachedTo.visible_message("<b><span style=\"color:red\">The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</span></b>")
+		src.attachedTo.visible_message("<b><span class='alert'>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</span></b>")
 		return
 	if (src.part_t.air_contents.return_pressure() < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
-		src.attachedTo.visible_message("<b><span style=\"color:red\">A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
+		src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
 		del(src)
 		return
-	src.attachedTo.visible_message("<b><span style=\"color:red\">A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
+	src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
 	if (attachedTo.air_contents.return_pressure() < 7000)
-		src.attachedTo.visible_message("<b><span style=\"color:red\">The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</span></b>")
+		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</span></b>")
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
@@ -274,7 +274,7 @@
 		del(src)
 		return
 	if (attachedTo.air_contents.temperature < 100000)
-		src.attachedTo.visible_message("<b><span style=\"color:red\">The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</span></b>")
+		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</span></b>")
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
@@ -285,7 +285,7 @@
 	var/turf/epicenter = get_turf(loc)
 	logTheThing("bombing", null, null, "A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
-	src.attachedTo.visible_message("<b><span style=\"color:red\">The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
+	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
 
 	var/power = min(850 * (attachedTo.air_contents.return_pressure() + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
 	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal

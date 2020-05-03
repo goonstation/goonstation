@@ -324,7 +324,7 @@
 		else if (isitem(target))
 			var/obj/item/potentially_food = target
 			if (findtext(target.name,"bee") && !istype(target, /obj/item/reagent_containers/food/snacks/beefood))
-				boutput(user, "<span style='color:red'>Oh god, that's <b>repulsive</b>!</span>")
+				boutput(user, "<span class='alert'>Oh god, that's <b>repulsive</b>!</span>")
 				return
 			else if (potentially_food.edible)
 				potentially_food.Eat(user, user, 1)
@@ -590,21 +590,21 @@
 
 		if (istype(W, /obj/item/device/gps))
 			if (src.jittered)
-				boutput(user, "<span style='color:red'>[src] politely declines.</span>")
+				boutput(user, "<span class='alert'>[src] politely declines.</span>")
 				return
 
 			src.jittered = 1
-			user.visible_message("<span style='color:red'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
+			user.visible_message("<span class='alert'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
 
 			W.layer = initial(src.layer)
 			user.u_equip(W)
 			W.set_loc(src)
 
 			SPAWN_DBG(rand(10,20))
-				src.visible_message("<span style='color:red'><b>[src] begins to move at unpredicable speeds!</b></span>")
+				src.visible_message("<span class='alert'><b>[src] begins to move at unpredicable speeds!</b></span>")
 				animate_bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
-				src.visible_message("<span style='color:red'>[W] goes flying!</span>")
+				src.visible_message("<span class='alert'>[W] goes flying!</span>")
 				if (W)
 					W.set_loc(src.loc)
 					var/edge = get_edge_target_turf(src, pick(alldirs))
@@ -718,7 +718,7 @@
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span style='color:red'><b>[src]</b> dies!</span>",\
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span style='color:red'><b>You die!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
@@ -729,7 +729,7 @@
 			src.set_density(1)
 			src.full_heal()
 			src.visible_message("<span style='color:blue'><b>[src]</b> seems to rise from the dead!</span>")
-			boutput(src, "<span style='color:blue'><b>You rise from the dead!</b></span>") // visible_message doesn't go through when this triggers
+			boutput(src, "<span class='notice'><b>You rise from the dead!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else

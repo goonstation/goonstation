@@ -46,7 +46,7 @@ var/list/all_toilets = null
 
 /obj/item/storage/toilet/MouseDrop(atom/over_object, src_location, over_location)
 	if (usr && over_object == usr && in_range(src, usr) && iscarbon(usr) && !usr.stat)
-		usr.visible_message("<span style='color:red'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
+		usr.visible_message("<span class='alert'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 	..()
 
@@ -134,7 +134,7 @@ var/list/all_toilets = null
 	if (!ishuman(user) || !user.organHolder)
 		return 0
 
-	user.visible_message("<span style='color:red'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
 	if (src.clogged >= 1 || src.contents.len >= 7 || !(islist(all_toilets) && all_toilets.len))
 		head.set_loc(src.loc)
@@ -142,7 +142,7 @@ var/list/all_toilets = null
 		src.visible_message("<span style='color:blue'>[head] floats up out of the clogged [src.name]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span style='color:red'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
 				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 	else
@@ -157,7 +157,7 @@ var/list/all_toilets = null
 			head.visible_message("<span style='color:blue'>[head] emerges from [picked]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span style='color:red'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
 				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 

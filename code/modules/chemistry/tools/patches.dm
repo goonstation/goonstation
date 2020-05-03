@@ -119,7 +119,7 @@
 		if (src.medical && !borg && !src.in_use && (iscarbon(M) || iscritter(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message("<span style='color:red'>[src] lands on [M] sticky side down!</span>")
+				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
 				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by %target% at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker_manual(M)
@@ -143,7 +143,7 @@
 				"<span style='color:blue'>You apply [src] to yourself.</span>")
 			else
 				if (medical == 0)
-					user.visible_message("<span style='color:red'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
+					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
 					"<span style='color:red'>You try to stick [src] to [M]'s arm!</span>")
 					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to %target% at [log_loc(user)].")
 
@@ -154,7 +154,7 @@
 						return
 					// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-					user.visible_message("<span style='color:red'><b>[user]</b> sticks [src] to [M]'s arm.</span>",\
+					user.visible_message("<span class='alert'><b>[user]</b> sticks [src] to [M]'s arm.</span>",\
 					"<span style='color:red'>You stick [src] to [M]'s arm.</span>")
 					attach_sticker_manual(M)
 
@@ -409,9 +409,9 @@
 			P.loc = user.loc
 			patches -= P
 			update_overlay()
-			boutput(user, "<span style='color:blue'>You remove [P] from the stack.</span>")
+			boutput(user, "<span class='notice'>You remove [P] from the stack.</span>")
 		else
-			boutput(user, "<span style='color:red'>There are no patches on the stack.</span>")
+			boutput(user, "<span class='alert'>There are no patches on the stack.</span>")
 
 	attack() //Or you're gonna literally attack someone with it. *thwonk* style
 		return
@@ -430,7 +430,7 @@
 				target.loc = src
 				patches += target
 				update_overlay()
-				boutput(user, "<span style='color:blue'>You add [target] to the stack.</span>")
+				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
 		else if (ishuman(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
@@ -532,7 +532,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 				M.visible_message("[user] begins mending [his_or_her(user)]self with [src].",\
 					"<span style='color:blue'>You begin mending yourself with [src].</span>")
 			else
-				user.visible_message("<span style='color:red'><b>[user]</b> begins mending [M] with [src].</span>",\
+				user.visible_message("<span class='alert'><b>[user]</b> begins mending [M] with [src].</span>",\
 					"<span style='color:red'>You begin mending [M] with [src].</span>")
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)

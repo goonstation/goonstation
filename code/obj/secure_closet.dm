@@ -357,7 +357,7 @@
 		if(W && W.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
 	else if (istype(W, /obj/item/card/id))
 		if(src.broken)
-			boutput(user, "<span style=\"color:red\">It appears to be broken.</span>")
+			boutput(user, "<span class='alert'>It appears to be broken.</span>")
 			return
 		var/obj/item/card/id/I = W
 		if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
@@ -929,10 +929,10 @@
 
 /obj/secure_closet/proc/bust_out()
 	if(health)
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("cracks","bends","shakes","groans")].</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> [pick("cracks","bends","shakes","groans")].</span>")
 		src.health--
 	if(health <= 0)
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> breaks apart!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> breaks apart!</span>")
 		src.dump_contents()
 		sleep(0.1 SECONDS)
 		var/newloc = src.loc
@@ -981,7 +981,7 @@
 
 			var/obj/closet/warp_dest = pick(closets)
 			M.set_loc(warp_dest)
-			boutput(M, "<span style=\"color:red\">You are suddenly thrown elsewhere!</span>")
+			boutput(M, "<span class='alert'>You are suddenly thrown elsewhere!</span>")
 			M.playsound_local(M.loc, "warp", 50, 1)
 
 			continue
@@ -1091,7 +1091,7 @@
 		if(W && W.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
 		return
 	else if(src.broken)
-		boutput(user, "<span style=\"color:red\">It appears to be broken.</span>")
+		boutput(user, "<span class='alert'>It appears to be broken.</span>")
 		return
 
 	if(src.allowed(user))
@@ -1104,7 +1104,7 @@
 			src.close()
 			return
 
-	boutput(user, "<span style=\"color:red\">Access Denied</span>")
+	boutput(user, "<span class='alert'>Access Denied</span>")
 	user.unlock_medal("Rookie Thief", 1)
 	return
 
@@ -1121,7 +1121,7 @@
 	else
 		if (!src.jiggled)
 			src.jiggled = 1
-			boutput(user, "<span style=\"color:blue\">It's welded shut!</span>")
+			boutput(user, "<span class='notice'>It's welded shut!</span>")
 			user.unlock_medal("IT'S A TRAP", 1)
 			playsound(src.loc, "sound/effects/zhit.wav", 15, 1, -3)
 			var/shakes = 5
@@ -1175,7 +1175,7 @@
 		return
 	step_towards(O, src.loc)
 	if (user != O)
-		user.visible_message("<span style=\"color:red\">[user] stuffs [O] into [src]!</span>", "<span style=\"color:red\">You stuff [O] into [src]!</span>")
+		user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>", "<span class='alert'>You stuff [O] into [src]!</span>")
 	src.add_fingerprint(user)
 	return
 /*

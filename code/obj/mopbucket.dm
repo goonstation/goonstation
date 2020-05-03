@@ -39,10 +39,10 @@
 				W.reagents.trans_to(src,W.reagents.total_volume)
 			src.reagents.trans_to(W, W.reagents ? W.reagents.maximum_volume : 10)
 
-			boutput(user, "<span style=\"color:blue\">You dunk the mop into [src].</span>")
+			boutput(user, "<span class='notice'>You dunk the mop into [src].</span>")
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 		if (src.reagents.total_volume < 1)
-			boutput(user, "<span style=\"color:blue\">[src] is empty!</span>")
+			boutput(user, "<span class='notice'>[src] is empty!</span>")
 	else
 		return ..()
 
@@ -51,7 +51,7 @@
 		return ..()
 
 	if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
-		boutput(usr, "<span style=\"color:red\">That's too far!</span>")
+		boutput(usr, "<span class='alert'>That's too far!</span>")
 		return
 
 	src.transfer_all_reagents(over_object, usr)
@@ -74,7 +74,7 @@
 					no_go = thingy
 					break
 		if (no_go)
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> scoots around [src], right into [no_go]!</span>",\
+			user.visible_message("<span class='alert'><b>[user]</b> scoots around [src], right into [no_go]!</span>",\
 			"<span style=\"color:red\">You scoot around [src], right into [no_go]!</span>")
 			if (!user.hasStatus("weakened"))
 				user.changeStatus("weakened", 4 SECONDS)
@@ -86,7 +86,7 @@
 		if (iscarbon(O))
 			var/mob/living/carbon/M = user
 			if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(40))
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> trips over [src]!</span>",\
+				user.visible_message("<span class='alert'><b>[user]</b> trips over [src]!</span>",\
 				"<span style=\"color:red\">You trip over [src]!</span>")
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 				user.set_loc(src.loc)

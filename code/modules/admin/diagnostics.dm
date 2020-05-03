@@ -146,7 +146,7 @@ proc/debug_color_of(var/thing)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span style=\"color:blue\">@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] t:[GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("<span style=\"color:red\">BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] t:[GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
 			for(var/datum/gas/trace_gas in GM.trace_gases)
@@ -158,7 +158,7 @@ proc/debug_color_of(var/thing)
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
 		if (disable_next_click)
-			boutput(usr, "<span style=\"color:red\">next_click is disabled and therefore so is this command!</span>")
+			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
 			return
 		for(var/mob/M in mobs)
 			if(!M.client)

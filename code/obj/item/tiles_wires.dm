@@ -56,7 +56,7 @@ TILES
 			return
 		var/T = user.loc
 		if (!( istype(T, /turf) ))
-			boutput(user, "<span style=\"color:blue\">You must be on the ground!</span>")
+			boutput(user, "<span class='notice'>You must be on the ground!</span>")
 			return
 		else
 			var/S = T
@@ -95,7 +95,7 @@ TILES
 		user.visible_message("<span style=\"color:blue\">[user] begins stacking floor tiles!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish stacking tiles.</span>")
+		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()

@@ -7,7 +7,7 @@
   if(!istype(T) || !istype(S))
     return
   if(!S.affects_mobs && ismob(T))
-    S.show_message("<span style='color:red'>You can't seem to exert enough attractive force to budge it.</span>")
+    S.show_message("<span class='alert'>You can't seem to exert enough attractive force to budge it.</span>")
     return
   if(get_dist(T, user) <= grav_range)
     if(!T.anchored)
@@ -15,9 +15,9 @@
         S.visible_message("<span style='color:red; font-weight:bold'>[S] [pick("sucks", "draws", "pulls", "yanks", "tugs", "flings")] [T] towards itself!</span>")
         T.throw_at(S, grav_range, 2)
     else
-      S.show_message("<span style='color:red'>You can't seem to exert enough attractive force to budge it.</span>")
+      S.show_message("<span class='alert'>You can't seem to exert enough attractive force to budge it.</span>")
   else
-    S.show_message("<span style='color:red'>It's too far away, your gravitational drop-off is too severe.[prob(10) ? " Curse you, general relativity!" : ""]</span>")
+    S.show_message("<span class='alert'>It's too far away, your gravitational drop-off is too severe.[prob(10) ? " Curse you, general relativity!" : ""]</span>")
 
 /mob/living/critter/singularity
   name = "singularity"

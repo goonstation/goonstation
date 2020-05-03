@@ -276,10 +276,10 @@
 					if (H != holder.owner && prob(30 - value) * 2)
 						//H.stunned = max(holder.owner.stunned, 1) <- Let's not punish others for our poor choices in life - unrealistic but more fun
 						H.vomit()
-						H.visible_message("<span style=\"color:red\">[H] throws up all over \himself. Gross!</span>")
-						boutput(H, "<span style=\"color:red\">You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
+						H.visible_message("<span class='alert'>[H] throws up all over \himself. Gross!</span>")
+						boutput(H, "<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
 				holder.owner.changeStatus("stunned", 1 SECOND)
-				holder.owner.visible_message("<span style=\"color:red\">[holder.owner] throws up all over \himself. Gross!</span>")
+				holder.owner.visible_message("<span class='alert'>[holder.owner] throws up all over \himself. Gross!</span>")
 				holder.owner.vomit()
 				showOwner("<span style=\"color:red\">You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
 			if (value < 5 && prob(1))

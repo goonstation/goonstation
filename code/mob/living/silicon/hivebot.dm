@@ -49,7 +49,7 @@
 	return fireloss
 
 /mob/living/silicon/hivebot/New(loc, mainframe)
-	boutput(src, "<span style=\"color:blue\">Your icons have been generated!</span>")
+	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 	updateicon()
 
 	if (mainframe)
@@ -471,7 +471,7 @@
 
 /mob/living/silicon/hivebot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span style=\"color:red\">[src] has been hit by [O]</span>"), 1)
+		M.show_message(text("<span class='alert'>[src] has been hit by [O]</span>"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30
@@ -489,7 +489,7 @@
 			var/mob/tmob = AM
 			if(ishuman(tmob) && tmob.bioHolder.HasEffect("fat"))
 				if(prob(20))
-					src.visible_message("<span style=\"color:red\"><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
+					src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
 					src.now_pushing = 0
 					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
 					return
@@ -514,7 +514,7 @@
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weldingtool) && W:welding)
 		if (src.get_brute_damage() < 1)
-			boutput(user, "<span style=\"color:red\">[src] has no dents to repair.</span>")
+			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
 			return
 		if(!W:try_weld(user, 1))
 			return
@@ -522,9 +522,9 @@
 		src.add_fingerprint(user)
 		if (src.get_brute_damage() < 1)
 			src.bruteloss = 0
-			src.visible_message("<span style=\"color:red\"><b>[user] fully repairs the dents on [src]!</b></span>")
+			src.visible_message("<span class='alert'><b>[user] fully repairs the dents on [src]!</b></span>")
 		else
-			src.visible_message("<span style=\"color:red\">[user] has fixed some of the dents on [src].</span>")
+			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src].</span>")
 		src.updatehealth()
 
 	// Added ability to repair burn-damaged AI shells (Convair880).
@@ -538,9 +538,9 @@
 		src.HealDamage("All", 0, 30)
 		if (src.get_burn_damage() < 1)
 			src.fireloss = 0
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> fully repairs the damage to [src.name]'s wiring.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> fully repairs the damage to [src.name]'s wiring.</span>")
 		else
-			boutput(user, "<span style=\"color:red\"><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
+			boutput(user, "<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		src.updatehealth()
 
 	else if (istype(W, /obj/item/clothing/suit/bee))
@@ -715,7 +715,7 @@ Frequency:
 		mainframe.return_to(src)
 		src.updateicon()
 	else
-		boutput(src, "<span style=\"color:red\">You lack a dedicated mainframe!</span>")
+		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
 		return
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)

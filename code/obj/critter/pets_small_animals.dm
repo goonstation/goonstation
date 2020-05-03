@@ -674,7 +674,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN_DBG(1 SECOND)
-				boutput(M, "<span style=\"color:red\"><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
+				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)
@@ -686,12 +686,12 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))//Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
-			boutput(M, "<span style=\"color:red\"><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN_DBG(1 MINUTE)
-				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -2028,7 +2028,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (istype(W, /obj/item/shaker))
 			var/obj/item/shaker/S = W
 			if (S.stuff == "salt" && S.shakes < 15)
-				src.visible_message("<span style='color:red'>[src] shrivels up!</span>")
+				src.visible_message("<span class='alert'>[src] shrivels up!</span>")
 				src.CritterDeath()
 				S.shakes ++
 				return

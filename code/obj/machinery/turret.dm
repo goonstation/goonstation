@@ -361,7 +361,7 @@
 				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	return attack_hand(user)

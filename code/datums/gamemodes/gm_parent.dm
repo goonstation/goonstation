@@ -171,12 +171,12 @@
 					if (istype(objective, /datum/objective/miscreant)) continue
 
 					if (objective.check_completion())
-						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:green\"><B>Success</B></span>")
+						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>")
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
-						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:red\">Failed</span>")
+						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>")
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
 					count++

@@ -259,7 +259,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		//H.bleeding = CLAMP(H.bleeding, 0, 10)
 		if (H.bleeding > old_bleeding) // I'm not sure how it wouldn't be, but, uh, yeah
 			if (old_bleeding <= 0)
-				H.visible_message("<span style='color:red'>[H] starts bleeding!</span>",\
+				H.visible_message("<span class='alert'>[H] starts bleeding!</span>",\
 				"<span style='color:red'><b>You start bleeding!</b></span>")
 			else if (old_bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")

@@ -342,10 +342,10 @@
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span style=\"color:red\">[src] can now be moved.</span>")
+				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
 				src.on = 0
 			else
-				boutput(user, "<span style=\"color:red\">[src] is now secured.</span>")
+				boutput(user, "<span class='alert'>[src] is now secured.</span>")
 				src.on = 1
 
 			update()

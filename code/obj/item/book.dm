@@ -27,7 +27,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
 		user.suiciding = 0
 		return 1
 
@@ -2551,7 +2551,7 @@ After a very long time, Albert got up. He was not going to give up just because 
 	attackby(obj/item/P as obj, mob/user as mob)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, "<span style=\"color:blue\">You pore over the book with the magnifying glass.</span>")
+			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
 			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
@@ -2758,7 +2758,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span style=\"color:red\"><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 2 SECONDS)
 				user.changeStatus("weakened", 2 SECONDS)

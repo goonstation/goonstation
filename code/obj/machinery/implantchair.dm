@@ -50,7 +50,7 @@
 
 	src.imp = new/obj/item/implant/antirev(src)
 
-	M.visible_message("<span style=\"color:red\">[M] has been implanted by the [src].</span>")
+	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 
 
 	logTheThing("combat", M, "has implanted %target% with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")

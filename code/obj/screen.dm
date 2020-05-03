@@ -136,7 +136,7 @@
 			user.a_intent = INTENT_GRAB
 			src.icon_state = "grab"
 
-	boutput(user, "<span style=\"color:blue\">Your intent is now set to '[user.a_intent]'.</span>")
+	boutput(user, "<span class='hint'>Your intent is now set to '[user.a_intent]'.</span>")
 
 /obj/screen/clicked(list/params)
 	switch(src.name)

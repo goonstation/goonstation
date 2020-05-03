@@ -1001,7 +1001,7 @@
 
 		qdel(src)*/
 
-		src.visible_message("<span style=\"color:red\">[src] emits a weird noise!</span>")
+		src.visible_message("<span class='alert'>[src] emits a weird noise!</span>")
 
 		src.nugget_mode = !src.nugget_mode
 		src.update()
@@ -1159,7 +1159,7 @@
 
 				/*SPAWN_DBG(rand(100,1000))
 					if(src)
-						src.visible_message("<span style=\"color:red\"><b>[src] collapses into a black hole! Holy fuck!</b></span>")
+						src.visible_message("<span class='alert'><b>[src] collapses into a black hole! Holy fuck!</b></span>")
 						world << sound("sound/effects/kaboom.ogg")
 						new /obj/bhole(get_turf(src.loc))*/
 
@@ -1176,11 +1176,11 @@
 		if (istype(src.loc,/obj/))
 			if (prob(33))
 				var/obj/container = src.loc
-				container.visible_message("<span style=\"color:red\"><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+				container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 				if (istype(container, /obj/storage) && prob(33))
 					var/obj/storage/C = container
 					if (C.can_flip_bust == 1)
-						boutput(src, "<span style=\"color:red\">[C] [pick("cracks","bends","shakes","groans")].</span>")
+						boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
 						C.bust_out()
 
 
@@ -1513,14 +1513,14 @@
 			return
 
 		if(istype(O, /obj/item/mechanics) && O.level == 2)
-			boutput(usr, "<span style=\"color:red\">[O] needs to be secured into place before it can be connected.</span>")
+			boutput(usr, "<span class='alert'>[O] needs to be secured into place before it can be connected.</span>")
 			return
 
 		if(usr.stat)
 			return
 
 		if(!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
 		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)

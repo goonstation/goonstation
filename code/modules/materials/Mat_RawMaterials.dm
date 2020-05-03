@@ -45,20 +45,20 @@
 		if(istype(W, /obj/item/material_piece) && W.material)
 
 			if(src.stack_item(W))
-				boutput(usr, "<span style=\"color:blue\">You stack \the [W]!</span>")
+				boutput(usr, "<span class='notice'>You stack \the [W]!</span>")
 		return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
-			boutput(usr, "<span style=\"color:red\">Quit that! You're dead!</span>")
+			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
 		if(!istype(over_object, /obj/screen/hud))
 			if (get_dist(usr,src) > 1)
-				boutput(usr, "<span style=\"color:red\">You're too far away from it to do that.</span>")
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 			if (get_dist(usr,over_object) > 1)
-				boutput(usr, "<span style=\"color:red\">You're too far away from it to do that.</span>")
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
 		if (istype(over_object,/obj/item/material_piece)) //piece to piece, doesnt matter if in hand or not.

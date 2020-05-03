@@ -11,7 +11,7 @@
 	throw_impact(atom/hit_atom)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
-			src.visible_message("<span style=\"color:red\">[src] splats in [M]'s face!</span>")
+			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
 			playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
@@ -57,7 +57,7 @@
 		..()
 		if (has_key)
 			src.has_key = 0
-			M.visible_message("<span style=\"color:red\">[M] pulls a key out of [src]!</span>","<span style=\"color:red\">You discover an iron key in [src]! Gross!</span>")
+			M.visible_message("<span class='alert'>[M] pulls a key out of [src]!</span>","<span class='alert'>You discover an iron key in [src]! Gross!</span>")
 			new /obj/item/device/key/haunted(get_turf(src))
 		return
 
@@ -127,9 +127,9 @@
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 				var/mob/M = hit_atom
 				if (M == usr)
-					src.visible_message("<span style=\"color:red\">[usr] fumbles and smacks the [src] into their own face!</span>")
+					src.visible_message("<span class='alert'>[usr] fumbles and smacks the [src] into their own face!</span>")
 				else
-					src.visible_message("<span style=\"color:red\">[src] smacks into [M]!</span>")
+					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
 
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"

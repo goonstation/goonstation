@@ -329,7 +329,7 @@
 	New(var/loc,var/forceartitype = null,var/cinematic = 0)
 		var/turf/T = get_turf(src)
 		if (cinematic)
-			T.visible_message("<span style=\"color:red\"><b>An artifact suddenly warps into existence!</b></span>")
+			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
 			playsound(T,"sound/effects/teleport.ogg",50,1)
 			var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 			swirl.set_loc(T)

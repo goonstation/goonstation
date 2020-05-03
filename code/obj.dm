@@ -58,7 +58,7 @@
 		*/
 		return
 	proc/onDestroy()
-		src.visible_message("<span style=\"color:red\"><b>[src] is destroyed.</b></span>")
+		src.visible_message("<span class='alert'><b>[src] is destroyed.</b></span>")
 		qdel(src)
 		return
 
@@ -425,7 +425,7 @@
 			qdel(src)
 			return
 		if (istype(C, /obj/item/weldingtool) && C:welding)
-			boutput(user, "<span style=\"color:blue\">Slicing lattice joints ...</span>")
+			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			C:eyecheck(user)
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
@@ -433,7 +433,7 @@
 			var/obj/item/rods/R = C
 			if (R.amount >= 2)
 				R.amount -= 2
-				boutput(user, "<span style=\"color:blue\">You assemble a barricade from the lattice and rods.</span>")
+				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
 				new /obj/lattice/barricade(src.loc)
 				if (R.amount < 1)
 					user.u_equip(C)
@@ -461,7 +461,7 @@
 		if (istype(W, /obj/item/weldingtool))
 			var/obj/item/weldingtool/WELD = W
 			if(WELD.welding)
-				boutput(user, "<span style=\"color:blue\">You disassemble the barricade.</span>")
+				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
 				WELD.eyecheck(user)
 				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
 				R.amount = src.strength
@@ -471,19 +471,19 @@
 			var/obj/item/rods/R = W
 			var/difference = 5 - src.strength
 			if (difference <= 0)
-				boutput(user, "<span style=\"color:red\">This barricade is already fully reinforced.</span>")
+				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
 				return
 			if (R.amount > difference)
 				R.amount -= difference
 				src.strength = 5
-				boutput(user, "<span style=\"color:blue\">You reinforce the barricade.</span>")
-				boutput(user, "<span style=\"color:blue\">The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
+				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
+				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
 				return
 			else if (R.amount <= difference)
 				R.amount -= difference
 				src.strength = 5
-				boutput(user, "<span style=\"color:blue\">You use up the last of your rods to reinforce the barricade.</span>")
-				if (src.strength >= 5) boutput(user, "<span style=\"color:blue\">The barricade is now fully reinforced!</span>")
+				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
+				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
 				if (R.amount < 1)
 					user.u_equip(W)
 					qdel(W)
@@ -608,7 +608,7 @@
 	user.show_text("<span style=\"color:red\">You leap and slam against the inside of [src]! Ouch!</span>")
 	user.changeStatus("paralysis", 40)
 	user.changeStatus("weakened", 4 SECONDS)
-	src.visible_message("<span style=\"color:red\"><b>[src]</b> emits a loud thump and rattles a bit.</span>")
+	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
 
@@ -625,7 +625,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_handcuffs"
 		return
 
@@ -634,11 +634,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/handcuffs, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_handcuffs0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no handcuffs left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no handcuffs left in the [src]!</span>")
 
 /obj/latexglovesdispenser
 	name = "latex gloves dispenser"
@@ -653,7 +653,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of latex gloves in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of latex gloves in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_gloves"
 		return
 
@@ -662,11 +662,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/clothing/gloves/latex, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of latex gloves from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of latex gloves from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_gloves0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no latex gloves left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no latex gloves left in the [src]!</span>")
 
 /obj/medicalmaskdispenser
 	name = "medical mask dispenser"
@@ -681,7 +681,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of medical masks in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of medical masks in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_mask"
 		return
 
@@ -690,11 +690,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/clothing/mask/medical, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of medical masks from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of medical masks from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_mask0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no medical masks left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no medical masks left in the [src]!</span>")
 
 /obj/glassesdispenser
 	name = "prescription glass dispenser"
@@ -709,7 +709,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of prescription glass in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of prescription glass in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_glasses"
 		return
 
@@ -718,8 +718,8 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/clothing/glasses/regular, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of prescription glass from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of prescription glass from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_glasses0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no prescription glass left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no prescription glass left in the [src]!</span>")

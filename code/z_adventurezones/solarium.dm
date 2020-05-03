@@ -56,7 +56,7 @@ var/global/the_sun = null
 				O:light(user, "<span style=\"color:red\"><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
 				if (!user.is_heat_resistant())
 					SPAWN_DBG (10)
-						user.visible_message("<span style=\"color:red\"><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
+						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span style=\"color:red\"><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
 						user.firegib()
 				else
@@ -103,14 +103,14 @@ var/global/derelict_mode = 0
 
 	proc/eaten(var/mob/living/carbon/human/that_asshole)
 		if (server_kicked_over)
-			boutput(that_asshole, "<span style=\"color:red\">Frankly, it doesn't look as tasty when it's broken. You have no appetite for that.</span>")
+			boutput(that_asshole, "<span class='alert'>Frankly, it doesn't look as tasty when it's broken. You have no appetite for that.</span>")
 			return
-		src.visible_message("<span style=\"color:red\"><b>[that_asshole] devours the server!<br>OH GOD WHAT</b></span>")
+		src.visible_message("<span class='alert'><b>[that_asshole] devours the server!<br>OH GOD WHAT</b></span>")
 		src.loc = null
 		world.save_intra_round_value("somebody_ate_the_fucking_thing", 1)
 		breakdown()
 		SPAWN_DBG(5 SECONDS)
-			boutput(that_asshole, "<span style=\"color:red\"><b>IT BURNS!</b></span>")
+			boutput(that_asshole, "<span class='alert'><b>IT BURNS!</b></span>")
 
 	proc/breakdown()
 		if (server_kicked_over)
@@ -119,7 +119,7 @@ var/global/derelict_mode = 0
 		server_kicked_over = 1
 		sleep(1 SECOND)
 		src.icon_state = "serverf"
-		src.visible_message("<span style=\"color:red\"><b>[src] bursts into flames!</b><br>UHHHHHHHH</span>")
+		src.visible_message("<span class='alert'><b>[src] bursts into flames!</b><br>UHHHHHHHH</span>")
 		SPAWN_DBG(0)
 			var/area/the_solarium = get_area(src)
 			for (var/mob/living/M in the_solarium)

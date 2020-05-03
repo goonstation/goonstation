@@ -24,7 +24,7 @@
 		if(holder.owner.wizard_spellpower())
 			SPtime = 50
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Your spell doesn't last as long without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
 		playsound(holder.owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
@@ -57,7 +57,7 @@
 	if (stop_burning == 1)
 		var/mob/living/carbon/human/HH = H
 		if (istype(HH) && HH.getStatusDuration("burning"))
-			boutput(HH, "<span style=\"color:blue\">The flames sputter out as you phase shift.</span>")
+			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
 			HH.delStatus("burning")
 
 	SPAWN_DBG(0)

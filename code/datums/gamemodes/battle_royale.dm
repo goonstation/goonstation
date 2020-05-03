@@ -87,7 +87,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
-			boutput(player.current,"<span style=\"color:red\">You are thrown out of the shuttle for taking too long!</span>")
+			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
 			player.current.nodamage = 0
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
@@ -132,7 +132,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		// oh and tell anyone on the shuttle it moved I guess
 		for(var/mob/M in mobs)
 			if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle))
-				boutput(M,"<span style=\"color:blue\">The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+				boutput(M, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Is it time for a storm
 	if(src.next_storm < world.time)
@@ -152,7 +152,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 // Does what it says on the tin
 proc/hide_weapons_everywhere()
-	boutput(world, "<span style=\"color:blue\">Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
+	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()

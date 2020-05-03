@@ -15,16 +15,16 @@ var/list/datum/reagents/active_reagent_holders = list()
 
 proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	if(H.wear_mask)
-		boutput(H, "<span style=\"color:red\">Your mask protects you from the [what_liquid] liquid!</span>")
+		boutput(H, "<span class='alert'>Your mask protects you from the [what_liquid] liquid!</span>")
 		return 0
 	else if(H.head)
-		boutput(H, "<span style=\"color:red\">Your helmet protects you from the [what_liquid] liquid!</span>")
+		boutput(H, "<span class='alert'>Your helmet protects you from the [what_liquid] liquid!</span>")
 		return 0
 	return 1
 
 proc/chemhood_check(mob/living/carbon/human/H)
 	if(H.wear_mask == /obj/item/clothing/head/chemhood && H.wear_suit == /obj/item/clothing/suit/chemsuit )
-		boutput(H, "<span style=\"color:red\">FUCK YOU ACID</span>")
+		boutput(H, "<span class='alert'>FUCK YOU ACID</span>")
 		return 0
 	else
 		return 1
@@ -434,7 +434,7 @@ datum
 							var/turf/T = 0
 							if (my_atom)
 								for(var/mob/living/M in AIviewers(4, get_turf(my_atom)) )	//Fuck you, ghosts
-									if (C.mix_phrase) boutput(M, "<span style=\"color:blue\">[bicon(my_atom)] [C.mix_phrase]</span>")
+									if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
 								if (C.mix_sound) play_mix_sound(C.mix_sound)
 
 								T = get_turf(my_atom.loc)
@@ -616,13 +616,13 @@ datum
 
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
-								boutput(H, "<span style=\"color:red\">You are scalded by the hot chemicals!</span>")
+								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
 								H.TakeDamage("head", 0, round(log(temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
 								H.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
-								boutput(H, "<span style=\"color:red\">You are frostbitten by the freezing cold chemicals!</span>")
+								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
 								H.TakeDamage("head", 0, round(log(T0C - temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
 								H.bodytemperature -= min(max(T0C - temp_to_burn_with - 20, 5), 500)
@@ -670,11 +670,11 @@ datum
 
 							if(C.bioHolder)
 								if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
-									boutput(C, "<span style=\"color:red\">You scald yourself trying to consume the boiling hot substance!</span>")
+									boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 									C.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),700)
 								else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
-									boutput(C, "<span style=\"color:red\">You frostburn yourself trying to consume the freezing cold substance!</span>")
+									boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 									C.bodytemperature -= min(max((temp_to_burn_with - T0C) - 20, 5),700)
 

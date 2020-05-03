@@ -115,7 +115,7 @@
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
-		boutput(user, "<span style=\"color:red\">The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
 	name = "Atmospherics Transporter"
@@ -125,7 +125,7 @@
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span style=\"color:red\">You have nothing stored!</span>")
+		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
 			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
@@ -148,10 +148,10 @@
 		var/obj/item/reagent_containers/glass/B = W
 
 		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-			boutput(user, "<span style=\"color:red\">That beaker is empty! There are no reagents for the [src.name] to process!</span>")
+			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
 			return
 		if (working)
-			boutput(user, "<span style=\"color:red\">Chemmaster is working, be patient</span>")
+			boutput(user, "<span class='alert'>Chemmaster is working, be patient</span>")
 			return
 
 		working = 1

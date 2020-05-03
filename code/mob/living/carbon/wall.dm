@@ -31,7 +31,7 @@
 		return ..()
 
 	attack_hand(mob/user as mob)
-		boutput(user, "<span style=\"color:blue\">You push the [src.name] but nothing happens!</span>")
+		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 		src.add_fingerprint(user)
 		return

@@ -393,7 +393,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/living/M)
 			setdead(M)
-			boutput(M, "<span style='color:blue'><b>You magically keel over and die! Oh, no!</b></span>")
+			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
 	space_diner

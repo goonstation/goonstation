@@ -110,8 +110,8 @@
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
 			log_shot(src, A, 1)
-			A.visible_message("<b><span style=\"color:red\">The projectile narrowly misses [A]!</span></b>")
-			//A.visible_message("<b><span style=\"color:red\">The projectile thuds into [A] uselessly!</span></b>")
+			A.visible_message("<b><span class='alert'>The projectile narrowly misses [A]!</span></b>")
+			//A.visible_message("<b><span class='alert'>The projectile thuds into [A] uselessly!</span></b>")
 			//die()
 			return
 
@@ -776,7 +776,7 @@ datum/projectile/snowball
 		var/immunity = check_target_immunity(T) // Point-blank overrides, such as stun bullets (Convair880).
 		if (immunity)
 			log_shot(P, T, 1)
-			T.visible_message("<b><span style=\"color:red\">...but the projectile bounces off uselessly!</span></b>")
+			T.visible_message("<b><span class='alert'>...but the projectile bounces off uselessly!</span></b>")
 			P.die()
 			return
 		if (P.proj_data)

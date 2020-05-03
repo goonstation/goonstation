@@ -52,7 +52,7 @@
 				if (!.(I, user))
 					break
 		else
-			boutput(user, "<span style='color:red'>[src] only accepts glass shards or glassware!</span>")
+			boutput(user, "<span class='alert'>[src] only accepts glass shards or glassware!</span>")
 			return
 
 	attack_hand(mob/user as mob)
@@ -102,7 +102,7 @@
 */
 	proc/create(var/object)
 		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker") && src.glass_amt < 2))
-			src.visible_message("<span style='color:red'>[src] doesn't have enough glass to make that!</span>")
+			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
 			return
 
 		var/obj/item/G
@@ -179,7 +179,7 @@
 
 	create(var/object)
 		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker") && src.glass_amt < 2))
-			src.visible_message("<span style='color:red'>[src] doesn't have enough glass to make that!</span>")
+			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
 			return
 
 		var/obj/item/G

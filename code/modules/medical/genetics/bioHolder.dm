@@ -266,9 +266,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.OnAdd()
 		if(lentext(E.msgGain) > 0)
 			if (E.isBad)
-				boutput(owner, "<span style=\"color:red\">[E.msgGain]</span>")
+				boutput(owner, "<span class='alert'>[E.msgGain]</span>")
 			else
-				boutput(owner, "<span style=\"color:blue\">[E.msgGain]</span>")
+				boutput(owner, "<span class='notice'>[E.msgGain]</span>")
 
 		mobAppearance.UpdateMob()
 		return E
@@ -513,9 +513,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && lentext(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
-					boutput(owner, "<span style=\"color:red\">[newEffect.msgGain]</span>")
+					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
 				else
-					boutput(owner, "<span style=\"color:blue\">[newEffect.msgGain]</span>")
+					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
 			mobAppearance.UpdateMob()
 			return newEffect
 
@@ -536,9 +536,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 			src.genetic_stability = max(0,src.genetic_stability)
 		if(lentext(BE.msgGain) > 0)
 			if (BE.isBad)
-				boutput(owner, "<span style=\"color:red\">[BE.msgGain]</span>")
+				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
 			else
-				boutput(owner, "<span style=\"color:blue\">[BE.msgGain]</span>")
+				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
 		mobAppearance.UpdateMob()
 		return BE
 
@@ -556,9 +556,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if(owner && lentext(D.msgLose) > 0)
 				if (D.isBad)
-					boutput(owner, "<span style=\"color:blue\">[D.msgLose]</span>")
+					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else
-					boutput(owner, "<span style=\"color:red\">[D.msgLose]</span>")
+					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
 			return effects.Remove(D.id)

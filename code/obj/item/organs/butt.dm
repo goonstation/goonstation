@@ -137,10 +137,10 @@
 		if (!source || !target) return
 		if( src.unstaple()) //Try a staple if it worked, yay
 			if (!src.stapled) //That's the last staple!
-				source.visible_message("<span style=\"color:red\"><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span style=\"color:red\"><B>You rip out the staples from \the [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+				source.visible_message("<span class='alert'><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 				. = 1
 			else //Did you get some of them?
-				source.visible_message("<span style=\"color:red\"><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span style=\"color:red\"><B>You rip out some of the staples from \the [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+				source.visible_message("<span class='alert'><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 				. = 0
 
 			//Commence owie

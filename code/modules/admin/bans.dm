@@ -179,8 +179,8 @@ var/global/list/playersSeen = list()
 		var/replacement_text
 		if (targetC)
 			targetC.mob.unlock_medal("Banned", 1)
-			boutput(targetC, "<span style=\"color:red\"><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
-			boutput(targetC, "<span style=\"color:red\">To try to resolve this matter head to https://forum.ss13.co</span>")
+			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
+			boutput(targetC, "<span class='alert'>To try to resolve this matter head to https://forum.ss13.co</span>")
 		else
 			replacement_text = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 
@@ -191,7 +191,7 @@ var/global/list/playersSeen = list()
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
 
 		if (expiry == 0)
-			if (targetC) boutput(targetC, "<span style=\"color:red\">This is a permanent ban.</span>")
+			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
 			logTheThing("admin", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
 			logTheThing("diary", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
 			var/adminMsg = "<span style=\"color:blue\">"
@@ -199,7 +199,7 @@ var/global/list/playersSeen = list()
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This is a permanent ban.</span>"
 			message_admins(adminMsg)
 		else
-			if (targetC) boutput(targetC, "<span style=\"color:red\">This is a temporary ban, it will be removed in [expiry].</span>")
+			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
 			logTheThing("admin", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].")
 			logTheThing("diary", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].", "admin")
 			var/adminMsg = "<span style=\"color:blue\">"
@@ -279,17 +279,17 @@ var/global/list/playersSeen = list()
 			data["ip"] = M.lastKnownIP
 
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
-			boutput(usr, "<span style=\"color:red\">You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
+			boutput(usr, "<span class='alert'>You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
 			return null
 
-		boutput(usr, "<span style=\"color:red\"><b>You are currently banning the following player:</b></span>")
+		boutput(usr, "<span class='alert'><b>You are currently banning the following player:</b></span>")
 		boutput(usr, "<b>Mob:</b> [mobRef ? M.name : "N/A"]")
 		boutput(usr, "<b>Key:</b> [data["ckey"] ? data["ckey"] : "N/A"] (IP: [data["ip"] ? data["ip"] : "N/A"], CompID: [data["compID"] ? data["compID"] : "N/A"])")
-		boutput(usr, "<span style=\"color:red\"><b>Make sure this is who you want to ban before continuing!</b></span>")
+		boutput(usr, "<span class='alert'><b>Make sure this is who you want to ban before continuing!</b></span>")
 
 		var/reason = input(usr,"Reason for ban?","Ban") as null|text
 		if(!reason)
-			boutput(usr, "<span style=\"color:red\">You need to enter a reason for the ban.</span>")
+			boutput(usr, "<span class='alert'>You need to enter a reason for the ban.</span>")
 			return
 		data["reason"] = reason
 
@@ -324,10 +324,10 @@ var/global/list/playersSeen = list()
 			else
 				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",1440) as null|num
 				if(!cust_mins)
-					boutput(usr, "<span style=\"color:red\">No time entered, cancelling ban.</span>")
+					boutput(usr, "<span class='alert'>No time entered, cancelling ban.</span>")
 					return null
 				if(cust_mins >= 525600)
-					boutput(usr, "<span style=\"color:red\">Ban time too long. Ban shortened to one year (525599 minutes).</span>")
+					boutput(usr, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
 					mins = 525599
 				else
 					mins = cust_mins
@@ -421,12 +421,12 @@ var/global/list/playersSeen = list()
 		data["ip"] = input(usr, "IP Address", "Ban", ip) as null|text
 
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
-			boutput(usr, "<span style=\"color:red\">You need to input a ckey or a compID or an IP, all cannot be blank.</span>")
+			boutput(usr, "<span class='alert'>You need to input a ckey or a compID or an IP, all cannot be blank.</span>")
 			return
 
 		var/reason = input(usr,"Reason for ban?","Ban", oreason) as null|text
 		if(!reason)
-			boutput(usr, "<span style=\"color:red\">You need to enter a reason for the ban.</span>")
+			boutput(usr, "<span class='alert'>You need to enter a reason for the ban.</span>")
 			return
 		data["reason"] = reason
 
@@ -461,10 +461,10 @@ var/global/list/playersSeen = list()
 			else
 				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",remaining ? remaining : 1440) as null|num
 				if(!cust_mins)
-					boutput(usr, "<span style=\"color:red\">No time entered, cancelling ban.</span>")
+					boutput(usr, "<span class='alert'>No time entered, cancelling ban.</span>")
 					return
 				if(cust_mins >= 525600)
-					boutput(usr, "<span style=\"color:red\">Ban time too long. Ban shortened to one year (525599 minutes).</span>")
+					boutput(usr, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
 					mins = 525599
 				else
 					mins = cust_mins

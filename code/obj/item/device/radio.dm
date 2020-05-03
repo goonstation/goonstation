@@ -645,7 +645,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	..()
 	if ((in_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
-			boutput(usr, "<span style=\"color:blue\">The electric pads are exposed!</span>")
+			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
 
 /obj/item/device/radio/electropack/attackby(obj/item/W as obj, mob/user as mob)
@@ -718,7 +718,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	if (ismob(src.loc) && src.on)
 		var/mob/M = src.loc
 		if (src == M.back)
-			M.show_message("<span style=\"color:red\"><B>You feel a sharp shock!</B></span>")
+			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))

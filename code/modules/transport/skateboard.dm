@@ -304,13 +304,13 @@
 		if("harm", "disarm")
 			if(prob(60))
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
-				src.visible_message("<span style=\"color:red\"><B>[M] has shoved [rider] off of the [src]!</B></span>")
+				src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of the [src]!</B></span>")
 				src.log_me(src.rider, M, "shoved_off")
 				rider.weakened = 2
 				eject_rider()
 			else
 				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
-				src.visible_message("<span style=\"color:red\"><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
+				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	*/
 	return
 
@@ -328,7 +328,7 @@
 
 /obj/vehicle/skateboard/disposing()
 	if(rider)
-		boutput(rider, "<span style=\"color:red\"><B>Your skateboard is somehow destroyed!</B></span>")
+		boutput(rider, "<span class='alert'><B>Your skateboard is somehow destroyed!</B></span>")
 		eject_rider()
 	..()
 	return

@@ -39,7 +39,7 @@ rcd light flash thingy on matter drain
 	for(var/mob/living/silicon/ai/ai in AIs)
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
-	boutput(usr, "<span style=\"color:red\">Core fireproofed.</span>")
+	boutput(usr, "<span class='alert'>Core fireproofed.</span>")
 
 /datum/game_mode/malfunction/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"

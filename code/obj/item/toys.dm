@@ -26,7 +26,7 @@
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	user.machine = src
 	if(src.busy)
-		boutput(user, "<span style=\"color:red\">Someone else is currently playing [src]. Be patient!</span>")
+		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
 	else
 		actions.start(new/datum/action/bar/icon/claw_machine(user,src), user)
 		return
@@ -52,7 +52,7 @@
 		return
 	if(prob(10))
 		playsound(get_turf(CM), 'sound/machines/claw_machine_fail.ogg', 80, 1)
-		M.visible_message("<span style=\"color:red\">[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
+		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
 
@@ -292,7 +292,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b></span>")
 		user.take_oxygen_deprivation(175)
 		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
@@ -304,13 +304,13 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
-				user.visible_message("<span style=\"color:red\">[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
+				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
 			else if(user:a_intent == INTENT_DISARM)
-				user.visible_message("<span style=\"color:red\">[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
+				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
 			else if(user:a_intent == INTENT_GRAB)
-				user.visible_message("<span style=\"color:red\">[user] has [W.name] put the [src.name] in a headlock!</span>")
+				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
-				user.visible_message("<span style=\"color:red\">[user] bangs the [W.name] into the [src.name] over and over!</span>")
+				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
 			if (src.icon_state != "fig-shelterfrog-dead")
@@ -336,7 +336,7 @@
 		..()
 
 		if (istype(target,/obj/stool/bed))
-			user.visible_message("<span style=\"color:red\">[user] tucks the [src.name] into [target].</span>")
+			user.visible_message("<span class='alert'>[user] tucks the [src.name] into [target].</span>")
 			var/obj/O = target
 			O.place_on(src, user, params)
 			if (src.icon_state == "fig-beebo")
@@ -883,7 +883,7 @@ var/list/figure_patreon_rarity = list(\
 		if (!src.user_can_suicide(user))
 			return 0
 		playsound(loc, 'sound/items/gavel.ogg', 75, 1)
-		user.visible_message("<span style=\"color:red\"><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
+		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
@@ -940,7 +940,7 @@ var/list/figure_patreon_rarity = list(\
 	if (isliving(user))
 		var/mob/living/L = user
 		if (L.mind && L.mind.assigned_role == "Clown")
-			L.visible_message("<span style=\"color:red\"><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
+			L.visible_message("<span class='alert'><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
 			playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 
@@ -976,7 +976,7 @@ var/list/figure_patreon_rarity = list(\
 			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt", "energetic", "diarrhea inducing", "confusing", "magical", "relative pathed", "stealing", "ridiculous")
 			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
 			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
-			user.visible_message("<span style=\"color:red\"><B>[user] uploads the Gooncode to their PDA.</B></span>")
+			user.visible_message("<span class='alert'><B>[user] uploads the Gooncode to their PDA.</B></span>")
 			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span style='color:#605b59'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
 			cooldown = world.time + 40
 			return

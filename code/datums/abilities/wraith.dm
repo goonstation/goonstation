@@ -45,7 +45,7 @@
 		if (!holder || !holder.owner)
 			return 1
 		//if (!iswraith(holder.owner))
-		//	boutput(holder.owner, "<span style=\"color:red\">Yo, you're not a wraith, stop that. (like how the hell did you get this. report this to a coder asap)</span>")
+		//	boutput(holder.owner, "<span class='alert'>Yo, you're not a wraith, stop that. (like how the hell did you get this. report this to a coder asap)</span>")
 		//	return 1
 		return 0
 
@@ -74,10 +74,10 @@
 			holder.help_mode = 0
 		else
 			holder.help_mode = 1
-			boutput(holder.owner, "<span style=\"color:blue\"><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
-			boutput(holder.owner, "<span style=\"color:blue\">Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-			boutput(holder.owner, "<span style=\"color:blue\">You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-			boutput(holder.owner, "<span style=\"color:blue\">Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
+			boutput(holder.owner, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
+			boutput(holder.owner, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
 
@@ -110,7 +110,7 @@
 		else if (ishuman(T))
 			M = T
 			if (!isdead(M))
-				boutput(holder.owner, "<span style=\"color:red\">The living consciousness controlling this body shields it from being absorbed.</span>")
+				boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
 				return 1
 			else if (M.decomp_stage == 4)
 				M = null
@@ -118,14 +118,14 @@
 			else
 				M = T
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Absorbing [src] does not satisfy your ethereal taste.</span>")
+			boutput(holder.owner, "<span class='alert'>Absorbing [src] does not satisfy your ethereal taste.</span>")
 			return 1
 
 		if (!M && !error)
-			boutput(holder.owner, "<span style=\"color:red\">There are no usable corpses here!</span>")
+			boutput(holder.owner, "<span class='alert'>There are no usable corpses here!</span>")
 			return 1
 		if (!M && error)
-			boutput(holder.owner, "<span style=\"color:red\">[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
+			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
 
 		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
@@ -141,9 +141,9 @@
 		holder.regenRate *= 2.0
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
-		boutput(holder.owner, "<span style=\"color:red\"><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
+		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
 		for (var/mob/living/V in viewers(7, holder.owner))
-			boutput(V, "<span style=\"color:red\"><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
+			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
 
 		return 0
 
@@ -179,22 +179,22 @@
 			return 1
 
 		if (src.holder.owner.density)
-			boutput(usr, "<span style=\"color:red\">You cannot force your consciousness into a body while corporeal.</span>")
+			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return 1
 
 		if (!isitem(T) || istype(T, /obj/item/storage/bible))
-			boutput(holder.owner, "<span style=\"color:red\">You cannot possess this!</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")
 			return 1
 
-		boutput(holder.owner, "<span style=\"color:red\"><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
 
 		SPAWN_DBG (450)
 			if (O)
-				boutput(O, "<span style=\"color:red\">You feel your control of this vessel slipping away!</span>")
+				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
 		SPAWN_DBG (600) //time limit on possession: 1 minute
 			if (O)
-				boutput(O, "<span style=\"color:red\"><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
+				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				O.death(0)
 
 		return 0
@@ -214,7 +214,7 @@
 			return 1
 
 		if (src.holder.owner.density)
-			boutput(usr, "<span style=\"color:red\">You cannot force your consciousness into a body while corporeal.</span>")
+			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return 1
 
 		//If you targeted a turf for some reason, find a corpse on it
@@ -229,7 +229,7 @@
 			return W.makeRevenant(T)
 			//return 0
 		else
-			boutput(usr, "<span style=\"color:red\">There are no corpses here to possess!</span>")
+			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
 			return 1
 
 /datum/targetable/wraithAbility/decay
@@ -262,11 +262,11 @@
 		if (ishuman(T))
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(usr, "<span style=\"color:red\">Some mysterious force protects [T] from your influence.</span>")
+				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
 				return 1
 			else
-				boutput(usr, "<span style=\"color:blue\">[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
-				boutput(T, "<span style=\"color:red\">You feel really tired all of a sudden!</span>")
+				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
+				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
@@ -274,17 +274,17 @@
 		else if (isobj(T))
 			var/obj/O = T
 			if(istype(O, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span style='color:red'>You cannot seem to alter the energy off [O].</span>" )
+				boutput(usr, "<span class='alert'>You cannot seem to alter the energy off [O].</span>" )
 				return 0
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))
-				boutput(usr, "<span style=\"color:blue\">You alter the energy of [O].</span>")
+				boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
 				return 0
 			else
-				boutput(usr, "<span style=\"color:red\">You fail to alter the energy of the [O].</span>")
+				boutput(usr, "<span class='alert'>You fail to alter the energy of the [O].</span>")
 				return 1
 		else
-			boutput(usr, "<span style=\"color:red\">There is nothing to decay here!</span>")
+			boutput(usr, "<span class='alert'>There is nothing to decay here!</span>")
 			return 1
 
 /datum/targetable/wraithAbility/command
@@ -302,14 +302,14 @@
 		if (ishuman(T))
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(usr, "<span style=\"color:red\">Some mysterious force protects [T] from your influence.</span>")
+				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
 				return 1
 			else
 				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
 				// T:stunned = max(max(T:weakened, T:stunned), 3)
 				H.delStatus("weakened")
 				H.lying = 0
-				H.show_message("<span style=\"color:red\">A ghostly force compels you to be still on your feet.</span>")
+				H.show_message("<span class='alert'>A ghostly force compels you to be still on your feet.</span>")
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
 				if (prob(current_prob))
@@ -345,7 +345,7 @@
 		if (ishuman(T))
 			var/mob/living/carbon/human/H = T
 			if (!isdead(H) || H.decomp_stage != 4)
-				boutput(usr, "<span style=\"color:red\">That body refuses to submit its skeleton to your will.</span>")
+				boutput(usr, "<span class='alert'>That body refuses to submit its skeleton to your will.</span>")
 				return 1
 			var/personname = H.real_name
 			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(get_turf(T))
@@ -354,7 +354,7 @@
 			H.gib()
 			return 0
 		else
-			boutput(usr, "<span style=\"color:red\">There are no skeletonized corpses here to raise!</span>")
+			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
 			return 1
 
 /datum/targetable/wraithAbility/animateObject
@@ -381,9 +381,9 @@
 
 		if (istype(O))
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
-				boutput(usr, "<span style=\"color:red\">That is not a valid target for animation!</span>")
+				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			O.visible_message("<span style=\"color:red\">The [O] comes to life!</span>")
+			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
 			O.loc = L
 			L.name = "Living [O.name]"
@@ -401,7 +401,7 @@
 			animate_levitate(L, -1, 30)
 			return 0
 		else
-			boutput(usr, "<span style=\"color:red\">There is no object here to animate!</span>")
+			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
 			return 1
 
 /datum/targetable/wraithAbility/haunt
@@ -475,12 +475,12 @@
 			effect = rand(1, 7)
 		switch (effect)
 			if (1)
-				boutput(holder.owner, "<span style=\"color:blue\">You flip some light switches near the designated location!!</span>")
+				boutput(holder.owner, "<span class='notice'>You flip some light switches near the designated location!!</span>")
 				for (var/obj/machinery/light_switch/L in range(10, holder.owner))
 					L.attack_hand(holder.owner)
 				return 0
 			if (2)
-				boutput(holder.owner, "<span style=\"color:blue\">You cause a few lights to burn out near the designated location!.</span>")
+				boutput(holder.owner, "<span class='notice'>You cause a few lights to burn out near the designated location!.</span>")
 				var/c_prob = 100
 				for (var/obj/machinery/light/L in range(10, holder.owner))
 					if (L.status == 2 || L.status == 1)
@@ -490,7 +490,7 @@
 						c_prob *= 0.5
 				return 0
 			if (3)
-				boutput(holder.owner, "<span style=\"color:blue\">Smoke rises in the designated location.</span>")
+				boutput(holder.owner, "<span class='notice'>Smoke rises in the designated location.</span>")
 				var/turf/trgloc = get_turf(holder.owner)
 				var/list/affected = block(locate(trgloc.x - 3,trgloc.y - 3,trgloc.z), locate(trgloc.x + 3,trgloc.y + 3,trgloc.z))
 				if(!affected.len) return
@@ -504,7 +504,7 @@
 				particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", 30, trgloc))
 				return 0
 			if (4)
-				boutput(holder.owner, "<span style=\"color:blue\">Matter from your realm appears near the designated location!</span>")
+				boutput(holder.owner, "<span class='notice'>Matter from your realm appears near the designated location!</span>")
 				var/count = rand(5,9)
 				var/turf/trgloc = get_turf(holder.owner)
 				var/list/affected = block(locate(trgloc.x - 8,trgloc.y - 8,trgloc.z), locate(trgloc.x + 8,trgloc.y + 8,trgloc.z))
@@ -515,15 +515,15 @@
 				var/sapped_amt = src.holder.regenRate * 100
 				var/obj/machinery/power/apc/apc = locate() in get_area(holder.owner)
 				if (!apc)
-					boutput(holder.owner, "<span style=\"color:red\">Power sap failed: local APC not found.</span>")
+					boutput(holder.owner, "<span class='alert'>Power sap failed: local APC not found.</span>")
 					return 0
-				boutput(holder.owner, "<span style=\"color:blue\">You sap the power of the chamber's power source.</span>")
+				boutput(holder.owner, "<span class='notice'>You sap the power of the chamber's power source.</span>")
 				var/obj/item/cell/cell = apc.cell
 				if (cell)
 					cell.use(sapped_amt)
 				return 0
 			if (6)
-				boutput(holder.owner, "<span style=\"color:blue\">Mysterious messages haunt PDAs near the designated location!</span>")
+				boutput(holder.owner, "<span class='notice'>Mysterious messages haunt PDAs near the designated location!</span>")
 				for (var/mob/living/L in range(10, holder.owner))
 					var/obj/item/device/pda2/pda = locate() in L
 					if (pda)
@@ -531,7 +531,7 @@
 				for (var/obj/item/device/pda2/pda in range(10, holder.owner))
 					src.haunt_pda(pda)
 			if (7)
-				boutput(holder.owner, "<span style=\"color:blue\">Crates, lockers and doors mysteriously open and close in the designated area!</span>")
+				boutput(holder.owner, "<span class='notice'>Crates, lockers and doors mysteriously open and close in the designated area!</span>")
 				var/c_prob = 100
 				for(var/obj/machinery/door/G in range(10, holder.owner))
 					if (prob(c_prob))
@@ -572,7 +572,7 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if (isdead(H))
-				boutput(usr, "<span style=\"color:red\">They can hear you just fine without the use of your abilities.</span>")
+				boutput(usr, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
@@ -581,7 +581,7 @@
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")
 				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")
 		else
-			boutput(usr, "<span style=\"color:red\">It would be futile to attempt to force your voice to the consciousness of that.</span>")
+			boutput(usr, "<span class='alert'>It would be futile to attempt to force your voice to the consciousness of that.</span>")
 			return 1
 
 //this is the spooky_writing ability from spooktober ghosts
@@ -657,7 +657,7 @@
 			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
 			make_poltergeist(holder.owner, T)
 		else
-			boutput(holder.owner, "<span style=\"color:red\">You can't cast this spell on your current tile!</span>")
+			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
 
 	proc/make_poltergeist(var/mob/wraith/W, var/turf/T, var/tries = 0)
@@ -697,7 +697,7 @@
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder].")
 		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder].")
 
-		boutput(P, "<span style=\"color:blue\"><b>You have been respawned as a poltergeist!</b></span>")
+		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")
 

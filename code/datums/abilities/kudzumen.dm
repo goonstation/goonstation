@@ -16,11 +16,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -177,7 +177,7 @@
 			var/marker_to_del = locate(/obj/kudzu_marker) in T.contents
 			if (marker_to_del in T.contents)
 				qdel(locate(/obj/kudzu_marker) in T.contents)
-				boutput(holder.owner, "<span style=\"color:red\">You remove the guiding maker from [T].</span>")
+				boutput(holder.owner, "<span class='alert'>You remove the guiding maker from [T].</span>")
 
 			//make the marker
 			else
@@ -187,7 +187,7 @@
 					for (var/obj/spacevine/K in T.contents)
 						qdel(K)
 				else
-					boutput(holder.owner, "<span style=\"color:blue\">You create a guiding marker on [T].</span>")
+					boutput(holder.owner, "<span class='notice'>You create a guiding marker on [T].</span>")
 				new/obj/kudzu_marker(T)
 
 //technically kudzu, non invasive
@@ -278,13 +278,13 @@
 			return 1
 
 		if (target == holder.owner)
-			boutput(holder.owner, "<span style=\"color:red\">You can't heal yourself with your own vines this way!</span>")
+			boutput(holder.owner, "<span class='alert'>You can't heal yourself with your own vines this way!</span>")
 			return 1
 
 		var/mob/living/carbon/C = target
 		if (istype(C))
-			C.visible_message("<span style=\"color:red\"><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
-			boutput(C, "<span style=\"color:blue\">You feel your pain fading away.</span>")
+			C.visible_message("<span class='alert'><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
+			boutput(C, "<span class='notice'>You feel your pain fading away.</span>")
 			C.HealDamage("All", 25, 25)
 			C.take_toxin_damage(-25)
 			C.take_oxygen_deprivation(-25)

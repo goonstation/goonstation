@@ -23,21 +23,21 @@
 // These two procs were so similar that I combined them (Convair880).
 /mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null)
 	if (src.getStatusDuration("paralysis") || !isalive(src))
-		boutput(src, "<span style=\"color:red\">Not when you're incapacitated.</span>")
+		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
 		return 0
 
 	if (!isturf(src.loc)) // Teleport doesn't go along well with doppelgaenger or phaseshift.
-		boutput(src, "<span style=\"color:red\">You can't seem to teleport from here.</span>")
+		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
 		return 0
 
 	var/turf/T = get_turf(src)
 	if (!T || !isturf(T))
-		boutput(src, "<span style=\"color:red\">You can't seem to teleport from here.</span>")
+		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
 		return 0
 	if (isrestrictedz(T.z))
 		var/area/A = get_area(T)
 		if (!istype(A, /area/wizard_station))
-			boutput(src, "<span style=\"color:red\">You can't seem to teleport from here.</span>")
+			boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
 			return 0
 
 	var/A
@@ -67,7 +67,7 @@
 				src.show_text("The scroll appears to have been destroyed.", "red")
 				return 0
 			if (!iswizard(src))
-				boutput(src, "<span style=\"color:red\">The scroll is illegible!</span>")
+				boutput(src, "<span class='alert'>The scroll is illegible!</span>")
 				return 0
 			if (scroll_check.uses < 1)
 				src.show_text("The scroll is depleted!", "src")
@@ -90,46 +90,46 @@
 
 		if (3)
 			/*if (!iswizard(src))
-				boutput(src, "<span style=\"color:red\">You seem to have lost all magical abilities.</span>")
+				boutput(src, "<span class='alert'>You seem to have lost all magical abilities.</span>")
 				return 0*/
 			if (src.wizard_castcheck() == 0)
 				return 0 // Has own user feedback.
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
-		boutput(src, "<span style=\"color:red\">Not when you're incapacitated.</span>")
+		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
 		return 0
 
 	if (!isturf(src.loc))
-		boutput(src, "<span style=\"color:red\">You can't seem to teleport from here.</span>")
+		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
 		return 0
 
 	var/turf/T2 = get_turf(src)
 	if (!T2 || !isturf(T2))
-		boutput(src, "<span style=\"color:red\">You can't seem to teleport from here.</span>")
+		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
 		return 0
 	if (isrestrictedz(T2.z))
 		var/area/Arr = get_area(T2)
 		if (!istype(Arr, /area/wizard_station))
-			boutput(src, "<span style=\"color:red\">You can't seem to teleport from here.</span>")
+			boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
 			return 0
 
 	switch (perform_check)
 		if (1)
-			src.visible_message("<span style=\"color:red\"><b>[src] magically disappears!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] magically disappears!</b></span>")
 
 		if (2)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> presses a button and teleports away.</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> presses a button and teleports away.</span>")
 
 		if (3) // Spell-specific stuff.
 			src.say("SCYAR NILA [uppertext(A)]")
 
-			src.visible_message("<span style=\"color:red\"><b>[src] begins to fade away!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] begins to fade away!</b></span>")
 			animate_teleport_wiz(src)
 			sleep(4 SECONDS) // Animation.
 
 			var/mob/living/carbon/human/H = src
 			if (istype(H) && H.getStatusDuration("burning"))
-				boutput(H, "<span style=\"color:blue\">The flames sputter out as you phase shift.</span>")
+				boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
 				H.set_burning(0)
 
 			playsound(src.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)

@@ -137,7 +137,7 @@
 			return 1
 		if (ishuman(user))
 			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-				boutput(user, "<span style='color:red'>You are too dazed to use [src] properly.</span>")
+				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
 				return 1
 
 		src.add_fingerprint(user)
@@ -355,7 +355,7 @@
 			src.emagged = 1
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
-			src.visible_message("<span style='color:red'><b>[src] buzzes oddly!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
 			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with %target% inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return 1
 
@@ -572,10 +572,10 @@
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
 		if (!ishuman(M))
-			boutput(usr, "<span style='color:red'>You can't seem to fit into \the [src].</span>")
+			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
 			return 0
 		if (src.occupant)
 			usr.show_text("The [src.name] is already occupied!", "red")

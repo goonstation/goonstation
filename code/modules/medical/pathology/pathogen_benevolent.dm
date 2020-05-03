@@ -187,7 +187,7 @@ datum/pathogeneffects/benevolent/oxygenconversion
 			M.TakeDamage("chest", M:losebreath * 2, 0)
 			M:losebreath = 0
 			if (prob(25))
-				M.show_message("<span style=\"color:red\">You feel your body deteriorating as you breathe on.</span>")
+				M.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
 		if (M.get_oxygen_deprivation())
 			if (origin.stage != 0)
 				M.take_oxygen_deprivation(0 - (origin.stage / 2))
@@ -224,7 +224,7 @@ datum/pathogeneffects/benevolent/resurrection
 		if (origin.stage < 5)
 			return
 		if(prob(5))
-			M.show_message("<span style=\"color:red\">You feel a sudden craving for ... brains??</span>")
+			M.show_message("<span class='alert'>You feel a sudden craving for ... brains??</span>")
 
 	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -261,7 +261,7 @@ datum/pathogeneffects/benevolent/resurrection
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
 				H.remission(origin)			// set the pathogen into remission, so it will be gone soon. Unlikely for a person to revive twice like this!
 				H.immunity(origin)
-				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
+				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")

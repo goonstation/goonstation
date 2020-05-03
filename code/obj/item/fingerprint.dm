@@ -68,7 +68,7 @@
 			add_fingerprint(user)
 			src.add_fingerprint(user)
 		else
-			boutput(user, "<span style=\"color:blue\">Not enough space!!!</span>")
+			boutput(user, "<span class='notice'>Not enough space!!!</span>")
 	else
 		if (istype(P, /obj/item/pen))
 			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text

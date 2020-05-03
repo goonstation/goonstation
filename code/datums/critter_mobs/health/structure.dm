@@ -10,6 +10,6 @@
 					holder.visible_message("<span style=\"color:blue\">[M] repairs some dents on [holder]!</span>")
 					HealDamage(5)
 				else
-					M.show_message("<span style=\"color:red\">Nothing to repair on [holder]!")
+					M.show_message("<span class='alert'>Nothing to repair on [holder]!")
 				return 0
 		return ..()

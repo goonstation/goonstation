@@ -30,7 +30,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
-	boutput(user, "<span style=\"color:red\">AI Interfacing with this computer has been disabled.</span>")
+	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
 	return
 
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
@@ -65,19 +65,19 @@
 /obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, user as mob)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-		boutput(user, "<span style=\"color:blue\">You swipe the ID card.</span>")
+		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 		var/datum/data/record/account = null
 		account = FindBankAccountByName(I:registered)
 		if(account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
 			if (enterpin == I:pin)
-				boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = I
 			else
-				boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 				src.scan = null
 		else
-			boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
 	else src.attack_hand(user)
 	return
@@ -207,19 +207,19 @@
 					I = mag.holding
 			if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 				if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-				boutput(usr, "<span style=\"color:blue\">You swipe the ID card.</span>")
+				boutput(usr, "<span class='notice'>You swipe the ID card.</span>")
 				var/datum/data/record/account = null
 				account = FindBankAccountByName(I:registered)
 				if(account)
 					var/enterpin = input(usr, "Please enter your PIN number.", "Order Console", 0) as null|num
 					if (enterpin == I:pin)
-						boutput(usr, "<span style=\"color:blue\">Card authorized.</span>")
+						boutput(usr, "<span class='notice'>Card authorized.</span>")
 						src.scan = I
 					else
-						boutput(usr, "<span style=\"color:red\">Pin number incorrect.</span>")
+						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 						src.scan = null
 				else
-					boutput(usr, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+					boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
 					src.scan = null
 			else
 				src.temp = "There is no card scan to log out.<BR>"
@@ -246,7 +246,7 @@
 	else if (href_list["buy"])
 		if (src.scan)
 			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span style=\"color:red\">Your account cannot currently be liquidated due to active borrows.</span>")
+				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)

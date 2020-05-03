@@ -40,9 +40,9 @@
 		interacted(user)
 	else
 		if (locked)
-			boutput(user, "<span style=\"color:red\">The access panel is locked.</span>")
+			boutput(user, "<span class='alert'>The access panel is locked.</span>")
 		else
-			boutput(user, "<span style=\"color:blue\">You open the access panel.</span>")
+			boutput(user, "<span class='notice'>You open the access panel.</span>")
 			// todo: update icon to open state
 			open = 1
 			icon_state = initial(icon_state)
@@ -51,12 +51,12 @@
 	if(istype(W, /obj/item/card/id))
 		if (src.allowed(user))
 			if (src.open)
-				boutput(user, "<span style=\"color:red\">You need to close the panel first.</span>")
+				boutput(user, "<span class='alert'>You need to close the panel first.</span>")
 				return
 			src.locked = !src.locked
-			boutput(user, "<span style=\"color:blue\">You [src.locked ? "lock" : "unlock"] the switchgear access panel.</span>")
+			boutput(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the switchgear access panel.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 	else
 		return ..(W, user)
 
@@ -122,7 +122,7 @@
 			return
 		if( href_list["close"] )
 			if (isAI(usr))
-				boutput(usr, "<span style=\"color:red\">You'd close the panel, if only you had hands.</span>")
+				boutput(usr, "<span class='alert'>You'd close the panel, if only you had hands.</span>")
 				return
 			usr.Browse(null, "window=switchgear")
 			usr.machine = null

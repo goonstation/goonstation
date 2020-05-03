@@ -21,24 +21,24 @@
 				proceed = 1
 				break
 		if (!proceed)
-			boutput(user, "<span style=\"color:red\">[src] cannot hold that kind of item!</span>")
+			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
 			return
 
 		if (src.contents.len < src.maxitems)
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped()
-			boutput(user, "<span style=\"color:blue\">You put [W] in [src].</span>")
-			if (src.contents.len == src.maxitems) boutput(user, "<span style=\"color:blue\">[src] is now full!</span>")
+			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.satchel_updateicon()
-		else boutput(user, "<span style=\"color:red\">[src] is full!</span>")
+		else boutput(user, "<span class='alert'>[src] is full!</span>")
 
 	attack_self(var/mob/user as mob)
 		if (src.contents.len)
 			var/turf/T = user.loc
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
-			boutput(user, "<span style=\"color:blue\">You empty out [src].</span>")
+			boutput(user, "<span class='notice'>You empty out [src].</span>")
 			src.satchel_updateicon()
 		else ..()
 
@@ -112,7 +112,7 @@
 				proceed = 1
 				break
 		if (!proceed)
-			boutput(user, "<span style=\"color:red\">\The [src] can't hold that kind of item.</span>")
+			boutput(user, "<span class='alert'>\The [src] can't hold that kind of item.</span>")
 			return
 
 		if (src.contents.len < src.maxitems)
@@ -129,10 +129,10 @@
 					sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (src.contents.len >= src.maxitems)
-					boutput(user, "<span style=\"color:blue\">\The [src] is now full!</span>")
+					boutput(user, "<span class='notice'>\The [src] is now full!</span>")
 					break
-			boutput(user, "<span style=\"color:blue\">You finish filling \the [src].</span>")
-		else boutput(user, "<span style=\"color:red\">\The [src] is already full!</span>")
+			boutput(user, "<span class='notice'>You finish filling \the [src].</span>")
+		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
 		src.satchel_updateicon()
 
 	proc/satchel_updateicon()

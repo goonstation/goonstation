@@ -72,8 +72,8 @@
 	Q.sharktarget2 = sharktarget
 	Q.caller = usr
 	Q.sharkspeed = speed
-//				boutput(sharktarget, "<span style=\"color:red\"><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(sharktarget, "<span style=\"color:red\">This is a temporary ban, it will be removed in [sharkmins] minutes.</span>")
+//				boutput(sharktarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
+//				boutput(sharktarget, "<span class='alert'>This is a temporary ban, it will be removed in [sharkmins] minutes.</span>")
 //				logTheThing("admin", usr, sharktarget, "has sharked %target%.<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.")
 //				logTheThing("diary", usr, sharktarget, "has sharked %target%.<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.", "admin")
 //				message_admins("<span style=\"color:blue\">[usr.client.ckey] has banned [sharktarget.ckey].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.</span>")
@@ -120,7 +120,7 @@
 				return
 			else if (get_dist(src, src.sharktarget2) <= 1)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> bites [sharktarget2]!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
 				sharktarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
@@ -135,14 +135,14 @@
 		// drsingh for various cannot read null
 		if(sharktarget2)
 			for(var/mob/O in AIviewers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src]</B> bans [sharktarget2] in one bite!</span>", 1)
+				O.show_message("<span class='alert'><B>[src]</B> bans [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			sharktarget2.gib()
-			boutput(sharktarget2, "<span style=\"color:red\"><BIG><B>You have been eaten by the banshark!</B></BIG></span>")
+			boutput(sharktarget2, "<span class='alert'><BIG><B>You have been eaten by the banshark!</B></BIG></span>")
 			logTheThing("admin", caller:client, sharktarget2, "has been eaten by the banshark!")
 			message_admins("<span style=\"color:blue\">[sharktarget2.ckey] has been eaten by the banshark!</span>")
 		else
-			boutput(sharktarget2, "<span style=\"color:red\"><BIG><B>You can escape the banshark, but not the ban!</B></BIG></span>")
+			boutput(sharktarget2, "<span class='alert'><BIG><B>You can escape the banshark, but not the ban!</B></BIG></span>")
 			logTheThing("admin", caller:client, data["ckey"], "has evaded the shark by ceasing to exist!  Banning them anyway.")
 			message_admins("<span style=\"color:blue\">data["ckey"] has evaded the shark by ceasing to exist!  Banning them anyway.</span>")
 		addBan(data)
@@ -178,7 +178,7 @@
 		while (!disposed)
 			if (get_dist(src, src.sharktarget2) <= 1)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> bites [sharktarget2]!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
 				sharktarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
@@ -193,7 +193,7 @@
 		sleep(1.5 SECONDS)
 		if (get_dist(src, src.sharktarget2) <= 1)
 			for(var/mob/O in AIviewers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
+				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			if(sharktarget2 && sharktarget2.client)
 				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed %target%")

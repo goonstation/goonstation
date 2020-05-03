@@ -36,19 +36,19 @@
 			playsound(user, "sound/weapons/Gunclick.ogg", 80, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span style=\"color:red\">[user] points the gun at \his head. Click!</span>", 1, "<span style=\"color:red\">Click!</span>", 2)
+					O.show_message("<span class='alert'>[user] points the gun at \his head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
 
 			return 0
 		else if(src.shotsLeft == 1)
 			src.shotsLeft = 0
 			playsound(user, "sound/weapons/Gunshot.ogg", 100, 1)
 			for(var/mob/O in AIviewers(user, null))
-				if (O.client)	O.show_message("<span style=\"color:red\"><B>BOOM!</B> [user]'s head explodes.</span>", 1, "<span style=\"color:red\">You hear someone's head explode.</span>", 2)
+				if (O.client)	O.show_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", 1, "<span class='alert'>You hear someone's head explode.</span>", 2)
 				user.TakeDamage("head", 300, 0)
 				take_bleeding_damage(user, null, 500, DAMAGE_STAB)
 			return 1
 		else
-			boutput(user, "<span style=\"color:blue\">You need to reload the gun.</span>")
+			boutput(user, "<span class='notice'>You need to reload the gun.</span>")
 			return 0
 
 	proc/reload_gun(mob/user as mob)

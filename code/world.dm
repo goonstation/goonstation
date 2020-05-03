@@ -602,7 +602,7 @@ var/f_color_selector_handler/F_Color_Selector
 		//we're already holding and in the reboot retry loop, do nothing
 		if (mapSwitcher.holdingReboot && !retry) return
 
-		out(world, "<span style='color: blue;'><b>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</b></span>")
+		out(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
 		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
 
 		mapSwitcher.holdingReboot = 1
@@ -1572,7 +1572,7 @@ var/opt_inactive = null
 /world/proc/KickInactiveClients()
 	for(var/client/C in clients)
 		if(!C.holder && ((C.inactivity/10)/60) >= 15)
-			boutput(C, "<span style=\"color:red\">You have been inactive for more than 15 minutes and have been disconnected.</span>")
+			boutput(C, "<span class='alert'>You have been inactive for more than 15 minutes and have been disconnected.</span>")
 			del(C)
 
 /// EXPERIMENTAL STUFF

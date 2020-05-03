@@ -18,7 +18,7 @@
 	initialize()
 		selection = unpool(/obj/adventurepuzzle/marker)
 		//savename = input("Save file name", "Save file name", "save") as text
-		boutput(usr, "<span style=\"color:blue\">Use left clicks to mark two corners of the rectangular area to save. Saving will take a significant amount of time, and you should not modify the area until the saving is completed.</span>")
+		boutput(usr, "<span class='notice'>Use left clicks to mark two corners of the rectangular area to save. Saving will take a significant amount of time, and you should not modify the area until the saving is completed.</span>")
 
 	disposing()
 		if (A)
@@ -35,13 +35,13 @@
 			if (T)
 				if (!A)
 					A = T
-					boutput(usr, "<span style=\"color:blue\">Corner #1 set.</span>")
+					boutput(usr, "<span class='notice'>Corner #1 set.</span>")
 				else
 					if (A.z != T.z)
-						boutput(usr, "<span style=\"color:red\">Z-level mismatch.</span>")
+						boutput(usr, "<span class='alert'>Z-level mismatch.</span>")
 						return
 					if (saving)
-						boutput(usr, "<span style=\"color:red\">Already saving.</span>")
+						boutput(usr, "<span class='alert'>Already saving.</span>")
 						return
 					var/fname = "adventure/ADV_SAVE_[usr.client.ckey]_[world.time]"
 					if (fexists(fname))
@@ -52,7 +52,7 @@
 					var/datum/puzzlewizard/save/this = src
 					A = null
 					src = null
-					boutput(usr, "<span style=\"color:blue\">Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
+					boutput(usr, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
 					AS.overlays -= selection
 					var/datum/sandbox/sandbox = new /datum/sandbox()
 					sandbox.context["max_x"] = max(AS.x, B.x)
@@ -101,7 +101,7 @@
 								fdel("adventure/adventure_save_[usr.client.ckey].dat")
 							var/target = file("adventure/adventure_save_[usr.client.ckey].dat")
 							F.ExportText("/", target)
-							boutput(usr, "<span style=\"color:blue\">Saving finished.</span>")
+							boutput(usr, "<span class='notice'>Saving finished.</span>")
 							usr << ftp(target)
 							if (fexists(fname))
 								fdel(fname)

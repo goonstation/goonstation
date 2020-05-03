@@ -176,7 +176,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 				qdel(src)
 			return
 		else
-			boutput(src, "<span style='font-size: 1.5em; color: blue;'><B>Haha you died loser.</B></span>")
+			boutput(src, "<span class='bold notice'>Haha you died loser.</span>")
 			src.become_ghost()
 
 	Life(datum/controller/process/mobs/parent)
@@ -229,7 +229,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 				if(prob(75))
 					return
 				else
-					src.visible_message("<span style=\"color:red\">[src] horks up a lump from his stomach... </span>")
+					src.visible_message("<span class='alert'>[src] horks up a lump from his stomach... </span>")
 			snacc.Eat(src,src,1)
 
 
@@ -366,14 +366,14 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
+			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
 				say("One of them [pick(JOHN_people)] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		#ifdef SECRETS_ENABLED
 		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
+			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
 				say("Well hot dog! [pick(JOHN_insults)], you wouldn't believe it but I use to work there!")
 				johnbill_shuttle_fartnasium_active = 1
@@ -384,7 +384,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 		#endif
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || (istype(W, /obj/item/clothing/mask/cigarette/cigarillo) && !gotsmokes))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span style=\"color:blue\"><b>You offer [W] to [src]</b> </span>")
+			boutput(M, "<span class='notice'><b>You offer [W] to [src]</b> </span>")
 			M.u_equip(W)
 			W.set_loc(src)
 			W.dropped()
@@ -557,7 +557,7 @@ var/bombini_saved = 0
 				johnbus_active = 1
 				for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
 
-					C.visible_message("<span style=\"color:red\">John is starting up the engines, this could take a minute!</span>")
+					C.visible_message("<span class='alert'>John is starting up the engines, this could take a minute!</span>")
 
 				for(var/obj/machinery/computer/shuttle_bus/embedded/B in machine_registry[MACHINES_SHUTTLECOMPS])
 					T = get_turf(B)
@@ -565,7 +565,7 @@ var/bombini_saved = 0
 						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
 						sleep(3 SECONDS)
 						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
-						src.visible_message("<span style=\"color:red\">The shuttle is making a hell of a racket!</span>")
+						src.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
 						sleep(5 SECONDS)
 						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
@@ -574,7 +574,7 @@ var/bombini_saved = 0
 						sleep(2 SECONDS)
 						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
 						sleep(3 SECONDS)
-						src.visible_message("<span style=\"color:red\">The shuttle engine alarms start blaring!</span>")
+						src.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
 						playsound(T, "sound/machines/pod_alarm.ogg", 60, 1)
 						var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(src)
 						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -650,7 +650,7 @@ var/bombini_saved = 0
 				for(var/obj/npc/trader/bee/b in start_location)
 					bombini_saved = 1
 					for(var/mob/M in start_location)
-						boutput(M, "<span style=\"color:blue\">It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
+						boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
 
 			start_location.move_contents_to(end_location)
 
@@ -668,7 +668,7 @@ var/bombini_saved = 0
 
 	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_TURRETS])
 
-		C.visible_message("<span style=\"color:red\">John's Juicin' Bus has Moved!</span>")
+		C.visible_message("<span class='alert'>John's Juicin' Bus has Moved!</span>")
 
 	return
 

@@ -48,7 +48,7 @@
       user.visible_message("<span style='color:blue;'><b>[user]</b> activates the seed!</span>", "<span style='color:blue;'>You activate the seed!</span>")
       src.martianDesc = "It's active. Apply to the ground to form a new structure."
   else
-    boutput(user, "<span style='color:red;'>You have no idea how to use this!</span>")
+    boutput(user, "<span class='alert'>You have no idea how to use this!</span>")
 
 /obj/item/martianSeed/proc/plant(var/turf/T=null)
   if(!T)

@@ -48,10 +48,10 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
-				boutput(user, "<span style=\"color:red\">[src] is already wearing a hat!</span>")
+				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
 				return
 			if(!(W.icon_state in BUDDY_HATS))
-				boutput(user, "<span style=\"color:red\">It doesn't fit!</span>")
+				boutput(user, "<span class='alert'>It doesn't fit!</span>")
 				return
 
 			src.hat = W
@@ -240,9 +240,9 @@
 					C.limbs.r_arm:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
 
 		var/dna_gain = absorbed_dna + 4
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
@@ -443,9 +443,9 @@
 					C.limbs.r_leg:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
 
 		var/dna_gain = 6 //spend dna
 		if (isdead(src))	//if the legworm is dead, the changeling can only gain half of what was spent
@@ -508,9 +508,9 @@
 				C.organHolder.receive_organ(E,"butt",0)
 				C.update_body()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B></span>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
 
 		var/dna_gain = 1 //spend dna
 		if (isdead(src))	//if the legworm is dead, the changeling can only gain half of what was spent
