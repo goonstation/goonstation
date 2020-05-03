@@ -149,10 +149,9 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/updateDialog()
 	if(!(status & BROKEN)) // unbroken
-		var/list/nearby = viewers(1, src)
-		for(var/mob/M in nearby)
-			if (M.client && M.machine == src)
-				src.interacted(M)
+		for(var/client/C)
+			if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
+				src.interacted(C.mob)
 	AutoUpdateAI(src)
 
 /obj/machinery/power/apc/New()
