@@ -35,7 +35,7 @@
 	var/obj/item/storage/I = parent
 	if(!istype(I)||!(I.c_flags && I.c_flags & HAS_GRAB_EQUIP))
 		return
-	var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + round(I.get_contents().len/3) //a bit of bonus protection. 1 point bonus per 3 items in the bag
+	var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + ceil(I.get_contents().len/3) //a bit of bonus protection. 1 point bonus per 3 items in the bag
 	for (var/obj/item/grab/block/B in I.contents)
 		if(I.c_flags & BLOCK_CUT) //only increase the types we're actually blocking
 			B.setProperty("I_block_cut", blockplus)
