@@ -1354,6 +1354,7 @@
 			src.blood_pressure["status"] = "Normal"
 			return
 
+		src.blood_volume = max(0, src.blood_volume) //clean up negative blood amounts here. Lazy fix, but easier than cleaning up every place that blood is removed
 		var/current_blood_amt = src.blood_volume + (src.reagents ? src.reagents.total_volume / 4 : 0) // dropping how much reagents count so that people stop going hypertensive at the drop of a hat
 		var/anticoag_amt = (src.reagents ? src.reagents.get_reagent_amount("heparin") : 0)
 		var/coag_amt = (src.reagents ? src.reagents.get_reagent_amount("proconvertin") : 0)
