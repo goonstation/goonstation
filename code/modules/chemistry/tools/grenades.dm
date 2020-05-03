@@ -427,12 +427,12 @@
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
+		B1.reagents.maximum_volume=75 //dumb hack, but it works
+		B1.reagents.add_reagent("capsaicin", 50)
+		B1.reagents.add_reagent("sugar",25)
 
-		B1.reagents.add_reagent("capsaicin", 25)
-		B1.reagents.add_reagent("water",25)
-
-		B2.reagents.add_reagent("fluorosurfactant", 25)
-
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
 		beakers += B1
 		beakers += B2
 
@@ -448,8 +448,8 @@
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
-
-		B1.reagents.add_reagent("sarin", 25)
+		B1.reagents.maximum_volume=100 //dumb hack, but it works
+		B1.reagents.add_reagent("sarin", 75)
 		B1.reagents.add_reagent("sugar",25)
 
 		B2.reagents.add_reagent("phosphorus", 25)

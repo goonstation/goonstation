@@ -1354,6 +1354,7 @@
 			src.blood_pressure["status"] = "Normal"
 			return
 
+		src.blood_volume = max(0, src.blood_volume) //clean up negative blood amounts here. Lazy fix, but easier than cleaning up every place that blood is removed
 		var/current_blood_amt = src.blood_volume + (src.reagents ? src.reagents.total_volume / 4 : 0) // dropping how much reagents count so that people stop going hypertensive at the drop of a hat
 		var/anticoag_amt = (src.reagents ? src.reagents.get_reagent_amount("heparin") : 0)
 		var/coag_amt = (src.reagents ? src.reagents.get_reagent_amount("proconvertin") : 0)
@@ -1520,9 +1521,13 @@
 
 		if (src.bleeding)
 			var/decrease_chance = 2 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
-			if (src.bleeding > 1 && src.bleeding < 4) // higher bleeding gets a better chance to drop down
-			//if (src.bleeding >= 4 && src.bleeding <= 7) // higher bleeding gets a better chance to drop down
+			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
+
+			if (src.bleeding > 1 && src.bleeding < 4) // midrange bleeding gets a better chance to drop down
 				decrease_chance += 3
+			else
+				surgery_increase_chance += 10
+
 			if (src.reagents)
 				if (src.reagents.has_reagent("heparin")) // anticoagulant
 					decrease_chance -= rand(1,2)
@@ -1537,7 +1542,7 @@
 			if (src.bleeding < 0) //INVERSE BLOOD LOSS was a fun but ultimately easily fixed bug
 				src.bleeding = 0
 
-			if (src.get_surgery_status())
+			if (prob(surgery_increase_chance) && src.get_surgery_status())
 				src.bleeding += 1 * mult
 
 		if (src.bleeding && src.blood_volume)

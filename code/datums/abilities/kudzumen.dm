@@ -208,6 +208,19 @@
 		var/turf/T = get_turf(location)
 		T.temp_flags |= HAS_KUDZU
 
+	set_loc(var/newloc as turf|mob|obj in world)
+		//remove kudzu flag from current turf
+		var/turf/T1 = get_turf(loc)
+		if (T1)
+			T1.temp_flags &= ~HAS_KUDZU
+
+		..()
+		//Add kudzu flag to new turf.
+		var/turf/T2 = get_turf(newloc)
+		if (T2)
+			T2.temp_flags |= HAS_KUDZU
+
+
 	disposing()
 		var/turf/T = get_turf(src)
 		T.temp_flags &= ~HAS_KUDZU

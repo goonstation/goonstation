@@ -1303,6 +1303,7 @@ var/list/electiles = list()
 	var/image/shaftImg = null
 	var/image/headImg = null
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+	hit_type = DAMAGE_STAB
 
 	New()
 		setShaftMaterial(getMaterial("bohrum"))

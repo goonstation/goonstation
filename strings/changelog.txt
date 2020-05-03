@@ -1,5 +1,22 @@
 
+(t)sun may 03 20
+(u)Tarmunora
+(p)544
+(e)⚖|balance
+(+)Changed the damage type of crafted spears from blunt to stabbing.
+(u)Tarmunora
+(p)547
+(e)⚖|balance
+(+)Made sarin grenades more concentrated and changed the delivery mechanism of capsaicin grenades
 (t)sat may 02 20
+(u)Kyle
+(*)The HoS now has a pet turtle named Sylvester. He starts in the HoS office and wears an adorable beret.
+(u)mbc
+(p)549
+(e)|
+(*)The suture can be used for limb attachment as well as the stapler now.
+(+)Fixed a bug where a limb's surgery state could get 'stuck' and not mendable.
+(+)Adjusted speed at which an open surgical incision would increase your bleeding amount.
 (u)UrsulaMajor
 (p)516
 (e)⚖🎨|balance, sprites

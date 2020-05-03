@@ -42,7 +42,7 @@
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
-	var/obj/machinery/machine = null
+	var/obj/machinery/machine = null // todo : look into rewriting the way this works. its a lingering ref to the last machine the mob touched, and machines have to search thru all clients to check this var when they update their screens
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null

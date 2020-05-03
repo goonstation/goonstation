@@ -653,7 +653,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				bank_earnings.badguy = 1
 				player_dead = 0
 			//some might not actually have a wage
-			if (isnukeop(player) || iswizard(player) || isblob(player) || iswraith(player) || iswizard(player))
+			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
 				earnings = 800
 
 			if (player.mind.completed_objs > 0)

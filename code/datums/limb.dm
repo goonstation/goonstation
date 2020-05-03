@@ -1053,32 +1053,39 @@
 
 
 //hey maybe later standardize this into flags per obj so we dont search this huge list every click ok??
-var/list/ghostcritter_blocked = list(/obj/item/device/flash,\
-/obj/item/reagent_containers/glass/beaker,\
-/obj/item/reagent_containers/glass/bottle,\
-/obj/item/scalpel,\
-/obj/item/circular_saw,\
-/obj/item/staple_gun,\
-/obj/item/scissors,\
-/obj/item/razor_blade,\
-/obj/item/raw_material/shard,\
-/obj/item/kitchen/utensil/knife,\
-/obj/item/reagent_containers/food/snacks/prison_loaf,\
-/obj/item/reagent_containers/food/snacks/einstein_loaf,\
-/obj/reagent_dispensers,\
-/obj/machinery/chem_dispenser,\
-/obj/machinery/portable_atmospherics/canister,\
-/obj/machinery/networked/teleconsole,\
-/obj/storage/crate, /obj/storage/closet,\
-/obj/storage/secure/closet,\
-/obj/machinery/firealarm,\
-/obj/machinery/weapon_stand,\
-/obj/dummy/chameleon,\
-/obj/machinery/light,\
-/obj/machinery/vending,\
-/obj/machinery/nuclearbomb,\
-/obj/item/gun/kinetic/airzooka,\
-/obj/machinery/computer/genetics) //Items that ghostcritters simply cannot interact, regardless of w_class
+var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
+
+/proc/ghostcritter_blocked_objects() // Generates an associate list of (type = 1) that can be checked much faster than looping istypes
+	var/blocked_types = list(/obj/item/device/flash,\
+	/obj/item/reagent_containers/glass/beaker,\
+	/obj/item/reagent_containers/glass/bottle,\
+	/obj/item/scalpel,\
+	/obj/item/circular_saw,\
+	/obj/item/staple_gun,\
+	/obj/item/scissors,\
+	/obj/item/razor_blade,\
+	/obj/item/raw_material/shard,\
+	/obj/item/kitchen/utensil/knife,\
+	/obj/item/reagent_containers/food/snacks/prison_loaf,\
+	/obj/item/reagent_containers/food/snacks/einstein_loaf,\
+	/obj/reagent_dispensers,\
+	/obj/machinery/chem_dispenser,\
+	/obj/machinery/portable_atmospherics/canister,\
+	/obj/machinery/networked/teleconsole,\
+	/obj/storage/crate, /obj/storage/closet,\
+	/obj/storage/secure/closet,\
+	/obj/machinery/firealarm,\
+	/obj/machinery/weapon_stand,\
+	/obj/dummy/chameleon,\
+	/obj/machinery/light,\
+	/obj/machinery/vending,\
+	/obj/machinery/nuclearbomb,\
+	/obj/item/gun/kinetic/airzooka,\
+	/obj/machinery/computer/genetics) //Items that ghostcritters simply cannot interact, regardless of w_class
+	. = list()
+	for (var/blocked_type in blocked_types)
+		for (var/subtype in typesof(blocked_type))
+			.[subtype] = 1
 
 //little critters with teeth, like mice! can pick up small items only.
 /datum/limb/small_critter
@@ -1106,10 +1113,8 @@ var/list/ghostcritter_blocked = list(/obj/item/device/flash,\
 
 				if (issmallanimal(usr))
 					var/mob/living/critter/small_animal/C = usr
-					if (C.ghost_spawned)
-						for (var/type in ghostcritter_blocked)
-							if (istype(O,type))
-								can_pickup = 0
+					if (C.ghost_spawned && ghostcritter_blocked[O.type])
+						can_pickup = 0
 
 				if (O.w_class > max_wclass || !can_pickup)
 					user.visible_message("<span class='alert'><b>[user] struggles, failing to lift [target] off the ground!</b></span>", "<span class='alert'><b>You struggle with [target], but it's too big for you to lift!</b></span>")
@@ -1117,11 +1122,9 @@ var/list/ghostcritter_blocked = list(/obj/item/device/flash,\
 			else
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
-					if (C.ghost_spawned)
-						for (var/type in ghostcritter_blocked)
-							if (istype(target,type))
-								user.show_text("<span style=\"color:red\"><b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b></span>")
-								return
+					if (C.ghost_spawned && ghostcritter_blocked[target.type])
+						user.show_text("<span style=\"color:red\"><b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b></span>")
+						return
 
 
 		..()

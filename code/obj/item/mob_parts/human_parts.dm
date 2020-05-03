@@ -119,7 +119,7 @@
 				src.standImage.color = newrgb
 
 	surgery(var/obj/item/tool)
-		if(remove_stage > 1 && istype(tool,/obj/item/staple_gun))
+		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
@@ -136,7 +136,7 @@
 
 		switch(remove_stage)
 			if(0)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span class='alert'>You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
+				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
 				logTheThing("combat", tool.the_mob, holder, "staples %target%'s [src.name] back on")
 				logTheThing("diary", tool.the_mob, holder, "staples %target%'s [src.name] back on", "combat")
 			if(1)

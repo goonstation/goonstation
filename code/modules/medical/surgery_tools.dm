@@ -296,8 +296,7 @@ CONTAINS:
 		if (!surgeryCheck(H, user))
 			return ..()
 
-		// Marq fix for undefined variable /datum/human_limbs/var/head
-		if (user.zone_sel.selecting in H.limbs.vars)
+		if (user.zone_sel.selecting in H.limbs.vars) //ugly copy paste in surgery_procs.dm for suture
 			var/obj/item/parts/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
 			if (istype(surgery_limb))
 				src.ammo--
