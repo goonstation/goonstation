@@ -785,6 +785,7 @@
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 0)
+		updateUsrDialog()
 	S.set_loc(src)
 	myhud.update_systems()
 	return
