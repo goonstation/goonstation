@@ -246,7 +246,7 @@
 
 /obj/proc/updateUsrDialog()
 	for(var/client/C)
-		if (C.mob.machine == src)
+		if (C.mob?.machine == src)
 			if (get_dist(C.mob,src) <= 1)
 				src.attack_hand(C.mob)
 			else
@@ -258,14 +258,14 @@
 
 /obj/proc/updateDialog()
 	for(var/client/C)
-		if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
+		if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
 			src.attack_hand(C.mob)
 	AutoUpdateAI(src)
 
 /obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
 
 	for(var/client/C)
-		if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
+		if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
 			src.attack_self(C.mob)
 
 	for(var/mob/living/silicon/ai/M in AIs)
