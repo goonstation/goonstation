@@ -316,7 +316,7 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
-	icon_state = "pistol_clip"
+	icon_state = "pistol_magazine"
 	amount_left = 10.0
 	max_amount = 10.0
 	ammo_type = new/datum/projectile/bullet/bullet_22
@@ -419,7 +419,7 @@
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm NATO"
 	name = "9mm magazine"
-	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 18.0
 	max_amount = 18.0
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
@@ -760,7 +760,7 @@
 /obj/item/ammo/bullets/bullet_9mm
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
-	icon_state = "pistol_clip"
+	icon_state = "pistol_magazine"
 	amount_left = 15.0
 	max_amount = 15.0
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
