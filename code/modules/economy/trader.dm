@@ -102,7 +102,7 @@
 
 	updateUsrDialog()
 		for(var/client/C)
-			if (C.mob.machine == src)
+			if (C.mob?.machine == src)
 				if (get_dist(C.mob,src) <= 1)
 					src.openTrade(C.mob)
 
