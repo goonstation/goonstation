@@ -438,6 +438,10 @@
 
 		src.addOverlaysClient(src.client)  //ov1
 
+		var/obj/machinery/vehicle/V = src.loc
+		if (istype(V))
+			V.myhud.add_client(src.client)
+
 	src.emote_allowed = 1
 
 	if (!src.mind)
