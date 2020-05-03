@@ -150,7 +150,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/updateDialog()
 	if(!(status & BROKEN)) // unbroken
 		for(var/client/C)
-			if (C?.mob.machine == src && get_dist(C.mob,src) <= 1)
+			if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
 				src.interacted(C.mob)
 	AutoUpdateAI(src)
 
