@@ -1,5 +1,11 @@
 
 (t)sat may 02 20
+(u)mbc
+(p)549
+(e)|
+(*)The suture can be used for limb attachment as well as the stapler now.
+(+)Fixed a bug where a limb's surgery state could get 'stuck' and not mendable.
+(+)Adjusted speed at which an open surgical incision would increase your bleeding amount.
 (u)UrsulaMajor
 (p)516
 (e)⚖🎨|balance, sprites
