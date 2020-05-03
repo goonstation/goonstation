@@ -100,6 +100,13 @@
 		shopping_cart = null
 		..()
 
+	updateUsrDialog()
+		for(var/client/C)
+			if (C.mob.machine == src)
+				if (get_dist(C.mob,src) <= 1)
+					src.openTrade(C.mob)
+
+
 	Topic(href, href_list)
 		if(..())
 			return
