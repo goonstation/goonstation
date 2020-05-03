@@ -468,7 +468,7 @@
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
-
+		
 	throw_impact(atom/A)
 		..()
 		usr.set_loc(get_turf(src))
@@ -918,7 +918,7 @@
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SWORD
 
-/obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
+/obj/item/katana/attack(mob/target as mob, mob/user as mob)
 	if(target == user) //Can't cut off your own limbs, dumbo
 		return ..()
 	if(!ishuman(target))
@@ -927,8 +927,6 @@
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
 		return
-	if(is_special)
-		return ..()
 	switch(zoney)
 		if("head")
 			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
