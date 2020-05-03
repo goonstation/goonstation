@@ -272,11 +272,6 @@
 			bp.size_x = save["sizex"]
 			bp.size_y = save["sizey"]
 
-			var/savefile/F = save
-			var/txtfile = file("blueprints.txt")
-			fdel(txtfile)
-			F.ExportText("/",txtfile)
-
 			for (var/A in save.dir)
 				if(A == "sizex" || A == "sizey" || A == "roomname") continue
 				save.cd = "/[key]/[A]"
