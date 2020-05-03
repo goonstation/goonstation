@@ -44,10 +44,10 @@ var/datum/event_controller/random_events
 		if (events_enabled && (num_players >= minimum_population))
 			do_random_event(events)
 		else
-			message_admins("<span style=\"color:blue\">A random event would have happened now, but they are disabled!</span>")
+			message_admins("<span class='notice'>A random event would have happened now, but they are disabled!</span>")
 		var/event_timer = rand(time_between_events_lower,time_between_events_upper)
 		next_event = ticker.round_elapsed_ticks + event_timer
-		message_admins("<span style=\"color:blue\">Next event will occur at [round(next_event / 600)] minutes into the round.</span>")
+		message_admins("<span class='notice'>Next event will occur at [round(next_event / 600)] minutes into the round.</span>")
 		SPAWN_DBG(event_timer)
 			event_cycle()
 
@@ -211,7 +211,7 @@ var/datum/event_controller/random_events
 			if (new_min == minimum_population) return
 
 			if (new_min < 1)
-				boutput(usr, "<span style=\"color:red\">Well that doesn't even make sense.</span>")
+				boutput(usr, "<span class='alert'>Well that doesn't even make sense.</span>")
 				return
 			else
 				minimum_population = new_min
@@ -263,12 +263,12 @@ var/datum/event_controller/random_events
 		else if(href_list["TimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
 			if (time < 1)
-				boutput(usr, "<span style=\"color:red\">The fuck is that supposed to mean???? Knock it off!</span>")
+				boutput(usr, "<span class='alert'>The fuck is that supposed to mean???? Knock it off!</span>")
 				return
 
 			time *= 600
 			if (time > time_between_events_upper)
-				boutput(usr, "<span style=\"color:red\">You cannot set the lower bound higher than the upper bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the lower bound higher than the upper bound.</span>")
 			else
 				time_between_events_lower = time
 				message_admins("Admin [key_name(usr)] set event lower interval bound to [time_between_events_lower / 600] minutes")
@@ -278,12 +278,12 @@ var/datum/event_controller/random_events
 		else if(href_list["TimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
 			if (time > 100)
-				boutput(usr, "<span style=\"color:red\">That's a bit much.</span>")
+				boutput(usr, "<span class='alert'>That's a bit much.</span>")
 				return
 
 			time *= 600
 			if (time < time_between_events_lower)
-				boutput(usr, "<span style=\"color:red\">You cannot set the upper bound lower than the lower bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the upper bound lower than the lower bound.</span>")
 			else
 				time_between_events_upper = time
 			message_admins("Admin [key_name(usr)] set event upper interval bound to [time_between_events_upper / 600] minutes")
@@ -293,12 +293,12 @@ var/datum/event_controller/random_events
 		else if(href_list["MTimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
 			if (time < 1)
-				boutput(usr, "<span style=\"color:red\">The fuck is that supposed to mean???? Knock it off!</span>")
+				boutput(usr, "<span class='alert'>The fuck is that supposed to mean???? Knock it off!</span>")
 				return
 
 			time *= 600
 			if (time > time_between_minor_events_upper)
-				boutput(usr, "<span style=\"color:red\">You cannot set the lower bound higher than the upper bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the lower bound higher than the upper bound.</span>")
 			else
 				time_between_minor_events_lower = time
 			message_admins("Admin [key_name(usr)] set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes")
@@ -308,12 +308,12 @@ var/datum/event_controller/random_events
 		else if(href_list["MTimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
 			if (time > 100)
-				boutput(usr, "<span style=\"color:red\">That's a bit much.</span>")
+				boutput(usr, "<span class='alert'>That's a bit much.</span>")
 				return
 
 			time *= 600
 			if (time < time_between_events_lower)
-				boutput(usr, "<span style=\"color:red\">You cannot set the upper bound lower than the lower bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the upper bound lower than the lower bound.</span>")
 			else
 				time_between_minor_events_upper = time
 			message_admins("Admin [key_name(usr)] set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes")

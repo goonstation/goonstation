@@ -44,9 +44,9 @@
 				if (master.controller)
 					if (master.cell)
 						var/perc = round(100*master.cell.charge/master.cell.maxcharge)
-						boutput(master.controller, "<span style=\"color:blue\">Current cell charge level is [perc]%.</span>")
+						boutput(master.controller, "<span class='notice'>Current cell charge level is [perc]%.</span>")
 					else
-						boutput(master.controller, "<span style=\"color:red\">No power cell installed. Only basic systems will be available.</span>")
+						boutput(master.controller, "<span class='alert'>No power cell installed. Only basic systems will be available.</span>")
 			if ("disconnect")
 				master.disconnect_user()
 

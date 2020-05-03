@@ -71,7 +71,7 @@
 	throw_impact(atom/A)
 		..()
 		if (prob(50))
-			A.visible_message("<span style=\"color:red\">[src] lands on [A] sticky side down!</span>")
+			A.visible_message("<span class='alert'>[src] lands on [A] sticky side down!</span>")
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -93,14 +93,14 @@
 		src.invisibility = 0
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
-		attached.visible_message("<span style=\"color:red\"><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
+		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
 		attached = 0
 
 	dispose()
 		if (attached)
 			if (!dont_make_an_overlay && active)
 				attached.ClearSpecificOverlays(overlay_key)
-			attached.visible_message("<span style=\"color:red\"><b>[src]</b> is destroyed!</span>")
+			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
 
 	attack()
 		return
@@ -118,7 +118,7 @@
 	var/max_message = 128
 
 	get_desc()
-		. = "<br><span style='color: blue'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
+		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user as mob)
 		//boutput(user, "fart")
@@ -155,12 +155,12 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
-			boutput(user, "<span style=\"color:blue\">You stamp \the [src].</span>")
+			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
 			return
 
 		else if (istype(W, /obj/item/pen))
 			if(!user.literate)
-				boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+				boutput(user, "<span class='alert'>You don't know how to write.</span>")
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1

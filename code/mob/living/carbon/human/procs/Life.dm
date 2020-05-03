@@ -188,17 +188,17 @@
 					if (0 to 15)
 						breathe()
 					if (34)
-						boutput(src, "<span style=\"color:red\">You need to breathe!</span>")
+						boutput(src, "<span class='alert'>You need to breathe!</span>")
 					if (35 to 51)
 						if (prob(5)) emote("gasp")
 					if (52)
-						boutput(src, "<span style=\"color:red\">Your lungs start to hurt. You really need to breathe!</span>")
+						boutput(src, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
 					if (53 to 61)
 						hud.update_oxy_indicator(1)
 						take_oxygen_deprivation(breathtimer/12)
 					if (62)
 						hud.update_oxy_indicator(1)
-						boutput(src, "<span style=\"color:red\">Your lungs are burning and the need to take a breath is almost unbearable!</span>")
+						boutput(src, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
 						take_oxygen_deprivation(10)
 					if (63 to INFINITY)
 						hud.update_oxy_indicator(1)
@@ -501,7 +501,7 @@
 					var/atom/A = atom
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
-							src.visible_message("<span style=\"color:red\"><b>[A]</b> is burnt to a crisp and destroyed!</span>")
+							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
 							qdel(A)
 
 			if (isturf(src.loc))
@@ -567,11 +567,11 @@
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+				boutput(C, "<span class='alert'>[stinkString()]</span>")
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
 	proc/handle_disabilities(var/mult = 1)
 
@@ -601,11 +601,11 @@
 		if (src.mind && isvampire(src))
 			if (istype(get_area(src), /area/station/chapel) && src.check_vampire_power(3) != 1)
 				if (prob(33))
-					boutput(src, "<span style=\"color:red\">The holy ground burns you!</span>")
+					boutput(src, "<span class='alert'>The holy ground burns you!</span>")
 				src.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
 			if (src.loc && istype(src.loc, /turf/space))
 				if (prob(33))
-					boutput(src, "<span style=\"color:red\">The starlight burns you!</span>")
+					boutput(src, "<span class='alert'>The starlight burns you!</span>")
 				src.TakeDamage("chest", 0, 2 * mult, 0, DAMAGE_BURN)
 
 		if (src.loc && isarea(src.loc.loc))
@@ -613,7 +613,7 @@
 			if (A.irradiated)
 				if (src.wear_suit && src.get_rad_protection())
 					if (istype(wear_suit, /obj/item/clothing/suit/rad) && prob(33))
-						boutput(src, "<span style=\"color:red\">Your geiger counter ticks...</span>")
+						boutput(src, "<span class='alert'>Your geiger counter ticks...</span>")
 					return
 				else
 					src.changeStatus("radiation", (A.irradiated * 10) SECONDS)
@@ -643,7 +643,7 @@
 				if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
 					O:score = max(0, O:score - 1)
 					if (prob(20))
-						boutput(src, "<span style=\"color:red\"><B>Being away from the station is making you lose your composure...</B></span>")
+						boutput(src, "<span class='alert'><B>Being away from the station is making you lose your composure...</B></span>")
 					src << sound('sound/effects/env_damage.ogg')
 					continue
 				if (T && isturf(T) && T.RL_GetBrightness() < 0.2)
@@ -735,7 +735,7 @@
 			if (src.mutantrace && src.mutantrace.aquatic)
 				return
 			if (prob(25) && losebreath > 0)
-				boutput(src, "<span style=\"color:red\">You are drowning!</span>")
+				boutput(src, "<span class='alert'>You are drowning!</span>")
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath = null
@@ -759,7 +759,7 @@
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
 				if (src.losebreath <= 0)
-					boutput(src, "<span style='color:blue'>You catch your breath.</span>")
+					boutput(src, "<span class='notice'>You catch your breath.</span>")
 			else
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
 				breath = get_breath_from_internal(BREATH_VOLUME)
@@ -963,16 +963,16 @@
 			for (var/datum/gas/farts/FARD in breath.trace_gases) // FARDING AND SHIDDING TIME ~warc
 				var/FARD_pp = (FARD.moles/breath.total_moles())*breath_pressure
 				if (prob(15) && (FARD_pp > fart_smell_min))
-					boutput(src, "<span style=\"color:red\">Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+					boutput(src, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 					if ((FARD_pp > fart_vomit_min) && prob(50))
-						src.visible_message("<span style=\"color:blue\">[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+						src.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
 						src.vomit()
 				if (FARD_pp > fart_choke_min)
 					take_oxygen_deprivation(6.9 * mult)
 					if (prob(20))
 						src.emote("cough")
 						if (prob(30))
-							boutput(src, "<span style=\"color:red\">Oh god it's so bad you could choke to death in here!</span>")
+							boutput(src, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
 
 			//cyber lungs beat radiation. Is there anything they can't do?
@@ -985,13 +985,13 @@
 				var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
 				TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
 				if (prob(20))
-					boutput(src, "<span style=\"color:red\">You feel a searing heat in your lungs!</span>")
+					boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
 					if (src.organHolder)
 						src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
 
 				hud.update_fire_indicator(1)
 				if (prob(4))
-					boutput(src, "<span style=\"color:red\">Your lungs hurt like hell! This can't be good!</span>")
+					boutput(src, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
 					//src.contract_disease(new/datum/ailment/disability/cough, 1, 0) // cogwerks ailment project - lung damage from fire
 
 		else
@@ -1354,6 +1354,7 @@
 			src.blood_pressure["status"] = "Normal"
 			return
 
+		src.blood_volume = max(0, src.blood_volume) //clean up negative blood amounts here. Lazy fix, but easier than cleaning up every place that blood is removed
 		var/current_blood_amt = src.blood_volume + (src.reagents ? src.reagents.total_volume / 4 : 0) // dropping how much reagents count so that people stop going hypertensive at the drop of a hat
 		var/anticoag_amt = (src.reagents ? src.reagents.get_reagent_amount("heparin") : 0)
 		var/coag_amt = (src.reagents ? src.reagents.get_reagent_amount("proconvertin") : 0)
@@ -1382,7 +1383,7 @@
 		//special case
 		if (current_blood_amt >= 1500)
 			if (prob(10))
-				src.visible_message("<span style='color:red'><b>[src] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
+				src.visible_message("<span class='alert'><b>[src] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
 				src.gib(1) // :v
 				return
 
@@ -1402,7 +1403,7 @@
 				if (prob(18))
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
-					boutput(src, "<span style='color:red'><b>You feel [feeling]!</b></span>")
+					boutput(src, "<span class='alert'><b>You feel [feeling]!</b></span>")
 					src.changeStatus("weakened", (4 * mult) SECONDS)
 				src.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
 				src.add_stam_mod_regen("hypotension", -3)
@@ -1420,7 +1421,7 @@
 				if (prob(14))
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
-					boutput(src, "<span style='color:red'><b>You feel [feeling]!</b></span>")
+					boutput(src, "<span class='alert'><b>You feel [feeling]!</b></span>")
 					src.changeStatus("weakened", (3 * mult) SECONDS)
 				if (prob(25))
 					src.contract_disease(/datum/ailment/malady/shock, null, null, 1)
@@ -1433,7 +1434,7 @@
 				if (prob(5))
 					var/extreme = pick("", "kinda ", "a little ", "sorta ", "a bit ")
 					var/feeling = pick("ill", "sick", "numb", "cold", "dizzy", "out of it", "confused", "off-balance", "tingly", "faint")
-					boutput(src, "<span style='color:red'><b>You feel [extreme][feeling]!</b></span>")
+					boutput(src, "<span class='alert'><b>You feel [extreme][feeling]!</b></span>")
 				if (prob(5))
 					src.contract_disease(/datum/ailment/malady/shock, null, null, 1)
 				src.add_stam_mod_regen("hypotension", -1)
@@ -1451,7 +1452,7 @@
 					var/msg = pick("You feel kinda sweaty",\
 					"You can feel your heart beat loudly in your chest",\
 					"Your head hurts")
-					boutput(src, "<span style='color:red'>[msg].</span>")
+					boutput(src, "<span class='alert'>[msg].</span>")
 				if (prob(1))
 					src.losebreath += (1 * mult)
 				if (prob(1))
@@ -1467,7 +1468,7 @@
 					"Your heart beats rapidly",\
 					"Your head hurts badly",\
 					"Your chest hurts")
-					boutput(src, "<span style='color:red'>[msg].</span>")
+					boutput(src, "<span class='alert'>[msg].</span>")
 				if (prob(3))
 					src.losebreath += (1 * mult)
 				if (prob(2))
@@ -1484,7 +1485,7 @@
 					"Your head pounds with pain",\
 					"Your chest hurts badly",\
 					"It's hard to breathe")
-					boutput(src, "<span style='color:red'>[msg]!</span>")
+					boutput(src, "<span class='alert'>[msg]!</span>")
 				if (prob(5))
 					src.losebreath += (1 * mult)
 				if (prob(2))
@@ -1494,7 +1495,7 @@
 				if (prob(5))
 					src.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 				if (prob(2))
-					src.visible_message("<span style='color:red'>[src] coughs up a little blood!</span>")
+					src.visible_message("<span class='alert'>[src] coughs up a little blood!</span>")
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 					bleed(src, rand(1,2) * mult, 1)
 				src.add_stam_mod_regen("hypertension", -3)
@@ -1520,9 +1521,13 @@
 
 		if (src.bleeding)
 			var/decrease_chance = 2 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
-			if (src.bleeding > 1 && src.bleeding < 4) // higher bleeding gets a better chance to drop down
-			//if (src.bleeding >= 4 && src.bleeding <= 7) // higher bleeding gets a better chance to drop down
+			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
+
+			if (src.bleeding > 1 && src.bleeding < 4) // midrange bleeding gets a better chance to drop down
 				decrease_chance += 3
+			else
+				surgery_increase_chance += 10
+
 			if (src.reagents)
 				if (src.reagents.has_reagent("heparin")) // anticoagulant
 					decrease_chance -= rand(1,2)
@@ -1532,12 +1537,12 @@
 				decrease_chance -= 1
 			if (prob(decrease_chance))
 				src.bleeding -= 1 * mult
-				boutput(src, "<span style='color:blue'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
+				boutput(src, "<span class='notice'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
 
 			if (src.bleeding < 0) //INVERSE BLOOD LOSS was a fun but ultimately easily fixed bug
 				src.bleeding = 0
 
-			if (src.get_surgery_status())
+			if (prob(surgery_increase_chance) && src.get_surgery_status())
 				src.bleeding += 1 * mult
 
 		if (src.bleeding && src.blood_volume)
@@ -1582,8 +1587,8 @@
 		if (!oH.skull && !src.nodamage) // look okay it's close enough to an organ and there's no other place for it right now shut up
 			if (oH.head)
 				src.death()
-				src.visible_message("<span style=\"color:red\"><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
-				"<span style=\"color:red\">Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
+				"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
 
 		//Wire note: Fix for Cannot read null.loc
 		if (oH.skull && oH.skull.loc != src)
@@ -1699,7 +1704,7 @@
 
 		if (src.get_brain_damage() >= 100) // braindeath
 			if (!is_chg)
-				boutput(src, "<span style=\"color:red\">Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
+				boutput(src, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
 				src.losebreath+=10
 				src.changeStatus("weakened", 3 SECONDS)
 		if (src.health <= -100)
@@ -1742,7 +1747,7 @@
 				if (-99 to -80)
 					src.take_oxygen_deprivation(1)
 					if (prob(4))
-						boutput(src, "<span style=\"color:red\"><b>Your chest hurts...</b></span>")
+						boutput(src, "<span class='alert'><b>Your chest hurts...</b></span>")
 						src.changeStatus("paralysis", 2 SECONDS)
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 				if (-79 to -51)
@@ -1754,7 +1759,7 @@
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (prob(6))
-						boutput(src, "<span style=\"color:red\"><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
+						boutput(src, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
 						src.setStatus("weakened", max(src.getStatusDuration("weakened"), 30))
 					if (prob(3))
 						src.changeStatus("paralysis", 2 SECONDS)
@@ -1767,7 +1772,7 @@
 						src.contract_disease(/datum/ailment/malady/shock,null,null,1)
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
 					if (prob(5))
-						boutput(src, "<span style=\"color:red\"><b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b></span>")
+						boutput(src, "<span class='alert'><b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b></span>")
 						src.changeStatus("weakened", 3 SECONDS)
 
 		parent.setLastTask("status_updates blindness checks", src)
@@ -1807,21 +1812,21 @@
 			src.blinktimer++
 			switch(src.blinktimer)
 				if (20)
-					if (showmessages) boutput(src, "<span style=\"color:red\">Your eyes feel slightly uncomfortable!</span>")
+					if (showmessages) boutput(src, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
 				if (30)
-					if (showmessages) boutput(src, "<span style=\"color:red\">Your eyes feel quite dry!</span>")
+					if (showmessages) boutput(src, "<span class='alert'>Your eyes feel quite dry!</span>")
 				if (40)
-					if (showmessages) boutput(src, "<span style=\"color:red\">Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
+					if (showmessages) boutput(src, "<span class='alert'>Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
 					src.change_eye_blurry(3, 3)
 				if (41 to 59)
 					src.change_eye_blurry(3, 3)
 				if (60)
-					if (showmessages) boutput(src, "<span style=\"color:red\">Your eyes are so dry that you can't see a thing!</span>")
+					if (showmessages) boutput(src, "<span class='alert'>Your eyes are so dry that you can't see a thing!</span>")
 					src.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
 				if (61 to 99)
 					src.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
 				if (100) //blinking won't save you now, buddy
-					if (showmessages) boutput(src, "<span style=\"color:red\">You feel a horrible pain in your eyes. That can't be good.</span>")
+					if (showmessages) boutput(src, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
 					src.contract_disease(/datum/ailment/disability/blind,null,null,1)
 
 			if (src.blinkstate) src.take_eye_damage(max(0, min(1, 1 - tempblind)), 1)

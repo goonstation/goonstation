@@ -341,9 +341,9 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (istype(trap))
 			if (E)
-				boutput(user, "<span style=\"color:red\">The crate's anti-tamper system immediately activates in response to [E]! Fuck!</span>")
+				boutput(user, "<span class='alert'>The crate's anti-tamper system immediately activates in response to [E]! Fuck!</span>")
 			else
-				src.visible_message("<span style=\"color:red\">Something sets off [src]'s anti-tamper system!</span>")
+				src.visible_message("<span class='alert'>Something sets off [src]'s anti-tamper system!</span>")
 			trap.trigger_trap(user)
 		else
 			..()
@@ -353,7 +353,7 @@
 		if(istype(lock) && locked)
 			var/success_state = lock.attempt_to_open(user)
 			if (success_state == 1) // Succeeded
-				boutput(user, "<span style=\"color:blue\">The crate unlocks!</span>")
+				boutput(user, "<span class='notice'>The crate unlocks!</span>")
 				src.locked = 0
 				src.lock = null
 				src.trap = null
@@ -373,7 +373,7 @@
 		else if (istype(W, /obj/item/weldingtool))
 			var/obj/item/weldingtool/WELD = W
 			if (WELD.welding)
-				boutput(user, "<span style=\"color:red\">The crate seems to be resistant to welding.</span>")
+				boutput(user, "<span class='alert'>The crate seems to be resistant to welding.</span>")
 				return
 			else
 				..()
@@ -417,18 +417,18 @@
 		return -1
 
 	proc/fail_attempt(var/mob/living/opener)
-		boutput(opener, "<span style=\"color:red\">A red light flashes.</span>")
+		boutput(opener, "<span class='alert'>A red light flashes.</span>")
 		attempts_remaining--
 		if (attempts_remaining <= 0)
-			boutput(opener, "<span style=\"color:red\">The crate's anti-tamper system activates!</span>")
+			boutput(opener, "<span class='alert'>The crate's anti-tamper system activates!</span>")
 			if (holder && holder.trap)
 				holder.trap.trigger_trap(opener)
 				if (!holder.trap.destroys_crate)
 					src.scramble_code()
-					boutput(opener, "<span style=\"color:red\">Looks like the code changed, too. You'll have to start again.</span>")
+					boutput(opener, "<span class='alert'>Looks like the code changed, too. You'll have to start again.</span>")
 			else
 				src.scramble_code()
-				boutput(opener, "<span style=\"color:red\">Looks like the code changed. You'll have to start again.</span>")
+				boutput(opener, "<span class='alert'>Looks like the code changed. You'll have to start again.</span>")
 			return
 
 	proc/inputter_check(var/mob/living/opener)
@@ -454,7 +454,7 @@
 	var/lastattempt = null
 
 	attempt_to_open(var/mob/living/opener)
-		boutput(opener, "<span style=\"color:blue\">The crate is locked with a deca-code lock.</span>")
+		boutput(opener, "<span class='notice'>The crate is locked with a deca-code lock.</span>")
 		var/input = input(usr, "Enter digit from 1 to 10.", "Deca-Code Lock") as null|num
 		if (input < 1 || input > 10)
 			boutput(opener, "You leave the crate alone.")
@@ -473,7 +473,7 @@
 	read_device(var/mob/living/reader)
 		boutput(reader, "<b>DECA-CODE LOCK REPORT:</b>")
 		if (attempts_allowed == 1)
-			boutput(reader, "<span style=\"color:red\">* Anti-tamper system will activate on next failed access attempt.</span>")
+			boutput(reader, "<span class='alert'>* Anti-tamper system will activate on next failed access attempt.</span>")
 		else
 			boutput(reader, "* Anti-tamper system will activate after [attempts_remaining] failed access attempts.")
 
@@ -508,7 +508,7 @@
 		code_pool = "nine"
 
 	attempt_to_open(var/mob/living/opener)
-		boutput(opener, "<span style=\"color:blue\">The crate is locked with a password lock. You'll need a multitool or similar to get very far here.</span>")
+		boutput(opener, "<span class='notice'>The crate is locked with a password lock. You'll need a multitool or similar to get very far here.</span>")
 		var/input = input(usr, "Enter one letter to reveal part of the password, or attempt to guess the password.", "Password Lock") as null|text
 		input = lowertext(input)
 
@@ -521,7 +521,7 @@
 
 		if (length(input) == 1)
 			if (attempts_remaining <= 1)
-				boutput(opener, "<span style=\"color:red\">Trying to reveal any more of the password would set off the anti-tamper system. You'll have to make a guess.</span>")
+				boutput(opener, "<span class='alert'>Trying to reveal any more of the password would set off the anti-tamper system. You'll have to make a guess.</span>")
 				return -1
 
 			var/chars_found = 0
@@ -549,7 +549,7 @@
 		boutput(reader, "<b>PASSWORD LOCK REPORT:</b>")
 		boutput(reader, "All passwords are fully lower-case and feature no non-alphabetical characters.")
 		if (attempts_allowed == 1)
-			boutput(reader, "<span style=\"color:red\">* Anti-tamper system will activate on next failed access attempt.</span>")
+			boutput(reader, "<span class='alert'>* Anti-tamper system will activate on next failed access attempt.</span>")
 		else
 			boutput(reader, "* Anti-tamper system will activate after [attempts_remaining] failed access attempts.")
 
@@ -594,7 +594,7 @@
 	var/damage = 20
 
 	trigger_trap(var/mob/living/opener)
-		holder.visible_message("<span style=\"color:red\"><b>Spikes shoot out of [holder]!</b></span>")
+		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
 		if (opener)
 			random_brute_damage(opener,damage,1)
 			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
@@ -614,7 +614,7 @@
 	destroys_crate = 1
 
 	trigger_trap(var/mob/living/opener)
-		holder.visible_message("<span style=\"color:red\">A loud grinding sound comes from inside [holder] as it unlocks!</span>")
+		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
 		playsound(holder.loc, "sound/machines/engine_grump1.ogg", 60, 1)
 
 		for (var/obj/I in holder.contents)
@@ -670,8 +670,8 @@
 			if (psy.bioHolder && psy.bioHolder.HasEffect("psy_resist"))
 				return
 			if (psy.gloves == src.twin)
-				boutput(user, "<span style=\"color:red\">You suddenly begin hearing and seeing things. What the hell?</span>")
-				boutput(psy, "<span style=\"color:red\">You suddenly begin hearing and seeing things. What the hell?</span>")
+				boutput(user, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
+				boutput(psy, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
 
 	unequipped(var/mob/user)
 		if (!user)
@@ -681,8 +681,8 @@
 			if (psy.bioHolder && psy.bioHolder.HasEffect("psy_resist"))
 				return
 			if (psy.gloves == src.twin)
-				boutput(user, "<span style=\"color:blue\">The strange hallcuinations suddenly stop. That was weird.</span>")
-				boutput(psy, "<span style=\"color:blue\">The strange hallcuinations suddenly stop. That was weird.</span>")
+				boutput(user, "<span class='notice'>The strange hallcuinations suddenly stop. That was weird.</span>")
+				boutput(psy, "<span class='notice'>The strange hallcuinations suddenly stop. That was weird.</span>")
 
 /obj/item/clothing/gloves/psylink_bracelet/secondary
 

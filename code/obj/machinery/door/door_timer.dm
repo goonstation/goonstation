@@ -158,13 +158,13 @@
 
 /obj/machinery/door_timer/examine()
 	. = list("A remote control switch for a door.")
-	
+
 	if(src.timing)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		. += "<span style=\"color:red\">Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b></span>"
+		. += "<span class='alert'>Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b></span>"
 	else
-		. += "<span style=\"color:red\">There is no time set.</span>"
+		. += "<span class='alert'>There is no time set.</span>"
 
 /obj/machinery/door_timer/process()
 	..()
@@ -239,7 +239,7 @@
 				if (B.locked)
 					B.locked = 0
 					B.update_icon()
-					B.visible_message("<span style=\"color:blue\">[B.name] unlocks automatically.</span>")
+					B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
 			LAGCHECK(LAG_HIGH)
 
 	src.updateUsrDialog()

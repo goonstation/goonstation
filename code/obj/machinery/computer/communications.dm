@@ -168,7 +168,7 @@
 	src.updateUsrDialog()
 
 /proc/disablelockdown(var/mob/usr)
-	boutput(world, "<span style=\"color:red\">Lockdown cancelled by [usr.name]!</span>")
+	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
 	for(var/obj/machinery/firealarm/FA in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
 		SPAWN_DBG( 0 )
@@ -186,7 +186,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -201,7 +201,7 @@
 				logTheThing("station", user, null, "disassembles [src] (broken) [log_loc(src)]")
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
@@ -359,7 +359,7 @@
 		return
 	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] called the Emergency Shuttle to the station</span>")
+	message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 	call_shuttle_proc(src, call_reason)
 
 	// hack to display shuttle timer
@@ -398,7 +398,7 @@
 		boutput(user, "Centcom will not allow the shuttle to be called.")
 		return 1
 	if (signal_loss >= 75)
-		boutput(user, "<span style=\"color:red\">Severe signal interference is preventing contact with the Emergency Shuttle.</span>")
+		boutput(user, "<span class='alert'>Severe signal interference is preventing contact with the Emergency Shuttle.</span>")
 		return 1
 
 	// sanitize the reason
@@ -409,9 +409,9 @@
 
 
 	emergency_shuttle.incall()
-	boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
-	boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> [call_reason]<B></span>")
-	boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+	boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+	boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
+	boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 
 	return 0
 
@@ -420,14 +420,14 @@
 		return 1
 
 	if (!emergency_shuttle.can_recall)
-		boutput(user, "<span style='color:red'>Centcom will not allow the shuttle to be recalled.</span>")
+		boutput(user, "<span class='alert'>Centcom will not allow the shuttle to be recalled.</span>")
 		return 1
 
 	if (signal_loss >= 75)
-		boutput(user, "<span style='color:red'>Severe signal interference is preventing contact with the Emergency Shuttle.</span>")
+		boutput(user, "<span class='alert'>Severe signal interference is preventing contact with the Emergency Shuttle.</span>")
 		return 1
 
-	boutput(world, "<span style='color:blue'><B>Alert: The shuttle is going back!</B></span>") //marker4
+	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 	world << csound("sound/misc/shuttle_recalled.ogg")
 
 	emergency_shuttle.recall()

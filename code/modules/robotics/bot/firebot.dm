@@ -107,10 +107,10 @@
 /obj/machinery/bot/firebot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span style=\"color:red\">You short out [src]'s valve control circuit!</span>")
+			boutput(user, "<span class='alert'>You short out [src]'s valve control circuit!</span>")
 		SPAWN_DBG(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 		flick("firebot_spark", src)
 		src.target = null
 		src.last_found = world.time
@@ -134,7 +134,7 @@
 /obj/machinery/bot/firebot/emp_act()
 	..()
 	if (!src.emagged && prob(75))
-		src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		flick("firebot_spark", src)
 		src.target = null
 		src.last_found = world.time
@@ -159,12 +159,12 @@
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 	else
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
@@ -322,7 +322,7 @@
 
 		SPAWN_DBG(0)
 			var/mob/living/carbon/Ctarget = target
-			boutput(Ctarget, "<span style=\"color:red\"><b>[src] knocks you back!</b></span>")
+			boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
 			Ctarget.changeStatus("weakened", 2 SECONDS)
 			Ctarget.throw_at(targetTurf, 200, 4)
 
@@ -355,7 +355,7 @@
 /obj/machinery/bot/firebot/explode()
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/prox_sensor(Tsec)
@@ -403,7 +403,7 @@
 		return
 
 	if(src.contents.len >= 1)
-		boutput(user, "<span style=\"color:red\">You need to empty [src] out first!</span>")
+		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 
 	var/obj/item/toolbox_arm/B = new /obj/item/toolbox_arm

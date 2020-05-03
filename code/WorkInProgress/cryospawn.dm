@@ -241,14 +241,14 @@
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting))
 				if (G.affecting.client || !G.affecting.ckey)
-					boutput(user, "<span style='color:red'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
+					boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 					return
 				else if (alert(user, "Would you like to put [G.affecting] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", "Yes", "No") == "Yes")
 					if (!src.mob_can_enter_storage(G.affecting, user))
 						return
 					else
 						src.add_person_to_storage(G.affecting, 0)
-						src.visible_message("<span style='color:red'><b>[user] forces [G.affecting] into [src]!</b></span>")
+						src.visible_message("<span class='alert'><b>[user] forces [G.affecting] into [src]!</b></span>")
 						user.u_equip(G)
 						qdel(G)
 						return

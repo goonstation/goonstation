@@ -36,7 +36,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
@@ -71,7 +71,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
@@ -133,25 +133,25 @@
 		..()
 		return
 	if(src.empty)
-		boutput(user, "<span style='color:red'>\The [src] is empty!</span>")
+		boutput(user, "<span class='alert'>\The [src] is empty!</span>")
 	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
-			boutput(user, "<span style='color:blue'>You're going to need to remove that mask/helmet first.</span>")
+			boutput(user, "<span class='hint'>You're going to need to remove that mask/helmet first.</span>")
 			return
 		/*
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
-		boutput(user, "<span style=\"color:blue\">You begin dying [M]'s hair.</span>")
-		boutput(M, "<span style=\"color:blue\">[user] begins dying your hair.</span>")
+		boutput(user, "<span class='notice'>You begin dying [M]'s hair.</span>")
+		boutput(M, "<span class='notice'>[user] begins dying your hair.</span>")
 		sleep(3 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return
 		*/
 		user.tri_message("[user] dyes [M]'s hair.",\
-		user, "<span style='color:blue'>You dye [M]'s hair.</span>",\
-		M, "<span style='color:blue'>[user] dyes your hair.</span>")
+		user, "<span class='notice'>You dye [M]'s hair.</span>",\
+		M, "<span class='notice'>[user] dyes your hair.</span>")
 		M.bioHolder.mobAppearance.customization_first_color = src.customization_first_color
 		M.bioHolder.mobAppearance.customization_second_color = src.customization_first_color
 		M.set_face_icon_dirty()
@@ -160,7 +160,7 @@
 		src.empty = 1
 		src.icon_state= "dye-e"
 	//else
-	//	boutput(user, "<span style=\"color:red\">They need to be in a barber chair!</span>")
+	//	boutput(user, "<span class='alert'>They need to be in a barber chair!</span>")
 
 /////////////////////////////////////////////////////
 //////Scissors Code								/////
@@ -193,25 +193,25 @@
 		return 0
 
 	if (user == M)
-		boutput(user, "<span style=\"color:red\">You can't cut your own hair!</span>")
+		boutput(user, "<span class='alert'>You can't cut your own hair!</span>")
 		return 0
 	if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return 0
 
 		if(M.bioHolder.mobAppearance.customization_first == "None")
-			boutput(user, "<span style=\"color:red\">There is nothing to cut!</span>")
+			boutput(user, "<span class='alert'>There is nothing to cut!</span>")
 			return 0
 
 		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
 
 		if (new_style)
 			if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
-				boutput(user, "<span style=\"color:red\">Not enough hair!</span>")
+				boutput(user, "<span class='alert'>Not enough hair!</span>")
 				return 0
 
 		if(!new_style)
@@ -220,8 +220,8 @@
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
 		user.tri_message("[user] begins cutting [M]'s hair.",\
-		user, "<span style='color:blue'>You begin cutting [M]'s hair.</span>",\
-		M, "<span style='color:blue'>[user] begins cutting your hair.</span>")
+		user, "<span class='notice'>You begin cutting [M]'s hair.</span>",\
+		M, "<span class='notice'>[user] begins cutting your hair.</span>")
 		playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
 		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
@@ -233,8 +233,8 @@
 
 		M.bioHolder.mobAppearance.customization_first = new_style
 		user.tri_message("[user] cuts [M]'s hair.",\
-		M, "<span style='color:blue'>[user] cuts your hair.</span>",\
-		user, "<span style='color:blue'>You cut [M]'s hair.</span>")
+		M, "<span class='notice'>[user] cuts your hair.</span>",\
+		user, "<span class='notice'>You cut [M]'s hair.</span>")
 
 		M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
@@ -251,14 +251,14 @@
 		return
 
 	if( issilicon(M))
-		boutput(user, "<span style=\"color:red\">Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
+		boutput(user, "<span class='alert'>Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
 		return
 
 	if(M.cust_two_state == "wiz")
 		if (user == M)
-			boutput(user, "<span style=\"color:red\">No!!! This is the worst idea you've ever had!</span>")
+			boutput(user, "<span class='alert'>No!!! This is the worst idea you've ever had!</span>")
 			return
-		src.visible_message("<span style=\"color:red\"><b>[user]</b> quickly shaves off [M]'s beard!</span>")
+		src.visible_message("<span class='alert'><b>[user]</b> quickly shaves off [M]'s beard!</span>")
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
 		M.bioHolder.mobAppearance.customization_second = "None"
 		M.cust_two_state = "None"
@@ -271,12 +271,12 @@
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return
 
 
 		if(M.bioHolder.mobAppearance.customization_second == "None")
-			boutput(user, "<span style=\"color:red\">There is nothing to shave!</span>")
+			boutput(user, "<span class='alert'>There is nothing to shave!</span>")
 			return
 
 		var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in customization_styles + customization_styles_gimmick
@@ -287,21 +287,21 @@
 			var/list/full = list("Goatee", "Full Beard", "Long Beard")
 
 			if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
-				boutput(user, "<span style=\"color:red\">[M] doesn't have enough facial hair!</span>")
+				boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
 				return
 
 			if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
-				boutput(user, "<span style=\"color:red\">[M] doesn't have a beard!</span>")
+				boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
 				return
 
 			if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
-				boutput(user, "<span style=\"color:red\">[M] doesn't have a mustache!</span>")
+				boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
 				return
 
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
-		boutput(user, "<span style=\"color:blue\">You begin shaving [M].</span>")
-		boutput(M, "<span style=\"color:blue\">[user] begins shaving you.</span>")
+		boutput(user, "<span class='notice'>You begin shaving [M].</span>")
+		boutput(M, "<span class='notice'>[user] begins shaving you.</span>")
 		//playsound(src.loc, "Scissor.ogg", 100, 1)
 		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
@@ -309,8 +309,8 @@
 
 
 		M.bioHolder.mobAppearance.customization_second = new_style
-		boutput(M, "<span style=\"color:blue\">[user] shaves your face</span>")
-		boutput(user, "<span style=\"color:blue\">You shave [M]'s face.</span>")
+		boutput(M, "<span class='notice'>[user] shaves your face</span>")
+		boutput(user, "<span class='notice'>You shave [M]'s face.</span>")
 
 		M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 		M.set_face_icon_dirty()
@@ -386,9 +386,9 @@
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/dye_bottle))
 			if(src.bottle)
-				boutput(user, "<span style=\"color:blue\">The dispenser already has a dye bottle in it.</span>")
+				boutput(user, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert the dye bottle into the dispenser.</span>")
+				boutput(user, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
 				if(W)
 					user.drop_item(W)
 					W.set_loc(src)
@@ -404,7 +404,7 @@
 		if(usr.stat || usr.restrained())
 			return
 		if (isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))

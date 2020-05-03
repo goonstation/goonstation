@@ -105,7 +105,7 @@
 	emp_act()
 		..()
 		if (src.broken)
-			boutput(donor, "<span style=\"color:red\"><B>Your cyberheart malfunctions and shuts down!</B></span>")
+			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
 /obj/item/organ/heart/flock

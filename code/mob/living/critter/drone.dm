@@ -50,7 +50,7 @@
 			else
 				AM.meteorhit()
 			playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> smashes into \the [AM]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
 
 	proc/setup_loot_table()
 		loot_table = list(/obj/item/device/prox_sensor = 25)

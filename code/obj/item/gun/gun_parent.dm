@@ -137,20 +137,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /*
 /obj/item/gun/proc/emag(obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/card/emag))
-		boutput(user, "<span style=\"color:red\">No lock to break!</span>")
+		boutput(user, "<span class='alert'>No lock to break!</span>")
 		return 1
 	return 0
 */
 /obj/item/gun/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
-		boutput(user, "<span style=\"color:red\">No lock to break!</span>")
+		boutput(user, "<span class='alert'>No lock to break!</span>")
 	return 0
 
 /obj/item/gun/attack_self(mob/user as mob)
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.current_projectile = src.projectiles[src.current_projectile_num]
-		boutput(user, "<span style=\"color:blue\">you set the output to [src.current_projectile.sname].</span>")
+		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
 	return
 
 /datum/action/bar/icon/guncharge
@@ -268,7 +268,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!canshoot())
 		if (!silenced)
-			M.visible_message("<span style=\"color:red\"><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
+			M.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 		else
 			user.show_text("*click* *click*", "red")
@@ -281,9 +281,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.silenced)
 		for (var/mob/O in AIviewers(M, null))
 			if (O.client)
-				O.show_message("<span style=\"color:red\"><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
+				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
-		user.show_text("<span style=\"color:red\">You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
+		user.show_text("<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
 
 	if (!process_ammo(user))
 		return
@@ -388,10 +388,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))
-				O.show_message("<span style=\"color:red\"><B>[user] fires [src] at [target]!</B></span>", 1, "<span style=\"color:red\">You hear a gunshot</span>", 2)
+				O.show_message("<span class='alert'><B>[user] fires [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a gunshot</span>", 2)
 		else
 			if (ismob(user)) // Fix for: undefined proc or verb /obj/item/mechanics/gunholder/show text().
-				user.show_text("<span style=\"color:red\">You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
+				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
 
 		var/turf/T = target
 		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
@@ -416,7 +416,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
-	boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+	boutput(user, "<span class='alert'>*click* *click*</span>")
 	if (!src.silenced)
 		playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 	return 0
@@ -444,7 +444,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return 0
 
 	src.process_ammo(user)
-	user.visible_message("<span style='color:red'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
 	var/dmg = user.get_brute_damage() + user.get_burn_damage()
 	src.shoot_point_blank(user, user)
 	var/new_dmg = user.get_brute_damage() + user.get_burn_damage()
@@ -452,10 +452,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.TakeDamage("head", 500, 0)
 		user.updatehealth()
 	else if (new_dmg < (dmg + 20))
-		user.visible_message("<span style='color:red'>[user] hangs their head in shame because they chose such a weak gun.</span>")
+		user.visible_message("<span class='alert'>[user] hangs their head in shame because they chose such a weak gun.</span>")
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-		user.visible_message("<span style=\"color:red\"><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)

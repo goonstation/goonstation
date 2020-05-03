@@ -40,11 +40,11 @@
 	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
-				boutput(user, "<span style=\"color:red\">Put it on your eyes, dingus!</span>")
+				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")
 				return
 			var/mob/living/carbon/human/target = M //can't equip to mobs unless they are human
 			if(target.glasses)
-				boutput(user, "<span style=\"color:red\">[target] is already wearing something on their eyes!</span>")
+				boutput(user, "<span class='alert'>[target] is already wearing something on their eyes!</span>")
 				return
 			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped() , target.slot_glasses, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
 			return
@@ -143,7 +143,7 @@
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
 				playsound(get_turf(user), "sound/voice/yeaaahhh.ogg", 100, 0)
-				user.visible_message("<span style='color:red'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
+				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
 
@@ -169,7 +169,7 @@
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				boutput(H, "<span style='color:red'><B>Your HUD malfunctions!</B></span>")
+				boutput(H, "<span class='alert'><B>Your HUD malfunctions!</B></span>")
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
@@ -226,7 +226,7 @@
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if (istype(H.glasses, /obj/item/clothing/glasses/thermal))
-				boutput(H, "<span style=\"color:red\"><B>Your thermals malfunction!</B></span>")
+				boutput(H, "<span class='alert'><B>Your thermals malfunction!</B></span>")
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
@@ -301,7 +301,7 @@
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((block_eye == "L") ? "left_eye" : "right_eye")
 				if(theEye)
-					user.show_message("<span style='color:red'>Um. Wow. Thats kinda grode.<span>")
+					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
 				appearance_flags |= RESET_COLOR
@@ -313,7 +313,7 @@
 				theEye.loc = W
 				src.loc = W
 				equipper = null
-				user.show_message("<span style='color:red'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
+				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
 
 				W.name_prefix("eye")
 				W.UpdateName()
@@ -322,7 +322,7 @@
 				pinhole = 1
 				block_eye = null
 				appearance_flags |= RESET_COLOR
-				user.show_message("<span style='color:blue'>You poke a tiny pinhole into [src]!</span>")
+				user.show_message("<span class='notice'>You poke a tiny pinhole into [src]!</span>")
 				if (!pinhole)
 					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return
@@ -447,14 +447,14 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (src.scan_upgrade)
-				boutput(user, "<span style=\"color:red\">[src] already has a health scan upgrade!</span>")
+				boutput(user, "<span class='alert'>[src] already has a health scan upgrade!</span>")
 				return
 			else
 				src.scan_upgrade = 1
 				src.health_scan = 1
 				src.icon_state = "prodocs"
 				src.item_state = "prodocs"
-				boutput(user, "<span style=\"color:blue\">Health scan upgrade installed.</span>")
+				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(W)
 				qdel(W)
@@ -464,11 +464,11 @@
 
 	attack_self(mob/user as mob)
 		if (!src.scan_upgrade)
-			boutput(user, "<span style=\"color:red\">No health scan upgrade detected!</span>")
+			boutput(user, "<span class='alert'>No health scan upgrade detected!</span>")
 			return
 		else
 			src.health_scan = !(src.health_scan)
-			boutput(user, "<span style=\"color:blue\">Health scanner [src.health_scan ? "enabled" : "disabled"].</span>")
+			boutput(user, "<span class='notice'>Health scanner [src.health_scan ? "enabled" : "disabled"].</span>")
 			return
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
@@ -569,7 +569,7 @@
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if (istype(H.glasses, /obj/item/clothing/glasses/nightvision))
-				boutput(H, "<span style=\"color:red\"><B>Your nightvision goggles malfunction!</B></span>")
+				boutput(H, "<span class='alert'><B>Your nightvision goggles malfunction!</B></span>")
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")

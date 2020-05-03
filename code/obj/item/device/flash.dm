@@ -78,14 +78,14 @@
 	src.add_fingerprint(user)
 	var/turf/t = get_turf(user)
 	if (t.loc:sanctuary)
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 		return
 	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> tries to use [src], but slips and drops it!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
 		return
 	if (src.status == 0)
-		boutput(user, "<span style=\"color:red\">The bulb has been burnt out!</span>")
+		boutput(user, "<span class='alert'>The bulb has been burnt out!</span>")
 		return
 
 	// Handle turboflash power cell.
@@ -95,7 +95,7 @@
 			user.show_text("[src] doesn't seem to be connected to a power cell.", "red")
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message("<span style=\"color:red\">[user]'s flash/cell assembly violently explodes!</span>")
+			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
 			logTheThing("combat", user, M, "tries to blind %target% with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
@@ -158,7 +158,7 @@
 	convert(M,user)
 
 	// Log entry.
-	M.visible_message("<span style=\"color:red\">[user] blinds [M] with the [src.name]!</span>")
+	M.visible_message("<span class='alert'>[user] blinds [M] with the [src.name]!</span>")
 	logTheThing("combat", user, M, "blinds %target% with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
@@ -167,7 +167,7 @@
 	if (src.turboflash)
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
-		boutput(user, "<span style=\"color:red\"><b>The bulb has burnt out!</b></span>")
+		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 
@@ -189,11 +189,11 @@
 		return
 
 	if (user && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> tries to use [src], but slips and drops it!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
 		return
 	if (status == 0)
-		boutput(user, "<span style=\"color:red\">The bulb has been burnt out!</span>")
+		boutput(user, "<span class='alert'>The bulb has been burnt out!</span>")
 		return
 
 	// Handle turboflash power cell.
@@ -205,7 +205,7 @@
 			user.show_text("[src] seems to be out of power.", "red")
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message("<span style=\"color:red\">[user]'s flash/cell assembly violently explodes!</span>")
+			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
@@ -244,7 +244,7 @@
 	if (src.turboflash)
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
-		boutput(user, "<span style=\"color:red\"><b>The bulb has burnt out!</b></span>")
+		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 	else
@@ -292,7 +292,7 @@
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
 	if (use > 1 && prob(max(0,(use*1.2) + burn_mod)))
 		status = 0
-		boutput(user, "<span style=\"color:red\"><b>The bulb has burnt out!</b></span>")
+		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("flash3")
 		name = "depleted flash"
 
@@ -301,7 +301,7 @@
 
 /obj/item/device/flash/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/cell) && !src.secure)
-		boutput(user, "<span style=\"color:blue\">You combine [W] and [src]...</span>")
+		boutput(user, "<span class='notice'>You combine [W] and [src]...</span>")
 		var/obj/item/device/flash/turbo/T = new /obj/item/device/flash/turbo(user.loc)
 		T.cell = W
 		user.drop_item()
@@ -314,22 +314,22 @@
 		qdel(src)
 		return
 	else if (isscrewingtool(W))
-		boutput(user, "<span style=\"color:blue\">You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
+		boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 		secure = !secure
 	else if (ispulsingtool(W))
 		if (src.status == 0)
-			boutput(user, "<span style=\"color:red\">The bulb has been burnt out.</span>")
+			boutput(user, "<span class='alert'>The bulb has been burnt out.</span>")
 		else
 			if (src.use <= 0)
-				boutput(user, "<span style=\"color:blue\">The bulb is in perfect condition.</span>")
+				boutput(user, "<span class='notice'>The bulb is in perfect condition.</span>")
 			else if (src.use>0 && src.use<5)
-				boutput(user, "<span style=\"color:blue\">The bulb is in good condition.</span>")
+				boutput(user, "<span class='notice'>The bulb is in good condition.</span>")
 			else if (src.use>5 && src.use<10)
-				boutput(user, "<span style=\"color:blue\">The bulb is in decent condition.</span>")
+				boutput(user, "<span class='notice'>The bulb is in decent condition.</span>")
 			else if (src.use>10 && src.use<15)
-				boutput(user, "<span style=\"color:blue\">The bulb is in bad condition.</span>")
+				boutput(user, "<span class='notice'>The bulb is in bad condition.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">The bulb is in terrible condition.</span>")
+				boutput(user, "<span class='notice'>The bulb is in terrible condition.</span>")
 	else
 		return ..()
 
@@ -388,7 +388,7 @@
 				F.set_icon_state("flash3")
 			qdel(src)
 		else if (isscrewingtool(W))
-			boutput(user, "<span style=\"color:blue\">You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
+			boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 			secure = !secure
 		return
 

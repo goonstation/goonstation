@@ -711,7 +711,7 @@ Code:
 			if (!(eye_loc.cameras && eye_loc.cameras.len))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span style=\"color:red\">***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 

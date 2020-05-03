@@ -37,7 +37,7 @@
 		M.drowsyness = 0
 
 		if (M.hasStatus("handcuffed"))
-			M.visible_message("<span style=\"color:red\"><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
 			M.handcuffs.destroy_handcuffs(M)
 		M.buckled = null
 
@@ -231,7 +231,7 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -251,7 +251,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Hunter"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 
 /////////////////////////////////////////////// Hunter spell parent ////////////////////////////
 

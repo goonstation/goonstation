@@ -72,7 +72,7 @@
 					boutput(O, "<font color='green'> [bicon(src)] Wake up, Neo...</font>")
 				else
 					boutput(O, "<font color='blue'> [bicon(src)] *beep* *beep*</font>")
-			src.visible_message("<span style='color:blue'>The [src.name]'s occupant alarm clock dings!</span>")
+			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
 			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 		return
 
@@ -137,7 +137,7 @@
 			return 1
 		if (ishuman(user))
 			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-				boutput(user, "<span style='color:red'>You are too dazed to use [src] properly.</span>")
+				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
 				return 1
 
 		src.add_fingerprint(user)
@@ -224,7 +224,7 @@
 					usr.show_text("The occupant is dead.", "red")
 				else
 					src.timing = text2num(href_list["time"])
-					src.visible_message("<span style='color:blue'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
+					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
 					if (src.timing)
 						src.time_started = world.timeofday//realtime
 						// People do use sleepers for grief from time to time.
@@ -355,7 +355,7 @@
 			src.emagged = 1
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
-			src.visible_message("<span style='color:red'><b>[src] buzzes oddly!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
 			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with %target% inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return 1
 
@@ -572,10 +572,10 @@
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
 		if (!ishuman(M))
-			boutput(usr, "<span style='color:red'>You can't seem to fit into \the [src].</span>")
+			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
 			return 0
 		if (src.occupant)
 			usr.show_text("The [src.name] is already occupied!", "red")
@@ -739,7 +739,7 @@
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return

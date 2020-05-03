@@ -86,7 +86,7 @@
 // Uniform
 	if (src.w_uniform)
 		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span style=\"color:red\">You burst out of the [src.w_uniform.name]!</span>")
+			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
 			if (c)
@@ -351,7 +351,7 @@
 
 	if (src.wear_suit)
 		if (src.bioHolder && src.bioHolder.HasEffect("fat") && !(src.wear_suit.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span style=\"color:red\">You burst out of the [src.wear_suit.name]!</span>")
+			boutput(src, "<span class='alert'>You burst out of the [src.wear_suit.name]!</span>")
 			var/obj/item/clothing/c = src.wear_suit
 			src.u_equip(c)
 			if (c)

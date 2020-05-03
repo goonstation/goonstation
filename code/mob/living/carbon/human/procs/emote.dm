@@ -13,7 +13,7 @@
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
 	if (src.bioHolder.HasEffect("revenant"))
-		src.visible_message("<span style=\"color:red\">[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
+		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
 	if (findtext(act, " ", 1, null))
@@ -897,7 +897,7 @@
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
-						src.visible_message("<span style=\"color:red\"><B>[src] pulls a derringer out of \the [C]!</B></span>")
+						src.visible_message("<span class='alert'><B>[src] pulls a derringer out of \the [C]!</B></span>")
 						playsound(src.loc, "rustle", 60, 1)
 						break
 
@@ -919,7 +919,7 @@
 						message = "<B>[src]</B> twitches feebly in time to music only [he_or_she(src)] can hear."
 					else
 						if (iswizard(src) && prob(10))
-							message = pick("<span style=\"color:red\"><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span style=\"color:red\"><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
+							message = pick("<span class='alert'><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span class='alert'><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
 							src.say("GHET DAUN!")
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
@@ -1088,7 +1088,7 @@
 								src.reagents.del_reagent("ants")
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
-								boutput(src, "<span style=\"color:blue\">The ants arachnify.</span>")
+								boutput(src, "<span class='notice'>The ants arachnify.</span>")
 								playsound(get_turf(src), "sound/effects/bubbles.ogg", 80, 1)
 
 			if ("flip")
@@ -1113,8 +1113,8 @@
 
 					if (!iswrestler(src))
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
-							boutput(src, "<span style=\"color:red\">You fall over, panting and wheezing.</span>")
-							message = "<span style=\"color:red\"><B>[src]</b> falls over, panting and wheezing.</span>"
+							boutput(src, "<span class='alert'>You fall over, panting and wheezing.</span>")
+							message = "<span class='alert'><B>[src]</b> falls over, panting and wheezing.</span>"
 							src.changeStatus("weakened", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
 							src.emote_allowed = 0
@@ -1183,7 +1183,7 @@
 										src.stamina_stun()
 
 									src.emote("scream")
-									message = "<span style='color:red'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
+									message = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
 									logTheThing("combat", src, G.affecting, "suplexes %target%[tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
@@ -1249,7 +1249,7 @@
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
 
-										message = "<span style=\"color:red\"><B>[src]</B> flips into [M]!</span>"
+										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into %target%")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
@@ -1313,7 +1313,7 @@
 							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 							s.set_up(3, 1, src)
 							s.start()
-							boutput(M, "<span style=\"color:blue\">BZZZZZZZZZZZT!</span>")
+							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1
 							if (narrator_mode)
@@ -1360,7 +1360,7 @@
 								if (3) message = "<B>[src]</B> does some armpit singing. Rude."
 								if (4) message = "<B>[src]</B> manages to blow one out- but it goes <i>right back in!</i>"
 								if (5)
-									message = "<span style=\"color:red\"><B>[src]</B> grunts so hard [he_or_she(src)] tears a ligament!</span>"
+									message = "<span class='alert'><B>[src]</B> grunts so hard [he_or_she(src)] tears a ligament!</span>"
 									src.emote("scream")
 									random_brute_damage(src, 20)
 						else
@@ -1371,7 +1371,7 @@
 						for (var/mob/living/M in src.loc) //TODO : FARTABLE FLAG?
 							if (M == src || !M.lying)
 								continue
-							message = "<span style='color:red'><B>[src]</B> farts in [M]'s face!</span>"
+							message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 							if (sims)
 								sims.affectMotive("fun", 4)
 							if (src.mind)
@@ -1393,13 +1393,13 @@
 								continue
 							playsound(get_turf(M), src.sound_fart, 20, 0, 0, src.get_age_pitch())
 							switch(rand(1, 7))
-								if (1) M.visible_message("<span style='color:#605b59'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
-								if (2) M.visible_message("<span style='color:#605b59'><b>[M]</b> is visited by ethereal incontinence.</span>")
-								if (3) M.visible_message("<span style='color:#605b59'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
-								if (4) M.visible_message("<span style='color:#605b59'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
-								if (5) M.visible_message("<span style='color:#605b59'><b>[M]</b> is swept over by a mysterious draft.</span>")
-								if (6) M.visible_message("<span style='color:#605b59'><b>[M]</b> abruptly emits an odor of cheese.</span>")
-								if (7) M.visible_message("<span style='color:#605b59'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
+								if (1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
+								if (2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
+								if (3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
+								if (4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
+								if (5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
+								if (6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
+								if (7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
 							if (sims)
 								sims.affectMotive("fun", 4)
 							//break deliberately omitted
@@ -1440,7 +1440,7 @@
 								if (33) message = "<B>[src]</B> farts cantankerously."
 								if (34) message = "<B>[src]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
 								if (35)
-									message = "<B>[src]</B> farts out pure plasma! <span style='color:red'><B>FUCK!</B></span>"
+									message = "<B>[src]</B> farts out pure plasma! <span class='alert'><B>FUCK!</B></span>"
 									oxyplasmafart = 1
 								if (36)
 									message = "<B>[src]</B> farts out pure oxygen. What the fuck did [he_or_she(src)] eat?"
@@ -1452,21 +1452,21 @@
 								if (41) message = "<B>[src]</B> farts, and as such, blob cannot evoulate."
 								if (42) message = "<b>[src]</B> farts. It might have been the Citizen Kane of farts."
 						if (src.bioHolder && src.bioHolder.HasEffect("toxic_farts"))
-							message = "<span style='color:red'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+							message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
 							var/turf/fart_turf = get_turf(src)
 							fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
 						// If there is a chest item, see if it can be activated on fart (attack_self)
 						if (src && src.chest_item != null) //Gotta do that pre-emptive runtime protection!
 							src.chest_item_attack_self_on_fart()
 						if (src.bioHolder && src.bioHolder.HasEffect("linkedfart"))
-							message = "<span style=\"color:red\"><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+							message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
 							var/turf/fart_turf = get_turf(src)
 							fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
 
 							for(var/mob/living/H in mobs)
 								if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 								if(locate(/obj/item/storage/bible) in get_turf(H))
-									src.visible_message("<span style=\"color:red\"><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
+									src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
 									src.gib()
 								else
 									H.emote("fart")
@@ -1514,7 +1514,7 @@
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
 						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
 						if (bladder > 75)
-							boutput(src, "<span style=\"color:blue\">You don't need to go right now.</span>")
+							boutput(src, "<span class='notice'>You don't need to go right now.</span>")
 							return
 						else if (bladder > 50)
 							if(toilet)
@@ -1526,11 +1526,11 @@
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
-								boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss in the beaker.</span>")
+								boutput(src, "<span class='alert'>You don't feel desperate enough to piss in the beaker.</span>")
 							else if(wear_suit || w_uniform)
-								boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+								boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
 							else
-								boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss on the floor.</span>")
+								boutput(src, "<span class='alert'>You don't feel desperate enough to piss on the floor.</span>")
 							return
 						else if (bladder > 25)
 							if(toilet)
@@ -1551,7 +1551,7 @@
 								sims.affectMotive("Hygiene", -25)
 							else
 								if(wear_suit || w_uniform)
-									boutput(src, "<span style=\"color:red\">You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+									boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
 									return
 								else
 									src.urinate()
@@ -1596,7 +1596,7 @@
 							message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
 						else if (toilet && (src.buckled != null) && (src.urine >= 2))
 							for (var/obj/item/storage/toilet/T in src.loc)
-								message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span style=\"color:blue\">Ahhh, sweet relief.</span>")
+								message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
 								src.urine = 0
 								T.clogged += 0.10
 								break
@@ -1703,7 +1703,7 @@
 								for(var/mob/living/carbon/human/M in range(1, src)) //Is there somebody to dab on?
 									if(M == src || !M.lying) //Are they on the floor and therefore fair game to get dabbed on?
 										continue
-									message = "<span style='color:red'><B>[src]</B> dabs on [M]!</span>" //Get fucking dabbed on!!!
+									message = "<span class='alert'><B>[src]</B> dabs on [M]!</span>" //Get fucking dabbed on!!!
 									get_dabbed_on = 1
 									if(prob(5))
 										M.emote("cry") //You should be ashamed
@@ -1715,7 +1715,7 @@
 								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before")]!!!"
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
-						message = "<span style=\"color:red\"><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
+						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0)
 						shake_camera(src, 40, 0.5)
 						if(H)
@@ -1752,14 +1752,14 @@
 		act = lowertext(act)
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 		else if (m_type & 2)
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 		else if (!isturf(src.loc))
 			var/atom/A = src.loc
 			for (var/mob/O in A.contents)
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

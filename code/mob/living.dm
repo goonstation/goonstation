@@ -74,7 +74,7 @@
 	var/emote_lock = 0
 
 	var/canbegrabbed = 1
-	var/grabresistmessage = null //Format: target.visible_message("<span style=\"color:red\"><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
+	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
 //#ifdef MAP_OVERRIDE_DESTINY
 	var/hibernating = 0 // if they're stored in the cryotron, Life() gets skipped
@@ -139,9 +139,9 @@
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
 				emergency_shuttle.incall()
-				boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 				world << csound("sound/misc/shuttle_enroute.ogg")
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
@@ -345,7 +345,7 @@
 
 	if (src.restrained())
 		if (src.hasStatus("handcuffed"))
-			boutput(src, "<span style=\"color:red\">You are handcuffed! Use Resist to attempt removal.</span>")
+			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
 	if (!src.stat && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
@@ -355,7 +355,7 @@
 				var/mult = S.sims.getMoodActionMultiplier()
 				if (mult < 0.5)
 					if (prob((0.5 - mult) * 200))
-						boutput(src, pick("<span style=\"color:red\">You're not in the mood to attack that.</span>", "<span style=\"color:red\">You don't feel like doing that.</span>"))
+						boutput(src, pick("<span class='alert'>You're not in the mood to attack that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
 						return
 
 
@@ -395,7 +395,7 @@
 					for (var/obj/item/cloaking_device/I in src)
 						if (I.active)
 							I.deactivate(src)
-							src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+							src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -425,7 +425,7 @@
 						ship.sensors.quick_obtain_target(target_pod)
 				else
 					if (istype(target, /obj/machinery/vehicle))
-						boutput(src, "<span style=\"color:red\">Sensors are inactive, unable to target craft!</span>")
+						boutput(src, "<span class='alert'>Sensors are inactive, unable to target craft!</span>")
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
@@ -480,7 +480,7 @@
 
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
-		src.visible_message("<span style='color:#605b59'><b>[src]</b> points to [target].</span>")
+		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
@@ -550,11 +550,11 @@
 		return
 
 	if(!src.canspeak)
-		boutput(src, "<span style=\"color:red\">You can not speak!</span>")
+		boutput(src, "<span class='alert'>You can not speak!</span>")
 		return
 
 	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		boutput(src, "<span style=\"color:red\">You are completely paralysed and can't speak!</span>")
+		boutput(src, "<span class='alert'>You are completely paralysed and can't speak!</span>")
 		return
 
 	if (isdead(src))
@@ -577,15 +577,15 @@
 
 	// Mute disability
 	if (src.bioHolder && src.bioHolder.HasEffect("mute"))
-		boutput(src, "<span style=\"color:red\">You seem to be unable to speak.</span>")
+		boutput(src, "<span class='alert'>You seem to be unable to speak.</span>")
 		return
 
 	if (src.wear_mask && src.wear_mask.is_muzzle)
-		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
+		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
 #if ASS_JAM //no speak in timestop
 	if(paused)
-		boutput(src, "<span style=\"color:red\">Can't speak in stopped time dummy!.</span>")
+		boutput(src, "<span class='alert'>Can't speak in stopped time dummy!.</span>")
 		return
 #endif
 	if (ishuman(src))
@@ -1156,7 +1156,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
-	src.visible_message("<span style=\"color:#888888\">[message]</span>")
+	src.visible_message("<span class='subtle'>[message]</span>")
 
 /mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
 	var/mod = 1
@@ -1204,7 +1204,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/turf/T = get_turf(src)
 	if (T.active_liquid && src.lying)
 		T.active_liquid.HasEntered(src, T)
-		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
+		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
 	if (!src.stat && !src.restrained())
 		var/struggled_grab = 0
@@ -1232,7 +1232,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						src.last_resist = world.time + 5
 					else
 						for (var/mob/O in AIviewers(src, null))
-							O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)

@@ -15,19 +15,19 @@
 	switch(D.stage)
 		if(1)
 			if(prob(1) && prob(10))
-				boutput(affected_mob, "<span style=\"color:blue\">You feel better.</span>")
+				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.resistances += src.type
 				affected_mob.ailments -= src
 				return
 			if(prob(4)) affected_mob.emote("shiver")
 		if(2)
 			if(prob(1) && prob(10))
-				boutput(affected_mob, "<span style=\"color:blue\">You feel better.</span>")
+				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.resistances += src.type
 				affected_mob.ailments -= src
 				return
 			if(prob(5))
-				boutput(affected_mob, "<span style=\"color:red\">You feel feverish!</span>")
+				boutput(affected_mob, "<span class='alert'>You feel feverish!</span>")
 				affected_mob.bodytemperature += rand(5,10)
 				affected_mob.take_toxin_damage(1)
 				affected_mob.updatehealth()
@@ -35,7 +35,7 @@
 			if(prob(4)) affected_mob.emote("groan")
 		if(3)
 			if(prob(1) && prob(10))
-				boutput(affected_mob, "<span style=\"color:blue\">You feel better.</span>")
+				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.resistances += src.type
 				affected_mob.ailments -= src
 				return
@@ -43,13 +43,13 @@
 				random_brute_damage(affected_mob, 1)
 			if(prob(7))
 				affected_mob.emote(pick("tremble", "groan", "shake"))
-				boutput(affected_mob, "<span style=\"color:red\">You feel like you're burning up!</span>")
+				boutput(affected_mob, "<span class='alert'>You feel like you're burning up!</span>")
 				affected_mob.bodytemperature += rand(10,30)
 				random_burn_damage(affected_mob,1)
 				affected_mob.take_toxin_damage(1)
 				affected_mob.updatehealth()
 			if(prob(5))
-				boutput(affected_mob, "<span style=\"color:red\">You feel sick!</span>")
+				boutput(affected_mob, "<span class='alert'>You feel sick!</span>")
 				affected_mob.change_misstep_chance(5)
 				affected_mob.take_toxin_damage(1)
 				affected_mob.updatehealth()

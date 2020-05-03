@@ -44,7 +44,7 @@ obj/chessbutton
 
 	attack_hand(mob/user as mob)
 		if(chess_in_progress && !confirm)
-			boutput(user, "<span style=\"color:red\">You are about to erase the board. Press again to confirm.</span>")
+			boutput(user, "<span class='alert'>You are about to erase the board. Press again to confirm.</span>")
 			confirm = 1
 		else
 			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
@@ -117,7 +117,7 @@ obj/item/chesspiece
 			if(istype(Tb,/turf/simulated/floor/chess) && validmove(Ta,Tb))
 				chessmove(Tb,user)
 			else
-				src.visible_message("<span style=\"color:red\">Invalid move dorkus.</span>") // seems USER here is not actually the mob, but the click proc itself, so im regressing to a visible message for now
+				src.visible_message("<span class='alert'>Invalid move dorkus.</span>") // seems USER here is not actually the mob, but the click proc itself, so im regressing to a visible message for now
 
 	proc/gib()
 		//do some gib stuff here
@@ -130,16 +130,16 @@ obj/item/chesspiece
 	proc/chessmove(turf/T, mob/user)
 		for(var/obj/item/chesspiece/C in T)
 			if(C.isking && (chess_color != C.chess_color))
-				src.visible_message("<span style=\"color:green\">[src] has captured the enemy Captain. The [chess_color ? "black" : "white" ] commander has defeated the [C.chess_color ? "black" : "white" ] crew.</span>")
+				src.visible_message("<span class='success'>[src] has captured the enemy Captain. The [chess_color ? "black" : "white" ] commander has defeated the [C.chess_color ? "black" : "white" ] crew.</span>")
 				C.gib()
 				chess_in_progress = 0
 			else if(chess_color == C.chess_color)
-				src.visible_message("<span style=\"color:red\">You really ought to fight the enemy pieces, [chess_color ? "black" : "white" ] commander.</span>")
+				src.visible_message("<span class='alert'>You really ought to fight the enemy pieces, [chess_color ? "black" : "white" ] commander.</span>")
 				return
 			else
-				src.visible_message("<span style=\"color:blue\">[src] has captured [C].</span>")
+				src.visible_message("<span class='notice'>[src] has captured [C].</span>")
 				C.gib()
-		src.visible_message("<span style=\"color:blue\">The [chess_color ? "black" : "white" ] commander has moved [src].</span>")
+		src.visible_message("<span class='notice'>The [chess_color ? "black" : "white" ] commander has moved [src].</span>")
 		src.loc = T
 		if(chess_enpassant)
 			for(var/turf/simulated/floor/chess/CB in chessboard)
@@ -188,7 +188,7 @@ obj/item/chesspiece/pawn
 				var/turf/simulated/floor/chess/Tep = end_pos
 				if(Tep.enpassant)
 					qdel(Tep.enpassant)
-					src.visible_message("<span style=\"color:blue\">[src] has made a capture en passant.</span>")
+					src.visible_message("<span class='notice'>[src] has made a capture en passant.</span>")
 					return 1
 			return 0
 		else if((end_pos.x - start_pos.x) != movdir)
@@ -207,7 +207,7 @@ obj/item/chesspiece/pawn
 				new /obj/item/chesspiece/queen/black(src.loc)
 			else
 				new /obj/item/chesspiece/queen(src.loc)
-			src.visible_message("<span style=\"color:blue\">[src] has been promoted.</span>")
+			src.visible_message("<span class='notice'>[src] has been promoted.</span>")
 			qdel(src)
 		if (EP)
 			EP.enpassant = src
@@ -240,7 +240,7 @@ obj/item/chesspiece/king
 					for(i=start+1, i < end, i++)
 						for(var/obj/item/chesspiece/Cfuck in locate(start_pos.x,i,src.z))
 							return 0
-						src.visible_message("<span style=\"color:blue\">[src] has castled with [C].</span>")
+						src.visible_message("<span class='notice'>[src] has castled with [C].</span>")
 						if(start_pos.y>end_pos.y)
 							C.loc = locate(src.x,(src.y - 1),src.z)
 							src.loc = locate(src.x,(src.y - 2),src.z)

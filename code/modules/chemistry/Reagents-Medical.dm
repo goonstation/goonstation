@@ -293,7 +293,7 @@ datum
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 					M.updatehealth()
 				if(prob(6))
-					M.visible_message("<span style=\"color:red\">[M] pukes all over \himself.</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
 					M.vomit()
 				if(prob(4))
 					M.emote("piss")
@@ -385,7 +385,7 @@ datum
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
-						boutput(M, "<span style=\"color:blue\">The synthetic flesh integrates itself into your wounds, healing you.</span>")
+						boutput(M, "<span class='notice'>The synthetic flesh integrates itself into your wounds, healing you.</span>")
 
 					M.UpdateDamageIcon()
 					M.updatehealth()
@@ -408,9 +408,9 @@ datum
 						O.overlays = null
 						O.icon_state = "repli_suit"
 						O.name = "Unfinished Replicant"
-						for(var/mob/V in AIviewers(O, null)) V.show_message(text("<span style=\"color:red\">The solution molds itself around [].</span>", O), 1)
+						for(var/mob/V in AIviewers(O, null)) V.show_message(text("<span class='alert'>The solution molds itself around [].</span>", O), 1)
 					else
-						for(var/mob/V in AIviewers(O, null)) V.show_message(text("<span style=\"color:red\">The solution fails to cling to [].</span>", O), 1)*/
+						for(var/mob/V in AIviewers(O, null)) V.show_message(text("<span class='alert'>The solution fails to cling to [].</span>", O), 1)*/
 
 
 		medical/synaptizine // COGWERKS CHEM REVISION PROJECT. remove this, make epinephrine (epinephrine) do the same thing
@@ -450,17 +450,17 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if( effect <= 1)
-						M.visible_message("<span style=\"color:red\">[M.name] suddenly and violently vomits!</span>")
+						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 3) M.emote(pick("groan","moan"))
 					if (effect <= 8)
 						M.take_toxin_damage(1 * mult)
 				else if (severity == 2)
 					if( effect <= 2)
-						M.visible_message("<span style=\"color:red\">[M.name] suddenly and violently vomits!</span>")
+						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 5)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 50 * mult))
 					if (effect <= 15)
@@ -512,29 +512,29 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> suddenly cluches their gut!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 40 * mult))
 					else if(effect <= 3)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> completely spaces out for a moment.</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> completely spaces out for a moment.</span>")
 						M.change_misstep_chance(15 * mult)
 					else if(effect <= 5)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> stumbles and staggers.</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 40 * mult))
 					else if(effect <= 7)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> shakes uncontrollably.</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
 						M.make_jittery(30)
 				else if (severity == 2) // greater
 					if(effect <= 2)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> suddenly cluches their gut!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 80 * mult))
 					else if(effect <= 5)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 80 * mult))
 					else if(effect <= 8)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> stumbles and staggers.</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 40 * mult))
 
@@ -785,16 +785,16 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if( effect <= 1)
-						M.visible_message("<span style=\"color:red\">[M.name] suddenly and violently vomits!</span>")
+						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 3) M.emote(pick("groan","moan"))
 					if (effect <= 8) M.emote("collapse")
 				else if (severity == 2)
 					if( effect <= 2)
-						M.visible_message("<span style=\"color:red\">[M.name] suddenly and violently vomits!</span>")
+						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 5)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 2
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 40 * mult))
 					if (effect <= 15) M.emote("collapse")
@@ -825,16 +825,16 @@ datum
 				DEBUG_MESSAGE("[M] processing OD of heparin ([src.volume]u): severity [severity], effect [effect]")
 				if (severity == 1) //lesser
 					if (effect <= 2)
-						M.visible_message("<span style='color:red'>[M] coughs up a lot of blood!</span>")
+						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
 						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 4)
-						M.visible_message("<span style='color:red'>[M] coughs up a little blood!</span>")
+						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
 						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 				else if (severity == 2) // greater
 					if (effect <= 2)
-						M.visible_message("<span style='color:red'><b>[M] is bleeding from [his_or_her(M)] very pores!</span>")
+						M.visible_message("<span class='alert'><b>[M] is bleeding from [his_or_her(M)] very pores!</span>")
 						bleed(M, rand(10,20) * mult, rand(1,3) * mult)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
@@ -845,11 +845,11 @@ datum
 									check.add_blood(H)
 							H.set_clothing_icon_dirty()
 					else if (effect <= 4)
-						M.visible_message("<span style='color:red'>[M] coughs up a lot of blood!</span>")
+						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
 						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 8)
-						M.visible_message("<span style='color:red'>[M] coughs up a little blood!</span>")
+						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
 						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 
@@ -911,7 +911,7 @@ datum
 					if(prob(20))
 						H.emote("cough")
 					else if (severity > 1 && prob(50))
-						H.visible_message("<span style='color:red'>[H] coughs up a little blood!</span>")
+						H.visible_message("<span class='alert'>[H] coughs up a little blood!</span>")
 						playsound(get_turf(H), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(2,8) * mult, 3 * mult)
 
@@ -980,13 +980,13 @@ datum
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
-						boutput(M, "<span style=\"color:blue\">The silver sulfadiazine soothes your burns.</span>")
+						boutput(M, "<span class='notice'>The silver sulfadiazine soothes your burns.</span>")
 
 
 					M.UpdateDamageIcon()
 					M.updatehealth()
 				else if (method == INGEST)
-					boutput(M, "<span style=\"color:red\">You feel sick...</span>")
+					boutput(M, "<span class='alert'>You feel sick...</span>")
 					if (volume_passed > 0)
 						M.take_toxin_damage(volume_passed/2)
 					M.updatehealth()
@@ -1083,17 +1083,17 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if( effect <= 1)
-						M.visible_message("<span style=\"color:red\">[M.name] suddenly and violently vomits!</span>")
+						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 3) M.emote(pick("groan","moan"))
 					if (effect <= 8)
 						M.take_toxin_damage(1 * mult)
 				else if (severity == 2)
 					if( effect <= 2)
-						M.visible_message("<span style=\"color:red\">[M.name] suddenly and violently vomits!</span>")
+						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 5)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 50 * mult))
 					if (effect <= 15)
@@ -1171,7 +1171,7 @@ datum
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
 					M.drowsyness++
-					M.visible_message("<span style=\"color:blue\"><b>[M.name]<b> looks a bit dazed.</span>")
+					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return
 
@@ -1226,12 +1226,12 @@ datum
 							silent = 1
 
 					if (!silent)
-						boutput(M, "<span style=\"color:blue\">The styptic powder stings like hell as it closes some of your wounds.</span>")
+						boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
 						M.emote("scream")
 					M.UpdateDamageIcon()
 					M.updatehealth()
 				else if(method == INGEST)
-					boutput(M, "<span style=\"color:red\">You feel gross!</span>")
+					boutput(M, "<span class='alert'>You feel gross!</span>")
 					if (volume_passed > 0)
 						M.take_toxin_damage(volume_passed/2)
 						if (prob(1) && isliving(M))
@@ -1526,7 +1526,7 @@ datum
 					M.take_toxin_damage(1 * mult)
 				M.updatehealth()
 				if(prob(25))
-					M.visible_message("<span style=\"color:red\">[M] pukes all over \himself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
 					M.vomit()
 				if(prob(5))
 					var/mob/living/L = M

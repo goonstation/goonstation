@@ -70,43 +70,43 @@
 
 	get_desc()
 		if (src.ears)
-			. += "<br><span style=\"color:blue\">[src.name] has a [bicon(src.ears)] [src.ears.name] by its mouth.</span>"
+			. += "<br><span class='notice'>[src.name] has a [bicon(src.ears)] [src.ears.name] by its mouth.</span>"
 
 		if (src.head)
 			if (src.head.blood_DNA)
-				. += "<br><span style=\"color:red\">[src.name] has a[src.head.blood_DNA ? " bloody " : " "][bicon(src.head)] [src.head.name] on it!</span>"
+				. += "<br><span class='alert'>[src.name] has a[src.head.blood_DNA ? " bloody " : " "][bicon(src.head)] [src.head.name] on it!</span>"
 			else
-				. += "<br><span style=\"color:blue\">[src.name] has a [bicon(src.head)] [src.head.name] on it.</span>"
+				. += "<br><span class='notice'>[src.name] has a [bicon(src.head)] [src.head.name] on it.</span>"
 
 		if (src.wear_mask)
 			if (src.wear_mask.blood_DNA)
-				. += "<br><span style=\"color:red\">[src.name] has a[src.wear_mask.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.wear_mask.name] on its face!</span>"
+				. += "<br><span class='alert'>[src.name] has a[src.wear_mask.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.wear_mask.name] on its face!</span>"
 			else
-				. += "<br><span style=\"color:blue\">[src.name] has a [bicon(src.wear_mask)] [src.wear_mask.name] on its face.</span>"
+				. += "<br><span class='notice'>[src.name] has a [bicon(src.wear_mask)] [src.wear_mask.name] on its face.</span>"
 
 		if (src.glasses)
 			if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
 				if (src.glasses.blood_DNA)
-					. += "<br><span style=\"color:red\">[src.name] has a[src.glasses.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.glasses.name] on its face!</span>"
+					. += "<br><span class='alert'>[src.name] has a[src.glasses.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.glasses.name] on its face!</span>"
 				else
-					. += "<br><span style=\"color:blue\">[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.</span>"
+					. += "<br><span class='notice'>[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.</span>"
 
 		if (!src.skull  && src.scalp_op_stage >= 3)
-			. += "<br><span style=\"color:red\"><B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B></span>"
+			. += "<br><span class='alert'><B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B></span>"
 
 		if (!src.skull && src.scalp_op_stage >= 5)
-			. += "<br><span style=\"color:red\"><B>[src.name] has been cut open and its skull is gone!</B></span>"
+			. += "<br><span class='alert'><B>[src.name] has been cut open and its skull is gone!</B></span>"
 		else if (!src.brain && src.scalp_op_stage >= 4)
-			. += "<br><span style=\"color:red\"><B>[src.name] has been cut open and its brain is gone!</B></span>"
+			. += "<br><span class='alert'><B>[src.name] has been cut open and its brain is gone!</B></span>"
 		else if (src.scalp_op_stage >= 3)
-			. += "<br><span style='color:red'><B>[src.name]'s head has been cut open!</B></span>"
+			. += "<br><span class='alert'><B>[src.name]'s head has been cut open!</B></span>"
 		else if (src.scalp_op_stage > 0)
-			. += "<br><span style=\"color:red\"><B>[src.name] has an open incision on it!</B></span>"
+			. += "<br><span class='alert'><B>[src.name] has an open incision on it!</B></span>"
 
 		if (!src.right_eye)
-			. += "<br><span style=\"color:red\"><B>[src.name]'s right eye is missing!</B></span>"
+			. += "<br><span class='alert'><B>[src.name]'s right eye is missing!</B></span>"
 		if (!src.left_eye)
-			. += "<br><span style=\"color:red\"><B>[src.name]'s left eye is missing!</B></span>"
+			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 
 	proc/update_icon()
 		if (!src.donor || !src.donor_appearance)
@@ -180,31 +180,31 @@
 			if (istype(W, /obj/item/scalpel) || istype(W, /obj/item/razor_blade) || istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/raw_material/shard))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
-					"<span style=\"color:red\">You cut away the flesh holding [src]'s right eye in with [W]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
+					"<span class='alert'>You cut away the flesh holding [src]'s right eye in with [W]!</span>")
 					src.right_eye.op_stage = 2.0
 				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
-					"<span style=\"color:red\">You cut away the flesh holding [src]'s left eye in with [W]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
+					"<span class='alert'>You cut away the flesh holding [src]'s left eye in with [W]!</span>")
 					src.left_eye.op_stage = 2.0
 				else if (src.brain)
 					if (src.brain.op_stage == 0.0)
 						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-						user.visible_message("<span style=\"color:red\"><b>[user]</b> cuts [src] open with [W]!</span>",\
-						"<span style=\"color:red\">You cut [src] open with [W]!</span>")
+						user.visible_message("<span class='alert'><b>[user]</b> cuts [src] open with [W]!</span>",\
+						"<span class='alert'>You cut [src] open with [W]!</span>")
 						src.brain.op_stage = 1.0
 					else if (src.brain.op_stage == 2.0)
 						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-						user.visible_message("<span style=\"color:red\"><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
-						"<span style=\"color:red\">You remove [src]'s connections to [src]'s brain with [W]!</span>")
+						user.visible_message("<span class='alert'><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
+						"<span class='alert'>You remove [src]'s connections to [src]'s brain with [W]!</span>")
 						src.brain.op_stage = 3.0
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 0.0)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
-					"<span style=\"color:red\">You cut [src]'s skull away from the skin with [W]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
+					"<span class='alert'>You cut [src]'s skull away from the skin with [W]!</span>")
 					src.skull.op_stage = 1.0
 				else
 					return ..()
@@ -214,21 +214,21 @@
 				if (src.brain)
 					if (src.brain.op_stage == 1.0)
 						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-						user.visible_message("<span style=\"color:red\"><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
-						"<span style=\"color:red\">You saw open [src]'s skull with [W]!</span>")
+						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
+						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.op_stage = 2.0
 					else if (src.brain.op_stage == 3.0)
 						playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-						user.visible_message("<span style=\"color:red\"><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
-						"<span style=\"color:red\">You saw open [src]'s skull with [W]!</span>")
+						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
+						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.set_loc(get_turf(src))
 						src.brain = null
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 1.0)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> saws [src]'s skull out with [W]!</span>",\
-					"<span style=\"color:red\">You saw [src]'s skull out with [W]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> saws [src]'s skull out with [W]!</span>",\
+					"<span class='alert'>You saw [src]'s skull out with [W]!</span>")
 					src.skull.set_loc(get_turf(src))
 					src.skull = null
 				else
@@ -238,24 +238,24 @@
 			else if (istype(W, /obj/item/surgical_spoon) || istype(W, /obj/item/kitchen/utensil/spoon))
 				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
-					"<span style=\"color:red\">You insert [W] into [src]'s right eye socket!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
+					"<span class='alert'>You insert [W] into [src]'s right eye socket!</span>")
 					src.right_eye.op_stage = 1.0
 				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
-					"<span style=\"color:red\">You insert [W] into [src]'s left eye socket!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
+					"<span class='alert'>You insert [W] into [src]'s left eye socket!</span>")
 					src.left_eye.op_stage = 1.0
 				else if (src.right_eye && src.right_eye.op_stage == 2.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
-					"<span style=\"color:red\">You remove [src]'s right eye with [W]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
+					"<span class='alert'>You remove [src]'s right eye with [W]!</span>")
 					src.right_eye.set_loc(get_turf(src))
 					src.right_eye = null
 				else if (src.left_eye && src.left_eye.op_stage == 2.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(get_turf(src), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
-					"<span style=\"color:red\">You remove [src]'s left eye with [W]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
+					"<span class='alert'>You remove [src]'s left eye with [W]!</span>")
 					src.left_eye.set_loc(get_turf(src))
 					src.left_eye = null
 				else
@@ -275,9 +275,9 @@
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
 		if (!H.get_organ("head"))
 
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -286,8 +286,8 @@
 			SPAWN_DBG(rand(50,500))
 				if (H && H.organHolder && H.organHolder.head && H.organHolder.head == src) // aaaaaa
 					if (src.op_stage != 0.0)
-						H.visible_message("<span style=\"color:red\"><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-						"<span style=\"color:red\"><b>Your head comes loose and tumbles off of your neck!</b></span>")
+						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
+						"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
 						H.organHolder.drop_organ("head") // :I
 
 			return 1

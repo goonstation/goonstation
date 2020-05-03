@@ -362,11 +362,11 @@
 				// We want to be able to feed stuff to maneaters, such as meat, people, etc.
 				if(istype(W, /obj/item/grab) && iscarbon(W:affecting) && istype(src.current,/datum/plant/maneater))
 					if(src.growth < 60)
-						boutput(user, "<span style=\"color:red\">It's not big enough to eat that yet.</span>")
+						boutput(user, "<span class='alert'>It's not big enough to eat that yet.</span>")
 						return
 						// It doesn't make much sense to feed a full man to a dinky little plant.
 					var/mob/living/carbon/C = W:affecting
-					user.visible_message("<span style=\"color:red\">[user] starts to feed [C] to the plant!</span>")
+					user.visible_message("<span class='alert'>[user] starts to feed [C] to the plant!</span>")
 					logTheThing("combat", user, (C), "attempts to feed %target% to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
 					message_admins("[key_name(user)] attempts to feed [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
@@ -374,7 +374,7 @@
 						src.contributors += user
 					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
-							user.visible_message("<span style=\"color:red\">[src.name] grabs [C] and devours them ravenously!</span>")
+							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
 							logTheThing("combat", user, (C), "feeds %target% to a man-eater at [log_loc(src)].")
 							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 							if(C.mind)
@@ -395,16 +395,16 @@
 						user.show_text("You were interrupted!", "red")
 						return
 				else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-					if(src.growth > 60) boutput(user, "<span style=\"color:red\">It's going to need something more substantial than that now...</span>")
+					if(src.growth > 60) boutput(user, "<span class='alert'>It's going to need something more substantial than that now...</span>")
 					else
 						src.reagents.add_reagent("blood", 5)
-						boutput(user, "<span style=\"color:red\">You toss the [W] to the plant.</span>")
+						boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
 						qdel (W)
 						if(!(user in src.contributors))
 							src.contributors += user
 				else if(istype(W, /obj/item/organ/brain) || istype(W, /obj/item/clothing/head/butt))
 					src.reagents.add_reagent("blood", 20)
-					boutput(user, "<span style=\"color:red\">You toss the [W] to the plant.</span>")
+					boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
 					qdel (W)
 					if(!(user in src.contributors))
 						src.contributors += user
@@ -428,7 +428,7 @@
 			if(istype(W, /obj/item/weldingtool) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
-				boutput(user, "<span style=\"color:red\">It would help if you lit it first, dumbass!</span>")
+				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")
 				return
 			if(src.current)
 				var/datum/plant/growing = src.current
@@ -453,12 +453,12 @@
 						if(growing.HYPattacked_proc(src,user,W)) return
 
 				if(src.dead)
-					src.visible_message("<span style=\"color:red\">[src] goes up in flames!</span>")
+					src.visible_message("<span class='alert'>[src] goes up in flames!</span>")
 					src.reagents.add_reagent("ash", src.growth)
 					HYPdestroyplant()
 					// Ashes in the plantpot I guess.
 				else
-					if(!HYPdamageplant("fire",150)) src.visible_message("<span style=\"color:red\">[src] resists the fire!</span>")
+					if(!HYPdamageplant("fire",150)) src.visible_message("<span class='alert'>[src] resists the fire!</span>")
 
 		else if(istype(W,/obj/item/saw))
 			// Allows you to cut down plants. Never really saw the point in chainsaws considering
@@ -486,20 +486,20 @@
 						if(growing.HYPattacked_proc(src,user,W)) return
 
 				if(src.dead)
-					src.visible_message("<span style=\"color:red\">[src] is is destroyed by [user.name]'s [W]!</span>")
+					src.visible_message("<span class='alert'>[src] is is destroyed by [user.name]'s [W]!</span>")
 					HYPdestroyplant()
 					return
 				else
 					HYPdamageplant("physical",150,1)
-					src.visible_message("<span style=\"color:red\">[user.name] cuts at [src] with [W]!</span>")
+					src.visible_message("<span class='alert'>[user.name] cuts at [src] with [W]!</span>")
 
 		else if(istype(W, /obj/item/seed/))
 			// Planting a seed in the tray. This one should be self-explanatory really.
 			var/obj/item/seed/SEED = W
 			if(src.current)
-				boutput(user, "<span style=\"color:red\">Something is already in that tray.</span>")
+				boutput(user, "<span class='alert'>Something is already in that tray.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] plants a seed in the [src].</span>")
+			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			user.u_equip(SEED)
 			SEED.set_loc(src)
 			if(SEED.planttype)
@@ -509,19 +509,19 @@
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
-				boutput(user, "<span style=\"color:red\">You plant the seed, but nothing happens.</span>")
+				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
 				pool (SEED)
 			return
 
 		else if(istype(W, /obj/item/seedplanter/))
 			var/obj/item/seedplanter/SP = W
 			if(src.current)
-				boutput(user, "<span style=\"color:red\">Something is already in that tray.</span>")
+				boutput(user, "<span class='alert'>Something is already in that tray.</span>")
 				return
 			if(!SP.selected)
-				boutput(user, "<span style=\"color:red\">You need to select something to plant first.</span>")
+				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\">[user] plants a seed in the [src].</span>")
+			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
 			var/obj/item/seed/WS = unpool(/obj/item/seed)
 			WS.set_loc(src)
 			WS.generic_seed_setup(SP.selected)
@@ -534,15 +534,15 @@
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">There is nothing in [W] to pour!</span>")
+				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
-				if(!W.reagents.total_volume) boutput(user, "<span style=\"color:red\"><b>[W] is now empty.</b></span>")
+				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 				update_icon()
 				return
 
@@ -550,7 +550,7 @@
 		else if(istype(W, /obj/item/raw_material/shard/plasmacrystal) && !current)
 			// Planting a crystal shard simply puts a crystal seed inside the plant pot for
 			// a moment, spawns a new plant from it, then deletes both the seed and the shard.
-			user.visible_message("<span style=\"color:blue\">[user] plants [W] in the tray.</span>")
+			user.visible_message("<span class='notice'>[user] plants [W] in the tray.</span>")
 			var/obj/item/seed/crystal/WS = unpool(/obj/item/seed/crystal)
 			WS.set_loc(src)
 			HYPnewplant(WS)
@@ -563,21 +563,21 @@
 		else if(istype(W, /obj/item/satchel/hydro))
 			// Harvesting directly into a satchel.
 			if(!src.current)
-				boutput(user, "<span style=\"color:red\">There's no plant here to harvest!</span>")
+				boutput(user, "<span class='alert'>There's no plant here to harvest!</span>")
 				return
 			if(src.dead)
-				boutput(user, "<span style=\"color:red\">The plant is dead and cannot be harvested!</span>")
+				boutput(user, "<span class='alert'>The plant is dead and cannot be harvested!</span>")
 				return
 
 			var/datum/plant/growing = src.current
 			if(!growing.harvestable)
-				boutput(user, "<span style=\"color:red\">You doubt this plant is going to grow anything worth harvesting...</span>")
+				boutput(user, "<span class='alert'>You doubt this plant is going to grow anything worth harvesting...</span>")
 				return
 
 			if(HYPcheck_if_harvestable())
 				HYPharvesting(user,W)
 			else
-				boutput(user, "<span style=\"color:red\">The plant isn't ready to be harvested yet!</span>")
+				boutput(user, "<span class='alert'>The plant isn't ready to be harvested yet!</span>")
 				return
 
 		else ..()
@@ -594,7 +594,7 @@
 			var/datum/plantmutation/MUT = DNA.mutation
 
 			if(src.dead)
-				boutput(user, "<span style=\"color:blue\">You clear the dead plant out of the tray.</span>")
+				boutput(user, "<span class='notice'>You clear the dead plant out of the tray.</span>")
 				HYPdestroyplant()
 				return
 
@@ -605,14 +605,14 @@
 				boutput(user, "You check [src.name] and the tray.")
 
 				if(src.recently_harvested) boutput(user, "This plant has been harvested recently. It needs some time to regenerate.")
-				if(!src.reagents.has_reagent("water")) boutput(user, "<span style=\"color:red\">The tray is completely dry.</span>")
+				if(!src.reagents.has_reagent("water")) boutput(user, "<span class='alert'>The tray is completely dry.</span>")
 				else
-					if(src.reagents.get_reagent_amount("water") > 200)  boutput(user, "<span style=\"color:red\">The tray has too much water.</span>")
-					if(src.reagents.get_reagent_amount("water") < 40) boutput(user, "<span style=\"color:red\">The tray's water level looks a little low.</span>")
-				if(src.health >= growing.starthealth * 4) boutput(user, "<span style=\"color:blue\">The plant is flourishing!</span>")
-				else if(src.health >= growing.starthealth * 2) boutput(user, "<span style=\"color:blue\">The plant looks very healthy.</span>")
-				else if(src.health <= growing.starthealth / 2) boutput(user, "<span style=\"color:red\">The plant is in poor condition.</span>")
-				if(MUT) boutput(user, "<span style=\"color:red\">The plant looks strange...</span>")
+					if(src.reagents.get_reagent_amount("water") > 200)  boutput(user, "<span class='alert'>The tray has too much water.</span>")
+					if(src.reagents.get_reagent_amount("water") < 40) boutput(user, "<span class='alert'>The tray's water level looks a little low.</span>")
+				if(src.health >= growing.starthealth * 4) boutput(user, "<span class='notice'>The plant is flourishing!</span>")
+				else if(src.health >= growing.starthealth * 2) boutput(user, "<span class='notice'>The plant looks very healthy.</span>")
+				else if(src.health <= growing.starthealth / 2) boutput(user, "<span class='alert'>The plant is in poor condition.</span>")
+				if(MUT) boutput(user, "<span class='alert'>The plant looks strange...</span>")
 
 				var/reag_list = ""
 				for(var/current_id in src.reagents.reagent_list)
@@ -637,7 +637,7 @@
 		..()
 		if(!isliving(usr)) return // ghosts killing plants fix
 		if(get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You need to be closer to empty the tray out!</span>")
+			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
 
 		if(src.current)
@@ -665,7 +665,7 @@
 			if(growing.growthmode == "weed")
 				if(alert("Clear this tray?",,"Yes","No") == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					boutput(usr, "<span style=\"color:red\">Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
+					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
 					src.growth = 0
 					src.reagents.clear_reagents()
 					// The idea here is you gotta use weedkiller or something else to get rid of the
@@ -688,10 +688,10 @@
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
 			if(get_dist(user, src) > 1)
-				boutput(user, "<span style=\"color:red\">You need to be closer to the tray!</span>")
+				boutput(user, "<span class='alert'>You need to be closer to the tray!</span>")
 				return
 			if(get_dist(user, over_object) > 1)
-				boutput(user, "<span style=\"color:red\">[over_object] is too far away!</span>")
+				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
 			src.attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
 			return
@@ -842,7 +842,7 @@
 		var/satchelpick = 0
 		if(SA)
 			if(SA.contents.len >= SA.maxitems)
-				boutput(user, "<span style=\"color:red\">Your satchel is already full! Free some space up first.</span>")
+				boutput(user, "<span class='alert'>Your satchel is already full! Free some space up first.</span>")
 				return
 			else
 				satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
@@ -887,21 +887,21 @@
 		// harvest time again.
 		var/getamount = growing.cropsize + DNA.cropsize
 		if(src.health >= growing.starthealth * 2 && prob(30))
-			boutput(user, "<span style=\"color:blue\">This looks like a good harvest!</span>")
+			boutput(user, "<span class='notice'>This looks like a good harvest!</span>")
 			base_quality_score += 5
 			var/bonus = rand(1,3)
 			getamount += bonus
 			harvest_cap += bonus
 			// Good health levels bump the harvest amount up a bit and increase jumbo chances.
 		if(src.health >= growing.starthealth * 4 && prob(30))
-			boutput(user, "<span style=\"color:blue\">It's a bumper crop!</span>")
+			boutput(user, "<span class='notice'>It's a bumper crop!</span>")
 			base_quality_score += 10
 			var/bonus = rand(2,5)
 			getamount += bonus
 			harvest_cap += bonus
 			// This is if the plant health is absolutely excellent.
 		if(src.health <= growing.starthealth / 2 && prob(70))
-			boutput(user, "<span style=\"color:red\">This is kind of a crappy harvest...</span>")
+			boutput(user, "<span class='alert'>This is kind of a crappy harvest...</span>")
 			base_quality_score -= 12
 			// And this is if you've neglected the plant!
 
@@ -956,10 +956,10 @@
 		getamount = max(getamount, 0)
 
 		if(getamount < 1)
-			boutput(user, "<span style=\"color:red\">You weren't able to harvest anything worth salvaging.</span>")
+			boutput(user, "<span class='alert'>You weren't able to harvest anything worth salvaging.</span>")
 			// We just don't bother if the output is below one.
 		else if(!getitem)
-			boutput(user, "<span style=\"color:red\">You can't seem to find anything that looks harvestable.</span>")
+			boutput(user, "<span class='alert'>You can't seem to find anything that looks harvestable.</span>")
 			// mostly a fix for a runtime error if getitem was null
 		else
 			var/cropcount = getamount
@@ -1188,9 +1188,9 @@
 				getamount--
 
 			if(seedcount)
-				boutput(user, "<span style=\"color:blue\">You harvested [cropcount] items and [seedcount] seeds.</span>")
+				boutput(user, "<span class='notice'>You harvested [cropcount] items and [seedcount] seeds.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You harvested [cropcount] items.</span>")
+				boutput(user, "<span class='notice'>You harvested [cropcount] items.</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
@@ -1204,7 +1204,7 @@
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
 					if(SA.contents.len >= SA.maxitems)
-						boutput(user, "<span style=\"color:red\">Your satchel got filled up! You had to dump the rest on the floor.</span>")
+						boutput(user, "<span class='alert'>Your satchel got filled up! You had to dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
@@ -1228,7 +1228,7 @@
 				extra_harvest_chance += 20
 				extra_harvest_chance = max(0,min(100,extra_harvest_chance))
 				if(prob(extra_harvest_chance))
-					boutput(user, "<span style=\"color:blue\">The plant glistens with good health!</span>")
+					boutput(user, "<span class='notice'>The plant glistens with good health!</span>")
 					// We got the bonus so don't reduce harvests.
 				else
 					// No bonus, harvest is decremented as usual.
@@ -1486,7 +1486,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	var/generation = 0
 
 	if(P.cantscan)
-		boutput(user, "<span style=\"color:red\"><B>ERROR:</B> Genetic structure not recognized. Cannot scan.</span>")
+		boutput(user, "<span class='alert'><B>ERROR:</B> Genetic structure not recognized. Cannot scan.</span>")
 		return
 
 	if(istype(scanned, /obj/machinery/plantpot))
@@ -1750,13 +1750,13 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">There is nothing in [W] to pour!</span>")
+				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 				return
 			else
-				user.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				if(!W.reagents.total_volume) boutput(user, "<span style=\"color:red\"><b>[W] is now empty.</b></span>")
+				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
 
 	attack_hand(var/mob/user as mob)

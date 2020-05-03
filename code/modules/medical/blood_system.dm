@@ -16,7 +16,7 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-BLOOD-STUFF-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
-#define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("<span style='color:red'><b>BLOOD DEBUG:</b></span> " + x)
+#define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("<span class='alert'><b>BLOOD DEBUG:</b></span> " + x)
 
 var/global/haine_blood_debug = 0
 
@@ -259,8 +259,8 @@ this is already used where it needs to be used, you can probably ignore it.
 		//H.bleeding = CLAMP(H.bleeding, 0, 10)
 		if (H.bleeding > old_bleeding) // I'm not sure how it wouldn't be, but, uh, yeah
 			if (old_bleeding <= 0)
-				H.visible_message("<span style='color:red'>[H] starts bleeding!</span>",\
-				"<span style='color:red'><b>You start bleeding!</b></span>")
+				H.visible_message("<span class='alert'>[H] starts bleeding!</span>",\
+				"<span class='alert'><b>You start bleeding!</b></span>")
 			else if (old_bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")
 			else if (old_bleeding >= 4)//9)
@@ -362,8 +362,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			H.bleeding ++
 		switch (H.bleeding)
 			if (-INFINITY to 0)
-				H.visible_message("<span style='color:blue'>[H]'s bleeding stops!</span>",\
-				"<span style='color:blue'><b>Your bleeding stops!</b></span>")
+				H.visible_message("<span class='notice'>[H]'s bleeding stops!</span>",\
+				"<span class='notice'><b>Your bleeding stops!</b></span>")
 			if (1 to 3)
 				H.show_text("<b>Your bleeding slows down!</b>", "blue")
 			if (4 to INFINITY)
@@ -688,9 +688,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span style=\"color:blue\"><b>[src]</b> puts pressure on [src == H ? "[his_her]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		src, "<span style=\"color:blue\">You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		H, "<span style=\"color:blue\">[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
+		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_her]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
 		if (do_mob(src, H, 100))
 			var/original_bleed = H.bleeding

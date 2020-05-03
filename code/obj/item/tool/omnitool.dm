@@ -28,12 +28,12 @@
 
 	get_desc(var/dist)
 		if (dist < 3)
-			. = "<span style=\"color: blue\">It is currently set to [src.omni_mode] mode.</span>"
+			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] stabs and beats [his_or_her(user)]self with each tool in the [src] in rapid succession.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] stabs and beats [his_or_her(user)]self with each tool in the [src] in rapid succession.</b></span>")
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
 		user.updatehealth()

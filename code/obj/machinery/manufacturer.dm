@@ -125,22 +125,22 @@
 		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 		if	(status & BROKEN)
-			. += "<span style=\"color:red\">It seems to be damaged beyond the point of operability.</span>"
+			. += "<span class='alert'>It seems to be damaged beyond the point of operability.</span>"
 		if	(status & NOPOWER)
-			. += "<span style=\"color:red\">It seems to be offline.</span>"
+			. += "<span class='alert'>It seems to be offline.</span>"
 
 		switch(src.dismantle_stage)
 			if(1)
-				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.</span>"
+				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.</span>"
 			if(2)
-				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.</span>"
+				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.</span>"
 			if(3)
-				. += "<span style=\"color:red\">It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
+				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
 
 	process()
 		if (status & NOPOWER)
@@ -159,7 +159,7 @@
 					if (src.queue.len < 1)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
-						src.visible_message("<span style=\"color:blue\">[src] finishes its production queue.</span>")
+						src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
 						src.mode = "ready"
 						src.build_icon()
 
@@ -453,7 +453,7 @@
 
 			if (href_list["eject"])
 				if (src.mode != "ready")
-					boutput(usr, "<span style=\"color:red\">You cannot eject materials while the unit is working.</span>")
+					boutput(usr, "<span class='alert'>You cannot eject materials while the unit is working.</span>")
 				else
 					var/mat_id = href_list["eject"]
 					var/ejectamt = 0
@@ -479,7 +479,7 @@
 
 			if (href_list["speed"])
 				if (src.mode == "working")
-					boutput(usr, "<span style=\"color:red\">You cannot alter the speed setting while the unit is working.</span>")
+					boutput(usr, "<span class='alert'>You cannot alter the speed setting while the unit is working.</span>")
 				else
 					var/upperbound = 3
 					if (src.hacked)
@@ -502,7 +502,7 @@
 			if (href_list["removefromQ"])
 				var/operation = text2num(href_list["removefromQ"])
 				if (!isnum(operation) || src.queue.len < 1 || operation > src.queue.len)
-					boutput(usr, "<span style=\"color:red\">Invalid operation.</span>")
+					boutput(usr, "<span class='alert'>Invalid operation.</span>")
 					return
 
 				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
@@ -522,7 +522,7 @@
 
 			if (href_list["internalize"])
 				if (src.retain_output_internally < 0)
-					boutput(usr, "<span style=\"color:red\">This unit does not feature that function.</span>")
+					boutput(usr, "<span class='alert'>This unit does not feature that function.</span>")
 				else
 					src.retain_output_internally = !src.retain_output_internally
 
@@ -536,10 +536,10 @@
 
 			if (href_list["continue"])
 				if (src.queue.len < 1)
-					boutput(usr, "<span style=\"color:red\">Cannot find any items in queue to continue production.</span>")
+					boutput(usr, "<span class='alert'>Cannot find any items in queue to continue production.</span>")
 					return
 				if (!check_enough_materials(src.queue[1]))
-					boutput(usr, "<span style=\"color:red\">Insufficient usable materials to manufacture first item in queue.</span>")
+					boutput(usr, "<span class='alert'>Insufficient usable materials to manufacture first item in queue.</span>")
 				else
 					src.begin_work(0)
 
@@ -563,9 +563,9 @@
 					return
 
 				if (!check_enough_materials(I))
-					boutput(usr, "<span style=\"color:red\">Insufficient usable materials to manufacture that item.</span>")
+					boutput(usr, "<span class='alert'>Insufficient usable materials to manufacture that item.</span>")
 				else if (src.queue.len >= MAX_QUEUE_LENGTH)
-					boutput(usr, "<span style=\"color:red\">Manufacturer queue length limit reached.</span>")
+					boutput(usr, "<span class='alert'>Manufacturer queue length limit reached.</span>")
 				else
 					src.queue += I
 					if (src.mode == "ready")
@@ -580,7 +580,7 @@
 			/*if (href_list["delete"])
 				var/datum/manufacture/I = locate(href_list["disp"])
 				if (!istype(I,/datum/manufacture/mechanics/))
-					boutput(usr, "<span style=\"color:red\">Cannot delete this schematic.</span>")
+					boutput(usr, "<span class='alert'>Cannot delete this schematic.</span>")
 					return
 				src.download -= I*/
 
@@ -653,7 +653,7 @@
 		if (!src.hacked)
 			src.hacked = 1
 			if(user)
-				boutput(user, "<span style=\"color:blue\">You remove the [src]'s product locks!</span>")
+				boutput(user, "<span class='notice'>You remove the [src]'s product locks!</span>")
 			return 1
 		return 0
 
@@ -664,36 +664,36 @@
 
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
-				boutput(user, "<span style=\"color:red\">This manufacturer unit does not accept blueprints.</span>")
+				boutput(user, "<span class='alert'>This manufacturer unit does not accept blueprints.</span>")
 				return
 			var/obj/item/paper/manufacturer_blueprint/BP = W
 			if (src.malfunction && prob(75))
-				src.visible_message("<span style=\"color:red\">[src] emits a [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
+				src.visible_message("<span class='alert'>[src] emits a [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
 				playsound(src.loc, pick(src.sounds_malfunction), 50, 1)
-				boutput(user, "<span style=\"color:red\">The manufacturer mangles and ruins the blueprint in the scanner! What the fuck?</span>")
+				boutput(user, "<span class='alert'>The manufacturer mangles and ruins the blueprint in the scanner! What the fuck?</span>")
 				qdel(BP)
 				return
 			if (!BP.blueprint)
-				src.visible_message("<span style=\"color:red\">[src] emits a grumpy buzz!</span>")
+				src.visible_message("<span class='alert'>[src] emits a grumpy buzz!</span>")
 				playsound(src.loc, src.sound_grump, 50, 1)
-				boutput(user, "<span style=\"color:red\">The manufacturer rejects the blueprint. Is something wrong with it?</span>")
+				boutput(user, "<span class='alert'>The manufacturer rejects the blueprint. Is something wrong with it?</span>")
 				return
 			for (var/datum/manufacture/M in (src.available + src.download))
 				if (BP.blueprint.name == M.name)
-					src.visible_message("<span style=\"color:red\">[src] emits an irritable buzz!</span>")
+					src.visible_message("<span class='alert'>[src] emits an irritable buzz!</span>")
 					playsound(src.loc, src.sound_grump, 50, 1)
-					boutput(user, "<span style=\"color:red\">The manufacturer rejects the blueprint, as it already knows it.</span>")
+					boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
 					return
 			BP.dropped()
 			src.download += BP.blueprint
-			src.visible_message("<span style=\"color:red\">[src] emits a pleased chime!</span>")
+			src.visible_message("<span class='alert'>[src] emits a pleased chime!</span>")
 			playsound(src.loc, src.sound_happy, 50, 1)
-			boutput(user, "<span style=\"color:blue\">The manufacturer accepts and scans the blueprint.</span>")
+			boutput(user, "<span class='notice'>The manufacturer accepts and scans the blueprint.</span>")
 			qdel(BP)
 			return
 
 		else if (istype(W, /obj/item/satchel))
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [W]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [W].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [W]!</span>", "<span class='notice'>You use [src]'s automatic loader on [W].</span>")
 			var/amtload = 0
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
@@ -701,8 +701,8 @@
 				src.load_item(M)
 				amtload++
 			W:satchel_updateicon()
-			if (amtload) boutput(user, "<span style=\"color:blue\">[amtload] materials loaded from [W]!</span>")
-			else boutput(user, "<span style=\"color:red\">No materials loaded!</span>")
+			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
+			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 
 		else if (isscrewingtool(W))
 			if (!src.panelopen)
@@ -719,16 +719,16 @@
 				if (alert(user,"What do you want to do with [WELD]?","[src.name]","Repair","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span style=\"color:blue\">[user] loads [WELD] into the [src].</span>", "<span style=\"color:blue\">You load [WELD] into the [src].</span>")
+				user.visible_message("<span class='notice'>[user] loads [WELD] into the [src].</span>", "<span class='notice'>You load [WELD] into the [src].</span>")
 				src.load_item(WELD,user)
 			else
 				if (src.health < 50)
-					boutput(user, "<span style=\"color:red\">It's too badly damaged. You'll need to replace the wiring first.</span>")
+					boutput(user, "<span class='alert'>It's too badly damaged. You'll need to replace the wiring first.</span>")
 				else if(WELD.try_weld(user, 1))
 					src.take_damage(-10)
 					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
 					if (src.health == 100)
-						boutput(user, "<span style=\"color:blue\"><b>[src] looks fully repaired!</b></span>")
+						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
 		else if (istype(W,/obj/item/cable_coil) && src.panelopen)
 			var/obj/item/cable_coil/C = W
@@ -737,18 +737,18 @@
 				if (alert(user,"What do you want to do with [C]?","[src.name]","Repair","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span style=\"color:blue\">[user] loads [C] into the [src].</span>", "<span style=\"color:blue\">You load [C] into the [src].</span>")
+				user.visible_message("<span class='notice'>[user] loads [C] into the [src].</span>", "<span class='notice'>You load [C] into the [src].</span>")
 				src.load_item(C,user)
 			else
 				if (src.health >= 50)
-					boutput(user, "<span style=\"color:red\">The wiring is fine. You need to weld the external plating to do further repairs.</span>")
+					boutput(user, "<span class='alert'>The wiring is fine. You need to weld the external plating to do further repairs.</span>")
 				else
 					C.use(1)
 					src.take_damage(-10)
 					user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 					if (src.health >= 50)
-						boutput(user, "<span style=\"color:blue\">The wiring is fully repaired. Now you need to weld the external plating.</span>")
+						boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
 		else if (iswrenchingtool(W))
 			var/do_action = 0
@@ -756,7 +756,7 @@
 				if (alert(user,"What do you want to do with [W]?","[src.name]","Dismantle/Construct","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>", "<span style=\"color:blue\">You load [W] into the [src].</span>")
+				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 				src.load_item(W,user)
 			else
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
@@ -808,9 +808,9 @@
 
 		else if (istype(W,/obj/item/reagent_containers/glass))
 			if (src.beaker)
-				boutput(user, "<span style=\"color:red\">There's already a receptacle in the machine. You need to remove it first.</span>")
+				boutput(user, "<span class='alert'>There's already a receptacle in the machine. You need to remove it first.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
+				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
 				src.beaker = W
 				if (user && W)
@@ -818,7 +818,7 @@
 					W.dropped()
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
-			user.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>", "<span style=\"color:blue\">You load [W] into the [src].</span>")
+			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
 		else
@@ -844,44 +844,44 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the manufacturer's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The manufacturing unit is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The manufacturing unit is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
 				src.output_target = over_object
-				boutput(usr, "<span style=\"color:blue\">You set the manufacturer to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable cart as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
 			else
 				src.output_target = over_object
-				boutput(usr, "<span style=\"color:blue\">You set the manufacturer to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
-			boutput(usr, "<span style=\"color:blue\">You set the manufacturer to output on top of [O]!</span>")
+			boutput(usr, "<span class='notice'>You set the manufacturer to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the manufacturer to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -889,15 +889,15 @@
 			return
 
 		if(!isliving(user))
-			boutput(user, "<span style=\"color:red\">Only living mobs are able to use the manufacturer's quick-load feature.</span>")
+			boutput(user, "<span class='alert'>Only living mobs are able to use the manufacturer's quick-load feature.</span>")
 			return
 
 		if (!istype(O,/obj/))
-			boutput(user, "<span style=\"color:red\">You can't quick-load that.</span>")
+			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
 		if(get_dist(O,user) > 1)
-			boutput(user, "<span style=\"color:red\">You are too far away!</span>")
+			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
 
@@ -906,21 +906,21 @@
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/) && src.accept_loading(user,1))
 			if (O:welded || O:locked)
-				boutput(user, "<span style=\"color:red\">You cannot load from a container that cannot open!</span>")
+				boutput(user, "<span class='alert'>You cannot load from a container that cannot open!</span>")
 				return
 
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [O]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [O].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
 				src.load_item(M)
 				amtload++
-			if (amtload) boutput(user, "<span style=\"color:blue\">[amtload] materials loaded from [O]!</span>")
-			else boutput(user, "<span style=\"color:red\">No material loaded!</span>")
+			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
+			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
 		else if (isitem(O) && src.accept_loading(user,1))
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing materials into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/M in view(1,user))
 				if (!O)
@@ -936,7 +936,7 @@
 				src.load_item(M)
 				sleep(0.5)
 				if (user.loc != staystill) break
-			boutput(user, "<span style=\"color:blue\">You finish stuffing materials into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing materials into [src]!</span>")
 
 		else ..()
 
@@ -1177,7 +1177,7 @@
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
-			src.visible_message("<span style=\"color:red\">[src] emits an angry buzz!</span>")
+			src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
 			playsound(src.loc, src.sound_grump, 50, 1)
 			src.build_icon()
 			return
@@ -1188,7 +1188,7 @@
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
-			src.visible_message("<span style=\"color:red\">[src] emits an angry buzz!</span>")
+			src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
 			playsound(src.loc, src.sound_grump, 50, 1)
 			src.build_icon()
 			return
@@ -1204,7 +1204,7 @@
 			if (!mats_used)
 				src.mode = "halt"
 				src.error = "Insufficient usable materials to continue queue production."
-				src.visible_message("<span style=\"color:red\">[src] emits an angry buzz!</span>")
+				src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
 				playsound(src.loc, src.sound_grump, 50, 1)
 				src.build_icon()
 				return
@@ -1306,7 +1306,7 @@
 		if (status & BROKEN || status & NOPOWER || !src.malfunction)
 			return
 		animate_shake(src,5,rand(3,8),rand(3,8))
-		src.visible_message("<span style=\"color:red\">[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
+		src.visible_message("<span class='alert'>[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
 		playsound(src.loc, pick(src.sounds_malfunction), 50, 2)
 		if (prob(15) && src.contents.len > 4 && src.mode != "working")
 			var/to_throw = rand(1,4)
@@ -1475,7 +1475,7 @@
 		if (damage_amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
-				src.visible_message("<span style=\"color:red\"><b>[src.name] is destroyed!</b></span>")
+				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
@@ -1486,11 +1486,11 @@
 			if (src.malfunction && prob(40))
 				src.flip_out()
 			if (src.health <= 25 && !(src.status & BROKEN))
-				src.visible_message("<span style=\"color:red\"><b>[src.name] breaks down and stops working!</b></span>")
+				src.visible_message("<span class='alert'><b>[src.name] breaks down and stops working!</b></span>")
 				src.status |= BROKEN
 		else
 			if (src.health >= 60 && src.status & BROKEN)
-				src.visible_message("<span style=\"color:red\"><b>[src.name] looks like it can function again!</b></span>")
+				src.visible_message("<span class='alert'><b>[src.name] looks like it can function again!</b></span>")
 				status &= ~BROKEN
 
 		src.build_icon()
@@ -1612,7 +1612,7 @@
 	throw_range = 10
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">The folder disintegrates in your hands, and papers scatter out. Shit!</span>")
+		boutput(user, "<span class='alert'>The folder disintegrates in your hands, and papers scatter out. Shit!</span>")
 		new /obj/item/paper/manufacturer_blueprint/clonepod(get_turf(src))
 		new /obj/item/paper/manufacturer_blueprint/clonegrinder(get_turf(src))
 		new /obj/item/paper/manufacturer_blueprint/clone_scanner(get_turf(src))

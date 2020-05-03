@@ -38,7 +38,7 @@
 		if (current_projectile)
 			. += "Each shot will currently use [src.current_projectile.cost] bullets!"
 		else
-			. += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0
@@ -53,7 +53,7 @@
 		if(src.ammo && src.current_projectile)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
-		boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+		boutput(user, "<span class='alert'>*click* *click*</span>")
 		if (!src.silenced)
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 		return 0
@@ -79,11 +79,11 @@
 					user.show_text("[src] is full!", "red")
 					return
 				if(4)
-					user.visible_message("<span style=\"color:red\">[user] reloads [src].</span>", "<span style=\"color:red\">There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
+					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
 				if(5)
-					user.visible_message("<span style=\"color:red\">[user] reloads [src].</span>", "<span style=\"color:red\">You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
+					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
 				if(6)
@@ -92,9 +92,9 @@
 							user.show_text("This ammo won't fit!", "red")
 							return
 						if(1)
-							user.visible_message("<span style=\"color:red\">[user] reloads [src].</span>", "<span style=\"color:red\">You swap out the magazine. Or whatever this specific gun uses.</span>")
+							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
 						if(2)
-							user.visible_message("<span style=\"color:red\">[user] reloads [src].</span>", "<span style=\"color:red\">You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
+							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
 		else
@@ -146,7 +146,7 @@
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
-			user.visible_message("<span style=\"color:red\">[user] unloads [src].</span>", "<span style=\"color:red\">You unload [src].</span>")
+			user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
 			//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
 			return
 
@@ -329,7 +329,7 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span style=\"color:blue\">You hide the derringer inside \the [O]. (Use the wink emote while wearing the clothing item to retrieve it.)</span>")
+			boutput(user, "<span class='hint'>You hide the derringer inside \the [O]. (Use the wink emote while wearing the clothing item to retrieve it.)</span>")
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)
@@ -400,11 +400,11 @@
 		if (hammer_cocked)
 			hammer_cocked = 0
 			icon_state = "colt_saa"
-			boutput(user, "<span style=\"color:blue\">You gently lower the weapon's hammer!</span>")
+			boutput(user, "<span class='notice'>You gently lower the weapon's hammer!</span>")
 		else
 			hammer_cocked = 1
 			icon_state = "colt_saa-c"
-			boutput(user, "<span style=\"color:red\">You cock the hammer!</span>")
+			boutput(user, "<span class='alert'>You cock the hammer!</span>")
 			playsound(user.loc, "sound/weapons/gun_cocked_colt45.ogg", 70, 1)
 
 /obj/item/gun/kinetic/clock_188
@@ -474,7 +474,7 @@
 
 		src.process_ammo(user)
 		var/hisher = his_or_her(user)
-		user.visible_message("<span style='color:red'><b>[user] places [src]'s barrel in [hisher] mouth and pulls the trigger with [hisher] foot!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] places [src]'s barrel in [hisher] mouth and pulls the trigger with [hisher] foot!</b></span>")
 		var/obj/head = user.organHolder.drop_organ("head")
 		qdel(head)
 		playsound(src, "sound/weapons/shotgunshot.ogg", 100, 1)
@@ -658,7 +658,7 @@
 		var/turf/T = get_turf_loc(src)
 
 		if (!istype(T.loc, /area/sim))
-			boutput(user, "<span style=\"color:red\">You can't use the guns outside of the combat simulation, fuckhead!</span>")
+			boutput(user, "<span class='alert'>You can't use the guns outside of the combat simulation, fuckhead!</span>")
 			return
 		else
 			..()
@@ -697,7 +697,7 @@
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
 			if(src.ammo.amount_left > 0)
-				boutput(user, "<span style=\"color:red\">The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
+				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
 				var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
@@ -970,7 +970,7 @@
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
 			if(src.ammo.amount_left > 0)
-				boutput(user, "<span style=\"color:red\">The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
+				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
 				var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
@@ -1094,16 +1094,16 @@
 			src.add_fingerprint(usr)
 			ammoHand.add_fingerprint(usr)
 
-			usr.visible_message("<span style=\"color:red\">[usr] unloads [src].</span>", "<span style=\"color:red\">You unload [src].</span>")
+			usr.visible_message("<span class='alert'>[usr] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
 			return
 		..()
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
-			boutput(user, "<span style=\"color:red\">You can't shove shells down the barrel! You'll have to open the [src]!</span>")
+			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src]!</span>")
 			return
 		if (istype(b, /obj/item/ammo/bullets) && (src.ammo.amount_left > 0 || src.casings_to_eject > 0))
-			boutput(user, "<span style=\"color:red\">The [src] already has a shell inside! You'll have to unload the [src]!</span>")
+			boutput(user, "<span class='alert'>The [src] already has a shell inside! You'll have to unload the [src]!</span>")
 			return
 		..()
 
@@ -1223,7 +1223,7 @@
 			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
-			boutput(T, "<span style=\"color:red\">[src] blows up!</span>")
+			boutput(T, "<span class='alert'>[src] blows up!</span>")
 			explosion(src, T,0,1,1,2)
 			qdel(src)
 		else

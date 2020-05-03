@@ -271,8 +271,8 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 			src.show_popup_win(user.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
+		"<span class='alert'>You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster,T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x
@@ -294,9 +294,9 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
-			user.tri_message("<span style=\"color:red\"><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
-			user, "<span style=\"color:red\">You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
-			M, "<span style=\"color:red\">[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
+			user.tri_message("<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
+			user, "<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
+			M, "<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
 				src.show_popup_win(M.client)
 			src.no_spam = ticker.round_elapsed_ticks
@@ -427,7 +427,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 			for (var/obj/item/paper/P in W)
 				n++
 			if (n <= 0)
-				boutput(user, "<span style='color:red'>\The [B] is empty!</span>")
+				boutput(user, "<span class='alert'>\The [B] is empty!</span>")
 				return
 			user.visible_message("[user] loads [W] into [src].",\
 			"You load [W] into [src].")
@@ -444,7 +444,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 		else if (istype(W, /obj/item/photo))
 			var/obj/item/photo/P = W
 			if (!istype(P.fullIcon))
-				boutput(user, "<span style='color:red'>\The [src] fails to scan [P]!</span>")
+				boutput(user, "<span class='alert'>\The [src] fails to scan [P]!</span>")
 				return
 			src.ensure_plist()
 			src.plist["image"] = P.fullIcon
@@ -457,7 +457,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 		else if (istype(W, /obj/item/poster/titled_photo))
 			var/obj/item/poster/titled_photo/P = W
 			if (!islist(P.plist))
-				boutput(user, "<span style='color:red'>\The [src] fails to scan [P]!</span>")
+				boutput(user, "<span class='alert'>\The [src] fails to scan [P]!</span>")
 				return
 			src.plist = P.plist.Copy()
 			user.visible_message("[user] scans [P] into [src].",\
@@ -494,10 +494,10 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 
 	proc/print_poster(mob/user as mob)
 		if (src.papers <= 0)
-			boutput(user, "<span style='color:red'>\The [src] is out of paper!</span>")
+			boutput(user, "<span class='alert'>\The [src] is out of paper!</span>")
 			return
 		if (!islist(src.plist))
-			boutput(user, "<span style='color:red'>\The [src] buzzes grumpily!</span>")
+			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
 		playsound(get_turf(src), "sound/machines/printer_dotmatrix.ogg", 30, 1)
@@ -520,7 +520,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 		if (!usr || !usr.client)
 			return ..()
 		if (get_dist(usr,src) > 1)
-			boutput(usr, "<span style='color:red'>You need to be closer to [src] to do that!</span>")
+			boutput(usr, "<span class='alert'>You need to be closer to [src] to do that!</span>")
 			return
 		src.ensure_plist()
 
@@ -553,14 +553,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 					R = rec
 					break
 			if (!istype(R))
-				boutput(usr, "<span style='color:red'>No record found for \"[ptext]\".</span>")
+				boutput(usr, "<span class='alert'>No record found for \"[ptext]\".</span>")
 				return
 			if (!islist(R.fields) || !R.fields.len)
-				boutput(usr, "<span style='color:red'>Records for \"[ptext]\" are corrupt.</span>")
+				boutput(usr, "<span class='alert'>Records for \"[ptext]\" are corrupt.</span>")
 				return
 			var/datum/computer/file/image/IMG = R.fields["file_photo"]
 			if (!istype(IMG) || !IMG.ourIcon)
-				boutput(usr, "<span style='color:red'>No photo exists on file for \"[ptext]\".</span>")
+				boutput(usr, "<span class='alert'>No photo exists on file for \"[ptext]\".</span>")
 				return
 			src.plist["image"] = IMG.ourIcon
 			src.plist["subtitle"] = "FILE PHOTO"

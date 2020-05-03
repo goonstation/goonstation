@@ -52,7 +52,7 @@
 	//Let's prevent people from promoting themselves, yes?
 	var/list/locked_type = list(/datum/admins) //Short list
 	if(!(src.holder.rank in list("Host", "Coder")) && (O.type in locked_type) )
-		boutput(usr, "<span style=\"color:red\">You're not allowed to edit [O.type] for security reasons!</span>")
+		boutput(usr, "<span class='alert'>You're not allowed to edit [O.type] for security reasons!</span>")
 		logTheThing("admin", usr, null, "tried to varedit [O.type] but was denied!")
 		logTheThing("diary", usr, null, "tried to varedit [O.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [O.type] but was denied.") //If someone tries this let's make sure we all know it.

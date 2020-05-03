@@ -190,9 +190,9 @@ var/const/PHASER_SNIPER = 256
 		set src in usr
 		set name = "Remove Mods"
 		if(!src.contents.len)
-			boutput(usr, "<span style=\"color:red\">No mods to remove.</span>")
+			boutput(usr, "<span class='alert'>No mods to remove.</span>")
 			return
-		boutput(usr, "<span style=\"color:blue\">You remove all mods.</span>")
+		boutput(usr, "<span class='notice'>You remove all mods.</span>")
 		for(var/obj/O in src)
 			O.set_loc(get_turf(src))
 		var/obj/item/oldgun/energy/phaser/P = new/obj/item/oldgun/energy/phaser(get_turf(src))
@@ -205,11 +205,11 @@ var/const/PHASER_SNIPER = 256
 	examine()
 		set src in view()
 		if(src.contents.len)
-			boutput(usr, "<span style=\"color:blue\">Installed mods:</span>")
+			boutput(usr, "<span class='notice'>Installed mods:</span>")
 			boutput(usr, "")
 			for(var/obj/O in src)
-				boutput(usr, "<span style=\"color:blue\">[O.name]</span>")
-				boutput(usr, "<span style=\"color:blue\">[O.desc]</span>")
+				boutput(usr, "<span class='notice'>[O.name]</span>")
+				boutput(usr, "<span class='notice'>[O.desc]</span>")
 				boutput(usr, "")
 		..()
 
@@ -230,10 +230,10 @@ var/const/PHASER_SNIPER = 256
 			switch(G.location)
 				if("ext")
 					if(extension_mod)
-						boutput(user, "<span style=\"color:red\">There is already a gun extension installed.</span>")
+						boutput(user, "<span class='alert'>There is already a gun extension installed.</span>")
 					else
 						user.drop_item()
-						boutput(user, "<span style=\"color:blue\">You install the gun extension.</span>")
+						boutput(user, "<span class='notice'>You install the gun extension.</span>")
 						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
 						G.set_loc(src)
 						extension_mod = G
@@ -245,10 +245,10 @@ var/const/PHASER_SNIPER = 256
 						update_settings()
 				if("conv")
 					if(converter_mod)
-						boutput(user, "<span style=\"color:red\">There is already an energy-converter mod installed.</span>")
+						boutput(user, "<span class='alert'>There is already an energy-converter mod installed.</span>")
 					else
 						user.drop_item()
-						boutput(user, "<span style=\"color:blue\">You install the energy-converter mod.</span>")
+						boutput(user, "<span class='notice'>You install the energy-converter mod.</span>")
 						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
 						G.set_loc(src)
 						converter_mod = G
@@ -350,11 +350,11 @@ var/const/PHASER_SNIPER = 256
 		if(isrobot(user))
 			var/mob/living/silicon/robot/R = user
 			if(R.cell.charge < charges_per_shot)
-				boutput(user, "<span style=\"color:red\">*Warning* Not enough power.</span>");
+				boutput(user, "<span class='alert'>*Warning* Not enough power.</span>");
 				return
 		else
 			if(src.charges < charges_per_shot)
-				boutput(user, "<span style=\"color:red\">*click* *click*</span>");
+				boutput(user, "<span class='alert'>*click* *click*</span>");
 				return
 
 		if(shot_firesounds.len)
@@ -551,7 +551,7 @@ var/const/PHASER_SNIPER = 256
 			src.attack_self(usr)
 			return
 		else if (href_list["overload"])
-			boutput(usr, "<span style=\"color:red\">Your phaser overloads.</span>");
+			boutput(usr, "<span class='alert'>Your phaser overloads.</span>");
 			overloading = 1
 			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1)
 			SPAWN_DBG(6 SECONDS)

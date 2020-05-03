@@ -42,7 +42,7 @@
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
-	var/obj/machinery/machine = null
+	var/obj/machinery/machine = null // todo : look into rewriting the way this works. its a lingering ref to the last machine the mob touched, and machines have to search thru all clients to check this var when they update their screens
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
@@ -504,7 +504,7 @@
 		if (ishuman(tmob))
 			if (tmob.bioHolder.HasEffect("fat"))
 				if (prob(40) && !src.bioHolder.HasEffect("fat"))
-					src.visible_message("<span style=\"color:red\"><B>[src] fails to push [tmob] out of the way.</B></span>")
+					src.visible_message("<span class='alert'><B>[src] fails to push [tmob] out of the way.</B></span>")
 					src.now_pushing = 0
 					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
 					deliver_move_trigger("bump")
@@ -524,7 +524,7 @@
 					// like repels - bimp them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
 					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, 1)
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
@@ -537,7 +537,7 @@
 				tmob.next_spammable_chem_reaction_time = world.time + 1
 				src.now_pushing = 0
 				var/atom/source = get_turf(tmob)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
 				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
@@ -556,7 +556,7 @@
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> and <B>[tmob]</B>'s opposite magnetic fields cause a minor magnetic blowout!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s opposite magnetic fields cause a minor magnetic blowout!</span>")
 					//src.bioHolder.RemoveEffect("magnets_pos")
 					//src.bioHolder.RemoveEffect("magnets_neg")
 					var/atom/source = get_turf(tmob)
@@ -777,7 +777,7 @@
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return
-//			boutput(src, "<span style=\"color:red\">You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
+//			boutput(src, "<span class='alert'>You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
 
 /mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
@@ -796,13 +796,13 @@
 	set name = "Medals"
 
 	if (IsGuestKey(src.key))
-		boutput(src, "<span style=\"color:red\">Sorry, you are a guest and cannot have medals.</span>")
+		boutput(src, "<span class='alert'>Sorry, you are a guest and cannot have medals.</span>")
 		return
 	else if (!config)
-		boutput(src, "<span style=\"color:red\">Sorry, medal information is currently not available.</span>")
+		boutput(src, "<span class='alert'>Sorry, medal information is currently not available.</span>")
 		return
 	else if (!config.medal_hub || !config.medal_password)
-		boutput(src, "<span style=\"color:red\">Sorry, this server does not have medals enabled.</span>")
+		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
 		return
 
 	boutput(src, "Retrieving your medal information...")
@@ -811,7 +811,7 @@
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
 		if (isnull(medals))
-			boutput(src, "<span style=\"color:red\">Sorry, could not contact the BYOND hub for your medal information.</span>")
+			boutput(src, "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>")
 			return
 
 		if (!medals)
@@ -836,7 +836,7 @@
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
 			src.mind.dnr = 1
-			boutput(src, "<span style=\"color:red\">DNR status set!</span>")
+			boutput(src, "<span class='alert'>DNR status set!</span>")
 		else
 			src << alert("There was an error setting this status. Perhaps you are a ghost?")
 	return
@@ -1061,7 +1061,7 @@
 /mob/proc/death(gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
-		message_admins("<span style=\"color:red\">Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
+		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
 	if(src.mind && !gibbed)
 		src.mind.death_icon = getFlatIcon(src,SOUTH)
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
@@ -1465,7 +1465,7 @@
 		return
 
 	if(!isobserver(usr) || !(ticker))
-		boutput(usr, "<span style=\"color:blue\"><B>You must be a ghost to use this!</B></span>")
+		boutput(usr, "<span class='notice'><B>You must be a ghost to use this!</B></span>")
 		return
 
 	logTheThing("diary", usr, null, "used abandon mob.", "game")
@@ -1504,7 +1504,7 @@
 		return
 
 	if (src.health < 0)
-		boutput(src, "<span style=\"color:blue\">You have given up life and succumbed to death.</span>")
+		boutput(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
@@ -1573,7 +1573,7 @@
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
-		src.visible_message("<span style=\"color:red\">[src] is hit by the [P]!</span>")
+		src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	return
@@ -1597,11 +1597,11 @@
 			else
 				src.changeStatus("weakened", (stun/2)*15)
 			src.set_clothing_icon_dirty()
-			src.show_text("<span style=\"color:red\">You are shocked by the impact of [P]!</span>")
+			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
 			src.stuttering += stun
 			src.drowsyness += stun/10
-			src.show_text("<span style=\"color:red\">You feel a wave of sickness as [P] impacts [src.loc]!</span>")
+			src.show_text("<span class='alert'>You feel a wave of sickness as [P] impacts [src.loc]!</span>")
 
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -2497,15 +2497,15 @@
 				eardeaf += 1
 
 			if (13 to 15)
-				boutput(src, "<span style=\"color:red\">Your ears ring a bit!</span>")
+				boutput(src, "<span class='alert'>Your ears ring a bit!</span>")
 				eardeaf += rand(2, 3)
 
 			if (15 to 24)
-				boutput(src, "<span style=\"color:red\">Your ears are really starting to hurt!</span>")
+				boutput(src, "<span class='alert'>Your ears are really starting to hurt!</span>")
 				eardeaf += src.ear_damage * 0.5
 
 			if (25 to INFINITY)
-				boutput(src, "<span style=\"color:red\"><b>Your ears ring very badly!</b></span>")
+				boutput(src, "<span class='alert'><b>Your ears ring very badly!</b></span>")
 
 				if (src.bioHolder && prob(src.ear_damage - 10 + 5))
 					src.show_text("<b>You go deaf!</b>", "red")
@@ -2523,9 +2523,9 @@
 		src.ear_deaf = max(0, src.ear_deaf + eardeaf)
 
 		if (src.ear_deaf == 0 && deaf_bypass == 0 && suppress_message == 0)
-			boutput(src, "<span style=\"color:blue\">The ringing in your ears subsides enough to let you hear again.</span>")
+			boutput(src, "<span class='notice'>The ringing in your ears subsides enough to let you hear again.</span>")
 		else if (eardeaf > 0 && deaf_bypass == 0 && suppress_message == 0)
-			boutput(src, "<span style=\"color:red\">The ringing overpowers your ability to hear momentarily.</span>")
+			boutput(src, "<span class='alert'>The ringing overpowers your ability to hear momentarily.</span>")
 
 	//DEBUG_MESSAGE("Ear damage applied: [amount]. Tempdeaf: [tempdeaf == 0 ? "N" : "Y"]")
 	return 1
@@ -2769,7 +2769,7 @@
 			return
 	if (src.mind)
 		if(src.mind.damned)
-			boutput(src, "<span style=\"color:red\">You can never escape.</span>")
+			boutput(src, "<span class='alert'>You can never escape.</span>")
 		else // uhhhhh how did you get here. You didnt sin enough! Go back and try harder!
 			return
 
@@ -2901,15 +2901,15 @@
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
 	if (isdiabolical(src))
-		boutput(src, "<span style=\"color:blue\">You collect souls, why would you want to sell yours?</span>")
+		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
 		return 0
 	if(istype(src, /mob/living/carbon/human) && src:unkillable) //shield of souls interaction
-		boutput(src,"<span style=\"color:red\"><b>Your soul is shielded and cannot be sold!</b></span>")
+		boutput(src,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 		return 0
 	if(amount > src.mind.soul)
-		boutput(src, "<span style=\"color:red\"><b>You don't have enough of a soul to sell!</b></span>")
+		boutput(src, "<span class='alert'><b>You don't have enough of a soul to sell!</b></span>")
 		return 0
-	boutput(src, "<span style=\"color:red\"><b>You feel a portion of your soul rip away from your body!</b></span>")
+	boutput(src, "<span class='alert'><b>You feel a portion of your soul rip away from your body!</b></span>")
 	if(reduce_health)
 		var/current_penalty = src.hasStatus("maxhealth-")?:change
 		src.setStatus("maxhealth-", null, current_penalty - amount / 4 * 3)

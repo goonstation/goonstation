@@ -19,7 +19,7 @@
 		var/mob/living/M = holder.owner
 
 		if (istype(M.loc,/mob/))
-			boutput(usr, "<span style=\"color:red\">You can't jump right now!</span>")
+			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
 			return 1
 
 		var/jump_tiles = max_range
@@ -32,7 +32,7 @@
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
-			usr.visible_message("<span style=\"color:red\"><b>[M]</b> pounces into the air!</span>")
+			usr.visible_message("<span class='alert'><b>[M]</b> pounces into the air!</span>")
 
 			for(var/i=0, i < jump_tiles, i++)
 
@@ -50,7 +50,7 @@
 			usr.pixel_y = 0
 
 			if (M.bioHolder && M.bioHolder.HasEffect("fat") && prob(66))
-				M.visible_message("<span style=\"color:red\"><b>[M]</b> crashes due to their heavy weight!</span>")
+				M.visible_message("<span class='alert'><b>[M]</b> crashes due to their heavy weight!</span>")
 				playsound(usr.loc, "sound/effects/zhit.ogg", 50, 1)
 				M.changeStatus("weakened",70)
 				M.changeStatus("stunned",40)
@@ -59,10 +59,10 @@
 
 		if (istype(M.loc,/obj/))
 			var/obj/container = M.loc
-			boutput(M, "<span style=\"color:red\">You leap and slam your head against the inside of [container]! Ouch!</span>")
+			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 			M.setStatus("paralysis",30)
 			M.setStatus("weakened",50)
-			container.visible_message("<span style=\"color:red\"><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
+			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(M.loc, "sound/effects/bang.ogg", 50, 1)
 			var/wiggle = 6
 			while(wiggle > 0)

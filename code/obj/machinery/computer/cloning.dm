@@ -86,7 +86,7 @@
 		var/obj/item/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
-		user.show_text("<span style=\"color:blue\">You add [cash] to the credit in [src].</span>")
+		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
 		user.u_equip(W)
 		pool(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
@@ -101,7 +101,7 @@
 	else if (isscrewingtool(W) && ((src.status & BROKEN) || !src.pod1 || !src.scanner || src.allow_dead_scanning || src.allow_mind_erasure || src.pod1.BE))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
-			boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -127,7 +127,7 @@
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
-			boutput(user, "<span style=\"color:red\">There is already an upgrade installed.</span>")
+			boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
 			return
 
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -138,7 +138,7 @@
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
 		if(allow_mind_erasure || allow_dead_scanning)
-			boutput(user, "<span style=\"color:red\">There is already an upgrade installed.</span>")
+			boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
@@ -148,10 +148,10 @@
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
 		if(module.BE == null)
-			boutput(user, "<span style=\"color:red\">You need to put an injector into the module before it will work!</span>")
+			boutput(user, "<span class='alert'>You need to put an injector into the module before it will work!</span>")
 			return
 		if(pod1.BE)
-			boutput(user,"<span style=\"color:red\">There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess.</span>")
+			boutput(user,"<span class='alert'>There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess.</span>")
 			return
 		src.pod1.BE = module.BE
 		user.drop_item()
@@ -499,7 +499,7 @@
 		//for deleting the mob in the afterlife bar if cloning person from there.
 		var/mob/ALB_selection = selected
 		if (inafterlifebar(ALB_selection))
-			boutput(selected, "<span style=\"color:blue\">You are being returned to the land of the living!</span>")
+			boutput(selected, "<span class='notice'>You are being returned to the land of the living!</span>")
 			selected = ALB_selection.ghostize()
 			qdel(ALB_selection)
 
@@ -662,7 +662,7 @@
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
 		.= 1
@@ -717,7 +717,7 @@
 			return
 
 		if (src.occupant)
-			boutput(user, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
 		var/mob/M = G.affecting
@@ -753,11 +753,11 @@
 		if(lock_status && !locked)
 			locked = 1
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span style='color:red'>\The [src] locks shut!</span>")
+			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span style='color:blue'>\The [src] unlocks!</span>")
+			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (air_group || (height==0))
@@ -811,7 +811,7 @@
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		bo(occupant, "<span style='color:red'>Hatches open and tiny, grabby claws emerge!</span>")
+		bo(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
 
 		SubscribeToProcess()
 
@@ -863,7 +863,7 @@
 
 		if(to_remove)
 			if(prob(70))
-				bo(occupant, "<span style='color:red'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
 				playsound(get_turf(src), "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else

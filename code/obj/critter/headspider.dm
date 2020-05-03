@@ -18,11 +18,11 @@
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			. += "<span style=\"color:red\"><B>the disgusting creature is not moving</B></span>"
+			. += "<span class='alert'><B>the disgusting creature is not moving</B></span>"
 		else if (src.health > 40)
-			. += "<span style=\"color:red\"><B>the spindly-legged head looks healthy and strong</B></span>"
+			. += "<span class='alert'><B>the spindly-legged head looks healthy and strong</B></span>"
 		else
-			. += "<span style=\"color:red\"><B>the ugly thing is missing several limbs</B></span>"
+			. += "<span class='alert'><B>the ugly thing is missing several limbs</B></span>"
 		return
 
 	filter_target(var/mob/living/C)

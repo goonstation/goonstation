@@ -64,7 +64,7 @@
 			if (prob(5))
 				var/msg = pick("Your chest hurts[prob(20) ? ". The pain radiates down your [pick("left arm", "back")]" : null]",\
 				"You feel a burning pain in your chest")
-				boutput(affected_mob, "<span style='color:red'>[msg].</span>")
+				boutput(affected_mob, "<span class='alert'>[msg].</span>")
 			if (prob(2))
 				affected_mob.losebreath ++
 			if (prob(2))

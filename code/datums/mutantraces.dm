@@ -105,7 +105,7 @@
 					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
-					boutput(mob, "<span style=\"color:red\"><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
 					if (W)
 						W.set_loc(mob.loc)
 						W.dropped(mob)
@@ -226,7 +226,7 @@
 					if (W.compatible_species.Find("human"))
 						continue
 					mob.u_equip(W)
-					boutput(mob, "<span style=\"color:red\"><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
 					if (W)
 						W.set_loc(mob.loc)
 						W.dropped(mob)
@@ -538,11 +538,11 @@
 			..()
 
 	onDeath()
-		mob.show_message("<span style=\"color:blue\">You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
+		mob.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
 		SPAWN_DBG(45 SECONDS)
 			if (mob)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
-					mob.show_message("<span style=\"color:blue\">You fail to rise, your brain has been destroyed.</span>")
+					mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
 				else
 					// ha ha nope. Instead we copy paste a bunch of shit from full_heal but leave out select bits such as : limb regeneration, reagent clearing
 					//mob.full_heal()
@@ -589,7 +589,7 @@
 
 
 					mob.emote("scream")
-					mob.visible_message("<span style=\"color:red\"><B>[mob]</B> rises from the dead!</span>")
+					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
 
 		return 1
 
@@ -794,7 +794,7 @@
 			if ("scream")
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
-					message = "<span style=\"color:red\"><B>[mob] screeches!</B></span>"
+					message = "<span class='alert'><B>[mob] screeches!</B></span>"
 					playsound(get_turf(mob), "sound/voice/creepyshriek.ogg", 60, 1)
 					SPAWN_DBG (30)
 						if (mob) mob.emote_allowed = 1
@@ -883,7 +883,7 @@
 			if("howl", "scream")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
-					message = "<span style=\"color:red\"><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
+					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
 					SPAWN_DBG(3 SECONDS)
 						mob.emote_allowed = 1
@@ -1086,7 +1086,7 @@
 							src.mob.reagents.del_reagent("ants")
 							src.mob.reagents.del_reagent("mutagen")
 							src.mob.reagents.add_reagent("spiders", ant_amt + mut_amt)
-							boutput(src.mob, "<span style=\"color:blue\">The ants arachnify.</span>")
+							boutput(src.mob, "<span class='notice'>The ants arachnify.</span>")
 							playsound(get_turf(src.mob), "sound/effects/bubbles.ogg", 80, 1)*/
 			if("roll")
 				if (!mob.restrained())
@@ -1114,7 +1114,7 @@
 					for(var/mob/living/M in mob.loc)
 						if(M == src || !M.lying)
 							continue
-						. = "<span style=\"color:red\"><B>[mob]</B> farts in [M]'s face!</span>"
+						. = "<span class='alert'><B>[mob]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
 						break
 					if(!fart_on_other)
@@ -1220,7 +1220,7 @@
 	onDeath()
 		SPAWN_DBG(2 SECONDS)
 			if (mob)
-				mob.visible_message("<span style=\"color:red\"><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
+				mob.visible_message("<span class='alert'><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 				mob.changeStatus("weakened", 150)
 				mob.make_jittery(1000)
 				sleep(rand(40, 120))
@@ -1334,7 +1334,7 @@
 			if ("scream","howl","laugh")
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
-					message = "<span style=\"color:red\"><B>[mob] makes an awful noise!</B></span>"
+					message = "<span class='alert'><B>[mob] makes an awful noise!</B></span>"
 					playsound(get_turf(mob), pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1)
 					SPAWN_DBG (30)
 						if (mob) mob.emote_allowed = 1
@@ -1396,7 +1396,7 @@
 	// ignore_missing_limbs = OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
 		if(ishuman(target))
-			mob.visible_message("<span style=\"color:red\"><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
+			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
 		else
 			return target.attack_hand(mob)
 
@@ -1649,7 +1649,7 @@
 		else
 			var/obj/item/reagent_containers/milk_target = mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span style=\"color:red\"><B>[mob] dispenses milk into [milk_target].</B></span>")
+				.= ("<span class='alert'><B>[mob] dispenses milk into [milk_target].</B></span>")
 				playsound(get_turf(mob), "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(mob, milk_target, 10)
 				return

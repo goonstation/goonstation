@@ -42,11 +42,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -66,7 +66,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Thrall"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
 
 	var/mob/vamp_isbiting = null

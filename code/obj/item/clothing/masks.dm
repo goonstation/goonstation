@@ -81,10 +81,10 @@
 	if (!source || !target) return
 	if( src.unstaple()) //Try a staple if it worked, yay
 		if (!src.stapled) //That's the last staple!
-			source.visible_message("<span style=\"color:red\"><B>[source] rips out the staples from [src]!</B></span>", "<span style=\"color:red\"><B>You rip out the staples from [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+			source.visible_message("<span class='alert'><B>[source] rips out the staples from [src]!</B></span>", "<span class='alert'><B>You rip out the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 			. = 1
 		else //Did you get some of them?
-			source.visible_message("<span style=\"color:red\"><B>[source] rips out some of the staples from [src]!</B></span>", "<span style=\"color:red\"><B>You rip out some of the staples from [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+			source.visible_message("<span class='alert'><B>[source] rips out some of the staples from [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 			. = 0
 
 		//Commence owie
@@ -370,11 +370,11 @@
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span style=\"color:blue\">You scribble on the mask until it's filled in.</span>")
+				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
 				if (P.font_color)
 					src.color = P.font_color
 		else if (istype(W,/obj/item/cable_coil/))
-			boutput(user, "<span style=\"color:blue\">You attach the cable to the mask. Looks like you can wear it now.</span>")
+			boutput(user, "<span class='notice'>You attach the cable to the mask. Looks like you can wear it now.</span>")
 			var/obj/item/cable_coil/C = W
 			C.use(1)
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
@@ -399,7 +399,7 @@
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span style=\"color:blue\">You scribble on the mask until it's filled in.</span>")
+				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
 				src.color = P.font_color
 
 /obj/item/clothing/mask/melons

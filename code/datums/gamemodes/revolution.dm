@@ -66,7 +66,7 @@
 	var/list/heads = get_living_heads()
 
 	if(!head_revolutionaries || !heads)
-		boutput(world, "<B><span style=\"color:red\">Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
+		boutput(world, "<B><span class='alert'>Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
 		sleep(5 SECONDS)
 		Reboot_server()
 		return
@@ -84,7 +84,7 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/obj_count = 1
-		boutput(rev_mind.current, "<span style=\"color:blue\">You are a member of the revolutionaries' leadership!</span>")
+		boutput(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 		for(var/datum/objective/objective in rev_mind.objectives)
 			boutput(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -412,11 +412,11 @@
 
 	var/text = ""
 	if(finished == 1)
-		boutput(world, "<span style=\"color:red\"><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>")
+		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>")
 	else if(finished == 2)
-		boutput(world, "<span style=\"color:red\"><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>")
+		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>")
 	else if(finished == 3)
-		boutput(world, "<span style=\"color:red\"><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
+		boutput(world, "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
 
 #ifdef DATALOGGER
 	switch(finished)

@@ -310,7 +310,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -333,7 +333,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		src.open = 0
@@ -387,7 +387,7 @@
 		else if (istype(W, /obj/item/satchel/))
 			var/amt = W.contents.len
 			if (amt)
-				user.visible_message("<span style='color:blue'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
 					if (open)
@@ -415,10 +415,10 @@
 				return
 			if (!src.welded)
 				src.weld(1, welder, user)
-				src.visible_message("<span style='color:red'>[user] welds [src] closed with [welder].</span>")
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [welder].</span>")
 			else
 				src.weld(0, welder, user)
-				src.visible_message("<span style='color:red'>[user] unwelds [src] with [welder].</span>")
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [welder].</span>")
 			return
 
 		if (src.secure)
@@ -430,7 +430,7 @@
 				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span style='color:blue'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.update_icon()
 					if (!src.registered)
 						src.registered = I.registered
@@ -442,7 +442,7 @@
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span style='color:blue'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.update_icon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")

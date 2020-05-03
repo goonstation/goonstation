@@ -548,17 +548,17 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.UpdateOverlays(src.image_pip, "pip")
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking [src.real_name]s!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking [src.real_name]s!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:blue'>You finish stacking [src.real_name]s.</span>")
+		boutput(user, "<span class='notice'>You finish stacking [src.real_name]s.</span>")
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:red'>You need another stack!</span>")
+		boutput(user, "<span class='alert'>You need another stack!</span>")
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
-			user.visible_message("<span style='color:blue'>[user] stacks some [src.real_name]s.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
 		else
 			..(I, user)
@@ -568,7 +568,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span style='color:red'>You wish!</span>")
+					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				src.change_stack_amount(0 - amt)
 				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
@@ -1187,16 +1187,16 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	ability_allowed()
 		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))
-			boutput(the_mob, "<span style='color:red'>You are incapacitated.</span>")
+			boutput(the_mob, "<span class='alert'>You are incapacitated.</span>")
 			return 0
 
 		if (ishuman(the_mob))
 			var/mob/living/carbon/human/usagi = the_mob
 			if (!(istype(usagi.w_uniform, /obj/item/clothing/under/gimmick/sailormoon)))
-				boutput(the_mob, "<span style='color:red'>Your clothes don't feel magical enough to use this.</span>")
+				boutput(the_mob, "<span class='alert'>Your clothes don't feel magical enough to use this.</span>")
 				return 0
 			if (!usagi.find_in_hand(the_item))
-				boutput(the_mob, "<span style='color:red'>You have to be holding [the_item] to use this.</span>")
+				boutput(the_mob, "<span class='alert'>You have to be holding [the_item] to use this.</span>")
 				return 0
 
 		if (!..())
@@ -1281,7 +1281,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		var/atom/movable/AM = pick(M.contents)
 		if (!AM)
 			return ..()
-		user.visible_message("<span style='color:red'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
 		playsound(get_turf(M), src.hitsound, 50, 1)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
@@ -1293,7 +1293,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -1331,7 +1331,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 		if ((last_shot + shot_delay) <= world.time)
 			if (cash_amt <= 0)
-				boutput(user, "<span style='color:green'>\The [src] beeps, \"I ain't got enough cash for that!\"</span>")
+				boutput(user, "<span class='success'>\The [src] beeps, \"I ain't got enough cash for that!\"</span>")
 				return
 
 			last_shot = world.time
@@ -1355,18 +1355,18 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
 			playsound(T, "sound/effects/bamf.ogg", 40, 1)
-			user.visible_message("<span style='color:green'><b>[user]</b> blasts some bling at [target]!</span>")
+			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
 	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??
-			boutput(user, "<span style='color:green'>\The [src] beeps, \"Your cash is trash! It ain't worth jack, mack!\"<br>[C] promptly vanishes in a puff of logic.</span>")
+			boutput(user, "<span class='success'>\The [src] beeps, \"Your cash is trash! It ain't worth jack, mack!\"<br>[C] promptly vanishes in a puff of logic.</span>")
 			user.u_equip(C)
 			pool(C)
 			return
 		if (src.cash_amt >= src.cash_max)
-			boutput(user, "<span style='color:green'>\The [src] beeps, \"I ain't need no more money, honey!\"</span>")
+			boutput(user, "<span class='success'>\The [src] beeps, \"I ain't need no more money, honey!\"</span>")
 			return
 		var/max_accept = (src.cash_max - src.cash_amt)
 		if (C.amount > max_accept)
@@ -1377,7 +1377,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.cash_amt += C.amount
 			user.u_equip(C)
 			pool(C)
-		boutput(user, "<span style='color:green'>\The [src] beeps, \"That's the good stuff!\"</span>")
+		boutput(user, "<span class='success'>\The [src] beeps, \"That's the good stuff!\"</span>")
 
 /obj/item/gun/bling_blaster/cheapo
 	name = "bling blaster"
@@ -1479,7 +1479,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			target.makeup_color = makeup.font_color
 			target.update_body()
 			for (var/mob/O in AIviewers(owner))
-				O.show_message("<span style='color:red'>[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!</span>", 1)
+				O.show_message("<span class='alert'>[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!</span>", 1)
 
 	onEnd()
 		..()
@@ -1518,7 +1518,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			src.bangfired = 1
 			if(user)
-				user.visible_message("<span style=\"color:red\"><span style='color:red'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
+				user.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
 			playsound(get_turf(user), "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
@@ -1727,7 +1727,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	set name = "Throw (c)"
 	set desc = "Spin a grabbed opponent around and throw them."
 
-	boutput(usr, "<span style=\"color:red\">Kali Ma is appeased for the moment!</span>")
+	boutput(usr, "<span class='alert'>Kali Ma is appeased for the moment!</span>")
 	return
 
 /mob/proc/kali_ma(var/mob/living/M in grabbing())
@@ -1767,7 +1767,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						src.transforming = 1
 						src.dir = get_dir(src, H)
 						H.dir = get_dir(H, src)
-						src.visible_message("<span style=\"color:red\"><B>[src] menacingly grabs [H] by the neck!</B></span>")
+						src.visible_message("<span class='alert'><B>[src] menacingly grabs [H] by the neck!</B></span>")
 						src.say("Shakthi Degi Kali Ma.")
 						var/dir_offset = get_dir(src, H)
 						switch(dir_offset)
@@ -1792,7 +1792,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						sleep(2 SECONDS)
 						if (ishuman(H))
 							var/mob/living/carbon/human/HU = H
-							src.visible_message("<span style=\"color:red\"><B>[src] shoves \his hand into [H]'s chest!</B></span>")
+							src.visible_message("<span class='alert'><B>[src] shoves \his hand into [H]'s chest!</B></span>")
 							src.say("Kali ma, shakthi deh!")
 							if(HU.heart_op_stage <= 3.0)
 								HU:heart_op_stage = 4.0
@@ -1806,14 +1806,14 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							else
 								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
 								HU.emote("scream")
-								src.visible_message("<span style=\"color:red\"><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
+								src.visible_message("<span class='alert'><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
 								sleep(2 SECONDS)
 							HU.stunned += 10
 							HU.weakened += 12
 							var/turf/target = get_edge_target_turf(src, src.dir)
 							SPAWN_DBG(0)
 								playsound(src.loc, "swing_hit", 40, 1)
-								src.visible_message("<span style=\"color:red\"><B>[src] casually tosses [H] away!</B></span>")
+								src.visible_message("<span class='alert'><B>[src] casually tosses [H] away!</B></span>")
 								HU.throw_at(target, 10, 2)
 							HU.pixel_x = 0
 							HU.pixel_y = 0
@@ -1824,7 +1824,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							src.verbs -= /mob/proc/kali_ma_placeholder
 							if (istype(src:w_uniform, /obj/item/clothing/under/mola_ram))
 								src.verbs += /mob/proc/kali_ma
-								boutput(src, "<span style=\"color:red\">Kali Ma desires more!</span>")
+								boutput(src, "<span class='alert'>Kali Ma desires more!</span>")
 
 						return
 */
@@ -1944,13 +1944,13 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(M.sleeping) M.sleeping = 0
 		if(prob(15)) M.emote(pick("grin", "smirk", "blink", "blink_r", "nod", "twitch", "twitch_v", "laugh", "chuckle", "stare", "leer", "scream"))
 		if(prob(10))
-			boutput(M, pick("<span style=\"color:red\"><b>You [pick(</span>"feel", "are")] [pick("", "totally ", "utterly ", "completely ", "absolutely ")]fucking [pick("awesome", "rad", "great")]!</b>", "<span style=\"color:red\"><b>[pick(</span>"Fuck", "Fucking", "Hell")] [pick("yeah", "yes")]!</b>", "<span style=\"color:red\"><b>[pick(</span>"Yes", "YES")]!</b>", "<span style=\"color:red\"><b>You've got this shit in the BAG!</b></span>", "<span style=\"color:red\"><b>I said god DAMN!!!</b></span>"))
+			boutput(M, pick("<span class='alert'><b>You [pick(</span>"feel", "are")] [pick("", "totally ", "utterly ", "completely ", "absolutely ")]fucking [pick("awesome", "rad", "great")]!</b>", "<span class='alert'><b>[pick(</span>"Fuck", "Fucking", "Hell")] [pick("yeah", "yes")]!</b>", "<span class='alert'><b>[pick(</span>"Yes", "YES")]!</b>", "<span class='alert'><b>You've got this shit in the BAG!</b></span>", "<span class='alert'><b>I said god DAMN!!!</b></span>"))
 			M.emote(pick("grin", "smirk", "nod", "laugh", "chuckle", "scream"))
 /*		if(prob(6))
-			boutput(M, "<span style=\"color:red\"><b>You feel warm.</b></span>")
+			boutput(M, "<span class='alert'><b>You feel warm.</b></span>")
 			M.bodytemperature += rand(1,10)
 		if(prob(4))
-			boutput(M, "<span style=\"color:red\"><b>You feel kinda awful!</b></span>")
+			boutput(M, "<span class='alert'><b>You feel kinda awful!</b></span>")
 			M.take_toxin_damage(1)
 			M.updatehealth()
 			M.make_jittery(30)
@@ -1967,12 +1967,12 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			if(hascall(holder.my_atom,"addOverlayComposition"))
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
 			if (effect <= 2)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> looks confused!</span>", "<span style=\"color:red\"><b>Fuck, what was that?!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> looks confused!</span>", "<span class='alert'><b>Fuck, what was that?!</b></span>")
 				M.change_misstep_chance(33)
 				M.make_jittery(20)
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
 			else if (effect <= 4)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> is all sweaty!</span>", "<span style=\"color:red\"><b>Did it get way fucking hotter in here?</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> is all sweaty!</span>", "<span class='alert'><b>Did it get way fucking hotter in here?</b></span>")
 				M.bodytemperature += rand(10,30)
 				M.brainloss++
 				M.take_toxin_damage(1)
@@ -1987,12 +1987,12 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			if(hascall(holder.my_atom,"addOverlayComposition"))
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 			if (effect <= 2)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> is sweating like a pig!</span>", "<span style=\"color:red\"><b>Fuck, someone turn on the AC!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>", "<span class='alert'><b>Fuck, someone turn on the AC!</b></span>")
 				M.bodytemperature += rand(20,100)
 				M.take_toxin_damage(5)
 				M.updatehealth()
 			else if (effect <= 4)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> starts freaking the fuck out!</span>", "<span style=\"color:red\"><b>Holy shit, what the fuck was that?!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> starts freaking the fuck out!</span>", "<span class='alert'><b>Holy shit, what the fuck was that?!</b></span>")
 				M.make_jittery(100)
 				M.take_toxin_damage(2)
 				M.brainloss += 8
@@ -2002,7 +2002,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				M.emote("scream")
 			else if (effect <= 7)
 				M.emote("scream")
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> nervously scratches at their skin!</span>", "<span style=\"color:red\"><b>Fuck, so goddamn itchy!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> nervously scratches at their skin!</span>", "<span class='alert'><b>Fuck, so goddamn itchy!</b></span>")
 				M.make_jittery(10)
 				random_brute_damage(M, 5)
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))

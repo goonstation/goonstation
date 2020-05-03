@@ -39,7 +39,7 @@
 
 		//pretty sure this should never happen since I'm adding the first camera found to be the current, but just in cases
 		if (!src.current)
-			boutput(user, "<span style=\"color:red\">No current active camera. Select a camera as an origin point.</span>")
+			boutput(user, "<span class='alert'>No current active camera. Select a camera as an origin point.</span>")
 			return
 
 
@@ -62,7 +62,7 @@
 		if(!closest)
 			return
 		else if (!closest.camera_status)
-			boutput(user, "<span style=\"color:red\">ERROR. Cannot connect to camera.</span>")
+			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
 			return
 		switchCamera(user, closest)
@@ -147,7 +147,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -161,7 +161,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/security/M = new /obj/item/circuitboard/security( A )

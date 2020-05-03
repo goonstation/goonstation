@@ -36,7 +36,7 @@ VUVUZELA
 		if (!M.can_slip())
 			return
 		M.pulling = null
-		boutput(M, "<span style=\"color:blue\">You slipped on the banana peel!</span>")
+		boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.sims)

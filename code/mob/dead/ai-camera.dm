@@ -263,7 +263,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span style=\"color:red\">You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 		return
 
 	verb/ai_view_crew_manifest()

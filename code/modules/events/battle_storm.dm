@@ -75,7 +75,7 @@
 		blowoutsound.repeat = 0
 		blowoutsound.channel = 5
 		world << blowoutsound
-		boutput(world, "<span style=\"color:red\"><B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]!</span>")
+		boutput(world, "<span class='alert'><B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]!</span>")
 
 		for (var/mob/M in mobs)
 			SPAWN_DBG(0)
