@@ -103,7 +103,7 @@
 	if (!message || get_dist(src, user) > 1)
 		return
 	logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
-	user.audible_message("<span style='color:#605b59'>[src] says, \"[message]\"</span>")
+	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 	var/mob/living/carbon/human/H = user
 	if (H.sims)
 		H.sims.affectMotive("fun", 1)
@@ -327,7 +327,7 @@
 		if (!message || get_dist(src, user) > 1)
 			return
 		logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
-		user.audible_message("<span style='color:#605b59'>[src] says, \"[message]\"</span>")
+		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
 			H.sims.affectMotive("fun", 1)
@@ -977,7 +977,7 @@ var/list/figure_patreon_rarity = list(\
 			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
 			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
 			user.visible_message("<span class='alert'><B>[user] uploads the Gooncode to their PDA.</B></span>")
-			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span style='color:#605b59'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
+			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span class='emote'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
 			cooldown = world.time + 40
 			return
 	return ..()

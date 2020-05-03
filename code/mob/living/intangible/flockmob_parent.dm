@@ -190,12 +190,12 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 	switch (lowertext(act))
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				message = "<span style='color:#605b59'><b>[src]</B> does a flip!</span>"
+				message = "<span class='emote'><b>[src]</B> does a flip!</span>"
 				m_type = 1
 				animate_spin(src, pick("L", "R"), 1, 0)
 		if ("scream", "caw")
 			if (src.emote_check(voluntary, 50))
-				message = "<span style='color:#605b59'><b>[src]</B> caws!</span>"
+				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
 				playsound(get_turf(src), "sound/misc/flockmind/flockmind_caw.ogg", 60, 1)
 

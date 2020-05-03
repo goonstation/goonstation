@@ -585,10 +585,10 @@
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 			else
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 		return
 
 	examine()

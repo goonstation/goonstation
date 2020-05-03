@@ -480,7 +480,7 @@
 
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
-		src.visible_message("<span style='color:#605b59'><b>[src]</b> points to [target].</span>")
+		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
@@ -1156,7 +1156,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
-	src.visible_message("<span style=\"color:#888888\">[message]</span>")
+	src.visible_message("<span class='subtle'>[message]</span>")
 
 /mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
 	var/mod = 1

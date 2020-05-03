@@ -2379,9 +2379,9 @@ datum
 					if (nerds && nerds.len)
 						var/mob/some_idiot = pick(nerds)
 						if (prob(50))
-							M.visible_message("<span style='color:#605b59'><B>[M]</B> flips off [some_idiot.name]!</span>")
+							M.visible_message("<span class='emote'><B>[M]</B> flips off [some_idiot.name]!</span>")
 						else
-							M.visible_message("<span style='color:#605b59'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
+							M.visible_message("<span class='emote'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
 				..()
 				return
 
@@ -2555,9 +2555,9 @@ datum
 				if (!M) M = holder.my_atom
 				if (prob(10))
 					if (prob(50))
-						M.visible_message("<span style='color:#605b59'><B>[M]</B> flaps [his_or_her(M)] arms!</span>")
+						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms!</span>")
 					else
-						M.visible_message("<span style='color:#605b59'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
+						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.sound_list_flap && H.sound_list_flap.len)
@@ -3398,7 +3398,7 @@ datum
 					M.bioHolder.AddEffect("lizard", timeleft = 180)
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (prob(20))
-					M.visible_message("<span style='color:#605b59'><b>[M]</b> yees.</span>")
+					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
 					playsound(get_turf(M), "sound/misc/yee.ogg", 50, 1)
 				if (prob(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")

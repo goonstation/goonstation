@@ -202,7 +202,7 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
 		C.mob.put_in_hand_or_drop(LGP)
-		boutput(C.mob, "<span style='color:#605b59'>A pamphlet flutters out.</span>")
+		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
 /datum/jobXpReward/head_of_security_LG/old

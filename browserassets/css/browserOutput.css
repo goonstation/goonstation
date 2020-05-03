@@ -271,6 +271,8 @@ a.popt {text-decoration: none;}
 .success {color: green;}
 .hint {color: #0000ff;}
 .notice {color: #0000ff;}
+.subtle {color: #888888;}
+.emote {color: #605b59;}
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}
