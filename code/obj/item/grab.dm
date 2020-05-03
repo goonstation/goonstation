@@ -743,7 +743,7 @@
 
 
 	proc/can_block(var/hit_type = null)
-		.= 1
+		.= DEFAULT_BLOCK_PROTECTION_BONUS
 		if (isitem(src.loc) && hit_type)
 			.= 0
 			var/obj/item/I = src.loc
