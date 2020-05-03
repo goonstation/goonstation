@@ -248,11 +248,7 @@
 	for(var/client/C)
 		if (C.mob.machine == src)
 			if (get_dist(C.mob,src) <= 1)
-				if(istype(src, /obj/npc/trader)) //This is not great. But making dialogues and trader windows work together is tricky. Needs a better solution.
-					var/obj/npc/trader/T = src
-					T.openTrade(C.mob)
-				else
-					src.attack_hand(C.mob)
+				src.attack_hand(C.mob)
 			else
 				if (issilicon(C.mob))
 					src.attack_ai(usr)
