@@ -1,6 +1,6 @@
 ---
-name: Bug report
-about: Report a bug!
+name: Report a bug!
+about: Report a bug here on our issue tracker.
 title: ''
 label: ''
 assignees: ''
