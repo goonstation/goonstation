@@ -38,18 +38,18 @@
 /* -------------------- Guns & Ammo -------------------- */
 
 /obj/item/storage/box/revolver
-	name = "revolver box"
-	icon_state = "revolver"
-	desc = "A box containing a syndicate revolver and ammo."
+	name = "revolver case"
+	icon_state = "gun_case"
+	desc = "A hard case containing a syndicate revolver and ammo."
 	// cogwerks - i think the ammo boxes are dumb, giving the starting box more ammo
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,\
 	/obj/item/ammo/bullets/a357 = 3,\
 	/obj/item/ammo/bullets/a357/AP = 2)
 
 /obj/item/storage/box/detectivegun
-	name = ".38 revolver box"
-	icon_state = "revolver"
-	desc = "A box containing a .38 caliber revolver and ammunition."
+	name = ".38 revolver case"
+	icon_state = "gun_case"
+	desc = "A hard case containing a .38 caliber revolver and ammunition."
 	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
 	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
 	/obj/item/ammo/bullets/a38 = 2,\
@@ -64,17 +64,17 @@
 	/obj/item/ammo/bullets/ak47 = 2)
 
 /obj/item/storage/box/pistol
-	name = "suppressed pistol box"
-	icon_state = "revolver"
-	desc = "A box containing a sneaky pistol and some ammo."
+	name = "suppressed pistol case"
+	icon_state = "gun_case"
+	desc = "A hard case containing a sneaky pistol and some ammo."
 	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/silenced_22,\
 	/obj/item/ammo/bullets/bullet_22 = 3)
 
 /obj/item/storage/box/derringer
-	name = "derringer box"
-	icon_state = "revolver"
-	desc = "A box containing a derringer and some ammo."
+	name = "derringer case"
+	icon_state = "gun_case"
+	desc = "A hard case containing a derringer and some ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/derringer,\
 	/obj/item/ammo/bullets/derringer = 4)
 
