@@ -1,5 +1,7 @@
 
 (t)sat may 02 20
+(u)Kyle
+(*)The HoS now has a pet turtle named Sylvester. He starts in the HoS office and wears an adorable beret.
 (u)mbc
 (p)549
 (e)|
