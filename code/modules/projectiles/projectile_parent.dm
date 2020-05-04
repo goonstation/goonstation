@@ -164,6 +164,7 @@
 						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 							if (proj_data.hit_mob_sound)
 								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
+							proj_data.on_hit(X, angle_to_dir(src.angle), src)
 						for (var/obj/item/cloaking_device/S in X.contents)
 							if (S.active)
 								S.deactivate(X)
@@ -595,7 +596,7 @@ datum/projectile
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
-	var/ticks_between_mob_hits = 0
+	var/ticks_between_mob_hits = 1
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 

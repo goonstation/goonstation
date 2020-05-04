@@ -545,11 +545,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					src.slippery = 10
 
 		src.Dry(rand(vis_amount*80,vis_amount*120))
-
+		var/counter = 0
 		for (var/obj/item/I in get_turf(src))
-			LAGCHECK(LAG_LOW)
 			if (prob(vis_amount*10))
 				I.add_blood(src)
+			if(counter++>25)break
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction)
 		var/blood_addition
