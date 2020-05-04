@@ -1148,7 +1148,7 @@
 			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
-		var/joingang = alert(target,"Do you wish to join [src.gang.gang_name]?", "Gang", "Yes", "No")
+		var/joingang = alert(target,"Do you wish to join [src.gang.gang_name]?", "Gang", "No", "Yes")
 		if (joingang == "No") return
 
 		target.mind.gang = gang
