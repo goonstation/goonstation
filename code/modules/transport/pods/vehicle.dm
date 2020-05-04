@@ -866,7 +866,7 @@
 		return
 
 	if (ejectee.client)
-		myhud.remove_client(ejectee.client)
+		ejectee.detach_hud(myhud)
 		if (ejectee.client.tooltipHolder)
 			ejectee.client.tooltipHolder.inPod = 0
 
@@ -969,7 +969,7 @@
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
-		myhud.add_client(M.client)
+		M.attach_hud(myhud)
 		if (M.client.tooltipHolder)
 			M.client.tooltipHolder.inPod = 1
 
