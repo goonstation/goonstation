@@ -809,35 +809,37 @@
 
 #define BASE_SPEED 1.3
 #define RUN_SCALING 0.2
-//	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
-//	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
+
+
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
 	. = BASE_SPEED
 
 	. += movement_delay_modifier
 
+
+	var/multiplier = 1
+
+	var/datum/movement_modifier/modifier
+	for(var/type_or_instance in src.movement_modifiers)
+		if (ispath(type_or_instance))
+			modifier = movement_modifier_instances[type_or_instance]
+		else
+			modifier = type_or_instance
+		if (modifier.ask_proc)
+			var/list/r = modifier.modifiers(src, move_target, running)
+			. += r[1]
+			multiplier += r[2]
+		. += modifier.additive_slowdown
+		multiplier += modifier.multiplicative_slowdown
+
 	if (m_intent == "walk")
 		. += 0.8
+
 	if (src.nodamage)
 		return .
 
-	if (src.getStatusDuration("staggered") || src.hasStatus("blocking"))
-		. += 0.5
-		//sprint disable handled in input.dm process_move, so that stamina isn't used up when running is impossible
-
-	var/datum/statusEffect/slowed/slowedStatus = src.hasStatus("slowed")
-	if (istype(slowedStatus))
-		. += slowedStatus.howMuch
-
-	if (src.getStatusDuration("disorient"))
-		. += 9
-
-	if (src.getStatusDuration("hastened"))
-		. -= 0.8
-
 	if (src.drowsyness > 0)
 		. += 6
-
 
 	var/health_deficiency = (src.max_health - src.health) // cogwerks // let's treat this like pain
 	if (src.reagents)
@@ -895,8 +897,6 @@
 				if (2)
 					. += 300 //haha good luck
 
-	if (src.mutantrace)
-		. += src.mutantrace.movement_delay()
 	if (src.bioHolder)
 		if (src.bioHolder.HasEffect("fat"))
 			. += 1.5
@@ -954,47 +954,10 @@
 			else
 				. *= 0.5
 
-	if (src.reagents)
-		if (src.reagents.has_reagent("cocktail_triple"))
-			if (. > 9)
-				. /= 3
-			else
-				. -= 6
-
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
 		. = max(., 3)
 
-	/*	speed adjustment from pulling now handled in /mob/living/proc/pull_speed_modifier in living.dm, since it applies to both humans and cyborgs
-	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/M = src.pulling
-		// hi grayshift sorry grayshift
-		if(pull_slowing)
-			tally *= max(M.p_class, 1)
-		else
-			if(ishuman(M))
-				// if they're not on help intent and also not standing, THEN we might deign to use the p_class
-				var/mob/living/carbon/human/H = M
-				if(istype(H) && H.intent != INTENT_HELP && H.lying)
-					tally *= max(H.p_class, 1)
-			else if(istype(M, /obj/storage))
-				// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-				var/contains_unwilling_mobs = 0
-				var/obj/storage/S = M
-				for(var/mob/B in M.contents)
-					if(B.intent != INTENT_HELP && B.lying)
-						contains_unwilling_mobs = 1
-						break
-				if(contains_unwilling_mobs)
-					tally *= max(S.p_class, 1)
-			else if(istype(M,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-				tally *= max(M.p_class, 1)
-			// else, ignore p_class
-			*/
 	. *= pull_speed_modifier(move_target)
-
-	// if (src.pushing && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-	// 	if (src.pulling != src.pushing)
-	// 		. *= max (src.pushing.p_class, 1)
 
 	if (!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 		if (src.pushing && (src.pulling != src.pushing))
@@ -1010,12 +973,12 @@
 			else
 				. *= max(H.p_class, 1)
 
+	. *= multiplier
+
 	if (running)
 		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
-
-	return .
 
 #undef BASE_SPEED
 #undef RUN_SCALING

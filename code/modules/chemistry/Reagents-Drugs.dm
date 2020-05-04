@@ -919,6 +919,9 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 3)
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
 				..()
 
 			on_remove()
@@ -927,6 +930,9 @@ datum
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
 				if(holder && ismob(holder.my_atom))
 					holder.del_reagent("triplemeth")
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
