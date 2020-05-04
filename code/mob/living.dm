@@ -1184,7 +1184,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						var/mob/M = A
 						//if they're lying, pull em slower, unless you have a gang and they are in your gang.
 						if(M.lying)
-							if (src.mind?.gang && (src.mind.gang == A.mind?.gang))
+							if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
 								. *= 1		//do nothing
 							else
 								. *= max(A.p_class, 1)
