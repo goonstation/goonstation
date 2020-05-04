@@ -911,7 +911,6 @@
 			. -= src.limbs.l_leg.effect_modifier
 		if (src.limbs.r_leg)
 			. -= src.limbs.r_leg.effect_modifier
-!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))
 	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
 		var/mob/living/carbon/human/H = G.affecting
 		if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
