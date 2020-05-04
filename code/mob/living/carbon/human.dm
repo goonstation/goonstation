@@ -807,35 +807,36 @@
 
 	return
 
+#define BASE_SPEED 1.3
+#define RUN_SCALING 1.3
+//	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
+//	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
-	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
-	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
+	. = BASE_SPEED
 
-	var/tally = baseSpeed
-
-	tally += movement_delay_modifier
+	. += movement_delay_modifier
 
 	if (m_intent == "walk")
-		tally += 0.8
+		. += 0.8
 	if (src.nodamage)
-		return tally
+		return .
 
 	if (src.getStatusDuration("staggered") || src.hasStatus("blocking"))
-		tally += 0.5
+		. += 0.5
 		//sprint disable handled in input.dm process_move, so that stamina isn't used up when running is impossible
 
 	var/datum/statusEffect/slowed/slowedStatus = src.hasStatus("slowed")
 	if (istype(slowedStatus))
-		tally += slowedStatus.howMuch
+		. += slowedStatus.howMuch
 
 	if (src.getStatusDuration("disorient"))
-		tally += 9
+		. += 9
 
 	if (src.getStatusDuration("hastened"))
-		tally -= 0.8
+		. -= 0.8
 
 	if (src.drowsyness > 0)
-		tally += 6
+		. += 6
 
 
 	var/health_deficiency = (src.max_health - src.health) // cogwerks // let's treat this like pain
@@ -848,17 +849,17 @@
 			health_deficiency -= 25
 	if (src.hasStatus("gang_drug"))
 		health_deficiency -= 50
-	if (health_deficiency >= 30) tally += (health_deficiency / 25)
+	if (health_deficiency >= 30) . += (health_deficiency / 25)
 
 	var/in_wheelchair = 0
 	if (src.buckled)
 		if (istype(src.buckled, /obj/stool/chair/comfy/wheelchair))
 			if (!src.l_hand)
 				in_wheelchair++
-				tally *= 0.66
+				. *= 0.66
 			if (!src.r_hand)
 				in_wheelchair++
-				tally *= 0.66
+				. *= 0.66
 	var/missing_legs = 0
 	var/missing_arms = 0
 	if (src.limbs)
@@ -873,60 +874,60 @@
 		if (0)
 			if (!in_wheelchair && src.shoes)
 				if (src.shoes.chained)
-					tally += 15
+					. += 15
 				else if (src.shoes.speedy) // miner boots, split off from the suit
-					tally *= 0.5
+					. *= 0.5
 		if (1)
 			if (!in_wheelchair || (in_wheelchair && missing_arms))
-				tally += 7
+				. += 7
 			else if (in_wheelchair < 2)
-				tally += 3
+				. += 3
 			if (src.shoes && src.shoes.speedy) // miner boots, split off from the suit
-				tally *= 0.75 //less effect if there's only one i guess
+				. *= 0.75 //less effect if there's only one i guess
 		if (2)
 			if (!in_wheelchair)
-				tally += 15
+				. += 15
 			else if (in_wheelchair < 2)
-				tally += 7
+				. += 7
 			switch(missing_arms)
 				if (1)
-					tally += 15 //can't pull yourself along too well
+					. += 15 //can't pull yourself along too well
 				if (2)
-					tally += 300 //haha good luck
+					. += 300 //haha good luck
 
 	if (src.mutantrace)
-		tally += src.mutantrace.movement_delay()
+		. += src.mutantrace.movement_delay()
 	if (src.bioHolder)
 		if (src.bioHolder.HasEffect("fat"))
-			tally += 1.5
+			. += 1.5
 		if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-			tally += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)//10)
+			. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)//10)
 	//if (src.traitHolder)
 		//if (src.traitHolder.hasTrait("training_security"))
 		//	tally -= 0.2
 
 	if (src.limbs)
 		if (src.limbs.l_leg)
-			tally -= src.limbs.l_leg.effect_modifier
+			. -= src.limbs.l_leg.effect_modifier
 		if (src.limbs.r_leg)
-			tally -= src.limbs.r_leg.effect_modifier
-
+			. -= src.limbs.r_leg.effect_modifier
+!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))
 	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
 		var/mob/living/carbon/human/H = G.affecting
 		if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 		if (G.state == 0)
 			if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 				if(istype(H) && H.intent != INTENT_HELP && H.lying)
-					tally *= max(H.p_class, 1)
+					. *= max(H.p_class, 1)
 		else
-			tally *= max(H.p_class, 1)
+			. *= max(H.p_class, 1)
 
 	var/has_fluid_move_gear = 0
 	var/has_space_move_gear = 0
 
 	for(var/atom in src.get_equipped_items())
 		var/obj/item/I = atom
-		tally += I.getProperty("movespeed")
+		. += I.getProperty("movespeed")
 		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
 		has_space_move_gear += I.getProperty("space_movespeed")
 
@@ -934,35 +935,35 @@
 	if (has_space_move_gear)
 		var/turf/T = get_turf(src)
 		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE))
-			tally += has_space_move_gear
+			. += has_space_move_gear
 
 	if (!(src.mutantrace && src.mutantrace.aquatic)) //aquatic race suffers no penalty on dry land OR in fluid
 		var/turf/T = get_turf(src)
 		if (T && has_fluid_move_gear)		//add tally : we are on dry land and have gear on
 			if (!T.active_liquid && !(T.turf_flags & FLUID_MOVE))
-				tally += has_fluid_move_gear
+				. += has_fluid_move_gear
 		else if (T && !has_fluid_move_gear) 	//add tally : we are in fluid but have no gear
 			if (T.active_liquid)
-				tally += T.active_liquid.movement_speed_mod
+				. += T.active_liquid.movement_speed_mod
 			else if (istype(T,/turf/space/fluid))
-				tally += 4
+				. += 4
 
 	if (src.reagents)
 		if (src.reagents.has_reagent("energydrink") || src.reagents.has_reagent("methamphetamine"))
 			if (src.getStatusDuration("disorient")) //disorient still works on meth dudes!
-				tally *= 0.85
+				. *= 0.85
 			else
-				tally *= 0.5
+				. *= 0.5
 
 	if (src.reagents)
 		if (src.reagents.has_reagent("cocktail_triple"))
-			if (tally > 9)
-				tally /= 3
+			if (. > 9)
+				. /= 3
 			else
-				tally -= 6
+				. -= 6
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
-		tally = max(tally, 3)
+		. = max(., 3)
 
 	/*	speed adjustment from pulling now handled in /mob/living/proc/pull_speed_modifier in living.dm, since it applies to both humans and cyborgs
 	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
@@ -997,9 +998,9 @@
 			tally *= max (src.pushing.p_class, 1)
 
 	if (running)
-		var/minSpeed = (0.75 - runScaling * baseSpeed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
-		if (pulling) minSpeed = baseSpeed // not so fast, fucko
-		tally = min(tally, minSpeed + (tally - minSpeed) * runScaling) // i don't know what I'm doing, help
+		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
+		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
+		tally = min(tally, minSpeed + (tally - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
 
 	return tally
 
