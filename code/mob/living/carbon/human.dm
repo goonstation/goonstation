@@ -911,15 +911,15 @@
 			. -= src.limbs.l_leg.effect_modifier
 		if (src.limbs.r_leg)
 			. -= src.limbs.r_leg.effect_modifier
-	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
-		var/mob/living/carbon/human/H = G.affecting
-		if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
-		if (G.state == 0)
-			if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-				if(istype(H) && H.intent != INTENT_HELP && H.lying)
-					. *= max(H.p_class, 1)
-		else
-			. *= max(H.p_class, 1)
+	// for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
+	// 	var/mob/living/carbon/human/H = G.affecting
+	// 	if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+	// 	if (G.state == 0)
+	// 		if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+	// 			if(istype(H) && H.intent != INTENT_HELP && H.lying)
+	// 				. *= max(H.p_class, 1)
+	// 	else
+	// 		. *= max(H.p_class, 1)
 
 	var/has_fluid_move_gear = 0
 	var/has_space_move_gear = 0
@@ -992,9 +992,23 @@
 			*/
 	. *= pull_speed_modifier(move_target)
 
-	if (src.pushing && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		if (src.pulling != src.pushing)
+	// if (src.pushing && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+	// 	if (src.pulling != src.pushing)
+	// 		. *= max (src.pushing.p_class, 1)
+
+	if (!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong")))
+		if (src.pushing && (src.pulling != src.pushing))
 			. *= max (src.pushing.p_class, 1)
+			
+		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
+			var/mob/living/carbon/human/H = G.affecting
+			if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+			if (G.state == 0)
+				if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+					if(istype(H) && H.intent != INTENT_HELP && H.lying)
+						. *= max(H.p_class, 1)
+			else
+				. *= max(H.p_class, 1)
 
 	if (running)
 		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
