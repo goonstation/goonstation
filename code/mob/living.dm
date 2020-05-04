@@ -1168,34 +1168,27 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	src.visible_message("<span class='subtle'>[message]</span>")
 
 /mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
-	var/mod = 1
+	. = 1
 	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/M = src.pulling
+		var/atom/movable/A = src.pulling
 		// hi grayshift sorry grayshift
-		if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 			if(pull_slowing)
-				mod *= max(M.p_class, 1)
+				. *= max(A.p_class, 1)
 			else
-				if(istype(M,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-					mod *= max(M.p_class, 1)
+				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+					. *= max(A.p_class, 1)
 				// else, ignore p_class*/
 				else if (ishuman(src))
-					if(ishuman(M))
-						// if they're not on help intent and also not standing, THEN we might deign to use the p_class
-						var/mob/living/carbon/human/H = M
-						if(istype(H) && H.intent != INTENT_HELP && H.lying)
-							mod *= max(H.p_class, 1)
-					else if(istype(M, /obj/storage))
+					if(ismob(A))
+						var/mob/M = A
+						if(M.lying)
+							. *= max(A.p_class, 1)
+					else if(istype(A, /obj/storage))
 						// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-						var/contains_unwilling_mobs = 0
-						var/obj/storage/S = M
-						for(var/mob/B in M.contents)
-							if(B.intent != INTENT_HELP && B.lying)
-								contains_unwilling_mobs = 1
-								break
-						if(contains_unwilling_mobs)
-							mod *= max(S.p_class, 1)
-	return mod
+						if (locate(/mob) in A.contents)
+							. *= max(A.p_class,1)
+	return .
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
