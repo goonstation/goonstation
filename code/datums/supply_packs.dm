@@ -390,7 +390,7 @@
 	category = "Security Department"
 	contains = list(/obj/item/storage/belt/security,
 					/obj/item/clothing/suit/armor/vest,
-					/obj/item/clothing/head/helmet
+					/obj/item/clothing/head/helmet,
 					/obj/item/gun/energy/taser_gun,
 					/obj/item/baton,
 					/obj/item/storage/box/QM_grenadekit_security,
