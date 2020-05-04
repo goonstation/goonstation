@@ -1003,6 +1003,9 @@
 		tally = min(tally, minSpeed + (tally - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
 
 	return tally
+	
+#undef BASE_SPEED
+#undef RUN_SCALING
 
 /mob/living/carbon/human/Stat()
 	..()
