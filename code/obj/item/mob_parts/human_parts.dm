@@ -65,7 +65,7 @@
 		var/mob/living/carbon/human/H = M
 
 		if(H.limbs.vars[src.slot])
-			boutput(user, "<span style=\"color:red\">[H.name] already has one of those!</span>")
+			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
 		attach(H,user)
@@ -119,7 +119,7 @@
 				src.standImage.color = newrgb
 
 	surgery(var/obj/item/tool)
-		if(remove_stage > 1 && istype(tool,/obj/item/staple_gun))
+		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
@@ -136,19 +136,19 @@
 
 		switch(remove_stage)
 			if(0)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span style=\"color:red\">You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
+				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
 				logTheThing("combat", tool.the_mob, holder, "staples %target%'s [src.name] back on")
 				logTheThing("diary", tool.the_mob, holder, "staples %target%'s [src.name] back on", "combat")
 			if(1)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span style=\"color:red\">You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span style=\"color:red\">You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
 
 				SPAWN_DBG(rand(150,200))
 					if(remove_stage == 2)
 						src.remove(0)
 			if(3)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span style=\"color:red\">You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
+				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
 				logTheThing("combat", tool.the_mob, holder, "removes %target%'s [src.name]")
 				logTheThing("diary", tool.the_mob, holder, "removes %target%'s [src.name]", "combat")
 				src.remove(0)
@@ -187,22 +187,22 @@
 		if(strangling == 1)
 			if(holder.losebreath < 5) holder.losebreath = 5
 			if(prob(20-rebelliousness))
-				holder.visible_message("<span style=\"color:red\">[holder.name] stops trying to strangle themself.</span>", "<span style=\"color:red\">You manage to pull your [src.name] away from your throat!</span>")
+				holder.visible_message("<span class='alert'>[holder.name] stops trying to strangle themself.</span>", "<span class='alert'>You manage to pull your [src.name] away from your throat!</span>")
 				strangling = 0
 				holder.losebreath -= 5
 			return
 
 		if(prob(rebelliousness*2)) //Emote
-			boutput(holder, "<span style=\"color:red\">Your [src.name] moves by itself!</span>")
+			boutput(holder, "<span class='alert'>Your [src.name] moves by itself!</span>")
 			holder.emote(pick("snap", "shrug", "clap", "flap", "aflap", "raisehand", "crackknuckles","rude","gesticulate","wgesticulate","nosepick","flex","facepalm","airquote","flipoff","shakefist"))
 		else if(prob(rebelliousness)) //Slap self
-			boutput(holder, "<span style=\"color:red\">Your [src.name] moves by itself!</span>")
+			boutput(holder, "<span class='alert'>Your [src.name] moves by itself!</span>")
 			holder.emote("slap")
 		else if(prob(rebelliousness) && holder.get_eye_blurry() == 0) //Poke own eye
-			holder.visible_message("<span style=\"color:red\">[holder.name] pokes themself in the eye with their [src.name].</span>", "<span style=\"color:red\">Your [src.name] pokes you in the eye!</span>")
+			holder.visible_message("<span class='alert'>[holder.name] pokes themself in the eye with their [src.name].</span>", "<span class='alert'>Your [src.name] pokes you in the eye!</span>")
 			holder.change_eye_blurry(10)
 		else if(prob(rebelliousness) && holder.losebreath == 0) //Strangle self
-			holder.visible_message("<span style=\"color:red\">[holder.name] tries to strangle themself with their [src.name].</span>", "<span style=\"color:red\">Your [src.name] tries to strangle you!</span>")
+			holder.visible_message("<span class='alert'>[holder.name] tries to strangle themself with their [src.name].</span>", "<span class='alert'>Your [src.name] tries to strangle you!</span>")
 			holder.emote("gasp")
 			holder.losebreath = 5
 			strangling = 1
@@ -237,16 +237,16 @@
 			rebelliousness += 1
 
 		if(prob(rebelliousness*2)) //Emote
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] moves by itself!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] moves by itself!</b></span>")
 			holder.emote(pick("shakebutt", "flap", "aflap","stretch","dance","fart","twitch","twitch_v","flip"))
 		else if(prob(rebelliousness)) //Trip over
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] moves by itself!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] moves by itself!</b></span>")
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] is slowing you down!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
 			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 10))
 		else if(prob(rebelliousness)) //Stumble around
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] won't do what you tell it to!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)
 				holder.change_misstep_chance(20)
 

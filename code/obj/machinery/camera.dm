@@ -65,11 +65,11 @@
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 30, 1, -2)
 			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
 		else if (securedstate)
-			boutput(user, "<span style=\"color:red\">You need to secure the floor bolts!</span>")
+			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
 			playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
-			boutput(user, "<span style=\"color:red\">You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
+			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
@@ -94,15 +94,15 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style=\"color:red\">You were interrupted!</span>")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style=\"color:blue\">[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
+		owner.visible_message("<span class='notice'>[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
 		cam.securedstate = (secstate == 2) ? 1 : 2
 		if (cam.securedstate != 2)
 			cam.UnsubscribeProcess()
@@ -269,12 +269,12 @@
 
 /obj/machinery/camera/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
-		user.visible_message("<span style=\"color:red\">[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span style=\"color:red\">You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
+		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
 	if (issnippingtool(W))
 		src.camera_status = !( src.camera_status )
 		if (!( src.camera_status ))
-			user.visible_message("<span style=\"color:red\">[user] has deactivated [src]!</span>", "<span style=\"color:red\">You have deactivated [src].</span>")
+			user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
 			logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([showCoords(src.loc.x, src.loc.y, src.loc.z)])")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera1"
@@ -284,7 +284,7 @@
 					O.removeCameraCoverage(src)
 				src.remove_from_turfs()
 		else
-			user.visible_message("<span style=\"color:red\">[user] has reactivated [src]!</span>", "<span style=\"color:red\">You have reactivated [src].</span>")
+			user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera"
 			add_fingerprint(user)
@@ -372,11 +372,11 @@
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
-		boutput(user, text("<span style=\"color:blue\">[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
+		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
 		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
-			boutput(user, text("<span style=\"color:blue\">The access hatch is now [].</span>", (locked) ? "closed" : "open"))
+			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
 
 	..() // call the parent to (de|re)activate
 

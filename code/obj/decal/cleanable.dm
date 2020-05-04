@@ -133,8 +133,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				return
 			if (prob(src.slippery))
 				M.pulling = null
-				M.visible_message("<span style='color:red'><b>[M]</b> slips on [src]!</span>",\
-				"<span style='color:red'>You slip on [src]!</span>")
+				M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
+				"<span class='alert'>You slip on [src]!</span>")
 				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 				M.changeStatus("stunned", 3 SECONDS)
 				M.changeStatus("weakened", 3 SECONDS)
@@ -175,8 +175,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			else
 				if (src.reagents.total_volume)
 					src.reagents.trans_to(W, src.reagents.total_volume)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
-				"<span style=\"color:blue\">You [src.sample_verb] some of [src] into [W].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
+				"<span class='notice'>You [src.sample_verb] some of [src] into [W].</span>")
 				W.reagents.handle_reactions()
 				src.sampled = 1
 				return 1
@@ -187,8 +187,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				return 0
 			else
 				W.reagents.add_reagent(src.sample_reagent, src.sample_amt)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
-				"<span style=\"color:blue\">You [src.sample_verb] some of [src] into [W].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
+				"<span class='notice'>You [src.sample_verb] some of [src] into [W].</span>")
 				W.reagents.handle_reactions()
 				src.sampled = 1
 				return 1
@@ -545,11 +545,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					src.slippery = 10
 
 		src.Dry(rand(vis_amount*80,vis_amount*120))
-
+		var/counter = 0
 		for (var/obj/item/I in get_turf(src))
-			LAGCHECK(LAG_LOW)
 			if (prob(vis_amount*10))
 				I.add_blood(src)
+			if(counter++>25)break
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction)
 		var/blood_addition
@@ -645,8 +645,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Chef" || H.job == "Sous-Chef")
-				user.visible_message("<span style=\"color:blue\"><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
-				"<span style=\"color:blue\">You rake through \the [src] with your bare hands.</span>")
+				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
+				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				if (H.gloves)
 					H.gloves.blood_DNA = src.blood_DNA
@@ -759,8 +759,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	real_name = "writing"
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br><span style='color:[src.font_color]'>[words]</span>"
-		//. = "[src.webfont ? "<link href='http://fonts.googleapis.com/css?family=[src.font]' rel='stylesheet' type='text/css'>" : null]<span style='color: blue'>It says:</span><br><span style='[src.font ? "font-family: [src.font][src.webfont ? ", cursive" : null];" : null]color: [src.font_color]'>[words]</span>"
+		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br><span style='color:[src.font_color]'>[words]</span>"
+		//. = "[src.webfont ? "<link href='http://fonts.googleapis.com/css?family=[src.font]' rel='stylesheet' type='text/css'>" : null]<span class='notice'>It says:</span><br><span style='[src.font ? "font-family: [src.font][src.webfont ? ", cursive" : null];" : null]color: [src.font_color]'>[words]</span>"
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -811,12 +811,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "<br>\[[S.current_mode]\]<br>"
-			boutput(user, "<span style=\"color:blue\">You stamp \the [src].</span>")
+			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
 
 
 		else if (istype(W, /obj/item/pen))
 			if(!user.literate)
-				boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+				boutput(user, "<span class='alert'>You don't know how to write.</span>")
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1
@@ -906,8 +906,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				return
 
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> is splashing the urine puddle into \the [W]. How singular.</span>",\
-				"<span style=\"color:blue\">You splash a little urine into \the [W].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> is splashing the urine puddle into \the [W]. How singular.</span>",\
+				"<span class='notice'>You splash a little urine into \the [W].</span>")
 
 				switch (thrice_drunk)
 					if (0)
@@ -970,8 +970,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				return 0
 			else
 				W.reagents.add_reagent(src.sample_reagent, src.sample_amt)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's probably best not to ask.</span>",\
-				"<span style=\"color:blue\">You [src.sample_verb] some of the puke into [W]. You are absolutely disgusting.</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's probably best not to ask.</span>",\
+				"<span class='notice'>You [src.sample_verb] some of the puke into [W]. You are absolutely disgusting.</span>")
 				W.reagents.handle_reactions()
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				src.sampled = 1
@@ -1006,8 +1006,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				var/that_is = " that is the [pick("worst", "most vile", "most utterly horrendous", "grodiest", "most horrific")] thing you've seen[pick(" in your entire life", " this week", " today", "", "!")]"
 				fluff2 = " [swear1] [swear2][prob(50) ? "[that_is]" : null][pick(".", "!", "!!")]"
 
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> is sticking their fingers into [src] and pushing it into [W].<span style=\"color:red\">It [fluff] a bit.[fluff2]</span></span>",\
-			"<span style=\"color:blue\">You [src.sample_verb] some of the puke into [W].<span style=\"color:red\">It [fluff] a bit.[fluff2]</span></span>")
+			user.visible_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>",\
+			"<span class='notice'>You [src.sample_verb] some of the puke into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>")
 			W.reagents.handle_reactions()
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			src.sampled = 1
@@ -1059,11 +1059,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.show_text("You scoop some of the sticky, slimy, stringy green puke into [W]. You are absolutely horrifying.", "blue")
 				for (var/mob/O in AIviewers(user, null))
 					if (O != user)
-						O.show_message("<span style=\"color:blue\"><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's all slimy and stringy. Oh god.</span>", 1)
+						O.show_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's all slimy and stringy. Oh god.</span>", 1)
 						if (prob(33) && ishuman(O))
-							O.show_message("<span style=\"color:red\">You feel ill from watching that.</span>")
+							O.show_message("<span class='alert'>You feel ill from watching that.</span>")
 							for (var/mob/V in viewers(O, null))
-								V.show_message("<span style=\"color:red\">[O] pukes all over \himself. Thanks, [user].</span>", 1)
+								V.show_message("<span class='alert'>[O] pukes all over \himself. Thanks, [user].</span>", 1)
 								O.vomit()
 
 				W.reagents.handle_reactions()
@@ -1249,8 +1249,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				return 0
 			else
 				W.reagents.add_reagent(src.sample_reagent, src.sample_amt)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
-				"<span style=\"color:blue\">You [src.sample_verb] some of [src] into [W].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
+				"<span class='notice'>You [src.sample_verb] some of [src] into [W].</span>")
 				W.reagents.handle_reactions()
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.amount--
@@ -1362,8 +1362,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")
-				user.visible_message("<span style=\"color:blue\"><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
-				"<span style=\"color:blue\">You rake through \the [src] with your bare hands.</span>")
+				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
+				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, "sound/effects/sparks3.ogg", 50, 1)
 				if (src.sampled)
 					H.show_text("You didn't find anything useful. Now you have grime all over your hands for nothing!", "red")
@@ -1372,8 +1372,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					new /obj/item/cable_coil/cut/small(src.loc)
 				src.sampled = 1
 			if (H.job == "Chef" || H.job == "Sous-Chef")
-				user.visible_message("<span style=\"color:blue\"><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
-				"<span style=\"color:blue\">You rake through \the [src] with your bare hands.</span>")
+				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
+				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				if (src.sampled)
 					H.show_text("You didn't find anything useful. Now your hands are all grimey for nothing!", "red")
@@ -1498,7 +1498,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		if (istype(AM, /obj/critter/slug))
 			var/obj/critter/slug/S = AM
-			S.visible_message("<span style='color:red'>[S] shrivels up!</span>")
+			S.visible_message("<span class='alert'>[S] shrivels up!</span>")
 			S.CritterDeath()
 			return
 		else if (!isliving(AM) || isobj(AM) || isintangible(AM))
@@ -1507,8 +1507,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/oopschance = 0
 		if (ismob(AM))
 			if (istype(AM, /mob/living/critter/small_animal/slug)) // slugs are not good with salt
-				M.visible_message("<span style='color:red'>[M] shrivels up!</span>",\
-				"<span style='color:red'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
+				M.visible_message("<span class='alert'>[M] shrivels up!</span>",\
+				"<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 				M.TakeDamage(null, 15, 15)
 				pool(src)
 				return
@@ -1519,7 +1519,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (prob(oopschance))
 				health -= 5
 				if (health <= 0)
-					M.visible_message("<span style='color:red'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
+					M.visible_message("<span class='alert'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
 					pool(src)
 				else
 
@@ -1611,7 +1611,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (on_fire)
 			return
 		on_fire = image('icons/effects/fire.dmi', "2old")
-		visible_message("<span style='color:red'>[src] ignites!</span>")
+		visible_message("<span class='alert'>[src] ignites!</span>")
 		src.overlays += on_fire
 		SPAWN_DBG(0)
 			var/turf/T = get_turf(src)
@@ -1693,7 +1693,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (src.dry)
 			src.bang()
 		else
-			boutput(user, "<span style=\"color:blue\">You poke the mess. It's slightly viscous and smells strange. [prob(25) ? pick("Ew.", "Grody.", "Weird.") : null]</span>")
+			boutput(user, "<span class='notice'>You poke the mess. It's slightly viscous and smells strange. [prob(25) ? pick("Ew.", "Grody.", "Weird.") : null]</span>")
 
 	proc/bang()
 		src.visible_message("<b>The dust emits a loud bang!</b>")

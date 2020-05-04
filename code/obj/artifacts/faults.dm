@@ -21,7 +21,7 @@
 		if (..())
 			return
 		var/turf/T = get_turf(user)
-		T.visible_message("<span style=\"color:red\">The [O.name] suddenly bursts into flames!</span>")
+		T.visible_message("<span class='alert'>The [O.name] suddenly bursts into flames!</span>")
 		user.update_burning(40)
 		playsound(T, "sound/effects/bamf.ogg", 100, 1)
 
@@ -33,7 +33,7 @@
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		boutput(user, "<span style=\"color:red\">You feel strange.</span>")
+		boutput(user, "<span class='alert'>You feel strange.</span>")
 		user.changeStatus("radiation", (src.rads_amount)*10, 3)
 
 /datum/artifact_fault/shutdown
@@ -45,7 +45,7 @@
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span style=\"color:red\">The [O.name] suddenly deactivates!</span>")
+		T.visible_message("<span class='alert'>The [O.name] suddenly deactivates!</span>")
 		playsound(T, "sound/effects/shielddown2.ogg", 100, 1)
 		O.ArtifactDeactivated()
 
@@ -57,7 +57,7 @@
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span style=\"color:red\">The [O.name] warps [user.name] away!</span>")
+		T.visible_message("<span class='alert'>The [O.name] warps [user.name] away!</span>")
 		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
 		user.set_loc(pick(wormholeturfs))
 
@@ -75,7 +75,7 @@
 				user.u_equip(I)
 				I.dropped()
 		var/turf/T = get_turf(O)
-		T.visible_message("<span style=\"color:red\"><b>The [O.name] utterly annihilates [user.name]!</b></span>")
+		T.visible_message("<span class='alert'><b>The [O.name] utterly annihilates [user.name]!</b></span>")
 		playsound(T, "sound/effects/elec_bigzap.ogg", 100, 1)
 		user.elecgib()
 
@@ -88,7 +88,7 @@
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span style=\"color:red\">The [O.name] suddenly explodes!</span>")
+		T.visible_message("<span class='alert'>The [O.name] suddenly explodes!</span>")
 		if (isitem(src))
 			var/obj/item/I = src
 			user.u_equip(I)
@@ -104,7 +104,7 @@
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span style=\"color:red\"><b>[user.name]</b> is shocked by a surge of energy from [O.name]!</span>")
+		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [O.name]!</span>")
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(4, 1, user)
 		s.start()
@@ -128,9 +128,9 @@
 			if ("big")
 				boutput(user, "<big>[pick(messages)]</big>")
 			if ("red")
-				boutput(user, "<span style=\"color:red\">[pick(messages)]</span>")
+				boutput(user, "<span class='alert'>[pick(messages)]</span>")
 			if ("blue")
-				boutput(user, "<span style=\"color:blue\">[pick(messages)]</span>")
+				boutput(user, "<span class='notice'>[pick(messages)]</span>")
 			else
 				boutput(user, "[pick(messages)]")
 
@@ -149,6 +149,6 @@
 	deploy(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		boutput(user, "<span style=\"color:red\">The [O.name] stings you!</span>")
+		boutput(user, "<span class='alert'>The [O.name] stings you!</span>")
 		if (user.reagents)
 			user.reagents.add_reagent(poison_type,poison_amount)

@@ -103,14 +103,14 @@
 			return
 
 		if (istype(W, /obj/item/circular_saw))
-			user.visible_message("<span style=\"color:blue\">[user] hollows out [src].</span>")
+			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
 				SK.set_loc(get_turf(user))
-				SK.visible_message("<span style=\"color:red\"><B>A key clatters out of \the [src]!</B></span>")
+				SK.visible_message("<span class='alert'><B>A key clatters out of \the [src]!</B></span>")
 				src.key = null
 
 			smask.set_loc(get_turf(user))
@@ -130,7 +130,7 @@
 				if (M == user || user.loc != get_turf(user))
 					continue
 				nerdlist += M
-			user.visible_message("<span style=\"color:blue\">[user] holds out [src] and stares into it.</span>")
+			user.visible_message("<span class='notice'>[user] holds out [src] and stares into it.</span>")
 			if(src.donor || src.donor_name)
 				user.say("Alas, poor [src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"]! I knew him, [length(nerdlist) != 0 ? pick(nerdlist) : "Horatio"], a fellow of infinite jest, of most excellent fancy.")
 			else
@@ -161,19 +161,19 @@
 		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
 
 		if (!organ_location)
-			boutput(user, "<span style=\"color:blue\">Where are you putting that again? You need a head to hold the skull.</span>")
+			boutput(user, "<span class='notice'>Where are you putting that again? You need a head to hold the skull.</span>")
 			return null
 
 		if (!headSurgeryCheck(H))
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return null
 
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

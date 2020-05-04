@@ -7,9 +7,9 @@
 			var/obj/item/weldingtool/W = I
 			if (W.welding)
 				if (damaged())
-					holder.visible_message("<span style=\"color:blue\">[M] repairs some dents on [holder]!</span>")
+					holder.visible_message("<span class='notice'>[M] repairs some dents on [holder]!</span>")
 					HealDamage(5)
 				else
-					M.show_message("<span style=\"color:red\">Nothing to repair on [holder]!")
+					M.show_message("<span class='alert'>Nothing to repair on [holder]!")
 				return 0
 		return ..()

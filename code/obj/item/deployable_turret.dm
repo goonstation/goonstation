@@ -23,7 +23,7 @@
 		icon_state = "[src.icon_tag]_deployer"
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 
 	attack_self(mob/user as mob)
@@ -48,7 +48,7 @@
 			return
 		src.emagged = 1
 		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span style='color: red'>Its safety indicator is off!</span>"
+		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from)
@@ -120,7 +120,7 @@
 
 
 	get_desc(dist)
-		. = "<br><span style='color: blue'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -211,7 +211,7 @@
 		else if (istype(W, /obj/item/weldingtool) && (src.active))
 			var/turf/T = user.loc
 			if (src.health >= max_health)
-				user.show_message("<span style=\"color:blue\">The turret is already fully repaired!.</span>")
+				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
 				return
 
 			if(!W:try_weld(user, 1))
@@ -230,7 +230,7 @@
 
 			if(src.anchored)
 
-				user.show_message("<span style=\"color:blue\">Click where you want to aim the turret!</span>")
+				user.show_message("<span class='notice'>Click where you want to aim the turret!</span>")
 				var/datum/targetable/deployable_turret_aim/A = new()
 				user.targeting_ability = A
 				user.update_cursor()
@@ -261,7 +261,7 @@
 		else if (istype(W, /obj/item/screwdriver))
 
 			if(!src.anchored)
-				user.show_message("<span style=\"color:blue\">The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+				user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
 				return
 
 			var/turf/T = user.loc
@@ -272,7 +272,7 @@
 
 			if ((user.loc == T && user.equipped() == W))
 				if(src.active)
-					user.show_message("<span style=\"color:blue\">You power off the turret.</span>")
+					user.show_message("<span class='notice'>You power off the turret.</span>")
 					src.icon_state = "[src.icon_tag]_off"
 					src.active = 0
 					src.shooting = 0
@@ -280,13 +280,13 @@
 					src.target = null
 
 				else
-					user.show_message("<span style=\"color:blue\">You power on the turret.</span>")
+					user.show_message("<span class='notice'>You power on the turret.</span>")
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
 			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
 				if(src.active)
-					user.show_message("<span style=\"color:blue\">You power off the turret.</span>")
+					user.show_message("<span class='notice'>You power off the turret.</span>")
 					src.icon_state = "[src.icon_tag]_off"
 					src.active = 0
 					src.shooting = 0
@@ -294,7 +294,7 @@
 					src.target = null
 
 				else
-					user.show_message("<span style=\"color:blue\">You power on the turret.</span>")
+					user.show_message("<span class='notice'>You power on the turret.</span>")
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
@@ -309,7 +309,7 @@
 		if(!(src.quick_deploy_fuel > 0))
 			return
 		src.quick_deploy_fuel--
-		src.visible_message("<span style='color: red'>[src]'s quick deploy system engages, automatically securing it!</span>")
+		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
 		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
 		src.anchored = 1
 		src.active = 1
@@ -347,7 +347,7 @@
 
 		/*
 		if(src.emagged)
-			damage_words += "<br><span style='color: red'>Its safety indicator is off!</span>"
+			damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 		*/
 
 
@@ -517,7 +517,7 @@
 			return
 		src.emagged = 1
 		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span style='color: red'>Its safety indicator is off!</span>"
+		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
 

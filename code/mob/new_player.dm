@@ -68,7 +68,7 @@ mob/new_player
 					src.spawning = 1
 
 					close_spawn_windows()
-					boutput(src, "<span style=\"color:blue\">Now teleporting.</span>")
+					boutput(src, "<span class='notice'>Now teleporting.</span>")
 					var/ASLoc = pick(observer_start)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
@@ -94,7 +94,7 @@ mob/new_player
 		else
 			if (src.client && src.client.ckey == TWITCH_BOT_CKEY)
 				twitch_bill_spawn = 1
-				boutput(src, "<span style='font-size: 1.5em; color: blue;'><B>Please wait. When the game starts, Shitty Bill will be activated.</B></span>")
+				boutput(src, "<span class='bold notice'>Please wait. When the game starts, Shitty Bill will be activated.</span>")
 #endif
 
 	Logout()
@@ -189,7 +189,7 @@ mob/new_player
 				src.spawning = 1
 
 				close_spawn_windows()
-				boutput(src, "<span style=\"color:blue\">Now teleporting.</span>")
+				boutput(src, "<span class='notice'>Now teleporting.</span>")
 				var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
 				if (ASLoc)
 					observer.set_loc(ASLoc)
@@ -226,7 +226,7 @@ mob/new_player
 				return
 
 			if (!enter_allowed)
-				boutput(usr, "<span style=\"color:blue\">There is an administrative lock on entering the game!</span>")
+				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 				return
 
 			if (ticker && ticker.mode)
@@ -242,7 +242,7 @@ mob/new_player
 							qdel(src)
 					else
 						close_spawn_windows()
-						boutput(usr, "<span style=\"color:blue\">Sorry, that Silicon has already been taken control of.</span>")
+						boutput(usr, "<span class='notice'>Sorry, that Silicon has already been taken control of.</span>")
 
 				else if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
@@ -307,11 +307,11 @@ mob/new_player
 				F.init_player(character, 0, 1)
 
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived in a nondescript container! Good luck!</h3>")
+				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived through an alternative mode of travel! Good luck!</h3>")
+				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && rp_latejoin && rp_latejoin.len)
@@ -333,7 +333,7 @@ mob/new_player
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
-					boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
 				var/starting_loc = pick(battle_royale_spawn)
 				character.set_loc(starting_loc)
@@ -652,7 +652,7 @@ a.latejoin-card:hover {
 #if ASS_JAM
 			if(ass_mutation)
 				new_character.bioHolder.AddEffect(ass_mutation)
-				boutput(new_character.mind.current,"<span style=\"color:red\">A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
+				boutput(new_character.mind.current,"<span class='alert'>A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
 #endif
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
@@ -772,7 +772,7 @@ a.latejoin-card:hover {
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span style=\"color:red\">The round is currently being set up. Please wait.</span>")
+						boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
 						return
 
 		if(!ticker || current_state <= GAME_STATE_PREGAME)
@@ -799,7 +799,7 @@ a.latejoin-card:hover {
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span style=\"color:red\">You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
+						boutput(usr, "<span class='alert'>You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
 						return
 
 		if(ready)
@@ -824,7 +824,7 @@ a.latejoin-card:hover {
 			src.spawning = 1
 
 			close_spawn_windows()
-			boutput(src, "<span style=\"color:blue\">Now teleporting.</span>")
+			boutput(src, "<span class='notice'>Now teleporting.</span>")
 			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
 			if (ASLoc)
 				observer.set_loc(ASLoc)

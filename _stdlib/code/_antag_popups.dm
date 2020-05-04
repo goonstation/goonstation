@@ -1,4 +1,4 @@
-// moving traitor popups to defines so i can make an admin proc to show them to yourself and see what players see. 
+// moving traitor popups to defines so i can make an admin proc to show them to yourself and see what players see.
 // if you add new types of popups in here, don't forget to add them to the View Antag Popups panel at the bottom of this file
 // - thanks, singh
 
@@ -63,7 +63,7 @@
 #define SHOW_KUDZU_TIPS(M) M.Browse(grabResource("html/traitorTips/kudzu.html"), ANTAG_TIPS_WINDOW)
 
 // borg does things a little differently
-#define BORG_EMAGGED_MSG "<span style=\"color:red\"><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span style=\"color:red\"><b>Law ROM data corrupted. Unable to restore...</b></span>"
+#define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
 #define BORG_EMAGGED_ALERT_MSG "You have been emagged and now have absolute free will.", "You have been emagged!"
 #define SHOW_EMAGGED_BORG_TIPS(M) boutput(M, BORG_EMAGGED_MSG); SPAWN_DBG(0) alert(M, BORG_EMAGGED_ALERT_MSG)
 #define SHOW_ROGUE_BORG_REMOVED_TIPS(M) M.Browse(grabResource("html/traitorTips/roguerobotRemoved.html"), ANTAG_TIPS_WINDOW)
@@ -154,7 +154,7 @@
 			if (!generateHTML())
 				alert("Unable to generate the admin antag popup panel! Something's gone wacky!")
 				return
-		
+
 		usr.Browse(html, "window=adminAntagPopups;size=600x400")
 
 	Topic(href, href_list)
@@ -219,7 +219,7 @@
 			// gangers
 			if ("gang_member")
 				SHOW_GANG_MEMBER_TIPS(M)
-				
+
 			// vamp/changeling
 			if ("vampire")
 				SHOW_VAMPIRE_TIPS(M)
@@ -269,7 +269,7 @@ var/datum/adminAntagPopups/aap
 
 /client/proc/cmd_admin_antag_popups()
 	set name = "View Antag Popups"
-	set category = "Admin"	
+	set category = "Admin"
 	if (src.holder)
 		if (!aap)
 			aap = new

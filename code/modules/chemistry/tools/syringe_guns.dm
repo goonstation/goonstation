@@ -26,7 +26,7 @@
 
 	process_ammo(var/mob/user)
 		if (!canshoot())
-			boutput(user, "<span style=\"color:red\">The syringe gun's internal reservoir does not contain enough reagents to fire it!</span>")
+			boutput(user, "<span class='alert'>The syringe gun's internal reservoir does not contain enough reagents to fire it!</span>")
 			return 0
 		return 1
 
@@ -39,13 +39,13 @@
 	get_desc(dist)
 		if (dist > 2)
 			return
-		. = "<br>[round(reagents.total_volume/15)] / [round(reagents.maximum_volume/15)] shots available.<br><span style=\"color:blue\">The internal reservoir contains:</span>"
+		. = "<br>[round(reagents.total_volume/15)] / [round(reagents.maximum_volume/15)] shots available.<br><span class='notice'>The internal reservoir contains:</span>"
 		if (src.reagents.reagent_list.len)
 			for (var/current_id in src.reagents.reagent_list)
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-				. += "<br><span style=\"color:blue\">&emsp; [current_reagent.volume] units of [current_reagent.name]</span>"
+				. += "<br><span class='notice'>&emsp; [current_reagent.volume] units of [current_reagent.name]</span>"
 		else
-			. += "<br><span style=\"color:blue\">&emsp; Nothing</span>"
+			. += "<br><span class='notice'>&emsp; Nothing</span>"
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
@@ -64,7 +64,7 @@
 		set src in usr
 
 		if (!reagents)
-			boutput(usr, "<span style=\"color:red\">The little cap on the fluid container is stuck. Uh oh.</span>")
+			boutput(usr, "<span class='alert'>The little cap on the fluid container is stuck. Uh oh.</span>")
 			return
 
 		if (reagents.total_volume)
@@ -73,7 +73,7 @@
 			reagents.clear_reagents()
 			boutput(usr, "You dump out the [src.name]'s stored reagents.")
 		else
-			boutput(usr, "<span style=\"color:red\">There's nothing loaded to drain!</span>")
+			boutput(usr, "<span class='alert'>There's nothing loaded to drain!</span>")
 
 
 	alter_projectile(var/obj/projectile/P)

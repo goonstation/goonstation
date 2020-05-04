@@ -138,9 +138,9 @@ datum
 						H.emote("scream")
 						H.updatehealth()
 						if (cauterised)
-							boutput(H, "<span style=\"color:blue\">The silver nitrate burns like hell as it cauterises some of your wounds.</span>")
+							boutput(H, "<span class='notice'>The silver nitrate burns like hell as it cauterises some of your wounds.</span>")
 						else
-							boutput(H, "<span style=\"color:blue\">The silver nitrate burns like hell.</span>")
+							boutput(H, "<span class='notice'>The silver nitrate burns like hell.</span>")
 
 		silver_fulminate
 			name = "silver fulminate"
@@ -248,9 +248,9 @@ datum
 				if (prob(90))
 					M.take_toxin_damage(1 * mult)
 				if (prob(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
-				if (prob(8)) boutput(M, "<span style=\"color:blue\">You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
+				if (prob(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
 				if (prob(5))
-					boutput(M, "<span style=\"color:red\">You cannot breathe!</span>")
+					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
 					M.take_oxygen_deprivation(15 * mult)
 					M.losebreath += (1 * mult)
@@ -343,7 +343,7 @@ datum
 					var/mob/living/carbon/human/H = M
 					H.bioHolder.mobAppearance.customization_first = pick(feminine_hstyles + masculine_hstyles)
 					H.bioHolder.mobAppearance.UpdateMob()
-					boutput(H, "<span style=\"color:blue\">Your scalp feels itchy!</span>")
+					boutput(H, "<span class='notice'>Your scalp feels itchy!</span>")
 				..()
 				return
 
@@ -385,7 +385,7 @@ datum
 						var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
 						H.equip_if_possible(moustache, H.slot_wear_mask)
 						H.set_clothing_icon_dirty()
-					if (somethingchanged) boutput(H, "<span style=\"color:red\">Hair bursts forth from every follicle on your head!</span>")
+					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
 				..()
 				return
 
@@ -487,7 +487,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
-				O.visible_message("<span style=\"color:red\">The [O] comes to life!</span>")
+				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
 				O.loc = L
 				L.name = "Living [O.name]"
@@ -507,7 +507,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (prob(8))
-					boutput(M, "<span style=\"color:red\">The voices ...</span>")
+					boutput(M, "<span class='alert'>The voices ...</span>")
 					M.playsound_local(M, pick(ghostly_sounds), 100, 1)
 
 				return
@@ -545,22 +545,22 @@ datum
 						M.updatehealth()
 						setalive(M)
 					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-						M.ghost.show_text("<span style=\"color:red\"><B>You feel yourself being dragged out of the afterlife!</B></span>")
+						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 						M.ghost.mind.transfer_to(M)
 						qdel(M.ghost)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (came_back_wrong || H.decomp_stage != 0 || (H.mind && H.mind.dnr)) //Wire: added the dnr condition here
-							H.visible_message("<span style=\"color:red\"><B>[H]</B> starts convulsing violently!</span>")
+							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
 							if (H.mind && H.mind.dnr)
-								H.visible_message("<span style=\"color:red\"><b>[H]</b> seems to prefer the afterlife!</span>")
+								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN_DBG(rand(20, 100))
 								H.gib()
 						else
-							H.visible_message("<span style=\"color:red\">[H] seems to rise from the dead!</span>","<span style=\"color:red\">You feel hungry...</span>")
+							H.visible_message("<span class='alert'>[H] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 					else
-						M.visible_message("<span style=\"color:red\">[M] seems to rise from the dead!</span>","<span style=\"color:red\">You feel hungry...</span>")
+						M.visible_message("<span class='alert'>[M] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -573,7 +573,7 @@ datum
 						critter.icon_state = initial(critter.icon_state)
 						critter.set_density(initial(critter.density))
 						critter.on_revive()
-						critter.visible_message("<span style=\"color:red\">[critter] seems to rise from the dead!</span>")
+						critter.visible_message("<span class='alert'>[critter] seems to rise from the dead!</span>")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -848,7 +848,7 @@ datum
 					var/atom/A = atom
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
-							target.visible_message("<span style=\"color:red\"><b>[A]</b> dissolves completely!</span>")
+							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")
 							qdel(A)
 							removed_count++
 					if (removed_count > can_remove_amt)
@@ -892,18 +892,18 @@ datum
 					var/Message = rand(1,6)
 					switch(Message)
 						if (1)
-							boutput(M, "<span style=\"color:red\">You shudder as if cold...</span>")
+							boutput(M, "<span class='alert'>You shudder as if cold...</span>")
 							M.emote("shiver")
 						if (2)
-							boutput(M, "<span style=\"color:red\">You feel something gliding across your back...</span>")
+							boutput(M, "<span class='alert'>You feel something gliding across your back...</span>")
 						if (3)
-							boutput(M, "<span style=\"color:red\">Your eyes twitch, you feel like something you can't see is here...</span>")
+							boutput(M, "<span class='alert'>Your eyes twitch, you feel like something you can't see is here...</span>")
 						if (4)
-							boutput(M, "<span style=\"color:red\">You notice something moving out of the corner of your eye, but nothing is there...</span>")
+							boutput(M, "<span class='alert'>You notice something moving out of the corner of your eye, but nothing is there...</span>")
 						if (5)
-							boutput(M, "<span style=\"color:red\">You feel uneasy.</span>")
+							boutput(M, "<span class='alert'>You feel uneasy.</span>")
 						if (6)
-							boutput(M, "<span style=\"color:red\">You've got the heebie-jeebies.</span>")
+							boutput(M, "<span class='alert'>You've got the heebie-jeebies.</span>")
 
 					if (prob(1))
 						for (var/obj/W in orange(5,M))
@@ -934,12 +934,12 @@ datum
 				if (method == INGEST)
 					var/ranchance = rand(1,10)
 					if (ranchance == 1)
-						boutput(M, "<span style=\"color:red\">You feel very sick.</span>")
+						boutput(M, "<span class='alert'>You feel very sick.</span>")
 						M.reagents.add_reagent("toxin", rand(1,5))
 					else if (ranchance <= 5 && ranchance != 1)
-						boutput(M, "<span style=\"color:red\">That tasted absolutely FOUL.</span>")
+						boutput(M, "<span class='alert'>That tasted absolutely FOUL.</span>")
 						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
-					else boutput(M, "<span style=\"color:red\">Yuck!</span>")
+					else boutput(M, "<span class='alert'>Yuck!</span>")
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
@@ -1139,8 +1139,8 @@ datum
 						if (isrobot(M))
 							var/mob/living/silicon/robot/R = M
 							R.add_oil(volume * 2)
-							boutput(R, "<span style=\"color:blue\">Your joints and servos begin to run more smoothly.</span>")
-						else boutput(M, "<span style=\"color:red\">You feel greasy and gross.</span>")
+							boutput(R, "<span class='notice'>Your joints and servos begin to run more smoothly.</span>")
+						else boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
 
@@ -1294,7 +1294,7 @@ datum
 					if (H.bioHolder.age < 140)
 						H.bioHolder.age += 1 * mult
 					if (prob(10))
-						boutput(H, "<span style=\"color:red\">You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
+						boutput(H, "<span class='alert'>You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
 					if (prob(4))
 						H.emote("scream")
 				..()
@@ -1381,14 +1381,14 @@ datum
 					M.updatehealth()
 				else if (our_amt < 10)
 					if (prob(8))
-						M.visible_message("<span style=\"color:red\">[M] pukes all over \himself.</span>", "<span style=\"color:red\">You puke all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 					M.updatehealth()
 
 				else if (prob(4))
-					M.visible_message("<span style=\"color:red\"><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
+					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 150 * mult))
 					M.make_jittery(1000)
 					SPAWN_DBG(rand(20, 100))
@@ -1423,13 +1423,13 @@ datum
 					M.updatehealth()
 				else if (our_amt < 20)
 					if (prob(8))
-						M.visible_message("<span style=\"color:red\">[M] hoots all over \himself.</span>", "<span style=\"color:red\">You hoot all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span class='alert'>You hoot all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 					M.updatehealth()
 				else if (prob(4))
-					M.visible_message("<span style=\"color:red\"><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
+					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 150 * mult))
 					M.make_jittery(1000)
 					SPAWN_DBG(rand(20, 100))
@@ -1485,7 +1485,7 @@ datum
 							H.equip_if_possible(owl_suit, H.slot_w_uniform)
 							something_changed = 1
 						if (something_changed)
-							boutput(H, "<span style=\"color:red\">HOOT HOOT HOOT HOOT!</span>")
+							boutput(H, "<span class='alert'>HOOT HOOT HOOT HOOT!</span>")
 							playsound(H.loc, "sound/voice/animal/hoot.ogg", 80, 1)
 				..()
 				return
@@ -1505,15 +1505,15 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if (method == INGEST)
-					boutput(M, "<span style=\"color:red\">Aaaagh! It tastes fucking horrendous!</span>")
+					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN_DBG(1 SECOND)
-						M.visible_message("<span style=\"color:red\">[M] pukes violently!</span>")
+						M.visible_message("<span class='alert'>[M] pukes violently!</span>")
 						M.vomit()
 				else
-					boutput(M, "<span style=\"color:red\">Oh god! It smells horrific! What the fuck IS this?!</span>")
+					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
 						SPAWN_DBG(1 SECOND)
-							M.visible_message("<span style=\"color:red\">[M] pukes violently!</span>")
+							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
 							M.vomit()
 				return
 
@@ -1540,7 +1540,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if (ishuman(M))
-					boutput(M, "<span style=\"color:red\"><b>OH SHIT ANTS!!!!</b></span>")
+					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
 					M.emote("scream")
 					random_brute_damage(M, 4)
 				return
@@ -1567,9 +1567,9 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if (method == TOUCH)
-					boutput(M, "<span style=\"color:red\"><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				if (method == INGEST)
-					boutput(M, "<span style=\"color:red\"><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				M.emote("scream")
 				random_brute_damage(M, 2)
 				if (ishuman(M))
@@ -1579,7 +1579,7 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				var/turf/simulated/target = T
 				if (istype(target) && volume >= 5)
 					if (!locate(/obj/reagent_dispensers/spiders) in target)
@@ -1615,21 +1615,21 @@ datum
 				else if (prob(10))
 					random_brute_damage(M, 2 * mult)
 					M.emote(pick("twitch", "twitch_s", "grumble"))
-					M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under their skin", "their skin")]!</span>",\
-					"<span style=\"color:red\"><b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b></span>")
+					M.visible_message("<span class='alert'><b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under their skin", "their skin")]!</span>",\
+					"<span class='alert'><b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b></span>")
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
 					M.emote("scream")
 					M.emote("twitch")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 20 * mult))
-					M.visible_message("<span style=\"color:red\"><b>[M.name]</b> tears at their own skin!</span>",\
-					"<span style=\"color:red\"><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
+					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\
+					"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
 				else if (prob(10))
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))
-						M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]</span>",\
-						"<span style=\"color:red\"><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+						M.visible_message("<span class='alert'><b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]</span>",\
+						"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 						if (prob(33))
 							var/obj/critter/spider/baby/S = new /obj/critter/spider/baby(M)
 							if (prob(5))
@@ -1662,7 +1662,7 @@ datum
 			viscosity = 0.3
 
 			reaction_mob(var/mob/M)
-				boutput(M, "<span style=\"color:blue\">You feel loved!</span>")
+				boutput(M, "<span class='notice'>You feel loved!</span>")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1695,7 +1695,7 @@ datum
 							. = "pretty happy with yourself, even though things haven't always gone as well as they could"
 
 
-					boutput(M, "<span style=\"color:blue\">You feel [.].</span>")
+					boutput(M, "<span class='notice'>You feel [.].</span>")
 
 				else if (prob(100) && !M.restrained())//(prob(16))
 					for (var/mob/living/hugTarget in orange(1,M))
@@ -1703,7 +1703,7 @@ datum
 							continue
 						if (!hugTarget.stat)
 
-							M.visible_message("<span style=\"color:red\">[M] [prob(5) ? "awkwardly side-" : ""]hugs [hugTarget]!</span>")
+							M.visible_message("<span class='alert'>[M] [prob(5) ? "awkwardly side-" : ""]hugs [hugTarget]!</span>")
 
 							break
 
@@ -1833,9 +1833,9 @@ datum
 				if(method == INGEST)
 					var/mob/living/carbon/human/H = M
 					if (H.bioHolder && H.bioHolder.HasEffect("bee"))
-						boutput(M, "<span style=\"color:blue\">That tasted amazing!</span>")
+						boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					else
-						boutput(M, "<span style=\"color:red\">Ugh! Eating that was a terrible idea!</span>")
+						boutput(M, "<span class='alert'>Ugh! Eating that was a terrible idea!</span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
 
 		martian_flesh
@@ -1873,14 +1873,14 @@ datum
 					M.take_toxin_damage(-1 * mult)
 					M.take_brain_damage(-1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-blue'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
+						boutput(M, "<span class='notice'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
 						M.HealDamage("All", 4, 0)
 						M.take_oxygen_deprivation(-4 * mult)
 						M.take_brain_damage(-4 * mult)
 				else
 					M.take_toxin_damage(1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-red'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
+						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
 				M.updatehealth()
@@ -1893,17 +1893,17 @@ datum
 					return
 				if(ismartian(M))
 					// no matter what the method is, it's just gonna start doing weird freaky alien melding so whatever
-					boutput(M, "<span class='text-blue'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
+					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
 					M.updatehealth()
 				else
 					if(method == INGEST)
-						boutput(M, "<span class='text-red bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
+						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
 						M.emote("scream")
 					if(method == TOUCH)
-						boutput(M, "<span class='text-red'>Well, that was gross.</span>")
+						boutput(M, "<span class='alert'>Well, that was gross.</span>")
 /*
 		reliquary_blood
 			name = "blueish fluid"
@@ -1926,7 +1926,7 @@ datum
 					M.take_toxin_damage(-1 * mult)
 					M.take_brain_damage(-1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-blue'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
+						boutput(M, "<span class='notice'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
 						M.HealDamage("All", 4, 0)
 						M.take_oxygen_deprivation(-4 * mult)
 						M.take_brain_damage(-4 * mult)
@@ -1935,7 +1935,7 @@ datum
 				else
 					M.take_toxin_damage(1 * mult)
 					if(prob(10))
-						boutput(M, "<span class='text-red'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
+						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
 				M.updatehealth()
@@ -1948,17 +1948,17 @@ datum
 					return
 				if(ismartian(M))
 					// no matter what the method is, it's just gonna start doing weird freaky alien melding so whatever
-					boutput(M, "<span class='text-blue'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
+					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
 					M.updatehealth()
 				else
 					if(method == INGEST)
-						boutput(M, "<span class='text-red bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
+						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
 						M.emote("scream")
 					if(method == TOUCH)
-						boutput(M, "<span class='text-red'>Well, that was gross.</span>")
+						boutput(M, "<span class='alert'>Well, that was gross.</span>")
 */
 		flockdrone_fluid
 			name = "coagulated gnesis"
@@ -2012,7 +2012,7 @@ datum
 					if(holder.get_reagent_amount(src.id) > 300)
 						// oh no
 						if(prob(1)) // i hate you all, players
-							H.visible_message("<span class='text-red bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
+							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
 							B.loc = get_turf(H)
 							H.gib()
@@ -2038,21 +2038,21 @@ datum
 				if(!volume_passed)
 					return
 				if(method == INGEST)
-					boutput(M, "<span class='text-red'>Tastes oily and unpleasant, with a weird sweet aftertaste. It's like eating children's modelling clay.</span>")
+					boutput(M, "<span class='alert'>Tastes oily and unpleasant, with a weird sweet aftertaste. It's like eating children's modelling clay.</span>")
 				if(method == TOUCH)
-					boutput(M, "<span class='text-blue'>It feels like you got smudged with oil paints.</span>")
+					boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
 					M.color = col
 					SPAWN_DBG(3 SECONDS)
-						boutput(M, "<span class='text-red'>Oh god it's not coming off! You're tinted like this forever!</span>")
+						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if (!istype(T, /turf/space))
 					if (volume >= 50 && (istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/wall)))
-						T.visible_message("<span class='text-blue'>The substance flows out and sinks into [T], forming new shapes.</span>")
+						T.visible_message("<span class='notice'>The substance flows out and sinks into [T], forming new shapes.</span>")
 						flock_convert_turf(T)
 					if (volume >= 10)
-						T.visible_message("<span class='text-blue'>The substance flows out and takes a solid form.</span>")
+						T.visible_message("<span class='notice'>The substance flows out and takes a solid form.</span>")
 						if(prob(50))
 							var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
 							B.set_loc(T)
@@ -2065,7 +2065,7 @@ datum
 							B.setMaterial(mat)
 						return
 				// otherwise we didn't have enough
-				T.visible_message("<span class='text-blue'>The substance flows out, spread too thinly.</span>")
+				T.visible_message("<span class='notice'>The substance flows out, spread too thinly.</span>")
 
 		black_goop
 			name = "gross black goop"
@@ -2201,14 +2201,14 @@ datum
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
 				animate_spin(M, dir_temp, speed_temp)
-				DEBUG_MESSAGE("<span style=\"color:blue\"><b>Spun [M]: [dir_temp], [speed_temp]</b></span>") // <- What's this?
+				DEBUG_MESSAGE("<span class='notice'><b>Spun [M]: [dir_temp], [speed_temp]</b></span>") // <- What's this?
 
 /*			reaction_obj(var/obj/O, var/volume)
 				if (volume >= 10)
 					var/dir_temp = pick("L", "R")
 					var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
 					animate_spin(O, dir_temp, speed_temp)
-					DEBUG_MESSAGE("<span style=\"color:blue\"><b>Spun [O]: [dir_temp], [speed_temp]</b></span>")
+					DEBUG_MESSAGE("<span class='notice'><b>Spun [O]: [dir_temp], [speed_temp]</b></span>")
 */
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
@@ -2227,11 +2227,11 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> can't seem to control their legs!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
 						M.change_misstep_chance(33 * mult)
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30 * mult))
 					else if (effect <= 4)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
 						M.drop_item()
 						M.hand = !M.hand
 						M.drop_item()
@@ -2240,13 +2240,13 @@ datum
 						M.emote("laugh")
 				else if (severity == 2)
 					if (effect <= 2)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
 						M.drop_item()
 						M.hand = !M.hand
 						M.drop_item()
 						M.hand = !M.hand
 					else if (effect <= 4)
-						M.visible_message("<span style=\"color:red\"><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
 						M.make_jittery(5)
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 60 * mult))
 					else if (effect <= 7)
@@ -2379,9 +2379,9 @@ datum
 					if (nerds && nerds.len)
 						var/mob/some_idiot = pick(nerds)
 						if (prob(50))
-							M.visible_message("<span style='color:#605b59'><B>[M]</B> flips off [some_idiot.name]!</span>")
+							M.visible_message("<span class='emote'><B>[M]</B> flips off [some_idiot.name]!</span>")
 						else
-							M.visible_message("<span style='color:#605b59'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
+							M.visible_message("<span class='emote'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
 				..()
 				return
 
@@ -2415,13 +2415,13 @@ datum
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
 				if(M)
-					boutput(M, "<span style=\"color:red\">You feel yourself fading away.</span>")
+					boutput(M, "<span class='alert'>You feel yourself fading away.</span>")
 					M.alpha = 0
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN_DBG(effect_length * 10)
 						if(ishuman(M) && M.alpha != 255)
-							boutput(M, "<span style=\"color:blue\">You feel yourself returning back to normal. Phew!</span>")
+							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
 
 			do_overdose(var/severity, var/mob/living/carbon/human/M, var/mult = 1)
@@ -2466,11 +2466,11 @@ datum
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
 				if(M)
-					boutput(M, "<span style=\"color:red\">You feel yourself fading.</span>")
+					boutput(M, "<span class='alert'>You feel yourself fading.</span>")
 					M.alpha = rand(80,200)
 					SPAWN_DBG(effect_length * 10)
 						if(ismob(M) && M.alpha != 255)
-							boutput(M, "<span style=\"color:blue\">You feel yourself returning back to normal. Phew!</span>")
+							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
 
 		fartonium // :effort:
@@ -2494,7 +2494,7 @@ datum
 
 				if (M.reagents.has_reagent("anti_fart"))
 					if (prob(25))
-						boutput(M, "<span style=\"color:red\">[pick("Oh god, something doesn't feel right!", "<B>IT HURTS!</B>", "<B>FUCK!</B>", "Something is seriously wrong!", "<B>THE PAIN!</B>", "You feel like you're gunna die!")]</span>")
+						boutput(M, "<span class='alert'>[pick("Oh god, something doesn't feel right!", "<B>IT HURTS!</B>", "<B>FUCK!</B>", "Something is seriously wrong!", "<B>THE PAIN!</B>", "You feel like you're gunna die!")]</span>")
 						random_brute_damage(M, 1 * mult)
 					if (prob(10))
 						M.emote("poo")
@@ -2526,7 +2526,7 @@ datum
 				createSomeBirds(T, volume)
 
 			proc/createSomeBirds(var/turf/T as turf, var/volume)
-				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
+				CRITTER_REACTION_CHECK(reaction_count)
 				if (!T)
 					return
 				if (volume < 5)
@@ -2555,9 +2555,9 @@ datum
 				if (!M) M = holder.my_atom
 				if (prob(10))
 					if (prob(50))
-						M.visible_message("<span style='color:#605b59'><B>[M]</B> flaps [his_or_her(M)] arms!</span>")
+						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms!</span>")
 					else
-						M.visible_message("<span style='color:#605b59'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
+						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms ANGRILY!</span>")
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.sound_list_flap && H.sound_list_flap.len)
@@ -2623,11 +2623,11 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (prob(10))
-					M.visible_message("<span style=\"color:red\"><b>[M.name]</b> scratches at an itch.</span>")
+					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at an itch.</span>")
 					random_brute_damage(M, 1 * mult)
 					M.emote("grumble")
 				if (prob(5))
-					boutput(M, "<span style=\"color:red\"><b>So itchy!</b></span>")
+					boutput(M, "<span class='alert'><b>So itchy!</b></span>")
 					random_brute_damage(M, 2 * mult)
 				if (prob(1))
 					M.reagents.add_reagent("histamine", 1 * mult)
@@ -3012,7 +3012,7 @@ datum
 									M.show_text("Injecting your own blood? Who are you kidding?", "red")
 									return*/
 								if (prob(33))
-									boutput(M, "<span style=\"color:red\">Fresh blood would be better...</span>")
+									boutput(M, "<span class='alert'>Fresh blood would be better...</span>")
 								var/bloodget = volume_passed / 3
 								M.change_vampire_blood(bloodget, 1) // vamp_blood
 								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
@@ -3071,12 +3071,12 @@ datum
 				if (exposed_temperature > T0C + 50)
 					if (holder.my_atom)
 						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
-							boutput(O, "<span style=\"color:red\">The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
+							boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
 					else
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							for (var/mob/O in AIviewers(t, null))
-								boutput(O, "<span style=\"color:red\">The blood reacts, attempting to escape the heat before sizzling away!</span>")
+								boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
 					holder.del_reagent(id)
 				return
 
@@ -3145,7 +3145,7 @@ datum
 					if (prob(10))
 						M.resistances += virus.type
 						M.ailments -= virus
-						boutput(M, "<span style=\"color:blue\">You feel better</span>")
+						boutput(M, "<span class='notice'>You feel better</span>")
 				..()
 				return*/
 			reaction_turf(var/turf/T, var/volume)
@@ -3398,7 +3398,7 @@ datum
 					M.bioHolder.AddEffect("lizard", timeleft = 180)
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (prob(20))
-					M.visible_message("<span style='color:#605b59'><b>[M]</b> yees.</span>")
+					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
 					playsound(get_turf(M), "sound/misc/yee.ogg", 50, 1)
 				if (prob(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")
@@ -3616,7 +3616,7 @@ datum
 						var/startx = 1
 						var/starty = 1
 						var/mob/badmantarget = M
-						boutput(badmantarget, "<span style=\"color:blue\"> <B> You feel a sense of dread and patriotism wash over you. </B>")
+						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
 						badmantarget << sound('sound/misc/american_patriot.ogg', volume = 50)
 						sleep(10 SECONDS)
 						startx = badmantarget.x - rand(-11, 11)
@@ -3692,7 +3692,7 @@ datum
 
 				if (M && M.reagents)
 					if (prob(25))
-						boutput(M, "<span style=\"color:red\">Oh god! The <i>smell</i>!!!</span>")
+						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
 
 			//on_mob_life(var/mob/M, var/mult = 1)
@@ -3764,7 +3764,7 @@ datum
 		cloak_juice
 			name = "cloaked panellus extract"
 			id = "cloak_juice"
-			description = "<br><span style=\"color:red\">ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+			description = "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 			reagent_state = LIQUID
 			fluid_r = 50
 			fluid_g = 50
@@ -3944,7 +3944,7 @@ datum
 		while (!disposed)
 			if (get_dist(src, src.deathtarget) <= 1)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!</span>", 1)
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
@@ -3964,5 +3964,3 @@ datum
 			else
 				walk_towards(src, src.deathtarget, deathspeed)
 				sleep(0.1 SECONDS)
-
-

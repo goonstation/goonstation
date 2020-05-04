@@ -3643,7 +3643,7 @@
 "bsc" = (/obj/stool/chair/red{anchored = 0},/obj/landmark/start{name = "Security Officer"},/obj/disposalpipe/segment/mail{dir = 4},/turf/simulated/floor/specialroom/bar,/area/station/security/main)
 "bsd" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/decal/tile_edge/line/red{dir = 4; icon_state = "line1"},/obj/disposalpipe/segment,/obj/disposalpipe/segment/mail{dir = 4},/turf/simulated/floor/specialroom/bar,/area/station/security/main)
 "bse" = (/obj/wingrille_spawn/reinforced,/obj/cable{d2 = 2; icon_state = "0-2"},/obj/disposalpipe/segment/mail{dir = 4},/obj/window_blinds,/turf/simulated/floor/plating/random,/area/station/security/hos{workplace = 1})
-"bsf" = (/obj/disposalpipe/segment/mail{dir = 4},/turf/simulated/floor/white/checker{dir = 5},/area/station/security/hos{workplace = 1})
+"bsf" = (/obj/disposalpipe/segment/mail{dir = 4},/obj/critter/turtle/sylvester/HoS,/turf/simulated/floor/white/checker{dir = 5},/area/station/security/hos{workplace = 1})
 "bsg" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/disposalpipe/segment/mail{dir = 4},/turf/simulated/floor/red/checker{dir = 4},/area/station/security/hos{workplace = 1})
 "bsh" = (/obj/machinery/light{dir = 1},/obj/disposalpipe/segment/mail{dir = 4},/obj/table/wood/auto,/obj/machinery/recharger,/obj/item/device/camera_viewer,/obj/item/device/prisoner_scanner,/obj/item/device/detective_scanner,/obj/item/device/radio/headset/security,/obj/item/device/radio/headset/security,/turf/simulated/floor/white/checker{dir = 5},/area/station/security/hos{workplace = 1})
 "bsi" = (/obj/storage/secure/filing_cabinet,/obj/disposalpipe/segment/mail{dir = 4},/turf/simulated/floor/red/checker{dir = 4},/area/station/security/hos{workplace = 1})

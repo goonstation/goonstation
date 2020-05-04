@@ -29,7 +29,7 @@
   // you idiot!!
   user.TakeDamage("All", 2, 2)
   user.updatehealth()
-  user.visible_message("<span style=\"color:red\"><b>[user]</b> burns themselves on the acid of the pool! What a moron!</span>", "<span style=\"color:red\">You burn yourself on the acidic contents! Ouch!</span>")
+  user.visible_message("<span class='alert'><b>[user]</b> burns themselves on the acid of the pool! What a moron!</span>", "<span class='alert'>You burn yourself on the acidic contents! Ouch!</span>")
   if(prob(50))
     user.emote("scream")
 
@@ -82,14 +82,14 @@
     meatValue = src.calcMeatValue(W)
 
   if(meatValue <= 0)
-    boutput(user, "<span style='color:red'><b>[src]</b> can't process [meat].</span>")
+    boutput(user, "<span class='alert'><b>[src]</b> can't process [meat].</span>")
     return
 
   if(ismob(meat))
     // there should be a bit more time given for other people to rescue whoever
     actions.start(new /datum/action/bar/icon/put_in_biomass_pool(G.affecting, meatValue, src, G, 40), user)
   else
-    user.visible_message("<span style=\"color:red\"><b>[user]</b> dips [meat] in [src]!</span>", "<span style=\"color:red\">You dip [meat] in [src]!</span>")
+    user.visible_message("<span class='alert'><b>[user]</b> dips [meat] in [src]!</span>", "<span class='alert'>You dip [meat] in [src]!</span>")
     if(G)
       qdel(G)
     qdel(meat)
@@ -133,7 +133,7 @@
       src.reagents.del_reagent(reagentId)
 
 /obj/martianBiotech/biomassPool/martianInteract(var/mob/user)
-  boutput(user, "<span class='text-blue'>Pool contents: [src.meatAmount] meat, [src.biomatterAmount] biomatter.</span>")
+  boutput(user, "<span class='notice'>Pool contents: [src.meatAmount] meat, [src.biomatterAmount] biomatter.</span>")
 
 /////////////////////////////////////////////////////////////////////////////////
 // PUT-INTO-POOL ACTION
@@ -172,11 +172,11 @@
 
   onStart()
     ..()
-    owner.visible_message("<span style='color:red'><b>[owner]</b> starts dipping [target] in [pool]!</span>", "<span style='color:red'>You starting dipping [target] in [pool]!</span>")
+    owner.visible_message("<span class='alert'><b>[owner]</b> starts dipping [target] in [pool]!</span>", "<span class='alert'>You starting dipping [target] in [pool]!</span>")
 
   onEnd()
     ..()
-    owner.visible_message("<span style='color:red'><b>[owner] dips [target] into [pool]!</b></span>", "<span style='color:red'>You dip [target] in [pool]!</span>")
+    owner.visible_message("<span class='alert'><b>[owner] dips [target] into [pool]!</b></span>", "<span class='alert'>You dip [target] in [pool]!</span>")
     logTheThing("combat", owner, target, "forced %target% ([isdead(target) ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
     if (!isdead(target))
       message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")

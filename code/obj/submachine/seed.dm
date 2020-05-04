@@ -241,7 +241,7 @@
 
 	Topic(href, href_list)
 		if((get_dist(usr,src) > 1) && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You need to be closer to the machine to do that!</span>")
+			boutput(usr, "<span class='alert'>You need to be closer to the machine to do that!</span>")
 			return
 		if(href_list["page"])
 			var/ops = text2num(href_list["page"])
@@ -252,7 +252,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, "<span style=\"color:red\">No receptacle found to eject.</span>")
+			if (!src.inserted) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
 				src.inserted.set_loc(src.loc)
 				usr.put_in_hand_or_eject(src.inserted) // try to eject it into the users hand, if we can
@@ -303,19 +303,19 @@
 			if (istype(I,/obj/item/seed/))
 				var/obj/item/seed/S = I
 				if (!istype(S.planttype,/datum/plant/) || !istype(S.plantgenes,/datum/plantgenes/))
-					boutput(usr, "<span style=\"color:red\">Genetic structure of seed corrupted. Cannot scan.</span>")
+					boutput(usr, "<span class='alert'>Genetic structure of seed corrupted. Cannot scan.</span>")
 				else
 					HYPgeneticanalysis(usr,S,S.planttype,S.plantgenes)
 
 			else if (istype(I,/obj/item/reagent_containers/food/snacks/plant/))
 				var/obj/item/reagent_containers/food/snacks/plant/P = I
 				if (!istype(P.planttype,/datum/plant/) || !istype(P.plantgenes,/datum/plantgenes/))
-					boutput(usr, "<span style=\"color:red\">Genetic structure of item corrupted. Cannot scan.</span>")
+					boutput(usr, "<span class='alert'>Genetic structure of item corrupted. Cannot scan.</span>")
 				else
 					HYPgeneticanalysis(usr,P,P.planttype,P.plantgenes)
 
 			else
-				boutput(usr, "<span style=\"color:red\">Item cannot be scanned.</span>")
+				boutput(usr, "<span class='alert'>Item cannot be scanned.</span>")
 			src.updateUsrDialog()
 
 		else if(href_list["outputmode"])
@@ -335,9 +335,9 @@
 				if (HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					give = 0
 				if (!give)
-					boutput(usr, "<span style=\"color:red\">No viable seeds found in [I].</span>")
+					boutput(usr, "<span class='alert'>No viable seeds found in [I].</span>")
 				else
-					boutput(usr, "<span style=\"color:blue\">Extracted [give] seeds from [I].</span>")
+					boutput(usr, "<span class='notice'>Extracted [give] seeds from [I].</span>")
 					while (give > 0)
 						var/obj/item/seed/S
 						if (stored.unique_seed) S = new stored.unique_seed(src)
@@ -374,7 +374,7 @@
 				qdel(I)
 
 			else
-				boutput(usr, "<span style=\"color:red\">This item is not viable extraction produce.</span>")
+				boutput(usr, "<span class='alert'>This item is not viable extraction produce.</span>")
 			src.updateUsrDialog()
 
 		else if(href_list["splice_select"])
@@ -404,10 +404,10 @@
 			if (!istype(S))
 				return
 			if (!src.inserted)
-				boutput(usr, "<span style=\"color:red\">No reagent container available for infusions.</span>")
+				boutput(usr, "<span class='alert'>No reagent container available for infusions.</span>")
 			else
 				if (src.inserted.reagents.total_volume < 10)
-					boutput(usr, "<span style=\"color:red\">You require at least ten units of a reagent to infuse a seed.</span>")
+					boutput(usr, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 				else
 					var/list/usable_reagents = list()
 					var/datum/reagent/R = null
@@ -416,17 +416,17 @@
 						if (current_reagent.volume >= 10) usable_reagents += current_reagent
 
 					if (!usable_reagents.len)
-						boutput(usr, "<span style=\"color:red\">You require at least ten units of a reagent to infuse a seed.</span>")
+						boutput(usr, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 					else
 						dialogue_open = 1
 						R = input(usr, "Use which reagent to infuse the seed?", "[src.name]", 0) in usable_reagents
 						if (!R || !S)
 							return
 						switch(S.HYPinfusionS(R.id,src))
-							if (1) boutput(usr, "<span style=\"color:red\">ERROR: Seed has been destroyed.</span>")
-							if (2) boutput(usr, "<span style=\"color:red\">ERROR: Reagent lost.</span>")
-							if (3) boutput(usr, "<span style=\"color:red\">ERROR: Unknown error. Please try again.</span>")
-							else boutput(usr, "<span style=\"color:blue\">Infusion of [R.name] successful.</span>")
+							if (1) boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
+							if (2) boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
+							if (3) boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
+							else boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 						src.inserted.reagents.remove_reagent(R.id,10)
 						dialogue_open = 0
 
@@ -587,13 +587,13 @@
 				P.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1.vars["endurance"],P2.vars["endurance"])
 				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
-				boutput(usr, "<span style=\"color:blue\">Splice successful.</span>")
+				boutput(usr, "<span class='notice'>Splice successful.</span>")
 				if (!src.seedoutput) src.seeds.Add(S)
 				else S.set_loc(src.loc)
 
 			else
 				// It fucked up - we don't need to do anything else other than tell the user
-				boutput(usr, "<span style=\"color:red\">Splice failed.</span>")
+				boutput(usr, "<span class='alert'>Splice failed.</span>")
 
 			// Now get rid of the old seeds and go back to square one
 			src.seeds.Remove(seed1)
@@ -611,16 +611,16 @@
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
-				boutput(user, "<span style=\"color:red\">A container is already loaded into the machine.</span>")
+				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 				return
 			src.inserted =  W
 			user.drop_item()
 			W.set_loc(src)
-			boutput(user, "<span style=\"color:blue\">You add [W] to the machine!</span>")
+			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			src.updateUsrDialog()
 
 		else if(istype(W, /obj/item/reagent_containers/food/snacks/plant/) || istype(W, /obj/item/seed/))
-			boutput(user, "<span style=\"color:blue\">You add [W] to the machine!</span>")
+			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
@@ -646,9 +646,9 @@
 						loadcount++
 						continue
 				if (loadcount)
-					boutput(user, "<span style=\"color:blue\">[loadcount] items were loaded from the satchel!</span>")
+					boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 				else
-					boutput(user, "<span style=\"color:red\">No items were loaded from the satchel!</span>")
+					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.satchel_updateicon()
 		else ..()
 
@@ -660,7 +660,7 @@
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
 			return src.attackby(O, user)
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/seed/))
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
 				sleep(0.2 SECONDS)
@@ -670,7 +670,7 @@
 					else src.extractables.Add(P)
 					P.set_loc(src)
 				else continue
-			boutput(user, "<span style=\"color:blue\">You finish stuffing items into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		else ..()
 
 	proc/SpliceMK2(var/allele1,var/allele2,var/value1,var/value2)
@@ -857,7 +857,7 @@
 
 	Topic(href, href_list)
 		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr) )
-			boutput(usr, "<span style=\"color:red\">You need to be closer to the extractor to do that!</span>")
+			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
 			var/ops = text2num(href_list["page"])
@@ -869,7 +869,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, "<span style=\"color:red\">No receptacle found to eject.</span>")
+			if (!src.inserted) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
 				if (src.inserted == src.extract_to) src.extract_to = null
 				src.inserted.set_loc(src.output_target)
@@ -882,7 +882,7 @@
 			if (istype(I))
 				src.ingredients.Remove(I)
 				I.set_loc(src.output_target)
-				boutput(usr, "<span style=\"color:blue\">You eject [I] from the machine!</span>")
+				boutput(usr, "<span class='notice'>You eject [I] from the machine!</span>")
 				src.update_icon()
 			src.updateUsrDialog()
 
@@ -915,10 +915,10 @@
 
 		else if(href_list["extractingred"])
 			if (!src.extract_to)
-				boutput(usr, "<span style=\"color:red\">You must first select an extraction target.</span>")
+				boutput(usr, "<span class='alert'>You must first select an extraction target.</span>")
 			else
 				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, "<span style=\"color:red\">The extraction target is already full.</span>")
+					boutput(usr, "<span class='alert'>The extraction target is already full.</span>")
 				else
 					var/obj/item/I = locate(href_list["extractingred"]) in src
 					if (!istype(I) || !I.reagents)
@@ -933,11 +933,11 @@
 		else if(href_list["chemtransfer"])
 			var/obj/item/reagent_containers/glass/G = locate(href_list["chemtransfer"]) in src
 			if (!G)
-				boutput(usr, "<span style=\"color:red\">Transfer target not found.</span>")
+				boutput(usr, "<span class='alert'>Transfer target not found.</span>")
 				src.updateUsrDialog()
 				return
 			else if (!G.reagents.total_volume)
-				boutput(usr, "<span style=\"color:red\">Nothing in container to transfer.</span>")
+				boutput(usr, "<span class='alert'>Nothing in container to transfer.</span>")
 				src.updateUsrDialog()
 				return
 
@@ -948,12 +948,12 @@
 			if(get_dist(usr, src) > 1) return
 			var/obj/item/reagent_containers/glass/T = target
 
-			if (!T) boutput(usr, "<span style=\"color:red\">Transfer target not found.</span>")
-			else if (G == T) boutput(usr, "<span style=\"color:red\">Cannot transfer a container's contents to itself.</span>")
+			if (!T) boutput(usr, "<span class='alert'>Transfer target not found.</span>")
+			else if (G == T) boutput(usr, "<span class='alert'>Cannot transfer a container's contents to itself.</span>")
 			else
 				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
 				if(get_dist(usr, src) > 1) return
-				if (amt < 1) boutput(usr, "<span style=\"color:red\">Invalid transfer quantity.</span>")
+				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
 				else G.reagents.trans_to(T,amt)
 
 			src.updateUsrDialog()
@@ -965,12 +965,12 @@
 
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
-				boutput(user, "<span style=\"color:red\">A container is already loaded into the machine.</span>")
+				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 				return
 			src.inserted =  W
 			user.drop_item()
 			W.set_loc(src)
-			boutput(user, "<span style=\"color:blue\">You add [W] to the machine!</span>")
+			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			src.updateUsrDialog()
 
 		else if (istype(W,/obj/item/satchel/hydro))
@@ -986,9 +986,9 @@
 						break
 
 			if (loadcount)
-				boutput(user, "<span style=\"color:blue\">[loadcount] items were loaded from the satchel!</span>")
+				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 			else
-				boutput(user, "<span style=\"color:red\">No items were loaded from the satchel!</span>")
+				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 			S.satchel_updateicon()
 			src.update_icon()
 			src.updateUsrDialog()
@@ -1000,18 +1000,18 @@
 					proceed = 1
 					break
 			if (!proceed)
-				boutput(user, "<span style=\"color:red\">The extractor cannot accept that!</span>")
+				boutput(user, "<span class='alert'>The extractor cannot accept that!</span>")
 				return
 
 			if (src.autoextract)
 				if (!src.extract_to)
-					boutput(usr, "<span style=\"color:red\">You must first select an extraction target if you want items to be automatically extracted.</span>")
+					boutput(usr, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
 					return
 				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, "<span style=\"color:red\">The extraction target is full.</span>")
+					boutput(usr, "<span class='alert'>The extraction target is full.</span>")
 					return
 
-			boutput(user, "<span style=\"color:blue\">You add [W] to the machine!</span>")
+			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			user.u_equip(W)
 			W.dropped()
 
@@ -1035,7 +1035,7 @@
 				break
 		if (!proceed) ..()
 		else
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O.name] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
 				sleep(0.2 SECONDS)
@@ -1044,28 +1044,28 @@
 					src.ingredients.Add(P)
 					P.set_loc(src)
 				else continue
-			boutput(user, "<span style=\"color:blue\">You finish stuffing items into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		src.update_icon()
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the extractor's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The extractor is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The extractor is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the extractor to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the extractor to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 /obj/submachine/chem_extractor/proc/update_icon()
@@ -1177,7 +1177,7 @@
 
 	Topic(href, href_list)
 		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You need to be closer to the vendor to do that!</span>")
+			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
 			return
 		if(href_list["amount"])
 			var/amount = input(usr, "How many seeds do you want?", "[src.name]", 0) as null|num
@@ -1197,13 +1197,13 @@
 
 		if(href_list["disp"])
 			if (src.can_vend == 0)
-				boutput(usr, "<span style=\"color:red\">It's charging.</span>")
+				boutput(usr, "<span class='alert'>It's charging.</span>")
 				return
 			//var/getseed = null
 			var/datum/plant/I = locate(href_list["disp"])
 
 			if (!src.working || !istype(I))
-				boutput(usr, "<span style=\"color:red\">[src.name] fails to dispense anything.</span>")
+				boutput(usr, "<span class='alert'>[src.name] fails to dispense anything.</span>")
 				return
 
 			if(!I.vending)
@@ -1256,7 +1256,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
 			if(user)
-				boutput(user, "<span style=\"color:blue\">You disable the [src]'s product locks!</span>")
+				boutput(user, "<span class='notice'>You disable the [src]'s product locks!</span>")
 			src.hacked = 1
 			src.name = "Feed Sabricator"
 			src.updateUsrDialog()

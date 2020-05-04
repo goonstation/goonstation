@@ -23,22 +23,22 @@
 		if (isghostdrone(user))
 			return ..()
 		if (user.mind && user.mind.gang)
-			boutput(user, "<span style=\"color:red\">You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
+			boutput(user, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
 			if(tank_one && tank_two)
-				boutput(user, "<span style=\"color:red\">There are already two tanks attached, remove one first!</span>")
+				boutput(user, "<span class='alert'>There are already two tanks attached, remove one first!</span>")
 				return
 
 			if(!tank_one)
 				tank_one = item
 				user.drop_item()
 				item.set_loc(src)
-				boutput(user, "<span style=\"color:blue\">You attach \the [item] to the transfer valve</span>")
+				boutput(user, "<span class='notice'>You attach \the [item] to the transfer valve</span>")
 			else if(!tank_two)
 				tank_two = item
 				user.drop_item()
 				item.set_loc(src)
-				boutput(user, "<span style=\"color:blue\">You attach the \the [item] to the transfer valve!</span>")
+				boutput(user, "<span class='notice'>You attach the \the [item] to the transfer valve!</span>")
 
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
@@ -54,13 +54,13 @@
 
 		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
-				boutput(user, "<span style=\"color:red\">There is already an device attached to the valve, remove it first!</span>")
+				boutput(user, "<span class='alert'>There is already an device attached to the valve, remove it first!</span>")
 				return
 
 			attached_device = item
 			user.drop_item()
 			item.set_loc(src)
-			boutput(user, "<span style=\"color:blue\">You attach the [item] to the valve controls!</span>")
+			boutput(user, "<span class='notice'>You attach the [item] to the valve controls!</span>")
 			item.master = src
 
 			/*
@@ -78,17 +78,17 @@
 
 		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
 			if(flags & ONBACK)
-				boutput(user, "<span style=\"color:red\">The valve already has shoulder straps!</span>")
+				boutput(user, "<span class='alert'>The valve already has shoulder straps!</span>")
 				return
 
 			var/obj/item/cable_coil/coil = item
 			if (coil.amount < 2)
-				boutput(user, "<span style=\"color:red\">You do not have enough cable to produce two straps! (2 units required)</span>")
+				boutput(user, "<span class='alert'>You do not have enough cable to produce two straps! (2 units required)</span>")
 				return
 			coil.use(2)
 
 			flags |= ONBACK
-			boutput(user, "<span style=\"color:blue\">You attach two loops of [item] to the transfer valve!</span>")
+			boutput(user, "<span class='notice'>You attach two loops of [item] to the transfer valve!</span>")
 			update_icon()
 
 		return
@@ -97,7 +97,7 @@
 		if (isghostdrone(user))
 			return
 		if (user.mind && user.mind.gang)
-			boutput(user, "<span style=\"color:red\">You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
+			boutput(user, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
 		user.machine = src
 		var/dat = {"<B> Valve properties: </B>
 		<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=\ref[src];tankone=1'>Remove</A>" : ""]
@@ -115,7 +115,7 @@
 		if (isghostdrone(usr))
 			return
 		if (usr.mind && usr.mind.gang)
-			boutput(usr, "<span style=\"color:red\">You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
+			boutput(usr, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
 		if (usr.stat|| usr.restrained())
 			return
 		if (src.loc == usr)
@@ -146,12 +146,12 @@
 				attached_device.attack_self(usr)
 			if(href_list["straps"])
 				if(usr && usr.back && usr.back == src)
-					boutput(usr, "<span style=\"color:red\">You can't detach the loops of wire while you're wearing [src]!</span>")
+					boutput(usr, "<span class='alert'>You can't detach the loops of wire while you're wearing [src]!</span>")
 				else
 					flags &= ~ONBACK
 					var/turf/location = get_turf(src)
 					new /obj/item/cable_coil/cut/small(location)
-					boutput(usr, "<span style=\"color:blue\">You detach the loops of wire from [src]!</span>")
+					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
 					update_icon()
 
 			src.attack_self(usr)
@@ -275,7 +275,7 @@
 
 				for(var/mob/living/L in hearers(get_turf(src), fart_range))
 					shake_camera(L,10,5)
-					boutput(L, "<span style=\"color:red\">You are sent flying!</span>")
+					boutput(L, "<span class='alert'>You are sent flying!</span>")
 
 					L.changeStatus("weakened", stun_time * 10)
 					while (throw_repeat > 0)
@@ -339,7 +339,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] drops [src], takes a short run up and kicks the valve as hard as [he_or_she(user)] can, knocking it [valve_open ? "closed" : "open"]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] drops [src], takes a short run up and kicks the valve as hard as [he_or_she(user)] can, knocking it [valve_open ? "closed" : "open"]!</b></span>")
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		toggle_valve()
@@ -347,7 +347,7 @@
 			if (user)
 				user.suiciding = 0
 				if(isalive(user) && src && get_dist(user,src) <= 7)
-					user.visible_message("<span style=\"color:red\">[user] stares at the [src.name], a confused expression on \his face.</span>") //It didn't blow up!
+					user.visible_message("<span class='alert'>[user] stares at the [src.name], a confused expression on \his face.</span>") //It didn't blow up!
 		return 1
 
 /obj/item/device/transfer_valve/briefcase
@@ -373,9 +373,9 @@
 		if(tester)
 			tester.update_bomb_log("VR Bomb deleted.", 1)
 		if(ismob(src.loc))
-			boutput(src.loc, "<span style=\"color:red\">[src] fades away!</span>")
+			boutput(src.loc, "<span class='alert'>[src] fades away!</span>")
 		else
-			src.visible_message("<span style=\"color:red\">[src] fades away!</span>")
+			src.visible_message("<span class='alert'>[src] fades away!</span>")
 		..()
 
 	toggle_valve()
@@ -466,7 +466,7 @@
 			wear_image.overlays = list()
 			boutput( user, "You pry out the crystal." )
 			if(prob(src.crystal.total_pressure / 45))
-				boutput( user, "<b style='color:red'>It shatters!</b>" )
+				boutput( user, "<b class='alert'>It shatters!</b>" )
 				qdel(src.crystal)
 				return
 			src.crystal.set_loc(user.loc)

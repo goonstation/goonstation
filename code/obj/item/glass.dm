@@ -26,19 +26,19 @@ SHARDS
 	burn_type = 1
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins stacking glass sheets!</span>")
+		user.visible_message("<span class='notice'>[user] begins stacking glass sheets!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish stacking glass.</span>")
+		boutput(user, "<span class='notice'>You finish stacking glass.</span>")
 
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
 			if (splitnum >= amount || splitnum < 1)
-				boutput(user, "<span style=\"color:red\">Invalid entry, try again.</span>")
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span style=\"color:blue\">You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
 			var/obj/item/sheet/glass/new_stack = new src.type(usr.loc, diff)
 			new_stack.amount = splitnum
@@ -52,15 +52,15 @@ SHARDS
 		if ( W.type == src.type )
 			var/obj/item/sheet/glass/G = W
 			if (G.amount >= src.max_stack)
-				boutput(user, "<span style=\"color:red\">You can't put any more sheets in this stack!</span>")
+				boutput(user, "<span class='alert'>You can't put any more sheets in this stack!</span>")
 				return
 			if (G.amount + src.amount > src.max_stack)
 				src.amount = min(G.amount + src.amount, src.max_stack)
 				G.amount = 5
-				boutput(user, "<span style=\"color:blue\">You add the glass sheets to the stack. It now has [G.amount] sheets.</span>")
+				boutput(user, "<span class='notice'>You add the glass sheets to the stack. It now has [G.amount] sheets.</span>")
 			else
 				G.amount += src.amount
-				boutput(user, "<span style=\"color:blue\">You add the glass sheet to the stack. It now has [G.amount] sheets.</span>")
+				boutput(user, "<span class='notice'>You add the glass sheet to the stack. It now has [G.amount] sheets.</span>")
 				//SN src = null
 				qdel(src)
 				return
@@ -277,7 +277,7 @@ SHARDS
 			if(isabomination(H))
 				return
 			if(!H.shoes)
-				boutput(H, "<span style=\"color:red\"><B>You step in the broken glass!</B></span>")
+				boutput(H, "<span class='alert'><B>You step in the broken glass!</B></span>")
 				playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
 				var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 				H.weakened = max(3, H.weakened)
@@ -323,7 +323,7 @@ SHARDS
 	HasEntered(AM as mob|obj)
 		if(ismob(AM))
 			var/mob/M = AM
-			boutput(M, "<span style=\"color:red\"><B>You step on the crystal shard!</B></span>")
+			boutput(M, "<span class='alert'><B>You step on the crystal shard!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M

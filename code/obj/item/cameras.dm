@@ -6,7 +6,7 @@
 
 /obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob)
 	if (!istype(W,/obj/item/photo))
-		boutput(user, "<span style=\"color:red\">You can only put photos in a photo album.</span>")
+		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
 
 	return ..()
@@ -193,18 +193,18 @@
 		else
 			..()
 		if(enchant_power == 0)
-			boutput(user,"<span style=\"color:red\"><b>[src]</b> crumbles away to dust!</span>")
+			boutput(user,"<span class='alert'><b>[src]</b> crumbles away to dust!</span>")
 			qdel(src)
 		return
 
 	throw_begin(atom/target)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && ismob(cursed_dude))
-			cursed_dude.visible_message("<span style=\"color:red\"><b>[cursed_dude] is violently thrown by an unseen force!</b></span>")
+			cursed_dude.visible_message("<span class='alert'><b>[cursed_dude] is violently thrown by an unseen force!</b></span>")
 			cursed_dude.throw_at(get_edge_cheap(src, get_dir(src, target)), 20, 1)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		if(enchant_power == 0)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> crumbles away to dust!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> crumbles away to dust!</span>")
 			qdel(src)
 		return ..(target)
 
@@ -237,7 +237,7 @@
 	if (src.pictures_left > 0)
 		src.pictures_left = max(0, src.pictures_left - 1)
 		if (user)
-			boutput(user, "<span style='color:blue'>[pictures_left] photos left.</span>")
+			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
 	SPAWN_DBG (50)
 		if (src)

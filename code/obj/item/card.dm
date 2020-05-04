@@ -148,7 +148,7 @@ GAUNTLET CARDS
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
-		boutput(user, "<span style=\"color:red\">The ID-Card explodes.</span>")
+		boutput(user, "<span class='alert'>The ID-Card explodes.</span>")
 		user.transforming = 1
 		var/obj/overlay/O = new/obj/overlay(get_turf(user))
 		O.anchored = 1
@@ -218,7 +218,7 @@ GAUNTLET CARDS
 		src.registered = reg
 		src.assignment = ass
 		src.name = "[src.registered]'s ID Card ([src.assignment])"
-		boutput(user, "<span style=\"color:blue\">You successfully forge the ID card.</span>")
+		boutput(user, "<span class='notice'>You successfully forge the ID card.</span>")
 	else
 		..()
 
@@ -330,7 +330,7 @@ GAUNTLET CARDS
 	process()
 		if(!owner) return
 		if(!isInContents(src,owner))
-			boutput(owner, "<h3><span style=\"color:red\">You have lost your license to kill!</span></h3>")
+			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
 			logTheThing("combat",owner,null,"dropped their license to kill")
 			logTheThing("admin",owner,null,"dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
@@ -341,7 +341,7 @@ GAUNTLET CARDS
 			logTheThing("combat",user,null,"picked up a license to kill")
 			logTheThing("admin",user,null,"picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
-			boutput(user, "<h3><span style=\"color:red\">You now have a license to kill!</span></h3>")
+			boutput(user, "<h3><span class='alert'>You now have a license to kill!</span></h3>")
 			if(owner)
 				boutput(owner, "<h2>You have lost your license to kill!</h2>")
 				logTheThing("combat",user,null,"dropped their license to kill")

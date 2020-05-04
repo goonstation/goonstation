@@ -413,7 +413,7 @@ Obsidian Crown
 
 					randomturfs.Add(T)
 
-				boutput(M, "<span style=\"color:blue\">You are caught in a magical warp field!</span>")
+				boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
 				M.visible_message("<span class='combat'>[M] is warped away!</span>")
 				playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 				M.set_loc(pick(randomturfs))

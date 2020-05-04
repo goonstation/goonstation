@@ -346,7 +346,7 @@
 						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
 						startup = 0
 						wanderer = 1
-					src.visible_message("<span style=\"color:red\">The <b>[src]</b> charges at [C:name]!</span>")
+					src.visible_message("<span class='alert'>The <b>[src]</b> charges at [C:name]!</span>")
 					src.speak(pick("DooN'T Wor##y I'M hERE!!!","LawwSS UpdAA&$.A.!!.!","CANIHELPYO&£%SIR","REsREACH!!!!!","NATAS&$%LIAHLLA ERROR CODE #736"))
 					playsound(src.loc, 'sound/machines/glitch3.ogg', 50, 1)
 					icon_state = "mars_bot"
@@ -411,23 +411,23 @@
 	attackby(obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/mars_roverpart))
 			if ((istype(P, /obj/item/mars_roverpart/wheel))&&(!wheel))
-				boutput(user, "<span style=\"color:blue\">You attach the wheel to the rover's chassis.</span>")
+				boutput(user, "<span class='notice'>You attach the wheel to the rover's chassis.</span>")
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_wheel")
 				wheel = 1
 			if ((istype(P, /obj/item/mars_roverpart/oxy))&&(!oxy))
-				boutput(user, "<span style=\"color:blue\">You connect the life support module to the rover.</span>")
+				boutput(user, "<span class='notice'>You connect the life support module to the rover.</span>")
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_oxy")
 				oxy = 1
 			if ((istype(P, /obj/item/mars_roverpart/glass))&&(!glass))
-				boutput(user, "<span style=\"color:blue\">You attach the glass to the rover.</span>")
+				boutput(user, "<span class='notice'>You attach the glass to the rover.</span>")
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_window")
 				glass = 1
 			if ((istype(P, /obj/item/mars_roverpart/battery))&&(!battery))
-				boutput(user, "<span style=\"color:blue\">You wire the battery to the rover.</span>")
+				boutput(user, "<span class='notice'>You wire the battery to the rover.</span>")
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_cell")
 				battery = 1
 			if ((istype(P, /obj/item/mars_roverpart/motherboard))&&(!motherboard))
-				boutput(user, "<span style=\"color:blue\">You wire the motherboard to the rover.</span>")
+				boutput(user, "<span class='notice'>You wire the motherboard to the rover.</span>")
 				motherboard = 1
 			playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 			qdel(P)
@@ -435,7 +435,7 @@
 				var/obj/vehicle/marsrover/R = new /obj/vehicle/marsrover(loc)
 				R.dir = WEST
 				playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
-				boutput(user, "<span style=\"color:blue\">The rover has been completed!</span>")
+				boutput(user, "<span class='notice'>The rover has been completed!</span>")
 				qdel(src)
 
 /obj/item/mars_roverpart
@@ -467,7 +467,7 @@
 		pickup(mob/user)
 			..()
 			if(!pickedup)
-				boutput(user, "<span style=\"color:red\">Uh oh.</span>")
+				boutput(user, "<span class='alert'>Uh oh.</span>")
 				for(var/obj/critter/marsrobot/M in oview(4,src))
 					M.active = 1
 					M.seek_target()
@@ -515,7 +515,7 @@
 		update()
 		return
 	if(selfdismount)
-		boutput(rider, "<span style=\"color:blue\">You dismount from the [src].</span>")
+		boutput(rider, "<span class='notice'>You dismount from the [src].</span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -543,10 +543,10 @@
 
 	if(target == user && !user.stat)	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
-		boutput(user, "<span style=\"color:blue\">You climb onto the [src].</span>")
+		boutput(user, "<span class='notice'>You climb onto the [src].</span>")
 	else if(target != user && !user.restrained())
 		msg = "[user.name] helps [target.name] onto the [src]!"
-		boutput(user, "<span style=\"color:blue\">You help [target.name] onto the [src]!</span>")
+		boutput(user, "<span class='notice'>You help [target.name] onto the [src]!</span>")
 	else
 		return
 

@@ -34,7 +34,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
@@ -128,20 +128,20 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!ishuman(usr) || !usr:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-			boutput(usr, "<span style=\"color:red\">You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
+			boutput(usr, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 			return
 		return ..()
 
 	attack_hand(mob/user as mob)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-				boutput(user, "<span style=\"color:red\">You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
+				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 				return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-			boutput(user, "<span style=\"color:red\">You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
+			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return
 		if (src.contents.len >= 7)
 			return
@@ -151,12 +151,12 @@
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
 			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
-				boutput(user, "<span style=\"color:red\">They're moving too much to feed to His Grace!</span>")
+				boutput(user, "<span class='alert'>They're moving too much to feed to His Grace!</span>")
 				return
-			user.visible_message("<span style=\"color:red\"><b>[user] is trying to feed [G.affecting] to [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] is trying to feed [G.affecting] to [src]!</b></span>")
 			if(!do_mob(user, G.affecting, 30)) return
 			G.affecting.set_loc(src)
-			user.visible_message("<span style=\"color:red\"><b>[user] has fed [G.affecting] to [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] has fed [G.affecting] to [src]!</b></span>")
 
 			src.consume(G.affecting, G)
 
@@ -210,7 +210,7 @@
 	disposing()
 		for(var/mob/M in src) //Release trapped dudes...
 			M.set_loc(get_turf(src))
-			src.visible_message("<span style=\"color:red\">[M] bursts out of [src]!</span>")
+			src.visible_message("<span class='alert'>[M] bursts out of [src]!</span>")
 
 		for(var/datum/ailment_data/A in src.servantlinks) //Remove the plague...
 			if (istype(A.master,/datum/ailment/disability/memetic_madness/))
@@ -221,7 +221,7 @@
 			servantlinks.len = 0
 		servantlinks = null
 
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> screams!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
 		playsound(src.loc,"sound/effects/screech.ogg", 100, 1)
 
 		..()
@@ -344,7 +344,7 @@
 						progenitor.hunger_message_level = 4
 						boutput(affected_mob, "<i><b><font face = Tempus Sans ITC>His Grace starves in your hands.  Feed Me the unclean or suffer.</font></b></i>")
 				if (300 to INFINITY)
-					affected_mob.visible_message("<span style=\"color:red\"><b>[progenitor] consumes [affected_mob] whole!</b></span>")
+					affected_mob.visible_message("<span class='alert'><b>[progenitor] consumes [affected_mob] whole!</b></span>")
 					progenitor.consume(affected_mob)
 					return
 
@@ -355,11 +355,11 @@
 				D.stage = 1
 				return
 			if(prob(4))
-				boutput(affected_mob, "<span style=\"color:red\">We are too far from His Grace...</span>")
+				boutput(affected_mob, "<span class='alert'>We are too far from His Grace...</span>")
 				affected_mob.take_toxin_damage(5)
 				affected_mob.updatehealth()
 			else if(prob(6))
-				boutput(affected_mob, "<span style=\"color:red\">You feel weak.</span>")
+				boutput(affected_mob, "<span class='alert'>You feel weak.</span>")
 				random_brute_damage(affected_mob, 5)
 
 			if (ismob(progenitor.loc))

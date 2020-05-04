@@ -30,9 +30,9 @@
 	get_desc()
 		if (usr && (usr.job == "Roboticist" || usr.job == "Medical Doctor" || usr.job == "Geneticist" || usr.job == "Medical Director"))
 			if (src.owner && src.owner.current)
-				. += "<br><span style='color:blue'>This brain is still warm.</span>"
+				. += "<br><span class='notice'>This brain is still warm.</span>"
 			else
-				. += "<br><span style='color:red'>This brain has gone cold.</span>"
+				. += "<br><span class='alert'>This brain has gone cold.</span>"
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for brains. */
@@ -43,23 +43,23 @@
 		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
 
 		if (!organ_location)
-			boutput(user, "<span style=\"color:blue\">Where are you putting that again? There's no head.</span>")
+			boutput(user, "<span class='notice'>Where are you putting that again? There's no head.</span>")
 			return null
 
 		if (!headSurgeryCheck(H))
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return null
 
 		if (!H.organHolder.get_organ("brain") && H.organHolder.head.scalp_op_stage >= 4.0)
 			if (!H.organHolder.get_organ("skull"))
-				boutput(user, "<span style=\"color:blue\">There's no skull in there to hold the brain in place.</span>")
+				boutput(user, "<span class='notice'>There's no skull in there to hold the brain in place.</span>")
 				return null
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

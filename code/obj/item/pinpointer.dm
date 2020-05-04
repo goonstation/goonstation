@@ -25,11 +25,11 @@
 				return
 			active = 1
 			work()
-			boutput(usr, "<span style=\"color:blue\">You activate the pinpointer</span>")
+			boutput(usr, "<span class='notice'>You activate the pinpointer</span>")
 		else
 			active = 0
 			icon_state = "[src.icon_type]_pinoff"
-			boutput(usr, "<span style=\"color:blue\">You deactivate the pinpointer</span>")
+			boutput(usr, "<span class='notice'>You deactivate the pinpointer</span>")
 
 	proc/work()
 		if(!active || !target_criteria) return
@@ -87,7 +87,7 @@
 	attack_self()
 		if(!active)
 			if (!src.owner || !src.owner.mind)
-				boutput(usr, "<span style=\"color:red\">The target locator emits a sorrowful ping!</span>")
+				boutput(usr, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 				return
 			active = 1
 			for(var/X in by_type[/obj/item/card/id])
@@ -101,14 +101,14 @@
 			target = input(usr, "Which ID do you wish to track?", "Target Locator", null) in targets
 			work()
 			if(!target)
-				boutput(usr, "<span style=\"color:blue\">You activate the target locator. No available targets!</span>")
+				boutput(usr, "<span class='notice'>You activate the target locator. No available targets!</span>")
 				active = 0
 			else
-				boutput(usr, "<span style=\"color:blue\">You activate the target locator. Tracking [target]</span>")
+				boutput(usr, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
 		else
 			active = 0
 			icon_state = "id_pinoff"
-			boutput(usr, "<span style=\"color:blue\">You deactivate the target locator</span>")
+			boutput(usr, "<span class='notice'>You deactivate the target locator</span>")
 			target = null
 
 	proc/work()
@@ -132,7 +132,7 @@
 	attack_hand(mob/user as mob)
 		..(user)
 		if (!user.mind || user.mind.special_role != "spy_thief")
-			boutput(usr, "<span style=\"color:red\">The target locator emits a sorrowful ping!</span>")
+			boutput(usr, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 
 			//B LARGHHHHJHH
 			active = 0
@@ -143,7 +143,7 @@
 	attack_self()
 		if(!active)
 			if (!src.owner || !src.owner.mind || src.owner.mind.special_role != "spy_thief")
-				boutput(usr, "<span style=\"color:red\">The target locator emits a sorrowful ping!</span>")
+				boutput(usr, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 				return
 			active = 1
 
@@ -160,14 +160,14 @@
 			target = input(usr, "Which ID do you wish to track?", "Target Locator", null) in targets
 			work()
 			if(!target)
-				boutput(usr, "<span style=\"color:blue\">You activate the target locator. No available targets!</span>")
+				boutput(usr, "<span class='notice'>You activate the target locator. No available targets!</span>")
 				active = 0
 			else
-				boutput(usr, "<span style=\"color:blue\">You activate the target locator. Tracking [target]</span>")
+				boutput(usr, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
 		else
 			active = 0
 			icon_state = "id_pinoff"
-			boutput(usr, "<span style=\"color:blue\">You deactivate the target locator</span>")
+			boutput(usr, "<span class='notice'>You deactivate the target locator</span>")
 			target = null
 
 /obj/item/bloodtracker
@@ -189,7 +189,7 @@
 		if(!active && istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
 			if(B.dry > 0) //Fresh blood is -1
-				boutput(usr, "<span style=\"color:red\">Targeted blood is too dry to be useful!</span>")
+				boutput(usr, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
 				return
 			for(var/mob/living/carbon/human/H in mobs)
 				if(B.blood_DNA == H.bioHolder.Uid)
@@ -197,8 +197,8 @@
 					break
 			active = 1
 			work()
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> scans [A] with [src]!</span>",\
-			"<span style=\"color:blue\">You scan [A] with [src]!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
+			"<span class='notice'>You scan [A] with [src]!</span>")
 
 	proc/work(var/turf/T)
 		if(!active) return
@@ -207,12 +207,12 @@
 		if(get_turf(src) != T)
 			icon_state = "blood_pinoff"
 			active = 0
-			boutput(usr, "<span style=\"color:red\">[src] shuts down because you moved!</span>")
+			boutput(usr, "<span class='alert'>[src] shuts down because you moved!</span>")
 			return
 		if(!target)
 			icon_state = "blood_pinonnull"
 			active = 0
-			boutput(usr, "<span style=\"color:red\">No target found!</span>")
+			boutput(usr, "<span class='alert'>No target found!</span>")
 			return
 		src.dir = get_dir(src,target)
 		switch(get_dist(src,target))

@@ -69,23 +69,23 @@
 obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.broken > 0)
 		if (isscrewingtool(O) && src.broken == 2)
-			src.visible_message("<span style=\"color:blue\">[user] starts to fix part of the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
 			sleep(2 SECONDS)
-			src.visible_message("<span style=\"color:blue\">[user] fixes part of the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] fixes part of the microwave.</span>")
 			src.broken = 1 // Fix it a bit
 		else if (src.broken == 1 && iswrenchingtool(O))
-			src.visible_message("<span style=\"color:blue\">[user] starts to fix part of the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
 			sleep(2 SECONDS)
-			src.visible_message("<span style=\"color:blue\">[user] fixes the microwave!</span>")
+			src.visible_message("<span class='notice'>[user] fixes the microwave!</span>")
 			src.icon_state = "mw"
 			src.broken = 0 // Fix it!
 		else
 			boutput(user, "It's broken!")
 	else if(src.dirty) // The microwave is all dirty so can't be used!
 		if(istype(O, /obj/item/spraybottle)) // If they're trying to clean it then let them
-			src.visible_message("<span style=\"color:blue\">[user] starts to clean the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] starts to clean the microwave.</span>")
 			sleep(2 SECONDS)
-			src.visible_message("<span style=\"color:blue\">[user] has cleaned the microwave!</span>")
+			src.visible_message("<span class='notice'>[user] has cleaned the microwave!</span>")
 			src.dirty = 0 // It's cleaned!
 			src.icon_state = "mw"
 		else //Otherwise bad luck!!
@@ -93,40 +93,40 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if(istype(O,/obj/item/dice))
 		var/obj/item/dice/die = O
 		if(die.dicePals.len)
-			boutput(user,"<span style=\"color:red\"><b>If you put all these dice in the microwave, they'd all melt together!</b></span>")
+			boutput(user,"<span class='alert'><b>If you put all these dice in the microwave, they'd all melt together!</b></span>")
 			return
 		else
 			user.u_equip(die)
 			extra_item = die
 			die.set_loc(src)
 			die.dropped(user)
-			src.visible_message("<span style=\"color:blue\">[user] adds [die] to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds [die] to the microwave.</span>")
 	else if (isghostdrone(user))
-		boutput(usr, "<span style=\"color:red\">\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/egg)) // If an egg is used, add it
 		if(src.egg_amount < 5)
-			src.visible_message("<span style=\"color:blue\">[user] adds an egg to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds an egg to the microwave.</span>")
 			src.egg_amount++
 			qdel(O)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/flour)) // If flour is used, add it
 		if(src.flour_amount < 5)
-			src.visible_message("<span style=\"color:blue\">[user] adds some flour to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds some flour to the microwave.</span>")
 			src.flour_amount++
 			qdel(O)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat))
 		if(src.monkeymeat_amount < 5)
-			src.visible_message("<span style=\"color:blue\">[user] adds some meat to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds some meat to the microwave.</span>")
 			src.monkeymeat_amount++
 			qdel(O)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
 		if(src.synthmeat_amount < 5)
-			src.visible_message("<span style=\"color:blue\">[user] adds some meat to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds some meat to the microwave.</span>")
 			src.synthmeat_amount++
 			qdel(O)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/))
 		if(src.humanmeat_amount < 5)
-			src.visible_message("<span style=\"color:blue\">[user] adds some meat to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds some meat to the microwave.</span>")
 			src.humanmeat_name = O:subjectname
 			src.humanmeat_job = O:subjectjob
 			src.humanmeat_amount++
@@ -137,7 +137,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/donkpocket))
 		if(src.donkpocket_amount < 2)
-			src.visible_message("<span style=\"color:blue\">[user] adds a donk-pocket to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds a donk-pocket to the microwave.</span>")
 			src.donkpocket_amount++
 			qdel(O)
 	else
@@ -146,7 +146,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			extra_item = O
 			O.set_loc(src)
 			O.dropped(user)
-			src.visible_message("<span style=\"color:blue\">[user] adds [O] to the microwave.</span>")
+			src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 
@@ -156,7 +156,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/machinery/microwave/attack_hand(mob/user as mob) // The microwave Menu
 	if (isghostdrone(user))
-		boutput(usr, "<span style=\"color:red\">\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
 	var/dat
 	if(src.broken > 0)
@@ -213,7 +213,7 @@ Please clean it before use!</TT><BR>
 			var/cooked_item = ""
 
 			if(operation == 1) // If cook was pressed
-				src.visible_message("<span style=\"color:blue\">The microwave turns on.</span>")
+				src.visible_message("<span class='notice'>The microwave turns on.</span>")
 				var/diceinside = 0
 				for(var/obj/item/dice/D in src.contents)
 					if(!diceinside)
@@ -237,7 +237,7 @@ Please clean it before use!</TT><BR>
 					s.set_up(2, 1, src)
 					s.start()
 					icon_state = "mwb"
-					src.visible_message("<span style=\"color:red\">The microwave breaks!</span>")
+					src.visible_message("<span class='alert'>The microwave breaks!</span>")
 					src.broken = 2
 					src.operating = 0
 					for(var/obj/item/dice/d in src.contents)
@@ -276,7 +276,7 @@ Please clean it before use!</TT><BR>
 						icon_state = "mwbloody1" // Make it look dirty!!
 						sleep(4 SECONDS) // Then at the end let it finish normally
 						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-						src.visible_message("<span style=\"color:red\">The microwave gets covered in muck!</span>")
+						src.visible_message("<span class='alert'>The microwave gets covered in muck!</span>")
 						src.dirty = 1 // Make it dirty so it can't be used util cleaned
 						src.icon_state = "mwbloody" // Make it look dirty too
 						src.operating = 0 // Turn it off again aferwards
@@ -301,7 +301,7 @@ Please clean it before use!</TT><BR>
 						icon_state = "mweggexplode1" // Make it look dirty!!
 						sleep(4 SECONDS) // Then at the end let it finish normally
 						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-						src.visible_message("<span style=\"color:red\">The microwave gets covered in cooked egg!</span>")
+						src.visible_message("<span class='alert'>The microwave gets covered in cooked egg!</span>")
 						src.dirty = 1 // Make it dirty so it can't be used util cleaned
 						src.icon_state = "mweggexplode" // Make it look dirty too
 						src.operating = 0 // Turn it off again aferwards
@@ -326,7 +326,7 @@ Please clean it before use!</TT><BR>
 						s.set_up(2, 1, src)
 						s.start()
 						icon_state = "mwb" // Make it look all busted up and shit
-						src.visible_message("<span style=\"color:red\">The microwave breaks!</span>") //Let them know they're stupid
+						src.visible_message("<span class='alert'>The microwave breaks!</span>") //Let them know they're stupid
 						src.broken = 2 // Make it broken so it can't be used util fixed
 						src.operating = 0 // Turn it off again aferwards
 						src.extra_item.set_loc(get_turf(src)) // Eject the extra item so important shit like the disk can't be destroyed in there
@@ -356,7 +356,7 @@ Please clean it before use!</TT><BR>
 
 			var/cooking = text2path(cooked_item) // Get the item that needs to be spanwed
 			if(!isnull(cooking))
-				src.visible_message("<span style=\"color:blue\">The microwave begins cooking something!</span>")
+				src.visible_message("<span class='notice'>The microwave begins cooking something!</span>")
 				src.operating = 1 // Turn it on so it can't be used again while it's cooking
 				src.icon_state = "mw1" //Make it look on too
 				src.updateUsrDialog()

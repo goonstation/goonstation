@@ -660,7 +660,7 @@ var/global
 	list/reagents_cache = list()
 
 	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/gravaton","/mob/living/carbon/human/krampus")
+	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/graviton","/mob/living/carbon/human/krampus")
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
@@ -746,12 +746,6 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
-var/global/mentorhelp_text_color = "#CC0066"
-/proc/set_mentorhelp_color(var/new_color as color)
-	if (!new_color)
-		new_color = input(usr, "Select Mentorhelp color", "Selection", mentorhelp_text_color) as null|color
-	if (new_color)
-		mentorhelp_text_color = new_color
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

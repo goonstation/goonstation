@@ -298,16 +298,16 @@
 		switch(firemode)
 			if(CRUISER_FIREMODE_BOTH)
 				firemode = CRUISER_FIREMODE_ALT
-				boutput(usr, "<span style=\"color:red\">Fire mode now: Alternate</span>")
+				boutput(usr, "<span class='alert'>Fire mode now: Alternate</span>")
 			if(CRUISER_FIREMODE_ALT)
 				firemode = CRUISER_FIREMODE_LEFT
-				boutput(usr, "<span style=\"color:red\">Fire mode now: Left only</span>")
+				boutput(usr, "<span class='alert'>Fire mode now: Left only</span>")
 			if(CRUISER_FIREMODE_LEFT)
 				firemode = CRUISER_FIREMODE_RIGHT
-				boutput(usr, "<span style=\"color:red\">Fire mode now: Right only</span>")
+				boutput(usr, "<span class='alert'>Fire mode now: Right only</span>")
 			if(CRUISER_FIREMODE_RIGHT)
 				firemode = CRUISER_FIREMODE_BOTH
-				boutput(usr, "<span style=\"color:red\">Fire mode now: Simultaneous</span>")
+				boutput(usr, "<span class='alert'>Fire mode now: Simultaneous</span>")
 		return
 
 	Bump(atom/O)
@@ -776,7 +776,7 @@
 				unsubscribe_interior(user)
 				user.set_eye(user)
 		else
-			boutput(usr, "<span style=\"color:red\">The exit is blocked.</span>")
+			boutput(usr, "<span class='alert'>The exit is blocked.</span>")
 		return
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)
@@ -791,9 +791,9 @@
 					if(O:client)
 						subscribe_interior(O)
 						O:set_eye(src)
-				boutput(user, "<span style=\"color:red\">You put [O] into [src].</span>")
+				boutput(user, "<span class='alert'>You put [O] into [src].</span>")
 			else
-				boutput(user, "<span style=\"color:red\">[O] is too far away from [src]'s airlock.</span>")
+				boutput(user, "<span class='alert'>[O] is too far away from [src]'s airlock.</span>")
 		return
 
 	proc/shakeCruiser(duration, strength=1, delay=0.2)
@@ -1041,7 +1041,7 @@
 				break
 		if(check_blocked && blocked && !ignore_blocked)
 			if(user)
-				boutput(user, "<span style=\"color:red\">Something is preventing the [src] from opening.</span>")
+				boutput(user, "<span class='alert'>Something is preventing the [src] from opening.</span>")
 		else
 			ready = 0
 			SPAWN_DBG(1 SECOND) ready = 1
@@ -1055,7 +1055,7 @@
 	proc/close(var/mob/user = null)
 		if(!open) return
 		if(rebooting)
-			boutput(user, "<span style=\"color:red\">This device is currently disabled.</span>")
+			boutput(user, "<span class='alert'>This device is currently disabled.</span>")
 			return
 		ready = 0
 		SPAWN_DBG(1 SECOND) ready = 1
@@ -1196,12 +1196,12 @@
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 		if (!G.state)
-			boutput(user, "<span style=\"color:red\">You need a tighter grip!</span>")
+			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
 		var/mob/M = G.affecting
 		var/area/ship_interior/interior = get_area(src)
 		if(interior.ship)
-			user.visible_message("<span style=\"color:red\"><b>[user] throws [M] out of \the [src]!", "<span style=\"color:red\"><b>You throw [M] out of \the [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] throws [M] out of \the [src]!", "<span class='alert'><b>You throw [M] out of \the [src]!</b></span>")
 			interior.ship.leaveShip(M)
 			M.changeStatus("weakened", 2 SECONDS)
 		qdel(G)
@@ -1295,10 +1295,10 @@
 
 	attack_hand(mob/user as mob)
 		if(broken)
-			boutput(user, "<span style=\"color:red\">This pod is broken and must be repaired before it can be used again.</span>")
+			boutput(user, "<span class='alert'>This pod is broken and must be repaired before it can be used again.</span>")
 			return
 		if(using)
-			boutput(user, "<span style=\"color:red\">This pod is already being used.</span>")
+			boutput(user, "<span class='alert'>This pod is already being used.</span>")
 			return
 		else
 			enterPod(user)
@@ -1311,7 +1311,7 @@
 	proc/enterPod(mob/user as mob)
 		var/obj/machinery/cruiser/C = interior.ship
 		if(rebooting)
-			boutput(user, "<span style=\"color:red\">This device is currently disabled.</span>")
+			boutput(user, "<span class='alert'>This device is currently disabled.</span>")
 			return
 		using = user
 		user.set_loc(src)

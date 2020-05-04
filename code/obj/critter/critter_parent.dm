@@ -111,7 +111,7 @@
 			return
 		var/msg = replacetext(message, "%src%", "<b>[src]</b>")
 		msg = replacetext(msg, "%target%", "[target]")
-		src.visible_message("<span style='color:red'>[msg]</span>")
+		src.visible_message("<span class='alert'>[msg]</span>")
 
 	proc/report_spawn()
 		if (!report_state)
@@ -237,10 +237,10 @@
 
 					src.skinresult = null
 
-					user.visible_message("<span style=\"color:red\">[user] skins [src].</span>","You skin [src].")
+					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
 
 			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
-				user.visible_message("<span style=\"color:red\">[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
+				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
 				var/transfer = src.reagents.total_volume / i
@@ -340,10 +340,10 @@
 				if (prob(50 - attack_force))
 					return
 				else
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> flinches!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
 			src.target = user
 			src.oldtarget_name = user.name
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> [src.angertext] [user.name]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
 			src.task = "chasing"
 			on_grump()
 
@@ -388,7 +388,7 @@
 
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
-			src.visible_message("<span style=\"color:red\"><b>[user]</b> punches [src]!</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
 			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
@@ -402,15 +402,15 @@
 					if (prob(50))
 						return
 					else
-						src.visible_message("<span style=\"color:red\"><b>[src]</b> flinches!</span>")
+						src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
 				src.target = user
 				src.oldtarget_name = user.name
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> [src.angertext] [user.name]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
 				src.task = "chasing"
 				on_grump()
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-			src.visible_message("<span style=\"color:blue\"><b>[user]</b> [pet_verb] [src]!</span>", 1)
+			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]!</span>", 1)
 			on_pet()
 
 	proc/patrol_step()
@@ -802,9 +802,9 @@
 							src.task = "thinking"
 							src.corpse_target = null
 						if (3)
-							src.visible_message("<span style=\"color:red\"><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
+							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
 						if (2)
-							src.visible_message("<span style=\"color:red\"><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
+							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
 
 			if ("attacking")
 #if ASS_JAM //timestop stuff
@@ -896,7 +896,7 @@
 				src.task = "thinking"
 			if (visible.len)
 				src.corpse_target = visible[1]
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> eyes [src.corpse_target.name] hungrily!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> eyes [src.corpse_target.name] hungrily!</span>")
 				src.task = "chasing"// corpse"
 
 		if (src.chases_food)
@@ -1092,8 +1092,8 @@
 			src.critter_name = t
 
 		else if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> warms [src] with [W].</span>",\
-			"<span style=\"color:red\">You warm [src] with [W].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> warms [src] with [W].</span>",\
+			"<span class='alert'>You warm [src] with [W].</span>")
 			src.warm_count -= 2
 			src.warm_count = max(src.warm_count, 0)
 			src.hatch_check(0, user)
@@ -1129,7 +1129,7 @@
 
 			SPAWN_DBG(0)
 				if (shouldThrow && T)
-					src.visible_message("<span style=\"color:red\">[src] splats onto the floor messily!</span>")
+					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 				else
 					var/hatch_wiggle_counter = rand(3,8)
@@ -1176,7 +1176,7 @@
 		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
 		C.set_density(initial(C.density))
 		C.on_revive()
-		C.visible_message("<span style=\"color:red\">[C] seems to rise from the dead!</span>")
+		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
 		logTheThing("admin", src, null, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else

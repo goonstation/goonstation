@@ -33,7 +33,7 @@ obj/machinery/computer/general_air_control
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
 				if (src.status & BROKEN)
-					boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 					var/obj/computerframe/A = new /obj/computerframe( src.loc )
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -48,7 +48,7 @@ obj/machinery/computer/general_air_control
 					A.anchored = 1
 					qdel(src)
 				else
-					boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 					var/obj/computerframe/A = new /obj/computerframe( src.loc )
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
@@ -187,7 +187,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				return
 
 			if(!allowed(usr))
-				boutput(usr, "<span style=\"color:red\">Access Denied!</span>")
+				boutput(usr, "<span class='alert'>Access Denied!</span>")
 				return
 
 			if(href_list["in_refresh_status"])
@@ -288,7 +288,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				if(do_after(user, 20))
 					if (src.status & BROKEN)
-						boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+						boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 						var/obj/computerframe/A = new /obj/computerframe( src.loc )
 						if(src.material) A.setMaterial(src.material)
 						var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -303,7 +303,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 						A.anchored = 1
 						qdel(src)
 					else
-						boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+						boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 						var/obj/computerframe/A = new /obj/computerframe( src.loc )
 						if(src.material) A.setMaterial(src.material)
 						var/obj/item/circuitboard/injector_control/M = new /obj/item/circuitboard/injector_control( A )
@@ -584,7 +584,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
 				if (src.status & BROKEN)
-					boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 					var/obj/computerframe/A = new /obj/computerframe( src.loc )
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -599,7 +599,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 					A.anchored = 1
 					qdel(src)
 				else
-					boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 					var/obj/computerframe/A = new /obj/computerframe( src.loc )
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
@@ -705,7 +705,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if (!radio_connection)
 			return 0
 		if (!src.allowed(usr))
-			boutput(usr, "<span style=\"color:red\">Access denied!</span>")
+			boutput(usr, "<span class='alert'>Access denied!</span>")
 			return 0
 
 		var/datum/signal/signal = get_free_signal()
@@ -745,7 +745,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
 					return 0
 				if (!src.allowed(usr))
-					boutput(usr, "<span style=\"color:red\">Access denied!</span>")
+					boutput(usr, "<span class='alert'>Access denied!</span>")
 					return 0
 				if (!isnum(change))
 					return 0

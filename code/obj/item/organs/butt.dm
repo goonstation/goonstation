@@ -96,9 +96,9 @@
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
 		if (H.butt_op_stage == 4.0)
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -106,9 +106,9 @@
 			H.butt_op_stage = 3.0
 			return 1
 		else if (H.butt_op_stage == 5.0)
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			return null
@@ -137,10 +137,10 @@
 		if (!source || !target) return
 		if( src.unstaple()) //Try a staple if it worked, yay
 			if (!src.stapled) //That's the last staple!
-				source.visible_message("<span style=\"color:red\"><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span style=\"color:red\"><B>You rip out the staples from \the [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+				source.visible_message("<span class='alert'><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 				. = 1
 			else //Did you get some of them?
-				source.visible_message("<span style=\"color:red\"><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span style=\"color:red\"><B>You rip out some of the staples from \the [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+				source.visible_message("<span class='alert'><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 				. = 0
 
 			//Commence owie
