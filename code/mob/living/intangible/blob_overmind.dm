@@ -67,7 +67,7 @@
 		if (tutorial.tutorial_area)
 			tutorial.Start()
 		else
-			boutput(src, "<span style=\"color:red\">Could not start tutorial! Please try again later or call Wire.</span>")
+			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
 			tutorial = null
 			return
 
@@ -122,7 +122,7 @@
 		//time to un-apply the nucleus-destroyed debuff
 		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
 			src.debuff_timestamp = 0
-			out(src, "<span style=\"color:red\"><b>You can feel your former power returning!</b></span>")
+			out(src, "<span class='alert'><b>You can feel your former power returning!</b></span>")
 
 		if (blobs.len > 0)
 			/**
@@ -155,18 +155,18 @@
 
 		if (starter_buff == 1)
 			if (blobs.len >= 25)
-				boutput(src, "<span style=\"color:red\"><b>You no longer have the starter assistance.</b></span>")
+				boutput(src, "<span class='alert'><b>You no longer have the starter assistance.</b></span>")
 				starter_buff = 0
 
 		if (blobs.len >= next_evo_point)
 			next_evo_point += initial(next_evo_point)
 			evo_points++
-			boutput(src, "<span style=\"color:blue\"><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
+			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
 
 		if (blobs.len >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
 			extra_nuclei++
-			boutput(src, "<span style=\"color:blue\"><b>You have expanded enough to earn one extra nucleus! You will be granted another at size [next_extra_nucleus]. Good luck!</b></span>")
+			boutput(src, "<span class='notice'><b>You have expanded enough to earn one extra nucleus! You will be granted another at size [next_extra_nucleus]. Good luck!</b></span>")
 
 		src.nucleus_reflectivity = src.blobs.len < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
 		var/old_alpha = src.nucleus_overlay.alpha
@@ -190,14 +190,14 @@
 			src.extra_try_timestamp = 0
 			src.current_try++
 			src.reset()
-			out(src, "<span style=\"color:blue\"><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
+			out(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
 
 		//no grace, go die scrub
 		else
 			src.remove_all_abilities()
 			src.remove_all_upgrades()
 
-			boutput(src, "<span style=\"color:red\"><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
+			boutput(src, "<span class='alert'><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
 			src.ghostize()
 			SPAWN_DBG(0)
 				qdel(src)
@@ -211,7 +211,7 @@
 		//debuff active
 		if (src.debuff_timestamp && gen_rate_bonus > 0)
 			var/genBonus = round(gen_rate_bonus / 2)
-			stat("Generation Rate:", "[base_gen_rate + genBonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP <span style='color: red;'>(WEAKENED)</span>")
+			stat("Generation Rate:", "[base_gen_rate + genBonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP <span class='alert'>(WEAKENED)</span>")
 
 		else
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")
@@ -613,7 +613,7 @@
 			return
 		var/obj/screen/blob/source = O
 		if (!istype(src.ability) || !istype(source.ability))
-			boutput(user, "<span style=\"color:red\">You may only switch the places of ability buttons.</span>")
+			boutput(user, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return
 		var/mob/living/intangible/blob_overmind/owner = user
 
@@ -659,64 +659,64 @@
 				boutput(user, "[upgrade.desc]")
 				boutput(user, "<b>Evo Point Cost:</b> [upgrade.evo_point_cost]")
 				if (upgrade.check_requirements())
-					boutput(user, "<span style=\"color:blue\">Shift-click on this icon to take the upgrade.</span>")
+					boutput(user, "<span class='notice'>Shift-click on this icon to take the upgrade.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">You cannot take this upgrade yet.</span>")
+					boutput(user, "<span class='alert'>You cannot take this upgrade yet.</span>")
 			return
 
 		if (parameters["ctrl"] && ability.targeted)
 			if (ability == user.alt_power || ability == user.shift_power)
-				boutput(user, "<span style=\"color:red\">That ability is already bound to another key.</span>")
+				boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
 				return
 
 			if (ability == user.ctrl_power)
 				user.ctrl_power = null
-				boutput(user, "<span style=\"color:blue\"><b>[ability.name] has been unbound from Ctrl-Click.</b></span>")
+				boutput(user, "<span class='notice'><b>[ability.name] has been unbound from Ctrl-Click.</b></span>")
 				user.update_buttons()
 			else
 				user.ctrl_power = ability
-				boutput(user, "<span style=\"color:blue\"><b>[ability.name] is now bound to Ctrl-Click.</b></span>")
+				boutput(user, "<span class='notice'><b>[ability.name] is now bound to Ctrl-Click.</b></span>")
 
 		else if (parameters["alt"] && ability.targeted)
 			if (ability == user.shift_power || ability == user.ctrl_power)
-				boutput(user, "<span style=\"color:red\">That ability is already bound to another key.</span>")
+				boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
 				return
 
 			if (ability == user.alt_power)
 				user.alt_power = null
-				boutput(user, "<span style=\"color:blue\"><b>[ability.name] has been unbound from Alt-Click.</b></span>")
+				boutput(user, "<span class='notice'><b>[ability.name] has been unbound from Alt-Click.</b></span>")
 				user.update_buttons()
 			else
 				user.alt_power = ability
-				boutput(user, "<span style=\"color:blue\"><b>[ability.name] is now bound to Alt-Click.</b></span>")
+				boutput(user, "<span class='notice'><b>[ability.name] is now bound to Alt-Click.</b></span>")
 
 		else if (parameters["shift"] && ability.targeted)
 			if (ability == user.alt_power || ability == user.ctrl_power)
-				boutput(user, "<span style=\"color:red\">That ability is already bound to another key.</span>")
+				boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
 				return
 
 			if (ability == user.shift_power)
 				user.shift_power = null
-				boutput(user, "<span style=\"color:blue\"><b>[ability.name] has been unbound from Shift-Click.</b></span>")
+				boutput(user, "<span class='notice'><b>[ability.name] has been unbound from Shift-Click.</b></span>")
 				user.update_buttons()
 			else
 				user.shift_power = ability
-				boutput(user, "<span style=\"color:blue\"><b>[ability.name] is now bound to Shift-Click.</b></span>")
+				boutput(user, "<span class='notice'><b>[ability.name] is now bound to Shift-Click.</b></span>")
 
 		else
 			if (user.help_mode)
-				boutput(user, "<span style=\"color:blue\"><b>This is your [ability.name] ability.</b></span>")
-				boutput(user, "<span style=\"color:blue\">It costs [ability.bio_point_cost] bio points to use.</span>")
+				boutput(user, "<span class='notice'><b>This is your [ability.name] ability.</b></span>")
+				boutput(user, "<span class='notice'>It costs [ability.bio_point_cost] bio points to use.</span>")
 				if (istype(ability,/datum/blob_ability/build))
 					var/datum/blob_ability/build/AB = ability
-					boutput(user, "<span style=\"color:blue\">This is a building ability - you need to use it on a regular blob tile.</span>")
+					boutput(user, "<span class='notice'>This is a building ability - you need to use it on a regular blob tile.</span>")
 					if (AB.gen_rate_invest > 0)
-						boutput(user, "<span style=\"color:blue\">This ability requires you to invest [AB.gen_rate_invest] of your BP generation rate in it. It will be returned when the cell is destroyed.</span>")
-				boutput(user, "<span style=\"color:blue\">[ability.desc]</span>")
-				boutput(user, "<span style=\"color:blue\">Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-				boutput(user, "<span style=\"color:blue\">You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-				boutput(user, "<span style=\"color:blue\">Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
-				boutput(user, "<span style=\"color:blue\">If you want to swap the places of two buttons on this bar, click and drag one to the position you want it to occupy.</span>")
+						boutput(user, "<span class='notice'>This ability requires you to invest [AB.gen_rate_invest] of your BP generation rate in it. It will be returned when the cell is destroyed.</span>")
+				boutput(user, "<span class='notice'>[ability.desc]</span>")
+				boutput(user, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
+				boutput(user, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
+				boutput(user, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
+				boutput(user, "<span class='notice'>If you want to swap the places of two buttons on this bar, click and drag one to the position you want it to occupy.</span>")
 			else
 				ability.onUse()
 

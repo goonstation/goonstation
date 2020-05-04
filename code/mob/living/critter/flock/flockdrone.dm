@@ -86,7 +86,7 @@
 	if(!pilot)
 		return // fuck it
 	if(controller)
-		boutput(pilot, "<span class='text-red'>This drone is already being controlled.</span>")
+		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
 	src.controller = pilot
 	walk(src, 0)
@@ -155,7 +155,7 @@
 	src.anchored = 0
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
-	src.visible_message("<span class='text-blue><b>[src]</b> begins to glow and hover.</span>")
+	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.a_intent = INTENT_HELP // default
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -188,7 +188,7 @@
 		src.flock.registerUnit(src) // for the sake of the flockmind
 	if(controller)
 		controller.flock = flocks[flockName]
-	boutput(src, "<span class='text-blue'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
+	boutput(src, "<span class='notice'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
 
 /mob/living/critter/flock/drone/Login()
 	..()
@@ -312,7 +312,7 @@
 		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
 			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
-			boutput(src, "<span class='text-blue'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
+			boutput(src, "<span class='notice'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
@@ -323,13 +323,13 @@
 					else
 						qdel(O)
 				if(anything_tumbled)
-					src.visible_message("<span class='text-red'>The contents of [I] tumble out of [src].</span>",
-						"<span class='text-red'>The contents of [I] tumble out of you.</span>",
-						"<span class='text-red'>You hear things fall onto the floor.</span")
+					src.visible_message("<span class='alert'>The contents of [I] tumble out of [src].</span>",
+						"<span class='alert'>The contents of [I] tumble out of you.</span>",
+						"<span class='alert'>You hear things fall onto the floor.</span")
 			src.resources += src.absorb_completion
 			if(istype(I, /obj/item/organ/heart/flock))
 				var/obj/item/organ/heart/flock/F = I
-				boutput(src, "<span class='text-blue'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
+				boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 				src.resources += F.resources
 			qdel(I)
 	// AI ticks are handled in mob_ai.dm, as they ought to be
@@ -429,7 +429,7 @@
 	if(floorrunning)
 		return // haha fuck you i'm in the FLOOR
 	if(istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
-		src.visible_message("<span class='text-blue'>[src] harmlessly absorbs the [P].</span>")
+		src.visible_message("<span class='notice'>[src] harmlessly absorbs the [P].</span>")
 	else
 		..()
 		if(P.mob_shooter)
@@ -484,19 +484,19 @@
 		if(50 to 74)
 			if(damaged == 1) return
 			damaged = 1
-			desc = "[initial(desc)]<br><span class='text-red'>\The [src] looks lightly [pick("dented", "scratched", "beaten", "wobbly")].</span>"
+			desc = "[initial(desc)]<br><span class='alert'>\The [src] looks lightly [pick("dented", "scratched", "beaten", "wobbly")].</span>"
 			if(!dormant)
 				src.icon_state = "drone-d1"
 		if(25 to 49)
 			if(damaged == 2) return
 			damaged = 2
-			desc = "[initial(desc)]<br><span class='text-red'>\The [src] looks [pick("quite", "pretty", "rather")] [pick("dented", "busted", "messed up", "haggard")].</span>"
+			desc = "[initial(desc)]<br><span class='alert'>\The [src] looks [pick("quite", "pretty", "rather")] [pick("dented", "busted", "messed up", "haggard")].</span>"
 			if(!dormant)
 				src.icon_state = "drone-d2"
 		if(0 to 24)
 			if(damaged == 3) return
 			damaged = 3
-			desc = "[initial(desc)]<br><span class='text-red'>\The [src] looks [pick("really", "totally", "very", "all sorts of", "super")] [pick("mangled", "busted", "messed up", "broken", "haggard", "smashed up", "trashed")].</span>"
+			desc = "[initial(desc)]<br><span class='alert'>\The [src] looks [pick("really", "totally", "very", "all sorts of", "super")] [pick("mangled", "busted", "messed up", "broken", "haggard", "smashed up", "trashed")].</span>"
 			if(!dormant)
 				src.icon_state = "drone-d2"
 	return
@@ -527,7 +527,7 @@
 	src.icon_state = "drone-dead"
 	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	src.set_density(0)
-	desc = "[initial(desc)]<br><span class='text-red'>\The [src] is a dead, broken heap.</span>"
+	desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 
 /mob/living/critter/flock/drone/ghostize()
 	if(src.controller)
@@ -598,14 +598,14 @@
 
 /mob/living/critter/flock/drone/proc/create_egg()
 	if(isnull(src.flock))
-		boutput(src, "<span class='text-red'>You do not have flockmind authorization to synthesize eggs.</span>")
+		boutput(src, "<span class='alert'>You do not have flockmind authorization to synthesize eggs.</span>")
 		return
 	if(src.resources < 100)
-		boutput(src, "<span class='text-red'>Not enough resources (you need 100).</span>")
+		boutput(src, "<span class='alert'>Not enough resources (you need 100).</span>")
 		return
 	var/turf/simulated/floor/feather/nest = get_turf(src)
 	if(!istype(nest, /turf/simulated/floor/feather))
-		boutput(src, "<span class='text-red'>The egg needs to be placed on flock tile.</span>")
+		boutput(src, "<span class='alert'>The egg needs to be placed on flock tile.</span>")
 		return
 	actions.start(new/datum/action/bar/flock_egg(), src)
 
@@ -671,7 +671,7 @@
 	if(prob(grab_mob_hit_prob))
 		..()
 	else
-		boutput(user, "<span class='text-red'>The grip tool can't get a good grip on [target]!</span>")
+		boutput(user, "<span class='alert'>The grip tool can't get a good grip on [target]!</span>")
 
 /datum/limb/flock_grip/harm(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
@@ -680,7 +680,7 @@
 		return 0 // you'll need to be out of the floor to do anything
 	var/mob/living/critter/flock/drone/F = target
 	if(istype(F, /mob/living/critter/flock/drone))
-		boutput(user, "<span class='text-red'>The grip tool refuses to harm another flockdrone, jamming briefly.</span>")
+		boutput(user, "<span class='alert'>The grip tool refuses to harm another flockdrone, jamming briefly.</span>")
 	else
 		if (!target.melee_attack_test(user))
 			return
@@ -712,7 +712,7 @@
 		target = get_turf(target)
 
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
-		boutput(user, "<span class='text-red'>Something about this structure prevents it from being assimilated.</span>")
+		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else if(isfeathertile(target))
 		if(istype(target, /turf/simulated/floor/feather))
 			var/turf/simulated/floor/feather/flocktarget = target
@@ -721,23 +721,23 @@
 				anything_needs_repair = anything_needs_repair || D.broken
 			if(anything_needs_repair)
 				if(user.resources < 10)
-					boutput(user, "<span class='text-red'>Not enough resources to repair (you need 10).</span>")
+					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
 				else
 					actions.start(new/datum/action/bar/flock_convert(target, 10), user)
 			else if(user.a_intent == INTENT_DISARM)
 				if(!locate(/obj/grille/flock) in flocktarget)
 					if(user.resources < 25)
-						boutput(user, "<span class='text-red'>Not enough resources to construct a barricade (you need 25).</span>")
+						boutput(user, "<span class='alert'>Not enough resources to construct a barricade (you need 25).</span>")
 					else
 						actions.start(new/datum/action/bar/flock_construct(target), user)
 				else
-					boutput(user, "<span class='text-red'>There's already a barricade here.</span>")
+					boutput(user, "<span class='alert'>There's already a barricade here.</span>")
 			else
-				boutput(user, "<span class='text-blue'>It's already been repurposed. Can't improve on perfection. (Use the disarm intent to construct a barricade.)</span>")
+				boutput(user, "<span class='notice'>It's already been repurposed. Can't improve on perfection. (Use the disarm intent to construct a barricade.)</span>")
 		else
-			boutput(user, "<span class='text-blue'>It's already been repurposed. Can't improve on perfection.</span>")
+			boutput(user, "<span class='notice'>It's already been repurposed. Can't improve on perfection.</span>")
 	else if(user.resources < 20)
-		boutput(user, "<span class='text-red'>Not enough resources to convert (you need 20).</span>")
+		boutput(user, "<span class='alert'>Not enough resources to convert (you need 20).</span>")
 	else
 		actions.start(new/datum/action/bar/flock_convert(target), user)
 
@@ -750,9 +750,9 @@
 	var/mob/living/critter/flock/drone/F = target
 	if(isflock(F))
 		if(F.get_health_percentage() >= 1.0)
-			boutput(user, "<span class='text-red'>They don't need to be repaired, they're in perfect condition.</span>")
+			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
 		if(user.resources < 10)
-			boutput(user, "<span class='text-red'>Not enough resources to repair (you need 10).</span>")
+			boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
@@ -766,16 +766,16 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	if (!user.flock)
-		boutput(user, "<span class='text-red'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
+		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
 		return
 	// IMPRISON TARGET
 	if(isflock(target))
-		boutput(user, "<span class='text-red'>The imprisonment matrix doesn't work on flockdrones.</span>")
+		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
 	else if(user.resources < 15)
-		boutput(user, "<span class='text-red'>Not enough resources to imprison (you need 15).</span>")
+		boutput(user, "<span class='alert'>Not enough resources to imprison (you need 15).</span>")
 	else if(istype(target.loc, /obj/icecube/flockdrone))
-		boutput(user, "<span class='text-red'>They're already imprisoned, you can't double-imprison them!</span>")
+		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
 
@@ -825,12 +825,12 @@
 
 /datum/equipmentHolder/flockAbsorption/on_equip()
 	if(!isobj(item))
-		boutput(holder, "<span class='text-red'>You can't possibly absorb that!</span>")
+		boutput(holder, "<span class='alert'>You can't possibly absorb that!</span>")
 		drop()
 	if(istype(item, /obj/item/grab))
 		// STOP TRYING TO EAT GRABS
 		drop()
-	holder.visible_message("<span class='text-red'>[holder] absorbs [item]!</span>", "<span class='text-blue'>You place [item] into [src.name] and begin breaking it down.</span>")
+	holder.visible_message("<span class='alert'>[holder] absorbs [item]!</span>", "<span class='notice'>You place [item] into [src.name] and begin breaking it down.</span>")
 	animate_flockdrone_item_absorb(item)
 
 /datum/equipmentHolder/flockAbsorption/on_unequip()

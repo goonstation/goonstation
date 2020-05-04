@@ -433,10 +433,13 @@
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
-	desc = "x4 Floor Bot, x5 Air Tank, x5 Gas Mask"
+	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
-	/obj/item/tank/air = 5,
-	/obj/item/clothing/mask/gas = 5)
+	/obj/item/clothing/mask/gas = 4,
+	/obj/item/tank/emergency_oxygen = 2,
+	/obj/item/tank/air = 2,
+	/obj/item/clothing/head/emerg = 4,
+	/obj/item/clothing/suit/space/emerg = 4)
 	cost = 1500
 	containertype = /obj/storage/crate/internals
 	containername = "Emergency Equipment"

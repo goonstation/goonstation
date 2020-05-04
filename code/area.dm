@@ -143,7 +143,6 @@
 					if (enteringM.ckey && enteringM.client)
 						if( !CanEnter( enteringM ) )
 
-							//boutput( enteringM, "<span style='color:red'>You cannot enter this area.</span>" )
 							var/target = get_turf(oldloc)
 							if( !target && blocked_waypoint )
 								target = get_turf(locate(blocked_waypoint) in world)
@@ -188,7 +187,7 @@
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
 						if( blocked && !exitingM.client.holder )
 							blockedTimers[ exitingM.client.key ] = world.time + 300
-							boutput( exitingM, "<b style='color:red'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
+							boutput( exitingM, "<b class='alert'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
 
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
@@ -2699,7 +2698,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span style='color:red'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
 			return 0
 		return 1
 
@@ -4747,7 +4746,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span style='color:red'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
 			return 0
 		return 1
 

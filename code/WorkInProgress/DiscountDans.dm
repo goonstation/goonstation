@@ -152,7 +152,7 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/ticket/golden))
 			qdel(I)
-			boutput(user, "<span style=\"color:blue\">You insert the golden ticket into the GTM.</span>")
+			boutput(user, "<span class='notice'>You insert the golden ticket into the GTM.</span>")
 			src.current_tickets++
 			src.updateUsrDialog()
 		else

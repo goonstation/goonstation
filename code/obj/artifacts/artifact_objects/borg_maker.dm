@@ -24,9 +24,9 @@
 			return
 		if (ishuman(user))
 			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.dnr)
-				O.visible_message("<span style=\"color:red\"><b>[O]</b> refuses to process [user.name]!</span>")
+				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
 				return
-			O.visible_message("<span style=\"color:red\"><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
+			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
 			user.emote("scream")
 			user.set_loc(O.loc)
 			converting = 1
@@ -61,6 +61,6 @@
 				M.Robotize_MK2(1)
 			converting = 0
 		else if (issilicon(user))
-			boutput(user, "<span style=\"color:red\">An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
+			boutput(user, "<span class='alert'>An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
 		else
 			return

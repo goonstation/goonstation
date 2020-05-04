@@ -54,7 +54,15 @@ var opts = {
     //Client Connection Data
     'clientDataLimit': 5,
     'clientData': [],
+
+    // Theme stuff
+    'currentTheme': 'theme-default',
 };
+
+var themes = { // "css-class": "Option name"
+    "theme-default": "Windows 3.1 (default)",
+    "theme-dark": "Dark",
+}
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
 if (!Date.now) {
@@ -597,6 +605,7 @@ $(function() {
         'spingDisabled': getCookie('pingdisabled'),
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
+        'stheme': getCookie('theme'),
     };
 
     if (savedConfig.sfontSize) {
@@ -627,6 +636,13 @@ $(function() {
     if (savedConfig.shighlightColor) {
         opts.highlightColor = savedConfig.shighlightColor;
         output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>');
+    }
+    if (savedConfig.stheme) {
+        var body = $('body');
+        body.removeClass(opts.currentTheme);
+        body.addClass(savedConfig.stheme);
+        opts.currentTheme = savedConfig.stheme;
+        output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
     }
 
     (function() {
@@ -841,6 +857,26 @@ $(function() {
         var font = $(this).attr('data-font');
         $messages.css('font-family', font);
         setCookie('fonttype', font, 365);
+    });
+
+    $('#chooseTheme').click(function(e) {
+        if ($('.popup .changeTheme').is(':visible')) {return;}
+        var popupContent = '<div class="head">Change Theme</div><div id="changeTheme" class="changeTheme">';
+        $.each(themes, function(themeclass, themename) {
+          popupContent = popupContent + '<a href="#" data-theme="'+themeclass+'">'+themename+'</a>';
+        })
+
+        popupContent = popupContent + '</div>';
+        createPopup(popupContent, 200);
+    });
+
+    $('body').on('click', '#changeTheme a', function(e) {
+        var theme = $(this).attr('data-theme');
+        var body = $('body');
+        body.removeClass(opts.currentTheme);
+        body.addClass(theme);
+        opts.currentTheme = theme;
+        setCookie('theme', theme, 365);
     });
 
     $('#togglePing').click(function(e) {

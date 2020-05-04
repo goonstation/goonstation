@@ -99,7 +99,7 @@
 </div>
 
 <div style="margin-top: 2em;">
-	Mob: <b>[M.name]</b> (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<br>Mob Type: <b>[M.type]</b> ([antag])

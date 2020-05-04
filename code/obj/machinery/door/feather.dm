@@ -24,7 +24,7 @@
 
 /obj/machinery/door/feather/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.density)
-		boutput(user, "<span class='text-red'>No reaction, apparently.</span>")
+		boutput(user, "<span class='alert'>No reaction, apparently.</span>")
 	return 0
 
 /obj/machinery/door/feather/take_damage(var/amount, var/mob/user = 0)
@@ -82,7 +82,7 @@
 
 /obj/machinery/door/feather/attack_ai(mob/user as mob)
 	// do nothing, AI and borgs can't interface with the door
-	boutput(user, "<span class='text-red'>No response. It doesn't seem compatible with your systems.</span>")
+	boutput(user, "<span class='alert'>No response. It doesn't seem compatible with your systems.</span>")
 	return
 
 /obj/machinery/door/feather/attack_hand(mob/user as mob)

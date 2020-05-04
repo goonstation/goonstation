@@ -44,10 +44,9 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.stunready)
-			boutput(usr, "It seems to have some wires attached to it.[src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]")
-		return
+			. += "It seems to have some wires attached to it.[src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
 
 	// reworked this proc a bit so it can't run more than 5 times, just in case
 	proc/CreateID()
@@ -79,12 +78,12 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if (ismob(target))
 			target.visible_message(
 				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
-				"<span style=\"color:red\"><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
+				"<span class='alert'><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
 			)
 			logTheThing("combat", challenger, target, "glove-slapped %target%")
 		else
 			target.visible_message(
-				"<span style=\"color:red\"><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
+				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
 			)
 		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, 1)
 
@@ -97,7 +96,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
+			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			src.material_prints += ", electrically charged"
 			W:amount--
@@ -110,7 +109,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span style=\"color:red\">You shock yourself while fumbling around with [C]!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
 				return
 
@@ -126,9 +125,9 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				src.item_state = "stun"
 				C.updateicon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span style=\"color:blue\">The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span class='notice'>The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
 			else
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span style=\"color:red\">You shock yourself while fumbling around with [C]!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
 			return
 
@@ -359,7 +358,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	afterattack(atom/target, mob/user, reach, params)
 		..()
-		boutput(user, "<span style=\"color:blue\"><b>You have to put the gloves on your hands first, silly!</b></span>")
+		boutput(user, "<span class='notice'><b>You have to put the gloves on your hands first, silly!</b></span>")
 
 	get_desc(dist)
 		if (src.weighted)
@@ -368,7 +367,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 /obj/item/clothing/gloves/boxing/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/horseshoe))
 		if (src.weighted)
-			boutput(user, "<span style='color:red'>You try to put [W] into [src], but there's already something in there!</span>")
+			boutput(user, "<span class='alert'>You try to put [W] into [src], but there's already something in there!</span>")
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
@@ -429,7 +428,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if(get_dist(user, target) > 1 && !user:equipped())
 
 			if(!netnum)
-				boutput(user, "<span style=\"color:red\">The gloves find no cable to draw power from.</span>")
+				boutput(user, "<span class='alert'>The gloves find no cable to draw power from.</span>")
 				return
 
 			spam_flag = 1
@@ -447,7 +446,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			for (var/obj/item/cloaking_device/I in user)
 				if (I.active)
 					I.deactivate(user)
-					user.visible_message("<span style=\"color:blue\"><b>[user]'s cloak is disrupted!</b></span>")
+					user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)
@@ -520,13 +519,13 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if (istype(W, /obj/item/power_stones))
 			if(!istype(user, /mob/living/carbon/human)) return //This ain't a critter gauntlet
 			if(user:gloves != src)
-				boutput(user, "<span style=\"color:red\"><B>You need to be wearing it dingus!</B></span>")
+				boutput(user, "<span class='alert'><B>You need to be wearing it dingus!</B></span>")
 				return
 			for(var/obj/item/power_stones/S in src)
 				if(S.stonetype == W.stonetype)
-					boutput(user, "<span style=\"color:red\"><B>That's already in there you doofus!</B></span>") //Some nerd is going to figure out how to duplicate stones I know it
+					boutput(user, "<span class='alert'><B>That's already in there you doofus!</B></span>") //Some nerd is going to figure out how to duplicate stones I know it
 					return
-			user.visible_message("<span style=\"color:red\"><B>[user] slots the [W] into the [src]!</B></span>")
+			user.visible_message("<span class='alert'><B>[user] slots the [W] into the [src]!</B></span>")
 			user.drop_item()
 			W.set_loc(src)
 			abilities.Add(W.ability)
@@ -563,10 +562,10 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			if(!istype(user, /mob/living/carbon/human)) return
 			if(user:gloves != src) return
 
-			boutput(user, "<span style=\"color:red\"><B>You smack the [src] with the [W]. It makes a grumpy whirr. I don't think it liked that!</B></span>")
+			boutput(user, "<span class='alert'><B>You smack the [src] with the [W]. It makes a grumpy whirr. I don't think it liked that!</B></span>")
 			sleep(5 SECONDS)
-			boutput(user, "<span style=\"color:red\"><B>The [src] suddenly sucks you inside and devours you. Next time don't go smacking dangerous artifacts with bricks!</B></span>")
+			boutput(user, "<span class='alert'><B>The [src] suddenly sucks you inside and devours you. Next time don't go smacking dangerous artifacts with bricks!</B></span>")
 			user.implode()
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))
-			boutput(user, "<span style=\"color:red\"><B>The [src] reacts but the core is too big for the slots.</B></span>")
+			boutput(user, "<span class='alert'><B>The [src] reacts but the core is too big for the slots.</B></span>")

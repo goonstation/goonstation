@@ -11,25 +11,25 @@
 	module_research_type = /obj/item/coin
 
 /obj/item/coin/attack_self(mob/user as mob)
-	boutput(user, "<span style='color:blue'>You flip the coin</span>")
+	boutput(user, "<span class='notice'>You flip the coin</span>")
 	SPAWN_DBG(1 SECOND)
 		if(prob(49))
-			boutput(user, "<span style='color:blue'>It comes up heads</span>")
+			boutput(user, "<span class='notice'>It comes up heads</span>")
 		else if(prob(49))
-			boutput(user, "<span style='color:blue'>It comes up tails</span>")
+			boutput(user, "<span class='notice'>It comes up tails</span>")
 		else
-			boutput(user, "<span style='color:red'>It lands on its side, fuck</span>")
+			boutput(user, "<span class='alert'>It lands on its side, fuck</span>")
 
 /obj/item/coin/throw_impact(atom/hit_atom)
 	..(hit_atom)
 	var/p = rand(100)
 	if(p < 50)
-		src.visible_message("<span style='color:blue'>The coin comes up heads</span>")
+		src.visible_message("<span class='notice'>The coin comes up heads</span>")
 
 	else if(p < 99)
-		src.visible_message("<span style='color:blue'>The coin comes up tails</span>")
+		src.visible_message("<span class='notice'>The coin comes up tails</span>")
 	else
-		src.visible_message("<span style='color:blue'>The coin lands on its side</span>")
+		src.visible_message("<span class='notice'>The coin lands on its side</span>")
 
 /obj/item/coin_bot
 	name = "Probability Disc"
@@ -50,7 +50,7 @@
 /obj/item/coin/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] swallows [src] and begins to choke!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] swallows [src] and begins to choke!</b></span>")
 	user.take_oxygen_deprivation(175)
 	user.updatehealth()
 	qdel(src)

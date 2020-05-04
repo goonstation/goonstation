@@ -65,7 +65,7 @@ obj/machinery/air_vendor
 		if (istype(W, /obj/item/spacecash))
 			src.credits += W.amount
 			W.amount = 0
-			boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
+			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
 			pool(W)
@@ -89,19 +89,19 @@ obj/machinery/air_vendor
 	proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 		if (!card || !user)
 			return
-		boutput(user, "<span style=\"color:blue\">You swipe [card].</span>")
+		boutput(user, "<span class='notice'>You swipe [card].</span>")
 		var/datum/data/record/account = null
 		account = FindBankAccountByName(card.registered)
 		if (account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
 			if (enterpin == card.pin)
-				boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = card
 			else
-				boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 				src.scan = null
 		else
-			boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
 		src.updateUsrDialog()
 
@@ -158,7 +158,7 @@ obj/machinery/air_vendor
 					if(credits > cost)
 						src.credits -= cost
 						src.fill()
-						boutput(usr, "<span style=\"color:blue\">You fill up the [src.holding].</span>")
+						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 						src.updateUsrDialog()
 						return
 					else if(scan)
@@ -166,12 +166,12 @@ obj/machinery/air_vendor
 						if (account && account.fields["current_money"] > cost)
 							account.fields["current_money"] -= cost
 							src.fill()
-							boutput(usr, "<span style=\"color:blue\">You fill up the [src.holding].</span>")
+							boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 							src.updateUsrDialog()
 							return
-					boutput(usr, "<span style=\"color:red\">Insufficient funds.</span>")
+					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">There is no tank to fill up!</span>")
+					boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
 			update_icon()

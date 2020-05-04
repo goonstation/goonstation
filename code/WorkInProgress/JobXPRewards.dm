@@ -36,7 +36,7 @@ mob/verb/checkrewards()
 			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
 		winshow(M, "winjobrewards_[M.ckey]")
 	else
-		boutput(M, "<span style=\"color:red\">Woops! That's not a valid job, sorry!</span>")
+		boutput(M, "<span class='alert'>Woops! That's not a valid job, sorry!</span>")
 
 //Once again im forced to make fucking objects to properly use byond skin stuff.
 /obj/jobxprewardbutton
@@ -64,9 +64,9 @@ mob/verb/checkrewards()
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
 							else
-								boutput(usr, "<span style=\"color:red\">Looks like you haven't earned this yet, sorry!</span>")
+								boutput(usr, "<span class='alert'>Looks like you haven't earned this yet, sorry!</span>")
 					else
-						boutput(usr, "<span style=\"color:red\">Sorry, you can not claim any more of this reward, this round.</span>")
+						boutput(usr, "<span class='alert'>Sorry, you can not claim any more of this reward, this round.</span>")
 		return
 
 	MouseEntered(location,control,params)
@@ -160,14 +160,14 @@ mob/verb/checkrewards()
 //JANITOR END
 
 /datum/jobXpReward/head_of_security_LG
-	name = "The Lawgiver"
+	name = "The Lawbringer"
 	desc = "Gain access to a voice activated weapon of the future-past by sacrificing your egun."
 	required_levels = list("Head of Security"=0)
 	claimable = 1
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/energy/egun 		//Don't go lower than obj/item/gun/energy/egun
-	var/reward_path = /obj/item/gun/energy/lawgiver
+	var/reward_path = /obj/item/gun/energy/lawbringer
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -188,8 +188,8 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/energy/lawgiver/LG = new reward_path()
-		var/obj/item/paper/lawgiver_pamphlet/LGP = new/obj/item/paper/lawgiver_pamphlet()
+		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
+		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
@@ -202,15 +202,15 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
 		C.mob.put_in_hand_or_drop(LGP)
-		boutput(C.mob, "<span style='color:#605b59'>A pamphlet flutters out.</span>")
+		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
 /datum/jobXpReward/head_of_security_LG/old
-	name = "The Antique Lawgiver"
-	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawgiver."
-	sacrifice_path = /obj/item/gun/energy/lawgiver
-	reward_path = /obj/item/gun/energy/lawgiver/old
-	sacrifice_name = "Lawgiver"
+	name = "The Antique Lawbringer"
+	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
+	sacrifice_path = /obj/item/gun/energy/lawbringer
+	reward_path = /obj/item/gun/energy/lawbringer/old
+	sacrifice_name = "Lawbringer"
 	required_levels = list("Head of Security"=5)
 
 //Captain

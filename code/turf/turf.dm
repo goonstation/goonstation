@@ -805,6 +805,7 @@ var/global/client/ff_debugger = null
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"
@@ -814,6 +815,7 @@ var/global/client/ff_debugger = null
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+	plane = PLANE_WALL
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
@@ -931,10 +933,10 @@ var/global/client/ff_debugger = null
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(usr, "<span style=\"color:red\">You can't build here.</span>")
+		boutput(usr, "<span class='alert'>You can't build here.</span>")
 		return
 	if (istype(C, /obj/item/rods))
-		boutput(user, "<span style=\"color:blue\">Constructing support lattice ...</span>")
+		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
 		if(C.material) src.setMaterial(C.material)
@@ -1084,7 +1086,7 @@ var/global/client/ff_debugger = null
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
-				boutput(user, "<span style=\"color:red\">That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
+				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
 				return
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")

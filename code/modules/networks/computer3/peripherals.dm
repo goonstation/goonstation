@@ -912,7 +912,7 @@
 			src.vend_prize()
 			src.last_vend = world.time
 		else
-			boutput(user, "<span style=\"color:red\">[src] isn't ready to dispense a prize yet.</span>")
+			boutput(user, "<span class='alert'>[src] isn't ready to dispense a prize yet.</span>")
 
 		return
 
@@ -1143,7 +1143,7 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
@@ -1263,7 +1263,7 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
@@ -1410,14 +1410,14 @@
 			if(host)
 				for(var/mob/M in hearers(host, null))
 					if(M.client)
-						M.show_message(text("<span style=\"color:red\">You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
+						M.show_message(text("<span class='alert'>You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
 				// add a sound effect maybe
 				sleep(rand(50,100))
 				if(host)
 					if(prob(50))
 						for(var/mob/M in AIviewers(host, null))
 							if(M.client)
-								M.show_message("<span style=\"color:red\"><B>The [src.host.name] explodes!</B></span>", 1)
+								M.show_message("<span class='alert'><B>The [src.host.name] explodes!</B></span>", 1)
 						var/turf/T = get_turf(src.host.loc)
 						if(T)
 							T.hotspot_expose(700,125)
@@ -1427,7 +1427,7 @@
 						return
 					for(var/mob/M in AIviewers(host, null))
 						if(M.client)
-							M.show_message("<span style=\"color:red\"><B>The [src.host.name] catches on fire!</B></span>", 1)
+							M.show_message("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>", 1)
 						fireflash(src.host.loc, 0)
 						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
 						src.host.set_broken()

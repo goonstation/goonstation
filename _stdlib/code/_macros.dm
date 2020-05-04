@@ -106,9 +106,8 @@ var/list/global_spawn_dbg = list()
 
 #define DEBUG_MESSAGE(x) if (debug_messages) message_coders(x)
 #define DEBUG_MESSAGE_VARDBG(x,d) if (debug_messages) message_coders_vardbg(x,d)
-#define __red(x) text("<span style='color:red'>[]</span>", x)  //deprecated for some reason
-#define __blue(x) text("<span style='color:blue'>[]</span>", x) //deprecated for some reason
-#define __green(x) text("<span style='color:green'>[]</span>", x) //deprecated for some reason
+#define __red(x) text("<span class='alert'>[]</span>", x)  //deprecated for some reason
+#define __blue(x) text("<span class='notice'>[]</span>", x) //deprecated for some reason
 
 #define TimeOfHour world.timeofday % 36000
 //#endif
@@ -182,4 +181,4 @@ var/list/global_spawn_dbg = list()
 
 
 //used for pods
-#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > 32 || V.bound_height > 32) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
+#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )

@@ -179,13 +179,13 @@
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("<span style=\"color:blue\">[M] ties \himself to the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] ties \himself to the conveyor.</span>")
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
-					user.visible_message("<span style=\"color:blue\">[M] has been tied to the conveyor by [user].</span>", "<span style=\"color:blue\">You tie [M] to the converyor!</span>")
+					user.visible_message("<span class='notice'>[M] has been tied to the conveyor by [user].</span>", "<span class='notice'>You tie [M] to the converyor!</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">[M] must be lying down to be tied to the converyor!</span>")
+					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
 			M.buckled = src.loc
@@ -203,9 +203,9 @@
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("<span style=\"color:blue\">[M] cuts \himself free from the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] cuts \himself free from the conveyor.</span>")
 			else
-				src.visible_message("<span style=\"color:blue\">[M] had been cut free from the conveyor by [user].</span>")
+				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
 
 	else if(istype(I, /obj/item/ore_scoop))

@@ -152,10 +152,10 @@ todo: add more small animals!
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/mouse_squeak.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> squeaks!</span>"
+					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("smile")
 				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> wiggles [his_or_her(src)] tail happily!</span>"
+					return "<span class='emote'><b>[src]</b> wiggles [his_or_her(src)] tail happily!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -331,17 +331,17 @@ todo: add more small animals!
 			if ("scream","meow")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/cat.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> meows!</span>"
+					return "<span class='emote'><b>[src]</b> meows!</span>"
 			if ("smile","purr")
 				if (src.emote_check(voluntary, 30))
-					return "<span style='color:#605b59'><b>[src]</b> purrs.</span>"
+					return "<span class='emote'><b>[src]</b> purrs.</span>"
 			if ("frown","tail")
 				if (src.emote_check(voluntary, 30))
-					return "<span style='color:#605b59'><b>[src]</b>'s tail swishes back and forth aggressively!</span>" // cat do dis when mad.  mad catte
+					return "<span class='emote'><b>[src]</b>'s tail swishes back and forth aggressively!</span>" // cat do dis when mad.  mad catte
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> hisses!</span>"
+					return "<span class='emote'><b>[src]</b> hisses!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -456,15 +456,15 @@ todo: add more small animals!
 				if (src.emote_check(voluntary, 50))
 					if (src.gabe == 1) //sniff. bark bork. brork.
 						playsound (get_turf(src), "gabe", 80, 1)
-						return "<span style='color:#605b59'><b>[src]</b> barks??</span>"
+						return "<span class='emote'><b>[src]</b> barks??</span>"
 					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> barks!</span>"
+					return "<span class='emote'><b>[src]</b> barks!</span>"
 			if ("smile","tail")
 				if (src.emote_check(voluntary, 30))
-					return "<span style='color:#605b59'><b>[src]</b> wags [his_or_her(src)] tail happily!</span>"
+					return "<span class='emote'><b>[src]</b> wags [his_or_her(src)] tail happily!</span>"
 			if ("frown","growl")
 				if (src.emote_check(voluntary, 30))
-					return "<span style='color:#605b59'><b>[src]</b>'s growls!</span>"
+					return "<span class='emote'><b>[src]</b>'s growls!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -485,8 +485,8 @@ todo: add more small animals!
 			src.setStatus("paralysis", 100)
 			src.setStatus("stunned", 100)
 			src.setStatus("weakened", 100)
-			src.visible_message("<span style='color:blue'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
-			"<span style='color:blue'>You flop on your back!</span>")
+			src.visible_message("<span class='notice'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
+			"<span class='notice'>You flop on your back!</span>")
 			SPAWN_DBG(3 SECONDS)
 				if (src && !isdead(src))
 					src.delStatus("paralysis")
@@ -537,7 +537,7 @@ todo: add more small animals!
 			if ("scream","bark")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 80, 0, 0, -1)
-					return "<span style='color:#605b59'><b>[src]</b> bark bark bark!</span>"
+					return "<span class='emote'><b>[src]</b> bark bark bark!</span>"
 
 /* -------------------- Corgi -------------------- */
 
@@ -565,7 +565,7 @@ todo: add more small animals!
 			if ("scream","bark","howl")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> [pick("barks","howls")]!</span>"
+					return "<span class='emote'><b>[src]</b> [pick("barks","howls")]!</span>"
 		return ..()
 
 	specific_emote_type(var/act)
@@ -596,8 +596,8 @@ todo: add more small animals!
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span style='color:red'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
-				"<span style='color:red'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
+				src.visible_message("<span class='alert'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
+				"<span class='alert'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
@@ -606,8 +606,8 @@ todo: add more small animals!
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span style='color:blue'><b>[src]</b> wags [his_or_her(src)] tail and gets back up!</span>")
-			boutput(src, "<span style='color:blue'><b>You wag your tail and get back up!</b></span>") // visible_message doesn't go through when this triggers
+			src.visible_message("<span class='notice'><b>[src]</b> wags [his_or_her(src)] tail and gets back up!</span>")
+			boutput(src, "<span class='notice'><b>You wag your tail and get back up!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -740,7 +740,7 @@ todo: add more small animals!
 				if (src.emote_check(voluntary, 50))
 					if (bird_call_sound)
 						playsound(get_turf(src), bird_call_sound, 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> [islist(src.bird_call_msg) ? pick(src.bird_call_msg) : src.bird_call_msg]!</span>"
+					return "<span class='emote'><b>[src]</b> [islist(src.bird_call_msg) ? pick(src.bird_call_msg) : src.bird_call_msg]!</span>"
 			if ("smile","wink","poof")
 				if (src.emote_check(voluntary, 30))
 					if (src.icon_state_poof)
@@ -751,14 +751,14 @@ todo: add more small animals!
 					if (prob(3))
 						SPAWN_DBG(0)
 							src.create_feather()
-					return "<span style='color:#605b59'><b>[src]</b> [pick("poofs", "fluffs")] up!</span>"
+					return "<span class='emote'><b>[src]</b> [pick("poofs", "fluffs")] up!</span>"
 			if ("snap","click")
 				if (src.emote_check(voluntary, 50))
 					if (src.species == "goose" || src.species == "swan") // hardcoded thing because im loaf 2day.
 						playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
-						return "<span style='color:#605b59'><b>[src]</b> hisses!</span>"
+						return "<span class='emote'><b>[src]</b> hisses!</span>"
 					else
-						return "<span style='color:#605b59'><b>[src]</b> clicks [his_or_her(src)] beak!</span>"
+						return "<span class='emote'><b>[src]</b> clicks [his_or_her(src)] beak!</span>"
 			if ("dance","flap")
 				if (src.emote_check(voluntary, 50))
 					if (prob(20))
@@ -769,17 +769,17 @@ todo: add more small animals!
 						SPAWN_DBG(3.8 SECONDS)
 							if (src && !isdead(src))
 								src.icon_state = src.species
-						return "<span style='color:#605b59'><b>[src]</b> dances!</span>"
+						return "<span class='emote'><b>[src]</b> dances!</span>"
 					else
 						flick("[src.species]-flaploop", src)
 						if (prob(3))
 							SPAWN_DBG(0)
 								src.create_feather()
-						return "<span style='color:#605b59'><b>[src]</b> flaps and bobs happily!</span>"
+						return "<span class='emote'><b>[src]</b> flaps and bobs happily!</span>"
 			if ("hiss")
 				if ((src.species == "goose" || src.species == "swan") && src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> hisses!</span>"
+					return "<span class='emote'><b>[src]</b> hisses!</span>"
 			if ("wave","fuss","fussle")
 				if (src.emote_check(voluntary, 50))
 					var/holding_thing = src.equipped()
@@ -787,7 +787,7 @@ todo: add more small animals!
 						if (prob(3))
 							SPAWN_DBG(0)
 								src.create_feather()
-						return "<span style='color:#605b59'><b>[src]</b> [pick("fusses with", "picks at", "pecks at", "throws around", "waves around", "nibbles on", "chews on", "tries to pry open")] [holding_thing].</span>"
+						return "<span class='emote'><b>[src]</b> [pick("fusses with", "picks at", "pecks at", "throws around", "waves around", "nibbles on", "chews on", "tries to pry open")] [holding_thing].</span>"
 
 		return null
 
@@ -983,12 +983,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
-			boutput(M, "<span style=\"color:red\"><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN_DBG(1 MINUTE)
-				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -1016,12 +1016,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
-			boutput(M, "<span style=\"color:red\"><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN_DBG(1 MINUTE)
-				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -1280,7 +1280,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> chitters!</span>"
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -1321,7 +1321,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> chitters!</span>"
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -1535,8 +1535,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span style='color:red'><b>[src]</b> dies!</span>",\
-				"<span style='color:red'><b>You play dead!</b></span>")
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
+				"<span class='alert'><b>You play dead!</b></span>")
 				src.set_density(0)
 			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
@@ -1545,8 +1545,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span style='color:blue'><b>[src]</b> stops playing dead and gets back up!</span>")
-			boutput(src, "<span style='color:blue'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
+			src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
+			boutput(src, "<span class='notice'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -1562,11 +1562,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> shrieks!</span>"
+					return "<span class='emote'><b>[src]</b> shrieks!</span>"
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> hisses!</span>"
+					return "<span class='emote'><b>[src]</b> hisses!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -1606,7 +1606,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if (..())
 			return 1
-		src.visible_message("<span style='color:red'>You feel uncomfortable now.</span>")
+		src.visible_message("<span class='alert'>You feel uncomfortable now.</span>")
 
 /* ============================================= */
 /* -------------------- Pig -------------------- */
@@ -1638,7 +1638,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> squeals!</span>"
+					return "<span class='emote'><b>[src]</b> squeals!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -1682,7 +1682,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> shrieks!</span>"
+					return "<span class='emote'><b>[src]</b> shrieks!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -1783,7 +1783,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return null
 			if ("snap","buzz")
 				if (src.emote_check(voluntary, 30))
-					return "<span style='color:#605b59'><b>[src]</b> buzzes!</span>" // todo?: find buzz noise
+					return "<span class='emote'><b>[src]</b> buzzes!</span>" // todo?: find buzz noise
 		return null
 
 	specific_emote_type(var/act)
@@ -1850,10 +1850,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> [pick("shriek","yowl","bark")]s!</span>"
+					return "<span class='emote'><b>[src]</b> [pick("shriek","yowl","bark")]s!</span>"
 			if ("shriek","yowl","bark")
 				if (src.emote_check(voluntary, 50))
-					return "<span style='color:#605b59'><b>[src]</b> [act]s!</span>"
+					return "<span class='emote'><b>[src]</b> [act]s!</span>"
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
@@ -1970,7 +1970,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/butterflyscream.ogg", 80, 1)
-					return "<span style='color:#605b59'><b>[src]</b> cheeps.</span>"
+					return "<span class='emote'><b>[src]</b> cheeps.</span>"
 			if ("flutter","dance")
 				if (src.emote_check(voluntary, 50)) //copied from moonwalk code
 					SPAWN_DBG(0)
@@ -1980,7 +1980,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						for (var/i = 0, i < 4, i++)
 							src.pixel_x-= 2
 							sleep(0.2 SECONDS)
-					return "<span style='color:#605b59'><b>[src]</b> flutters.</span>"
+					return "<span class='emote'><b>[src]</b> flutters.</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -2066,7 +2066,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/fly_buzz.ogg", 90, 1)
-					return "<span style='color:#605b59'><b>[src]</b> bzzts annoyingly.</span>"
+					return "<span class='emote'><b>[src]</b> bzzts annoyingly.</span>"
 
 /mob/living/critter/small_animal/fly/weak
 	health_brute = 2
@@ -2129,7 +2129,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/fly_buzz.ogg", 90, 1)
-					return "<span style='color:#605b59'><b>[src]</b> bzzts annoyingly.</span>"
+					return "<span class='emote'><b>[src]</b> bzzts annoyingly.</span>"
 
 /mob/living/critter/small_animal/mosquito/weak
 	health_brute = 2
@@ -2177,7 +2177,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						if (src && !isdead(src))
 							src.icon_state = start_icon
 					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1,0,0,0.8)
-					return "<span style='color:#605b59'><b>[src]</b> screeches!</span>"
+					return "<span class='emote'><b>[src]</b> screeches!</span>"
 
 			if ("dance","flap")
 				if (src.emote_check(voluntary, 50))
@@ -2185,7 +2185,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					SPAWN_DBG(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
-					return "<span style='color:#605b59'><b>[src]</b> clacks their claws!</span>"
+					return "<span class='emote'><b>[src]</b> clacks their claws!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -2225,7 +2225,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/screams/Robot_scream_2.ogg", 50, 1, 0.1, 2.6)
-					return "<span style='color:#605b59'><b>[src]</b> squeaks!</span>"
+					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
@@ -2233,11 +2233,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						if (src && !isdead(src))
 							src.icon_state = initial(icon_state)
 					var/msg = pick("beeps and boops","does a little dance","gets down tonight","is feeling funky","is out of control","gets up to get down","busts a groove","begins clicking and whirring","emits an excited bloop","can't contain itself","can dance if it wants to")
-					return "<span style='color:#605b59'><b>[src]</b> [msg]!</span>"
+					return "<span class='emote'><b>[src]</b> [msg]!</span>"
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/vox/birdwell.ogg', 50, 1)
-					return "<span style='color:#605b59'><b>[src]</b> birdwells.</span>"
+					return "<span class='emote'><b>[src]</b> birdwells.</span>"
 			if ("flip")
 				var/mode = pick("honk", "fart", "burp", "squeak", "cat", "harmonica", "vuvuzela", "bang", "buzz", "gunshot", "siren", "coo", "rimshot", "trombone")
 				switch(mode)
@@ -2292,7 +2292,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/figure
 	name = "collectable figure"
 	real_name = "collectable figure"
-	desc = "<b><span style=\"color:red\">WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
+	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 2
@@ -2350,15 +2350,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3)
-					return "<span style='color:#605b59'><b>[src]</b> squeaks!</span>"
+					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("burp")
 				if (src.emote_check(voluntary, 30))
 					playsound(get_turf(src), 'sound/voice/burp.ogg', 40, 1, 0.1, 3)
-					return "<span style='color:#605b59'><b>[src]</b> burps.</span>"
+					return "<span class='emote'><b>[src]</b> burps.</span>"
 			if ("fart")
 				if (src.emote_check(voluntary))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
-					return "<span style='color:#605b59'><b>[src]</b> farts!</span>"
+					return "<span class='emote'><b>[src]</b> farts!</span>"
 
 		return null
 
@@ -2474,8 +2474,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
-			boutput(src, "<span class='game' style='color:[mentorhelp_text_color]'>You poke [target] in a way that clearly indicates you want to help them.</span>")
-			boutput(target, "<span class='game' style='color:[mentorhelp_text_color]'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
+			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help them.</span>")
+			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)
 				flick(src.icon_state_exclaim, src)
@@ -2489,7 +2489,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(get_turf(src), "sound/voice/animal/mouse_squeak.ogg", 80, 1)
 					if(src.icon_state_exclaim)
 						flick(src.icon_state_exclaim, src)
-					return "<span style='color:#605b59'><b>[src]</b> squeaks!</span>"
+					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 		return ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -2497,7 +2497,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
-					return "<span style='color:#605b59'><b>[src]</b> toots helpfully!</span>"
+					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
 		return ..()
 
 	specific_emote_type(var/act)

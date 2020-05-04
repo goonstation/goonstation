@@ -447,7 +447,7 @@
 /obj/item/storage/pill_bottle/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] swallows [src] whole and begins to choke!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] swallows [src] whole and begins to choke!</b></span>")
 	user.take_oxygen_deprivation(175)
 	user.updatehealth()
 	qdel(src)

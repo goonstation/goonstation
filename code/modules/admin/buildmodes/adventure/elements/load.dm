@@ -5,7 +5,7 @@
 
 	initialize()
 		//savename = input("Save file name", "Save file name", "save") as text
-		boutput(usr, "<span style=\"color:blue\">Left click the bottom left corner of the area to fill with the saved structure. </span>")
+		boutput(usr, "<span class='notice'>Left click the bottom left corner of the area to fill with the saved structure. </span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -17,7 +17,7 @@
 				if (fexists("adventure/ADV_LOAD_[usr.client.ckey]"))
 					fdel("adventure/ADV_LOAD_[usr.client.ckey]")
 				if (pasting)
-					boutput(usr, "<span style=\"color:red\">Already loading.</span>")
+					boutput(usr, "<span class='alert'>Already loading.</span>")
 					return
 				pasting = 1
 				var/datum/puzzlewizard/load/this = src
@@ -56,7 +56,7 @@
 				F << null
 				F.ImportText("/", file2text(target))
 				if (!F)
-					boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+					boutput(usr, "<span class='alert'>Import failed.</span>")
 					pasting = 0
 					return
 				var/basex = T.x
@@ -72,19 +72,19 @@
 				if (!version)
 					version = 1
 				if (!w || !h)
-					boutput(usr, "<span style=\"color:red\">Size error: [w]x[h]</span>")
+					boutput(usr, "<span class='alert'>Size error: [w]x[h]</span>")
 					return
 				if (T.z == 0)
-					boutput(usr, "<span style=\"color:red\">Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
+					boutput(usr, "<span class='alert'>Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
 					return
 				if (!locate(basex + w, basey + h, T.z))
-					boutput(usr, "<span style=\"color:red\">Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
+					boutput(usr, "<span class='alert'>Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
 				if (alert("This action will paste an area of [w]x[h]. Are you sure you wish to proceed?",, "Yes", "No") == "No")
 					this.pasting = 0
-					boutput(usr, "<span style=\"color:red\">Aborting paste.</span>")
+					boutput(usr, "<span class='alert'>Aborting paste.</span>")
 					return
 				message_admins("[key_name(usr)] initiated loading an adventure (size: [w]x[h], estimated pasting duration: [w*h/10] seconds).")
-				boutput(usr, "<span style=\"color:blue\">Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
+				boutput(usr, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
 				var/datum/sandbox/sandbox = new /datum/sandbox()
 				sandbox.context["version"] = version
 				SPAWN_DBG(0)
@@ -144,7 +144,7 @@
 					if (this)
 						this.pasting = 0
 					if (usr && usr.client)
-						boutput(usr, "<span style=\"color:blue\">Pasting finished. Fixing lights.</span>")
+						boutput(usr, "<span class='notice'>Pasting finished. Fixing lights.</span>")
 						if (fexists("ADV_LOAD_[usr.client.ckey]"))
 							fdel("ADV_LOAD_[usr.client.ckey]")
 					message_admins("Adventure/loader: loading initiated by [paster] is finalizing.")

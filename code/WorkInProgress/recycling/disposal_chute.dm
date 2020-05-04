@@ -71,13 +71,13 @@
 		if(status & BROKEN)
 			return
 		if (istype(I,/obj/item/electronics/scanner))
-			user.visible_message("<span style=\"color:red\"><B>[user] hits [src] with [I]!</B></span>")
+			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I,/obj/item/satchel/))
 			var/action = input(usr, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
 			if (!action || action == "Never Mind") return
 			if (get_dist(src,user) > 1)
-				boutput(user, "<span style=\"color:red\">You need to be closer to the chute to do that.</span>")
+				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if (action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
@@ -89,7 +89,7 @@
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
 		else if (issilicon(user))
-			boutput(user, "<span style=\"color:red\">You can't put that in the trash when it's attached to you!</span>")
+			boutput(user, "<span class='alert'>You can't put that in the trash when it's attached to you!</span>")
 			return
 
 		var/obj/item/grab/G = I
@@ -97,10 +97,10 @@
 			if (ismob(G.affecting))
 				var/mob/GM = G.affecting
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
-					boutput(user, "<span style=\"color:red\">That won't fit!</span>")
+					boutput(user, "<span class='alert'>That won't fit!</span>")
 					return
 				GM.set_loc(src)
-				user.visible_message("<span style=\"color:red\"><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
 				qdel(G)
 				logTheThing("combat", user, GM, "places %target% into [src] at [log_loc(src)].")
 				actions.interrupt(G.affecting, INTERRUPT_MOVE)
@@ -127,7 +127,7 @@
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
 			//Is this mob allowed to ride mailchutes?
 			if (!target.canRideMailchutes())
-				boutput(user, "<span style=\"color:red\">That won't fit!</span>")
+				boutput(user, "<span class='alert'>That won't fit!</span>")
 				return
 
 		var/msg
@@ -173,9 +173,9 @@
 				I.set_loc(get_turf(src))
 				if(prob(30)) //It landed cleanly!
 					I.set_loc(src)
-					src.visible_message("<span style=\"color:red\">\The [I] lands cleanly in \the [src]!</span>")
+					src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
 				else	//Aaaa the tension!
-					src.visible_message("<span style=\"color:red\">\The [I] teeters on the edge of \the [src]!</span>")
+					src.visible_message("<span class='alert'>\The [I] teeters on the edge of \the [src]!</span>")
 					var/delay = rand(5, 15)
 					SPAWN_DBG(0)
 						var/in_x = I.pixel_x
@@ -186,20 +186,20 @@
 					sleep(delay)
 					if(I && I.loc == src.loc)
 						if(prob(40)) //It goes in!
-							src.visible_message("<span style=\"color:red\">\The [I] slips into \the [src]!</span>")
+							src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
 							I.set_loc(src)
 						else
-							src.visible_message("<span style=\"color:red\">\The [I] slips off of the edge of \the [src]!</span>")
+							src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
 
 		else if (ishuman(MO))
 			var/mob/living/carbon/human/H = MO
 			H.set_loc(get_turf(src))
 			if(prob(30))
-				H.visible_message("<span style=\"color:red\"><B>[H] falls into the disposal outlet!</B></span>")
+				H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
 				logTheThing("combat", H, null, "is thrown into a [src.name] at [log_loc(src)].")
 				H.set_loc(src)
 				if(prob(20))
-					src.visible_message("<span style=\"color:red\"><B><I>...accidentally hitting the handle!</I></B></span>")
+					src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
 					H.show_text("<B><I>...accidentally hitting the handle!</I></B>", "red")
 					flush = 1
 					if (!is_processing)
@@ -518,7 +518,7 @@
 		if (src.mode != 2)//!hasvar(user,"organHolder")) I will END YOU
 			return 0
 
-		user.visible_message("<span style='color:red'><b>[user] sticks [his_or_her(user)] head into [src] and pulls the flush!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and pulls the flush!</b></span>")
 		var/obj/head = user.organHolder.drop_organ("head")
 		head.set_loc(src)
 		src.flush()

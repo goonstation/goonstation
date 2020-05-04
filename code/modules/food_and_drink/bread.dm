@@ -16,17 +16,17 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
-			boutput(user, "<span style=\"color:red\">You can't just cram that in your mouth, you greedy beast!</span>")
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				return

@@ -107,16 +107,16 @@
 					if (ispath(A) && istype(W, A))
 						ok = 1
 			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
+				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
 				return
 
 		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
+			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
+			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0
 
 		var/atom/checkloc = src.loc // no infinite loops for you
@@ -139,7 +139,7 @@
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
+			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return
 
@@ -153,14 +153,14 @@
 			return
 		for (var/obj/item/mousetrap/MT in src)
 			if (MT.armed)
-				user.visible_message("<span style='color:red'><B>[user] reaches into \the [src] and sets off a mousetrap!</B></span>",\
-				"<span style='color:red'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a mousetrap!</B></span>",\
+				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
 		for (var/obj/item/mine/M in src)
 			if (M.armed && M.used_up != 1)
-				user.visible_message("<span style='color:red'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
-				"<span style='color:red'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
+				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
 				M.triggered(user)
 				. = 1
 
@@ -201,19 +201,19 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span style='color:red'>[usr] dumps the contents of [src] onto [T]!</span>")
+					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
 					for (var/obj/item/I in src)
 						I.set_loc(T)
 						I.layer = initial(I.layer)
 						if (istype(I, /obj/item/mousetrap))
 							var/obj/item/mousetrap/MT = I
 							if (MT.armed)
-								MT.visible_message("<span style='color:red'>[MT] triggers as it falls on the ground!</span>")
+								MT.visible_message("<span class='alert'>[MT] triggers as it falls on the ground!</span>")
 								MT.triggered(usr, null)
 						else if (istype(I, /obj/item/mine))
 							var/obj/item/mine/M = I
 							if (M.armed && M.used_up != 1)
-								M.visible_message("<span style='color:red'>[M] triggers as it falls on the ground!</span>")
+								M.visible_message("<span class='alert'>[M] triggers as it falls on the ground!</span>")
 								M.triggered(usr)
 						hud.remove_item(I)
 
@@ -347,14 +347,14 @@
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
 				playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 50, 1)
 			else
-				boutput(user, "<span style='color:red'>[K] doesn't seem to fit in [src]'s lock.</span>")
+				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return
 		..()
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if (src.locked)
 			if (usr)
-				boutput(usr, "<span style='color:red'>[src] is locked!</span>")
+				boutput(usr, "<span class='alert'>[src] is locked!</span>")
 			return
 		..()
 

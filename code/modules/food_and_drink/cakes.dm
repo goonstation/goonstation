@@ -37,12 +37,12 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			if (src.sliced == 1)
-				boutput(user, "<span style=\"color:red\">This has already been sliced.</span>")
+				boutput(user, "<span class='alert'>This has already been sliced.</span>")
 				return
 			if (!icing)
-				boutput(user, "<span style=\"color:red\">You need to add icing first!</span>")
+				boutput(user, "<span class='alert'>You need to add icing first!</span>")
 				return
-			boutput(user, "<span style=\"color:blue\">You cut the cake into slices.</span>")
+			boutput(user, "<span class='notice'>You cut the cake into slices.</span>")
 			var/makeslices = src.amount
 			while (makeslices > 0)
 				var/obj/item/reagent_containers/food/snacks/cake/custom/P = new src.type(get_turf(src))
@@ -65,25 +65,25 @@
 			qdel (src)
 		if(istype(W, /obj/item/reagent_containers/glass/bottle/icing) && !(icing) &&(!sliced) && (W.reagents.total_volume))
 			if(W.reagents.total_volume == 50)
-				boutput(user, "<span style=\"color:blue\">You add the icing to the cake.</span>")
+				boutput(user, "<span class='notice'>You add the icing to the cake.</span>")
 				icing = 1
 				src.desc += "<br>It has " + W.reagents.get_master_reagent_name() + " icing."
 				icing_color = W.reagents.get_master_color()
 				src.update_icing(0)
 				W.reagents.trans_to(src, W.reagents.total_volume)
 			else
-				boutput(user, "<span style=\"color:red\">The icing tube must be full!</span>")
+				boutput(user, "<span class='alert'>The icing tube must be full!</span>")
 		else
 			..()
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (!src.sliced)
 			if (user == M)
-				boutput(user, "<span style=\"color:red\">You can't just cram that in your mouth, you greedy beast!</span>")
+				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 				return
 		else
 			..()
@@ -178,7 +178,7 @@
 
 	on_finish(mob/eater)
 		..()
-		boutput(eater, "<span style=\"color:red\">It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?</span>")
+		boutput(eater, "<span class='alert'>It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?</span>")
 		random_brute_damage(eater, 3)
 		eater.emote("scream")
 		return
@@ -221,9 +221,9 @@
 /obj/item/cake_item/attack(target as mob, mob/user as mob)
 	var/iteminside = src.contents.len
 	if(!iteminside)
-		boutput(user, "<span style=\"color:red\">The cake crumbles away!</span>")
+		boutput(user, "<span class='alert'>The cake crumbles away!</span>")
 		qdel(src)
-	boutput(user, "<span style=\"color:blue\">You bite down on something odd! You open up the cake...</span>")
+	boutput(user, "<span class='notice'>You bite down on something odd! You open up the cake...</span>")
 	for(var/obj/item/I in src.contents)
 		I.set_loc(user.loc)
 		I.add_fingerprint(user)

@@ -64,7 +64,7 @@
 				spyObjective = bestow_objective(leaderMind,/datum/objective/regular/steal)
 
 		SHOW_SPY_TIPS(leaderMind.current)
-		boutput(leaderMind.current, "<span style=\"color:red\">Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
+		boutput(leaderMind.current, "<span class='alert'>Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
 
 		equip_leader(leaderMind.current)
 
@@ -107,7 +107,7 @@
 		leader.put_in_hand_or_drop(K2)
 		the_slot = "hand"
 
-	boutput(leader, "<span style=\"color:blue\">You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindslaved henchmen!</span>")
+	boutput(leader, "<span class='notice'>You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindslaved henchmen!</span>")
 	return
 
 /datum/game_mode/spy/proc/add_spy(mob/living/new_spy, mob/living/leader)
@@ -251,7 +251,7 @@
 					continue
 
 				if (user.mind && (user.mind == implant_check.leader_mind))
-					boutput(user, "<span style=\"color:red\">Injecting the same person twice won't solve anything!</span>")
+					boutput(user, "<span class='alert'>Injecting the same person twice won't solve anything!</span>")
 					return
 				else
 					override = (override || prob(10))
@@ -269,7 +269,7 @@
 					break
 
 			var/obj/item/implant/spy_implant/new_imp = new
-			M.visible_message("<span style=\"color:red\">[M] has been implanted by [user].</span>", "<span style=\"color:red\">You have been implanted by [user].</span>")
+			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -278,7 +278,7 @@
 			new_imp.set_loc(M)
 			new_imp.implanted = 1
 			new_imp.owner = M
-			user.show_message("<span style=\"color:red\">You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
+			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
 			new_imp.implanted(M, user, override)
 
 			src.charges--
@@ -295,12 +295,12 @@
 		..()
 
 		if (!istype(ticker.mode, /datum/game_mode/spy))
-			boutput(M, "<span style=\"color:red\">A stunning pain shoots through your brain!</span>")
+			boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
 			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to...</font>yourself.</h1>Maybe the implant was defective? Oh dear, act natural!")
 			return
 
 		if (M == Implanter)
-			boutput(M, "<span style=\"color:red\">This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
+			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
 			alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
 
@@ -312,15 +312,15 @@
 		var/datum/game_mode/spy/spymode = ticker.mode
 
 		if (M.mind && (M.mind in spymode.leaders))
-			boutput(M, "<span style=\"color:red\">A sharp pain flares behind your eyes, but quickly subsides.</span>")
-			boutput(M, "<span style=\"color:red\">You have undergone special mental conditioning to gain immunity from the control implants of competing agents.</span>")
+			boutput(M, "<span class='alert'>A sharp pain flares behind your eyes, but quickly subsides.</span>")
+			boutput(M, "<span class='alert'>You have undergone special mental conditioning to gain immunity from the control implants of competing agents.</span>")
 			return
 
 		var/datum/mind/oldLeader = leader_mind
 		leader_name = Implanter.real_name
 		leader_mind = Implanter.mind
 		//todo - implantation when there is another XL already in here
-		boutput(M, "<span style=\"color:red\">A brilliant pain flashes through your brain!</span>")
+		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
 		if (override)
 			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
 			alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")

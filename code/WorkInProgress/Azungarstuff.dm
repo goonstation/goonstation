@@ -85,10 +85,10 @@
 				if (istype(H))
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
-				src.visible_message("<span style=\"color:red\"><B>[M]</B> falls into the [src] and melts away!</span>")
+				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
 				M.firegib() // thanks ISN!
 		else
-			src.visible_message("<span style=\"color:red\"><B>[O]</B> falls into the [src] and melts away!</span>")
+			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
 			qdel(O)
 
 	ex_act(severity)
@@ -120,7 +120,7 @@
 					M.canmove = 0
 					M.changeStatus("weakened", 6 SECONDS)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message("<span style=\"color:red\">[M] gets too close to the edge of the lava and spontaniously combusts from the heat!</span>")
+					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and spontaniously combusts from the heat!</span>")
 					H.set_burning(500)
 					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 					M.emote("scream")
@@ -130,7 +130,7 @@
 					M.emote("scream")
 					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message("<span style=\"color:red\">[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
+					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
 			SPAWN_DBG(5 SECONDS)
 				if(M.loc == src)
@@ -147,10 +147,10 @@
 							if (H.limbs.r_leg)
 								H.limbs.r_leg.delete()
 							boutput(M, "You can feel how both of your legs melt away!")
-							visible_message("<span style=\"color:red\">[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+							visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
 						else
 							boutput(M, "You can feel intense heat on the lower part of your torso.")
-							visible_message("<span style=\"color:red\">[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
+							visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
 
 					if (isrobot(M))
 						var/mob/living/silicon/robot/R = M
@@ -173,11 +173,11 @@
 							R.update_bodypart("r_leg")
 						R.part_leg_l = null
 						R.update_bodypart("l_leg")
-						visible_message("<span style=\"color:red\">[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+						visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
 						boutput(M, "You can feel how both of your legs melt away!")
 					else
 						boutput(M, "You can feel intense heat on the lower part of your torso.")
-						visible_message("<span style=\"color:red\">[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
+						visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
 
 	corners
 		icon_state = "lava_corners"
@@ -494,7 +494,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
-			src.visible_message("<span style=\"color:blue\"><b>[src] crumbles into dust!</b></span>")
+			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
 			playsound(src.loc, 'sound/items/mining_pick.ogg', 90,1)
 			qdel(src)
 
@@ -510,7 +510,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
-			src.visible_message("<span style=\"color:blue\"><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
+			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
 			playsound(src.loc, 'sound/items/mining_pick.ogg', 90,1)
 			new /obj/decal/fakeobjects/smallrocks(src.loc)
 			qdel(src)
@@ -657,20 +657,20 @@
 			if (!G.affecting || G.affecting.buckled)
 				return
 			if (!G.state)
-				boutput(user, "<span style='color:red'>You need a tighter grip!</span>")
+				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
 				if (!G.affecting.hasStatus("weakened"))
 					G.affecting.changeStatus("weakened", 4 SECONDS)
-				src.visible_message("<span style='color:red'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
+				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 			else
 				if (!G.affecting.hasStatus("weakened"))
 					G.affecting.changeStatus("weakened", 2 SECONDS)
-				src.visible_message("<span style='color:red'>[G.assailant] puts [G.affecting] on \the [src].</span>")
+				src.visible_message("<span class='alert'>[G.assailant] puts [G.affecting] on \the [src].</span>")
 
 	place_on(obj/item/W as obj, mob/user as mob, params)
 		..()
@@ -948,7 +948,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 		return
 
 	attack_hand(mob/user as mob)
@@ -956,11 +956,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/handcuffs, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_handcuffs"
 		else
-			boutput(user, "<span style=\"color:red\">There's no handcuffs left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no handcuffs left in the [src]!</span>")
 
 /obj/decal/fakeobjects/mantacontainer
 	name = "container"
@@ -975,7 +975,7 @@
 
 	attack_hand(mob/user as mob)
 		if (can_reach(user,src))
-			boutput(user, "<span style=\"color:red\">You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
+			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
 			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
 
 	yellow
@@ -1043,7 +1043,7 @@
 		if (last_result in nums_green)
 			src.resultcolor = "green"
 
-		src.visible_message("<span style=\"color:green\">[src] lands on [src.last_result > 37 ? "00" : src.last_result > 36 ? "0" : src.last_result] [src.resultcolor]!</span>")
+		src.visible_message("<span class='success'>[src] lands on [src.last_result > 37 ? "00" : src.last_result > 36 ? "0" : src.last_result] [src.resultcolor]!</span>")
 		src.running = 0
 		update_icon()
 		src.maptext = text("<span style='color:[resultcolor];font:bold'>[] []</span>", src.last_result > 37 ? "00" : src.last_result > 36 ? "0" : src.last_result, length(resultcolor) ? uppertext(resultcolor[1]) : "")
@@ -1110,7 +1110,7 @@
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span style=\"color:red\"><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 50)
 				user.changeStatus("weakened", 3 SECONDS)
@@ -1288,14 +1288,14 @@
 	onStart()
 		..()
 		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
-		owner.visible_message("<span style='color:blue'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
+		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:red'>[owner] has successfully teleported the NT vital supplies somewhere else!</span>")
+		owner.visible_message("<span class='alert'>[owner] has successfully teleported the NT vital supplies somewhere else!</span>")
 		showswirl(thecrate.loc)
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
-		boutput(owner, "<span style='color:blue'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
+		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
 		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
 
 

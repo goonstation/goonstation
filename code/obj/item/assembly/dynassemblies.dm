@@ -42,9 +42,9 @@ For hairball DynAssemblies see: jonescity.dm
 			if ((!multipart && (P.type in src.contents) || (multipart && multitypes && !(P.type in src.multitypes) ) && contents.len >= 15)) //who really needs more than 15 parts
 				boutput(user, "You can't add any more of this type of part!")
 			else
-				boutput(user, "<span style=\"color:blue\">You begin adding \the [P.name] to \the [src.name].</span>")
+				boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
 				if (!do_after(user, 50))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return ..()
 				else
 					user.drop_item()
@@ -136,15 +136,15 @@ For hairball DynAssemblies see: jonescity.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins securing \the [assembly].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins securing \the [assembly].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style=\"color:red\">You were interrupted!</span>")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 
 	onEnd()
 		..()
-		user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
+		user.visible_message("<span class='notice'><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
 		user.hand = !user.hand
 		user.drop_item()
 		user.hand = !user.hand
@@ -169,18 +169,18 @@ For hairball DynAssemblies see: jonescity.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins unsecuring \the [assembly].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins unsecuring \the [assembly].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style=\"color:red\">You were interrupted!</span>")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 
 	onEnd()
 		..()
 		for (var/obj/O in assembly.contents)
 			O.loc = get_turf(assembly)
 		user.u_equip(assembly)
-		boutput(user, "<span style=\"color:red\">You have unsecured \the [assembly]!</span>")
+		boutput(user, "<span class='alert'>You have unsecured \the [assembly]!</span>")
 		qdel(assembly)
 
 
@@ -318,13 +318,13 @@ For hairball DynAssemblies see: jonescity.dm
 /obj/item/musicpart/attackby(obj/item/W as obj, mob/user as mob) //init the assembly
 	if (istype(W, /obj/item/musicpart))
 		var/obj/item/musicpart/P = W
-		boutput(user, "<span style=\"color:blue\">You begin adding \the [P.name] to \the [src.name].</span>")
+		boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
 		if (!do_after(user, 50))
-			boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else
 			if (!user) return
-			user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>", "<span style=\"color:blue\">You drop the objects in your hands to create an assembly.</span>")
+			user.visible_message("<span class='notice'><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>", "<span class='notice'>You drop the objects in your hands to create an assembly.</span>")
 			user.u_equip(P)
 			user.u_equip(src)
 			var/obj/item/dynassembly/instrument/A = new /obj/item/dynassembly/instrument(get_turf(src))

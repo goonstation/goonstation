@@ -136,7 +136,7 @@
 					src.jiggled = 0
 
 			if (prob(10) && src.can_flip_bust)
-				user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")
+				user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 				src.bust_out()
 
 			return
@@ -149,7 +149,7 @@
 
 		// if all else fails:
 		src.open()
-		src.visible_message("<span style='color:red'><b>[user]</b> kicks [src] open!</span>")
+		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
 		if (get_dist(user, src) > 1)
@@ -172,7 +172,7 @@
 		else if (istype(W, /obj/item/satchel/))
 			var/amt = W.contents.len
 			if (amt)
-				user.visible_message("<span style='color:blue'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
 					if (open)
@@ -194,7 +194,7 @@
 					if(!welder.try_weld(user, 1))
 						return
 					src.legholes = 1
-					src.visible_message("<span style='color:red'>[user] adds some holes to the bottom of [src] with [welder].</span>")
+					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [welder].</span>")
 					return
 				else if(!issilicon(user))
 					if(user.drop_item())
@@ -218,10 +218,10 @@
 				return
 			if (!src.welded)
 				src.weld(1, welder, user)
-				src.visible_message("<span style='color:red'>[user] welds [src] closed with [welder].</span>")
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [welder].</span>")
 			else
 				src.weld(0, welder, user)
-				src.visible_message("<span style='color:red'>[user] unwelds [src] with [welder].</span>")
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [welder].</span>")
 			return
 
 		if (src.secure)
@@ -233,7 +233,7 @@
 				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span style='color:blue'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.update_icon()
 					if (!src.registered)
 						src.registered = I.registered
@@ -245,7 +245,7 @@
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span style='color:blue'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.update_icon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
@@ -282,8 +282,8 @@
 
 		if (no_go) // no more scooting around walls and doors okay
 			if(!skip_penalty & istype(L))
-				L.visible_message("<span style='color:red'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
-				"<span style='color:red'>You scoot around [src], right into [no_go]!</span>")
+				L.visible_message("<span class='alert'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
+				"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
 				if (!L.hasStatus("weakened"))
 					L.changeStatus("weakened", 4 SECONDS)
 				if (prob(25))
@@ -315,8 +315,8 @@
 			if (iscarbon(O))
 				var/mob/living/carbon/M = user
 				if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(40))
-					user.visible_message("<span style='color:red'><b>[user]</b> trips over [src]!</span>",\
-					"<span style='color:red'>You trip over [src]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> trips over [src]!</span>",\
+					"<span class='alert'>You trip over [src]!</span>")
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 					user.set_loc(src.loc)
 					if (!user.hasStatus("weakened"))
@@ -352,8 +352,8 @@
 
 		SPAWN_DBG(0.5 SECONDS)
 			if (istype(O, /obj/item/raw_material/))
-				user.visible_message("<span style='color:blue'>[user] begins quickly stuffing materials into [src]!</span>",\
-				"<span style='color:blue'>You begin quickly stuffing materials into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>",\
+				"<span class='notice'>You begin quickly stuffing materials into [src]!</span>")
 				var/staystill = user.loc
 				for (var/obj/item/raw_material/M in view(1,user))
 					if (M.material && M.material.getProperty("radioactive") > 0)
@@ -387,8 +387,8 @@
 						src.close()
 
 			else if (istype(O, /obj/item/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/))
-				user.visible_message("<span style='color:blue'>[user] begins quickly stuffing produce into [src]!</span>",\
-				"<span style='color:blue'>You begin quickly stuffing produce into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] begins quickly stuffing produce into [src]!</span>",\
+				"<span class='notice'>You begin quickly stuffing produce into [src]!</span>")
 				var/staystill = user.loc
 				for (var/obj/item/plant/P in view(1,user))
 					if (P in user)
@@ -425,8 +425,8 @@
 				if(check_if_enterable(O))
 					O.set_loc(src.loc)
 					if (user != O)
-						user.visible_message("<span style='color:red'>[user] stuffs [O] into [src]!</span>",\
-						"<span style='color:red'>You stuff [O] into [src]!</span>")
+						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
+						"<span class='alert'>You stuff [O] into [src]!</span>")
 					SPAWN_DBG(0.5 SECONDS)
 						if (src.open)
 							src.close()
@@ -491,7 +491,7 @@
 			flick(src.opening_anim,src)
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -514,11 +514,11 @@
 		if (!src.open)
 			return 0
 		if (!src.can_close())
-			visible_message("<span style='color:red'>[src] can't close; looks like it's too full!</span>")
+			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		src.open = 0
@@ -613,10 +613,10 @@
 
 	proc/bust_out()
 		if (src.health)
-			src.visible_message("<span style='color:red'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			src.visible_message("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 			src.health--
 		if (src.health <= 0)
-			src.visible_message("<span style='color:red'>[src] breaks apart!</span>")
+			src.visible_message("<span class='alert'>[src] breaks apart!</span>")
 			src.dump_contents()
 			SPAWN_DBG(1 DECI SECOND)
 				var/newloc = get_turf(src)
@@ -625,10 +625,10 @@
 
 	proc/weld(var/shut = 0, var/obj/item/weldingtool/W as obj, var/mob/weldman as mob)
 		if (shut)
-			weldman.visible_message("<span style='color:red'>[weldman] welds [src] shut.</span>")
+			weldman.visible_message("<span class='alert'>[weldman] welds [src] shut.</span>")
 			src.welded = 1
 		else
-			weldman.visible_message("<span style='color:red'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
+			weldman.visible_message("<span class='alert'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
 			src.welded = 0
 		src.update_icon()
 		for (var/mob/M in src.contents)
@@ -755,12 +755,12 @@
 	onStart()
 		..()
 		playsound(get_turf(the_storage), "sound/items/Ratchet.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] begins taking apart [the_storage].</span>")
+		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
 		playsound(get_turf(the_storage), "sound/items/Deconstruct.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] takes apart [the_storage].</span>")
+		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
@@ -900,7 +900,7 @@
 	mob_flip_inside(var/mob/user)
 		..(user)
 		if (prob(33) && src.can_flip_bust)
-			user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 			src.bust_out()
 
 #undef RELAYMOVE_DELAY

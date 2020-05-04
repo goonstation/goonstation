@@ -77,5 +77,5 @@ client/verb/help()
 	</ul>"}, "window=help;title=Help" )
 
 	//src.Browse('browserassets/html/admin/help.html', "window=help")
-	//boutput(src, "<span style=\"color:blue\">Please visit the goonstation wiki at <b>http://wiki.ss13.co</b> for more indepth help.</span>")
+	//boutput(src, "<span class='notice'>Please visit the goonstation wiki at <b>http://wiki.ss13.co</b> for more indepth help.</span>")
 	return

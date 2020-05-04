@@ -94,10 +94,10 @@
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
-			poorSob.visible_message("<span style=\"color:red\">[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span style=\"color:blue\">Your faith protects you from [owner]'s ethereal force!</span>")
+			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
 			return
 		else
-			poorSob.visible_message("<span style=\"color:red\">[poorSob] is hit by [owner]'s ethereal force!</span>", "<span style=\"color:red\">You are hit by [owner]'s ethereal force!</span>")
+			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
 			if (istype(affecting))
 				affecting.take_damage(4, 4, 0, DAMAGE_BLUNT)
 			else
@@ -133,8 +133,8 @@
 		else
 			src.wraith.client.mob = owner
 
-		owner.visible_message("<span style=\"color:red\"><strong>[pick("[owner] suddenly rises from the floor!", "[owner] suddenly looks a lot less dead!", "A dark light shines from [owner]'s eyes!")]</strong></span>",\
-			                  "<span style=\"color:blue\">[pick("You force your will into [owner]'s corpse.", "Your dark will forces [owner] to rise.", "You assume direct control of [owner].")]</span>")
+		owner.visible_message("<span class='alert'><strong>[pick("[owner] suddenly rises from the floor!", "[owner] suddenly looks a lot less dead!", "A dark light shines from [owner]'s eyes!")]</strong></span>",\
+			                  "<span class='notice'>[pick("You force your will into [owner]'s corpse.", "Your dark will forces [owner] to rise.", "You assume direct control of [owner].")]</span>")
 
 		src.addRevenantVerbs()
 
@@ -174,7 +174,7 @@
 		if (ghoulTouchActive)
 			ghoulTouchActive--
 			if (!ghoulTouchActive)
-				owner.show_message("<span style=\"color:red\">You are no longer empowered by the netherworld.</span>")
+				owner.show_message("<span class='alert'>You are no longer empowered by the netherworld.</span>")
 
 		src.wraith.Life()
 
@@ -198,7 +198,7 @@
 		owner.updatehealth()
 
 		if (owner.health < -50)
-			boutput(owner, "<span style=\"color:red\"><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
+			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
 			owner.death(0) // todo: add custom death
 			return
 
@@ -255,7 +255,7 @@
 		if (holder && holder.owner)
 			return 1
 		else
-			boutput(usr, "<span style=\"color:red\">You're not a revenant, what the heck are you doing?</span>")
+			boutput(usr, "<span class='alert'>You're not a revenant, what the heck are you doing?</span>")
 			return 0
 
 	doCooldown()
@@ -281,21 +281,21 @@
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
-		holder.owner.visible_message("<span style=\"color:red\"><strong>[holder.owner]</strong> gestures upwards, then at [target] with a swift striking motion!</span>")
+		holder.owner.visible_message("<span class='alert'><strong>[holder.owner]</strong> gestures upwards, then at [target] with a swift striking motion!</span>")
 		var/list/thrown = list()
 		var/current_prob = 100
 		if (ishuman(target))
 			var/mob/living/carbon/T = target
 			if (T.traitHolder.hasTrait("training_chaplain"))
-				target.visible_message("<span style=\"color: red\"> [target] gives a rude gesture right back to [holder.owner]!</span>")
+				target.visible_message("<span class='alert'> [target] gives a rude gesture right back to [holder.owner]!</span>")
 				return 1
 			else if( check_target_immunity(T) )
-				holder.owner.show_message( "<span style='color:red'>That target seems to be warded from the effects!</span>" )
+				holder.owner.show_message( "<span class='alert'>That target seems to be warded from the effects!</span>" )
 			else
 				T.changeStatus("stunned", max(max(T.getStatusDuration("weakened"), T.getStatusDuration("stunned")), 3))
 				T.lying = 0
 				T.delStatus("weakened")
-				T.show_message("<span style=\"color:red\">A ghostly force compels you to be still on your feet.</span>")
+				T.show_message("<span class='alert'>A ghostly force compels you to be still on your feet.</span>")
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
 				if (prob(current_prob))
@@ -329,7 +329,7 @@
 				for (var/mob/living/carbon/human/M in T)
 					if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 						M.changeStatus("weakened", 6 SECONDS)
-						M.show_message("<span style=\"color:red\">A shockwave sweeps you off your feet!</span>")
+						M.show_message("<span class='alert'>A shockwave sweeps you off your feet!</span>")
 				for (var/obj/machinery/light/L in T)
 					L.broken()
 				for (var/obj/window/W in T)
@@ -402,9 +402,9 @@
 			RH.channeling = 0
 			var/datum/bioEffect/hidden/revenant/R = RH.revenant
 			R.ghoulTouchActive = 4
-			holder.owner.visible_message("<span style=\"color:red\">[holder.owner] glows with ethereal power!</span>", "<span style=\"color:blue\">You feel ghostly strength pulsing through you.</span>")
+			holder.owner.visible_message("<span class='alert'>[holder.owner] glows with ethereal power!</span>", "<span class='notice'>You feel ghostly strength pulsing through you.</span>")
 			return 0
-		holder.owner.show_message("<span style='color:red'>You cannot cast that ability!</span>")
+		holder.owner.show_message("<span class='alert'>You cannot cast that ability!</span>")
 
 /datum/targetable/revenantAbility/push
 	name = "Push"
@@ -418,7 +418,7 @@
 
 	cast(atom/target)
 		if (isturf(target))
-			holder.owner.show_message("<span style=\"color:red\">You must target an object or mob with this ability.</span>")
+			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
@@ -430,17 +430,17 @@
 		if (ismob(target))
 			var/mob/T = target
 			if (T.bioHolder && T.traitHolder.hasTrait("training_chaplain"))
-				holder.owner.show_message("<span style=\"color: red\">Some mysterious force protects [target] from your influence.</span>")
+				holder.owner.show_message("<span class='alert'>Some mysterious force protects [target] from your influence.</span>")
 				return 1
 			else if( check_target_immunity(T) )
-				holder.owner.show_message("<span style='color:red'>[target] seems to be warded from the effects!</span>")
+				holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")
 				return 1
 			else
-				holder.owner.show_message("<span style=\"color:blue\">You hurl [target] away from you!</span>")
+				holder.owner.show_message("<span class='notice'>You hurl [target] away from you!</span>")
 				T.throw_at(throwat, 32, 2)
-				T.show_message("<span style=\"color:red\">An unknown force hurls you away!</span>")
+				T.show_message("<span class='alert'>An unknown force hurls you away!</span>")
 		else
-			holder.owner.show_message("<span style=\"color:blue\">You hurl [target] away from you!</span>")
+			holder.owner.show_message("<span class='notice'>You hurl [target] away from you!</span>")
 			M.throw_at(throwat, 32, 2)
 
 		return 0
@@ -456,25 +456,25 @@
 
 	cast(atom/target)
 		if (!ishuman(target))
-			holder.owner.show_message("<span style=\"color:red\">You must target a human with this ability.</span>")
+			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
 		var/mob/living/carbon/human/H = target
 		if (!isturf(holder.owner.loc))
-			holder.owner.show_message("<span style=\"color:red\">You cannot cast this ability inside a [holder.owner.loc].</span>")
+			holder.owner.show_message("<span class='alert'>You cannot cast this ability inside a [holder.owner.loc].</span>")
 			return 1
 		if (holder.owner.equipped())
-			holder.owner.show_message("<span style=\"color:red\">You require a free hand to cast this ability.</span>")
+			holder.owner.show_message("<span class='alert'>You require a free hand to cast this ability.</span>")
 			return 1
 		if (H.traitHolder.hasTrait("training_chaplain"))
-			holder.owner.show_message("<span style=\"color: red\">Some mysterious force shields [target] from your influence.</span>")
+			holder.owner.show_message("<span class='alert'>Some mysterious force shields [target] from your influence.</span>")
 			return 1
 		else if( check_target_immunity(H) )
-			holder.owner.show_message("<span style='color:red'>[target] seems to be warded from the effects!</span>")
+			holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")
 			return 1
 
 		var/location = holder.owner.loc
 
-		holder.owner.visible_message("<span style=\"color:red\">[holder.owner] reaches out towards [H], making a crushing motion.</span>", "<span style=\"color:blue\">You reach out towards [H].</span>")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] reaches out towards [H], making a crushing motion.</span>", "<span class='notice'>You reach out towards [H].</span>")
 		H.changeStatus("weakened", 2 SECONDS)
 
 		var/datum/abilityHolder/revenant/RH
@@ -492,28 +492,28 @@
 					RH.channeling = 0
 					break
 				if (RH.channeling == 0)
-					holder.owner.show_message("<span style=\"color:red\">You were interrupted!</span>")
+					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
 					break
 				if (!H)
-					holder.owner.show_message("<span style=\"color:red\">You were interrupted!</span>")
+					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
 					RH.channeling = 0
 					break
 				if (get_dist(holder.owner, H) > 7)
-					holder.owner.show_message("<span style=\"color:red\">[H] is pulled from your telekinetic grip!</span>")
+					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
 				H.changeStatus("weakened", (2 + rand(0, iterations))*10)
 				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
 				if (prob(40))
-					H.visible_message("<span style=\"color:red\">[H]'s bones crack loudly!</span>", "<span style=\"color:red\">You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
+					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
 				if (prob(50))
 					H.emote("scream")
 				if (iterations > 12 && prob((iterations - 12) * 5))
-					H.visible_message("<span style=\"color:red\">[H]'s body gives in to the telekinetic grip!</span>", "<span style=\"color:red\">You are completely crushed.</span>")
+					H.visible_message("<span class='alert'>[H]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
 					H.gib()
 					return
 				sleep(0.7 SECONDS)
-			holder.owner.show_message("<span style=\"color:red\">You were interrupted!</span>")
+			holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
 		return 0
 
 /datum/targetable/revenantAbility/help
@@ -532,10 +532,10 @@
 			holder.help_mode = 0
 		else
 			holder.help_mode = 1
-			boutput(holder.owner, "<span style=\"color:blue\"><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
-			boutput(holder.owner, "<span style=\"color:blue\">Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-			boutput(holder.owner, "<span style=\"color:blue\">You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-			boutput(holder.owner, "<span style=\"color:blue\">Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
+			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='hint'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
+			boutput(holder.owner, "<span class='hint'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
+			boutput(holder.owner, "<span class='hint'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
 		return 0

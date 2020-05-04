@@ -201,7 +201,7 @@ var/mutable_appearance/fluid_ma
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. = "<br><span style=\"color:blue\">[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
+		. = "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -732,8 +732,8 @@ var/mutable_appearance/fluid_ma
 						if (checks <= 0) break
 					if (prob(slippery))
 						src.pulling = null
-						src.visible_message("<span style='color:red'><b>[src]</b> slips on [F]!</span>",\
-						"<span style='color:red'>You slip on [F]!</span>")
+						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+						"<span class='alert'>You slip on [F]!</span>")
 						src.changeStatus("stunned", 2 SECONDS)
 						src.changeStatus("weakened", 2 SECONDS)
 						src.force_laydown_standup()
@@ -750,8 +750,8 @@ var/mutable_appearance/fluid_ma
 								break
 
 					random_brute_damage(src, 4)
-					src.visible_message("<span style='color:red'><b>[src]</b> slips on [F]!</span>",\
-					"<span style='color:red'>You slip on [F]!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+					"<span class='alert'>You slip on [F]!</span>")
 					src.changeStatus("weakened", 7 SECONDS)
 					playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
 

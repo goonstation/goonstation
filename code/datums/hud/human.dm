@@ -315,11 +315,15 @@
 						src.add_screen(S)
 					for (var/obj/O in inventory_items)
 						src.add_object(O, HUD_LAYER+2)
+					if (layout_style == "tg")
+						src.add_screen(legend)
 				else
 					for (var/obj/screen/hud/S in inventory_bg)
 						src.remove_screen(S)
 					for (var/obj/O in inventory_items)
 						src.remove_object(O)
+					if (layout_style == "tg")
+						src.remove_screen(legend)
 
 			if ("lhand")
 				master.swap_hand(1)
