@@ -317,6 +317,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
 						antagWeighter.record(role = "blob", ckey = B.ckey)
 
+				else if (player.mind && player.mind.special_role == "flockmind")
+					player.close_spawn_windows()
+					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
+					if (F)
+						F.set_loc(pick(observer_start))
+						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
+						antagWeighter.record(role = "flockmind", ckey = F.ckey)
+
 				else if (player.mind)
 					if (player.client.using_antag_token)
 						player.client.use_antag_token()	//Removes a token from the player
