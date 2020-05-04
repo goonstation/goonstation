@@ -386,10 +386,11 @@
 // Added security resupply crate (Convair880).
 /datum/supply_packs/security_resupply
 	name = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
-	desc = "x1 Port-a-Brig and remote, x1 Taser, x1 Stun Baton, x1 Security-Issue Grenade Box, x1 Handcuff Kit"
+	desc = "x1 Security Belt, 1x Armoured Vest, 1x Helmet, x1 Taser, x1 Stun Baton, x1 Security-Issue Grenade Box, x1 Handcuff Kit"
 	category = "Security Department"
-	contains = list(/obj/machinery/port_a_brig,
-					/obj/item/remote/porter/port_a_brig,
+	contains = list(/obj/item/storage/belt/security,
+					/obj/item/clothing/suit/armor/vest,
+					/obj/item/clothing/head/helmet
 					/obj/item/gun/energy/taser_gun,
 					/obj/item/baton,
 					/obj/item/storage/box/QM_grenadekit_security,
@@ -397,6 +398,17 @@
 	cost = 5000
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
+	access = access_security
+
+/datum/supply_packs/security_resupply
+	name = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
+	desc = "x1 Port-a-Brig and Remote"
+	category = "Security Department"
+	contains = list(/obj/machinery/port_a_brig,
+					/obj/item/remote/porter/port_a_brig)
+	cost = 1000
+	containertype = /obj/storage/secure/crate/weapon
+	containername = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
 	access = access_security
 
 /datum/supply_packs/security_upgrade //Azungar's upgrade pack for security.
@@ -911,6 +923,7 @@
 	category = "Civilian Department"
 	contains = list(/obj/item/chem_grenade/cleaner = 4,
 					/obj/item/spraybottle/cleaner = 2,
+					/obj/item/reagent_containers/glass/bottle/cleaner = 2,
 					/obj/item/storage/box/trash_bags,
 					/obj/item/storage/box/biohazard_bags)
 	cost = 500
