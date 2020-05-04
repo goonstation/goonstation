@@ -2112,7 +2112,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/set_frequency(new_frequency)
 		if (!radio_controller) return
-		new_frequency = max(R_FREQ_MINIMUM, min(new_frequency, R_FREQ_MAXIMUM))
+		new_frequency = sanitize_frequency(new_frequency)
+		componentSay("New frequency: [new_frequency]")
 		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
