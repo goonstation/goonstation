@@ -5,7 +5,7 @@
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
-	layer = OBJ_LAYER
+	layer = OBJ_LAYER - 0.1
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
