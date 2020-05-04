@@ -3216,7 +3216,6 @@ datum
 
 			on_add(var/mob/M)
 				APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
-				return ..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
