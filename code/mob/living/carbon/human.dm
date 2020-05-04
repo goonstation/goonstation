@@ -990,19 +990,19 @@
 				tally *= max(M.p_class, 1)
 			// else, ignore p_class
 			*/
-	tally *= pull_speed_modifier(move_target)
+	. *= pull_speed_modifier(move_target)
 
 	if (src.pushing && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 		if (src.pulling != src.pushing)
-			tally *= max (src.pushing.p_class, 1)
+			. *= max (src.pushing.p_class, 1)
 
 	if (running)
 		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
-		tally = min(tally, minSpeed + (tally - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
+		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
 
-	return tally
-	
+	return .
+
 #undef BASE_SPEED
 #undef RUN_SCALING
 
