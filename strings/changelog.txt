@@ -1,7 +1,4 @@
 
-(t)mon may 03 20
-(u)Kyle
-(+)Gang members should now be able to pull members of their own gang without movespeed penalty. That is pull, not grabs.
 (t)sun may 03 20
 (u)Kubius
 (p)567
