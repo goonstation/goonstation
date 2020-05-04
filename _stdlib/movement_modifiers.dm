@@ -2,7 +2,7 @@
 	do { \
 		var/list/_L = target.movement_modifiers; \
 		if (_L[modifier]) { \
-			_L[modifier] |= list(source); \
+			_L[modifier] |= source; \
 		} else { \
 			_L[modifier] = list(source); \
 		} \
