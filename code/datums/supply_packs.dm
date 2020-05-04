@@ -400,7 +400,7 @@
 	containername = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
 	access = access_security
 
-/datum/supply_packs/security_resupply
+/datum/supply_packs/security_brig_resupply
 	name = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
 	desc = "x1 Port-a-Brig and Remote"
 	category = "Security Department"
