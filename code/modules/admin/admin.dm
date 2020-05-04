@@ -743,9 +743,6 @@ var/global/noir = 0
 					#endif
 					if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
-						ticker.hide_mode = 0
-					else
-						ticker.hide_mode = 1
 				else
 					boutput(usr, "<span class='alert'><b>That is not a valid game mode!</b></span>")
 			else
@@ -760,9 +757,6 @@ var/global/noir = 0
 				world.save_mode(newmode)
 				if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 					boutput(world, "<span class='notice'><b>The next round's mode will be: [newmode]</b></span>")
-					ticker.hide_mode = 0
-				else
-					ticker.hide_mode = 1
 			else
 				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
 
