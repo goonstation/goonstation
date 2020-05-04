@@ -1,4 +1,9 @@
 
+(t)mon may 04 20
+(u)Erinexx
+(p)546
+(e)🗺🎨|mapping, sprites
+(*)Some new grenade sprites
 (t)sun may 03 20
 (u)Kubius
 (p)567
