@@ -808,7 +808,7 @@
 	return
 
 #define BASE_SPEED 1.3
-#define RUN_SCALING 1.3
+#define RUN_SCALING 0.2
 //	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
 //	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
