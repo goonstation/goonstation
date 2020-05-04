@@ -996,10 +996,10 @@
 	// 	if (src.pulling != src.pushing)
 	// 		. *= max (src.pushing.p_class, 1)
 
-	if (!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong")))
+	if (!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 		if (src.pushing && (src.pulling != src.pushing))
 			. *= max (src.pushing.p_class, 1)
-			
+
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
 			var/mob/living/carbon/human/H = G.affecting
 			if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
