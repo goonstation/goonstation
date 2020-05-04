@@ -104,7 +104,7 @@
 	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
-	var/list/movement_modifiers
+	var/list/movement_modifiers = list()
 
 	var/misstep_chance = 0
 
@@ -237,7 +237,6 @@
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.movement_modifiers = list()
 
 /mob/proc/is_spacefaring()
 	return 0

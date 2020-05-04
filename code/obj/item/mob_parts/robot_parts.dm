@@ -662,7 +662,6 @@
 	name = "placeholder item (don't use this!)"
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
 	max_health = 60
-	effect_modifier = 0.2
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
 
@@ -771,7 +770,7 @@
 	speedbonus = 0.25
 	powerdrain = 2.5
 	step_image_state = "tracksL"
-	effect_modifier = 0.25
+	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/right
 	name = "standard cyborg right leg"
@@ -795,7 +794,7 @@
 	speedbonus = 0.25
 	powerdrain = 2.5
 	step_image_state = "tracksR"
-	effect_modifier = 0.25
+	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/treads
 	name = "cyborg treads"
@@ -807,7 +806,7 @@
 	speedbonus = 0.5
 	powerdrain = 5
 	step_image_state = "tracks-w"
-	effect_modifier = 0.25
+	movement_modifier = /datum/movement_modifier/robotleg_right // only one of these? if it replaces both it doesn't matter which one we put here.
 
 /obj/item/parts/robot_parts/leg/thruster
 	name = "Alastor pattern thruster"

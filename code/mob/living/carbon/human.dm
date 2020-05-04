@@ -817,7 +817,9 @@
 	. += movement_delay_modifier
 
 
-	var/multiplier = 1
+	var/multiplier = 1 // applied before running multiplier
+	var/health_deficiency_adjustment = 0
+	var/maximum_slowdown = 100 // applied before pulling checks
 
 	var/datum/movement_modifier/modifier
 	for(var/type_or_instance in src.movement_modifiers)
@@ -828,9 +830,12 @@
 		if (modifier.ask_proc)
 			var/list/r = modifier.modifiers(src, move_target, running)
 			. += r[1]
-			multiplier += r[2]
+			multiplier *= r[2]
 		. += modifier.additive_slowdown
 		multiplier += modifier.multiplicative_slowdown
+		health_deficiency_adjustment += modifier.health_deficiency_adjustment
+		if (modifier.maximum_slowdown < maximum_slowdown)
+			maximum_slowdown = modifier.maximum_slowdown
 
 	if (m_intent == "walk")
 		. += 0.8
@@ -841,17 +846,10 @@
 	if (src.drowsyness > 0)
 		. += 6
 
-	var/health_deficiency = (src.max_health - src.health) // cogwerks // let's treat this like pain
-	if (src.reagents)
-		if (src.reagents.has_reagent("juggernaut"))
-			health_deficiency -= 65
-		if (src.reagents.has_reagent("morphine"))
-			health_deficiency -= 50
-		if (src.reagents.has_reagent("salicylic_acid"))
-			health_deficiency -= 25
-	if (src.hasStatus("gang_drug"))
-		health_deficiency -= 50
-	if (health_deficiency >= 30) . += (health_deficiency / 25)
+	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
+
+	if (health_deficiency >= 30)
+		. += (health_deficiency / 25)
 
 	var/in_wheelchair = 0
 	if (src.buckled)
@@ -897,34 +895,13 @@
 				if (2)
 					. += 300 //haha good luck
 
-	if (src.bioHolder)
-		if (src.bioHolder.HasEffect("fat"))
-			. += 1.5
-		if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-			. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)//10)
-	//if (src.traitHolder)
-		//if (src.traitHolder.hasTrait("training_security"))
-		//	tally -= 0.2
-
-	if (src.limbs)
-		if (src.limbs.l_leg)
-			. -= src.limbs.l_leg.effect_modifier
-		if (src.limbs.r_leg)
-			. -= src.limbs.r_leg.effect_modifier
-	// for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
-	// 	var/mob/living/carbon/human/H = G.affecting
-	// 	if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
-	// 	if (G.state == 0)
-	// 		if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-	// 			if(istype(H) && H.intent != INTENT_HELP && H.lying)
-	// 				. *= max(H.p_class, 1)
-	// 	else
-	// 		. *= max(H.p_class, 1)
+	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
+		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
 
 	var/has_fluid_move_gear = 0
 	var/has_space_move_gear = 0
 
-	for(var/atom in src.get_equipped_items())
+	for(var/atom in src.get_equipped_items()) // maybe replace this with items adding movement modifiers as well?
 		var/obj/item/I = atom
 		. += I.getProperty("movespeed")
 		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
@@ -947,15 +924,7 @@
 			else if (istype(T,/turf/space/fluid))
 				. += 4
 
-	if (src.reagents)
-		if (src.reagents.has_reagent("energydrink") || src.reagents.has_reagent("methamphetamine"))
-			if (src.getStatusDuration("disorient")) //disorient still works on meth dudes!
-				. *= 0.85
-			else
-				. *= 0.5
-
-	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
-		. = max(., 3)
+	. = min(., maximum_slowdown)
 
 	. *= pull_speed_modifier(move_target)
 

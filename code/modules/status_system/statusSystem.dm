@@ -1129,6 +1129,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
 		unique = 1
+		movement_modifier = /datum/movement_modifier/janktank
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.

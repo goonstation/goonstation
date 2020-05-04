@@ -163,13 +163,17 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
-			owner.unlock_medal("Space Ham", 1)
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			H.unlock_medal("Space Ham", 1)
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnLife()
 		if(..()) return
