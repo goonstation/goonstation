@@ -3754,3 +3754,13 @@ datum
 			on_mob_life_complete(var/mob/living/carbon/human/M)
 				if(M)
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
+
+		fooddrink/alcoholic/hottoddy
+			name = "Hot Toddy"
+			id = "hottoddy"
+			fluid_r = 255
+			fluid_g = 220
+			fluid_b = 95
+			alch_strength = 0.4
+			description = "A warm, late night drink, usually enjoyed during long winter nights."
+			reagent_state = LIQUID
