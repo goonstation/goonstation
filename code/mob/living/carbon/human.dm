@@ -1523,9 +1523,9 @@
 				return
 			*/
 
-			if (gloves && (gloves.can_be_charged && gloves.stunready && gloves.uses >= 1))
-				M.stun_glove_attack(src)
-				return
+			//if (gloves && (gloves.can_be_charged && gloves.stunready && gloves.uses >= 1))
+			//	M.stun_glove_attack(src)
+			//	return
 
 			if (gloves && gloves.activeweapon)
 				gloves.special_attack(src)
@@ -3144,7 +3144,8 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK) return slot_item.equipment_click(src, target, params, location, control, origParams, slot)
+		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+			return
 
 	if (src.lying)
 		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
