@@ -457,7 +457,7 @@
 	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
 	var/list/potential_targets = list()
 	for (var/mob/living/carbon/human/H in mobs)
-		if (H.ckey && H.stat != 2 && H.mind.gang != top_gang)
+		if (H.ckey && H.stat != 2 && H.mind?.gang != top_gang)
 			potential_targets += H
 
 	if (!potential_targets.len)
