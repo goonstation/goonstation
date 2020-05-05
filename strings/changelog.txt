@@ -1,5 +1,7 @@
 
 (t)mon may 04 20
+(u)Goonstation Administration Team:
+(*)Removed player access to starter pathogen samples
 (u)Kyle
 (+)Gang members should now be able to pull members of their own gang without movespeed penalty. That is pulls, not grabs.
 (u)Gannets
