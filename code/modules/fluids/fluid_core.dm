@@ -361,26 +361,19 @@ var/mutable_appearance/fluid_ma
 			if(! t.density )
 				var/suc = 1
 				var/push_thing = 0
-				for(var/obj/thing in t.contents) //HEY maybe do item pushing here since you're looping thru turf contents anyway??
+				for(var/obj/thing in t.contents)
 					LAGCHECK(LAG_HIGH)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
 					else if (!push_thing && !thing.anchored)
 						push_thing = thing
-					/*
-					for(var/type_string in solid_to_fluid)
-						if (istype(thing,text2path(type_string)))
-							found = 1
-							break
-					*/
+
 					if (found)
 						if( thing.density )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))
-							//for(var/type_string in perspective_blocks)
-							//	if (istype(thing,text2path(type_string)))
 								blocked_perspective_objects["[dir]"] = 1
 							break
 
@@ -495,7 +488,7 @@ var/mutable_appearance/fluid_ma
 			LAGCHECK(LAG_HIGH)
 
 	//hey this isn't being called at all right now. Moved its blood spread shit up into spread() so we don't call this function that basically does nothing
-	proc/flow_towards(var/list/obj/Flist, var/push_stuff = 1)
+	/*proc/flow_towards(var/list/obj/Flist, var/push_stuff = 1)
 		if (!length(Flist)) return
 		if (!src.group || !src.group.reagents) return
 
@@ -533,7 +526,7 @@ var/mutable_appearance/fluid_ma
 					for (var/mob/living/M in src.loc)
 						step_towards(M,F.loc)
 						break
-
+	*/
 	proc/update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
 		LAGCHECK(LAG_HIGH)
 		if (!src.group || !src.group.reagents) return
