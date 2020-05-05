@@ -6,7 +6,6 @@
 	var/enabled = 1
 	anchored = 1
 	layer = OBJ_LAYER
-	plane = PLANE_NOSHADOW_BELOW
 	invisibility = 2
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
@@ -337,7 +336,6 @@
 	icon_state = "ai3"
 	anchored = 1
 	density = 0
-	plane = PLANE_NOSHADOW_BELOW
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
@@ -363,7 +361,7 @@
 				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, "<span style=\"color:red\">Access denied.</span>")
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	return attack_hand(user)

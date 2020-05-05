@@ -1474,7 +1474,7 @@
 						var/obj/item/tile = F.pry_tile(master, user, params)
 						if (tile)
 							hit = 1
-							user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
+							user.visible_message("<span style='color:red'><b>[user] flings a tile from [turf] into the air!</b></span>")
 							logTheThing("combat", user, "fling throws a floor tile ([F]) from [turf].")
 
 							user.lastattacked = user //apply combat click delay
@@ -1673,7 +1673,7 @@
 				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
-				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
+				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

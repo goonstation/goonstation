@@ -55,7 +55,7 @@
 			var/turf/T = get_turf(user)
 			var/obj/item/clothing/shoes/rocket/R = new/obj/item/clothing/shoes/rocket(T)
 			R.uses = uses
-			boutput(user, "<span class='notice'>You haphazardly kludge together some rocket shoes.</span>")
+			boutput(user, "<span style=\"color:blue\">You haphazardly kludge together some rocket shoes.</span>")
 			qdel(W)
 			qdel(src)
 
@@ -317,7 +317,7 @@
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though they are alive! They just barely wriggle out of your grip!</span>"), 1)
+			source.show_message(text("<span style=\"color:red\">\The [src] writhes in your hands as though they are alive! They just barely wriggle out of your grip!</span>"), 1)
 			. = 0
 
 /obj/item/clothing/shoes/tourist
@@ -427,19 +427,19 @@
 
 	proc/toggle()
 		src.on = !(src.on)
-		boutput(usr, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
+		boutput(usr, "<span style='color:blue'>The jet boots are now [src.on ? "on" : "off"].</span>")
 		return
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/tank))
 			if (src.tank)
-				boutput(user, "<span class='alert'>There's already a tank installed!</span>")
+				boutput(user, "<span style='color:red'>There's already a tank installed!</span>")
 				return
 			if (!istype(W, /obj/item/tank/emergency_oxygen))
-				boutput(user, "<span class='alert'>[W] doesn't fit!</span>")
+				boutput(user, "<span style='color:red'>[W] doesn't fit!</span>")
 				return
-			boutput(user, "<span class='notice'>You install [W] into [src].</span>")
+			boutput(user, "<span style='color:blue'>You install [W] into [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			src.tank = W
@@ -461,10 +461,10 @@
 		switch (action)
 			if ("Toggle")
 				src.on = !(src.on)
-				boutput(usr, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
+				boutput(usr, "<span style='color:blue'>The jet boots are now [src.on ? "on" : "off"].</span>")
 				return
 			if ("Remove Tank")
-				boutput(usr, "<span class='notice'>You eject [src.tank] from [src].</span>")
+				boutput(usr, "<span style='color:blue'>You eject [src.tank] from [src].</span>")
 				usr.put_in_hand_or_drop(src.tank)
 				src.tank = null
 				return
@@ -495,7 +495,7 @@
 
 	get_desc(dist)
 		if (dist <= 1)
-			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [src.tank.air_contents.return_pressure()]." : "<span class='alert'>They have no tank attached!</span>"]"
+			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [src.tank.air_contents.return_pressure()]." : "<span style='color:red'>They have no tank attached!</span>"]"
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 

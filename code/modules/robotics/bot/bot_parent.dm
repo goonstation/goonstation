@@ -95,6 +95,6 @@
 	. = ..()
 	if (src.health < 20)
 		if (src.health > 15)
-			. += "<span class='alert'>[src]'s parts look loose.</span>"
+			. += "<span style='color:red'>[src]'s parts look loose.</span>"
 		else
-			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
+			. += "<span style='color:red'><B>[src]'s parts look very loose!</B></span>"

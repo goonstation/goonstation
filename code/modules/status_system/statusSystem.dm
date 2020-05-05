@@ -484,7 +484,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						var/mob/M = owner
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 							M.changeStatus("weakened", 3 SECONDS)
-							boutput(M, "<span class='alert'>You feel weak.</span>")
+							boutput(M, "<span style=\"color:red\">You feel weak.</span>")
 							M.emote("collapse")
 				if(3)
 					damage_tox = (3 * prot)
@@ -498,7 +498,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
+							boutput(M, "<span style=\"color:red\">You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(4)
 					damage_tox = (4 * prot)
@@ -512,7 +512,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
+							boutput(M, "<span style=\"color:red\">You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(5)
 					damage_tox = (4.5 * prot)
@@ -526,7 +526,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
+							boutput(M, "<span style=\"color:red\">You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 
 			icon_state = "radiation[stage]"
@@ -1276,7 +1276,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		if (prob(5))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
-			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
+			H.visible_message("<span style=\"color:red\">[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span style=\"color:red\">You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
 			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)

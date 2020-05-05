@@ -318,7 +318,7 @@ obj/machinery/atmospherics/retrofilter
 		src.emagged = 1
 		if (user)
 			src.add_fingerprint(user)
-			src.visible_message("<span class='alert'>[user] has shorted out the [src.name] with an electromagnetic card!</span>")
+			src.visible_message("<span style=\"color:red\">[user] has shorted out the [src.name] with an electromagnetic card!</span>")
 		src.update_overlays()
 		return 1
 
@@ -337,7 +337,7 @@ obj/machinery/atmospherics/retrofilter
 		if (istype(W, /obj/item/card/id))
 			src.add_fingerprint(user)
 			if (src.hacked)
-				boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")
+				boutput(user, "<span style=\"color:red\">Remove the foreign wires first!</span>")
 				return
 			if (src.allowed(user))
 				src.locked = !src.locked
@@ -345,31 +345,31 @@ obj/machinery/atmospherics/retrofilter
 				src.updateUsrDialog()
 				src.update_overlays()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(user, "<span style=\"color:red\">Access denied.</span>")
 		else if (isscrewingtool(W))
 			if(src.hacked)
-				user.show_message("<span class='alert'>Remove the foreign wires first!</span>", 1)
+				user.show_message("<span style=\"color:red\">Remove the foreign wires first!</span>", 1)
 				return
 			src.add_fingerprint(user)
-			user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
+			user.show_message("<span style=\"color:red\">Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
 			if (!do_after(user, 30))
 				return
 			src.open = !src.open
-			user.show_message("<span class='alert'>Done!</span>",1)
+			user.show_message("<span style=\"color:red\">Done!</span>",1)
 			src.update_overlays()
 			return
 		else if (istype(W, /obj/item/cable_coil) && !hacked)
 			if(!src.open)
-				user.show_message("<span class='alert'>You must remove the panel first!</span>",1)
+				user.show_message("<span style=\"color:red\">You must remove the panel first!</span>",1)
 				return
 			var/obj/item/cable_coil/C = W
 			if(C.amount >= 4)
-				user.show_message("<span class='alert'>You unravel some cable..</span>",1)
+				user.show_message("<span style=\"color:red\">You unravel some cable..</span>",1)
 			else
-				user.show_message("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>",1)
+				user.show_message("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>",1)
 				return
 			src.add_fingerprint(user)
-			user.show_message("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
+			user.show_message("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
 			if(!do_after(user, 100))
 				return
 			C.use(4)
@@ -379,7 +379,7 @@ obj/machinery/atmospherics/retrofilter
 			return
 		else if (issnippingtool(W) && hacked)
 			src.add_fingerprint(user)
-			user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
+			user.show_message("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
 			if (!do_after(user, 50))
 				return
 			src.hacked = 0
