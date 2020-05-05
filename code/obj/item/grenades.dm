@@ -167,22 +167,51 @@ PIPE BOMBS + CONSTRUCTION
 
 /obj/item/old_grenade/banana/wasp
 	name = "suspicious looking grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
+	icon_state = "wasp"
+	icon_state_armed = "wasp1"
 	payload = /obj/critter/spacebee
 
-/obj/item/old_grenade/gravaton
+/obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
-	name = "gravaton grenade"
+	name = "graviton grenade"
 	det_time = 100
 	org_det_time = 100
 	alt_det_time = 60
-	icon_state = "gravaton"
-	item_state = "emp"
+	icon_state = "graviton"
+	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
 	mats = 12
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "gravaton1"
+	icon_state_armed = "graviton1"
+	var/icon_state_exploding = "graviton2"
+
+	attack_self(mob/user as mob)
+		if (!src.state)
+			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			if (!isturf(user.loc))
+				src.state = 0
+				return
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			if (user && user.bioHolder.HasEffect("clumsy"))
+				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src) prime()
+					return
+			else
+				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(src.det_time)
+					if (src) prime()
+					return
+		return
 
 	prime()
 		var/turf/T = ..()
@@ -293,7 +322,7 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "fragnade"
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
-	icon_state_armed = "fragnade_1"
+	icon_state_armed = "fragnade1"
 
 	prime()
 		var/turf/T = ..()
@@ -331,7 +360,7 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/stinger/frag
 	name = "frag grenade"
 	icon_state = "fragnade-alt"
-	icon_state_armed = "fragnade-alt_1"
+	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
 	New()
@@ -345,7 +374,7 @@ PIPE BOMBS + CONSTRUCTION
 	name = "HE grenade"
 	desc = "A high-explosive grenade. It is set to detonate in 3 seconds."
 	icon_state = "fragnade-alt"
-	icon_state_armed = "fragnade-alt_1"
+	icon_state_armed = "fragnade-alt1"
 	det_time = 30.0
 	org_det_time = 30
 	alt_det_time = 60

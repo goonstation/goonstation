@@ -660,7 +660,7 @@ var/global
 	list/reagents_cache = list()
 
 	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/gravaton","/mob/living/carbon/human/krampus")
+	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/graviton","/mob/living/carbon/human/krampus")
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()

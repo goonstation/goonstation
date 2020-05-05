@@ -29,12 +29,19 @@
 
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
-	var/hot_zone_timer = 3000
+	var/hot_zone_timer = 5 MINUTES
 	var/hot_zone_score = 1000
+
+	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
+	var/const/delay_between_kidnappings = 5 MINUTES
+	var/kidnapping_score = 20000
+	var/kidnapp_success = 0			//true if the gang successfully kidnapps.
+
 	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
+	var/mob/kidnapping_target
 
 /datum/game_mode/gang/announce()
 	boutput(world, "<B>The current game mode is - Gang War!</B>")
@@ -99,13 +106,16 @@
 
 	find_potential_hot_zones()
 
-	SPAWN_DBG (6000)
+	SPAWN_DBG (10 MINUTES)
 		process_hot_zones()
+
+	SPAWN_DBG (15 MINUTES)
+		process_kidnapping_event()
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
 
-	SPAWN_DBG (30000)
+	SPAWN_DBG (50 MINUTES)
 		force_shuttle()
 
 	return 1
@@ -428,6 +438,67 @@
 				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
 				sleep(10 SECONDS)
 			process_hot_zones()
+
+/datum/game_mode/gang/proc/process_kidnapping_event()
+	kidnapp_success = 0
+	kidnapping_target = null
+	var/datum/gang/top_gang = null
+	for (var/datum/gang/G in gangs)
+		if (!top_gang)
+			top_gang = G
+			continue
+		if (G.gang_score() > top_gang.gang_score())
+			top_gang = G
+
+	if (!top_gang)
+		logTheThing("debug", null, null, "No winning gang chosen for kidnapping event. Something's broken.")
+		message_admins("No winning gang chosen for kidnapping event. Something's broken.")
+		return 0
+
+	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
+	var/list/potential_targets = list()
+	for (var/mob/living/carbon/human/H in mobs)
+		if (H.ckey && H.stat != 2 && H.mind?.gang != top_gang)
+			potential_targets += H
+
+	if (!potential_targets.len)
+		logTheThing("debug", null, null, "No players found to be kidnapping targets.")
+		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
+		return 0
+
+	kidnapping_target = pick(potential_targets)
+	var/target_name
+	if (ismob(kidnapping_target))
+		target_name = kidnapping_target.real_name
+	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
+
+	//alert gangs, alert target which gang to be wary of.
+	for (var/datum/gang/G in gangs)
+		if (G == top_gang)
+			broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
+		else
+			broadcast_to_gang("[target_name] is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+
+	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
+
+
+	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
+		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
+		SPAWN_DBG(1 MINUTE)
+			//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
+			if(!kidnapp_success)
+				//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
+				if (kidnapping_target && kidnapping_target.stat != 2)
+					for (var/datum/gang/G in gangs)
+						if (G != top_gang)
+							G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
+					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+				else
+					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
+
+				sleep(delay_between_kidnappings)
+			process_kidnapping_event()
+
 
 //bleh
 /datum/game_mode/gang/proc/broadcast_to_all_gangs(var/message)
@@ -1004,6 +1075,36 @@
 
 		if (W.cant_drop)
 			return
+
+
+		//kidnapping event here
+		//if they're the target
+		if (istype(W, /obj/item/grab))
+			if (user?.mind.gang != src.gang)
+				boutput(user, "<span class='alert'>You can't kidnapp someone for a different gang!</span>")
+				return
+			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnapp
+				var/datum/game_mode/gang/mode = ticker.mode
+				var/obj/item/grab/G = W
+				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
+					if (G.affecting.stat == 2)
+						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnapp a dead person!</span>")
+					else if (G.state < 3)
+						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
+					else
+						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
+						G.affecting.set_loc(src)
+						//assign poitns, gangs
+
+						user.mind.gang.score_event += mode.kidnapping_score
+						mode.broadcast_to_all_gangs("[src.gang] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
+
+						mode.kidnapping_target = null
+						mode.kidnapp_success = 1
+						qdel(G.affecting)
+						qdel(G)
+			return
+
 
 		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
 			if (insert_item(W,user))

@@ -1535,6 +1535,7 @@
 				src.antiagent.reagents.add_reagent(new_antiagent, added)
 				boutput(usr, "<span class='notice'>[added] units of anti-agent added to the beaker.</span>")
 			else if (href_list["buymats"])
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				var/confirm = alert("Are you sure you want to spend [synthesize_pathogen_cost] credits to manufacture a new pathogen culture? This will take about five seconds.", "Confirm Purchase", "Yes", "No")
 				if (confirm == "Yes" && machine_state == 0 && (usr in range(1)))
 					if (synthesize_pathogen_cost > wagesystem.research_budget)
@@ -1551,6 +1552,9 @@
 							for (var/mob/C in viewers(src))
 								C.show_message("The [src.name] shuts down and ejects a new pathogen sample.", 3)
 							new/obj/item/reagent_containers/glass/vial/prepared(src.loc)
+				#else
+				boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
+				#endif
 		show_interface(usr)
 
 	proc/finish_creation(var/use_suppressant, var/use_antiagent)
