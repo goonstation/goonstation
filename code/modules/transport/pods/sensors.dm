@@ -334,7 +334,7 @@
 					lifelist += "Obscure Life Sign"
 					break
 
-		src.updateDialog()
+		//src.updateDialog()
 		sleep(1 SECOND)
 		scanning = 0
 		return
