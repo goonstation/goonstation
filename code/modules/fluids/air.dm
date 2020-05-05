@@ -28,17 +28,16 @@ var/list/ban_from_airborne_fluid = list()
 
 	set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
-		if(istype( src.loc, /turf ) )
-			src.loc:active_airborne_liquid = 0
 		if (!newloc) return
+
 		is_setup = 1
-		if(!istype( newloc, /turf ) || !waterflow_enabled)
+		if(!isturf(newloc) || !waterflow_enabled)
 			src.removed()
 			return
 
 		set_loc(newloc)
 		src.loc = newloc
-		loc:active_airborne_liquid = src//the dreaded :
+		src.loc:active_airborne_liquid = src//the dreaded :
 
 	done_init()
 		var/i = 0

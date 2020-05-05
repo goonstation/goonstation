@@ -111,17 +111,16 @@ var/mutable_appearance/fluid_ma
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
-		if(istype( src.loc, /turf ) )
-			src.loc:active_liquid = 0
 		if (!newloc) return
+
 		is_setup = 1
-		if(!istype( newloc, /turf ) || !waterflow_enabled)
+		if(!isturf(newloc) || !waterflow_enabled)
 			src.removed()
 			return
 
 		set_loc(newloc)
 		src.loc = newloc
-		loc:active_liquid = src//the dreaded :
+		src.loc:active_liquid = src//the dreaded :
 
 	proc/done_init()
 		.=0
@@ -285,7 +284,6 @@ var/mutable_appearance/fluid_ma
 
 
 	proc/add_tracked_blood(atom/movable/AM as mob|obj)
-		LAGCHECK(LAG_MED)
 		AM.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "color" = src.color, "count" = rand(2,6))
 		if (ismob(AM))
 			var/mob/M = AM
