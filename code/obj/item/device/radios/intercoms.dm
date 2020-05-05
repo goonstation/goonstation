@@ -2,7 +2,6 @@
 	name = "Station Intercom (Radio)"
 	icon_state = "intercom"
 	anchored = 1.0
-	plane = PLANE_NOSHADOW_BELOW
 	mats = 0
 	device_color = RADIOC_INTERCOM
 	var/number = 0

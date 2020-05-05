@@ -96,11 +96,11 @@
 			if(environment)
 				t = text("<B>Pressure:</B> [] kPa", round(environment.return_pressure(), 0.1))
 			else
-				t = "<span class='alert'><B>Results: Sensor Error!</B></span>"
+				t = "<span style=\"color:red\"><B>Results: Sensor Error!</B></span>"
 		else
-			t = "<span class='alert'><B>Results: Connection Error!</B></span>"
+			t = "<span style=\"color:red\"><B>Results: Connection Error!</B></span>"
 	else
-		boutput(usr, "<span class='notice'><B>You are too far away.</B></span>")
+		boutput(usr, "<span style=\"color:blue\"><B>You are too far away.</B></span>")
 
 	boutput(usr, t)
 	return

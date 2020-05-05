@@ -442,7 +442,6 @@
 				mySkull.holder = null
 				src.skull = null
 				src.organ_list["skull"] = null
-				src.head.skull = null
 				return mySkull
 
 			if ("brain")
@@ -473,7 +472,6 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -485,7 +483,6 @@
 				myLeftEye.holder = null
 				src.left_eye = null
 				src.organ_list["left_eye"] = null
-				src.head.left_eye = null
 				return myLeftEye
 
 			if ("right_eye")
@@ -497,7 +494,6 @@
 				myRightEye.holder = null
 				src.right_eye = null
 				src.organ_list["right_eye"] = null
-				src.head.right_eye = null
 				return myRightEye
 
 			if ("chest")
@@ -689,19 +685,32 @@
 				if (newHead.skull)
 					if (src.skull) // how
 						src.drop_organ("skull") // I mean really, how
-					src.receive_organ(newHead.skull, "skull", newHead.skull.op_stage)
+					src.skull = newHead.skull
+					newHead.skull.set_loc(src.donor)
+					newHead.skull.holder = src
+					newHead.skull = null
 				if (newHead.brain)
 					if (src.brain) // ???
 						src.drop_organ("brain") // god idfk
-					src.receive_organ(newHead.brain, "brain", newHead.brain.op_stage)
+					src.brain = newHead.brain
+					newHead.brain.set_loc(src.donor)
+					newHead.brain.holder = src
+					newHead.brain = null
 				if (newHead.right_eye)
 					if (src.right_eye)
 						src.drop_organ("right_eye")
-					src.receive_organ(newHead.right_eye, "right_eye", newHead.right_eye.op_stage)
+					src.right_eye = newHead.right_eye
+					newHead.right_eye.set_loc(src.donor)
+					newHead.right_eye.holder = src
+					newHead.right_eye = null
 				if (newHead.left_eye)
 					if (src.left_eye)
 						src.drop_organ("left_eye")
-					src.receive_organ(newHead.left_eye, "left_eye", newHead.left_eye.op_stage)
+					src.left_eye = newHead.left_eye
+					newHead.left_eye.set_loc(src.donor)
+					newHead.left_eye.holder = src
+					newHead.left_eye = null
+
 				if (ishuman(src.donor))
 					var/mob/living/carbon/human/H = src.donor
 					if (newHead.glasses)
@@ -745,12 +754,9 @@
 						qdel(src.skull)
 					else
 						return 0
-				if (!src.head)
-					return 0
 				var/obj/item/skull/newSkull = I
 				newSkull.op_stage = op_stage
 				src.skull = newSkull
-				src.head.skull = newSkull
 				newSkull.set_loc(src.donor)
 				newSkull.holder = src
 				organ_list["skull"] = newSkull
@@ -762,8 +768,6 @@
 						qdel(src.brain)
 					else
 						return 0
-				if (!src.skull)
-					return 0
 				var/obj/item/organ/brain/newBrain = I
 				if (src.donor.client)
 					src.donor.client.mob = new /mob/dead/observer(src)
@@ -771,7 +775,6 @@
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
-				src.head.brain = newBrain
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
 				organ_list["brain"] = newBrain
@@ -783,12 +786,9 @@
 						qdel(src.left_eye)
 					else
 						return 0
-				if (!src.head)
-					return 0
 				var/obj/item/organ/eye/newLeftEye = I
 				newLeftEye.op_stage = op_stage
 				src.left_eye = newLeftEye
-				src.head.left_eye = newLeftEye
 				newLeftEye.body_side = L_ORGAN
 				newLeftEye.set_loc(src.donor)
 				newLeftEye.holder = src
@@ -801,12 +801,9 @@
 						qdel(src.right_eye)
 					else
 						return 0
-				if (!src.head)
-					return 0
 				var/obj/item/organ/eye/newRightEye = I
 				newRightEye.op_stage = op_stage
 				src.right_eye = newRightEye
-				src.head.right_eye = newRightEye
 				newRightEye.body_side = R_ORGAN
 				newRightEye.set_loc(src.donor)
 				newRightEye.holder = src
@@ -1279,13 +1276,13 @@
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, "<span style='color:red'>You can't use that ability right now.</span>")
 			return 0
 		else if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
+			boutput(holder.owner, "<span style='color:red'>You can't use that ability while you're incapacitated.</span>")
 			return 0
 		else if (disabled)
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, "<span style='color:red'>You can't use that ability right now.</span>")
 			return 0
 		return 1
 
