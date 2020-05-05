@@ -1,5 +1,9 @@
 
 (t)tue may 05 20
+(u)Tarmunora
+(p)457
+(e)⚖|balance
+(+)Tweaked stun gloves use the stunbaton special (spark throw) as an unarmed special attack override, replacing their old behaviour outright
 (u)Kyle
 (p)582
 (e)|
