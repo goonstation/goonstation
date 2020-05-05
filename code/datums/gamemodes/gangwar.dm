@@ -1081,8 +1081,8 @@
 			if (user?.mind.gang != src.gang)
 				boutput(user, "<span class='alert'>You can't kidnapp someone for a different gang!</span>")
 				return
-			if (istype(ticker, /datum/game_mode/gang))	//gotta be gang mode to kidnapp
-				var/datum/game_mode/gang/mode = ticker
+			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnapp
+				var/datum/game_mode/gang/mode = ticker.mode
 				var/obj/item/grab/G = W
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
