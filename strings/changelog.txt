@@ -1,4 +1,10 @@
 
+(t)tue may 05 20
+(u)Kyle
+(p)582
+(e)|
+(*)New gang mode event: Kidnapping. A target is selected from the crew that is not a member of the currently winning gang that . The rest of the gangs have to stop the target from being kidnapped or killed.
+(*)Gang members wearing their gang clothes get slight passive heal and stun reduction if they are on turf that they own corresponding to the inverse of the distance between them and their gang locker.
 (t)mon may 04 20
 (u)Goonstation Administration Team:
 (*)Removed player access to starter pathogen samples
