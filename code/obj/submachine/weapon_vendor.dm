@@ -1,5 +1,14 @@
-// Stolen from GTMs
-// Meant for nuclear operatives to use to order gear on the battlecruiser
+/*
+	==>	Syndicate Weapons Vendor	<==
+	Designed for use on the Syndicate Battlecruiser Cairngorm.
+	Stocked with weapons and gear for nuclear operatives to pick between, instead of using traditional uplinks.
+	Operatives recieve a token on spawn that provides them with 1 sidearm credit and one loadout credit in the vendor.
+
+	Index:
+	- Vendor
+	- Materiel
+	- Supply credits
+*/
 
 /obj/submachine/weapon_vendor
 	name = "Syndicate Weapons Vendor"
@@ -12,7 +21,6 @@
 
 	deconstruct_flags = DECON_MULTITOOL
 
-	//var/current_supply_credits = 0
 	var/current_sidearm_credits = 0
 	var/current_loadout_credits = 0
 	var/temp = null
@@ -146,10 +154,5 @@
 	name = "ticket"
 	desc = "It's a ticket."
 	icon = 'icons/obj/discountdans.dmi'
-	w_class = 1.0
-/*
-/obj/item/ticket/golden
-	name = "golden ticket"
-	desc = "A (partially) golden ticket! It has the Discount Dan's logo emblazoned on it. The fine print tells you that you can redeem this shimmery piece of foil at your nearest vending machine. Huh!"
 	icon_state = "golden"
-*/
+	w_class = 1.0
