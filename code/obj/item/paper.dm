@@ -106,7 +106,7 @@
 		windowtext = src.info
 		if (src.form_startpoints && src.form_endpoints)
 			for (var/x = src.form_startpoints.len, x > 0, x--)
-				windowtext = copytext(., 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(., src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(., src.form_endpoints[src.form_endpoints[x]])
+				windowtext = copytext(windowtext, 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(windowtext, src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(windowtext, src.form_endpoints[src.form_endpoints[x]])
 
 	var/font_junk = ""
 	for (var/i in src.fonts)
