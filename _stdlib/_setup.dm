@@ -1115,6 +1115,8 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//PATHOLOGY REMOVAL
+//#define CREATE_PATHOGENS 1
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
