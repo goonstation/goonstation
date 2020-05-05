@@ -441,6 +441,7 @@
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnapp_success = 0
+	kidnapping_target = null
 	var/datum/gang/top_gang = null
 	for (var/datum/gang/G in gangs)
 		if (!top_gang)
@@ -494,6 +495,7 @@
 					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
 				else
 					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
+
 				sleep(delay_between_kidnappings)
 			process_kidnapping_event()
 
