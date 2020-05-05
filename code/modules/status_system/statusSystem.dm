@@ -1088,7 +1088,10 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/const/max_health = 30
 		var/const/max_stam = 60
 		var/const/regen_stam = 5
+		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
 
 		onAdd(var/optional=null)
 			if (ishuman(owner))
@@ -1098,14 +1101,46 @@ var/list/statusGroupLimits = list("Food"=4)
 			H.max_health += max_health
 			H.add_stam_mod_max("ganger_max", max_stam)
 			H.add_stam_mod_regen("ganger_regen", regen_stam)
+			if (ismob(owner))
+				var/mob/M = owner
+				if (M.mind)
+					gang = M.mind.gang
 
 		onRemove()
 			H.max_health -= max_health
 			H.remove_stam_mod_max("ganger_max")
 			H.remove_stam_mod_regen("ganger_regen")
+			gang = null
+
+		onUpdate(var/timedPassed)
+			var/area/cur_area = get_area(H)
+			if (cur_area?.gang_owners == gang && prob(50))
+				on_turf = 1
+
+				//get distance divided by max distance and invert it. Result will be between 0 and 1
+				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				if (buff_mult <=0)
+					buff_mult = 0.1
+
+				var/mob/living/carbon/human/H
+				if(ishuman(owner))
+					H = owner
+					H.HealDamage("All", 10*buff_mult, 0, 0)
+					if (H.bleeding && prob(100*buff_mult))
+						repair_bleeding_damage(H, 5, 1)
+
+					if(H.hasStatus("paralysis")) H.changeStatus("paralysis", -3*buff_mult)
+					if(H.hasStatus("stunned")) H.changeStatus("stunned", -3*buff_mult)
+					if(H.hasStatus("weakened")) H.changeStatus("weakened", -3*buff_mult)
+
+					H.updatehealth()
+			else
+				on_turf = 0
+
+			return
 
 		getTooltip()
-			return "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform."
+			return "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
 
 	janktank
 		id = "janktank"
@@ -1139,19 +1174,19 @@ var/list/statusGroupLimits = list("Food"=4)
 			var/mob/living/carbon/human/H
 			if(ishuman(owner))
 				H = owner
-			H.take_oxygen_deprivation(-1)
-			H.HealDamage("All", 2, 0, 0)
-			if (prob(60))
-				H.HealDamage("All", 1, 1, 1)
-				if (H.bleeding)
-					repair_bleeding_damage(H, 10, 1)
-			if (prob(10))
-				H.make_jittery(2)
+				H.take_oxygen_deprivation(-1)
+				H.HealDamage("All", 2, 0, 0)
+				if (prob(60))
+					H.HealDamage("All", 1, 1, 1)
+					if (H.bleeding)
+						repair_bleeding_damage(H, 10, 1)
+				if (prob(10))
+					H.make_jittery(2)
 
-			if (H.misstep_chance)
-				H.change_misstep_chance(-5)
+				if (H.misstep_chance)
+					H.change_misstep_chance(-5)
 
-			H.updatehealth()
+				H.updatehealth()
 			return
 
 	gang_drug_withdrawl
