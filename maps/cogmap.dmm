@@ -6622,7 +6622,7 @@
 "cyH" = (/obj/grille/steel,/obj/cable{d2 = 2; icon_state = "0-2"},/obj/window/auto/reinforced,/obj/cable{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating,/area/station/medical/cdc)
 "cyI" = (/obj/machinery/mass_driver{dir = 1; id = "chemdock_in"},/turf/simulated/floor/plating/airless,/area)
 "cyJ" = (/obj/machinery/synthomatic,/turf/simulated/floor/white,/area/station/medical/cdc)
-"cyK" = (/obj/table/auto,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/dropper/mechanical,/turf/simulated/floor/white,/area/station/medical/cdc)
+"cyK" = (/obj/table/auto,/obj/item/reagent_containers/dropper/mechanical,/turf/simulated/floor/white,/area/station/medical/cdc)
 "cyL" = (/obj/machinery/pathogen_manipulator,/obj/machinery/light,/turf/simulated/floor/white,/area/station/medical/cdc)
 "cyM" = (/obj/cable,/obj/machinery/power/data_terminal{layer = 2},/obj/machinery/computer/pathology,/obj/cable{icon_state = "0-2"},/turf/simulated/floor/white,/area/station/medical/cdc)
 "cyN" = (/obj/table/auto,/obj/item/storage/toolbox/mechanical,/obj/item/clothing/glasses/spectro,/obj/item/device/light/flashlight/penlight,/turf/simulated/floor/white,/area/station/medical/cdc)
