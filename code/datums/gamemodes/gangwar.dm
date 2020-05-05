@@ -31,7 +31,7 @@
 	var/area/hot_zone = null
 	var/hot_zone_timer = 5 MINUTES
 	var/hot_zone_score = 1000
-	
+
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
 	var/kidnapping_score = 20000
@@ -466,16 +466,19 @@
 		return 0
 
 	kidnapping_target = pick(potential_targets)
+	var/target_name
 	if (ismob(kidnapping_target))
-	var/target_name = kidnapping_target.real_name
+		target_name = kidnapping_target.real_name
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	//alert gangs, alert target which gang to be wary of. 
+	//alert gangs, alert target which gang to be wary of.
 	for (var/datum/gang/G in gangs)
 		if (G == top_gang)
 			broadcast_to_gang("A bounty has been placed on the capture of <b>[target_name]<b>. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
 		else
 			broadcast_to_gang("<b>[target_name]<b> is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+
+	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
 
 	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
@@ -488,7 +491,6 @@
 					for (var/datum/gang/G in gangs)
 						if (G != top_gang)
 							G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-					var/datum/gang/G = hot_zone.gang_owners
 					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
 				else
 					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
@@ -1076,26 +1078,30 @@
 		//kidnapping event here
 		//if they're the target
 		if (istype(W, /obj/item/grab))
-			if (user.gang != src.gang)
-				bouput(user, "<span class='alert'>You can't kidnapp someone for a different gang!</span>")
+			if (user?.mind.gang != src.gang)
+				boutput(user, "<span class='alert'>You can't kidnapp someone for a different gang!</span>")
 				return
-			var/obj/item/grab/G = W
-			if (G.affecting == kidnapping_target)
-				if (G.affecting.stat == 2)
-					bouput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnapp a dead person!</span>")
-				else if (G.stat < 3)
-					bouput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
-				else
-					user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
-					G.affecting.set_loc(src)
-					//assign poitns, gangs
-					user.gang.score_event += kidnapping_score
-					broadcast_to_all_gangs("[user.gang] has successfully kidnapped [kidnapping_target] and has been rewarded for their efforts.")
+			if (istype(ticker, /datum/game_mode/gang))	//gotta be gang mode to kidnapp
+				var/datum/game_mode/gang/mode = ticker
+				var/obj/item/grab/G = W
+				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
+					if (G.affecting.stat == 2)
+						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnapp a dead person!</span>")
+					else if (G.state < 3)
+						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
+					else
+						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
+						G.affecting.set_loc(src)
+						//assign poitns, gangs
 
-					kidnapping_target == null
-					kidnapp_success = 1
-					qdel(G.affecting)
-					qdel(G)
+						user.mind.gang.score_event += mode.kidnapping_score
+						mode.broadcast_to_all_gangs("[src.gang] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
+
+						mode.kidnapping_target = null
+						mode.kidnapp_success = 1
+						qdel(G.affecting)
+						qdel(G)
+			return
 
 
 		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
