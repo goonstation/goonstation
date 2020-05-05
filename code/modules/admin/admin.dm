@@ -23,14 +23,12 @@ var/global/noir = 0
 				continue
 		else
 			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
-		LAGCHECK(LAG_LOW)
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/mob/M in mobs)
 		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
 
 /proc/message_coders_vardbg(var/text, var/datum/d)
 	var/rendered
@@ -39,14 +37,12 @@ var/global/noir = 0
 			var/dbg_html = M.client.debug_variable("", d, 0)
 			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/mob/M in mobs)
 		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_MOD && M.client.holder.attacktoggle && !M.client.player_mode)
 			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
 
 /proc/rank_to_level(var/rank)
 	var/level = 0

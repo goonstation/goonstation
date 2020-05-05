@@ -217,7 +217,7 @@ datum/controller/process/proc/scheck()
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
-	if (world.tick_usage > 95 || ( (world.tick_usage - tick_start) > tick_allowance )) //mbc : changed this to 95 from 100 lol
+	if (world.tick_usage > MAX_TICK_USAGE || ( (world.tick_usage - tick_start) > tick_allowance ))
 		current_usage += world.tick_usage - tick_start
 		sleep( world.tick_lag * main.running.len )
 		cpu_defer_count++

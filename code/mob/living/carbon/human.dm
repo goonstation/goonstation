@@ -847,7 +847,7 @@
 			health_deficiency -= 50
 		if (src.reagents.has_reagent("salicylic_acid"))
 			health_deficiency -= 25
-	if (src.hasStatus("gang_drug"))
+	if (src.hasStatus("janktank"))
 		health_deficiency -= 50
 	if (health_deficiency >= 30) . += (health_deficiency / 25)
 
@@ -1001,14 +1001,14 @@
 			. *= max (src.pushing.p_class, 1)
 
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
-			var/mob/living/carbon/human/H = G.affecting
-			if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+			var/mob/M = G.affecting
+			if (isnull(M)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 			if (G.state == 0)
-				if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-					if(istype(H) && H.intent != INTENT_HELP && H.lying)
-						. *= max(H.p_class, 1)
+				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+					if(ismob(M) && M.lying)
+						. *= max(M.p_class, 1)
 			else
-				. *= max(H.p_class, 1)
+				. *= max(M.p_class, 1)
 
 	if (running)
 		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
@@ -1523,9 +1523,9 @@
 				return
 			*/
 
-			if (gloves && (gloves.can_be_charged && gloves.stunready && gloves.uses >= 1))
-				M.stun_glove_attack(src)
-				return
+			//if (gloves && (gloves.can_be_charged && gloves.stunready && gloves.uses >= 1))
+			//	M.stun_glove_attack(src)
+			//	return
 
 			if (gloves && gloves.activeweapon)
 				gloves.special_attack(src)
@@ -3144,7 +3144,8 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK) return slot_item.equipment_click(src, target, params, location, control, origParams, slot)
+		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+			return
 
 	if (src.lying)
 		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact

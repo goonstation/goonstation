@@ -794,11 +794,12 @@
 #define PROCESS_STATUS_HUNG 6
 
 // Process time thresholds
-#define PROCESS_DEFAULT_HANG_WARNING_TIME 	3000 // 300 seconds
-#define PROCESS_DEFAULT_HANG_ALERT_TIME 	6000 // 600 seconds
-#define PROCESS_DEFAULT_HANG_RESTART_TIME 	9000 // 900 seconds
+#define PROCESS_DEFAULT_HANG_WARNING_TIME 	300 SECONDS
+#define PROCESS_DEFAULT_HANG_ALERT_TIME 	600 SECONDS
+#define PROCESS_DEFAULT_HANG_RESTART_TIME 	900 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		15	// 15% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		20	// 20% of one tick
+#define MAX_TICK_USAGE 95 // 95% of a tick
 
 /** Delete queue defines */
 #define MIN_DELETE_CHUNK_SIZE 1
@@ -1122,6 +1123,8 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//PATHOLOGY REMOVAL
+//#define CREATE_PATHOGENS 1
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
