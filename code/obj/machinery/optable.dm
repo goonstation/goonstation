@@ -42,7 +42,7 @@
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
 	if (usr.is_hulk())
-		user.visible_message("<span style=\"color:red\">[user] destroys the table.</span>")
+		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
 		qdel(src)
 	return
@@ -83,7 +83,7 @@
 				var/mob/living/carbon/human/H = M
 				H.hud.update_resting()
 			M.set_loc(src.loc)
-			src.visible_message("<span style=\"color:red\">[M] has been laid on the operating table by [user].</span>")
+			src.visible_message("<span class='alert'>[M] has been laid on the operating table by [user].</span>")
 			for(var/obj/O in src)
 				O.set_loc(src.loc)
 			src.add_fingerprint(user)
@@ -98,27 +98,27 @@
 
 /obj/machinery/optable/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!isliving(user))
-		boutput(user, "<span style=\"color:red\">You're dead! What the hell could surgery possibly do for you NOW, dumbass?!</span>")
+		boutput(user, "<span class='alert'>You're dead! What the hell could surgery possibly do for you NOW, dumbass?!</span>")
 		return
 	if (!ismob(O))
-		boutput(user, "<span style=\"color:red\">You can't put that on the operating table!</span>")
+		boutput(user, "<span class='alert'>You can't put that on the operating table!</span>")
 		return
 	if (iscritter(O))
-		boutput(user, "<span style=\"color:red\">You don't know how to operate on this. You never went to vet school!</span>")
+		boutput(user, "<span class='alert'>You don't know how to operate on this. You never went to vet school!</span>")
 		return
 	if (!ishuman(O))
-		boutput(user, "<span style=\"color:red\">You can only put carbon lifeforms on the operating table.</span>")
+		boutput(user, "<span class='alert'>You can only put carbon lifeforms on the operating table.</span>")
 		return
 	if (get_dist(user,src) > 1)
-		boutput(user, "<span style=\"color:red\">You need to be closer to the operating table.</span>")
+		boutput(user, "<span class='alert'>You need to be closer to the operating table.</span>")
 		return
 	if (get_dist(user,O) > 1)
-		boutput(user, "<span style=\"color:red\">Your target needs to be near you to put them on the operating table.</span>")
+		boutput(user, "<span class='alert'>Your target needs to be near you to put them on the operating table.</span>")
 		return
 
 	var/mob/living/carbon/C = O
 	if (user == C)
-		src.visible_message("<span style=\"color:red\"><b>[user.name]</b> lies down on [src].</span>")
+		src.visible_message("<span class='alert'><b>[user.name]</b> lies down on [src].</span>")
 		user.setStatus("resting", INFINITE_STATUS)
 		user.force_laydown_standup()
 		if (ishuman(user))
@@ -127,7 +127,7 @@
 		user.set_loc(src.loc)
 		src.victim = user
 	else
-		src.visible_message("<span style=\"color:red\"><b>[user.name]</b> starts to move [C.name] onto the operating table.</span>")
+		src.visible_message("<span class='alert'><b>[user.name]</b> starts to move [C.name] onto the operating table.</span>")
 		if (do_mob(user,C,30))
 			C.setStatus("resting", INFINITE_STATUS)
 			C.force_laydown_standup()
@@ -137,5 +137,5 @@
 			C.set_loc(src.loc)
 			src.victim = C
 		else
-			boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+			boutput(user, "<span class='alert'>You were interrupted!</span>")
 	return

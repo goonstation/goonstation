@@ -221,11 +221,11 @@
 				EH.equip(I)
 				hud.add_object(I, HUD_LAYER+2, EH.screenObj.screen_loc)
 			else
-				boutput(src, "<span style='color:red'>You cannot equip [I] in that slot!</span>")
+				boutput(src, "<span class='alert'>You cannot equip [I] in that slot!</span>")
 			update_clothing()
 		else if (W)
 			if (!EH.remove())
-				boutput(src, "<span style='color:red'>You cannot remove [W] from that slot!</span>")
+				boutput(src, "<span class='alert'>You cannot remove [W] from that slot!</span>")
 			update_clothing()
 
 	proc/handcheck()
@@ -245,7 +245,7 @@
 						var/obj/item/S = unpool(src.skinresult)
 						S.set_loc(src.loc)
 					src.skinresult = null
-					M.visible_message("<span style='color:red'>[M] skins [src].</span>","You skin [src].")
+					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
 			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src), M)
@@ -329,9 +329,9 @@
 		if (I)
 			I.layer = initial(I.layer)
 			if(prob(yeet_chance))
-				src.visible_message("<span style=\"color:red\">[src] yeets [I].</span>")
+				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[src] throws [I].</span>")
+				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
 				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
@@ -516,14 +516,14 @@
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()
 		else
-			boutput(src, "<span style='color:red'>You cannot attack with your [HH.name]!</span>")
+			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
 	proc/melee_attack_human(var/mob/living/carbon/human/M, var/extra_damage) // non-special limb attack
 		if (check_target_immunity(src, 0, M))
-			visible_message("<b><span style='color:red'>[src]'s attack bounces uselessly off [M]!</span></b>")
+			visible_message("<b><span class='alert'>[src]'s attack bounces uselessly off [M]!</span></b>")
 			playsound_local(M, "punch", 50, 0)
 			return
-		src.visible_message("<b><span style='color:red'>[src] punches [M]!</span></b>")
+		src.visible_message("<b><span class='alert'>[src] punches [M]!</span></b>")
 		playsound_local(M, "punch", 50, 0)
 		M.TakeDamageAccountArmor(zone_sel.selecting, rand(3,6), 0, 0, DAMAGE_BLUNT)
 
@@ -536,7 +536,7 @@
 		if (HH.can_hold_items)
 			return 1
 		else
-			boutput(src, "<span style='color:red'>You cannot strip other people with your [HH.name].</span>")
+			boutput(src, "<span class='alert'>You cannot strip other people with your [HH.name].</span>")
 
 	attack_hand(var/mob/living/M)
 		M.lastattacked = src
@@ -550,12 +550,12 @@
 					M.disarm(src)
 			if (INTENT_HARM)
 				if(check_target_immunity(src, 0, M))
-					visible_message("<b><span style='color:red'>[M]'s attack bounces off [src] uselessly!</span></b>")
+					visible_message("<b><span class='alert'>[M]'s attack bounces off [src] uselessly!</span></b>")
 					return
 				actions.interrupt(src, INTERRUPT_ATTACKED)
 				src.TakeDamageAccountArmor(M.zone_sel.selecting, rand(1,3), 0)
 				playsound(src.loc, "punch", 50, 1)
-				visible_message("<b><span style='color:red'>[M] punches [src]!</span></b>")
+				visible_message("<b><span class='alert'>[M] punches [src]!</span></b>")
 			if (INTENT_GRAB)
 				if (M == src)
 					M.grab_self()
@@ -570,8 +570,8 @@
 		if (!user)
 			return 1 // so things can do if (..())
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-		src.visible_message("<span style='color:blue'><b>[user] [pmsg] [src]!</b></span>",\
-		"<span style='color:blue'><b>[user] [pmsg] you!</b></span>")
+		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
+		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
 		return
 
 	proc/get_active_hand()
@@ -770,7 +770,7 @@
 			if (src.death_text)
 				src.tokenized_message(src.death_text, null, "red")
 			else
-				src.visible_message("<span style='color:red'><b>[src]</b> dies!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>")
 			setdead(src)
 			icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
 		empty_hands()
@@ -1021,10 +1021,10 @@
 					if (src.emote_check(voluntary, 50) && !src.shrunk)
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
-							boutput(src, "<span style='color:red'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 							src.changeStatus("paralysis", 30)
 							src.changeStatus("weakened", 4 SECONDS)
-							container.visible_message("<span style='color:red'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 							var/wiggle = 6
 							while(wiggle > 0)
@@ -1038,7 +1038,7 @@
 								if (istype(container, /obj/storage))
 									var/obj/storage/C = container
 									if (C.can_flip_bust == 1)
-										boutput(src, "<span style='color:red'>[C] [pick("cracks","bends","shakes","groans")].</span>")
+										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
 										C.bust_out()
 						else
 							message = "<b>[src]</B> does a flip!"
@@ -1047,14 +1047,14 @@
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 			else if (m_type & 2)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 			else if (!isturf(src.loc))
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 
 
 	talk_into_equipment(var/mode, var/message, var/param)
@@ -1126,8 +1126,8 @@
 		var/obj/item/grab/block/G = src.check_block()
 		if (G)
 			add += 1
-			if (G.can_block(damage_type))
-				add += 2
+			if (G != src.equipped())
+				add += G.can_block(damage_type)
 
 		if(zone=="head")
 			return get_head_armor_modifier() + add
@@ -1292,20 +1292,20 @@
 		damage /= 4
 		//src.paralysis += 1
 
-	src.show_message("<span style=\"color:red\">The blob attacks you!</span>")
+	src.show_message("<span class='alert'>The blob attacks you!</span>")
 
 	if (src.spellshield)
-		boutput(src, "<span style=\"color:red\"><b>Your Spell Shield absorbs some damage!</b></span>")
+		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
 	if (damage > 4.9)
 		if (prob(50))
 			changeStatus("weakened", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span style=\"color:red\"><B>The blob has knocked down [src]!</B></span>", 1, "<span style=\"color:red\">You hear someone fall.</span>", 2)
+				O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 		else
 			src.changeStatus("stunned", 50)
 			for (var/mob/O in viewers(src, null))
-				if (O.client)	O.show_message("<span style=\"color:red\"><B>The blob has stunned [src]!</B></span>", 1)
+				if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
 		if (isalive(src))
 			src.lastgasp() // calling lastgasp() here because we just got knocked out
 

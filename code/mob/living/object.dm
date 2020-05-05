@@ -93,7 +93,7 @@
 				// src.owner.client.mob = src
 			src.owner.mind.transfer_to(src)
 
-		src.visible_message("<span style=\"color:red\"><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
+		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
 		src.add_stun_resist_mod("living_object", 1000)
 
@@ -109,9 +109,9 @@
 
 	examine()
 		. = ..()
-		. += "<span style=\"color:red\">It seems to be alive.</span>"
+		. += "<span class='alert'>It seems to be alive.</span>"
 		if (health < 25)
-			. += "<span style=\"color:blue\">The ethereal grip on this object appears to be weak.</span>"
+			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
 
 	meteorhit(var/obj/O as obj)
 		src.death(1)
@@ -190,7 +190,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span style=\"color:red\">[src] is hit by the [P]!</span>")
+			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
 		logTheThing("combat", src, null, "is hit by a blob")
@@ -204,14 +204,14 @@
 
 		src.TakeDamage(null, damage, 0)
 
-		src.show_message("<span style=\"color:red\">The blob attacks you!</span>")
+		src.show_message("<span class='alert'>The blob attacks you!</span>")
 		return
 
 	attack_hand(mob/user as mob)
 		if (user.a_intent == "help")
-			user.visible_message("<span style=\"color:red\">[user] pets [src]!</span>")
+			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
 		else
-			user.visible_message("<span style=\"color:red\">[user] punches [src]!</span>")
+			user.visible_message("<span class='alert'>[user] punches [src]!</span>")
 			src.TakeDamage(null, rand(4, 7), 0)
 
 	TakeDamage(zone, brute, burn)
@@ -255,7 +255,7 @@
 			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
 				var/atom/movable/M = target
 				if(ismob(target) || !M.anchored)
-					src.visible_message("<span style=\"color:red\">[src] grabs [target]!</span>")
+					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")
 					M.set_loc(src.loc)
 			else
 				. = ..()
@@ -282,7 +282,7 @@
 	death(gibbed)
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
-			src.visible_message("<span style=\"color:red\"><b>[src] is no longer possessed.</b></span>")
+			src.visible_message("<span class='alert'><b>[src] is no longer possessed.</b></span>")
 
 			if (src.mind)
 				mind.transfer_to(src.owner)
@@ -328,6 +328,6 @@
 
 	item_attack_message(var/mob/T, var/obj/item/S, var/d_zone)
 		if (d_zone)
-			return "<span style=\"color:red\"><B>[src] attacks [T] in the [d_zone]!</B></span>"
+			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
 		else
-			return "<span style=\"color:red\"><B>[src] attacks [T]!</B></span>"
+			return "<span class='alert'><B>[src] attacks [T]!</B></span>"

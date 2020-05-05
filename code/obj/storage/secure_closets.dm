@@ -308,7 +308,7 @@
 			src.id = DT.id
 			src.our_timer = DT
 			src.name = "\improper Automatic Locker ([src.id])"
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> links [src.name] to a brig timer.</span>", "<span style=\"color:blue\">Brig timer linked: [src.id].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> links [src.name] to a brig timer.</span>", "<span class='notice'>Brig timer linked: [src.id].</span>")
 		return
 
 /* =================== */

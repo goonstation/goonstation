@@ -14,7 +14,7 @@
 
 	examine()
 		. = ..()
-		. += "[bicon(src)] <span style=\"color:blue\">There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
+		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
 
 	attack_hand(mob/user as mob)
 		if (user.r_hand == src || user.l_hand == src)
@@ -55,7 +55,7 @@
 			return
 		if (user)
 			if (M != user)
-				M.visible_message("<span style=\"color:red\">[M] has been applied with [src] by [user]</span>",)
+				M.visible_message("<span class='alert'>[M] has been applied with [src] by [user]</span>",)
 			else
 				var/t_himself = "itself"
 				if (user.gender == MALE)
@@ -63,7 +63,7 @@
 				else if (user.gender == FEMALE)
 					t_himself = "herself"
 
-				M.visible_message("<span style=\"color:red\">[M] applied [src] on [t_himself]</span>")
+				M.visible_message("<span class='alert'>[M] applied [src] on [t_himself]</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

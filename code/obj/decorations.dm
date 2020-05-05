@@ -170,16 +170,16 @@
 
 			if (ispath(something))
 				var/thing = new something(src.loc)
-				visible_message("<b><span style='color:red'>[user] violently shakes [src] around! \An [thing] falls out!</span></b>", 1)
+				visible_message("<b><span class='alert'>[user] violently shakes [src] around! \An [thing] falls out!</span></b>", 1)
 				last_use = world.time
 				max_uses--
 		else
-			visible_message("<b><span style='color:red'>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</span></b>", 1)
+			visible_message("<b><span class='alert'>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</span></b>", 1)
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
-				boutput(L, "<span style=\"color:red\"><b>A branch from [src] smacks you right in the face!</b></span>")
+				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
 				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
@@ -197,12 +197,12 @@
 		attack_particle(user,src)
 		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
 		src.take_damage(W.force)
-		user.visible_message("<span style='color:red'><b>[user] hacks at [src] with [W]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
 		if (src.health <= 0)
-			src.visible_message("<span style=\"color:red\"><b>The [src.name] falls apart!</b></span>")
+			src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
 			new /obj/decal/cleanable/leaves(get_turf(src))
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
 			qdel(src)
@@ -234,7 +234,7 @@
 		C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
-				boutput(M, "<span style='color:red'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
+				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -246,24 +246,24 @@
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
 			if (issnippingtool(W))
-				boutput(user, "<span style='color:blue'>You carefully and lovingly sculpt your bonsai tree.</span>")
+				boutput(user, "<span class='notice'>You carefully and lovingly sculpt your bonsai tree.</span>")
 			else
-				boutput(user, "<span style='color:red'>Why would you ever destroy your precious bonsai tree?</span>")
+				boutput(user, "<span class='alert'>Why would you ever destroy your precious bonsai tree?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.update_icon()
-			boutput(user, "<span style='color:red'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span style='color:red'>[user] ravages the [src] with [W].</span></b>", 1)
+			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
+			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<b><span style='color:red'>The meteor smashes right through [src]!</span></b>")
+		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
 		src.update_icon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
-		src.visible_message("<b><span style='color:red'>[src] is ripped to pieces by the blast!</span></b>")
+		src.visible_message("<b><span class='alert'>[src] is ripped to pieces by the blast!</span></b>")
 		src.update_icon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
@@ -291,7 +291,7 @@
 		C.anchored = 0
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
-				boutput(M, "<span style='color:red'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
+				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -302,22 +302,22 @@
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
-			boutput(user, "<span style='color:red'>Why would you ever destroy your precious ship in a bottle?</span>")
+			boutput(user, "<span class='alert'>Why would you ever destroy your precious ship in a bottle?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.update_icon()
-			boutput(user, "<span style='color:red'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span style='color:red'>[user] ravages the [src] with [W].</span></b>", 1)
+			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
+			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<b><span style='color:red'>The meteor smashes right through [src]!</span></b>")
+		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
 		src.update_icon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
-		src.visible_message("<b><span style='color:red'>[src] is shattered and pulverized by the blast!</span></b>")
+		src.visible_message("<b><span class='alert'>[src] is shattered and pulverized by the blast!</span></b>")
 		src.update_icon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
@@ -750,32 +750,32 @@ obj/decoration/ceilingfan
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!src.lit)
 			if (istype(W, /obj/item/weldingtool) && W:welding)
-				boutput(user, "<span style=\"color:red\"><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				src.lit = 1
 				update_icon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span style=\"color:red\">Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
 				update_icon()
 
 			if (istype(W, /obj/item/device/igniter))
-				boutput(user, "<span style=\"color:red\"><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				src.lit = 1
 				update_icon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span style=\"color:red\">With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				src.lit = 1
 				update_icon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				boutput(user, "<span style=\"color:red\"><b>[user] lights [src] with [W].</span>")
+				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				src.lit = 1
 				update_icon()
 
 			if (W.burning)
-				boutput(user, "<span style=\"color:red\"><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				src.lit = 1
 				update_icon ()
 

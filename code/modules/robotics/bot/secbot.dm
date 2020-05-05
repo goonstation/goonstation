@@ -221,7 +221,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	attack_ai(mob/user as mob)
 		if (src.on && src.emagged)
-			boutput(user, "<span style=\"color:red\">[src] refuses your authority!</span>")
+			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
 			return
 		src.on = !src.on
 		src.target = null
@@ -235,13 +235,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (src.emagged < 2)
 			if (emagged)
 				if (user)
-					boutput(user, "<span style=\"color:red\">You short out [src]'s system clock inhibition circuis.</span>")
+					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuis.</span>")
 				src.overlays.len = 0
 			else if (user)
-				boutput(user, "<span style=\"color:red\">You short out [src]'s target assessment circuits.</span>")
+				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
 			SPAWN_DBG(0)
 				for(var/mob/O in hearers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 
 			src.anchored = 0
 			src.emagged++
@@ -274,7 +274,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		..()
 		if(!src.emagged && prob(75))
 			src.emagged = 1
-			src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			src.on = 1
 		else
 			src.explode()
@@ -289,12 +289,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 
 		else if (isscrewingtool(W))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span style=\"color:red\">[user] repairs [src]!</span>", "<span style=\"color:red\">You repair [src].</span>")
+				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
 		else
 			switch(W.hit_type)
 				if (DAMAGE_BURN)
@@ -438,7 +438,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if (!src.target.hasStatus("handcuffed") && !src.arrest_type)
 					playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 					mode = SECBOT_ARREST
-					src.visible_message("<span style=\"color:red\"><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
 
 					SPAWN_DBG(6 SECONDS)
 						if (get_dist(src, src.target) <= 1)
@@ -944,7 +944,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 		var/turf/Tsec = get_turf(src)
 
 		var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)

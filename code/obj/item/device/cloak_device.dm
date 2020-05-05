@@ -79,7 +79,7 @@
 			return
 
 	emp_act()
-		usr.visible_message("<span style=\"color:blue\"><b>[usr]'s cloak is disrupted!</b></span>")
+		usr.visible_message("<span class='notice'><b>[usr]'s cloak is disrupted!</b></span>")
 		src.deactivate(usr)
 		return
 

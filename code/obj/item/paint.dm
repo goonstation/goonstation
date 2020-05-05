@@ -28,12 +28,12 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(user)
-			boutput(user, "<span style=\"color:blue\">You swipe the card along a crack in the machine.</span>")
+			boutput(user, "<span class='notice'>You swipe the card along a crack in the machine.</span>")
 
 		if (prob(5))
 			var/obj/item/paint_can/rainbow/plaid/P = new/obj/item/paint_can/rainbow/plaid(src.loc)
 			if (user)
-				boutput(user, "<span style=\"color:blue\">You hear a faint droning sound. Like a tiny set of bagpipes.</span>")
+				boutput(user, "<span class='notice'>You hear a faint droning sound. Like a tiny set of bagpipes.</span>")
 			P.uses = (15 * 7)
 			P.generate_icon()
 		else
@@ -45,7 +45,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/paint_can))
-			boutput(user, "<span style=\"color:blue\">You refill the paint can.</span>")
+			boutput(user, "<span class='notice'>You refill the paint can.</span>")
 			W:uses = 15
 			W:generate_icon()
 
@@ -74,7 +74,7 @@
 	var/paint_needed = 20
 
 	attack_hand(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">This must be repaired before it can be used!</span>")
+		boutput(user, "<span class='alert'>This must be repaired before it can be used!</span>")
 		add_fingerprint(user)
 		return
 
@@ -100,7 +100,7 @@
 
 				user.visible_message("[user] pours some paint into [src].", "You pour some paint into [src]. ([paint_needed] units still needed)")
 			else
-				boutput(user, "<span style=\"color:red\">You need to repair the machine first!</span>")
+				boutput(user, "<span class='alert'>You need to repair the machine first!</span>")
 			return
 
 		else
@@ -115,7 +115,7 @@
 						user.visible_message("[user] finishes unscrewing the maintenance panel.")
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been unscrewed."
 					else
-						boutput(user, "<span style=\"color:red\">The maintenance panel needs to be unscrewed first!</span>")
+						boutput(user, "<span class='alert'>The maintenance panel needs to be unscrewed first!</span>")
 						return
 
 				if (1)
@@ -132,7 +132,7 @@
 
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been removed."
 					else
-						boutput(user, "<span style=\"color:red\">The maintenance panel needs to be pried open first!</span>")
+						boutput(user, "<span class='alert'>The maintenance panel needs to be pried open first!</span>")
 						return
 
 				if (2)
@@ -146,14 +146,14 @@
 
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been removed and the service module has been loosened."
 					else
-						boutput(user, "<span style=\"color:red\">The bolts on the service module must be loosened first!</span>")
+						boutput(user, "<span class='alert'>The bolts on the service module must be loosened first!</span>")
 						return
 
 				if (3)
 					if (istype(W, /obj/item/cable_coil))
 						var/obj/item/cable_coil/coil = W
 						if (W.amount < 20)
-							boutput(user, "<span style=\"color:red\">You do not have enough cable to replace all of the burnt wires! (20 units required)</span>")
+							boutput(user, "<span class='alert'>You do not have enough cable to replace all of the burnt wires! (20 units required)</span>")
 							return
 						user.visible_message("[user] begins to replace the burnt wires.","You begin to replace the burnt wires.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
@@ -167,7 +167,7 @@
 						src.name = "Partially-Repaired Paint Dispenser"
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been removed and the wiring has been replaced. A \"check paint cartridge\" light is blinking."
 					else
-						boutput(user, "<span style=\"color:red\">The wiring on the service module must be replaced first!</span>")
+						boutput(user, "<span class='alert'>The wiring on the service module must be replaced first!</span>")
 						return
 
 				if (5)
@@ -182,13 +182,13 @@
 						src.name = "Almost Fully Repaired and Properly Serviced Paint Dispenser"
 						src.desc = "Would dispense paint, if only the maintenance panel was replaced."
 					else
-						boutput(user, "<span style=\"color:red\">The bolts on the service module must be secured first!</span>")
+						boutput(user, "<span class='alert'>The bolts on the service module must be secured first!</span>")
 						return
 
 				if (6)
 					if (istype(W, /obj/item/tile))
 						if (W.name != "maintenance panel")
-							user.visible_message("[user] tries to use a common floor tile in place of the maintenance panel! How silly!", "<span style=\"color:red\">That is a floor tile, not a maintenance panel! It doesn't even fit!</span>")
+							user.visible_message("[user] tries to use a common floor tile in place of the maintenance panel! How silly!", "<span class='alert'>That is a floor tile, not a maintenance panel! It doesn't even fit!</span>")
 							return
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
@@ -201,7 +201,7 @@
 						src.name = "One-Step-Away-from-Being-Fully-Repaired Paint Dispenser"
 						src.desc = "Would dispense paint, if only the maintenance panel was secured so as to allow operation."
 					else
-						boutput(user, "<span style=\"color:red\">The service panel must be replaced first!</span>")
+						boutput(user, "<span class='alert'>The service panel must be replaced first!</span>")
 						return
 
 				if (7)
@@ -216,7 +216,7 @@
 							new /obj/machinery/vending/paint(src.loc)
 							qdel(src)
 							return
-						user.visible_message("<span style=\"color:red\"><b>[user] slips, knocking the paint dispenser over!.</b></span>")
+						user.visible_message("<span class='alert'><b>[user] slips, knocking the paint dispenser over!.</b></span>")
 						boutput(user, "<b><font color=red>OH FUCK</font></b>")
 
 						src.name = "Irreparably Destroyed Paint Dispenser"
@@ -239,7 +239,7 @@
 							return
 
 					else
-						boutput(user, "<span style=\"color:red\">The service panel must be secured first!</span>")
+						boutput(user, "<span class='alert'>The service panel must be secured first!</span>")
 						return
 
 ////////////// paint cans
@@ -272,7 +272,7 @@ var/list/cached_colors = new/list()
 
 		boutput(user, "You paint \the [target].")
 		for(var/mob/O in oviewers(world.view, user))
-			O.show_message("<span style=\"color:blue\">[user] paints \the [target].</span>", 1)
+			O.show_message("<span class='notice'>[user] paints \the [target].</span>", 1)
 
 		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 
@@ -384,7 +384,7 @@ var/list/cached_colors = new/list()
 
 		boutput(user, "You paint \the [target].")
 		for(var/mob/O in oviewers(world.view, user))
-			O.show_message("<span style=\"color:blue\">[user] paints \the [target].</span>", 1)
+			O.show_message("<span class='notice'>[user] paints \the [target].</span>", 1)
 
 		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 

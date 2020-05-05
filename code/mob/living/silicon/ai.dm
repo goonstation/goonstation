@@ -243,39 +243,39 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		user.visible_message("<span style=\"color:red\"><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
+		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> closes [src.name]'s chassis cover.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> closes [src.name]'s chassis cover.</span>")
 			src.dismantle_stage = 1
 		else ..()
 
 	else if (iswrenchingtool(W))
 		if (src.dismantle_stage == 2)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
 			SPAWN_DBG(6 SECONDS)
 				if (user.loc != T || !can_act(user))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				src.visible_message("<span style=\"color:red\"><b>[user.name]</b> removes [src.name]'s CPU bolts.</span>")
+				src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU bolts.</span>")
 				src.dismantle_stage = 3
 		else if (src.dismantle_stage == 3)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
 			SPAWN_DBG(6 SECONDS)
 				if (user.loc != T || !can_act(user))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				src.visible_message("<span style=\"color:red\"><b>[user.name]</b> puts [src.name]'s CPU bolts into place.</span>")
+				src.visible_message("<span class='alert'><b>[user.name]</b> puts [src.name]'s CPU bolts into place.</span>")
 				src.dismantle_stage = 2
 		else ..()
 
@@ -285,8 +285,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if(WELD.try_weld(user, 1))
 				src.add_fingerprint(user)
 				src.bruteloss = max(0,src.bruteloss - 15)
-				src.visible_message("<span style=\"color:red\"><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
-		else boutput(user, "<span style=\"color:red\">There's no structural damage on [src.name] to mend.</span>")
+				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
+		else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 
 	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= 2)
 		var/obj/item/cable_coil/coil = W
@@ -295,31 +295,31 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			coil.use(1)
 			src.fireloss = max(0,src.fireloss - 15)
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-		else boutput(user, "<span style=\"color:red\">There's no burn damage on [src.name]'s wiring to mend.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
+		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
 	else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
 		if (src.dismantle_stage >= 2)
-			boutput(user, "<span style=\"color:red\">You must close the cover to swipe an ID card.</span>")
+			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 		else
 			if(src.allowed(usr))
 				if (src.dismantle_stage == 1)
 					src.dismantle_stage = 0
 				else
 					src.dismantle_stage = 1
-				user.visible_message("<span style=\"color:red\"><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
-			else boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				user.visible_message("<span class='alert'><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
+			else boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == 4)
 		if (src.brain)
-			boutput(user, "<span style=\"color:red\">There's already a brain in there!</span>")
+			boutput(user, "<span class='alert'>There's already a brain in there!</span>")
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user.name]</b> inserts [W] into [src.name].</span>")
+			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [W] into [src.name].</span>")
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
 			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI")))
-				src.visible_message("<span style=\"color:red\">\The [B] is hit by a spark of electricity from \the [src]!</span>")
+				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 				B.combust()
 				return
 			if(B.owner)
@@ -365,26 +365,26 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	else if (istype(W, /obj/item/roboupgrade/ai/))
 		if (src.dismantle_stage >= 2 && src.dismantle_stage < 4)
 			var/obj/item/roboupgrade/ai/R = W
-			user.visible_message("<span style=\"color:red\"><b>[user.name]</b> inserts [R] into [src.name].</span>")
+			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [R] into [src.name].</span>")
 			user.drop_item()
 			R.set_loc(src)
 			R.slot_in(src)
 		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, "<span style=\"color:red\">Using this on a deactivated AI would be pointless.</span>")
+			boutput(user, "<span class='alert'>Using this on a deactivated AI would be pointless.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open.</span>")
+			boutput(user, "<span class='alert'>You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open.</span>")
 
 	else if (istype(W, /obj/item/clothing/mask/moustache/))
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
-			user.visible_message("<span style=\"color:red\"><b>[user.name]</b> uploads a moustache to [src.name]!</span>")
+			user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [src.name]!</span>")
 		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, "<span style=\"color:red\">Using this on a deactivated AI would be silly.</span>")
+			boutput(user, "<span class='alert'>Using this on a deactivated AI would be silly.</span>")
 	else if( istype(W,/obj/item/clothing/head))
 		user.drop_item()
 		src.set_hat(W, user)
-		user.visible_message( "<span style='color:blue'>[user] places the [W] on the [src]!</span>" )
-		src.show_message( "<span style='color:blue'>[user] places the [W] on you!</span>" )
+		user.visible_message( "<span class='notice'>[user] places the [W] on the [src]!</span>" )
+		src.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 		return
 
 	else ..()
@@ -414,10 +414,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.dismantle_stage = 4
 	if (user)
-		src.visible_message("<span style=\"color:red\"><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
+		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
 		logTheThing("combat", user, src, "removes %target%'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
-		src.visible_message("<span style=\"color:red\"><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
+		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
 
 	// Stick the player (if one exists) in a ghost mob
 	src.death()
@@ -453,17 +453,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (src.turn_it_back_on())
-		user.visible_message("<span style=\"color:red\"><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>")
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>")
 		return 1
 	else
-		user.visible_message("<span style=\"color:red\"><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>")
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>")
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
 	if (src.health >= 50 && isdead(src))
 		setalive(src)
 		if (src.ghost && src.ghost.mind)
-			src.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
+			src.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
 			src.ghost.mind.transfer_to(src)
 			qdel(src.ghost)
 		return 1
@@ -494,29 +494,29 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					var/obj/item/roboupgrade/ai/A = src.installed_modules[1]
 					A.slot_out(src)
 					user.put_in_hand_or_drop(A)
-					src.visible_message("<span style=\"color:red\"><b>[user.name]</b> removes [A] from [src].</span>")
+					src.visible_message("<span class='alert'><b>[user.name]</b> removes [A] from [src].</span>")
 	else
 		switch(user.a_intent)
 			if(INTENT_HELP)
 				if (isdead(src))
 					src.try_rebooting_it(user)
 				else
-					user.visible_message("<span style=\"color:red\"><b>[user.name]</b> pats [src.name] on the head.</span>")
+					user.visible_message("<span class='alert'><b>[user.name]</b> pats [src.name] on the head.</span>")
 			if(INTENT_DISARM)
-				user.visible_message("<span style=\"color:red\"><b>[user.name]</b> shoves [src.name] around a bit.</span>")
+				user.visible_message("<span class='alert'><b>[user.name]</b> shoves [src.name] around a bit.</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_GRAB)
-				user.visible_message("<span style=\"color:red\"><b>[user.name]</b> grabs and shakes [src.name].</span>")
+				user.visible_message("<span class='alert'><b>[user.name]</b> grabs and shakes [src.name].</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_HARM)
-				user.visible_message("<span style=\"color:red\"><b>[user.name]</b> kicks [src.name].</span>")
+				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
 				logTheThing("combat", user, src, "kicks %target%")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
-					boutput(user, "<span style=\"color:red\">You stub your toe! Ouch!</span>")
+					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
 					var/obj/item/organ/foot = null
 					if(M.hand)
 						foot = M.organs["r_leg"]
@@ -612,7 +612,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span style=\"color:red\">[] has been hit by []</span>", src, O), 1)
+		M.show_message(text("<span class='alert'>[] has been hit by []</span>", src, O), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30
@@ -755,23 +755,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>")
+	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>")
 
 	if (isdead(src))
-		. += "<span style=\"color:red\">[src.name] is nonfunctional...</span>"
+		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
 	else if (isunconscious(src))
-		. += "<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"
+		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
 
 	if (src.bruteloss)
 		if (src.bruteloss < 30)
-			. += "<span style=\"color:red\">[src.name] looks slightly dented.</span>"
+			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
 		else
-			. += "<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span>"
+			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
 	if (src.fireloss)
 		if (src.fireloss < 30)
-			. += "<span style=\"color:red\">[src.name] looks slightly burnt!</span>"
+			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
 		else
-			. += "<span style=\"color:red\"><B>[src.name] looks severely burnt!</B></span>"
+			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	var/param = null
@@ -1008,7 +1008,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/fart_on_other = 0
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying) continue
-					message = "<span style=\"color:red\"><B>[src]</B> farts in [M]'s face!</span>"
+					message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
@@ -1032,7 +1032,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span style=\"color:red\"><B>FUCK!</B></span>"
+						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
 						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -1052,7 +1052,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
-						if (40) message = "<B>[src] <span style=\"color:red\">f</span><span style=\"color:blue\">a</span>r<span style=\"color:red\">t</span><span style=\"color:blue\">s</span>!</B>"
+						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
 				else
@@ -1071,10 +1071,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		logTheThing("say", src, null, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+				O.show_message("<span class='emote'>[message]</span>", m_type)
 		else
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+				O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
 /mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
@@ -1221,10 +1221,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		killswitch_time --
 		if(killswitch_time <= 10)
 			if(src.client)
-				boutput(message_mob, "<span style=\"color:red\"><b>Time left until Killswitch: [killswitch_time]</b></span>")
+				boutput(message_mob, "<span class='alert'><b>Time left until Killswitch: [killswitch_time]</b></span>")
 		if(killswitch_time <= 0)
 			if(src.client)
-				boutput(message_mob, "<span style=\"color:red\"><B>Killswitch Process Complete!</B></span>")
+				boutput(message_mob, "<span class='alert'><B>Killswitch Process Complete!</B></span>")
 			killswitch = 0
 			logTheThing("combat", src, null, "has died to the killswitch robot self destruct protocol")
 			// doink
@@ -1236,7 +1236,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.setStatus("paralysis", 50)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
-			if(src.client) boutput(src, "<span style=\"color:red\"><B>Hibernation Mode Timed Out!</B></span>")
+			if(src.client) boutput(src, "<span class='alert'><B>Hibernation Mode Timed Out!</B></span>")
 			weapon_lock = 0
 			weaponlock_time = 120
 
@@ -1369,13 +1369,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!newalert)
 		return
 	if (!findtext(newalert, "$NAME"))
-		boutput(src, "<span style=\"color:red\">The alert needs at least one $NAME token.</span>")
+		boutput(src, "<span class='alert'>The alert needs at least one $NAME token.</span>")
 		return
 	if (!findtext(newalert, "$JOB"))
-		boutput(src, "<span style=\"color:red\">The alert needs at least one $JOB token.</span>")
+		boutput(src, "<span class='alert'>The alert needs at least one $JOB token.</span>")
 		return
 	src.arrivalalert = sanitize(adminscrub(newalert, 200))
-	boutput(src, "<span style=\"color:blue\">Arrival alert set to '[newalert]'</span>")
+	boutput(src, "<span class='notice'>Arrival alert set to '[newalert]'</span>")
 
 /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts()
 	set category = "AI Commands"
@@ -1508,7 +1508,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.network = "Mining"
 	else
 		src.network = "SS13"
-	boutput(src, "<span style=\"color:blue\">Switched to [src.network] camera network.</span>")
+	boutput(src, "<span class='notice'>Switched to [src.network] camera network.</span>")
 	if (camnets.len && camnets[network])
 		switchCamera(pick(camnets[network]))
 
@@ -1567,7 +1567,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (deployed_to_eyecam)
 		messageTarget = src.eyecam
 
-	boutput( messageTarget, "<b style='color:red'>Your AI core/room is taking damage!</b>" )
+	boutput( messageTarget, "<b class='alert'>Your AI core/room is taking damage!</b>" )
 
 /mob/living/silicon/ai/proc/return_to(var/mob/user)
 	if (user.mind)
@@ -1713,7 +1713,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (istype(src.internal_pda,/obj/item/device/pda2/))
 		src.internal_pda.attack_self(message_mob)
 	else
-		boutput(usr, "<span style=\"color:red\"><b>Internal PDA not found!</span>")
+		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
 /mob/living/silicon/ai/verb/access_internal_radio()
 	set category = "AI Commands"
@@ -1731,7 +1731,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (istype(which,/obj/item/device/radio/))
 		which.attack_self(message_mob)
 	else
-		boutput(usr, "<span style=\"color:red\"><b>Radio not found!</b></span>")
+		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
 
 // CALCULATIONS
 

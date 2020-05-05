@@ -36,7 +36,7 @@ mob/verb/checkrewards()
 			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
 		winshow(M, "winjobrewards_[M.ckey]")
 	else
-		boutput(M, "<span style=\"color:red\">Woops! That's not a valid job, sorry!</span>")
+		boutput(M, "<span class='alert'>Woops! That's not a valid job, sorry!</span>")
 
 //Once again im forced to make fucking objects to properly use byond skin stuff.
 /obj/jobxprewardbutton
@@ -64,9 +64,9 @@ mob/verb/checkrewards()
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
 							else
-								boutput(usr, "<span style=\"color:red\">Looks like you haven't earned this yet, sorry!</span>")
+								boutput(usr, "<span class='alert'>Looks like you haven't earned this yet, sorry!</span>")
 					else
-						boutput(usr, "<span style=\"color:red\">Sorry, you can not claim any more of this reward, this round.</span>")
+						boutput(usr, "<span class='alert'>Sorry, you can not claim any more of this reward, this round.</span>")
 		return
 
 	MouseEntered(location,control,params)
@@ -202,7 +202,7 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
 		C.mob.put_in_hand_or_drop(LGP)
-		boutput(C.mob, "<span style='color:#605b59'>A pamphlet flutters out.</span>")
+		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
 /datum/jobXpReward/head_of_security_LG/old

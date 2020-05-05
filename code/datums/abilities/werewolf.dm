@@ -21,7 +21,7 @@
 		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction)	//not using for now, but could be fun later ish.
 		if (force)
 			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-			boutput(src, "<span style=\"color:red\">You are a full werewolf, you can transform immediately!</span>")
+			boutput(src, "<span class='alert'>You are a full werewolf, you can transform immediately!</span>")
 		else
 			SPAWN_DBG(W.awaken_time)
 				handle_natural_werewolf(W)
@@ -35,15 +35,15 @@
 
 /mob/proc/handle_natural_werewolf(var/datum/abilityHolder/werewolf/W)
 	src.emote("shiver")
-	boutput(src, "<span style=\"color:red\"><b>You feel feral!</b></span>")
+	boutput(src, "<span class='alert'><b>You feel feral!</b></span>")
 	sleep(5 SECONDS)
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		boutput(src, "<span style=\"color:red\"><b>You suddenly feel very weak.</b></span>")
+		boutput(src, "<span class='alert'><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")
 	SPAWN_DBG(8 SECONDS)
 		if (!src.getStatusDuration("weakened"))
 			src.emote("collapse")
-		boutput(src, "<span style=\"color:red\"><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
+		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
 		SPAWN_DBG(rand(300, 500))
 			src.emote("scream")
 			if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
@@ -76,7 +76,7 @@
 				if (M && M.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
-			M.visible_message("<span style=\"color:red\"><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
 			if (message_type == 0)
 				boutput(M, __blue("<h3>You are now a werewolf.</h3>"))
 			else
@@ -92,13 +92,13 @@
 			// M.health =
 			if (src.bioHolder)
 				src.bioHolder.AddEffect("regenerator")
-				boutput(src, "<span style=\"color:red\">You will now heal over time!</span>")
+				boutput(src, "<span class='alert'>You will now heal over time!</span>")
 
 			if (M.hasStatus("handcuffed"))
 				if (M.handcuffs.werewolf_cant_rip())
 					boutput(M, __red("You can't seem to break free from these silver handcuffs."))
 				else
-					M.visible_message("<span style=\"color:red\"><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+					M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
 					M.handcuffs.destroy_handcuffs(M)
 
 			which_way = 0
@@ -113,12 +113,12 @@
 
 			if (src.bioHolder)
 				src.bioHolder.RemoveEffect("regenerator")
-				boutput(src, "<span style=\"color:red\">You will no longer heal over time!</span>")
+				boutput(src, "<span class='alert'>You will no longer heal over time!</span>")
 
 			//Changing back removes all the implants in you, wolves should have a non-surgery way to remove bullets. considering silver is so harmful
 			for(var/obj/item/implant/I in M)
 				// if (istype(I, /obj/item/implant/projectile))
-				boutput(M, "<span style=\"color:red\">\an [I] falls out of your abdomen.</span>")
+				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 				I.on_remove(M)
 				M.implant.Remove(I)
 				I.set_loc(M.loc)
@@ -145,7 +145,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span style=\"color:red\"><B>[M]'s swipe bounces off of [target] uselessly!</B></span>")
+		target.visible_message("<span class='alert'><B>[M]'s swipe bounces off of [target] uselessly!</B></span>")
 		return 0
 	M.werewolf_tainted_saliva_transfer(target)
 
@@ -174,12 +174,12 @@
 					G.blood_DNA = HH.bioHolder.Uid
 					G.blood_type = HH.bioHolder.bloodType
 
-				M.visible_message("<span style=\"color:red\"><B>[M] messily [pick("rips", "tears")] out and [pick("eats", "devours", "wolfs down", "chows on")] some of [HH]'s [pick("guts", "intestines", "entrails")]!</B></span>")
+				M.visible_message("<span class='alert'><B>[M] messily [pick("rips", "tears")] out and [pick("eats", "devours", "wolfs down", "chows on")] some of [HH]'s [pick("guts", "intestines", "entrails")]!</B></span>")
 
 			else
 				HH.spread_blood_clothes(HH)
 
-				M.visible_message("<span style=\"color:red\"><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
+				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
 			if (ismonkey(HH) || HH.bioHolder && HH.bioHolder.HasEffect("monkey"))
 				boutput(M, __red("Monkey flesh just isn't the real deal..."))
@@ -235,7 +235,7 @@
 					if (HH.bioHolder && HH.bioHolder.Uid && HH.bioHolder.bloodType)
 						G.blood_DNA = HH.bioHolder.Uid
 						G.blood_type = HH.bioHolder.bloodType
-					M.visible_message("<span style=\"color:red\"><B>[M] sinks its teeth into [target]! !</B></span>")
+					M.visible_message("<span class='alert'><B>[M] sinks its teeth into [target]! !</B></span>")
 				HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 				M.werewolf_audio_effects(HH, "feast")
 				HH.setStatus("weakened",rand(30,60))
@@ -243,7 +243,7 @@
 					HH.emote("scream")
 		if ("pounce")
 			wrestler_knockdown(M, target, 1)
-			M.visible_message("<span style=\"color:red\"><B>[M] barrels through the air, slashing [target]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 			damage += rand(2,8)
 			playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 			if (prob(33) && target.stat != 2)
@@ -328,7 +328,7 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -348,7 +348,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Werewolf"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
 	var/datum/reagents/tainted_saliva_reservior = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.

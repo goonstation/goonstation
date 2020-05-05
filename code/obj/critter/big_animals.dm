@@ -35,11 +35,11 @@
 		if (!src.left_arm)
 			src.left_arm = new /obj/item/parts/human_parts/arm/left/bear(src)
 			src.left_arm_stage = 0
-			src.visible_message("<span style=\"color:red\">[src]'s left arm regrows!</span>")
+			src.visible_message("<span class='alert'>[src]'s left arm regrows!</span>")
 		if (!src.right_arm)
 			src.right_arm = new /obj/item/parts/human_parts/arm/right/bear(src)
 			src.right_arm_stage = 0
-			src.visible_message("<span style=\"color:red\">[src]'s right arm regrows!</span>")
+			src.visible_message("<span class='alert'>[src]'s right arm regrows!</span>")
 		..()
 
 	CritterDeath()
@@ -65,10 +65,10 @@
 			if (istype(W, /obj/item/scalpel))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 0)
-						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span style=\"color:red\">You slice through the skin and flesh of [src]'s left arm with [W].</span>")
+						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
 						src.left_arm_stage++
 					else if (src.left_arm_stage == 2)
-						user.visible_message("<span class='combat'>[user] cuts through the remaining strips of skin holding [src]'s left arm on with [W].</span>", "<span style=\"color:red\">You cut through the remaining strips of skin holding [src]'s left arm on with [W].</span>")
+						user.visible_message("<span class='combat'>[user] cuts through the remaining strips of skin holding [src]'s left arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s left arm on with [W].</span>")
 						src.left_arm_stage++
 
 						var/turf/location = get_turf(src)
@@ -79,10 +79,10 @@
 
 				else if (user.zone_sel.selecting == "r_arm")
 					if (src.right_arm_stage == 0)
-						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s right arm with [W].</span>", "<span style=\"color:red\">You slice through the skin and flesh of [src]'s right arm with [W].</span>")
+						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s right arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s right arm with [W].</span>")
 						src.right_arm_stage++
 					else if (src.right_arm_stage == 2)
-						user.visible_message("<span class='combat'>[user] cuts through the remaining strips of skin holding [src]'s right arm on with [W].</span>", "<span style=\"color:red\">You cut through the remaining strips of skin holding [src]'s right arm on with [W].</span>")
+						user.visible_message("<span class='combat'>[user] cuts through the remaining strips of skin holding [src]'s right arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s right arm on with [W].</span>")
 						src.right_arm_stage++
 
 						var/turf/location = get_turf(src)
@@ -94,11 +94,11 @@
 			else if (istype(W, /obj/item/circular_saw))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 1)
-						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span style=\"color:red\">You saw through the bone of [src]'s left arm with [W].</span>")
+						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")
 						src.left_arm_stage++
 				else if (user.zone_sel.selecting == "r_arm")
 					if (src.right_arm_stage == 1)
-						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s right arm with [W].</span>", "<span style=\"color:red\">You saw through the bone of [src]'s right arm with [W].</span>")
+						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s right arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s right arm with [W].</span>")
 						src.right_arm_stage++
 			else
 				..()
@@ -350,7 +350,7 @@ obj/critter/bear/care
 					src.visible_message("[usr] offers up [his_or_her(usr)] arm to feed [src].")
 					if (prob(30))
 						take_bleeding_damage(usr, null, 5, DAMAGE_CUT, 0, get_turf(src))
-						src.visible_message("<span style=\"color:red\"><B>Whoops, looks like [src] bit down a bit too hard.</span>")
+						src.visible_message("<span class='alert'><B>Whoops, looks like [src] bit down a bit too hard.</span>")
 
 			//stand next to bat, and point towards some blood, the bat will try to drink it
 			else if (istype(over_object,/obj/item/reagent_containers/) && get_dist(usr, src) <= 1)

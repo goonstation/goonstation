@@ -12,7 +12,7 @@
 
 	var/usesPoints = 1
 	var/pointName = ""
-	var/notEnoughPointsMessage = "<span style=\"color:red\">You do not have enough points to use that ability.</span>"
+	var/notEnoughPointsMessage = "<span class='alert'>You do not have enough points to use that ability.</span>"
 	var/points = 0 //starting points
 	var/regenRate = 1 //starting regen
 	var/bonus = 0
@@ -272,32 +272,32 @@
 		if (params["alt"])
 			if (altPower)
 				if(!altPower.cooldowncheck())
-					boutput(owner, "<span style=\"color:red\">That ability is on cooldown for [round((altPower.last_cast - world.time) / 10)] seconds.</span>")
+					boutput(owner, "<span class='alert'>That ability is on cooldown for [round((altPower.last_cast - world.time) / 10)] seconds.</span>")
 					return 0
 				altPower.handleCast(target, params)
 				return 1
 			//else
-			//	boutput(owner, "<span style=\"color:red\">Nothing is bound to alt.</span>")
+			//	boutput(owner, "<span class='alert'>Nothing is bound to alt.</span>")
 			return 0
 		else if (params["ctrl"])
 			if (ctrlPower)
 				if(!ctrlPower.cooldowncheck())
-					boutput(owner, "<span style=\"color:red\">That ability is on cooldown for [round((ctrlPower.last_cast - world.time) / 10)] seconds.</span>")
+					boutput(owner, "<span class='alert'>That ability is on cooldown for [round((ctrlPower.last_cast - world.time) / 10)] seconds.</span>")
 					return 0
 				ctrlPower.handleCast(target, params)
 				return 1
 			//else
-			//	boutput(owner, "<span style=\"color:red\">Nothing is bound to ctrl.</span>")
+			//	boutput(owner, "<span class='alert'>Nothing is bound to ctrl.</span>")
 			return 0
 		else if (params["shift"])
 			if (shiftPower)
 				if(!shiftPower.cooldowncheck())
-					boutput(owner, "<span style=\"color:red\">That ability is on cooldown for [round((shiftPower.last_cast - world.time) / 10)] seconds.</span>")
+					boutput(owner, "<span class='alert'>That ability is on cooldown for [round((shiftPower.last_cast - world.time) / 10)] seconds.</span>")
 					return 0
 				shiftPower.handleCast(target, params)
 				return 1
 			//else
-			//	boutput(owner, "<span style=\"color:red\">Nothing is bound to shift.</span>")
+			//	boutput(owner, "<span class='alert'>Nothing is bound to shift.</span>")
 			return 0
 
 	proc/actionKey(var/num)
@@ -307,7 +307,7 @@
 				unbind_action_number(num)
 				T.waiting_for_hotkey = 0
 				T.action_key_number = num
-				boutput(owner, "<span style=\"color:blue\">Bound [T.name] to [num].</span>")
+				boutput(owner, "<span class='notice'>Bound [T.name] to [num].</span>")
 				updateButtons()
 				return 1
 
@@ -330,7 +330,7 @@
 					T.holder.updateButtons()
 					return 1
 				else
-					boutput(owner, "<span style=\"color:red\">That ability is on cooldown for [round((T.last_cast - world.time) / 10)] seconds!</span>")
+					boutput(owner, "<span class='alert'>That ability is on cooldown for [round((T.last_cast - world.time) / 10)] seconds!</span>")
 					return 1
 		return 0
 
@@ -343,7 +343,7 @@
 		for (var/datum/targetable/T in src.abilities)
 			if(T.action_key_number == num)
 				T.action_key_number = -1
-				boutput(owner, "<span style=\"color:red\">Unbound [T.name] from [num].</span>")
+				boutput(owner, "<span class='alert'>Unbound [T.name] from [num].</span>")
 		updateButtons()
 		return 0
 
@@ -424,7 +424,7 @@
 		if (spell.target_selection_check == 1)
 			var/list/mob/targets = spell.target_reference_lookup()
 			if (targets.len <= 0)
-				boutput(owner.holder.owner, "<span style=\"color:red\">There's nobody in range.</span>")
+				boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
 				use_targeted = 2 // Abort parent proc.
 			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 				use_targeted = 0
@@ -432,7 +432,7 @@
 					spell.handleCast(targets[1])
 				use_targeted = 2 // Abort parent proc.
 			else
-				boutput(owner.holder.owner, "<span style=\"color:red\"><b>Multiple targets detected, switching to manual aiming.</b></span>")
+				boutput(owner.holder.owner, "<span class='alert'><b>Multiple targets detected, switching to manual aiming.</b></span>")
 				use_targeted = 1
 
 		return use_targeted
@@ -618,7 +618,7 @@
 
 	clicked(parameters)
 		if (!owner.holder || !owner.holder.owner || usr != owner.holder.owner)
-			boutput(usr, "<span style=\"color:red\">You do not own this ability.</span>")
+			boutput(usr, "<span class='alert'>You do not own this ability.</span>")
 			return
 		var/datum/abilityHolder/holder = owner.holder
 		var/mob/user = holder.owner
@@ -631,54 +631,54 @@
 
 			if (parameters["ctrl"])
 				if (owner == holder.altPower || owner == holder.shiftPower)
-					boutput(user, "<span style=\"color:red\">That ability is already bound to another key.</span>")
+					boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
 					return
 
 				if (owner == holder.ctrlPower)
 					holder.ctrlPower = null
-					boutput(user, "<span style=\"color:blue\"><b>[owner.name] has been unbound from Ctrl-Click.</b></span>")
+					boutput(user, "<span class='notice'><b>[owner.name] has been unbound from Ctrl-Click.</b></span>")
 					holder.updateButtons()
 				else
 					holder.ctrlPower = owner
-					boutput(user, "<span style=\"color:blue\"><b>[owner.name] is now bound to Ctrl-Click.</b></span>")
+					boutput(user, "<span class='notice'><b>[owner.name] is now bound to Ctrl-Click.</b></span>")
 
 			else if (parameters["alt"])
 				if (owner == holder.shiftPower || owner == holder.ctrlPower)
-					boutput(user, "<span style=\"color:red\">That ability is already bound to another key.</span>")
+					boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
 					return
 
 				if (owner == holder.altPower)
 					holder.altPower = null
-					boutput(user, "<span style=\"color:blue\"><b>[owner.name] has been unbound from Alt-Click.</b></span>")
+					boutput(user, "<span class='notice'><b>[owner.name] has been unbound from Alt-Click.</b></span>")
 					holder.updateButtons()
 				else
 					holder.altPower = owner
-					boutput(user, "<span style=\"color:blue\"><b>[owner.name] is now bound to Alt-Click.</b></span>")
+					boutput(user, "<span class='notice'><b>[owner.name] is now bound to Alt-Click.</b></span>")
 
 			else if (parameters["shift"])
 				if (owner == holder.altPower || owner == holder.ctrlPower)
-					boutput(user, "<span style=\"color:red\">That ability is already bound to another key.</span>")
+					boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
 					return
 
 				if (owner == holder.shiftPower)
 					holder.shiftPower = null
-					boutput(user, "<span style=\"color:blue\"><b>[owner.name] has been unbound from Shift-Click.</b></span>")
+					boutput(user, "<span class='notice'><b>[owner.name] has been unbound from Shift-Click.</b></span>")
 					holder.updateButtons()
 				else
 					holder.shiftPower = owner
-					boutput(user, "<span style=\"color:blue\"><b>[owner.name] is now bound to Shift-Click.</b></span>")
+					boutput(user, "<span class='notice'><b>[owner.name] is now bound to Shift-Click.</b></span>")
 
 			else
 				if (holder.help_mode && owner.helpable)
-					boutput(user, "<span style=\"color:blue\"><b>This is your [owner.name] ability.</b></span>")
-					boutput(user, "<span style=\"color:blue\">[owner.desc]</span>")
+					boutput(user, "<span class='notice'><b>This is your [owner.name] ability.</b></span>")
+					boutput(user, "<span class='notice'>[owner.desc]</span>")
 					if (owner.holder.usesPoints)
-						boutput(user, "<span style=\"color:blue\">Cost: <strong>[owner.pointCost]</strong></span>")
+						boutput(user, "<span class='notice'>Cost: <strong>[owner.pointCost]</strong></span>")
 					if (owner.cooldown)
-						boutput(user, "<span style=\"color:blue\">Cooldown: <strong>[owner.cooldown / 10] seconds</strong></span>")
+						boutput(user, "<span class='notice'>Cooldown: <strong>[owner.cooldown / 10] seconds</strong></span>")
 				else
 					if (!owner.cooldowncheck())
-						boutput(holder.owner, "<span style=\"color:red\">That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
+						boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
 						return
 
 					if (!owner.targeted)
@@ -692,7 +692,7 @@
 				holder.cancel_action_binding()
 			else
 				owner.waiting_for_hotkey = 1
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 
 		owner.holder.updateButtons()
 
@@ -703,7 +703,7 @@
 			return
 		var/obj/screen/ability/source = O
 		if (!istype(src.owner) || !istype(source.owner))
-			boutput(src.owner, "<span style=\"color:red\">You may only switch the places of ability buttons.</span>")
+			boutput(src.owner, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return
 
 		var/index_source = owner.holder.abilities.Find(source.owner)
@@ -798,7 +798,7 @@
 				logTheThing("debug", usr, null, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
 				return 1
 			if (src.holder.locked == 1 && src.ignore_holder_lock != 1)
-				boutput(holder.owner, "<span style=\"color:red\">You're already casting an ability.</span>")
+				boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
 				return 999
 			if (src.dont_lock_holder != 1)
 				src.holder.locked = 1
@@ -806,33 +806,33 @@
 				src.holder.locked = 0
 				return 1000
 			if (!holder.cast_while_dead && isdead(holder.owner))
-				boutput(holder.owner, "<span style=\"color:red\">You cannot cast this ability while you are dead.</span>")
+				boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 				src.holder.locked = 0
 				return 999
 			if (last_cast > world.time)
-				boutput(holder.owner, "<span style=\"color:red\">That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+				boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 				src.holder.locked = 0
 				return 999
 			if (src.restricted_area_check)
 				var/turf/T = get_turf(holder.owner)
 				if (!T || !isturf(T))
-					boutput(holder.owner, "<span style=\"color:red\">That ability doesn't seem to work here.</span>")
+					boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 					src.holder.locked = 0
 					return 999
 				switch (src.restricted_area_check)
 					if (1)
 						if (isrestrictedz(T.z))
-							boutput(holder.owner, "<span style=\"color:red\">That ability doesn't seem to work here.</span>")
+							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 							src.holder.locked = 0
 							return 999
 					if (2)
 						var/area/A = get_area(T)
 						if (A && istype(A, /area/sim))
-							boutput(holder.owner, "<span style=\"color:red\">You can't use this ability in virtual reality.</span>")
+							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
 							src.holder.locked = 0
 							return 999
 			if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target) == 1))
-				target.visible_message("<span style=\"color:red\"><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
+				target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
 				src.holder.locked = 0
 				return 998
 			if (!castcheck())

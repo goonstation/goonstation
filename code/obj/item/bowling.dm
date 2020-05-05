@@ -17,12 +17,12 @@
 	throw_speed = 1
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 5, 10, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 10, 15, user)
 

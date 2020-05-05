@@ -79,7 +79,7 @@ To-do: Add overlays here */
 		src.health += 30
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[user] has mended the robot!</span>"), 1)
+			O.show_message(text("<span class='alert'>[user] has mended the robot!</span>"), 1)
 		src.update()
 
 	else if (ispryingtool(W))
@@ -127,7 +127,7 @@ To-do: Add overlays here */
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				updateicon()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)		// trying to unlock with an emag card
 		if(opened)
@@ -148,7 +148,7 @@ To-do: Add overlays here */
 	else
 		src.health -= W.force
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[src] has been attacked by [user] with the [W]!</span>"), 5)
+			O.show_message(text("<span class='alert'>[src] has been attacked by [user] with the [W]!</span>"), 5)
 		src.update()
 
 	return

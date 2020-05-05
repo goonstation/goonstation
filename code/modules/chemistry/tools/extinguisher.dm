@@ -75,23 +75,23 @@
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 	if (!src.reagents)
-		boutput(user, "<span style=\"color:red\">Man, the handle broke off, you won't spray anything with this.</span>")
+		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
 
 	if ( istype(target, /obj/reagent_dispensers) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, 75)
-		boutput(user, "<span style=\"color:blue\">Extinguisher refilled...</span>")
+		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
 		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 		user.lastattacked = target
 		return
 
 	if (!safety && !istype(target, /obj/item/storage) && !istype(target, /obj/item/storage/secure))
 		if (src.reagents.total_volume < 1)
-			boutput(user, "<span style=\"color:red\">The extinguisher is empty.</span>")
+			boutput(user, "<span class='alert'>The extinguisher is empty.</span>")
 			return
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
-			user.visible_message("<span style=\"color:red\">[src] violently bursts!</span>")
+			user.visible_message("<span class='alert'>[src] violently bursts!</span>")
 			user.drop_item()
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
 			fireflash(src.loc, 0)
@@ -103,13 +103,13 @@
 				implanted.owner = M
 				M.implant += implanted
 				implanted.implanted(M, null, 4)
-				boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
+				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 				M.emote("scream")
 			qdel(src)
 			return
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
-			user.visible_message("<span style=\"color:red\">[src] ruptures!</span>")
+			user.visible_message("<span class='alert'>[src] ruptures!</span>")
 			user.drop_item()
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
 			fireflash(src.loc, 0)
@@ -119,12 +119,12 @@
 
 		for (var/reagent in src.banned_reagents)
 			if (src.reagents.has_reagent(reagent))
-				boutput(user, "<span style=\"color:red\">The nozzle is clogged!</span>")
+				boutput(user, "<span class='alert'>The nozzle is clogged!</span>")
 				return
 
 		for (var/reagent in src.melting_reagents)
 			if (src.reagents.has_reagent(reagent))
-				user.visible_message("<span style=\"color:red\">[src] melts!</span>")
+				user.visible_message("<span class='alert'>[src] melts!</span>")
 				user.drop_item()
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(user))
 				qdel(src)

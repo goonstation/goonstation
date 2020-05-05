@@ -489,13 +489,13 @@
 			src.name = "HoS Beret"
 			src.icon_state = "hosberet"
 			src.item_state = "hosberet"
-			boutput(usr, "<span style=\"color:blue\">You fold the hat into a beret.</span>")
+			boutput(usr, "<span class='notice'>You fold the hat into a beret.</span>")
 		else
 			src.folds = 0
 			src.name = "HoS Hat"
 			src.icon_state = "hoscap"
 			src.item_state = "hoscap"
-			boutput(usr, "<span style=\"color:blue\">You unfold the beret back into a hat.</span>")
+			boutput(usr, "<span class='notice'>You unfold the beret back into a hat.</span>")
 		return
 
 /obj/item/clothing/head/helmet/siren
@@ -649,7 +649,7 @@
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		step_rand(src)
-		user.visible_message("<span style=\"color:red\"><b>[user] kicks the bucket!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
 		user.death(0)
 
 
@@ -664,7 +664,7 @@
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
 
 	attack_self(mob/user as mob)
-		boutput(usr, "<span style=\"color:blue\">You turn the bucket right side up.</span>")
+		boutput(usr, "<span class='notice'>You turn the bucket right side up.</span>")
 		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
@@ -675,7 +675,7 @@
 	suicide(var/mob/user as mob)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
-		user.visible_message("<span style=\"color:red\"><b>[user] kicks the bucket!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
 		user.death(0)
 
 	red

@@ -152,13 +152,13 @@
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onWeakened()
 		if (deaths < 2)
-			boutput(src, "<span style=\"color:red\"><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
+			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
 			src.set_loc(pick(latejoin))
 			SPAWN_DBG(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
-			boutput(src, "<span style=\"color:red\"><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
+			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
 			if (src.mind)
 				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 					WO.onBanished()
@@ -211,7 +211,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span style=\"color:red\">[src] is hit by the [P]!</span>")
+			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 
 	TakeDamage(zone, brute, burn)
@@ -319,7 +319,7 @@
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
-				boutput(src, "<span style=\"color:red\">You have passed over salt! You now interact with the mortal realm...</span>")
+				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
 				SPAWN_DBG(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
@@ -419,7 +419,7 @@
 
 		if (acts)
 			for (var/mob/M in hearers(src, null))
-				M.show_message("<span style=\"color:red\">[src] [acts]!</span>")
+				M.show_message("<span class='alert'>[src] [acts]!</span>")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -442,11 +442,11 @@
 				src.invisibility = 0
 				src.alpha = 255
 				src.see_invisible = 0
-				src.visible_message(pick("<span style=\"color:red\">A horrible apparition fades into view!</span>", "<span style=\"color:red\">A pool of shadow forms!</span>"), pick("<span style=\"color:red\">A shell of ectoplasm forms around you!</span>", "<span style=\"color:red\">You manifest!</span>"))
+				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
 
 		makeIncorporeal()
 			if (src.density)
-				src.visible_message(pick("<span style=\"color:red\">[src] vanishes!</span>", "<span style=\"color:red\">The wraith dissolves into shadow!</span>"), pick("<span style=\"color:blue\">The ectoplasm around you dissipates!</span>", "<span style=\"color:blue\">You fade into the aether!</span>"))
+				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
 				src.invisibility = 10
 				src.alpha = 160
@@ -454,7 +454,7 @@
 
 		haunt()
 			if (src.density)
-				src.show_message("<span style=\"color:red\">You are already corporeal! You cannot use this ability.</span>")
+				src.show_message("<span class='alert'>You are already corporeal! You cannot use this ability.</span>")
 				return 1
 
 			src.makeCorporeal()
@@ -514,21 +514,21 @@
 
 		makeRevenant(var/mob/M as mob)
 			if (!ishuman(M))
-				boutput(usr, "<span style=\"color:red\">You can only extend your consciousness into humans corpses.</span>")
+				boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
 				return 1
 			var/mob/living/carbon/human/H = M
 			if (!isdead(H))
-				boutput(usr, "<span style=\"color:red\">A living consciousness possesses this body. You cannot force your way in.</span>")
+				boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
 				return 1
 			if (H.decomp_stage == 4)
-				boutput(usr, "<span style=\"color:red\">This corpse is no good for this!</span>")
+				boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
 				return 1
 			if (H.is_changeling())
-				boutput(usr, "<span style=\"color:red\">What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
+				boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
 				return 1
 			if (!H.bioHolder)
 				message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
-				boutput(usr, "<span style=\"color:red\">Failed.</span>")
+				boutput(usr, "<span class='alert'>Failed.</span>")
 				return 1
 			// Happens in wraithPossess() already.
 			//src.abilityHolder.suspendAllAbilities()

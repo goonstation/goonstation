@@ -33,7 +33,7 @@ Fibre wire
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"
-			boutput(user, "<span style=\"color:blue\">You add [W] to [src]. That's neat.</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
 			B.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -224,7 +224,7 @@ proc/Create_Tommyname()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
-			O.show_message("<span style=\"color:red\"><B>[user] fires the [src] at [target]!</B></span>", 1, "<span style=\"color:red\">You hear a loud crackling noise.</span>", 2)
+			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
 		sleep(0.1 SECONDS)
 		return ..(target, start, user)
 

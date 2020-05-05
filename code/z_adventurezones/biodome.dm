@@ -191,10 +191,10 @@ SYNDICATE DRONE FACTORY AREAS
 				if (istype(H))
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
-				src.visible_message("<span style=\"color:red\"><B>[M]</B> falls into the [src] and melts away!</span>")
+				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
 				M.firegib() // thanks ISN!
 		else
-			src.visible_message("<span style=\"color:red\"><B>[O]</B> falls into the [src] and melts away!</span>")
+			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
 			qdel(O)
 
 	ex_act(severity)
@@ -427,7 +427,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(target == usr) return
 
 		if(get_dist(usr, target) > 5)
-			boutput(usr, "<span style=\"color:red\">That is too far away!</span>")
+			boutput(usr, "<span class='alert'>That is too far away!</span>")
 			return
 
 		var/atom/target_r = target
@@ -446,10 +446,10 @@ SYNDICATE DRONE FACTORY AREAS
 			var/turf/T = O.loc
 
 			if(locate(/obj/decal/stalagmite) in T)
-				boutput(usr, "<span style=\"color:red\">You pull yourself to the stalagmite using the whip.</span>")
+				boutput(usr, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
 				usr.set_loc(T)
 			else if(locate(/obj/decal/stalagtite) in T)
-				boutput(usr, "<span style=\"color:red\">You pull yourself to the stalagtite using the whip.</span>")
+				boutput(usr, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
 				usr.set_loc(T)
 
 			SPAWN_DBG(0.2 SECONDS) pool(O)
@@ -546,22 +546,22 @@ SYNDICATE DRONE FACTORY AREAS
 		var/movedir = null
 
 		if (href_list["north"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = NORTH
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 		else if (href_list["east"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = EAST
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 		else if (href_list["south"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = SOUTH
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 		else if (href_list["west"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = WEST
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
@@ -625,7 +625,7 @@ SYNDICATE DRONE FACTORY AREAS
 // spookycoders are welcome to contribute to this thing
 
 /obj/item/clothing/suit/armor/ancient/equipped(var/mob/user, var/slot)
-	boutput(user, "<span style=\"color:blue\">The armor plates creak oddly as you put on [src].</span>")
+	boutput(user, "<span class='notice'>The armor plates creak oddly as you put on [src].</span>")
 	playsound(src.loc, 'sound/machines/ArtifactEld2.ogg', 30, 1)
 	user.reagents.add_reagent("itching", 10)
 	take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
@@ -636,19 +636,19 @@ SYNDICATE DRONE FACTORY AREAS
 		if (!(src in processing_items))
 			processing_items.Add(src)
 	SPAWN_DBG(5 SECONDS)
-		boutput(user, "<span style=\"color:blue\">The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
+		boutput(user, "<span class='notice'>The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
 		random_brute_damage(user, 5)
 		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 		bleed(user, 5, 5)
 		SPAWN_DBG(9 SECONDS)
-			user.visible_message("<span style=\"color:red\"><b>[src] violently contracts around [user]!</B></span>")
+			user.visible_message("<span class='alert'><b>[src] violently contracts around [user]!</B></span>")
 			playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
 			random_brute_damage(user, 15)
 			user.emote("scream")
 			take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 			bleed(user, 5, 1)
 			SPAWN_DBG(5 SECONDS)
-				user.visible_message("<span style=\"color:red\"><b>[src] digs into [user]!</B></span>")
+				user.visible_message("<span class='alert'><b>[src] digs into [user]!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
 				random_brute_damage(user, 15)
 				user.emote("scream")
@@ -657,7 +657,7 @@ SYNDICATE DRONE FACTORY AREAS
 				SPAWN_DBG(5 SECONDS)
 					var/mob/living/carbon/human/H = user
 					playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-					H.visible_message("<span style=\"color:red\"><b>[src] absorbs some of [user]'s skin!</b></span>")
+					H.visible_message("<span class='alert'><b>[src] absorbs some of [user]'s skin!</b></span>")
 					random_brute_damage(user, 30)
 					H.emote("scream")
 					if (!H.decomp_stage)
@@ -679,7 +679,7 @@ SYNDICATE DRONE FACTORY AREAS
 	if(prob(30) && ishuman(host))
 		var/mob/living/carbon/human/M = host
 		M.bioHolder.age++
-		if(prob(10)) boutput(M, "<span style=\"color:red\">You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
+		if(prob(10)) boutput(M, "<span class='alert'>You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
 		if(prob(4)) M.emote("scream")
 	return
 /////////////////////////////// GRAVEYARD stuff
@@ -742,7 +742,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 	proc/crumble()
-		src.visible_message("<span style=\"color:red\"><b>[src] crumbles!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
 		var/obj/effects/bad_smoke/smoke = unpool(/obj/effects/bad_smoke)
 		smoke.name = "dust cloud"
@@ -779,7 +779,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	New()
 		..()
-		src.visible_message("<span style=\"color:blue\"><b>[src] appears out of thin air!</b></span>")
+		src.visible_message("<span class='notice'><b>[src] appears out of thin air!</b></span>")
 		new /obj/effects/shockwave {name = "mystical energy";} (src.loc)
 		light = new /datum/light/point
 		light.attach(src)
@@ -801,7 +801,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(!in_range(target, usr) && !istype(target, /obj/alchemy/circle))
 			return
 		if(target == loc) return
-		boutput(user, "<span style=\"color:blue\">Your sprinkle some powder on \the [target].</span>")
+		boutput(user, "<span class='notice'>Your sprinkle some powder on \the [target].</span>")
 		if(istype(target, /obj/alchemy/circle))
 			target:activate()
 		return
@@ -896,7 +896,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol.loc = src.loc
 			symbol = null
 			overlays.Cut()
-			boutput(usr, "<span style=\"color:blue\">You remove the Symbol.</span>")
+			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -905,7 +905,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol = W
 			symbol.loc = src
 			overlays += symbol
-			boutput(usr, "<span style=\"color:blue\">You put the Symbol in the Circle.</span>")
+			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
 
 /obj/alchemy/circle
@@ -937,7 +937,7 @@ SYNDICATE DRONE FACTORY AREAS
 					break
 			if(blood == 1)
 				activated = 1
-				boutput(usr, "<span style=\"color:green\">The Circle begins to vibrate and glow.</span>")
+				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
 				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
 				sleep(1 SECOND)
 				shake_camera(usr, 15, 1, 0.2)
@@ -961,10 +961,10 @@ SYNDICATE DRONE FACTORY AREAS
 					M.unlock_medal("Illuminated", 1)
 
 			else
-				boutput(usr, "<span style=\"color:blue\">The Circle glows faintly before returning to normal. Maybe something is missing.</span>")
+				boutput(usr, "<span class='notice'>The Circle glows faintly before returning to normal. Maybe something is missing.</span>")
 			return
 		else
-			boutput(usr, "<span style=\"color:red\">The Circle remains silent ...</span>")
+			boutput(usr, "<span class='alert'>The Circle remains silent ...</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(activated) return
@@ -1023,24 +1023,24 @@ SYNDICATE DRONE FACTORY AREAS
 			return
 
 		if (satellite_crash_event_status != -1)
-			boutput(user, "<span style=\"color:red\">The [src.name] emits a sad beep.</span>")
+			boutput(user, "<span class='alert'>The [src.name] emits a sad beep.</span>")
 			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			return
 
 		var/area/crypt/graveyard/ourArea = get_area(user)
 		if (!istype(ourArea))
-			boutput(user, "<span style=\"color:red\">The [src.name] emits a rude beep! It appears to have no signal.</span>")
+			boutput(user, "<span class='alert'>The [src.name] emits a rude beep! It appears to have no signal.</span>")
 			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			return
 
 		for (var/turf/T in range(user, 1))
 			if (T.density)
-				boutput(user, "<span style=\"color:red\">The [src.name] gives off a grumpy beep! Looks like the signals are reflecting off of walls or something.  Maybe move?</span>")
+				boutput(user, "<span class='alert'>The [src.name] gives off a grumpy beep! Looks like the signals are reflecting off of walls or something.  Maybe move?</span>")
 				playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 				return
 
 		satellite_crash_event_status = 0
-		user.visible_message("<span style=\"color:red\">[user] pokes some buttons on [src]!</span>", "You activate [src].  Apparently.")
+		user.visible_message("<span class='alert'>[user] pokes some buttons on [src]!</span>", "You activate [src].  Apparently.")
 		playsound(user.loc, "sound/machines/signal.ogg", 60, 1)
 		new /obj/effects/sat_crash(get_turf(src))
 

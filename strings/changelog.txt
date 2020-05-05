@@ -1,5 +1,82 @@
 
+(t)sun may 03 20
+(u)Kubius
+(p)567
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 16: wrestling enhancements and more.
+(u)mbc
+(p)566
+(e)|
+(*)You can chain a block into an attack directly now (instead of needing to swap hands / drop the block). To balance this utility, beginning a block now applies combat click delay just like a punch or a throw would.
+(u)Tarmunora
+(p)560
+(e)⚖|balance
+(+)Numbers tweak on backpack blocks.
+(u)Naksu
+(p)557
+(e)🆕|enhancement
+(+)Added preliminary chat window theming support
+(u)mbc
+(p)559
+(e)|
+(*)Bonus protection when blocking incoming damage with a proper weapon raised to give +2 protection instead of +1.
+(+)Fixed bug where chair flips could be executed while lying/stunned
+(u)Tarmunora
+(p)544
+(e)⚖|balance
+(+)Changed the damage type of crafted spears from blunt to stabbing.
+(u)Tarmunora
+(p)547
+(e)⚖|balance
+(+)Made sarin grenades more concentrated and changed the delivery mechanism of capsaicin grenades
+(t)sat may 02 20
+(u)Kyle
+(*)The HoS now has a pet turtle named Sylvester. He starts in the HoS office and wears an adorable beret.
+(u)mbc
+(p)549
+(e)|
+(*)The suture can be used for limb attachment as well as the stapler now.
+(+)Fixed a bug where a limb's surgery state could get 'stuck' and not mendable.
+(+)Adjusted speed at which an open surgical incision would increase your bleeding amount.
+(u)UrsulaMajor
+(p)516
+(e)⚖🎨|balance, sprites
+(+)Adjusted the .22 Suppressed Pistol Box to have 2 mags of hollow point rounds and 2 mags of regular ammo
+(u)glassofmilk
+(p)538
+(e)|
+(+)Added signal changing toggle to Delay Component
+(u)Naksu
+(p)527
+(e)|
+(+)UpdateOverlays should be a touch faster.
+(t)fri may 01 20
+(u)Kyle
+(p)508
+(e)⚖🆕|balance, enhancement
+(+)Blob Bridge ability now much more useful and usable.
+(u)UrsulaMajor
+(p)509
+(e)🗺🎨|mapping, sprites
+(+)Renovated the Afterlife Bar, splitting it into a sanctuary lounge and a basement bar
+(u)Uta
+(p)449
+(e)🆕🔄|enhancement, rework
+(*)You can now transplant organs via drag and drop, including mediborgs. L/R organs will randomly pick a side. Can only drag organs, so you still need a human doc to staple that nuke disc to your bleeding stump arm.
+(*)Skulls can now be re-inserted into an empty head. A skull must be present for a brain to be inserted into a human head.
+(+)Added additional examine text for the process of decapitating heads and other operations.
+(+)Added stapler to medical borg module.
 (t)thu apr 30 20
+(u)mbc
+(*)This isn't my change, but download the newest BYOND version (513.1521)! Coupled with our recent verb changes, it fixes right click menu lag.
+(u)Kubius
+(p)502
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 15: wide swath of minor improvements, from eggnog to wardrobes.
+(u)adharainspace
+(p)488
+(e)🆕🎨|enhancement, sprites
+(*)Added a muzzle flash when you fire (most) bullet based weapons!
 (u)Naksu
 (p)498
 (e)|

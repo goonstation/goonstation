@@ -103,7 +103,7 @@
 			if (M.stat || M.getStatusDuration("paralysis"))
 				src.task = "thinking"
 				return
-			src.visible_message("<span style='color:red'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
 			logTheThing("combat", src.name, M, "stings %target%")
 			random_brute_damage(src.target, 10)//armor-piercing stingers
 
@@ -129,7 +129,7 @@
 				if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 					animate_bumble(src)
 			if ((M.loc != src) && ((issilicon(M) && prob(20)) || prob(5)))
-				src.visible_message("<span style='color:red'><B>[src]</B> swallows [M] whole!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> swallows [M] whole!</span>")
 				M.set_loc(src)
 				SPAWN_DBG(2 SECONDS)
 					var/obj/icecube/honeycube = new /obj/icecube(src)
@@ -152,7 +152,7 @@
 				task = "thinking"
 				return
 
-			src.visible_message("<span style='color:red'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
 			logTheThing("combat", src.name, M, "bites %target%")
 			random_brute_damage(M, 10,1)
 			if (ishuman(M))
@@ -255,11 +255,11 @@
 		attack_hand(mob/user as mob)
 			if (src.alive)
 				if (user.a_intent == INTENT_HELP)
-					src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 					karma_update(1, "SAINT", user)
 
 					if (masked == 1)
-						src.visible_message("<span style='color:red'>[src]'s halloween mask falls off!<br>[src] stares at the fallen mask for a moment, then buzzes wearily.</span>")
+						src.visible_message("<span class='alert'>[src]'s halloween mask falls off!<br>[src] stares at the fallen mask for a moment, then buzzes wearily.</span>")
 						src.masked = 0
 						src.overlays = list()
 						new /obj/item/clothing/mask/waltwhite {name = "weird nerd mask"; desc = "A Halloween mask of some guy who seems sorta familiar.  Walt, you think.  Walt...Whitman.  That's it, Walt Whitman.  Weird choice for a costume.";} (src.loc)
@@ -271,7 +271,7 @@
 							for(var/mob/O in hearers(src, null))
 								O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 						if (prob(10))
-							user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>", "<span style='color:blue'>[src] hugs you back!</span>")
+							user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
 							if (user.reagents)
 								user.reagents.add_reagent("hugs", 10)
 							karma_update(2, "SAINT", user)
@@ -292,21 +292,21 @@
 
 			if (istype(W, /obj/item/device/gps))
 				if (src.jittered)
-					boutput(user, "<span style='color:red'>[src] politely declines.</span>")
+					boutput(user, "<span class='alert'>[src] politely declines.</span>")
 					return
 
 				src.jittered = 1
-				user.visible_message("<span style='color:red'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
+				user.visible_message("<span class='alert'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
 
 				W.layer = initial(src.layer)
 				user.u_equip(W)
 				W.set_loc(src)
 
 				SPAWN_DBG(rand(10,20))
-					src.visible_message("<span style='color:red'><b>[src] begins to move at unpredicable speeds!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] begins to move at unpredicable speeds!</b></span>")
 					animate_bumble(src, floatspeed = 3)
 					sleep(rand(30,50))
-					src.visible_message("<span style='color:red'>[W] goes flying!</span>")
+					src.visible_message("<span class='alert'>[W] goes flying!</span>")
 					if (W)
 						W.set_loc(src.loc)
 						var/edge = get_edge_target_turf(src, pick(alldirs))
@@ -357,7 +357,7 @@
 			SPAWN_DBG(0.8 SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 				if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 					animate_bumble(src)
-			src.visible_message("<span style='color:red'><B>[src]</B> shanks [M] with its [pick("tiny","eeny-weeny","minute","little")] switchblade!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> shanks [M] with its [pick("tiny","eeny-weeny","minute","little")] switchblade!</span>")
 			random_brute_damage(M, 20)//get shivved - no armor for this
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -371,7 +371,7 @@
 
 		attack_hand(mob/user as mob)
 			if (src.alive && user.a_intent == INTENT_GRAB)
-				src.visible_message("<span style='color:red'><b>[user]</b> attempts to wrangle [src], but [src] is far, FAR too sassy!</span>")
+				src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is far, FAR too sassy!</span>")
 				return
 
 			else
@@ -380,14 +380,14 @@
 		attackby(obj/item/W as obj, mob/user as mob)
 			if (istype(W, /obj/item/reagent_containers/glass/bottle/bubblebath) && src.alive && !cleaned && src.task != "attacking")
 				if (!W.reagents || !W.reagents.has_reagent("fluorosurfactant"))
-					boutput(user, "<span style='color:red'>How do you expect this to work without bubble bath in the bubble bath bottle?</span>")
+					boutput(user, "<span class='alert'>How do you expect this to work without bubble bath in the bubble bath bottle?</span>")
 					return
 
 				cleaned = 1
 				W.reagents.clear_reagents()
 				playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
-				user.visible_message("<span style='color:blue'><b>[user]</b> washes [src]!</span>", "<span style='color:blue'>You clean the HECK out of [src]!</span>")
-				src.visible_message("<span style='color:blue'>[src] bumbles really happily!  Also, a little squeakily.</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> washes [src]!</span>", "<span class='notice'>You clean the HECK out of [src]!</span>")
+				src.visible_message("<span class='notice'>[src] bumbles really happily!  Also, a little squeakily.</span>")
 				//todo: splash visual effect
 				src.dance()
 				user.unlock_medal("Remember to Wash Behind the Antennae", 1)
@@ -436,7 +436,7 @@
 			src.sleeping = rand(10, 20)
 			src.task = "sleeping"
 			src.on_sleep()
-			src.visible_message("<span style='color:blue'>[src] gets tired from all that work and takes a nap!</span>")
+			src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 			src.is_dancing = 0
 
 	overbee
@@ -486,16 +486,16 @@
 				return
 
 			attacking = 1
-			src.visible_message("<span style='color:red'><b>[src]</b> stares at [M.name]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> stares at [M.name]!</span>")
 			playsound(src.loc, 'sound/voice/animal/buzz.ogg', 100, 1)
-			boutput(M, "<span style='color:red'>You feel a horrible pain in your head!</span>")
+			boutput(M, "<span class='alert'>You feel a horrible pain in your head!</span>")
 			M.changeStatus("stunned", 2 SECONDS)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.was_harmed(src)
 			SPAWN_DBG(2.5 SECONDS)
 				if ((get_dist(src, M) <= 6) && src.alive)
-					M.visible_message("<span style='color:red'><b>[M.name] clutches their temples!</b></span>")
+					M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 					M.emote("scream")
 					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 100))
 					M.take_brain_damage(10)
@@ -543,7 +543,7 @@
 
 				else if (user.a_intent == INTENT_GRAB)
 					if (src.task == "attacking" && src.target)
-						src.visible_message("<span style='color:red'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
+						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 						return
 
 					user.pulling = src
@@ -551,11 +551,11 @@
 					if (src.task == "wandering")
 						src.task = "thinking"
 					src.wrangler = user
-					src.visible_message("<span style='color:red'><b>[user]</b> wrangles [src].</span>")
+					src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
 
 				else
 
-					src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 					switch (++hug_count)
 						if (10)
 							src.visible_message("<b>[src]</b> burps!  It smells like beeswax.")
@@ -610,7 +610,7 @@
 		attack_hand(mob/user as mob)
 			if (src.alive && user.a_intent == "help")
 
-				src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " in a comforted manner" : ""].",2)
@@ -676,7 +676,7 @@
 					src.alive = 1
 					src.set_density(initial(src.density))
 					src.on_revive()
-					src.visible_message("<span style='color:red'>[src] seems to rise from the dead!</span>")
+					src.visible_message("<span class='alert'>[src] seems to rise from the dead!</span>")
 
 	zombee/lich // sprite by mageziya, it's silly but cute imo
 		name = "lich-bee"
@@ -752,19 +752,19 @@
 				for (var/mob/maybeOurMom in hearers(src, null))
 					if (!isdead(maybeOurMom) && beeMomCkey == maybeOurMom.ckey)
 						beeMom = maybeOurMom
-						src.visible_message("<span style='color:blue'><b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!</span>")
+						src.visible_message("<span class='notice'><b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!</span>")
 						break
 
 			else if ((beeMom in hearers(src, null)))
 				if (isdead(beeMom))
 					beeMom = null //beeMomCkey still set.
-					src.visible_message("<span style='color:red'><b>[src]</b> bumbles MOURNFULLY.</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> bumbles MOURNFULLY.</span>")
 					return
 
 				if (beeMom.lastattacker && beeMom.lastattacker != beeMom && (beeMom.lastattackertime + 140) >= world.time)
 					src.target = beeMom.lastattacker
 					src.oldtarget_name = "[src.target]"
-					src.visible_message("<span style='color:red'><b>[src] buzzes angrily at [beeMom.lastattacker]!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] buzzes angrily at [beeMom.lastattacker]!</b></span>")
 					src.task = "chasing"
 					return ..()
 
@@ -816,9 +816,9 @@
 			else if (user.a_intent == INTENT_GRAB)
 				if (src.task == "attacking" && src.target)
 					if (istype(src.target, /obj/machinery/plantpot))
-						src.visible_message("<span style='color:red'><b>[user]</b> attempts to wrangle [src], but [src] is too focused on \the [src.target] to be wrangled!</span>")
+						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is too focused on \the [src.target] to be wrangled!</span>")
 					else
-						src.visible_message("<span style='color:red'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
+						src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
 					return
 
 				user.pulling = src
@@ -826,16 +826,16 @@
 				if (src.task == "wandering")
 					src.task = "thinking"
 				src.wrangler = user
-				src.visible_message("<span style='color:red'><b>[user]</b> wrangles [src].</span>")
+				src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
 
 			else
 
-				src.visible_message("<span style='color:blue'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 				if (prob(10))
-					user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>", "<span style='color:blue'>[src] hugs you back!</span>")
+					user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
 					if (user.reagents)
 						user.reagents.add_reagent("hugs", 10)
 
@@ -908,7 +908,7 @@
 				src.attacking = 0
 			return
 
-		src.visible_message("<span style='color:red'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
 		logTheThing("combat", src.name, M, "bites %target%")
 		random_brute_damage(M, 2, 1)
 		if (ishuman(M))
@@ -931,7 +931,7 @@
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"
 			return
-		src.visible_message("<span style='color:red'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
 		logTheThing("combat", src.name, M, "stings %target%")
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1217,10 +1217,10 @@
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/clothing/head))
 			if (src.cant_take_hat)
-				boutput(user, "<span style='color:red'>[src] declines, but appreciates the offer.[prob(30) ? " You can tell, because of the bumbling. Appreciative bumbling, definitely." : null]</span>")
+				boutput(user, "<span class='alert'>[src] declines, but appreciates the offer.[prob(30) ? " You can tell, because of the bumbling. Appreciative bumbling, definitely." : null]</span>")
 				return // yes let's say no and then take the hat anyway and keep it in our hat void
 			if (src.hat)
-				boutput(user, "<span style='color:red'>[src] is already wearing a hat!</span>")
+				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
 				return
 			if (W.icon_state == "fdora")
 				var/fluff = pick("kind of", "kinda", "a bit", "mildly", "slightly", "just a little")
@@ -1228,7 +1228,7 @@
 				boutput(user, "[src] looks [fluff] [fluff2] at your offer and turns it down.")
 				return
 			if (!(W.icon_state in src.hat_list))
-				boutput(user, "<span style='color:red'>It doesn't fit!</span>")
+				boutput(user, "<span class='alert'>It doesn't fit!</span>")
 				return
 
 			src.hat = W
@@ -1237,8 +1237,8 @@
 
 			hat_that_bee(src.hat)
 			src.update_icon()
-			user.visible_message("<span style='color:blue'><b>[user]</b> puts a hat on [src]!</span>",\
-			"<span style='color:blue'>You put a hat on [src]!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> puts a hat on [src]!</span>",\
+			"<span class='notice'>You put a hat on [src]!</span>")
 			return
 		else
 			return ..()
@@ -1539,7 +1539,7 @@
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
 		hatched = 1
-		src.visible_message("<span style='color:red'>[src] splats onto the floor messily!</span>")
+		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		var/obj/critter/domestic_bee_larva/newLarva
@@ -1578,7 +1578,7 @@
 					bee_name = "sun larva"
 
 		heal(var/mob/M)
-			boutput(M, "<span style='color:red'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
+			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
 
 		attack_self(mob/user as mob)
 			if (src.anchored)
@@ -1627,7 +1627,7 @@
 			return
 
 		src.hatched = 1
-		src.visible_message("<span style='color:red'>[src] splats onto the floor messily!</span>")
+		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		var/obj/critter/domestic_bee_larva/newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
@@ -1663,11 +1663,11 @@
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/egg/bee))
 			if (!src.open)
-				boutput(user, "<span style='color:red'>For <i>some reason</i>, you are unable to place the egg into a closed carton.</span>")
+				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place the egg into a closed carton.</span>")
 				return
 
 			if (src.ourEgg)
-				boutput(user, "<span style='color:red'>There is already an egg in the carton.  It's only big enough for one egg at a time.  They are very large eggs.</span>")
+				boutput(user, "<span class='alert'>There is already an egg in the carton.  It's only big enough for one egg at a time.  They are very large eggs.</span>")
 				return
 
 			user.u_equip(W)
@@ -1746,7 +1746,7 @@
 	CritterAttack(mob/M)
 		src.attacking = 1
 
-		src.visible_message("<span style='color:red'><B>[src]</B> bites [M]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> bites [M]!</span>")
 		logTheThing("combat", src.name, M, "bites %target%")
 		random_brute_damage(M, 2, 1)
 		if (M.stat || M.getStatusDuration("paralysis"))
@@ -1771,12 +1771,12 @@
 				return ..()
 
 			else if (user.a_intent == INTENT_GRAB)
-				src.visible_message("<span style='color:red'><b>[user]</b> attempts to wrangle [src], but [src] squirms away.</span>")
+				src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] squirms away.</span>")
 				return
 
 			else
 
-				user.visible_message("<span style='color:red'><b>[user]</b> pets [src]. Both parties look uncomfortable.</span>","<span style='color:red'>You pet [src]. [src] looks uncomfortable.  You don't feel much better.</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> pets [src]. Both parties look uncomfortable.</span>","<span class='alert'>You pet [src]. [src] looks uncomfortable.  You don't feel much better.</span>")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] bozzes.",2)

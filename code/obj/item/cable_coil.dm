@@ -47,16 +47,16 @@
 		BLOCK_ROPE
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins coiling cable!</span>")
+		user.visible_message("<span class='notice'>[user] begins coiling cable!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish coiling cable.</span>")
+		boutput(user, "<span class='notice'>You finish coiling cable.</span>")
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style=\"color:red\"><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
@@ -175,10 +175,10 @@
 	if (istype(M))
 		if (M.move_laying)
 			M.move_laying = null
-			boutput(M, "<span style=\"color:blue\">No longer laying the cable while moving.</span>")
+			boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
 		else
 			M.move_laying = src
-			boutput(M, "<span style=\"color:blue\">Now laying cable while moving.</span>")
+			boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
 
 /obj/proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
 	return
@@ -193,7 +193,7 @@
 		return
 	if (!src.amount)
 		M.move_laying = null
-		boutput(M, "<span style=\"color:red\">Your cable coil runs out!</span>")
+		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 	var/obj/cable/C
 
@@ -205,7 +205,7 @@
 
 	if (!src.amount)
 		M.move_laying = null
-		boutput(M, "<span style=\"color:red\">Your cable coil runs out!</span>")
+		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 
 	C = find_half_cable(target, get_dir(target, source))
@@ -217,7 +217,7 @@
 
 	if (!src.amount)
 		M.move_laying = null
-		boutput(M, "<span style=\"color:red\">Your cable coil runs out!</span>")
+		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 
 /obj/item/cable_coil/examine()

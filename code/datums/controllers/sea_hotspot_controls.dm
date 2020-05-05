@@ -359,13 +359,13 @@
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
 				shake_camera(M, 4, 0.1)
-				M.show_text("<span style='color:red'><b>The ground rumbles softly.</b></span>")
+				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
 
 			if (phenomena_flags & PH_QUAKE)
 				shake_camera(M, 5, 0.5)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
-				M.show_text("<span style='color:red'><b>The ground quakes and rumbles violently!</b></span>")
+				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
 			LAGCHECK(LAG_HIGH)
 
@@ -558,18 +558,18 @@
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
+						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
 
 
 				speech_bubble.icon_state = "[val]"
@@ -864,7 +864,7 @@
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
 		..()
 
 	proc/update_icon()
@@ -879,13 +879,13 @@
 				cell.updateicon()
 				cell = null
 
-				usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
 			update_icon()
-			user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
 		on = !on
@@ -908,7 +908,7 @@
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -925,13 +925,13 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (ispryingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
 		else
 			..()
@@ -962,7 +962,7 @@
 			if (get_dist(src,H.center.turf()) <= 1)
 				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1135,8 +1135,8 @@
 				hotspot_controller.show_map(usr.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
+		"<span class='alert'>You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster, T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x

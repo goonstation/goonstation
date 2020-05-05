@@ -148,19 +148,19 @@
 			E.set_loc(src)
 			user.u_equip(E)
 			//parts.Add(E)
-			boutput(user, "<span style=\"color:blue\">You add the [E.name] to the [src].</span>")
+			boutput(user, "<span class='notice'>You add the [E.name] to the [src].</span>")
 			return
 		else if(istype(E,/obj/item/electronics/soldering))
 			if(!secured)
 				secured = 1
 				viewstat = 1
-				boutput(user, "<span style=\"color:blue\">You secure the [src].</span>")
+				boutput(user, "<span class='notice'>You secure the [src].</span>")
 			else if(secured == 1)
 				secured = 0
 				viewstat = 0
-				boutput(user, "<span style=\"color:blue\">You unsecure the [src].</span>")
+				boutput(user, "<span class='notice'>You unsecure the [src].</span>")
 			else if(secured == 2)
-				boutput(user, "<span style=\"color:red\">You deploy the [src]!</span>")
+				boutput(user, "<span class='alert'>You deploy the [src]!</span>")
 				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([showCoords(src.x, src.y, src.z)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
@@ -173,7 +173,7 @@
 			src.dir = turn(src.dir, 90)
 			return
 	else if (iswrenchingtool(W))
-		boutput(user, "<span style=\"color:red\">You deconstruct [src] into its base materials!</span>")
+		boutput(user, "<span class='alert'>You deconstruct [src] into its base materials!</span>")
 		src.drop_resources(W,user)
 	..()
 
@@ -186,13 +186,13 @@
 
 	var/list/bad_types = list(/obj/item/electronics/disk, /obj/item/electronics/scanner, /obj/item/electronics/soldering, /obj/item/electronics/frame)
 	if(!istype(O, /obj/item/electronics) || (O.type in bad_types))
-		boutput(user, "<span style=\"color:red\">That is not a valid component!</span>")
+		boutput(user, "<span class='alert'>That is not a valid component!</span>")
 		return
 
 	if (!src.secured)
 		var/turf/source_turf = get_turf(O)
 		if(!source_turf) return
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly adding components to [src]!</span>", "<span style=\"color:blue\">You begin to quickly add components to [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly adding components to [src]!</span>", "<span class='notice'>You begin to quickly add components to [src]!</span>")
 		var/staystill = user.loc
 
 		for(var/obj/item/electronics/I in source_turf)
@@ -202,9 +202,9 @@
 			sleep(0.3 SECONDS)
 			if (user.loc != staystill) break
 
-		boutput(user, "<span style=\"color:blue\">You finish adding components to [src]!</span>")
+		boutput(user, "<span class='notice'>You finish adding components to [src]!</span>")
 	else
-		boutput(user, "<span style=\"color:red\">The board is already secured!</span>")
+		boutput(user, "<span class='alert'>The board is already secured!</span>")
 	return
 
 /obj/item/electronics/frame/attack_self(mob/user as mob)
@@ -225,7 +225,7 @@
 		if(1)
 			var/check = parts_check()
 			if(!check)
-				boutput(user, "<span style=\"color:red\">Incomplete Object, unable to finish!</span>")
+				boutput(user, "<span class='alert'>Incomplete Object, unable to finish!</span>")
 				return
 			if(dir_needed)
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
@@ -241,7 +241,7 @@
 			boutput(user, "Ready to deploy!")
 			switch(alert("Ready to deploy?",,"Yes","No"))
 				if("Yes")
-					boutput(user, "<span style=\"color:red\">Place box and solder to deploy!</span>")
+					boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
 					viewstat = 2
 					secured = 2
 					icon_state = "dbox"
@@ -322,7 +322,7 @@
 			M.set_loc(get_turf(src))
 			looper--
 	else
-		boutput(user, "<span style=\"color:red\">Could not reclaim resources.</span>")
+		boutput(user, "<span class='alert'>Could not reclaim resources.</span>")
 	qdel(src)
 
 /datum/action/bar/icon/build_electronics_frame
@@ -421,7 +421,7 @@
 		var/decon_len = O.decon_contexts ? O.decon_contexts.len : 0
 		O.decon_contexts = null
 		if (O.build_deconstruction_buttons() != decon_len)
-			boutput(user, "<span style=\"color:red\">You repair [target]'s deconstructed state.</span>")
+			boutput(user, "<span class='alert'>You repair [target]'s deconstructed state.</span>")
 			return
 		..()
 
@@ -456,7 +456,7 @@
 		if(O.mats == 0 || (O.is_syndicate != 0 && src.is_syndicate == 0))
 			// if this item doesn't have mats defined or was constructed or
 			// attempting to scan a syndicate item and this is a normal scanner
-			boutput(user, "<span style=\"color:red\">The structure of this object is not compatible with the scanner.</span>")
+			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
 			return
 
 		user.visible_message("<B>[user.name]</B> scans [O].")
@@ -465,16 +465,16 @@
 
 		for (var/X in src.scanned)
 			if (final_type == X)
-				boutput(user, "<span style=\"color:red\">You have already scanned that object.</span>")
+				boutput(user, "<span class='alert'>You have already scanned that object.</span>")
 				return
 
 		for(var/datum/electronics/scanned_item/I in mechanic_controls.scanned_items)
 			if(final_type == I.item_type)
-				boutput(user, "<span style=\"color:red\">That object already exists in the scanned database.</span>")
+				boutput(user, "<span class='alert'>That object already exists in the scanned database.</span>")
 				return
 		animate_scanning(O, "#FFFF00")
 		src.scanned += final_type
-		boutput(user, "<span style=\"color:blue\">Item scan successful.</span>")
+		boutput(user, "<span class='notice'>Item scan successful.</span>")
 
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit
@@ -599,9 +599,9 @@
 				add_count++
 
 		if (add_count > 0)
-			boutput(user, "<span style=\"color:blue\">[add_count] new items entered into kit.</span>")
+			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">No new items entered into kit.</span>")
+			boutput(user, "<span class='alert'>No new items entered into kit.</span>")
 
 	else
 		..()
@@ -716,17 +716,17 @@
 
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity)
-			boutput(user, "<span style=\"color:red\">[target] cannot be deconstructed.</span>")
+			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
 			if (O.deconstruct_flags & DECON_ACCESS)
-				boutput(user, "<span style=\"color:red\">[target] is under an access lock and must have its access requirements removed first.</span>")
+				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 
 		if (!O.allowed(user) || O.is_syndicate)
-			boutput(user, "<span style=\"color:red\">You cannot deconstruct [target] without sufficient access to operate it.</span>")
+			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
 		if (isrestrictedz(O.z) && !isitem(target))
-			boutput(user, "<span style=\"color:red\">You cannot bring yourself to deconstruct [target] in this area.</span>")
+			boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [target] in this area.</span>")
 			return
 
 		if (O.decon_contexts && O.decon_contexts.len <= 0) //ready!!!
@@ -735,7 +735,7 @@
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
 		else
 			user.showContextActions(O.decon_contexts, O)
-			boutput(user, "<span style=\"color:red\">You need to use some tools on [target] before it can be deconstructed.</span>")
+			boutput(user, "<span class='alert'>You need to use some tools on [target] before it can be deconstructed.</span>")
 			return
 
 /obj/var/list/decon_contexts = null
@@ -829,5 +829,5 @@
 
 	onInterrupt()
 		if (O && owner)
-			boutput(owner, "<span style=\"color:red\">Deconstruction of [O] interrupted!</span>")
+			boutput(owner, "<span class='alert'>Deconstruction of [O] interrupted!</span>")
 		..()

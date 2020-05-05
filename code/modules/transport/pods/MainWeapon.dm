@@ -294,7 +294,7 @@
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">[ship] spews out a metalic foam!</span>")
+						boutput(M, "<span class='alert'>[ship] spews out a metalic foam!</span>")
 					var/list/bandaidfix = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).

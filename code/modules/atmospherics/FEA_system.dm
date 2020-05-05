@@ -182,7 +182,7 @@ datum
 				return
 				#else
 
-				boutput(world, "<span style=\"color:red\">Processing Geometry...</span>")
+				boutput(world, "<span class='alert'>Processing Geometry...</span>")
 
 				var/start_time = world.timeofday
 
@@ -198,7 +198,7 @@ datum
 				for(var/obj/movable/floor/S in world) //Update all pathing and border information as well
 					S.update_air_properties()
 */
-				boutput(world, "<span style=\"color:red\">Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
+				boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
 				#endif
 
 			assemble_group_turf(turf/simulated/base)

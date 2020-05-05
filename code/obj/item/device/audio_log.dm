@@ -355,7 +355,7 @@
 
 			if (ismob(src.loc))
 				var/mob/M = src.loc
-				M.show_message("<span style=\"color:red\">Your [src] explodes!</span>", 1)
+				M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
 
 			if(T)
 				T.hotspot_expose(700,125)

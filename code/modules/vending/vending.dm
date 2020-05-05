@@ -136,36 +136,36 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the output target for [src].</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">[src] is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
 				src.output_target = over_object
-				boutput(usr, "<span style=\"color:blue\">You set [src] to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
-			boutput(usr, "<span style=\"color:blue\">You set [src] to output on top of [O]!</span>")
+			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf) && !over_object:density)
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set [src] to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 	proc/get_output_location()
@@ -821,7 +821,7 @@
 			if (href_list["cook"])
 				if(!pizcooking)
 					if((credit < 50)&&(!emagged))
-						boutput(usr, "<span style=\"color:red\">Insufficient funds!</span>") // no money? get out
+						boutput(usr, "<span class='alert'>Insufficient funds!</span>") // no money? get out
 						return
 					if(!emagged)
 						credit -= 50
@@ -1036,7 +1036,7 @@
 
 	prevend_effect()
 		if(src.seconds_electrified || src.extended_inventory)
-			src.visible_message("<span style=\"color:blue\">[src] wakes up!</span>")
+			src.visible_message("<span class='notice'>[src] wakes up!</span>")
 			playsound(src.loc, sound_riff_broken, 60, 1)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting_broken, 65, 1)
@@ -1044,12 +1044,12 @@
 				flick(src.icon_vend,src)
 			speak("F*!@$*(9HZZZZ9**###!")
 			sleep(2.5 SECONDS)
-			src.visible_message("<span style=\"color:blue\">[src] spasms violently!</span>")
+			src.visible_message("<span class='notice'>[src] spasms violently!</span>")
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
 			sleep(1 SECOND)
-			src.visible_message("<span style=\"color:blue\">[src] makes an obscene gesture!</b></span>")
+			src.visible_message("<span class='notice'>[src] makes an obscene gesture!</b></span>")
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
@@ -1058,7 +1058,7 @@
 			speak("AHHH#######!")
 
 		else
-			src.visible_message("<span style=\"color:blue\">[src] wakes up!</span>")
+			src.visible_message("<span class='notice'>[src] wakes up!</span>")
 			playsound(src.loc, sound_riff, 60, 1)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting, 65, 1)
@@ -1066,12 +1066,12 @@
 				flick(src.icon_vend,src)
 			speak("The great wizard Zoldorf is here!")
 			sleep(2.5 SECONDS)
-			src.visible_message("<span style=\"color:blue\">[src] rocks back and forth!</span>")
+			src.visible_message("<span class='notice'>[src] rocks back and forth!</span>")
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
 			sleep(1 SECOND)
-			src.visible_message("<span style=\"color:blue\">[src] makes a mystical gesture!</b></span>")
+			src.visible_message("<span class='notice'>[src] makes a mystical gesture!</b></span>")
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
@@ -1108,10 +1108,10 @@
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
 			if(h.unkillable)
-				boutput(user,"<span style=\"color:red\"><b>Your soul is shielded and cannot be sold!</b></span>")
+				boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 				return
 			if(scroll.icon_state != "signed")
-				boutput(h, "<span style=\"color:red\">It doesn't seem to be signed yet.</span>")
+				boutput(h, "<span class='alert'>It doesn't seem to be signed yet.</span>")
 				return
 			if(scroll.signer == h.real_name)
 				var/obj/machinery/playerzoldorf/pz = new /obj/machinery/playerzoldorf
@@ -1119,7 +1119,7 @@
 				if(the_zoldorf.len)
 					if(the_zoldorf[1].homebooth)
 						//var/obj/booth = the_zoldorf[1].homebooth
-						boutput(h, "<span style=\"color:red\"><b>There can only be one!</b></span>") // Maybe add a way to point where the booth is if people are being jerks
+						boutput(h, "<span class='alert'><b>There can only be one!</b></span>") // Maybe add a way to point where the booth is if people are being jerks
 					else
 						pz.booth(h,src.loc,scroll)
 						qdel(src)
@@ -1127,7 +1127,7 @@
 					pz.booth(h,src.loc,scroll)
 					qdel(src)
 			else
-				user.visible_message("<span style=\"color:red\"><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span style=\"color:red\"><b>You can only sell your own soul!</b></span>")
+				user.visible_message("<span class='alert'><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span class='alert'><b>You can only sell your own soul!</b></span>")
 		else
 			..()
 
@@ -1359,19 +1359,19 @@
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
-	boutput(user, "<span style=\"color:blue\">You swipe [card].</span>")
+	boutput(user, "<span class='notice'>You swipe [card].</span>")
 	var/datum/data/record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
 		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
 		if (enterpin == card.pin)
-			boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
 		else
-			boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+			boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 			src.scan = null
 	else
-		boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 		src.scan = null
 
 /obj/machinery/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
@@ -1472,14 +1472,14 @@
 		if (src.pay)
 			src.credit += W.amount
 			W.amount = 0
-			boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
+			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
 			pool( W )
 			src.generate_HTML(1)
 			return
 		else
-			boutput(user, "<span style=\"color:red\">This machine does not accept cash.</span>")
+			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
 			return
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
@@ -1492,15 +1492,15 @@
 			if(amount <= 0)
 				return
 			if(amount > W:money)
-				boutput(user, "<span style=\"color:red\">Insufficent funds. [W] only has [W:money] credits.</span>")
+				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [W:money] credits.</span>")
 				return
 			src.credit += amount
 			W:money -= amount
-			boutput(user, "<span style=\"color:blue\">You deposit [amount] credits. [W] now has [W:money] credits.</span>")
+			boutput(user, "<span class='notice'>You deposit [amount] credits. [W] now has [W:money] credits.</span>")
 			src.updateUsrDialog()
 			return()*/
 		else
-			boutput(user, "<span style=\"color:red\">This machine does not accept ID cards.</span>")
+			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
 			return
 	else if (isscrewingtool(W))
 		src.panel_open = !src.panel_open
@@ -1510,12 +1510,12 @@
 		return
 	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
 		if (src.seconds_electrified != 0)
-			boutput(user, "<span style=\"color:red\">[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
+			boutput(user, "<span class='alert'>[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
 		else
 			if (status & NOPOWER)
-				boutput(user, "<span style=\"color:red\">[bicon(W)] No electrical response received from access panel.</span>")
+				boutput(user, "<span class='alert'>[bicon(W)] No electrical response received from access panel.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">[bicon(W)] Regular electrical response received from access panel.</span>")
+				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
 		return
 	else if (ispulsingtool(W))
 		return src.attack_hand(user)
@@ -1531,13 +1531,13 @@
 			src.create_products()
 			src.generate_HTML(1)
 
-			boutput(user, "<span style=\"color:blue\">You restocked the items in [src].</span>")
+			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 			user.u_equip(W)
 			qdel(W)
 			return
 		else
-			boutput(user, "<span style=\"color:red\">[W] is not compatible with [src].</span>")
+			boutput(user, "<span class='alert'>[W] is not compatible with [src].</span>")
 	else
 		user.lastattacked = src
 		hit_twitch(src)
@@ -1591,7 +1591,7 @@
 
 	//ehh just let the AI operate vending machines. why not!!
 	if (isAI(usr) && !src.ai_control_enabled)
-		boutput(usr, "<span style=\"color:red\">AI control for this vending machine has been disconnected!</span>")
+		boutput(usr, "<span class='alert'>AI control for this vending machine has been disconnected!</span>")
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -1600,7 +1600,7 @@
 		if ((href_list["vend"]) && (src.vend_ready))
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-				boutput(usr, "<span style=\"color:red\">Access denied.</span>") //Unless emagged of course
+				boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
 
@@ -1639,14 +1639,14 @@
 				if (src.acceptcard && src.scan)
 					account = FindBankAccountByName(src.scan.registered)
 					if (!account)
-						boutput(usr, "<span style=\"color:red\">No bank account associated with ID found.</span>")
+						boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
 						src.paying_for = R
 						src.generate_HTML(1)
 						return
 					if (account.fields["current_money"] < R.product_cost)
-						boutput(usr, "<span style=\"color:red\">Insufficient funds in account. To use machine credit, log out.</span>")
+						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
 						src.paying_for = R
@@ -1654,7 +1654,7 @@
 						return
 				else
 					if (src.credit < R.product_cost)
-						boutput(usr, "<span style=\"color:red\">Insufficient Credit.</span>")
+						boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
 						src.paying_for = R
@@ -1728,7 +1728,7 @@
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 					src.credit = 0
-					boutput(usr, "<span style=\"color:blue\">You receive [returned].</span>")
+					boutput(usr, "<span class='notice'>You receive [returned].</span>")
 					src.generate_HTML(1)
 
 		if ((href_list["cutwire"]) && (src.panel_open))
@@ -1791,7 +1791,7 @@
 		if (src.glitchy_slogans)
 			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
 		else
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
 
 	return
 
@@ -1921,14 +1921,14 @@
 				R.product_amount--
 				SPAWN_DBG(0)
 					playsound(src.loc, S, 50, 0)
-					src.visible_message("<span style=\"color:red\"><b>[src] launches [R.product_name] at [target.name]!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
 					src.generate_HTML(1)
 				return 1
 
 	SPAWN_DBG(0)
 		if (throw_item)
 			throw_item.throw_at(target, 16, 3)
-			src.visible_message("<span style=\"color:red\"><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/vending/proc/isWireColorCut(var/wireColor)
@@ -2016,7 +2016,7 @@
 	if (user.shock(src, PN.avail, user.hand == 1 ? "l_arm" : "r_arm", 1, 0))
 		for (var/mob/M in AIviewers(src))
 			if (M == user)	continue
-			M.show_message("<span style=\"color:red\">[user.name] was shocked by the [src.name]!</span>", 3, "<span style=\"color:red\">You hear a heavy electrical crack</span>", 2)
+			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 		return 1
 	return 0
 

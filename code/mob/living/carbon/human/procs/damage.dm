@@ -8,12 +8,12 @@
 
 	if (src.nodamage) return
 	if (src.spellshield)
-		src.visible_message("<span style=\"color:red\">[src]'s shield deflects the shot!</span>")
+		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
 		return
 	for (var/obj/item/device/shield/S in src)
 		if (S.active)
 			if (P.proj_data.damage_type == D_KINETIC)
-				src.visible_message("<span style=\"color:red\">[src]'s shield deflects the shot!</span>")
+				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
 				return
 			S.active = 0
 			S.icon_state = "shield0"
@@ -41,7 +41,7 @@
 
 			return hostage
 	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
-		src.visible_message("<span style=\"color:red\">[src] is hit by the [P.name]!</span>", "<span style=\"color:red\">You are hit by the [P.name]!</span>")
+		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
 
 	for (var/mob/V in nervous_mobs)
 		if (get_dist(src,V) > 6)
@@ -73,7 +73,7 @@
 
 				if (armor_value_bullet > 1)
 					if (!P.proj_data.nomsg)
-						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_BLUNT)
 				else
 					src.TakeDamage("chest", damage, 0, 0, DAMAGE_BLUNT)
@@ -122,7 +122,7 @@
 				//bleed
 				if (armor_value_bullet > 1)
 					if (!P.proj_data.nomsg)
-						show_message("<span style=\"color:red\">[P] pierces through your armor!</span>", 4)
+						show_message("<span class='alert'>[P] pierces through your armor!</span>", 4)
 					src.TakeDamage("chest", damage/max((armor_value_bullet/3), 1), 0, 0, DAMAGE_STAB)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/max(armor_value_bullet/3), 0, 0, target_organ)
@@ -168,7 +168,7 @@
 				//bleed
 				if (armor_value_bullet > 1)
 					if (!P.proj_data.nomsg)
-						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_BLUNT)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/armor_value_bullet, 0, 0, target_organ)
@@ -190,7 +190,7 @@
 
 				if (armor_value_bullet > 1)
 					if (!P.proj_data.nomsg)
-						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
@@ -207,12 +207,12 @@
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
-					src.visible_message("<span style=\"color:red\"><b>[src] seems unaffected by fire!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
 					return
 
 				if (armor_value_bullet > 1)
 					if (!P.proj_data.nomsg)
-						show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 					src.update_burning(damage/armor_value_bullet)
 					if (src.organHolder && prob(50))
@@ -241,7 +241,7 @@
 				if (P.proj_data.reagent_payload)
 					if (armor_value_bullet > 1)
 						if (!P.proj_data.nomsg)
-							show_message("<span style=\"color:red\">Your armor softens the hit!</span>", 4)
+							show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 						src.TakeDamage("chest", (damage/armor_value_bullet), 0, 0, DAMAGE_STAB)
 					else
 						src.TakeDamage("chest", damage, 0, 0, DAMAGE_STAB)
@@ -312,12 +312,12 @@
 	if (src.spellshield)
 		reduction += 30
 		spellshielded = 1
-		boutput(src, "<span style=\"color:red\"><b>Your Spell Shield absorbs some blast!</b></span>")
+		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
 	var/in_severity = severity
 	if (src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit/armor/EOD))
 		reduction += rand(10,40)
 		severity++ // let's make this function like mining armor
-		boutput(src, "<span style=\"color:red\"><b>Your armor absorbs some of the blast!</span>")
+		boutput(src, "<span class='alert'><b>Your armor absorbs some of the blast!</span>")
 		if (src.head && istype(src.head, /obj/item/clothing/head/helmet/EOD))
 			reduction += rand(5,20) // buffed a bit - cogwerks
 			severity++
@@ -331,7 +331,7 @@
 		if (client && client.hellbanned)
 			reduction = 0
 			severity = in_severity
-		boutput(src, "<span style=\"color:red\"><b>Your armor absorbs some of the blast!</span>")
+		boutput(src, "<span class='alert'><b>Your armor absorbs some of the blast!</span>")
 	else if (src.w_uniform && src.w_uniform.getProperty("exploprot"))
 		var/sevmod = max(0,round(src.w_uniform.getProperty("exploprot") / 4))
 		severity += sevmod
@@ -339,7 +339,7 @@
 		if (client && client.hellbanned)
 			reduction = 0
 			severity = in_severity
-		boutput(src, "<span style=\"color:red\"><b>Your jumpsuit absorbs some of the blast!</span>")
+		boutput(src, "<span class='alert'><b>Your jumpsuit absorbs some of the blast!</span>")
 
 	var/b_loss = null
 	var/f_loss = null
@@ -392,7 +392,7 @@
 					curprob -= 10 // let's not get too crazy
 
 		if (4.0 to INFINITY)
-			boutput(src, "<span style=\"color:red\"><b>Your armor shields you from the blast!</b></span>")
+			boutput(src, "<span class='alert'><b>Your armor shields you from the blast!</b></span>")
 
 	TakeDamage(zone="All", brute=b_loss, burn=f_loss, tox=0, damage_type=0, disallow_limb_loss=1)
 
@@ -437,10 +437,10 @@
 
 		//src.paralysis += 1
 
-	src.show_message("<span style=\"color:red\">The blob attacks you!</span>")
+	src.show_message("<span class='alert'>The blob attacks you!</span>")
 
 	if (src.spellshield)
-		boutput(src, "<span style=\"color:red\"><b>Your Spell Shield absorbs some damage!</b></span>")
+		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
 	var/list/zones = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 
@@ -454,27 +454,27 @@
 				if (temp && prob(45))
 					temp.take_damage(damage, 0)
 				else
-					src.show_message("<span style=\"color:red\">You have been protected from a hit to the head.</span>")
+					src.show_message("<span class='alert'>You have been protected from a hit to the head.</span>")
 				return
 			if (damage > 4.9)
 				changeStatus("weakened", 2 SECONDS)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>The blob has weakened [src]!</B></span>", 1, "<span style=\"color:red\">You hear someone fall.</span>", 2)
+					O.show_message("<span class='alert'><B>The blob has weakened [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 			if (temp)
 				temp.take_damage(damage, 0)
 		if ("chest")
 			if ((((src.wear_suit && src.wear_suit.body_parts_covered & TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & TORSO)) && prob(70)))
-				src.show_message("<span style=\"color:red\">You have been protected from a hit to the chest.</span>")
+				src.show_message("<span class='alert'>You have been protected from a hit to the chest.</span>")
 				return
 			if (damage > 4.9)
 				if (prob(50))
 					src.changeStatus("weakened", 5 SECONDS)
 					for (var/mob/O in viewers(src, null))
-						O.show_message("<span style=\"color:red\"><B>The blob has knocked down [src]!</B></span>", 1, "<span style=\"color:red\">You hear someone fall.</span>", 2)
+						O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 				else
 					changeStatus("stunned", 5 SECONDS)
 					for (var/mob/O in viewers(src, null))
-						if (O.client)	O.show_message("<span style=\"color:red\"><B>The blob has stunned [src]!</B></span>", 1)
+						if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
 				if (isalive(src))
 					src.lastgasp() // calling lastgasp() here because we just got knocked out
 			if (temp)
@@ -484,19 +484,19 @@
 			if (temp)
 				temp.take_damage(damage, 0)
 			if (prob(20) && equipped())
-				visible_message("<span style=\"color:red\"><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
+				visible_message("<span class='alert'><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
 				drop_item()
 		if ("r_arm")
 			if (temp)
 				temp.take_damage(damage, 0)
 			if (prob(20) && equipped())
-				visible_message("<span style=\"color:red\"><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
+				visible_message("<span class='alert'><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
 				drop_item()
 		if ("l_leg")
 			if (temp)
 				temp.take_damage(damage, 0)
 			if (prob(5))
-				visible_message("<span style=\"color:red\"><b>The blob has knocked [src] off-balance!</b></span>")
+				visible_message("<span class='alert'><b>The blob has knocked [src] off-balance!</b></span>")
 				drop_item()
 				if (prob(50))
 					src.changeStatus("weakened", 1 SECOND)
@@ -504,7 +504,7 @@
 			if (temp)
 				temp.take_damage(damage, 0)
 			if (prob(5))
-				visible_message("<span style=\"color:red\"><b>The blob has knocked [src] off-balance!</b></span>")
+				visible_message("<span class='alert'><b>The blob has knocked [src] off-balance!</b></span>")
 				drop_item()
 				if (prob(50))
 					src.changeStatus("weakened", 1 SECOND)
@@ -610,9 +610,9 @@
 	burn = max(0, burn - armor_mod)
 	/*
 	if (brute + burn == 0)
-		show_message("<span style='color:blue'>You have been completely protected from damage on your [z_name]!</span>")
+		show_message("<span class='notice'>You have been completely protected from damage on your [z_name]!</span>")
 	else if (armor_mod != 0)
-		show_message("<span style='color:blue'>You have been partly protected from damage on your [z_name]!</span>")
+		show_message("<span class='notice'>You have been partly protected from damage on your [z_name]!</span>")
 	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
@@ -878,7 +878,7 @@
 			src.organHolder.heal_organ(abs(amount), 0, 0, "brain")
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120)
-		src.visible_message("<span style=\"color:red\"><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
+		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()
 		return
 	return

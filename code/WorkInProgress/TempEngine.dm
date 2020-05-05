@@ -254,7 +254,7 @@
 			grump++ // get grump'd
 			if(grump >= 100 && prob(5))
 				playsound(src.loc, pick(sounds_enginegrump), 70, 0)
-				src.visible_message("<span style=\"color:red\">[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
+				src.visible_message("<span class='alert'>[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
 				grump -= 5
 		switch (lastgenlev)
 			if(0)
@@ -280,11 +280,11 @@
 					smoke.set_up(1, 0, src.loc)
 					smoke.attach(src)
 					smoke.start()
-					src.visible_message("<span style=\"color:red\">[src] starts smoking!</span>")
+					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
 				if (!grumping && grump >= 100 && prob(5))
 					grumping = 1
 					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 0)
-					src.visible_message("<span style=\"color:red\">[src] erupts in flame!</span>")
+					src.visible_message("<span class='alert'>[src] erupts in flame!</span>")
 					fireflash(src, 1)
 					grumping = 0
 					grump -= 10
@@ -296,11 +296,11 @@
 					smoke.set_up(1, 0, src.loc)
 					smoke.attach(src)
 					smoke.start()
-					src.visible_message("<span style=\"color:red\">[src] starts smoking!</span>")
+					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
 				if (!grumping && grump >= 100 && prob(5))
 					grumping = 1
 					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 0)
-					src.visible_message("<span style=\"color:red\">[src] erupts in flame!</span>")
+					src.visible_message("<span class='alert'>[src] erupts in flame!</span>")
 					fireflash(src, rand(1,3))
 					grumping = 0
 					grump -= 30
@@ -314,11 +314,11 @@
 					smoke.set_up(1, 0, src.loc)
 					smoke.attach(src)
 					smoke.start()
-					src.visible_message("<span style=\"color:red\">[src] starts smoking!</span>")
+					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
 				if (!grumping && grump >= 100 && prob(10)) // probably not good if this happens several times in a row
 					grumping = 1
 					playsound(src.loc, "sound/weapons/rocket.ogg", 50, 0)
-					src.visible_message("<span style=\"color:red\">[src] explodes in flame!</span>")
+					src.visible_message("<span class='alert'>[src] explodes in flame!</span>")
 					var/firesize = rand(1,4)
 					fireflash(src, firesize)
 					for(var/atom/movable/M in view(firesize, src.loc)) // fuck up those jerkbag engineers
@@ -338,7 +338,7 @@
 				playsound(src.loc, sound_engine_alert3, 55, 0)
 				if(!grumping && grump >= 100 && prob(6))
 					grumping = 1
-					src.visible_message("<span style=\"color:red\"><b>[src] [pick("resonates", "shakes", "rumbles", "grumbles", "vibrates", "roars")] [pick("dangerously", "strangely", "ominously", "frighteningly", "grumpily")]!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] [pick("resonates", "shakes", "rumbles", "grumbles", "vibrates", "roars")] [pick("dangerously", "strangely", "ominously", "frighteningly", "grumpily")]!</b></span>")
 					playsound(src.loc, "sound/effects/explosionfar.ogg", 65, 1)
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
 						if (W.health_max >= 80) // plasma glass or better, no break please and thank you
@@ -369,9 +369,9 @@
 				if (prob(33)) // lowered because all the DEL procs related to zap are stacking up in the profiler
 					zapStuff()
 				if(prob(5))
-					src.visible_message("<span style=\"color:red\">[src] [pick("rumbles", "groans", "shudders", "grustles", "hums", "thrums")] [pick("ominously", "oddly", "strangely", "oddly", "worringly", "softly", "loudly")]!</span>")
+					src.visible_message("<span class='alert'>[src] [pick("rumbles", "groans", "shudders", "grustles", "hums", "thrums")] [pick("ominously", "oddly", "strangely", "oddly", "worringly", "softly", "loudly")]!</span>")
 				else if (prob(2))
-					src.visible_message("<span style=\"color:red\"><b>[src] hungers!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] hungers!</b></span>")
 				// todo: sorta run happily at this extreme level as long as it gets a steady influx of corpses OR WEED into the furnaces
 
 	proc/zapStuff()
@@ -526,7 +526,7 @@
 				fuel--
 
 			if(!src.fuel)
-				src.visible_message("<span style=\"color:red\">[src] runs out of fuel and shuts down!</span>")
+				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
 				src.overlays = null
 				src.active = 0
 
@@ -679,7 +679,7 @@
 		if(..())
 			return
 		if(!allowed(usr))
-			boutput(usr, "<span style=\"color:red\">Access Denied!</span>")
+			boutput(usr, "<span class='alert'>Access Denied!</span>")
 			return
 
 		if(href_list["toggle"])

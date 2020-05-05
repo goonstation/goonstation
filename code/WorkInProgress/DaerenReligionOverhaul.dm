@@ -62,10 +62,10 @@
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+			boutput(holder.owner, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 			return 0
 		if (disabled)
-			boutput(holder.owner, "<span style=\"color:red\">You cannot use that ability at this time.</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
 			return 0
 		return 1
 
@@ -105,7 +105,7 @@
 		religiousHolder.god_fullname += pick("God", "Goddess")
 	religiousHolder.god_fullname += " of [religiousHolder.god_domain]"
 
-	boutput(religiousHolder.owner, "<span style=\"color:blue\"><b>You are now a priest of [religiousHolder.god_fullname]!</b></span>")
+	boutput(religiousHolder.owner, "<span class='notice'><b>You are now a priest of [religiousHolder.god_fullname]!</b></span>")
 	return
 
 /datum/targetable/chaplain/chooseReligion
@@ -221,15 +221,15 @@
 			boutput(usr, __red("[T] is too far away."))
 			return 1
 		if (!iscarbon(T))
-			boutput(usr, "<span style=\"color:red\">That's not exactly what this power was meant to work on.</span>")
+			boutput(usr, "<span class='alert'>That's not exactly what this power was meant to work on.</span>")
 			return 1
 		var/mob/living/carbon/human/C = T
 		if (isdead(C))
-			boutput(usr, "<span style=\"color:red\">[C]'s dead, Jim! You're a miracle-worker, not...uh...look, it ain't gonna work.</span>")
+			boutput(usr, "<span class='alert'>[C]'s dead, Jim! You're a miracle-worker, not...uh...look, it ain't gonna work.</span>")
 			return 1
 
-		usr.visible_message("<span style=\"color:blue\">[src.holder.owner] lays hands upon [C], murmuring a soft prayer to [religiousHolder.god_name]!</span>")
-		boutput(C, "<span style=\"color:blue\">You feel less terrible!</span>")
+		usr.visible_message("<span class='notice'>[src.holder.owner] lays hands upon [C], murmuring a soft prayer to [religiousHolder.god_name]!</span>")
+		boutput(C, "<span class='notice'>You feel less terrible!</span>")
 		playsound(usr.loc, "sound/voice/heavenly.ogg", 50, 1)
 		var/datum/ailment_data/disease/D
 		for(D in C.ailments)
@@ -279,27 +279,27 @@
 			return 1
 
 		if (!istype(T, /obj/item/plant/herb/cannabis))
-			boutput(holder.owner, "<span style=\"color:red\">That ain't weed, you dingus!</span>")
+			boutput(holder.owner, "<span class='alert'>That ain't weed, you dingus!</span>")
 			return 1
 
 		if (istype(T,/obj/item/plant/herb/cannabis/black))
-			boutput(holder.owner, "<span style=\"color:blue\">You purify the toxins in [T].</span>")
+			boutput(holder.owner, "<span class='notice'>You purify the toxins in [T].</span>")
 			new/obj/item/plant/herb/cannabis/spawnable(T.loc)
 			qdel(T)
 			return 0
 		if (istype(T, /obj/item/plant/herb/cannabis/mega))
-			boutput(holder.owner, "<span style=\"color:blue\">You bestow [religiousHolder.god_name]'s <i>special</i> blessing upon [T].</span>")
+			boutput(holder.owner, "<span class='notice'>You bestow [religiousHolder.god_name]'s <i>special</i> blessing upon [T].</span>")
 			new/obj/item/plant/herb/cannabis/omega/spawnable(T.loc)
 			qdel(T)
 			return 0
 		if (istype(T, /obj/item/plant/herb/cannabis/white))
-			boutput(holder.owner, "<span style=\"color:red\">No need to bless what's already blessed.</span>")
+			boutput(holder.owner, "<span class='alert'>No need to bless what's already blessed.</span>")
 			return 1
 		if (istype(T, /obj/item/plant/herb/cannabis/omega))
-			boutput(holder.owner, "<span style=\"color:red\">Look, this shit could glue [religiousHolder.god_name] to the couch already. Making it any more dank might cause some sort of weedularity.</span>")
+			boutput(holder.owner, "<span class='alert'>Look, this shit could glue [religiousHolder.god_name] to the couch already. Making it any more dank might cause some sort of weedularity.</span>")
 			return 1
 		else
-			boutput(holder.owner, "<span style=\"color:blue\">You bestow [religiousHolder.god_name]'s blessing upon [T].</span>")
+			boutput(holder.owner, "<span class='notice'>You bestow [religiousHolder.god_name]'s blessing upon [T].</span>")
 			new/obj/item/plant/herb/cannabis/white/spawnable(T.loc)
 			qdel(T)
 			return 0
@@ -326,11 +326,11 @@
 			return 1
 
 		if (istype(T, /obj/item/seed))
-			boutput(holder.owner, "<span style=\"color:blue\">You bestow [religiousHolder.god_name]'s blessing upon [T].</span>")
+			boutput(holder.owner, "<span class='notice'>You bestow [religiousHolder.god_name]'s blessing upon [T].</span>")
 			fortify(T)
 			return 0
 		else
-			boutput(holder.owner, "<span style=\"color:red\">This only works on seeds!</span>")
+			boutput(holder.owner, "<span class='alert'>This only works on seeds!</span>")
 			return 1
 
 
@@ -348,16 +348,16 @@
 			return 1
 
 		if (!istype(T, /obj))
-			boutput(holder.owner, "<span style=\"color:red\">You cannot try to repair this!</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot try to repair this!</span>")
 			return 1
 
 		var/obj/O = T
 		// go to jail, do not pass src, do not collect pushed messages
 		if (O.demag())
-			boutput(usr, "<span style=\"color:blue\">You repair the damage to [O] in the name of [religiousHolder.god_name].</span>")
+			boutput(usr, "<span class='notice'>You repair the damage to [O] in the name of [religiousHolder.god_name].</span>")
 			return 0
 		else
-			boutput(usr, "<span style=\"color:red\">It doesn't seem like this needs fixing.</span>")
+			boutput(usr, "<span class='alert'>It doesn't seem like this needs fixing.</span>")
 			return 1
 
 /datum/targetable/chaplain/sootheMachineSpirits
@@ -376,14 +376,14 @@
 			return 1
 
 		if (!istype(T, /obj/machinery/power/generatorTemp))
-			boutput(usr, "<span style=\"color:red\">You can only use this on the engine's core!</span>")
+			boutput(usr, "<span class='alert'>You can only use this on the engine's core!</span>")
 			return 1
 
 		var/obj/machinery/power/generatorTemp/E = T
-		usr.visible_message("<span style=\"color:blue\">[usr] places a hand on the [E] and mumbles something.</span>")
+		usr.visible_message("<span class='notice'>[usr] places a hand on the [E] and mumbles something.</span>")
 		playsound(usr.loc, "sound/voice/heavenly.ogg", 50, 1)
 		E.grump = 0
-		E.visible_message("<span style=\"color:blue\"><b>The [E] suddenly seems very chill!</b></span>")
+		E.visible_message("<span class='notice'><b>The [E] suddenly seems very chill!</b></span>")
 
 		return 0
 

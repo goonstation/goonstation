@@ -87,7 +87,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
-			boutput(player.current,"<span style=\"color:red\">You are thrown out of the shuttle for taking too long!</span>")
+			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
 			player.current.nodamage = 0
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
@@ -115,10 +115,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/declare_completion()
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(living_battlers.len == 1)
-		boutput(world,"<h2 style=\"color:red\">[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
-		boutput(living_battlers[1].current,"<h1 style=\"color:blue\">Holy shit you won!!!</h1>")
+		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
+		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
-		boutput(world,"<h2 style=\"color:red\">Literally everyone died. wow.</h2>")
+		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 
 
 
@@ -132,7 +132,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		// oh and tell anyone on the shuttle it moved I guess
 		for(var/mob/M in mobs)
 			if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle))
-				boutput(M,"<span style=\"color:blue\">The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+				boutput(M, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Is it time for a storm
 	if(src.next_storm < world.time)
@@ -152,7 +152,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 // Does what it says on the tin
 proc/hide_weapons_everywhere()
-	boutput(world, "<span style=\"color:blue\">Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
+	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()

@@ -139,7 +139,7 @@ var/list/mechanics_telepads = new/list()
 
 			if("Trigger")
 				if(O.mechanics.connected_outgoing.Find(master))
-					boutput(usr, "<span style=\"color:red\">Can not create a direct loop between 2 components.</span>")
+					boutput(usr, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 					return
 
 				if(O.mechanics.inputs.len)
@@ -148,7 +148,7 @@ var/list/mechanics_telepads = new/list()
 					connected_outgoing.Add(O)
 					connected_outgoing[O] = selected_input
 					O.mechanics.connected_incoming.Add(master)
-					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
+					boutput(usr, "<span class='success'>You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (filtered)
 						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
@@ -156,15 +156,15 @@ var/list/mechanics_telepads = new/list()
 							if (!outgoing_filters[O]) outgoing_filters[O] = list()
 							outgoing_filters.Add(O)
 							outgoing_filters[O] = splittext(filter, ",")
-							boutput(usr, "<span style=\"color:green\">Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
+							boutput(usr, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
 						else
-							boutput(usr, "<span style=\"color:green\">Passing all messages to the [O.name]</span>")
+							boutput(usr, "<span class='success'>Passing all messages to the [O.name]</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">[O] has no input slots. Can not connect [master] as Trigger.</span>")
+					boutput(usr, "<span class='alert'>[O] has no input slots. Can not connect [master] as Trigger.</span>")
 
 			if("Receiver")
 				if(O.mechanics.connected_incoming.Find(master))
-					boutput(usr, "<span style=\"color:red\">Can not create a direct loop between 2 components.</span>")
+					boutput(usr, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 					return
 
 				if(inputs.len)
@@ -173,7 +173,7 @@ var/list/mechanics_telepads = new/list()
 					O.mechanics.connected_outgoing.Add(master)
 					O.mechanics.connected_outgoing[master] = selected_input
 					connected_incoming.Add(O)
-					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
+					boutput(usr, "<span class='success'>You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (O.mechanics.filtered)
 						var/filter = input(usr, "Add filters for this connection?(Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
@@ -181,11 +181,11 @@ var/list/mechanics_telepads = new/list()
 							if(!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
 							O.mechanics.outgoing_filters.Add(master)
 							O.mechanics.outgoing_filters[master] = splittext(filter, ",")
-							boutput(usr, "<span style=\"color:green\">Only passing messages that [O.mechanics.exact_match ? "match" : "contain"] [filter] to the [master.name]</span>")
+							boutput(usr, "<span class='success'>Only passing messages that [O.mechanics.exact_match ? "match" : "contain"] [filter] to the [master.name]</span>")
 						else
-							boutput(usr, "<span style=\"color:green\">Passing all messages to the [O.name]</span>")
+							boutput(usr, "<span class='success'>Passing all messages to the [O.name]</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">[master] has no input slots. Can not connect [O] as Trigger.</span>")
+					boutput(usr, "<span class='alert'>[master] has no input slots. Can not connect [O] as Trigger.</span>")
 
 			if("*CANCEL*")
 				return
@@ -266,7 +266,7 @@ var/list/mechanics_telepads = new/list()
 					if("Disconnect All")
 						mechanics.wipeIncoming()
 						mechanics.wipeOutgoing()
-						boutput(usr, "<span style=\"color:blue\">You disconnect [src].</span>")
+						boutput(usr, "<span class='notice'>You disconnect [src].</span>")
 						return 0
 				return input
 			else
@@ -293,7 +293,7 @@ var/list/mechanics_telepads = new/list()
 					loosen()
 				if(2) //Level 2 = loose
 					if(!isturf(src.loc))
-						boutput(usr, "<span style=\"color:red\">[src] needs to be on the ground for that to work.</span>")
+						boutput(usr, "<span class='alert'>[src] needs to be on the ground for that to work.</span>")
 						return 0
 					//var/turf/T = src.loc
 					//var/can_deploy = 1
@@ -305,7 +305,7 @@ var/list/mechanics_telepads = new/list()
 								can_deploy = 0
 								break
 					if (!can_deploy)
-						boutput(usr, "<span style=\"color:red\">There's something in the way of [src], it can't be attached here!</span>")
+						boutput(usr, "<span class='alert'>There's something in the way of [src], it can't be attached here!</span>")
 						return 0*///why. why.
 					boutput(user, "You attach the [src] to the underfloor and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the underfloor  at [log_loc(src)].")
@@ -341,14 +341,14 @@ var/list/mechanics_telepads = new/list()
 			return
 
 		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
-			boutput(usr, "<span style=\"color:red\">Both components need to be secured into place before they can be connected.</span>")
+			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
 			return
 
 		if(usr.stat)
 			return
 
 		if(!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
 		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)
@@ -381,7 +381,7 @@ var/list/mechanics_telepads = new/list()
 	var/thank_string = ""
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Collected money: [collected]<br>
+		. += {"<br><span class='notice'>Collected money: [collected]<br>
 		Current price: [price] credits</span>"}
 
 	New()
@@ -407,7 +407,7 @@ var/list/mechanics_telepads = new/list()
 					if (code)
 						var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
 						if (codecheck != code)
-							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
+							boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 							return
 					var/inp = input(user,"Enter new price:","Price setting", price) as num
 					if (inp)
@@ -426,7 +426,7 @@ var/list/mechanics_telepads = new/list()
 					if (code)
 						var/codecheck = adminscrub(input(user,"Please enter current code:","Code check","") as text)
 						if (codecheck != code)
-							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
+							boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 							return
 					var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
 					if (length(inp))
@@ -438,7 +438,7 @@ var/list/mechanics_telepads = new/list()
 					if(code)
 						var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
 						if (codecheck != code)
-							boutput(user, "<span style=\"color:red\">[bicon(src)]: Incorrect code entered.</span>")
+							boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 							return
 					ejectmoney()
 		else if (istype(W, /obj/item/spacecash) && ready)
@@ -633,7 +633,7 @@ var/list/mechanics_telepads = new/list()
 					boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		else if (istype(W, /obj/item/paper) && ready)
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
-				boutput(user, "<span style=\"color:red\">This scanner only accepts thermal paper.</span>")
+				boutput(user, "<span class='alert'>This scanner only accepts thermal paper.</span>")
 				return
 			ready = 0
 			SPAWN_DBG(3 SECONDS) ready = 1
@@ -699,7 +699,7 @@ var/list/mechanics_telepads = new/list()
 				if("Set Range")
 					var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
 					range = CLAMP(rng, 1, 5)
-					boutput(user, "<span style='color:blue'>Range set to [range]!</span>")
+					boutput(user, "<span class='notice'>Range set to [range]!</span>")
 					if(level == 1)
 						rebeam()
 
@@ -778,7 +778,7 @@ var/list/mechanics_telepads = new/list()
 				var/datum/mechanicsMessage/msg = mechanics.newSignal(sendstr)
 				mechanics.fireOutgoing(msg)
 			else
-				boutput(user, "<span style=\"color:red\">The hand scanner can only be used by humanoids.</span>")
+				boutput(user, "<span class='alert'>The hand scanner can only be used by humanoids.</span>")
 				return
 		else return ..(user)
 
@@ -858,14 +858,16 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_wait"
 	var/active = 0
 	var/delay = 10
+	var/changesig = 0
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Delay: [delay]</span>"
+		. += "<br><span class='notice'>Current Delay: [delay]</span>"
 
 	New()
 		..()
 		mechanics.addInput("delay", "delayproc")
 		configs.Add("Set Delay")
+		configs.Add("Toggle Signal Changing")
 		src.append_default_configs()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -880,6 +882,9 @@ var/list/mechanics_telepads = new/list()
 					if(inp)
 						delay = inp
 						boutput(user, "Set delay to [inp]")
+				if("Toggle Signal Changing")
+					changesig = !changesig
+					boutput(user, "Signal changing now [changesig ? "on":"off"]")
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -891,6 +896,8 @@ var/list/mechanics_telepads = new/list()
 					active = 1
 				sleep(delay)
 				if(src)
+					if(changesig)
+						input.signal = mechanics.outputSignal
 					mechanics.fireOutgoing(input)
 					icon_state = "[under_floor ? "u":""]comp_wait"
 					active = 0
@@ -909,7 +916,7 @@ var/list/mechanics_telepads = new/list()
 	var/inp2 = 0
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Time Frame: [timeframe]</span>"
+		. += "<br><span class='notice'>Current Time Frame: [timeframe]</span>"
 
 	New()
 		..()
@@ -1020,7 +1027,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_split"
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Trigger Field: [mechanics.triggerSignal]</span>"
+		. += "<br><span class='notice'>Current Trigger Field: [mechanics.triggerSignal]</span>"
 
 	New()
 		..()
@@ -1064,8 +1071,8 @@ var/list/mechanics_telepads = new/list()
 	var/expressionflag = "g"
 
 	get_desc()
-		. += "<span style=\"color:blue\">Current Expression: [html_encode(expression)]</span><br/>"
-		. += "<span style=\"color:blue\">Current Replacement: [html_encode(expressionrepl)]</span><br/>"
+		. += "<span class='notice'>Current Expression: [html_encode(expression)]</span><br/>"
+		. += "<span class='notice'>Current Replacement: [html_encode(expressionrepl)]</span><br/>"
 		. += "Your replacement string can contain $0-$9 to insert that matched group(things between parenthesis)<br/>"
 		. += "$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>"
 		. += "$0 or $& will be the entire matched string."
@@ -1089,7 +1096,7 @@ var/list/mechanics_telepads = new/list()
 					if(inp != null)
 						//var/regex/R = new(inp) // How would you even check this anymore?
 						//if(!R)
-						//	boutput(user, "<span style=\"color:red\">Bad regex</span>")
+						//	boutput(user, "<span class='alert'>Bad regex</span>")
 						//else
 						expressionpatt = inp
 						inp = sanitize(html_encode(inp))
@@ -1149,7 +1156,7 @@ var/list/mechanics_telepads = new/list()
 	var/expressionflag
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Current Expression: [sanitize(html_encode(expression))]<br>
+		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expression))]<br>
 		Replace Signal is [replacesignal ? "on.":"off."]</span>"}
 
 	New()
@@ -1212,7 +1219,7 @@ var/list/mechanics_telepads = new/list()
 	var/changesig = 0
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">[not ? "Component triggers when Signal is NOT found.":"Component triggers when Signal IS found."]<br>
+		. += {"<br><span class='notice'>[not ? "Component triggers when Signal is NOT found.":"Component triggers when Signal IS found."]<br>
 		Replace Signal is [changesig ? "on.":"off."]<br>
 		Currently checking for: [sanitize(html_encode(mechanics.triggerSignal))]</span>"}
 
@@ -1267,7 +1274,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_disp"
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Exact match mode: [mechanics.exact_match ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [mechanics.exact_match ? "on" : "off"]</span>"
 
 	New()
 		..()
@@ -1305,7 +1312,7 @@ var/list/mechanics_telepads = new/list()
 	var/astr = ""
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Current Buffer Contents: [html_encode(sanitize(buffer))]<br>"
+		. += {"<br><span class='notice'>Current Buffer Contents: [html_encode(sanitize(buffer))]<br>"
 		Current starting String: [html_encode(sanitize(bstr))]<br>"
 		Current ending String: [html_encode(sanitize(astr))]</span>"}
 
@@ -1372,7 +1379,7 @@ var/list/mechanics_telepads = new/list()
 	var/changesig = 0
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Replace Signal is [changesig ? "on.":"off."]</span>"
+		. += "<br><span class='notice'>Replace Signal is [changesig ? "on.":"off."]</span>"
 
 	New()
 		..()
@@ -1421,7 +1428,7 @@ var/list/mechanics_telepads = new/list()
 	var/datum/radio_frequency/radio_connection
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">[send_full ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
+		. += {"<br><span class='notice'>[send_full ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
 		Current NetID: [net_id]</span>"}
@@ -1551,7 +1558,7 @@ var/list/mechanics_telepads = new/list()
 	var/random = 0
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">[random ? "Sending random Signals.":"Sending selected Signals."]<br>
+		. += {"<br><span class='notice'>[random ? "Sending random Signals.":"Sending selected Signals."]<br>
 		[announce ? "Announcing Changes.":"Not announcing Changes."]<br>
 		Current Selection: [(!current_index || current_index > signals.len ||!signals.len) ? "Empty":"[current_index] -> [signals[current_index]]"]<br>
 		Currently contains [signals.len] Items:<br></span>"}
@@ -1584,7 +1591,7 @@ var/list/mechanics_telepads = new/list()
 					var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
 					numsig = round(numsig)
 					if(numsig > 10) //Needs a limit because nerds are nerds
-						boutput(user, "<span style=\"color:red\">This component can't handle more than 10 signals!</span>")
+						boutput(user, "<span class='alert'>This component can't handle more than 10 signals!</span>")
 						return
 					if(numsig)
 						signals.Cut()
@@ -1605,7 +1612,7 @@ var/list/mechanics_telepads = new/list()
 					while(1)
 						newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
 						if(!newsigs)
-							boutput(user, "<span style='color:blue'>Signals remain unchanged!</span>")
+							boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
 							break
 						if(length(newsigs) >= 2048)
 							alert(user, "That's far too long. Trim it down some!")
@@ -1620,7 +1627,7 @@ var/list/mechanics_telepads = new/list()
 						if(done)
 							signals = built
 							current_index = 1
-							boutput(user, "<span style='color:blue'>There are now [signals.len] signals in the list.</span>")
+							boutput(user, "<span class='notice'>There are now [signals.len] signals in the list.</span>")
 							break
 				if("Toggle Announcements")
 					announce = !announce
@@ -1770,7 +1777,7 @@ var/list/mechanics_telepads = new/list()
 	var/signal_off = "0"
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Currently [on ? "ON":"OFF"].<br>
+		. += {"<br><span class='notice'>Currently [on ? "ON":"OFF"].<br>
 		Current ON Signal: [signal_on]<br>
 		Current OFF Signal: [signal_off]</span>"}
 
@@ -1849,7 +1856,7 @@ var/list/mechanics_telepads = new/list()
 	var/send_only = 0
 
 	get_desc()
-		. += {"<br><span style=\"color:blue\">Current ID: [teleID].<br>
+		. += {"<br><span class='notice'>Current ID: [teleID].<br>
 		Send only Mode: [send_only ? "On":"Off"].</span>"}
 
 	New()
@@ -1939,7 +1946,7 @@ var/list/mechanics_telepads = new/list()
 	color = "#AAAAAA"
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Color: [selcolor].</span>"
+		. += "<br><span class='notice'>Current Color: [selcolor].</span>"
 
 	New()
 		..()
@@ -2151,7 +2158,7 @@ var/list/mechanics_telepads = new/list()
 		attack_hand(user)
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Signal: [html_encode(sanitize(mechanics.outputSignal))].</span>"
+		. += "<br><span class='notice'>Current Signal: [html_encode(sanitize(mechanics.outputSignal))].</span>"
 
 	attack_hand(mob/user as mob)
 		if(level == 1)
@@ -2199,7 +2206,7 @@ var/list/mechanics_telepads = new/list()
 					return
 				if("Add Button")
 					if(src.active_buttons.len >= 10)
-						boutput(user, "<span style=\"color:red\">There's no room to add another button - the panel is full</span>")
+						boutput(user, "<span class='alert'>There's no room to add another button - the panel is full</span>")
 						return
 
 					var/new_label = input(user, "Button label", "Button Panel") as text
@@ -2215,7 +2222,7 @@ var/list/mechanics_telepads = new/list()
 						boutput(user, "Added button with label: [new_label] and value: [new_signal]")
 				if("Remove Button")
 					if(!src.active_buttons.len)
-						boutput(user, "<span style=\"color:red\">[src] has no active buttons - there's nothing to remove!</span>")
+						boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to remove!</span>")
 					else
 						var/to_remove = input(user, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
 						if(!to_remove || to_remove == "*CANCEL*") return
@@ -2223,9 +2230,9 @@ var/list/mechanics_telepads = new/list()
 						boutput(user, "Removed button labeled [to_remove]")
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Buttons:</span>"
+		. += "<br><span class='notice'>Buttons:</span>"
 		for (var/button in src.active_buttons)
-			. += "<br><span style=\"color:blue\">Label: [button], Value: [src.active_buttons[button]]</span>"
+			. += "<br><span class='notice'>Label: [button], Value: [src.active_buttons[button]]</span>"
 
 	attack_hand(mob/user as mob)
 		if (level == 1)
@@ -2235,7 +2242,7 @@ var/list/mechanics_telepads = new/list()
 				flick(icon_down, src)
 				mechanics.fireOutgoing(mechanics.newSignal(src.active_buttons[selected_button]))
 			else
-				boutput(usr, "<span style=\"color:red\">[src] has no active buttons - there's nothing to press!</span>")
+				boutput(usr, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2261,7 +2268,7 @@ var/list/mechanics_telepads = new/list()
 	var/compatible_guns = /obj/item/gun/kinetic
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
 	New()
 		..()
@@ -2281,7 +2288,7 @@ var/list/mechanics_telepads = new/list()
 						Gun.loc = get_turf(src)
 						Gun = null
 					else
-						boutput(user, "<span style=\"color:red\">There is no gun inside this component.</span>")
+						boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		else if(istype(W, src.compatible_guns))
 			if(!Gun)
 				boutput(usr, "You put the [W] inside the [src].")
@@ -2335,7 +2342,7 @@ var/list/mechanics_telepads = new/list()
 
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += charging ? "<br><span style=\"color:blue\">Component is charging.</span>" : null
+		. += charging ? "<br><span class='notice'>Component is charging.</span>" : null
 
 	New()
 		..()
@@ -2402,7 +2409,7 @@ var/list/mechanics_telepads = new/list()
 	var/volume = 50
 
 	get_desc()
-		. += "<br><span style='color:blue'>Current Instrument: [instrument ? "[instrument]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Instrument: [instrument ? "[instrument]" : "None"]</span>"
 
 	New()
 		..()
@@ -2439,7 +2446,7 @@ var/list/mechanics_telepads = new/list()
 						instrument.loc = get_turf(src)
 						instrument = null
 					else
-						boutput(user, "<span style=\"color:red\">There is no instrument inside this component.</span>")
+						boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 			return
 		else if (instrument) // Already got one, chief!
 			boutput(usr, "There is already \a [instrument] inside the [src].")
@@ -2485,7 +2492,7 @@ var/list/mechanics_telepads = new/list()
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span style=\"color:blue\">Current Mode: [mode] | A = [A] | B = [B]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()

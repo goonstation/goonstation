@@ -110,8 +110,8 @@
 			if (started == 2)
 				if (!try_billing(occupant))
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
-					occupant.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+					occupant.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
 
 					eject_occupant(0)
 		else if (started)
@@ -268,7 +268,7 @@
 								//if (src.glitchy_slogans)
 								//	O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
 								//else
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
 
 
 							.= 1
@@ -330,7 +330,7 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span style=\"color:red\">[src] [pick("bends","shakes","groans")].</span>")
+		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
 		if (prob(8))
 			src.eject_occupant(add_power = 0)
 

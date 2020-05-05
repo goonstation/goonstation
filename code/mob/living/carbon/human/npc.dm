@@ -162,11 +162,11 @@
 		ai_state = AI_PASSIVE
 		if(src.canmove && !ai_busy)
 			ai_busy = 1
-			src.visible_message("<span style=\"color:red\"><B>[src] attempts to remove the handcuffs!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] attempts to remove the handcuffs!</B></span>")
 			SPAWN_DBG(2 MINUTES)
 				ai_busy = 0
 				if(src.hasStatus("handcuffed") && !ai_incapacitated())
-					src.visible_message("<span style=\"color:red\"><B>[src] manages to remove the handcuffs!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] manages to remove the handcuffs!</B></span>")
 					src.handcuffs.drop_handcuffs(src)
 	ai_move()
 
@@ -304,7 +304,7 @@
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
-						src.visible_message("<span style=\"color:red\"><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
+						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
 						carbon_target.u_equip(mask)
 						if (mask)
 							mask:set_loc(carbon_target:loc)
@@ -312,7 +312,7 @@
 							mask:layer = initial(mask:layer)
 					else if (carbon_target:wear_suit && prob(5) && !src.r_hand)
 						var/suit = carbon_target:wear_suit
-						src.visible_message("<span style=\"color:red\"><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
+						src.visible_message("<span class='alert'><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
 						carbon_target.u_equip(suit)
 						if (suit)
 							suit:set_loc(carbon_target:loc)
@@ -337,7 +337,7 @@
 					var/obj/item/temp = src.r_hand
 					temp.set_loc(src.loc)
 					src.u_equip(temp)
-					src.visible_message("<span style=\"color:red\">[src] throws [temp].</span>")
+					src.visible_message("<span class='alert'>[src] throws [temp].</span>")
 					temp.throw_at(carbon_target, 7, 1)
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
@@ -371,7 +371,7 @@
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
 					ai_pounced = world.timeofday
-					src.visible_message("<span style=\"color:red\">[src] lunges at [ai_target]!</span>")
+					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN_DBG(0)
 						step_towards(src,ai_target)

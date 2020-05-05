@@ -468,7 +468,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 				overlays += O.icon_pedestal
 				name = "[O.pedestal_name] pedestal"
 			else
-				boutput(user, "<span style=\"color:red\">This pedestal already holds an orb!</span>")
+				boutput(user, "<span class='alert'>This pedestal already holds an orb!</span>")
 
 	proc/destroyOrb()
 		if (O)
@@ -553,17 +553,17 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!reagent)
-			boutput(user, "<span style=\"color:red\">The potion flask is empty.</span>")
+			boutput(user, "<span class='alert'>The potion flask is empty.</span>")
 		if (user == target)
-			user.visible_message("<span style=\"color:blue\">[user] uncorks the potion and pours it down \his throat.</span>")
+			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down \his throat.</span>")
 			logTheThing("combat", user, null, "drinks [src] ([potion_name] -- [reagent])")
 			drink(user)
 		else if (ishuman(target))
-			user.visible_message("<span style=\"color:red\">[user] attempts to force [target] to drink [src].</span>")
+			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
 			logTheThing("combat", user, target, "tries to force %target% to drink [src] ([potion_name] -- [reagent]).")
 			if (do_after(user, 30))
 				if (reagent)
-					user.visible_message("<span style=\"color:red\">[user] forces [target] to drink [src].</span>")
+					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
 					logTheThing("combat", user, target, "forces %target% to drink [src] ([potion_name] -- [reagent]).")
 					drink(target)
 
@@ -721,14 +721,14 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/wizard_crystal))
 			if (!src.crystal)
-				boutput(user, "<span style=\"color:blue\">You place the crystal into the socket.</span>")
+				boutput(user, "<span class='notice'>You place the crystal into the socket.</span>")
 				crystal = W
 				user.u_equip(W)
 				W.loc = src
 				user.client.screen -= W
 				apply_crystal()
 			else
-				boutput(user, "<span style=\"color:red\">There already is a crystal inserted into this.</span>")
+				boutput(user, "<span class='alert'>There already is a crystal inserted into this.</span>")
 
 	proc/apply_crystal()
 		if (!crystal)
@@ -799,7 +799,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	examine(mob/user)
 		. = ..()
 		if (!written)
-			. += "<span style=\"color:red\">You cannot decipher the runes written in the book.</span>"
+			. += "<span class='alert'>You cannot decipher the runes written in the book.</span>"
 		else
 			user.Browse(written, "window=tome;size=200x400")
 

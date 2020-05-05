@@ -45,7 +45,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> lunges at [C.name]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> lunges at [C.name]!</span>")
 				playsound(src.loc, pick('sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg'), 25, 0)
 				src.task = "chasing"
 				return
@@ -62,7 +62,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> lunges at [C.name]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> lunges at [C.name]!</span>")
 				playsound(src.loc, pick('sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg'), 25, 0)
 				src.task = "chasing"
 				return
@@ -80,7 +80,7 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 		else
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> tries to knock down [src.target] but misses!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> tries to knock down [src.target] but misses!</span>")
 
 	CritterAttack(mob/living/M)
 		src.attacking = 1
@@ -89,7 +89,7 @@
 			H.was_harmed(src)
 		if(istype(M,/obj/critter))
 			var/obj/critter/C = M
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> punches [src.target]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> punches [src.target]!</span>")
 			playsound(C.loc, "punch", 25, 1, -1)
 			C.health -= 4
 			if(C.health <= 0)
@@ -99,7 +99,7 @@
 			return
 
 		if (M.health > 40 && !M.getStatusDuration("weakened"))
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> punches [src.target]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> punches [src.target]!</span>")
 			playsound(M.loc, "punch", 25, 1, -1)
 
 			var/to_deal = rand(punch_damage_min,punch_damage_max)
@@ -107,7 +107,7 @@
 			after_attack_special(src.target)
 			if(iscarbon(M))
 				if(to_deal > (((punch_damage_max-punch_damage_min)/2)+punch_damage_min) && prob(50))
-					src.visible_message("<span style=\"color:red\"><B>[src] knocks down [M]!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] knocks down [M]!</B></span>")
 					M:changeStatus("weakened", 80)
 		//		if(prob(4) && eats_brains) //Give the gift of being a zombie (unless we eat them too fast)
 		//			M.contract_disease(/datum/ailment/disease/necrotic_degeneration, null, null, 1) // path, name, strain, bypass resist
@@ -120,9 +120,9 @@
 				src.attacking = 0
 		else
 			if(ishuman(M) && src.eats_brains) //These only make human zombies anyway!
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> starts trying to eat [M]'s brain!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> starts trying to eat [M]'s brain!</span>")
 			else
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> attacks [src.target]!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> attacks [src.target]!</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 				random_brute_damage(src.target, rand(punch_damage_min,punch_damage_max),1)
 				after_attack_special(src.target)
@@ -134,7 +134,7 @@
 					if(iscarbon(M))
 						logTheThing("combat", M, null, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 						M.death(1)
-						src.visible_message("<span style=\"color:red\"><B>[src]</B> slurps up [M]'s brain!</span>")
+						src.visible_message("<span class='alert'><B>[src]</B> slurps up [M]'s brain!</span>")
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 						M.canmove = 0
 						M.icon = null
@@ -145,7 +145,7 @@
 						if (M == null)
 							qdel(P)
 							return
-						src.visible_message("<span style=\"color:red\">[M]'s corpse reanimates!</span>")
+						src.visible_message("<span class='alert'>[M]'s corpse reanimates!</span>")
 						//Zombie is all dressed up and no place to go
 						var/stealthy = 0 //High enough and people won't even see it's undead right away.
 						if(ishuman(M))
@@ -224,7 +224,7 @@
 						sleeping = 2
 						SPAWN_DBG(2 SECONDS) playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 				else
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> gnashes its teeth in fustration!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
 				src.attacking = 0
 
 	CritterDeath()
@@ -286,7 +286,7 @@
 
 	CritterDeath()
 		src.alive = 0
-		src.visible_message("<span style=\"color:red\">Black mist flows from the broken suit!</span>")
+		src.visible_message("<span class='alert'>Black mist flows from the broken suit!</span>")
 		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 
 		harmless_smoke_puff(src.loc)
@@ -336,7 +336,7 @@
 		return
 
 	after_attack_special(mob/living/M)
-		boutput(M, "<span style=\"color:red\">You are enveloped by a soft green glow emanating from [src].</span>")
+		boutput(M, "<span class='alert'>You are enveloped by a soft green glow emanating from [src].</span>")
 		M.changeStatus("radiation", 80, 4)
 
 	CritterDeath()

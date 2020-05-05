@@ -231,21 +231,21 @@
 			WELD.eyecheck(user)
 			src.ArtifactStimulus("heat", 800)
 			playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
-			src.visible_message("<span style=\"color:red\">[user.name] burns the artifact with [WELD]!</span>")
+			src.visible_message("<span class='alert'>[user.name] burns the artifact with [WELD]!</span>")
 			return 0
 
 	if (istype(W,/obj/item/device/light/zippo))
 		var/obj/item/device/light/zippo/ZIP = W
 		if (ZIP.on)
 			src.ArtifactStimulus("heat", 400)
-			src.visible_message("<span style=\"color:red\">[user.name] burns the artifact with [ZIP]!</span>")
+			src.visible_message("<span class='alert'>[user.name] burns the artifact with [ZIP]!</span>")
 			return 0
 
 	if (istype(W, /obj/item/robodefibrillator))
 		var/obj/item/robodefibrillator/R = W
 		if (R.do_the_shocky_thing(user))
 			src.ArtifactStimulus("elec", 2500)
-			src.visible_message("<span style=\"color:red\">[user.name] shocks \the [src] with \the [R]!</span>")
+			src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [R]!</span>")
 		return 0
 
 	if(istype(W,/obj/item/baton))
@@ -254,7 +254,7 @@
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
-			src.visible_message("<span style=\"color:red\">[user.name] beats the artifact with [BAT]!</span>")
+			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
 			BAT.process_charges(-1, user)
 			return 0
 
@@ -348,14 +348,14 @@
 		if("martian") // biotech, so anything that'd probably kill a living thing works on them too
 			if(stimtype == "force")
 				if (strength >= 30)
-					T.visible_message("<span style=\"color:red\">[src] bruises from the impact!</span>")
+					T.visible_message("<span class='alert'>[src] bruises from the impact!</span>")
 					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 1)
 					ArtifactDevelopFault(33)
 					src.ArtifactTakeDamage(strength / 1.5)
 			if(stimtype == "elec")
 				if (strength >= 3000) // max you can get from the electrobox is 5000
 					if (prob(10))
-						T.visible_message("<span style=\"color:red\">[src] seems to quiver in pain!</span>")
+						T.visible_message("<span class='alert'>[src] seems to quiver in pain!</span>")
 					src.ArtifactTakeDamage(strength / 1000)
 			if(stimtype == "radiate")
 				if (strength >= 6)
@@ -366,21 +366,21 @@
 		if("wizard") // these are big crystals, thus you probably shouldn't smack them around too hard!
 			if(stimtype == "force")
 				if (strength >= 20)
-					T.visible_message("<span style=\"color:red\">[src] cracks and splinters!</span>")
+					T.visible_message("<span class='alert'>[src] cracks and splinters!</span>")
 					playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 		if("reliquary") // fragile machinery so no smacking them too hard, also pretty vulnerable to electricity
 			if(stimtype == "force")
 				if (strength >= 20)
-					T.visible_message(pick("<span style=\"color:red\">[src] cracks and splinters!</span>","<span style=\"color:red\">[src] starts to split and break from the impact!</span>"))
+					T.visible_message(pick("<span class='alert'>[src] cracks and splinters!</span>","<span class='alert'>[src] starts to split and break from the impact!</span>"))
 					playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 			if(stimtype == "elec")
 				if (strength >= 3000) // max you can get from the electrobox is 5000
 					if (prob(10))
-						T.visible_message(pick("<span style=\"color:red\">[src] buzzes angrily!</span>","<span style=\"color:red\">[src] beeps grumpily!</span>"))
+						T.visible_message(pick("<span class='alert'>[src] buzzes angrily!</span>","<span class='alert'>[src] beeps grumpily!</span>"))
 						src.ArtifactTakeDamage(strength / 1000)
 
 	if (!src || !A)
@@ -458,17 +458,17 @@
 	if (istype(T,/turf/))
 		switch(A.artitype)
 			if("ancient")
-				T.visible_message("<span style=\"color:red\"><B>[src] sparks and sputters violently before falling apart!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] sparks and sputters violently before falling apart!</B></span>")
 			if("martian")
-				T.visible_message("<span style=\"color:red\"><B>[src] bursts open, and rapidly liquefies!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] bursts open, and rapidly liquefies!</B></span>")
 			if("wizard")
-				T.visible_message("<span style=\"color:red\"><B>[src] shatters and disintegrates!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] shatters and disintegrates!</B></span>")
 			if("eldritch")
-				T.visible_message("<span style=\"color:red\"><B>[src] warps in on itself and vanishes!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
-				T.visible_message("<span style=\"color:red\"><B>[src] implodes, crushing itself into dust!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
 			if("reliquary")
-				T.visible_message("<span style=\"color:red\"><B>[src] sparks violently before its internal circuitry falls apart and causes it to collapse!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] sparks violently before its internal circuitry falls apart and causes it to collapse!</B></span>")
 
 	qdel(src)
 	return
