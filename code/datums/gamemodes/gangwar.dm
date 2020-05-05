@@ -474,10 +474,10 @@
 
 	//alert gangs, alert target which gang to be wary of.
 	for (var/datum/gang/G in gangs)
-		if (G == top_gang)
-			broadcast_to_gang("A bounty has been placed on the capture of <b>[target_name]<b>. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
+		if (G == top_gang)kidnapping_target
+			broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
 		else
-			broadcast_to_gang("<b>[target_name]<b> is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+			broadcast_to_gang("[target_name] is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
 
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
