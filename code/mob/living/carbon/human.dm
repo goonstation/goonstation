@@ -847,7 +847,7 @@
 			health_deficiency -= 50
 		if (src.reagents.has_reagent("salicylic_acid"))
 			health_deficiency -= 25
-	if (src.hasStatus("gang_drug"))
+	if (src.hasStatus("janktank"))
 		health_deficiency -= 50
 	if (health_deficiency >= 30) . += (health_deficiency / 25)
 
