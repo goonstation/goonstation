@@ -25,6 +25,7 @@ var/list/ban_from_airborne_fluid = list()
 	do_iconstate_updates = 0
 	mouse_opacity = 1
 	opacity = 0
+	layer = FLUID_AIR_LAYER
 
 	set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
