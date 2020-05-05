@@ -471,13 +471,13 @@
 			return ..()
 
 /obj/table/CanPass(atom/A, turf/T)
-	if (isliving(A)&&ishuman(A)) // You Shall Not Pass!
+	if (ismonkey(A)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(M.lying||ismonkey(M)) // Lying down monkeys can crawl under tables
+		if(M.lying) // Lying down monkeys can crawl under tables
 			var/mob/living/carbon/human/monkey/X = A
-			X.table_hide = 1
-			message_admins("monkee hide under table")
 			return 1
+		else
+			return 0
 	return ..()
 
 /obj/table/reinforced/bar
