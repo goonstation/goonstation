@@ -193,8 +193,9 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
-		enable_extools_debugger()
-
+		var/dll = world.GetConfig("env", "EXTOOLS_DLL")
+		if (dll)
+			call(dll, "debug_initialize")()
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
 		world.Profile(PROFILE_START)
