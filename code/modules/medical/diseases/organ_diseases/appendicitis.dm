@@ -78,9 +78,7 @@
 
 					if (prob(20))
 						H.reagents.add_reagent("toxin", 20)
-					#ifdef CREATE_PATHOGENS
 					add_pathogens(H, 30)
-					#endif
 					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
 
 			H.take_toxin_damage(1)
