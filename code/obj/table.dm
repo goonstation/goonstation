@@ -470,6 +470,16 @@
 		else
 			return ..()
 
+/obj/table/CanPass(atom/A, turf/T)
+	if (isliving(A)&&ishuman(A)) // You Shall Not Pass!
+		var/mob/living/M = A
+		if(M.lying||ismonkey(M)) // Lying down monkeys can crawl under tables
+			var/mob/living/carbon/human/monkey/X = A
+			X.table_hide = 1
+			message_admins("monkee hide under table")
+			return 1
+	return ..()
+
 /obj/table/reinforced/bar
 	name = "bar table"
 	desc = "A reinforced table with a faux wooden finish to make you feel at ease."
