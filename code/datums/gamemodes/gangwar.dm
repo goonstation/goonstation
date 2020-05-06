@@ -1348,12 +1348,11 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 				user.force_equip(C, user.w_uniform)
 
 			if(!hasitem2)
-			
 				var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
-				if (user.head && istype(C, /obj/item/clothing/head))
+				if (istype(C, /obj/item/clothing/head))
 					user.drop_from_slot(user.head)
 					user.force_equip(C, user.head)
-				else if (user.wear_mask && istype(C, /obj/item/clothing/mask))
+				else if (istype(C, /obj/item/clothing/mask))
 					user.drop_from_slot(user.wear_mask)
 					user.force_equip(C, user.wear_mask)
 
@@ -1363,6 +1362,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 				if (user.ears)
 					user.drop_from_slot(user.ears)
 				user.force_equip(headset, user.ears)
+
 			if(!haspaint)
 				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
