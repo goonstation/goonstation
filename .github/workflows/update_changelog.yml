@@ -20,6 +20,8 @@ jobs:
         pip install pygithub
     - name: Update Changelog
       run: |
+        git config --local user.name "buddybot"
+        git config --local user.email "63184342+goonstation-issuebot@users.noreply.github.com"
         python update_changelog.py
       env:
         REPO: ${{ github.repository }}
