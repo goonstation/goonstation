@@ -31,6 +31,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\math.dm"
 #include "_stdlib\pathfinding.dm"
 #include "_stdlib\text.dm"
+#include "_stdlib\code\spaceman_dmm.dm"
 
 #include "_stdlib\code\_antag_popups.dm"
 #include "_stdlib\code\_controls.dm"
@@ -40,7 +41,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\_plane.dm"
 #include "_stdlib\code\_vox.dm"
 #include "_stdlib\code\_z_material_properties.dm"
-#include "_stdlib\code\spaceman_dmm.dm"
 
 //Secret Code Handling
 #ifndef FASTDMM

@@ -250,47 +250,50 @@
 	var/savefile/save = new/savefile("data/blueprints.dat")
 	save.cd = "/"
 
-	for(var/curr in save.dir)
-		save.cd = "/[curr]"
-		bps.Add("[curr];[save["roomname"]]")
+	for(var/currckey in save.dir)
+		save.cd = "/[currckey]"
+		for(var/currroom in save.dir)
+			save.cd = "/[currckey]/[currroom]"
+			bps.Add("[currckey]/[currroom]")
 
 	save.cd = "/"
 
 	var/input = input(usr,"Select save:","Blueprints") in bps
-	var/list/split = splittext(input, ";")
-	var/key = split[1]
+	var/list/split = splittext(input, "/")
+	var/key = input
+	if(save.dir.Find("[split[1]]"))
+		save.cd = "/[split[1]]"
+		if(save.dir.Find("[split[2]]"))
+			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
 
-	if(save.dir.Find("[key]"))
-		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
+			save.cd = "/[key]"
+			boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
+			var/roomname = save["roomname"]
+			bp.size_x = save["sizex"]
+			bp.size_y = save["sizey"]
 
-		save.cd = "/[key]"
-		boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
-		var/roomname = save["roomname"]
-		bp.size_x = save["sizex"]
-		bp.size_y = save["sizey"]
-
-		for (var/A in save.dir)
-			if(A == "sizex" || A == "sizey" || A == "roomname") continue
-			save.cd = "/[key]/[A]"
-			var/list/coords = splittext(A, ",")
-			var/datum/tileinfo/tf = new/datum/tileinfo()
-			tf.posx = coords[1]
-			tf.posy = coords[2]
-			tf.tiletype = save["type"]
-			tf.state = save["state"]
-			tf.direction = save["dir"]
-			for (var/B in save.dir)
-				if(B == "type" || B == "state") continue
-				save.cd = "/[key]/[A]/[B]"
-				var/datum/objectinfo/O = new/datum/objectinfo()
-				O.objecttype = save["type"]
-				O.direction = save["dir"]
-				O.layer = save["layer"]
-				O.px = save["pixelx"]
-				O.py = save["pixely"]
-				tf.objects.Add(O)
-			bp.roominfo.Add(tf)
-			bp.name = "Blueprint '[roomname]'"
+			for (var/A in save.dir)
+				if(A == "sizex" || A == "sizey" || A == "roomname") continue
+				save.cd = "/[key]/[A]"
+				var/list/coords = splittext(A, ",")
+				var/datum/tileinfo/tf = new/datum/tileinfo()
+				tf.posx = coords[1]
+				tf.posy = coords[2]
+				tf.tiletype = save["type"]
+				tf.state = save["state"]
+				tf.direction = save["dir"]
+				for (var/B in save.dir)
+					if(B == "type" || B == "state") continue
+					save.cd = "/[key]/[A]/[B]"
+					var/datum/objectinfo/O = new/datum/objectinfo()
+					O.objecttype = save["type"]
+					O.direction = save["dir"]
+					O.layer = save["layer"]
+					O.px = save["pixelx"]
+					O.py = save["pixely"]
+					tf.objects.Add(O)
+				bp.roominfo.Add(tf)
+				bp.name = "Blueprint '[roomname]'"
 
 
 /obj/item/blueprint
@@ -359,7 +362,7 @@
 	"/obj/rack", \
 	"/obj/structure",
 	"/obj/disposalpipe", \
-	"/obj/machinery/vending", \
+//	"/obj/machinery/vending", \ //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
 	"/obj/machinery/light", \
 	"/obj/machinery/door_control", \
 	"/obj/machinery/light_switch", \
@@ -380,7 +383,7 @@
 	"/obj/machinery/launcher_loader",
 	"/obj/machinery/optable",
 	"/obj/machinery/mass_driver", \
-	"/obj/reagent_dispensers", \
+//	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
 	"/obj/machinery/manufacturer", \
 	"/obj/machinery/sleeper", \
 	"/obj/machinery/sleep_console", \
@@ -477,14 +480,18 @@
 
 	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
 		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]" + name))
-			save.dir.Remove("[usr.client.ckey]" + name)
-			save.dir.Add("[usr.client.ckey]" + name)
-			save.cd = "/[usr.client.ckey]" + name
-		else
-			save.dir.Add("[usr.client.ckey]" + name)
-			save.cd = "/[usr.client.ckey]" + name
+		if(!save.dir.Find("[usr.client.ckey]"))
+			save.dir.Add("[usr.client.ckey]")
+		save.cd = "/[usr.client.ckey]"
 
+		if(save.dir.Find(name))
+			save.dir.Remove(name)
+			save.dir.Add(name)
+			save.cd = "/[usr.client.ckey]/" + name
+		else
+			save.dir.Add(name)
+			save.cd = "/[usr.client.ckey]/" + name
+			
 		var/minx = 100000000
 		var/miny = 100000000
 
@@ -510,9 +517,9 @@
 			var/posx = (curr.x - minx)
 			var/posy = (curr.y - miny)
 
-			save.cd = "/[usr.client.ckey]" + name
+			save.cd = "/[usr.client.ckey]/" + name
 			save.dir.Add("[posx],[posy]")
-			save.cd = "/[usr.client.ckey][name]/[posx],[posy]"
+			save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
 			save["type"] << curr.type
 			save["dir"] << curr.dir
 			save["state"] << curr.icon_state
@@ -528,11 +535,11 @@
 						break
 				if(permitted || !applyWhitelist)
 					var/id = "\ref[o]"
-					save.cd = "/[usr.client.ckey][name]/[posx],[posy]"
+					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
 					while(save.dir.Find(id))
 						id = id + "I"
 					save.dir.Add("[id]")
-					save.cd = "/[usr.client.ckey][name]/[posx],[posy]/[id]"
+					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]/[id]"
 					save["dir"] << o.dir
 					save["type"] << o.type
 					save["layer"] << o.layer
@@ -542,51 +549,68 @@
 
 	proc/printSaved(var/name = "")
 		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]" + name))
-			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
-			prints_left--
+		if(save.dir.Find("[usr.client.ckey]"))
+			save.cd = "/[usr.client.ckey]/"
+			if(save.dir.Find(name))
+				var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
+				prints_left--
 
-			save.cd = "/[usr.client.ckey]" + name
-			boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
-			var/roomname = save["roomname"]
-			bp.size_x = save["sizex"]
-			bp.size_y = save["sizey"]
+				save.cd = "/[usr.client.ckey]/" + name
+				boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
+				var/roomname = save["roomname"]
+				bp.size_x = save["sizex"]
+				bp.size_y = save["sizey"]
 
-			for (var/A in save.dir)
-				if(A == "sizex" || A == "sizey" || A == "roomname") continue
-				save.cd = "/[usr.client.ckey][name]/[A]"
-				var/list/coords = splittext(A, ",")
-				var/datum/tileinfo/tf = new/datum/tileinfo()
-				tf.posx = coords[1]
-				tf.posy = coords[2]
-				tf.tiletype = save["type"]
-				tf.state = save["state"]
-				tf.direction = save["dir"]
-				bp.req_metal += 1.0
-				bp.req_glass += 0.5
-				for (var/B in save.dir)
-					if(B == "type" || B == "state") continue
-					save.cd = "/[usr.client.ckey][name]/[A]/[B]"
-					var/datum/objectinfo/O = new/datum/objectinfo()
-					O.objecttype = save["type"]
-					O.direction = save["dir"]
-					O.layer = save["layer"]
-					O.px = save["pixelx"]
-					O.py = save["pixely"]
-					bp.req_metal += 0.9
-					bp.req_glass += 1.5
-					tf.objects.Add(O)
-				bp.roominfo.Add(tf)
-				bp.name = "Blueprint '[roomname]'"
-				bp.req_metal = round(bp.req_metal)
-				bp.req_glass = round(bp.req_glass)
-			return
+				for (var/A in save.dir)
+					if(A == "sizex" || A == "sizey" || A == "roomname") continue
+					save.cd = "/[usr.client.ckey]/[name]/[A]"
+					var/list/coords = splittext(A, ",")
+					var/datum/tileinfo/tf = new/datum/tileinfo()
+					tf.posx = coords[1]
+					tf.posy = coords[2]
+					tf.tiletype = save["type"]
+					tf.state = save["state"]
+					tf.direction = save["dir"]
+					bp.req_metal += 1.0
+					bp.req_glass += 0.5
+					for (var/B in save.dir)
+						if(B == "type" || B == "state") continue
+						save.cd = "/[usr.client.ckey]/[name]/[A]/[B]"
+						var/datum/objectinfo/O = new/datum/objectinfo()
+						O.objecttype = save["type"]
+						O.direction = save["dir"]
+						O.layer = save["layer"]
+						O.px = save["pixelx"]
+						O.py = save["pixely"]
+						bp.req_metal += 0.9
+						bp.req_glass += 1.5
+						tf.objects.Add(O)
+					bp.roominfo.Add(tf)
+					bp.name = "Blueprint '[roomname]'"
+					bp.req_metal = round(bp.req_metal)
+					bp.req_glass = round(bp.req_glass)
+				return
+			else
+				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+
 		else
-			boutput(usr, "<span class='alert'>No blueprint found for user.</span>")
+			boutput(usr, "<span class='alert'>No blueprints found for user.</span>")
 			return
+	proc/delSaved(var/name = "")
+		save.cd = "/"
+		if(save.dir.Find("[usr.client.ckey]"))
+			save.cd = "/[usr.client.ckey]/"
+			if(save.dir.Find(name))
+				save.dir.Remove(name)
+				boutput(usr, "<span class='alert'>Blueprint [name] deleted..</span>")
+			else
+				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+		else
+			boutput(usr, "<span class='alert'>No blueprints found for user.</span>")
+
 
 	attack_self(mob/user as mob)
-		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Information")
+		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
 		var/input = input(usr,"Select option:","Option") in options
 
 		switch(input)
@@ -608,11 +632,15 @@
 				if(prints_left <= 0)
 					boutput(user, "<span class='alert'>Out of energy.</span>")
 					return
-				printSaved()
+				printSaved(roomname)
 				return
 
 			if("Save Blueprint")
-				saveMarked()
+				saveMarked(roomname)
+				return
+
+			if("Delete Blueprint")
+				delSaved(roomname)
 				return
 
 			if("Information")

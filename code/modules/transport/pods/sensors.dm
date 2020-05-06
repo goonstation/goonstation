@@ -123,7 +123,6 @@
 		animate(src.ship.myhud.tracking, transform = null, time = 10, loop = 0)
 
 		src.ship.myhud.tracking.icon_state = "off"
-		src.updateDialog()
 
 	//Tracking loop
 	proc/track_target(var/gps_coord)
@@ -201,7 +200,6 @@
 		else
 			boutput(usr, "<span class='notice'>Unable to locate target.</span>")
 			src.tracking_target = null
-		src.updateDialog()
 		scanning = 0
 
 	//For use by clicking a pod to target them, instantly add them as your tracking target
@@ -212,7 +210,6 @@
 		boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
 		SPAWN_DBG(0)
 			begin_tracking(0)
-		src.updateDialog()
 		for(var/mob/M in ship)
 			if ((M.client && M.machine == src))
 				src.opencomputer(M)
@@ -334,7 +331,6 @@
 					lifelist += "Obscure Life Sign"
 					break
 
-		src.updateDialog()
 		sleep(1 SECOND)
 		scanning = 0
 		return

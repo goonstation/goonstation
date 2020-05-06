@@ -575,6 +575,7 @@
 
 		if (src.gloves.uses <= 0)
 			src.show_text("The gloves are no longer electrically charged.", "red")
+			src.gloves.overridespecial = 0
 		else
 			src.show_text("The gloves have [src.gloves.uses]/[src.gloves.max_uses] charges left!", "red")
 
