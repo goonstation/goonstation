@@ -1603,11 +1603,12 @@
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker
-	name = "Cocktail shaker"
-	desc = "A stainless steel cocktail shaker. Can hold up to 120 units."
+	name = "cocktail shaker"
+	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "cocktailer"
 	initial_volume = 120
 
-	attack_self(
+	attack_self(mob/user)
 		user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
+		playsound(src.loc, "sound/items/CocktailShake.ogg", 50, 1, -6)
