@@ -1,6 +1,3 @@
-/obj/item/parts/var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
-/obj/item/parts/var/effect_modifier = 0 //if leg, this will apply a speed mod. If arms, will do nothing (yet!)
-
 /obj/item/parts/human_parts
 	name = "human parts"
 	icon = 'icons/obj/items/human_parts.dmi'
@@ -18,8 +15,6 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
-
-
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)

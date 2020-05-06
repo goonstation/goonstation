@@ -1,4 +1,9 @@
 
+(t)wed may 06 20
+(u)Naksu
+(p)576
+(e)|
+(+)Triple triple now has a constant multiplier effect rather than a speed-dependent additive or multiplicative effect. It should still go plenty fast.
 (t)tue may 05 20
 (u)Tarmunora
 (p)457

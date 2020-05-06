@@ -91,6 +91,24 @@
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
+/mob/living/carbon/human/npc/syndicate_weak
+	ai_aggressive = 1
+	New()
+		..()
+		SPAWN_DBG(0)
+			src.real_name = "Junior Syndicate Agent"
+			JobEquipSpawned("Junior Syndicate Operative")
+
+/mob/living/carbon/human/npc/syndicate_weak/no_ammo
+	ai_aggressive = 1
+	New()
+		..()
+		SPAWN_DBG(0)
+			src.real_name = "Junior Syndicate Agent"
+			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
+
+//reverse blade samurai
+
 // npc ai procs
 
 //NOTE TO SELF: BYONDS TIMING FUNCTIONS ARE INACCURATE AS FUCK

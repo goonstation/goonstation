@@ -35,12 +35,16 @@
 	var/tox_dam = 0
 	var/siemens_coefficient = 1
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
+	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
+	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
 
 	New(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))
 			src.holder = new_holder
 		src.limb_data = new src.limb_type(src)
+		if (holder && movement_modifier)
+			APPLY_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 	disposing()
 		if (limb_data)
@@ -66,6 +70,8 @@
 
 	//just get rid of it. don't put it on the floor, don't show a message
 	proc/delete()
+		if (holder && movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
@@ -89,6 +95,9 @@
 				holder = null
 				qdel(src)
 			return
+
+		if (movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -137,6 +146,9 @@
 				holder = null
 				qdel(src)
 			return
+
+		if (movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
 			logTheThing("admin", user, src.holder, "severed %target%'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
@@ -234,6 +246,9 @@
 		src.screen_loc = ""
 		src.set_loc(attachee)
 		src.remove_stage = 2
+
+		if (movement_modifier)
+			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)
 
 		for(var/mob/O in AIviewers(attachee, null))
 			if(O == (attacher || attachee))

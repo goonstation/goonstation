@@ -289,6 +289,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	var/exclusiveGroup = "" //optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
 	var/maxDuration = null //If non-null, duration of the effect will be clamped to be max. this amount.
 	var/move_triggered = 0 //has an on-move effect
+	var/datum/movement_modifier/movement_modifier // Has a movement-modifying effect
 
 
 	proc/preCheck(var/atom/A) //Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something. ret = 1 allow, 0 = do not allow
@@ -298,9 +299,15 @@ var/list/statusGroupLimits = list("Food"=4)
 		.= change
 
 	proc/onAdd(var/optional=null) //Called when the status is added to an object. owner is already set at this point. Has the optional arg from setStatus passed in.
+		if (movement_modifier && ismob(owner))
+			var/mob/mob_owner = owner
+			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
 	proc/onRemove() //Called when the status is removed from the object. owner is still set at this point.
+		if (movement_modifier && ismob(owner))
+			var/mob/mob_owner = owner
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
 	proc/onUpdate(var/timedPassed) //Called every tick by the status controller. Argument is the actual time since the last update call.
@@ -829,6 +836,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "staggered"
 		unique = 1
 		maxDuration = 5 SECONDS
+		movement_modifier = /datum/movement_modifier/staggered_or_blocking
 
 	blocking
 		id = "blocking"
@@ -838,6 +846,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		movement_modifier = /datum/movement_modifier/staggered_or_blocking
 
 		clicked(list/params)
 			if (ishuman(owner))
@@ -851,15 +860,18 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "slowed"
 		unique = 1
 		var/howMuch = 10
+		movement_modifier = new /datum/movement_modifier/status_slowed
 
 		onAdd(var/optional=null)
 			if(optional)
 				howMuch = optional
+				movement_modifier.additive_slowdown = optional
 			return ..(optional)
 
 		onChange(var/optional=null)
 			if(optional)
 				howMuch = optional
+				movement_modifier.additive_slowdown = optional
 			return ..(optional)
 
 	disorient
@@ -872,6 +884,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/counter = 0
 		var/sound = "sound/effects/electric_shock_short.ogg"
 		var/count = 7
+		movement_modifier = /datum/movement_modifier/disoriented
 
 		onUpdate(var/timedPassed)
 			counter += timedPassed
@@ -929,6 +942,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are hastened.<br>Movement speed is increased."
 		icon_state = "hastened"
 		unique = 1
+		movement_modifier = /datum/movement_modifier/hastened
 
 	cloaked
 		id = "cloaked"
@@ -1150,6 +1164,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
 		unique = 1
+		movement_modifier = /datum/movement_modifier/janktank
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.
