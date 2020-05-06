@@ -759,7 +759,7 @@
 				var/atom/A = new /obj/item/sheet(get_turf(target))
 				if (target.material)
 					A.setMaterial(target.material)
-					qdel(A)
+					qdel(target)
 			else
 				return
 		else if(istype(target, /obj/machinery/door/feather))
