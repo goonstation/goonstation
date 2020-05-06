@@ -1444,10 +1444,13 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if (prob(5))
-					M.say(pick("Placeholder.",\
-					"Placeholder.",\
-					"Placeholder.",\
-					"Placeholder."))
+					M.say(pick("Ye damned whale",\
+					"I don't shleep, I die.",\
+					"Call me Ishmael.",\
+					"Yo ho and a bottle of rum.",\
+					"This ish no place for a clergyman'sh shon!",\
+					"Ahoy!.",\
+					"There she blowsh."))
 				..()
 				return
 
