@@ -61,7 +61,7 @@
 		if (gauntlet_controller.state != 0)
 			return
 		if (ticker.round_elapsed_ticks < 3000)
-			boutput(usr, "<span style=\"color:red\">You may not initiate the Gauntlet before 5 minutes into the round.</span>")
+			boutput(usr, "<span class='alert'>You may not initiate the Gauntlet before 5 minutes into the round.</span>")
 			return
 		if (alert("Start the Gauntlet? No more players will be given admittance to the staging area!",, "Yes", "No") == "Yes")
 			if (gauntlet_controller.state != 0)
@@ -822,7 +822,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.HealDamage("All", 5, 5)
-					//boutput(M, "<span style=\"color:blue\">A soothing wave of energy washes over you!</span>")
+					//boutput(M, "<span class='notice'>A soothing wave of energy washes over you!</span>")
 				counter = 10
 
 		tearDown()
@@ -869,7 +869,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				M.bodytemperature = T0C + 120
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
-						boutput(M, "<span style=\"color:red\">You spontaneously combust!</span>")
+						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
 					M.changeStatus("burning", 70)
 
 		tearDown()
@@ -896,7 +896,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			if (prob(20))
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.TakeDamage("chest", 1, 0, 0, DAMAGE_CUT)
-					//boutput(M, "<span style=\"color:red\">The void tears at you!</span>")
+					//boutput(M, "<span class='alert'>The void tears at you!</span>")
 					// making the zone name a bit more obvious and making its spam chatbox less - ISN
 
 		tearDown()

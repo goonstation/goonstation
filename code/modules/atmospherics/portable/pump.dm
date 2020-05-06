@@ -78,10 +78,10 @@
 /obj/machinery/portable_atmospherics/pump/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/canamt = W.contents.len
-		if (canamt >= W:capacity) boutput(user, "<span style=\"color:red\">Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span style=\"color:red\">\The [src] is attached!</span>")
+		if (canamt >= W:capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
-			user.visible_message("<span style=\"color:blue\">[user] collects the [src].</span>", "<span style=\"color:blue\">You collect the [src].</span>")
+			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)

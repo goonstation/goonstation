@@ -1,8 +1,8 @@
 /proc/testMat()
 	boutput(world, "[materialProps.len]")
-	sleep(10)
+	sleep(1 SECOND)
 	usr.client.debug_variables(material_cache["cerenkite"])
-	sleep(10)
+	sleep(1 SECOND)
 	usr.client.debug_variables(new/datum/material/metal/cerenkite())
 	return
 

@@ -10,13 +10,13 @@
 	}
 
 	function fuckYouByondBrowser() {
-		
+
 		if(!document.getElementsByClassName) {
 			document.getElementsByClassName = function (cl) {
 				var pattern, i,
 				d = document,
 				results = [];
-				
+
 				if(d.querySelectorAll) {
 					return d.querySelectorAll("." + cl);
 				}
@@ -41,7 +41,7 @@
 	}
 
 	function sortOn(key) {
-		
+
 		var sortFunc;
 		if (lastKey != key || descendingSort) {
 			sortFunc = function(a, b){
@@ -68,7 +68,7 @@
 		}
 		knownList.sort(sortFunc);
 		lastKey = key;
-		
+
 	}
 
 	function display() {
@@ -83,6 +83,8 @@
 				var data = listing[k]
 				if (k != "seq")
 					data = prettifyYesNo(data);
+				else
+					data = insertSpaces(data);
 				html += "<td>" + data + "</td>";
 			}
 			html +="</tr>"
@@ -91,7 +93,7 @@
 		tableSpan.innerHTML = html;
 		setListeners();
 	}
-	
+
 	function prettifyYesNo(text) {
 		if (text == "Yes") {
 			text = "<span style='font-weight:bold;color:#0C0;'>" + text + "</span>";
@@ -100,23 +102,34 @@
 		}
 		return text
 	}
-	
+
+	// This inserts spaces between the individual segments of a sequence, so the list is less of an eyesore
+	function insertSpaces(text) {
+		var text2 = "";
+		for(i = 0; i < text.length; i++)
+		{
+			text2 += text.substring(i*3, (i+1)*3);
+			text2 += " ";
+		}
+		return text2;
+	}
+
 	function getTableHeader() {
-		
+
 		var thead = '<tr>';
-		
+
 		var headerObj = {
 			seq: "Sequence",
 			stable: "Stable",
 			trans: "Trans"
 		};
-		
+
 		var sortChar = '\u2193';
 		if (descendingSort) {sortChar = '\u2191';}
-		
+
 		for (k in headerObj) {
 			var v = headerObj[k]
-			
+
 			var out = v;
 			if (k == lastKey) {
 				out += ' ' + sortChar;
@@ -124,16 +137,16 @@
 			thead += '<th><a href = "#" class="tableHeader" id="' + k + '">' + out + '</a></th>';
 		}
 		return thead + '</tr>';
-		
+
 	}
 
 	function setListeners() {
 		var targets = document.getElementsByClassName("tableHeader");
-		
+
 		for(var i = 0; i < targets.length; i++){
 			var a = targets[i];
 			var func = function(){sortAndDisplay(this.id); return false;};
-			
+
 			a.onclick = func; //Do I give any fucks about how ancient this is? Nope. Sure don't.
 		}
 	}
@@ -142,7 +155,7 @@
 		sortOn(key);
 		display();
 	}
-	
+
 	window.initializeScript = initializeScript;
 	window.sortAndDisplay = sortAndDisplay;
 })(window, document);

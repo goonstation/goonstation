@@ -1,0 +1,48 @@
+# Number of labels to fetch (optional). Defaults to 20.
+numLabels: 40
+
+# Determines if we search the title (optional). Defaults to true.
+matchTitle: false
+
+# Determines if we search the body (optional). Defaults to true.
+matchBody: true
+
+# Explicit keyword mappings to labels. Form of match:label. Required.
+labelMappings:
+    "[BUG - CRITICAL]": bug - critical
+    "[CRITICAL]": bug - critical
+    "[BUG - MAJOR]": bug - major
+    "[MAJOR]": bug - major
+    "[BUG]": bug
+    "[FIX]": bug
+    "[BUGFIX]": bug
+    "[BUG - MINOR]": bug - minor
+    "[MINOR]": bug - minor
+    "[BUG - TRIVIAL]": bug - trivial
+    "[TRIVIAL]": bug - trivial
+    "[RUNTIME]": runtime
+    "[HELP WANTED]": help wanted
+    "[HELP]": help wanted
+    "[INPUT WANTED]": input wanted
+    "[INPUT]": input wanted
+    "[ENHANCEMENT]": enhancement
+    "[FEATURE]": enhancement
+    "[FEAT]": enhancement
+    "[ASS-JAM]": ass-jam
+    "[BALANCE]": balance
+    "[CLEANLINESS]": cleanliness
+    "[CLEAN]": cleanliness
+    "[CHORE]": cleanliness
+    "[EXPERIMENTAL]": experimental
+    "[PERFORMANCE]": performance
+    "[PERF]": performance
+    "[QOL]": QoL
+    "[REMOVAL]": removal
+    "[REVERT]": revert
+    "[REWORK]": rework
+    "[SECRET]": secret
+    "[STYLE]": style
+    "[TOOLING]": tooling
+    "[WIP]": WIP
+    "[EASY]": good first issue
+    "[GOOD FIRST ISSUE]": good first issue

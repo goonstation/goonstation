@@ -145,7 +145,7 @@ var/datum/respawn_controls/respawn_controller
 			boutput(the_client.mob, "<h1>You are now eligible for a respawn!</h1>")
 			boutput(the_client.mob, "Check the commands tab for \"Respawn As New Character\"")
 			if(master.rp_alert)
-				boutput(the_client.mob, "<span style='color:red'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
+				boutput(the_client.mob, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
 
 			the_client.verbs |= /client/proc/respawn_via_controller
 			client_processed = 1

@@ -250,7 +250,7 @@ AI MODULES
 			if (isAI(S) && isdead(S))
 				setalive(S)
 				if (S.ghost && S.ghost.mind)
-					S.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
+					S.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
 					S.ghost.mind.transfer_to(S)
 					qdel(S.ghost)
 					do_admin_logging(" revived the AI", sender)
@@ -375,7 +375,7 @@ AI MODULES
 		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws
 		if (!LAWS)
 			// YOU BETRAYED THE LAW!!!!!!
-			boutput(user, "<span style=\"color:red\">Unable to detect AI unit's Law software. It may be corrupt.</span>")
+			boutput(user, "<span class='alert'>Unable to detect AI unit's Law software. It may be corrupt.</span>")
 			return
 
 		var/lawOut = list("<b>The AI's current laws are:</b>")
@@ -404,7 +404,7 @@ AI MODULES
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
 				if (src.status & BROKEN)
-					boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -418,7 +418,7 @@ AI MODULES
 					A.anchored = 1
 					qdel(src)
 				else
-					boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)
@@ -432,7 +432,7 @@ AI MODULES
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for (var/mob/living/silicon/ai/M in AIs)
 				M.moustache_mode = 1
-				user.visible_message("<span style=\"color:red\"><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
+				user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 				M.update_appearance()
 		else
 			return ..()

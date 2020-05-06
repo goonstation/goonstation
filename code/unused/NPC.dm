@@ -110,7 +110,7 @@
 				return
 
 			for(var/mob/M as mob in oview(world.view,src))
-				boutput(M, "<span style=\"color:red\">The [src.name] stares at [target]</span>")
+				boutput(M, "<span class='alert'>The [src.name] stares at [target]</span>")
 			if (prob(10) && !special) emote("gnarl")
 			mainstate = 2
 			SPAWN_DBG(1.5 SECONDS) //////////////////////////////////////!!!
@@ -127,7 +127,7 @@
 
 			if( (get_dist(src,target) >= world.view - 2) && !cantact)
 				for(var/mob/M as mob in oview(world.view,src))
-					boutput(M, "<span style=\"color:red\">The [src.name] calms down.</span>")
+					boutput(M, "<span class='alert'>The [src.name] calms down.</span>")
 				target = null
 				count = 0
 				mainstate = 0
@@ -144,11 +144,11 @@
 
 			if (!nolos && canmove && !cantact)
 				for(var/mob/M as mob in oview(world.view,src))
-					boutput(M, "<span style=\"color:red\">The [src.name] lunges at [target].</span>")
+					boutput(M, "<span class='alert'>The [src.name] lunges at [target].</span>")
 				if (prob(10) && !special) emote("roar")
 				while(get_dist(src,target) > 2)
 					step_towards(src,target)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 			mainstate = 3
 
@@ -156,7 +156,7 @@
 
 			if( ( (target:stat && prob(50-aggressiveness) ) && !cantact) || count > 300 )
 				for(var/mob/M as mob in oview(world.view,src))
-					boutput(M, "<span style=\"color:red\">The [src.name] loses interest in its target.</span>")
+					boutput(M, "<span class='alert'>The [src.name] loses interest in its target.</span>")
 				target = null
 				count = 0
 				mainstate = 0
@@ -166,7 +166,7 @@
 
 			if(get_dist(src,target) > world.view + 2 && !cantact)
 				for(var/mob/M as mob in oview(world.view,src))
-					boutput(M, "<span style=\"color:red\">The [src.name] calms down.</span>")
+					boutput(M, "<span class='alert'>The [src.name] calms down.</span>")
 				target = null
 				count = 0
 				mainstate = 0
@@ -186,7 +186,7 @@
 
 				if(!nolos)
 					for(var/mob/M as mob in oview(world.view,src))
-						boutput(M, "<span style=\"color:red\">The [src.name] pounces [target].</span>")
+						boutput(M, "<span class='alert'>The [src.name] pounces [target].</span>")
 					target:weakened += 3
 					step_towards(src,target)
 					step_towards(src,target)
@@ -197,11 +197,11 @@
 
 			if(get_dist(src,target) < 2 && (!cantact && !istype(src.wear_mask, /obj/item/clothing/mask/muzzle)) )
 				for(var/mob/M as mob in oview(world.view,src))
-					boutput(M, "<span style=\"color:red\">The [src.name] bites [target].</span>")
+					boutput(M, "<span class='alert'>The [src.name] bites [target].</span>")
 				if(prob(15) && special)
 					randmutb(target)
 					for(var/mob/M as mob in oview(world.view,src))
-						boutput(M, "<span style=\"color:red\">[target] has been infected.</span>")
+						boutput(M, "<span class='alert'>[target] has been infected.</span>")
 				target:TakeDamage("chest", 5, 0)
 				SPAWN_DBG(2 SECONDS)
 					think()

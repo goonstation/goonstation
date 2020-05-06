@@ -38,7 +38,7 @@
 		if(istype( what, /obj/machinery/bathtub ))
 			var/obj/machinery/bathtub/B = what
 			B.wheels = src
-			boutput( user, "<span style='color:blue'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
+			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
 
@@ -111,7 +111,7 @@
 			var/matrix/xf = matrix()
 			img.transform = xf/2
 			animate(img,alpha=255,transform=xf,time=2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"

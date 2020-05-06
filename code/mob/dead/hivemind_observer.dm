@@ -1,6 +1,6 @@
 /mob/dead/target_observer/hivemind_observer
 	var/datum/abilityHolder/changeling/hivemind_owner
-	var/can_exit_hivemind = 0
+	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
 
 	say_understands(var/other)
@@ -123,9 +123,10 @@
 	set category = "Special Verbs"
 	usr = src
 
-	if(can_exit_hivemind && hivemind_owner && hivemind_owner.master != src)
+	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
 		hivemind_owner.hivemind -= src
 		boutput(src, __red("You have parted with the hivemind."))
 		src.boot()
 	else
-		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave if your master goes inactive or chooses to release you of their own will."))
+		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave in [can_exit_hivemind_time/10] seconds."))
+

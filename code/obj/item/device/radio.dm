@@ -334,7 +334,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	if (src.protected_radio != 1 && isnull(src.traitorradio))
 		for (var/mob/living/L in radio_brains)
 			receive += L
-			
+
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
@@ -531,22 +531,17 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			SPAWN_DBG(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
-/obj/item/device/radio/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if ((in_range(src, usr) || src.loc == usr))
+/obj/item/device/radio/examine(mob/user)
+	. = ..()
+	if ((in_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			usr.show_message("<span style=\"color:blue\">\the [src] can be attached and modified!</span>")
+			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
-			usr.show_message("<span style=\"color:blue\">\the [src] can not be modified or attached!</span>")
+			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
-		var/o = "Supplementary Channels:"
+		. += "Supplementary Channels:"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
-			o += "<br>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
-		boutput(usr, o)
-	return
+			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
 /obj/item/device/radio/attackby(obj/item/W as obj, mob/user as mob)
 	user.machine = src
@@ -554,9 +549,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		return
 	src.b_stat = !( src.b_stat )
 	if (src.b_stat)
-		user.show_message("<span style=\"color:blue\">The radio can now be attached and modified!</span>")
+		user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
 	else
-		user.show_message("<span style=\"color:blue\">The radio can no longer be modified or attached!</span>")
+		user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
 		src.attack_self(M)
@@ -650,7 +645,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	..()
 	if ((in_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
-			boutput(usr, "<span style=\"color:blue\">The electric pads are exposed!</span>")
+			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
 
 /obj/item/device/radio/electropack/attackby(obj/item/W as obj, mob/user as mob)
@@ -723,7 +718,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	if (ismob(src.loc) && src.on)
 		var/mob/M = src.loc
 		if (src == M.back)
-			M.show_message("<span style=\"color:red\"><B>You feel a sharp shock!</B></span>")
+			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
@@ -789,9 +784,9 @@ Code:
 	..()
 	if ((in_range(src, usr) || src.loc == usr))
 		if (src.b_stat)
-			usr.show_message("<span style=\"color:blue\">The signaler can be attached and modified!</span>")
+			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
 		else
-			usr.show_message("<span style=\"color:blue\">The signaler can not be modified or attached!</span>")
+			usr.show_message("<span class='notice'>The signaler can not be modified or attached!</span>")
 	return
 */
 
@@ -1008,14 +1003,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	boutput(usr, "[src] is[src.broadcasting ? " " : " not "]active!")
-	boutput(usr, "It is tuned to [format_frequency(src.frequency)]Hz.")
-
-	return
+	. = ..()
+	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
 /obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
 	if (!broadcasting)

@@ -16,9 +16,9 @@
 			if (H == src.fartowner)
 				continue
 			if (prob(20))
-				boutput(H, "<span style=\"color:red\">Oh god! The <i>smell</i>!!!</span>")
+				boutput(H, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 			H.reagents.add_reagent("jenkem",0.1)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if(amount < 1)
 			dispose()
 			return

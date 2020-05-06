@@ -326,7 +326,11 @@
 #define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
 #define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
 #define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
-
+#define BLOCK_TOOLTIP 4096				//whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_CUT 8192					//block an extra point of cut damage when used to block
+#define BLOCK_STAB 16384				//block an extra point of stab damage when used to block
+#define BLOCK_BURN 32768				//block an extra point of burn damage when used to block
+#define BLOCK_BLUNT 65536				//block an extra point of blunt damage when used to block
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -539,6 +543,8 @@
 #define ui_rest "CENTER+6, SOUTH"
 #define ui_abiltoggle "CENTER-6, SOUTH"
 #define ui_stats "CENTER+7, SOUTH"
+#define ui_legend "CENTER+7:16, SOUTH"
+
 
 #define ui_zone_sel "CENTER+4, SOUTH"
 #define ui_storage_area "1,8 to 1,1"
@@ -562,6 +568,7 @@
 #define tg_ui_ears "WEST+2:10,SOUTH+2:9"
 #define tg_ui_mask "WEST+1:8,SOUTH+2:9"
 #define tg_ui_head "WEST+1:8,SOUTH+3:11"
+#define tg_ui_legend "WEST+2:10, SOUTH+3:11"
 #define tg_ui_throwing "EAST-1:28,SOUTH+1:7"
 #define tg_ui_intent "EAST-3:24,SOUTH:5"
 #define tg_ui_mintent "EAST-2:26,SOUTH:5"
@@ -761,43 +768,21 @@
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
-
+#define DAMAGE_TYPE_TO_STRING(x) (x == DAMAGE_BLUNT ? "blunt" : x == DAMAGE_CUT ? "cut" : x == DAMAGE_STAB ? "stab" : x == DAMAGE_BURN ? "burn" : x == DAMAGE_CRUSH ? "crush" : "")
 
 //some different generalized block weapon shapes that i can re use instead of copy paste
-#define BLOCK_ALL do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-	setProperty("block_stab", 1);\
-	setProperty("block_burn", 1);\
-} while (FALSE)
-#define BLOCK_LARGE do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-	setProperty("block_stab", 1);\
-} while (FALSE)
-#define BLOCK_SWORD BLOCK_LARGE
+#define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work
+#define BLOCK_ALL		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_LARGE		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_SWORD		BLOCK_LARGE
+#define BLOCK_ROD 		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT)
+#define BLOCK_TANK		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_BURN)
+#define BLOCK_SOFT		BLOCK_SETUP; src.c_flags |= (BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_KNIFE		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_ROPE		BLOCK_BOOK
 
-#define BLOCK_ROD do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-} while (FALSE)
-#define BLOCK_TANK do {\
-	setProperty("block_blunt", 1);\
-	setProperty("block_cut", 1);\
-	setProperty("block_burn", 1);\
-} while (FALSE)
-#define BLOCK_SOFT do {\
-	setProperty("block_stab", 1);\
-	setProperty("block_burn", 1);\
-} while (FALSE)
-#define BLOCK_KNIFE do {\
-	setProperty("block_cut", 1);\
-	setProperty("block_stab", 1);\
-} while (FALSE)
-#define BLOCK_BOOK do {\
-	setProperty("block_stab", 1);\
-} while (FALSE)
-#define BLOCK_ROPE BLOCK_BOOK
+#define DEFAULT_BLOCK_PROTECTION_BONUS 2 //blocking to match damage type correctly gives you a -2 bonus on protection (unless this item grants Even More protection, that overrides this)
 
 // Process Scheduler defines
 // Process status defines
@@ -809,11 +794,12 @@
 #define PROCESS_STATUS_HUNG 6
 
 // Process time thresholds
-#define PROCESS_DEFAULT_HANG_WARNING_TIME 	3000 // 300 seconds
-#define PROCESS_DEFAULT_HANG_ALERT_TIME 	6000 // 600 seconds
-#define PROCESS_DEFAULT_HANG_RESTART_TIME 	9000 // 900 seconds
+#define PROCESS_DEFAULT_HANG_WARNING_TIME 	300 SECONDS
+#define PROCESS_DEFAULT_HANG_ALERT_TIME 	600 SECONDS
+#define PROCESS_DEFAULT_HANG_RESTART_TIME 	900 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		15	// 15% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		20	// 20% of one tick
+#define MAX_TICK_USAGE 95 // 95% of a tick
 
 /** Delete queue defines */
 #define MIN_DELETE_CHUNK_SIZE 1
@@ -1052,8 +1038,7 @@ var/ZLOG_START_TIME
 #endif
 
 #define CRITTER_REACTION_LIMIT 50
-#define fucking_critter_bullshit_fuckcrap_limiter(x) if (x > CRITTER_REACTION_LIMIT) return; else x += 1
-#define get_fucked_clarks if (istype(my_atom, "/obj/critter/domestic_bee")) return my_atom.visible_message("<span style=\"color:red\">[my_atom] burps.</span>"); if (istype(my_atom, "/obj/item/reagent_containers/food/snacks/ingredient/honey")) return
+#define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
 //Activates the viscontents warps
 #define NON_EUCLIDEAN 1
@@ -1131,6 +1116,8 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//PATHOLOGY REMOVAL
+//#define CREATE_PATHOGENS 1
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))

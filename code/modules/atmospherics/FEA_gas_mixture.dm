@@ -27,7 +27,7 @@ What are the archived variables for?
 	specific_heat = 30
 /datum/gas/rad_particles
 	specific_heat = 20
-/datum/gas/farts //add a visual to this 
+/datum/gas/farts //add a visual to this
 	specific_heat = 69
 
 /datum/gas_mixture
@@ -128,8 +128,8 @@ What are the archived variables for?
 	else
 		oxygen = 0
 		nitrogen = 0
-		
-/datum/gas_mixture/proc/vacuum() //yknow, for when you want "zero" to actually mean "zero". 
+
+/datum/gas_mixture/proc/vacuum() //yknow, for when you want "zero" to actually mean "zero".
 	trace_gases = null
 	carbon_dioxide = 0
 	toxins = 0
@@ -729,6 +729,8 @@ What are the archived variables for?
 			var/delta = 0
 
 			delta = QUANTIZE((trace_gas.moles_archived/5)*border_multiplier/group_multiplier)
+
+			if (abs(delta) <= 0.0001) continue
 
 			trace_gas.moles -= delta
 

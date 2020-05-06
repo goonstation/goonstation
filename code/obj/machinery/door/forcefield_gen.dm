@@ -110,8 +110,8 @@
 	proc/shock(var/mob/A)
 		if(!A) return
 		for(var/mob/M in view(A))
-			boutput(M, "<span style=\"color:red\">[A] was shocked by [src]!</span>")
-		boutput(A, "<span style=\"color:red\">[src] shocks you.</span>")
+			boutput(M, "<span class='alert'>[A] was shocked by [src]!</span>")
+		boutput(A, "<span class='alert'>[src] shocks you.</span>")
 		A.TakeDamage("All", 0, 75)
 		if(hasvar(A,"weakened")) A:changeStatus("weakened", 1 SECOND)
 		var/dirmob = turn(A.dir,180)
@@ -134,14 +134,14 @@
 			if(set_active)
 				set_active = 0
 				turn_off()
-				boutput(user, "<span style=\"color:blue\">You deactivate the forcefield.</span>")
+				boutput(user, "<span class='notice'>You deactivate the forcefield.</span>")
 			else
 				set_active = 1
 				if(powered())
 					turn_on()
-					boutput(user, "<span style=\"color:blue\">You activate the forcefield.</span>")
+					boutput(user, "<span class='notice'>You activate the forcefield.</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">You attempt to activate the forcefield but its not powered.</span>")
+					boutput(user, "<span class='notice'>You attempt to activate the forcefield but its not powered.</span>")
 
 	CanPass(atom/A, turf/T)
 		if (!active) return 1

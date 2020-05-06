@@ -1,5 +1,5 @@
-#define CRYOSLEEP_DELAY 9000 // 15 minutes
-#define CRYOTRON_MESSAGE_DELAY 30 // 3 seconds
+#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
 	New()
@@ -95,7 +95,7 @@
 		src.icon_state = "cryotron_down"
 		flick("cryotron_go_down", src)
 
-		//sleep(19)
+		//sleep(1.9 SECONDS)
 		SPAWN_DBG(1.9 SECONDS)
 			if (!thePerson)
 				busy = 0
@@ -106,7 +106,7 @@
 			for (var/obj/O in src) // someone dropped something
 				O.set_loc(firstLoc)
 
-		//sleep(10)
+		//sleep(1 SECOND)
 			SPAWN_DBG(1 SECOND)
 				if (!thePerson)
 					busy = 0
@@ -124,7 +124,7 @@
 							if (!A.status && A.announces_arrivals)
 								A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
 //#endif
-		//sleep(9)
+		//sleep(0.9 SECONDS)
 				SPAWN_DBG(0.9 SECONDS)
 					busy = 0
 					return (folks_to_spawn.len != 0)
@@ -241,14 +241,14 @@
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting))
 				if (G.affecting.client || !G.affecting.ckey)
-					boutput(user, "<span style='color:red'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
+					boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 					return
 				else if (alert(user, "Would you like to put [G.affecting] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", "Yes", "No") == "Yes")
 					if (!src.mob_can_enter_storage(G.affecting, user))
 						return
 					else
 						src.add_person_to_storage(G.affecting, 0)
-						src.visible_message("<span style='color:red'><b>[user] forces [G.affecting] into [src]!</b></span>")
+						src.visible_message("<span class='alert'><b>[user] forces [G.affecting] into [src]!</b></span>")
 						user.u_equip(G)
 						qdel(G)
 						return

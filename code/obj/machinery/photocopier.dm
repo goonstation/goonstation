@@ -65,7 +65,7 @@
 
 	attackby(var/obj/item/w as obj, var/mob/user as mob) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 		if (src.use_state == 2) //photocopier is busy?
-			boutput(user, "<span style=\"color:red\">/The [src] is busy! Try again later!</span>")
+			boutput(user, "<span class='alert'>/The [src] is busy! Try again later!</span>")
 			return
 
 		else if (src.use_state == 1) //is the photocopier open?
@@ -85,11 +85,11 @@
 						boutput(user, "You put the picture on the scan bed, close the lid, and press start...")
 					else
 						boutput(user, "You put the paper on the scan bed, close the lid, and press start...")
-				sleep(3)
+				sleep(0.3 SECONDS)
 				src.icon_state = "close_sesame"
 				flick("scan", src)
 				playsound(src.loc, "sound/machines/scan.ogg", 50, 1)
-				sleep(18)
+				sleep(1.8 SECONDS)
 				src.icon_state = "open_sesame"
 				w.set_loc(get_turf(src))
 				src.visible_message("\The [src] finishes scanning and opens automatically!")
@@ -121,7 +121,7 @@
 		else //photocopier is closed? if someone varedits use state this'll screw up but if they do theyre dumb so
 			if (istype(w, /obj/item/paper))
 				if (src.paper_amount >= 30.0)
-					boutput(user, "<span style=\"color:red\">You can't fit any more paper into \the [src].</span>")
+					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
 					return
 				boutput(user, "You load the sheet of paper into \the [src].")
 				src.paper_amount++
@@ -130,7 +130,7 @@
 
 			else if (istype(w, /obj/item/paper_bin))
 				if ((w.amount + src.paper_amount) > 30.0)
-					boutput(user, "<span style=\"color:red\">You can't fit any more paper into \the [src].</span>")
+					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
 					return
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
@@ -143,7 +143,7 @@
 
 	attack_hand(var/mob/user as mob) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
-			boutput(user, "<span style=\"color:red\">\The [src] is busy right now! Try again later!</span>")
+			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return
 		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
 		if (get_dist(user, src) <= 1)
@@ -154,7 +154,7 @@
 						return
 					src.reset_all()
 					playsound(src.loc, "sound/machines/bweep.ogg", 50, 1)
-					boutput(user, "<span style=\"color:blue\">You reset \the [src]'s memory.</span>")
+					boutput(user, "<span class='notice'>You reset \the [src]'s memory.</span>")
 					return
 
 				if ("Print Copies")
@@ -172,7 +172,7 @@
 						if (paper_amount <= 0)
 							break
 						flick("print", src)
-						sleep(18)
+						sleep(1.8 SECONDS)
 						playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 1)
 						paper_amount --
 						src.print_stuff()
@@ -193,7 +193,7 @@
 							boutput(user, "Amount set to: [num_sel] sheets.")
 							return
 						else
-							boutput(user, "<span style=\"color:red\">There's not enough paper for that!</span>")
+							boutput(user, "<span class='alert'>There's not enough paper for that!</span>")
 							return
 
 				if ("Toggle Lid")

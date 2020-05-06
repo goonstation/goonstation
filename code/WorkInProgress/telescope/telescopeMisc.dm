@@ -222,7 +222,7 @@ var/list/magnet_locations = list()
 	ChaseAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> floats towards [M]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> floats towards [M]!</span>")
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -234,7 +234,7 @@ var/list/magnet_locations = list()
 		if(target && !attacking)
 			attacking = 1
 			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> shreds [M]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> shreds [M]!</span>")
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -249,7 +249,7 @@ var/list/magnet_locations = list()
 
 	CritterDeath()
 		if(prob(20) && alive)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> begins to reassemble!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
 			var/turf/T = src.loc
 			SPAWN_DBG(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)

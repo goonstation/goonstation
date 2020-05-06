@@ -348,7 +348,7 @@ var/compx_gridx_max = 5
 				src.override_temp += "<font color=red>ERR - BOOT FAILURE</font><br>"
 
 			src.updateUsrDialog()
-			sleep(20)
+			sleep(2 SECONDS)
 
 			src.restarting = 0
 			if(to_run)

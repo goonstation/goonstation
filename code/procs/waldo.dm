@@ -73,7 +73,7 @@
 	animation.icon = 'icons/effects/effects.dmi'
 	animation.master = usr
 
-	sleep(30)
+	sleep(3 SECONDS)
 	qdel(animation)
 	usr.buckled = null
 	if(!usr.stat)

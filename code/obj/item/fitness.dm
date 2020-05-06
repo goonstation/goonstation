@@ -59,7 +59,7 @@
 
 	attack_hand(mob/user as mob)
 		if(in_use)
-			boutput(user, "<span style=\"color:red\">Its already in use - wait a bit.</span>")
+			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
 		else
 			in_use = 1
@@ -68,16 +68,16 @@
 			user.dir = SOUTH
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span style=\"color:red\"><B>[usr] is [bragmessage]!</B></span>"))
+			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
 					break
-				sleep(3)
+				sleep(0.3 SECONDS)
 				user.pixel_y = -2
-				sleep(3)
+				sleep(0.3 SECONDS)
 				user.pixel_y = -4
-				sleep(3)
+				sleep(0.3 SECONDS)
 				playsound(user, 'sound/effects/spring.ogg', 60, 1)
 
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
@@ -91,7 +91,7 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
 			user.changeStatus("fitness_stam_regen",1000)
-			boutput(user, "<span style=\"color:blue\">[finishmessage]</span>")
+			boutput(user, "<span class='notice'>[finishmessage]</span>")
 
 /obj/fitness/weightlifter
 	name = "Weight Machine"
@@ -105,7 +105,7 @@
 
 	attack_hand(mob/user as mob)
 		if(in_use)
-			boutput(user, "<span style=\"color:red\">Its already in use - wait a bit.</span>")
+			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
 		else
 			in_use = 1
@@ -120,7 +120,7 @@
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span style=\"color:red\"><B>[usr] is [bragmessage]!</B></span>"))
+			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -128,14 +128,14 @@
 					break
 
 				for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
-					sleep(3)
+					sleep(0.3 SECONDS)
 					user.pixel_y = (user.pixel_y == 3) ? 5 : 3
 
 				playsound(user, 'sound/effects/spring.ogg', 60, 1)
 
-			sleep(3)
+			sleep(0.3 SECONDS)
 			user.pixel_y = 2
-			sleep(3)
+			sleep(0.3 SECONDS)
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
@@ -147,7 +147,7 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnessweight"
 			qdel(W)
-			boutput(user, "<span style=\"color:blue\">[finishmessage]</span>")
+			boutput(user, "<span class='notice'>[finishmessage]</span>")
 			user.changeStatus("fitness_stam_max",1000)
 
 /obj/item/rubberduck
@@ -178,10 +178,10 @@
 			playsound(src.loc, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
 			var/wacka = 0
 			while (wacka++ < 50)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				pixel_x = rand(-6,6)
 				pixel_y = rand(-6,6)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)

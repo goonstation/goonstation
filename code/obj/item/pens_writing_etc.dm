@@ -59,7 +59,7 @@
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
 			return
 		if(!user.literate)
-			boutput(user, "<span class='text-red'>You don't know how to write.</span>")
+			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
@@ -103,7 +103,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
 		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
@@ -128,7 +128,7 @@
 
 /obj/item/pen/red // we didn't have one of these already??
 	name = "red pen"
-	desc = "The horrible, the unspeakable, the dreaded <span style='color:red'><b>RED PEN!!</b></span>"
+	desc = "The horrible, the unspeakable, the dreaded <span class='alert'><b>RED PEN!!</b></span>"
 	color = "red"
 	font_color = "red"
 
@@ -301,7 +301,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] jams [src] up [his_or_her(user)] nose!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] jams [src] up [his_or_her(user)] nose!</b></span>")
 		SPAWN_DBG(0.5 SECONDS) // so we get a moment to think before we die
 			user.take_brain_damage(120)
 		user.u_equip(src)
@@ -374,7 +374,7 @@
 
 	proc/chalk_break(var/mob/user as mob)
 		if (src.chalk_health <= 1)
-			user.visible_message("<span style=\"color:red\"><b>\The [src] snaps into pieces so small that you can't use them to draw anymore!</b></span>")
+			user.visible_message("<span class='alert'><b>\The [src] snaps into pieces so small that you can't use them to draw anymore!</b></span>")
 			qdel(src)
 			return
 		if (src.chalk_health % 2)
@@ -385,7 +385,7 @@
 		C.assign_color(src.color)
 		C.adjust_icon()
 		src.adjust_icon()
-		user.visible_message("<span style=\"color:red\"><b>\The [src] snaps in half! [pick("Fuck!", "Damn!", "Shit!", "Damnit!", "Fucking...", "Argh!", "Arse!", "Piss!")]")
+		user.visible_message("<span class='alert'><b>\The [src] snaps in half! [pick("Fuck!", "Damn!", "Shit!", "Damnit!", "Fucking...", "Argh!", "Arse!", "Piss!")]")
 
 	proc/adjust_icon()
 		if (src.chalk_health > 10) //shouldnt happen but it could
@@ -420,7 +420,7 @@
 			boutput(user, "You couldn't possibly eat \the [src], that's such a cold blooded thing to do!") //heh
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b></span>")
 		SPAWN_DBG(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
@@ -444,7 +444,7 @@
 		if (!T || !user || src.in_use || get_dist(T, user) > 1)
 			return
 		if(!user.literate)
-			boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
@@ -502,7 +502,7 @@
 			return
 		*/
 		if (!src.labels_left)
-			boutput(user, "<span style=\"color:red\">No labels left.</span>")
+			boutput(user, "<span class='alert'>No labels left.</span>")
 			return
 		if (!src.label || !length(src.label))
 			RemoveLabel(M, user)
@@ -514,7 +514,7 @@
 		if (ismob(A)) // do this via attack()
 			return
 		if (!src.labels_left)
-			boutput(user, "<span style=\"color:red\">No labels left.</span>")
+			boutput(user, "<span class='alert'>No labels left.</span>")
 			return
 		if (!src.label || !length(src.label))
 			RemoveLabel(A, user)
@@ -524,20 +524,20 @@
 
 	attack_self(mob/user as mob)
 		if(!user.literate)
-			boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
 		if(url_regex && url_regex.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(usr, "<span style=\"color:blue\">Label text cleared.</span>")
+			boutput(usr, "<span class='notice'>Label text cleared.</span>")
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(usr, "<span style=\"color:red\">Text too long.</span>")
+			boutput(usr, "<span class='alert'>Text too long.</span>")
 			return
 		src.label = "[str]"
-		boutput(usr, "<span style=\"color:blue\">You set the text to '[str]'.</span>")
+		boutput(usr, "<span class='notice'>You set the text to '[str]'.</span>")
 		logTheThing("combat", usr, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
@@ -549,8 +549,8 @@
 		if (A.name_suffixes.len)
 			A.remove_suffixes(1)
 			A.UpdateName()
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> removes the label from [A].</span>",\
-			"<span style=\"color:blue\">You remove the label from [A].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> removes the label from [A].</span>",\
+			"<span class='notice'>You remove the label from [A].</span>")
 			return
 
 	proc/Label(var/atom/A, var/mob/user, var/no_message = 0)
@@ -562,8 +562,8 @@
 				return
 
 		if (user && !no_message)
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> labels [A] with \"[src.label]\".</span>",\
-			"<span style=\"color:blue\">You label [A] with \"[src.label]\".</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> labels [A] with \"[src.label]\".</span>",\
+			"<span class='notice'>You label [A] with \"[src.label]\".</span>")
 		if (istype(A, /obj/item/paper))
 			A.name = "'[src.label]'"
 		else
@@ -582,7 +582,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] labels [him_or_her(user)]self \"DEAD\"!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] labels [him_or_her(user)]self \"DEAD\"!</b></span>")
 		src.label = "(DEAD)"
 		Label(user,user,1)
 
@@ -600,7 +600,8 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "clipboard00"
 	var/obj/item/pen/pen = null
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "clipboard0"
 	throwforce = 0
 	w_class = 3.0
 	throw_speed = 3
@@ -707,7 +708,7 @@
 				user.drop_item()
 				P.set_loc(src)
 			else
-				boutput(user, "<span style=\"color:blue\">Not enough space!!!</span>")
+				boutput(user, "<span class='notice'>Not enough space!!!</span>")
 		else
 			if (istype(P, /obj/item/pen))
 				if (!src.pen)
@@ -717,6 +718,7 @@
 			else
 				return
 		src.update()
+		user.update_inhands()
 		SPAWN_DBG(0)
 			attack_self(user)
 			return
@@ -724,6 +726,7 @@
 
 	proc/update()
 		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
 		return
 
 /obj/item/clipboard/with_pen
@@ -823,14 +826,13 @@
 		src.add_fingerprint(user)
 		return
 
-	attack_self(var/mob/user as mob, var/page = 1 )
+	proc/display_booklet_contents(var/mob/user as mob, var/page = 1)
 		var/obj/item/paper/cur_page = pages[page]
 		var/next_page = ""
 		var/prev_page = "     "
 		set src in view()
 		set category = "Local"
 
-		..()
 		if(!user.literate)
 			. = html_encode(illiterateGarbleText(cur_page.info)) // deny them ANY useful information
 		else
@@ -849,14 +851,18 @@
 		if (page < pages.len)
 			next_page = "<a href='byond://?src=\ref[src];action=next_page;page=[page]'>Next</a>"
 
-		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=/ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
+		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
 		onclose(usr, "[src.name]")
 		return null
 
-	examine()
+	attack_self(var/mob/user)
 		..()
-		attack_self(usr, 1)
+		src.display_booklet_contents(user,1)
+
+	examine(mob/user)
+		. = ..()
+		src.display_booklet_contents(user, 1)
 
 	Topic(href, href_list)
 		..()
@@ -869,22 +875,22 @@
 
 		switch (href_list["action"])
 			if ("next_page")
-				src.attack_self(usr,page_num + 1)
+				src.display_booklet_contents(usr,page_num + 1)
 			if ("prev_page")
-				src.attack_self(usr,page_num - 1)
+				src.display_booklet_contents(usr,page_num - 1)
 			if ("write")
 				if (istype(usr.equipped(), /obj/item/pen))
 					cur_page.attackby(usr.equipped(),usr)
-					src.attack_self(usr,page_num)
+					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
 					cur_page.attack_self(usr)
 			if ("title_book")
 				src.give_title(usr)
 			if ("first_page")
-				src.attack_self(usr,1)
+				src.display_booklet_contents(usr,1)
 			if ("last_page")
-				src.attack_self(usr,pages.len)
+				src.display_booklet_contents(usr,pages.len)
 
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/paper))
@@ -899,7 +905,7 @@
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			else
-				boutput(usr, "<span style='color:red'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
 			..()
 		return

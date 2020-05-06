@@ -5,6 +5,7 @@
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
@@ -16,6 +17,7 @@
 	New()
 		..()
 		BLOCK_LARGE
+		AddComponent(/datum/component/itemblock/backpackblock)
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -34,7 +36,8 @@
 
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
-	icon_state = "bp_medic"
+	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
+	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel
@@ -135,19 +138,19 @@
 		var/mob/M = usr
 		if (!istype(over_object, /obj/screen))
 			if(!can_use())
-				boutput(M, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+				boutput(M, "<span class='alert'>I need to wear [src] for that.</span>")
 				return
 		return ..()
 
 	attack_hand(mob/user as mob)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
 			return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!can_use())
-			boutput(user, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
@@ -269,9 +272,8 @@
 		return ..()
 
 	examine()
-		..()
-		boutput(usr, "There are [src.charge]/[src.maxCharge] PU left.")
-		return
+		. = ..()
+		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
 		var/content = ..()
@@ -324,8 +326,8 @@
 	/obj/item/gun/energy/phaser_gun,
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawgiver,
-	/obj/item/gun/energy/lawgiver/old,
+	/obj/item/gun/energy/lawbringer,
+	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun)

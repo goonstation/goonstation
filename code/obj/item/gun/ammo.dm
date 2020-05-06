@@ -99,7 +99,7 @@
 				src.update_icon()
 				if (A.delete_on_reload)
 					qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span style=\"color:red\">[user] refills [src].</span>", "<span style=\"color:red\">There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining.</span>")
+				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining.</span>")
 				return // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (src.amount_left == src.max_amount))
 				A.update_icon()
@@ -107,7 +107,7 @@
 				if (A.amount_left == 0)
 					if (A.delete_on_reload)
 						qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span style=\"color:red\">[user] refills [src].</span>", "<span style=\"color:red\">You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name].</span>")
+				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name].</span>")
 				return // Full reload or ammo left over.
 		else return ..()
 
@@ -316,10 +316,19 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
-	icon_state = "pistol_clip"
+	icon_state = "pistol_magazine"
 	amount_left = 10.0
 	max_amount = 10.0
 	ammo_type = new/datum/projectile/bullet/bullet_22
+	caliber = 0.22
+
+/obj/item/ammo/bullets/bullet_22HP
+	sname = ".22 Hollow Point"
+	name = ".22 HP magazine"
+	icon_state = "pistol_magazine_hp"
+	amount_left = 10.0
+	max_amount = 10.0
+	ammo_type = new/datum/projectile/bullet/bullet_22/HP
 	caliber = 0.22
 
 /obj/item/ammo/bullets/a357
@@ -401,11 +410,12 @@
 	amount_left = 10
 	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/airzooka
+	caliber = 4.6
 
 /obj/item/ammo/bullets/airzooka/bad
-	name = "Airzooka Tactical Replacement Trashbag Xtreme Edition"
+	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
-	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma infusion."
+	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
@@ -413,7 +423,7 @@
 	amount_left = 10
 	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/airzooka/bad
-
+	caliber = 4.6
 
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm NATO"
@@ -626,6 +636,11 @@
 		name = "40mm HE pod-seeking shells"
 		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
 
+	knocker
+		sname = "40mm HE Knocker"
+		name = "40mm HE airlock-breaching shells"
+		ammo_type = new/datum/projectile/bullet/autocannon/knocker
+
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm HEDP"
 	name = "40mm HEDP shells"
@@ -698,7 +713,7 @@
 				boutput(user, "You load [W] into the [src].")
 				return
 			else
-				boutput(user, "<span style=\"color:red\">For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
+				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
 				return
 		else
 			return ..()
@@ -754,7 +769,7 @@
 /obj/item/ammo/bullets/bullet_9mm
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
-	icon_state = "9mm_mag"
+	icon_state = "pistol_magazine"
 	amount_left = 15.0
 	max_amount = 15.0
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
@@ -846,12 +861,11 @@
 
 	examine()
 		if (src.artifact)
-			boutput(usr, text("You have no idea what this thing is!"))
+			return list("You have no idea what this thing is!")
+		. = ..()
+		if (src.unusualCell)
 			return
-		..()
-		if (src.unusualCell) return
-		boutput(usr, "There are [src.charge]/[src.max_charge] PU left!")
-		return
+		. += "There are [src.charge]/[src.max_charge] PU left!"
 
 	use(var/amt = 0)
 		if (src.charge <= 0)
@@ -983,7 +997,7 @@
 					if(prob(max(11 - src.material.getProperty("stability"), 0)))
 						var/turf/T = get_turf(src)
 						explosion_new(src, T, 1)
-						src.visible_message("<span style=\"color:red\">\the [src] detonates.</span>")
+						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
 
 		src.charge = min(charge + recharge_rate, max_charge)
 		src.update_icon()
@@ -1034,8 +1048,8 @@
 	cycle = 0
 	recharge_rate = 40.0
 
-/obj/item/ammo/power_cell/self_charging/lawgiver
-	name = "Power Cell - Lawgiver Charger"
+/obj/item/ammo/power_cell/self_charging/lawbringer
+	name = "Power Cell - Lawbringer Charger"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 300PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
@@ -1045,6 +1059,12 @@
 	max_charge = 300.0
 	cycle = 0
 	recharge_rate = 10.0
+
+/obj/item/ammo/power_cell/self_charging/howitzer
+	name = "Miniaturized SMES"
+	desc = "This thing is huge! How did you even lift it put it into the gun?"
+	charge = 2500.0
+	max_charge = 2500.0
 
 /obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
 	sname = ".58 Flintlock"

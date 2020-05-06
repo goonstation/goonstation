@@ -33,7 +33,7 @@ Fibre wire
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"
-			boutput(user, "<span style=\"color:blue\">You add [W] to [src]. That's neat.</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
 			B.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -92,7 +92,7 @@ Fibre wire
 
 			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
-			sleep(30)
+			sleep(3 SECONDS)
 			qdel(src)
 
 //////////////////////////////
@@ -224,8 +224,8 @@ proc/Create_Tommyname()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
-			O.show_message("<span style=\"color:red\"><B>[user] fires the [src] at [target]!</B></span>", 1, "<span style=\"color:red\">You hear a loud crackling noise.</span>", 2)
-		sleep(1)
+			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
+		sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
 	update_icon()
@@ -368,18 +368,18 @@ proc/Create_Tommyname()
 					return
 				else
 					activated = 1
-					sleep(20)
+					sleep(2 SECONDS)
 					var/startx = 1
 					var/starty = 1
 					var/mob/badmantarget = M
 					boutput(badmantarget, "<span style=\"color:black\"> <B> You hear a voice in your head, 'You're not supposed to be here'. </B>")
 					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, 1, -1)
-					sleep(100)
+					sleep(10 SECONDS)
 					startx = badmantarget.x - rand(-11, 11)
 					starty = badmantarget.y - rand(-11, 11)
 					var/turf/pickedstart = locate(startx, starty, badmantarget.z)
 					new /obj/badman(pickedstart, badmantarget)
-					sleep(150)
+					sleep(15 SECONDS)
 					activated = 0
 
 ////////////////////////////// Donald Trumpet

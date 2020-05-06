@@ -61,7 +61,7 @@
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)
-			boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
+			boutput(user, "<span class='notice'>You insert [W].</span>")
 			return
 		..()
 

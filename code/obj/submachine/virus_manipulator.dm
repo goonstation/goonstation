@@ -206,13 +206,13 @@
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if (src.working)
-			boutput(user, "<span style=\"color:red\">The manipulator is busy!</span>")
+			boutput(user, "<span class='alert'>The manipulator is busy!</span>")
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
 			if(src.active_vial)
-				boutput(user, "<span style=\"color:red\">A vial is already loaded into the manipulator.</span>")
+				boutput(user, "<span class='alert'>A vial is already loaded into the manipulator.</span>")
 				return
-			boutput(user, "<span style=\"color:blue\">You add the [W] to the manipulator!</span>")
+			boutput(user, "<span class='notice'>You add the [W] to the manipulator!</span>")
 			src.datavial = W.name
 			src.active_vial = W
 			user.drop_item()
@@ -253,5 +253,5 @@
 				src.dataregress = "N/A"
 				src.datavaccine = "N/A"
 		else
-			boutput(user, "<span style=\"color:red\">The manipulator cannot accept that!</span>")
+			boutput(user, "<span class='alert'>The manipulator cannot accept that!</span>")
 			return

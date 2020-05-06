@@ -114,7 +114,7 @@
 
 	anger()
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span style=\"color:red\"><B>[src.name]</B> becomes angry!</span>")
+			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
 		teleport()
 		SPAWN_DBG(rand(1000,3000))
@@ -164,7 +164,7 @@
 		if(..())
 			return
 		if(angry)
-			boutput(user, "<span style=\"color:red\">[src] is angry and won't trade with anyone right now.</span>")
+			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
 		user.machine = src
 		var/dat = updatemenu()
@@ -396,7 +396,7 @@
 				src.updateUsrDialog()
 				return
 			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span style=\"color:red\">Your account cannot currently be liquidated due to active borrows.</span>")
+				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
@@ -459,19 +459,19 @@
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-					boutput(usr, "<span style=\"color:blue\">You swipe the ID card in the card reader.</span>")
+					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 					var/datum/data/record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
 						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
 						if (enterpin == I:pin)
-							boutput(usr, "<span style=\"color:blue\">Card authorized.</span>")
+							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I
 						else
-							boutput(usr, "<span style=\"color:red\">Pin number incorrect.</span>")
+							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 							src.scan = null
 					else
-						boutput(usr, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+						boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
 						src.scan = null
 
 		////////////////////////////////////////////////////

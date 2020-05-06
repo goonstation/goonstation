@@ -3,13 +3,14 @@
 *.rsc
 *.int
 *.lk
+*.mdme
 
-# runtime generated files
-/data/*
+# Runtime generated files
+/data/**/*
+/adventure/**/*
 *.log
-/adventure
 
-# ignore build files
+# Build files
 /_stdlib/__build.dm
 z_build_opts.dm
 
@@ -20,12 +21,16 @@ node_modules
 Build System.dm
 
 # Editor Files
-*.sublime-project
-*.sublime-workspace
-*.vscode
-*.idea
+*.sublime-project/*
+*.sublime-workspace/*
+*.vscode/*
+!/.vscode/extensions.json
+*.idea/*
 
-#Misc
+# Local Map Backups
+/maps/**/backup/
+
+# Windows image file caches
 Thumbs.db
 /unversioned/*
 maps/WIP/5-6 Station v3.dmm
@@ -50,3 +55,18 @@ maps/WIP/Shuttles.dmm
 maps/WIP/5-6Station.dmm
 maps/WIP/4station.dmm
 maps/WIP/FartmapMocup.dmm
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Windows shortcuts
+*.lnk
+
+# OSX Junk
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Dedicated unversioned folder
+/unversioned/**/*

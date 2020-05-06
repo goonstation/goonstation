@@ -228,7 +228,7 @@
 
 	clicked(id, mob/user, list/params)
 		if (user.loc != master)
-			boutput(user, "<span style=\"color:red\">You're not in the pod doofus. (Call 1-800-CODER.)</span>")
+			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
 			remove_client(user.client)
 
 			if (user.client.tooltipHolder)
@@ -236,7 +236,7 @@
 
 			return
 		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
-			boutput(user, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+			boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 			return
 		// WHAT THE FUCK PAST MARQUESAS
 		// GET IT TOGETHER
@@ -246,7 +246,7 @@
 			if ("engine")
 				if (master.engine)
 					if (user != master.pilot)
-						boutput(user, "<span style=\"color:red\">Only the pilot may do that!</span>")
+						boutput(user, "<span class='alert'>Only the pilot may do that!</span>")
 						return
 					master.engine.toggle()
 			if ("life_support")
@@ -284,21 +284,21 @@
 							master.locked = 0
 						master.lock.code = ""
 
-						boutput(usr, "<span style=\"color:blue\">Code reset.  Please type new code and press enter.</span>")
+						boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
 						master.lock.show_lock_panel(usr)
 					else if (!master.locked)
 						master.locked = 1
-						boutput(usr, "<span style=\"color:red\">The lock mechanism clunks locked.</span>")
+						boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
 					else if (master.locked)
 						master.locked = 0
-						boutput(usr, "<span style=\"color:red\">The ship mechanism clicks unlocked.</span>")
+						boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 			if ("set_code")
 				if (master.lock)
 					master.lock.configure_mode = 1
 					if (master)
 						master.locked = 0
 					master.lock.code = ""
-					boutput(usr, "<span style=\"color:blue\">Code reset.  Please type new code and press enter.</span>")
+					boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
 					master.lock.show_lock_panel(usr)
 			if ("return_to_station")
 				if(master.com_system)

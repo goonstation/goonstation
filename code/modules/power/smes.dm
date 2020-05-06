@@ -168,7 +168,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.interact(M)
+			src.interacted(M)
 	AutoUpdateAI(src)
 
 // called after all power processes are finished
@@ -215,7 +215,7 @@
 
 	if (status & BROKEN) return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/smes/attack_hand(mob/user)
 
@@ -223,11 +223,11 @@
 
 	if (status & BROKEN) return
 
-	interact(user)
+	interacted(user)
 
 
 
-/obj/machinery/power/smes/proc/interact(mob/user)
+/obj/machinery/power/smes/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!isAI(user) && !issilicon(user))

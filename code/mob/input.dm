@@ -82,7 +82,7 @@ mob
 				if (src.restrained())
 					for(var/mob/M in range(src, 1))
 						if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)
-							boutput(src, "<span style=\"color:blue\">You're restrained! You can't move!</span>")
+							boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 							return
 
 				var/misstep_angle = 0
@@ -105,6 +105,8 @@ mob
 					if (src.buckled && istype(src.buckled, /obj/stool/chair))
 						var/obj/stool/chair/C = src.buckled
 						delay += C.buckle_move_delay //GriiiiIIIND
+						if (C.rotatable)
+							C.rotate(src.move_dir)
 
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 						if (get_dist(src, G.affecting) > 1)

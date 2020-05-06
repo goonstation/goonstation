@@ -202,7 +202,7 @@
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
 			boutput(user, "You insert the record into the record player.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] inserts the record into the record player.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
@@ -226,14 +226,14 @@
 				sleep(3000)
 #endif
 			is_playing = 0
-	else 
+	else
 		..()
 
 /obj/submachine/record_player/attack_hand(mob/user as mob)
 	if(has_record)
 		if(!is_playing)
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes the record from the record player.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes the record from the record player.</b></span>")
 			user.put_in_hand_or_drop(src.record_inside)
 			src.record_inside = null
 			src.has_record = 0
@@ -265,9 +265,9 @@
 /obj/item/record/attack(mob/M as mob, mob/user as mob) // copied plate code
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
-			boutput(user, "<span style=\"color:red\"><B>You smash the record over your own head!</b></span>")
+			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
-			M.visible_message("<span style=\"color:red\"><B>[user] smashes [src] over [M]'s head!</B></span>")
+			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
@@ -279,7 +279,7 @@
 			O.setMaterial(copyMaterial(src.material))
 		qdel(src)
 	else
-		M.visible_message("<span style=\"color:red\">[user] taps [M] over the head with [src].</span>")
+		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps %target% over the head with [src].")
 
 /obj/item/record/random/adventure_1
@@ -413,8 +413,8 @@
 
 /obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
 	if (istype(P, /obj/item/magnifying_glass))
-		boutput(user, "<span style=\"color:blue\">You examine the record with the magnifying glass.</span>")
-		sleep(20)
+		boutput(user, "<span class='notice'>You examine the record with the magnifying glass.</span>")
+		sleep(2 SECONDS)
 		boutput(user, "The scratch on the record, upon close examination, is actually tiny lettering. It says, <i>Fuck Discount Dan's. I hope more of your factories go under and you all drown in your toxic sewage.</i>")
 
 /obj/item/record/atlas
@@ -488,7 +488,7 @@
 	..()
 	icon_state = "sleeve_[rand(4,36)]"
 
-/obj/item/storage/box/record/radio/one 
+/obj/item/storage/box/record/radio/one
 	spawn_contents = list(/obj/item/record/january,
 	/obj/item/record/february,
 	/obj/item/record/march,
@@ -496,7 +496,7 @@
 	/obj/item/record/may,
 	/obj/item/record/june)
 
-/obj/item/storage/box/record/radio/two 
+/obj/item/storage/box/record/radio/two
 	spawn_contents = list(/obj/item/record/july,
 	/obj/item/record/august,
 	/obj/item/record/september,
@@ -504,7 +504,7 @@
 	/obj/item/record/november,
 	/obj/item/record/december)
 
-/obj/item/storage/box/record/radio/host 
+/obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
 /obj/item/storage/box/record/radio/host/New()
@@ -532,7 +532,7 @@
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
 		else if(!is_playing)
-			src.visible_message("<span style=\"color:blue\"><b>[user] inserts the compact tape into the tape deck.</b></span>",
+			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
 			user.drop_item()
 			W.set_loc(src)
@@ -555,7 +555,7 @@
 	if(has_tape)
 		if(!is_playing)
 			boutput(user, "You remove the tape from the tape deck.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes the tape from the tape deck.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
 			user.put_in_hand_or_drop(src.tape_inside)
 			src.tape_inside = null
 			src.has_tape = 0

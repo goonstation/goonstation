@@ -265,7 +265,7 @@
 			return
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
 
 
 /obj/machinery/fakesecscanner

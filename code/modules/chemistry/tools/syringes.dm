@@ -86,12 +86,12 @@
 						return
 
 					if (reagents.total_volume >= reagents.maximum_volume)
-						boutput(user, "<span style=\"color:red\">The syringe is full.</span>")
+						boutput(user, "<span class='alert'>The syringe is full.</span>")
 						return
 
 					var/mob/living/carbon/human/H = target
 					if (target != user)
-						L.visible_message("<span style=\"color:red\"><B>[user] is trying to draw blood from [L]!</B></span>")
+						L.visible_message("<span class='alert'><B>[user] is trying to draw blood from [L]!</B></span>")
 
 						if (!do_mob(user, L))
 							if (user && ismob(user))
@@ -101,7 +101,7 @@
 							user.show_text("You can't draw blood from this mob.", "red")
 							return
 						if (reagents.total_volume >= reagents.maximum_volume)
-							boutput(user, "<span style=\"color:red\">The syringe is full.</span>")
+							boutput(user, "<span class='alert'>The syringe is full.</span>")
 							return
 
 					// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
@@ -110,61 +110,61 @@
 						if ((isvampire(H) && (H.get_vampire_blood() <= 0)) || (!isvampire(H) && !H.blood_volume))
 							user.show_text("[H]'s veins appear to be completely dry!", "red")
 							return
-					target.visible_message("<span style=\"color:red\">[user] draws blood from [H]!</span>")
+					target.visible_message("<span class='alert'>[user] draws blood from [H]!</span>")
 
 					transfer_blood(target, src)
 					user.update_inhands()
 
-					boutput(user, "<span style=\"color:blue\">You fill the syringe with 5 units of [target]'s blood.</span>")
+					boutput(user, "<span class='notice'>You fill the syringe with 5 units of [target]'s blood.</span>")
 					return
 
 				if (!target.reagents.total_volume)
-					boutput(user, "<span style=\"color:red\">[target] is empty.</span>")
+					boutput(user, "<span class='alert'>[target] is empty.</span>")
 					return
 
 				if (reagents.total_volume >= reagents.maximum_volume)
-					boutput(user, "<span style=\"color:red\">The syringe is full.</span>")
+					boutput(user, "<span class='alert'>The syringe is full.</span>")
 					return
 
 				if (target.is_open_container() != 1 && !istype(target,/obj/reagent_dispensers))
-					boutput(user, "<span style=\"color:red\">You cannot directly remove reagents from this object.</span>")
+					boutput(user, "<span class='alert'>You cannot directly remove reagents from this object.</span>")
 					return
 
 				target.reagents.trans_to(src, 5)
 				user.update_inhands()
 
-				boutput(user, "<span style=\"color:blue\">You fill the syringe with 5 units of the solution.</span>")
+				boutput(user, "<span class='notice'>You fill the syringe with 5 units of the solution.</span>")
 
 			if (S_INJECT)
 				// drsingh for Cannot read null.total_volume
 				if (!reagents || !reagents.total_volume)
-					boutput(user, "<span style=\"color:red\">The Syringe is empty.</span>")
+					boutput(user, "<span class='alert'>The Syringe is empty.</span>")
 					return
 
 				if (istype(target, /obj/item/bloodslide))
 					var/obj/item/bloodslide/BL = target
 					if (BL.reagents.total_volume)
-						boutput(user, "<span style=\"color:red\">There is already a pathogen sample on [target].</span>")
+						boutput(user, "<span class='alert'>There is already a pathogen sample on [target].</span>")
 						return
 					var/transferred = src.reagents.trans_to(target, 5)
 					user.update_inhands()
-					boutput(user, "<span style=\"color:blue\">You fill the blood slide with [transferred] units of the solution.</span>")
+					boutput(user, "<span class='notice'>You fill the blood slide with [transferred] units of the solution.</span>")
 					// contingency
 					BL.on_reagent_change()
 					return
 
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
-					boutput(user, "<span style=\"color:red\">[target] is full.</span>")
+					boutput(user, "<span class='alert'>[target] is full.</span>")
 					return
 
 				if (target.is_open_container() != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/reagent_containers/patch))
-					boutput(user, "<span style=\"color:red\">You cannot directly fill this object.</span>")
+					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 
 				if (iscarbon(target) || iscritter(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
-							O.show_message(text("<span style=\"color:red\"><B>[] is trying to inject []!</B></span>", user, target), 1)
+							O.show_message(text("<span class='alert'><B>[] is trying to inject []!</B></span>", user, target), 1)
 						logTheThing("combat", user, target, "tries to inject %target% with a syringe [log_reagents(src)] at [log_loc(user)].")
 
 						if (!do_mob(user, target))
@@ -176,16 +176,16 @@
 							return
 
 						for (var/mob/O in AIviewers(world.view, user))
-							O.show_message(text("<span style=\"color:red\">[] injects [] with the syringe!</span>", user, target), 1)
+							O.show_message(text("<span class='alert'>[] injects [] with the syringe!</span>", user, target), 1)
 
 					src.reagents.reaction(target, INGEST)
 
 				if (istype(target,/obj/item/reagent_containers/patch))
 					var/obj/item/reagent_containers/patch/P = target
-					boutput(user, "<span style=\"color:blue\">You fill [P].</span>")
+					boutput(user, "<span class='notice'>You fill [P].</span>")
 					if (P.medical == 1)
 						//break the seal
-						boutput(user, "<span style=\"color:red\">You break [P]'s tamper-proof seal!</span>")
+						boutput(user, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 						P.medical = 0
 
 				SPAWN_DBG (5)
@@ -205,7 +205,7 @@
 							patch_name += "patch"
 							target.name = patch_name
 
-						boutput(user, "<span style=\"color:blue\">You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
+						boutput(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
 		return
 
 /* =================================================== */

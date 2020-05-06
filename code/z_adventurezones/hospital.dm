@@ -52,7 +52,7 @@ var/list/samostrel_warps = list()
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -204,7 +204,7 @@ var/list/samostrel_warps = list()
 	proximity_act()
 		..()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] passes its arm through [target]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] passes its arm through [target]!</B></span>")
 			//playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
@@ -601,7 +601,7 @@ var/list/samostrel_warps = list()
 
 		SPAWN_DBG(0) //Delete the overlay when finished with it.
 			src.on = 0
-			sleep(15)
+			sleep(1.5 SECONDS)
 			qdel(Ov)
 			qdel(src)
 

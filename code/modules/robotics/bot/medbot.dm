@@ -142,18 +142,6 @@
 			src.update_icon()
 	return
 
-/obj/machinery/bot/medbot/examine()
-	set src in view()
-	set category = "Local"
-	..()
-
-	if (src.health < 20)
-		if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-	return
-
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 
@@ -239,10 +227,10 @@
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span style=\"color:red\">You short out [src]'s reagent synthesis circuits.</span>")
+			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
 		SPAWN_DBG(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 		src.patient = null
 		src.oldpatient = user
 		src.currently_healing = 0
@@ -292,12 +280,12 @@
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 
 	else if (istype(W, /obj/item/reagent_containers/glass))
 		if (src.locked)
@@ -543,7 +531,7 @@
 		return
 	else
 		src.update_icon(stun = 0, heal = 1)
-		src.visible_message("<span style=\"color:red\"><B>[src] is trying to inject [src.patient]!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient]!</B></span>")
 		SPAWN_DBG(3 SECONDS)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if ((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -551,7 +539,7 @@
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				src.visible_message("<span style=\"color:red\"><B>[src] injects [src.patient] with the syringe!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
 
 			src.update_icon()
 			src.currently_healing = 0
@@ -568,13 +556,13 @@
 					SPAWN_DBG(1 DECI SECOND)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
 
@@ -645,7 +633,7 @@
 	..()
 	if(!src.emagged && prob(75))
 		src.emagged = 1
-		src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		src.on = 1
 	else
 		src.explode()
@@ -666,7 +654,7 @@
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)
@@ -708,7 +696,7 @@
 		return
 
 	if (src.contents.len >= 1)
-		boutput(user, "<span style=\"color:red\">You need to empty [src] out first!</span>")
+		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 	else
 		var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly
