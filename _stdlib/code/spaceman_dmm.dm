@@ -27,3 +27,9 @@
 	#define VAR_PRIVATE var
 	#define VAR_PROTECTED var
 #endif
+
+/proc/enable_extools_debugger()
+	Z_LOG_DEBUG("Preload", "Loading extools debugger...")
+	var/dll = world.GetConfig("env", "EXTOOLS_DLL")
+	if (dll)
+		call(dll, "debug_initialize")()

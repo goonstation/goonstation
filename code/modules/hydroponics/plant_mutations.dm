@@ -67,7 +67,7 @@
 		if (.)
 			return .
 		if (prob(5) || (user.client && user.client.hellbanned && prob(50)))
-			boutput(user, "<span style='color:red'>A tomato explodes as you pick it off the plant!</span>")
+			boutput(user, "<span class='alert'>A tomato explodes as you pick it off the plant!</span>")
 			explosion_new(POT, get_turf(user), 10, 1)
 			return 399
 		return 0
@@ -236,7 +236,7 @@
 		var/fart_prob = max(0,min(100,DNA.potency))
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
-			POT.visible_message("<span style=\"color:red\"><b>[POT]</b> farts!</span>")
+			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
 			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1)
 			// coder.Life()
 			// whoops undefined proc
@@ -353,7 +353,7 @@
 				else
 					continue
 			if (nerds.len >= 1)
-				POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
+				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
 				playsound(get_turf(POT), pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
 // Cannabis Mutations
@@ -553,7 +553,7 @@
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
 		playsound(get_turf(POT), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
-		boutput(user, "<span style=\"color:red\">[POT.name] angrily bites you!</span>")
+		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
 		return prob(50) // fights back, but doesn't always succeed
 

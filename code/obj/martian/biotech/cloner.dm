@@ -109,7 +109,7 @@
         playsound(src, "sound/effects/bubbles.ogg", 100, 1)
         // if there's a ghost, time to pull them back
         if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-          boutput(M.ghost, "<span style='color:blue'>You are dimly aware of bubbling fluid.</span>")
+          boutput(M.ghost, "<span class='notice'>You are dimly aware of bubbling fluid.</span>")
           M.ghost.mind.transfer_to(M)
           qdel(M.ghost)
         M = M.make_critter(src.growing_variant)
@@ -138,29 +138,29 @@
     var/mob/living/M = src.occupant
     var/health_percent = round((M.health / M.max_health) * 100)
     if(src.growing)
-      boutput(user, "<span class='text-blue'>Current occupant is [health_percent]% grown.</span>")
+      boutput(user, "<span class='notice'>Current occupant is [health_percent]% grown.</span>")
     else
-      boutput(user, "<span class='text-blue'>Current occupant is [100 - health_percent]% consumed.</span>")
+      boutput(user, "<span class='notice'>Current occupant is [100 - health_percent]% consumed.</span>")
   else if(src.cooldown > 0)
-    boutput(user, "<span class='text-blue'>Cloner is resting. Normal function will resume shortly.</span>")
+    boutput(user, "<span class='notice'>Cloner is resting. Normal function will resume shortly.</span>")
   else
-    boutput(user, "<span class='text-blue'>This device processes Martian bodies that are placed into it or next to it.</span>")
+    boutput(user, "<span class='notice'>This device processes Martian bodies that are placed into it or next to it.</span>")
 
 /obj/martianBiotech/cloner/attackby(obj/item/W as obj, mob/user as mob)
   var/obj/item/grab/G = W
   if (ismartian(user) && istype(G) && ismob(G.affecting))
     if(src.in_use)
-      boutput(user, "<span style=\"color:blue\"><B>The cloner is already occupied!</B></span>")
+      boutput(user, "<span class='notice'><B>The cloner is already occupied!</B></span>")
     else if(src.cooldown > 0)
-      boutput(user, "<span style=\"color:blue\"><B>The cloner is resting!</B></span>")
+      boutput(user, "<span class='notice'><B>The cloner is resting!</B></span>")
     else
       var/mob/M = G.affecting
       if(src.can_process_other_species || ismartian(M))
-        boutput(user, "<span style=\"color:blue\"><B>The cloner snatches your offering from your tentacles!</B></span>")
+        boutput(user, "<span class='notice'><B>The cloner snatches your offering from your tentacles!</B></span>")
         src.consume(M, 0) // yes I know this bypasses the reject chance but who the fuck is going to notice when processing other species is an admin gimmick anyway
         qdel(G)
       else
-        boutput(user, "<span style=\"color:blue\"><B>The cloner's biology is incompatible with this subject's. Perhaps consider putting it into a biomass pool?</B></span>")
+        boutput(user, "<span class='notice'><B>The cloner's biology is incompatible with this subject's. Perhaps consider putting it into a biomass pool?</B></span>")
     return
   else
     ..(W, user)

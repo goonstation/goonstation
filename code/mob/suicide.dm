@@ -35,7 +35,7 @@
 			return
 
 	if(src.mind && src.mind.damned)
-		boutput(src,"<span style=\"color:red\">You can't suicide. You're already in hell!</span>")
+		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
 		return
 
 
@@ -131,7 +131,7 @@
 		src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
 
 		if (!isnull(src.on_chair) && selection == src.on_chair)
-			src.visible_message("<span style='color:red'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
 			src.TakeDamage("head", 200, 0)
 			src.updatehealth()
 			SPAWN_DBG(50 SECONDS)
@@ -149,7 +149,7 @@
 					src.suiciding = 0
 		else
 			//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-			src.visible_message("<span style='color:red'><b>[src] is holding [his_or_her(src)] breath. It looks like [he_or_she(src)]'s trying to commit suicide.</b></span>")
+			src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [he_or_she(src)]'s trying to commit suicide.</b></span>")
 			src.take_oxygen_deprivation(175)
 			src.updatehealth()
 			SPAWN_DBG(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -159,18 +159,18 @@
 	return
 
 /mob/living/silicon/ai/do_suicide()
-	src.visible_message("<span style=\"color:red\"><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
+	src.visible_message("<span class='alert'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
 	src.unlock_medal("Damned", 1)
 	SPAWN_DBG(3 SECONDS)
 		src.death()
 
 /mob/living/silicon/robot/do_suicide()
 	var/mob/living/silicon/robot/R = src
-	src.visible_message("<span style=\"color:red\"><b>[src] is clutching its head strangely!</b></span>")
+	src.visible_message("<span class='alert'><b>[src] is clutching its head strangely!</b></span>")
 	SPAWN_DBG(2 SECONDS)
 		R.emote("scream")
 	SPAWN_DBG(3 SECONDS)
-		//src.visible_message("<span style=\"color:red\"><b>[src] has torn out its head!</b></span>")
+		//src.visible_message("<span class='alert'><b>[src] has torn out its head!</b></span>")
 		//playsound(R.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 		/*
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -187,7 +187,7 @@
 		R.eject_brain()
 
 /mob/living/silicon/ghostdrone/do_suicide()
-	src.visible_message("<span style=\"color:red\"><b>[src] forcefully rips it's own soul from its body!</b></span>")
+	src.visible_message("<span class='alert'><b>[src] forcefully rips it's own soul from its body!</b></span>")
 	src.unlock_medal("Damned", 1)
 	src.death()
 
@@ -196,7 +196,7 @@
 	pop()
 
 /mob/living/critter/do_suicide() // :effort:
-	src.visible_message("<span style=\"color:red\"><b>[src] suddenly dies for no adequately explained reason!</b></span>")
+	src.visible_message("<span class='alert'><b>[src] suddenly dies for no adequately explained reason!</b></span>")
 	src.unlock_medal("Damned", 1)
 	src.death()
 

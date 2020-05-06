@@ -289,7 +289,7 @@
 		if (!l_arm && howmany > 0)
 			l_arm = new /obj/item/parts/human_parts/arm/left(holder)
 			l_arm.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your left arm regrows!</span>")
+			boutput(holder, "<span class='notice'>Your left arm regrows!</span>")
 			l_arm:original_holder = holder
 			l_arm:set_skin_tone()
 			holder.hud.update_hands()
@@ -298,7 +298,7 @@
 		if (!r_arm && howmany > 0)
 			r_arm = new /obj/item/parts/human_parts/arm/right(holder)
 			r_arm.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your right arm regrows!</span>")
+			boutput(holder, "<span class='notice'>Your right arm regrows!</span>")
 			r_arm:original_holder = holder
 			r_arm:set_skin_tone()
 			holder.hud.update_hands()
@@ -307,7 +307,7 @@
 		if (!l_leg && howmany > 0)
 			l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 			l_leg.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your left leg regrows!</span>")
+			boutput(holder, "<span class='notice'>Your left leg regrows!</span>")
 			l_leg:original_holder = holder
 			l_leg:set_skin_tone()
 			howmany--
@@ -315,7 +315,7 @@
 		if (!r_leg && howmany > 0)
 			r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your right leg regrows!</span>")
+			boutput(holder, "<span class='notice'>Your right leg regrows!</span>")
 			r_leg:original_holder = holder
 			r_leg:set_skin_tone()
 			howmany--
@@ -329,27 +329,27 @@
 		if (!l_arm && howmany > 0)
 			l_arm = new /obj/item/parts/robot_parts/arm/left/reliquary(holder)
 			l_arm.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your left arm rebuilds itself!</span>")
+			boutput(holder, "<span class='notice'>Your left arm rebuilds itself!</span>")
 			holder.hud.update_hands()
 			howmany--
 
 		if (!r_arm && howmany > 0)
 			r_arm = new /obj/item/parts/robot_parts/arm/right/reliquary(holder)
 			r_arm.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your right arm rebuilds itself!</span>")
+			boutput(holder, "<span class='notice'>Your right arm rebuilds itself!</span>")
 			holder.hud.update_hands()
 			howmany--
 
 		if (!l_leg && howmany > 0)
 			l_leg = new /obj/item/parts/robot_parts/leg/left/reliquary(holder)
 			l_leg.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your left leg rebuilds itself!</span>")
+			boutput(holder, "<span class='notice'>Your left leg rebuilds itself!</span>")
 			howmany--
 
 		if (!r_leg && howmany > 0)
 			r_leg = new /obj/item/parts/robot_parts/leg/right/reliquary(holder)
 			r_leg.holder = holder
-			boutput(holder, "<span style=\"color:blue\">Your right rebuilds itself!</span>")
+			boutput(holder, "<span class='notice'>Your right rebuilds itself!</span>")
 			howmany--
 
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
@@ -422,7 +422,7 @@
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
 				if (show_message)
-					src.holder.show_message("<span style=\"color:blue\"><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
+					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
 					logTheThing("admin", user, src.holder, "replaced %target%'s left arm with [new_type]")
 				. ++
@@ -437,7 +437,7 @@
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
 				if (show_message)
-					src.holder.show_message("<span style=\"color:blue\"><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
+					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
 					logTheThing("admin", user, src.holder, "replaced %target%'s right arm with [new_type]")
 				. ++
@@ -447,7 +447,7 @@
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
 					if (show_message)
-						src.holder.show_message("<span style=\"color:blue\"><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
+						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
 						logTheThing("admin", user, src.holder, "replaced %target%'s left leg with [new_type]")
 					. ++
@@ -457,7 +457,7 @@
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
 					if (show_message)
-						src.holder.show_message("<span style=\"color:blue\"><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
+						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
 						logTheThing("admin", user, src.holder, "replaced %target%'s right leg with [new_type]")
 					. ++
@@ -573,7 +573,7 @@
 			logTheThing("combat", src, null, "was about to be respawned (Unkillable) but had DNR set.")
 			if (!gibbed)
 				src.gib()
-			boutput(src, "<span style=\"color:red\">The shield hisses and buzzes grumpily! It's almost as if you have some sort of option set that prevents you from coming back to life. Fancy that.</span>")
+			boutput(src, "<span class='alert'>The shield hisses and buzzes grumpily! It's almost as if you have some sort of option set that prevents you from coming back to life. Fancy that.</span>")
 			var/obj/item/unkill_shield/U = new /obj/item/unkill_shield
 			U.set_loc(src.loc)
 		else
@@ -615,14 +615,14 @@
 			SPAWN_DBG(0)
 				var/datum/mind/M = src.mind
 				emote("deathgasp")
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> begins to grow another head!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> begins to grow another head!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				sleep(20 SECONDS)
 				if(!M || M.disposed)
 					return
 				if (M && M.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> grows a head, which sprouts legs and wanders off, looking for food!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> grows a head, which sprouts legs and wanders off, looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
@@ -737,7 +737,7 @@
 				break
 
 	if (!antag_removal && src.spell_soulguard)
-		boutput(src, "<span style=\"color:blue\">Your Soulguard enchantment activates and saves you...</span>")
+		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		reappear_turf = pick(wizardstart)
 
 	////////////////Set up the new body./////////////////
@@ -807,58 +807,59 @@
 
 	return
 
+#define BASE_SPEED 1.3
+#define RUN_SCALING 0.2
+
+
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
-	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
-	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
+	. = BASE_SPEED
 
-	var/tally = baseSpeed
+	. += movement_delay_modifier
 
-	tally += movement_delay_modifier
+
+	var/multiplier = 1 // applied before running multiplier
+	var/health_deficiency_adjustment = 0
+	var/maximum_slowdown = 100 // applied before pulling checks
+
+	var/datum/movement_modifier/modifier
+	for(var/type_or_instance in src.movement_modifiers)
+		if (ispath(type_or_instance))
+			modifier = movement_modifier_instances[type_or_instance]
+		else
+			modifier = type_or_instance
+		if (modifier.ask_proc)
+			var/list/r = modifier.modifiers(src, move_target, running)
+			. += r[1]
+			multiplier *= r[2]
+		. += modifier.additive_slowdown
+		multiplier += modifier.multiplicative_slowdown
+		health_deficiency_adjustment += modifier.health_deficiency_adjustment
+		if (modifier.maximum_slowdown < maximum_slowdown)
+			maximum_slowdown = modifier.maximum_slowdown
 
 	if (m_intent == "walk")
-		tally += 0.8
+		. += 0.8
+
 	if (src.nodamage)
-		return tally
-
-	if (src.getStatusDuration("staggered") || src.hasStatus("blocking"))
-		tally += 0.5
-		//sprint disable handled in input.dm process_move, so that stamina isn't used up when running is impossible
-
-	var/datum/statusEffect/slowed/slowedStatus = src.hasStatus("slowed")
-	if (istype(slowedStatus))
-		tally += slowedStatus.howMuch
-
-	if (src.getStatusDuration("disorient"))
-		tally += 9
-
-	if (src.getStatusDuration("hastened"))
-		tally -= 0.8
+		return .
 
 	if (src.drowsyness > 0)
-		tally += 6
+		. += 6
 
+	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
-	var/health_deficiency = (src.max_health - src.health) // cogwerks // let's treat this like pain
-	if (src.reagents)
-		if (src.reagents.has_reagent("juggernaut"))
-			health_deficiency -= 65
-		if (src.reagents.has_reagent("morphine"))
-			health_deficiency -= 50
-		if (src.reagents.has_reagent("salicylic_acid"))
-			health_deficiency -= 25
-	if (src.hasStatus("gang_drug"))
-		health_deficiency -= 50
-	if (health_deficiency >= 30) tally += (health_deficiency / 25)
+	if (health_deficiency >= 30)
+		. += (health_deficiency / 25)
 
 	var/in_wheelchair = 0
 	if (src.buckled)
 		if (istype(src.buckled, /obj/stool/chair/comfy/wheelchair))
 			if (!src.l_hand)
 				in_wheelchair++
-				tally *= 0.66
+				. *= 0.66
 			if (!src.r_hand)
 				in_wheelchair++
-				tally *= 0.66
+				. *= 0.66
 	var/missing_legs = 0
 	var/missing_arms = 0
 	if (src.limbs)
@@ -873,60 +874,36 @@
 		if (0)
 			if (!in_wheelchair && src.shoes)
 				if (src.shoes.chained)
-					tally += 15
+					. += 15
 				else if (src.shoes.speedy) // miner boots, split off from the suit
-					tally *= 0.5
+					. *= 0.5
 		if (1)
 			if (!in_wheelchair || (in_wheelchair && missing_arms))
-				tally += 7
+				. += 7
 			else if (in_wheelchair < 2)
-				tally += 3
+				. += 3
 			if (src.shoes && src.shoes.speedy) // miner boots, split off from the suit
-				tally *= 0.75 //less effect if there's only one i guess
+				. *= 0.75 //less effect if there's only one i guess
 		if (2)
 			if (!in_wheelchair)
-				tally += 15
+				. += 15
 			else if (in_wheelchair < 2)
-				tally += 7
+				. += 7
 			switch(missing_arms)
 				if (1)
-					tally += 15 //can't pull yourself along too well
+					. += 15 //can't pull yourself along too well
 				if (2)
-					tally += 300 //haha good luck
+					. += 300 //haha good luck
 
-	if (src.mutantrace)
-		tally += src.mutantrace.movement_delay()
-	if (src.bioHolder)
-		if (src.bioHolder.HasEffect("fat"))
-			tally += 1.5
-		if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-			tally += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)//10)
-	//if (src.traitHolder)
-		//if (src.traitHolder.hasTrait("training_security"))
-		//	tally -= 0.2
-
-	if (src.limbs)
-		if (src.limbs.l_leg)
-			tally -= src.limbs.l_leg.effect_modifier
-		if (src.limbs.r_leg)
-			tally -= src.limbs.r_leg.effect_modifier
-
-	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
-		var/mob/living/carbon/human/H = G.affecting
-		if (isnull(H)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
-		if (G.state == 0)
-			if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-				if(istype(H) && H.intent != INTENT_HELP && H.lying)
-					tally *= max(H.p_class, 1)
-		else
-			tally *= max(H.p_class, 1)
+	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
+		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
 
 	var/has_fluid_move_gear = 0
 	var/has_space_move_gear = 0
 
-	for(var/atom in src.get_equipped_items())
+	for(var/atom in src.get_equipped_items()) // maybe replace this with items adding movement modifiers as well?
 		var/obj/item/I = atom
-		tally += I.getProperty("movespeed")
+		. += I.getProperty("movespeed")
 		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
 		has_space_move_gear += I.getProperty("space_movespeed")
 
@@ -934,74 +911,46 @@
 	if (has_space_move_gear)
 		var/turf/T = get_turf(src)
 		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE))
-			tally += has_space_move_gear
+			. += has_space_move_gear
 
 	if (!(src.mutantrace && src.mutantrace.aquatic)) //aquatic race suffers no penalty on dry land OR in fluid
 		var/turf/T = get_turf(src)
 		if (T && has_fluid_move_gear)		//add tally : we are on dry land and have gear on
 			if (!T.active_liquid && !(T.turf_flags & FLUID_MOVE))
-				tally += has_fluid_move_gear
+				. += has_fluid_move_gear
 		else if (T && !has_fluid_move_gear) 	//add tally : we are in fluid but have no gear
 			if (T.active_liquid)
-				tally += T.active_liquid.movement_speed_mod
+				. += T.active_liquid.movement_speed_mod
 			else if (istype(T,/turf/space/fluid))
-				tally += 4
+				. += 4
 
-	if (src.reagents)
-		if (src.reagents.has_reagent("energydrink") || src.reagents.has_reagent("methamphetamine"))
-			if (src.getStatusDuration("disorient")) //disorient still works on meth dudes!
-				tally *= 0.85
+	. = min(., maximum_slowdown)
+
+	. *= pull_speed_modifier(move_target)
+
+	if (!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+		if (src.pushing && (src.pulling != src.pushing))
+			. *= max (src.pushing.p_class, 1)
+
+		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
+			var/mob/M = G.affecting
+			if (isnull(M)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+			if (G.state == 0)
+				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+					if(ismob(M) && M.lying)
+						. *= max(M.p_class, 1)
 			else
-				tally *= 0.5
+				. *= max(M.p_class, 1)
 
-	if (src.reagents)
-		if (src.reagents.has_reagent("cocktail_triple"))
-			if (tally > 9)
-				tally /= 3
-			else
-				tally -= 6
-
-	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
-		tally = max(tally, 3)
-
-	/*	speed adjustment from pulling now handled in /mob/living/proc/pull_speed_modifier in living.dm, since it applies to both humans and cyborgs
-	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/M = src.pulling
-		// hi grayshift sorry grayshift
-		if(pull_slowing)
-			tally *= max(M.p_class, 1)
-		else
-			if(ishuman(M))
-				// if they're not on help intent and also not standing, THEN we might deign to use the p_class
-				var/mob/living/carbon/human/H = M
-				if(istype(H) && H.intent != INTENT_HELP && H.lying)
-					tally *= max(H.p_class, 1)
-			else if(istype(M, /obj/storage))
-				// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-				var/contains_unwilling_mobs = 0
-				var/obj/storage/S = M
-				for(var/mob/B in M.contents)
-					if(B.intent != INTENT_HELP && B.lying)
-						contains_unwilling_mobs = 1
-						break
-				if(contains_unwilling_mobs)
-					tally *= max(S.p_class, 1)
-			else if(istype(M,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-				tally *= max(M.p_class, 1)
-			// else, ignore p_class
-			*/
-	tally *= pull_speed_modifier(move_target)
-
-	if (src.pushing && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		if (src.pulling != src.pushing)
-			tally *= max (src.pushing.p_class, 1)
+	. *= multiplier
 
 	if (running)
-		var/minSpeed = (0.75 - runScaling * baseSpeed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
-		if (pulling) minSpeed = baseSpeed // not so fast, fucko
-		tally = min(tally, minSpeed + (tally - minSpeed) * runScaling) // i don't know what I'm doing, help
+		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
+		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
+		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
 
-	return tally
+#undef BASE_SPEED
+#undef RUN_SCALING
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -1174,11 +1123,11 @@
 			yeet_chance = 0.1
 
 		if(prob(yeet_chance))
-			src.visible_message("<span style=\"color:red\">[src] yeets [I].</span>")
+			src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			src.say("YEET")
 			yeet = 1 // I hate this
 		else
-			src.visible_message("<span style=\"color:red\">[src] throws [I].</span>")
+			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
 			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
@@ -1252,7 +1201,7 @@
 				for (var/obj/item/cloaking_device/I in src)
 					if (I.active)
 						I.deactivate(src)
-						src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+						src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 				src.throw_item(target, params)
 				return
 
@@ -1289,7 +1238,7 @@
 
 /mob/living/carbon/human/meteorhit(O as obj)
 	if (isdead(src)) src.gib()
-	src.visible_message("<span style=\"color:red\">[src] has been hit by [O]!</span>")
+	src.visible_message("<span class='alert'>[src] has been hit by [O]!</span>")
 	if (src.nodamage) return
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
@@ -1300,7 +1249,7 @@
 			if (src.energy_shield) reduction = src.energy_shield.protect()
 			if (src.spellshield)
 				reduction = 30
-				boutput(src, "<span style=\"color:red\"><b>Your Spell Shield absorbs some damage!</b></span>")
+				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
 			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
 			src.UpdateDamageIcon()
@@ -1375,6 +1324,44 @@
 		return r_store
 	return null
 
+/mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
+	if (!(I in src.contents))
+		return null
+
+	//wanted the following to be a switch case but those expect constant expressions
+
+	if (src.w_uniform == I)
+		return slot_w_uniform
+	if (src.wear_id == I)
+		return slot_wear_id
+	if (src.gloves == I)
+		return slot_gloves
+	if (src.shoes == I)
+		return slot_shoes
+	if (src.wear_suit == I)
+		return slot_wear_suit
+	if (src.back == I)
+		return slot_back
+	if (src.glasses == I)
+		return slot_glasses
+	if (src.ears == I)
+		return ears
+	if (src.wear_mask == I)
+		return slot_wear_mask
+	if (src.head == I)
+		return slot_head
+	if (src.belt == I)
+		return slot_belt
+	if (src.l_store == I)
+		return slot_l_store
+	if (src.r_store == I)
+		return slot_r_store
+	if(src.l_hand == I)
+		return slot_l_hand
+	if(src.r_hand == I)
+		return slot_r_hand
+	return null
+
 /mob/living/carbon/human/is_in_hands(var/obj/O)
 	if (l_hand == O || r_hand == O)
 		return 1
@@ -1430,7 +1417,7 @@
 
 		if (INTENT_DISARM)
 			if (M.is_mentally_dominated_by(src))
-				boutput(M, "<span style=\"color:red\">You cannot harm your master!</span>")
+				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
 				return
 
 			var/datum/limb/L = M.equipped_limb()
@@ -1452,7 +1439,7 @@
 
 		if (INTENT_HARM)
 			if (M.is_mentally_dominated_by(src))
-				boutput(M, "<span style=\"color:red\">You cannot harm your master!</span>")
+				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
 				return
 
 			if (M != src)
@@ -1463,14 +1450,14 @@
 			// instant kills are kinda boring. itd be fun to make it do more damage or smth, but
 			// as it is: no
 			if (src.shrunk == 2)
-				M.visible_message("<span style=\"color:red\">[M] squashes [src] like a bug.</span>")
+				M.visible_message("<span class='alert'>[M] squashes [src] like a bug.</span>")
 				src.gib()
 				return
 			*/
 
-			if (gloves && (gloves.can_be_charged && gloves.stunready && gloves.uses >= 1))
-				M.stun_glove_attack(src)
-				return
+			//if (gloves && (gloves.can_be_charged && gloves.stunready && gloves.uses >= 1))
+			//	M.stun_glove_attack(src)
+			//	return
 
 			if (gloves && gloves.activeweapon)
 				gloves.special_attack(src)
@@ -1480,7 +1467,7 @@
 				return
 
 			if (src.mob_flags && IS_RELIQUARY_SOLDIER)
-				M.visible_message("<span style=\"color:red\"><B>[M] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span style=\"color:red\"><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+				M.visible_message("<span class='alert'><B>[M] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 				random_brute_damage(M, rand(2,5))
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 				if(prob(10)) M.show_text("Your hand hurts...", "red")
@@ -1646,7 +1633,7 @@
 		return
 
 	if (src.bioHolder.HasEffect("revenant"))
-		src.visible_message("<span style=\"color:red\">[src] makes some [pick("eldritch", "eerie", "otherworldly", "netherly", "spooky", "demonic", "haunting")] noises!</span>")
+		src.visible_message("<span class='alert'>[src] makes some [pick("eldritch", "eerie", "otherworldly", "netherly", "spooky", "demonic", "haunting")] noises!</span>")
 		src.say_language = original_language
 		return
 
@@ -1654,13 +1641,13 @@
 		for (var/mob/living/L in view(2,src))
 			if (L == src) continue //You were able to vomit from your own breath. Maybe a good idea?
 			if (prob(20))
-				boutput(L, "<span style=\"color:red\">Good lord, [src]'s breath smells bad!</span>")
+				boutput(L, "<span class='alert'>Good lord, [src]'s breath smells bad!</span>")
 				L.vomit()
 
 
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN && !ignore_stamina_winded)
 		//src.emote(pick("gasp", "choke", "cough"))
-		//boutput(src, "<span style=\"color:red\">You are too exhausted to speak.</span>")
+		//boutput(src, "<span class='alert'>You are too exhausted to speak.</span>")
 		whisper(message)
 		src.say_language = original_language
 		return
@@ -1762,8 +1749,8 @@
 	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
 
 	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
-		boutput(src, "<span style=\"color:blue\"><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span style=\"color:red\">&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 
 	if (src.client && src.client.ismuted())
@@ -1785,11 +1772,11 @@
 
 	// Mute disability
 	if (src.bioHolder.HasEffect("mute"))
-		boutput(src, "<span style=\"color:red\">You seem to be unable to speak.</span>")
+		boutput(src, "<span class='alert'>You seem to be unable to speak.</span>")
 		return
 
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
+		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
 
 	var/italics = 1
@@ -2429,13 +2416,13 @@
 	hud.update_hands()
 
 /mob/living/carbon/human/emp_act()
-	boutput(src, "<span style=\"color:red\"><B>Your equipment malfunctions.</B></span>")
+	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")
 
 	var/list/L = src.get_all_items_on_mob()
 	if (L && L.len)
 		for (var/obj/O in L)
 			O.emp_act()
-	boutput(src, "<span style=\"color:red\"><B>BZZZT</B></span>")
+	boutput(src, "<span class='alert'><B>BZZZT</B></span>")
 
 /mob/living/carbon/human/verb/consume(mob/M as mob in oview(0))
 	set hidden = 1
@@ -2452,20 +2439,20 @@
 		return
 
 	if(src.emote_check(1, 50, 0))	//spam prevention
-		usr.visible_message("<span style=\"color:red\">[usr] starts [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. [pick("What a [pick("psychopath","freak","weirdo","lunatic","creep","rude dude","nutter","jerk","nerd")]!","Holy shit!","What the [pick("hell","fuck","christ","shit","heck")]?","Oh [pick("no","dear","god")]!")]</span>")
+		usr.visible_message("<span class='alert'>[usr] starts [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. [pick("What a [pick("psychopath","freak","weirdo","lunatic","creep","rude dude","nutter","jerk","nerd")]!","Holy shit!","What the [pick("hell","fuck","christ","shit","heck")]?","Oh [pick("no","dear","god")]!")]</span>")
 
 		var/loc = usr.loc
 
 		SPAWN_DBG(5 SECONDS)
 			if (usr.loc != loc || H.loc != loc)
-				boutput(usr, "<span style=\"color:red\">Your consumption of [H] was interrupted!</span>")
+				boutput(usr, "<span class='alert'>Your consumption of [H] was interrupted!</span>")
 				return
 
-			usr.visible_message("<span style=\"color:red\">[usr] finishes [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. That was [pick("gross","horrific","disturbing","weird","horrible","funny","strange","odd","creepy","bloody","gory","shameful","awkward","unusual")]!</span>")
+			usr.visible_message("<span class='alert'>[usr] finishes [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. That was [pick("gross","horrific","disturbing","weird","horrible","funny","strange","odd","creepy","bloody","gory","shameful","awkward","unusual")]!</span>")
 
 			if (prob(10) && !H.mutantrace)
 				usr.reagents.add_reagent("prions", 10)
-				SPAWN_DBG(rand(20,50)) boutput(usr, "<span style=\"color:red\">You don't feel so good.</span>")
+				SPAWN_DBG(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
 
 			H.TakeDamageAccountArmor("chest", rand(30,50), 0, 0, DAMAGE_STAB)
 			if (!isdead(H) && prob(50))
@@ -2479,8 +2466,8 @@
 	set name = "7848(2)9(1)"
 	set hidden = 1
 
-	boutput(src, "<span style=\"color:red\">You have no idea what to do with that.</span>")
-	boutput(src, "<span style=\"color:red\">This statement is universally true because if you did you probably wouldn't be desperate enough to see this message.</span>")
+	boutput(src, "<span class='alert'>You have no idea what to do with that.</span>")
+	boutput(src, "<span class='alert'>This statement is universally true because if you did you probably wouldn't be desperate enough to see this message.</span>")
 
 /mob/living/carbon/human/full_heal()
 	blinded = 0
@@ -2632,10 +2619,10 @@
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)
 		src.take_toxin_damage(0 - healing)
-		boutput(src, "<span style=\"color:blue\">You absorb the electrical shock, healing your body!</span>")
+		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return 0
 	else if (src.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(src, "<span style=\"color:blue\">You feel electricity course through you harmlessly!</span>")
+		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return 0
 
 	switch(shock_damage)
@@ -2645,7 +2632,7 @@
 			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
 		if (60 to 99)
 			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
-			boutput(src, "<span style=\"color:red\"><b>[origin] discharges a violent arc of electricity!</b></span>")
+			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
 			src.apply_flash(60, 0, 10)
 			if (ishuman(src))
 				var/mob/living/carbon/human/H = src
@@ -2666,14 +2653,14 @@
 				explosion(origin, T, -1,-1,1,2)
 			if (ishuman(src))
 				if (prob(20))
-					boutput(src, "<span style=\"color:red\"><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
+					boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
 					if (src.shoes)
 						src.drop_from_slot(src.shoes)
 					make_cleanable(/obj/decal/cleanable/ash,src.loc)
 					SPAWN_DBG(1 DECI SECOND)
 						src.elecgib()
 				else
-					boutput(src, "<span style=\"color:red\"><b>[origin] blasts you with an arc flash!</b></span>")
+					boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
 					if (src.shoes)
 						src.drop_from_slot(src.shoes)
 					var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
@@ -2681,7 +2668,7 @@
 	shock_cyberheart(shock_damage)
 	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
 	src.updatehealth()
-	boutput(src, "<span style=\"color:red\"><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
+	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
 	sleep(0.1 SECONDS)
@@ -2728,7 +2715,7 @@
 			src.update_clothing()
 			src.show_text("You briefly shrink your legs to remove the shackles.", "blue")
 		else if (src.is_hulk() || ishunter(src) || iswerewolf(src))
-			src.visible_message("<span style=\"color:red\">[src] rips apart the shackles with pure brute strength!</b></span>", "<span style=\"color:blue\">You rip apart the shackles.</span>")
+			src.visible_message("<span class='alert'>[src] rips apart the shackles with pure brute strength!</b></span>", "<span class='notice'>You rip apart the shackles.</span>")
 			var/obj/item/clothing/shoes/NEW = new SH.type
 			// Fallback if type is chained by default. Don't think we can check without spawning a pair first.
 			if (NEW.chained)
@@ -2739,7 +2726,7 @@
 			src.update_clothing()
 			qdel(SH)
 		else if (src.limbs && (istype(src.limbs.l_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/light)) && (istype(src.limbs.r_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/light))) // Light cyborg legs don't count.
-			src.visible_message("<span style=\"color:red\">[src] rips apart the shackles with pure machine-like strength!</b></span>", "<span style=\"color:blue\">You rip apart the shackles.</span>")
+			src.visible_message("<span class='alert'>[src] rips apart the shackles with pure machine-like strength!</b></span>", "<span class='notice'>You rip apart the shackles.</span>")
 			var/obj/item/clothing/shoes/NEW2 = new SH.type
 			if (NEW2.chained)
 				qdel(NEW2)
@@ -2757,13 +2744,13 @@
 	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
 			if (src.is_changeling())
-				boutput(src, "<span style=\"color:blue\">You briefly shrink your hands to remove your handcuffs.</span>")
+				boutput(src, "<span class='notice'>You briefly shrink your hands to remove your handcuffs.</span>")
 				src.handcuffs.drop_handcuffs(src)
 				return
 			if (ishunter(src))
 				for (var/mob/O in AIviewers(src))
-					O.show_message(text("<span style=\"color:red\"><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
-				boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
+					O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
+				boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
 				if (src.handcuffs:material) //This is a bit hacky.
 					src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
@@ -2776,24 +2763,24 @@
 					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
 					return
 				else
-					src.visible_message("<span style=\"color:red\"><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
-					boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
+					src.visible_message("<span class='alert'><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
+					boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 					if (src.handcuffs:material) //This is a bit hacky.
 						src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
 					src.handcuffs.destroy_handcuffs(src)
 					return
 		if (src.is_hulk())
 			for (var/mob/O in AIviewers(src))
-				O.show_message(text("<span style=\"color:red\"><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
-			boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
+				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
+			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
 			if (src.handcuffs:material) //This is a bit hacky.
 				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
 			for (var/mob/O in AIviewers(src))
-				O.show_message(text("<span style=\"color:red\"><B>[] rips apart the handcuffs with machine-like strength!</B></span>", src), 1)
-			boutput(src, "<span style=\"color:blue\">You rip apart your handcuffs.</span>")
+				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with machine-like strength!</B></span>", src), 1)
+			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
 			if (src.handcuffs:material) //This is a bit hacky.
 				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
@@ -2801,7 +2788,7 @@
 		else
 			src.last_resist = world.time + 100
 			var/calcTime = src.handcuffs.material ? max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) * 10, 200) : (istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(150, 180) : (src.canmove ? rand(400,500) : rand(600,750)))
-			boutput(src, "<span style=\"color:red\">You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
+			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
 			if (src.handcuffs:material) //This is a bit hacky.
 				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
@@ -2829,7 +2816,7 @@
 		animation.icon = 'icons/mob/mob.dmi'
 		animation.master = src
 		flick("spidergib", animation)
-		src.visible_message("<span style=\"color:red\"><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span style=\"color:red\"><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span style=\"color:red\">You hear a vile chittering sound.</span>")
+		src.visible_message("<span class='alert'><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span class='alert'><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span class='alert'>You hear a vile chittering sound.</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
 		SPAWN_DBG(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
@@ -2972,7 +2959,7 @@
 			continue
 		if (istype(A, /obj/screen)) // maybe people will stop gibbing out their stamina bars now  :|
 			continue
-		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/fry_holder)) //For dudes who got fried and eaten so they eject -ZeWaka
+		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/shell)) //For dudes who got fried and eaten so they eject -ZeWaka
 			ret += A
 	return ret
 
@@ -3089,7 +3076,8 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK) return slot_item.equipment_click(src, target, params, location, control, origParams, slot)
+		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+			return
 
 	if (src.lying)
 		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
@@ -3167,7 +3155,7 @@
 /mob/living/carbon/human/proc/drop_juggle()
 	if (!src.juggling())
 		return
-	src.visible_message("<span style=\"color:red\"><b>[src]</b> drops everything they were juggling!</span>")
+	src.visible_message("<span class='alert'><b>[src]</b> drops everything they were juggling!</span>")
 	for (var/obj/O in src.juggling)
 		O.set_loc(src.loc)
 		O.layer = initial(O.layer)
@@ -3304,7 +3292,7 @@
 	if (liquidReagentContainer && src.chest_item.reagents.total_volume > 0)			// If container type is OK and has reagents...
 		var/maxVolumeAdd = src.reagents.maximum_volume - src.reagents.total_volume	// Get max available volume in human
 		if (maxVolumeAdd > 0)	// If we can add reagents to human, print message and dump shit into human
-			boutput(src, "<span style=\"color:red\"><b>[src.chest_item] spills its contents inside your chest!</span>")
+			boutput(src, "<span class='alert'><b>[src.chest_item] spills its contents inside your chest!</span>")
 			logTheThing("combat", src, src.chest_item, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
 			src.chest_item.reagents.trans_to(src, maxVolumeAdd)
 	return
@@ -3327,12 +3315,12 @@
 				src.show_text("You poop out <B>[src.chest_item]</B>! Your butt aches a bit.")
 			else if (src.chest_item.w_class == 3 )
 				poopingDamage = 20
-				src.show_text("<span style=\"color:red\"><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
+				src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 				src.changeStatus("stunned", 2 SECONDS)
 				take_bleeding_damage(src, src, 5)
 			else if (src.chest_item.w_class == 4 || src.chest_item.w_class == 5)
 				poopingDamage = 50
-				src.show_text("<span style=\"color:red\"><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
+				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
 				src.changeStatus("stunned", 50)
 				take_bleeding_damage(src, src, 20)
 
@@ -3350,12 +3338,12 @@
 			if (cutOffButt)
 				src.TakeDamage("chest", 15, 0, 0, src.chest_item.hit_type)
 				take_bleeding_damage(src, src, 15)
-				src.show_text("<span style=\"color:red\"><B>[src.chest_item] cut your butt off on the way out!</B></span>")
+				src.show_text("<span class='alert'><B>[src.chest_item] cut your butt off on the way out!</B></span>")
 				src.organHolder.drop_organ("butt")
 		// Other object is pooped out
 		else
 			// If it's not an "item", deal medium damage
-			src.show_text("<span style=\"color:red\"><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
+			src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 			src.changeStatus("stunned", 1 SECOND)
 			src.TakeDamage("chest", 20, 0, 0, DAMAGE_BLUNT)
 			take_bleeding_damage(src, src, 5)
@@ -3494,7 +3482,7 @@
 		if (prob(5)) // Handling tied or cut shoelaces courtesy of /obj/item/gun/energy/pickpocket
 			if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 				if (src.shoes.laces == LACES_TIED) // Laces tied
-					boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! <span style='color:red'>FUCK!</span>")
+					boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! <span class='alert'>FUCK!</span>")
 					src.changeStatus("weakened", 3 SECONDS)
 				else if (src.shoes.laces == LACES_CUT) // Laces cut
 					var/obj/item/clothing/shoes/S = src.shoes
@@ -3502,7 +3490,7 @@
 					S.set_loc(src.loc)
 					S.dropped(src)
 					S.layer = initial(S.layer)
-					if (prob(20)) boutput(src, "You run right the fuck out of your shoes. <span style='color:red'>Shit!</span>")
+					if (prob(20)) boutput(src, "You run right the fuck out of your shoes. <span class='alert'>Shit!</span>")
 
 #undef can_step_sfx
 

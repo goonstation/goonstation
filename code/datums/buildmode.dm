@@ -43,7 +43,7 @@
 	proc/click_right(atom/object, var/ctrl, var/alt, var/shift)
 
 	var/name = "You shouldn't see me."
-	var/desc = "<span style=\"color:red\">Someone is a lazy bum.</span>"
+	var/desc = "<span class='alert'>Someone is a lazy bum.</span>"
 	var/datum/buildmode_holder/holder = null
 	var/icon_state = null
 	var/admin_level = LEVEL_BABBY // restricts certain things to certain ranks

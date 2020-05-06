@@ -13,8 +13,8 @@
 		button_type = input("Pad type", "Pad type", "ancient") in list("ancient", "runes")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		button_name = input("Pressure pad name", "Pressure pad name", "pressure pad") as text
-		boutput(usr, "<span style=\"color:blue\">Left click to place pressure pads, right click triggerables to (de)select them for automatic assignment to the pressure pads. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">NOTE: Select stuff first, then make pressure pads for extra comfort!</span>")
+		boutput(usr, "<span class='notice'>Left click to place pressure pads, right click triggerables to (de)select them for automatic assignment to the pressure pads. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make pressure pads for extra comfort!</span>")
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -60,7 +60,7 @@
 						selected_triggerable_untrigger += object
 						selected_triggerable_untrigger[object] = unact
 					else
-						boutput(usr, "<span style=\"color:red\">ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/twostate/pressurepad
 	icon = 'icons/obj/randompuzzles.dmi'

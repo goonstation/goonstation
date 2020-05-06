@@ -36,7 +36,7 @@
 		for (var/mob/living/carbon/M in range(O,src.field_radius))
 			if (src.field_type)
 				random_brute_damage(M, src.field_strength)
-				boutput(M, "<span style=\"color:red\">Waves of painful energy wrack your body!</span>")
+				boutput(M, "<span class='alert'>Waves of painful energy wrack your body!</span>")
 			else
 				M.HealDamage("All", src.field_strength, src.field_strength)
-				boutput(M, "<span style=\"color:blue\">Waves of soothing energy wash over you!</span>")
+				boutput(M, "<span class='notice'>Waves of soothing energy wash over you!</span>")

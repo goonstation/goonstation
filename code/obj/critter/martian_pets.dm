@@ -145,7 +145,7 @@ CritterAttack(atom/M)
   if(target)
     src.attacking = 1
     //playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-    src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [M]!</span>")
+    src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
     var/tturf = get_turf(M)
     Shoot(tturf, src.loc, src)
@@ -166,7 +166,7 @@ CritterAttack(atom/M)
   if(target)
     src.attacking = 1
     //playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-    src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [M]!</span>")
+    src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
     var/tturf = get_turf(M)
     Shoot(tturf, src.loc, src)

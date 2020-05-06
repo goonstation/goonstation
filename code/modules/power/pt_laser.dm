@@ -79,7 +79,7 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message("<span style=\"color:red\">[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
+		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
 	return 1
 
 /obj/machinery/power/pt_laser/proc/updateicon(var/started_firing = 0)
@@ -602,7 +602,7 @@
 		else if (istype(newL.glasses, /obj/item/clothing/glasses/sunglasses) || newL.eye_istype(/obj/item/organ/eye/cyber/sunglass))
 			safety = 2
 
-		boutput(L, "<span style=\"color:red\">Your eyes are burned by the laser!</span>")
+		boutput(L, "<span class='alert'>Your eyes are burned by the laser!</span>")
 		L.take_eye_damage(power/(safety*1e5)) //this will damage them a shitload at the sorts of power the laser will reach, as it should.
 		L.change_eye_blurry(rand(power / (safety * 2e5)), 50) //don't stare into 100MW lasers, kids
 

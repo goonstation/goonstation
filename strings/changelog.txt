@@ -1,4 +1,266 @@
 
+(t)wed may 06 20
+(u)Naksu
+(p)576
+(e)|
+(+)Triple triple now has a constant multiplier effect rather than a speed-dependent additive or multiplicative effect. It should still go plenty fast.
+(t)tue may 05 20
+(u)Tarmunora
+(p)457
+(e)⚖|balance
+(+)Tweaked stun gloves use the stunbaton special (spark throw) as an unarmed special attack override, replacing their old behaviour outright
+(u)Kyle
+(p)582
+(e)|
+(*)New gang mode event: Kidnapping. A target is selected from the crew that is not a member of the currently winning gang that . The rest of the gangs have to stop the target from being kidnapped or killed.
+(*)Gang members wearing their gang clothes get slight passive heal and stun reduction if they are on turf that they own corresponding to the inverse of the distance between them and their gang locker.
+(t)mon may 04 20
+(u)Goonstation Administration Team:
+(*)Removed player access to starter pathogen samples
+(u)Kyle
+(+)Gang members should now be able to pull members of their own gang without movespeed penalty. That is pulls, not grabs.
+(u)Gannets
+(p)578
+(e)🎨|sprites
+(+)New sprites for 9mm pistol, tranqulizer pistol, .22 magazines, gun cases + attache cases.
+(u)Erinexx
+(p)546
+(e)🗺🎨|mapping, sprites
+(*)Some new grenade sprites
+(t)sun may 03 20
+(u)Kubius
+(p)567
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 16: wrestling enhancements and more.
+(u)mbc
+(p)566
+(e)|
+(*)You can chain a block into an attack directly now (instead of needing to swap hands / drop the block). To balance this utility, beginning a block now applies combat click delay just like a punch or a throw would.
+(u)Tarmunora
+(p)560
+(e)⚖|balance
+(+)Numbers tweak on backpack blocks.
+(u)Naksu
+(p)557
+(e)🆕|enhancement
+(+)Added preliminary chat window theming support
+(u)mbc
+(p)559
+(e)|
+(*)Bonus protection when blocking incoming damage with a proper weapon raised to give +2 protection instead of +1.
+(+)Fixed bug where chair flips could be executed while lying/stunned
+(u)Tarmunora
+(p)544
+(e)⚖|balance
+(+)Changed the damage type of crafted spears from blunt to stabbing.
+(u)Tarmunora
+(p)547
+(e)⚖|balance
+(+)Made sarin grenades more concentrated and changed the delivery mechanism of capsaicin grenades
+(t)sat may 02 20
+(u)Kyle
+(*)The HoS now has a pet turtle named Sylvester. He starts in the HoS office and wears an adorable beret.
+(u)mbc
+(p)549
+(e)|
+(*)The suture can be used for limb attachment as well as the stapler now.
+(+)Fixed a bug where a limb's surgery state could get 'stuck' and not mendable.
+(+)Adjusted speed at which an open surgical incision would increase your bleeding amount.
+(u)UrsulaMajor
+(p)516
+(e)⚖🎨|balance, sprites
+(+)Adjusted the .22 Suppressed Pistol Box to have 2 mags of hollow point rounds and 2 mags of regular ammo
+(u)glassofmilk
+(p)538
+(e)|
+(+)Added signal changing toggle to Delay Component
+(u)Naksu
+(p)527
+(e)|
+(+)UpdateOverlays should be a touch faster.
+(t)fri may 01 20
+(u)Kyle
+(p)508
+(e)⚖🆕|balance, enhancement
+(+)Blob Bridge ability now much more useful and usable.
+(u)UrsulaMajor
+(p)509
+(e)🗺🎨|mapping, sprites
+(+)Renovated the Afterlife Bar, splitting it into a sanctuary lounge and a basement bar
+(u)Uta
+(p)449
+(e)🆕🔄|enhancement, rework
+(*)You can now transplant organs via drag and drop, including mediborgs. L/R organs will randomly pick a side. Can only drag organs, so you still need a human doc to staple that nuke disc to your bleeding stump arm.
+(*)Skulls can now be re-inserted into an empty head. A skull must be present for a brain to be inserted into a human head.
+(+)Added additional examine text for the process of decapitating heads and other operations.
+(+)Added stapler to medical borg module.
+(t)thu apr 30 20
+(u)mbc
+(*)This isn't my change, but download the newest BYOND version (513.1521)! Coupled with our recent verb changes, it fixes right click menu lag.
+(u)Kubius
+(p)502
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 15: wide swath of minor improvements, from eggnog to wardrobes.
+(u)adharainspace
+(p)488
+(e)🆕🎨|enhancement, sprites
+(*)Added a muzzle flash when you fire (most) bullet based weapons!
+(u)Naksu
+(p)498
+(e)|
+(+)Refactored examine-code to pass and eventually join a list instead of sending separate browser output for every line of text.
+(u)Gannets
+(p)489
+(e)🆕🎨|enhancement, sprites
+(+)New sprites for the revolver, detective revolver, .22 pistol and derringer.
+(u)zjdtmkhzt
+(p)491
+(e)|
+(+)Hopefully fixed the CDC.
+(t)wed apr 29 20
+(u)AwkwardDryad
+(p)407
+(e)🆕|enhancement
+(*)All MechComp components can be modified by clicking them with a multitool.
+(*)Most object rotation is handled with a crowbar instead of right clicking (windows,pipes,etc.)
+(+)Atmosphere shields can be clicked while activated and their range and power settings are accessed by clicking them with a multitool.
+(u)zjdtmkhzt
+(p)470
+(e)⚖|balance
+(+)Readded the old delay to the pathogen manipulator when adjusting pathogens with >65 maliciousness.
+(u)Uta
+(p)474
+(e)🐛|bug
+(+)Forklifts now eject rider when attacked to prevent an attack spam bug.
+(u)Ryumi
+(p)466
+(e)🗺|mapping
+(+)Added a pulse rifle rack to Manta's armory and fixed up some of its wiring.
+(u)mbc
+(p)479
+(e)|
+(+)Improved the range and fixed the knockback effect of the SPES-12 and SPES-6 guns.
+(u)mbc
+(p)478
+(e)|
+(+)Hivemind members can leave at will.
+(u)Somethings
+(p)475
+(e)|
+(+)Mail chutes now show the expected UI when interacted with, and thus can be used again to mail items.
+(t)tue apr 28 20
+(u)Kubius
+(p)471
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 14 - most prominently, emergency lights.
+(u)Fautz0
+(p)358
+(e)|
+(+)Zippo lighters now have a limited capacity of 100 fuel units. You can refill them with handheld or regular welding fuel tanks.
+(u)MarkNstein
+(p)437
+(e)🗺|mapping
+(*)Added freezers to Cog1 engine, and additional valves.
+(u)Flourish
+(p)463
+(e)🐛|bug
+(+)Fixed a bug with portable reclaimers outputting fewer processed materials than inputted.
+(u)mbc
+(e)⚖|balance
+(*)Disorient statuseffect will no longer randomly make you drop items. Increased the likelihood of a changeling or vampire scream forcing you to drop items to compensate.
+(u)Fosstar
+(p)450
+(e)🍑⚖🗺|ass-jam, balance, mapping
+(*)Modernized and fixed up Donut 2 a bunch. The map is available during Ass Jam!
+(u)mbc
+(p)461
+(e)⚖|balance
+(+)Doors have a small chance to open when taking damage at very low health.
+(u)Tarmunora
+(p)456
+(e)⚖|balance
+(+)Kinetic projectiles stagger on hit
+(u)Kubius
+(p)439
+(e)🆕|enhancement
+(+)QM's emergency crate now contains emergency-grade spacesuits and tanks.
+(t)mon apr 27 20
+(u)Kubius
+(p)453
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 13 - further minor tuneups and fixes, inc. fire alarms.
+(u)zjdtmkhzt
+(p)423
+(e)⚖🆕|balance, enhancement
+(+)Minor pathology GUI improvements. You can now use the + and - buttons to select multiple segments when splicing.
+(u)Moonlol
+(p)447
+(e)🆕🗺|enhancement, mapping
+(+)Murderbox now features test dummies.
+(t)sun apr 26 20
+(u)Tarmunora
+(p)239
+(e)⚖🆕|balance, enhancement
+(*)Changed pod(etc)seeking 40mmHE shells to have a high chance of not detonating on impact unless they have found a target to seek. Additionally boosted their direct-impact stats to compensate somewhat.
+(u)saccharineChampion
+(p)415
+(e)🆕|enhancement
+(+)You can now load deep-fried (and grilled) stuff, as well as other particularly coal-like culinary mistakes, into the engine's furnaces. Credit to Studenterhue for the idea & Flourish and ZeWaka for code help!
+(u)mbc
+(p)443
+(e)🎨|sprites
+(*)You no longer need a crowbar to access a pod's maint/lock panel, just click it with free hand and use the multicontext buttons. Also fixed bugs where you could not hit a pod with an item.
+(u)Uta
+(p)426
+(e)🐛|bug
+(*)Mediborg can now perform surgery on organs requiring L/R side selection. Use tool slot 1 for the left and slot 3 for the right
+(t)sat apr 25 20
+(u)Tarmunora
+(p)422
+(e)⚖🎨|balance, sprites
+(+)Security barriers have a slightly more robust block, but only when turned on
+(u)mbc
+(p)431
+(e)|
+(*)Moved all pod verbs to a multicontext menu (just click the pod) instead of rclick verbs
+(u)Kubius
+(p)429
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch twelve - more cargo pads and miscellaneous tuneups.
+(u)Tarmunora
+(p)410
+(e)⚖🆕|balance, enhancement
+(+)Added special block functionality to backpacks/satchels.
+(u)mbc
+(p)421
+(e)|
+(+)Click+Drag chairs in order to rotate them. They also rotate when you are buckled in and trying to move.
+(u)mbc
+(p)420
+(e)|
+(*)Shoving a person who is downed and using item limbs will cause them to attack themselves just like they would if they were standing upright.
+(+)Fixed bug where item limbs wouldn't show icons on your hud.
+(t)fri apr 24 20
+(u)Flourish
+(p)400
+(e)🐛🆕|bug, enhancement
+(*)Cloning and stable mutagen now properly copy blood DNA, fingerprints, and genetic effects. The advanced genetic analysis option on the cloning computer toggles copying active genetic effects (yes, that includes mutantraces).
+(u)Tarmunora
+(p)395
+(e)🐛|bug
+(+)Fixed issue where guns treated you as if you were always slightly drunk for the purposes of aiming.
+(u)AwkwardDryad
+(p)385
+(e)🎨|sprites
+(*)Added the Double-Part and Drill hairstyles.
+(u)UrsulaMajor
+(p)394
+(e)🆕|enhancement
+(+)You can now ladle soup back into the soup pot, if you want. Soups also now drop their bowls when eaten.
+(u)Erinexx
+(p)406
+(e)🆕🎨|enhancement, sprites
+(*)Glowsticks are now colored. You can buy their colored variants from QM. You can also change csaber blade colors by unscrewing them and swapping out the glowstick inside!
 (t)thu apr 23 20
 (u)Erinexx
 (p)335

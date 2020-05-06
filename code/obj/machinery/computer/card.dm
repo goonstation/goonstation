@@ -213,7 +213,7 @@
 						I.set_loc(src)
 					src.modify = I
 			if (I && !src.modify)
-				boutput(usr, "<span style=\"color:blue\">[I] won't fit in the modify slot.</span>")
+				boutput(usr, "<span class='notice'>[I] won't fit in the modify slot.</span>")
 		src.authenticated = 0
 		src.scan_access = null
 	if (href_list["scan"])
@@ -234,7 +234,7 @@
 					I.set_loc(src)
 					src.modify = I
 			else
-				boutput(usr, "<span style=\"color:blue\">[I] won't fit in the authentication slot.</span>")
+				boutput(usr, "<span class='notice'>[I] won't fit in the authentication slot.</span>")
 		src.authenticated = 0
 		src.scan_access = null
 	if (href_list["auth"])
@@ -355,7 +355,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -369,7 +369,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/card/M = new /obj/item/circuitboard/card( A )
@@ -388,16 +388,16 @@
 			modify_only = 1
 
 		if (modify_only && src.eject && !src.scan && src.modify)
-			boutput(user, "<span style=\"color:blue\">[src.eject] will not work in the authentication card slot.</span>")
+			boutput(user, "<span class='notice'>[src.eject] will not work in the authentication card slot.</span>")
 			return
 		else if (istype(I, /obj/item/card/id))
 			if (!src.scan && !modify_only)
-				boutput(user, "<span style=\"color:blue\">You insert [I] into the authentication card slot.</span>")
+				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
 				user.drop_item()
 				I.set_loc(src)
 				src.scan = I
 			else if (!src.modify)
-				boutput(user, "<span style=\"color:blue\">You insert [src.eject ? src.eject : I] into the target card slot.</span>")
+				boutput(user, "<span class='notice'>You insert [src.eject ? src.eject : I] into the target card slot.</span>")
 				user.drop_item()
 				if (src.eject)
 					src.eject.set_loc(src)

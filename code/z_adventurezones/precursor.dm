@@ -185,7 +185,7 @@
 			spam_flag = 0
 			return
 
-		user.visible_message("<span style=\"color:red\"><B>[user]</B> blasts out [pick("a grody", "a horrifying", "an eldritch","a hideous","a jazzy","a funky","a terrifying","an awesome","a deathly")] note on [src]!</span>")
+		user.visible_message("<span class='alert'><B>[user]</B> blasts out [pick("a grody", "a horrifying", "an eldritch","a hideous","a jazzy","a funky","a terrifying","an awesome","a deathly")] note on [src]!</span>")
 		var/horn_note = 'sound/musical_instruments/WeirdHorn_0.ogg'
 
 		switch(pitch) // heh
@@ -261,7 +261,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
 			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
-			src.visible_message("<span style=\"color:blue\"><b>Something activates inside [src]!</b></span>")
+			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
 
 			if (id)
 				if (istype(id, /list))
@@ -321,11 +321,11 @@
 			return
 
 		if (!src.assembled)
-			boutput(user, "<span style=\"color:blue\">[src] is missing something.</span>")
+			boutput(user, "<span class='notice'>[src] is missing something.</span>")
 			return
 
 		if (!src.ready)
-			boutput(user, "<span style=\"color:blue\">[src] isn't ready yet.</span>")
+			boutput(user, "<span class='notice'>[src] isn't ready yet.</span>")
 			return
 
 		var/obj/precursor_puzzle/orb_stand/other = locate("orb_stand_[target_id]")
@@ -334,7 +334,7 @@
 
 		SPAWN_DBG(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
-			user.visible_message("<span style=\"color:red\"><b>[user] is warped away by [src]! Holy shit!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] is warped away by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
 			user.set_loc(otherside)
 			explosion(src,src.loc,-1,-1,1,2)
@@ -354,24 +354,24 @@
 		if(istype(W, /obj/item/chilly_orb))
 			var/obj/item/chilly_orb/O = W
 			if(O.id == src.id)
-				boutput(user, "<span style=\"color:blue\"><b>[O] attaches neatly to [src]. Oh dear.</span>")
+				boutput(user, "<span class='notice'><b>[O] attaches neatly to [src]. Oh dear.</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 60, 1)
 				user.drop_item(O)
 				O.set_loc(src)
 				src.icon_state = "orb_activated"
 				src.assembled = 1
 				sleep(0.5 SECONDS)
-				src.visible_message("<span style=\"color:blue\"><b>[src] makes a strange noise!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] makes a strange noise!</b></span>")
 				playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 60, 1)
 				src.ready = 1
 				return
 			else
-				boutput(user, "<span style=\"color:blue\"><b>[src] don't seem to quite fit together with [O].</span>")
+				boutput(user, "<span class='notice'><b>[src] don't seem to quite fit together with [O].</span>")
 
 		else if(istype(W, /obj/item/basketball) && !src.assembled) // sailor dave thinks the bball is the orb, this will really fuck with his day
-			user.visible_message("<span style=\"color:blue\"><b>[user] slams [W] down onto [src]'s central spike.</b></span>")
+			user.visible_message("<span class='notice'><b>[user] slams [W] down onto [src]'s central spike.</b></span>")
 			sleep(0.1 SECONDS)
-			user.visible_message("<span style=\"color:red\"><b>[W] violently pops! Way to go, jerk!</span>")
+			user.visible_message("<span class='alert'><b>[W] violently pops! Way to go, jerk!</span>")
 			user.drop_item(W)
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 75, 1)
 			playsound(src.loc, "sound/machines/hiss.ogg", 75, 1)
@@ -408,7 +408,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/hell_sax) && !src.opened)
 			..()
-			user.visible_message("<span style=\"color:blue\"><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
+			user.visible_message("<span class='notice'><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
 			var/door_note = 'sound/musical_instruments/WeirdChime_0.ogg'
 
 			switch(src.pitch) // heh
@@ -556,7 +556,7 @@
 				if("projectile" || null) // copied from singularity emitter code
 					src.animate_effect()
 					shoot_projectile_DIR(src, plaser, dir)
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> fires a bolt of energy!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 
 					if(prob(35))
 						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -569,7 +569,7 @@
 					light.enable()
 					src.animate_effect()
 					playsound(src.loc, "sound/effects/warp1.ogg", 65, 1)
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> charges up!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> charges up!</span>")
 					sleep(0.5 SECONDS)
 					playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
 
@@ -582,7 +582,7 @@
 						arcFlash(src, poorSoul, 15000)
 						/*poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 						random_burn_damage(poorSoul, 15) // let's not be too mean
-						boutput(poorSoul, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+						boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 						poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 						poorSoul:Virus_ShockCure(poorSoul, 100)
 						poorSoul:shock_cyberheart(100)
@@ -662,7 +662,7 @@
 		if(src.active)	return
 		src.active = 1
 
-		src.visible_message("<span style=\"color:blue\"><b>[user] turns [src].</b></span>")
+		src.visible_message("<span class='notice'><b>[user] turns [src].</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 60, 1)
 		src.icon = 'icons/obj/artifacts/puzzles.dmi'
 		src.icon_state = "column_spin"
@@ -799,15 +799,15 @@
 
 			if(src.linked_shields.len)
 				if(setting_red == target_red)
-					src.visible_message("<span style=\"color:blue\"><b>[src]</b> beeps oddly.</span>")
+					src.visible_message("<span class='notice'><b>[src]</b> beeps oddly.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
 					sleep(0.2 SECONDS)
 				if(setting_green == target_green)
-					src.visible_message("<span style=\"color:blue\"><b>[src]</b> beeps strangely.</span>")
+					src.visible_message("<span class='notice'><b>[src]</b> beeps strangely.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
 					sleep(0.2 SECONDS)
 				if(setting_blue == target_blue)
-					src.visible_message("<span style=\"color:blue\"><b>[src] beeps curiously.</span>")
+					src.visible_message("<span class='notice'><b>[src] beeps curiously.</span>")
 					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
 					sleep(0.2 SECONDS)
 
@@ -863,7 +863,7 @@
 				src.invisibility = 0
 				changing_state = 1
 				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] powers up!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
 				SPAWN_DBG(0.4 SECONDS)
@@ -878,7 +878,7 @@
 				src.set_density(0)
 				src.invisibility = 100
 				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] powers down!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
 				light.disable()
 
@@ -929,15 +929,15 @@
 					healing = shock_damage / 3
 				user.HealDamage("All", shock_damage, shock_damage)
 				user.take_toxin_damage(0 - healing)
-				boutput(user, "<span style=\"color:blue\">You absorb the electrical shock, healing your body!</span>")
+				boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 				return
 			else if (user.bioHolder.HasEffect("resist_electric") == 1)
-				boutput(user, "<span style=\"color:blue\">You feel electricity course through you harmlessly!</span>")
+				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
 			user.updatehealth()
-			boutput(user, "<span style=\"color:red\"><B>You feel a powerful shock course through your body sending you flying!</B></span>")
+			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(user, 100)
 			user:shock_cyberheart(100)
@@ -947,7 +947,7 @@
 			user.throw_at(target, 200, 4)
 			for(var/mob/M in AIviewers(src))
 				if(M == user)	continue
-			user.show_message("<span style=\"color:red\">[user.name] was shocked by the [src.name]!</span>", 3, "<span style=\"color:red\">You hear a heavy electrical crack</span>", 2)
+			user.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 
 //// collecting some junk together for the ice moon
 
@@ -990,14 +990,14 @@
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
 	attack_hand(var/mob/user as mob)
-		boutput(user, "<span style=\"color:blue\"><b>You try to straighten [src], but it won't quite budge.</b></span>")
+		boutput(user, "<span class='notice'><b>You try to straighten [src], but it won't quite budge.</b></span>")
 		..()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispryingtool(W))
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-			boutput(user, "<span style=\"color:blue\"><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
+			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
@@ -1038,15 +1038,15 @@
 			src.speak( pick("me-�m ina men-an-uras-a?", "e-z� ina gu-sum... e-z� ina g�-ri-ta!", "e-z� n�-gig, e-z� n�-d�m-d�m-ma, e-z� �u...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-b�r-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri �rim, ri e-z�!", "e-z�, �rim diir-da...nu-me-a.") )
 			// where is the crown of heaven and earth // you are from the writing... you are from the other side // you abominations, created creatures, you let loose the ancient king
 			// mankind's hubris, mankind's breach of treaty extinguished the heavens // banish the taboo, banish the taboo, banish you // you, enemy, without a god
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> takes hold of [M]!</span>")
-			boutput(M, "<span style=\"color:red\"><b>It burns!</b></span>")
+			src.visible_message("<span class='alert'><B>[src]</B> takes hold of [M]!</span>")
+			boutput(M, "<span class='alert'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 		else
 			src.speak( pick("an-z�, bar ina k�, ina k�! ina k�-bar-ra!", "hul-�l. l��r-l�-ene ina im-dugud-ene. n-ene. e-z�.", "ki-lul-la, ki-in-dar, �-a-nir-ra: urudu e-re-s�-ki-in ina �mun, en-nu-�a-ak ina l��r-l�-ene", "l�-k�r-ra! l�-n�-zuh! l�-ru-g�!", "nu-me-en-na-ta, na!") )
 			// where heaven ends, the gate, the gate! the outer door! // the evil ones, the butchers on the lumps of stone. humans. you. // in the place of murder, in the crevice, in the house of mourning: the copper servant formed of thought guards against the butchers //
 			// stranger! thief! recalcitrant one! // you don't exist, human!
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> reaches for [M]!</span>")
-			boutput(M, "<span style=\"color:red\"><b>It burns!</b></span>")
+			src.visible_message("<span class='alert'><B>[src]</B> reaches for [M]!</span>")
+			boutput(M, "<span class='alert'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 
 		SPAWN_DBG(6 SECONDS)
@@ -1317,7 +1317,7 @@
 
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(poorSoul, 100)
 			poorSoul:shock_cyberheart( 100)
@@ -1396,11 +1396,11 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/dongle))
 			if (activated)
-				boutput(user, "<span style=\"color:red\">There's already one plugged in!</span>")
+				boutput(user, "<span class='alert'>There's already one plugged in!</span>")
 				return
 
 			activated = TRUE
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> plugs [W] into [src].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> plugs [W] into [src].</span>")
 			qdel (W)
 
 			summon_drone()

@@ -110,8 +110,8 @@
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
 			log_shot(src, A, 1)
-			A.visible_message("<b><span style=\"color:red\">The projectile narrowly misses [A]!</span></b>")
-			//A.visible_message("<b><span style=\"color:red\">The projectile thuds into [A] uselessly!</span></b>")
+			A.visible_message("<b><span class='alert'>The projectile narrowly misses [A]!</span></b>")
+			//A.visible_message("<b><span class='alert'>The projectile thuds into [A] uselessly!</span></b>")
 			//die()
 			return
 
@@ -164,14 +164,15 @@
 						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 							if (proj_data.hit_mob_sound)
 								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
+							proj_data.on_hit(X, angle_to_dir(src.angle), src)
 						for (var/obj/item/cloaking_device/S in X.contents)
 							if (S.active)
 								S.deactivate(X)
-								src.visible_message("<span style=\"color:blue\"><b>[X]'s cloak is disrupted!</b></span>")
+								src.visible_message("<span class='notice'><b>[X]'s cloak is disrupted!</b></span>")
 						for (var/obj/item/device/disguiser/D in A.contents)
 							if (D.on)
 								D.disrupt(X)
-								src.visible_message("<span style=\"color:blue\"><b>[X]'s disguiser is disrupted!</b></span>")
+								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
 						if (ishuman(X))
 							var/mob/living/carbon/human/H = X
 							H.stamina_stun()
@@ -187,11 +188,11 @@
 			for (var/obj/item/cloaking_device/S in A.contents)
 				if (S.active)
 					S.deactivate(A)
-					src.visible_message("<span style=\"color:blue\"><b>[A]'s cloak is disrupted!</b></span>")
+					src.visible_message("<span class='notice'><b>[A]'s cloak is disrupted!</b></span>")
 			for (var/obj/item/device/disguiser/D in A.contents)
 				if (D.on)
 					D.disrupt(A)
-					src.visible_message("<span style=\"color:blue\"><b>[A]'s disguiser is disrupted!</b></span>")
+					src.visible_message("<span class='notice'><b>[A]'s disguiser is disrupted!</b></span>")
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()
@@ -595,7 +596,7 @@ datum/projectile
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
-	var/ticks_between_mob_hits = 0
+	var/ticks_between_mob_hits = 1
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 
@@ -776,7 +777,7 @@ datum/projectile/snowball
 		var/immunity = check_target_immunity(T) // Point-blank overrides, such as stun bullets (Convair880).
 		if (immunity)
 			log_shot(P, T, 1)
-			T.visible_message("<b><span style=\"color:red\">...but the projectile bounces off uselessly!</span></b>")
+			T.visible_message("<b><span class='alert'>...but the projectile bounces off uselessly!</span></b>")
 			P.die()
 			return
 		if (P.proj_data)

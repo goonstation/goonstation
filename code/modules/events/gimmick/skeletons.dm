@@ -50,7 +50,7 @@
 					if(temp.open)
 						closets -= temp
 						continue
-					temp.visible_message("<span style=\"color:red\"><b>[temp]</b> emits a loud thump and rattles a bit.</span>")
+					temp.visible_message("<span class='alert'><b>[temp]</b> emits a loud thump and rattles a bit.</span>")
 					playsound(get_turf(temp), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 					var/wiggle = 6
 					while(wiggle > 0)

@@ -96,7 +96,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		M.dnr = 1
 		M.transfer_to(L)
-		boutput(L, "<span style=\"color:blue\"><b>You have been respawned as Santa Claus!</b></span>")
+		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
 		santa_spawned = 1
@@ -114,7 +114,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		L.set_loc(ASLoc)
 		M.dnr = 1
 		M.transfer_to(L)
-		boutput(L, "<span style=\"color:blue\"><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
+		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")
 		boutput(L, "Be on the lookout for grinches. Do not harm them!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
@@ -227,14 +227,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if (!P)
 				return
 
-			user.visible_message("<span style=\"color:red\"><b>[master] throws a snowball at [target]!</b></span>")
+			user.visible_message("<span class='alert'><b>[master] throws a snowball at [target]!</b></span>")
 
 		else
 			var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
 			if (!P)
 				return
 
-			user.visible_message("<span style=\"color:red\"><b>[master] beans [target] point-blank with the snowball!</b></span>")
+			user.visible_message("<span class='alert'><b>[master] beans [target] point-blank with the snowball!</b></span>")
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target)
 
@@ -467,7 +467,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	proc/change_fire_state(var/burning = 0)
 		if (src.on_fire && burning == 0)
 			src.on_fire = 0
-			src.visible_message("<span style=\"color:blue\">[src] is extinguished. Phew!</span>")
+			src.visible_message("<span class='notice'>[src] is extinguished. Phew!</span>")
 		else if (!src.on_fire && burning == 1)
 			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
 			src.on_fire = 1
@@ -529,14 +529,14 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		M.stuttering += rand(0, 1)
 		M.bodytemperature -= rand(1, 10)
 		if (message)
-			M.visible_message("<span style='color:red'><b>[M]</b> is hit by [src]!</span>",\
-			"<span style='color:red'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> is hit by [src]!</span>",\
+			"<span class='alert'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
 		src.amount -= rand(1, 2)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
-			"<span style='color:red'>You plaster the snowball over your face.</span>")
+			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
+			"<span class='alert'>You plaster the snowball over your face.</span>")
 			src.hit(user, 0)
 			return
 
@@ -549,12 +549,12 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 		else if (user.a_intent == "harm")
 			if (M == user)
-				M.visible_message("<span style='color:red'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
-				"<span style='color:red'><b>You smush [src] into your own face!</b></span>")
+				M.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
+				"<span class='alert'><b>You smush [src] into your own face!</b></span>")
 			else if ((user != M && iscarbon(M)))
-				M.tri_message("<span style='color:red'><b>[user] smushes [src] into [M]'s face!</b></span>",\
-				user, "<span style='color:red'><b>You smush [src] into [M]'s face!</b></span>",\
-				M, "<span style='color:red'><b>[user] smushes [src] in your face!</b></span>")
+				M.tri_message("<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
+				user, "<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
+				M, "<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
 			src.hit(M, 0)
 
 		else return ..()
@@ -692,16 +692,16 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fun"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_heal
 			playsound(src.loc, "sound/voice/heavenly.ogg", 100, 1, 0)
-			src.visible_message("<span style=\"color:red\"><B>[src] calls on the power of Spacemas to heal everyone!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] calls on the power of Spacemas to heal everyone!</B></span>")
 			for (var/mob/living/M in view(src,5))
 				M.HealDamage("All", 30, 30)
 			SPAWN_DBG(1 MINUTE)
-				boutput(src, "<span style=\"color:blue\">You may now use your healing spell again.</span>")
+				boutput(src, "<span class='notice'>You may now use your healing spell again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_heal
 
 		santa_gifts()
@@ -710,11 +710,11 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fun"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_gifts
-			src.visible_message("<span style=\"color:red\"><B>[src] throws out a bunch of Spacemas presents from nowhere!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] throws out a bunch of Spacemas presents from nowhere!</B></span>")
 			playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
 			src.transforming = 1
 			var/to_throw = rand(3,12)
@@ -732,7 +732,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.transforming = 0
 
 			SPAWN_DBG(2 MINUTES)
-				boutput(src, "<span style=\"color:blue\">You may now summon gifts again.</span>")
+				boutput(src, "<span class='notice'>You may now summon gifts again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_gifts
 
 		santa_food()
@@ -741,11 +741,11 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fun"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_food
-			src.visible_message("<span style=\"color:red\"><B>[src] casts out a whole shitload of snacks from nowhere!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] casts out a whole shitload of snacks from nowhere!</B></span>")
 			playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
 			src.transforming = 1
 			var/to_throw = rand(6,18)
@@ -765,7 +765,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.transforming = 0
 
 			SPAWN_DBG(80 SECONDS)
-				boutput(src, "<span style=\"color:blue\">You may now summon snacks again.</span>")
+				boutput(src, "<span class='notice'>You may now summon snacks again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_food
 
 		santa_warmth()
@@ -774,17 +774,17 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fun"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_warmth
 			playsound(src.loc, "sound/effects/MagShieldUp.ogg", 100, 1, 0)
-			src.visible_message("<span style=\"color:red\"><B>[src] summons the warmth of a nice toasty fireplace!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] summons the warmth of a nice toasty fireplace!</B></span>")
 			for (var/mob/living/M in view(src,5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 60)
 			SPAWN_DBG(80 SECONDS)
-				boutput(src, "<span style=\"color:blue\">You may now use your warmth spell again.</span>")
+				boutput(src, "<span class='notice'>You may now use your warmth spell again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_warmth
 
 		santa_teleport()
@@ -793,7 +793,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fun"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_teleport
@@ -801,7 +801,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 			var/area/thearea = get_telearea(A)
 
-			src.visible_message("<span style=\"color:red\"><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
 			playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
 			playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -821,7 +821,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.loc = pick(L)
 
 			SPAWN_DBG(30 SECONDS)
-				boutput(src, "<span style=\"color:blue\">You may now teleport again.</span>")
+				boutput(src, "<span class='notice'>You may now teleport again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_teleport
 
 		santa_banish()
@@ -830,13 +830,13 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fun"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			for (var/mob/living/carbon/cube/meat/krampus/K in view(7,src))
-				src.visible_message("<span style=\"color:red\"><B>[src] makes a stern gesture at [K]!</B></span>")
-				boutput(K, "<span style=\"color:red\">You have been banished by Santa Claus!</span>")
+				src.visible_message("<span class='alert'><B>[src] makes a stern gesture at [K]!</B></span>")
+				boutput(K, "<span class='alert'>You have been banished by Santa Claus!</span>")
 				playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
 				smoke.set_up(1, 0, K.loc)
 				smoke.attach(K)
@@ -906,7 +906,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				var/mob/M = AM
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 8, 3)
-					C.show_message("<span style=\"color:red\"><B>[src] tramples right over [M]!</B></span>", 1)
+					C.show_message("<span class='alert'><B>[src] tramples right over [M]!</B></span>", 1)
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(M, 10,1)
@@ -921,7 +921,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", attack_volume, 1, 0, 0.4)
 					for (var/mob/C in viewers(src))
 						shake_camera(C, 8, 3)
-						C.show_message("<span style=\"color:red\"><B>[src] [attack_text] on [O]!</B></span>", 1)
+						C.show_message("<span class='alert'><B>[src] [attack_text] on [O]!</B></span>", 1)
 					if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
 					else
@@ -931,7 +931,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				if(T.density && istype(T,/turf/simulated/wall/))
 					for (var/mob/C in viewers(src))
 						shake_camera(C, 8, 3)
-						C.show_message("<span style=\"color:red\"><B>[src] [attack_text] on [T]!</B></span>", 1)
+						C.show_message("<span class='alert'><B>[src] [attack_text] on [T]!</B></span>", 1)
 					playsound(T.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", attack_volume, 1, 0, 0.4)
 					T.ex_act(attack_strength)
 
@@ -947,18 +947,18 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.stance = "krampage"
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 80, 1, 0, 0.4)
-			src.visible_message("<span style=\"color:red\"><B>[src] goes completely apeshit!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] goes completely apeshit!</B></span>")
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_rampage
 			SPAWN_DBG(30 SECONDS)
 				src.stance = "normal"
-				boutput(src, "<span style=\"color:red\">Your rage burns out for a while.</span>")
+				boutput(src, "<span class='alert'>Your rage burns out for a while.</span>")
 			SPAWN_DBG(1800)
-				boutput(src, "<span style=\"color:blue\">You feel ready to rampage again.</span>")
+				boutput(src, "<span class='notice'>You feel ready to rampage again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_rampage
 
 		krampus_leap(var/mob/living/M as mob in oview(7))
@@ -967,7 +967,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			var/turf/target
@@ -978,7 +978,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_leap
 			src.transforming = 1
 			playsound(src.loc, "sound/misc/rustle5.ogg", 100, 1, 0, 0.3)
-			src.visible_message("<span style=\"color:red\"><B>[src] leaps high into the air, heading right for [M]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] leaps high into the air, heading right for [M]!</B></span>")
 			animate_fading_leap_up(src)
 			sleep(2.5 SECONDS)
 			src.loc = target
@@ -988,7 +988,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				playsound(M.loc, "Explosion1.ogg", 50, 1, -1)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 6)
-					C.show_message("<span style=\"color:red\"><B>[src] slams down onto the ground!</B></span>", 1)
+					C.show_message("<span class='alert'><B>[src] slams down onto the ground!</B></span>", 1)
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))
 				for (var/mob/living/X in range(src,1))
@@ -999,7 +999,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				src.transforming = 0
 
 			SPAWN_DBG(1 MINUTE)
-				boutput(src, "<span style=\"color:blue\">You may now leap again.</span>")
+				boutput(src, "<span class='notice'>You may now leap again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_leap
 
 		krampus_stomp()
@@ -1008,14 +1008,14 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_stomp
 			if(!src.stat && !src.transforming)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 6)
-					C.show_message("<span style=\"color:red\"><B>[src] stomps the ground with \his huge feet!</B></span>", 1)
+					C.show_message("<span class='alert'><B>[src] stomps the ground with \his huge feet!</B></span>", 1)
 				playsound(src.loc, "meteorimpact.ogg", 80, 1, 1, 0.6)
 				for (var/mob/living/M in view(src,2))
 					if (M == src)
@@ -1026,7 +1026,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
 				SPAWN_DBG(1 MINUTE)
-					boutput(src, "<span style=\"color:blue\">You may now stomp again.</span>")
+					boutput(src, "<span class='notice'>You may now stomp again.</span>")
 					src.verbs += /mob/living/carbon/human/krampus/verb/krampus_stomp
 
 		krampus_teleport()
@@ -1035,7 +1035,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_teleport
@@ -1043,7 +1043,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 			var/area/thearea = get_telearea(A)
 
-			src.visible_message("<span style=\"color:red\"><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
 			playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(1, 0, usr.loc)
@@ -1064,7 +1064,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			usr.set_loc(pick(L))
 			smoke.start()
 			SPAWN_DBG(1800)
-				boutput(src, "<span style=\"color:blue\">You may now teleport again.</span>")
+				boutput(src, "<span class='notice'>You may now teleport again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_teleport
 
 		krampus_snatch(var/mob/living/M as mob in oview(1))
@@ -1073,14 +1073,14 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			if(istype(M))
 				for(var/obj/item/grab/G in src)
 					if(G.affecting == M)
 						return
-				src.visible_message("<span style=\"color:red\"><B>[src] snatches up [M] in \his huge claws!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] snatches up [M] in \his huge claws!</B></span>")
 				var/obj/item/grab/G = new /obj/item/grab( src )
 				G.assailant = src
 				usr.put_in_hand_or_drop(G)
@@ -1099,18 +1099,18 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			for(var/obj/item/grab/G in src)
 				if(ishuman(G.affecting))
 					src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_crush
 					var/mob/living/carbon/human/H = G.affecting
-					src.visible_message("<span style=\"color:red\"><B>[src] begins squeezing [H] in \his hand!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
 					H.loc = src.loc
 					while (!isdead(H))
 						if (src.stat || src.transforming || get_dist(src,H) > 1)
-							boutput(src, "<span style=\"color:red\">Your victim escaped! Curses!</span>")
+							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
@@ -1118,7 +1118,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 						H.changeStatus("stunned", 80)
 						H.changeStatus("weakened", 5 SECONDS)
 						if (H.health < 0)
-							src.visible_message("<span style=\"color:red\"><B>[H] bursts like a ripe melon! Holy shit!</B></span>")
+							src.visible_message("<span class='alert'><B>[H] bursts like a ripe melon! Holy shit!</B></span>")
 							H.gib()
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1129,7 +1129,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 						sleep(1.5 SECONDS)
 				else
 					playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
-					src.visible_message("<span style=\"color:red\"><B>[src] crushes [G.affecting] like a bug!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] crushes [G.affecting] like a bug!</B></span>")
 					G.affecting.gib()
 					qdel(G)
 					src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1141,19 +1141,19 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span style=\"color:red\">You can't do that while you're incapacitated.</span>")
+				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 				return
 
 			for(var/obj/item/grab/G in src)
 				if(ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					src.visible_message("<span style=\"color:red\"><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
 					H.loc = src.loc
 					sleep(6 SECONDS)
 					if (src.stat || src.transforming || get_dist(src,H) > 1)
-						boutput(src, "<span style=\"color:red\">Your prey escaped! Curses!</span>")
+						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")
 					else
-						src.visible_message("<span style=\"color:red\"><B>[src] devours [H] whole!</B></span>")
+						src.visible_message("<span class='alert'><B>[src] devours [H] whole!</B></span>")
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 						H.death(1)
 						H.ghostize()
@@ -1197,7 +1197,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		giftees += user.key
 
 		if (src.booby_trapped)
-			boutput(user, "<span style='color:red'>There is a pissed off snake in the stocking! It bites you! What the hell?!</span>")
+			boutput(user, "<span class='alert'>There is a pissed off snake in the stocking! It bites you! What the hell?!</span>")
 			modify_christmas_cheer(-5)
 			if (user.reagents)
 				user.reagents.add_reagent("venom", 5)
@@ -1217,7 +1217,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			if (dangerous)
 				user.visible_message("<span class='combat'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='combat'>You take [gift] out of [src]!<br>This looks dangerous...</span>")
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span style=\"color:blue\">You take [gift] out of [src]!</span>")
+				user.visible_message("<span class='notice'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='notice'>You take [gift] out of [src]!</span>")
 		return
 
 /obj/decal/tile_edge/stripe/xmas

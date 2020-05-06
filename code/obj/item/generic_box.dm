@@ -276,7 +276,7 @@
 		else if (!src.open)
 			src.open = 1
 		else
-			boutput(user, "<span style=\"color:red\">[src] is already open!</span>")
+			boutput(user, "<span class='alert'>[src] is already open!</span>")
 		src.update_icon()
 		return
 
@@ -298,7 +298,7 @@
 				src.update_icon()
 				return
 			else
-				boutput(user, "<span style=\"color:red\">[src] is empty!</span>")
+				boutput(user, "<span class='alert'>[src] is empty!</span>")
 				return ..()
 		else
 			return ..()
@@ -307,10 +307,10 @@
 		..()
 		if (usr && usr.is_in_hands(src))
 			if (!src.open)
-				boutput(usr, "<span style=\"color:red\">[src] isn't open, you goof!</span>")
+				boutput(usr, "<span class='alert'>[src] isn't open, you goof!</span>")
 				return
 			if (!src.item_amount)
-				boutput(usr, "<span style=\"color:red\">[src] is empty!</span>")
+				boutput(usr, "<span class='alert'>[src] is empty!</span>")
 				return
 			var/turf/T = over_object
 			if (istype(T, /obj/table))
@@ -322,7 +322,7 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span style=\"color:red\">[usr] dumps a bunch of patches from [src] onto [T]!</span>")
+					usr.visible_message("<span class='alert'>[usr] dumps a bunch of patches from [src] onto [T]!</span>")
 					for (var/i = rand(3,8), i>0, i--)
 						var/obj/item/I = src.take_from()
 						if (!I)
@@ -333,16 +333,16 @@
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 		if (!in_range(user, src) || !in_range(user, O))
-			boutput(user, "<span style='color:red'>That's too far away!</span>")
+			boutput(user, "<span class='alert'>That's too far away!</span>")
 			return
 		if (!istype(O, src.contained_item))
-			boutput(user, "<span style='color:red'>[O] doesn't fit in [src]!</span>")
+			boutput(user, "<span class='alert'>[O] doesn't fit in [src]!</span>")
 			return
 		if (!src.open)
-			boutput(user, "<span style=\"color:red\">[src] isn't open, you goof!</span>")
+			boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
 			return
 
-		user.visible_message("<span style='color:blue'>[user] begins quickly filling [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/thing in view(1,user))
 			if (src.item_amount >= src.max_item_amount && !(src.max_item_amount == -1))
@@ -355,7 +355,7 @@
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
-		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")
+		boutput(user, "<span class='notice'>You finish filling [src]!</span>")
 
 	proc/take_from()
 		var/obj/item/myItem = locate(src.contained_item) in src
@@ -380,16 +380,16 @@
 			user = usr
 		if (islist(src.contained_item) && !(I.type in src.contained_item))
 			if (user && show_messages)
-				boutput(user, "<span style=\"color:red\">[I] doesn't fit in [src]!</span>")
+				boutput(user, "<span class='alert'>[I] doesn't fit in [src]!</span>")
 			return 0
 		if (!istype(I, src.contained_item))
 			if (user && show_messages)
-				boutput(user, "<span style=\"color:red\">[I] doesn't fit in [src]!</span>")
+				boutput(user, "<span class='alert'>[I] doesn't fit in [src]!</span>")
 			return 0
 		if (src.reusable && (!(src.item_amount >= src.max_item_amount) || src.max_item_amount == -1))
 			if (!src.open)
 				if (user && show_messages)
-					boutput(user, "<span style=\"color:red\">[src] isn't open, you goof!</span>")
+					boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
 				return 0
 			if (src.item_amount != -1)
 				src.item_amount ++
@@ -401,7 +401,7 @@
 			return 1
 		else
 			if (user && show_messages)
-				boutput(user, "<span style=\"color:red\">You can't seem to make [I] fit into [src].</span>")
+				boutput(user, "<span class='alert'>You can't seem to make [I] fit into [src].</span>")
 			return 0
 
 	proc/update_icon()

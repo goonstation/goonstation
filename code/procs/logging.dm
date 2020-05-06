@@ -146,7 +146,7 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		if (type == "diary")
 			data += " \[DEAD\]"
 		else
-			data += " \[<span class='text-red'>DEAD</span>\]"
+			data += " \[<span class='alert'>DEAD</span>\]"
 	return data
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
