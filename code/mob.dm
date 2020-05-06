@@ -104,6 +104,8 @@
 	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
+	var/list/movement_modifiers = list()
+
 	var/misstep_chance = 0
 
 	var/datum/hud/storage/s_active

@@ -2123,6 +2123,18 @@ datum
 				..()
 				tickcounter = 0
 
+			on_add()
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+				return ..()
+
+			on_remove()
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+				return ..()
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if (ishuman(M))
@@ -3203,7 +3215,7 @@ datum
 			bladder_value = -2
 
 			on_add(var/mob/M)
-				return
+				APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
@@ -3214,6 +3226,10 @@ datum
 					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
 
 			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
@@ -3223,7 +3239,10 @@ datum
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
+				if(!M)
+					M = holder.my_atom
+
+				REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					holder.my_atom:add_stam_mod_regen("tripletriple", 3333)
