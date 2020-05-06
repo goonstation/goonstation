@@ -1459,7 +1459,8 @@
 	icon_state = "fancycoffee"
 	item_state = "coffee"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE //see _setup.dm
-	initial_volume = 10
+	initial_volume = 20
+	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever
 	var/glass_style = "fancycoffee"
 
@@ -1483,7 +1484,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 40
+	initial_volume = 80
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1600,3 +1601,13 @@
 	g_amt = 5
 	initial_volume = 40
 	initial_reagents = list("bojack"=40)
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker
+	name = "Cocktail shaker"
+	desc = "A stainless steel cocktail shaker. Can hold up to 120 units."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "cocktailer"
+	initial_volume = 120
+
+	attack_self(
+		user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
