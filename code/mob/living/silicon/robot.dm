@@ -77,13 +77,6 @@
 	var/oil = 0
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
-	//For borg_death_alert() and send_borg_death_alert()
-	var/message = null
-	var/mailgroup = "medresearch"
-	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
-
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
@@ -2327,28 +2320,27 @@
 				return " at [T.x],[T.y],[T.z]"
 
 	proc/borg_death_alert()
+		var/message = null
+		var/mailgroup = "medresearch"
+		var/net_id = generate_net_id(src)
+		var/frequency = 1149
+		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
+
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		src.message = "CONTACT LOST: [src][coords] in [myarea]"
-		if (radio_controller)
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-		if (!src.net_id)
-			src.net_id = generate_net_id(src)
-		src.send_borg_death_alert()
+		message = "CONTACT LOST: [src][coords] in [myarea]"
 
-	proc/send_borg_death_alert() //Send a PDA message to med-research alerting of borg demise when called
-		DEBUG_MESSAGE("sending message: [src.message]")
+		DEBUG_MESSAGE("sending message: [message]")
 		if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
-			newsignal.data["message"] = "[src.message]"
-
+			newsignal.data["message"] = "[message]"
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
+			newsignal.data["sender"] = net_id
 
 			radio_connection.post_signal(src, newsignal)
 			radio_controller.remove_object(src, "[frequency]")
