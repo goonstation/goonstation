@@ -1745,7 +1745,7 @@
 "Kz" = (/obj/grille/catwalk,/obj/cable{icon_state = "1-2"},/turf/simulated/floor/airless/plating/catwalk,/area/station/solar/south)
 "KA" = (/obj/table/auto,/obj/item/reagent_containers/dropper/mechanical,/obj/item/reagent_containers/dropper,/turf/simulated/floor/bluewhite{dir = 10},/area/station/medical/cdc)
 "KB" = (/obj/table/auto,/obj/machinery/microscope,/turf/simulated/floor/bluewhite,/area/station/medical/cdc)
-"KC" = (/obj/table/auto,/obj/item/bloodslide,/obj/item/bloodslide,/obj/item/reagent_containers/glass/petridish,/obj/item/reagent_containers/glass/petridish,/obj/machinery/light{layer = 3},/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/turf/simulated/floor/bluewhite,/area/station/medical/cdc)
+"KC" = (/obj/table/auto,/obj/item/bloodslide,/obj/item/bloodslide,/obj/item/reagent_containers/glass/petridish,/obj/item/reagent_containers/glass/petridish,/obj/machinery/light{layer = 3},/turf/simulated/floor/bluewhite,/area/station/medical/cdc)
 "KD" = (/obj/machinery/computer3/generic/med_data,/turf/simulated/floor/bluewhite,/area/station/medical/cdc)
 "KE" = (/obj/machinery/centrifuge,/turf/simulated/floor/bluewhite,/area/station/medical/cdc)
 "KF" = (/obj/machinery/synthomatic,/turf/simulated/floor/bluewhite{dir = 6},/area/station/medical/cdc)

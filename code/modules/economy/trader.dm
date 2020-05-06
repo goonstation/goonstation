@@ -819,7 +819,9 @@
 				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
 				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
 				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/pathogensample(src)
+				#endif
 
 				src.goods_sell += new /datum/commodity/bodyparts/cyberheart(src)
 				src.goods_sell += new /datum/commodity/bodyparts/cyberbutt(src)

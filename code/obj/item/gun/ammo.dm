@@ -316,7 +316,7 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
-	icon_state = "pistol_clip"
+	icon_state = "pistol_magazine"
 	amount_left = 10.0
 	max_amount = 10.0
 	ammo_type = new/datum/projectile/bullet/bullet_22
@@ -325,7 +325,7 @@
 /obj/item/ammo/bullets/bullet_22HP
 	sname = ".22 Hollow Point"
 	name = ".22 HP magazine"
-	icon_state = "pistol_clip_hp"
+	icon_state = "pistol_magazine_hp"
 	amount_left = 10.0
 	max_amount = 10.0
 	ammo_type = new/datum/projectile/bullet/bullet_22/HP
@@ -769,7 +769,7 @@
 /obj/item/ammo/bullets/bullet_9mm
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
-	icon_state = "9mm_mag"
+	icon_state = "pistol_magazine"
 	amount_left = 15.0
 	max_amount = 15.0
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
@@ -1059,6 +1059,12 @@
 	max_charge = 300.0
 	cycle = 0
 	recharge_rate = 10.0
+
+/obj/item/ammo/power_cell/self_charging/howitzer
+	name = "Miniaturized SMES"
+	desc = "This thing is huge! How did you even lift it put it into the gun?"
+	charge = 2500.0
+	max_charge = 2500.0
 
 /obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
 	sname = ".58 Flintlock"

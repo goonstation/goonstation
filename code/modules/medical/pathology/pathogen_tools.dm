@@ -280,12 +280,17 @@
 	New()
 		..()
 		SPAWN_DBG(2 SECONDS)
+			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/pathogen/P = unpool(/datum/pathogen)
 			P.create_weak()
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
 			R.pathogens[P.pathogen_uid] = P
+			#else
+			var/datum/reagents/RE = src.reagents
+			RE.add_reagent("water", 5)
+			#endif
 
 /obj/item/reagent_containers/glass/beaker/parasiticmedium
 	name = "Beaker of Parasitic Medium"
