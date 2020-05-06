@@ -1023,7 +1023,19 @@
 			src.icon_needs_update = 0
 			return
 
+		set_beacon_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.beacon_freq]")
+			src.beacon_freq = newfreq
+			src.beacon_connection = radio_controller.add_object(src, "[src.beacon_freq]")
 
+		set_control_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.control_freq]")
+			src.control_freq = newfreq
+			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
 
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
@@ -3448,6 +3460,30 @@
 								qdel(src.current.task)
 							src.post_wire_status(target,"command","term_message","data","command=status&status=wipe_success")
 							return
+
+						if("set_freq") //Set control or beacon frequency of current bot
+							if(!src.current)
+								src.post_wire_status(target,"command","term_message","data","command=status&status=nobot")
+								return
+
+							var/newfreq = text2num(data["freq"])
+							if(!newfreq || newfreq != sanitize_frequency(newfreq))
+								src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq")
+								return
+
+							var/freqtype = data["freq_type"]
+							switch(freqtype)
+								if("control")
+									src.current.set_control_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								if("beacon")
+									src.current.set_beacon_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								else
+									src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq_type")
+									return
 
 					return
 
