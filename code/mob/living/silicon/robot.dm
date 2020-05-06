@@ -2330,7 +2330,6 @@
 		var/myarea = get_area(src)
 		message = "CONTACT LOST: [src][coords] in [myarea]"
 
-		DEBUG_MESSAGE("sending message: [message]")
 		if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
