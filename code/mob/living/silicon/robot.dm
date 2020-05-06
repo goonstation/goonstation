@@ -2313,11 +2313,9 @@
 	//Begin Borg Death Alerts Procs
 	//#############################
 	proc/get_coords()
-		if (isrobot(src))
-			var/mob/living/silicon/robot/R = src
-			var/turf/T = get_turf(R)
-			if (istype(T))
-				return " at [T.x],[T.y],[T.z]"
+		var/turf/T = get_turf(src)
+		if (istype(T))
+			return " at [T.x],[T.y],[T.z]"
 
 	proc/borg_death_alert()
 		var/message = null
@@ -2327,17 +2325,16 @@
 		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
 
 		var/coords = src.get_coords()
-		var/myarea = get_area(src)
+		var/area/myarea = get_area(src)
 		message = "CONTACT LOST: [src][coords] in [myarea]"
 
-		DEBUG_MESSAGE("sending message: [message]")
 		if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
-			newsignal.data["message"] = "[message]"
+			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup
 			newsignal.data["sender"] = net_id
