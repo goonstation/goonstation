@@ -9,9 +9,11 @@ var/list/ban_from_airborne_fluid = list()
 	bonus_evaporation_time = 30 SECONDS
 
 	//max_alpha = 200
-
+#if ASS_JAM
 	required_to_spread = 5
-
+#else
+	required_to_spread = 15
+#endif
 	drains_floor = 0
 #if ASS_JAM
 	update_required_to_spread()
