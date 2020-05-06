@@ -1169,7 +1169,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
-	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 		var/atom/movable/A = src.pulling
 		// hi grayshift sorry grayshift
 		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
@@ -1178,21 +1178,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			else
 				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
 					. *= max(A.p_class, 1)
-				// else, ignore p_class*/
-				else if (ishuman(src))
-					if(ismob(A))
-						var/mob/M = A
-						//if they're lying, pull em slower, unless you have a gang and they are in your gang.
-						if(M.lying)
-							if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
-								. *= 1		//do nothing
-							else
-								. *= max(A.p_class, 1)
-					else if(istype(A, /obj/storage))
-						// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-						if (locate(/mob) in A.contents)
-							. *= max(A.p_class,1)
-	return .
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()

@@ -254,11 +254,6 @@
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
 	else
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				//if (usr == G.assailant)
-				continue
-				G.shoot()
 		. = ..()
 
 	src.closeContextActions()
@@ -2348,7 +2343,7 @@
 	src.take_ear_damage(-INFINITY, 1)
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
-	src.buckled = initial(src.buckled)
+	src.buckled = null
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
@@ -2736,13 +2731,7 @@
 		return 1
 	return 0
 
-/mob/living/carbon/human/is_hulk()
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
-		return 1
-	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
-		return 1
-	return 0
-
+/mob/proc/update_equipped_modifiers()
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
@@ -2929,12 +2918,6 @@
 	if(istype(src.equipped(), /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
-
-
-
-
-
-
 
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN

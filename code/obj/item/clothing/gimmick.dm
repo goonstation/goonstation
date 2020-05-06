@@ -1172,11 +1172,14 @@
 	material_prints = "deep scratches"
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "gloves" && (!user.bioHolder || !user.bioHolder.HasEffect("hulk")))
-			boutput(user, "You feel your muscles swell to an immense size.")
+		if (slot == "gloves")
+			if (!user.bioHolder || !user.bioHolder.HasEffect("hulk"))
+				boutput(user, "You feel your muscles swell to an immense size.")
+			APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/hulkstrong, src.type)
 		return ..()
 
 	unequipped(var/mob/user)
+		REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/hulkstrong, src.type)
 		if (!user.bioHolder || !user.bioHolder.HasEffect("hulk"))
 			boutput(user, "Your muscles shrink back down.")
 		return ..()

@@ -971,7 +971,7 @@
 	arm_icon_state = "arm-wheelchair"
 	anchored = 0
 	comfort_value = 3
-	buckle_move_delay = 1
+	buckle_move_delay = 0
 	p_class = 2
 	scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
 	var/lying = 0 // didja get knocked over? fall down some stairs?
@@ -1028,6 +1028,12 @@
 		if (src.lying)
 			return
 		..()
+		if (src.buckled_guy == to_buckle)
+			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+
+	unbuckle()
+		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		return ..()
 
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */
