@@ -1237,7 +1237,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative")) //Let detectives join gangs, they don't get tasers etc anyway
+		if(target.mind.assigned_role in list("Security Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
@@ -1331,31 +1331,47 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		for(var/obj/item/I in user.contents)
 			if(istype(I,user.mind.gang.item1))
 				hasitem1 = 1
-			if(istype(I,user.mind.gang.item2))
+			else if(istype(I,user.mind.gang.item2))
 				hasitem2 = 1
-			if(istype(I,/obj/item/spray_paint))
+			else if(istype(I,/obj/item/spray_paint))
 				haspaint = 1
-			if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
+			else if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
 				hasheadset = 1
 		if(hasitem1 && hasitem2 && hasheadset)
 			if(!haspaint)
 				new /obj/item/spray_paint(user.loc)
 		else
 			if(!hasitem1)
-				new user.mind.gang.item1(user.loc)
+				var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
+				if (user.w_uniform)
+					user.drop_from_slot(user.w_uniform)
+				user.force_equip(C, user.w_uniform)
+
 			if(!hasitem2)
-				new user.mind.gang.item2(user.loc)
+				var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
+				if (istype(C, /obj/item/clothing/head))
+					user.drop_from_slot(user.head)
+					user.force_equip(C, user.head)
+				else if (istype(C, /obj/item/clothing/mask))
+					user.drop_from_slot(user.wear_mask)
+					user.force_equip(C, user.wear_mask)
+
 			if(!hasheadset)
 				var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
 				headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
+				if (user.ears)
+					user.drop_from_slot(user.ears)
+				user.force_equip(headset, user.ears)
+
 			if(!haspaint)
-				new /obj/item/spray_paint(user.loc)
+				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == "gang_leader")
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
 			case.name = "[user.mind.gang.gang_name] recruitment material"
 			case.desc = "A briefcase full of flyers advertising the [user.mind.gang.gang_name] gang."
 			case.gang = user.mind.gang //this updates the flyers once they are spawned
+			user.put_in_hand_or_drop(case)
 
 		user.mind.gang.gear_cooldown += user
 		sleep(3000)
@@ -1363,6 +1379,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 			user.mind.gang.gear_cooldown -= user
 		return 2
 
+//Must be jumpsuit. /obj/item/clothing/under
 /datum/game_mode/gang/proc/make_item_lists()
 	under_list = list(
 	"owl" = /obj/item/clothing/under/gimmick/owl,
@@ -1402,12 +1419,17 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"psyche" = /obj/item/clothing/under/gimmick/psyche,
 	"tourist" = /obj/item/clothing/under/misc/tourist)
 
+	//must be mask or hat. type /obj/item/clothing/mask or /obj/item/clothing/head
 	headwear_list = list(
 	"owl_mask" = /obj/item/clothing/mask/owl_mask,
 	"smile" = /obj/item/clothing/mask/smile,
 	"balaclava" = /obj/item/clothing/mask/balaclava,
 	"horse_mask" = /obj/item/clothing/mask/horse_mask,
 	"melons" = /obj/item/clothing/mask/melons,
+	"spiderman" = /obj/item/clothing/mask/spiderman,
+	"swat" = /obj/item/clothing/mask/gas/swat,
+	"skull" = /obj/item/clothing/mask/skull,
+	"surgical" = /obj/item/clothing/mask/surgical,
 	"waldohat" = /obj/item/clothing/head/waldohat,
 	"purple" = /obj/item/clothing/head/that/purple,
 	"cakehat" = /obj/item/clothing/head/cakehat,
@@ -1434,11 +1456,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	"psyche" = /obj/item/clothing/head/psyche,
 	"formal_turban" = /obj/item/clothing/head/formal_turban,
 	"snake" = /obj/item/clothing/head/snake,
-	"powdered_wig" = /obj/item/clothing/head/powdered_wig,
-	"spiderman" = /obj/item/clothing/mask/spiderman,
-	"swat" = /obj/item/clothing/mask/gas/swat,
-	"skull" = /obj/item/clothing/mask/skull,
-	"surgical" = /obj/item/clothing/mask/surgical)
+	"powdered_wig" = /obj/item/clothing/head/powdered_wig)
 
 	//items purchasable from gangs
 /datum/gang_item

@@ -1475,3 +1475,21 @@
 		current_projectile = new/datum/projectile/special/spreader/quadwasp
 		projectiles = list(current_projectile)
 		..()
+
+// HOWIZTER GUN
+// dumb meme admin item. not remotely fair, will probably kill person firing it.
+
+/obj/item/gun/energy/howitzer
+	name = "man-portable plasma howitzer"
+	desc = "How can you even lift this?"
+	icon_state = "bfg"
+	uses_multiple_icon_states = 0
+	force = 25
+	two_handed = 1
+	can_dual_wield = 0
+
+	New()
+		..()
+		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
+		current_projectile = new/datum/projectile/special/howitzer
+		projectiles = list(new/datum/projectile/special/howitzer )
