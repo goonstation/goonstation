@@ -314,8 +314,8 @@ toxic - poisons
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		var/pow = O.power
-		O.die()
 		if (ishuman(hit))
+			O.die()
 			var/mob/living/carbon/human/H = hit
 			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
