@@ -2313,11 +2313,9 @@
 	//Begin Borg Death Alerts Procs
 	//#############################
 	proc/get_coords()
-		if (isrobot(src))
-			var/mob/living/silicon/robot/R = src
-			var/turf/T = get_turf(R)
-			if (istype(T))
-				return " at [T.x],[T.y],[T.z]"
+		var/turf/T = get_turf(src)
+		if (istype(T))
+			return " at [T.x],[T.y],[T.z]"
 
 	proc/borg_death_alert()
 		var/message = null
