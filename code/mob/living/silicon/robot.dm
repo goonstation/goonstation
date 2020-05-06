@@ -77,6 +77,13 @@
 	var/oil = 0
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
+	//For borg_death_alert() and send_borg_death_alert()
+	var/message = null
+	var/mailgroup = "medresearch"
+	var/net_id = null
+	var/frequency = 1149
+	var/datum/radio_frequency/radio_connection
+
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
@@ -248,6 +255,7 @@
 			logTheThing("combat", src, null, "'s AI controlled cyborg body was destroyed [log_health(src)] at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 			src.mainframe.return_to(src)
 		setdead(src)
+		borg_death_alert()
 		src.canmove = 0
 
 		if (src.camera)
@@ -2308,6 +2316,46 @@
 			oil = 0
 			src.remove_stun_resist_mod("robot_oil", 25)
 
+	//#############################
+	//Begin Borg Death Alerts Procs
+	//#############################
+	proc/get_coords()
+		if (isrobot(src))
+			var/mob/living/silicon/robot/R = src
+			var/turf/T = get_turf(R)
+			if (istype(T))
+				return " at [T.x],[T.y],[T.z]"
+
+	proc/borg_death_alert()
+		var/coords = src.get_coords()
+		var/myarea = get_area(src)
+		src.message = "CONTACT LOST: [src][coords] in [myarea]"
+		if (radio_controller)
+			radio_connection = radio_controller.add_object(src, "[frequency]")
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		src.send_borg_death_alert()
+
+	proc/send_borg_death_alert() //Send a PDA message to med-research alerting of borg demise when called
+		DEBUG_MESSAGE("sending message: [src.message]")
+		if (message && mailgroup && radio_connection)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "text_message"
+			newsignal.data["sender_name"] = "CYBORG-DAEMON"
+			newsignal.data["message"] = "[src.message]"
+
+			newsignal.data["address_1"] = "00000000"
+			newsignal.data["group"] = mailgroup
+			newsignal.data["sender"] = src.net_id
+
+			radio_connection.post_signal(src, newsignal)
+			radio_controller.remove_object(src, "[frequency]")
+	//#############################
+	//End Borg Death Alerts Procs
+	//#############################
+
 	proc/handle_regular_status_updates()
 		if(src.stat) src.camera.camera_status = 0.0
 
@@ -2387,6 +2435,8 @@
 			if (src.part_head)
 				src.part_head.set_loc(src.loc)
 				src.part_head = null
+				//no chest means you are dead. Placed here to avoid duplicate alert in event that head was already destroyed and you then destroy torso
+				borg_death_alert()
 
 			if (src.client)
 				var/mob/dead/observer/newmob = ghostize()
@@ -2403,6 +2453,7 @@
 				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
 
 			src.visible_message("<b>[src]</b> completely stops moving and shuts down...")
+			borg_death_alert()
 			logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Ditto (Convair880).
 
 			var/mob/dead/observer/newmob = ghostize()
@@ -2906,6 +2957,7 @@
 			src.part_chest = null
 		if (istype(part,/obj/item/parts/robot_parts/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
+			borg_death_alert()//no head means you dead
 			if (src.brain)
 				src.brain.set_loc(get_turf(src))
 			src.part_head.brain = null
