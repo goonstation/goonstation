@@ -1682,7 +1682,7 @@
 				UpdateOverlays(null, "sleep_bubble")
 
 		if (src.sleeping)
-			src.changeStatus("paralysis", 4 SECONDS)
+			src.changeStatus("paralysis", 4 SECONDS * mult)
 			if (prob(10) && (health > 0))
 				emote("snore")
 			if (!src.hasStatus("resting")) src.sleeping--
