@@ -230,14 +230,14 @@ datum
 			value = 41 // 17 18 6
 			viscosity = 0.4
 
-			on_add(var/mob/M)
+			on_add()
 				M = holder?.my_atom
 				if(istype(M) && holder.get_reagent_amount(src.id) > theraputicamount)
 					M.add_stam_mod_regen("aranesp", 15)
 					M.add_stam_mod_max("aranesp", 25)
 				return
 
-			on_remove(var/mob/M)
+			on_remove()
 				M = holder?.my_atom
 				if(istype(M))
 					M.remove_stam_mod_regen("aranesp")
@@ -256,13 +256,11 @@ datum
 						if (prob(8))
 							boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
 						if (prob(5))
-								boutput(M, "<span class='alert'>You cannot breathe!</span>")
+							boutput(M, "<span class='alert'>You cannot breathe!</span>")
 							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
 							M.take_oxygen_deprivation(15 * mult)
 							M.losebreath += (1 * mult)
 					else
-						M.remove_stam_mod_regen("aranesp")
-						M.remove_stam_mod_max("aranesp")
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if(blood_system)
