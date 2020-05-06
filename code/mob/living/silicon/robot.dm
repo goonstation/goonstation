@@ -2334,7 +2334,7 @@
 			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
-			newsignal.data["message"] = "[message]"
+			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup
 			newsignal.data["sender"] = net_id
