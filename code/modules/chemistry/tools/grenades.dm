@@ -210,8 +210,8 @@
 	name = "metal foam grenade"
 	desc = "Used for emergency sealing of air breaches."
 	icon = 'icons/obj/items/grenade.dmi'
-	icon_state = "metal_foam"
-	icon_state_armed = "metal_foam1"
+	icon_state = "metalfoam"
+	icon_state_armed = "metalfoam1"
 	stage = 2
 
 	New()
@@ -230,8 +230,8 @@
 	name = "fire fighting grenade"
 	desc = "Can help to put out dangerous fires from a distance."
 	icon = 'icons/obj/items/grenade.dmi'
-	icon_state = "fire_fighting"
-	icon_state_armed = "fire_fighting1"
+	icon_state = "firefighting"
+	icon_state_armed = "firefighting1"
 	stage = 2
 
 	New()
@@ -386,8 +386,8 @@
 	name = "high range incendiary grenade"
 	desc = "A rather volatile grenade that creates a large fire."
 	icon = 'icons/obj/items/grenade.dmi'
-	icon_state = "high_range_incendiary"
-	icon_state_armed = "high_range_incendiary1"
+	icon_state = "incendiary-highrange"
+	icon_state_armed = "incendiary-highrange1"
 	stage = 2
 
 	New()

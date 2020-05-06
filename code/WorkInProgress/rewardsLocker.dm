@@ -803,12 +803,16 @@
 		if (isdead(activator))
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
+		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
+			boutput(activator, "<span style=\"color:red\">Absolutely Not.</span>")
+			return
 		activator.suiciding = 1
 		var/turf/T = get_turf(activator)
-		T.fluid_react_single("blood",5000)
+		T.fluid_react_single("blood",2000)
 		activator.gib()
 		SPAWN_DBG(20 SECONDS)
-			activator.suiciding = 0
+			if(activator && !isdead(activator))
+				activator.suiciding = 0
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
 /chui/window/contributorrewards

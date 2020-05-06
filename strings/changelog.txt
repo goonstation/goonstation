@@ -1,5 +1,32 @@
 
+(t)tue may 05 20
+(u)Tarmunora
+(p)457
+(e)⚖|balance
+(+)Tweaked stun gloves use the stunbaton special (spark throw) as an unarmed special attack override, replacing their old behaviour outright
+(u)Kyle
+(p)582
+(e)|
+(*)New gang mode event: Kidnapping. A target is selected from the crew that is not a member of the currently winning gang that . The rest of the gangs have to stop the target from being kidnapped or killed.
+(*)Gang members wearing their gang clothes get slight passive heal and stun reduction if they are on turf that they own corresponding to the inverse of the distance between them and their gang locker.
+(t)mon may 04 20
+(u)Goonstation Administration Team:
+(*)Removed player access to starter pathogen samples
+(u)Kyle
+(+)Gang members should now be able to pull members of their own gang without movespeed penalty. That is pulls, not grabs.
+(u)Gannets
+(p)578
+(e)🎨|sprites
+(+)New sprites for 9mm pistol, tranqulizer pistol, .22 magazines, gun cases + attache cases.
+(u)Erinexx
+(p)546
+(e)🗺🎨|mapping, sprites
+(*)Some new grenade sprites
 (t)sun may 03 20
+(u)Kubius
+(p)567
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 16: wrestling enhancements and more.
 (u)mbc
 (p)566
 (e)|

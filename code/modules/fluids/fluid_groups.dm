@@ -200,7 +200,6 @@
 		//	contained_amt = src.reagents.total_volume
 		//	amt_per_tile = contained_amt
 
-		LAGCHECK(LAG_HIGH)
 		if (!guarantee_is_member)
 			if (!members.len || !(F in members))
 				members += F

@@ -467,7 +467,11 @@
 
 	heal(var/mob/M)
 		if(prob(15))
+			#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 			wrap_pathogen(M.reagents, generate_indigestion_pathogen(), 15)
+			#else
+			M.reagents.add_reagent("salmonella",15)
+			#endif
 			boutput(M, "<span class='alert'>That tasted a little bit...off.</span>")
 		..()
 
