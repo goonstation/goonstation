@@ -2325,7 +2325,7 @@
 		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
 
 		var/coords = src.get_coords()
-		var/myarea = get_area(src)
+		var/area/myarea = get_area(src)
 		message = "CONTACT LOST: [src][coords] in [myarea]"
 
 		if (message && mailgroup && radio_connection)
