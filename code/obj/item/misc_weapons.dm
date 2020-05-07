@@ -191,6 +191,7 @@
 		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
+		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
 	if (src.active)
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
@@ -919,8 +920,6 @@
 		BLOCK_SWORD
 
 /obj/item/katana/attack(mob/target as mob, mob/user as mob)
-	if(target == user) //Can't cut off your own limbs, dumbo
-		return ..()
 	if(!ishuman(target))
 		return ..()  //Only humans can currently be dismembered
 	var/zoney = user.zone_sel.selecting

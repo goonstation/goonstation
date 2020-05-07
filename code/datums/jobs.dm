@@ -1999,6 +1999,28 @@
 		equip_syndicate(M)
 		return
 
+/datum/job/special/syndicate_weak
+	linkcolor = "#880000"
+	name = "Junior Syndicate Operative"
+	limit = 0
+	slot_back = /obj/item/storage/backpack/satchel
+	slot_belt = null
+	slot_jump = /obj/item/clothing/under/misc/syndicate
+	slot_suit = /obj/item/clothing/suit/armor/vest
+	slot_head = /obj/item/clothing/head/helmet/swat
+	slot_foot = /obj/item/clothing/shoes/swat
+	slot_ears =  null
+	slot_mask = /obj/item/clothing/mask/breath
+	slot_card = null		///obj/item/card/id/
+	slot_poc1 = /obj/item/reagent_containers/pill/tox
+	slot_poc2 = /obj/item/storage/pouch/bullet_9mm
+	slot_lhan = null
+	slot_rhan = /obj/item/gun/kinetic/pistol
+
+/datum/job/special/syndicate_weak/no_ammo
+	name = "Poorly Equipped Junior Syndicate Operative"
+	slot_poc2 = null
+	slot_poc1 = null
 // hidden jobs for nt-so vs syndicate spec-ops
 
 /datum/job/special/syndicate_specialist

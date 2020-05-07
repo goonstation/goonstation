@@ -99,6 +99,7 @@
 		brutevuln = 0.2
 		firevuln = 0.5
 		icon_state = "turtle-shell"
+		density = 0
 
 		src.visible_message("<span class='alert'><b>[src]</b> retreats into their shell!")
 		return 1
@@ -112,6 +113,7 @@
 		brutevuln = 0.7
 		firevuln = 1
 		icon_state = "turtle"
+		density = 1
 
 		src.visible_message("<span class='notice'><b>[src]</b> comes out of their shell!")
 		return 1

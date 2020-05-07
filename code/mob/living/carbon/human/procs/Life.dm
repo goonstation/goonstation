@@ -1216,8 +1216,8 @@
 		// Resistance from Clothing
 		for(var/atom in src.get_equipped_items())
 			var/obj/item/C = atom
-			if(C.hasProperty("disarmblock"))
-				var/curr = C.getProperty("disarmblock")
+			if(C.hasProperty("deflection"))
+				var/curr = C.getProperty("deflection")
 				protection += curr
 
 		return min(protection, 90-STAMINA_BLOCK_CHANCE)
@@ -1682,7 +1682,7 @@
 				UpdateOverlays(null, "sleep_bubble")
 
 		if (src.sleeping)
-			src.changeStatus("paralysis", 4 SECONDS)
+			src.changeStatus("paralysis", 4 SECONDS * mult)
 			if (prob(10) && (health > 0))
 				emote("snore")
 			if (!src.hasStatus("resting")) src.sleeping--

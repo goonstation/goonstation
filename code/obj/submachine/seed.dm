@@ -754,7 +754,7 @@
 	attack_hand(var/mob/user as mob)
 		user.machine = src
 
-		var/dat = "<B>Reagent Extractor</B><BR><HR>"
+		var/list/dat = list("<B>Reagent Extractor</B><BR><HR>")
 		if (src.mode == "overview")
 			dat += "<b><u>Extractor Overview</u></b><br><br>"
 			// Overview mode is just a general outline of what's in the machine at the time
@@ -848,7 +848,7 @@
 		dat += "<HR>"
 		dat += "<b><u>Mode:</u></b> <A href='?src=\ref[src];page=1'>(Overview)</A> <A href='?src=\ref[src];page=2'>(Extraction)</A> <A href='?src=\ref[src];page=3'>(Transference)</A>"
 
-		user.Browse(dat, "window=rextractor;size=370x500")
+		user.Browse(dat.Join(), "window=rextractor;size=370x500")
 		onclose(user, "rextractor")
 
 	handle_event(var/event, var/sender)

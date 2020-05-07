@@ -201,7 +201,28 @@
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
 					return
 
-			if ("twirl", "spin", "juggle")
+			if ("juggle")
+				if (!src.restrained())
+					if (src.emote_check(voluntary, 25))
+						m_type = 1
+						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
+							var/obj/item/thing = src.equipped()
+							if (!thing)
+								if (src.l_hand)
+									thing = src.l_hand
+								else if (src.r_hand)
+									thing = src.r_hand
+							if (thing)
+								if (src.juggling())
+									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+										src.drop_juggle()
+									else
+										src.add_juggle(thing)
+								else
+									src.add_juggle(thing)
+							else
+								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
@@ -238,6 +259,7 @@
 									message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 									src.u_equip(thing)
 									thing.set_loc(src.loc)
+									JOB_XP(src, "Clown", 1)
 								else
 									message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand."
 									thing.on_spin_emote(src)
@@ -1133,6 +1155,8 @@
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
 								src.changeStatus("weakened", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
+								JOB_XP(src, "Clown", 1)
+
 							if (src.bioHolder.HasEffect("fat"))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under [his_or_her(src)] own weight!")
 								src.changeStatus("weakened", 2 SECONDS)

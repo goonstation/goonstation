@@ -1,4 +1,19 @@
 
+(t)thu may 07 20
+(u)Kyle
+(p)606
+(e)🆕|enhancement
+(*)Added Clown Job XP and Rewards. Get it from doing Clown things.
+(t)wed may 06 20
+(u)Carbadox
+(p)573
+(e)🆕|enhancement
+(+)Removed Port-a-brig from Security Equipment Crate and moved it to it's own seperate purchase
+(+)Added general Security gear like belt, helmet and vest in place of the Brig
+(u)Naksu
+(p)576
+(e)|
+(+)Triple triple now has a constant multiplier effect rather than a speed-dependent additive or multiplicative effect. It should still go plenty fast.
 (t)tue may 05 20
 (u)Tarmunora
 (p)457
