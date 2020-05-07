@@ -351,19 +351,23 @@ mob/verb/checkrewards()
 
 /////////////CLOWN////////////////
 /datum/jobXpReward/clown1
-	name = "Nothing"
-	desc = "Nothing!"
+	name = "Special Crayon"
+	desc = "Spin it and watch it work its \"Magic\"!"
 	required_levels = list("Clown"=1)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "Nothing seems to happen!")
+		boutput(C, "You pull your special crayon out from your special place!")
+		var/obj/item/I = new/obj/item/pen/crayon/random/choose()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
 		return
+
 /datum/jobXpReward/clown5
-	name = "Nothing Again!"
-	desc = "Nothing!"
+	name = "Nothing!"
+	desc = "Nothing Again!"
 	required_levels = list("Clown"=5)
 	icon_state = "?"
 	claimable = 1
@@ -374,8 +378,8 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/clown10
-	name = "Nothing Again Again!!"
-	desc = "Nothing!"
+	name = "Nothing!!"
+	desc = "Nothing Again Again!!"
 	required_levels = list("Clown"=10)
 	icon_state = "?"
 	claimable = 1
@@ -385,8 +389,8 @@ mob/verb/checkrewards()
 		boutput(C, "Nothing seems to happen!")
 		return
 /datum/jobXpReward/clown15
-	name = "Nothing Again Again Again!!!"
-	desc = "Nothing!"
+	name = "Nothing!!!"
+	desc = "Nothing Again Again Again!!!"
 	required_levels = list("Clown"=15)
 	icon_state = "?"
 	claimable = 1
@@ -406,12 +410,11 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		boutput(C, "You get a \"banana\"!")
-		var/obj/banana 
-		if (prob(1)
-			banana = new/obj/item/old_grenade/banana
+		var/obj/item/banana = null 
+		if (prob(1))
+			banana = new/obj/item/old_grenade/banana()
 		else
-
-			banana = new/obj/item/reagent_containers/food/snacks/plant/banana
+			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
 		return
