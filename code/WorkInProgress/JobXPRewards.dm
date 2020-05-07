@@ -348,3 +348,70 @@ mob/verb/checkrewards()
 	desc = ""
 	required_levels = list("Security Officer"=999)
 	icon_state = "?"
+
+/////////////CLOWN////////////////
+/datum/jobXpReward/clown1
+	name = "Nothing"
+	desc = "Nothing!"
+	required_levels = list("Clown"=1)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "Nothing seems to happen!")
+		return
+/datum/jobXpReward/clown5
+	name = "Nothing Again!"
+	desc = "Nothing!"
+	required_levels = list("Clown"=5)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "Nothing seems to happen!")
+		return
+
+/datum/jobXpReward/clown10
+	name = "Nothing Again Again!!"
+	desc = "Nothing!"
+	required_levels = list("Clown"=10)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "Nothing seems to happen!")
+		return
+/datum/jobXpReward/clown15
+	name = "Nothing Again Again Again!!!"
+	desc = "Nothing!"
+	required_levels = list("Clown"=15)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "Nothing seems to happen!")
+		return
+
+/datum/jobXpReward/clown20
+	name = "Bananna"
+	desc = "Banana, but misspelled!"
+	required_levels = list("Clown"=20)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You get a \"banana\"!")
+		var/obj/banana 
+		if (prob(1)
+			banana = new/obj/item/old_grenade/banana
+		else
+
+			banana = new/obj/item/reagent_containers/food/snacks/plant/banana
+		banana.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(banana)
+		return
