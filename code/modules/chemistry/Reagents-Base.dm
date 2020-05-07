@@ -534,14 +534,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_sugar", 2)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_sugar", 2)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_sugar")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)

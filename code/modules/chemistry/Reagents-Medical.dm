@@ -66,14 +66,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_morphine", -5)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_morphine", -5)
 				return
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_morphine")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_morphine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -115,14 +117,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_ether", -5)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_ether", -5)
 				return
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_ether")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_ether")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -428,14 +432,16 @@ datum
 			stun_resist = 27
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_synaptizine", 4)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_synaptizine", 4)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_synaptizine")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_synaptizine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -605,14 +611,16 @@ datum
 			var/remove_buff = FALSE
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_smelling_salt", 5)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_smelling_salt", 5)
 				return
 
 			on_remove()
 				if (remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_smelling_salt")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_smelling_salt")
 				return
 
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
@@ -685,14 +693,16 @@ datum
 			value = 8 // 2c + 3c + 1c + 1c + 1c
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_haloperidol", -5)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_haloperidol", -5)
 				return
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_haloperidol")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_haloperidol")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -748,14 +758,16 @@ datum
 			stun_resist = 5
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_epinephrine", 3)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_epinephrine", 3)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_epinephrine")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_epinephrine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1051,14 +1063,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_ephedrine", 2)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_ephedrine", 2)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_ephedrine")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_ephedrine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1150,14 +1164,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_diphenhydramine", -3)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_diphenhydramine", -3)
 				return
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_diphenhydramine")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_diphenhydramine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
