@@ -771,6 +771,7 @@
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_ears = /obj/item/device/radio/headset/civilian
 	slot_poc1 = /obj/item/paper/book/pocketguide/bartending
+	slot_lhan = /obj/item/reagent_containers/food/drinks/cocktailshaker
 	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
 
 	New()
