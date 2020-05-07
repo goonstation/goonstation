@@ -1259,7 +1259,6 @@
 				W.set_loc(get_turf(src.loc))
 			else
 				W.set_loc(src.loc)
-			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
 		var/turf/T = get_turf(src.loc)
@@ -1351,7 +1350,7 @@
 /mob/proc/swap_hand()
 	return
 
-/mob/proc/u_equip(W as obj)
+/mob/proc/u_equip(obj/item/W)
 
 // I think this bit is handled by each method of dropping it, and it prevents dropping items in your hands and other procs using u_equip so I'll get rid of it for now.
 //	if (hasvar(W,"cant_self_remove"))
@@ -1373,6 +1372,8 @@
 		src.client.screen -= W
 
 	set_clothing_icon_dirty()
+
+	W.dropped(src)
 
 /*
 /mob/verb/dump_source()

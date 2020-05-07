@@ -853,6 +853,7 @@ proc/Create_Tommyname()
 	name = "fibre wire"
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = 1
+	c_flags = EQUIPPED_WHILE_HELD
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
@@ -905,12 +906,13 @@ proc/Create_Tommyname()
 		//Slow us down slightly when we have the thing readied to encourage late-readying
 		src.setProperty("movespeed", 1 * wire_readied)
 
-	var/mob/M = src.loc // inc terminally stupid code
+	var/mob/M = the_mob // inc terminally stupid code
 	if (!ismob(M) && src.chokehold && ismob(src.chokehold.assailant))
 		M = src.chokehold.assailant
+	else if (ismob(src.loc))
+		M = src.loc
 	else if (ismob(usr)) // we've tried nothing and we're all out of ideas
 		M = usr
-	message_admins("garrote user is [M]")
 	M.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
 
 /obj/item/garrote/proc/is_behind_target(var/mob/living/assailant, var/mob/living/target)

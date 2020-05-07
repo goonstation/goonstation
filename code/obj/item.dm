@@ -86,6 +86,7 @@
 
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
+	var/debug_pickedup = 0
 
 
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
@@ -1333,6 +1334,8 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
 /obj/item/proc/dropped(mob/user)
+	if (src.c_flags & EQUIPPED_WHILE_HELD)
+		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
@@ -1351,7 +1354,9 @@
 	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	#endif
-	if(src.material) src.material.triggerPickup(user, src)
+	if(src.material)
+		src.material.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
-	return
+	if (src.c_flags & EQUIPPED_WHILE_HELD)
+		src.equipped(user, user.get_slot_from_item(src))

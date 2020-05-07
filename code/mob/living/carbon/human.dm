@@ -873,8 +873,10 @@
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
 
-	if (missing_legs)
-		. += max((missing_legs * 7.5) - ((2-missing_arms) * 4), 0) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 4.
+	if (missing_legs == 2)
+		. += 15 - ((2-missing_arms) * 2) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 2.
+	else
+		. += 7.5*missing_legs
 
 	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
 		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
@@ -1098,11 +1100,6 @@
 	u_equip(I)
 
 	I.set_loc(src.loc)
-
-	// u_equip() already calls I.dropped()
-	// no it doesn't
-	if (isitem(I))
-		I.dropped(src) // let it know it's been dropped
 
 	if (get_dist(src, target) > 0)
 		src.dir = get_dir(src, target)
@@ -2024,7 +2021,7 @@
 		W.dropped(src)
 		src.update_inhands()
 
-/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach
+/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -2045,7 +2042,6 @@
 		if (spacemove)
 			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 			equipment_proxy.space_movement += spacemove
-	message_admins("additive slowdown is [equipment_proxy.additive_slowdown], fluidmove is [equipment_proxy.aquatic_movement], spacemove is [equipment_proxy.space_movement]")
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)

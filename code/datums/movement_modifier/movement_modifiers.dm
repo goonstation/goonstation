@@ -131,8 +131,11 @@
 	if (missing_arms == 2)
 		return list(100,0) // this was snowflaked in as 300 in previous movement delay code
 	else
-		var/applied_modifier = max((missing_legs * 7.5) - ((2-missing_arms) * 4), 0)
-		if (missing_arms == 0)
+		var/applied_modifier = 0
+		if (missing_legs == 2)
+			applied_modifier = 15 - ((2-missing_arms) * 2) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 2.
+		else
+			applied_modifier = 7.5*missing_legs
 
 
 		message_admins("applied modifier is [applied_modifier], correction is [0-(applied_modifier*((2-missing_arms)*0.5))]")
