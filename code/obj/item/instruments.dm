@@ -219,9 +219,6 @@
 				if (H.hasStatus("weakened"))
 					JOB_XP(user, "Clown", 2)
 					break
-				else (prob(50))
-					break
-
 
 	is_detonator_attachment()
 		return 1
