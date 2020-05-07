@@ -1156,7 +1156,7 @@ var/datum/action_controller/actions
 		..()
 		M = owner
 		if (!M.hasStatus("resting"))
-			M.setStatus("resting", INFINITE_STATUS)
+			M.rest()
 			var/mob/living/carbon/human/H = M
 			if (istype(H))
 				H.hud.update_resting()

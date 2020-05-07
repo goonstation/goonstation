@@ -271,7 +271,7 @@
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
-		
+
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
 
@@ -395,7 +395,7 @@
 				if(master.ai_active && !master.hasStatus("resting"))
 					master.show_text("You feel too restless to do that!", "red")
 				else
-					master.hasStatus("resting") ? master.delStatus("resting") : master.setStatus("resting", INFINITE_STATUS)
+					master.hasStatus("resting") ? master.delStatus("resting") : master.rest()
 					master.force_laydown_standup()
 				src.update_resting()
 
@@ -958,3 +958,10 @@
 			var/datum/hud/human/H = src.hud
 			H.update_status_effects()
 		return
+
+mob/proc/rest()
+	.= 0
+mob/living/carbon/human/rest() //jesus fucking christ how do we not have a rest proc already, like what the fuck anyway now we do, you better use it
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()

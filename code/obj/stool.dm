@@ -481,7 +481,7 @@
 			boutput(user, "<span class='alert'>You must be lying down on [src] to sleep on it.</span>")
 			return
 
-		user.setStatus("resting", INFINITE_STATUS)
+		user.rest()
 		user.sleeping = 4
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user

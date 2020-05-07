@@ -1062,7 +1062,7 @@
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
-				src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
+				src.hasStatus("resting") ? src.delStatus("resting") : src.rest()
 				src.force_laydown_standup()
 			hud.update_resting()
 		if ("head")

@@ -77,7 +77,7 @@
 	if (istype(W, /obj/item/grab))
 		if(ismob(W:affecting))
 			var/mob/M = W:affecting
-			M.setStatus("resting", INFINITE_STATUS)
+			M.rest()
 			M.force_laydown_standup()
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -119,7 +119,7 @@
 	var/mob/living/carbon/C = O
 	if (user == C)
 		src.visible_message("<span class='alert'><b>[user.name]</b> lies down on [src].</span>")
-		user.setStatus("resting", INFINITE_STATUS)
+		user.rest()
 		user.force_laydown_standup()
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -129,7 +129,7 @@
 	else
 		src.visible_message("<span class='alert'><b>[user.name]</b> starts to move [C.name] onto the operating table.</span>")
 		if (do_mob(user,C,30))
-			C.setStatus("resting", INFINITE_STATUS)
+			C.rest()
 			C.force_laydown_standup()
 			if (ishuman(C))
 				var/mob/living/carbon/human/H = C

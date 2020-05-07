@@ -463,7 +463,7 @@
 				if (value < 25)
 					if (!L.hasStatus("resting"))
 						showOwner("<span class='alert'>You overworked yourself and cannot wake up until you are minimally rested!</span>")
-						L.setStatus("resting", INFINITE_STATUS)
+						L.rest()
 					L.sleeping += 1
 				else
 					forced_sleep = 0
