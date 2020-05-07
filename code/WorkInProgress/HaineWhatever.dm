@@ -1919,14 +1919,14 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 
 	on_add()
 		if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-			holder.my_atom:add_stam_mod_regen("consumable_good", 200)
+			holder.my_atom:add_stam_mod_regen("r_cocaine", 200)
 		if(hascall(holder.my_atom,"addOverlayComposition"))
 			holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
 	on_remove()
 		if(remove_buff)
 			if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-				holder.my_atom:remove_stam_mod_regen("consumable_good")
+				holder.my_atom:remove_stam_mod_regen("r_cocaine")
 		if(hascall(holder.my_atom,"removeOverlayComposition"))
 			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine)
 			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
