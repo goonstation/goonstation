@@ -2317,7 +2317,7 @@
 		if (istype(T))
 			return " at [T.x],[T.y],[T.z]"
 
-	proc/borg_death_alert(var/modifier)
+	proc/borg_death_alert(modifier = MOD_NONE)
 		var/message = null
 		var/mailgroup = "medresearch"
 		var/net_id = generate_net_id(src)
@@ -2326,12 +2326,16 @@
 
 		var/coords = src.get_coords()
 		var/area/myarea = get_area(src)
-		if (modifier == 1) //suicide
-			message = "SELF-TERMINATION DETECTED: [src][coords] in [myarea]"
-		else if (modifier == 2) //killswitch
-			message = "KILLSWITCH ACTIVATED: [src][coords] in [myarea]"
-		else //normal death and gib
-			message = "CONTACT LOST: [src][coords] in [myarea]"
+
+		switch(modifier)
+			if (MOD_NONE)	//normal death and gib
+				message = "CONTACT LOST: [src][coords] in [myarea]"
+			if (MOD_BORG_SUICIDE) //suicide
+				message = "SELF-TERMINATION DETECTED: [src][coords] in [myarea]"
+			if (MOD_KILLSWITCH) //killswitch
+				message = "KILLSWITCH ACTIVATED: [src][coords] in [myarea]"
+			else	//Someone passed us an unkown modifier
+				message = "UNKNOWN ERROR: [src][coords] in [myarea]"
 
 		if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
@@ -2556,7 +2560,7 @@
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain()
 				src.update_appearance()
-				src.borg_death_alert(2)
+				src.borg_death_alert(MOD_KILLSWITCH)
 
 
 	process_locks()
