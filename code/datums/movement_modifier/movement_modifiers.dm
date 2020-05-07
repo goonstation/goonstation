@@ -137,8 +137,6 @@
 		else
 			applied_modifier = 7.5*missing_legs
 
-
-		message_admins("applied modifier is [applied_modifier], correction is [0-(applied_modifier*((2-missing_arms)*0.5))]")
 		// apply a negative modifier to balance out what movement_delay would set, times half times the number of arms
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),0)
