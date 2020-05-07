@@ -152,6 +152,7 @@ datum
 						M.ailments += AD
 					else */if (AD)
 						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
 /*					if (ishuman(M) && thirst_value)
