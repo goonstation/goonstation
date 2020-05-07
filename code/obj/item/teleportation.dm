@@ -138,6 +138,20 @@ Frequency:
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 
+		// Make sure you're holding the hand tele, or it's implanted, before you can use it.
+		var/obj/item/I = user.equipped()
+		var/obj/item/C = null
+		if (istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/humanuser = user
+			C = humanuser.chest_item
+		if (I != src)
+			if (istype(I, /obj/item/magtractor))
+				var/obj/item/magtractor/mag = I
+				if (mag.holding != src)
+					return
+		else if (C != src)
+			return
+
 		if (src.portals.len > 2)
 			user.show_text("The hand teleporter is recharging!", "red")
 			return
@@ -192,14 +206,6 @@ Frequency:
 		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
 		if (user.stat || user.restrained())
 			return
-		var/obj/item/I = user.equipped()
-		if (I != src)
-			if (istype(I, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = I
-				if (mag.holding != src)
-					return
-			else
-				return
 
 		if (t1 == "Cancel")
 			return
@@ -240,7 +246,7 @@ Frequency:
 			return
 
 		var/obj/portal/P = unpool(/obj/portal)
-		P.set_loc(get_turf(src))
+		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
 			P.target = src.our_random_target
