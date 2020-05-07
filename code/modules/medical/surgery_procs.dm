@@ -300,6 +300,7 @@ limbs are their own thing not included here.
 		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
 		surgeon.changeStatus("weakened", 4 SECONDS)
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, null, damage)
@@ -911,6 +912,7 @@ limbs are their own thing not included here.
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!</span>",\
 		"<span class='alert'>You mishandle [src] and cut yourself!</span>")
 		surgeon.changeStatus("weakened", 1 SECOND)
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(10, 20)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, damage)
@@ -1256,6 +1258,7 @@ limbs are their own thing not included here.
 		// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
 		// - Haine
 		surgeon.changeStatus("weakened", 4 SECONDS)
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(1, 10)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, damage)
@@ -1429,6 +1432,7 @@ limbs are their own thing not included here.
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!</span>",\
 		"<span class='alert'>You burn yourself with [src]</span>")
 
+		JOB_XP(surgeon, "Clown", 1)
 		surgeon.changeStatus("weakened", 4 SECONDS)
 		random_burn_damage(surgeon, damage)
 		return 1
@@ -1693,6 +1697,7 @@ limbs are their own thing not included here.
 		surgeon.bioHolder.AddEffect("blind")
 		patient.changeStatus("weakened", 4)
 
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, null, damage)

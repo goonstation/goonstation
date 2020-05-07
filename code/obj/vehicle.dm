@@ -191,6 +191,7 @@ Contains:
 				continue
 			C.show_message("<span class='alert'><B>[rider] crashes into the wall with \the [src]!</B></span>", 1)
 		eject_rider(2)
+		JOB_XP(rider, "Clown", 1)
 		in_bump = 0
 		return
 	if(ismob(AM))

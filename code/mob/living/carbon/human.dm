@@ -695,6 +695,7 @@
 
 		if (src.getStatusDuration("burning") > 400)
 			src.unlock_medal("Black and Blue", 1)
+		JOB_XP(src, "Clown", 10)
 
 	ticker.mode.check_win()
 

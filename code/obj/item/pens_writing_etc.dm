@@ -277,6 +277,23 @@
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] crayon"
 
+		choose
+			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
+
+			on_spin_emote(var/mob/living/carbon/human/user as mob)
+				src.color = random_color()
+				src.font_color = src.color
+				src.color_name = hex2color_name(src.color)
+				src.name = "[src.color_name] crayon"
+
+				if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)))
+					user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
+					src.throw_impact(user)
+					JOB_XP(user, "Clown", 3)
+
+
+
+
 	rainbow
 		name = "strange crayon"
 		color = "#FFFFFF"

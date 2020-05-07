@@ -62,6 +62,7 @@ var/list/bible_contents = list()
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on \his foot.</span>")
 			random_brute_damage(user, 10)
 			user.changeStatus("stunned", 3 SECONDS)
+			JOB_XP(user, "Clown", 1)
 			return
 
 	//	if(..() == BLOCKED)

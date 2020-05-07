@@ -238,6 +238,7 @@
 									message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 									src.u_equip(thing)
 									thing.set_loc(src.loc)
+									JOB_XP(src, "Clown", 1)
 								else
 									message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand."
 									thing.on_spin_emote(src)
@@ -1133,6 +1134,8 @@
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
 								src.changeStatus("weakened", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
+								JOB_XP(src, "Clown", 1)
+
 							if (src.bioHolder.HasEffect("fat"))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under [his_or_her(src)] own weight!")
 								src.changeStatus("weakened", 2 SECONDS)

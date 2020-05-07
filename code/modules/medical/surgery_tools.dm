@@ -1225,6 +1225,7 @@ CONTAINS:
 
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(33))
 			M = user // hold the pen the right way, dingus!
+			JOB_XP(user, "Clown", 1)
 
 		if (!src.on || def_zone != "head")
 			M.tri_message("[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
