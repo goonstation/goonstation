@@ -201,7 +201,28 @@
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
 					return
 
-			if ("twirl", "spin", "juggle")
+			if ("juggle")
+				if (!src.restrained())
+					if (src.emote_check(voluntary, 25))
+						m_type = 1
+						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
+							var/obj/item/thing = src.equipped()
+							if (!thing)
+								if (src.l_hand)
+									thing = src.l_hand
+								else if (src.r_hand)
+									thing = src.r_hand
+							if (thing)
+								if (src.juggling())
+									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+										src.drop_juggle()
+									else
+										src.add_juggle(thing)
+								else
+									src.add_juggle(thing)
+							else
+								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
