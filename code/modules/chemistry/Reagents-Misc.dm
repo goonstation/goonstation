@@ -232,7 +232,7 @@ datum
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					M.:add_stam_mod_regen("aranesp", 15)
+					M.add_stam_mod_regen("aranesp", 15)
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
 					holder.my_atom:add_stam_mod_max("aranesp", 25)
 				return

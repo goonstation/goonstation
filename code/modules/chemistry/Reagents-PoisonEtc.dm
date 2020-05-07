@@ -426,7 +426,7 @@ datum
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.:add_stam_mod_regen("r_initropidril", 33)
+					remove_buff = M.add_stam_mod_regen("r_initropidril", 33)
 				return
 
 			on_remove()
