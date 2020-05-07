@@ -370,7 +370,7 @@
 
 	//mbc : bringing this silly fix back in for now
 	if (map_currently_underwater)
-		if (totalPressure / members.len < 5+(map_currently_underwater*60))
+		if (totalPressure / members.len < 65)
 			space_group()
 			return 1
 	else
