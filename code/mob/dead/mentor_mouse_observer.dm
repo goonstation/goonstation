@@ -25,7 +25,7 @@
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
 			params = params2list(params)
-		
+
 		src.the_guy << src.ping
 		src << src.ping
 
@@ -45,7 +45,7 @@
 		animate(src.ping, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
 		animate(src.ping, transform = M, time = 1 SECOND, easing = BACK_EASING, flags = ANIMATION_PARALLEL)
 		pool(M)
-		
+
 		SPAWN_DBG(1 SECONDS)
 			if(my_id == src.ping_id) // spam clicking and stuff
 				animate(src.ping, alpha = 0, time = 0.3 SECOND, easing = SINE_EASING)
@@ -53,7 +53,7 @@
 			sleep(0.3 SECOND)
 			if(my_id == src.ping_id)
 				src.ping.loc = null
-	
+
 	say_understands(var/other)
 		return 1
 
@@ -79,11 +79,11 @@
 		game_stats.ScanText(message)
 #endif
 
-		var/text_color = mentorhelp_text_color
+		var/more_class = " mhelp"
 		if(src.is_admin)
-			text_color = "#d12519"
-		var/rendered = "<span class='game say' style='color:[text_color]'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> whispers, <span class='message'>\"[message]\"</span></span>"
-		var/rendered_admin = "<span class='game say' style='color:[text_color]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, <span class='message'>\"[message]\"</span></span>"
+			more_class = "adminooc"
+		var/rendered = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> whispers, <span class='message'>\"[message]\"</span></span>"
+		var/rendered_admin = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, <span class='message'>\"[message]\"</span></span>"
 
 		//show message to admins
 		for (var/mob/M in mobs)

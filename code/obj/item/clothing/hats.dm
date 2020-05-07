@@ -206,7 +206,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span style=\"color:blue\">You heat \the [target.name]</span>")
+			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 
@@ -263,34 +263,28 @@
 
 	New()
 		..()
-		items = list("bodybag" = /obj/item/body_bag, \
-									"scanner" = /obj/item/device/detective_scanner, \
-									"lighter" = /obj/item/device/light/zippo/, \
-									"spray" = /obj/item/spraybottle, \
-									"monitor" = /obj/item/device/camera_viewer, \
-									"camera" = /obj/item/camera_test, \
-									"audiolog" = /obj/item/device/audio_log , \
-									"flashlight" = /obj/item/device/light/flashlight, \
+		items = list("bodybag" = /obj/item/body_bag,
+									"scanner" = /obj/item/device/detective_scanner,
+									"lighter" = /obj/item/device/light/zippo/,
+									"spray" = /obj/item/spraybottle,
+									"monitor" = /obj/item/device/camera_viewer,
+									"camera" = /obj/item/camera_test,
+									"audiolog" = /obj/item/device/audio_log ,
+									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses)
 		cigs = list()
 	examine()
-		set src in view()
-		set category = "Local"
-
-		..()
-		var/str = "<span style=\"color:blue\">Current activation phrase is <b>\"[phrase]\"</b>.</span>"
+		. = ..()
+		. += "<span class='notice'>Current activation phrase is <b>\"[phrase]\"</b>.</span>"
 		for (var/name in items)
 			var/type = items[name]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				str += "<br><span style=\"color:blue\">[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
 			else
-				str += "<br>There is no [name]!"
+				. += "<br>There is no [name]!"
 		if (cigs.len)
-			str += "<br><span style=\"color:blue\">It contains <b>[cigs.len]</b> cigarettes!</span>"
-
-		usr.show_message(str)
-		return
+			. += "<br><span class='notice'>It contains <b>[cigs.len]</b> cigarettes!</span>"
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
@@ -306,7 +300,7 @@
 				var/obj/item/I = locate(type) in contents
 				if(findtext(gadget, name) && I)
 					M.put_in_hand_or_drop(I)
-					M.visible_message("<span style=\"color:red\"><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
+					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
 					return
 
 			if(findtext(gadget, "cigarette"))
@@ -326,7 +320,7 @@
 					else
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
-					M.visible_message("<span style=\"color:red\"><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
@@ -362,7 +356,7 @@
 				success = 1
 
 		if(success)
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
 			return
 
 		return ..()
@@ -609,7 +603,7 @@
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
-			source.show_message(text("<span style=\"color:red\">\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
+			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
 			. = 0
 
 /obj/item/clothing/head/wizard/red
@@ -661,7 +655,7 @@
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
-			boutput(user, "<span style=\"color:blue\">You scribble on the hat until it's filled in.</span>")
+			boutput(user, "<span class='notice'>You scribble on the hat until it's filled in.</span>")
 			if (P.font_color)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
@@ -722,7 +716,7 @@
 			src.throw_source = null
 		else
 			if (user)
-				user.visible_message("<span style='color:blue'><b>[user]'s hat's blades retract.</b></span>")
+				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
 			src.hit_type = DAMAGE_BLUNT
 			src.hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
 			src.force = 1
@@ -891,7 +885,7 @@
 				light.attach(src)
 
 	equipped(var/mob/user, var/slot)
-		boutput(user, "<span style=\"color:blue\">You better start running! It's kill or be killed now, buddy!</span>")
+		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
 			SPAWN_DBG(1 SECOND)
@@ -921,7 +915,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:red\"><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
+				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
 				H.unequip_all()
@@ -954,7 +948,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:blue\"><b>[H] becomes one with the [src.name]!</b></span>")
+				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
@@ -1014,10 +1008,9 @@
 		item_state = "sunhatg"
 
 	examine()
-		..()
+		. = ..()
 		if (src.stunready)
-			boutput(usr, "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]")
-		return
+			. += "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -1025,7 +1018,7 @@
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
+			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			W:amount--
 			return
@@ -1037,7 +1030,7 @@
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span style=\"color:red\">You shock yourself while fumbling around with [C]!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
 				return
 
@@ -1052,7 +1045,7 @@
 			src.item_state = text("[]-stun",src.item_state)
 			C.updateicon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span style=\"color:blue\">The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return
 
 		..()

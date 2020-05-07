@@ -129,7 +129,7 @@
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span style=\"color:blue\">A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
+					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
 					if(H.client && !checktraitor(H) && H.client.preferences.be_traitor && !(H.mind.assigned_role in list("Head of Security", "Security Officer")))
 						candidates += H
 				break
@@ -140,7 +140,7 @@
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)
 					listeners += R
-					boutput(R, "<span style=\"color:blue\">A peculiar noise intrudes upon your radio frequency.</span>")
+					boutput(R, "<span class='notice'>A peculiar noise intrudes upon your radio frequency.</span>")
 
 	proc/broadcast_sound(var/soundfile)
 		for (var/mob/M in listeners)

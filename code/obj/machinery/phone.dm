@@ -103,7 +103,7 @@
 					phonebook.Subscribe(user.client)
 			else
 				if(user)
-					boutput(user,"<span style=\"color:red\">As you pick up the phone you notice that the cord has been cut!</span>")
+					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
 		else
 			src.ringing = 0
 			src.linked.ringing = 0
@@ -159,7 +159,7 @@
 		src.icon_state = "[ringingicon]"
 		if (!src.emagged)
 			if(user)
-				boutput(user, "<span style=\"color:red\">You short out the ringer circuit on the [src].</span>")
+				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
 			src.emagged = 1
 			return 1
 		return 0
@@ -232,7 +232,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		if (ishuman(user))
-			user.visible_message("<span style='color:red'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
 			user.TakeDamage("head", 150, 0)
 			user.updatehealth()
 			return 1
@@ -298,7 +298,7 @@
 			qdel(src)
 			return
 		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
-			boutput(src.holder,"<span style=\"color:red\">The phone cord reaches it limit and the handset is yanked back to its base!</span>")
+			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
 			processing_items.Remove(src)

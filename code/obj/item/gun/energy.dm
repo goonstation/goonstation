@@ -27,17 +27,15 @@
 
 
 	examine()
-		set src in usr
+		. = ..()
 		if(src.cell)
-			src.desc = "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+			. += "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 		else
-			src.desc = "There is no cell loaded!"
+			. += "There is no cell loaded!"
 		if(current_projectile)
-			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
+			. += "Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
-		..()
-		return
+			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0
@@ -87,7 +85,7 @@
 			if(src.cell && src.current_projectile)
 				if(src.cell.use(src.current_projectile.cost))
 					return 1
-			boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
 				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 			return 0
@@ -96,19 +94,19 @@
 		if (can_swap_cell && istype(b, /obj/item/ammo/power_cell))
 			var/obj/item/ammo/power_cell/pcell = b
 			if (src.custom_cell_max_capacity && (pcell.max_charge > src.custom_cell_max_capacity))
-				boutput(user, "<span style=\"color:red\">This [pcell.name] won't fit!</span>")
+				boutput(user, "<span class='alert'>This [pcell.name] won't fit!</span>")
 				return
 			src.logme_temp(user, src, pcell) //if (!src.rechargeable)
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
 			if (src.cell)
 				if (pcell.swap(src))
-					user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
 				src.cell = pcell
 				user.drop_item()
 				pcell.set_loc(src)
-				user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 		else
 			..()
 
@@ -714,17 +712,17 @@
 
 	/*examine()
 		set src in view()
-		boutput(usr, "<span style=\"color:blue\">Installed components:</span><br>")
+		boutput(usr, "<span class='notice'>Installed components:</span><br>")
 		if(emitter)
-			boutput(usr, "<span style=\"color:blue\">[src.emitter.name]</span>")
+			boutput(usr, "<span class='notice'>[src.emitter.name]</span>")
 		if(cell)
-			boutput(usr, "<span style=\"color:blue\">[src.cell.name]</span>")
+			boutput(usr, "<span class='notice'>[src.cell.name]</span>")
 		if(back)
-			boutput(usr, "<span style=\"color:blue\">[src.back.name]</span>")
+			boutput(usr, "<span class='notice'>[src.back.name]</span>")
 		if(top_rail)
-			boutput(usr, "<span style=\"color:blue\">[src.top_rail.name]</span>")
+			boutput(usr, "<span class='notice'>[src.top_rail.name]</span>")
 		if(bottom_rail)
-			boutput(usr, "<span style=\"color:blue\">[src.bottom_rail.name]</span>")
+			boutput(usr, "<span class='notice'>[src.bottom_rail.name]</span>")
 		..()*/
 
 	/*proc/generate_overlays()
@@ -1157,7 +1155,7 @@
 
 	attack_hand(mob/user as mob)
 		if (!owner_prints)
-			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		..()
 
@@ -1167,10 +1165,10 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		if (!owner_prints)
-			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		else
-			boutput(user, "<span style=\"color:blue\">There don't seem to be any buttons on [src] to press.</span>")
+			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
 
 	proc/asign_name(var/mob/M)
 		if (ishuman(M))
@@ -1202,7 +1200,7 @@
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
 		if(!src.projectiles && !src.projectiles.len > 1)
-			boutput(M, "<span style=\"color:blue\">Gun broke. Call 1-800-CODER.</span>")
+			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
 			current_projectile = new/datum/projectile/energy_bolt/aoe
 			item_state = "lawg-detain"
 			M.update_inhands()
@@ -1261,7 +1259,7 @@
 					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 					s.set_up(2, 1, (get_turf(src)))
 					s.start()
-					M.visible_message("<span style=\"color:red\">[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 					return
 
 		M.update_inhands()
@@ -1344,7 +1342,7 @@
 			// 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
-			// 	user.visible_message("<span style=\"color:red\">[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 			// 	return
 
 			if (current_projectile.type == /datum/projectile/bullet/flare)
@@ -1356,11 +1354,11 @@
 		var/output = "This is \an [src.name]."
 		// Added for forensics (Convair880).
 		if (isitem(src) && src.blood_DNA)
-			output = "<span style='color:red'>This is a bloody [src.name].</span>"
+			output = "<span class='alert'>This is a bloody [src.name].</span>"
 			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in an odd azure liquid!</span>"
+				output += "<br>[src.desc] <span class='alert'>It seems to be covered in an odd azure liquid!</span>"
 			if (src.desc)
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in blood!</span>"
+				output += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
 		else if (src.desc)
 			output += "<br>[src.desc]"
 		var/dist = get_dist(src, usr)
@@ -1397,13 +1395,13 @@
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += " <span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += " <span class='alert'>*ERROR* No output selected!</span>"
 		return
 
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
-		boutput(user, "<span style=\"color:red\">Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
+		boutput(user, "<span class='alert'>Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
 	return 0
 
@@ -1477,3 +1475,21 @@
 		current_projectile = new/datum/projectile/special/spreader/quadwasp
 		projectiles = list(current_projectile)
 		..()
+
+// HOWIZTER GUN
+// dumb meme admin item. not remotely fair, will probably kill person firing it.
+
+/obj/item/gun/energy/howitzer
+	name = "man-portable plasma howitzer"
+	desc = "How can you even lift this?"
+	icon_state = "bfg"
+	uses_multiple_icon_states = 0
+	force = 25
+	two_handed = 1
+	can_dual_wield = 0
+
+	New()
+		..()
+		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
+		current_projectile = new/datum/projectile/special/howitzer
+		projectiles = list(new/datum/projectile/special/howitzer )

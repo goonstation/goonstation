@@ -20,7 +20,7 @@
 
 		var/protectuser = 1
 		if (!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Without your staff to focus your spell, it may backfire!</span>")
+			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, it may backfire!</span>")
 			protectuser = 0
 
 		var/people_in_range = 0
@@ -54,17 +54,17 @@
 
 // holy shit someone clean this up and just move it into the main spell proc, this is ridiclous
 /mob/living/proc/PAND_Fireburst(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> radiates a wave of burning heat!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> radiates a wave of burning heat!</span>", src), 1)
 	playsound(src, "sound/effects/bamf.ogg", 80, 1)
 	for (var/mob/living/carbon/human/M in range(6, src))
 		if (M == src && protectuser) continue
 		if (iswizard(M)) continue
 		if(check_target_immunity( M )) continue
-		boutput(M, "<span style=\"color:red\">You suddenly burst into flames!</span>")
+		boutput(M, "<span class='alert'>You suddenly burst into flames!</span>")
 		M.update_burning(30)
 
 /mob/living/proc/PAND_Babel(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> emits a faint smell of cheese!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a faint smell of cheese!</span>", src), 1)
 	playsound(src, "sound/voice/farts/superfart.ogg", 80, 1)
 	for (var/mob/living/carbon/human/M in mobs)
 		if (M == src && protectuser) continue
@@ -78,7 +78,7 @@
 		M.bioHolder.AddEffect("accent_chav", timeleft = 15)
 
 /mob/living/proc/PAND_Tripballs(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> radiates a confusing aura!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> radiates a confusing aura!</span>", src), 1)
 	playsound(src, "sound/effects/bionic_sound.ogg", 80, 1)
 	for (var/mob/living/carbon/human/M in range(25, src))
 		if (M == src && protectuser) continue
@@ -86,13 +86,13 @@
 			if (M.traitHolder.hasTrait("training_chaplain")) continue
 		if (iswizard(M)) continue
 		if(check_target_immunity( M )) continue
-		boutput(M, "<span style=\"color:red\">You feel extremely strange!</span>")
+		boutput(M, "<span class='alert'>You feel extremely strange!</span>")
 		M.reagents.add_reagent("LSD", 20)
 		M.reagents.add_reagent("THC", 20)
 		M.reagents.add_reagent("psilocybin", 20)
 
 /mob/living/proc/PAND_Flashbang(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> explodes into a brilliant flash of light!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> explodes into a brilliant flash of light!</span>", src), 1)
 	playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 	for(var/mob/N in AIviewers(src, null))
 		if(get_dist(N, src) <= 6)
@@ -107,7 +107,7 @@
 		if(N.client) shake_camera(N, 6, 4)
 
 /mob/living/proc/PAND_Meteors(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> summons meteors!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> summons meteors!</span>", src), 1)
 	for(var/turf/T in orange(1, src))
 		if(!T.density)
 			var/target_dir = get_dir(src.loc, T)
@@ -115,7 +115,7 @@
 			new /obj/newmeteor/small(my_spawn = T, trg = U)
 
 /mob/living/proc/PAND_Screech(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> emits a horrible shriek!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a horrible shriek!</span>", src), 1)
 	playsound(src.loc, "sound/effects/screech.ogg", 25, 1, -1)
 
 	for (var/mob/living/H in hearers(src, null))
@@ -136,12 +136,12 @@
 	return
 
 /mob/living/proc/PAND_Boost(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> glows with magical power!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> glows with magical power!</span>", src), 1)
 	playsound(src.loc, "sound/mksounds/boost.ogg", 25, 1, -1)
 	src.bioHolder.AddEffect("arcane_power", timeleft = 60)
 
 /mob/living/proc/PAND_Roar(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> emits a horrific reverberating roar!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a horrific reverberating roar!</span>", src), 1)
 	world << sound('sound/effects/mag_pandroar.ogg')
 	for (var/mob/living/carbon/human/M in mobs)
 		if (M == src && protectuser) continue
@@ -149,21 +149,21 @@
 			if (M.traitHolder.hasTrait("training_chaplain")) continue
 		if (iswizard(M)) continue
 		if(check_target_immunity( M )) continue
-		boutput(M, "<span style=\"color:red\">A horrifying noise stuns you in sheer terror!</span>")
+		boutput(M, "<span class='alert'>A horrifying noise stuns you in sheer terror!</span>")
 		M.changeStatus("stunned", 3 SECONDS)
 		M.stuttering += 10
 
 /mob/living/proc/PAND_Signaljam(var/protectuser = 1)//wtf.
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> emits a wave of electrical interference!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a wave of electrical interference!</span>", src), 1)
 	playsound(src.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 	for (var/mob/living/carbon/human/M in mobs)
-		if (M.ears) boutput(M, "<span style=\"color:red\">Your headset speaker suddenly bursts into weird static!</span>")
+		if (M.ears) boutput(M, "<span class='alert'>Your headset speaker suddenly bursts into weird static!</span>")
 	signal_loss += 100
 	sleep(10 SECONDS)
 	signal_loss -= 100
 
 /mob/living/proc/PAND_Grilles(var/protectuser = 1)
-	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span style=\"color:red\"><B>[]</B> reshapes the metal around \him!</span>", src), 1)
+	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> reshapes the metal around \him!</span>", src), 1)
 	playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
 	for(var/turf/simulated/floor/T in view(src,7))
 		if (prob(33)) new /obj/grille/steel(T)

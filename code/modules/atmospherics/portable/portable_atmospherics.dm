@@ -103,7 +103,7 @@
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
-			boutput(user, "<span style=\"color:blue\">You attach the [W.name] to the the [src.name]</span>")
+			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W
@@ -113,12 +113,12 @@
 		if ((istype(src, /obj/machinery/portable_atmospherics/canister))) //No messing with anchored canbombs. -ZeWaka
 			var/obj/machinery/portable_atmospherics/canister/C = src
 			if (!isnull(C.det) && C.anchored)
-				boutput(user, "<span style=\"color:red\">The detonating mechanism blocks you from modifying the anchors on the [src.name].</span>")
+				boutput(user, "<span class='alert'>The detonating mechanism blocks you from modifying the anchors on the [src.name].</span>")
 				return
 		if(connected_port)
 			logTheThing("station", user, null, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
 			disconnect()
-			boutput(user, "<span style=\"color:blue\">You disconnect [name] from the port.</span>")
+			boutput(user, "<span class='notice'>You disconnect [name] from the port.</span>")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			return
 		else
@@ -126,14 +126,14 @@
 			if(possible_port)
 				if(connect(possible_port))
 					logTheThing("station", user, null, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
-					boutput(user, "<span style=\"color:blue\">You connect [name] to the port.</span>")
+					boutput(user, "<span class='notice'>You connect [name] to the port.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 					return
 				else
-					boutput(user, "<span style=\"color:blue\">[name] failed to connect to the port.</span>")
+					boutput(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
 			else
-				boutput(user, "<span style=\"color:blue\">Nothing happens.</span>")
+				boutput(user, "<span class='notice'>Nothing happens.</span>")
 				return
 
 	return

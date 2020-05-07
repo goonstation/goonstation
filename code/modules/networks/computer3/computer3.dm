@@ -328,7 +328,7 @@
 		return
 
 	if(!user.literate)
-		boutput(user, "<span style=\"color:red\">You don't know how to read or write, operating a computer isn't going to work!</span>")
+		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 		return
 
 	if ((user.machine == src) && (src.current_user == user))
@@ -578,7 +578,7 @@ function lineEnter (ev)
 		if (src.diskette)
 			//Ai/cyborgs cannot press a physical button from a room away.
 			if((issilicon(usr) || isAI(usr)) && get_dist(src, usr) > 1)
-				boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
 			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
@@ -668,13 +668,13 @@ function lineEnter (ev)
 			if(src.material) A.setMaterial(src.material)
 			A.created_icon_state = src.base_icon_state
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 				G.set_loc( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 
@@ -1007,7 +1007,7 @@ function lineEnter (ev)
 	proc/deploy(mob/user as mob)
 		var/turf/T = get_turf(src)
 		if(!T || !luggable)
-			boutput(user, "<span style=\"color:red\">You can't seem to get the latch open!</span>")
+			boutput(user, "<span class='alert'>You can't seem to get the latch open!</span>")
 			return
 
 		if (src.loc == user)
@@ -1046,7 +1046,7 @@ function lineEnter (ev)
 		if(usr.stat)
 			return
 
-		src.visible_message("<span style=\"color:red\">[usr] folds [src] back up!</span>")
+		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
 		src.undeploy()
 		return
 
@@ -1076,19 +1076,19 @@ function lineEnter (ev)
 
 		else if (ispryingtool(W))
 			if(!src.cell)
-				boutput(user, "<span style=\"color:red\">There is no energy cell inserted!</span>")
+				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
-			user.visible_message("<span style=\"color:red\">[user] removes the power cell from [src]!.</span>","<span style=\"color:red\">You remove the power cell from [src]!</span>")
+			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
 			src.power_change()
 			return
 
 		else if (istype(W, /obj/item/cell))
 			if(src.cell)
-				boutput(user, "<span style=\"color:red\">There is already an energy cell inserted!</span>")
+				boutput(user, "<span class='alert'>There is already an energy cell inserted!</span>")
 
 			else
 				user.drop_item()

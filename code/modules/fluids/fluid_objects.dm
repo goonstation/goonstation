@@ -510,10 +510,10 @@
 		active = !active
 		if (active)
 			playsound(src.loc, powerupsfx, 50, 1, 0.1, 1)
-			usr.visible_message("<span style=\"color:blue\">[usr] activates [src].</span>", "<span style=\"color:blue\">You activate [src].</span>")
+			user.visible_message("<span class='notice'>[user] activates [src].</span>", "<span class='notice'>You activate [src].</span>")
 		else
 			playsound(src.loc, powerdownsfx, 50, 1, 0.1, 1)
-			user.visible_message("<span style=\"color:blue\">[user] disarms [src].</span>","<span style=\"color:blue\">You disarm [src].</span>")
+			user.visible_message("<span class='notice'>[user] disarms [src].</span>","<span class='notice'>You disarm [src].</span>")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I) || ispryingtool(I) || ispulsingtool(I))

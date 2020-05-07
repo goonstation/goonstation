@@ -22,19 +22,19 @@
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				boutput(the_mob, "<span style=\"color:red\">The nozzle is clogged!</span>")
+				boutput(the_mob, "<span class='alert'>The nozzle is clogged!</span>")
 				return
 
 		for (var/reagent in E.melting_reagents)
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				the_mob.visible_message("<span style=\"color:red\">[E] melts!</span>")
+				the_mob.visible_message("<span class='alert'>[E] melts!</span>")
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(the_mob))
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span style=\"color:red\">[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
@@ -185,14 +185,14 @@
 		var/obj/item/clothing/shoes/rocket/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
 		R.uses--
 
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
-			boutput(the_mob, "<span style=\"color:red\">Your rocket shoes are empty.</span>")
+			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
 			R.abilities.Cut()
 			qdel(src)
 			return
@@ -200,7 +200,7 @@
 		playsound(get_turf(the_mob), 'sound/effects/bamf.ogg', 100, 1)
 
 		if(prob(explosion_chance) || R.emagged)
-			boutput(the_mob, "<span style=\"color:red\">The rocket shoes blow up!</span>")
+			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
 			explosion(src, get_turf(the_mob), -1, -1, 1, 1)
 			qdel(the_item)
 			qdel(src)
@@ -262,7 +262,7 @@
 		var/obj/item/clothing/shoes/sonic/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
 		playsound(get_turf(the_mob), "sound/effects/bamf.ogg", 100, 1)
@@ -454,11 +454,11 @@
 
 	ability_allowed()
 		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
-			boutput(the_mob, "<span style=\"color:red\">You need to be ready on your feet to use this ability.</span>")
+			boutput(the_mob, "<span class='alert'>You need to be ready on your feet to use this ability.</span>")
 			return 0
 
 		if(ishuman(the_mob) && the_mob:wear_suit != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing [the_item] to use this ability.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing [the_item] to use this ability.</span>")
 			return 0
 
 		if(!..())
@@ -797,7 +797,7 @@
 			if (H.restrained())
 				return 0
 		if (src.last_use_time && src.cooldown && ( src.last_use_time + cooldown ) > TIME)
-			boutput(src.the_mob, "<span style=\"color:red\">This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)</span>")
+			boutput(src.the_mob, "<span class='alert'>This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)</span>")
 			return 0
 		return 1
 

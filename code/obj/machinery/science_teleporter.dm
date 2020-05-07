@@ -121,12 +121,12 @@ var/ZSUBTRACT = 0
 			var/turf/target = doturfcheck(0)
 			if(!target)
 				boutput(usr, " ")
-				boutput(usr, "<span style=\"color:green\">Scan Results:</span>")
-				boutput(usr, "<span style=\"color:green\">No Atmosphere.</span>")
+				boutput(usr, "<span class='success'>Scan Results:</span>")
+				boutput(usr, "<span class='success'>No Atmosphere.</span>")
 				return
 			else
 				boutput(usr, " ")
-				boutput(usr, "<span style=\"color:green\">Scan Results:</span>")
+				boutput(usr, "<span class='success'>Scan Results:</span>")
 				if(!istype(target, /turf/space))
 					var/datum/gas_mixture/GM = target.return_air()
 					var/burning = 0
@@ -134,9 +134,9 @@ var/ZSUBTRACT = 0
 						var/turf/simulated/T = target
 						if(T.active_hotspot)
 							burning = 1
-					boutput(usr, "<span style=\"color:green\">Atmosphere: Oxy:[GM.oxygen], Tox:[GM.toxins], Nit:[GM.nitrogen], Car:[GM.carbon_dioxide],  [GM.temperature] Kelvin, [GM.return_pressure()] kPa, [(burning)?("<span style=\"color:red\">BURNING</span>"):(null)]")
+					boutput(usr, "<span class='success'>Atmosphere: Oxy:[GM.oxygen], Tox:[GM.toxins], Nit:[GM.nitrogen], Car:[GM.carbon_dioxide],  [GM.temperature] Kelvin, [GM.return_pressure()] kPa, [(burning)?("<span class='alert'>BURNING</span>"):(null)]")
 				else
-					boutput(usr, "<span style=\"color:green\">No Atmosphere.</span>")
+					boutput(usr, "<span class='success'>No Atmosphere.</span>")
 			src.updateUsrDialog()
 			return
 
@@ -159,7 +159,7 @@ var/ZSUBTRACT = 0
 
 		if (href_list["addbookmark"])
 			if(bookmarks.len >= max_bookmarks)
-				boutput(usr, "<span style=\"color:red\">Maximum number of Bookmarks reached.</span>")
+				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new
 			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
@@ -347,9 +347,9 @@ var/ZSUBTRACT = 0
 		if (!xisbad && !yisbad && !zisbad)
 			realturf = locate(realx, realy, realz)
 		if (notify_invalid)
-			if (xisbad) boutput(usr, "<span style=\"color:red\">X coordinate invalid.</span>")
-			if (yisbad) boutput(usr, "<span style=\"color:red\">Y coordinate invalid.</span>")
-			if (zisbad) boutput(usr, "<span style=\"color:red\">Z coordinate invalid.</span>")
+			if (xisbad) boutput(usr, "<span class='alert'>X coordinate invalid.</span>")
+			if (yisbad) boutput(usr, "<span class='alert'>Y coordinate invalid.</span>")
+			if (zisbad) boutput(usr, "<span class='alert'>Z coordinate invalid.</span>")
 		return realturf
 
 	proc/is_allowed(var/turf/T)
@@ -378,7 +378,7 @@ var/ZSUBTRACT = 0
 		leaveresidual(target)
 		use_power(1500)
 		if((prob(2) && prob(2)) || ((usr.ckey in Dorks) && prob(10)))
-			usr.visible_message("<span style=\"color:red\">The console emits a loud pop and an acrid smell fills the air!</span>")
+			usr.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -401,7 +401,7 @@ var/ZSUBTRACT = 0
 		showswirl(receiveturf)
 		use_power(1500)
 		if((prob(2) && prob(2)) || ((usr.ckey in Dorks) && prob(10)))
-			usr.visible_message("<span style=\"color:red\">The console emits a loud pop and an acrid smell fills the air!</span>")
+			usr.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -427,7 +427,7 @@ var/ZSUBTRACT = 0
 		showswirl(target)
 		use_power(500000)
 		if(prob(2))
-			usr.visible_message("<span style=\"color:red\">The console emits a loud pop and an acrid smell fills the air!</span>")
+			usr.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -485,7 +485,7 @@ var/ZSUBTRACT = 0
 			if("")
 				return
 			if("flash")
-				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span style=\"color:red\">A bright flash emnates from the [src.linked_pad]!</span>", 1)
+				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src.linked_pad]!</span>", 1)
 				playsound(src.linked_pad.loc, "sound/weapons/flashbang.ogg", 50, 1)
 				for(var/mob/N in viewers(src.linked_pad, null))
 					if(get_dist(N, src.linked_pad) <= 6)
@@ -494,7 +494,7 @@ var/ZSUBTRACT = 0
 					if(N.client) shake_camera(N, 6, 4)
 				return
 			if("buzz")
-				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span style=\"color:red\">You hear a loud buzz coming from the [src.linked_pad]!</span>", 1)
+				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src.linked_pad]!</span>", 1)
 				playsound(src.linked_pad.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				return
 			if("scatter") //stolen from hand tele, heh
@@ -515,17 +515,17 @@ var/ZSUBTRACT = 0
 			if("ignite")
 				for(var/mob/living/carbon/M in src.linked_pad.loc)
 					M.update_burning(30)
-					boutput(M, "<span style=\"color:red\">You catch fire!</span>")
+					boutput(M, "<span class='alert'>You catch fire!</span>")
 				return
 			if("chill")
 				for(var/mob/living/carbon/M in src.linked_pad.loc)
 					M.bodytemperature -= 100
-					boutput(M, "<span style=\"color:red\">You feel colder!</span>")
+					boutput(M, "<span class='alert'>You feel colder!</span>")
 				return
 			if("tempblind")
 				for(var/mob/living/carbon/M in src.linked_pad.loc)
 					M.eye_blind += 10
-					boutput(M, "<span style=\"color:red\">You can't see anything!</span>")
+					boutput(M, "<span class='alert'>You can't see anything!</span>")
 				return
 			if("minormutate")
 				for(var/mob/living/carbon/M in src.linked_pad.loc)
@@ -549,11 +549,11 @@ var/ZSUBTRACT = 0
 						T.reagents = R
 						R.my_atom = T
 					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span style=\"color:red\">The area surrounding the [src.linked_pad] begins to glow bright green!</span>", 1)
+				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span class='alert'>The area surrounding the [src.linked_pad] begins to glow bright green!</span>", 1)
 				return
 			if("fire")
 				fireflash(src.linked_pad.loc, 6) // cogwerks - lowered from 8, too laggy
-				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span style=\"color:red\">A huge wave of fire explodes out from the [src.linked_pad]!</span>", 1)
+				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span class='alert'>A huge wave of fire explodes out from the [src.linked_pad]!</span>", 1)
 				return
 			if("widescatter")
 				var/list/turfs = new
@@ -573,7 +573,7 @@ var/ZSUBTRACT = 0
 			if("brute")
 				for(var/mob/living/M in src.linked_pad.loc)
 					M.TakeDamage("chest", rand(20,30), 0)
-					boutput(M, "<span style=\"color:red\">You feel like you're being pulled apart!</span>")
+					boutput(M, "<span class='alert'>You feel like you're being pulled apart!</span>")
 				return
 			if("gib")
 				for(var/mob/living/M in src.linked_pad.loc)
@@ -590,7 +590,7 @@ var/ZSUBTRACT = 0
 			if("mutatearea")
 				for(var/mob/living/carbon/M in orange(5,src.linked_pad.loc))
 					M:bioHolder:RandomEffect("bad")
-				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span style=\"color:red\">A bright green pulse emnates from the [src.linked_pad]!</span>", 1)
+				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span class='alert'>A bright green pulse emnates from the [src.linked_pad]!</span>", 1)
 				return
 			if("explosion")
 				explosion(src, src.linked_pad.loc, 0, 0, 5, 10)
@@ -630,7 +630,7 @@ var/ZSUBTRACT = 0
 				return
 			if("tinyfire")
 				fireflash(src.linked_pad.loc, 3)
-				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span style=\"color:red\">The area surrounding the [src.linked_pad] bursts into flame!</span>", 1)
+				for(var/mob/O in AIviewers(src.linked_pad, null)) O.show_message("<span class='alert'>The area surrounding the [src.linked_pad] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
 				var/summon = pick("maneater","killertomato","bee","golem","magiczombie","mimic")

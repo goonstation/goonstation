@@ -30,7 +30,7 @@
 
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
-			M.visible_message("<span style='color:red'>You seem to attack [HH]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [HH]!</span>")
 			return 1
 		HH.set_loc(M.loc)
 		HH.dir = get_dir(HH, M)
@@ -39,10 +39,10 @@
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.changeStatus("stunned", 4 SECONDS)
-		M.visible_message("<span style=\"color:red\"><B>[M] starts spinning around with [HH]!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")
 		M.emote("scream")
 
 		for (var/i = 0, i < 20, i++)
@@ -113,7 +113,7 @@
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
 			qdel(G)
 
-			M.visible_message("<span style=\"color:red\"><B>[M] [pick_string("wrestling_belt.txt", "throw")] [HH]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "throw")] [HH]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
 
 			var/turf/T = get_edge_target_turf(M, M.dir)

@@ -195,10 +195,10 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 //<img alt="Goon Station 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
 
 	html = {"
-<h1>Goon Station 13 <a href="#license"><img alt="Creative Commons License" src="[resource("images/changelog/somerights20.png")]" /></a></h1>
+<h1>Goon Station 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
 
 <ul class="links cf">
-    <li>Official Wiki<br><strong>http://wiki.ss13.co</strong><span></span></li>
+    <li>Official Wiki<br><strong>https://wiki.ss13.co</strong><span></span></li>
     <li>Official Forums<br><strong>https://forum.ss13.co</strong></li>
 </ul>"}
 
@@ -213,11 +213,11 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
     <strong>Spriters:</strong> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No, Cogwerks, Aphtonites, Hempuli, Gannets, Haine, SLthePyro, Sundance, Azungar, Flaborized, and a bunch of awesome people from the forums!
 </p>
 
-<p class="lic">
-    <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" name="license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a><br/>
+<p id="license" class="lic">
+    <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" name="license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a><br/>
 
     <em>
-    	Except where otherwise noted, Goon Station 13 is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>
+    	Except where otherwise noted, Goon Station 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>
     	Rights are currently extended to SomethingAwful Goons only.
     </em>
 </p>"}

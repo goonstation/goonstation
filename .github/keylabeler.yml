@@ -44,3 +44,5 @@ labelMappings:
     "[STYLE]": style
     "[TOOLING]": tooling
     "[WIP]": WIP
+    "[EASY]": good first issue
+    "[GOOD FIRST ISSUE]": good first issue

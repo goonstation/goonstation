@@ -97,47 +97,40 @@
 
 	return
 
-/obj/item/paper/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if(ismob(usr) && !usr.literate)
-		. = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
+/obj/item/paper/examine(mob/user)
+	. = ..()
+	var/windowtext
+	if(!user.literate)
+		windowtext = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
 	else
-		. = src.info
+		windowtext = src.info
 		if (src.form_startpoints && src.form_endpoints)
 			for (var/x = src.form_startpoints.len, x > 0, x--)
-				. = copytext(., 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(., src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(., src.form_endpoints[src.form_endpoints[x]])
+				windowtext = copytext(windowtext, 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(windowtext, src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(windowtext, src.form_endpoints[src.form_endpoints[x]])
 
 	var/font_junk = ""
 	for (var/i in src.fonts)
 		font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
 
-	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[.]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
+	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[windowtext]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
 	onclose(usr, "[src.name]")
-	return null
 
 //[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
-/obj/item/paper/Map/examine()
-	set src in view()
-	set category = "Local"
+/obj/item/paper/Map/examine(mob/user)
+	. = ..()
 
-	..()
-
-	if (!( ishuman(usr) || isobserver(usr) || issilicon(usr) ))
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
+	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
+		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
+		onclose(user, "[src.name]")
 	else
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
+		onclose(user, "[src.name]")
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
+	user.visible_message("<span class='alert'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
 	user.TakeDamage("chest", 150, 0)
 	user.updatehealth()
 	return 1
@@ -203,7 +196,7 @@
 				t = sign_name(t, usr)
 				src.info = copytext(src.info, 1, form_startpoints[.]) + "" + t + "" + copytext(src.info, form_startpoints[.] + length(t))
 				build_formpoints()
-				src.examine()
+				usr.examine_verb(src)
 
 		if (istype(usr.equipped(), /obj/item/stamp))
 			var/obj/item/stamp/S = usr.equipped()
@@ -222,7 +215,7 @@
 						src.info = copytext(src.info, 1, form_startpoints[.]) + "" + T + "" + copytext(src.info, form_endpoints[.])
 						src.icon_state = "paper_stamped"
 						build_formpoints()
-						src.examine()
+						usr.examine_verb(src)
 
 	src.add_fingerprint(usr)
 
@@ -230,14 +223,14 @@
 
 	if (istype(P, /obj/item/pen))
 		if(!user.literate)
-			boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return ..()
 
 		if (isghostdrone(user))
 			return ..()
 
 		if (src.sealed)
-			boutput(user, "<span style=\"color:red\">You can't write on [src].</span>")
+			boutput(user, "<span class='alert'>You can't write on [src].</span>")
 			return
 
 		var/custom_font = "Georgia"
@@ -315,10 +308,10 @@
 			var/obj/item/stamp/S = P
 			src.info += "<br>" + S.get_stamp_text() + "<br>"
 			src.icon_state = "paper_stamped"
-			boutput(user, "<span style=\"color:blue\">You stamp the paper.</span>")
+			boutput(user, "<span class='notice'>You stamp the paper.</span>")
 
 		else if (issnippingtool(P))
-			boutput(user, "<span style=\"color:blue\">You cut the paper into a mask.</span>")
+			boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
 			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
 			user.put_in_hand_or_drop(M)
@@ -340,7 +333,7 @@
 				S.ammo--
 				playsound(user,"sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			else
-				boutput(usr, "<span style='color:red'>You need a loaded stapler in hand to staple these papers.</span>")
+				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to staple these papers.</span>")
 
 		else
 			..()
@@ -922,9 +915,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	examine()
 		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		..()
-		return
-
+		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"
@@ -1116,16 +1107,16 @@ Only trained personnel should operate station systems. Follow all procedures car
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
-			boutput(user, "<span style=\"color:red\">This rubber stamp cannot be reassigned!</span>")
+			boutput(user, "<span class='alert'>This rubber stamp cannot be reassigned!</span>")
 			return
 		if (!isnull(src.assignment))
-			boutput(user, "<span style=\"color:red\">This rubber stamp has already been assigned!</span>")
+			boutput(user, "<span class='alert'>This rubber stamp has already been assigned!</span>")
 			return
 		else if (!ID.assignment)
-			boutput(user, "<span style=\"color:red\">This ID isn't assigned to a job!</span>")
+			boutput(user, "<span class='alert'>This ID isn't assigned to a job!</span>")
 			return
 		src.set_assignment(ID.assignment)
-		boutput(user, "<span style=\"color:blue\">You update the assignment of the rubber stamp.</span>")
+		boutput(user, "<span class='notice'>You update the assignment of the rubber stamp.</span>")
 		return
 
 /obj/item/stamp/attack_self() // change current mode
@@ -1133,12 +1124,12 @@ Only trained personnel should operate station systems. Follow all procedures car
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
 	src.current_mode = NM
-	boutput(usr, "<span style=\"color:blue\">You set \the [src] to '[NM]'.</span>")
+	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
 /obj/item/stamp/examine()
-	..()
-	boutput(usr, "It is set to '[current_mode]' mode.")
+	. = ..()
+	. += "It is set to '[current_mode]' mode."
 
 /obj/item/stamp/reagent_act(reagent_id, volume)
 	if (..())
@@ -1156,7 +1147,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/stamp/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
 	user.TakeDamage("head", 250, 0)
 	user.updatehealth()
 	return 1
@@ -1253,9 +1244,9 @@ WHO DID THIS */
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		boutput(usr, desc)
+		return list(desc)
 	else
-		..()
+		return ..()
 
 /obj/item/paper/folded/plane
 	name = "paper plane"
@@ -1275,7 +1266,7 @@ WHO DID THIS */
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span style='color:blue'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		src = null

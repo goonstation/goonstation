@@ -25,7 +25,7 @@
 		HH.set_loc(M.loc)
 		HH.dir = get_dir(HH, M)
 		HH.changeStatus("stunned",40)
-		M.visible_message("<span style=\"color:red\"><B>[M] starts flinging [HH] around like a ragdoll!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] starts flinging [HH] around like a ragdoll!</B></span>")
 		M.emote("scream")
 		for (var/i = 0, i < 10, i++)
 			var/delay = 3
@@ -60,7 +60,7 @@
 				boutput(M, __red("You can't throw [HH] from here!"))
 				return 0
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
-			M.visible_message("<span style=\"color:red\"><B>[M] throws [HH]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] throws [HH]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))

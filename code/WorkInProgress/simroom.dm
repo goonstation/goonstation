@@ -145,9 +145,9 @@
 	if (M.buckled)	return
 
 	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[user] buckles in!</span>")
+		user.visible_message("<span class='notice'>[user] buckles in!</span>")
 	else
-		M.visible_message("<span style=\"color:blue\">[M] is buckled in by [user]!</span>")
+		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
 
 	M.anchored = 1
 	M.buckled = src
@@ -163,9 +163,9 @@
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
-			M.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>")
+			M.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>")
 		else
-			M.visible_message("<span style=\"color:blue\">[M] is unbuckles.</span>")
+			M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
 
 		M.anchored = 0
 		M.buckled = null
@@ -212,7 +212,7 @@
 		if (!ismob(G.affecting))
 			return
 		if (src.occupant)
-			boutput(user, "<span style=\"color:blue\"><B>The VR pod is already occupied!</B></span>")
+			boutput(user, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
 			return
 		if(..())
 			return
@@ -240,11 +240,11 @@
 	if (src.occupant && !isobserver(M))
 		if(M == src.occupant)
 			return src.go_out()
-		boutput(M, "<span style=\"color:blue\"><B>The VR pod is already occupied!</B></span>")
+		boutput(M, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
 		return
 
 	if (!iscarbon(M) && !isobserver(M))
-		boutput(M, "<span style=\"color:blue\"><B>You cannot possibly fit into that!</B></span>")
+		boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
 		return
 
 	if (!isobserver(M))
@@ -462,7 +462,7 @@
 			var/mob/living/carbon/human/virtual/V = usr
 
 			if(src.network == "prison")
-				boutput(V, "<span style=\"color:red\">Leaving this network from the inside has been disabled!</span>")
+				boutput(V, "<span class='alert'>Leaving this network from the inside has been disabled!</span>")
 				return
 			Station_VNet.Leave_Vspace(V)
 

@@ -68,16 +68,16 @@
 			return
 
 		if(isExploitableObject(W))
-			boutput(user, "<span style=\"color:red\">\the [src] grumps at you and refuses to use [W].</span>")
+			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
 			return
 
 		if(istype(W, /obj/item/material_piece))
-			boutput(user, "<span style=\"color:red\">[W] has already been processed.</span>")
+			boutput(user, "<span class='alert'>[W] has already been processed.</span>")
 			return
 
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
-			boutput(user, "<span style=\"color:blue\">You empty \the [W] into \the [src].</span>")
+			boutput(user, "<span class='notice'>You empty \the [W] into \the [src].</span>")
 			for(var/obj/item/I in S)
 				if(I.material)
 					I.set_loc(src)
@@ -85,7 +85,7 @@
 			return
 
 		if(W.material)
-			boutput(user, "<span style=\"color:blue\">You put \the [W] into \the [src].</span>")
+			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped()
@@ -95,66 +95,66 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Get your filthy dead fingers off that!</span>")
+			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return
 
 		if(over_object == src)
 			output_location = null
-			boutput(usr, "<span style=\"color:blue\">You reset the processor's output target.</span>")
+			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The processor is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
 			else
 				src.output_location = over_object
-				boutput(usr, "<span style=\"color:blue\">You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span style=\"color:red\">You can't use a currently unopenable cart as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
 			else
 				src.output_location = over_object
-				boutput(usr, "<span style=\"color:blue\">You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/machinery/manufacturer/))
 			var/obj/machinery/manufacturer/M = over_object
 			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span style=\"color:red\">You can't use a non-functioning manufacturer as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
 			else
 				src.output_location = M
-				boutput(usr, "<span style=\"color:blue\">You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
 
 		else if (istype(over_object, /obj/machinery/nanofab))
 			var/obj/machinery/nanofab/N = over_object
 			if (N.status & BROKEN || N.status & NOPOWER)
-				boutput(usr, "<span style=\"color:red\">You can't use a non-functioning nano-fabricator as an output target.</span>")
+				boutput(usr, "<span class='alert'>You can't use a non-functioning nano-fabricator as an output target.</span>")
 			else
 				src.output_location = N
-				boutput(usr, "<span style=\"color:blue\">You set the processor to output to [over_object]!</span>")
+				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_location = O.loc
-			boutput(usr, "<span style=\"color:blue\">You set the processor to output on top of [O]!</span>")
+			boutput(usr, "<span class='notice'>You set the processor to output on top of [O]!</span>")
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_location = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the processor to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
 
 		else
 
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -162,7 +162,7 @@
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
-			user.visible_message("<span style=\"color:blue\">[user] uses [src]'s automatic loader on [O]!</span>", "<span style=\"color:blue\">You use [src]'s automatic loader on [O].</span>")
+			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if(!M.material)
@@ -173,8 +173,8 @@
 					continue
 				M.set_loc(src)
 				amtload += max(M.amount, 1)
-			if (amtload) boutput(user, "<span style=\"color:blue\">[amtload] materials loaded from [O]!</span>")
-			else boutput(user, "<span style=\"color:red\">No material loaded!</span>")
+			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
+			else boutput(user, "<span class='alert'>No material loaded!</span>")
 			return
 
 		var/obj/item/W = O
@@ -199,7 +199,7 @@
 	proc/quickload(var/mob/living/user,var/obj/item/O)
 		if (!user || !O || !istype(O))
 			return
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing [O] into [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		O.set_loc(src)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
@@ -217,7 +217,7 @@
 			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
-		boutput(user, "<span style=\"color:blue\">You finish stuffing [O] into [src]!</span>")
+		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
 	proc/get_output_location()
@@ -348,7 +348,7 @@
 						piece.set_loc(get_turf(src))
 					first_part = null
 					second_part = null
-					boutput(usr, "<span style=\"color:blue\">You make [amt] [piece].</span>")
+					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
 
 		else if(href_list["eject"])
 			var/obj/item/L = locate(href_list["eject"]) in src
@@ -395,19 +395,19 @@
 
 	attackby(var/obj/item/W , mob/user as mob)
 		if(isExploitableObject(W))
-			boutput(user, "<span style=\"color:red\">\the [src] grumps at you and refuses to use [W].</span>")
+			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
 			return
 
 		if(W.material != null)
 			if(!W.material.canMix)
-				boutput(user, "<span style=\"color:red\">This material can not be used in \the [src].</span>")
+				boutput(user, "<span class='alert'>This material can not be used in \the [src].</span>")
 				return
 
-			user.visible_message("<span style=\"color:blue\">[user] puts \the [W] in \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
 			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
 				addMaterial(W, user)
 			else
-				boutput(user, "<span style=\"color:red\">The crucible can only use raw materials.</span>")
+				boutput(user, "<span class='alert'>The crucible can only use raw materials.</span>")
 				return
 		return
 
@@ -416,7 +416,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 
-		user.visible_message("<span style='color:red'><b>[user] hops right into [src]! Jesus!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
 		user.unequip_all()
 		user.set_loc(src)
 
@@ -502,7 +502,7 @@
 			if(R)
 				if(R.result_item)
 					var/atom/A = new R.result_item(locate(src.x + 1, src.y, src.z))
-					boutput(user, "<span style=\"color:blue\">You remove [A.name] from the [src].</span>")
+					boutput(user, "<span class='notice'>You remove [A.name] from the [src].</span>")
 					playsound(src.loc, sound_thunk, 40, 1)
 					resetMats()
 					return
@@ -511,7 +511,7 @@
 				else
 					R.apply_to(output)
 
-			boutput(user, "<span style=\"color:blue\">You remove [output.name] from the [src].</span>")
+			boutput(user, "<span class='notice'>You remove [output.name] from the [src].</span>")
 
 			var/bar_type = getProcessedMaterialForm(output)
 			var/obj/item/material_piece/M = unpool(bar_type)
@@ -525,7 +525,7 @@
 			playsound(src.loc, sound_thunk, 40, 1)
 
 			if(M.material && M.material.getProperty("stability") <= 30 && prob((30 - M.material.getProperty("stability")) * 2 ) )
-				M.visible_message("<span style=\"color:red\">[M] [getMatFailString(M.material.material_flags)]!</span>")
+				M.visible_message("<span class='alert'>[M] [getMatFailString(M.material.material_flags)]!</span>")
 				M.material.triggerOnFail(M)
 			return
 
@@ -535,7 +535,7 @@
 			SPAWN_DBG(0.5 SECONDS)
 				playsound(src.loc, sound_bubble, 40, 1)
 			if(components.len == 1)
-				boutput(user, "<span style=\"color:red\">You activate the [src].</span>")
+				boutput(user, "<span class='alert'>You activate the [src].</span>")
 				icon_state = "smelter1"
 				sleep(1 SECOND)
 				var/atom/obj1 = components[1]
@@ -563,7 +563,7 @@
 				playsound(src.loc, sound_hiss, 45, 1)
 				light.disable()
 		else
-			boutput(user, "<span style=\"color:red\">There is nothing in the [src].</span>")
+			boutput(user, "<span class='alert'>There is nothing in the [src].</span>")
 		return
 
 	proc/handleSlag()
@@ -584,7 +584,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 
-		user.visible_message("<span style='color:red'><b>[user] hops right into [src]! Jesus!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
 		user.unequip_all()
 		user.set_loc(src)
 
@@ -599,13 +599,13 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/slag_shovel))
 			if(slag_level)
-				src.visible_message("<span style=\"color:blue\">[user] removes slag from the [src]</span>")
+				src.visible_message("<span class='notice'>[user] removes slag from the [src]</span>")
 				slag_level = 0
 				var/obj/item/material_piece/slag/S = unpool(/obj/item/material_piece/slag)
 				S.set_loc(src.loc)
 				return
 			else
-				boutput(user, "<span style=\"color:blue\">There is no slag in [src].</span>")
+				boutput(user, "<span class='notice'>There is no slag in [src].</span>")
 				return
 
 		if(istype(W, /obj/item/wizard_crystal) && components.len < 2 && !W.material)
@@ -613,21 +613,21 @@
 
 		if(W.material != null)
 			if(!W.material.canMix)
-				boutput(user, "<span style=\"color:red\">This material can not be used in the [src].</span>")
+				boutput(user, "<span class='alert'>This material can not be used in the [src].</span>")
 				return
 
 			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material)) )
 				if(components.len < 2)
-					src.visible_message("<span style=\"color:blue\">[user] puts [W] into [src]</span>")
+					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
 					user.drop_item()
 					components.Add(W)
 					W.loc = src
 					playsound(src.loc, sound_thunk, 40, 1)
 				else
-					boutput(user, "<span style=\"color:red\">The smelter is already filled to capacity!</span>")
+					boutput(user, "<span class='alert'>The smelter is already filled to capacity!</span>")
 					return
 			else
-				boutput(user, "<span style=\"color:red\">The smelter can only use metals or minerals in raw form.</span>")
+				boutput(user, "<span class='alert'>The smelter can only use metals or minerals in raw form.</span>")
 				return
 		return
 
@@ -647,20 +647,20 @@
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)
-				boutput(user, "<span style=\"color:red\">No significant material found in \the [target].</span>")
+				boutput(user, "<span class='alert'>No significant material found in \the [target].</span>")
 			else
-				boutput(user, "<span style=\"color:blue\"><u>[capitalize(W.material.name)]</u></span>")
-				boutput(user, "<span style=\"color:blue\">[W.material.desc]</span>")
+				boutput(user, "<span class='notice'><u>[capitalize(W.material.name)]</u></span>")
+				boutput(user, "<span class='notice'>[W.material.desc]</span>")
 
 				if(W.material.properties.len)
-					boutput(user, "<span style=\"color:blue\"><u>The material is:</u></span>")
+					boutput(user, "<span class='notice'><u>The material is:</u></span>")
 					for(var/datum/material_property/X in W.material.properties)
 						var/value = W.material.getProperty(X.id)
-						boutput(user, "<span style=\"color:blue\">• [X.getAdjective(W.material)] ([value])</span>")
+						boutput(user, "<span class='notice'>• [X.getAdjective(W.material)] ([value])</span>")
 				else
-					boutput(user, "<span style=\"color:blue\"><u>The material is completely unremarkable.</u></span>")
+					boutput(user, "<span class='notice'><u>The material is completely unremarkable.</u></span>")
 		else
-			boutput(user, "<span style=\"color:red\">[target] is too far away.</span>")
+			boutput(user, "<span class='alert'>[target] is too far away.</span>")
 		return
 
 /obj/item/slag_shovel

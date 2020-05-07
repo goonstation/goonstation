@@ -447,9 +447,9 @@ var/list/electiles = list()
 	var/loaded = file2text(mapPath)
 
 	if(loaded)
-		boutput(usr, "<span style=\"color:red\">GRABBED '[mapPath]' FROM LOCAL FILESYSTEM</span>")
+		boutput(usr, "<span class='alert'>GRABBED '[mapPath]' FROM LOCAL FILESYSTEM</span>")
 	else
-		boutput(usr, "<span style=\"color:red\">COULDNT LOAD '[mapPath]'</span>")
+		boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
 		return
 
 	var/trgX = input(usr, "Enter target X:", "", 1) as num
@@ -462,9 +462,9 @@ var/list/electiles = list()
 		if(loaded && lentext(loaded))
 			usr.loc = locate(trgX,trgY,trgZ)
 			D.read_map(loaded,trgX,trgY,trgZ)
-			boutput(usr, "<span style=\"color:red\">LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
+			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
 		else
-			boutput(usr, "<span style=\"color:red\">COULDNT LOAD '[mapPath]'</span>")
+			boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
 	return
 
 /proc/endoftheworldasweknowit()
@@ -1196,7 +1196,7 @@ var/list/electiles = list()
 					else continue
 				if(canSee)
 					seen.Add(O)
-					O.show_message("<span style=\"color:red\"><B>[user] raises \the [dagger] menacingly!!!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[user] raises \the [dagger] menacingly!!!</B></span>", 1)
 
 
 /obj/item/experimental/melee/dagger
@@ -1303,6 +1303,7 @@ var/list/electiles = list()
 	var/image/shaftImg = null
 	var/image/headImg = null
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+	hit_type = DAMAGE_STAB
 
 	New()
 		setShaftMaterial(getMaterial("bohrum"))
@@ -1568,7 +1569,7 @@ var/list/electiles = list()
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
 
-			src.visible_message("<span style=\"color:red\"><B>[src] breaks into pieces!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] breaks into pieces!</B></span>")
 			icon_state = "statuefloorpills0"
 
 			broken = 1
@@ -1878,7 +1879,7 @@ var/list/electiles = list()
 						if(src && selected)
 							animate_float(src, 1, 5, 1)
 							for (var/mob/O in observersviewers(7, src))
-								O.show_message("<B><span style=\"color:blue\">The board spells out a message ... \"[selected]\"</span></B>", 1)
+								O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
 #ifdef HALLOWEEN
 							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
 								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
@@ -1952,7 +1953,7 @@ var/list/electiles = list()
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
-				C.light(user, "<span style=\"color:red\">[user] lights the [C] with [src]. That seems appropriate.</span>")
+				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
 
 /*
 
@@ -1970,7 +1971,7 @@ var/list/electiles = list()
 		var/mob/M = AM
 
 		if(M.adventure_variables.hh_energy < 3)
-			boutput(M, "<span style=\"color:red\">You can't seem to pass through the energy ... </span>")
+			boutput(M, "<span class='alert'>You can't seem to pass through the energy ... </span>")
 			return
 
 		var/mob/dead/hhghost/H = new(AM.loc)
@@ -2009,11 +2010,11 @@ var/list/electiles = list()
 		if(!ismob(AM)) return
 
 		if(AM.reagents.has_reagent("anima") && !AM.reagents.has_reagent("anima", 10))
-			boutput(AM, "<span style=\"color:red\">The portal briefly glows as you get near but quickly dulls again. It seems like you have done SOMETHING correctly but it isn't quite enough.</span>")
+			boutput(AM, "<span class='alert'>The portal briefly glows as you get near but quickly dulls again. It seems like you have done SOMETHING correctly but it isn't quite enough.</span>")
 			return
 
 		if(!AM.reagents.has_reagent("anima"))
-			boutput(AM, "<span style=\"color:red\">The strange energy in front of you becomes solid as you approach ...</span>")
+			boutput(AM, "<span class='alert'>The strange energy in front of you becomes solid as you approach ...</span>")
 			return
 
 		AM.reagents.del_reagent("anima")
@@ -2231,7 +2232,7 @@ var/list/electiles = list()
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))
 				if("Yes")
 					copy_to(trgTurf)
-					boutput(usr, "<span style=\"color:green\">*** All done ***</span>")
+					boutput(usr, "<span class='success'>*** All done ***</span>")
 				if("No")
 					return
 		return
@@ -2312,7 +2313,7 @@ var/list/electiles = list()
 		procArgs = listargs
 		procName = procname
 		procTarget = target
-		boutput(usr, "<span style=\"color:green\">*** All done ***</span>")
+		boutput(usr, "<span class='success'>*** All done ***</span>")
 
 		return
 
@@ -2352,7 +2353,7 @@ var/list/electiles = list()
 			spawn_rate = nRate
 			spawn_check_rate = nCheck
 			spawn_type = nSpawn
-			boutput(usr, "<span style=\"color:green\">*** All done ***</span>")
+			boutput(usr, "<span class='success'>*** All done ***</span>")
 		return
 
 	New()
@@ -2410,7 +2411,7 @@ var/list/electiles = list()
 	attack_hand(mob/user as mob)
 		if(fireworking) return
 		fireworking = 1
-		boutput(user, "<span style=\"color:red\">The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
+		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
 		anchored = 1
 
 		SPAWN_DBG(0)
@@ -2419,7 +2420,7 @@ var/list/electiles = list()
 				sleep(rand(2, 15))
 
 			for(var/mob/O in oviewers(world.view, src))
-				O.show_message("<span style=\"color:blue\">The box of fireworks magically disappears.</span>", 1)
+				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
 
 			qdel(src)
 		return
@@ -2855,12 +2856,12 @@ var/list/electiles = list()
 	if (!istype(ZOM,/datum/ailment/disease/))
 		return
 	ZOM.stage = 5
-	boutput(src, "<span style=\"color:red\">########################################</span>")
-	boutput(src, "<span style=\"color:red\">You have turned into a zombie.</span>")
-	boutput(src, "<span style=\"color:red\">To infect other players, you must knock</span>")
-	boutput(src, "<span style=\"color:red\">them down and then attack them with your</span>")
-	boutput(src, "<span style=\"color:red\">bare hands and the harm intent.</span>")
-	boutput(src, "<span style=\"color:red\">########################################</span>")
+	boutput(src, "<span class='alert'>########################################</span>")
+	boutput(src, "<span class='alert'>You have turned into a zombie.</span>")
+	boutput(src, "<span class='alert'>To infect other players, you must knock</span>")
+	boutput(src, "<span class='alert'>them down and then attack them with your</span>")
+	boutput(src, "<span class='alert'>bare hands and the harm intent.</span>")
+	boutput(src, "<span class='alert'>########################################</span>")
 
 /obj/item/boomerang
 	name = "Boomerang"
@@ -2898,7 +2899,7 @@ var/list/electiles = list()
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span style=\"color:red\"><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 50)
 				user.changeStatus("weakened", 3 SECONDS)
@@ -3071,7 +3072,7 @@ var/list/electiles = list()
 	if(findtext(text,"for no raisin"))
 		if(M.client)
 			if(!(M.client in raisinlist) && isliving(M))
-				boutput(M, "<span style=\"color:red\">A raisin mysteriously materializes right next to your feet...</span>")
+				boutput(M, "<span class='alert'>A raisin mysteriously materializes right next to your feet...</span>")
 				new/obj/item/reagent_containers/food/snacks/raisin(get_turf(M))
 				raisinlist += M.client
 	return
@@ -3090,21 +3091,21 @@ var/list/electiles = list()
 				M.poo += 1
 				src.heal(M)
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-				boutput(user, "<span style=\"color:red\">You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
+				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
 			else
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span style=\"color:red\">[user] attempts to feed [M] [src].</span>", 1)
+					O.show_message("<span class='alert'>[user] attempts to feed [M] [src].</span>", 1)
 				if(!do_mob(user, M)) return
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span style=\"color:red\">[user] feeds [M] [src].</span>", 1)
+					O.show_message("<span class='alert'>[user] feeds [M] [src].</span>", 1)
 				src.amount--
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
-				boutput(user, "<span style=\"color:red\">[M] eats the raisin.</span>")
+				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
 				qdel(src)
 				return 1
 		return 0 */
@@ -3268,7 +3269,7 @@ var/list/electiles = list()
 
 	attack_hand(mob/user as mob)
 		if(in_use)
-			boutput(user, "<span style=\"color:red\">Its already in use - wait a bit.</span>")
+			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
 		else
 			in_use = 1
@@ -3308,7 +3309,7 @@ var/list/electiles = list()
 			user.pixel_y = 25
 			playsound(user, "sound/effects/brrp.ogg", 15, 1)
 			sleep(0.2 SECONDS)
-			if(range == 1) boutput(user, "<span style=\"color:red\">You slip...</span>")
+			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
 			user.layer = MOB_LAYER
 			user.buckled = null
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
@@ -3316,7 +3317,7 @@ var/list/electiles = list()
 				user:changeStatus("weakened", 2 SECONDS)
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
-				src.visible_message("<span style=\"color:red\"><b>[user.name] dives headfirst at the [target.name]!</b></span>")
+				src.visible_message("<span class='alert'><b>[user.name] dives headfirst at the [target.name]!</b></span>")
 				SPAWN_DBG(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
@@ -3380,7 +3381,7 @@ var/list/lag_list = new/list()
 	SPAWN_DBG(0.5 SECONDS) lag_loop()
 
 /proc/get_lag_average()
-	boutput(usr, "<span style=\"color:green\">[average_tenth] at [lag_list.len] samples.</span>")
+	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
 
 /obj/mirror
@@ -3451,7 +3452,7 @@ var/list/lag_list = new/list()
 		health--
 		if(health <= 0)
 			break_it()
-			boutput(user, "<span style=\"color:red\">You break the mirror ...</span>")
+			boutput(user, "<span class='alert'>You break the mirror ...</span>")
 			playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		else
 			playsound(src, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 0)
@@ -3657,9 +3658,9 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		if(hasvar(target,"id"))
 			target:id = saved_var
-			boutput(usr, "<span style=\"color:blue\">Done.</span>")
+			boutput(usr, "<span class='notice'>Done.</span>")
 		else
-			boutput(usr, "<span style=\"color:red\">Not a linkabled object.</span>")
+			boutput(usr, "<span class='alert'>Not a linkabled object.</span>")
 		return
 
 /datum/engibox_mode/reqacc
@@ -3669,9 +3670,9 @@ var/list/lag_list = new/list()
 		if(istype(target, /obj/machinery/door))
 			if(hasvar(target, "req_access"))
 				target:req_access = get_access(input(usr) in get_all_jobs() + "Club member")
-				boutput(usr, "<span style=\"color:blue\">Done.</span>")
+				boutput(usr, "<span class='notice'>Done.</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">Invalid object.</span>")
+				boutput(usr, "<span class='alert'>Invalid object.</span>")
 		return
 
 /datum/engibox_mode/spawnid
@@ -3808,10 +3809,10 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		if(obj_path)
 			var/atom/A = new obj_path(get_turf(target))
-			boutput(usr, "<span style=\"color:blue\">Placed: [A.name]</span>")
+			boutput(usr, "<span class='notice'>Placed: [A.name]</span>")
 		else
 			obj_path = target.type
-			boutput(usr, "<span style=\"color:blue\">Now replicating: [target.name]s</span>")
+			boutput(usr, "<span class='notice'>Now replicating: [target.name]s</span>")
 		return
 
 /datum/engibox_mode/transmute
@@ -3827,7 +3828,7 @@ var/list/lag_list = new/list()
 	desc = "Toggles the density of an object."
 	used(atom/user, atom/target)
 		target.set_density(!target.density)
-		boutput(usr, "<span style=\"color:blue\">Target density now: [target.density]</span>")
+		boutput(usr, "<span class='notice'>Target density now: [target.density]</span>")
 		return
 
 /datum/engibox_mode/opacity
@@ -3835,7 +3836,7 @@ var/list/lag_list = new/list()
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
 		target.opacity = !target.opacity
-		boutput(usr, "<span style=\"color:blue\">Target opacity now: [target.opacity]</span>")
+		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 
 /obj/item/engibox
@@ -3850,10 +3851,10 @@ var/list/lag_list = new/list()
 	w_class = 1.0
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && usr.ckey != ckey_lock)
-			boutput(user, "<span style=\"color:red\">You are not authorized to use this item.</span>")
+			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
 		if(get_dist(target,user) > 1)
-			boutput(user, "<span style=\"color:red\">You are too far away.</span>")
+			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return
 		if(active_mode)
@@ -3865,7 +3866,7 @@ var/list/lag_list = new/list()
 
 	attack_self(mob/user as mob)
 		if(ckey_lock && usr.ckey != ckey_lock)
-			boutput(user, "<span style=\"color:red\">You are not authorized to use this item.</span>")
+			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
 		var/dat = "Engie-box modes:<BR><BR>"
 		for(var/datum/engibox_mode/D in modes)

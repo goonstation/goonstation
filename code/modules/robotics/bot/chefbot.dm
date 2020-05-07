@@ -159,7 +159,7 @@
 /obj/machinery/bot/chefbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span style=\"color:red\">You short out the restraining bolt on [src].</span>")
+			boutput(user, "<span class='alert'>You short out the restraining bolt on [src].</span>")
 		src.emagged = 1
 		return 1
 	return 0
@@ -176,7 +176,7 @@
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
-		src.visible_message("<span style=\"color:red\">[user] hits [src] with [W]!</span>")
+		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
@@ -187,7 +187,7 @@
 /obj/machinery/bot/chefbot/explode()
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 	s.set_up(3, 1, src)

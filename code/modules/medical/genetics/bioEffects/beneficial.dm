@@ -93,7 +93,7 @@
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
-			boutput(owner, "<span style=\"color:red\">Something is wrong with your cyberheart, it stops beating!</span>")
+			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
 
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
@@ -391,7 +391,7 @@ var/list/radio_brains = list()
 		if(..()) return
 		if (owner:health <= 25)
 			timeLeft = 1
-			boutput(owner, "<span style=\"color:red\">You suddenly feel very weak.</span>")
+			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
 			owner:changeStatus("weakened", 3 SECONDS)
 			owner:emote("collapse")
 

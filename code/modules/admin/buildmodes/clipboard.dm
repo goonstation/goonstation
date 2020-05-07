@@ -24,9 +24,9 @@ Right Mouse Button                     = Select object to copy<br>
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (isturf(object))
 			cloned = object
-			boutput(usr, "<span style=\"color:blue\">Selected [object] for copying by reference.</span>")
+			boutput(usr, "<span class='notice'>Selected [object] for copying by reference.</span>")
 			update_button_text("Copying [object] by reference.")
 		else if (isobj(object))
 			cloned = object:clone()
-			boutput(usr, "<span style=\"color:blue\">Selected [object] for copying.</span>")
+			boutput(usr, "<span class='notice'>Selected [object] for copying.</span>")
 			update_button_text("Copying [object].")

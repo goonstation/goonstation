@@ -289,6 +289,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	var/exclusiveGroup = "" //optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
 	var/maxDuration = null //If non-null, duration of the effect will be clamped to be max. this amount.
 	var/move_triggered = 0 //has an on-move effect
+	var/datum/movement_modifier/movement_modifier // Has a movement-modifying effect
 
 
 	proc/preCheck(var/atom/A) //Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something. ret = 1 allow, 0 = do not allow
@@ -298,9 +299,15 @@ var/list/statusGroupLimits = list("Food"=4)
 		.= change
 
 	proc/onAdd(var/optional=null) //Called when the status is added to an object. owner is already set at this point. Has the optional arg from setStatus passed in.
+		if (movement_modifier && ismob(owner))
+			var/mob/mob_owner = owner
+			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
 	proc/onRemove() //Called when the status is removed from the object. owner is still set at this point.
+		if (movement_modifier && ismob(owner))
+			var/mob/mob_owner = owner
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
 	proc/onUpdate(var/timedPassed) //Called every tick by the status controller. Argument is the actual time since the last update call.
@@ -484,7 +491,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						var/mob/M = owner
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 							M.changeStatus("weakened", 3 SECONDS)
-							boutput(M, "<span style=\"color:red\">You feel weak.</span>")
+							boutput(M, "<span class='alert'>You feel weak.</span>")
 							M.emote("collapse")
 				if(3)
 					damage_tox = (3 * prot)
@@ -498,7 +505,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(4)
 					damage_tox = (4 * prot)
@@ -512,7 +519,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(5)
 					damage_tox = (4.5 * prot)
@@ -526,7 +533,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 
 			icon_state = "radiation[stage]"
@@ -829,6 +836,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "staggered"
 		unique = 1
 		maxDuration = 5 SECONDS
+		movement_modifier = /datum/movement_modifier/staggered_or_blocking
 
 	blocking
 		id = "blocking"
@@ -838,6 +846,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		movement_modifier = /datum/movement_modifier/staggered_or_blocking
 
 		clicked(list/params)
 			if (ishuman(owner))
@@ -851,15 +860,18 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "slowed"
 		unique = 1
 		var/howMuch = 10
+		movement_modifier = new /datum/movement_modifier/status_slowed
 
 		onAdd(var/optional=null)
 			if(optional)
 				howMuch = optional
+				movement_modifier.additive_slowdown = optional
 			return ..(optional)
 
 		onChange(var/optional=null)
 			if(optional)
 				howMuch = optional
+				movement_modifier.additive_slowdown = optional
 			return ..(optional)
 
 	disorient
@@ -872,6 +884,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/counter = 0
 		var/sound = "sound/effects/electric_shock_short.ogg"
 		var/count = 7
+		movement_modifier = /datum/movement_modifier/disoriented
 
 		onUpdate(var/timedPassed)
 			counter += timedPassed
@@ -929,6 +942,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are hastened.<br>Movement speed is increased."
 		icon_state = "hastened"
 		unique = 1
+		movement_modifier = /datum/movement_modifier/hastened
 
 	cloaked
 		id = "cloaked"
@@ -1053,6 +1067,8 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
 							var/obj/stool/bed/B = H.buckled
 							B.sleep_in(H)
+						else
+							sleepcount = 3 SECONDS
 
 			.=..()
 
@@ -1088,7 +1104,10 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/const/max_health = 30
 		var/const/max_stam = 60
 		var/const/regen_stam = 5
+		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
 
 		onAdd(var/optional=null)
 			if (ishuman(owner))
@@ -1098,14 +1117,46 @@ var/list/statusGroupLimits = list("Food"=4)
 			H.max_health += max_health
 			H.add_stam_mod_max("ganger_max", max_stam)
 			H.add_stam_mod_regen("ganger_regen", regen_stam)
+			if (ismob(owner))
+				var/mob/M = owner
+				if (M.mind)
+					gang = M.mind.gang
 
 		onRemove()
 			H.max_health -= max_health
 			H.remove_stam_mod_max("ganger_max")
 			H.remove_stam_mod_regen("ganger_regen")
+			gang = null
+
+		onUpdate(var/timedPassed)
+			var/area/cur_area = get_area(H)
+			if (cur_area?.gang_owners == gang && prob(50))
+				on_turf = 1
+
+				//get distance divided by max distance and invert it. Result will be between 0 and 1
+				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				if (buff_mult <=0)
+					buff_mult = 0.1
+
+				var/mob/living/carbon/human/H
+				if(ishuman(owner))
+					H = owner
+					H.HealDamage("All", 10*buff_mult, 0, 0)
+					if (H.bleeding && prob(100*buff_mult))
+						repair_bleeding_damage(H, 5, 1)
+
+					if(H.hasStatus("paralysis")) H.changeStatus("paralysis", -3*buff_mult)
+					if(H.hasStatus("stunned")) H.changeStatus("stunned", -3*buff_mult)
+					if(H.hasStatus("weakened")) H.changeStatus("weakened", -3*buff_mult)
+
+					H.updatehealth()
+			else
+				on_turf = 0
+
+			return
 
 		getTooltip()
-			return "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform."
+			return "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
 
 	janktank
 		id = "janktank"
@@ -1115,6 +1166,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
 		unique = 1
+		movement_modifier = /datum/movement_modifier/janktank
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.
@@ -1139,19 +1191,19 @@ var/list/statusGroupLimits = list("Food"=4)
 			var/mob/living/carbon/human/H
 			if(ishuman(owner))
 				H = owner
-			H.take_oxygen_deprivation(-1)
-			H.HealDamage("All", 2, 0, 0)
-			if (prob(60))
-				H.HealDamage("All", 1, 1, 1)
-				if (H.bleeding)
-					repair_bleeding_damage(H, 10, 1)
-			if (prob(10))
-				H.make_jittery(2)
+				H.take_oxygen_deprivation(-1)
+				H.HealDamage("All", 2, 0, 0)
+				if (prob(60))
+					H.HealDamage("All", 1, 1, 1)
+					if (H.bleeding)
+						repair_bleeding_damage(H, 10, 1)
+				if (prob(10))
+					H.make_jittery(2)
 
-			if (H.misstep_chance)
-				H.change_misstep_chance(-5)
+				if (H.misstep_chance)
+					H.change_misstep_chance(-5)
 
-			H.updatehealth()
+				H.updatehealth()
 			return
 
 	gang_drug_withdrawl
@@ -1276,7 +1328,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		if (prob(5))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
-			H.visible_message("<span style=\"color:red\">[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span style=\"color:red\">You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
+			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
 			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
