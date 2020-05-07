@@ -1,5 +1,9 @@
 
 (t)thu may 07 20
+(u)glassofmilk
+(p)529
+(e)🆕🎨|enhancement, sprites
+(*)Added a Radio Scanner Component to the MechComp Dispenser. It can monitor voice radio channels and output a packet accordingly.
 (u)Kyle
 (p)606
 (e)🆕|enhancement
