@@ -1,4 +1,9 @@
 
+(t)thu may 07 20
+(u)Kyle
+(p)606
+(e)🆕|enhancement
+(*)Added Clown Job XP and Rewards. Get it from doing Clown things.
 (t)wed may 06 20
 (u)Carbadox
 (p)573
