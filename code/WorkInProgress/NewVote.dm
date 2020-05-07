@@ -179,7 +179,7 @@ var/const/recently_time = 6000 // 10 mins
 			boutput(C, "<span class='alert'><BIG>You may not vote as you were not present when the vote was started.</BIG></span>")
 			return
 		if((C.ckey in voted_ckey) || (C.computer_id in voted_id))
-			boutput(C, "<span style=\"color:red\"><BIG>You have already voted. Current winner : [curr_win]</BIG></span>")
+			boutput(C, "<span class='alert'><BIG>You have already voted. Current winner : [curr_win]</BIG></span>")
 			return
 		open_votes += C
 		var/choice = input(C,details,vote_name,null) in options
@@ -239,14 +239,14 @@ var/const/recently_time = 6000 // 10 mins
 		boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
 			if(get_winner_num() < round(clients.len * 0.5))
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mode votes not reached (~50% of players).</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Minimum mode votes not reached (~50% of players).</B></BIG></span>")
 				qdel(src)
 				return
 			if(current_state == GAME_STATE_PREGAME)
-				boutput(world, "<span style=\"color:green\"><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
 				master_mode = lowertext(data)
 			else
-				boutput(world, "<span style=\"color:green\"><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
 				world.save_mode(lowertext(data))
 		qdel(src)
 		return
@@ -262,7 +262,7 @@ var/const/recently_time = 6000 // 10 mins
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
 			if(get_winner_num() < round(clients.len * 0.5))
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum restart votes not reached (~50% of players).</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Minimum restart votes not reached (~50% of players).</B></BIG></span>")
 				qdel(src)
 				return
 			Reboot_server()
@@ -295,7 +295,7 @@ var/const/recently_time = 6000 // 10 mins
 		boutput(world, "<span class='success'><BIG><B>Vote ban result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
 			if(get_winner_num() < round(clients.len * 0.7))
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum ban votes not reached (~70% of players) - Player not banned.</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Minimum ban votes not reached (~70% of players) - Player not banned.</B></BIG></span>")
 				qdel(src)
 				return
 			if(data)
@@ -334,7 +334,7 @@ var/const/recently_time = 6000 // 10 mins
 		boutput(world, "<span class='success'>Vote mute result: [get_winner()]</span>")
 		if(get_winner() == "Yes")
 			if(get_winner_num() < round(clients.len * 0.5))
-				boutput(world, "<span style=\"color:green\"><BIG><B>Minimum mute votes not reached (~50% of players) - Player not muted.</B></BIG></span>")
+				boutput(world, "<span class='success'><BIG><B>Minimum mute votes not reached (~50% of players) - Player not muted.</B></BIG></span>")
 				qdel(src)
 				return
 			if(data)
