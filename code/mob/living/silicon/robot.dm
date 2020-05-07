@@ -2551,6 +2551,7 @@
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain()
 				src.update_appearance()
+				src.borg_death_alert()
 
 
 	process_locks()
