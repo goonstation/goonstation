@@ -50,7 +50,7 @@ VUVUZELA
 		if(M.bioHolder.HasEffect("clumsy"))
 			M.changeStatus("stunned", 80)
 			M.changeStatus("weakened", 5 SECONDS)
-			JOB_XP(user, "Clown", 2)
+			JOB_XP(M, "Clown", 2)
 		else
 			M.changeStatus("weakened", 2 SECONDS)
 			if (prob(20))

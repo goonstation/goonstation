@@ -41,7 +41,7 @@
 				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
-					JOB_XP(surgeon, "Clown", 1)
+					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
 				src.attack_hand(M)
