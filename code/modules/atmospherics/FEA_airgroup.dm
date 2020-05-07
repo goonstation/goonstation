@@ -273,7 +273,7 @@
 			if(length_space_border > 0)
 				//var/turf/space/sample = locate()
 				var/turf/space/sample = air_master.space_sample
-				if (!(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+				if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 					sample = air_master.update_space_sample()
 				var/connection_difference = 0
 
