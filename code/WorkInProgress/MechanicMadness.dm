@@ -2079,6 +2079,70 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_mic"
 		return
 
+/obj/item/mechanics/radioscanner
+	name = "Radio Scanner Component"
+	desc = ""
+	icon_state = "comp_radioscanner"
+
+	var/frequency = R_FREQ_DEFAULT
+	var/datum/radio_frequency/radio_connection
+
+	get_desc()
+		. += "<br><span style=\"color:blue\">Current Frequency: [frequency]</span>"
+
+	New()
+		..()
+		mechanics.addInput("set frequency", "setfreq")
+		configs.Add(list("Set Frequency"))
+		src.append_default_configs(2)
+
+		if(radio_controller)
+			set_frequency(frequency)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (..(W, user)) return
+		else if (ispulsingtool(W))
+			switch (src.modify_configs())
+				if (0)
+					return
+				if ("Set Frequency")
+					var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
+					if (inp)
+						set_frequency(inp)
+						boutput(user, "Frequency set to [frequency]")
+
+	proc/setfreq(var/datum/mechanicsMessage/input)
+		var/newfreq = text2num(input.signal)
+		if (!newfreq) return
+		set_frequency(newfreq)
+		return
+
+	proc/set_frequency(new_frequency)
+		if (!radio_controller) return
+		new_frequency = sanitize_frequency(new_frequency)
+		componentSay("New frequency: [new_frequency]")
+		radio_controller.remove_object(src, "[frequency]")
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, "[frequency]")
+
+	proc/hear_radio(mob/M as mob, msg, lang_id)
+		if (level == 2) return
+		var/message = msg[2]
+		if (lang_id in list("english", ""))
+			message = msg[1]
+		message = strip_html(html_decode(message))
+		var/heardname = M.real_name
+		if (M.wear_mask && M.wear_mask.vchange)
+			heardname = M:wear_id ? M:wear_id:registered : "Unknown"
+		var/datum/mechanicsMessage/sigmsg = mechanics.newSignal("name=[heardname]&message=[message]")
+		mechanics.fireOutgoing(sigmsg)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+		return
+
+	updateIcon()
+		icon_state = "[under_floor ? "u" : ""]comp_radioscanner"
+		return
+
 /obj/item/mechanics/synthcomp
 	name = "Sound Synthesizer"
 	desc = ""
