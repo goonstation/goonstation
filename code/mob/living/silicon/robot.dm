@@ -2309,33 +2309,23 @@
 			oil = 0
 			src.remove_stun_resist_mod("robot_oil", 25)
 
-	//#############################
-	//Begin Borg Death Alerts Procs
-	//#############################
-	proc/get_coords()
-		var/turf/T = get_turf(src)
-		if (istype(T))
-			return " at [T.x],[T.y],[T.z]"
-
 	proc/borg_death_alert(modifier = MOD_NONE)
 		var/message = null
 		var/mailgroup = "medresearch"
 		var/net_id = generate_net_id(src)
 		var/frequency = 1149
 		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
-
-		var/coords = src.get_coords()
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
 			if (MOD_NONE)	//normal death and gib
-				message = "CONTACT LOST: [src][coords] in [myarea]"
+				message = "CONTACT LOST: [src] in [myarea]"
 			if (MOD_BORG_SUICIDE) //suicide
-				message = "SELF-TERMINATION DETECTED: [src][coords] in [myarea]"
+				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
 			if (MOD_KILLSWITCH) //killswitch
-				message = "KILLSWITCH ACTIVATED: [src][coords] in [myarea]"
+				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
 			else	//Someone passed us an unkown modifier
-				message = "UNKNOWN ERROR: [src][coords] in [myarea]"
+				message = "UNKNOWN ERROR: [src] in [myarea]"
 
 		if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
@@ -2350,9 +2340,6 @@
 
 			radio_connection.post_signal(src, newsignal)
 			radio_controller.remove_object(src, "[frequency]")
-	//#############################
-	//End Borg Death Alerts Procs
-	//#############################
 
 	proc/handle_regular_status_updates()
 		if(src.stat) src.camera.camera_status = 0.0
