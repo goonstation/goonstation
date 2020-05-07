@@ -1606,10 +1606,20 @@
 	name = "cocktail shaker"
 	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "cocktailer"
+	icon_state = "GannetsCocktailer"
 	initial_volume = 120
 
+	New()
+		..()
+		src.reagents.inert = 1
+
 	attack_self(mob/user)
-		user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-		if(src.reagents.total_volume > 0)
+		if (src.reagents.total_volume > 0)
+			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
 			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			sleep (0.3 SECONDS)
+			src.reagents.inert = 0
+			src.reagents.handle_reactions()
+			src.reagents.inert = 1
+		else
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
