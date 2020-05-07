@@ -474,10 +474,13 @@
 	if (ismonkey(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(M.lying) // Lying down monkeys can crawl under tables
-			var/mob/living/carbon/human/monkey/X = A
+			M.layer = src.layer - 0.01
 			return 1
 		else
+			M.layer = MOB_LAYER
 			return 0
+	else
+		return 0
 	return ..()
 
 /obj/table/reinforced/bar
