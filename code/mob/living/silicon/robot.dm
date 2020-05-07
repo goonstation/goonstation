@@ -2317,7 +2317,7 @@
 		if (istype(T))
 			return " at [T.x],[T.y],[T.z]"
 
-	proc/borg_death_alert()
+	proc/borg_death_alert(var/modifier)
 		var/message = null
 		var/mailgroup = "medresearch"
 		var/net_id = generate_net_id(src)
@@ -2326,7 +2326,12 @@
 
 		var/coords = src.get_coords()
 		var/area/myarea = get_area(src)
-		message = "CONTACT LOST: [src][coords] in [myarea]"
+		if (modifier == 1) //suicide
+			message = "SELF-TERMINATION DETECTED: [src][coords] in [myarea]"
+		else if (modifier == 2) //killswitch
+			message = "KILLSWITCH ACTIVATED: [src][coords] in [myarea]"
+		else //normal death and gib
+			message = "CONTACT LOST: [src][coords] in [myarea]"
 
 		if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
@@ -2551,7 +2556,7 @@
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain()
 				src.update_appearance()
-				src.borg_death_alert()
+				src.borg_death_alert(2)
 
 
 	process_locks()
