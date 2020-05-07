@@ -77,12 +77,12 @@
 
 			the_user.client.images += cableimgs
 
-			sleep(10)*/
+			sleep(1 SECOND)*/
 
 /obj/item/device/voltron
 	name = "Voltron"
 	desc = "Converts matter into energy and back. Needs to be used while standing on a cable."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "voltron"
 	item_state = "electronic"
 	var/active = 0
@@ -155,7 +155,7 @@
 
 		if(rebuild_overlay)
 			overlays.Cut()
-			overlays += image('icons/obj/device.dmi',src,power_icon)
+			overlays += image('icons/obj/items/device.dmi',src,power_icon)
 	var/overlay_state = 0//0: nothing visible; 1: there's some visible
 	var/client/prev_user
 	proc/check()
@@ -176,7 +176,7 @@
 						img.loc = null
 						img.alpha = 0
 					overlay_state = 0
-				sleep(10)
+				sleep(1 SECOND)
 			else
 				overlay_state = 1
 				for(var/image/img in cableimgs)
@@ -203,16 +203,16 @@
 				power--
 				handle_overlay()
 				if(power == 20)
-					boutput(target, "<span style=\"color:red\">The [src] is dangerously low on power. Your energy pattern is destabilizing.</span>")
+					boutput(target, "<span class='alert'>The [src] is dangerously low on power. Your energy pattern is destabilizing.</span>")
 				if(power < 20)
 					random_brute_damage(target, 4)
 					target.updatehealth()
 				if(power <= 0)
-					boutput(target, "<span style=\"color:red\">The [src] is out of energy.</span>")
+					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
 					var/mob/old_trg = target
 					deactivate()
 					old_trg.changeStatus("stunned", 200)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/deactivate()
 		if(activating) return
@@ -234,7 +234,7 @@
 		target.transforming = 1
 		O.icon = 'icons/effects/effects.dmi'
 		O.icon_state = "energytwirlout"
-		sleep(5)
+		sleep(0.5 SECONDS)
 		target.transforming = 0
 		qdel(O)
 
@@ -250,7 +250,7 @@
 		if(locate(/obj/cable) in get_turf(src))
 
 			if(on_cooldown)
-				boutput(usr, "<span style=\"color:red\">The [src] is still recharging.</span>")
+				boutput(usr, "<span class='alert'>The [src] is still recharging.</span>")
 				return
 
 			activating = 1
@@ -263,7 +263,7 @@
 			usr:transforming = 1
 			O.icon = 'icons/effects/effects.dmi'
 			O.icon_state = "energytwirlin"
-			sleep(5)
+			sleep(0.5 SECONDS)
 			usr:transforming = 0
 			qdel(O)
 
@@ -273,16 +273,16 @@
 			active = 1
 			activating = 0
 		else
-			boutput(usr, "<span style=\"color:red\">This needs to be used while standing on a cable.</span>")
+			boutput(usr, "<span class='alert'>This needs to be used while standing on a cable.</span>")
 
 	attack_self(mob/user as mob)
 		if(activating) return
 
 		if(active)
-			boutput(target, "<span style=\"color:blue\">You deactivate the [src].</span>")
+			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
 			deactivate()
 		else
-			boutput(user, "<span style=\"color:blue\">You activate the [src].</span>")
+			boutput(user, "<span class='notice'>You activate the [src].</span>")
 			activate()
 			power -= 5
 			handle_overlay()

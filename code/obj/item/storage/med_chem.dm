@@ -4,7 +4,7 @@
 /obj/item/storage/firstaid
 	name = "first aid"
 	icon_state = "firstaid1"
-	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
 	max_wclass = 2
@@ -447,7 +447,7 @@
 /obj/item/storage/pill_bottle/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] swallows [src] whole and begins to choke!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] swallows [src] whole and begins to choke!</b></span>")
 	user.take_oxygen_deprivation(175)
 	user.updatehealth()
 	qdel(src)

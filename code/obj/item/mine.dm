@@ -6,7 +6,7 @@
 	density = 0
 	anchored = 1
 	layer = OBJ_LAYER
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
 	is_syndicate = 1
 	mats = 6
@@ -28,10 +28,9 @@
 		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.suppress_flavourtext != 1)
-			boutput(usr, "It appears to be [src.armed == 1 ? "armed" : "disarmed"].")
-		return
+			. += "It appears to be [src.armed == 1 ? "armed" : "disarmed"]."
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -289,7 +288,7 @@
 		if (!src || !istype(src))
 			return
 
-		src.visible_message("<span style=\"color:red\">[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
+		src.visible_message("<span class='alert'>[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
 		gibs(src.loc)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 

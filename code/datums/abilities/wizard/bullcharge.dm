@@ -25,7 +25,7 @@
 			if(prev != curr)
 				path += curr
 				prev = curr
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 		playsound(holder.owner.loc, "sound/voice/animal/bull.ogg", 25, 1, -1)
 
@@ -44,7 +44,7 @@
 					var/mob/some_idiot = M
 					some_idiot.changeStatus("weakened", 3 SECONDS)
 					some_idiot.TakeDamage("chest", 33, 0, 0, DAMAGE_BLUNT)//it's magic. no armor 4 u
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 		qdel(B)
 

@@ -55,9 +55,9 @@
 			if (!src.affected_area)
 				affected_mob.cure_disease(D)
 				return
-			boutput(affected_mob, "<span style='color:red'>Your [src.affected_area] starts hurting!</span>")
+			boutput(affected_mob, "<span class='alert'>Your [src.affected_area] starts hurting!</span>")
 		else if (prob(3))
-			boutput(affected_mob, "<span style='color:red'>Your [src.affected_area] hurts!</span>")
+			boutput(affected_mob, "<span class='alert'>Your [src.affected_area] hurts!</span>")
 
 		switch (src.affected_area)
 			if ("chest")
@@ -108,7 +108,7 @@
 						affected_mob.cure_disease(D)
 						return
 				if (prob(2)) // the clot moves
-					boutput(affected_mob, "<span style='color:blue'>Your [src.affected_area] stops hurting.</span>")
+					boutput(affected_mob, "<span class='notice'>Your [src.affected_area] stops hurting.</span>")
 					if (prob(1))
 						affected_mob.cure_disease(D)
 						return

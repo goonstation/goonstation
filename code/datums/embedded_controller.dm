@@ -679,7 +679,7 @@ obj/machinery/embedded_controller/radio/department_controller
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
 			..()
 

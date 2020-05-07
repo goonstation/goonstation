@@ -238,7 +238,7 @@
 		if (src.check_records)
 			for (var/datum/data/record/E in data_core.general)
 				var/perpname = perp.name
-				if (perp?.wear_id:registered)
+				if (perp?.wear_id?:registered)
 					perpname = perp.wear_id:registered
 				if (E.fields["name"] == perpname)
 					for (var/datum/data/record/R in data_core.security)
@@ -265,7 +265,7 @@
 			return
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
 
 
 /obj/machinery/fakesecscanner

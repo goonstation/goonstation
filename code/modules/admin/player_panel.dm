@@ -2,6 +2,7 @@
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
 	set category = null
+	set popup_menu = 1
 	if (src.holder)
 		src.holder.playeropt(M)
 	return
@@ -98,7 +99,7 @@
 </div>
 
 <div style="margin-top: 2em;">
-	Mob: <b>[M.name]</b> (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<br>Mob Type: <b>[M.type]</b> ([antag])
@@ -282,7 +283,6 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[iswelder(M) ? "<em>Is Welder</em>" : "<a href='[playeropt_link(M, "makewelder")]'>Welder</a>"] &bull;
 						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
 					</div>
 				</div>
@@ -326,7 +326,7 @@
 		//dat += "</div>"
 
 	//Coder options
-	if( src.level >= LEVEL_SHITGUY )
+	if( src.level >= LEVEL_PA )
 		dat += {"
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>

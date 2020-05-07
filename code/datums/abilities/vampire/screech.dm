@@ -24,7 +24,7 @@
 
 		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
 			boutput(M, __red("How do you expect this to work? You're muzzled!"))
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> makes a loud noise.</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> makes a loud noise.</span>")
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
@@ -70,7 +70,7 @@
 				boutput(HH, __blue("[M]'s scream only strengthens your resolve!"))
 				continue
 
-			HH.apply_sonic_stun(0, 0, 40, 0, 15, 8, 12)
+			HH.apply_sonic_stun(0, 0, 40, 0, 50, 8, 12)
 
 		sonic_attack_environmental_effect(M, 2, list("light", "window", "r_window"))
 

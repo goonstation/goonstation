@@ -27,7 +27,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -41,7 +41,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/arcade/M = new /obj/item/circuitboard/arcade( A )
@@ -112,7 +112,7 @@
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.enemy_hp -= attackamt
 			src.arcade_action()
 
@@ -124,7 +124,7 @@
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			src.updateUsrDialog()
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.player_mp -= pointamt
 			src.player_hp += healamt
 			src.blocked = 1
@@ -139,7 +139,7 @@
 			src.player_mp += chargeamt
 
 			src.updateUsrDialog()
-			sleep(10)
+			sleep(1 SECOND)
 			src.arcade_action()
 
 	if (href_list["close"])
@@ -207,7 +207,7 @@
 				prize = new /obj/item/wrench/gold(src.loc)
 			if(7)
 				prize = new /obj/item/firework(src.loc)
-				prize.icon = 'icons/obj/device.dmi'
+				prize.icon = 'icons/obj/items/device.dmi'
 				prize.icon_state = "shield0"
 				prize.name = "decloaking device"
 				prize.desc = "A device for removing cloaks. Made in Space-Taiwan."
@@ -224,7 +224,7 @@
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
-			sleep(10)
+			sleep(1 SECOND)
 			src.temp = "You have been drained! GAME OVER"
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))

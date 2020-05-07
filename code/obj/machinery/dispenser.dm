@@ -80,7 +80,7 @@
 	if(usr.stat || usr.restrained())
 		return
 	if (isAI(usr))
-		boutput(usr, "<span style=\"color:red\">You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+		boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 		return
 
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
@@ -202,9 +202,9 @@
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
 			if(src.active_vial)
-				boutput(user, "<span style=\"color:blue\">The dispenser already has a test tube in it</span>")
+				boutput(user, "<span class='notice'>The dispenser already has a test tube in it</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert the test tube into the dispenser</span>")
+				boutput(user, "<span class='notice'>You insert the test tube into the dispenser</span>")
 				user.drop_vial()
 				W.set_loc(src)
 				src.active_vial = W
@@ -212,7 +212,7 @@
 			return
 
 		else if(istype(W, /obj/item/reagent_containers))
-			boutput(user, "<span style=\"color:blue\">[W] is too big to fit in!</span>")
+			boutput(user, "<span class='notice'>[W] is too big to fit in!</span>")
 			return
 
 		else if (istype(W, /obj/item/disk/data/tape))
@@ -222,7 +222,7 @@
 				src.tape = W
 				boutput(user, "You insert [W].")
 			else
-				boutput(user, "<span style=\"color:red\">There is already a tape loaded!</span>")
+				boutput(user, "<span class='alert'>There is already a tape loaded!</span>")
 			src.updateUsrDialog()
 			return
 
@@ -236,7 +236,7 @@
 		if(usr.stat || usr.restrained())
 			return
 		if (isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))

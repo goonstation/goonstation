@@ -48,13 +48,13 @@
 		..()*/
 
 	click(atom/target)
-		target.examine()
+		src.examine_verb(target)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 1
 
 	say_understands(var/other)
-	
+
 		if (isAI(other))
 			return 1
 
@@ -147,7 +147,7 @@
 
 			if (src.mind)
 				mind.transfer_to(originalmob)
-			
+
 			originalmob.set_loc(src.loc)
 		else
 			var/mob/dead/observer/o = src.ghostize()

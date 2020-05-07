@@ -111,7 +111,7 @@
 /obj/storage/crate/bin
 	name = "large bin"
 	desc = "A large bin."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
 	icon_closed = "largebin"
@@ -363,7 +363,7 @@
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
-		/obj/item/storage/backpack/syndicate_medic_satchel,
+		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 

@@ -126,7 +126,7 @@
 		..()
 		owner.set_mutantrace(/datum/mutantrace/premature_clone)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			boutput(owner, "<span style=\"color:red\">Your genes feel...disorderly.</span>")
+			boutput(owner, "<span class='alert'>Your genes feel...disorderly.</span>")
 		return
 
 	OnRemove()
@@ -142,11 +142,11 @@
 
 		if (outOfPod)
 			if (prob(6))
-				owner.visible_message("<span style=\"color:red\">[owner.name] suddenly and violently vomits!</span>")
+				owner.visible_message("<span class='alert'>[owner.name] suddenly and violently vomits!</span>")
 				owner.vomit()
 
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\">[owner.name] vomits blood!</span>")
+				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
 				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
@@ -180,9 +180,9 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					boutput(C, "<span style=\"color:red\">[src.personalized_stink]</span>")
+					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
-					boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
 // Magnetic Random Event
 

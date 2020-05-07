@@ -3,6 +3,7 @@
 	desc = "A book.  I wonder how many of these there are here, it's not like there would be a library on a space station or something."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "book0"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
 	//cogwerks - burn vars
@@ -15,10 +16,10 @@
 	stamina_cost = 2
 	stamina_crit_chance = 0
 
-	attack_self(mob/user as mob)
-		return src.examine()
+	attack_self(mob/user)
+		return user.examine_verb(src)
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		src.add_fingerprint(user)
 		return
 
@@ -26,7 +27,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
 		user.suiciding = 0
 		return 1
 
@@ -968,13 +969,17 @@
 	name = "Beepsky's private journal"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "pinkbook"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
 
-	examine()
-		set src in view()
-		if (!issilicon(usr))
-			boutput(usr, "What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
+	New()
+		..()
+		BLOCK_BOOK
+
+	examine(mob/user)
+		if (!issilicon(user))
+			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
 			var/mob/living/carbon/jerk = usr
 			if (!istype(jerk))
 				return
@@ -985,11 +990,8 @@
 						if (S.fields["id"] == R.fields["id"])
 							S.fields["criminal"] = "*Arrest*"
 							S.fields["mi_crim"] = "Reading highly-confidential private information."
-
-			return
-
 		else
-			boutput(usr, "It appears to be heavily encrypted information.")
+			return list("It appears to be heavily encrypted information.")
 
 /obj/item/storage/photo_album/beepsky
 	name = "Beepsky's photo album"
@@ -2549,8 +2551,8 @@ After a very long time, Albert got up. He was not going to give up just because 
 	attackby(obj/item/P as obj, mob/user as mob)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, "<span style=\"color:blue\">You pore over the book with the magnifying glass.</span>")
-			sleep(20)
+			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
+			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
 /obj/item/paper/book/zoo_diary
@@ -2735,7 +2737,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	opacity = 0
 	anchored = 1
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
 	item_state = "lawbook"
 
@@ -2756,7 +2758,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span style=\"color:red\"><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 2 SECONDS)
 				user.changeStatus("weakened", 2 SECONDS)
@@ -3285,3 +3287,45 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
+	var/custom_cover = 0 //if 1, goes thru with the build custom icon process
+	var/book_cover = "" //what cover does our book have
+	var/cover_color = "#FFFFFF" //white by default, what colour will our book be?
+	var/cover_symbol = "" //what symbol is on our front cover?
+	var/symbol_color = "#FFFFFF" //white by default, if our symbol is colourable, what colour is it?
+	var/cover_flair = "" //whats the "flair" thing on the book?
+	var/flair_color = "#FFFFFF" //white by default, whats the color of the flair (if its colorable)?
+	var/symbol_colorable = 0 //set this to 1 if your symbol is colourable
+	var/flair_colorable = 0 //set this to 1 if your flair is colourable
+	var/ink_color = "#000000" //what color is the text written in?
+
+	New()
+		..()
+		src.build_custom_book()
+
+	proc/build_custom_book()
+		if (src.custom_cover)
+			src.icon = 'icons/obj/items/custom_books.dmi'
+			src.icon_state = "paper"
+			if (src.cover_color)
+				var/image/I = SafeGetOverlayImage("cover", src.icon, "base-colorable")
+				I.color = src.cover_color
+				src.UpdateOverlays(I, "cover")
+			if (src.cover_symbol)
+				var/image/I = SafeGetOverlayImage("symbol", src.icon, "symbol-[cover_symbol]")
+				if (src.symbol_colorable)
+					I.color = src.symbol_color
+				src.UpdateOverlays(I, "symbol")
+			if (src.cover_flair)
+				var/image/I = SafeGetOverlayImage("flair", src.icon, "flair-[cover_flair]")
+				if (src.flair_colorable)
+					I.color = flair_color
+				src.UpdateOverlays(I, "flair")
+		else
+			if (src.book_cover == "bible")
+				src.icon = 'icons/obj/items/storage.dmi'
+			else if (!src.book_cover)
+				src.book_cover = "book0"
+			src.icon_state = src.book_cover
+		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"

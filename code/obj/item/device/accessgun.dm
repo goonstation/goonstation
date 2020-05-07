@@ -1,7 +1,7 @@
 /obj/item/device/accessgun
 	name = "access-pro"
 	desc = "This device can reprogram electronic access requirements. It will copy the permissions of any inserted ID. Activate it in-hand while empty to change between AND/OR modes"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "accessgun"
 	item_state = "accessgun"
 	w_class = 2.0
@@ -61,13 +61,13 @@
 	attack_self(mob/user as mob)
 		..()
 		if (src.ID_card)
-			boutput(user, "<span style=\"color:blue\">You eject [ID_card] from [src].</span>")
+			boutput(user, "<span class='notice'>You eject [ID_card] from [src].</span>")
 		else
 			if (mode == 0)
-				boutput(user, "<span style=\"color:blue\">[src] set to OR mode. The doors you reprogram will allow anyone with any of the accesses on the inserted ID.</span>")
+				boutput(user, "<span class='notice'>[src] set to OR mode. The doors you reprogram will allow anyone with any of the accesses on the inserted ID.</span>")
 				mode = 1
 			else
-				boutput(user, "<span style=\"color:blue\">[src] set to AND mode. The doors you reprogram will only allow those who meet every access listed on the inserted ID.</span>")
+				boutput(user, "<span class='notice'>[src] set to AND mode. The doors you reprogram will only allow those who meet every access listed on the inserted ID.</span>")
 				mode = 0
 
 
@@ -77,13 +77,13 @@
 		if (istype(C, /obj/item/card/id))
 			var/obj/item/card/id/ID = C
 			if (src.ID_card)
-				boutput(user, "<span style=\"color:blue\">You swap [ID] and [src.ID_card].</span>")
+				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
 				return
 			else if (!src.ID_card)
 				src.insert_id_card(ID, user)
-				boutput(user, "<span style=\"color:blue\">You insert [ID] into [src].</span>")
+				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 		else
 			..()
 
@@ -91,23 +91,23 @@
 		..()
 		if (!src.ID_card)
 			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] refuses to turn on without an ID inserted.</span>")
+			boutput(user, "<span class='notice'>[src] refuses to turn on without an ID inserted.</span>")
 			return
 		if (!isobj(target))
 			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
 		if (!allowed(user))
 			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">Your worn ID fails [src]'s check!</span>")
+			boutput(user, "<span class='notice'>Your worn ID fails [src]'s check!</span>")
 			return
 
 		var/obj/O = target
 
 		if (access_maxsec in O.req_access)
 			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
 		if (O.object_flags & CAN_REPROGRAM_ACCESS)
@@ -115,13 +115,13 @@
 				var/obj/machinery/door/D = target
 				if (D.cant_emag || isrestrictedz(D.z))
 					playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-					boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+					boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 					return
 
 			actions.start(new/datum/action/bar/icon/access_reprog(O,src), user)
 		else
 			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 
 
 
@@ -172,5 +172,5 @@
 
 	onInterrupt()
 		if (O && owner)
-			boutput(owner, "<span style=\"color:red\">Access change of [O] interrupted!</span>")
+			boutput(owner, "<span class='alert'>Access change of [O] interrupted!</span>")
 		..()

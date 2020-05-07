@@ -14,7 +14,7 @@
 		if (!source)
 			source = "random"
 		if (announce_to_admins)
-			message_admins("<span style=\"color:blue\">Beginning [src.name] event (Source: [source]).</span>")
+			message_admins("<span class='notice'>Beginning [src.name] event (Source: [source]).</span>")
 			logTheThing("admin", null, null, "Random event [src.name] was triggered. Source: [source]")
 
 		if (centcom_headline && centcom_message && random_events.announce_events)

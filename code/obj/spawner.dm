@@ -208,7 +208,7 @@
 /obj/bomberman
 	name = "large cartoon bomb"
 	desc = "It looks like it's gonna blow."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "dumb_bomb"
 	density = 1
 	var/exploding = 0
@@ -287,7 +287,7 @@
 			if (!isnull(O)) O.ex_act(rand(1,2))
 		playsound(src.loc, "explosion", 100, 1)
 		playsound(src.loc, "sound/effects/explosionfar.ogg", 100, 1, 14)
-		sleep(10)
+		sleep(1 SECOND)
 		animation.dispose()
 		for(var/atom/movable/overlay/A in (boom + boom_tips))
 			A.dispose()

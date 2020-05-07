@@ -309,7 +309,7 @@
 
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
-		boutput(src, "<span style=\"color:red\"><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
+		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
 		return
 
 	//if(JOB.name == "Captain")
@@ -399,7 +399,7 @@
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
 				if (V && V.lock && V.lock.code)
-					boutput(src, "<span style=\"color:blue\">The unlock code to your pod ([V]) is: [V.lock.code]</span>")
+					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 					if (src.mind)
 						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
@@ -408,7 +408,7 @@
 				equip_traitor(src)
 
 		set_clothing_icon_dirty()
-		sleep(1)
+		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO)//!ismap("DESTINY") && !ismap("CLARION"))
@@ -432,7 +432,7 @@
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	if (JOB.slot_back)
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
-		if (JOB.items_in_backpack.len && istype(src.back, /obj/item/storage))
+		if (istype(src.back, /obj/item/storage))
 			for (var/X in JOB.items_in_backpack)
 				src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
@@ -515,7 +515,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (list(/obj/item/clothing/head/power, /obj/item/clothing/head/fancy) + typesof(/obj/item/clothing/head/bighat))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
+		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat
@@ -597,7 +597,7 @@
 		PDA.ownerAssignment = JOB.name
 		PDA.name = "PDA-[src.real_name]"
 
-	boutput(src, "<span style=\"color:blue\">Your pin to your ID is: [C.pin]</span>")
+	boutput(src, "<span class='notice'>Your pin to your ID is: [C.pin]</span>")
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
 
@@ -622,7 +622,7 @@
 /mob/living/carbon/human/proc/JobEquipSpawned(rank, no_special_spawn)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
-		boutput(src, "<span style=\"color:red\"><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
+		boutput(src, "<span class='alert'><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
 		return
 
 	if (JOB.slot_back)

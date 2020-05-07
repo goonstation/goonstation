@@ -84,7 +84,9 @@ var/list/action_names = list(
 	"fire" = "Fire",
 	"fire_secondary" = "Fire Secondary",
 	"cycle" = "Cycle Shell",
-	"exit" = "Exit"
+	"exit" = "Exit",
+
+	"admin_interact" = "Admin Interact"
 )
 
 var/list/action_verbs = list(
@@ -124,6 +126,7 @@ var/list/action_verbs = list(
 	"refocus"   = ".winset \\\"mainwindow.input.focus=true;mainwindow.input.text=\\\"\\\"\\\"",
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
+	"Admin Interact" = "admin_interact"
 )
 
 var/list/key_names = list(
@@ -155,6 +158,7 @@ var/list/key_names = list(
 							"B" = KEY_POINT,
 							"T" = "say",
 							"Y" = "say_radio",
+							"W" = "resist",
 							"G" = "refocus",
 							"F" = "fart",
 							"R" = "flip",
@@ -193,7 +197,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 				else
 					return new /datum/keymap(list(
@@ -208,6 +214,7 @@ var/list/key_names = list(
 							"EAST" = KEY_RIGHT,
 							"T" = "say",
 							"Y" = "say_radio",
+							"Z" = "resist",
 							"G" = "refocus",
 							"F" = "fart",
 							"R" = "flip",
@@ -246,7 +253,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 			if ("human")
 				if (src.preferences.use_azerty)
@@ -295,6 +304,7 @@ var/list/key_names = list(
 							"E" = "equip",
 							"X" = "swaphand",
 							"Z" = "attackself",
+							"C" = "resist",
 							"Q" = "drop"
 						))
 				else
@@ -350,6 +360,7 @@ var/list/key_names = list(
 							"B" = KEY_POINT,
 							"X" = "swaphand",
 							"Z" = "attackself",
+							"C" = "resist",
 							"Q" = "unequip"
 						))
 				else
@@ -371,20 +382,26 @@ var/list/key_names = list(
 				if (src.preferences.use_azerty)
 					return new /datum/keymap(list(
 							"B" = KEY_POINT,
+							"ALT" = KEY_EXAMINE,
+							"CTRL" = KEY_PULL,
 							"C" = "attackself",
-							"A" = "unequip"
+							"A" = "unequip",
 						))
 				else if (src.tg_controls)
 					return new /datum/keymap(list(
 							"B" = KEY_POINT,
+							"SHIFT" = KEY_EXAMINE,
+							"CTRL" = KEY_PULL,
 							"Z" = "attackself",
-							"Q" = "unequip"
+							"Q" = "unequip",
 						))
 				else
 					return new /datum/keymap(list(
 							"B" = KEY_POINT,
+							"ALT" = KEY_EXAMINE,
+							"CTRL" = KEY_PULL,
 							"C" = "attackself",
-							"Q" = "unequip"
+							"Q" = "unequip",
 						))
 			if ("pod")
 				return new /datum/keymap(list(
@@ -418,6 +435,7 @@ var/list/key_names = list(
 						"EAST" = KEY_RIGHT,
 						"T" = "say",
 						"Y" = "say_radio",
+						"C" = "resist",
 						"G" = "refocus",
 						"F" = "fart",
 						"R" = "flip",
@@ -455,7 +473,9 @@ var/list/key_names = list(
 						"J" = "look_w",
 						"L" = "look_e",
 						"P" = "pickup",
-						"DELETE" = "stop_pull"
+						"DELETE" = "stop_pull",
+						"`" = "admin_interact",
+						"~" = "admin_interact"
 					))
 				else
 					return new /datum/keymap(list(
@@ -465,6 +485,7 @@ var/list/key_names = list(
 							"EAST" = KEY_RIGHT,
 							"T" = "say",
 							"Y" = "say_radio",
+							"Z" = "resist",
 							"G" = "refocus",
 							"F" = "fart",
 							"R" = "flip",
@@ -501,7 +522,9 @@ var/list/key_names = list(
 							"K" = "look_s",
 							"J" = "look_w",
 							"L" = "look_e",
-							"P" = "pickup"
+							"P" = "pickup",
+							"`" = "admin_interact",
+							"~" = "admin_interact"
 						))
 			if ("human")
 				if(src.tg_controls)
@@ -568,6 +591,7 @@ var/list/key_names = list(
 						"B" = KEY_POINT,
 						"X" = "swaphand",
 						"Z" = "attackself",
+						"C" = "resist",
 						"Q" = "unequip"
 					))
 				else

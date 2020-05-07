@@ -5,55 +5,9 @@
 //ADD YOUR SHIT HERE IF YOU MAKE A NEW VERB THAT GOES ON RIGHT-CLICK OR YOU ARE LITERALLY HITLER (Aka marquesas jr)
 //fixed that for you -marq
 var/list/popup_verbs_to_toggle = list(\
-/client/proc/addpathogens,\
-/client/proc/addreagents,\
-/client/proc/call_proc_atom,\
-/client/proc/cmd_admin_check_reagents,\
-/client/proc/cmd_admin_check_health,\
-/client/proc/cmd_admin_get_mobject,\
-/client/proc/admin_follow_mobject,\
-/client/proc/cmd_admin_delete,\
-/client/proc/debug_variables,\
-/proc/possess,\
-/client/proc/view_fingerprints,\
-/client/proc/cmd_admin_pm,\
-/client/proc/cmd_admin_gib,\
-/client/proc/cmd_admin_rejuvenate,\
-/client/proc/jumptomob,\
-/client/proc/cmd_admin_playeropt,\
-/client/proc/cmd_admin_subtle_message,\
-/client/proc/view_save_data,\
-/client/proc/cmd_admin_polymorph,\
-/client/proc/sendmobs,\
-/client/proc/sendhmobs,\
-/client/proc/create_portal,\
-/client/proc/jumptoturf,\
-/client/proc/cmd_explosion,\
-/client/proc/air_status,\
+/client/proc/sendmobs,
+/client/proc/sendhmobs,
 /client/proc/Jump,\
-/client/proc/debug_check_possible_reactions,\
-/client/proc/revive_critter,\
-/client/proc/kill_critter,\
-/client/proc/admin_smoke,\
-/client/proc/admin_foam,\
-/client/proc/cmd_swap_minds,\
-/client/proc/cmd_transfer_client,\
-/client/proc/cmd_admin_polymorph,\
-/client/proc/cmd_add_to_screen,\
-/client/proc/edit_module,\
-/client/proc/modify_organs,\
-/client/proc/generate_poster,\
-/client/proc/modify_parts,\
-/client/proc/cmd_boot,\
-/client/proc/cmd_shame_cube,\
-/client/proc/cmd_unshame_cube,\
-/client/proc/replace_with_explosive,\
-/client/proc/getturftelesci, \
-/client/proc/admin_fluid, \
-///client/proc/admin_airborne_fluid, \
-/client/proc/dbg_objectprop, \
-/client/proc/dbg_itemspecial
-
 )
 
 /client/proc/toggle_popup_verbs()
@@ -84,7 +38,7 @@ var/list/popup_verbs_to_toggle = list(\
 				src.verbs += V
 		src.holder.popuptoggle = !src.holder.popuptoggle
 
-		boutput(usr, "<span style=\"color:blue\">Toggled popup verbs [src.holder.popuptoggle?"off":"on"]!</span>")
+		boutput(usr, "<span class='notice'>Toggled popup verbs [src.holder.popuptoggle?"off":"on"]!</span>")
 
 	return
 
@@ -154,7 +108,7 @@ var/list/server_toggles_tab_verbs = list(\
 				src.verbs += V
 		src.holder.servertoggles_toggle = !src.holder.servertoggles_toggle
 
-		boutput(usr, "<span style=\"color:blue\">Toggled Server Toggle tab [src.holder.servertoggles_toggle?"off":"on"]!</span>")
+		boutput(usr, "<span class='notice'>Toggled Server Toggle tab [src.holder.servertoggles_toggle?"off":"on"]!</span>")
 
 	return
 
@@ -165,7 +119,7 @@ var/list/server_toggles_tab_verbs = list(\
 	if (!src.holder.extratoggle)
 		src.verbs -= /client/proc/addreagents
 
-		src.verbs -= /proc/possess
+		//src.verbs -= /proc/possess
 		src.verbs -= /client/proc/addreagents
 		src.verbs -= /client/proc/cmd_admin_rejuvenate
 
@@ -182,7 +136,7 @@ var/list/server_toggles_tab_verbs = list(\
 		src.verbs += /client/proc/addreagents
 
 
-		src.verbs += /proc/possess
+		//src.verbs += /proc/possess
 		src.verbs += /client/proc/addreagents
 		src.verbs += /client/proc/cmd_admin_rejuvenate
 
@@ -210,7 +164,7 @@ var/global/IP_alerts = 1
 	admin_only
 
 	src.only_local_looc = !src.only_local_looc
-	boutput(usr, "<span style=\"color:blue\">Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
+	boutput(usr, "<span class='notice'>Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
 
 /client/proc/toggle_attack_messages()
 	set category = "Toggles"
@@ -219,7 +173,7 @@ var/global/IP_alerts = 1
 	admin_only
 
 	src.holder.attacktoggle = !src.holder.attacktoggle
-	boutput(usr, "<span style=\"color:blue\">Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
+	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
 	set category = "Toggles"
@@ -228,7 +182,7 @@ var/global/IP_alerts = 1
 	admin_only
 
 	src.holder.hear_prayers = !src.holder.hear_prayers
-	boutput(usr, "<span style=\"color:blue\">Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
+	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
 
 /client/proc/toggle_buildmode_view()
 	set category = "Toggles"
@@ -237,7 +191,7 @@ var/global/IP_alerts = 1
 	admin_only
 
 	src.holder.buildmode_view = !src.holder.buildmode_view
-	boutput(usr, "<span style=\"color:blue\">Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!</span>")
+	boutput(usr, "<span class='notice'>Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!</span>")
 
 /client/proc/cmd_admin_playermode()
 	set name = "Toggle Player mode"
@@ -251,7 +205,7 @@ var/global/IP_alerts = 1
 		player_mode_asay = 0
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
-		boutput(usr, "<span style=\"color:blue\">Player mode now OFF.</span>")
+		boutput(usr, "<span class='notice'>Player mode now OFF.</span>")
 	else
 		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to recieve") as null|anything in list("NONE", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
 		switch (choice)
@@ -299,7 +253,7 @@ var/global/IP_alerts = 1
 				// Cancel = don't turn on player mode
 				return
 
-		boutput(usr, "<span style=\"color:blue\">Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]</span>")
+		boutput(usr, "<span class='notice'>Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]</span>")
 
 		// turn of popup verbs too
 		if (!src.holder.popuptoggle)
@@ -318,7 +272,7 @@ var/global/IP_alerts = 1
 	if (!isliving(M))
 		return
 	M.nodamage = !(M.nodamage)
-	boutput(usr, "<span style=\"color:blue\"><b>[M]'s godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
+	boutput(usr, "<span class='notice'><b>[M]'s godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
 	logTheThing("admin", usr, M, "has toggled %target%'s nodamage to [(M.nodamage ? "On" : "Off")]")
 	logTheThing("diary", usr, M, "has toggled %target%'s nodamage to [(M.nodamage ? "On" : "Off")]", "admin")
@@ -333,7 +287,7 @@ var/global/IP_alerts = 1
 	if (!isliving(usr))
 		return
 	usr.nodamage = !(usr.nodamage)
-	boutput(usr, "<span style=\"color:blue\"><b>Your godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
+	boutput(usr, "<span class='notice'><b>Your godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
 	logTheThing("admin", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 	logTheThing("diary", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
@@ -553,7 +507,7 @@ var/global/IP_alerts = 1
 		boutput(world, "<B>You may now enter the game.</B>")
 	logTheThing("admin", usr, null, "toggled new player game entering.")
 	logTheThing("diary", usr, null, "toggled new player game entering.", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] toggled new player game entering.</span>")
+	message_admins("<span class='notice'>[key_name(usr)] toggled new player game entering.</span>")
 	world.update_status()
 
 /datum/admins/proc/toggleAI()
@@ -590,7 +544,7 @@ var/global/IP_alerts = 1
 		boutput(world, "<B>You may now respawn.</B>")
 	else
 		boutput(world, "<B>You may no longer respawn :(</B>")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
+	message_admins("<span class='notice'>[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
 	logTheThing("admin", usr, null, "toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	logTheThing("diary", usr, null, "toggled respawn to [abandon_allowed ? "On" : "Off"].", "admin")
 	world.update_status()
@@ -625,7 +579,7 @@ var/global/IP_alerts = 1
 	set name="Toggle Sound Playing"
 	NOT_IF_TOGGLES_ARE_OFF
 	config.allow_admin_sounds = !(config.allow_admin_sounds)
-	message_admins("<span style=\"color:blue\">Toggled admin sound playing to [config.allow_admin_sounds].</span>")
+	message_admins("<span class='notice'>Toggled admin sound playing to [config.allow_admin_sounds].</span>")
 
 /datum/admins/proc/adspawn()
 	set category = "Toggles (Server)"
@@ -633,7 +587,7 @@ var/global/IP_alerts = 1
 	set name="Toggle Spawn"
 	NOT_IF_TOGGLES_ARE_OFF
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
-	message_admins("<span style=\"color:blue\">Toggled admin item spawning to [config.allow_admin_spawning].</span>")
+	message_admins("<span class='notice'>Toggled admin item spawning to [config.allow_admin_spawning].</span>")
 
 /datum/admins/proc/adrev()
 	set category = "Toggles (Server)"
@@ -641,7 +595,7 @@ var/global/IP_alerts = 1
 	set name="Toggle Revive"
 	NOT_IF_TOGGLES_ARE_OFF
 	config.allow_admin_rev = !(config.allow_admin_rev)
-	message_admins("<span style=\"color:blue\">Toggled reviving to [config.allow_admin_rev].</span>")
+	message_admins("<span class='notice'>Toggled reviving to [config.allow_admin_rev].</span>")
 
 /datum/admins/proc/toggledeadchat()
 	set category = "Toggles (Server)"
@@ -735,10 +689,10 @@ var/global/IP_alerts = 1
 	NOT_IF_TOGGLES_ARE_OFF
 	if(deadchatoff == 0)
 		deadchatoff = 1
-		boutput(usr, "<span style=\"color:blue\">No longer viewing deadchat.</span>")
+		boutput(usr, "<span class='notice'>No longer viewing deadchat.</span>")
 	else
 		deadchatoff = 0
-		boutput(usr, "<span style=\"color:blue\">Now viewing deadchat.</span>")
+		boutput(usr, "<span class='notice'>Now viewing deadchat.</span>")
 
 /datum/admins/proc/toggleaprilfools()
 	set category = "Toggles (Server)"
@@ -828,7 +782,7 @@ var/global/IP_alerts = 1
 	set name="Toggle Jump"
 	NOT_IF_TOGGLES_ARE_OFF
 	config.allow_admin_jump = !(config.allow_admin_jump)
-	message_admins("<span style=\"color:blue\">Toggled admin jumping to [config.allow_admin_jump].</span>")
+	message_admins("<span class='notice'>Toggled admin jumping to [config.allow_admin_jump].</span>")
 
 /datum/admins/proc/togglesimsmode()
 	set category = "Toggles (Server)"
@@ -836,7 +790,7 @@ var/global/IP_alerts = 1
 	set name = "Toggle Sims Mode"
 	NOT_IF_TOGGLES_ARE_OFF
 	global_sims_mode = !global_sims_mode
-	message_admins("<span style=\"color:blue\">[key_name(usr)] toggled sims mode. [global_sims_mode ? "Oh, the humanity!" : "Phew, it's over."]</span>")
+	message_admins("<span class='notice'>[key_name(usr)] toggled sims mode. [global_sims_mode ? "Oh, the humanity!" : "Phew, it's over."]</span>")
 	for (var/mob/M in mobs)
 		LAGCHECK(LAG_LOW)
 		boutput(M, "<b>Motives have been globally [global_sims_mode ? "enabled" : "disabled"].</b>")

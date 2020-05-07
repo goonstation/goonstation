@@ -184,7 +184,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 		O.set_loc(subject)
 	else
 		// what the fuck are you doing trying to observe a datum??!!!
-		boutput(M, "<span class='text-red'>You can't observe something that abstract. Please contact a coder, something has gone terribly, terribly wrong.</span>")
+		boutput(M, "<span class='alert'>You can't observe something that abstract. Please contact a coder, something has gone terribly, terribly wrong.</span>")
 
 /datum/ghost_notification/observe/admin
 	category = "admin alert"
@@ -224,7 +224,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	if(..())
 		return
 	src.responders |= M
-	boutput(M, "<span class='text-blue'>You've been added to the list for selection. Good luck!</span>")
+	boutput(M, "<span class='notice'>You've been added to the list for selection. Good luck!</span>")
 
 /datum/ghost_notification/respawn/expire()
 	..() // close all the windows

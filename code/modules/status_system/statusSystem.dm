@@ -484,7 +484,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						var/mob/M = owner
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 							M.changeStatus("weakened", 3 SECONDS)
-							boutput(M, "<span style=\"color:red\">You feel weak.</span>")
+							boutput(M, "<span class='alert'>You feel weak.</span>")
 							M.emote("collapse")
 				if(3)
 					damage_tox = (3 * prot)
@@ -498,7 +498,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(4)
 					damage_tox = (4 * prot)
@@ -512,7 +512,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(5)
 					damage_tox = (4.5 * prot)
@@ -526,7 +526,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 
 			icon_state = "radiation[stage]"
@@ -830,6 +830,20 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		maxDuration = 5 SECONDS
 
+	blocking
+		id = "blocking"
+		name = "Blocking"
+		desc = "You are currently blocking. Use Resist to stop blocking.<br>Slowed slightly, unable to sprint. This overrides the 'staggered' effect and does not stack."
+		icon_state = "blocking"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+
+		clicked(list/params)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.resist()
+
 	slowed
 		id = "slowed"
 		name = "Slowed"
@@ -1016,10 +1030,12 @@ var/list/statusGroupLimits = list("Food"=4)
 		duration = INFINITE_STATUS
 		maxDuration = null
 		var/mob/living/carbon/human/H
+		var/sleepcount = 5 SECONDS
 
 		onAdd(var/optional=null)
 			if (ishuman(owner))
 				H = owner
+				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
@@ -1027,9 +1043,17 @@ var/list/statusGroupLimits = list("Food"=4)
 			if(H.buckled)
 				H.buckled.attack_hand(H)
 
-		onUpdate()
+		onUpdate(var/timedPassed)
 			if (H && !H.buckled)
 				owner.delStatus("buckled")
+			else
+				if (sleepcount > 0)
+					sleepcount -= timedPassed
+					if (sleepcount <= 0)
+						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = H.buckled
+							B.sleep_in(H)
+
 			.=..()
 
 	resting
@@ -1252,7 +1276,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		if (prob(5))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
-			H.visible_message("<span style=\"color:red\">[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span style=\"color:red\">You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
+			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
 			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)

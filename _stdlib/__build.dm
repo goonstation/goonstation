@@ -29,72 +29,76 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
-//Delete queue debug toggle
-//This is expensive. don't turn it on on the server unless you want things to be bad and slow
+
+//////////// OPTIONS TO GO FAST
+
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
+//#define Z_LOG_ENABLE 1  // Enable additional world.log logging
+
+
+//////////// PROFILING OPTIONS
+
+//#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
+//#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
+//#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
+
+
+//////////// DEBUGGING TOGGLES
+
+// Delete queue debug toggle
+// This is expensive. don't turn it on on the server unless you want things to be bad and slow
 //#define DELETE_QUEUE_DEBUG
 
+// Update queue debug toggle
+// Probably don't turn it on on a real server but also I have no idea what an update queue is vOv
 //#define UPDATE_QUEUE_DEBUG
 
-//Image deletion debug
-//DO NOT ENABLE THIS ON THE SERVER FOR FUCKS SAKE
+// Image deletion debug
+// DO NOT ENABLE THIS ON THE SERVER FOR FUCKS SAKE
 //#define IMAGE_DEL_DEBUG
 
 // Machine processing debug
-//Apparently not that hefty but still
+// Apparently not that hefty but still
 //#define MACHINE_PROCESSING_DEBUG
 
-//Queue worker statistics
-//Probably hefty
+// Queue worker statistics
+// Probably hefty
 //#define QUEUE_STAT_DEBUG
 
-//Map overrides
 
-//Construction mode
-//#define MAP_OVERRIDE_CONSTRUCTION
+//////////// MAP OVERRIDES
 
-// Destiny/RP
-//#define MAP_OVERRIDE_DESTINY
+//#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
+//#define MAP_OVERRIDE_DESTINY			// Destiny/RP
+//#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
+//#define MAP_OVERRIDE_COGMAP			// Cogmap
+//#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
+//#define MAP_OVERRIDE_DONUT2			// Updated Donut2
+//#define MAP_OVERRIDE_LINEMAP			// Linemap by pgoat
+//#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
+//#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
+//#define MAP_OVERRIDE_CHIRON			// Chiron by Kusibu
+//#define MAP_OVERRIDE_SAMEDI			// Samedi by Kusibu
+//#define MAP_OVERRIDE_OSHAN			// Oshan
+//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
+//#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
+//#define MAP_OVERRIDE_MANTA			// manta map
+//#define MAP_OVERRIDE_DENSITY
+//#define MAP_OVERRIDE_KONDARU
+//#define MAP_OVERRIDE_FLEET
+//#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 
-// Destiny/Alt RP
-//#define MAP_OVERRIDE_CLARION
 
-// Cogmap
-//#define MAP_OVERRIDE_COGMAP
+//////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
-// Cogmap 2
-//#define MAP_OVERRIDE_COGMAP2
+//#define RP_MODE
+//#define HALLOWEEN 1
+//#define XMAS 1
+//#define CANADADAY 1
+//#define FOOTBALL_MODE 1
+// see below for ASS_JAM
 
-// Updated Donut2
-//#define MAP_OVERRIDE_DONUT2
-
-// Linemap by pgoat
-//#define MAP_OVERRIDE_LINEMAP
-
-// Updated Mushroom
-//#define MAP_OVERRIDE_MUSHROOM
-
-// Updated Ovary
-//#define MAP_OVERRIDE_TRUNKMAP
-
-// Chiron by Kusibu
-//#define MAP_OVERRIDE_CHIRON
-
-// Samedi by Kusibu
-//#define MAP_OVERRIDE_SAMEDI
-
-// Oshan
-//#define MAP_OVERRIDE_OSHAN
-
-// Horizon by Warcrimes
-//#define MAP_OVERRIDE_HORIZON
-
-// gannetmap OR IS IT KUBIUSGANNETMAP??
-//#define MAP_OVERRIDE_ATLAS
-
-//#define MAP_OVERRIDE_MANTA
-
-//WIP do not use
-//#define MAP_OVERRIDE_GEHENNA
 
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
@@ -108,7 +112,7 @@ var/global/ci_dm_version_minor = "100"
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
 #define BUILD_TIME_MONTH 01
-#define BUILD_TIME_DAY 01
+#define BUILD_TIME_DAY 01 //SET ME TO 13 TO TEST YOUR ASS_JAM CONTENT!!
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30

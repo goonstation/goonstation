@@ -84,7 +84,7 @@
 					var/part_splinched = splinch(M, 75)
 					if (part_splinched)
 						do_teleport(part_splinched, destination, 8)
-						M.visible_message("<span style=\"color:red\"><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+						M.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
 					M.throw_at(destination, 8, 2)
 
 					return

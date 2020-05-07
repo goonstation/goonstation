@@ -168,7 +168,7 @@
 				return
 			var/content_id = items_screen + i - 1
 			if (content_id > master.module.modules.len || content_id < 1)
-				boutput(usr, "<span style=\"color:red\">An error occurred. Please notify a coder immediately. (Content ID: [content_id].)</span>")
+				boutput(usr, "<span class='alert'>An error occurred. Please notify a coder immediately. (Content ID: [content_id].)</span>")
 			var/obj/item/O = master.module.modules[content_id]
 			if(!O || O.loc != master.module)
 				return

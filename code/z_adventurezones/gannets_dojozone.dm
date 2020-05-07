@@ -150,7 +150,7 @@ Contents:
 /obj/item/dojohammer
 	name = "blacksmithing hammer"
 	desc = "An unusal looking hammer with an extended head used for pounding sword blades."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "dojo_hammer"
 	item_state = "dojo_hammer"
@@ -166,22 +166,22 @@ Contents:
 /obj/unfinished_katana
 	name = "unfinished blade"
 	desc = "A blade that still requires some work before it'll be an effective weapon."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana"
 
 	attackby(obj/item/H as obj, mob/user as mob)
 		if (istype(H, /obj/item/dojohammer))
 			if (prob(85))
-				boutput(user, "<span style=\"color:blue\">You pound the [src] with the [H].</span>")
+				boutput(user, "<span class='notice'>You pound the [src] with the [H].</span>")
 				playsound(loc, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
 			else
 				if (prob(50))
-					boutput(user, "<span style=\"color:blue\">The steel groans and bends under your swings, forming a menacing blade!</span>")
+					boutput(user, "<span class='notice'>The steel groans and bends under your swings, forming a menacing blade!</span>")
 					playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
 					new /obj/item/bloodthirsty_blade(src.loc)
 					del(src)
 				else
-					boutput(user, "<span style=\"color:blue\">The steel grows brittle under your swings, but takes on a tremendously sharp edge!</span>")
+					boutput(user, "<span class='notice'>The steel grows brittle under your swings, but takes on a tremendously sharp edge!</span>")
 					playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
 					new /obj/item/fragile_sword(src.loc)
 					del(src)
@@ -340,7 +340,7 @@ Contents:
 /obj/decal/fakeobjects/katana_fake
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
 
 /obj/lantern // bad copypaste code from candle_light

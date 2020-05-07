@@ -36,27 +36,27 @@
 			playsound(user, "sound/weapons/Gunclick.ogg", 80, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span style=\"color:red\">[user] points the gun at \his head. Click!</span>", 1, "<span style=\"color:red\">Click!</span>", 2)
+					O.show_message("<span class='alert'>[user] points the gun at \his head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
 
 			return 0
 		else if(src.shotsLeft == 1)
 			src.shotsLeft = 0
 			playsound(user, "sound/weapons/Gunshot.ogg", 100, 1)
 			for(var/mob/O in AIviewers(user, null))
-				if (O.client)	O.show_message("<span style=\"color:red\"><B>BOOM!</B> [user]'s head explodes.</span>", 1, "<span style=\"color:red\">You hear someone's head explode.</span>", 2)
+				if (O.client)	O.show_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", 1, "<span class='alert'>You hear someone's head explode.</span>", 2)
 				user.TakeDamage("head", 300, 0)
 				take_bleeding_damage(user, null, 500, DAMAGE_STAB)
 			return 1
 		else
-			boutput(user, "<span style=\"color:blue\">You need to reload the gun.</span>")
+			boutput(user, "<span class='notice'>You need to reload the gun.</span>")
 			return 0
 
 	proc/reload_gun(mob/user as mob)
 		if(src.shotsLeft <= 0)
-			user.visible_message("<span style=\"color:blue\">[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span style=\"color:blue\">You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
+			user.visible_message("<span class='notice'>[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span class='notice'>You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
 			src.shotsLeft = rand(1, shotsMax)
 		else if(src.shotsLeft >= 1)
-			user.visible_message("<span style=\"color:blue\">[user] spins the cylinder.</span>", "<span style=\"color:blue\">You spin the cylinder.</span>")
+			user.visible_message("<span class='notice'>[user] spins the cylinder.</span>", "<span class='notice'>You spin the cylinder.</span>")
 			src.shotsLeft = rand(1, shotsMax)
 
 /obj/item/gun/russianrevolver/fake357

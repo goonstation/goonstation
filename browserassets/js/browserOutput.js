@@ -488,8 +488,8 @@ function ehjaxCallback(data) {
 
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
-                    music.volume = data.volume;
-                    if (music.paused) {
+                    music.volume = data.volume * 0.3; /*   Added the multiplier here because youtube is consistently   */
+                    if (music.paused) {								/* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }
                 } catch (e) {
@@ -554,7 +554,7 @@ $(function() {
         return;
     }
     readyCalled = true;
-    
+
     $messages = $('#messages');
     $subOptions = $('#subOptions');
     $playMusic = $('#play-music');

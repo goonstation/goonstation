@@ -111,6 +111,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 #define P_INDEX 1
 #define P_IMAGE 2
 #define P_ISTATE 3
+#define P_ILEN P_ISTATE // maximum index
 
 /atom/var/list/overlay_refs = null
 
@@ -124,24 +125,19 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	//List to store info about the last state of the icon
 	prev_data = overlay_refs[key]
 	if(!prev_data && I) //Ok, we don't have previous data, but we will add an overlay
-		prev_data = list()
-		prev_data.len = 3
+		prev_data = new /list(P_ILEN)
 	else if(!prev_data) //We don't have data and we won't add an overlay
 		return 0
 
-	//Wire: Temp debugging to narrow down on a runtime
-	if (!I && key == 1 && force == 0 && retain_cache == 0)
-		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]] (Temp Overlay Debug) prev_data is: [json_encode(prev_data)]"
-
-	var/hash = hash_image(I)
+	var/hash = I ? "\ref[I.appearance]" : null
 	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
-	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the hashes match then do not update
+	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
 		return 0
 
 	var/index = prev_data[P_INDEX]
 	if(index > 0) //There is an existing overlay in place in this slot, remove it
 		src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
-	
+
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
@@ -153,15 +149,13 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		prev_data[P_INDEX] = index
 
 		prev_data[P_IMAGE] = I
-		prev_data[P_ISTATE] = hash//I.icon_state
+		prev_data[P_ISTATE] = "\ref[I.appearance]"
 
 		overlay_refs[key] = prev_data
 	else
 		if(retain_cache) //Keep the cached image available?
 			prev_data[P_INDEX] = 0	//Clear the index
-			prev_data[P_ISTATE] = 0	//Clear the hash
-
-			//overlay_refs[key] = prev_data //Update our list <- Pointers, dumbass /Spy
+			prev_data[P_ISTATE] = 0	//Clear the ref
 		else
 			overlay_refs -= key
 	return 1
@@ -217,16 +211,8 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 			I.layer = layer
 	return I
 
-/////////////////////////////////////////////
-//helper procs
-/////////////////////////////////////////////
-/proc/hash_image(var/image/I)
-	if(I)
-		. = md5("\ref[I][I.icon_state][I.overlays ? I.overlays.len : 0][I.color][I.alpha]")
-	else
-		. = null
-
 
 #undef P_INDEX
 #undef P_IMAGE
 #undef P_ISTATE
+#undef P_ILEN

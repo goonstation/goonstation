@@ -141,5 +141,5 @@
         M.show_text("You look directly into [holder.owner.name], good thing you had your protective eyewear on!", "green")
         return
     M.changeStatus("stunned", 3 SECONDS)
-    M.visible_message("<span style=\"color:red\"><B>[M] stares blankly at [holder.owner]!</B></span>",\
-    "<B>You look directly into [holder.owner]!<br><span style=\"color:red\">You feel weak!</span></B>")
+    M.visible_message("<span class='alert'><B>[M] stares blankly at [holder.owner]!</B></span>",\
+    "<B>You look directly into [holder.owner]!<br><span class='alert'>You feel weak!</span></B>")

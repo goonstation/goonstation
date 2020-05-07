@@ -86,7 +86,7 @@
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
 							logTheThing("combat", user, target, "flashes %target% with an emagged flashlight.")
-				user.visible_message("<span style=\"color:red\">The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span style=\"color:red\">The bulb in your hand explodes with a blinding flash!</span>")
+				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light.disable()
 				icon_state = "flightbroken"
@@ -102,7 +102,8 @@
 
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "glowstick-off"
+	icon_state = "glowstick-green0"
+	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
 	w_class = 2
@@ -113,6 +114,7 @@
 	col_b = 0.1
 	brightness = 0.5
 	height = 0.75
+	var/color_name = "green"
 
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
@@ -120,13 +122,18 @@
 		make_cleanable( /obj/decal/cleanable/greenglow,T)
 		qdel(src)
 
+	proc/turnon()
+		on = 1
+		icon_state = "[base_state][on]"
+		light.enable()
+
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istype(W, /obj/item/weldingtool) && W:welding) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> heats [src] with [W].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
 			if (src.heated >= 3 || prob(5 + (heated * 20)))
-				user.visible_message("<span style=\"color:red\">[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
+				user.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
 				if (user.reagents)
 					user.reagents.add_reagent("radium", 8, null, T0C + heated * 200)
 				burst()
@@ -137,7 +144,7 @@
 			if(iscarbon(src.loc))
 				if (src.loc.reagents)
 					src.loc.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			src.visible_message("<span style=\"color:red\">[src] bursts open, spraying hot liquid on [src.loc]!</span>")
+			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
 	throw_impact(atom/A)
@@ -146,19 +153,17 @@
 			if(iscarbon(A))
 				if (A.reagents)
 					A.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			A.visible_message("<span style=\"color:red\">[src] bursts open, spraying hot liquid on [A]!</span>")
+			A.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [A]!</span>")
 			burst()
 
 	attack_self(mob/user as mob)
 		if (!on)
-			boutput(user, "<span style=\"color:blue\">You crack [src].</span>")
-			on = 1
-			icon_state = "glowstick-on"
+			boutput(user, "<span class='notice'>You crack [src].</span>")
 			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			light.enable()
+			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
 				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 				if (user.reagents)
 					if (heated > 0)
@@ -167,7 +172,79 @@
 						user.reagents.add_reagent("radium", 10)
 				burst()
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+
+/obj/item/device/light/glowstick/white
+	base_state = "glowstick-white"
+	icon_state = "glowstick-white0"
+	desc = "A regular emergency glowstick filtered for only the purest space light."
+	col_r = 0.9
+	col_g = 0.9
+	col_b = 0.9
+	color_name = "white"
+
+/obj/item/device/light/glowstick/yellow
+	base_state = "glowstick-yellow"
+	icon_state = "glowstick-yellow0"
+	desc = "A regular emergency glowstick full of lovely artificial sunshine!"
+	col_r = 0.9
+	col_g = 0.8
+	col_b = 0.1
+	color_name = "yellow"
+
+/obj/item/device/light/glowstick/blue
+	base_state = "glowstick-blue"
+	icon_state = "glowstick-blue0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow blue instead."
+	col_r = 0.1
+	col_g = 0.1
+	col_b = 0.9
+	color_name = "blue"
+
+/obj/item/device/light/glowstick/purple
+	base_state = "glowstick-purple"
+	icon_state = "glowstick-purple0"
+	desc = "A emergency glowstick, designed by the legendary Samuel L. Jackson."
+	col_r = 0.6
+	col_g = 0.1
+	col_b = 0.9
+	color_name = "purple"
+
+/obj/item/device/light/glowstick/pink
+	base_state = "glowstick-pink"
+	icon_state = "glowstick-pink0"
+	desc = "A regular emergency glowstick, 60% cuter!"
+	col_r = 0.9
+	col_g = 0.5
+	col_b = 0.9
+	color_name = "pink"
+
+/obj/item/device/light/glowstick/cyan
+	base_state = "glowstick-cyan"
+	icon_state = "glowstick-cyan0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow cyan instead."
+	col_r = 0.1
+	col_g = 0.9
+	col_b = 0.9
+	color_name = "cyan"
+
+/obj/item/device/light/glowstick/orange
+	base_state = "glowstick-orange"
+	icon_state = "glowstick-orange0"
+	desc = "A regular emergency glowstick but somehow those madmen made it glow orange instead."
+	col_r = 0.9
+	col_g = 0.6
+	col_b = 0.1
+	color_name = "orange"
+
+/obj/item/device/light/glowstick/red
+	base_state = "glowstick-red"
+	icon_state = "glowstick-red0"
+	desc = "A regular emergency glowstick edgy and red!"
+	col_r = 0.9
+	col_g = 0.1
+	col_b = 0.0
+	color_name = "red"
 
 /obj/item/device/light/candle
 	name = "candle"
@@ -193,22 +270,22 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!src.on)
 			if (istype(W, /obj/item/weldingtool) && W:welding)
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span style=\"color:red\">Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span style=\"color:red\">With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span style=\"color:red\"><b>[user] lights [src] with [W].</span>")
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 
 			else if (W.burning)
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 		else
 			return ..()
 
@@ -227,7 +304,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
@@ -239,7 +316,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()

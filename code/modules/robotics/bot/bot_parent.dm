@@ -90,3 +90,11 @@
 					return 1
 				else
 					return 0
+
+/obj/machinery/bot/examine()
+	. = ..()
+	if (src.health < 20)
+		if (src.health > 15)
+			. += "<span class='alert'>[src]'s parts look loose.</span>"
+		else
+			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"

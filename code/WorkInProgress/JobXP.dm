@@ -10,7 +10,7 @@ var/list/xp_archive = list()
 /proc/testSummary(var/amt = 1)
 	award_xp(usr.key, "Bip", amt, 1)
 	award_xp(usr.key, "Bop", amt, 1)
-	sleep(10)
+	sleep(1 SECOND)
 	SPAWN_DBG(0) show_xp_summary(usr.key, usr)
 	return
 

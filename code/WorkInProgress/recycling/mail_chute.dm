@@ -42,7 +42,7 @@
 		..()
 
 	// user interaction
-	interact(mob/user, var/ai=0)
+	interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
 			user.machine = null
@@ -180,9 +180,9 @@
 
 		air_contents.zero()		// new empty gas resv.
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -244,9 +244,9 @@
 
 			H.init(src)	// copy the contents of disposer to holder
 
-			sleep(10)
+			sleep(1 SECOND)
 			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-			sleep(5) // wait for animation to finish
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 
 			H.start(src) // start the holder processing movement
