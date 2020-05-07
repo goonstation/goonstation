@@ -45,6 +45,21 @@
 	stamina_mods_max[key] = value
 	return 1
 
+/mob/living/carbon/mod_stam_max(var/key, var/value)
+	if(!isnum(value)) 
+		return 0
+	if(!stamina_mods_max.Find(key)) 
+		return 0
+	stamina_mods_max[key] = value
+	return 1
+	
+	/mob/living/carbon/mod_stam_regen(var/key, var/value)
+	if(!isnum(value)) 
+		return 0
+	if(!stamina_mods_max.Find(key)) 
+		return 0
+	stamina_mods_regen[key] = value
+	return 1
 //Removes a stamina max modifier with the given key.
 /mob/proc/remove_stam_mod_max(var/key)
 	return 0
@@ -79,6 +94,14 @@
 	if(!isnum(value)) return
 	if(stamina_mods_regen.Find(key)) return 0
 	stamina_mods_regen.Add(key)
+	stamina_mods_regen[key] = value
+	return 1
+
+/mob/living/carbon/mod_stam_regen(var/key, var/value)
+	if(!isnum(value)) 
+		return 0
+	if(!stamina_mods_max.Find(key)) 
+		return 0
 	stamina_mods_regen[key] = value
 	return 1
 
