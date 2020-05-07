@@ -86,7 +86,6 @@
 
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
-	var/debug_pickedup = 0
 
 
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
