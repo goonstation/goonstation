@@ -873,7 +873,8 @@
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
 
-	. += max((missing_legs * 7.5) - (missing_arms * 4), 0) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 4.
+	if (missing_legs)
+		. += max((missing_legs * 7.5) - ((2-missing_arms) * 4), 0) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 4.
 
 	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
 		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
@@ -2034,7 +2035,7 @@
 	equipment_proxy.aquatic_movement = 0
 	equipment_proxy.space_movement = 0
 
-	for (var/obj/item/I in src.get_equipped_items(check_for_magtractor = 0))
+	for (var/obj/item/I in src.get_equipped_items())
 		equipment_proxy.additive_slowdown += I.getProperty("movespeed")
 		var/fluidmove = I.getProperty("negate_fluid_speed_penalty")
 		if (fluidmove)
@@ -2044,6 +2045,7 @@
 		if (spacemove)
 			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 			equipment_proxy.space_movement += spacemove
+	message_admins("additive slowdown is [equipment_proxy.additive_slowdown], fluidmove is [equipment_proxy.aquatic_movement], spacemove is [equipment_proxy.space_movement]")
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)

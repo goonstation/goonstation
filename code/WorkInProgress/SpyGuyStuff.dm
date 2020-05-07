@@ -905,7 +905,13 @@ proc/Create_Tommyname()
 		//Slow us down slightly when we have the thing readied to encourage late-readying
 		src.setProperty("movespeed", 1 * wire_readied)
 
-
+	var/mob/M = src.loc // inc terminally stupid code
+	if (!ismob(M) && src.chokehold && ismob(src.chokehold.assailant))
+		M = src.chokehold.assailant
+	else if (ismob(usr)) // we've tried nothing and we're all out of ideas
+		M = usr
+	message_admins("garrote user is [M]")
+	M.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
 
 /obj/item/garrote/proc/is_behind_target(var/mob/living/assailant, var/mob/living/target)
 	var/assailant_dir = get_dir(target, assailant)
@@ -952,7 +958,7 @@ proc/Create_Tommyname()
 	update_state()
 
 // It will crumple when dropped
-/obj/item/garrote/dropped()
+/obj/item/garrote/dropped(mob/user)
 	..()
 	set_readiness(0)
 
@@ -968,7 +974,7 @@ proc/Create_Tommyname()
 		set_readiness(0)
 
 // Change the size of the garrote or the posture
-/obj/item/garrote/attack_self()
+/obj/item/garrote/attack_self(mob/user)
 	if(!chokehold)
 		..()
 		toggle_wire_readiness()

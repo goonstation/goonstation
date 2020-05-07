@@ -1332,7 +1332,7 @@
 				possible_mob_holder.drop_item()
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
-/obj/item/proc/dropped(mob/user as mob)
+/obj/item/proc/dropped(mob/user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif

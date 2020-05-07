@@ -111,13 +111,17 @@
 	ask_proc = 1
 
 /datum/movement_modifier/wheelchair/modifiers(mob/living/carbon/human/user, move_target, running)
-	var/missing_arms
-	var/missing_legs
+	var/missing_arms = 0
+	var/missing_legs = 0
 	if (user.limbs)
-		if (!user.limbs.l_leg) missing_legs++
-		if (!user.limbs.r_leg) missing_legs++
-		if (!user.limbs.l_arm) missing_arms++
-		if (!user.limbs.r_arm) missing_arms++
+		if (!user.limbs.l_leg)
+			missing_legs++
+		if (!user.limbs.r_leg)
+			missing_legs++
+		if (!user.limbs.l_arm)
+			missing_arms++
+		if (!user.limbs.r_arm)
+			missing_arms++
 
 	if (user.lying)
 		missing_legs = 2
@@ -127,7 +131,11 @@
 	if (missing_arms == 2)
 		return list(100,0) // this was snowflaked in as 300 in previous movement delay code
 	else
-		var/applied_modifier = max((missing_legs * 7.5) - (missing_arms * 4), 0)
+		var/applied_modifier = max((missing_legs * 7.5) - ((2-missing_arms) * 4), 0)
+		if (missing_arms == 0)
+
+
+		message_admins("applied modifier is [applied_modifier], correction is [0-(applied_modifier*((2-missing_arms)*0.5))]")
 		// apply a negative modifier to balance out what movement_delay would set, times half times the number of arms
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
-		return list(0-(applied_modifier*(missing_arms*0.5)),0)
+		return list(0-(applied_modifier*((2-missing_arms)*0.5)),0)

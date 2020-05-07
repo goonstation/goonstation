@@ -971,7 +971,7 @@
 	arm_icon_state = "arm-wheelchair"
 	anchored = 0
 	comfort_value = 3
-	buckle_move_delay = 0
+	buckle_move_delay = 1
 	p_class = 2
 	scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
 	var/lying = 0 // didja get knocked over? fall down some stairs?
