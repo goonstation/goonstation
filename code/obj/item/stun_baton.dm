@@ -313,6 +313,7 @@
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
+			JOB_XP(user, "Clown", 2)
 			return
 
 		if (src.status)
@@ -339,6 +340,7 @@
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, M, "failed", 1)
+			JOB_XP(user, "Clown", 1)
 			return
 
 		switch (user.a_intent)
@@ -478,6 +480,7 @@
 		//make it harder for them clowns...
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
+			JOB_XP(user, "Clown", 2)
 			return
 
 		//move to next state

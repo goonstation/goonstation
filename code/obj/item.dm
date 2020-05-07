@@ -1276,6 +1276,7 @@
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
 		user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
 		src.throw_impact(user)
+		JOB_XP(user, "Clown", 1)
 	return
 
 /obj/item/proc/HY_set_species()
