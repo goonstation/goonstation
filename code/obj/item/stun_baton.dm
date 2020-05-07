@@ -240,7 +240,7 @@
 			if ("stun", "stun_classic")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns %target% with the [src.name] at [log_loc(victim)].")
-
+				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				else
