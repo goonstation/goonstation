@@ -1,5 +1,10 @@
 
 (t)wed may 06 20
+(u)Carbadox
+(p)573
+(e)🆕|enhancement
+(+)Removed Port-a-brig from Security Equipment Crate and moved it to it's own seperate purchase
+(+)Added general Security gear like belt, helmet and vest in place of the Brig
 (u)Naksu
 (p)576
 (e)|
