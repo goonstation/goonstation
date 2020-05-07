@@ -240,7 +240,7 @@ Frequency:
 			return
 
 		var/obj/portal/P = unpool(/obj/portal)
-		P.set_loc(get_turf(src))
+		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
 			P.target = src.our_random_target
