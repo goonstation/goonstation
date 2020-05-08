@@ -218,7 +218,7 @@
 /datum/plantmutation/wheat/steelwheat
 	name = "steel wheat"
 	name_prefix = "steel "
-	iconmod = "steelwheat" //TODO: capitalize in DMI
+	iconmod = "Steelwheat" //TODO: capitalize in DMI
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 
@@ -226,7 +226,7 @@
 
 /datum/plantmutation/synthmeat/butt
 	name = "Synthbutt"
-	iconmod = "butts" //TODO: rename to SynthButts in DMI
+	iconmod = "Butts"
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = 1
@@ -248,28 +248,35 @@
 /datum/plantmutation/synthmeat/limb
 	name = "Synthlimb"
 	dont_rename_crop = true
-	iconmod = "limbs" // haine has farted up a shitty recolored sprite for these, everyone rejoice
+	iconmod = "Limbs" // im sorry Haine i made a new sprite
 	crop = list(/obj/item/parts/human_parts/arm/left/synth, /obj/item/parts/human_parts/arm/right/synth,
 	            /obj/item/parts/human_parts/leg/left/synth, /obj/item/parts/human_parts/leg/right/synth,
 	            /obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/right/synth/bloom,
 	            /obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/right/synth/bloom)
 
-/datum/plantmutation/synthmeat/organ
+/datum/plantmutation/synthmeat/heart
+	name = "Synthheart"
+	dont_rename_crop = true
+	iconmod = "Hearts"
+	crop = list(/obj/item/organ/heart/synth)
+
+/datum/plantmutation/synthmeat/eye
 	name = "Synthorgan"
 	dont_rename_crop = true
-	iconmod = "limbs"
-	crop = list(/obj/item/organ/heart/synth, /obj/item/organ/brain/synth, /obj/item/organ/eye/synth) // Just slap your new organ in there.
+	iconmod = "Eyes"
+	crop = list(/obj/item/organ/eye/synth)
 
-	/datum/plantmutation/synthmeat/organ
+
+/datum/plantmutation/synthmeat/brain
 	name = "Synthbrain"
 	dont_rename_crop = true
 	iconmod = "Brains"
-	crop = list(/obj/item/organ/brain/synth) // Just slap your new organ in there.
+	crop = list(/obj/item/organ/brain/synth)
 
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
 	dont_rename_crop = true
-	iconmod = "butts" //TODO: rename to SynthButts in DMI
+	iconmod = "Butts"
 	crop = /obj/machinery/bot/buttbot
 
 // Soy Mutations
@@ -278,7 +285,7 @@
 	name = "Strange soybean"
 	name_prefix = "Strange "
 	crop = /obj/item/reagent_containers/food/snacks/plant/soylent
-	iconmod = "soylent" //TODO: capitalize in DMI
+	iconmod = "Soylent"
 
 // Contusine Mutations
 
