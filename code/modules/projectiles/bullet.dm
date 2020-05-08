@@ -1243,17 +1243,7 @@ toxic - poisons
 	implanted= null
 	casing = null
 	icon_turf_hit = null
-	var/already_gun_made = 0 //has a gun already been made?
-
-	on_launch(obj/projectile/O) //we only want 1 gun per fire
-		already_gun_made = 0
-
-	on_hit(atom/hit)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(hit))
-			already_gun_made = 1
 
 	on_end(obj/projectile/O)
 		if (!already_gun_made)
 			new /obj/item/gun/kinetic/derringer(get_turf(O))
-			already_gun_made = 1

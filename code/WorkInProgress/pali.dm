@@ -15,14 +15,23 @@
 	caliber = 2
 	icon_turf_hit = "secbot1-spaz"
 	implanted = null
+	var/didhit = 0
 
 	on_hit(atom/hit)
-		var/obj/machinery/bot/secbot/autopatrol/beepsky = new(get_turf(hit))
 		if(istype(hit, /mob))
+			didhit=1
+			var/obj/machinery/bot/secbot/beepsky = new(get_turf(hit))
 			var/mob/hitguy = hit
 			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy
+
+	on_end(obj/projectile/O)
+		if(!didhit)
+			var/obj/machinery/bot/secbot/beepsky = new(get_turf(O))
+			beepsky.emagged = 1
+		didhit=0
 
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
