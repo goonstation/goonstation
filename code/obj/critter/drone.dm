@@ -1063,11 +1063,21 @@
 			for (var/obj/O in lineObjs)
 				pool(O)
 
+#if ASS_JAM
+
+	New()
+		..()
+		name = "X Æ Y-[rand(10,15)]"
+		return
+
+#else
 
 	New()
 		..()
 		name = "Battledrone Y-[rand(1,5)]"
 		return
+
+#endif
 
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
