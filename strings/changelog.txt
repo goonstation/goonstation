@@ -1,4 +1,9 @@
 
+(t)fri may 08 20
+(u)glassofmilk
+(p)597
+(e)🆕|enhancement
+(+)Changed to allow more configuration for guardbuddy and navbeacon settings
 (t)thu may 07 20
 (u)Kubius
 (p)614
