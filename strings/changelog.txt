@@ -1,5 +1,9 @@
 
 (t)thu may 07 20
+(u)Kubius
+(p)614
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch seventeen: mainly the engine again.
 (u)glassofmilk
 (p)529
 (e)🆕🎨|enhancement, sprites
