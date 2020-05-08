@@ -1470,7 +1470,7 @@
 					/obj/item/circular_saw)
 	frames = list(/obj/machinery/manufacturer/robotics,
 					/obj/machinery/optable,
-					/obj/submachine/robomoduler,
+					/obj/machinery/computer/robot_module_rewriter,
 					/obj/machinery/recharge_station)
 	cost = 20000
 	containertype = /obj/storage/crate
