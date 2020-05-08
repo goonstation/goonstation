@@ -260,6 +260,12 @@
 	iconmod = "limbs"
 	crop = list(/obj/item/organ/heart/synth, /obj/item/organ/brain/synth, /obj/item/organ/eye/synth) // Just slap your new organ in there.
 
+	/datum/plantmutation/synthmeat/organ
+	name = "Synthbrain"
+	dont_rename_crop = true
+	iconmod = "Brains"
+	crop = list(/obj/item/organ/brain/synth) // Just slap your new organ in there.
+
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
 	dont_rename_crop = true
