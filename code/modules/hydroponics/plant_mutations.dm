@@ -185,14 +185,14 @@
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
-	name = "chilly"
+	name = "Chilly"
 	name_prefix = "chilly "
 	iconmod = "chilly" //TODO: capitalize in DMI
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	assoc_reagents = list("cryostylane")
 
 /datum/plantmutation/chili/ghost
-	name = "fiery chili"
+	name = "Fiery Chili"
 	name_prefix = "fiery "
 	iconmod = "ghost" //TODO: rename to GhostChili in DMI
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
@@ -203,7 +203,7 @@
 // Eggplant Mutations
 
 /datum/plantmutation/eggplant/literal
-	name = "free range eggplant"
+	name = "Free-Range Eggplant"
 	name_prefix = "free range "
 	iconmod = "eggs" //TODO: capitalize in DMI
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -211,7 +211,7 @@
 // Wheat Mutations
 
 /datum/plantmutation/wheat/durum
-	name = "durum wheat"
+	name = "Durum Wheat"
 	name_prefix = "durum "
 	crop = /obj/item/plant/wheat/durum
 
@@ -221,6 +221,15 @@
 	iconmod = "Steelwheat" //TODO: capitalize in DMI
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
+
+// Bean Mutations
+
+/datum/plantmutation/beans/jelly
+	name = "Jelly Bean"
+	name_prefix = "jelly"
+	iconmod = "Jellybean"
+	assoc_reagents = list("VHFCS")
+	crop = /obj/item/reagent_containers/food/snacks/candy/everyflavor
 
 // Synthmeat Mutations
 
