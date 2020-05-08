@@ -122,7 +122,7 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey) mobType = "NPC"
 
-	var/data
+	var/list/data = list()
 	if (name)
 		if (type == "diary")
 			data += name
@@ -147,7 +147,7 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 			data += " \[DEAD\]"
 		else
 			data += " \[<span class='alert'>DEAD</span>\]"
-	return data
+	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
