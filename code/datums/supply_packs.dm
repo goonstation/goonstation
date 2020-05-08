@@ -1467,10 +1467,10 @@
 	category = "Medical Department"
 	contains = list(/obj/item/staple_gun,
 					/obj/item/scalpel,
-					/obj/item/circular_saw)
+					/obj/item/circular_saw,
+					/obj/item/circuitboard/robot_module_rewriter)
 	frames = list(/obj/machinery/manufacturer/robotics,
 					/obj/machinery/optable,
-					/obj/machinery/computer/robot_module_rewriter,
 					/obj/machinery/recharge_station)
 	cost = 20000
 	containertype = /obj/storage/crate
