@@ -227,47 +227,26 @@
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
 
-						// clown juggling
-						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
-							var/obj/item/thing = src.equipped()
-							if (!thing)
-								if (src.l_hand)
-									thing = src.l_hand
-								else if (src.r_hand)
-									thing = src.r_hand
-							if (thing)
-								if (src.juggling())
-									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-										src.drop_juggle()
-									else
-										src.add_juggle(thing)
-								else
-									src.add_juggle(thing)
+						var/obj/item/thing = src.equipped()
+						if (!thing)
+							if (src.l_hand)
+								thing = src.l_hand
+							else if (src.r_hand)
+								thing = src.r_hand
+						if (thing)
+							if ((src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50)) || (src.reagents && prob(src.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+								message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
+								src.u_equip(thing)
+								thing.set_loc(src.loc)
+								JOB_XP(src, "Clown", 1)
 							else
-								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-
-						// everyone else
+								message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand."
+								thing.on_spin_emote(src)
+							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
+							animate(transform = turn(matrix(), 240), time = 0.7)
+							animate(transform = null, time = 0.7)
 						else
-							var/obj/item/thing = src.equipped()
-							if (!thing)
-								if (src.l_hand)
-									thing = src.l_hand
-								else if (src.r_hand)
-									thing = src.r_hand
-							if (thing)
-								if ((src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50)) || (src.reagents && prob(src.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-									message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
-									src.u_equip(thing)
-									thing.set_loc(src.loc)
-									JOB_XP(src, "Clown", 1)
-								else
-									message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand."
-									thing.on_spin_emote(src)
-								animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
-								animate(transform = turn(matrix(), 240), time = 0.7)
-								animate(transform = null, time = 0.7)
-							else
-								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 				else
 					message = "<B>[src]</B> struggles to move."
 
