@@ -214,7 +214,7 @@
 	else if (href_list["tool-remove"])
 		if (src.module && !src.module_tool_removal_lock)
 			var/obj/item/tool = locate(href_list["tool-remove"])
-			if (tool && tool in src.module.modules)
+			if (tool && (tool in src.module.modules))
 				// remove tool
 				src.module.modules -= tool
 				qdel(tool)
