@@ -158,9 +158,11 @@
 				return
 			else //GUN THEM DOWN
 				if(src.target)
-					src.icon_state = "[src.icon_tag]_fire"
+					SPAWN_DBG(0)
+						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
+							flick("[src.icon_tag]_fire",src)
+							sleep(src.current_projectile.shot_delay)
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
-				src.icon_state = "[src.icon_tag]_active"
 
 
 	attackby(obj/item/W, mob/user)
@@ -445,38 +447,6 @@
 		*/
 		return istype(C.get_id(), /obj/item/card/id/syndicate)
 
-
-	proc/shoot(var/turf/target, var/start, var/user, var/bullet = 0)
-		if(target == start)
-			return
-
-		var/obj/projectile/A = unpool(/obj/projectile)
-		if(!A)	return
-		A.set_loc(src.loc)
-		if (!current_projectile)
-			current_projectile = new projectile_type()
-
-		A.proj_data = new current_projectile.type
-		A.proj_data.master = A
-		A.set_icon()
-		A.power = A.proj_data.power
-		if(src.current_projectile.shot_sound)
-			playsound(src, src.current_projectile.shot_sound, 60)
-
-		if (!istype(target, /turf))
-			A.die()
-			return
-
-		A.target = target
-		A.yo = target:y - start:y
-		A.xo = target:x - start:x
-		A.shooter = src
-
-		SPAWN_DBG(0)
-			A.process()
-		return
-
-
 	proc/set_angle(var/angle)
 		angle = angle > 0 ? angle%360 : -((-angle)%360)+360 //limit user input to a sane range!
 		var/angle_diff = angle - src.external_angle
@@ -601,10 +571,6 @@
 				src.projectile_type = /datum/projectile/bullet/a12
 				src.current_projectile = new/datum/projectile/bullet/a12
 		*/
-
-	shoot(var/turf/target, var/start, var/user, var/bullet = 0)
-		flick("[src.icon_tag]_shoot",src)
-		..(target,start,user,bullet)
 
 	is_friend(var/mob/living/C)
 		/*
