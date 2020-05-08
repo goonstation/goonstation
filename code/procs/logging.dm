@@ -204,6 +204,8 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
 /proc/log_loc(var/atom/A as turf|obj|mob)
+	if (!A)
+		return
 	var/turf/our_turf = get_turf(A)
 	return "([showCoords(our_turf.x, our_turf.y, our_turf.z)] in [get_area(A)])"
 
