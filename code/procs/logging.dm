@@ -204,12 +204,8 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
 /proc/log_loc(var/atom/A as turf|obj|mob)
-	if (!istype(A))
-		return
-	var/turf/our_turf = null
-	if (!isturf(A.loc))
-		our_turf = get_turf(A)
-	return "([our_turf ? "[showCoords(our_turf.x, our_turf.y, our_turf.z)]" : "[showCoords(A.x, A.y, A.z)]"] in [get_area(A)])"
+	var/turf/our_turf = get_turf(A)
+	return "([showCoords(our_turf.x, our_turf.y, our_turf.z)] in [get_area(A)])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).
 /proc/log_atmos(var/atom/A as turf|obj|mob)
