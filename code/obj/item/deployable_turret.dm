@@ -84,7 +84,7 @@
 	var/internal_angle = 0 // used for the matrix transforms
 	var/external_angle = 180 // used for determining target validity
 	var/projectile_type = /datum/projectile/bullet/ak47
-	var/datum/projectile/current_projectile = new/datum/projectile/bullet/ak47
+	var/datum/projectile/current_projectile
 	var/burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
 	var/fire_rate = 3 // rate of fire in shots per second
 	var/angle_arc_size = 45
@@ -95,6 +95,7 @@
 	var/shooting = 0 // tracks whether we're currently in the process of shooting someone
 	var/icon_tag = "st"
 	var/quick_deploy_fuel = 2 // number of quick deploys the turret has left
+	var/spread = 0
 
 	New(var/direction)
 		..()
@@ -112,8 +113,10 @@
 		src.transform = M.Turn(src.external_angle)
 		if (!(src in processing_items))
 			processing_items.Add(src)
-
-
+		
+		current_projectile = new projectile_type
+		current_projectile.shot_number = burst_size
+		current_projectile.shot_delay = 10/fire_rate
 	disposing()
 		processing_items.Remove(src)
 		..()
@@ -144,34 +147,20 @@
 				src.external_angle = (180) // how did you get here?
 
 
-	proc/process() //main turret processing loop
-		if(src.waiting || src.shooting)
-			return
+
+	proc/process()
 		if(src.active)
-			if(!src.target)
-				if(!src.seek_target())
-					src.waiting = 1
-					SPAWN_DBG(src.wait_time)
-						src.waiting = 0
-					return
-			if(!src.target_valid(src.target))
+			if(!src.target && !src.seek_target()) //attempt to set the target if no target
+				return
+			if(!src.target_valid(src.target)) //check valid target
 				src.icon_state = "[src.icon_tag]_idle"
 				src.target = null
 				return
-			else
-				src.shooting = 1
-				src.icon_state = "[src.icon_tag]_fire"
-				SPAWN_DBG(0)
-					for (var/i = 0, i<burst_size, i++)
-						if(src.target)
-							shoot(src.target.loc,src.loc,src)
-							sleep(10/fire_rate)
-						else
-							src.icon_state = "[src.icon_tag]_idle"
-							src.target = null
-							break
-					src.shooting = 0
-					src.icon_state = "[src.icon_tag]_active"
+			else //GUN THEM DOWN
+				if(src.target)
+					src.icon_state = "[src.icon_tag]_fire"
+					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
+				src.icon_state = "[src.icon_tag]_active"
 
 
 	attackby(obj/item/W, mob/user)
@@ -408,7 +397,7 @@
 			return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.hasStatus("resting") || H.hasStatus("weakened")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus("resting") || H.hasStatus("weakened") || H.hasStatus("stunned") || H.hasStatus("paralysis")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return 0
 		if (is_friend(C))
 			return 0

@@ -789,13 +789,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, target, remote_sound_source)
+	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay(S, DATA, target, remote_sound_source)
+				shoot_projectile_relay(S, DATA, T, remote_sound_source)
 	return Q
 
 /proc/shoot_projectile_ST_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
@@ -803,13 +802,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, target, pox, poy)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel(S, DATA, target, pox, poy)
+				shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
 	return Q
 
 /proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle)
@@ -817,13 +815,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
+				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
 	return Q
 
 /proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir, var/atom/movable/remote_sound_source)
