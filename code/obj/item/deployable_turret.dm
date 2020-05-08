@@ -114,9 +114,6 @@
 		if (!(src in processing_items))
 			processing_items.Add(src)
 		
-		current_projectile = new projectile_type
-		current_projectile.shot_number = burst_size
-		current_projectile.shot_delay = 10/fire_rate
 	disposing()
 		processing_items.Remove(src)
 		..()
@@ -146,6 +143,10 @@
 			else
 				src.external_angle = (180) // how did you get here?
 
+	proc/set_projectile()
+		current_projectile = new projectile_type
+		current_projectile.shot_number = burst_size
+		current_projectile.shot_delay = 10/fire_rate
 
 
 	proc/process()
@@ -272,6 +273,7 @@
 
 				else
 					user.show_message("<span class='notice'>You power on the turret.</span>")
+					set_projectile()
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
@@ -286,6 +288,7 @@
 
 				else
 					user.show_message("<span class='notice'>You power on the turret.</span>")
+					set_projectile()
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
@@ -302,6 +305,7 @@
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
 		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
+		set_projectile()
 		src.anchored = 1
 		src.active = 1
 		src.icon_state = "[src.icon_tag]_idle"
