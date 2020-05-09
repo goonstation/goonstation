@@ -22,6 +22,13 @@ var/datum/score_tracker/score_tracker
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
 	var/tickets_text = null
+	var/mob/richest_escapee = null
+	var/mob/most_damaged_escapee = null
+	var/acula_blood = null
+	var/beepsky_alive = null
+	var/clown_beatings = null
+	var/list/pets_escaped = null
+
 
 	proc/calculate_score()
 		if (score_calculated != 0)
@@ -144,6 +151,68 @@ var/datum/score_tracker/score_tracker
 		else
 			most_xp = "No one. Dang."
 
+		/////////////////////////////////////
+		/////////Escapee stuff///////////////
+		/////////////////////////////////////
+		//richest_escapee = null
+		//most_damaged_escapee = null
+		//pets_escaped = null
+		//acula_blood = null
+		//beepsky_alive = null
+		//clown_beatings = null
+
+		var/richest_total = 0		//
+		//search mobs in centcom
+		for (var/mob/M in mobs)
+			var/area/A = get_area(M)
+			if (istype(A, /area/shuttle/escape/centcom) || istype(A, /area/centcom))
+				if (!most_damaged_escapee)
+					most_damaged_escapee = M
+				else if (M.get_damage() < most_damaged_escapee.get_damage())
+					most_damaged_escapee = M
+
+				var/cash_total = get_cash_in_thing(M)
+				if (richest_total < cash_total)
+					richest_total = cash_total
+					richest_escapee = M
+
+		pets_escaped = list()
+		//mobs can be in centcom proper, pets gotta be on the shuttle at calc time.
+		var/list/area_contents = get_area_all_atoms(/area/shuttle/escape/centcom)
+		for (var/obj/critter/C in area_contents)
+			if (istype(C, /obj/critter/bat/doctor))
+				var/obj/critter/bat/doctor/P = C
+				if (P.alive)
+					pets_escaped += P
+					acula_blood = P.blood_volume
+
+			if (istype(C, /obj/critter/turtle/sylvester))
+				if (C.alive)
+					pets_escaped += C
+
+			if (istype(C, /obj/critter/cat/jones))
+				if (C.alive)
+					pets_escaped += C
+
+			if (istype(C, /obj/critter/dog/george))
+				if (C.alive)
+					pets_escaped += C
+
+			if (istype(C, /obj/critter/domestic_bee/heisenbee))
+				if (C.alive)
+					pets_escaped += C
+
+		if (locate(/obj/machinery/bot/secbot/beepsky) in world)
+			beepsky_alive = 1
+
+
+
+
+
+
+		// for (var/X in )
+
+
 		// AND THE WINNER IS.....
 
 		var/department_score_sum = 0
@@ -187,8 +256,41 @@ var/datum/score_tracker/score_tracker
 			if(E.client)
 				if (E.client.preferences.view_score)
 					E.scorestats()
+		// for(var/client/C in clients)
+		// 	if(C)
+		// 		if (C.preferences.view_score)
+		// 			C.scorestats()
 
 		return
+
+	proc/get_cash_in_thing(var/atom/A)
+		. = 0
+		for (var/I in A)
+			if (istype(I, /obj/item/storage))
+				. += get_cash_in_thing(A)
+			if (istype(I, /obj/item/spacecash))
+				var/obj/item/spacecash/SC = I
+				. += SC.amount
+			if (istype(I, /obj/item/card/id))
+				var/obj/item/card/id/ID = I
+				. += ID.amount
+
+	proc/escapee_facts()
+		. = ""
+		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name]<BR>"
+		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name]<BR>"
+		if (islist(escaped_pets))
+			var/who_escaped = ""
+			for (var/obj/critter/C in escaped_pets)
+				who_escaped += "C.name |"
+
+			. += "<B>Pets Escaped:</B> [copytext(1, length(who_escaped)-1)]<BR>"
+
+		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]<BR>"
+		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
+		return .
+
 
 /mob/proc/scorestats()
 	if (score_tracker.score_calculated == 0)
@@ -215,9 +317,9 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_eng)]%<BR>"
 		score_tracker.score_text += "<BR>"
 
-		score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "Scores for this department are not done yet.<br>"
-		score_tracker.score_text += "<BR>"
+		// score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
+		// score_tracker.score_text += "Scores for this department are not done yet.<br>"
+		// score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
 		score_tracker.score_text += "<B>Overall Station Cleanliness:</B> [round(score_tracker.score_cleanliness)]%<BR>"
@@ -227,7 +329,29 @@ var/datum/score_tracker/score_tracker
 	 /* until this is actually done or being worked on im just going to comment it out
 		score_tracker.score_text += "<B>Most Experienced:</B> [score_tracker.most_xp]<BR>"
 		*/
+		score_tracker.score_text += "<B><U>STATISTICS</U></B><BR>"
+
+		score_tracker.score_text += score_tracker.escapee_facts()
+		// //Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
+		// if (richest_escapee)		score_tracker.score_text += "<B>Richest Escapee:</B> [richest_escapee.real_name]<BR>"
+		// if (most_damaged_escapee) 	score_tracker.score_text += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name]<BR>"
+		// if (islist(escaped_pets))
+		// 	var/who_escaped = ""
+		// 	for (var/obj/critter/C in escaped_pets)
+		// 		who_escaped += "C.name |"
+
+		// 	score_tracker.score_text += "<B>Pets Escaped:</B> [copytext(1, length(who_escaped)-1)]<BR>"
+		// if (acula_blood) 			score_tracker.score_text += "<B>Dr. Acula Blood Total:</B> [acula_blood]<BR>"
+		// if (beepsky_alive) 			score_tracker.score_text += "<B>Beepsky:</B> Yes<BR>"
+		// score_tracker.score_text += "<B>Clown Beatings:</B> []<BR>"
+
 		score_tracker.score_text += "<HR>"
+		//richest_escapee = null
+		//most_damaged_escapee = null
+		//pets_escaped = null
+		//acula_blood = null
+		//beepsky_alive = null
+		//clown_beatings = null
 
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
