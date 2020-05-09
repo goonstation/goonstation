@@ -122,14 +122,14 @@
 
 				if (traitor.special_role == "blob")
 					var/victims = traitor.blob_absorb_victims.len
-					boutput(world, "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span style=\"color:green\">Players in Green</span></b>")
+					boutput(world, "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>")
 					if (victims)
 						var/absorbed_announce = "They absorbed: "
 						for (var/mob/living/carbon/human/AV in traitor.blob_absorb_victims)
 							if(!AV || !AV.last_client || !AV.last_client.key)
 								absorbed_announce += "[AV:real_name](NPC), "
 							else
-								absorbed_announce += "<span style=\"color:green\">[AV:real_name]([AV:last_client:key])</span>, "
+								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						boutput(world, absorbed_announce)
 
 				if (traitor.special_role == "traitor")
@@ -171,12 +171,12 @@
 					if (istype(objective, /datum/objective/miscreant)) continue
 
 					if (objective.check_completion())
-						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:green\"><B>Success</B></span>")
+						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>")
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
-						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:red\">Failed</span>")
+						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>")
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
 					count++

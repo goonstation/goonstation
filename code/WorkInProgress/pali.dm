@@ -71,7 +71,7 @@
 	afterattack(atom/A, mob/user as mob)
 		if(istype(A, /obj/machinery/bot/secbot))
 			src.ammo.amount_left += 1
-			user.visible_message("<span style=\"color:red\">[user] loads \the [A] into \the [src].</span>", "<span style=\"color:red\">You load \the [A] into \the [src].</span>")
+			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
 			qdel(A)
 			return
 		else

@@ -30,7 +30,7 @@
 			if (user.a_intent == INTENT_HARM)
 				return ..()
 			else
-				src.visible_message("<span style=\"color:red\"><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 				if (prob(15))
 					for (var/mob/O in hearers(src, null))
 						O.show_message("[src] coos[prob(50) ? " happily!" : ""]!",2)
@@ -54,7 +54,7 @@
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
 				if(prob(30))
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> bites [src.target]!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> bites [src.target]!</span>")
 					playsound(src.loc, "rustle", 50, 1)
 					random_brute_damage(src.target, rand(1,2))//it's all over you
 					M.reagents.add_reagent("[venom1]", 2)
@@ -132,7 +132,7 @@
 			src.oldtarget_name = C.name
 			src.task = "chasing"
 			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> hisses!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 			break
 
 	Move()
@@ -145,7 +145,7 @@
 		if(ismob(M))
 			src.attacking = 1
 			if (prob(20))
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> dives on [M]!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> dives on [M]!</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
 				M.changeStatus("weakened", 2 SECONDS)
 				M.changeStatus("stunned", 2 SECONDS)
@@ -153,7 +153,7 @@
 				src.spiderspaz(src.target)
 				if(!M.stat) M.emote("scream") // don't scream while dead/asleep // why?
 			else
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> bites [src.target]!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> bites [src.target]!</span>")
 				playsound(src.loc, src.bitesound, 50, 1)
 				if(ishuman(M))
 					random_brute_damage(src.target, rand(1,2),1)
@@ -178,9 +178,9 @@
 				H.was_harmed(src)
 				if(isunconscious(M)) // kill KOd people faster
 					src.set_loc(M.loc)
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> jumps onto [src.target]!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> jumps onto [src.target]!</span>")
 					sleep(0.5 SECONDS)
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> sinks its fangs into [src.target]!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> sinks its fangs into [src.target]!</span>")
 					playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
 					src.reagents.add_reagent("[venom1]", 5) // doing this instead of directly adding reagents to M should give people the correct messages
 					src.reagents.add_reagent("[venom2]", 5)
@@ -195,13 +195,13 @@
 						var/mob/living/carbon/human/T = M
 						feeding = 1
 						src.spiderspaz(src.target)
-						src.visible_message("<span style=\"color:red\"><B>[src]</B> starts draining the fluids out of [T]!</span>")
+						src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [T]!</span>")
 						src.set_loc(T.loc)
 						sleep(2 SECONDS)
 						playsound(src.loc, "sound/misc/pourdrink.ogg", 50, 1)
 						sleep(5 SECONDS)
 						if(src.target && T.stat && src.loc == T.loc) // check to see if the target is still passed out and under the spider
-							src.visible_message("<span style=\"color:red\"><B>[src]</B> drains [T] dry!</span>")
+							src.visible_message("<span class='alert'><B>[src]</B> drains [T] dry!</span>")
 							T.death(0)
 							T.real_name = "Unknown"
 							T.bioHolder.AddEffect("husk")
@@ -213,25 +213,25 @@
 							M.set_loc(cube)
 							switch (src.encase_in_web)
 								if (2)
-									src.visible_message("<span style=\"color:red\"><B>[src]</B> wraps [src.target] in cotton candy!</span>")
+									src.visible_message("<span class='alert'><B>[src]</B> wraps [src.target] in cotton candy!</span>")
 									cube.name = "bundle of cotton candy"
 									cube.desc = "What the fuck spins webs out of - y'know what, scratch that. You don't want to find out."
 									cube.icon_state = "candyweb2"
 									cube.steam_on_death = 0
 
 								if (1)
-									src.visible_message("<span style=\"color:red\"><B>[src]</B> encases [src.target] in web!</span>")
+									src.visible_message("<span class='alert'><B>[src]</B> encases [src.target] in web!</span>")
 									cube.name = "bundle of web"
 									cube.desc = "A big wad of web. Someone seems to be stuck inside it."
 									cube.icon_state = "web2"
 									cube.steam_on_death = 0
 
 								if (0)
-									src.visible_message("<span style=\"color:red\"><B>[src]</B> encases [src.target] in ice!</span>")
+									src.visible_message("<span class='alert'><B>[src]</B> encases [src.target] in ice!</span>")
 
 							feeding = 0
 							if (babyspider) // dawww
-								src.visible_message("<span style=\"color:red\"><B>[src]</B> grows up!</span>")
+								src.visible_message("<span class='alert'><B>[src]</B> grows up!</span>")
 								var/adult = text2path(src.adultpath)
 								new adult(src.loc)
 								qdel(src)
@@ -243,7 +243,7 @@
 
 	ChaseAttack(mob/M)
 		playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
-		src.visible_message("<span style=\"color:red\"><B>[src]</B> hisses!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 		if (prob(30))
 			..()
 			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
@@ -252,11 +252,11 @@
 			random_brute_damage(M, rand(2,5),1)
 			src.spiderspaz(src.target)
 			if(!M.stat) M.emote("scream") // don't scream while dead or KOd
-		else src.visible_message("<span style=\"color:red\"><B>[src]</B> dives at [M], but misses!</span>")
+		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")
 
 	on_pet()
 		playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
-		src.visible_message("<span style=\"color:red\"><b>[src] coos!</b></span>", 1)
+		src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
 
 	proc/spiderspaz(mob/M)
 		if (spazzing)
@@ -272,7 +272,7 @@
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
 				if(prob(30))
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> bites [src.target]!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> bites [src.target]!</span>")
 					playsound(src.loc, src.bitesound, 50, 1)
 					if(ishuman(M))
 						random_brute_damage(src.target, rand(1,2),1)
@@ -484,13 +484,13 @@
 				src.task = "thinking"
 			if (get_dist(src, src.corpse_target) > src.attack_range)
 				src.task = "chasing corpse"
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> starts draining the fluids out of [C]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [C]!</span>")
 			src.set_loc(C.loc)
 			sleep(2 SECONDS)
 			playsound(src.loc, "sound/misc/pourdrink.ogg", 50, 1)
 			sleep(5 SECONDS)
 			if(src.corpse_target && src.loc == C.loc)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> drains [C] dry!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> drains [C] dry!</span>")
 				C.real_name = "Unknown"
 				C.bioHolder.AddEffect("husk")
 				sleep(0.2 SECONDS)
@@ -499,12 +499,12 @@
 				sleep(0.2 SECONDS)
 				var/obj/icecube/cube = new /obj/icecube(get_turf(C), C)
 				C.set_loc(cube)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> encases [src.target] in web!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> encases [src.target] in web!</span>")
 				cube.name = "bundle of cotton candy"
 				cube.desc = "What the fuck spins webs out of - y'know what, scratch that. You don't want to find out."
 				cube.icon_state = "candyweb2"
 				cube.steam_on_death = 0
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> grows up!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> grows up!</span>")
 				var/adult = text2path(src.adultpath)
 				new adult(src.loc)
 				qdel(src)
@@ -557,7 +557,7 @@
 			src.oldtarget_name = C.name
 			src.task = "chasing"
 			playsound(src.loc, src.sound_effect, 50, 1)
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> honks!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> honks!</span>")
 			break
 
 	CritterDeath()

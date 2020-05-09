@@ -39,7 +39,7 @@
 		else if(istype(target, /obj/critter/snake))
 			var/obj/critter/snake/snek = target
 			if(snek.double)
-				boutput(holder.owner, "<span style=\"color:red\">Your wizarding skills are not up to the legendary Triplesnake technique.</span>")
+				boutput(holder.owner, "<span class='alert'>Your wizarding skills are not up to the legendary Triplesnake technique.</span>")
 				return 1
 			stick = target
 		if (ismob(target.loc))
@@ -55,10 +55,10 @@
 			AM.set_loc(get_turf(target))
 
 		if(!stick)
-			boutput(holder.owner, "<span style=\"color:red\">You must target an item or a person holding one.</span>")
+			boutput(holder.owner, "<span class='alert'>You must target an item or a person holding one.</span>")
 			return 1 // No cooldown when it fails.
 		if(!istype(stick.loc, /turf))
-			boutput(holder.owner, "<span style=\"color:red\">It wasn't possible to remove the item from its container, oh no.</span>")
+			boutput(holder.owner, "<span class='alert'>It wasn't possible to remove the item from its container, oh no.</span>")
 			return 1 // No cooldown when it fails.
 
 		holder.owner.say("STYX TUSNEKS")
@@ -71,5 +71,5 @@
 		
 		snake.start_expiration(2 MINUTES)
 
-		holder.owner.visible_message("<span style=\"color:red\">[holder.owner] turns [stick] into [snake]!</span>")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] turns [stick] into [snake]!</span>")
 		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)

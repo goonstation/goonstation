@@ -149,11 +149,11 @@
 					usr.show_text("[target_name] is too far away from the target airlock.", "red")
 					return
 				if (A.open())
-					boutput(usr, "<span style=\"color:blue\">[A.name] opened successfully.</span>")
+					boutput(usr, "<span class='notice'>[A.name] opened successfully.</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">Attempt to open [A.name] failed. It may require manual repairs.</span>")
+					boutput(usr, "<span class='alert'>Attempt to open [A.name] failed. It may require manual repairs.</span>")
 		else
-			boutput(usr, "<span style=\"color:red\">Cannot interface with airlock \"[A.name]\". It may require manual repairs.</span>")
+			boutput(usr, "<span class='alert'>Cannot interface with airlock \"[A.name]\". It may require manual repairs.</span>")
 
 	else if (istype(our_door, /obj/machinery/door/window))
 		if (alert("This door is located in [get_area(our_door)]. Open it?","Airlock: \"[our_door.name]\"","Yes","No") == "Yes")
@@ -164,9 +164,9 @@
 				usr.show_text("[target_name] is too far away from the target airlock.", "red")
 				return
 			if (our_door.open())
-				boutput(usr, "<span style=\"color:blue\">[our_door.name] opened successfully.</span>")
+				boutput(usr, "<span class='notice'>[our_door.name] opened successfully.</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">Attempt to open [our_door.name] failed.</span>")
+				boutput(usr, "<span class='alert'>Attempt to open [our_door.name] failed.</span>")
 
 	return
 #undef STUNNED
@@ -390,34 +390,34 @@ td {
 		usr_admin_only
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
-			boutput(usr, "<span style=\"color:red\">Missing module reference!</span>")
+			boutput(usr, "<span class='alert'>Missing module reference!</span>")
 			return
 		if (href_list["edit"])
 			var/obj/item/I = locate(href_list["edit"])
 			if (!istype(I))
-				boutput(usr, "<span style=\"color:red\">Item no longer exists!</span>")
+				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
 			if (!(I in D.modules))
-				boutput(usr, "<span style=\"color:red\">Item no longer in module!</span>")
+				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
 			usr.client:debug_variables(I)
 		if (href_list["del"])
 			var/obj/item/I = locate(href_list["del"])
 			if (!istype(I))
-				boutput(usr, "<span style=\"color:red\">Item no longer exists!</span>")
+				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
 			if (!(I in D.modules))
-				boutput(usr, "<span style=\"color:red\">Item no longer in module!</span>")
+				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
 			D.modules -= I
 			qdel(I)
 		if (href_list["edcurr"])
 			if (!current)
-				boutput(usr, "<span style=\"color:red\">No current item!</span>")
+				boutput(usr, "<span class='alert'>No current item!</span>")
 				show_interface(usr.client, D)
 				return
 			usr.client:debug_variables(current)
@@ -425,7 +425,7 @@ td {
 			var/path_match = input("Enter a type path or part of a type path.", "Type match", null) as text
 			var/path = get_one_match(path_match, /obj/item)
 			if (!path)
-				boutput(usr, "<span style=\"color:red\">Invalid path!</span>")
+				boutput(usr, "<span class='alert'>Invalid path!</span>")
 				show_interface(usr.client, D)
 				return
 			current = new path(null)
@@ -436,7 +436,7 @@ td {
 			D.modules += current
 			current.loc = D
 			current = null
-			boutput(usr, "<span style=\"color:blue\">Added item to module!</span>")
+			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)
 
 var/global/list/module_editors = list()
@@ -449,11 +449,11 @@ var/global/list/module_editors = list()
 	admin_only
 
 	if (!istype(M))
-		boutput(src, "<span style=\"color:red\">That thing has no module!</span>")
+		boutput(src, "<span class='alert'>That thing has no module!</span>")
 		return
 
 	if (!M.module)
-		boutput(src, "<span style=\"color:red\">That robot has no module yet.</span>")
+		boutput(src, "<span class='alert'>That robot has no module yet.</span>")
 		return
 
 	var/datum/module_editor/editor = module_editors[ckey]
@@ -595,7 +595,7 @@ var/global/list/module_editors = list()
 				mainframe.syndicate = 0
 
 			if (persistent == 0)
-				boutput(src, "<h2><span style=\"color:red\">You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
+				boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
 				SHOW_ROGUE_BORG_REMOVED_TIPS(src)
 
 			return
@@ -631,8 +631,8 @@ var/global/list/module_editors = list()
 					ticker.mode.Agimmicks += src.mind
 
 		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
-			boutput(src, "<span style=\"color:red\"><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
-			boutput(src, "<span style=\"color:red\"><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
+			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
+			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
 			SPAWN_DBG (0)
 				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 

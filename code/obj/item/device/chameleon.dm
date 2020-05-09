@@ -15,7 +15,7 @@
 		if (isnull(master))
 			return
 		for (var/mob/M in src)
-			boutput(M, "<span style=\"color:red\">Your chameleon-projector deactivates.</span>")
+			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
 		if (isnull(master))
 			return
 		master.disrupt()
@@ -25,7 +25,7 @@
 		if (isnull(master))
 			return
 		for (var/mob/M in src)
-			boutput(M, "<span style=\"color:red\">Your chameleon-projector deactivates.</span>")
+			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
 		if (isnull(master))
 			return
 		master.disrupt()
@@ -38,7 +38,7 @@
 			return
 
 		for (var/mob/M in src)
-			boutput(M, "<span style=\"color:red\">Your chameleon-projector deactivates.</span>")
+			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
 			M.ex_act(severity) //Fuck you and your TTBs.
 
 		if(master)
@@ -51,7 +51,7 @@
 		if (isnull(master))
 			return
 		for (var/mob/M in src)
-			boutput(M, "<span style=\"color:red\">Your chameleon-projector deactivates.</span>")
+			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
 		if (isnull(master))
 			return
 		master.disrupt()
@@ -109,7 +109,7 @@
 		else
 			out = "The screen on it is blank."
 
-		boutput(usr, "<span style=\"color:blue\">[out]</span>")
+		boutput(usr, "<span class='notice'>[out]</span>")
 		return null
 */
 	afterattack(atom/target, mob/user , flag)
@@ -127,7 +127,7 @@
 				cham.master = src
 
 			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
-			boutput(user, "<span style=\"color:blue\">Scanned [target].</span>")
+			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			cham.name = target.name
 			cham.real_name = target.name
 			cham.desc = target.desc
@@ -152,14 +152,14 @@
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.loc = src
-			boutput(usr, "<span style=\"color:blue\">You deactivate the [src].</span>")
+			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
 			anim.loc = get_turf(src)
 			flick("emppulse",anim)
 			SPAWN_DBG (8)
 				anim.loc = src //Back in the box with ye
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
-				boutput(usr, "<span style=\"color:red\">As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
+				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
 				return
 
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
@@ -168,7 +168,7 @@
 			usr.set_loc(cham)
 			src.active = 1
 
-			boutput(usr, "<span style=\"color:blue\">You activate the [src].</span>")
+			boutput(usr, "<span class='notice'>You activate the [src].</span>")
 			anim.loc = get_turf(src)
 			flick("emppulse",anim)
 			SPAWN_DBG (8)
@@ -237,7 +237,7 @@
 			return
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
-			boutput(user, "<span style=\"color:blue\">Scanned [target].</span>")
+			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			src.name = target.name
 			src.real_name = target.name
 			src.desc = target.desc
@@ -259,14 +259,14 @@
 		if (active)
 			active = 0
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
-			boutput(usr, "<span style=\"color:blue\">You disarm the [src].</span>")
+			boutput(usr, "<span class='notice'>You disarm the [src].</span>")
 			message_admins("[key_name(usr)] disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 			logTheThing("bombing", usr, null, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 		else
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			src.active = 1
-			boutput(usr, "<span style=\"color:blue\">You arm the [src].</span>")
+			boutput(usr, "<span class='notice'>You arm the [src].</span>")
 			message_admins("[key_name(usr)] arms a chameleon bomb ([src]) at [log_loc(usr)].")
 			logTheThing("bombing", usr, null, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
 

@@ -29,7 +29,7 @@
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		if(istype(hit, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = hit
-			boutput(H, "<span style=\"color:red\"><B>You catch the kiss and save it for later.</B></span>")
+			boutput(H, "<span class='alert'><B>You catch the kiss and save it for later.</B></span>")
 
 /datum/projectile/special/acid
 	name = "acid"
@@ -519,7 +519,7 @@
 
 				var/setangle = 0
 				if (face_desired_dir)
-					setangle = atan2(desired_y,desired_x)
+					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
 				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )

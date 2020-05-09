@@ -56,7 +56,7 @@
 
 	anger()
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span style=\"color:red\"><B>[src.name]</B> becomes angry!</span>")
+			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry"
 		SPAWN_DBG(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
@@ -67,7 +67,7 @@
 
 	proc/openTrade(var/mob/user, var/windowName = "trader", var/windowSize = "400x700")
 		if(angry)
-			boutput(user, "<span style=\"color:red\">[src] is angry and won't trade with anyone right now.</span>")
+			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
 		user.machine = src
 		lastWindowName = windowName
@@ -100,6 +100,13 @@
 		shopping_cart = null
 		..()
 
+	updateUsrDialog()
+		for(var/client/C)
+			if (C.mob?.machine == src)
+				if (get_dist(C.mob,src) <= 1)
+					src.openTrade(C.mob)
+
+
 	Topic(href, href_list)
 		if(..())
 			return
@@ -128,7 +135,7 @@
 				src.updateUsrDialog()
 				return
 			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span style=\"color:red\">Your account cannot currently be liquidated due to active borrows.</span>")
+				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
@@ -315,19 +322,19 @@
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-					boutput(usr, "<span style=\"color:blue\">You swipe the ID card in the card reader.</span>")
+					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 					var/datum/data/record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
 						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
 						if (enterpin == I:pin)
-							boutput(usr, "<span style=\"color:blue\">Card authorized.</span>")
+							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I
 						else
-							boutput(usr, "<span style=\"color:red\">Pin number incorrect.</span>")
+							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 							src.scan = null
 					else
-						boutput(usr, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+						boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
 						src.scan = null
 		////////////////////////////////////////////////////
 		//////View what still needs to be picked up/////////
@@ -484,25 +491,25 @@
 		if(get_dist(O,user) > 1) return
 		if(!isliving(user)) return
 		if(!src.scan)
-			boutput(user, "<span style=\"color:red\">You have to scan your ID first!</span>")
+			boutput(user, "<span class='alert'>You have to scan your ID first!</span>")
 			return
 		if(angry)
-			boutput(user, "<span style=\"color:red\">[src] is angry and won't trade with anyone right now.</span>")
+			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
 		if(!alive)
-			boutput(user, "<span style=\"color:red\">[src] is dead!</span>")
+			boutput(user, "<span class='alert'>[src] is dead!</span>")
 			return
 		var/datum/data/record/account = null
 		account = FindBankAccountByName(src.scan.registered)
 		if(!account)
-			boutput(user, "<span style=\"color:red\">[src]There is no account registered with this card!</span>")
+			boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
 			return
 		/*if (isitem(O))
-			user.visible_message("<span style=\"color:blue\">[src] rummages through [user]'s goods.</span>")
+			user.visible_message("<span class='notice'>[src] rummages through [user]'s goods.</span>")
 			var/staystill = user.loc
 			for(var/datum/commodity/N in goods_buy)
 				if (N.comtype == O.type)
-					user.visible_message("<span style=\"color:blue\">[src] is willing to buy all of [O].</span>")
+					user.visible_message("<span class='notice'>[src] is willing to buy all of [O].</span>")
 					for(N.comtype in view(1,user))
 						account.fields["current_money"] += N.price
 						qdel(N.comtype)
@@ -513,25 +520,25 @@
 				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
 			SPAWN_DBG(1 DECI SECOND)
-				user.visible_message("<span style=\"color:blue\">[src] rummages through [user]'s [O].</span>")
+				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
 				for (var/obj/M in O.contents)
-					//boutput(world, "<span style=\"color:blue\">HELLO I AM [M]</span>")
-					//boutput(world, "<span style=\"color:blue\">AND MY TYPE PATH IS [M.type]</span>")
+					//boutput(world, "<span class='notice'>HELLO I AM [M]</span>")
+					//boutput(world, "<span class='notice'>AND MY TYPE PATH IS [M.type]</span>")
 					for(var/datum/commodity/N in src.goods_buy)
 						if(M) // fuck the hell off you dirty null.type errors
 							if(N.comtype == M.type)
 								//boutput(world, "<b>MY ASSOCIATED DATUM IS [N]</b>")
-								//boutput(world, "<span style=\"color:blue\">[M] IS GOING TO SELL FOR [N.price] HOT BALLS</span>")
-								//boutput(world, "<span style=\"color:blue\">UPDATING CRATE VALUE TO [cratevalue] OR FUCKING ELSE</span>")
+								//boutput(world, "<span class='notice'>[M] IS GOING TO SELL FOR [N.price] HOT BALLS</span>")
+								//boutput(world, "<span class='notice'>UPDATING CRATE VALUE TO [cratevalue] OR FUCKING ELSE</span>")
 								cratevalue += N.price
 								qdel( M )
 				if(cratevalue)
-					boutput(user, "<span style=\"color:blue\">[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
+					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
 					account.fields["current_money"] += cratevalue
 				else
-					boutput(user, "<span style=\"color:blue\">[src] finds nothing of interest in [O].</span>")
+					boutput(user, "<span class='notice'>[src] finds nothing of interest in [O].</span>")
 
 /////////////////////////////////////////////////////
 ///////////////THE TRADERS ///////////////////////////
@@ -812,7 +819,9 @@
 				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
 				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
 				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/pathogensample(src)
+				#endif
 
 				src.goods_sell += new /datum/commodity/bodyparts/cyberheart(src)
 				src.goods_sell += new /datum/commodity/bodyparts/cyberbutt(src)
@@ -1074,7 +1083,7 @@
 
 /obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
-		src.visible_message("<span style=\"color:red\"><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
+		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
 		src.spawncrate(/obj/vehicle/clowncar)
 		src.honk = 1
 	else

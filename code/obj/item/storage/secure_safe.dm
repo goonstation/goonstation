@@ -58,22 +58,22 @@
 		if (isscrewingtool(W) && (src.locked == 1))
 			sleep(0.6 SECONDS)
 			src.open =! src.open
-			user.show_message("<span style=\"color:blue\">You [src.open ? "open" : "close"] the service panel.</span>")
+			user.show_message("<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 
 		if (ispulsingtool(W) && (src.open == 1) && (!src.locked) && (!src.l_hacking))
-			user.show_message(text("<span style=\"color:red\">Now attempting to reset internal memory, please hold.</span>"), 1)
+			user.show_message(text("<span class='alert'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
 			SPAWN_DBG(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = 1
 					configure_mode = 1
-					user.show_message("<span style=\"color:red\">Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
+					user.show_message("<span class='alert'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
 					sleep(8 SECONDS)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message("<span style=\"color:red\">Unable to reset internal memory.</span>", 1)
+					user.show_message("<span class='alert'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
 			return
 
@@ -84,13 +84,13 @@
 
 /obj/item/storage/secure/attack_hand(mob/user as mob)
 	if (src.loc == user && src.locked == 1)
-		boutput(usr, "<span style=\"color:red\">[src] is locked and cannot be opened!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 
 /obj/item/storage/secure/MouseDrop(atom/over_object, src_location, over_location)
 	if ((usr.is_in_hands(src) || over_object == usr) && src.locked == 1)
-		boutput(usr, "<span style=\"color:red\">[src] is locked and cannot be opened!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 
@@ -246,21 +246,21 @@
 				if (locked)
 					locked = 0
 					overlays = list(image('icons/obj/items/storage.dmi', icon_open))
-					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clicks unlocked.</span>")
+					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 				else
 					locked = 1
 
 					overlays = null
-					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 			else if (href_list["enter"] == "")
 				locked = 1
 
 				overlays = null
-				src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 			else
@@ -326,7 +326,7 @@
 							desctext += "a long, sad, warbly boop"
 
 					if (desctext)
-						src.visible_message("<span style=\"color:red\">[src]'s lock panel emits [desctext].</span>")
+						src.visible_message("<span class='alert'>[src]'s lock panel emits [desctext].</span>")
 						playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1) // set this to play proper beeps later
 
 	else if (href_list["lock"])
@@ -334,8 +334,8 @@
 			locked = 1
 
 			overlays = null
-			boutput(usr, "<span style=\"color:red\">The lock mechanism clunks locked.</span>")
-			src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+			boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
+			src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 /*
 	else if (href_list["setcode"])
@@ -402,7 +402,7 @@
 /*
 /obj/item/storage/secure/sbriefcase/attack(mob/M as mob, mob/user as mob)
 	if (usr.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span style=\"color:red\"><b>[usr]</b> swings [src] too hard and nails \himself in the face.</span>")
+		user.visible_message("<span class='alert'><b>[usr]</b> swings [src] too hard and nails \himself in the face.</span>")
 		random_brute_damage(usr, 10)
 		usr.paralysis += 2
 		return
@@ -418,7 +418,7 @@
 			else if (issilicon(M))
 				S = M
 			if (H && (istype(H.head, /obj/item/clothing/head/helmet/) && H.head.body_parts_covered & HEAD) && prob(80))
-				boutput(M, "<span style=\"color:red\">The helmet protects you from being hit hard in the head!</span>")
+				boutput(M, "<span class='alert'>The helmet protects you from being hit hard in the head!</span>")
 				return
 			var/time = rand(2, 6)
 			if (prob(75))
@@ -432,9 +432,9 @@
 			if (S && isalive(S)) S.lastgasp()
 			if(!isdead(M))	setunconcious(M)
 			M.set_clothing_icon_dirty()
-			M.visible_message("<span style=\"color:red\"><B>[M] has been knocked unconscious!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] has been knocked unconscious!</B></span>")
 		else
-			boutput(M, "<span style=\"color:red\">[user] tried to knock you unconcious!</span>")
+			boutput(M, "<span class='alert'>[user] tried to knock you unconcious!</span>")
 			M.change_eye_blurry(3)
 
 	return

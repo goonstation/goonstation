@@ -29,7 +29,7 @@ mob
 			if (keys & KEY_LEFT)
 				move_x -= 1
 			if (move_x || move_y)
-				src.move_dir = angle2dir(atan2(move_y, move_x))
+				src.move_dir = angle2dir(arctan(move_y, move_x))
 				src.attempt_move()
 			else
 				src.move_dir = 0
@@ -82,7 +82,7 @@ mob
 				if (src.restrained())
 					for(var/mob/M in range(src, 1))
 						if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)
-							boutput(src, "<span style=\"color:blue\">You're restrained! You can't move!</span>")
+							boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 							return
 
 				var/misstep_angle = 0

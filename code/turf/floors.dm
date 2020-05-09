@@ -1063,7 +1063,7 @@
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
-	
+
 	New()
 		..()
 		setMaterial(getMaterial("blob"))
@@ -1218,7 +1218,7 @@
 		P.write_on_turf(src, user, params)
 		return
 	else if (isweldingtool(C) || iswrenchingtool(C))
-		boutput(user, "<span style=\"color:blue\">Loosening rods...</span>")
+		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		playsound(src, "sound/items/Ratchet.ogg", 80, 1)
 		if(do_after(user, 30))
 			var/obj/R1 = new /obj/item/rods(src)
@@ -1351,7 +1351,7 @@
 		return
 
 	if(broken || burnt)
-		boutput(user, "<span style=\"color:red\">You remove the broken plating.</span>")
+		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1385,7 +1385,7 @@
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
 			if (C:amount >= 2)
-				boutput(user, "<span style=\"color:blue\">Reinforcing the floor...</span>")
+				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
 				if(do_after(user, 30))
 					ReplaceWithEngineFloor()
 
@@ -1399,9 +1399,9 @@
 
 					playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
 			else
-				boutput(user, "<span style=\"color:red\">You need more rods.</span>")
+				boutput(user, "<span class='alert'>You need more rods.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">You must remove the plating first.</span>")
+			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 		return
 
 	if(istype(C, /obj/item/tile))
@@ -1528,7 +1528,7 @@
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
-			boutput(user, "<span style=\"color:red\">You must remove the plating first.</span>")
+			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 
 //grabsmash??
 	else if (istype(C, /obj/item/grab/))
@@ -1625,7 +1625,7 @@
 		attackby(obj/item/W as obj, mob/user as mob)
 			if (istype(W, /obj/item/device/key))
 				playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] slides away!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 
 	hive
@@ -1652,7 +1652,7 @@
 	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
 		return
 	if (isturf(T))
-		visible_message("<span style=\"color:red\">[A] falls into [src]!</span>")
+		visible_message("<span class='alert'>[A] falls into [src]!</span>")
 		if (ismob(A))
 			var/mob/M = A
 			if(!M.stat && ishuman(M))

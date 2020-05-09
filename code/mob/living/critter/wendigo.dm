@@ -18,7 +18,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/voice/animal/wendigo_roar.ogg", 80, 1)
-					return "<b><span style='color:red'>[src] howls!</span></b>"
+					return "<b><span class='alert'>[src] howls!</span></b>"
 		return null
 
 	specific_emote_type(var/act)

@@ -16,7 +16,7 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-BLOOD-STUFF-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
-#define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("<span style='color:red'><b>BLOOD DEBUG:</b></span> " + x)
+#define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("<span class='alert'><b>BLOOD DEBUG:</b></span> " + x)
 
 var/global/haine_blood_debug = 0
 
@@ -228,14 +228,14 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (H.reagents)
 		var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
 		if (anticoag_amt)
-			increase_chance += CLAMP(anticoag_amt, 0, 50)
-			increase_amount += rand(1, round(CLAMP((anticoag_amt / 10), 0, 3), 1))
+			increase_chance += clamp(anticoag_amt, 0, 50)
+			increase_amount += rand(1, round(clamp((anticoag_amt / 10), 0, 3), 1))
 			//BLOOD_DEBUG("[H] processes heparin: increase_chance now [increase_chance], increase_amount now [increase_amount]")
 
 		var/coag_amt = H.reagents.get_reagent_amount("proconvertin")
 		if (coag_amt)
-			increase_chance -= CLAMP(coag_amt, 0, 50)
-			increase_amount -= rand(1, round(CLAMP((coag_amt / 10), 0, 3), 1))
+			increase_chance -= clamp(coag_amt, 0, 50)
+			increase_amount -= rand(1, round(clamp((coag_amt / 10), 0, 3), 1))
 			//BLOOD_DEBUG("[H] processes proconvertin: increase_chance now [increase_chance], increase_amount now [increase_amount]")
 
 	if (ischangeling(H))
@@ -247,20 +247,20 @@ this is already used where it needs to be used, you can probably ignore it.
 		increase_chance *= 3
 		increase_amount += rand(0,1)
 
-	var/final_increase_chance = round(CLAMP(increase_chance, 0, 100), 1)
-	var/final_increase_amount = round(CLAMP(increase_amount, 0, 5), 1)
-	//var/final_increase_amount = round(CLAMP(increase_amount, 0, 10), 1)
+	var/final_increase_chance = round(clamp(increase_chance, 0, 100), 1)
+	var/final_increase_amount = round(clamp(increase_amount, 0, 5), 1)
+	//var/final_increase_amount = round(clamp(increase_amount, 0, 10), 1)
 	//BLOOD_DEBUG("[H]'s final_increase_chance: [final_increase_chance], final_increase_amount: [final_increase_amount]")
 
 	if (final_increase_amount > 0 && prob(final_increase_chance))
 		var/old_bleeding = H.bleeding
 		H.bleeding += final_increase_amount
-		H.bleeding = CLAMP(H.bleeding, 0, 5)
-		//H.bleeding = CLAMP(H.bleeding, 0, 10)
+		H.bleeding = clamp(H.bleeding, 0, 5)
+		//H.bleeding = clamp(H.bleeding, 0, 10)
 		if (H.bleeding > old_bleeding) // I'm not sure how it wouldn't be, but, uh, yeah
 			if (old_bleeding <= 0)
-				H.visible_message("<span style='color:red'>[H] starts bleeding!</span>",\
-				"<span style='color:red'><b>You start bleeding!</b></span>")
+				H.visible_message("<span class='alert'>[H] starts bleeding!</span>",\
+				"<span class='alert'><b>You start bleeding!</b></span>")
 			else if (old_bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")
 			else if (old_bleeding >= 4)//9)
@@ -316,11 +316,11 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (H.reagents)
 			var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
 			if (anticoag_amt)
-				repair_chance -= CLAMP(anticoag_amt, 0, 10)
+				repair_chance -= clamp(anticoag_amt, 0, 10)
 
 			var/coag_amt = H.reagents.get_reagent_amount("proconvertin")
 			if (coag_amt)
-				repair_chance += CLAMP(coag_amt, 0, 10)
+				repair_chance += clamp(coag_amt, 0, 10)
 
 		switch (H.bleeding)
 			if (-INFINITY to 0)
@@ -362,8 +362,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			H.bleeding ++
 		switch (H.bleeding)
 			if (-INFINITY to 0)
-				H.visible_message("<span style='color:blue'>[H]'s bleeding stops!</span>",\
-				"<span style='color:blue'><b>Your bleeding stops!</b></span>")
+				H.visible_message("<span class='notice'>[H]'s bleeding stops!</span>",\
+				"<span class='notice'><b>Your bleeding stops!</b></span>")
 			if (1 to 3)
 				H.show_text("<b>Your bleeding slows down!</b>", "blue")
 			if (4 to INFINITY)
@@ -688,9 +688,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span style=\"color:blue\"><b>[src]</b> puts pressure on [src == H ? "[his_her]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		src, "<span style=\"color:blue\">You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		H, "<span style=\"color:blue\">[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
+		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_her]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
 		if (do_mob(src, H, 100))
 			var/original_bleed = H.bleeding
@@ -799,7 +799,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] rolls internal bleeding increase, internal bleeding is now [H.bleeding_internal]</b>")
 	else
 		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding does not increase</b>")
-	H.bleeding_internal = CLAMP(H.bleeding_internal, 0, 5)
+	H.bleeding_internal = clamp(H.bleeding_internal, 0, 5)
 	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding is [H.bleeding_internal] after clamp</b>")
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */

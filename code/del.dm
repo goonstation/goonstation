@@ -135,5 +135,4 @@ proc/qdel(var/datum/O)
 	if (!disposed)
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()
-		SEND_SIGNAL(src, COMSIG_PARENT_POST_DISPOSING)
 		disposed = 1

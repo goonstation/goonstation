@@ -109,9 +109,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
-			user.visible_message("<span style=\"color:red\"><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
+			user.visible_message("<span class='alert'><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
 			if(do_after(user, 30))
-				user.visible_message("<span style=\"color:red\"><b>[user] clears the [src]!</b></span>","You clear the [src].")
+				user.visible_message("<span class='alert'><b>[user] clears the [src]!</b></span>","You clear the [src].")
 				//qdel(src.root)
 				if (src.root)
 					src.root.dispose()
@@ -158,7 +158,7 @@
 	name = "Permafloppy"
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You can't flip the write-protect tab, it's held in place with glue or something!</span>")
+		boutput(user, "<span class='alert'>You can't flip the write-protect tab, it's held in place with glue or something!</span>")
 		return
 
 /obj/item/disk/data/floppy/computer3boot

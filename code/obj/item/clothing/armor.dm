@@ -102,9 +102,9 @@
 	examine()
 		. = ..()
 		if (src.payload)
-			. += "<span style=\"color:red\">Looks like the payload is a [src.payload].</span>"
+			. += "<span class='alert'>Looks like the payload is a [src.payload].</span>"
 		else
-			. += "<span style=\"color:red\">There doesn't appear to be a payload attached.</span>"
+			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		src.add_fingerprint(user)
@@ -220,13 +220,13 @@
 		if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 			return
 		if (!isdead(wearer) || (wearer.suiciding && prob(60))) // Don't abuse suiciding.
-			wearer.visible_message("<span style=\"color:red\"><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
+			wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
 			return
 
 		if (!src.payload)
 			src.payload = "*unknown or null*"
 
-		wearer.visible_message("<span style=\"color:red\"><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
+		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
 		logTheThing("bombing", wearer, null, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 

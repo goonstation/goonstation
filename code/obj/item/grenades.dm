@@ -42,7 +42,7 @@ PIPE BOMBS + CONSTRUCTION
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 			if (user && user.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_armed
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
@@ -50,7 +50,7 @@ PIPE BOMBS + CONSTRUCTION
 					if (src) prime()
 					return
 			else
-				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				src.icon_state = src.icon_state_armed
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
@@ -70,7 +70,7 @@ PIPE BOMBS + CONSTRUCTION
 				src.icon_state = src.icon_state_armed
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 				logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
-				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				SPAWN_DBG(src.det_time)
 					if (src) prime()
@@ -84,11 +84,11 @@ PIPE BOMBS + CONSTRUCTION
 		if (isscrewingtool(W))
 			if (src.det_time == src.org_det_time)
 				src.det_time = src.alt_det_time
-				user.show_message("<span style=\"color:blue\">You set [src] for a [det_time/10] second detonation time.</span>")
+				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			else
 				src.det_time = src.org_det_time
-				user.show_message("<span style=\"color:blue\">You set [src] for a [det_time/10] second detonation time.</span>")
+				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			src.add_fingerprint(user)
 		return
@@ -167,28 +167,57 @@ PIPE BOMBS + CONSTRUCTION
 
 /obj/item/old_grenade/banana/wasp
 	name = "suspicious looking grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
+	icon_state = "wasp"
+	icon_state_armed = "wasp1"
 	payload = /obj/critter/spacebee
 
-/obj/item/old_grenade/gravaton
+/obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
-	name = "gravaton grenade"
+	name = "graviton grenade"
 	det_time = 100
 	org_det_time = 100
 	alt_det_time = 60
-	icon_state = "gravaton"
-	item_state = "emp"
+	icon_state = "graviton"
+	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
 	mats = 12
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "gravaton1"
+	icon_state_armed = "graviton1"
+	var/icon_state_exploding = "graviton2"
+
+	attack_self(mob/user as mob)
+		if (!src.state)
+			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			if (!isturf(user.loc))
+				src.state = 0
+				return
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			if (user && user.bioHolder.HasEffect("clumsy"))
+				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src) prime()
+					return
+			else
+				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(src.det_time)
+					if (src) prime()
+					return
+		return
 
 	prime()
 		var/turf/T = ..()
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
-				src.visible_message("<span style=\"color:red\">[src] buzzes for a moment, then self-destructs.</span>")
+				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(5, 1, T)
 				s.start()
@@ -293,7 +322,7 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "fragnade"
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
-	icon_state_armed = "fragnade_1"
+	icon_state_armed = "fragnade1"
 
 	prime()
 		var/turf/T = ..()
@@ -331,7 +360,7 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/stinger/frag
 	name = "frag grenade"
 	icon_state = "fragnade-alt"
-	icon_state_armed = "fragnade-alt_1"
+	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
 	New()
@@ -345,7 +374,7 @@ PIPE BOMBS + CONSTRUCTION
 	name = "HE grenade"
 	desc = "A high-explosive grenade. It is set to detonate in 3 seconds."
 	icon_state = "fragnade-alt"
-	icon_state_armed = "fragnade-alt_1"
+	icon_state_armed = "fragnade-alt1"
 	det_time = 30.0
 	org_det_time = 30
 	alt_det_time = 60
@@ -387,7 +416,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/turf/T = ..()
 		if (T)
 			if (isrestrictedz(T.z) && !restricted_z_allowed(usr, T))
-				src.visible_message("<span style=\"color:red\">[src] buzzes for a moment, then self-destructs.</span>")
+				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(5, 1, T)
 				s.start()
@@ -524,7 +553,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (src.state == 0)
 			message_admins("Grenade ([src]) primed in [get_area(src)] [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
-			boutput(user, "<span style=\"color:red\">You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
+			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
 			src.state = 1
 			src.add_fingerprint(user)
 			user.drop_item()
@@ -537,7 +566,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (src.state == 0)
 			message_admins("Grenade ([src]) primed in [get_area(src)] [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
-			boutput(user, "<span style=\"color:red\">You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
+			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
 			src.state = 1
 		return
 
@@ -621,10 +650,10 @@ PIPE BOMBS + CONSTRUCTION
 			src.detonate()
 
 	proc/arm(mob/usr as mob)
-		usr.show_message("<span style=\"color:red\"><B>You have armed the [src.name]!</span>")
+		usr.show_message("<span class='alert'><B>You have armed the [src.name]!</span>")
 		for(var/mob/O in viewers(usr))
 			if (O.client)
-				O.show_message("<span style=\"color:red\"><B>[usr] has armed the [src.name]! Run!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[usr] has armed the [src.name]! Run!</B></span>", 1)
 
 		SPAWN_DBG(0)
 			src.beep(10)
@@ -799,12 +828,12 @@ PIPE BOMBS + CONSTRUCTION
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (user.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				SPAWN_DBG( 5 )
 					boom()
 					return
 			else
-				boutput(user, "<span style=\"color:red\">You prime the firework! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
 					boom()
 					return
@@ -819,19 +848,19 @@ PIPE BOMBS + CONSTRUCTION
 				s.set_up(5, 1, src)
 				s.start()
 				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
-		src.visible_message("<span style=\"color:red\">\The [src] explodes!</span>")
+		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
 		qdel(src)
 
 	attack_self(mob/user as mob)
 		if (user.equipped() == src)
 			if (user.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				SPAWN_DBG( 5 )
 					boom()
 					return
 			else
-				boutput(user, "<span style=\"color:red\">You prime the firework! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
 					boom()
 					return
@@ -862,7 +891,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	attack_hand(var/mob/user)
 		if (src.state)
-			boutput(user, "<span style=\"color:red\">\The [src] is firmly anchored into place!</span>")
+			boutput(user, "<span class='alert'>\The [src] is firmly anchored into place!</span>")
 			return
 		return ..()
 
@@ -872,15 +901,15 @@ PIPE BOMBS + CONSTRUCTION
 				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
-					boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG (5)
 						user.u_equip(src)
 						src.boom()
 						return
 				else
-					boutput(user, "<span style=\"color:red\">You slap the charge on [target], [det_time/10] seconds!</span>")
-					user.visible_message("<span style=\"color:red\">[user] has attached [src] to [target].</span>")
+					boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
+					user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
@@ -906,7 +935,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/turf/location = get_turf(src)
 		if (location && istype(location) && !location.loc:sanctuary)
 			if (isrestrictedz(location.z))
-				src.visible_message("<span style=\"color:red\">[src] buzzes for a moment, then self-destructs.</span>")
+				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(5, 1, location)
 				s.start()
@@ -961,15 +990,15 @@ PIPE BOMBS + CONSTRUCTION
 				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
-					boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG (5)
 						user.u_equip(src)
 						src.boom()
 						return
 				else
-					boutput(user, "<span style=\"color:red\">You slap the charge on [target], [det_time/10] seconds!</span>")
-					user.visible_message("<span style=\"color:red\">[user] has attached [src] to [target].</span>")
+					boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
+					user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
@@ -991,7 +1020,7 @@ PIPE BOMBS + CONSTRUCTION
 		var/turf/location = get_turf(src.loc)
 		if (location && istype(location))
 			if (isrestrictedz(location.z))
-				src.visible_message("<span style=\"color:red\">[src] buzzes for a moment, then self-destructs.</span>")
+				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(5, 1, location)
 				s.start()
@@ -1102,7 +1131,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (state == 3)
 			if(alert(user, "Pour out the pipebomb reagents?",,"Yes","No") == "No")
 				return
-			boutput(user, "<span style=\"color:blue\">The reagents inside spill out!</span>")
+			boutput(user, "<span class='notice'>The reagents inside spill out!</span>")
 			src.reagents = null
 			state = 2
 		return
@@ -1120,7 +1149,7 @@ PIPE BOMBS + CONSTRUCTION
 			if(!W:try_weld(user, 1))
 				return
 			W:eyecheck(user)
-			boutput(user, "<span style=\"color:blue\">You hollow out the pipe.</span>")
+			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
 			src.state = 2
 			icon_state = "Pipe_Hollow"
 			desc = "Two small pipes joined together. The pipes are empty."
@@ -1135,7 +1164,7 @@ PIPE BOMBS + CONSTRUCTION
 			for (var/A in allowed_items)
 				if (istype(W, text2path(A) )) ok = 1
 			if (ok)
-				boutput(user, "<span style=\"color:blue\">You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
+				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
 				item_mods += W
 				user.u_equip(W)
 				W.loc = src
@@ -1147,7 +1176,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (!ok)
 				//There is less room for explosive material when you use item mods
 				var/max_allowed = 20 - item_mods.len * 5
-				boutput(user, "<span style=\"color:blue\">You fill the pipe with [max_allowed] units of the reagents.</span>")
+				boutput(user, "<span class='notice'>You fill the pipe with [max_allowed] units of the reagents.</span>")
 				src.state = 3
 				var/avg_volatility = 0
 				src.reagents = new /datum/reagents(max_allowed)
@@ -1175,7 +1204,7 @@ PIPE BOMBS + CONSTRUCTION
 
 
 		if(istype(W, /obj/item/cable_coil) && state == 3)
-			boutput(user, "<span style=\"color:blue\">You link the cable, fuel and pipes.</span>")
+			boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")
 			src.state = 4
 			icon_state = "Pipe_Wired"
 
@@ -1187,7 +1216,7 @@ PIPE BOMBS + CONSTRUCTION
 			desc = "Two small pipes joined together, filled with welding fuel and connected with a cable. It needs some kind of ignition switch."
 
 		if(istype(W, /obj/item/assembly/time_ignite) && state == 4)
-			boutput(user, "<span style=\"color:blue\">You connect the cable to the timer/igniter assembly.</span>")
+			boutput(user, "<span class='notice'>You connect the cable to the timer/igniter assembly.</span>")
 			var/turf/T = get_turf(src)
 			var/obj/item/pipebomb/bomb/A = new /obj/item/pipebomb/bomb(T)
 			A.strength = src.strength
@@ -1285,7 +1314,7 @@ PIPE BOMBS + CONSTRUCTION
 	attack_self(mob/user as mob)
 		if (armed)
 			return
-		boutput(user, "<span style=\"color:red\">You activate the pipe bomb! 5 seconds!</span>")
+		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = 1
 		message_admins("[key_name(user)] arms a pipe bomb (power [strength]) in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
 		logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
@@ -1317,7 +1346,7 @@ PIPE BOMBS + CONSTRUCTION
 					if(iscarbon(M))
 						if (M.reagents)
 							M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
-					boutput(M, "<span style=\"color:red\">You are splashed with hot green liquid!</span>")
+					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
 					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
@@ -1342,7 +1371,7 @@ PIPE BOMBS + CONSTRUCTION
 				if (ghost > 1)
 					for (var/mob/M in view(2+ghost,src.loc))
 						if(iscarbon(M))
-							boutput(M, "<span style=\"color:red\">You are yanked by an unseen force!</span>")
+							boutput(M, "<span class='alert'>You are yanked by an unseen force!</span>")
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
@@ -1378,8 +1407,8 @@ PIPE BOMBS + CONSTRUCTION
 						var/turf/warp_to = get_turf(pick(orange(3 + tele, M.loc)))
 						if (isturf(warp_to))
 							playsound(M.loc, "warp", 50, 1)
-							M.visible_message("<span style=\"color:red\">[M] is warped away!</span>")
-							boutput(M, "<span style=\"color:red\">You suddenly teleport ...</span>")
+							M.visible_message("<span class='alert'>[M] is warped away!</span>")
+							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
 				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 70, 1)
@@ -1429,7 +1458,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			qdel(src)
 		else
-			visible_message("<span style=\"color:red\">[src] sparks and emits a small cloud of smoke, crumbling into a pile of dust.</span>")
+			visible_message("<span class='alert'>[src] sparks and emits a small cloud of smoke, crumbling into a pile of dust.</span>")
 			qdel(src)
 
 /obj/item/pipebomb/bomb/syndicate
@@ -1486,19 +1515,19 @@ PIPE BOMBS + CONSTRUCTION
 		if(check_target_immunity(M)) continue
 		M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 		if (M.get_ranged_protection()>=1.5)
-			boutput(M, "<span style=\"color:red\"><b>Your armor blocks the shrapnel!</b></span>")
+			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
 			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 			implanted.owner = M
 			M.implant += implanted
 			implanted.implanted(M, null, 25 * sqstrength)
-			boutput(M, "<span style=\"color:red\"><b>You are struck by shrapnel!</b></span>")
+			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
 
 /obj/proc/blowthefuckup(var/strength = 1, var/delete = 1) // dropping this to object-level so that I can use it for other things
 	var/T = get_turf(src)
-	src.visible_message("<span style=\"color:red\">[src] explodes!</span>")
+	src.visible_message("<span class='alert'>[src] explodes!</span>")
 	var/sqstrength = sqrt(strength)
 	var/shrapnel_range = 3 + sqstrength
 	if (strength >= 1)
@@ -1511,7 +1540,7 @@ PIPE BOMBS + CONSTRUCTION
 
 /mob/proc/blowthefuckup(var/strength = 1,var/visible_message = 1) // similar proc for mobs
 	var/T = get_turf(src)
-	if(visible_message) src.visible_message("<span style=\"color:red\">[src] explodes!</span>")
+	if(visible_message) src.visible_message("<span class='alert'>[src] explodes!</span>")
 	var/sqstrength = sqrt(strength)
 	var/shrapnel_range = 3 + sqstrength
 	for (var/mob/living/carbon/human/M in view(T, shrapnel_range))
@@ -1519,13 +1548,13 @@ PIPE BOMBS + CONSTRUCTION
 		if (M != src)
 			M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 			if (M.get_ranged_protection()>=1.5)
-				boutput(M, "<span style=\"color:red\"><b>Your armor blocks the chunks of [src.name]!</b></span>")
+				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
 				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 				implanted.owner = M
 				M.implant += implanted
 				implanted.implanted(M, null, 25 * sqstrength)
-				boutput(M, "<span style=\"color:red\"><b>You are struck by chunks of [src.name]!</b></span>")
+				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")
 

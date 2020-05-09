@@ -26,9 +26,9 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/card/id))
 			if(src.scan)
-				boutput(user, "<span style=\"color:red\">There is a card already in the slot machine.</span>")
+				boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert your ID card.</span>")
+				boutput(user, "<span class='notice'>You insert your ID card.</span>")
 				usr.drop_item()
 				I.set_loc(src)
 				src.scan = I
@@ -76,7 +76,7 @@
 				if(!src.scan) return
 				if (src.scan.money < 20)
 					for(var/mob/O in hearers(src, null))
-						O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Insufficient money to play!'</span>", src), 1)
+						O.show_message(text("<span class='subtle'><b>[]</b> says, 'Insufficient money to play!'</span>", src), 1)
 					return
 				/*if (src.money < 0)
 					for(var/mob/O in hearers(src, null))
@@ -95,51 +95,51 @@
 				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! [src.scan.registered] has won a MILLION CREDITS!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [src.scan.registered] has won a MILLION CREDITS!'</span>", src), 1)
 						command_alert("Congratulations to [src.scan.registered] on winning the Jackpot of ONE MILLION CREDITS!", "Jackpot Winner")
 						playsound(src.loc, "sound/misc/airraid_loop_short.ogg", 55, 1)
 						src.scan.money += 1000000
 						//src.money = 0
 					else if (roll > 1 && roll <= 5)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won a hundred thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won a hundred thousand credits!'</span>", src), 1)
 						command_alert("Congratulations to [src.scan.registered] on winning a hundred thousand credits!", "Big Winner")
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.scan.money += 100000
 						//src.money -= 100000
 					else if (roll > 5 && roll <= 25)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won ten thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won ten thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.scan.money += 10000
 						//src.money -= 10000
 					else if (roll > 25 && roll <= 50)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! [src.scan.registered] has won a thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! [src.scan.registered] has won a thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
 						src.scan.money += 1000
 						//src.money -= 1000
 					else if (roll > 50 && roll <= 100)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! [src.scan.registered] has won a hundred credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! [src.scan.registered] has won a hundred credits!'</span>", src), 1)
 						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
 						src.scan.money += 100
 						//src.money -= 100
 					else if (roll > 100 && roll <= 200)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! [src.scan.registered] has won fifty credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! [src.scan.registered] has won fifty credits!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						src.scan.money += 50
 						//src.money -= 50
 					else if (roll > 200 && roll <= 500)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, '[src.scan.registered] has won ten credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, '[src.scan.registered] has won ten credits!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						src.scan.money += 10
 						//src.money -= 10
 					else
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'No luck!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'No luck!'</span>", src), 1)
 							//playsound(src.loc, "sound/machines/buzz-two.ogg", 55, 1) // way too loud UGH
 					src.working = 0
 					src.icon_state = "slots-off"
@@ -151,7 +151,7 @@
 				src.working = 0
 				src.icon_state = "slots-off" // just in case, some fucker broke it earlier
 				for(var/mob/O in hearers(src, null))
-					O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
+					O.show_message(text("<span class='subtle'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))
@@ -185,9 +185,9 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/card/id))
 			if(src.scan)
-				boutput(user, "<span style=\"color:red\">There is a card already in the slot machine.</span>")
+				boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert your ID card.</span>")
+				boutput(user, "<span class='notice'>You insert your ID card.</span>")
 				usr.drop_item()
 				I.set_loc(src)
 				src.scan = I
@@ -235,7 +235,7 @@
 				if(!src.scan) return
 				if (src.scan.money < 20)
 					for(var/mob/O in hearers(src, null))
-						O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Insufficient money to play!'</span>", src), 1)
+						O.show_message(text("<span class='subtle'><b>[]</b> says, 'Insufficient money to play!'</span>", src), 1)
 					return
 				/*if (src.money < 0)
 					for(var/mob/O in hearers(src, null))
@@ -254,51 +254,51 @@
 				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! [src.scan.registered] has won a MILLION CREDITS!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [src.scan.registered] has won a MILLION CREDITS!'</span>", src), 1)
 						command_alert("Congratulations to [src.scan.registered] on winning the Jackpot of ONE MILLION CREDITS!", "Jackpot Winner")
 						playsound(src.loc, "sound/misc/airraid_loop_short.ogg", 55, 1)
 						src.scan.money += 1000000
 						//src.money = 0
 					else if (roll > 1 && roll <= 5)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won a hundred thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won a hundred thousand credits!'</span>", src), 1)
 						command_alert("Congratulations to [src.scan.registered] on winning a hundred thousand credits!", "Big Winner")
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.scan.money += 100000
 						//src.money -= 100000
 					else if (roll > 5 && roll <= 25)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won ten thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! [src.scan.registered] has won ten thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.scan.money += 10000
 						//src.money -= 10000
 					else if (roll > 25 && roll <= 50)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! [src.scan.registered] has won a thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! [src.scan.registered] has won a thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
 						src.scan.money += 1000
 						//src.money -= 1000
 					else if (roll > 50 && roll <= 100)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! [src.scan.registered] has won a hundred credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! [src.scan.registered] has won a hundred credits!'</span>", src), 1)
 						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
 						src.scan.money += 100
 						//src.money -= 100
 					else if (roll > 100 && roll <= 200)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! [src.scan.registered] has won fifty credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! [src.scan.registered] has won fifty credits!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						src.scan.money += 50
 						//src.money -= 50
 					else if (roll > 200 && roll <= 500)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, '[src.scan.registered] has won ten credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, '[src.scan.registered] has won ten credits!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						src.scan.money += 10
 						//src.money -= 10
 					else
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'No luck!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'No luck!'</span>", src), 1)
 							//playsound(src.loc, "sound/machines/buzz-two.ogg", 55, 1) // way too loud UGH
 					src.working = 0
 					src.icon_state = "slotsnew-off"
@@ -310,7 +310,7 @@
 				src.working = 0
 				src.icon_state = "slotsnew-off" // just in case, some fucker broke it earlier
 				for(var/mob/O in hearers(src, null))
-					O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
+					O.show_message(text("<span class='subtle'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))
@@ -372,12 +372,12 @@
 				SPAWN_DBG(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
 						playsound(src.loc, "sound/voice/heavenly.ogg", 55, 1)
 						usr.un_damn()
 					else if(roll > 1 && roll <= 10 && istype(usr,/mob/living/carbon/human))
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, '[usr.name] has a limb ripped off by the machine!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, '[usr.name] has a limb ripped off by the machine!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						var/mob/living/carbon/human/H = usr
 						if(H.limbs.l_arm)
@@ -391,7 +391,7 @@
 							H.limbs.r_arm.sever()
 					else
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'No luck!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'No luck!'</span>", src), 1)
 					src.working = 0
 					src.icon_state = "slots-off"
 					updateUsrDialog()
@@ -415,7 +415,7 @@
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/spacecash/))
-			boutput(user, "<span style=\"color:blue\">You insert the cash into [src].</span>")
+			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
 			if(istype(I, /obj/item/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -457,7 +457,7 @@
 				if(src.working) return
 				if (src.play_money < 20)
 					for(var/mob/O in hearers(src, null))
-						O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Insufficient money to play!'</span>", src), 1)
+						O.show_message(text("<span class='subtle'><b>[]</b> says, 'Insufficient money to play!'</span>", src), 1)
 					return
 				/*if (src.money < 0)
 					for(var/mob/O in hearers(src, null))
@@ -476,49 +476,49 @@
 				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)
 						playsound(src.loc, "sound/misc/airraid_loop_short.ogg", 55, 1)
 						src.play_money += 1000000
 						//src.money = 0
 					else if (roll > 1 && roll <= 5)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Big Winner! You have has won a hundred thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have has won a hundred thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.play_money += 100000
 						//src.money -= 100000
 					else if (roll > 5 && roll <= 25)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Big Winner! You have won ten thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have won ten thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
 						src.play_money += 10000
 						//src.money -= 10000
 					else if (roll > 25 && roll <= 50)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! You have won a thousand credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won a thousand credits!'</span>", src), 1)
 						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
 						src.play_money += 1000
 						//src.money -= 1000
 					else if (roll > 50 && roll <= 100)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! You have won a hundred credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won a hundred credits!'</span>", src), 1)
 						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
 						src.play_money += 100
 						//src.money -= 100
 					else if (roll > 100 && roll <= 200)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Winner! You have won fifty credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won fifty credits!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						src.play_money += 50
 						//src.money -= 50
 					else if (roll > 200 && roll <= 500)
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'You have won ten credits!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'You have won ten credits!'</span>", src), 1)
 						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
 						src.play_money += 10
 						//src.money -= 10
 					else
 						for(var/mob/O in hearers(src, null))
-							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'No luck!'</span>", src), 1)
+							O.show_message(text("<span class='subtle'><b>[]</b> says, 'No luck!'</span>", src), 1)
 							//playsound(src.loc, "sound/machines/buzz-two.ogg", 55, 1) // way too loud UGH
 					src.working = 0
 					src.icon_state = "slots-off"
@@ -529,7 +529,7 @@
 				src.working = 0
 				src.icon_state = "slots-off" // just in case, some fucker broke it earlier
 				for(var/mob/O in hearers(src, null))
-					O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
+					O.show_message(text("<span class='subtle'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))

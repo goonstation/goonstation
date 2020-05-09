@@ -37,7 +37,7 @@
 			return 0
 		if (src.release_pressure < 5*ONE_ATMOSPHERE || src.air_contents.return_pressure() < 5*ONE_ATMOSPHERE)
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
 		user.gib()
 		return 1
 
@@ -198,7 +198,7 @@
 			if(rupturing) rupturing = 0
 		if(12 to 14)
 			if(prob(4))
-				src.visible_message("<span style=\"color:red\">[src] hisses!</span>")
+				src.visible_message("<span class='alert'>[src] hisses!</span>")
 				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 		if(14 to 16)
 			if(prob(3) && !rupturing)
@@ -230,7 +230,7 @@
 								theAPC.lighting = 0
 								theAPC.updateicon()
 								theAPC.update()
-								src.visible_message("<span style=\"color:red\">The lights mysteriously go out!</span>")
+								src.visible_message("<span class='alert'>The lights mysteriously go out!</span>")
 						if (6)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 3
@@ -239,7 +239,7 @@
 
 			else if (src.det.part_fs.time < 10 && src.det.part_fs.time > 7)  //EXPLOSION IMMINENT
 				src.add_simple_light("canister", list(1 * 255, 0.03 * 255, 0.03 * 255, 0.6 * 255))
-				src.visible_message("<span style=\"color:red\">[src] flashes and sparks wildly!</span>")
+				src.visible_message("<span class='alert'>[src] flashes and sparks wildly!</span>")
 				playsound(src.loc, "sound/machines/siren_generalquarters.ogg", 50, 1)
 				playsound(src.loc, "sparks", 75, 1, -1)
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -268,24 +268,24 @@
 	if (!destroyed)
 		rupturing = 1
 		SPAWN_DBG(1 SECOND)
-			src.visible_message("<span style=\"color:red\">[src] hisses ominously!</span>")
+			src.visible_message("<span class='alert'>[src] hisses ominously!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 55, 1)
 			sleep(5 SECONDS)
 			playsound(src.loc, "sound/machines/hiss.ogg", 60, 1)
 			sleep(5 SECONDS)
-			src.visible_message("<span style=\"color:red\">[src] hisses loudly!</span>")
+			src.visible_message("<span class='alert'>[src] hisses loudly!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 65, 1)
 			sleep(5 SECONDS)
-			src.visible_message("<span style=\"color:red\">[src] bulges!</span>")
+			src.visible_message("<span class='alert'>[src] bulges!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 65, 1)
 			sleep(5 SECONDS)
-			src.visible_message("<span style=\"color:red\">[src] cracks!</span>")
+			src.visible_message("<span class='alert'>[src] cracks!</span>")
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 65, 1)
 			playsound(src.loc, "sound/machines/hiss.ogg", 65, 1)
 			sleep(5 SECONDS)
 			if(rupturing && !destroyed) // has anyone drained the tank?
 				playsound(src.loc, "explosion", 70, 1)
-				src.visible_message("<span style=\"color:red\">[src] ruptures violently!</span>")
+				src.visible_message("<span class='alert'>[src] ruptures violently!</span>")
 				src.health = 0
 				src.disconnect()
 				healthcheck()
@@ -326,11 +326,11 @@
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
 		if (holding)
-			user.show_message("<span style=\"color:red\">You must remove the currently inserted tank from the slot first.</span>")
+			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
 		else
 			var/obj/item/assembly/detonator/Det = W
 			if (Det.det_state != 4)
-				user.show_message("<span style=\"color:red\">The assembly is incomplete.</span>")
+				user.show_message("<span class='alert'>The assembly is incomplete.</span>")
 			else
 				Det.loc = src
 				Det.master = src
@@ -343,7 +343,7 @@
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
 	else if (src.det && istype(W, /obj/item/tank))
-		user.show_message("<span style=\"color:red\">You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
+		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.attack_hand(user)
 
@@ -352,17 +352,17 @@
 		return
 	if(istype(W, /obj/item/atmosporter))
 		var/canamt = W.contents.len
-		if (canamt >= W:capacity) boutput(user, "<span style=\"color:red\">Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span style=\"color:red\">\The [src] is attached!</span>")
+		if (canamt >= W:capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
-			user.visible_message("<span style=\"color:blue\">[user] collects the [src].</span>", "<span style=\"color:blue\">You collect the [src].</span>")
+			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 			s.set_up(5, 1, user)
 			s.start()
 	if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
-		src.visible_message("<span style=\"color:red\">[user] hits the [src] with a [W]!</span>")
+		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck()
@@ -599,11 +599,11 @@
 
 		if (href_list["cut"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				usr.show_message("<span style=\"color:red\">You need to have a snipping tool equipped for this.</span>")
+				usr.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
 			else
 				if (src.det.shocked)
 					var/mob/living/carbon/human/H = usr
-					H.show_message("<span style=\"color:red\">You tried to cut a wire on the bomb, but got burned by it.</span>")
+					H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
 					H.TakeDamage("chest", 0, 30)
 					H.changeStatus("stunned", 150)
 					H.UpdateDamage()
@@ -664,11 +664,11 @@
 
 		if (href_list["pulse"])
 			if (!usr.find_tool_in_hand(TOOL_PULSING))
-				usr.show_message("<span style=\"color:red\">You need to have a multitool or similar equipped for this.</span>")
+				usr.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
 			else
 				if (src.det.shocked)
 					var/mob/living/carbon/human/H = usr
-					H.show_message("<span style=\"color:red\">You tried to pulse a wire on the bomb, but got burned by it.</span>")
+					H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 					H.TakeDamage("chest", 0, 30)
 					H.changeStatus("stunned", 150)
 					H.UpdateDamage()

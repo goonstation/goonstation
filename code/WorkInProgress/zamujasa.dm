@@ -11,8 +11,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
-			//boutput(user, "<span style=\"color:red\">You snip the ca</span>")
-			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span style=\"color:red\">You snip the ca</span>")
+			//boutput(user, "<span class='alert'>You snip the ca</span>")
+			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
 			var/client/C = user.client
 			user.ghostize()
 			del(C)
@@ -272,7 +272,7 @@
 		if (score == -1)
 			return ..()
 
-		boutput(user, "<span style=\"color:blue\">[src] mulches up [W].</span>")
+		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
 		W.dropped()
 		mulch_item(W, score)
@@ -352,19 +352,19 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span style=\"color:red\">Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
 		if (get_dist(user,src) > 1)
-			boutput(user, "<span style=\"color:red\">You need to move closer to [src] to do that.</span>")
+			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
 		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
-			boutput(user, "<span style=\"color:red\">[O] is too far away to load into [src]!</span>")
+			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))
@@ -377,7 +377,7 @@
 				update_score(MT, score)
 				sleep(0.1 SECONDS)
 
-			boutput(user, "<span style=\"color:blue\">You finish stuffing things into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing things into [src]!</span>")
 			finish_scoring(MT)
 		else ..()
 

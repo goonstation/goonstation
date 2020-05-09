@@ -49,7 +49,7 @@
 		src.oldtarget_name = newtarget.name
 		if (alertsound1 || alertsound2)
 			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> starts chasing [src.target]!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
 		task = "chasing"
 
 	Bump(atom/movable/AM)
@@ -75,7 +75,7 @@
 
 			if(smashed_shit)
 				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> smashes into \the [AM]!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
 
 
 	seek_target()
@@ -181,7 +181,7 @@
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [M]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -202,7 +202,7 @@
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [M]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -677,7 +677,7 @@
 		ChaseAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> charges at [M]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> charges at [M]!</span>")
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -689,7 +689,7 @@
 			if(target && !attacking)
 				attacking = 1
 				//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> hits [M]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -1034,7 +1034,7 @@
 
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(poorSoul, 100)
 			poorSoul:shock_cyberheart(100)
@@ -1181,7 +1181,7 @@
 
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(poorSoul, 100)
 			poorSoul:shock_cyberheart(100)

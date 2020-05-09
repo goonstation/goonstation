@@ -58,15 +58,15 @@
 		if (!W) return 0
 
 		if (get_dist(get_turf(src), get_turf(W)) > 1)
-			out(user, "<span style='color: red;'>\The [W] is too far away!</span>")
+			out(user, "<span class='alert'>\The [W] is too far away!</span>")
 			return 0
 
 		if (src.holding)
-			out(user, "<span style='color: red;'>\The [src] is already holding \the [src.holding]!</span>")
+			out(user, "<span class='alert'>\The [src] is already holding \the [src.holding]!</span>")
 			return 0
 
 		if (W.anchored || W.w_class >= 4) //too bulky for backpacks, too bulky for this
-			out(user, "<span style='color: blue;'>\The [src] can't possibly hold that heavy an item!</span>")
+			out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 			return 0
 
 		if (istype(W, /obj/item/magtractor))
@@ -95,12 +95,12 @@
 		if (!src.holding)
 			if (!isitem(A)) return 0
 			if (get_dist(get_turf(src), get_turf(A)) > 1)
-				out(user, "<span style='color: red;'>\The [A] is too far away!</span>")
+				out(user, "<span class='alert'>\The [A] is too far away!</span>")
 				return 0
 			var/obj/item/target = A
 
 			if (target.anchored || target.w_class == 4) //too bulky for backpacks, too bulky for this
-				out(user, "<span style='color: blue;'>\The [src] can't possibly hold that heavy an item!</span>")
+				out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 				return 0
 
 			if (istype(target, /obj/item/magtractor))
@@ -129,9 +129,9 @@
 	examine()
 		. = ..()
 		if (src.highpower)
-			. += "<span style='color: blue;'>The [src] has HPM enabled!</span>"
+			. += "<span class='notice'>The [src] has HPM enabled!</span>"
 		if (src.holding)
-			. += "<span style='color: blue;'>\The [src.holding] is enveloped in the magnetic field.</span>"
+			. += "<span class='notice'>\The [src.holding] is enveloped in the magnetic field.</span>"
 
 	proc/releaseItem()
 		set src in usr
@@ -152,7 +152,7 @@
 		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
 
 		var/image/magField = GetOverlayImage("magField")
-		var/msg = "<span style='color: blue;'>You toggle the [src]'s HPM "
+		var/msg = "<span class='notice'>You toggle the [src]'s HPM "
 		if (src.highpower)
 			if (src.holdAction) src.holdAction.interrupt_flags |= INTERRUPT_MOVE
 			if (magField) magField.color = "#66ebe0" //blue
@@ -214,7 +214,6 @@
 		src.updateHeldOverlay(W)
 
 		playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
-		//user.visible_message("<span class='bold' style='color: blue;'>[user] pulls \the [W] into the [src.name]</span>", "<span style='color: blue;'>The [src.name] pulls \the [W] into it's magnetic field and flickers worryingly.[src.highpower ? "" : " You must hold still while using this item."]</span>")
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop1"
@@ -237,7 +236,7 @@
 		src.useInnerItem = 0
 		var/turf/T = get_turf(src)
 
-		var/msg = "<span class='bold' style='color: blue;'>\The [src] deactivates its magnetic field"
+		var/msg = "<span class='bold notice'>\The [src] deactivates its magnetic field"
 		if (src.holding) //item still exists, dropping
 			if (src.holding.loc == src && setloc)
 				src.holding.set_loc(T)

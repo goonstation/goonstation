@@ -16,11 +16,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -43,7 +43,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "kudzu"
-	// notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
 	pointName = "nutrients"
 	var/stealthed = 0
@@ -177,17 +177,17 @@
 			var/marker_to_del = locate(/obj/kudzu_marker) in T.contents
 			if (marker_to_del in T.contents)
 				qdel(locate(/obj/kudzu_marker) in T.contents)
-				boutput(holder.owner, "<span style=\"color:red\">You remove the guiding maker from [T].</span>")
+				boutput(holder.owner, "<span class='alert'>You remove the guiding maker from [T].</span>")
 
 			//make the marker
 			else
 				//remove kudzu from the marked tile.
 				if (T.temp_flags & HAS_KUDZU)
-					T.visible_message("<span style=\"color:blue\">The Kudzu shifts off of [T].</span>")
+					T.visible_message("<span class='notice'>The Kudzu shifts off of [T].</span>")
 					for (var/obj/spacevine/K in T.contents)
 						qdel(K)
 				else
-					boutput(holder.owner, "<span style=\"color:blue\">You create a guiding marker on [T].</span>")
+					boutput(holder.owner, "<span class='notice'>You create a guiding marker on [T].</span>")
 				new/obj/kudzu_marker(T)
 
 //technically kudzu, non invasive
@@ -207,6 +207,19 @@
 		icon_state = "kudzu-benign-[rand(1,3)]"
 		var/turf/T = get_turf(location)
 		T.temp_flags |= HAS_KUDZU
+
+	set_loc(var/newloc as turf|mob|obj in world)
+		//remove kudzu flag from current turf
+		var/turf/T1 = get_turf(loc)
+		if (T1)
+			T1.temp_flags &= ~HAS_KUDZU
+
+		..()
+		//Add kudzu flag to new turf.
+		var/turf/T2 = get_turf(newloc)
+		if (T2)
+			T2.temp_flags |= HAS_KUDZU
+
 
 	disposing()
 		var/turf/T = get_turf(src)
@@ -265,13 +278,13 @@
 			return 1
 
 		if (target == holder.owner)
-			boutput(holder.owner, "<span style=\"color:red\">You can't heal yourself with your own vines this way!</span>")
+			boutput(holder.owner, "<span class='alert'>You can't heal yourself with your own vines this way!</span>")
 			return 1
 
 		var/mob/living/carbon/C = target
 		if (istype(C))
-			C.visible_message("<span style=\"color:red\"><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
-			boutput(C, "<span style=\"color:blue\">You feel your pain fading away.</span>")
+			C.visible_message("<span class='alert'><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
+			boutput(C, "<span class='notice'>You feel your pain fading away.</span>")
 			C.HealDamage("All", 25, 25)
 			C.take_toxin_damage(-25)
 			C.take_oxygen_deprivation(-25)

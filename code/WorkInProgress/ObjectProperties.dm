@@ -172,14 +172,14 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "+[propVal]% block chance"
 
-	disarmblock
+	deflection
 		name = "Deflection"
-		id = "disarmblock"
+		id = "deflection"
 		desc = "Improves chance to deflect attacks while unarmed." //Value is extra block chance.
 		tooltipImg = "block.png"
 		defaultValue = 10
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "+[propVal]% additional block chance on disarm while unarmed"
+			return "+[propVal]% additional chance to deflect attacks while blocking"
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"

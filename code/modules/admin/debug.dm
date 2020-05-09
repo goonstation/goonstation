@@ -272,8 +272,8 @@ var/global/debug_messages = 0
 
 			LAGCHECK(LAG_LOW)
 
-		boutput(usr, "<span style=\"color:blue\">'[procname]' called on [counter] instances of '[typename]'</span>")
-		message_admins("<span style=\"color:red\">Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
+		boutput(usr, "<span class='notice'>'[procname]' called on [counter] instances of '[typename]'</span>")
+		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
 		logTheThing("admin", src, null, "called [procname] on all instances of [typename]")
 		logTheThing("diary", src, null, "called [procname] on all instances of [typename]")
 	else
@@ -309,19 +309,19 @@ var/global/debug_messages = 0
 	var/list/listargs = get_proccall_arglist()
 
 	if (target)
-		boutput(usr, "<span style='color:blue'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
+		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
 		if(islist(listargs) && listargs.len)
 			returnval = call(target,procname)(arglist(listargs))
 		else
 			returnval = call(target,procname)()
 	else
-		boutput(usr, "<span style='color:blue'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
+		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
 		if(islist(listargs) && listargs.len)
 			returnval = call(procname)(arglist(listargs))
 		else
 			returnval = call(procname)()
 
-	boutput(usr, "<span style='color:blue'>Proc returned: [json_encode(returnval)]</span>")
+	boutput(usr, "<span class='notice'>Proc returned: [json_encode(returnval)]</span>")
 	return
 
 /proc/get_proccall_arglist()
@@ -382,7 +382,7 @@ var/global/debug_messages = 0
 				if (istype(T))
 					listargs += T
 				else
-					boutput(usr, "<span style='color:red'>Invalid coordinates!</span>")
+					boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
 
 			else
 				continue
@@ -418,10 +418,10 @@ var/global/debug_messages = 0
 		var/mob/living/carbon/human/H = M
 		var/obj/S = locate(text("start*AI"))
 		if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
-			boutput(M, "<span style=\"color:blue\"><B>You have been teleported to your new starting location!</B></span>")
+			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
 			M.set_loc(S.loc)
 			M.buckled = null
-		message_admins("<span style=\"color:red\">Admin [key_name(src)] AIized [key_name(M)]!</span>")
+		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
 		logTheThing("admin", src, M, "AIized %target%")
 		logTheThing("diary", src, M, "AIized %target%", "admin")
 		return H.AIize()
@@ -760,11 +760,11 @@ body
 	if (isarea(theinstance))
 		var/turf/T = locate(/turf) in theinstance
 		if (!T)
-			boutput(usr, "<span style=\"color:blue\">[theinstance] (no turfs in area).</span>")
+			boutput(usr, "<span class='notice'>[theinstance] (no turfs in area).</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">[theinstance] including [showMyCoords(T.x, T.y, T.z)].</span>")
+			boutput(usr, "<span class='notice'>[theinstance] including [showMyCoords(T.x, T.y, T.z)].</span>")
 	else if (isturf(theinstance))
-		boutput(usr, "<span style=\"color:blue\">[theinstance] at [showMyCoords(theinstance.x, theinstance.y, theinstance.z)].</span>")
+		boutput(usr, "<span class='notice'>[theinstance] at [showMyCoords(theinstance.x, theinstance.y, theinstance.z)].</span>")
 	else
 		var/turf/T = get_turf(theinstance)
 		var/in_text = ""
@@ -772,7 +772,7 @@ body
 		while (Q && Q != T)
 			in_text += " in [Q]"
 			Q = Q.loc
-		boutput(usr, "<span style=\"color:blue\">[theinstance][in_text] at [showMyCoords(T.x, T.y, T.z)]</span>")
+		boutput(usr, "<span class='notice'>[theinstance][in_text] at [showMyCoords(T.x, T.y, T.z)]</span>")
 
 /client/proc/find_one_of(var/typename as text)
 	set category = "Debug"
@@ -783,12 +783,12 @@ body
 	if (thetype)
 		var/atom/theinstance = locate(thetype) in world
 		if (!theinstance)
-			boutput(usr, "<span style=\"color:red\">Cannot locate an instance of [thetype].</span>")
+			boutput(usr, "<span class='alert'>Cannot locate an instance of [thetype].</span>")
 			return
-		boutput(usr, "<span style=\"color:blue\"><b>Found instance of [thetype]:</b></span>")
+		boutput(usr, "<span class='notice'><b>Found instance of [thetype]:</b></span>")
 		print_instance(theinstance)
 	else
-		boutput(usr, "<span style=\"color:red\">No type matches for [typename].</span>")
+		boutput(usr, "<span class='alert'>No type matches for [typename].</span>")
 		return
 
 /client/proc/find_all_of(var/typename as text)
@@ -799,14 +799,14 @@ body
 	var/thetype = get_one_match(typename, /atom)
 	if (thetype)
 		var/counter = 0
-		boutput(usr, "<span style=\"color:blue\"><b>All instances of [thetype]: </b></span>")
+		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
 		for (var/atom/theinstance in world)
 			LAGCHECK(LAG_LOW)
 			if (!istype(theinstance, thetype))
 				continue
 			counter++
 			print_instance(theinstance)
-		boutput(usr, "<span style=\"color:blue\">Found [counter] instances total.</span>")
+		boutput(usr, "<span class='notice'>Found [counter] instances total.</span>")
 	else
 		boutput(usr, "No type matches for [typename].")
 		return
@@ -820,7 +820,7 @@ body
 	if (!A)
 		return
 
-	boutput(usr, "<span style=\"color:blue\"><b>Located [A] ([A.type]): </b></span>")
+	boutput(usr, "<span class='notice'><b>Located [A] ([A.type]): </b></span>")
 	print_instance(A)
 
 /client/proc/count_all_of(var/typename as text)
@@ -836,9 +836,9 @@ body
 			if (!istype(theinstance, thetype))
 				continue
 			counter++
-		boutput(usr, "<span style=\"color:blue\">There are <b>[counter]</b> instances total of [thetype].</span>")
+		boutput(usr, "<span class='notice'>There are <b>[counter]</b> instances total of [thetype].</span>")
 	else
-		boutput(usr, "<span style=\"color:red\"><b>No type matches for [typename].</b></span>")
+		boutput(usr, "<span class='alert'><b>No type matches for [typename].</b></span>")
 		return
 
 /client/proc/set_admin_level()
@@ -923,7 +923,7 @@ proc/display_camera_paths()
 	admin_only
 
 	camera_network_reciprocity = !camera_network_reciprocity
-	boutput(usr, "<span style=\"color:blue\">Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]</span>")
+	boutput(usr, "<span class='notice'>Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]</span>")
 	logTheThing("admin", usr, null, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
 	logTheThing("diary", usr, null, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]", "admin")
 	message_admins("[key_name(usr)] toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
@@ -951,7 +951,7 @@ proc/display_camera_paths()
 
 	admin_only
 	if (!ishuman(src.mob))
-		return boutput(usr, "<span style=\"color:red\">Error: client mob is invalid type or does not exist</span>")
+		return boutput(usr, "<span class='alert'>Error: client mob is invalid type or does not exist</span>")
 	randomize_look(src.mob)
 	logTheThing("admin", usr, null, "randomized their appearance")
 	logTheThing("diary", usr, null, "randomized their appearance", "admin")
@@ -964,7 +964,7 @@ proc/display_camera_paths()
 	admin_only
 	if (src.mob && src.mob.mind)
 		src.mob.mind.handwriting = pick(handwriting_styles)
-		boutput(usr, "<span style=\"color:blue\">Handwriting style is now: [src.mob.mind.handwriting]</span>")
+		boutput(usr, "<span class='notice'>Handwriting style is now: [src.mob.mind.handwriting]</span>")
 		logTheThing("admin", usr, null, "randomized their handwriting style: [src.mob.mind.handwriting]")
 		logTheThing("diary", usr, null, "randomized their handwriting style: [src.mob.mind.handwriting]", "admin")
 
@@ -1089,7 +1089,7 @@ proc/display_camera_paths()
 		return
 	var/new_style_name = input("Please enter a new name for your HUD", "Enter Name") as null|text
 	if (!new_style_name)
-		boutput(src, "<span style=\"color:red\">Cannot create a HUD with no name![prob(5) ? " It's not a horse!" : null]</span>") // c:
+		boutput(src, "<span class='alert'>Cannot create a HUD with no name![prob(5) ? " It's not a horse!" : null]</span>") // c:
 		return
 	if (alert("Create: \"[new_style_name]\" with icon [new_style]?", "Confirmation", "Yes", "No") == "Yes")
 		hud_style_selection[new_style_name] = new_style
@@ -1276,4 +1276,4 @@ var/datum/flock/testflock
 	var/returnval = target._AddComponent(list(comptype) + listargs)
 
 
-	boutput(usr, "<span style='color:blue'>Returned: [!isnull(returnval) ? returnval : "null"]</span>")
+	boutput(usr, "<span class='notice'>Returned: [!isnull(returnval) ? returnval : "null"]</span>")

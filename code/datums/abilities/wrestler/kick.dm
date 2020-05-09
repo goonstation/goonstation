@@ -31,14 +31,14 @@
 			return 1
 
 		if(check_target_immunity( target ))
-			M.visible_message("<span style='color:red'>You seem to attack [target]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
 		if (M.invisibility > 0)
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		M.emote("scream")
 		M.emote("flip")
@@ -47,7 +47,7 @@
 		for (var/mob/C in oviewers(M))
 			shake_camera(C, 8, 3)
 
-		M.visible_message("<span style=\"color:red\"><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
+		M.visible_message("<span class='alert'><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
 		random_brute_damage(target, 15, 1)
 		playsound(M.loc, "swing_hit", 60, 1)
 

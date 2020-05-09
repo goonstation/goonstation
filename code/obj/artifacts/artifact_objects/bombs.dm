@@ -34,14 +34,14 @@
 		var/turf/T = get_turf(O)
 
 		if (warning_initial)
-			T.visible_message("<b><span style=\"color:red\">[O] [warning_initial]</b></span>")
+			T.visible_message("<b><span class='alert'>[O] [warning_initial]</b></span>")
 		if (alarm_initial)
 			playsound(T, alarm_initial, 100, 1, -1)
 
 		SPAWN_DBG(src.explode_delay)  //who the fuck coded this shit below without running get_turf again
 			T = get_turf(O)
 			if (warning_final)
-				T.visible_message("<b><span style=\"color:red\">[O] [warning_final]</b></span>")
+				T.visible_message("<b><span class='alert'>[O] [warning_final]</b></span>")
 			if (alarm_final)
 				playsound(T, alarm_final, 100, 1, -1)
 			animate_flash_color_fill(O,flascustomization_first_color,10,3)
@@ -51,7 +51,7 @@
 				if (src.activated)
 					deploy_payload(O)
 				else
-					T.visible_message("<b><span style=\"color:blue\">[O] [text_disarmed]</b></span>")
+					T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)
