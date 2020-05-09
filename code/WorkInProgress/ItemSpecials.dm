@@ -271,7 +271,7 @@
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
 		if(restrainDuration)
-			person.restrain_time = world.timeofday + restrainDuration
+			person.restrain_time = TIME + restrainDuration
 
 	rush
 		cooldown = 100

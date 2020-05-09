@@ -247,7 +247,7 @@
 		return
 
 	//for item specials
-	if (src.restrain_time > world.timeofday)
+	if (src.restrain_time > TIME)
 		return
 
 	if (src.buckled)
