@@ -887,14 +887,15 @@
 		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
 			. -= space_movement
 
-		if (aquatic_movement > 0)
-			if (T.active_liquid || T.turf_flags & FLUID_MOVE)
-				. -= aquatic_movement
-		else
-			if (T.active_liquid)
-				. += T.active_liquid.movement_speed_mod
-			else if (istype(T,/turf/space/fluid))
-				. += 4
+		if (!(src.mutantrace && src.mutantrace.aquatic))
+			if (aquatic_movement > 0)
+				if (T.active_liquid || T.turf_flags & FLUID_MOVE)
+					. -= aquatic_movement
+			else
+				if (T.active_liquid)
+					. += T.active_liquid.movement_speed_mod
+				else if (istype(T,/turf/space/fluid))
+					. += 4
 
 	. = min(., maximum_slowdown)
 
