@@ -23,7 +23,7 @@ var/global/datum/antagWeighter/antagWeighter
 	proc/debugLog(msg)
 		out(world, msg)
 		//logTheThing("debug", null, null, "<b>AntagWeighter</b> [msg]")
-	
+
 
 	/**
 	 * Queries the goonhub API for hisorical antag rounds for a single target
@@ -48,33 +48,33 @@ var/global/datum/antagWeighter/antagWeighter
 
 		return response["history"]
 
-	/** 
-	* Get the entire antag selection history for a player (all roles, all modes) 
-	* 
-	* @param string ckey Ckey of the person we're looking up 
-	* @return list List of history details 
-	*/ 
-	proc/completeHistory(ckey = "") 
-		if (!ckey) 
-			throw EXCEPTION("No ckey given") 
+	/**
+	* Get the entire antag selection history for a player (all roles, all modes)
+	*
+	* @param string ckey Ckey of the person we're looking up
+	* @return list List of history details
+	*/
+	proc/completeHistory(ckey = "")
+		if (!ckey)
+			throw EXCEPTION("No ckey given")
 		if (!config.goonhub_api_token)
 			throw EXCEPTION("You must have the goonhub API token to use this command!")
 
 		var/list/response
 		try
-			response = apiHandler.queryAPI("antags/completeHistory", list( 
-				"player" = ckey, 
+			response = apiHandler.queryAPI("antags/completeHistory", list(
+				"player" = ckey,
 			), 1)
 		catch ()
 			throw EXCEPTION("API is currently having issues, try again later")
 
-		if (response["error"]) 
+		if (response["error"])
 			throw EXCEPTION(response["error"])
 
 		if (length(response["history"]) < 1)
 			throw EXCEPTION("No history for that player")
 
-		return response["history"] 
+		return response["history"]
 
 	/**
 	 * Simulates a history response from the API, so local development doesn't fuck up
@@ -143,7 +143,7 @@ var/global/datum/antagWeighter/antagWeighter
 				weight = (targetPlayRate * poolSize) / percentSelected
 
 				if (src.debug)
-					src.debugLog("(Weighting Calc) [ckey] has [selected] selections and [seen] participations. Calculated weight as [weight] (poolSize: [poolSize]).")				
+					src.debugLog("(Weighting Calc) [ckey] has [selected] selections and [seen] participations. Calculated weight as [weight] (poolSize: [poolSize]).")
 
 			//insert the weighted entry in the right place
 			var/inserted = 0
@@ -154,7 +154,7 @@ var/global/datum/antagWeighter/antagWeighter
 					weightings[ckey] = list("weight" = weight, "seen" = seen)
 					inserted = 1
 					break
-			
+
 			//couldn't find a place for this entry, shove it on the end
 			if (!inserted)
 				weightings.Insert(0, ckey)
@@ -196,6 +196,8 @@ var/global/datum/antagWeighter/antagWeighter
 
 		if (!ckeyMinds.len)
 			throw EXCEPTION("No minds with valid ckeys were given")
+
+		logTheThing("debug", null, null, "<b>AntagWeighter</b> Selecting [amount] out of [ckeyMinds.len] candidates for [role].")
 
 		if (src.debug)
 			src.debugLog("Sending payload: [json_encode(apiPayload)]")
@@ -281,7 +283,7 @@ var/global/datum/antagWeighter/antagWeighter
 	 * @param string ckey Ckey of the player
 	 * @param boolean latejoin Whether this record is a latejoin antag selection
 	 * @return null
-	 */	
+	 */
 	proc/record(role = "", ckey = "", latejoin = 0)
 		if (!role || !ckey)
 			throw EXCEPTION("Incorrect parameters given")
@@ -306,7 +308,7 @@ var/global/datum/antagWeighter/antagWeighter
 	 *			"ckeyforadude2" = "wraith"
 	 * 		)
 	 * @return null
-	 */		
+	 */
 	proc/recordMultiple(list/players = list())
 		if (!players.len)
 			throw EXCEPTION("Incorrect parameters given")
