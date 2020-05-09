@@ -1,5 +1,9 @@
 
 (t)sat may 09 20
+(u)Carbadox
+(p)610
+(e)⚖🆕|balance, enhancement
+(+)Loosened the job restrictions for Syndicate items like sonic grenade, amplified vuvuzela, pickpocket gun, hotdog grenade, moustache grenade, poison bottles and syndicate sauce.
 (u)Dabir
 (p)609
 (e)🆕|enhancement
