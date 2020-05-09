@@ -884,7 +884,7 @@
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE))
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic))
