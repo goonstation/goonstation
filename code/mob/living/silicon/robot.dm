@@ -2309,7 +2309,7 @@
 			oil = 0
 			src.remove_stun_resist_mod("robot_oil", 25)
 
-	proc/borg_death_alert(modifier = MOD_NONE)
+	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/mailgroup = "medresearch"
 		var/net_id = generate_net_id(src)
@@ -2318,11 +2318,11 @@
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
-			if (MOD_NONE)	//normal death and gib
+			if (ROBOT_DEATH_MOD_NONE)	//normal death and gib
 				message = "CONTACT LOST: [src] in [myarea]"
-			if (MOD_BORG_SUICIDE) //suicide
+			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
 				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
-			if (MOD_KILLSWITCH) //killswitch
+			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
 				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
@@ -2547,7 +2547,7 @@
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain()
 				src.update_appearance()
-				src.borg_death_alert(MOD_KILLSWITCH)
+				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 
 	process_locks()
