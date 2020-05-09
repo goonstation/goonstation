@@ -43,7 +43,6 @@
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
-	var/obj/machinery/machine = null // todo : look into rewriting the way this works. its a lingering ref to the last machine the mob touched, and machines have to search thru all clients to check this var when they update their screens
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
@@ -289,9 +288,6 @@
 	if (ghost && ghost.corpse == src)
 		ghost.corpse = null
 
-	if (src.machine)
-		src.machine.current_user = null
-
 	if (traitHolder)
 		traitHolder.removeAll()
 		traitHolder.owner = null
@@ -469,7 +465,6 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
-	src.machine = null
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -1516,7 +1511,7 @@
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	src.set_eye(null)
-	src.machine = null
+	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 

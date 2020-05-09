@@ -91,7 +91,7 @@
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		if (!beaker)
 			// This should only happen when the UI is out of date - refresh it
 			src.updateUsrDialog()
@@ -156,7 +156,7 @@
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/list/dat = list()
 
 		if(!beaker)
@@ -354,7 +354,7 @@
 
 		src.add_fingerprint(usr)
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["close"])
 			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
@@ -570,7 +570,7 @@
 	attack_hand(mob/user as mob)
 		if (status & BROKEN)
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = ""
 		if (!beaker)
 			dat = "Please insert beaker.<BR>"
@@ -698,7 +698,7 @@ datum/chemicompiler_core/stationaryCore
 		if (status & BROKEN || !powered())
 			boutput( user, "<span class='alert'>You can't seem to power it on!</span>" )
 			return
-		user.machine = src
+		src.add_dialog(user)
 		executor.panel()
 		onclose(usr, "chemicompiler")
 		return

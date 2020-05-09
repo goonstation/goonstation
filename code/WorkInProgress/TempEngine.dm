@@ -446,7 +446,7 @@
 
 		if( href_list["close"] )
 			usr.Browse(null, "window=teg")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return 0
 
 		return 1
@@ -582,7 +582,7 @@
 		if(status & (BROKEN | NOPOWER))
 			return
 		user << browse(return_text(),"window=computer;can_close=1")
-		user.machine = src
+		src.add_dialog(user)
 		onclose(user, "computer")
 
 	process()

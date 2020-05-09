@@ -1253,7 +1253,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	if (..(parent))
 		return 1
 	src.UpdateDamage()
-	
+
 #endif
 
 /mob/living/carbon/human/UpdateDamageIcon()

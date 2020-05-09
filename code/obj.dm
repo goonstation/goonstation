@@ -244,47 +244,6 @@
 /obj/proc/get_movement_controller(mob/user)
 	return
 
-/obj/proc/updateUsrDialog()
-	for(var/client/C)
-		if (C.mob?.machine == src)
-			if (get_dist(C.mob,src) <= 1)
-				src.attack_hand(C.mob)
-			else
-				if (issilicon(C.mob))
-					src.attack_ai(usr)
-				else if (isAIeye(C.mob))
-					var/mob/dead/aieye/E = C.mob
-					src.attack_ai(E)
-
-/obj/proc/updateDialog()
-	for(var/client/C)
-		if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
-			src.attack_hand(C.mob)
-	AutoUpdateAI(src)
-
-/obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
-
-	for(var/client/C)
-		if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
-			src.attack_self(C.mob)
-
-	for(var/mob/living/silicon/ai/M in AIs)
-		var/mob/AI = M
-		if (M.deployed_to_eyecam)
-			AI = M.eyecam
-		if ((AI.client && AI.machine == src))
-			src.attack_self(AI)
-
-/obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
-	if(istype(M))
-		if (isAI(M)) //Eyecam handling
-			var/mob/living/silicon/ai/AI = M
-			if (AI.deployed_to_eyecam)
-				M = AI.eyecam
-		if(M.client && M.machine == src)
-			src.attack_self(M)
-
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets."

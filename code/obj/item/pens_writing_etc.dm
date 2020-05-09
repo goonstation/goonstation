@@ -649,7 +649,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 		if (usr.contents.Find(src))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["pen"])
 				if (src.pen)
 					usr.put_in_hand_or_drop(src.pen)
@@ -690,12 +690,7 @@
 
 				src.add_fingerprint(usr)
 
-			if (ismob(src.loc))
-				var/mob/M = src.loc
-				if (M.machine == src)
-					SPAWN_DBG( 0 )
-						src.attack_self(M)
-						return
+			src.updateSelfDialog()
 		return
 
 	attack_hand(mob/user as mob)

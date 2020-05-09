@@ -1505,7 +1505,7 @@
 
 
 /mob/living/carbon/human/proc/show_inv(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = {"
 	<B><HR><FONT size=3>[src.name]</FONT></B>
 	<BR><HR>

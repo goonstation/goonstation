@@ -534,7 +534,7 @@ SYNDICATE DRONE FACTORY AREAS
 		dat += "<A href='?src=\ref[src];south=1'>Touch the third rune</A><BR>"
 		dat += "<A href='?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
 
-		usr.machine = src
+		src.add_dialog(usr)
 		usr.Browse("[dat]", "window=rtab;size=400x300")
 		onclose(usr, "rtab")
 		return

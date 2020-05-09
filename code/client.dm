@@ -893,7 +893,7 @@ var/global/curr_day = null
 		if ("mach_close")
 			var/window = href_list["window"]
 			var/t1 = text("window=[window]")
-			usr.machine = null
+			usr.remove_dialogs()
 			usr.Browse(null, t1)
 			//Special cases
 			switch (window)

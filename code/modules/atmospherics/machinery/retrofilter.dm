@@ -138,11 +138,11 @@ obj/machinery/atmospherics/retrofilter
 	attack_hand(mob/user as mob)
 		if(..())
 			user.Browse(null, "window=pipefilter")
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		var/list/gases = list("O2", "N2", "CO2", "Plasma", "OTHER")
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<head><title>Gas Filtration Unit Mk VII</title></head><body><hr>"// "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 		for (var/i = 1; i <= gases.len; i++)
 			if (!issilicon(user) && src.locked)
@@ -185,7 +185,7 @@ obj/machinery/atmospherics/retrofilter
 		if(..() || (status & NOPOWER))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
 		if (href_list["toggle_gas"] && (!src.locked || issilicon(usr)))
@@ -203,7 +203,7 @@ obj/machinery/atmospherics/retrofilter
 
 		else if (href_list["close"])
 			usr.Browse(null, "window=pipefilter")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		return
 

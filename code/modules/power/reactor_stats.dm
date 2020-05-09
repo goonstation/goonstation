@@ -1609,7 +1609,7 @@
 	"})
 	html.addToHead(kstyle)
 
-	user.machine = src
+	src.add_dialog(user)
 	if(user.client)
 		luser = user.client
 

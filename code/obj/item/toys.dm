@@ -24,7 +24,7 @@
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	if(src.busy)
 		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
 	else

@@ -754,10 +754,7 @@ proc/get_angle(atom/a, atom/b)
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//boutput(world, "[src] was [src.mob.machine], setting to null")
-		if(src.mob.machine && istype(src.mob.machine, /obj/machinery))
-			src.mob.machine.current_user = null
-		src.mob.machine = null
+		src.mob.remove_dialogs()
 	return
 
 /proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc

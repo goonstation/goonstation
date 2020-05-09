@@ -254,7 +254,7 @@
 		return
 
 	var/dat = "<HTML><BODY><TT><B>[src.name] door controls</B>"
-	user.machine = src
+	src.add_dialog(user)
 	var/d2 = "<A href='?src=\ref[src];time=1'>Initiate Time</A><br>"
 	if (src.timing)
 		d2 = "<A href='?src=\ref[src];time=0'>Stop Timed</A><br>"
@@ -276,7 +276,7 @@
 	if (..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["time"])
 			if (src.allowed(usr))
 				if (src.timing == 0)

@@ -20,7 +20,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -41,7 +41,7 @@
 			return
 
 		if (usr.loc == ship)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["gunner"])
 				MakeGunner(usr)
@@ -49,7 +49,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in ship)
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.opencomputer(M)
 		else
 			usr.Browse(null, "window=ship_main_weapon")
@@ -222,7 +222,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
 		if(src.active)
@@ -245,7 +245,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		if (href_list["heat"])
 			current_projectile = ufo
@@ -310,7 +310,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
 		if(src.active)
@@ -333,7 +333,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		if (href_list["foam"])
 			mode = 0

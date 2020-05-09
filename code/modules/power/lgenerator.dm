@@ -56,7 +56,7 @@
 		else
 			..()
 
-		if (user.machine == src) src.updateUsrDialog()
+		src.updateUsrDialog()
 		return
 
 	proc/update_icon()
@@ -214,7 +214,7 @@
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<h4>[src]</h4>"
 
 		if (src.P)
@@ -250,7 +250,7 @@
 		if (!issilicon(usr) && !in_range(src, usr)) return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["eject"])
 			if (src.active)

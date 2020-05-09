@@ -387,7 +387,7 @@
 	interact(user)
 
 /obj/machinery/computer/laser_computer/proc/interact(mob/user)
-	user.machine = src
+	src.add_dialog(user)
 	var/polledemitters
 	for(var/obj/machinery/engine_laser_spawner/M in src.emitters)
 		if(M.health < 20)
@@ -412,7 +412,7 @@ text("<A href='?src=\ref[];pattern=1'>[src.pattern]</A>", src))
 
 /obj/machinery/computer/laser_computer/Topic(href, href_list)
 	boutput(world, "Topic, [href_list]")
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["testfire"])
 		if(!src.started)
 			src.testfire()

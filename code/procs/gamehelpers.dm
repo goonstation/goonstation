@@ -201,16 +201,6 @@ var/obj/item/dummy/click_dummy = new
 			L = L.loc
 	return 0
 
-/proc/AutoUpdateAI(obj/subject)
-	if (!subject)
-		return
-	for(var/mob/living/silicon/ai/M in AIs)
-		var/mob/AI = M
-		if (M.deployed_to_eyecam)
-			AI = M.eyecam
-
-		if (AI && AI.client && AI.machine == subject)
-			subject.attack_ai(AI)
 
 /proc/get_viewing_AIs(center = null, distance = 7)
 	. = list()

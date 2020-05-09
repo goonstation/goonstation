@@ -98,7 +98,7 @@
 			return
 		if (user.mind && user.mind.gang)
 			boutput(user, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"<B> Valve properties: </B>
 		<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=\ref[src];tankone=1'>Remove</A>" : ""]
 		<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=\ref[src];tanktwo=1'>Remove</A>" : ""]

@@ -69,7 +69,7 @@
 		if(angry)
 			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
-		user.machine = src
+		src.add_dialog(user)
 		lastWindowName = windowName
 
 		var/dat = updatemenu()
@@ -102,7 +102,7 @@
 
 	updateUsrDialog()
 		for(var/client/C)
-			if (C.mob?.machine == src)
+			if (C.mob && C.mob.using_dialog_of(src))
 				if (get_dist(C.mob,src) <= 1)
 					src.openTrade(C.mob)
 
@@ -112,7 +112,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//
 		///////////////////////////////
