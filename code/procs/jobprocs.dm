@@ -463,6 +463,12 @@
 				D.data_type = "cloning_record"
 				D.name = "data disk - '[src.real_name]'"
 
+			if(JOB.receives_badge)
+				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
+				src.equip_if_possible(B, slot_in_backpack)
+				B.badge_owner_name = src.real_name
+				B.badge_owner_job = src.job
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
