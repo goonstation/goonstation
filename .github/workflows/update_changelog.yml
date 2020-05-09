@@ -5,7 +5,8 @@ on:
 
 jobs:
   update-changelog:
-    runs-on: ubuntu-latest
+		runs-on: ubuntu-latest
+		if: github.repository == 'goonstation/goonstation'
     steps:
     - name: Get The Script
       run: |
@@ -25,3 +26,5 @@ jobs:
         REPO: ${{ github.repository }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CHANGELOG_PATH: strings/changelog.txt
+        GIT_EMAIL: "65057909+robuddybot@users.noreply.github.com"
+        GIT_NAME: "robuddybot"
