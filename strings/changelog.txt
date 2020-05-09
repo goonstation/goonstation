@@ -1,4 +1,7 @@
 
+(t)sat may 09 20
+(u)Kyle
+(*)High tier Janitor XP rewards moved to debris field instead of being spawnable. This is to bring them in line with our general philosophy on XP rewards; which is that having a higher job level should not give you a competitive advantage.
 (t)fri may 08 20
 (u)Sovexe
 (p)624
