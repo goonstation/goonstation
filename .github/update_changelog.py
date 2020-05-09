@@ -14,7 +14,7 @@ import time
 import pytz
 import random
 import traceback
-from github import Github
+from github import Github, InputGitAuthor
 
 labels_to_emoji = {
 	'ass-jam': '🍑',
