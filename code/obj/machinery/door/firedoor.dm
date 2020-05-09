@@ -141,7 +141,7 @@
 
 				play_animation("opening")
 				update_icon(1)
-				sleep(15)
+				sleep(1.5 SECONDS)
 				src.set_density(0)
 				update_nearby_tiles()
 				if (ignore_light_or_cam_opacity)
@@ -158,7 +158,7 @@
 				update_icon(1)
 				src.set_density(1)
 				update_nearby_tiles()
-				sleep(15)
+				sleep(1.5 SECONDS)
 
 				if (ignore_light_or_cam_opacity)
 					src.opacity = 1
@@ -257,7 +257,7 @@
 		return 0
 	if (!src.allowed(user) || src.density)
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)

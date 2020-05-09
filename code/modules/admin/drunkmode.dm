@@ -46,12 +46,10 @@ var/list/dangerousVerbs = list(\
 /client/proc/ticklag,\
 /client/proc/cmd_debug_vox,\
 /client/proc/mapWorld,\
-/client/proc/call_proc_atom,\
 /client/proc/haine_blood_debug,\
 /client/proc/debug_messages,\
 /client/proc/debug_reaction_list,\
 /client/proc/debug_reagents_cache,\
-/client/proc/debug_check_possible_reactions,\
 /client/proc/set_admin_level,\
 /client/proc/show_camera_paths, \
 /*/client/proc/remove_camera_paths_verb, \*/
@@ -211,4 +209,4 @@ var/list/dangerousVerbs = list(\
 		)
 		command_alert("[C.key] [pick(announce)].", "Drunkmin detected")
 
-		boutput(C, "<span style=\"color:red\"><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")
+		boutput(C, "<span class='alert'><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")

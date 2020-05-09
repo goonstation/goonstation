@@ -75,8 +75,7 @@
 	src.invisibility = src.invisibility_old
 
 
-/mob/dead/observer/verb/point(var/atom/target as mob|obj|turf in oview())
-	set name = "Point"
+/mob/dead/observer/point_at(var/atom/target)
 	if (!isturf(src.loc))
 		return
 
@@ -160,7 +159,7 @@
 		return
 
 	src.icon_state = "doubleghost"
-	src.visible_message("<span style=\"color:red\"><b>[src] is busted!</b></span>","<span style=\"color:red\">You are demateralized into a state of further death!</span>")
+	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
 		wig.loc = src.loc
@@ -351,17 +350,8 @@
 
 
 		var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-		newbio.CopyOther(src.bioHolder)
+		newbio.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		O.bioHolder = newbio
-		// cirr fix for mutations carrying over to ghosts leading to awful side-effects like ghostly irradiating
-		// for now keep glow because it amuses me very much, but we'll take that out if people abuse it
-		var/datum/bioEffect/glowy/G = null
-		if(O.bioHolder.HasEffect("glowy"))
-			G = O.bioHolder.GetEffect("glowy")
-		O.bioHolder.RemoveAllEffects()
-		// add the glow back if it exists
-		if(istype(G))
-			O.bioHolder.AddEffect(G)
 
 	return O
 
@@ -408,7 +398,7 @@
 	set category = "Ghost"
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	if(!ticker || !ticker.centralized_ai_laws)
@@ -548,7 +538,7 @@
 	// ooooo its a secret, oooooo!!
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	var/x = input("Enter view width in tiles: (Capped at 59)", "Width", 15)

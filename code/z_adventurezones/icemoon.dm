@@ -27,7 +27,7 @@ Contents:
 		if (iceelefall.len)
 			var/turf/T = pick(iceelefall)
 			if (isturf(T))
-				visible_message("<span style=\"color:red\">[A] falls down [src]!</span>")
+				visible_message("<span class='alert'>[A] falls down [src]!</span>")
 				if (ismob(A))
 					var/mob/M = A
 					if(!M.stat && ishuman(M))

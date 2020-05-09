@@ -69,7 +69,7 @@
 		else
 			move_dir = 0
 
-		var/delay = CLAMP(10 - master.speed, 1, 10)
+		var/delay = clamp(10 - master.speed, 1, 10)
 
 		if ((owner in master) && (owner == master.piloting))
 			master.facing = move_dir

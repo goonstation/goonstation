@@ -44,15 +44,15 @@
 		if ((marker && get_dist(src, marker) > 15) && (master && get_dist(src,master) > 12 ))
 			if (marker)
 				src.set_loc(get_turf(marker))
-				boutput(src, "<span style=\"color:red\">You are too far from your portal and master! You warp back to the portal!</span>")
+				boutput(src, "<span class='alert'>You are too far from your portal and master! You warp back to the portal!</span>")
 			else if (master)
 				src.set_loc(get_turf(marker))
-				boutput(src, "<span style=\"color:red\">You are too far from your master and your portal is destroyed! You warp back to your master!</span>")
-			boutput(src, "<span style=\"color:red\">You are damaged from snapping back to your current location!</span>")
+				boutput(src, "<span class='alert'>You are too far from your master and your portal is destroyed! You warp back to your master!</span>")
+			boutput(src, "<span class='alert'>You are damaged from snapping back to your current location!</span>")
 			TakeDamage("all", 10, 10)
 	death()
 		if (master)
-			boutput(master, "<span style=\"color:red\">Your poltergeist, [src], has been destroyed!</span>")
+			boutput(master, "<span class='alert'>Your poltergeist, [src], has been destroyed!</span>")
 		qdel(marker)
 		..()
 
@@ -85,12 +85,12 @@
 			src.invisibility = 0
 			src.icon_state = "poltergeist-corp"
 			src.see_invisible = 0
-			src.visible_message(pick("<span style=\"color:red\">A horrible apparition fades into view!</span>", "<span style=\"color:red\">A pool of shadow forms!</span>"), pick("<span style=\"color:red\">A shell of ectoplasm forms around you!</span>", "<span style=\"color:red\">You manifest!</span>"))
+			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
 		update_body()
 
 	makeIncorporeal()
 		if (src.density)
-			src.visible_message(pick("<span style=\"color:red\">[src] vanishes!</span>", "<span style=\"color:red\">The poltergeist dissolves into shadow!</span>"), pick("<span style=\"color:blue\">The ectoplasm around you dissipates!</span>", "<span style=\"color:blue\">You fade into the aether!</span>"))
+			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 			src.set_density(0)
 			src.invisibility = 10
 			src.icon_state = "poltergeist"

@@ -58,7 +58,7 @@
 
 		C.limbs.replace_with(target_limb, text2path(new_limb), C, 0)
 		var/adjective = pick("terrifying","scary","menacing","badass","deadly","disgusting","grody")
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner]'s [(target_limb == "r_arm") ? "right" : "left"] arm quivers and rearranges itself into a [adjective] new form!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s [(target_limb == "r_arm") ? "right" : "left"] arm quivers and rearranges itself into a [adjective] new form!</B></span>"))
 		logTheThing("combat", C, null, "morphs a [new_limb], [log_loc(C)].")
 		playsound(get_turf(C), 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, 0.2, 1)
 

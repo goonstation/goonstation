@@ -29,7 +29,7 @@ var/list/globalContextActions = null
 			return ..()
 
 		showButtons(var/list/buttons, var/atom/target)
-			var/atom/screenCenter = usr.client.virtual_eye
+			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
 			var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 			var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 			var/offX = 0
@@ -38,7 +38,7 @@ var/list/globalContextActions = null
 			screenX += offsetX
 			screenY += offsetY
 
-			for(var/obj/screen/contextButton/C in buttons)
+			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 				var/mob/living/carbon/human/H = usr
@@ -47,6 +47,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -63,7 +69,7 @@ var/list/globalContextActions = null
 
 	experimentalcircle
 		showButtons(var/list/buttons, var/atom/target)
-			var/atom/screenCenter = usr.client.virtual_eye
+			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
 			var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 			var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 
@@ -91,6 +97,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/offX = round(dist*cos(anglePer*count)) + additionalX
 				var/offY = round(dist*sin(anglePer*count))	+ additionalY
@@ -104,7 +116,7 @@ var/list/globalContextActions = null
 
 	default
 		showButtons(var/list/buttons, var/atom/target)
-			var/atom/screenCenter = usr.client.virtual_eye
+			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
 			var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 			var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 			var/offX = 0
@@ -119,6 +131,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -134,7 +152,7 @@ var/list/globalContextActions = null
 
 	expandtest
 		showButtons(var/list/buttons, var/atom/target)
-			var/atom/screenCenter = usr.client.virtual_eye
+			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
 			var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 			var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 			var/offX = 0
@@ -150,6 +168,12 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -205,6 +229,12 @@ var/list/globalContextActions = null
 				if(istype(W)) W.hud.add_screen(C)
 				var/mob/dead/observer/GO = usr
 				if(istype(GO)) GO.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -260,7 +290,7 @@ var/list/globalContextActions = null
 		return
 
 	proc/closeContextActions()
-		for(var/obj/screen/contextButton/C in contextButtons)
+		for(var/obj/screen/contextButton/C in contextButtons)//todo : stop typechecking per context
 			var/mob/living/carbon/human/H = src
 			if(istype(H)) H.hud.remove_screen(C)
 			var/mob/living/critter/R = src
@@ -269,7 +299,18 @@ var/list/globalContextActions = null
 			if(istype(W)) W.hud.remove_screen(C)
 			var/mob/dead/observer/GO = usr
 			if(istype(GO)) GO.hud.remove_screen(C)
+			if (isrobot(src))
+				var/mob/living/silicon/robot/robot = src
+				robot.hud.remove_screen(C)
+			if (ishivebot(src))
+				var/mob/living/silicon/hivebot/hivebot = src
+				hivebot.hud.remove_screen(C)
+
 			contextButtons.Remove(C)
+			if(C.overlays)
+				C.overlays = list()
+			if(C.underlays)
+				C.underlays = list()
 
 			pool(C)
 		return
@@ -867,6 +908,166 @@ var/list/globalContextActions = null
 						user.show_text("You pulse [target]. In a general sense.", "blue")
 						playsound(get_turf(target), "sound/items/penclick.ogg", 50, 1)
 						return ..()
+
+	vehicle
+		icon = 'icons/ui/context16x16.dmi'
+		name = "Vehicle action"
+		desc = "You shouldn't be reading this, bug."
+		icon_state = "wrench"
+
+		execute(var/atom/target, var/mob/user)
+
+		checkRequirements(var/atom/target, var/mob/user)
+			.= (user.loc == target)
+
+
+		board
+			name = "Board"
+			desc = "Hop on."
+			icon_state = "board"
+
+			checkRequirements(var/atom/target, var/mob/user)
+				var/obj/machinery/vehicle/V = target
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.board()
+
+		eject_occupants
+			name = "Eject Occupants"
+			desc = "Force occupants out of the vehicle."
+			icon_state = "exit"
+
+			checkRequirements(var/atom/target, var/mob/user)
+				var/obj/machinery/vehicle/V = target
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.eject_occupants()
+
+		lock
+			name = "Show Lock Panel"
+			desc = "Unlock the ship."
+			icon_state = "lock"
+
+			checkRequirements(var/atom/target, var/mob/user)
+				var/obj/machinery/vehicle/V = target
+				if (V.locked && V.lock)
+					.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.lock.show_lock_panel(user,0)
+
+		parts
+			name = "Show Parts Panel"
+			desc = "Replace ship parts."
+			icon_state = "panel"
+
+			checkRequirements(var/atom/target, var/mob/user)
+				var/obj/machinery/vehicle/V = target
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.open_parts_panel(user)
+
+
+		exit_ship
+			name = "Exit Ship"
+			desc = "Hop off."
+			icon_state = "exit"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.exit_ship()
+
+		access_main_computer
+			name = "Access Main Computer"
+			desc = "Manage some ship functions."
+			icon_state = "computer"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.access_main_computer()
+
+		fire_main_weapon
+			name = "Fire Main Weapon"
+			desc = "Fire your weapon. But you should probably be pressing SPACE to fire instead..."
+			icon_state = "gun"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.fire_main_weapon()
+
+		use_external_speaker
+			name = "Use External Speaker"
+			desc = "Talk to people with your ship intercom."
+			icon_state = "speaker"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.use_external_speaker()
+
+		create_wormhole
+			name = "Create Wormhole"
+			desc = "Warp to a pod beacon."
+			icon_state = "portal"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.create_wormhole()
+
+		access_sensors
+			name = "Access Sensors"
+			desc = "Scan your surroundings."
+			icon_state = "radar"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.access_sensors()
+
+		use_secondary_system
+			name = "Use Secondary System"
+			desc = "Use a secondary systems special function if it exists."
+			icon_state = "computer2"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.use_secondary_system()
+
+		open_hangar
+			name = "Open Hangar"
+			desc = "Toggle nearby hangar blast door remotely."
+			icon_state = "door"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.open_hangar()
+
+		return_to_station
+			name = "Return To Station"
+			desc = "Use the ship's comm system to locate the station's Space GPS beacon and plot a return course."
+			icon_state = "return"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/machinery/vehicle/V = target
+				V.return_to_station()
 
 /*
 	offered

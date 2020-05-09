@@ -51,7 +51,7 @@
 		if (user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
 		SPAWN_DBG(0)
-			src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
 		src.emagged = 1
 		return 1
@@ -69,13 +69,8 @@
 	if (istype(W, /obj/item/card/emag))
 		//Do not hit the buttbot with the emag tia
 	else
-		src.visible_message("<span style=\"color:red\">[user] hits [src] with [W]!</span>")
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.5
-			if("brute")
-				src.health -= W.force * 0.5
-			else
+		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
+		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 
@@ -105,7 +100,7 @@
 
 /obj/machinery/bot/buttbot/explode()
 	src.on = 0
-	src.visible_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>")
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>")
 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 	s.set_up(3, 1, src)
 	s.start()

@@ -177,7 +177,7 @@
 	if(adir != ndir)
 		SPAWN_DBG(10+rand(0,15))
 			var/old_adir = adir
-			adir = (360+adir+CLAMP(ndir-adir,-10,10))%360
+			adir = (360+adir+clamp(ndir-adir,-10,10))%360
 			if (round((old_adir+22.5)%360) != round((old_adir+22.5)%360)) // it's basically angle2dir except it returns wrong values, but it changes when angle2dir changes and stays the same when angle2dir stays the same
 				updateicon()
 			update_solar_exposure()
@@ -292,14 +292,14 @@
 
 	if(status & (BROKEN | NOPOWER)) return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN | NOPOWER)) return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
@@ -329,7 +329,7 @@
 
 	src.updateDialog()
 
-/obj/machinery/power/solar_control/proc/interact(mob/user)
+/obj/machinery/power/solar_control/proc/interacted(mob/user)
 	if(status & (BROKEN | NOPOWER)) return
 	if ( (get_dist(src, user) > 1 ))
 		if (!isAI(user))
@@ -380,12 +380,12 @@
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = CLAMP((360+src.cdir+text2num(href_list["cdir"]))%360, 0, 359)
+			src.cdir = clamp((360+src.cdir+text2num(href_list["cdir"]))%360, 0, 359)
 			SPAWN_DBG(1 DECI SECOND)
 				set_panels(cdir)
 				updateicon()
 		if(href_list["tdir"])
-			src.trackrate = CLAMP(src.trackrate+text2num(href_list["tdir"]), -7200,7200)
+			src.trackrate = clamp(src.trackrate+text2num(href_list["tdir"]), -7200,7200)
 			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 
 	if(href_list["track"])
@@ -468,6 +468,6 @@
 
 		if(adir != ndir)
 			SPAWN_DBG(10+rand(0,15))
-				adir = (360+adir+CLAMP(ndir-adir,-10,10))%360
+				adir = (360+adir+clamp(ndir-adir,-10,10))%360
 				updateicon()
 				update_solar_exposure()

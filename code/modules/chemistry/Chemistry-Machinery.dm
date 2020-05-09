@@ -263,23 +263,23 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The Reagent Heater/Cooler is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The Reagent Heater/Cooler is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the Reagent Heater/Cooler to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the Reagent Heater/Cooler to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
 			if (!pillvol || !src.beaker || !R)
 				return
-			pillvol = CLAMP(pillvol, 5, 100)
+			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [pillcount] [pillname] pills from [log_reagents(R)].")
@@ -515,7 +515,7 @@
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/40)", "Volume", 5) as null|num
 			if (!patchvol || !src.beaker || !R)
 				return
-			patchvol = CLAMP(patchvol, 5, 40)
+			patchvol = clamp(patchvol, 5, 40)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [patchcount] [patchname] patches from [log_reagents(R)].")
@@ -631,23 +631,23 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the CheMaster 3000's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The CheMaster 3000 is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The CheMaster 3000 is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the CheMaster 3000 to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the CheMaster 3000 to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 datum/chemicompiler_core/stationaryCore
@@ -696,7 +696,7 @@ datum/chemicompiler_core/stationaryCore
 
 	attack_hand(mob/user as mob)
 		if (status & BROKEN || !powered())
-			boutput( user, "<span style='color:red'>You can't seem to power it on!</span>" )
+			boutput( user, "<span class='alert'>You can't seem to power it on!</span>" )
 			return
 		user.machine = src
 		executor.panel()

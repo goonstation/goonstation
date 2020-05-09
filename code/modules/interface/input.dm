@@ -162,6 +162,10 @@ var/list/dirty_keystates = list()
 
 		var/list/parameters = params2list(params)
 
+		if (admin_intent)
+			src.mob.admin_interact(object,parameters)
+			return
+
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object
@@ -169,7 +173,7 @@ var/list/dirty_keystates = list()
 					return
 				else
 					if (parameters["right"])
-						object.examine()
+						src.mob.examine_verb(object)
 
 
 		if (parameters["drag"] == "middle") //fixes exploit that basically gave everyone access to an aimbot
@@ -263,8 +267,6 @@ var/list/dirty_keystates = list()
 	proc/set_keymap(datum/keymap/map)
 		src.keymap = map
 
-	proc/setup_macros()
-
 		// oh god
 		/*
 		I have removed a heap of commented out shit.
@@ -290,7 +292,7 @@ var/list/dirty_keystates = list()
 			var/wasd = src.preferences.use_wasd
 			src.preferences.use_wasd = !wasd
 			//set_macro(src.preferences.use_wasd ? "macro_wasd" : "macro_arrow")
-			boutput(src, "<span style=\"color:blue\">WASD mode toggled [!wasd ? "on" : "off"]. Note that this setting will not save unless you manually do so in Character Preferences.</style>")
+			boutput(src, "<span class='notice'>WASD mode toggled [!wasd ? "on" : "off"]. Note that this setting will not save unless you manually do so in Character Preferences.</style>")
 			src.mob.reset_keymap()
 			return 1
 

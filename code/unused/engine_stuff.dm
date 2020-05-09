@@ -437,13 +437,13 @@ text("<A href='?src=\ref[];pattern=1'>[src.pattern]</A>", src))
 		if(src.pattern == "Single")
 			for(var/obj/machinery/engine_laser_spawner/M in src.emitters)
 				M.state = 1
-				sleep(30)
+				sleep(3 SECONDS)
 		else if(src.pattern == "Double")
 			var/double = 0
 			for(var/obj/machinery/engine_laser_spawner/M in src.emitters)
 				M.state = 1
 				if(double)
-					sleep(20)
+					sleep(2 SECONDS)
 					double = 0
 				else
 					double = 1
@@ -457,20 +457,20 @@ text("<A href='?src=\ref[];pattern=1'>[src.pattern]</A>", src))
 			if(src.pattern == "Single")
 				for(var/obj/machinery/engine_laser_spawner/M in src.emitters)
 					M.state = 1
-					sleep(30)
+					sleep(3 SECONDS)
 			else if(src.pattern == "Double")
 				var/double = 0
 				for(var/obj/machinery/engine_laser_spawner/M in src.emitters)
 					M.state = 1
 					if(double)
-						sleep(30)
+						sleep(3 SECONDS)
 						double = 0
 					else
 						double = 1
 			else
 				for(var/obj/machinery/engine_laser_spawner/M in src.emitters)
 					M.state = 1
-				sleep(30)
+				sleep(3 SECONDS)
 
 
 /obj/machinery/computer/laser_computer/process()

@@ -293,7 +293,7 @@ chui/window/security_cameras
 
 			//maybe I should change this, could be dumb for the movement mode - Kyle
 			if (!C.camera_status)
-				boutput(usr, "<span style=\"color:red\">BEEEEPP. Camera broken.</span>")
+				boutput(usr, "<span class='alert'>BEEEEPP. Camera broken.</span>")
 				// usr.set_eye(null)
 				// if( IsSubscribed( usr.client ) )
 				// 	Unsubscribe( usr.client )

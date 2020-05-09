@@ -210,10 +210,10 @@
 		if (!target)
 			return
 		if (isdead(usr) && !src.spooky)
-			boutput(usr, "<span style=\"color:red\">Ghosts dealing cards? That's too spooky!</span>")
+			boutput(usr, "<span class='alert'>Ghosts dealing cards? That's too spooky!</span>")
 			return
 		if (get_dist(usr, src) > 1)
-			boutput(usr, "<span style=\"color:red\">You're too far from [src] to draw a card!</span>")
+			boutput(usr, "<span class='alert'>You're too far from [src] to draw a card!</span>")
 			return
 		if (get_dist(usr, target) > 1)
 			if (istype(target, /obj/screen/hud))
@@ -223,13 +223,13 @@
 					if (h_hud.master && h_hud.master == usr) // or their face, I guess.  it'll apply to any attempts to deal to your hud
 						target = usr
 					else
-						boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
+						boutput(usr, "<span class='alert'>You're too far away from [target] to deal a card!</span>")
 						return
 				else
-					boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
+					boutput(usr, "<span class='alert'>You're too far away from [target] to deal a card!</span>")
 					return
 			else
-				boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
+				boutput(usr, "<span class='alert'>You're too far away from [target] to deal a card!</span>")
 				return
 
 		var/deal_face_up = 0
@@ -237,13 +237,13 @@
 		if (usr.a_intent != INTENT_HELP)
 			deal_face_up = 1
 		if (usr.a_intent == INTENT_GRAB && src.cards.len > 1)
-			usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> looks through [src].</span>",\
-			"<span style=\"color:blue\">You look through [src].</span>")
+			usr.visible_message("<span class='notice'><b>[usr]</b> looks through [src].</span>",\
+			"<span class='notice'>You look through [src].</span>")
 			deal_face_up = 0
 			var/list/availableCards = list()
 			for (var/datum/playing_card/listCard in src.cards)
 				availableCards += "[listCard.card_name]"
-			boutput(usr, "<span style=\"color:blue\">What card would you like to deal from [src]?</span>")
+			boutput(usr, "<span class='notice'>What card would you like to deal from [src]?</span>")
 			availableCards = sortList(availableCards)
 			var/chosenCard = input("Select a card to deal.", "Choose Card") as null|anything in availableCards
 			if (!chosenCard)
@@ -259,48 +259,48 @@
 		if (src.cards.len == 1)
 			if (target == src && src.card_tappable)
 				if (src.card_tapped)
-					usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> untaps [src].</span>",\
-					"<span style=\"color:blue\">You untap [src].</span>")
+					usr.visible_message("<span class='notice'><b>[usr]</b> untaps [src].</span>",\
+					"<span class='notice'>You untap [src].</span>")
 					src.card_tapped = null
 					src.update_cards()
 				else
-					usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> taps [src].</span>",\
-					"<span style=\"color:blue\">You tap [src].</span>")
+					usr.visible_message("<span class='notice'><b>[usr]</b> taps [src].</span>",\
+					"<span class='notice'>You tap [src].</span>")
 					src.card_tapped = pick(EAST, WEST)
 					src.update_cards()
 			else if (ismob(target))
-				usr.tri_message("<span style=\"color:blue\"><b>[usr]</b> takes [stupid_var][usr == target ? "." : " and deals it to [target]."]</span>",\
-				usr, "<span style=\"color:blue\">You take [stupid_var][usr == target ? "." : " and deal it to [target]."]</span>", \
-				target, "<span style=\"color:blue\">[target == usr ? "You take" : "<b>[usr]</b> takes"] [stupid_var][target == usr ? "." : " and deals it to you."]</span>")
+				usr.tri_message("<span class='notice'><b>[usr]</b> takes [stupid_var][usr == target ? "." : " and deals it to [target]."]</span>",\
+				usr, "<span class='notice'>You take [stupid_var][usr == target ? "." : " and deal it to [target]."]</span>", \
+				target, "<span class='notice'>[target == usr ? "You take" : "<b>[usr]</b> takes"] [stupid_var][target == usr ? "." : " and deals it to you."]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
 			else if (istype(target, /obj/table))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> takes [stupid_var] and places it on [target].</span>",\
-				"<span style=\"color:blue\">You take [stupid_var] and place it on [target].</span>")
+				usr.visible_message("<span class='notice'><b>[usr]</b> takes [stupid_var] and places it on [target].</span>",\
+				"<span class='notice'>You take [stupid_var] and place it on [target].</span>")
 				src.draw_card(null, target, deal_face_up, Card)
 			else if (istype(target, /obj/item/playing_cards))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> takes [stupid_var] and adds it to [target].</span>",\
-				"<span style=\"color:blue\">You take [stupid_var] and add it to [target].</span>")
+				usr.visible_message("<span class='notice'><b>[usr]</b> takes [stupid_var] and adds it to [target].</span>",\
+				"<span class='notice'>You take [stupid_var] and add it to [target].</span>")
 				src.draw_card(target, null, deal_face_up, Card)
 			else
-				boutput(usr, "<span style=\"color:red\">What exactly are you trying to accomplish by giving [target] a card? [target] can't use it!</span>")
+				boutput(usr, "<span class='alert'>What exactly are you trying to accomplish by giving [target] a card? [target] can't use it!</span>")
 				return
 
 		else
 			if (ismob(target))
-				usr.tri_message("<span style=\"color:blue\"><b>[usr]</b> draws [other_stupid_var] from [src][usr == target ? "." : " and deals it to [target]."]</span>",\
-				usr, "<span style=\"color:blue\">You draw [other_stupid_var] from [src][usr == target ? "." : " and deal it to [target]."]</span>", \
-				target, "<span style=\"color:blue\">[target == usr ? "You draw" : "<b>[usr]</b> draws"] a card from [src][target == usr ? "." : " and deals it to you."]</span>")
+				usr.tri_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src][usr == target ? "." : " and deals it to [target]."]</span>",\
+				usr, "<span class='notice'>You draw [other_stupid_var] from [src][usr == target ? "." : " and deal it to [target]."]</span>", \
+				target, "<span class='notice'>[target == usr ? "You draw" : "<b>[usr]</b> draws"] a card from [src][target == usr ? "." : " and deals it to you."]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
 			else if (istype(target, /obj/table))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws [other_stupid_var] from [src] and places it on [target].</span>",\
-				"<span style=\"color:blue\">You draw [other_stupid_var] from [src] and place it on [target].[other_stupid_var]</span>")
+				usr.visible_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src] and places it on [target].</span>",\
+				"<span class='notice'>You draw [other_stupid_var] from [src] and place it on [target].[other_stupid_var]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
 			else if (istype(target, /obj/item/playing_cards))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws [other_stupid_var] from [src] and adds it to [target].</span>",\
-				"<span style=\"color:blue\">You draw [other_stupid_var] from [src] and add it to [target].</span>")
+				usr.visible_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src] and adds it to [target].</span>",\
+				"<span class='notice'>You draw [other_stupid_var] from [src] and add it to [target].</span>")
 				src.draw_card(target, null, deal_face_up, Card)
 			else
-				boutput(usr, "<span style=\"color:red\">What exactly are you trying to accomplish by dealing [target] a card? [target] can't use it!</span>")
+				boutput(usr, "<span class='alert'>What exactly are you trying to accomplish by dealing [target] a card? [target] can't use it!</span>")
 				return
 
 	attack_hand(mob/user as mob)
@@ -310,12 +310,12 @@
 				if (user.a_intent != INTENT_HELP)
 					draw_face_up = 1
 				if (user.a_intent == INTENT_GRAB && src.cards.len > 1)
-					user.visible_message("<span style=\"color:blue\"><b>[user]</b> looks through [src].</span>",\
-					"<span style=\"color:blue\">You look through [src].</span>")
+					user.visible_message("<span class='notice'><b>[user]</b> looks through [src].</span>",\
+					"<span class='notice'>You look through [src].</span>")
 					var/list/availableCards = list()
 					for (var/datum/playing_card/Card in src.cards)
 						availableCards += "[Card.card_name]"
-					boutput(user, "<span style=\"color:blue\">What card would you like to draw from [src]?</span>")
+					boutput(user, "<span class='notice'>What card would you like to draw from [src]?</span>")
 					var/chosenCard = input("Select a card to draw.", "Choose Card") as null|anything in availableCards
 					if (!chosenCard)
 						return
@@ -326,13 +326,13 @@
 							break
 					if (!cardToGive)
 						return
-					user.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws a card from [src].</span>",\
-					"<span style=\"color:blue\">You draw \an [chosenCard] from [src].</span>")
+					user.visible_message("<span class='notice'><b>[usr]</b> draws a card from [src].</span>",\
+					"<span class='notice'>You draw \an [chosenCard] from [src].</span>")
 					src.draw_card(null, user, draw_face_up, cardToGive)
 				else
 					var/datum/playing_card/Card = src.cards[1]
-					user.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
-					"<span style=\"color:blue\">You draw [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>")
+					user.visible_message("<span class='notice'><b>[usr]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
+					"<span class='notice'>You draw [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>")
 					src.draw_card(null, user, draw_face_up)
 			else return ..(user)
 		else return ..(user)
@@ -341,8 +341,8 @@
 		if (istype(W, /obj/item/playing_cards))
 			var/obj/item/playing_cards/C = W
 			src.add_cards(C)
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> adds [C] to the bottom of [src].</span>",\
-			"<span style=\"color:blue\">You add [C] to the bottom of [src].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> adds [C] to the bottom of [src].</span>",\
+			"<span class='notice'>You add [C] to the bottom of [src].</span>")
 		else return ..()
 
 	attack_self(mob/user as mob)
@@ -355,24 +355,24 @@
 			if (1)
 				src.face_up = !(src.face_up)
 				src.update_cards()
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> flips the card [src.face_up ? "face up. It's \an [src.name]." : "face down."]</span>",\
-				"<span style=\"color:blue\">You flip the card [src.face_up ? "face up. It's \an [src.name]." : "face down."]</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> flips the card [src.face_up ? "face up. It's \an [src.name]." : "face down."]</span>",\
+				"<span class='notice'>You flip the card [src.face_up ? "face up. It's \an [src.name]." : "face down."]</span>")
 				src.last_shown_off = world.time
 			if (2 to 10)
 				var/shown_hand = ""
 				for (var/datum/playing_card/Card in src.cards)
 					shown_hand += "\an [Card.card_name], "
 				var/final_shown_hand = copytext(shown_hand, 1, -2)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> shows their hand: [final_shown_hand].</span>",\
-				"<span style=\"color:blue\">You show your hand: [final_shown_hand].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> shows their hand: [final_shown_hand].</span>",\
+				"<span class='notice'>You show your hand: [final_shown_hand].</span>")
 				src.last_shown_off = world.time
 			if (11 to INFINITY)
 				riffle_shuffle(src.cards)
 				for (var/datum/playing_card/Card in src.cards)
 					if (Card.card_reversible)
 						Card.card_reversed = rand(0, 1)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> shuffles [src].</span>",\
-				"<span style=\"color:blue\">You shuffle [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> shuffles [src].</span>",\
+				"<span class='notice'>You shuffle [src].</span>")
 				src.last_shown_off = world.time
 
 /obj/item/playing_cards/suit
@@ -891,7 +891,7 @@
 		else if (!src.open)
 			src.open = 1
 		else
-			boutput(user, "<span style=\"color:red\">[src] is already open!</span>")
+			boutput(user, "<span class='alert'>[src] is already open!</span>")
 		src.update_icon()
 		return
 
@@ -900,20 +900,20 @@
 			if (istype(W, /obj/item/playing_cards))
 				var/obj/item/playing_cards/C = W
 				if (!src.open)
-					boutput(user, "<span style=\"color:red\">[src] isn't open, you goof!</span>")
+					boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
 					return
 
 				if (src.Cards)
 					if (src.Cards.cards.len + C.cards.len > 120)
-						boutput(user, "<span style=\"color:red\">You try your best to stuff more cards into [src], but there's just not enough room!</span>")
+						boutput(user, "<span class='alert'>You try your best to stuff more cards into [src], but there's just not enough room!</span>")
 						return
 					else
-						boutput(user, "<span style=\"color:blue\">You add [C] to the cards in [src].</span>")
+						boutput(user, "<span class='notice'>You add [C] to the cards in [src].</span>")
 						src.Cards.add_cards(C)
 						return
 
 				if (C.cards.len > 60)
-					boutput(user, "<span style=\"color:red\">You try your best to stuff the cards into [src], but there's just not enough room for all of them!</span>")
+					boutput(user, "<span class='alert'>You try your best to stuff the cards into [src], but there's just not enough room for all of them!</span>")
 					return
 
 				user.u_equip(W)

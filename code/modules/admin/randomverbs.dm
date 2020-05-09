@@ -79,14 +79,14 @@
 			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
 			logTheThing("admin", usr, M, "sent %target% to the prison zone.")
 			logTheThing("diary", usr, M, "%target% to the prison zone.", "admin")
-			message_admins("<span style=\"color:blue\">[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
+			message_admins("<span class='notice'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
 
 	return
 
 /client/proc/cmd_admin_subtle_message(mob/M as mob in world)
 	set category = null
 	set name = "Subtle Message"
-	set popup_menu = 1 // this was actually kinda useful to have in rclick menu, hope you dont mind me reactivating it
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -107,7 +107,7 @@
 	var/subtle_href = null
 	if(src.holder && M.client)
 		subtle_href = "?src=\ref[src.holder];action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins("<span style=\"color:blue\"><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
+	message_admins("<span class='notice'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	set category = null
@@ -128,11 +128,11 @@
 	if (!msg)
 		return
 	if (src && src.holder)
-		boutput(Mclient.mob, "<span style=\"color:red\">[msg]</span>")
+		boutput(Mclient.mob, "<span class='alert'>[msg]</span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged %target%: [html_encode(msg)]")
 	logTheThing("diary", src.mob, Mclient.mob, ": Plain Messaged %target%: [html_encode(msg)]", "admin")
-	message_admins("<span style=\"color:blue\"><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
+	message_admins("<span class='notice'><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
 
 /client/proc/cmd_admin_plain_message_all()
 	set category = "Special Verbs"
@@ -154,11 +154,13 @@
 
 	logTheThing("admin", src.mob, null, "Plain Messaged All: [html_encode(msg)]")
 	logTheThing("diary", src.mob, null, "Plain Messaged All: [html_encode(msg)]", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(src.mob)] showed a plain message to all</span>")
+	message_admins("<span class='notice'>[key_name(src.mob)] showed a plain message to all</span>")
 
 /client/proc/cmd_admin_pm(mob/M as mob in world)
 	set category = null
 	set name = "Admin PM"
+	set popup_menu = 0
+
 	admin_only
 
 	do_admin_pm(M.ckey, src.mob) //Changed to work off of ckeys instead of mobs.
@@ -303,11 +305,11 @@
 	for (var/mob/living/silicon/O in mobs)
 		if (isghostdrone(O))
 			continue
-		boutput(O, "<h3><span style=\"color:blue\">New law uploaded by Centcom: [input]</span></h3>")
+		boutput(O, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
 	for (var/mob/dead/aieye/E in mobs)
-		boutput(E, "<h3><span style=\"color:blue\">New law uploaded by Centcom: [input]</span></h3>")
+		boutput(E, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
 
@@ -352,11 +354,11 @@
 	for (var/mob/living/silicon/O in mobs)
 		if (isghostdrone(O))
 			continue
-		boutput(O, "<h3><span style=\"color:blue\">New laws were uploaded by CentCom:</span></h3>")
+		boutput(O, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
 	for (var/mob/dead/aieye/E in mobs)
-		boutput(E, "<h3><span style=\"color:blue\">New laws were uploaded by CentCom:</span></h3>")
+		boutput(E, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
 
@@ -398,7 +400,7 @@
 		for(var/mob/living/silicon/O in mobs)
 			if (isghostdrone(O)) continue
 			if (O.emagged || O.syndicate) continue
-			boutput(O, "<h3><span style=\"color:blue\">Behavior safety chip activated. Laws reset.</span></h3>")
+			boutput(O, "<h3><span class='notice'>Behavior safety chip activated. Laws reset.</span></h3>")
 			O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 			O.show_laws()
 
@@ -409,7 +411,7 @@
 /client/proc/cmd_admin_rejuvenate(mob/M as mob in world)
 	set category = null
 	set name = "Heal"
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 	if(!src.mob)
 		return
@@ -421,7 +423,7 @@
 
 		logTheThing("admin", usr, M, "healed / revived %target%")
 		logTheThing("diary", usr, M, "healed / revived %target%", "admin")
-		message_admins("<span style=\"color:red\">Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
+		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 	else
 		alert("Admin revive disabled")
 
@@ -445,7 +447,7 @@
 
 		logTheThing("admin", usr, null, "healed / revived [healed] mobs via Heal All")
 		logTheThing("diary", usr, null, "healed / revived [healed] mobs via Heal All", "admin")
-		message_admins("<span style=\"color:red\">Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!</span>")
+		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!</span>")
 
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
@@ -536,6 +538,7 @@
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Debug"
 	set name = "Delete"
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -638,7 +641,7 @@
 
 	logTheThing("admin", selection, "set %target%'s viewport orientation to [rotation].")
 	logTheThing("diary", usr, selection, "set %target%'s viewport orientation to [rotation].", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
+	message_admins("<span class='notice'>[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
 
 /client/proc/cmd_admin_clownify(mob/living/M as mob in world)
 	set category = null
@@ -653,11 +656,10 @@
 	smoke.attach(M)
 	smoke.start()
 
-	boutput(M, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
+	boutput(M, "<span class='alert'><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
-	if (M.mind)
-		M.mind.assigned_role = "Cluwne"
+	M.job = "Cluwne"
 	M.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1) // path, name, strain, bypass resist
 	M.contract_disease(/datum/ailment/disability/clumsy, null, null, 1) // path, name, strain, bypass resist
 	M.change_misstep_chance(66)
@@ -691,7 +693,7 @@
 	set category = "Special Verbs"
 	set name = "Polymorph Player"
 	set desc = "Futz with a human mob's DNA."
-	set popup_menu = 1
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -1024,7 +1026,7 @@
 
 		switch(src.cinematic)
 			if("Changeling") //Heh
-				target_mob.visible_message("<span style=\"color:red\"><b>[target_mob] transforms!</b></span>")
+				target_mob.visible_message("<span class='alert'><b>[target_mob] transforms!</b></span>")
 
 			if("Wizard") //Heh 2: Merlin Edition
 				qdel(target_mob.wear_suit)
@@ -1041,7 +1043,7 @@
 				smoke.attach(target_mob)
 				smoke.start()
 
-				target_mob.visible_message("<span style=\"color:red\"><b>The glamour around [old_name] drops!</b></span>")
+				target_mob.visible_message("<span class='alert'><b>The glamour around [old_name] drops!</b></span>")
 				target_mob.say("DISPEL!")
 
 			if("Smoke")
@@ -1087,7 +1089,7 @@
 			if(!usercl || !target_mob)
 				qdel(src)
 				return
-			sleep(20)
+			sleep(2 SECONDS)
 		return
 
 	proc/update_preview_icon()
@@ -1219,6 +1221,7 @@
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
 	set category = "Special Verbs"
+	set popup_menu = 0
 	new /mob/living/object(O, usr)
 
 /proc/possessmob(mob/M as mob in world)
@@ -1227,7 +1230,7 @@
 	set popup_menu = 0
 	M.oldmob = usr
 	M.oldmind = M.mind
-	boutput(M, "<span style=\"color:red\">Your soul is forced out of your body!</span>")
+	boutput(M, "<span class='alert'>Your soul is forced out of your body!</span>")
 	M.ghostize()
 	var/ckey = usr.key
 	M.mind = usr.mind
@@ -1245,7 +1248,7 @@
 	M.mind = M.oldmind
 	if(M.mind)
 		M.ckey = M.mind.key
-	boutput(M, "<span style=\"color:red\">Your soul is sucked back into your body!</span>")
+	boutput(M, "<span class='alert'>Your soul is sucked back into your body!</span>")
 
 /client/proc/cmd_whois(target as text)
 	set name = "Whois"
@@ -1257,7 +1260,7 @@
 	target = trim(lowertext(target))
 	if (!target) return 0
 
-	var/msg = "<span style='color:blue'>"
+	var/msg = "<span class='notice'>"
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
@@ -1280,7 +1283,7 @@
 	admin_only
 
 	SPAWN_DBG(0)
-		boutput(usr, "<span style=\"color:red\">Generating reward list.</span>")
+		boutput(usr, "<span class='alert'>Generating reward list.</span>")
 		var/list/eligible = list()
 		for (var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -1288,7 +1291,7 @@
 			eligible[D.title] = D
 
 		if (!length(eligible))
-			boutput(usr, "<span style=\"color:red\">Sorry, you don't have any rewards available.</span>")
+			boutput(usr, "<span class='alert'>Sorry, you don't have any rewards available.</span>")
 			return
 
 		var/selection = input(usr,"Please select your reward", "VIP Rewards","CANCEL") as null|anything in eligible
@@ -1305,7 +1308,7 @@
 				break
 
 		if (S == null)
-			boutput(usr, "<span style=\"color:red\">Invalid Rewardtype after selection. Please inform a coder.</span>")
+			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		if (M == "Yes")
@@ -1313,7 +1316,7 @@
 
 /client/proc/cmd_admin_check_health(var/atom/target as null|mob in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Check Health"
 	set desc = "Checks the health of someone."
 	admin_only
@@ -1327,7 +1330,7 @@
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Check Reagents"
 	set desc = "Checks the reagents of something."
 	admin_only
@@ -1346,7 +1349,7 @@
 			if (F.group && F.group.reagents)
 				reagents = F.group.reagents
 		if (!reagents)
-			boutput(usr, "<span style=\"color:blue\"><b>[target] contains no reagents.</b></span>")
+			boutput(usr, "<span class='notice'><b>[target] contains no reagents.</b></span>")
 			return
 	else
 		reagents = target.reagents
@@ -1455,7 +1458,7 @@
 		log_reagents = "(nothing)"
 
 	if(!refresh)
-		boutput(usr, "<span style=\"color:blue\"><b>[target]'s reagents</b> ([reagents.total_volume] / [reagents.maximum_volume])<br>[log_reagents]</span><br>Temp: <i>[reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)</i>") // Added temperature (Convair880).
+		boutput(usr, "<span class='notice'><b>[target]'s reagents</b> ([reagents.total_volume] / [reagents.maximum_volume])<br>[log_reagents]</span><br>Temp: <i>[reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)</i>") // Added temperature (Convair880).
 	usr.Browse(final_report, "window=reagent_report")
 
 	logTheThing("admin", usr, null, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]")
@@ -1506,10 +1509,9 @@
 	if(holder)
 		src.holder.playeropt(M)
 
-/client/proc/addpathogens(var/obj/A in world)
-	set category = null
-	set name = "Add Random Pathogens Reagent"
-	admin_only
+/obj/proc/addpathogens()
+	usr_admin_only
+	var/obj/A = src
 	if(!A.reagents) A.create_reagents(100)
 	var/amount = input(usr,"Amount:","Amount",50) as num
 	if(!amount) return
@@ -1521,11 +1523,12 @@
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P
 
-	boutput(usr, "<span style=\"color:green\">Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
+	boutput(usr, "<span class='success'>Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
 
 /client/proc/addreagents(var/atom/A in world)
 	set category = null
 	set name = "Add Reagent"
+	set popup_menu = 0
 
 	admin_only
 
@@ -1555,7 +1558,7 @@
 	if(!amount) return
 
 	A.reagents.add_reagent(reagent.id, amount)
-	boutput(usr, "<span style=\"color:green\">Added [amount] units of [reagent.id] to [A.name]</span>")
+	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name]</span>")
 
 	// Brought in line with adding reagents via the player panel (Convair880).
 	logTheThing("admin", src, A, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
@@ -1602,7 +1605,7 @@
 			Bee.set_density(initial(Bee.density))
 			Bee.update_icon()
 			Bee.on_revive()
-			Bee.visible_message("<span style=\"color:red\">[Bee] seems to rise from the dead!</span>")
+			Bee.visible_message("<span class='alert'>[Bee] seems to rise from the dead!</span>")
 			revived ++
 	for (var/obj/critter/domestic_bee_larva/Larva in world)
 		LAGCHECK(LAG_LOW)
@@ -1612,7 +1615,7 @@
 			Larva.icon_state = initial(Larva.icon_state)
 			Larva.set_density(initial(Larva.density))
 			Larva.on_revive()
-			Larva.visible_message("<span style=\"color:red\">[Larva] seems to rise from the dead!</span>")
+			Larva.visible_message("<span class='alert'>[Larva] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing("admin", src, null, "revived [revived] bee[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] bee[revived == 1 ? "" : "s"]!")
@@ -1631,7 +1634,7 @@
 			Cat.icon_state = initial(Cat.icon_state)
 			Cat.set_density(initial(Cat.density))
 			Cat.on_revive()
-			Cat.visible_message("<span style=\"color:red\">[Cat] seems to rise from the dead!</span>")
+			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing("admin", src, null, "revived [revived] cat[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] cat[revived == 1 ? "" : "s"]!")
@@ -1650,7 +1653,7 @@
 			Bird.icon_state = Bird.species
 			Bird.set_density(initial(Bird.density))
 			Bird.on_revive()
-			Bird.visible_message("<span style=\"color:red\">[Bird] seems to rise from the dead!</span>")
+			Bird.visible_message("<span class='alert'>[Bird] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing("admin", src, null, "revived [revived] parrot[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] parrot[revived == 1 ? "" : "s"]!")
@@ -1664,55 +1667,11 @@
 			critters += C
 	return critters
 
-/client/proc/revive_critter(var/obj/critter/C)
-	set name = "Revive Critter"
-	set category = null
-	set desc = "Brings a critter back to life, like magic!"
-	set popup_menu = 1
-	admin_only
-
-	if (!istype(C, /obj/critter))
-		boutput(src, "[C] isn't a critter! How did you even get here?!")
-		return
-
-	if (!C.alive || C.health <= 0)
-		C.health = initial(C.health)
-		C.alive = 1
-		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
-		C.set_density(initial(C.density))
-		C.on_revive()
-		C.visible_message("<span style=\"color:red\">[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
-		message_admins("[key_name(src)] revived [C] (critter)!")
-	else
-		boutput(src, "[C] isn't dead, you goof!")
-		return
-
-/client/proc/kill_critter(var/obj/critter/C)
-	set name = "Kill Critter"
-	set category = null
-	set desc = "Kills a critter DEAD!"
-	set popup_menu = 1
-	admin_only
-
-	if (!istype(C, /obj/critter))
-		boutput(src, "[C] isn't a critter! How did you even get here?!")
-		return
-
-	if (C.alive)
-		C.health = 0
-		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
-		message_admins("[key_name(src)] killed [C] (critter)!")
-	else
-		boutput(src, "[C] isn't alive, you goof!")
-		return
-
 /client/proc/cmd_transfer_client(var/mob/M)
 	set name = "Transfer Client To"
 	set category = "Special Verbs"
 	set desc = "Transfer a client to the selected mob."
-	set popup_menu = 1 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
+	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 	admin_only
 
 	if (M.ckey)
@@ -1739,7 +1698,7 @@
 	set name = "Swap Bodies With"
 	set category = "Special Verbs"
 	set desc = "Swaps yours and the other person's bodies around."
-	set popup_menu = 1 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
+	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 
 	admin_only
 	if(!M || M == usr ) return
@@ -1871,6 +1830,8 @@
 
 	return
 
+//flourish told me this was broken... if you want admin foam brew it yourself!!
+/*
 /client/proc/admin_foam(var/atom/A as turf|obj|mob, var/amount as num)
 	set name = "Create Foam"
 	set category = null
@@ -1890,6 +1851,7 @@
 	s.start()
 	if (A.reagents)
 		holder.clear_reagents()
+*/
 
 //client/proc/admin_smoke(var/atom/A as turf|obj|mob, var/size as num)
 //	set name = "Create Smoke"
@@ -1912,7 +1874,7 @@
 /client/proc/admin_smoke(var/turf/T in world)
 	set name = "Create smoke"
 	set category = "Special Verbs"
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	var/list/L = list()
@@ -1955,7 +1917,7 @@
 	set name = "Create Fluid"
 	set category = null
 	set desc = "Attempt a fluid reaction on a turf."
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	if (!T)
@@ -2043,7 +2005,7 @@
 
 /client/proc/admin_follow_mobject(var/atom/target as mob|obj in world)
 	set category = "Admin"
-	set popup_menu = 1
+	set popup_menu = 0
 	set name = "Follow Thing"
 	set desc = "It's like observing, but without that part where you see everything as the person you're observing. Move to cancel if an observer, or use any jump command to leave if alive."
 	admin_only
@@ -2082,7 +2044,7 @@
 		player_pool += M
 
 	if (!player_pool.len)
-		boutput(src, "<span style=\"color:red\">Error: no valid mobs found via selected options.</span>")
+		boutput(src, "<span class='alert'>Error: no valid mobs found via selected options.</span>")
 		return
 
 	var/chosen_player = pick(player_pool)
@@ -2149,10 +2111,11 @@ var/global/night_mode_enabled = 0
 /client/proc/modify_organs(var/mob/living/carbon/human/H as mob in list_humans())
 	set name = "Modify Organs"
 	set category = "Special Verbs"
+	set popup_menu = 0
 	admin_only
 
 	if (!istype(H))
-		boutput(usr, "<span style=\"color:red\">This can only be used on humans!</span>")
+		boutput(usr, "<span class='alert'>This can only be used on humans!</span>")
 		return
 	if (!H.organHolder)
 		if (alert(usr, "[H] lacks an organHolder! Create a new one?", "Error", "Yes", "No") == "Yes")
@@ -2238,13 +2201,13 @@ var/global/night_mode_enabled = 0
 			var/obj/item/created_organ = new new_organ
 			created_organ:donor = H
 			H.organHolder.receive_organ(created_organ, organ)
-			boutput(usr, "<span style=\"color:blue\">[H]'s [lowertext(organ)] replaced with [created_organ].</span>")
+			boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] replaced with [created_organ].</span>")
 			logTheThing("admin", usr, H, "replaced %target%'s [lowertext(organ)] with [created_organ]")
 			logTheThing("diary", usr, H, "replaced %target%'s [lowertext(organ)] with [created_organ]", "admin")
 		if ("Drop")
 			if (alert(usr, "Are you sure you want [H] to drop their [lowertext(organ)]?", "Confirmation", "Yes", "No") == "Yes")
 				H.organHolder.drop_organ(organ)
-				boutput(usr, "<span style=\"color:blue\">[H]'s [lowertext(organ)] dropped.</span>")
+				boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] dropped.</span>")
 				logTheThing("admin", usr, H, "dropped %target%'s [lowertext(organ)]")
 				logTheThing("diary", usr, H, "dropped %target%'s [lowertext(organ)]", "admin")
 			else
@@ -2253,7 +2216,7 @@ var/global/night_mode_enabled = 0
 			if (alert(usr, "Are you sure you want to delete [H]'s [lowertext(organ)]?", "Confirmation", "Yes", "No") == "Yes")
 				var/organ2del = H.organHolder.drop_organ(organ)
 				qdel(organ2del)
-				boutput(usr, "<span style=\"color:blue\">[H]'s [lowertext(organ)] deleted.</span>")
+				boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] deleted.</span>")
 				logTheThing("admin", usr, H, "deleted %target%'s [lowertext(organ)]")
 				logTheThing("diary", usr, H, "deleted %target%'s [lowertext(organ)]", "admin")
 			else
@@ -2271,7 +2234,8 @@ var/global/night_mode_enabled = 0
 /client/proc/generate_poster(var/target as null|area|turf|obj|mob in world)
 	set name = "Create Poster"
 	set category = "Special Verbs"
-	set popup_menu = 1
+	set popup_menu = 0
+
 	admin_only
 	if (alert(usr, "Wanted poster or custom poster?", "Select Poster Style", "Wanted", "Custom") == "Wanted")
 		gen_wp(target)
@@ -2282,6 +2246,8 @@ var/global/night_mode_enabled = 0
 	set name = "Boot"
 	set desc = "Boot a player off the server"
 	set category = "Admin"
+	set popup_menu = 0
+
 	admin_only
 
 	if (src.holder.level >= LEVEL_MOD)
@@ -2289,7 +2255,7 @@ var/global/night_mode_enabled = 0
 			if (alert(usr, "Boot [M]?", "Confirmation", "Yes", "No") == "Yes")
 				logTheThing("admin", usr, M, "booted %target%.")
 				logTheThing("diary", usr, M, "booted %target%.", "admin")
-				message_admins("<span style=\"color:blue\">[key_name(usr)] booted [key_name(M)].</span>")
+				message_admins("<span class='notice'>[key_name(usr)] booted [key_name(M)].</span>")
 				del(M.client)
 	else
 		alert("You need to be at least a Moderator to kick players.")
@@ -2298,6 +2264,8 @@ var/global/night_mode_enabled = 0
 	set name = "Fake Medal"
 	set desc = "Creates a false medal message and shows it to someone, or everyone."
 	set category = "Admin"
+	set popup_menu = 0
+
 	admin_only
 
 	if (!msg)
@@ -2327,6 +2295,8 @@ var/global/night_mode_enabled = 0
 	set name = "Unshamecube"
 	set desc = "Mostly removes the shamecube someone is under"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 
 	if (!M || !src.mob || !M.client || !M.client.player || !M.client.player.shamecubed)
@@ -2359,6 +2329,8 @@ var/global/night_mode_enabled = 0
 	set name = "Shamecube"
 	set desc = "Places the player in a windowed cube at your location"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
@@ -2460,6 +2432,8 @@ var/global/night_mode_enabled = 0
 	set name = "Get Telesci Coords"
 	set desc = "Get the weird messed up co-ordinates that telesci wants for this turf"
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if(!telesci_modifiers_set)
@@ -2478,6 +2452,8 @@ var/global/night_mode_enabled = 0
 	set name = "Clear Medals"
 	set desc = "Clear medals of an account."
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if (!target_key)
@@ -2502,6 +2478,8 @@ var/global/night_mode_enabled = 0
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if (!config || !config.medal_hub || !config.medal_password)
@@ -2527,6 +2505,8 @@ var/global/night_mode_enabled = 0
 	set name = "Copy Medals"
 	set desc = "Copy medals from one account to another."
 	set category = null
+	set popup_menu = 0
+
 	admin_only
 
 	if (!config || !config.medal_hub || !config.medal_password)
@@ -2558,6 +2538,8 @@ var/global/night_mode_enabled = 0
 	set name = "Disable Admin Powers"
 	set desc = "Disables all admin features for yourself until returned or you log in again."
 	set category = "Admin"
+	set popup_menu = 0
+
 	admin_only
 
 	if(alert("Disable admin powers? Lasts until you log in or you cancel the effect.", "Disable admin powers?", "Yes", "No") == "Yes")
@@ -2570,6 +2552,8 @@ var/global/night_mode_enabled = 0
 	set name = "Return Admin Powers"
 	set desc = "Returns your admin powers to you. If you had any. If not you will always and forever be a chumperton."
 	set category = "Commands"
+	set popup_menu = 0
+
 	if(src.init_admin())
 		message_admins("[key_name(src)] has re-enabled their admin powers.")
 	else

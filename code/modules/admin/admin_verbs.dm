@@ -51,7 +51,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
 		/client/proc/change_admin_prefs,
-		/client/proc/cmd_boot,
+		//client/proc/cmd_boot,
 
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
@@ -90,8 +90,8 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_bees,
 		/client/proc/revive_all_cats,
 		/client/proc/revive_all_parrots,
-		/client/proc/revive_critter,
-		/client/proc/kill_critter,
+		///client/proc/revive_critter,
+		///client/proc/kill_critter,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
 		/client/proc/admin_pick_random_player,
@@ -203,7 +203,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
-		/proc/possess,
+		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
 		/client/proc/critter_creator_debug,
@@ -217,15 +217,15 @@ var/list/admin_verbs = list(
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
 		/client/proc/toggle_camera_network_reciprocity,
-		/client/proc/generate_poster,
+		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 
 		// moved up from admin
-		/client/proc/cmd_admin_delete,
+		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
-		/client/proc/addpathogens,
+		///client/proc/addpathogens,
 		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
@@ -296,7 +296,6 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
 		/client/proc/find_all_of,
-		/client/proc/cmd_add_to_screen,
 		/client/proc/respawn_as,
 
 		/client/proc/general_report,
@@ -312,7 +311,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_explosion,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/admin_smoke,
-		/client/proc/admin_foam,
+		///client/proc/admin_foam,
 		/client/proc/admin_fluid,
 		/client/proc/implant_all,
 
@@ -323,7 +322,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_nightmode,
 		/client/proc/toggle_ip_alerts,
 		/client/proc/upload_custom_hud,
-		/client/proc/replace_with_explosive,
+		///client/proc/replace_with_explosive,
 		/client/proc/enable_waterflow,
 		/client/proc/delete_fluids,
 		/client/proc/special_fullbright,
@@ -366,20 +365,20 @@ var/list/admin_verbs = list(
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
-		/client/proc/view_save_data,
+		///client/proc/view_save_data,
 		/client/proc/check_gang_scores,
 		/client/proc/mapWorld,
-		/client/proc/call_proc_atom,
+		///client/proc/call_proc_atom,
 		/client/proc/haine_blood_debug,
 		/client/proc/debug_messages,
 		/client/proc/toggle_next_click,
 		/client/proc/debug_reaction_list,
 		/client/proc/debug_reagents_cache,
-		/client/proc/debug_check_possible_reactions,
+		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
 		/client/proc/show_camera_paths,
-		/client/proc/dbg_itemspecial,
-		/client/proc/dbg_objectprop,
+		///client/proc/dbg_itemspecial,
+		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
 		// /client/proc/show_runtime_window,
 		/client/proc/cmd_chat_debug,
@@ -448,6 +447,7 @@ var/list/special_pa_observing_verbs = list(
 	/client/proc/cmd_admin_aview,
 	)
 
+/*
 /client/proc/cmd_add_to_screen(var/atom/A as obj|mob|turf in world)
 	set name = "Add to Screen"
 	set desc = "Add a thing to some poor sod's screen."
@@ -471,9 +471,9 @@ var/list/special_pa_observing_verbs = list(
 	else
 		var/client/C = who[chosen]
 		C.screen += A
-		boutput(usr, "<span style=\"color:blue\">Successful.</span>")
+		boutput(usr, "<span class='notice'>Successful.</span>")
 		logTheThing("admin", usr, C.mob, "added [A] to %target%'s screen.")
-
+*/
 /client/proc/update_admins(var/rank)
 	if(!src.holder)
 		src.holder = new /datum/admins(src)
@@ -597,9 +597,9 @@ var/list/special_pa_observing_verbs = list(
 		if(src.mob.mind)
 			src.mob.mind.damned = 0
 		src.mob.ghostize()
-		boutput(src, "<span style=\"color:blue\">You are now observing</span>")
+		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
-		boutput(src, "<span style=\"color:blue\">You are already observing!</span>")
+		boutput(src, "<span class='notice'>You are already observing!</span>")
 
 /client/proc/admin_play()
 	set category = "Admin"
@@ -618,9 +618,9 @@ var/list/special_pa_observing_verbs = list(
 	blink(get_turf(src.mob))
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
-		boutput(src, "<span style=\"color:blue\">You are now playing</span>")
+		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
-		boutput(src, "<span style=\"color:blue\">You are already playing!</span>")
+		boutput(src, "<span class='notice'>You are already playing!</span>")
 
 /client/proc/get_admin_state()
 	set category = "Special Verbs"
@@ -791,9 +791,9 @@ var/list/special_pa_observing_verbs = list(
 		return
 	if(!M.client.warned)
 		M.Browse(rules, "window=rules;size=480x320")
-		boutput(M, "<span style=\"color:red\"><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
+		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
-		message_admins("<span style=\"color:blue\">[src.ckey] warned [M.ckey].</span>")
+		message_admins("<span class='notice'>[src.ckey] warned [M.ckey].</span>")
 	else
 		var/addData[] = new()
 		addData["ckey"] = M.ckey
@@ -848,13 +848,15 @@ var/list/fun_images = list()
 	logTheThing("diary", src, M, "forced %target% to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	M << csound("sound/misc/klaxon.ogg")
-	boutput(M, "<span style=\"color:red\"><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 	// M.Browse(rules, "window=rules;size=480x320")
 	M << browse(rules, "window=rules;size=480x320")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
 	set category = "Special Verbs"
+	set popup_menu = 0
+
 	admin_only
 	if(!O.fingerprintshidden || !O.fingerprintshidden.len)
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
@@ -880,7 +882,7 @@ var/list/fun_images = list()
 			return
 
 	if (!cli.preferences)
-		boutput(src, "<span style=\"color:red\">No preferences found on target client.</span>")
+		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
 	var/mob/living/carbon/human/H = new(mymob.loc)
@@ -903,7 +905,7 @@ var/list/fun_images = list()
 	admin_only
 
 	if (!src.preferences)
-		boutput(src, "<span style=\"color:red\">No preferences found on your client.</span>")
+		boutput(src, "<span class='alert'>No preferences found on your client.</span>")
 
 	if (!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		if (alert(usr, "Are you sure you wanna respawn yourself where you are? If you're already in a living mob, it'll be deleted!", "Confirmation", "Yes", "No") == "No")
@@ -1087,10 +1089,18 @@ var/list/fun_images = list()
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
 
+	// Get fucked ghost HUD
+	for (var/obj/screen/ability/hudItem in src.screen)
+		del(hudItem)
+
+	// Also get fucked giant...planet...things
+	for (var/obj/effects/background_objects/bgObj in world)
+		del(bgObj)
+
 	var/start_x = (viewport_width / 2) + 1
 	var/start_y = (viewport_height / 2) + 1
 
-	boutput(src, "<span style=\"color:blue\"><B>Begining mapping.</B></span>")
+	boutput(src, "<span class='notice'><B>Begining mapping.</B></span>")
 
 	//Map eeeeverything
 	if (allZ || safeAllZ)
@@ -1438,17 +1448,17 @@ var/list/fun_images = list()
 	admin_only
 
 	if (!src.mob)
-		out(src, "<span style='color: blue;'>You don't even exist!</span>")
+		out(src, "<span class='alert'>You don't even exist!</span>")
 		return
 
 	if (istype(src.mob, /mob/dead/observer) || istype(src.mob, /mob/dead/target_observer))
-		out(src, "<span style='color: blue;'>You're already dead, you can't be removed any more than that!</span>")
+		out(src, "<span class='alert'>You're already dead, you can't be removed any more than that!</span>")
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
-		sleep(15)
+		sleep(1.5 SECONDS)
 
 	var/mob/O = src.mob
 	src.mob.ghostize()
@@ -1462,11 +1472,11 @@ var/list/fun_images = list()
 	admin_only
 
 	if (!M)
-		out(src, "<span style='color: blue;'>You need to select someone to remove!</span>")
+		out(src, "<span class='alert'>You need to select someone to remove!</span>")
 		return
 
 	if (istype(M, /mob/dead/observer) || istype(M, /mob/dead/target_observer))
-		out(src, "<span style='color: blue;'>That person is already dead, sorry.</span>")
+		out(src, "<span class='notice'>That person is already dead, sorry.</span>")
 		return
 
 	var/client/C
@@ -1522,7 +1532,7 @@ var/list/fun_images = list()
 
 	var/announce = alert("Map set to [map]. It will apply next round.\n\nAnnounce this to the unwashed masses?", "All done", "Ok", "Nah")
 	if (announce == "Ok")
-		boutput(world, "<span style=\"color:blue\"><b>The next round's map will be: [map]</b></span>")
+		boutput(world, "<span class='notice'><b>The next round's map will be: [map]</b></span>")
 
 /client/proc/cmd_start_map_vote()
 	set category = "Admin"
@@ -1750,6 +1760,123 @@ var/list/fun_images = list()
 			MB.implanted(H, 0)
 			implanted ++
 		SPAWN_DBG (30)
-			boutput(usr, "<span style='color:red;'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
+			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
-		boutput(usr, "<span style='color:red;'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+
+
+/mob/verb/admin_interact_verb()
+	set name = "admin_interact"
+	set hidden = 1
+	usr_admin_only
+	src.client.admin_intent = 1
+	src.client.show_popup_menus = 0
+	src.update_cursor()
+
+/mob/proc/admin_interact(var/atom/A,var/list/parameters)
+	src.client.admin_intent = 0
+	src.client.show_popup_menus = 1
+	src.update_cursor()
+	usr_admin_only
+
+
+	if (parameters["right"])
+		var/list/atoms = list(get_turf(A))
+		for(var/thing in get_turf(A))
+			var/atom/atom = thing
+			atoms += atom
+		if (atoms.len)
+			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
+			if (isnull(A)) return
+
+	var/choice = 0
+
+	if (!client.holder.animtoggle)
+		if (ismob(A))
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
+		else if (isturf(A))
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
+		else
+			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
+	else
+		if (ismob(A))
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
+		else if (isturf(A))
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["turf"]
+		else
+			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["obj"]
+
+	var/client/C = src.client
+	switch(choice)
+		if("Get Thing")
+			C.cmd_admin_get_mobject(A)
+		if("Follow Thing")
+			C.admin_follow_mobject(A)
+		if("Add Reagents")
+			C.addreagents(A)
+		if("Check Reagents")
+			C.cmd_admin_check_reagents(A)
+		if("View Variables")
+			C.debug_variables(A)
+		if("View Fingerprints")
+			C.view_fingerprints(A)
+		if("Delete")
+			C.cmd_admin_delete(A)
+
+		if("Player Options")
+			C.cmd_admin_playeropt(A)
+		if("Private Message")
+			C.cmd_admin_pm(A)
+		if("Subtle Message")
+			C.cmd_admin_subtle_message(A)
+		if("Check Health")
+			C.cmd_admin_check_health(A)
+		if("Heal")
+			C.cmd_admin_rejuvenate(A)
+		if("Gib")
+			C.cmd_admin_gib(A)
+		if("Polymorph")
+			C.cmd_admin_polymorph(A)
+		if("Modify Organs")
+			C.modify_organs(A)
+		if("Modify Parts")
+			C.modify_parts(A)
+		if("Modify Module")
+			C.edit_module(A)
+		if("Swap Minds")
+			C.cmd_swap_minds(A)
+		if("Transfer Client To")
+			C.cmd_transfer_client(A)
+		if("Shamecube")
+			C.cmd_shame_cube(A)
+
+		if("Jump To Turf")
+			C.jumptoturf(A)
+		if("Air Status")
+			C.air_status(A)
+		if("Create Explosion")
+			C.cmd_explosion(A)
+		if("Create Fluid")
+			C.admin_fluid(A)
+		if("Create Smoke")
+			C.admin_smoke(A)
+		if("Create Portal")
+			C.create_portal(A)
+		if("Get Telesci Coords")
+			C.getturftelesci(A)
+
+		if ("Possess")
+			possess(A)
+		if ("Create Poster")
+			C.generate_poster(A)
+
+		if ("Spin")
+			C.cmd_spin_target(A)
+		if ("Rotate")
+			C.cmd_rotate_target(A)
+		if ("Scale")
+			C.cmd_scale_target(A)
+		if ("Emag")
+			C.cmd_emag_target(A)
+
+	src.update_cursor()

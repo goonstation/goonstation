@@ -36,7 +36,7 @@ VUVUZELA
 		if (!M.can_slip())
 			return
 		M.pulling = null
-		boutput(M, "<span style=\"color:blue\">You slipped on the banana peel!</span>")
+		boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.sims)
@@ -50,8 +50,11 @@ VUVUZELA
 		if(M.bioHolder.HasEffect("clumsy"))
 			M.changeStatus("stunned", 80)
 			M.changeStatus("weakened", 5 SECONDS)
+			JOB_XP(M, "Clown", 2)
 		else
 			M.changeStatus("weakened", 2 SECONDS)
+			if (prob(20))
+				JOB_XP(last_touched, "Clown", 1)
 		M.force_laydown_standup()
 
 /obj/item/canned_laughter

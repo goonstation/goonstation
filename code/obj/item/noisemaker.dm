@@ -41,9 +41,9 @@
 		var/newmode = input("Select sound to play", "Make some noise", src.mode) in list("honk", "fart", "burp", "squeak", "cat", "harmonica", "vuvuzela", "bang", "buzz", "gunshot", "siren", "coo", "rimshot", "trombone")
 
 		if (newmode && rand(1,150) == 1)
-			boutput(user, "<span style=\"color:red\">BZZZ SOUND SYNTHESISER ERROR</span>")
-			boutput(user, "<span style=\"color:blue\">Mode is now: ???</span>")
+			boutput(user, "<span class='alert'>BZZZ SOUND SYNTHESISER ERROR</span>")
+			boutput(user, "<span class='notice'>Mode is now: ???</span>")
 			src.mode = pick("un1","un2","un3")
 		else if (newmode)
-			boutput(user, "<span style=\"color:blue\">Mode is now: [newmode]</span>")
+			boutput(user, "<span class='notice'>Mode is now: [newmode]</span>")
 			src.mode = newmode

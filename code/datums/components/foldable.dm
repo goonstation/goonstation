@@ -57,7 +57,7 @@
 
 	briefcase.set_loc(get_turf(object))
 	object.set_loc(briefcase)
-	usr.visible_message("<span style=\"color:red\">[usr] folds [object] back up!</span>")
+	usr.visible_message("<span class='alert'>[usr] folds [object] back up!</span>")
 
 /obj/item/objBriefcase
 	name = "briefcase"
@@ -85,6 +85,7 @@
 		src.thingInside = object
 		src.name = "foldable [object.name]"
 		src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
+		BLOCK_BOOK
 
 	attack_self(mob/user)
 		deploy(user)
@@ -102,7 +103,7 @@
 		if(src.loc == user)
 			user.drop_from_slot(src)
 		src.set_loc(null)
-		user.visible_message("<span style=\"color:red\">[user] unfolds [thingInside] from a briefcase!</span>")
+		user.visible_message("<span class='alert'>[user] unfolds [thingInside] from a briefcase!</span>")
 
 	disposing()
 		if(src.thingInside)

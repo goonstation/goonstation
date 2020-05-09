@@ -26,7 +26,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
-			POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> vomits profusely!</span>")
+			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
 			playsound(POT.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			if(!locate(/obj/decal/cleanable/vomit) in POT.loc) make_cleanable( /obj/decal/cleanable/vomit,POT.loc)
 
@@ -53,33 +53,33 @@
 				src.focus_level = 0
 			return 0
 		var/how = pick("intently", "directly", "fixedly", "unflinchingly", "directly", "unwaveringly", "petrifyingly", "longingly", "determinedly", "hungrily", "grodily")
-		POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> stares [how] at [src.focused].</span>")
+		POT.visible_message("<span class='alert'><b>[POT.name]</b> stares [how] at [src.focused].</span>")
 		if(focus_level <= 1)
 			M.do_disorient(10, weakened = 0.7 SECONDS, stunned = 0, paralysis = 0, disorient = 0.7 SECONDS, remove_stamina_below_zero = 0)
 		else if(focus_level <= 2)
 			M.do_disorient(30, weakened = 1.5 SECONDS, stunned = 0, paralysis = 0, disorient = 1.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(5)
 			M.updatehealth()
-			boutput(M, "<span style=\"color:red\">You feel a headache.</span>")
+			boutput(M, "<span class='alert'>You feel a headache.</span>")
 		else if(focus_level <= 3)
 			M.do_disorient(30, weakened = 2 SECONDS, stunned = 0, paralysis = 0, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			M.TakeDamage("head", 5, 0)
 			M.updatehealth()
-			boutput(M, "<span style=\"color:red\">Your head is pounding with extreme pain.</span>")
+			boutput(M, "<span class='alert'>Your head is pounding with extreme pain.</span>")
 		else if(focus_level <= 4)
 			M.do_disorient(50, weakened = 2.5 SECONDS, stunned = 0, paralysis = 0.5 SECONDS, disorient = 2.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			blood_slash(M, 3)
 			M.TakeDamage("head", 10, 0)
 			M.updatehealth()
-			boutput(M, "<span style=\"color:red\">The gaze seems to almost burrow into your skill. You feel like your head is going to split open.</span>")
+			boutput(M, "<span class='alert'>The gaze seems to almost burrow into your skill. You feel like your head is going to split open.</span>")
 		else if(focus_level <= 5)
 			M.do_disorient(80, weakened = 3 SECONDS, stunned = 0, paralysis = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
 			blood_slash(M, 5)
 			M.TakeDamage("head", 15, 0)
 			M.updatehealth()
-			boutput(M, "<span style=\"color:red\">The intensity of the plant's gaze makes you feel like your head is going to <i>literally</i> split open.</span>")
+			boutput(M, "<span class='alert'>The intensity of the plant's gaze makes you feel like your head is going to <i>literally</i> split open.</span>")
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
 		else
@@ -103,7 +103,7 @@
 				R.updatehealth()
 			else
 				M.gib()
-			M.visible_message("<span style='color:red'><b>[M]'s head explodes!</b></span>")
+			M.visible_message("<span class='alert'><b>[M]'s head explodes!</b></span>")
 			src.focused = null
 			src.focus_level = 1
 			return 1
@@ -119,12 +119,12 @@
 		var/pr = 20
 		if(src.focused)
 			pr += 10
-		
+
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
-			
+
 			var/extreme_start = prob(1 + max(0, DNA.potency / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
@@ -132,7 +132,7 @@
 				for (var/obj/item/X in view(7,POT)) stuffnearby.Add(X)
 			if (stuffnearby.len > 1)
 				var/thing = pick(stuffnearby)
-				POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> stares at [thing].</span>")
+				POT.visible_message("<span class='alert'><b>[POT.name]</b> stares at [thing].</span>")
 				if(extreme_start)
 					src.focused = thing
 					src.focus_level = 1
@@ -224,12 +224,12 @@
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(16))
 			playsound(get_turf(POT),'sound/voice/animal/cat.ogg',30,1,-1)
-			POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> meows!</span>")
+			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
 			var/obj/critter/cat/synth/C = new(POT.loc)
 			C.health = POT.health
-			POT.visible_message("<span style=\"color:blue\">The synthcat climbs out of the tray!</span>")
+			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return
 
@@ -242,7 +242,7 @@
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
 
 		playsound(get_turf(POT),'sound/voice/animal/cat_hiss.ogg',30,1,-1)
-		POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> hisses!</span>")
+		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
 
 // Weird Shit
 
@@ -272,7 +272,7 @@
 			var/obj/critter/maneater/ME = new(POT.loc)
 			ME.health = POT.health * 3
 			ME.friends = ME.friends | POT.contributors
-			POT.visible_message("<span style=\"color:blue\">The man-eating plant climbs out of the tray!</span>")
+			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return
 
@@ -287,7 +287,7 @@
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))
 			O.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"", 1)
-		boutput(user, "<span style=\"color:red\">The plant angrily bites you!</span>")
+		boutput(user, "<span class='alert'>The plant angrily bites you!</span>")
 		random_brute_damage(user, 9,1)
 		return 1
 

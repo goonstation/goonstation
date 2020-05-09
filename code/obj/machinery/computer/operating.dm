@@ -21,20 +21,20 @@
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/operating/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/operating/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -48,7 +48,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/operating/M = new /obj/item/circuitboard/operating( A )
@@ -63,7 +63,7 @@
 		src.attack_hand(user)
 	return
 
-/obj/machinery/computer/operating/proc/interact(mob/user)
+/obj/machinery/computer/operating/proc/interacted(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isAI(user))
 			user.machine = null
@@ -105,7 +105,7 @@
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		usr.machine = src
 //		if (href_list["update"])
-//			src.interact(usr)
+//			src.interacted(usr)
 	return
 
 /obj/machinery/computer/operating/process()

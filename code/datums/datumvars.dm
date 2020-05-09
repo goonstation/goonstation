@@ -8,10 +8,10 @@
 	set name = "View Global Variable"
 
 	if( !src.holder || src.holder.level < LEVEL_CODER )
-		boutput( src, "<span style='color:red'>Get down from there!!</span>" )
+		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 	if (!S)
-		boutput( src, "<span style='color:red'>Can't enter null!!</span>" )
+		boutput( src, "<span class='alert'>Can't enter null!!</span>" )
 		return
 
 	src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variable [S]")
@@ -31,12 +31,12 @@
 	var/V = global.vars[S]
 	if (V == logs || V == logs["audit"])
 		src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
-		boutput(usr, "<span style='color:red'>Yeah, no.</span>")
+		boutput(usr, "<span class='alert'>Yeah, no.</span>")
 		return
 	if (V)
 		body += debug_variable(S, V, V, 0)
 	else
-		boutput(usr, "<span style='color:red'>Could not find [S] in the Global Variables list!!</span>" )
+		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
 		return
 	body += "</tbody></table>"
 
@@ -68,15 +68,16 @@
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
+	set popup_menu = 1
 
 	if( !src.holder || src.holder.level < LEVEL_PA )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to use view variables while being below PA.")
-		boutput( src, "<span style='color:red'>Get down from there!!</span>" )
+		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 
 	if(D == world && src.holder.level < LEVEL_CODER) // maybe host???
 		src.audit(AUDIT_ACCESS_DENIED, "tried to view variables of world as non-coder.")
-		boutput( src, "<span style='color:red'>Get down from there!!</span>" )
+		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 
 	//set src in world
@@ -85,7 +86,7 @@
 		return
 
 	if(istype(D, /datum/configuration) || istype(D, /datum/admins))
-		boutput(src, "<span style='color:red'>YEAH... no....</span>")
+		boutput(src, "<span class='alert'>YEAH... no....</span>")
 		src.audit(AUDIT_ACCESS_DENIED, "tried to View-Variables a forbidden type([D.type])")
 		return
 
@@ -171,6 +172,25 @@
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
 	if (istype(D, /atom) || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
+
+	if (isobj(D))
+		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ReplaceExplosive=\ref[D]'>Replace with Explosive</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];Possess=\ref[D]'>Possess</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];AddPathogen=\ref[D]'>Add Random Pathogens Reagent</a>"
+
+
+		if (isitem(D))
+			html += "<br><a href='byond://?src=\ref[src];GiveProperty=\ref[D]'>Give Property</a>"
+			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
+	if (istype(D,/atom))
+		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
+
+	if (istype(D,/obj/critter))
+		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ReviveCritter=\ref[D]'>Revive Critter</a>"
+
+
 
 	html += {"
 		<br>Direction: <a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=L90'>&lt; 90&deg;</a> &middot;
@@ -431,10 +451,82 @@
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
-			sleep(1)
+			sleep(0.1 SECONDS)
 			boutput(src, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to display a flat icon of something all rude-like.")
+		return
+	if (href_list["ReplaceExplosive"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/O = locate(href_list["ReplaceExplosive"])
+			O.replace_with_explosive()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
+		return
+	if (href_list["AddPathogen"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/O = locate(href_list["AddPathogen"])
+			O.addpathogens()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
+		return
+	if (href_list["KillCritter"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/critter/O = locate(href_list["KillCritter"])
+			O.kill_critter()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to kill critter all rude-like.")
+		return
+	if (href_list["ReviveCritter"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/critter/O = locate(href_list["ReviveCritter"])
+			O.revive_critter()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to revive critter all rude-like.")
+		return
+	if (href_list["GiveProperty"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/item/I = locate(href_list["GiveProperty"])
+			I.dbg_objectprop()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to give property all rude-like.")
+		return
+	if (href_list["GiveSpecial"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/item/I = locate(href_list["GiveSpecial"])
+			I.dbg_itemspecial()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to give special all rude-like.")
+		return
+	if (href_list["CheckReactions"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/atom/A = locate(href_list["CheckReactions"])
+			A.debug_check_possible_reactions()
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to check reactions all rude-like.")
+		return
+	if (href_list["CreatePoster"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/atom/A = locate(href_list["CreatePoster"])
+			src.generate_poster(A)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to create poster all rude-like.")
+		return
+	if (href_list["Possess"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/obj/O = locate(href_list["Possess"])
+			possess(O)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
 		return
 	if (href_list["Vars"])
 		usr_admin_only
@@ -493,13 +585,13 @@
 	var/dir
 
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
-		boutput(usr, "<span style=\"color:red\">You do not have access to edit this variable!</span>")
+		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
 		return
 
 	//Let's prevent people from promoting themselves, yes?
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
 	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
-		boutput(usr, "<span style=\"color:red\">You're not allowed to edit [D.type] for security reasons!</span>")
+		boutput(usr, "<span class='alert'>You're not allowed to edit [D.type] for security reasons!</span>")
 		logTheThing("admin", usr, null, "tried to varedit [D.type] but was denied!")
 		logTheThing("diary", usr, null, "tried to varedit [D.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
@@ -601,7 +693,7 @@
 					D.vars[variable] = null
 		if("ref")
 			if (!(src.holder.rank in list("Host", "Coder", "Shit Person")))
-				boutput( src, "<span style='color:red'>This can super break shit so you can't use this. Sorry.</span> ")
+				boutput( src, "<span class='alert'>This can super break shit so you can't use this. Sorry.</span> ")
 				return
 			var/theref = input("What ref?") as null|text
 			if(theref)
@@ -609,7 +701,7 @@
 				if(!thing)
 					thing = locate("\[[theref]\]")
 				if(!thing)
-					boutput(src, "<span style='color:red'>Bad ref or couldn't find that thing. Drats.</span>")
+					boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
 					return
 				if(set_global)
 					for(var/x in world)
@@ -693,7 +785,7 @@
 					D.vars[variable] = theInput
 
 		if("type")
-			boutput(usr, "<span style=\"color:blue\">Type part of the path of the type.</span>")
+			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/match = get_one_match(typename, /datum)
@@ -801,11 +893,11 @@
 					else
 						D.vars[variable] = T
 			else
-				boutput(usr, "<span style=\"color:red\">Invalid coordinates!</span>")
+				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
 				return
 
 		if("reference picker")
-			boutput(usr, "<span style=\"color:blue\">Click the mob, object or turf to use as a reference.</span>")
+			boutput(usr, "<span class='hint'>Click the mob, object or turf to use as a reference.</span>")
 			var/mob/M = usr
 			if (istype(M))
 				var/datum/targetable/refpicker/R
@@ -820,7 +912,7 @@
 				return
 
 		if ("new instance of a type")
-			boutput(usr, "<span style=\"color:blue\">Type part of the path of type of thing to instantiate.</span>")
+			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj

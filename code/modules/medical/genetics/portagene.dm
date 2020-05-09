@@ -16,7 +16,7 @@
 		if (isscrewingtool(W) && (src.status & BROKEN))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -34,15 +34,15 @@
 			var/obj/item/grab/G = W
 
 			if (src.occupant)
-				boutput(user, "<span style=\"color:red\"><B>The scanner is already occupied!</B></span>")
+				boutput(user, "<span class='alert'><B>The scanner is already occupied!</B></span>")
 				return
 
 			if (src.locked)
-				boutput(usr, "<span style=\"color:red\"><B>You need to unlock the scanner first.</B></span>")
+				boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 				return
 
 			if(!iscarbon(G.affecting))
-				boutput(user, "<span style=\"color:blue\"><B>The scanner supports only carbon based lifeforms.</B></span>")
+				boutput(user, "<span class='hint'><B>The scanner supports only carbon based lifeforms.</B></span>")
 				return
 
 			var/mob/M = G.affecting
@@ -71,7 +71,7 @@
 		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span style=\"color:red\"><b>The scanner door is locked!</b></span>")
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
 			return
 
 		src.go_out()
@@ -86,10 +86,10 @@
 		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span style=\"color:red\"><b>The scanner door is locked!</b></span>")
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
 			return
 		if (src.occupant)
-			boutput(usr, "<span style=\"color:red\">It's already occupied.</span>")
+			boutput(usr, "<span class='alert'>It's already occupied.</span>")
 			return
 
 		src.go_in(usr)
@@ -104,7 +104,7 @@
 		if (!isalive(usr))
 			return
 		if (usr == src.occupant)
-			boutput(usr, "<span style=\"color:red\"><b>You can't reach the scanner lock from the inside.</b></span>")
+			boutput(usr, "<span class='alert'><b>You can't reach the scanner lock from the inside.</b></span>")
 			return
 
 		playsound(src.loc, "sound/machines/click.ogg", 50, 1)
@@ -112,12 +112,12 @@
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You hear the scanner's lock slide out of place.</span>")
+				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock slide out of place.</span>")
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You hear the scanner's lock click into place.</span>")
+				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock click into place.</span>")
 
 	proc/go_out()
 		if (!src.occupant)

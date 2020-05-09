@@ -272,7 +272,9 @@
 		if(!abort_group)
 			if(length_space_border > 0)
 				//var/turf/space/sample = locate()
-				var/turf/space/sample = air_master.get_space_sample()
+				var/turf/space/sample = air_master.space_sample
+				if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+					sample = air_master.update_space_sample()
 				var/connection_difference = 0
 
 				if(air && sample && air.check_turf(sample))
@@ -298,11 +300,11 @@
 	// suspended in the above block.
 	if(!group_processing) //Revert to individual processing
 		// space fastpath
-		if (members.len && length_space_border) {
+		if (members.len && length_space_border)
 			if (space_fastpath(parent_controller))
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
-		}
+
 		for(var/turf/simulated/member in members)
 			member.process_cell()
 
@@ -317,6 +319,16 @@
 
 		air.react()
 
+// :getin:
+#define SPACEFASTPRESSURE(air, to_var) do { \
+	var/_moles = air.oxygen + air.carbon_dioxide + air.nitrogen + air.toxins; \
+	if(length(air.trace_gases)) { \
+		for(var/datum/gas/trace_gas in air.trace_gases) { \
+			_moles += trace_gas.moles; \
+		} \
+	} \
+	to_var += _moles*R_IDEAL_GAS_EQUATION*air.temperature/air.volume; \
+} while (0)
 // If group processing is off, and the air group is bordered by a space tile,
 // execute a fast evacuation of the air in the group.
 // If the average pressure in the group is < 5kpa, the group will be zeroed
@@ -325,14 +337,15 @@
 	var/minDist
 	var/dist
 	var/turf/space/sample
-	if (map_currently_underwater)
-		//sample = locate(/turf/space/fluid)
-		sample = air_master.get_space_sample()
-	else
-		//sample = locate()
-		sample = air_master.get_space_sample()
+	. = 0
+	sample = air_master.space_sample
+
+	if (!(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+		sample = air_master.update_space_sample()
+
 	if (!sample)
-		return 0
+		return
+
 	var/totalPressure = 0
 
 	for(var/turf/simulated/member in members)
@@ -347,11 +360,11 @@
 				minDist = dist
 
 		if (member.air && !isnull(minDist))
+			var/datum/gas_mixture/member_air = member.air
 			// Todo - retain nearest space tile border and apply force proportional to amount
 			// of air leaving through it
-			member.air.mimic(sample, CLAMP(length_space_border / (2 * max(1, minDist)), 0.1, 1))
-		if (member && member.air)
-			totalPressure += member.air.return_pressure()
+			member_air.mimic(sample, clamp(length_space_border / (2 * max(1, minDist)), 0.1, 1))
+			SPACEFASTPRESSURE(member_air, totalPressure) // Build your own atmos disaster
 
 		LAGCHECK(LAG_REALTIME)
 
@@ -364,10 +377,6 @@
 		if (totalPressure / members.len < 5)
 			space_group()
 			return 1
-
-
-
-	return 0
 
 /datum/air_group/proc/space_group()
 	for(var/turf/simulated/member in members)

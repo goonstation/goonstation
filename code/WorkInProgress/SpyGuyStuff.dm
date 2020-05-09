@@ -33,7 +33,7 @@ Fibre wire
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"
-			boutput(user, "<span style=\"color:blue\">You add [W] to [src]. That's neat.</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
 			B.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -92,7 +92,7 @@ Fibre wire
 
 			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
-			sleep(30)
+			sleep(3 SECONDS)
 			qdel(src)
 
 //////////////////////////////
@@ -224,8 +224,8 @@ proc/Create_Tommyname()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
-			O.show_message("<span style=\"color:red\"><B>[user] fires the [src] at [target]!</B></span>", 1, "<span style=\"color:red\">You hear a loud crackling noise.</span>", 2)
-		sleep(1)
+			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
+		sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
 	update_icon()
@@ -368,18 +368,18 @@ proc/Create_Tommyname()
 					return
 				else
 					activated = 1
-					sleep(20)
+					sleep(2 SECONDS)
 					var/startx = 1
 					var/starty = 1
 					var/mob/badmantarget = M
 					boutput(badmantarget, "<span style=\"color:black\"> <B> You hear a voice in your head, 'You're not supposed to be here'. </B>")
 					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, 1, -1)
-					sleep(100)
+					sleep(10 SECONDS)
 					startx = badmantarget.x - rand(-11, 11)
 					starty = badmantarget.y - rand(-11, 11)
 					var/turf/pickedstart = locate(startx, starty, badmantarget.z)
 					new /obj/badman(pickedstart, badmantarget)
-					sleep(150)
+					sleep(15 SECONDS)
 					activated = 0
 
 ////////////////////////////// Donald Trumpet
@@ -853,6 +853,7 @@ proc/Create_Tommyname()
 	name = "fibre wire"
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = 1
+	c_flags = EQUIPPED_WHILE_HELD
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
@@ -862,6 +863,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	New()
+		..()
+		BLOCK_ROPE
 
 
 /obj/item/garrote/proc/toggle_wire_readiness()
@@ -901,7 +906,14 @@ proc/Create_Tommyname()
 		//Slow us down slightly when we have the thing readied to encourage late-readying
 		src.setProperty("movespeed", 1 * wire_readied)
 
-
+	var/mob/M = the_mob // inc terminally stupid code
+	if (!ismob(M) && src.chokehold && ismob(src.chokehold.assailant))
+		M = src.chokehold.assailant
+	else if (ismob(src.loc))
+		M = src.loc
+	else if (ismob(usr)) // we've tried nothing and we're all out of ideas
+		M = usr
+	M.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
 
 /obj/item/garrote/proc/is_behind_target(var/mob/living/assailant, var/mob/living/target)
 	var/assailant_dir = get_dir(target, assailant)
@@ -948,7 +960,7 @@ proc/Create_Tommyname()
 	update_state()
 
 // It will crumple when dropped
-/obj/item/garrote/dropped()
+/obj/item/garrote/dropped(mob/user)
 	..()
 	set_readiness(0)
 
@@ -964,7 +976,7 @@ proc/Create_Tommyname()
 		set_readiness(0)
 
 // Change the size of the garrote or the posture
-/obj/item/garrote/attack_self()
+/obj/item/garrote/attack_self(mob/user)
 	if(!chokehold)
 		..()
 		toggle_wire_readiness()

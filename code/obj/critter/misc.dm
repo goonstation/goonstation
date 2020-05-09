@@ -571,7 +571,7 @@
 				src.health = initial(src.health)
 				src.icon_state = initial(src.icon_state)
 				for(var/mob/O in viewers(src, null))
-					O.show_message("<span style=\"color:red\"><b>[src]</b> re-assembles and is ready to fight once more!</span>")
+					O.show_message("<span class='alert'><b>[src]</b> re-assembles and is ready to fight once more!</span>")
 		return
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton
@@ -1096,10 +1096,11 @@
 		if (!src.alive)
 			..()
 			return
-		switch(W.damtype)
-			if("fire")
+
+		switch(W.hit_type)
+			if(DAMAGE_BURN)
 				src.health -= W.force * src.firevuln
-			if("brute")
+			if(DAMAGE_BLUNT)
 				src.health -= W.force * src.brutevuln
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
@@ -1192,7 +1193,7 @@
 
 		if (M.lying)
 			src.speak( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
-			src.visible_message("<span style=\"color:blue\">[src] shakes [M] trying to wake them up!</span>")
+			src.visible_message("<span class='notice'>[src] shakes [M] trying to wake them up!</span>")
 			boutput(M, "<span class='combat'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 		else
@@ -1427,7 +1428,7 @@
 
 	proc/contents_check()
 		if(!src.allow_empty && !src.contents.len)
-			src.visible_message("<span style=\"color:blue\"><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
+			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 
 	CritterAttack(mob/M)

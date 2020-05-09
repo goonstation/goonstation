@@ -189,7 +189,7 @@
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
 	var/turf/T = usr.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(usr, "<span style=\"color:blue\">You attach [W] to [src].</span>")
+		boutput(usr, "<span class='notice'>You attach [W] to [src].</span>")
 		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
 			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
 		else
@@ -339,7 +339,7 @@
 
 /obj/item/clothing/suit/det_suit/hos
 	name = "HoS jacket"
-	desc = "A slightly armored jacket favored by security personnel."
+	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
 	icon_state = "hoscoat"
@@ -347,6 +347,7 @@
 		..()
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.7)
+		setProperty("coldprot", 35)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -386,6 +387,8 @@
 	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
 
+	abilities = list(/obj/ability_button/labcoat_toggle)
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
@@ -393,7 +396,6 @@
 
 	New()
 		..()
-		src.verbs -= /obj/item/clothing/suit/labcoat/verb/button
 
 	attack_self()
 		..()
@@ -403,38 +405,27 @@
 				src.icon_state = "[src.coat_style]_o"
 				usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 				"You unbutton your [src.name].")
-				src.verbs += /obj/item/clothing/suit/labcoat/verb/button
-				src.verbs -= /obj/item/clothing/suit/labcoat/verb/unbutton
 			else
 				src.icon_state = src.coat_style
 				usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 				"You button your [src.name].")
-				src.verbs += /obj/item/clothing/suit/labcoat/verb/unbutton
-				src.verbs -= /obj/item/clothing/suit/labcoat/verb/button
 
 		buttoned = !buttoned
 
-	verb/button()
-		set category = "Local"
-		set src in usr
+	proc/button()
 		if (src.coat_style)
 			src.icon_state = src.coat_style
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 		"You button your [src.name].")
-		src.verbs += /obj/item/clothing/suit/labcoat/verb/unbutton
-		src.verbs -= /obj/item/clothing/suit/labcoat/verb/button
 
-	verb/unbutton()
-		set category = "Local"
-		set src in usr
+	proc/unbutton()
 		if (src.coat_style)
 			src.icon_state = "[src.coat_style]_o"
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
-		src.verbs += /obj/item/clothing/suit/labcoat/verb/button
-		src.verbs -= /obj/item/clothing/suit/labcoat/verb/unbutton
+
 
 /obj/item/clothing/suit/labcoat/genetics
 	name = "geneticist's labcoat"
@@ -582,7 +573,7 @@
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
 					for (var/i=3, i>0, i--)
@@ -614,7 +605,7 @@
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
 					if (!do_after(user, 30))
-						boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
 						for (var/i=3, i>0, i--)
@@ -855,7 +846,7 @@
 			return
 		else
 			new /obj/item/clothing/suit/fire/armored(T)
-		boutput(user, "<span style=\"color:blue\">You attach [W] to [src].</span>")
+		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
 		qdel(W)
 		qdel(src)
 
@@ -1019,7 +1010,7 @@
 
 /obj/item/clothing/suit/space/emerg/proc/ripcheck(var/mob/user)
 	if(rip >= 36 && rip != -1 && prob(10))  //upped from rip >= 14 by Buttes
-		boutput(user, "<span style=\"color:red\">The emergency suit tears off!</span>")
+		boutput(user, "<span class='alert'>The emergency suit tears off!</span>")
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
@@ -1332,8 +1323,8 @@
 
 	attack_hand(mob/user as mob)
 		if (user.a_intent == INTENT_HARM)
-			user.visible_message("<span style='color:blue'>[user] taps [src].</span>",\
-			"<span style='color:blue'>You tap [src].</span>")
+			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
+			"<span class='notice'>You tap [src].</span>")
 		else
 			return ..()
 
@@ -1342,14 +1333,14 @@
 			if (src.eyeholes)
 				user.show_text("\The [src] already has eyeholes cut out of it!", "red")
 				return
-			user.visible_message("<span style='color:blue'>[user] begins cutting eyeholes out of [src].</span>",\
-			"<span style='color:blue'>You begin cutting eyeholes out of [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins cutting eyeholes out of [src].</span>",\
+			"<span class='notice'>You begin cutting eyeholes out of [src].</span>")
 			if (!do_after(user, 20))
 				user.show_text("You were interrupted!", "red")
 				return
 			playsound(get_turf(src), "sound/items/Scissor.ogg", 100, 1)
-			user.visible_message("<span style='color:blue'>[user] cuts eyeholes out of [src].</span>",\
-			"<span style='color:blue'>You cut eyeholes out of [src].</span>")
+			user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
+			"<span class='notice'>You cut eyeholes out of [src].</span>")
 			src.eyeholes = 1
 			src.icon_state = "[initial(src.icon_state)]e"
 			return
@@ -1358,8 +1349,8 @@
 			src.UpdateOverlays(image(src.icon, "c_box-moustache"), "moustache")
 			if (src.wear_image)
 				src.wear_image.overlays += image(src.wear_image_icon, "c_box-moustache")
-			user.visible_message("<span style='color:blue'>[user] adds [W] to [src]!</span>",\
-			"<span style='color:blue'>You add [W] to [src]!</span>")
+			user.visible_message("<span class='notice'>[user] adds [W] to [src]!</span>",\
+			"<span class='notice'>You add [W] to [src]!</span>")
 			user.u_equip(W)
 			qdel(W)
 			return
@@ -1419,7 +1410,7 @@
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if ( . &&prob(75))
-			source.show_message(text("<span style=\"color:red\">\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
+			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
 			.  = 0
 
 /obj/item/clothing/suit/wizrobe/red
@@ -1574,3 +1565,23 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/security_badge
+	name = "Security Badge"
+	desc = "An official badge for a Nanotrasen Security Worker."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = 1.0
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "security_badge"
+	item_state = "security_badge"
+	var/badge_owner_name = null
+	var/badge_owner_job = null
+
+	setupProperties()
+
+	get_desc()
+		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
+
+	attack_self(mob/user as mob)
+		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")

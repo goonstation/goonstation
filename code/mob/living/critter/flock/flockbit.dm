@@ -115,7 +115,7 @@
 		target = get_turf(target)
 
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
-		boutput(user, "<span class='text-red'>Something about this structure prevents it from being assimilated.</span>")
+		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else
 		playsound(get_turf(src), "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg")
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)

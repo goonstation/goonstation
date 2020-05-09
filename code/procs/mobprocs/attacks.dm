@@ -17,10 +17,15 @@
 		for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
 			G.shoot()
 
+	var/obj/item/grab/block/block = user.check_block()
+	if (block)
+		block.attack(src,user)
+		return
+
 	var/shielded = 0
 	if (src.spellshield)
 		shielded = 1
-		boutput(user, "<span style=\"color:red\"><b>[src]'s Spell Shield prevents your attack!</b></span>")
+		boutput(user, "<span class='alert'><b>[src]'s Spell Shield prevents your attack!</b></span>")
 	else
 		if (!src.spellshield)
 			for(var/obj/item/device/shield/S in src)

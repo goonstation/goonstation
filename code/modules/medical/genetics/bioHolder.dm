@@ -152,7 +152,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			targetColor = hex2num(targetColor)
 
 			//Do the math and add to the output
-			. += num2hex(color + ((targetColor - color) / adjust_denominator))
+			. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
@@ -259,16 +259,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		// changed this to transfer the instance across rather than add a copy
 		// since some bioeffects have unique stuff
 		effects[E.id] = E
-		effectPool -= E.id
+		effectPool.Remove(E.id)
 		E.owner = owner
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
 		if(lentext(E.msgGain) > 0)
 			if (E.isBad)
-				boutput(owner, "<span style=\"color:red\">[E.msgGain]</span>")
+				boutput(owner, "<span class='alert'>[E.msgGain]</span>")
 			else
-				boutput(owner, "<span style=\"color:blue\">[E.msgGain]</span>")
+				boutput(owner, "<span class='notice'>[E.msgGain]</span>")
 
 		mobAppearance.UpdateMob()
 		return E
@@ -389,7 +389,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effectPool[selectedNew.id] = selectedNew
 			filteredBad.Remove(selectedS)
 
-		effectPool = shuffle(effectPool)
+		shuffle_list(effectPool)
 
 	proc/OnLife()
 		var/datum/bioEffect/BE
@@ -427,10 +427,19 @@ var/list/datum/bioEffect/mutini_effects = list()
 			mobAppearance.CopyOther(toCopy.mobAppearance)
 			mobAppearance.UpdateMob()
 
+			age = toCopy.age
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
-			age = toCopy.age
 			clone_generation = toCopy.clone_generation
+			genetic_stability = toCopy.genetic_stability
+			ownerName = toCopy.ownerName
+			Uid = toCopy.Uid
+
+		if (copyPool)
+			src.RemoveAllPoolEffects()
+			for (var/id in toCopy.effectPool)
+				AddNewPoolEffect(id)
+
 		if(copyActiveEffects)
 			src.RemoveAllEffects()
 			var/datum/bioEffect/BE
@@ -456,7 +465,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
-		if (progress >= 10)
+		if (progress > 10)
 			return CopyOther(toCopy)
 
 		if (mobAppearance)
@@ -470,7 +479,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/AddEffect(var/idToAdd, var/variant = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
-		if(!owner) return
 
 		if(HasEffect(idToAdd))
 			return 0
@@ -503,11 +511,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
-			if(lentext(newEffect.msgGain) > 0)
+			if(owner && lentext(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
-					boutput(owner, "<span style=\"color:red\">[newEffect.msgGain]</span>")
+					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
 				else
-					boutput(owner, "<span style=\"color:blue\">[newEffect.msgGain]</span>")
+					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
 			mobAppearance.UpdateMob()
 			return newEffect
 
@@ -528,9 +536,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 			src.genetic_stability = max(0,src.genetic_stability)
 		if(lentext(BE.msgGain) > 0)
 			if (BE.isBad)
-				boutput(owner, "<span style=\"color:red\">[BE.msgGain]</span>")
+				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
 			else
-				boutput(owner, "<span style=\"color:blue\">[BE.msgGain]</span>")
+				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
 		mobAppearance.UpdateMob()
 		return BE
 
@@ -548,9 +556,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if(owner && lentext(D.msgLose) > 0)
 				if (D.isBad)
-					boutput(owner, "<span style=\"color:blue\">[D.msgLose]</span>")
+					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else
-					boutput(owner, "<span style=\"color:red\">[D.msgLose]</span>")
+					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
 			return effects.Remove(D.id)
@@ -569,7 +577,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/D in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				effectPool -= BE
+				effectPool.Remove(D)
 				//qdel(BE)
 		return 1
 

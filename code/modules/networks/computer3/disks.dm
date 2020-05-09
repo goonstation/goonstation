@@ -77,10 +77,8 @@
 	boutput(user, "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].")
 
 /obj/item/disk/data/floppy/examine()
-	set src in oview(5)
-	..()
-	boutput(usr, text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."))
-	return
+	. = ..()
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 /obj/item/disk/data/floppy/demo
 	name = "data disk - 'Farmer Jeff'"
@@ -111,9 +109,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
-			user.visible_message("<span style=\"color:red\"><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
+			user.visible_message("<span class='alert'><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
 			if(do_after(user, 30))
-				user.visible_message("<span style=\"color:red\"><b>[user] clears the [src]!</b></span>","You clear the [src].")
+				user.visible_message("<span class='alert'><b>[user] clears the [src]!</b></span>","You clear the [src].")
 				//qdel(src.root)
 				if (src.root)
 					src.root.dispose()
@@ -128,6 +126,7 @@
 	desc = "A form of proprietary magnetic data tape used by Thinktronic Data Systems, LLC."
 	title = "MAGTAPE"
 	icon_state = "tape"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	file_amount = 128
 	portable = 0
@@ -159,7 +158,7 @@
 	name = "Permafloppy"
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You can't flip the write-protect tab, it's held in place with glue or something!</span>")
+		boutput(user, "<span class='alert'>You can't flip the write-protect tab, it's held in place with glue or something!</span>")
 		return
 
 /obj/item/disk/data/floppy/computer3boot

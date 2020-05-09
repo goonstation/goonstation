@@ -140,7 +140,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.interact(M)
+			src.interacted(M)
 	AutoUpdateAI(src)
 
 
@@ -149,7 +149,7 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
@@ -158,9 +158,9 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	interact(user)
+	interacted(user)
 
-/obj/machinery/power/turbine/proc/interact(mob/user)
+/obj/machinery/power/turbine/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
 		user.machine = null
@@ -204,7 +204,7 @@
 		SPAWN_DBG(0)
 			for(var/mob/M in viewers(1, src))
 				if ((M.client && M.machine == src))
-					src.interact(M)
+					src.interacted(M)
 
 	else
 		usr.Browse(null, "window=turbine")
@@ -237,7 +237,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -252,7 +252,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/turbine_control/M = new /obj/item/circuitboard/turbine_control( A )

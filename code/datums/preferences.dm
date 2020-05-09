@@ -213,7 +213,7 @@ datum/preferences
 
 		if(!user)
 			return
-			
+
 		if (!AH)
 			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
@@ -224,18 +224,7 @@ datum/preferences
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
 
 		var/display_gender = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)")
-/*
-		if (!AH.pronouns)
-			if (src.gender == MALE)
-				display_gender = "Male (he/him)"
-			else if (src.gender == FEMALE)
-				display_gender = "Female (she/her)"
-		else
-			if (src.gender == MALE)
-				display_gender = "Male (they/them)"
-			else if (src.gender == FEMALE)
-				display_gender = "Female (they/them)"
-*/
+
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
 		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
@@ -809,10 +798,10 @@ datum/preferences
 	proc/SetChoices(mob/user)
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span style=\"color:red\"><b>Your Job Preferences were null, and have been reset.</b></span>")
+			boutput(user, "<span class='alert'><b>Your Job Preferences were null, and have been reset.</b></span>")
 		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !src.jobs_unwanted.len)
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span style=\"color:red\"><b>Your Job Preferences were empty, and have been reset.</b></span>")
+			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
 
 
 		var/list/HTML = list()
@@ -909,7 +898,7 @@ datum/preferences
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span style=\"color:red\"><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
+				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
 			else
@@ -961,7 +950,7 @@ datum/preferences
 					continue
 
 				if (cat == "unwanted" && JD.cant_allocate_unwanted)
-					boutput(user, "<span style=\"color:red\"><b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count.</span>")
+					boutput(user, "<span class='alert'><b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count.</span>")
 					src.jobs_unwanted -= JD.name
 					src.jobs_low_priority += JD.name
 
@@ -970,7 +959,7 @@ datum/preferences
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=2;job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
 					[JD.name]</a>
 				</div>
 				"}
@@ -1019,7 +1008,7 @@ datum/preferences
 		if (src.antispam)
 			return
 		if (!find_job_in_controller_by_string(job,1))
-			boutput(user, "<span style=\"color:red\"><b>The game could not find that job in the internal list of jobs.</b></span>")
+			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
 				if (1) src.job_favorite = null
 				if (2) src.jobs_med_priority -= job
@@ -1027,7 +1016,7 @@ datum/preferences
 				if (4) src.jobs_unwanted -= job
 			return
 		if (job=="AI" && (!config.allow_ai))
-			boutput(user, "<span style=\"color:red\"><b>Selecting the AI is not currently allowed.</b></span>")
+			boutput(user, "<span class='alert'><b>Selecting the AI is not currently allowed.</b></span>")
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1037,7 +1026,7 @@ datum/preferences
 			return
 
 		if (jobban_isbanned(user, job))
-			boutput(user, "<span style=\"color:red\"><b>You are banned from this job and may not select it.</b></span>")
+			boutput(user, "<span class='alert'><b>You are banned from this job and may not select it.</b></span>")
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1070,7 +1059,7 @@ datum/preferences
 				if (4) picker = "Unwanted"
 		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
-			boutput(user, "<span style=\"color:red\"><b>[job] cannot be set to Unwanted.</b></span>")
+			boutput(user, "<span class='alert'><b>[job] cannot be set to Unwanted.</b></span>")
 			src.antispam = 0
 			return
 
@@ -1608,9 +1597,9 @@ datum/preferences
 			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
-					boutput( user, "<span style=\"color:red\">Failed to save savefile: [ret]</span>" )
+					boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile saved!</span>" )
+					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
@@ -1621,33 +1610,33 @@ datum/preferences
 					else
 						var/ret = src.cloudsave_save( user.client, newname )
 						if( istext( ret ) )
-							boutput( user, "<span style=\"color:red\">Failed to save savefile: [ret]</span>" )
+							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
-							boutput( user, "<span style=\"color:blue\">Savefile saved!</span>" )
+							boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
-					boutput( user, "<span style=\"color:red\">Failed to delete savefile: [ret]</span>" )
+					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile deleted!</span>" )
+					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
 			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
 				var/ret = src.cloudsave_load( user.client, link_tags["cloudload"] )
 				if( istext( ret ) )
-					boutput( user, "<span style=\"color:red\">Failed to load savefile: [ret]</span>" )
+					boutput( user, "<span class='alert'>Failed to load savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile loaded!</span>" )
+					boutput( user, "<span class='notice'>Savefile loaded!</span>" )
 
 			else if (link_tags["save"])
 				src.savefile_save(user, (isnum(text2num(link_tags["save"])) ? text2num(link_tags["save"]) : 1))
-				boutput(user, "<span style=\"color:blue\"><b>Character saved to Slot [text2num(link_tags["save"])].</b></span>")
+				boutput(user, "<span class='notice'><b>Character saved to Slot [text2num(link_tags["save"])].</b></span>")
 			else if (link_tags["load"])
 				if (!src.savefile_load(user.client, (isnum(text2num(link_tags["load"])) ? text2num(link_tags["load"]) : 1)))
 					alert(user, "You do not have a savefile.")
 				else if (!user.client.holder)
 					sanitize_name()
-					boutput(user, "<span style=\"color:blue\"><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
+					boutput(user, "<span class='notice'><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
 				else
-					boutput(user, "<span style=\"color:blue\"><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
+					boutput(user, "<span class='notice'><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
 
 
 		if (link_tags["reset_all"])
@@ -1829,11 +1818,11 @@ datum/preferences
 	if (copytext(hcolor, 1, 2) == "#")
 		adj = 1
 	//DEBUG_MESSAGE("HAIR initial: [hcolor]")
-	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25))
+	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25), 2)
 	//DEBUG_MESSAGE("HAIR R: [hR_adj]")
-	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5))
+	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5), 2)
 	//DEBUG_MESSAGE("HAIR G: [hG_adj]")
-	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10))
+	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("HAIR B: [hB_adj]")
 	var/return_color = "#" + hR_adj + hG_adj + hB_adj
 	//DEBUG_MESSAGE("HAIR final: [return_color]")
@@ -1846,11 +1835,11 @@ datum/preferences
 	if (copytext(ecolor, 1, 2) == "#")
 		adj = 1
 	//DEBUG_MESSAGE("EYE initial: [ecolor]")
-	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10))
+	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE R: [eR_adj]")
-	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10))
+	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE G: [eG_adj]")
-	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10))
+	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE B: [eB_adj]")
 	var/return_color = "#" + eR_adj + eG_adj + eB_adj
 	//DEBUG_MESSAGE("EYE final: [return_color]")

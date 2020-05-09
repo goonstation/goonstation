@@ -50,6 +50,7 @@
 		SPAWN_DBG (5)
 			if (src)
 				src.update_icon()
+		BLOCK_ROD
 		return
 
 	proc/check_health()
@@ -58,7 +59,7 @@
 				if (src)
 					usr.u_equip(src)
 					usr.update_inhands()
-					boutput(usr, "<span style=\"color:red\">[src] falls apart!</span>")
+					boutput(usr, "<span class='alert'>[src] falls apart!</span>")
 					qdel(src)
 		return
 
@@ -150,14 +151,15 @@
 
 	attack_self(mob/user as mob)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> accidentally grabs the blade of [src].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> accidentally grabs the blade of [src].</span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
+			JOB_XP(user, "Clown", 1)
 		src.active = !( src.active )
 		if (src.active)
-			boutput(user, "<span style=\"color:blue\">[src] is now active.</span>")
+			boutput(user, "<span class='notice'>[src] is now active.</span>")
 			src.force = active_force
 		else
-			boutput(user, "<span style=\"color:blue\">[src] is now off.</span>")
+			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
 		src.update_icon()
 		user.update_inhands()
@@ -168,7 +170,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b></span>")
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		user.gib()
@@ -209,7 +211,7 @@
 			H.organHolder.drop_organ("appendix")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
+				"<span class='alert'><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -218,7 +220,7 @@
 			H.organHolder.drop_organ("left_kidney")
 			playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+				"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -227,7 +229,7 @@
 			H.organHolder.drop_organ("left_lung")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+				"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -236,7 +238,7 @@
 			H.organHolder.drop_organ("right_kidney")
 			playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+				"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -245,7 +247,7 @@
 			H.organHolder.drop_organ("right_lung")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+				"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -254,7 +256,7 @@
 			H.organHolder.drop_organ("liver")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
+				"<span class='alert'><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 
@@ -264,7 +266,7 @@
 			H.organHolder.drop_organ("heart")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
+				"<span class='alert'><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -274,7 +276,7 @@
 			H.organHolder.drop_organ("spleen")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
+				"<span class='alert'><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -283,7 +285,7 @@
 			H.organHolder.drop_organ("pancreas")
 			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 			target.visible_message(
-				"<span style=\"color:red\"><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
+				"<span class='alert'><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
 				)
 			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 			return ..()
@@ -420,6 +422,10 @@
 	rand_pos = 1
 	var/image/plantyboi
 
+	New()
+		..()
+		BLOCK_KNIFE
+
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))
 			var/obj/machinery/plantpot/pot = target
@@ -432,7 +438,7 @@
 				else
 					return
 				if(p.growthmode == "weed")
-					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span style=\"color:red\">The [p.name] is too strong for you traveller...</span>")
+					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
 					return
 				pot.HYPdestroyplant()
 

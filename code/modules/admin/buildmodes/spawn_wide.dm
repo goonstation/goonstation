@@ -30,14 +30,14 @@ change the direction of created objects.<br>
 	var/matrix/mtx = matrix()
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span style=\"color:red\">No object path!</span>")
+			boutput(usr, "<span class='alert'>No object path!</span>")
 			return
 		if (!A)
 			mark_corner(object)
 		else
 			var/turf/B = get_turf(object)
 			if (!B || A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">Corners must be on the same Z-level!</span>")
+				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
 			update_button_text("Spawning...")
 			var/cnt = 0
@@ -71,11 +71,11 @@ change the direction of created objects.<br>
 							if (isobj(A) || ismob(A))
 								A.dir = holder.dir
 								A.onVarChanged("dir", SOUTH, A.dir)
-							sleep(5)
+							sleep(0.5 SECONDS)
 							mtx.Reset()
 							mtx.Translate(0,64)
 							animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-							sleep(5)
+							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
 							pool(swirl)
@@ -105,11 +105,11 @@ change the direction of created objects.<br>
 								if (isobj(A) || ismob(A))
 									A.dir = holder.dir
 									A.onVarChanged("dir", SOUTH, A.dir)
-								sleep(5)
+								sleep(0.5 SECONDS)
 								mtx.Reset()
 								mtx.Translate(0,64)
 								animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-								sleep(5)
+								sleep(0.5 SECONDS)
 								swirl.mouse_opacity = 1
 								pad.mouse_opacity = 1
 								pool(swirl)
@@ -139,7 +139,7 @@ change the direction of created objects.<br>
 				cnt++
 				if (cnt > 499)
 					cnt = 0
-					sleep(2)
+					sleep(0.2 SECONDS)
 			A = null
 			update_button_text(objpath)
 
@@ -149,7 +149,7 @@ change the direction of created objects.<br>
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">Corners must be on the same Z-level!</span>")
+				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
 			for (var/turf/T in block(A,B))
 				if (cinematic == "Blink")

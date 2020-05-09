@@ -35,7 +35,7 @@
 	if(..())
 		return
 	if ((!( src.d1 ) || !( src.d2 )))
-		boutput(usr, "<span style=\"color:red\">Error: Cannot interface with door security!</span>")
+		boutput(usr, "<span class='alert'>Error: Cannot interface with door security!</span>")
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
 		usr.machine = src
@@ -77,7 +77,7 @@
 					if (!( src.d1.density ))
 						src.d1.close()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (!( src.d2.density ))
 							src.d2.close()
@@ -89,7 +89,7 @@
 						if (src.d1.density)
 							src.d1.open()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (src.d2.density)
 							src.d2.open()
