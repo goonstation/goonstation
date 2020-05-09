@@ -149,6 +149,8 @@ Frequency:
 				var/obj/item/magtractor/mag = I
 				if (mag.holding != src)
 					return
+			else
+				return
 
 		if (src.portals.len > 2)
 			user.show_text("The hand teleporter is recharging!", "red")
