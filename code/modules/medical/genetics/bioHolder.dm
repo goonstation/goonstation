@@ -152,7 +152,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			targetColor = hex2num(targetColor)
 
 			//Do the math and add to the output
-			. += num2hex(color + ((targetColor - color) / adjust_denominator))
+			. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))

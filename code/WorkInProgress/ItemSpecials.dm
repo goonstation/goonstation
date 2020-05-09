@@ -49,7 +49,7 @@
 	if(params["icon-y"])
 		dy += (text2num(params["icon-y"]) - 16)
 
-	var/angle = atan2(dy,dx)
+	var/angle = arctan(dy,dx)
 	//boutput(world, "[dx] : [dy] ::: makes for [angle]")
 
 	//oh no ! i'm bad!!!!!!!!!!!

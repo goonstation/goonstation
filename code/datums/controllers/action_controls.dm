@@ -1135,7 +1135,7 @@ var/datum/action_controller/actions
 
 			M.dir = turn(M.dir,up ? -90 : 90)
 			pixely += up ? 1 : -1
-			if (pixely != CLAMP(pixely, -5,5))
+			if (pixely != clamp(pixely, -5,5))
 				up = !up
 			M.pixel_y = pixely
 

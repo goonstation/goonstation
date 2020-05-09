@@ -69,7 +69,7 @@
 			if (input_magnitude)
 				if (input_dir & (input_dir-1))
 					owner.dir = NORTH
-					owner.transform = turn(M,atan2(input_y,input_x))
+					owner.transform = turn(M,arctan(input_y,input_x))
 				else
 					owner.transform = null
 			last_dir = owner.dir

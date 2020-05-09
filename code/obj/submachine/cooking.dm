@@ -671,7 +671,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
-			src.time = CLAMP(text2num(href_list["time"]), 1, 10)
+			src.time = clamp(text2num(href_list["time"]), 1, 10)
 			src.updateUsrDialog()
 			return
 

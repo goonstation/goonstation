@@ -544,8 +544,8 @@
 					if (H.can_drift)
 						var/turf/dir_step = get_step(center, H.drift_dir)
 
-						var/angle = atan2(src.loc.y - center.y, src.loc.x - center.x)
-						var/angle2 = atan2(dir_step.y - center.y, dir_step.x - center.x) //todo : atan2 not necessary here. Make some dir2angle function for speed.
+						var/angle = arctan(src.loc.y - center.y, src.loc.x - center.x)
+						var/angle2 = arctan(dir_step.y - center.y, dir_step.x - center.x) //todo : atan2 not necessary here. Make some dir2angle function for speed.
 
 						var/diff = abs(angledifference(angle,angle2))
 						diff -= 90

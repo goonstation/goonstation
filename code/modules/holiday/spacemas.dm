@@ -630,7 +630,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
 		if (isnull(pattern))
 			return
-		pattern = CLAMP(pattern, 0, 4)
+		pattern = clamp(pattern, 0, 4)
 		src.light_pattern(pattern)
 
 // Grinch Stuff

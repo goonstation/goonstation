@@ -182,3 +182,9 @@ var/list/global_spawn_dbg = list()
 
 //used for pods
 #define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
+
+
+// num2hex, hex2num
+#define num2hex(X, len) num2text(X, len, 16)
+
+#define hex2num(X) text2num(X, 16)
