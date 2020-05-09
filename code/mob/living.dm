@@ -780,39 +780,6 @@
 
 		return
 
-	//Overmind handling - Cirr
-	// this code duplication is pretty bad. todo: fix the code duplication, hopefully
-	if (src.mob_flags & SPEECH_INTRUDER)
-		var/scrambledMessage = src.say_quote(stutter(say_superdrunk(message)))
-		message = src.say_quote(message)
-		var/rendered = "<span class='game astralsay'>"
-		rendered += "<span class='prefix'>ASTRAL:</span> "
-		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
-		rendered += "<span class='message'>[message]</span>"
-		rendered += "</span>"
-
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
-				continue
-
-			if (M.client)
-				if((istype(M, /mob/living/intangible/intruder) || M.client.holder))
-					var/thisR = rendered
-					if (M.client.holder && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
-					boutput(M, thisR)
-				else
-					if(prob(30))
-						boutput(M, "<em>A strange, unnatural voice enters your mind... [scrambledMessage]</em>")
-					else if(prob(20))
-						var/description = "[pick("chimes", "croaks", "shines", "whispers", "sings", "echoes")] "
-						description += "[pick("strangely", "hollowly", "incomprehensibly", "menacingly", "peacefully", "softly")]"
-						boutput(M, "<em>A strange, unnatural voice [description].</em>")
-
-		return
-
-
-
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
 
