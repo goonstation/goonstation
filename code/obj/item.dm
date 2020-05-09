@@ -764,11 +764,38 @@
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
+	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
+	if (!equipment_proxy)
+		equipment_proxy = new
+		APPLY_MOVEMENT_MODIFIER(user, equipment_proxy, /obj/item)
+	equipment_proxy.additive_slowdown += src.getProperty("movespeed")
+	var/fluidmove = src.getProperty("negate_fluid_speed_penalty")
+	if (fluidmove)
+		equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
+		equipment_proxy.aquatic_movement += fluidmove
+	var/spacemove = src.getProperty("space_movespeed")
+	if (spacemove)
+		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
+		equipment_proxy.space_movement += spacemove
+
 
 /obj/item/proc/unequipped(var/mob/user)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
+	if (!equipment_proxy)
+		equipment_proxy = new
+		APPLY_MOVEMENT_MODIFIER(user, equipment_proxy, /obj/item)
+	equipment_proxy.additive_slowdown -= src.getProperty("movespeed")
+	var/fluidmove = src.getProperty("negate_fluid_speed_penalty")
+	if (fluidmove)
+		equipment_proxy.additive_slowdown -= fluidmove
+		equipment_proxy.aquatic_movement -= fluidmove
+	var/spacemove = src.getProperty("space_movespeed")
+	if (spacemove)
+		equipment_proxy.additive_slowdown -= spacemove
+		equipment_proxy.space_movement -= spacemove
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
@@ -1308,7 +1335,9 @@
 				possible_mob_holder.drop_item()
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
-/obj/item/proc/dropped(mob/user as mob)
+/obj/item/proc/dropped(mob/user)
+	if (src.c_flags & EQUIPPED_WHILE_HELD)
+		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
@@ -1327,8 +1356,9 @@
 	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	#endif
-	if(src.material) src.material.triggerPickup(user, src)
+	if(src.material)
+		src.material.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
-	return
-
+	if (src.c_flags & EQUIPPED_WHILE_HELD)
+		src.equipped(user, user.get_slot_from_item(src))

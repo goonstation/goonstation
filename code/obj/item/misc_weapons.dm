@@ -469,7 +469,7 @@
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
-		
+
 	throw_impact(atom/A)
 		..()
 		usr.set_loc(get_turf(src))
@@ -574,6 +574,8 @@
 				setProperty("movespeed", 0)
 				force = one_handed_force
 				src.setItemSpecial(/datum/item_special/simple)
+
+			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
 
 			can_disarm = src.status
 			item_state = status ? "quarterstaff2" : "quarterstaff1"
