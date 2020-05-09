@@ -2078,7 +2078,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/pistol
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
@@ -2092,7 +2092,8 @@
 							/obj/item/device/pda2/heads,
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/powercell_medium)
+							/obj/item/storage/pouch/powercell_medium,
+							/obj/item/gun/kinetic/pistol)
 
 	New()
 		..()
@@ -2117,11 +2118,12 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/clock_188
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
@@ -2130,7 +2132,8 @@
 	slot_poc2 = /obj/item/spacecash/fivehundred
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/clock)
+							/obj/item/storage/pouch/clock,
+							/obj/item/gun/kinetic/clock_188)
 
 	New()
 		..()
