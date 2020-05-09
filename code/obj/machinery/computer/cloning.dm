@@ -24,6 +24,10 @@
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
 
+	var/obj/machinery/power/data_terminal/link = null
+	var/net_id = null
+	var/list/terminals = list() //list of netIDs of connected terminals.
+
 	lr = 1
 	lg = 0.6
 	lb = 1
@@ -78,8 +82,151 @@
 
 		if (src.temp == "")
 			src.temp = "System ready."
+
+		if(!src.link)
+			var/turf/T = get_turf(src)
+			var/obj/machinery/power/data_terminal/test_link = locate() in T
+			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+				src.link = test_link
+				src.link.master = src
+
+		src.net_id = generate_net_id(src)
 		return
 	return
+
+/obj/machinery/computer/cloning/disposing()
+	if (link)
+		link.master = null
+	link = null
+	..()
+
+/obj/machinery/computer/cloning/receive_signal(datum/signal/signal)
+	if(status & (NOPOWER|BROKEN) || !src.link)
+		return
+	if(!signal || !src.net_id || signal.encryption)
+		return
+
+	if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
+		return
+
+	var/target = signal.data["sender"]
+	if(!target) return
+
+	//They don't need to target us specifically to ping us.
+	//Otherwise, ff they aren't addressing us, ignore them
+	if(signal.data["address_1"] != src.net_id)
+		if((signal.data["address_1"] == "ping") && target)
+			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				src.post_status(target, "command", "ping_reply", "device", "PNET_CLONE_CONSOLE", "netid", src.net_id)
+		return
+
+	var/sigcommand = lowertext(signal.data["command"])
+	if(!sigcommand) return
+
+	switch(sigcommand)
+		if("term_connect") //Terminal interface stuff.
+			if(target in src.terminals)
+				//something might be wrong here, disconnect them!
+				src.terminals.Remove(target)
+				SPAWN_DBG(0.3 SECONDS)
+					src.post_status(target, "command","term_disconnect")
+				return
+
+			src.terminals.Add(target) //Accept the connection!
+			src.post_status(target, "command","term_connect","data","noreply","device","PNET_CLONE_CONSOLE")
+			src.updateUsrDialog()
+			SPAWN_DBG(0.2 SECONDS) //Hello!
+				src.post_status(target,"command","term_message","data","command=register")
+			return
+		if("term_ping")
+			if(!(target in src.terminals))
+				return
+			if(signal.data["data"] == "reply")
+				src.post_status(target, "command","term_ping")
+				return
+
+		if("term_disconnect")
+			if(target in src.terminals)
+				src.terminals -= target
+				return
+
+		if("term_message")
+			if(!(target in src.terminals)) //Ignore mystery jerks who aren't connected.
+				return
+			var/list/commandList = params2list(signal.data["data"])
+			if (!commandList || !commandList.len)
+				return
+			switch (commandList["command"])
+				if("clone")
+					var/datum/data/record/foundRecord = null
+					if(commandList["id"])
+						foundRecord = find_record_by_field("id", commandList["id"])
+					else if(commandList["name"])
+						foundRecord = find_record_by_field("name", commandList["name"])
+					else //Gotta give us an id or name to go on
+						post_status(target, "command", "term_message", "data", "message=BAD REQUEST: id or name required")
+						return
+
+					if(!foundRecord)
+						post_status(target, "command", "term_message", "data", "message=No record found")
+						return
+
+					clone_record(foundRecord)
+					post_status(target, "command", "term_message", "data", "message=[src.temp]")
+					return
+
+				if("list_records")
+					if(src.records.len < 1)
+						post_status(target, "command", "term_message", "data", "message=No records found")
+						return
+
+					for(var/datum/data/record/R in src.records)
+						post_status(target, "command", "term_message", "data", "name=[R.fields["name"]]&id=[R.fields["id"]]")
+					return
+
+				if("details")
+					var/datum/data/record/foundRecord = null
+					if(commandList["id"])
+						foundRecord = find_record_by_field("id", commandList["id"])
+					else if(commandList["name"])
+						foundRecord = find_record_by_field("name", commandList["name"])
+					else //Gotta give us an id or name to go on
+						post_status(target, "command", "term_message", "data", "message=BAD REQUEST: id or name required")
+						return
+
+					if(!foundRecord)
+						post_status(target, "command", "term_message", "data", "message=No record found")
+						return
+
+					var/obj/item/implant/health/H = locate(foundRecord.fields["imp"])
+					var/healthStatus = ((H) && (istype(H))) ? H.sensehealth() : "Unable to locate implant"
+					post_status(target, "command", "term_message", "data", "id=[foundRecord.fields["id"]]&name=[foundRecord.fields["name"]]&health=[healthStatus]")
+					return
+	return
+
+/obj/machinery/computer/cloning/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
+	if(!src.link || !target_id)
+		return
+
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src
+	signal.transmission_method = TRANSMISSION_WIRE
+	signal.data[key] = value
+	if(key2)
+		signal.data[key2] = value2
+	if(key3)
+		signal.data[key3] = value3
+
+	signal.data["address_1"] = target_id
+	signal.data["sender"] = src.net_id
+
+	src.link.post_signal(src, signal)
+
+/obj/machinery/computer/cloning/proc/find_record_by_field(var/fieldName, var/fieldValue)
+	for(var/datum/data/record/R in src.records)
+		if(R.fields["[fieldName]"] == fieldValue)
+			return R
+	return null
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
@@ -461,6 +608,8 @@
 	src.records += R
 	src.temp = "Subject successfully scanned."
 	JOB_XP(usr, "Medical Doctor", 10)
+	for(var/target in src.terminals)
+		post_status(target, "command", "term_message", "data", "message=[src.temp]&name=[R.fields["name"]]&id=[R.fields["id"]]")
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
@@ -530,8 +679,10 @@
 	else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
 		src.temp = "Cloning cycle activated."
 		src.records.Remove(C)
-		qdel(C)
 		JOB_XP(usr, "Medical Doctor", 15)
+		for(var/target in src.terminals)
+			post_status(target, "command", "term_message", "data", "message=[src.temp]&name=[C.fields["name"]]&id=[C.fields["id"]]")
+		qdel(C)
 		src.menu = 1
 
 /obj/machinery/computer/cloning/power_change()

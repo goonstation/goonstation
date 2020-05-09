@@ -1117,7 +1117,7 @@
 "wN" = (/obj/machinery/navbeacon/tour/atlas/tour7,/turf/simulated/floor,/area/station/hallway)
 "wO" = (/obj/machinery/clone_scanner,/obj/cable{icon_state = "0-2"},/turf/simulated/floor,/area/station/medical/medbay/cloner)
 "wP" = (/obj/machinery/power/data_terminal,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/cable,/turf/simulated/floor/plating,/area/station/engine/elect)
-"wQ" = (/obj/machinery/computer/cloning,/obj/cable{icon_state = "0-2"},/turf/simulated/floor,/area/station/medical/medbay/cloner)
+"wQ" = (/obj/machinery/computer/cloning,/obj/cable{icon_state = "0-2"},/obj/machinery/power/data_terminal,/turf/simulated/floor,/area/station/medical/medbay/cloner)
 "wR" = (/obj/cable{icon_state = "1-2"},/turf/simulated/floor/yellow/side{dir = 9},/area/station/engine/elect)
 "wS" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/blue,/area/station/hallway)
 "wT" = (/obj/shrub{dir = 1},/obj/decal/tile_edge/line/blue{dir = 1; icon_state = "line1"},/obj/decal/tile_edge/line/blue{icon_state = "line1"},/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/grass/random,/area/station/hallway)
@@ -2529,4 +2529,3 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 OZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
-
