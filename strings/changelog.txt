@@ -1,5 +1,9 @@
 
 (t)sat may 09 20
+(u)Flaborized
+(p)535
+(e)🆕🎨|enhancement, sprites
+(*)Security department roles now start with badges that they can show off!
 (u)RichardGere
 (p)554
 (e)⚖|balance
