@@ -577,7 +577,7 @@
 /obj/admin_plaque
 	name = "Admin's Office"
 	desc = "A nameplate signifying who this office belongs to."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "office_plaque"
 	anchored = 1
 
