@@ -223,7 +223,7 @@
 			var/amount = input("How much of it do you want? (1 to [amtlimit])", "[dispenser_name] Dispenser", null, null) as null|num
 			if (isnull(amount) || amount <= 0)
 				return
-			amount = CLAMP(amount, 0, amtlimit)
+			amount = clamp(amount, 0, amtlimit)
 			if (get_dist(src,user) > 1)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
@@ -317,7 +317,7 @@
 					if (istext(reagentlist[reagent])) //Set a dispense amount
 						var/num = text2num(reagentlist[reagent])
 						if(!num) num = 10
-						G.reagents[lowertext(reagent)] = CLAMP(round(num), 1, 100)
+						G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
 					else //Default to 10 if no specific amount given
 						G.reagents[lowertext(reagent)] = 10
 
@@ -357,7 +357,7 @@
 			if (isnull(nadd) || get_dist(src,usr) > 1)
 				doing_a_thing = 0
 				return
-			src.user_dispense_amt = CLAMP(round(nadd), 1, 100)
+			src.user_dispense_amt = clamp(round(nadd), 1, 100)
 			src.updateUsrDialog()
 			doing_a_thing = 0
 			return
@@ -368,7 +368,7 @@
 			if (isnull(nremove) || get_dist(src,usr) > 1)
 				doing_a_thing = 0
 				return
-			src.user_remove_amt = CLAMP(round(nremove), 1, 100)
+			src.user_remove_amt = clamp(round(nremove), 1, 100)
 			src.updateUsrDialog()
 			doing_a_thing = 0
 			return

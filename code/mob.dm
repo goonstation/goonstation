@@ -1960,7 +1960,7 @@
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
 	SPAWN_DBG(0) //multicluwne
-		duration = CLAMP(duration, 10, 100)
+		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
 		game_stats.Increment("violence")

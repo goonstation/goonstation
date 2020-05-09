@@ -69,7 +69,7 @@
 		yo = y
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : atan2(y,x)))
+			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
 			src.transform = null
 			facing_dir = angle2dir(angle_override)

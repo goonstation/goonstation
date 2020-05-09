@@ -947,7 +947,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		..()
 
 		src.code = ""
-		. = "[num2hex(rand(4096, 65535))]"
+		. = "[num2hex(rand(4096, 65535), 0)]"
 		for (var/i = 1, i < 5, i++)
 			switch (copytext(., i, i+1))
 				if ("c","C")

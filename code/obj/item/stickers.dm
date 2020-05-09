@@ -49,8 +49,8 @@
 			sticker.icon_state = src.icon_state
 			sticker.appearance_flags = RESET_COLOR
 
-			//pox = CLAMP(-round(A.bound_width/2), pox, round(A.bound_width/2))
-			//poy = CLAMP(-round(A.bound_height/2), pox, round(A.bound_height/2))
+			//pox = clamp(-round(A.bound_width/2), pox, round(A.bound_width/2))
+			//poy = clamp(-round(A.bound_height/2), pox, round(A.bound_height/2))
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
 			overlay_key = "sticker[world.timeofday]"

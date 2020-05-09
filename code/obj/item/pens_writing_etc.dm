@@ -378,7 +378,7 @@
 	random
 		New()
 			..()
-			src.color = "#[num2hex(rand(0, 255))][num2hex(rand(0, 255))][num2hex(rand(0, 255))]"
+			src.color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)]"
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] chalk"
