@@ -1235,6 +1235,7 @@
 	return
 
 /mob/proc/drop_item(var/obj/item/W)
+	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
@@ -1249,7 +1250,7 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 		u_equip(W)
-		if (W)
+		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
 				if (V.throw_dropped_items_overboard == 1)
@@ -1262,13 +1263,15 @@
 				W.set_loc(src.loc)
 			if (W)
 				W.layer = initial(W.layer)
-		var/turf/T = get_turf(src.loc)
-		T.Entered(W)
+
+			var/turf/T = get_turf(src.loc)
+			T.Entered(W)
+			.= 1
+		else
+			.= 0
 		if (origW)
 			origW.holding = null
 			actions.stopId("magpickerhold", src)
-		return 1
-	return 0
 
 //throw the dropped item
 /mob/proc/drop_item_throw()
