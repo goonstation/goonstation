@@ -649,7 +649,7 @@
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
 		//don't delete the barrier while we are restrained from deploying the barrier
-		if (M.restrain_time > world.timeofday) //hey, maybe make this check a define if you're gonna start using it outside of mob/move. gosh
+		if (M.restrain_time > TIME)
 			return
 
 		if (source != target)
