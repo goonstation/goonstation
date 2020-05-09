@@ -5,8 +5,8 @@ on:
 
 jobs:
   update-changelog:
-		runs-on: ubuntu-latest
-		if: github.repository == 'goonstation/goonstation'
+    runs-on: ubuntu-latest
+    if: github.repository == 'goonstation/goonstation'
     steps:
     - name: Get The Script
       run: |
