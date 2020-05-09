@@ -1,5 +1,9 @@
 
 (t)sat may 09 20
+(u)Dabir
+(p)609
+(e)🆕|enhancement
+(+)Hand teleporters now work when implanted as a chest item.
 (u)Flaborized
 (p)535
 (e)🆕🎨|enhancement, sprites
