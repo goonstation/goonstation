@@ -1274,9 +1274,12 @@
 
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-		user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
-		src.throw_impact(user)
-	return
+		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
+		user.u_equip(src)
+		src.set_loc(user.loc)
+		JOB_XP(user, "Clown", 1)
+	else
+		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand."
 
 /obj/item/proc/HY_set_species()
 	return

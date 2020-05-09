@@ -281,6 +281,7 @@
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
+				..(user)
 				src.color = random_color()
 				src.font_color = src.color
 				src.color_name = hex2color_name(src.color)
