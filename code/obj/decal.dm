@@ -79,7 +79,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
 
 	decomposed_corpse
@@ -103,7 +103,7 @@
 		opacity = 0
 		density = 0
 		anchored = 1
-		icon = 'icons/effects/3dimension.dmi'
+		icon = 'icons/obj/adventurezones/void.dmi'
 		icon_state = "skeleton_l"
 
 /obj/decal/floatingtiles
@@ -112,7 +112,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "floattiles1"
 
 /obj/decal/implo
@@ -477,7 +477,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/alienflower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
 
@@ -489,7 +489,7 @@ obj/decal/fakeobjects/teleport_pad
 
 /obj/decal/cleanable/alienvine
 	name = "strange alien vine"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
 	New()
@@ -539,7 +539,7 @@ obj/decal/fakeobjects/teleport_pad
 	mouse_opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	layer = TURF_LAYER + 0.1 // Should basically be part of a turf.
 
@@ -624,7 +624,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide
 	name = "navigation guide"
 	desc = "A navigation guide to help people find the department they're looking for."
-	icon = 'icons/obj/floorguides.dmi'
+	icon = 'icons/obj/decals/floorguides.dmi'
 	icon_state = "endpiece_s"
 
 /obj/decal/tile_edge/floorguide/security

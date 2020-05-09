@@ -581,7 +581,7 @@ obj/item/gnomechompski/elf
 /obj/owlerysign/owlplaque
 	desc = "Beyond here lies the Owl Habitation Wing."
 	name = "Informational Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -590,7 +590,7 @@ obj/item/gnomechompski/elf
 /obj/owlerysign/officeplaque
 	desc = "Beyond here lies the office wing."
 	name = "Informational Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -599,7 +599,7 @@ obj/item/gnomechompski/elf
 /obj/owlerysign/staffplaque
 	desc = "Beyond here lies the staff wing."
 	name = "Informational Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0

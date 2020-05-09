@@ -638,7 +638,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 /obj/decal/cleanable/grinch_graffiti
 	name = "un-jolly graffiti"
 	desc = "Wow, rude."
-	icon = 'icons/effects/graffiti.dmi'
+	icon = 'icons/obj/decals/graffiti.dmi'
 	random_icon_states = list("grinch1","grinch2","grinch3","grinch4","grinch5","grinch6")
 
 	disposing()

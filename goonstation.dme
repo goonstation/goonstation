@@ -39,6 +39,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\_dmm_suite.dm"
 #include "_stdlib\code\_fluid_defines.dm"
 #include "_stdlib\code\_layer.dm"
+#include "_stdlib\code\_list.dm"
 #include "_stdlib\code\_plane.dm"
 #include "_stdlib\code\_vox.dm"
 #include "_stdlib\code\_z_material_properties.dm"

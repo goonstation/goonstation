@@ -389,7 +389,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effectPool[selectedNew.id] = selectedNew
 			filteredBad.Remove(selectedS)
 
-		effectPool = shuffle(effectPool)
+		shuffle_list(effectPool)
 
 	proc/OnLife()
 		var/datum/bioEffect/BE

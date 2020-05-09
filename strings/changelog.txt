@@ -1,5 +1,13 @@
 
 (t)fri may 08 20
+(u)Sovexe
+(p)624
+(e)🆕|enhancement
+(+)Clicking an airlock that you don't have permission to open with the help intent will now cause you to knock on the door
+(u)Tarmunora
+(p)605
+(e)🍑|ass-jam
+(+)ASS JAM: Changed pulse to pullse
 (u)glassofmilk
 (p)597
 (e)🆕|enhancement

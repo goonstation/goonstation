@@ -99,9 +99,9 @@
 			available_job_roles.Add(JOB)
 
 	// Wiggle it like a pissy caterpillar
-	available_job_roles = shuffle(available_job_roles)
+	shuffle_list(available_job_roles)
 	// Wiggle the players too so that priority isn't determined by key alphabetization
-	unassigned = shuffle(unassigned)
+	shuffle_list(unassigned)
 
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
