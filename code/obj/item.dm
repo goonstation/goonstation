@@ -1272,6 +1272,12 @@
 
 	..()
 
+/obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
+	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+		user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
+		src.throw_impact(user)
+	return
+
 /obj/item/proc/HY_set_species()
 	return
 
