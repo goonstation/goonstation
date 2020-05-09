@@ -46,7 +46,7 @@ var/sound/mutecache
 			//world << "Their dist: [dist] vs [maxdist]"
 			if( dist < maxdist )
 				status &= ~SOUND_UPDATE
-				pan = CLAMP((AT.x - CT.x)/maxdist*100,-100,100)
+				pan = clamp((AT.x - CT.x)/maxdist*100,-100,100)
 				volume = 100-(dist/maxdist*100)
 				c << src
 				status |= SOUND_UPDATE
