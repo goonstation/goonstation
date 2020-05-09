@@ -285,11 +285,8 @@
 				src.font_color = src.color
 				src.color_name = hex2color_name(src.color)
 				src.name = "[src.color_name] crayon"
-
-				if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)))
-					user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
-					src.throw_impact(user)
-					JOB_XP(user, "Clown", 3)
+				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+				JOB_XP(user, "Clown", 1)
 
 
 
