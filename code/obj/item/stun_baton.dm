@@ -626,6 +626,8 @@
 
 				src.setItemSpecial(/datum/item_special/simple)
 
+			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
+
 			destroy_deployed_barrier(user)
 
 			can_disarm = src.status

@@ -1610,40 +1610,47 @@
 		return ..()
 
 	movement_delay(var/atom/move_target = 0)
-		var/tally = 2
 
-		tally += movement_delay_modifier
+		. = 2 + movement_delay_modifier
 
-		if (src.oil) tally -= 0.5
+		if (src.oil)
+			. -= 0.5
 
 		if (!src.part_leg_l)
-			tally += 3.5
-			if (src.part_arm_l) tally -= 1
+			. += 3.5
+			if (src.part_arm_l)
+				. -= 1
 		if (!src.part_leg_r)
-			tally += 3.5
-			if (src.part_arm_r) tally -= 1
+			. += 3.5
+			if (src.part_arm_r)
+				. -= 1
 
 		var/add_weight = 0
 		for (var/obj/item/parts/robot_parts/P in src.contents)
-			if (P.weight > 0) add_weight += P.weight
-			if (P.speedbonus) tally -= P.speedbonus
+			if (P.weight > 0)
+				add_weight += P.weight
+			if (P.speedbonus)
+				. -= P.speedbonus
 
 		if (add_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/treads) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/treads)) tally += add_weight / 3
-			else tally += add_weight
+			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/treads) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/treads))
+				. += add_weight / 3
+			else
+				. += add_weight
 
 		for (var/obj/item/roboupgrade/R in src.upgrades)
 			if (istype(R, /obj/item/roboupgrade/speed) && R.activated)
-				if (src.part_leg_r) tally *= 0.75
-				if (src.part_leg_l) tally *= 0.75
+				if (src.part_leg_r)
+					. *= 0.75
+				if (src.part_leg_l)
+					. *= 0.75
 
 		//This is how it's done in humans, but since borg max health is a bunch of nonsense, I'm not going to add it.
 		// var/health_deficiency = (src.max_health - src.health)
 		// if (health_deficiency >= 90) tally += (health_deficiency / 25)
 
-		tally *= pull_speed_modifier(move_target)
-
-		return tally
+		if (src.pulling)
+			. *= pull_speed_modifier(move_target)
 
 	hotkey(name)
 		switch (name)

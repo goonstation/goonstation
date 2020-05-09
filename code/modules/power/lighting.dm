@@ -59,14 +59,14 @@
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
-	/obj/machinery/light_area_manager/ex_act(severity)
-		return
+/obj/machinery/light_area_manager/ex_act(severity)
+	return
 
-	/obj/machinery/light_area_manager/process()
-		if(my_area && my_area.power_light && my_area.lightswitch)
-			..()
-			var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
-			use_power(thepower * lights.len, LIGHT)
+/obj/machinery/light_area_manager/process()
+	if(my_area && my_area.power_light && my_area.lightswitch)
+		..()
+		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
+		use_power(thepower * lights.len, LIGHT)
 
 
 // the standard tube light fixture

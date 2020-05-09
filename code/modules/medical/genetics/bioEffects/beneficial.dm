@@ -322,6 +322,18 @@
 	msgLose = "You feel wimpy and weak."
 	icon_state  = "strong"
 
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
 /datum/bioEffect/radio_brain
 	name = "Meta-Neural Antenna"
 	desc = "Enables the subject's brain to pick up radio signals."
@@ -373,7 +385,9 @@ var/list/radio_brains = list()
 	OnAdd()
 		owner.unlock_medal("It's not easy being green", 1)
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 		..()
 
 	OnMobDraw()
@@ -385,7 +399,9 @@ var/list/radio_brains = list()
 
 	OnRemove()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
 	OnLife()
 		if(..()) return

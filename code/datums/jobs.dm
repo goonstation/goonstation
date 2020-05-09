@@ -18,6 +18,7 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
+	var/receives_badge = 0
 	var/announce_on_join = 0
 	var/list/alt_names = list()
 	var/slot_head = null
@@ -208,6 +209,7 @@
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
 
 #ifdef SUBMARINE_MAP
@@ -415,6 +417,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/rank/security
@@ -460,6 +463,7 @@
 	limit = 1
 	wages = 150
 	//allow_traitors = 0
+	receives_badge = 1
 	cant_spawn_as_rev = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/storage/belt/security/shoulder_holster
@@ -999,6 +1003,7 @@
 	wages = 250
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_miranda = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
@@ -2116,6 +2121,7 @@
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
 	slot_belt = /obj/item/storage/belt/security

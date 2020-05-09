@@ -255,11 +255,6 @@
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
 	else
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				//if (usr == G.assailant)
-				continue
-				G.shoot()
 		. = ..()
 
 	src.closeContextActions()
@@ -1265,7 +1260,6 @@
 				W.set_loc(get_turf(src.loc))
 			else
 				W.set_loc(src.loc)
-			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
 		var/turf/T = get_turf(src.loc)
@@ -1357,7 +1351,7 @@
 /mob/proc/swap_hand()
 	return
 
-/mob/proc/u_equip(W as obj)
+/mob/proc/u_equip(obj/item/W)
 
 // I think this bit is handled by each method of dropping it, and it prevents dropping items in your hands and other procs using u_equip so I'll get rid of it for now.
 //	if (hasvar(W,"cant_self_remove"))
@@ -1379,6 +1373,8 @@
 		src.client.screen -= W
 
 	set_clothing_icon_dirty()
+
+	W.dropped(src)
 
 /*
 /mob/verb/dump_source()
@@ -2349,7 +2345,7 @@
 	src.take_ear_damage(-INFINITY, 1)
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
-	src.buckled = initial(src.buckled)
+	src.buckled = null
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
@@ -2737,13 +2733,7 @@
 		return 1
 	return 0
 
-/mob/living/carbon/human/is_hulk()
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
-		return 1
-	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
-		return 1
-	return 0
-
+/mob/proc/update_equipped_modifiers()
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
@@ -2930,12 +2920,6 @@
 	if(istype(src.equipped(), /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
-
-
-
-
-
-
 
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
