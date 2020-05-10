@@ -56,13 +56,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	apply_keys(get_keybind_style_datum(style_str))
 
 
-
-//Dummy used to find old code - What should be done is successive calls of apply_keybind(name) going down the tree of mob/human/monkey/wasd etc.
-/client/proc/get_default_keymap(name)
-	message_admins("Tell ZeWaka: OLD CALLER BAD: [name]")
-	return
-
-
 ///
 ///	BASE MOB KEYBINDS
 ///
@@ -325,7 +318,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	)
 
 /datum/keybind_style/torpedo
-	name = "torp"
+	name = "torpedo"
 	changed_keys = list(
 		"SPACE" = "fire",
 		"E" = "exit",

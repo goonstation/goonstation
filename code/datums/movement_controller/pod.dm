@@ -165,5 +165,6 @@
 			if ("fire")
 				owner.fire_main_weapon() // just, fuck it.
 
-	modify_keymap(datum/keymap/keymap, client/C)
-		keymap.merge(C.get_default_keymap("pod"))
+	modify_keymap(client/C)
+		..()
+		C.apply_keybind("pod")

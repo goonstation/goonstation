@@ -100,5 +100,4 @@
 
 	modify_keymap(datum/keymap/keymap, client/C)
 		..()
-		keymap.merge(C.get_default_keymap("colosseum_putt"))
-
+		C.apply_keybind("colputt")
