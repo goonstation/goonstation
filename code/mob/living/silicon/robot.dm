@@ -1,3 +1,7 @@
+#define ROBOT_BATTERY_DISTRESS_INACTIVE 0
+#define ROBOT_BATTERY_DISTRESS_ACTIVE 1
+#define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+
 /datum/robot_cosmetic
 	var/head_mod = null
 	var/ches_mod = null
@@ -51,6 +55,7 @@
 	var/opened = 0
 	var/wiresexposed = 0
 	var/brainexposed = 0
+	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -2272,11 +2277,20 @@
 					HealDamage("All", 6, 6)
 
 				setalive(src)
+
+			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD && batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE)
+				batteryDistress() // Enter distress mode
+			else if (src.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD && batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
+				endBatteryDistress() // Exit distress mode
+
 		else
 			if (isalive(src))
 				sleep(0)
 				src.lastgasp()
 			setunconscious(src)
+
+			if (batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // Enter distress mode
+				batteryDistress()
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -2751,6 +2765,21 @@
 			UpdateOverlays(i_clothes, "clothes")
 		else
 			UpdateOverlays(null, "clothes")
+
+	var/image/i_batterydistress
+
+	/mob/living/silicon/robot/proc/batteryDistress()
+		if (!i_batterydistress) // we only need to bother configuring this once. Since image is a runtime proc apparently it needs to be in here - Sovexe
+			i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
+			i_batterydistress.pixel_y = 24 // this looks about right for the offset...
+
+		UpdateOverlays(i_batterydistress, "batterydistress") // Help me humans!
+		batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
+
+	/mob/living/silicon/robot/proc/endBatteryDistress()
+		batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+		ClearSpecificOverlays("batterydistress")
+
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null
 		switch(slot)
@@ -3301,3 +3330,6 @@
 		//STEP SOUND HANDLING OVER
 
 #undef can_step_sfx
+#undef ROBOT_BATTERY_DISTRESS_INACTIVE
+#undef ROBOT_BATTERY_DISTRESS_ACTIVE
+#undef ROBOT_BATTERY_DISTRESS_THRESHOLD
