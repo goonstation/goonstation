@@ -201,7 +201,6 @@
 					var/healthStatus = ((H) && (istype(H))) ? H.sensehealth() : "Unable to locate implant"
 					post_status(target, "command", "term_message", "data", "id=[foundRecord.fields["id"]]&name=[foundRecord.fields["name"]]&health=[healthStatus]")
 					return
-	return
 
 /obj/machinery/computer/cloning/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 	if(!src.link || !target_id)
