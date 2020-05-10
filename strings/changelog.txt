@@ -1,5 +1,9 @@
 
 (t)sat may 09 20
+(u)Tarmunora
+(p)617
+(e)⚖|balance
+(+)Increased active cooling rate on cryotubes
 (u)Carbadox
 (p)610
 (e)⚖🆕|balance, enhancement
