@@ -1071,8 +1071,6 @@
 		name = "Battledrone Y-[rand(1,5)]"
 		#endif
 
-#endif
-
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
