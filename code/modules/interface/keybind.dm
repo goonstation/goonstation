@@ -6,7 +6,6 @@
 
 //Global list holding all of the keybind style datums
 var/global/list/datum/keybind_style/keybind_styles = null
-//TODO: Set this to be typesof() somewhere early in init
 
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
 //base -> base_wasd -> human -> human_wasd for example
@@ -19,38 +18,38 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 
 /** get_keybind_style_datum: Given the string name of a style, finds the keybind_style with the matching name.
- *
+ *	Internal use only.
  *	Called by apply_keybind to fetch our datum.
  */
-/client/proc/get_keybind_style_datum(var/style_name)
+/client/proc/get_keybind_style_datum(style_name)
 
 	if (!keybind_styles)
 		keybind_styles = childrentypesof(/datum/keybind_style/)
 
-	for (var/datum/keybind_style/s in keybind_styles)
-		if (s.name == "[style_name]")
-			return s
+	for (var/datum/keybind_style/found_style in keybind_styles)
+		if (found_style.name == "[style_name]")
+			return found_style
 
 
 /** apply_keys: Takes a keybind_style to apply to the src client
- *
+ *	Internal use only.
  *	Merges the given keybind_style onto the client. Also adds it to the client's tracking list.
  */
-/client/proc/apply_keys(var/datum/keybind_style/S)
-	if (applied_keybind_styles.Find("[S.name]")) //Already added
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [S.name] to [src] when already present.")
+/client/proc/apply_keys(datum/keybind_style/style)
+	if (applied_keybind_styles.Find("[style.name]"))
+		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [style.name] to [src] when already present.")
 		return
-	applied_keybind_styles.Add(S.name)
-	keymap.merge(S.changed_keys)
+	src.applied_keybind_styles.Add(style.name)
+	src.keymap.merge(style.changed_keys)
 
 
 //Applies a given style onto the client after getting the datum
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
- *
+ *	External use is proper.
  *	This is what external stuff should be calling when applying their additive styles.
  */
-/client/proc/apply_keybind(var/style)
-	apply_keys(get_keybind_style_datum(style))
+/client/proc/apply_keybind(style_str)
+	apply_keys(get_keybind_style_datum(style_str))
 
 
 

@@ -1200,18 +1200,25 @@
 			src.pulling = null
 
 /mob/proc/build_keymap(client/C)
-	var/datum/keymap/keymap = new
-	keymap.merge(client.get_default_keymap("general"))
-	return keymap
+	C.apply_keybind("base")
+
+	if (C.preferences.use_wasd)
+		C.apply_keybind("base_wasd")
+	else
+		C.apply_keybind("base_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("base_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("base_tg")
 
 /mob/proc/reset_keymap()
 	if (src.client)
-		var/datum/keymap/keymap = src.build_keymap(src.client)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
-				controller.modify_keymap(keymap, src.client)
-		src.client.set_keymap(keymap)
+				controller.modify_keymap(src.client.keymap, src.client)
+		src.client.set_keymap(src.client.keymap)
 
 /mob/proc/drop_from_slot(var/obj/item/item, var/turf/T)
 	if (!item)

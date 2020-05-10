@@ -9,105 +9,103 @@ var/list/dirty_keystates = list()
 //o noooo
 
 /client
-	var
-		key_state = 0
-		last_keys = 0
-		keys_dirty = 0
-		keys_modifier = 0
+	var/key_state = 0
+	var/last_keys = 0
+	var/keys_dirty = 0
+	var/keys_modifier = 0
 
-		keys_remove_next_process = 0
+	var/keys_remove_next_process = 0
 
-		datum/keymap/keymap
+	var/datum/keymap/keymap
 
-	verb
-		keydown(key as text)
-			set hidden = 1
-			set name = ".keydown"
-			set instant = 1
+	verb/keydown(key as text)
+		set hidden = 1
+		set name = ".keydown"
+		set instant = 1
 
-			key = uppertext(key)
-			//world << key
+		key = uppertext(key)
+		//world << key
 
-			if(key == "ALT")
-				keys_modifier |= MODIFIER_ALT
-				//return
-			else if(key == "SHIFT")
-				keys_modifier |= MODIFIER_SHIFT
-				//return
-			else if(key == "CTRL")
-				keys_modifier |= MODIFIER_CTRL
-				//return
+		if(key == "ALT")
+			keys_modifier |= MODIFIER_ALT
+			//return
+		else if(key == "SHIFT")
+			keys_modifier |= MODIFIER_SHIFT
+			//return
+		else if(key == "CTRL")
+			keys_modifier |= MODIFIER_CTRL
+			//return
 
-			if (!src.keymap)
+		if (!src.keymap)
+			return
+
+		var/mob/M = src.mob
+		var/numkey = text2num(key)
+		if(!isnull(numkey) && M.abilityHolder)
+			if (M.abilityHolder.actionKey(numkey))
 				return
 
-			var/mob/M = src.mob
-			var/numkey = text2num(key)
-			if(!isnull(numkey) && M.abilityHolder)
-				if (M.abilityHolder.actionKey(numkey))
-					return
+		var/action = src.keymap.check_keybind(key, keys_modifier)
 
-			var/action = src.keymap.check_keybind(key, keys_modifier)
+		if (isnull(action)) // not bound
+			return
 
-			if (isnull(action)) // not bound
-				return
+		if (istext(action)) // action
+			if(!do_action(action))
+				src.mob.hotkey(action)
 
-			if (istext(action)) // action
-				if(!do_action(action))
-					src.mob.hotkey(action)
+		else
+			src.key_state |= action
+			src.mob.hotkey(key)
+			if (!src.keys_dirty)
+				dirty_keystates += src
+				src.keys_dirty = world.time //1
 
+
+	verb/keyup(key as text)
+		set hidden = 1
+		set name = ".keyup"
+		set instant = 1
+		key = uppertext(key)
+		//mark my words
+		//this is all getting rewritten again
+		//just you wait
+		if(key == "ALT")
+			keys_modifier &= ~MODIFIER_ALT
+			//return
+		else if(key == "SHIFT")
+			keys_modifier &= ~MODIFIER_SHIFT
+			//return
+		else if(key == "CTRL")
+			keys_modifier &= ~MODIFIER_CTRL
+			//return
+
+		if (!src.keymap)
+			return
+
+		var/action = src.keymap.check_keybind(key, 0) //We don't care about keying up modifier commands.
+		if (isnull(action)) // not bound
+			return
+
+		if (!istext(action)) // key
+			if (src.keys_dirty == world.time)
+				src.keys_remove_next_process |= action
 			else
-				src.key_state |= action
-				src.mob.hotkey(key)
+				src.key_state &= ~action
 				if (!src.keys_dirty)
 					dirty_keystates += src
 					src.keys_dirty = world.time //1
 
-
-		keyup(key as text)
-			set hidden = 1
-			set name = ".keyup"
-			set instant = 1
-			key = uppertext(key)
-			//mark my words
-			//this is all getting rewritten again
-			//just you wait
-			if(key == "ALT")
-				keys_modifier &= ~MODIFIER_ALT
-				//return
-			else if(key == "SHIFT")
-				keys_modifier &= ~MODIFIER_SHIFT
-				//return
-			else if(key == "CTRL")
-				keys_modifier &= ~MODIFIER_CTRL
-				//return
-
-			if (!src.keymap)
-				return
-
-			var/action = src.keymap.check_keybind(key, 0) //We don't care about keying up modifier commands.
-			if (isnull(action)) // not bound
-				return
-
-			if (!istext(action)) // key
-				if (src.keys_dirty == world.time)
-					src.keys_remove_next_process |= action
-				else
-					src.key_state &= ~action
-					if (!src.keys_dirty)
-						dirty_keystates += src
-						src.keys_dirty = world.time //1
-
-		force_keyup(keys as text)
-			set hidden = 1
-			set name = ".force_keyup"
-			set instant = 1
-			//Maybe this can unfuck the macro situation? Perhaps. Hopefully!
-			keys = uppertext(keys)
-			var/list/keylist = splittext(keys, "+")
-			for(var/key in keylist)
-				src.keyup(key)
-			//keys_modifier = 0
+	verb/force_keyup(keys as text)
+		set hidden = 1
+		set name = ".force_keyup"
+		set instant = 1
+		//Maybe this can unfuck the macro situation? Perhaps. Hopefully!
+		keys = uppertext(keys)
+		var/list/keylist = splittext(keys, "+")
+		for(var/key in keylist)
+			src.keyup(key)
+		//keys_modifier = 0
 
 	//super heavy load apparently
 	//MouseMove(object,location,control,params)
@@ -494,15 +492,7 @@ var/list/dirty_keystates = list()
 			process_keystates()
 			sleep(world.tick_lag)
 
-/client/Move()
-	// you'll be missed
-	// -- absolutely noone
-
-	// fuck you.
-
 /datum/bind_set
-	var
-		name = ""
-
-		keys = 0
-		actions = list()
+	var/name = ""
+	var/keys = 0
+	var/actions = list()
