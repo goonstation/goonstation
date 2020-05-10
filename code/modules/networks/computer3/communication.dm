@@ -297,15 +297,15 @@
 
 					if("shutl_e_sen")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been called.")
-						if(master && master.current_user)
-							message_admins("<span class='notice'>[key_name(master.current_user)] called the Emergency Shuttle to the station</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] called the Emergency Shuttle to the station")
+						if(usr)
+							message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+							logTheThing("station", null, null, "[key_name(usr)] called the Emergency Shuttle to the station")
 
 					if("shutl_e_ret")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been recalled.")
-						if(master && master.current_user)
-							message_admins("<span class='notice'>[key_name(master.current_user)] recalled the Emergency Shuttle</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] recalled the Emergency Shuttle")
+						if(usr)
+							message_admins("<span class='notice'>[key_name(usr)] recalled the Emergency Shuttle</span>")
+							logTheThing("station", null, null, "[key_name(usr)] recalled the Emergency Shuttle")
 
 					if("transmit_e_success")
 						src.print_text("Message transmitted successfuly.")

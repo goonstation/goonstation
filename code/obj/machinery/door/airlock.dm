@@ -1550,7 +1550,7 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
 	else
 		playsound(src.loc, src.sound_airlock, 25, 1)
-	src.current_user = usr
+
 	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
 

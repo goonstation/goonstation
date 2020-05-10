@@ -331,7 +331,7 @@
 		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 		return
 
-	if (user.using_dialog_of(src) && (src.current_user == user))
+	if (user.using_dialog_of(src))
 		if (!src.temp)
 			user << output(null, "comp3.browser:con_clear")
 
@@ -343,12 +343,8 @@
 				src.temp_add = null
 */
 		update_peripheral_menu(user)
-		src.current_user = user
-
 	else
-
 		src.add_dialog(user)
-		src.current_user = user
 
 		if (src.temp_add)
 			src.temp += temp_add

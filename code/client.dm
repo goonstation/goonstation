@@ -120,6 +120,9 @@
 
 	src.images.Cut() //Probably not needed but eh.
 
+	if (src.mob)
+		src.mob.remove_dialogs()
+
 	clients -= src
 	if(src.holder)
 		onlineAdmins.Remove(src)

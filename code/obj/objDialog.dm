@@ -8,25 +8,33 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list(src)
 	else
-		objects_using_dialogs += src
+		if (!src in objects_using_dialogs)
+			objects_using_dialogs += src
 
 	if (!clients_operating)
 		clients_operating = list(user.client)
 	else
-		clients_operating += user.client
+		if (!user.client in clients_operating)
+			clients_operating += user.client
 
 /obj/proc/remove_dialog(mob/user)
 	if (!user.client) return
-
-	if (!objects_using_dialogs)
-		objects_using_dialogs = list()
-	else
-		objects_using_dialogs -= src
 
 	if (!clients_operating)
 		clients_operating = list()
 	else
 		clients_operating -= user.client
+
+	if (!objects_using_dialogs)
+		objects_using_dialogs = list()
+	else
+		if (clients_operating.len <= 0)
+			objects_using_dialogs -= src
+
+/obj/proc/remove_dialogs()
+	clients_operating = null
+	if (objects_using_dialogs)
+		objects_using_dialogs -= src
 
 /mob/proc/remove_dialogs() //try to avoid using this, it wipes stuff that you might want
 	for (var/obj/O in objects_using_dialogs)
@@ -34,7 +42,7 @@ var/global/list/objects_using_dialogs
 			O.remove_dialog(src)
 
 /mob/proc/using_dialog_of(var/obj/O)
-	.= src.client && src.client in O.clients_operating
+	.= (src.client && src.client in O.clients_operating)
 
 /mob/proc/using_dialog_of_type(var/type)
 	.= 0
@@ -96,23 +104,44 @@ var/global/list/objects_using_dialogs
 			subject.attack_ai(AI)
 
 
+//mob dialog stuff (show inventory)
+
+/mob/proc/add_dialog(mob/user)
+
+/mob/proc/remove_dialog(mob/user)
+
+/mob/living/carbon/human/add_dialog(mob/user)
+	if (!user.client) return
+
+	if (!showing_inv)
+		showing_inv = list(user.client)
+	else
+		showing_inv += user.client
+
+/mob/living/carbon/human/remove_dialog(mob/user)
+	if (!user.client) return
+
+	if (!showing_inv)
+		showing_inv = list()
+	else
+		showing_inv -= user.client
+
+
+//object stuyffs
+
 
 
 
 /obj/machinery/power/apc/updateUsrDialog()
-	var/list/nearby = viewers(1, src)
-	if (!(status & BROKEN)) // unbroken
-		for(var/mob/M in nearby)
-			if (usr.using_dialog_of(src))
-				src.interacted(M)
-	if (issilicon(usr) || isAI(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.interacted(usr)
+	for(var/client/C in clients_operating)
+		if (C.mob)
+			if (get_dist(C.mob,src) <= 1)
+				src.interacted(C.mob)
+			else if (issilicon(C.mob) || isAI(C.mob))
+				src.interacted(C.mob)
 
 /obj/machinery/power/apc/updateDialog()
-	if(!(status & BROKEN)) // unbroken
-		for(var/client/C)
-			if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
-				src.interacted(C.mob)
+	for(var/client/C in clients_operating)
+		if (C.mob && get_dist(C.mob,src) <= 1)
+			src.interacted(C.mob)
 	AutoUpdateAI(src)

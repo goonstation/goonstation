@@ -116,6 +116,7 @@
 		mats = null
 		if (artifact && !isnum(artifact))
 			artifact:holder = null
+		remove_dialogs()
 		..()
 
 	proc/client_login(var/mob/user)
