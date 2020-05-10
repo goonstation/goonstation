@@ -1,29 +1,5 @@
 // im pali
 
-/datum/projectile/bullet/beepsky
-	name = "Beepsky"
-	window_pass = 0
-	icon = 'icons/obj/aibots.dmi'
-	icon_state = "secbot1"
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	power = 5
-	dissipation_delay = 30
-	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
-	caliber = 2
-	icon_turf_hit = "secbot1-spaz"
-	implanted = null
-
-	on_hit(atom/hit)
-		var/obj/machinery/bot/secbot/autopatrol/beepsky = new(get_turf(hit))
-		if(istype(hit, /mob))
-			var/mob/hitguy = hit
-			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
-			if(istype(hitguy, /mob/living/carbon))
-				beepsky.target = hitguy
-
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
 	name = "beepsky box"
@@ -31,7 +7,8 @@
 	icon_state = "lmg_ammo"
 	amount_left = 10.0
 	max_amount = 10.0
-	ammo_type = new/datum/projectile/bullet/beepsky
+	ammo_type = new/datum/projectile/special/spawner/beepsky
+
 	caliber = 2
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
@@ -61,7 +38,7 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
-		current_projectile = new/datum/projectile/bullet/beepsky
+		current_projectile = new/datum/projectile/special/spawner/beepsky
 		..()
 
 	setupProperties()
