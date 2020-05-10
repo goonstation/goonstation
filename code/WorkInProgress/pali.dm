@@ -44,7 +44,7 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.4)
-	
+
 	afterattack(atom/A, mob/user as mob)
 		if(istype(A, /obj/machinery/bot/secbot))
 			src.ammo.amount_left += 1
@@ -99,7 +99,7 @@
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
-	
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -116,19 +116,19 @@
 		if (!isdead(src))
 			src.reagents.add_reagent("crime", 10)
 			src.fix_pulling_sprite() // just in case
-	
+
 	set_pulling(atom/movable/A)
 		. = ..()
 		src.fix_pulling_sprite()
-	
+
 	hotkey(name)
 		. = ..()
 		src.fix_pulling_sprite()
-	
+
 	Bump(atom/movable/AM as mob|obj, yes)
 		. = ..()
 		src.fix_pulling_sprite()
-	
+
 	Move(atom/NewLoc, direct)
 		. = ..()
 		if(src.pulling)
@@ -188,14 +188,15 @@
 			C.images -= src
 		src.loc = null
 		src.unique_id = 0
-	
+		..()
+
 	proc/bump_up(how_much = 8, invis = 0)
 		src.bumped++
 		if(invis)
 			animate(src, alpha = 0, maptext_y = src.maptext_y + how_much, time = 4)
 		else
 			animate(src, maptext_y = src.maptext_y + how_much, time = 4)
-	
+
 	proc/show_to(var/client/who)
 		if(!istype(who))
 			return
@@ -270,7 +271,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		if(slep)
 			sleep(0)
 		boutput(user, "time: [TIME - start]")
-	
+
 	attackby(obj/item/I, mob/user)
 		. = ..()
 		if(istype(I, /obj/item/spacecash))

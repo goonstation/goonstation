@@ -222,6 +222,7 @@
 		owner = null
 		tracking = null
 		global.tracking_list -= src
+		..()
 
 	proc/begin_track(mob/target as mob)
 		if(!owner || !target)

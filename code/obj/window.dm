@@ -747,6 +747,8 @@
 		initialPos = loc
 
 	disposing()
+		SHOULD_CALL_PARENT(0) //These are ACTUALLY indestructible.
+
 		SPAWN_DBG(0)
 			loc = initialPos
 			qdeled = 0// L   U    L
