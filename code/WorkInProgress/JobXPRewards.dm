@@ -123,33 +123,33 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(T)
 		return
 
-/datum/jobXpReward/janitor15
-	name = "Tsunami-P3"
-	desc = "Gain access to the Tsunami-P3 spray bottle."
-	required_levels = list("Janitor"=15)
-	icon_state = "tsunami"
-	claimable = 1
-	claimPerRound = 1
+// /datum/jobXpReward/janitor15
+// 	name = "Tsunami-P3"
+// 	desc = "Gain access to the Tsunami-P3 spray bottle."
+// 	required_levels = list("Janitor"=15)
+// 	icon_state = "tsunami"
+// 	claimable = 1
+// 	claimPerRound = 1
 
-	activate(var/client/C)
-		var/obj/item/spraybottle/cleaner/tsunami/T = new/obj/item/spraybottle/cleaner/tsunami()
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
+// 	activate(var/client/C)
+// 		var/obj/item/spraybottle/cleaner/tsunami/T = new/obj/item/spraybottle/cleaner/tsunami()
+// 		T.set_loc(get_turf(C.mob))
+// 		C.mob.put_in_hand(T)
+// 		return
 
-/datum/jobXpReward/janitor20
-	name = "Antique Mop"
-	desc = "Gain access to an ancient mop."
-	required_levels = list("Janitor"=20)
-	icon_state = "tsunami"
-	claimable = 1
-	claimPerRound = 1
+// /datum/jobXpReward/janitor20
+// 	name = "Antique Mop"
+// 	desc = "Gain access to an ancient mop."
+// 	required_levels = list("Janitor"=20)
+// 	icon_state = "tsunami"
+// 	claimable = 1
+// 	claimPerRound = 1
 
-	activate(var/client/C)
-		var/obj/item/mop/old/T = new/obj/item/mop/old()
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
+// 	activate(var/client/C)
+// 		var/obj/item/mop/old/T = new/obj/item/mop/old()
+// 		T.set_loc(get_turf(C.mob))
+// 		C.mob.put_in_hand(T)
+// 		return
 
 /datum/jobXpReward/janitor20
 	name = "(TBI)"

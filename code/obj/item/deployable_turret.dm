@@ -84,7 +84,7 @@
 	var/internal_angle = 0 // used for the matrix transforms
 	var/external_angle = 180 // used for determining target validity
 	var/projectile_type = /datum/projectile/bullet/ak47
-	var/datum/projectile/current_projectile = new/datum/projectile/bullet/ak47
+	var/datum/projectile/current_projectile
 	var/burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
 	var/fire_rate = 3 // rate of fire in shots per second
 	var/angle_arc_size = 45
@@ -95,6 +95,7 @@
 	var/shooting = 0 // tracks whether we're currently in the process of shooting someone
 	var/icon_tag = "st"
 	var/quick_deploy_fuel = 2 // number of quick deploys the turret has left
+	var/spread = 0
 
 	New(var/direction)
 		..()
@@ -112,8 +113,7 @@
 		src.transform = M.Turn(src.external_angle)
 		if (!(src in processing_items))
 			processing_items.Add(src)
-
-
+		
 	disposing()
 		processing_items.Remove(src)
 		..()
@@ -143,35 +143,27 @@
 			else
 				src.external_angle = (180) // how did you get here?
 
+	proc/set_projectile()
+		current_projectile = new projectile_type
+		current_projectile.shot_number = burst_size
+		current_projectile.shot_delay = 10/fire_rate
 
-	proc/process() //main turret processing loop
-		if(src.waiting || src.shooting)
-			return
+
+	proc/process()
 		if(src.active)
-			if(!src.target)
-				if(!src.seek_target())
-					src.waiting = 1
-					SPAWN_DBG(src.wait_time)
-						src.waiting = 0
-					return
-			if(!src.target_valid(src.target))
+			if(!src.target && !src.seek_target()) //attempt to set the target if no target
+				return
+			if(!src.target_valid(src.target)) //check valid target
 				src.icon_state = "[src.icon_tag]_idle"
 				src.target = null
 				return
-			else
-				src.shooting = 1
-				src.icon_state = "[src.icon_tag]_fire"
-				SPAWN_DBG(0)
-					for (var/i = 0, i<burst_size, i++)
-						if(src.target)
-							shoot(src.target.loc,src.loc,src)
-							sleep(10/fire_rate)
-						else
-							src.icon_state = "[src.icon_tag]_idle"
-							src.target = null
-							break
-					src.shooting = 0
-					src.icon_state = "[src.icon_tag]_active"
+			else //GUN THEM DOWN
+				if(src.target)
+					SPAWN_DBG(0)
+						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
+							flick("[src.icon_tag]_fire",src)
+							sleep(src.current_projectile.shot_delay)
+					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 
 	attackby(obj/item/W, mob/user)
@@ -281,6 +273,7 @@
 
 				else
 					user.show_message("<span class='notice'>You power on the turret.</span>")
+					set_projectile()
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
@@ -295,6 +288,7 @@
 
 				else
 					user.show_message("<span class='notice'>You power on the turret.</span>")
+					set_projectile()
 					src.active = 1
 					src.icon_state = "[src.icon_tag]_idle"
 
@@ -311,6 +305,7 @@
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
 		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
+		set_projectile()
 		src.anchored = 1
 		src.active = 1
 		src.icon_state = "[src.icon_tag]_idle"
@@ -408,7 +403,7 @@
 			return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.hasStatus("resting") || H.hasStatus("weakened")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus("resting") || H.hasStatus("weakened") || H.hasStatus("stunned") || H.hasStatus("paralysis")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return 0
 		if (is_friend(C))
 			return 0
@@ -455,38 +450,6 @@
 			return 0 // NO FRIENDS :'[
 		*/
 		return istype(C.get_id(), /obj/item/card/id/syndicate)
-
-
-	proc/shoot(var/turf/target, var/start, var/user, var/bullet = 0)
-		if(target == start)
-			return
-
-		var/obj/projectile/A = unpool(/obj/projectile)
-		if(!A)	return
-		A.set_loc(src.loc)
-		if (!current_projectile)
-			current_projectile = new projectile_type()
-
-		A.proj_data = new current_projectile.type
-		A.proj_data.master = A
-		A.set_icon()
-		A.power = A.proj_data.power
-		if(src.current_projectile.shot_sound)
-			playsound(src, src.current_projectile.shot_sound, 60)
-
-		if (!istype(target, /turf))
-			A.die()
-			return
-
-		A.target = target
-		A.yo = target:y - start:y
-		A.xo = target:x - start:x
-		A.shooter = src
-
-		SPAWN_DBG(0)
-			A.process()
-		return
-
 
 	proc/set_angle(var/angle)
 		angle = angle > 0 ? angle%360 : -((-angle)%360)+360 //limit user input to a sane range!
@@ -612,10 +575,6 @@
 				src.projectile_type = /datum/projectile/bullet/a12
 				src.current_projectile = new/datum/projectile/bullet/a12
 		*/
-
-	shoot(var/turf/target, var/start, var/user, var/bullet = 0)
-		flick("[src.icon_tag]_shoot",src)
-		..(target,start,user,bullet)
 
 	is_friend(var/mob/living/C)
 		/*

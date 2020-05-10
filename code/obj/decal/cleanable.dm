@@ -706,7 +706,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/paper
 	name = "paper"
 	desc = "Ripped up little flecks of paper."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "paper"
 	random_dir = 4
 	can_sample = 1
@@ -722,14 +722,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/leaves
 	name = "leaves"
 	desc = "A sad little pile of leaves from a sad, destroyed bush."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
 	random_dir = 4
 
 /obj/decal/cleanable/rust
 	name = "rust"
 	desc = "That sure looks safe."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "rust1"
 	random_icon_states = list("rust1", "rust2", "rust3","rust4","rust5")
 	can_sample = 1
@@ -751,7 +751,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "writing"
 	desc = "Someone's scribbled something here."
 	layer = TURF_LAYER + 1
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/decals/writing.dmi'
 	icon_state = "writing1"
 	color = "#000000"
 	random_icon_states = list("writing1", "writing2", "writing3", "writing4", "writing5", "writing6", "writing7")
@@ -1126,7 +1126,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/slime // made by slugs and snails
 	name = "slime"
 	desc = "Eww."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "slimeline1"
 	random_icon_states = list("slimeline1", "slimeline2", "slimeline3", "slimeline4")
 	color = "#A5BC64"
@@ -1160,7 +1160,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
 	random_dir = 1
 	stain = "dirty"
@@ -1187,7 +1187,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "cobweb"
 	desc = "Someone should remove that."
 	layer = MOB_LAYER+1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
 
 /obj/decal/cleanable/molten_item
@@ -1201,14 +1201,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "cobweb"
 	desc = "Someone should remove that."
 	layer = MOB_LAYER+1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb2"
 
 /obj/decal/cleanable/cobwebFloor
 	name = "cobweb"
 	desc = "\"Will you walk into my parlour?\" said the spider to the fly."
 	layer = MOB_LAYER-1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb_floor-c"
 	event_handler_flags = USE_CANPASS
 
@@ -1224,7 +1224,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/fungus
 	name = "space fungus"
 	desc = "A fungal growth. Looks pretty nasty."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "fungus1"
 	var/amount = 1
 	can_sample = 1
@@ -1480,7 +1480,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/saltpile
 	name = "salt pile"
 	desc = "Bad luck, that."
-	icon = 'icons/effects/salt.dmi'
+	icon = 'icons/obj/fluids/salt.dmi'
 	icon_state = "0"
 	can_sample = 1
 	sample_reagent = "salt"
@@ -1579,7 +1579,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
 	desc = "Uh-oh."
-	icon = 'icons/effects/salt.dmi'
+	icon = 'icons/obj/fluids/salt.dmi'
 	icon_state = "0"
 	can_sample = 1
 	sample_reagent = "magnesium"
@@ -1740,7 +1740,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = 1
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 

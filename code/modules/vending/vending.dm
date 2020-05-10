@@ -554,6 +554,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/cashmoney, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/networkcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/radioscanner, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regreplace, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/relaycomp, 30)
@@ -1324,7 +1325,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
 //obj/machinery/vending
-/	var/const
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3

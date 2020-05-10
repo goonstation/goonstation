@@ -1911,7 +1911,7 @@ var/list/electiles = list()
 	anchored = 1
 	density = 0
 	opacity = 0
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2102,7 +2102,7 @@ var/list/electiles = list()
 
 /obj/decal/nothing
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	anchored = 1
 	density = 0
@@ -2111,7 +2111,7 @@ var/list/electiles = list()
 
 /obj/decal/nothingplug
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank-plug"
 	anchored = 1
 	density = 0
@@ -2120,7 +2120,7 @@ var/list/electiles = list()
 
 /obj/decal/hfireplug
 	name = "fire"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfireplug"
 	anchored = 1
 	density = 0
@@ -2128,7 +2128,7 @@ var/list/electiles = list()
 
 /obj/decal/hfire
 	name = "fire"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfire"
 	anchored = 1
 	density = 0
@@ -2136,7 +2136,7 @@ var/list/electiles = list()
 
 /obj/decal/tileswish
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tileswish"
 	anchored = 1
 	density = 0
@@ -2371,7 +2371,7 @@ var/list/electiles = list()
 /obj/item/beamtest
 	desc = "beamtest thingamobob"
 	name = "beamtest thingamobob"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2426,7 +2426,7 @@ var/list/electiles = list()
 		return
 
 /obj/candle_light_2spoopy
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
@@ -2452,7 +2452,7 @@ var/list/electiles = list()
 
 //Really sorry about the shitty code below. I couldn't be arsed to do it properly.
 /obj/candle_light
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "candle"
 	desc = "It's a big candle"
@@ -2771,7 +2771,7 @@ var/list/electiles = list()
 	opacity = 0
 	density = 1
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
@@ -2795,7 +2795,7 @@ var/list/electiles = list()
 	opacity = 0
 	density = 1
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)

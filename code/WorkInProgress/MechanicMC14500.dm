@@ -117,9 +117,9 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 				sleep(0.1 SECONDS)
 
 	attack_hand(mob/user as mob)
+		if (src.level != 1)
+			return ..(user)
 		if (!istype(src.loc, /turf/)) return
-		if (!src.level)
-			return ..()
 
 		if (user.machine == src)
 			user << output("[src.running]&[RR ? 1 : 0]&[IEN]&[OEN]", "mcu14500b.browser:update_indicators")

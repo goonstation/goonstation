@@ -680,7 +680,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, SOUTH))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, EAST))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, WEST))
-			usr.restrain_time = world.timeofday + 40
+			usr.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
 			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
