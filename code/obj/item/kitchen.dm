@@ -81,6 +81,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 10)
+			JOB_XP(user, "Clown", 1)
 		if(!saw_surgery(M,user)) // it doesn't make sense, no. but hey, it's something.
 			return ..()
 
@@ -106,6 +107,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_fork(user)
 			return
@@ -150,6 +152,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
+			JOB_XP(user, "Clown", 1)
 		if(!scalpel_surgery(M,user))
 			return ..()
 
@@ -174,6 +177,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_knife(user)
 			return
@@ -210,6 +214,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
+			JOB_XP(user, "Clown", 1)
 		if(prob(5))
 			user.changeStatus("weakened", 4 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
@@ -257,6 +262,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(!saw_surgery(M,user))
 			return ..()
 
@@ -277,6 +283,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(!spoon_surgery(M,user))
 			return ..()
 
@@ -303,6 +310,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs \himself.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_spoon(user)
 			return
@@ -740,8 +748,8 @@ TRAYS
 		return "[health_desc] [food_desc]" //heres yr desc you *bastard*
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		user.changeStatus("weakened", rand(1,2) SECONDS)
+		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
+		M.changeStatus("weakened", 2 SECONDS)
 		M.updatehealth()
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
@@ -797,6 +805,7 @@ TRAYS
 	if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> swings [src] and hits \himself in the face!.</span>")
 		user.changeStatus("weakened", 20 * src.force)
+		JOB_XP(user, "Clown", 1)
 		return
 	else
 		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)

@@ -35,8 +35,6 @@
 #define COMSIG_COMPONENT_REMOVING "component_removing"
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
-/// just after a datum's disposing()
-#define COMSIG_PARENT_POST_DISPOSING "parent_post_disposing"
 
 
 // atom/movable signals

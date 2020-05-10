@@ -519,7 +519,7 @@
 
 				var/setangle = 0
 				if (face_desired_dir)
-					setangle = atan2(desired_y,desired_x)
+					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
 				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
@@ -799,7 +799,6 @@
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
-		
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
 	power = 1

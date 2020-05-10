@@ -554,6 +554,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/cashmoney, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/networkcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/radioscanner, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regreplace, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/relaycomp, 30)
@@ -1296,8 +1297,34 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=130, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=200, hidden=1)
 
+/obj/machinery/vending/janitor
+	name = "JaniTech Vendor"
+	desc = "One stop shop for all your custodial needs."
+	icon_state = "janitor"
+	icon_panel = "standard-panel"
+	icon_deny = "null"
+	pay = 1
+	acceptcard = 1
+	mats = 10
+	window_size = "400x475"
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
+		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
+		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cleaner, 4)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
+		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+
 //obj/machinery/vending
-/	var/const
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3

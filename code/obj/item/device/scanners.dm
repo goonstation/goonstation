@@ -281,6 +281,7 @@ that cannot be itched
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
 			user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
 			user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
+			JOB_XP(user, "Clown", 1)
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
@@ -552,7 +553,7 @@ that cannot be itched
 
 		if(found == 0)
 			src.active1 = new /datum/data/record()
-			src.active1.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+			src.active1.fields["id"] = num2hex(rand(1, 1.6777215E7),6)
 			src.active1.fields["rank"] = "Unassigned"
 			//Update Information
 			src.active1.fields["name"] = M.name

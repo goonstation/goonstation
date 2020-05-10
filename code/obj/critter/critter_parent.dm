@@ -101,10 +101,6 @@
 #if ASS_JAM //timestop stuff
 	var/paused = FALSE
 #endif
-	/////////////////////////////////////////////////////////////
-	// INTRUDER VARS AND PROCS
-	var/selected = 0
-	/////////////////////////////////////////////////////////////
 
 	proc/tokenized_message(var/message, var/target)
 		if (!message || !length(message))

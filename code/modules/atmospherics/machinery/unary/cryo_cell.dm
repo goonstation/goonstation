@@ -140,7 +140,7 @@
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
-		else if(air_contents.temperature > 225)
+		else if(air_contents.temperature > 170)
 			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
 		else
 			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
@@ -324,7 +324,7 @@
 		if(ishuman(occupant))
 			if(isdead(occupant))
 				return
-			occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 			occupant.changeStatus("burning",-100)
 			var/mob/living/carbon/human/H = 0

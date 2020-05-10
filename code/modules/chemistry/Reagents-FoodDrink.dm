@@ -3218,7 +3218,8 @@ datum
 			bladder_value = -2
 
 			on_add(var/mob/M)
-				APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+				if (ismob(M))
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
@@ -3244,8 +3245,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-
-				REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					holder.my_atom:add_stam_mod_regen("tripletriple", 3333)
@@ -3776,3 +3775,13 @@ datum
 			on_mob_life_complete(var/mob/living/carbon/human/M)
 				if(M)
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
+
+		fooddrink/alcoholic/hottoddy
+			name = "Hot Toddy"
+			id = "hottoddy"
+			fluid_r = 255
+			fluid_g = 220
+			fluid_b = 95
+			alch_strength = 0.4
+			description = "A warm, late night drink, usually enjoyed during long winter nights."
+			reagent_state = LIQUID

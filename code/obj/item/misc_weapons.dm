@@ -191,6 +191,7 @@
 		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
+		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
 	if (src.active)
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
@@ -468,7 +469,7 @@
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
-		
+
 	throw_impact(atom/A)
 		..()
 		usr.set_loc(get_turf(src))
@@ -573,6 +574,8 @@
 				setProperty("movespeed", 0)
 				force = one_handed_force
 				src.setItemSpecial(/datum/item_special/simple)
+
+			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
 
 			can_disarm = src.status
 			item_state = status ? "quarterstaff2" : "quarterstaff1"
@@ -918,13 +921,15 @@
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SWORD
 
-/obj/item/katana/attack(mob/target as mob, mob/user as mob)
-	if(!ishuman(target))
-		return ..()  //Only humans can currently be dismembered
+/obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
+	if(target == user || !ishuman(target)) //Can't cut off your own limbs, dumbo; only humans can currently be dismembered
+		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
 		return
+	if (is_special)
+		return ..()
 	switch(zoney)
 		if("head")
 			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
@@ -1254,22 +1259,22 @@
 		BLOCK_SWORD
 
 
-	/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
-		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			if(!isdead(C))
-				force += 5
-				boutput(user, "<span class='alert'>The [src] delights in the bloodshed, you can feel it grow stronger!</span>")
-				take_bleeding_damage(C, user, 5, DAMAGE_STAB)
-		..()
+/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
+	playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(!isdead(C))
+			force += 5
+			boutput(user, "<span class='alert'>The [src] delights in the bloodshed, you can feel it grow stronger!</span>")
+			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
+	..()
 
-	dropped(mob/user)
-		..()
-		if (isturf(src.loc))
-			user.visible_message("<span class='alert'>As the [src] falls from [user]'s hands, it seems to become duller!</span>")
-			force = 5
-			return
+/obj/item/bloodthirsty_blade/dropped(mob/user)
+	..()
+	if (isturf(src.loc))
+		user.visible_message("<span class='alert'>As the [src] falls from [user]'s hands, it seems to become duller!</span>")
+		force = 5
+		return
 
 obj/item/fragile_sword
 	name = "fragile sword"

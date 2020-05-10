@@ -423,7 +423,7 @@
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
 			if (!pillvol || !src.beaker || !R)
 				return
-			pillvol = CLAMP(pillvol, 5, 100)
+			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [pillcount] [pillname] pills from [log_reagents(R)].")
@@ -515,7 +515,7 @@
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/40)", "Volume", 5) as null|num
 			if (!patchvol || !src.beaker || !R)
 				return
-			patchvol = CLAMP(patchvol, 5, 40)
+			patchvol = clamp(patchvol, 5, 40)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [patchcount] [patchname] patches from [log_reagents(R)].")

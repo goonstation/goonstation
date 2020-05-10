@@ -321,6 +321,7 @@
 					user.set_loc(src.loc)
 					if (!user.hasStatus("weakened"))
 						user.changeStatus("weakened", 10 SECONDS)
+					JOB_XP(user, "Clown", 3)
 					return
 				else
 					user.show_text("You scoot around [src].")

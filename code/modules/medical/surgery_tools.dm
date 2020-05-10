@@ -727,9 +727,9 @@ CONTAINS:
 		repair_amount = Repair
 		vrb = Vrb
 		if (zone && surgery_status)
-			duration = CLAMP((duration * surgery_status), 5, 50)
+			duration = clamp((duration * surgery_status), 5, 50)
 		else if (ishuman(target))
-			duration = CLAMP((duration * target.bleeding), 5, 50)
+			duration = clamp((duration * target.bleeding), 5, 50)
 		if (tool)
 			icon = tool.icon
 			icon_state = tool.icon_state
@@ -1096,7 +1096,7 @@ CONTAINS:
 		user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 		H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
-		if (!do_mob(user, H, CLAMP(surgery_status * 4, 0, 100)))
+		if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
 			user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
 			"<span class='alert'>You were interrupted!</span>")
 			return
@@ -1225,6 +1225,7 @@ CONTAINS:
 
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(33))
 			M = user // hold the pen the right way, dingus!
+			JOB_XP(user, "Clown", 1)
 
 		if (!src.on || def_zone != "head")
 			M.tri_message("[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\

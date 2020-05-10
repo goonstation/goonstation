@@ -315,18 +315,23 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		connection = src.radio_connection
 		secure = 0
 
-	for (var/obj/item/device/radio/R in connection.devices)
+	for (var/obj/item/I in connection.devices)
+		if (istype(I, /obj/item/device/radio))
+			var/obj/item/device/radio/R = I
+			//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
+			if (can_check_jammer)
+				if (connection.check_for_jammer_bare(R))
+					continue
 
-		//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
-		if (can_check_jammer)
-			if (connection.check_for_jammer_bare(R))
-				continue
+			if (R.accept_rad(src, messages, connection))
+				R.speech_bubble()
+				for (var/i in R.send_hear())
+					if (!(i in receive))
+						receive += i
 
-		if (R.accept_rad(src, messages, connection))
-			R.speech_bubble()
-			for (var/i in R.send_hear())
-				if (!(i in receive))
-					receive += i
+		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
+			var/obj/item/mechanics/radioscanner/R = I
+			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
 

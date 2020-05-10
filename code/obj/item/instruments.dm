@@ -211,6 +211,15 @@
 			qdel(W)
 			qdel(src)
 
+	attack_self(mob/user as mob)
+		..()
+		//bad, but eh clowns...
+		if (prob(30))
+			for (var/mob/living/carbon/human/H in view(2, user))
+				if (H.hasStatus("weakened"))
+					JOB_XP(user, "Clown", 2)
+					break
+
 	is_detonator_attachment()
 		return 1
 

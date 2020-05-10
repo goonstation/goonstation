@@ -159,6 +159,7 @@
 				if (M.bioHolder.HasEffect("clumsy"))
 					M.changeStatus("stunned", 80)
 					M.changeStatus("weakened", 5 SECONDS)
+					JOB_XP(M, "Clown", 1)
 				else
 					M.changeStatus("weakened", 2 SECONDS)
 				M.force_laydown_standup()
