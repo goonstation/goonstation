@@ -4,7 +4,7 @@
  * list/keybind_styles - Global list holding all of these for access
  */
 
-//Global list holding all of the keybind style datums
+///Global list holding all of the keybind style datums
 var/global/list/datum/keybind_style/keybind_styles = null
 
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
@@ -31,7 +31,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 			return found_style
 	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
-
+//!!
+//TODO: Use this proc to apply a custom keybind datum saved in user cloud
 /** apply_keys: Takes a keybind_style to apply to the src client
  *	Internal use only.
  *	Merges the given keybind_style onto the client. Also adds it to the client's tracking list.
@@ -42,7 +43,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		return
 	src.applied_keybind_styles.Add(style.name)
 	src.keymap.merge(style.changed_keys)
-
 
 //Applies a given style onto the client after getting the datum
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
@@ -328,11 +328,3 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"E" = "exit",
 		"Q" = "exit"
 	)
-
-///
-/// CUSTOM KEYBINDS
-///
-
-/datum/keybind_style/custom
-	name = "custom"
-	changed_keys = list()

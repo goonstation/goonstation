@@ -1263,8 +1263,8 @@
 			else
 				return ..()
 
-	build_keybind_styles(client/C, apply_custom = TRUE)
-		..(C, apply_custom)
+	build_keybind_styles(client/C)
+		..(C)
 		C.apply_keybind("drone")
 
 		if (!C.preferences.use_wasd)

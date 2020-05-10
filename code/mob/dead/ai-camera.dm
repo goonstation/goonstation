@@ -66,8 +66,8 @@
 	isAIControlled()
 		return 1
 
-	build_keybind_styles(client/C, apply_custom = TRUE)
-		..(C, apply_custom)
+	build_keybind_styles(client/C)
+		..(C)
 		C.apply_keybind("robot")
 
 		if (!C.preferences.use_wasd)

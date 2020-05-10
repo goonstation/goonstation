@@ -1051,8 +1051,8 @@
 		else
 			return ..()
 
-/mob/living/carbon/human/build_keybind_styles(client/C, apply_custom = TRUE)
-	..(C, apply_custom)
+/mob/living/carbon/human/build_keybind_styles(client/C)
+	..(C)
 	C.apply_keybind("human")
 
 	if (C.preferences.use_wasd)

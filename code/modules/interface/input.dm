@@ -379,9 +379,9 @@ var/list/dirty_keystates = list()
 			else
 				src.keys[new_key] = act
 
+	///Checks the input key and converts it to a usable format
+	///Wants input in the format "CTRL+F", as an example.
 	proc/parse_keybind(keybind)
-		//Checks the input key and converts it to a usable format
-		//Wants input in the format "CTRL+F", as an example.
 		var/req_modifier = 0 //The modifier(s) associated with this key
 		var/bound_key //The final key that should be bound
 		var/list/keys = splittext(keybind, "+")
