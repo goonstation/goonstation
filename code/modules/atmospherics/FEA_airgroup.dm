@@ -363,7 +363,7 @@
 			var/datum/gas_mixture/member_air = member.air
 			// Todo - retain nearest space tile border and apply force proportional to amount
 			// of air leaving through it
-			member_air.mimic(sample, CLAMP(length_space_border / (2 * max(1, minDist)), 0.1, 1))
+			member_air.mimic(sample, clamp(length_space_border / (2 * max(1, minDist)), 0.1, 1))
 			SPACEFASTPRESSURE(member_air, totalPressure) // Build your own atmos disaster
 
 		LAGCHECK(LAG_REALTIME)

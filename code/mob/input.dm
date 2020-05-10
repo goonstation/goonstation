@@ -29,7 +29,7 @@ mob
 			if (keys & KEY_LEFT)
 				move_x -= 1
 			if (move_x || move_y)
-				src.move_dir = angle2dir(atan2(move_y, move_x))
+				src.move_dir = angle2dir(arctan(move_y, move_x))
 				src.attempt_move()
 			else
 				src.move_dir = 0

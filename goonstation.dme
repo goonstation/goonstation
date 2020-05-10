@@ -41,6 +41,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\_layer.dm"
 #include "_stdlib\code\_list.dm"
 #include "_stdlib\code\_plane.dm"
+#include "_stdlib\code\_robot.dm"
 #include "_stdlib\code\_vox.dm"
 #include "_stdlib\code\_z_material_properties.dm"
 
@@ -1559,7 +1560,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\fluid_pipes\fluid_pipe.dm"
 #include "code\WorkInProgress\griffening\griffening_cards.dm"
 #include "code\WorkInProgress\griffening\griffening_controller.dm"
-#include "code\WorkInProgress\intrusion\overmind.dm"
 #include "code\WorkInProgress\nuclear_engine\nuclear_engine.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
 #include "code\WorkInProgress\recycling\conveyor.dm"

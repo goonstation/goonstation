@@ -427,10 +427,10 @@
 	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength."
 	name = "Pressure Crystal"
 	ex_act(var/ex, var/inf, var/factor)
-		pressure = factor || (4-CLAMP(ex, 1, 3))*2
+		pressure = factor || (4-clamp(ex, 1, 3))*2
 		total_pressure += pressure
 		pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
-		icon_state = "pressure_[CLAMP(ex, 1, 3)]"
+		icon_state = "pressure_[clamp(ex, 1, 3)]"
 /obj/item/device/pressure_sensor
 	name = "Pressure Sensor"
 	icon = 'icons/obj/items/assemblies.dmi'

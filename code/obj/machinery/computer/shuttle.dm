@@ -578,7 +578,7 @@
 
 /obj/sign_accidents
 	name = "Elevator Safety Sign"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0

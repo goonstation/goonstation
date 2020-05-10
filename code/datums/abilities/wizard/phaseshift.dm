@@ -82,7 +82,7 @@
 		steam.location = mobloc
 		steam.start()
 		H.canmove = 0
-		H.restrain_time = world.timeofday + 40
+		H.restrain_time = TIME + 40
 		sleep(2 SECONDS)
 		flick("reappear",animation)
 		sleep(0.5 SECONDS)

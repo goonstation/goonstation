@@ -241,7 +241,7 @@
 					// People do use sleepers for grief from time to time.
 					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by %target%) by [t] seconds at [log_loc(src.our_sleeper)].")
 				//src.time = min(180, max(0, src.time + t))
-				src.time = CLAMP(src.time + (t*10), 0, 1800)
+				src.time = clamp(src.time + (t*10), 0, 1800)
 
 		if (href_list["rejuv"])
 			if (src.our_sleeper && src.our_sleeper.occupant)

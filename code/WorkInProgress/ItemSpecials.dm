@@ -49,7 +49,7 @@
 	if(params["icon-y"])
 		dy += (text2num(params["icon-y"]) - 16)
 
-	var/angle = atan2(dy,dx)
+	var/angle = arctan(dy,dx)
 	//boutput(world, "[dx] : [dy] ::: makes for [angle]")
 
 	//oh no ! i'm bad!!!!!!!!!!!
@@ -271,7 +271,7 @@
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
 		if(restrainDuration)
-			person.restrain_time = world.timeofday + restrainDuration
+			person.restrain_time = TIME + restrainDuration
 
 	rush
 		cooldown = 100
@@ -1371,6 +1371,9 @@
 			return
 
 		proc/on_hit(var/mob/hit)
+			if (ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				H.do_disorient(src.stamina_damage, stunned = 10)
 			return
 
 	katana_dash/reverse

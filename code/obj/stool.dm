@@ -1028,6 +1028,12 @@
 		if (src.lying)
 			return
 		..()
+		if (src.buckled_guy == to_buckle)
+			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+
+	unbuckle()
+		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		return ..()
 
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */

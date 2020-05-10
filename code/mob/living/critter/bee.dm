@@ -721,7 +721,7 @@
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span class='alert'><b>You die!</b></span>")
 				src.set_density(0)
-			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
+			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)
