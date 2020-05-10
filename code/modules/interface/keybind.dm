@@ -10,7 +10,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
 //base -> base_wasd -> human -> human_wasd for example
 //If you switch to a different mobtype, such as a robot,
-//You would subtract the human_base and human_wasd and apply robot_base and robot_wasd(last one is fictional)
+//You would reset the keymap, and successive calls of build_keymap will apply_keybind
 
 
 ///List on each client containing the styles we've applied so we don't double-apply.
@@ -24,11 +24,12 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/get_keybind_style_datum(style_name)
 
 	if (!keybind_styles)
-		keybind_styles = childrentypesof(/datum/keybind_style/)
+		keybind_styles = typesof(/datum/keybind_style/)
 
 	for (var/datum/keybind_style/found_style in keybind_styles)
 		if (found_style.name == "[style_name]")
 			return found_style
+	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
 
 /** apply_keys: Takes a keybind_style to apply to the src client
@@ -45,7 +46,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 //Applies a given style onto the client after getting the datum
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
- *	External use is proper.
+ *	External use.
  *	This is what external stuff should be calling when applying their additive styles.
  */
 /client/proc/apply_keybind(style_str)
@@ -55,7 +56,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 //Dummy used to find old code - What should be done is successive calls of apply_keybind(name) going down the tree of mob/human/monkey/wasd etc.
 /client/proc/get_default_keymap(name)
-	message_admins("OLD CALLER BAD BAD BAD: [name]")
+	message_admins("Tell ZeWaka: OLD CALLER BAD: [name]")
 	return
 
 
@@ -327,3 +328,11 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"E" = "exit",
 		"Q" = "exit"
 	)
+
+///
+/// CUSTOM KEYBINDS
+///
+
+/datum/keybind_style/custom
+	name = "custom"
+	changed_keys = list()

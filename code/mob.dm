@@ -1199,7 +1199,13 @@
 				unpull_particle(src,pulling)
 			src.pulling = null
 
-/mob/proc/build_keymap(client/C)
+/** build_keybind_styles: Additiviely applies keybind styles onto the client's keymap.
+ *	To be extended upon in children types that want to have special keybind handling.
+ *	Call this proc first, and then do your specific application of keybind styles.
+ */
+/mob/proc/build_keybind_styles(client/C, apply_custom = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	C.apply_keybind("base")
 
 	if (C.preferences.use_wasd)
@@ -1212,8 +1218,15 @@
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")
 
+	if (apply_custom)
+		C.apply_keybind("custom")
+
+/** reset_keymap: Builds the mob's keymap, checks for valid movement controllers, and finally sets the keymap.
+ *  Called on: Login, Vehicle change, WASD/TG toggle, Keybind menu Reset
+ */
 /mob/proc/reset_keymap()
 	if (src.client)
+		build_keybind_styles(src.client, )
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)

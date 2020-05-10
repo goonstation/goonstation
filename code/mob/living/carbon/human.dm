@@ -1051,14 +1051,19 @@
 		else
 			return ..()
 
-///mob/living/carbon/human/click(atom/target, params)
+/mob/living/carbon/human/build_keybind_styles(client/C, apply_custom = TRUE)
+	..(C, apply_custom)
+	C.apply_keybind("human")
 
-///mob/living/carbon/human/Stat()
+	if (C.preferences.use_wasd)
+		C.apply_keybind("human_wasd")
+	else
+		C.apply_keybind("human_arrow")
 
-/mob/living/carbon/human/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_default_keymap("human"))
-	return keymap
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
 
 /mob/living/carbon/human/proc/toggle_throw_mode()
 	if (src.in_throw_mode)

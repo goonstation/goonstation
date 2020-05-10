@@ -1679,10 +1679,17 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_default_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C, apply_custom = TRUE)
+		..(C, apply_custom)
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
 
 	say_understands(var/other)
 		if (isAI(other)) return 1

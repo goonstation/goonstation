@@ -297,10 +297,9 @@
 	else
 		return 0.75 + movement_delay_modifier
 
-/mob/dead/observer/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_default_keymap("human"))
-	return keymap
+/mob/dead/observer/build_keybind_styles(client/C, apply_custom = TRUE)
+	..(C, apply_custom)
+	C.apply_keybind("human")
 
 /mob/dead/observer/is_spacefaring()
 	return 1
