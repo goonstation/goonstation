@@ -22,6 +22,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
  *	Called by apply_keybind to fetch our datum.
  */
 /client/proc/get_keybind_style_datum(style_name)
+	PROTECTED_PROC(TRUE)
 
 	if (!keybind_styles)
 		keybind_styles = typesof(/datum/keybind_style/)
@@ -38,6 +39,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
  *	Merges the given keybind_style onto the client. Also adds it to the client's tracking list.
  */
 /client/proc/apply_keys(datum/keybind_style/style)
+	PROTECTED_PROC(TRUE)
+
 	if (applied_keybind_styles.Find("[style.name]"))
 		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [style.name] to [src] when already present.")
 		return
@@ -46,7 +49,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 //Applies a given style onto the client after getting the datum
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
- *	External use.
+ *	External use only.
  *	This is what external stuff should be calling when applying their additive styles.
  */
 /client/proc/apply_keybind(style_str)

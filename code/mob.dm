@@ -1218,19 +1218,35 @@
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")
 
+	apply_custom_keybinds(C)
+
+/** apply_custom_keybinds: Applies the client's custom keybind changelist, fetched from the cloud.
+ *	Called by build_keybind_styles if not resetting the custom keybinds of a u
+ */
+/mob/proc/apply_custom_keybinds(client/C)
+	PROTECTED_PROC(TRUE)
+
+	if(!C || !C.cloud_available())
+		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
+		return
+
+	var/fetched_keylist = C.cloud_get("keybind_data")
+	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
+		C.keymap.overwrite_by_action(fetched_keylist)
+
 /** reset_keymap: Builds the mob's keymap, checks for valid movement controllers, and finally sets the keymap.
  *  Called on: Login, Vehicle change, WASD/TG toggle, Keybind menu Reset
  */
-/mob/proc/reset_keymap()
+/mob/proc/reset_keymap(reset_custom = FALSE)
 	if (src.client)
-		build_keybind_styles(src.client)
+		build_keybind_styles(src.client, !reset_custom)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
 				controller.modify_keymap(src.client.keymap, src.client)
 		src.client.set_keymap(src.client.keymap)
 
-/mob/proc/drop_from_slot(var/obj/item/item, var/turf/T)
+/mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
 		return
 	if (!(item in src.contents))
@@ -1251,7 +1267,7 @@
 	T.Entered(item)
 	return
 
-/mob/proc/drop_item(var/obj/item/W)
+/mob/proc/drop_item(obj/item/W)
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
@@ -1294,7 +1310,7 @@
 		var/turf/T = get_edge_target_turf(src, pick(alldirs))
 		W.throw_at(T,rand(0,5),1)
 
-/mob/proc/drop_item_throw_dir(var/dir)
+/mob/proc/drop_item_throw_dir(dir)
 	var/obj/item/W = src.equipped()
 	if (src.drop_item())
 		var/turf/T = get_edge_target_turf(src, dir)

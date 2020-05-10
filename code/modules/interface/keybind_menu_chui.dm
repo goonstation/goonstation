@@ -40,7 +40,7 @@ chui/window/keybind_menu
 
 		html.Join("<tr><td>[theme.generateButton("confirm", "Confirm")]</td><td>[theme.generateButton("cancel", "Cancel")]</td></tr></tbody>")
 
-		html.Join("<tfoot><tr><td colspan=\"2\">[theme.generateButton("reset", "Reset All Keybinds")]</td></tr></tfoot></table>")
+		html.Join("<tfoot><tr><td colspan=\"2\">[theme.generateButton("reset", "Reset All Keybinds (Dangerous)")] [theme.generateButton("reset_cloud", "Reset Cloud Data (Dangerous)")]</td></tr></tfoot></table>")
 
 		html.Join("<hr> <strong>Preset Templates:</strong> [theme.generateButton("set_arrow", "Arrow Keys")] [theme.generateButton("set_wasd", "WASD")] [theme.generateButton("set_tg", "/tg/")] [theme.generateButton("set_azerty", "AZERTY")] ")
 
@@ -59,14 +59,12 @@ chui/window/keybind_menu
 					for (var/i in changed_keys)
 						changed_keys_rev[changed_keys[i]] = i
 
-					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimial merge
+					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimal merge
 					owner.keymap.overwrite_by_action(keydat)
 
-					owner.cloud_put("keybind_data", json_encode(owner.keymap.keys))
-
+					owner.cloud_put("keybind_data", json_encode(changed_keys_rev))
 			else if (id == "set_wasd")
 				changed_keys = new/list()
-				//who.mob.
 			else if (id == "set_tg")
 				changed_keys = new/list()
 			else if (id == "set_azerty")
@@ -76,6 +74,8 @@ chui/window/keybind_menu
 				boutput(world, "reset keymap")
 				who.mob.reset_keymap()
 				changed_keys = new/list()
+			else if (id == "reset_cloud")
+				owner.cloud_put("keybind_data", null)
 			else if (id == "cancel")
 				Unsubscribe(who)
 
