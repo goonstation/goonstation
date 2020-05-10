@@ -932,6 +932,8 @@ var/list/figure_patreon_rarity = list(\
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
+	var/redeemer = null
+	var/receiver = null
 
 /obj/item/toy/diploma/New()
 	..()
