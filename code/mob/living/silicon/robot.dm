@@ -2777,6 +2777,7 @@
 			UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
 			src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
 			src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
+			return
 
 		// Play a sad boop to garner sympathy
 		if(world.time >= src.next_batteryDistressBoop)
