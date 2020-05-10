@@ -56,6 +56,7 @@
 	var/wiresexposed = 0
 	var/brainexposed = 0
 	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+	var/next_batteryDistressBoop = 0
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -73,6 +74,7 @@
 	var/sound_automaton_spaz = 'sound/misc/automaton_spaz.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
+	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
 
 	// moved up to silicon.dm
 	killswitch = 0
@@ -2278,19 +2280,17 @@
 
 				setalive(src)
 
-			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD && batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE)
-				batteryDistress() // Enter distress mode
-			else if (src.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD && batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
-				endBatteryDistress() // Exit distress mode
+			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				batteryDistress() // Execute distress mode
+			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
+				clearBatteryDistress() // Exit distress mode
 
 		else
 			if (isalive(src))
 				sleep(0)
 				src.lastgasp()
 			setunconscious(src)
-
-			if (batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // Enter distress mode
-				batteryDistress()
+			batteryDistress() // No battery. Execute distress mode
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -2769,15 +2769,23 @@
 	var/image/i_batterydistress
 
 	/mob/living/silicon/robot/proc/batteryDistress()
-		if (!i_batterydistress) // we only need to bother configuring this once. Since image is a runtime proc apparently it needs to be in here - Sovexe
-			i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
-			i_batterydistress.pixel_y = 24 // this looks about right for the offset...
+		if (!src.i_batterydistress) // we only need to bother configuring this once. Since image is a runtime proc apparently it needs to be in here - Sovexe
+			src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
+			src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
 
-		UpdateOverlays(i_batterydistress, "batterydistress") // Help me humans!
-		batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
+		if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator the first time around
+			UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
+			src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
+			src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
 
-	/mob/living/silicon/robot/proc/endBatteryDistress()
-		batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+		// Play a sad boop to garner sympathy
+		if(world.time >= src.next_batteryDistressBoop)
+			src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
+			playsound(src.loc, src.sound_sad_robot, 100, 1)
+
+
+	/mob/living/silicon/robot/proc/clearBatteryDistress()
+		src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
 		ClearSpecificOverlays("batterydistress")
 
 	proc/compborg_force_unequip(var/slot = 0)
