@@ -1129,9 +1129,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				message = "<B>[src]</B> hands [thing] to [M]."
 				if(istype(thing,/obj/item/toy/diploma))
 					var/obj/item/toy/diploma/D = thing
-					if(!D.receiver && D.redeemer == src)
+					if(!D.receiver && D.redeemer == src.ckey)
 						M.unlock_medal( "Unlike the director, I went to college", 1 )
-						D.receiver = M
+						D.receiver = M.ckey
 						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)

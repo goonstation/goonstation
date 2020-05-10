@@ -407,7 +407,7 @@
 			if (H.mind.assigned_role == "Clown")
 				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
-				D.redeemer = H
+				D.redeemer = H.ckey
 				H.put_in_hand_or_drop(D)
 
 			else
