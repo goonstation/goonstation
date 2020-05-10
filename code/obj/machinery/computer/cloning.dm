@@ -91,7 +91,6 @@
 				src.link.master = src
 
 		src.net_id = generate_net_id(src)
-		return
 	return
 
 /obj/machinery/computer/cloning/disposing()
