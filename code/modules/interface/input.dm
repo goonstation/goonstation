@@ -297,22 +297,21 @@ var/list/dirty_keystates = list()
 		return 0
 
 /mob
-	var
-		move_scheduled = 0
-		last_move_ticklag = MIN_TICKLAG //if ticklag changes big inc, can interrupt hold-press. we needa save this to counteract!
+	var/move_scheduled = 0
+	var/last_move_ticklag = MIN_TICKLAG //if ticklag changes big inc, can interrupt hold-press. we needa save this to counteract!
+
 	proc
-		keys_changed(keys, changed)
-			set waitfor = 0 // prevent shitty code from locking up the main input loop
-
+		proc/keys_changed(keys, changed)
+			SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop
 			// stub
 
-		process_move(keys)
+		proc/process_move(keys)
 			// stub
 
-		attempt_move()
+		proc/attempt_move()
 			src.internal_process_move(src.client ? src.client.key_state : 0)
 
-		recheck_keys()
+		proc/recheck_keys()
 			if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 
@@ -320,7 +319,7 @@ var/list/dirty_keystates = list()
 		//i dont understand why. it *must* be a rounding error or math thing. i couldnt find it sorry bro
 		//ALSO last_move_ticklag, it compensates for the change in ticklag while we hold a key. It's also not consistent at all values, probably rounding errors again
 		//ticklag values that are multiples of 0.2 appear to work best  :)  so i've set the time dilation thing to move in 0.2inc notches.
-		internal_process_move(keys)
+		proc/internal_process_move(keys)
 			var/delay = src.process_move(keys)
 			if (isnull(delay))
 				return
@@ -408,9 +407,9 @@ var/list/dirty_keystates = list()
 
 		return uppertext("[req_modifier][bound_key]")
 
+	///Converts the given usable format to a readable format
+	///Wants input in the format "0NORTH" or "5D", as an example.
 	proc/unparse_keybind(keytext)
-		//Converts the given usable format to a readable format
-		//Wants input in the format "0NORTH" or "5D", as an example.
 		var/bound_key = ""
 		var/modifier = text2num(copytext(keytext, 1, 2)) //The modifier(s) associated with this key (NUM/BITFLAG ONLY)
 		var/modifier_string = ""
@@ -434,9 +433,9 @@ var/list/dirty_keystates = list()
 		else //must be a string
 			return key_string_to_desc(action)
 
+	///Converts from code-readable action names to human-readable
+	///Example: "l_arm" to "Target Left Arm"
 	proc/key_string_to_desc(string)
-		//Converts from code-readable action names to human-readable
-		//Example: "l_arm" to "Target Left Arm"
 		for (var/key in action_names)
 			if (string == key)
 				return action_names[key]
@@ -446,9 +445,9 @@ var/list/dirty_keystates = list()
 				return action_verbs[key]
 		return "not a string in action_names/verbs you fucko"
 
+	///Converts from bitflag to a human-readable description
+	///Assuming we're not passed a combination, because fuck that
 	proc/key_bitflag_to_stringdesc(bitflag)
-		//Converts from bitflag to a human-readable description
-		//Assuming we're not passed a combination, because fuck that
 		bitflag = num2text(bitflag)
 		for (var/key in key_names)
 			if (bitflag == key)
