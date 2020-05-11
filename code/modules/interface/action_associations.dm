@@ -17,6 +17,11 @@ var/list/action_names = list(
 	"grab" = "Grab Intent",
 	"harm" = "Harm Intent",
 
+	"look_n" = "Look North",
+	"look_s" = "Look South",
+	"look_w" = "Look West",
+	"look_e" = "Look East",
+
 	"head" = "Target Head",
 	"chest" = "Target Chest",
 	"l_arm" = "Target Left Arm",
@@ -39,9 +44,13 @@ var/list/action_names = list(
 	"cycle" = "Cycle Shell",
 	"exit" = "Exit",
 
+	"refocus"   = "Refocus Window",
+	"mainfocus" = "Focus Main Window",
+
 	"admin_interact" = "Admin Interact"
 )
 
+///Used for literal input of actions, but also convient for display in most cases.
 var/list/action_verbs = list(
 	"say" = "say",
 	"say_radio" = "say_radio",

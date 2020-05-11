@@ -12,43 +12,44 @@ chui/window/keybind_menu
 	var/list/changed_keys //so we can keep track of what keys the user changes then merge later
 	var/datum/keymap/current_keymap
 
-	New(var/client/my_client)
+	New(client/my_client)
 		..()
 		owner = my_client
 		theAtom = owner.mob
 		current_keymap = owner.keymap
 
-	Subscribe(var/client/who)
+	Subscribe(client/who)
 		..()
 		changed_keys = list() //new one every time so we're not merging an ever-expanding list (feel free to change if other is cheaper)
 
 	GetBody()
+
 		var/list/html = list()
 
-		html.Join("<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset{background-color: #f8d248; background: #f8d248}</style>")
+		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset{background-color: #f8d248; background: #f8d248}</style>"
 
-		html.Join("<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">This is a keybind menu for a shitty game engine. It's your fault if you type it in wrong.</span></i></b></td></tr></thead><tbody>")
+		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">This is a keybind menu for a shitty game engine. It's your fault if you type it in wrong.</span></i></b></td></tr></thead>"
 
-		html.Join("<tr><td>Action</td><td>Corresponding Keybind</td></tr>")
+		html += "<tbody><tr><td>Action</td><td>Corresponding Keybind</td></tr>"
 
-		boutput(world, "big shitter json: [json_encode(current_keymap.keys)]")
+		//boutput(world, "big shitter json: [json_encode(current_keymap.keys)]")
 
 		for (var/key in current_keymap.keys)
-			message_coders("went through key: [key]")
+			//message_coders("went through key: [key]")
 			if (key == "0NORTH" || key == "0SOUTH" || key == "0EAST" || key == "0WEST") continue //ignore arrow keys, fuck you for making obscure-ass names lummox
-			html.Join("<tr><td>[current_keymap.parse_action(current_keymap.keys[key])]</td><td><input class=\"input\" id=\"[current_keymap.keys[key]]\" type=\"text\" value=\"[current_keymap.unparse_keybind(key)]\"></td></tr>")
+			html += "<tr><td>[current_keymap.parse_action(current_keymap.keys[key])]</td><td><input class=\"input\" id=\"[current_keymap.keys[key]]\" type=\"text\" value=\"[current_keymap.unparse_keybind(key)]\"></td></tr>"
 
-		html.Join("<tr><td>[theme.generateButton("confirm", "Confirm")]</td><td>[theme.generateButton("cancel", "Cancel")]</td></tr></tbody>")
+		html += "<tr><td>[theme.generateButton("confirm", "Confirm")]</td><td>[theme.generateButton("cancel", "Cancel")]</td></tr></tbody>"
 
-		html.Join("<tfoot><tr><td colspan=\"2\">[theme.generateButton("reset", "Reset All Keybinds (Dangerous)")] [theme.generateButton("reset_cloud", "Reset Cloud Data (Dangerous)")]</td></tr></tfoot></table>")
+		html += "<tfoot><tr><td>[theme.generateButton("reset", "Reset All Keybinds (Dangerous)")]</td><td>[theme.generateButton("reset_cloud", "Reset Cloud Data (Dangerous)")]</td></tr></tfoot></table>"
 
-		html.Join("<hr> <strong>Preset Templates:</strong> [theme.generateButton("set_arrow", "Arrow Keys")] [theme.generateButton("set_wasd", "WASD")] [theme.generateButton("set_tg", "/tg/")] [theme.generateButton("set_azerty", "AZERTY")] ")
+		html += "<hr> <strong>Preset Templates:</strong> [theme.generateButton("set_arrow", "Arrow Keys")] [theme.generateButton("set_wasd", "WASD")] [theme.generateButton("set_tg", "/tg/")] [theme.generateButton("set_azerty", "AZERTY")] "
 
-		html.Join("<script language=\"JavaScript\">$(\".input\").on(\"change keyup paste\", function(){var elem=$(this); chui.bycall(\"changed_key\", {action:elem.attr(\"id\"), key:elem.val()})})</script>")
+		html += "<script language=\"JavaScript\">$(\".input\").on(\"change keyup paste\", function(){var elem=$(this); chui.bycall(\"changed_key\", {action:elem.attr(\"id\"), key:elem.val()})})</script>"
 
-		return html
+		return html.Join()
 
-	OnClick(var/client/who, var/id)
+	OnClick(client/who, id)
 		if(owner)
 			if (id == "confirm")
 				if (changed_keys.len)
@@ -69,7 +70,6 @@ chui/window/keybind_menu
 				changed_keys = new/list()
 			else if (id == "set_azerty")
 				changed_keys = new/list()
-
 			else if (id == "reset")
 				boutput(world, "reset keymap")
 				who.mob.reset_keymap()
@@ -79,7 +79,7 @@ chui/window/keybind_menu
 			else if (id == "cancel")
 				Unsubscribe(who)
 
-	OnTopic(var/client/myclient, href, href_list[] )
+	OnTopic(client/myclient, href, href_list[] )
 		boutput(world, "bigtopic - [json_encode(href)]")
 		var/action = href_list[ "_cact" ]
 		if( action == "changed_key" && href_list["action"] && href_list["key"])
@@ -88,7 +88,7 @@ chui/window/keybind_menu
 			var/keye = href_list["key"]
 			boutput(world, "ADD CHANGE - [acte] - [keye]")
 
-	proc/add_to_changed(var/action, var/key)
+	proc/add_to_changed(action, key)
 		key = uppertext(key) //keys are always uppertext
 		changed_keys[action] = key
 		boutput(world, "ADDED - [action] - [key]")
