@@ -57,7 +57,7 @@ proc/get_moving_lights_stats()
 #define RL_Atten_Quadratic 2.2 // basically just brightness scaling atm
 #define RL_Atten_Constant -0.11 // constant subtracted at every point to make sure it goes <0 after some distance
 #define RL_MaxRadius 6 // maximum allowed light.radius value. if any light ends up needing more than this it'll cap and look screwy
-#define DLL 0.01 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
+#define DLL 0 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
 
 #define D_BRIGHT 1
 #define D_COLOR 2
