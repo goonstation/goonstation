@@ -1557,14 +1557,15 @@ var/list/mechanics_telepads = new/list()
 	var/current_index = 1
 	var/announce = 0
 	var/random = 0
+	var/allowDuplicates = 1
 
 	get_desc()
 		. += {"<br><span class='notice'>[random ? "Sending random Signals.":"Sending selected Signals."]<br>
 		[announce ? "Announcing Changes.":"Not announcing Changes."]<br>
+		[allowDuplicates ? "Duplicate entries allowed." : "Duplicate entries not allowed."]<br>
 		Current Selection: [(!current_index || current_index > signals.len ||!signals.len) ? "Empty":"[current_index] -> [signals[current_index]]"]<br>
-		Currently contains [signals.len] Items:<br></span>"}
-		for (var/x in signals)
-			. += "- [x]<br>[(signals[signals.len] == x) ? "</span>" : null]"
+		Currently contains [signals.len] Items:<br></span>
+		[signals.Join("<br>")]"}
 
 	New()
 		..()
@@ -1579,7 +1580,7 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("previous + send", "previousplus")
 		mechanics.addInput("send selected", "sendCurrent")
 		mechanics.addInput("send random", "sendRand")
-		configs.Add(list("Set Signal List","Set Signal List(Delimeted)","Toggle Announcements","Toggle Random"))
+		configs.Add(list("Set Signal List","Set Signal List(Delimeted)","Toggle Announcements","Toggle Random","Toggle Allow Duplicate Entries"))
 		src.append_default_configs(2)
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1636,6 +1637,9 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Random")
 					random = !random
 					boutput(user, "[random ? "Now picking Items at random.":"Now using selected Items."]")
+				if("Toggle Allow Duplicate Entries")
+					allowDuplicates = !allowDuplicates
+					boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
 
 	proc/selitem(var/datum/mechanicsMessage/input)
 		if(!input) return
@@ -1686,6 +1690,11 @@ var/list/mechanics_telepads = new/list()
 
 	proc/additem(var/datum/mechanicsMessage/input)
 		if(!input) return
+
+		if(!allowDuplicates && signals.Find(input.signal))
+			if(announce)
+				componentSay("Duplicate entry - rejected: [input.signal]")
+			return
 
 		signals.Add(input.signal)
 		if(announce)
