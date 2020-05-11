@@ -1,5 +1,9 @@
 
 (t)mon may 11 20
+(u)Mordent
+(p)622
+(e)🆕🗺🎨|enhancement, mapping, sprites
+(*)Reworked cyborg module rewriter to let users re-order or remove tools from the inserted module.
 (u)Tarmunora
 (p)583
 (e)⚖🆕|balance, enhancement
