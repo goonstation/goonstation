@@ -14,7 +14,6 @@
 	flags = FPRINT | FLUID_SUBMERGE
 
 	var/status = 0
-	//var/mob/current_user = null //GC WOES (airlocks seem to capture current_user a lot and prevent mob gc)
 	var/power_usage = 0
 	var/power_channel = EQUIP
 	var/power_credit = 0

@@ -8,13 +8,13 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list(src)
 	else
-		if (!src in objects_using_dialogs)
+		if (!clients_operating || clients_operating.len <= 0)
 			objects_using_dialogs += src
 
 	if (!clients_operating)
 		clients_operating = list(user.client)
 	else
-		if (!user.client in clients_operating)
+		if (!(user.client in clients_operating))
 			clients_operating += user.client
 
 /obj/proc/remove_dialog(mob/user)
@@ -42,7 +42,7 @@ var/global/list/objects_using_dialogs
 			O.remove_dialog(src)
 
 /mob/proc/using_dialog_of(var/obj/O)
-	.= (src.client && src.client in O.clients_operating)
+	.= (src.client && (src.client in O.clients_operating))
 
 /mob/proc/using_dialog_of_type(var/type)
 	.= 0
@@ -51,45 +51,54 @@ var/global/list/objects_using_dialogs
 			.= O
 
 /obj/proc/updateUsrDialog()
-	for(var/client/C in clients_operating)
-		if (C.mob)
-			if (get_dist(C.mob,src) <= 1)
-				src.attack_hand(C.mob)
-			else
-				if (issilicon(C.mob))
-					src.attack_ai(usr)
-				else if (isAIeye(C.mob))
-					var/mob/dead/aieye/E = C.mob
-					src.attack_ai(E)
+	if (clients_operating?.len)
+		for(var/client/C in clients_operating)
+			if (C.mob)
+				if (get_dist(C.mob,src) <= 1)
+					src.attack_hand(C.mob)
+				else
+					if (issilicon(C.mob))
+						src.attack_ai(usr)
+					else if (isAIeye(C.mob))
+						var/mob/dead/aieye/E = C.mob
+						src.attack_ai(E)
+					else
+						src.remove_dialog(C.mob)
 
 /obj/proc/updateDialog()
-	for(var/client/C in clients_operating)
-		if (C.mob && get_dist(C.mob,src) <= 1)
-			src.attack_hand(C.mob)
-	AutoUpdateAI(src)
+	if (clients_operating?.len)
+		for(var/client/C in clients_operating)
+			if (C.mob)
+				if (get_dist(C.mob,src) <= 1)
+					src.attack_hand(C.mob)
+				else
+					src.remove_dialog(C.mob)
+
+		AutoUpdateAI(src)
 
 /obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
+	if (clients_operating?.len)
+		for(var/client/C in clients_operating)
+			if (C.mob && get_dist(C.mob,src) <= 1)
+				src.attack_self(C.mob)
 
-	for(var/client/C in clients_operating)
-		if (C.mob && get_dist(C.mob,src) <= 1)
-			src.attack_self(C.mob)
-
-	for(var/mob/living/silicon/ai/M in AIs)
-		var/mob/AI = M
-		if (M.deployed_to_eyecam)
-			AI = M.eyecam
-		if ((AI.client && AI.client in clients_operating))
-			src.attack_self(AI)
+		for(var/mob/living/silicon/ai/M in AIs)
+			var/mob/AI = M
+			if (M.deployed_to_eyecam)
+				AI = M.eyecam
+			if (AI.client && (AI.client in clients_operating))
+				src.attack_self(AI)
 
 /obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
-	if(istype(M))
-		if (isAI(M)) //Eyecam handling
-			var/mob/living/silicon/ai/AI = M
-			if (AI.deployed_to_eyecam)
-				M = AI.eyecam
-		if(M.client && M.client in clients_operating)
-			src.attack_self(M)
+	if (clients_operating?.len)
+		var/mob/M = src.loc
+		if(istype(M))
+			if (isAI(M)) //Eyecam handling
+				var/mob/living/silicon/ai/AI = M
+				if (AI.deployed_to_eyecam)
+					M = AI.eyecam
+			if(M.client && (M.client in clients_operating))
+				src.attack_self(M)
 
 
 /proc/AutoUpdateAI(obj/subject)
@@ -133,15 +142,22 @@ var/global/list/objects_using_dialogs
 
 
 /obj/machinery/power/apc/updateUsrDialog()
-	for(var/client/C in clients_operating)
-		if (C.mob)
-			if (get_dist(C.mob,src) <= 1)
-				src.interacted(C.mob)
-			else if (issilicon(C.mob) || isAI(C.mob))
-				src.interacted(C.mob)
+	if (clients_operating?.len)
+		for(var/client/C in clients_operating)
+			if (C.mob)
+				if (get_dist(C.mob,src) <= 1)
+					src.interacted(C.mob)
+				else if (issilicon(C.mob) || isAI(C.mob))
+					src.interacted(C.mob)
+				else
+					src.remove_dialog(C.mob)
 
 /obj/machinery/power/apc/updateDialog()
-	for(var/client/C in clients_operating)
-		if (C.mob && get_dist(C.mob,src) <= 1)
-			src.interacted(C.mob)
-	AutoUpdateAI(src)
+	if (clients_operating?.len)
+		for(var/client/C in clients_operating)
+			if (C.mob)
+				if (get_dist(C.mob,src) <= 1)
+					src.interacted(C.mob)
+				else
+					src.remove_dialog(C.mob)
+		AutoUpdateAI(src)
