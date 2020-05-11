@@ -302,7 +302,7 @@ var/list/dirty_keystates = list()
 
 	proc
 		proc/keys_changed(keys, changed)
-			SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop
+			//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
 			// stub
 
 		proc/process_move(keys)
