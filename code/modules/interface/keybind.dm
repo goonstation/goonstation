@@ -38,14 +38,27 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	PROTECTED_PROC(TRUE)
 
 	if (applied_keybind_styles.Find(initial(style.name)))
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [initial(style.name)] to [src] when already present.")
+		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
 		return
 	src.applied_keybind_styles.Add(initial(style.name))
-	var/datum/keybind_style/init_style = new style //Can't do static referencing from this point onwards
+	var/datum/keybind_style/init_style = new style //Can't do static referencing for merge, press F to pay respekts
 	var/datum/keymap/init_keymap = new /datum/keymap(init_style.changed_keys)
 	src.keymap.merge(init_keymap)
 
-//Applies a given style onto the client after getting the datum
+/** unapply_keys: Takes a keybind_style to remove from the src client
+ *  Internal use only.
+ *  De-merges the given keybind_style onto the client. Also removes it from the client's tracking list.
+ */
+/client/proc/unapply_keys(datum/keybind_style/style)
+	PROTECTED_PROC(TRUE)
+
+	if (!applied_keybind_styles.Find(initial(style.name)))
+		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to unapply [initial(style.name)] to [src] when not on them.")
+		return
+
+	src.applied_keybind_styles.Remove(initial(style.name))
+	///////////////////////////////////////////////////////TODO: REMOVING LOGIC + DEMERGE PROC ON KEYMAPS
+
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
  *	External use only.
  *	This is what external stuff should be calling when applying their additive styles.
@@ -53,8 +66,16 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/apply_keybind(style_str)
 	apply_keys(get_keybind_style_datum(style_str))
 
+/** unapply_keybind: Takes a given string style, and finds the datum, then unapplies it.
+ *  External use only.
+ *  This is what external stuff should be calling when wanting to remove an additive style.
+ */
+/client/proc/unapply_keybind(style_str)
+	unapply_keys(get_keybind_style_datum(style_str))
 
-//////////////TODO: ORDER IN MOST COMMON
+
+
+/// Keybinds are sub-sorted in order of most common, since then it'll be further up the global list of styles. Micro-optimizations whoo!
 
 ///
 ///	BASE MOB KEYBINDS
@@ -109,19 +130,13 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"P" = "pickup"
 	)
 
-/datum/keybind_style/azerty
-	name = "base_azerty"
+/datum/keybind_style/wasd
+	name = "base_wasd"
 	changed_keys = list(
-		"Z" = KEY_FORWARD,
+		"W" = KEY_FORWARD,
 		"S" = KEY_BACKWARD,
-		"Q" = KEY_LEFT,
+		"A" = KEY_LEFT,
 		"D" = KEY_RIGHT
-	)
-
-/datum/keybind_style/tg
-	name = "base_tg"
-	changed_keys = list(
-		"DELETE" = "stop_pull"
 	)
 
 /datum/keybind_style/arrow
@@ -133,15 +148,20 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"EAST" = KEY_RIGHT,
 	)
 
-/datum/keybind_style/wasd
-	name = "base_wasd"
+/datum/keybind_style/tg
+	name = "base_tg"
 	changed_keys = list(
-		"W" = KEY_FORWARD,
-		"S" = KEY_BACKWARD,
-		"A" = KEY_LEFT,
-		"D" = KEY_RIGHT
+		"DELETE" = "stop_pull"
 	)
 
+/datum/keybind_style/azerty
+	name = "base_azerty"
+	changed_keys = list(
+		"Z" = KEY_FORWARD,
+		"S" = KEY_BACKWARD,
+		"Q" = KEY_LEFT,
+		"D" = KEY_RIGHT
+	)
 
 ///
 ///	HUMAN-SPECIFIC KEYBINDS
@@ -173,12 +193,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"DELETE" = "togglethrow"
 	)
 
-/datum/keybind_style/human/azerty
-	name = "human_azerty"
-	changed_keys = list(
-		"A" = "drop"
-	)
-
 /datum/keybind_style/human/arrow
 	name = "human_arrow"
 	changed_keys = list(
@@ -200,6 +214,11 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"Q" = "drop"
 	)
 
+/datum/keybind_style/human/azerty
+	name = "human_azerty"
+	changed_keys = list(
+		"A" = "drop"
+	)
 
 ///
 ///	ROBOT-SPECIFIC KEYBINDS
@@ -222,12 +241,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Q" = "unequip"
 	)
 
-/datum/keybind_style/robot/azerty
-	name = "robot_azerty"
-	changed_keys = list(
-		"A" = "unequip"
-	)
-
 /datum/keybind_style/robot/arrow
 	name = "robot_arrow"
 	changed_keys = list(
@@ -247,6 +260,12 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Z" = "attackself",
 	)
 
+/datum/keybind_style/robot/azerty
+	name = "robot_azerty"
+	changed_keys = list(
+		"A" = "unequip"
+	)
+
 ///
 ///	DRONE-SPECIFIC KEYBINDS
 ///
@@ -259,10 +278,11 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Q" = "unequip"
 	)
 
-/datum/keybind_style/drone/azerty
-	name = "drone_azerty"
+/datum/keybind_style/drone/arrow
+	name = "drone_arrow"
 	changed_keys = list(
-		"A" = "unequip"
+		"SOUTHEAST" = "attackself", /*PGDN*/
+		"NORTHWEST" = "unequip" /*HOME*/
 	)
 
 /datum/keybind_style/drone/tg
@@ -271,11 +291,10 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Z" = "attackself",
 	)
 
-/datum/keybind_style/drone/arrow
-	name = "drone_arrow"
+/datum/keybind_style/drone/azerty
+	name = "drone_azerty"
 	changed_keys = list(
-		"SOUTHEAST" = "attackself", /*PGDN*/
-		"NORTHWEST" = "unequip" /*HOME*/
+		"A" = "unequip"
 	)
 
 ///
@@ -286,6 +305,14 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	name = "pod"
 	changed_keys = list(
 		"SPACE" = "fire"
+	)
+
+/datum/keybind_style/torpedo
+	name = "torpedo"
+	changed_keys = list(
+		"SPACE" = "fire",
+		"E" = "exit",
+		"Q" = "exit"
 	)
 
 /datum/keybind_style/col_putt
@@ -309,12 +336,4 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	changed_keys = list(
 		"SPACE" = "fire",
 		"Q" = "cycle"
-	)
-
-/datum/keybind_style/torpedo
-	name = "torpedo"
-	changed_keys = list(
-		"SPACE" = "fire",
-		"E" = "exit",
-		"Q" = "exit"
 	)
