@@ -130,7 +130,9 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 	"K" = "look_s",
 	"J" = "look_w",
 	"L" = "look_e",
-	"P" = "pickup"
+	"P" = "pickup",
+	"`" = "admin_interact",
+	"~" = "admin_interact"
 	)
 
 /datum/keybind_style/wasd
