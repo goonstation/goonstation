@@ -163,6 +163,7 @@
 	var/special_sprint = SPRINT_NORMAL
 
 	var/last_show_inv = 0 //used to speedup update_clothing check. its hacky, im sorry
+	var/list/showing_inv
 
 	var/icon/flat_icon = null
 
@@ -500,6 +501,8 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	showing_inv = null
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -1501,7 +1504,7 @@
 
 
 /mob/living/carbon/human/proc/show_inv(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = {"
 	<B><HR><FONT size=3>[src.name]</FONT></B>
 	<BR><HR>

@@ -114,7 +114,7 @@
 	if (!( data_core.security.Find(src.active2) ))
 		src.active2 = null
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr) || isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["temp"])
 			src.temp = null
 		if (href_list["scan"])

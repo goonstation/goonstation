@@ -76,7 +76,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
@@ -97,7 +97,7 @@
 
 	Topic(href, href_list)
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on
 				update_icon()

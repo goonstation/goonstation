@@ -202,7 +202,7 @@ Please clean it before use!</TT><BR>
 	if(..())
 		return
 
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 
 	if(href_list["cook"])

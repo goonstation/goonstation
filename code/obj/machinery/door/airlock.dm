@@ -970,7 +970,7 @@ About the new airlock wires panel:
 			return
 
 	//Separate interface for the AI.
-	user.machine = src
+	src.add_dialog(user)
 	var/t1 = text("<B>Airlock Control</B><br><br>")
 	t1 += "The access sensor reports the net identifier for this airlock is <i>[net_id]</i><br><br>"
 
@@ -1182,7 +1182,7 @@ About the new airlock wires panel:
 		return
 
 	if (src.p_open)
-		user.machine = src
+		src.add_dialog(user)
 		var/list/t1 = list(text("<B>Access Panel</B><br><br>"))
 		t1 += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
 
@@ -1236,15 +1236,14 @@ About the new airlock wires panel:
 		return
 	if (href_list["close"])
 		usr.Browse(null, "window=airlock")
-		if (usr.machine==src)
-			usr.machine = null
-			return
+		src.remove_dialog(usr)
+		return
 	if (!isAIeye(usr))
 		if (!isrobot(usr) && !ishivebot(usr))
 			if (!src.p_open)
 				return
 		if ((in_range(src, usr) && istype(src.loc, /turf)))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["wires"])
 				var/t1 = text2num(href_list["wires"])
 				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -1551,7 +1550,7 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
 	else
 		playsound(src.loc, src.sound_airlock, 25, 1)
-	src.current_user = usr
+
 	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
 

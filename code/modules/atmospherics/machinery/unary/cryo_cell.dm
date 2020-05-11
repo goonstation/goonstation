@@ -136,7 +136,7 @@
 		return
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
@@ -187,7 +187,7 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
-		if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+		if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()

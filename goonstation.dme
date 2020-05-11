@@ -1029,6 +1029,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\morgue.dm"
 #include "code\obj\noticeboard.dm"
 #include "code\obj\npc.dm"
+#include "code\obj\objDialog.dm"
 #include "code\obj\playable_piano.dm"
 #include "code\obj\portal.dm"
 #include "code\obj\posters.dm"

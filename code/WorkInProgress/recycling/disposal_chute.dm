@@ -243,7 +243,7 @@
 	proc/interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
@@ -271,7 +271,7 @@
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "window=disposal;size=360x235")
 		onclose(user, "disposal")
 
@@ -290,11 +290,11 @@
 
 		if (in_range(src, usr) && isturf(src.loc))
 			DEBUG_MESSAGE("in range of [src] and it is on a turf")
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["close"])
 				DEBUG_MESSAGE("closed [src]")
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, "window=disposal")
 				return
 
@@ -329,7 +329,7 @@
 				DEBUG_MESSAGE("[src] and [usr] are too far apart: [src] [log_loc(src)], [usr] [log_loc(usr)]")
 
 			usr.Browse(null, "window=disposal")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 
 		src.updateDialog()

@@ -61,7 +61,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 	attack_self(mob/user as mob)
 		update_icon()
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = ""
 		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
 

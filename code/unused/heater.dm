@@ -75,7 +75,7 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/tt
 	switch(src.t_status)
 		if(1.0)
@@ -112,7 +112,7 @@
 	if (usr.stat || usr.restrained())
 		return
 	if (((get_dist(src, usr) <= 1 || usr.telekinesis == 1) && istype(src.loc, /turf)) || (isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["c"])
 			var/c = text2num(href_list["c"])
 			switch(c)

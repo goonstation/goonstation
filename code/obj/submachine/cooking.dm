@@ -85,7 +85,7 @@
 	var/doing_a_thing = 0
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<b>Ice Cream-O-Mat 9900</b><br>"
 		if(src.cone)
 			dat += "<a href='?src=\ref[src];eject=cone'>Eject Cone</a><br>"
@@ -117,7 +117,7 @@
 				return
 
 			src.add_fingerprint(usr)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["eject"])
 				switch(href_list["eject"])
@@ -253,7 +253,7 @@ var/list/oven_recipes = list()
 			return
 
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"
 			<style type="text/css">
 table#cooktime {
@@ -1040,7 +1040,7 @@ var/list/mixer_recipes = list()
 
 	attack_hand(var/mob/user as mob)
 		if (!src.working)
-			user.machine = src
+			src.add_dialog(user)
 			var/dat = {"<B>KitchenHelper Mixer</B><BR>
 			<HR>
 			<B>Contents:</B><BR>"}
@@ -1052,7 +1052,7 @@ var/list/mixer_recipes = list()
 			user.Browse(dat, "window=mixer;size=400x500")
 			onclose(user, "mixer")
 		else
-			user.machine = src
+			src.add_dialog(user)
 			var/dat = {"<B>KitchenHelper Mixer</B><BR>
 			<HR><BR>
 			Mixing! Please wait!"}

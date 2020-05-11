@@ -121,7 +121,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 			return ..(user)
 		if (!istype(src.loc, /turf/)) return
 
-		if (user.machine == src)
+		if (user.using_dialog_of(src))
 			user << output("[src.running]&[RR ? 1 : 0]&[IEN]&[OEN]", "mcu14500b.browser:update_indicators")
 			user << output("[ioPins]", "mcu14500b.browser:update_mem_lights")
 			return
@@ -135,7 +135,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 		if (!user || user.stat ||(iscarbon(user) && get_dist(user, src) > 1))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		. = {"<html><head><title>Industrial Control Unit</title></head><body>
 		<center><table border='1'><tr><td id='active_indicator'><font color=white style='background-color:[running ? "#33FF00" : "#F80000"]'>[running ? "&nbsp;ACTIVE&nbsp;" : "INACTIVE"]</font></td></tr></table><br>

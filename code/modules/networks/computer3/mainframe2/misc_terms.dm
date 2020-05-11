@@ -218,7 +218,7 @@
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Databank - \[[bank_id]]</title></head><body>"
 
@@ -260,7 +260,7 @@
 		if(..() && !(href_list["tape"] && (status & NOPOWER)))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["tape"])
 			if(src.locked)
@@ -744,7 +744,7 @@
 		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>SimUnit - \[[bank_id]]</title></head><body>"
 
@@ -778,7 +778,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["tank"])
 
@@ -1089,7 +1089,7 @@
 		if(..() || status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Nuclear Charge</title></head><body>"
 
@@ -1120,7 +1120,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
@@ -1425,7 +1425,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Network Radio</title></head><body>"
 
@@ -1477,7 +1477,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
@@ -1811,7 +1811,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Printer - \[[print_id]]</title></head><body>"
 
@@ -1847,7 +1847,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["unjam"])
 			if(src.jam)
@@ -2210,7 +2210,7 @@
 		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Scanner - \[[copytext(bank_id,4)]]</title></head><body>"
 
@@ -2258,7 +2258,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["document"])
 			if(issilicon(usr) && get_dist(src, usr) > 1)
@@ -2472,7 +2472,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>IR Detector - \[[detector_id]]</title></head><body>"
 
@@ -2514,7 +2514,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
@@ -2942,7 +2942,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>HEPT Emitter</title></head><body><hr><center>Emission Crystals<br>"
 
@@ -2992,7 +2992,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["insert"])
@@ -3456,7 +3456,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>[setup_device_name]</title></head><body>"
 
@@ -3512,7 +3512,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		interface_topic(href_list)

@@ -165,7 +165,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if ("start")

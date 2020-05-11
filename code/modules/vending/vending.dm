@@ -818,7 +818,7 @@
 			return
 
 		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["cook"])
 				if(!pizcooking)
 					if((credit < 50)&&(!emagged))
@@ -1587,7 +1587,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
@@ -1622,7 +1622,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
 

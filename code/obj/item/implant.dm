@@ -1312,7 +1312,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 
 /obj/item/implantpad/attack_self(mob/user as mob)
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<B>Implant Mini-Computer:</B><HR>"
 	if (src.case)
 		if (src.case.imp)
@@ -1434,7 +1434,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	if (usr.stat)
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["freq"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
 				var/obj/item/implant/tracking/T = src.case.imp
