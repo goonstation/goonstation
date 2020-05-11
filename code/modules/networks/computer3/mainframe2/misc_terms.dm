@@ -2772,6 +2772,7 @@
 		if (src.next)
 			src.next.dispose()
 			src.next = null
+		..()
 
 	Bumped()
 		src.hit()

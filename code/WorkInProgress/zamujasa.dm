@@ -661,6 +661,7 @@
 
 	disposing()
 		UnsubscribeProcess()
+		..()
 
 	process()
 		if (src.last_count != runtime_count)
