@@ -1,4 +1,9 @@
 
+(t)mon may 11 20
+(u)Tarmunora
+(p)583
+(e)⚖🆕|balance, enhancement
+(+)Added plastic cuffs, which take a shorter amount of time to break out of, to security vendors.
 (t)sun may 10 20
 (u)mbc
 (p)650
