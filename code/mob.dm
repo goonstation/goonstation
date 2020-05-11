@@ -1201,7 +1201,8 @@
 /mob/proc/build_keybind_styles(client/C)
 	SHOULD_CALL_PARENT(TRUE)
 
-	C.keymap = new
+	if (!C.keymap)
+		C.keymap = new
 
 	C.apply_keybind("base")
 
