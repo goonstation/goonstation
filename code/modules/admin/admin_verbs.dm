@@ -412,6 +412,8 @@ var/list/admin_verbs = list(
 #ifdef ENABLE_SPAWN_DEBUG
 		/client/proc/cmd_modify_spawn_dbg_list,
 		/client/proc/spawn_dbg,
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+		/client/proc/spawn_dbg,
 #endif
 #ifdef INCLUDE_BUGGY_LUA_SHIT
 		/client/proc/RunLuaString,
@@ -1112,10 +1114,10 @@ var/list/fun_images = list()
 					src.mob.x = x
 					src.mob.y = y
 					src.mob.z = curZ
-					sleep(delay)
+					SLEEP_DBG(delay)
 					winset(src, null, "command=\".screenshot auto\"")
 					out(src, "Screenshot taken at ([x], [y], [z])")
-					sleep(delay)
+					SLEEP_DBG(delay)
 			if (curZ != world.maxz)
 				var/pause = alert("Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", "Ok", "Cancel")
 				if (pause == "Cancel")
@@ -1127,10 +1129,10 @@ var/list/fun_images = list()
 				src.mob.x = x
 				src.mob.y = y
 				src.mob.z = z
-				sleep(delay)
+				SLEEP_DBG(delay)
 				winset(src, null, "command=\".screenshot auto\"")
 				out(src, "Screenshot taken at ([x], [y], [z])")
-				sleep(delay)
+				SLEEP_DBG(delay)
 
 	alert("Mapping complete!", "Yay!", "Ok")
 
@@ -1458,7 +1460,7 @@ var/list/fun_images = list()
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
-		sleep(1.5 SECONDS)
+		SLEEP_DBG(1.5 SECONDS)
 
 	var/mob/O = src.mob
 	src.mob.ghostize()
