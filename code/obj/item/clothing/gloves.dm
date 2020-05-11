@@ -209,6 +209,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
+	scramble_prints = 1
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
 		..()
@@ -229,6 +230,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	item_state = "bgloves"
 	protective_temperature = 1500
 	material_prints = "black leather fibers"
+	scramble_prints = 1
 
 	setupProperties()
 		..()
@@ -250,7 +252,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	permeability_coefficient = 0.02
 	desc = "Thin gloves that offer minimal protection."
 	protective_temperature = 310
-	scramble_prints = 1
+	hide_prints = 1
+	material_prints = "white talcum powder"
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.3)
@@ -319,6 +322,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	item_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
+	scramble_prints = 1
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
@@ -336,6 +340,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "stun"
 	item_state = "stun"
 	material_prints = "insulative fibers, electrically charged"
+	scramble_prints = 1
 	stunready = 1
 	can_be_charged = 1
 	uses = 10
@@ -354,6 +359,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "yellow"
 	item_state = "ygloves"
 	material_prints = "insulative fibers"
+	scramble_prints = 1
 	can_be_charged = 1
 	max_uses = 4
 	permeability_coefficient = 0.5
@@ -372,6 +378,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 /obj/item/clothing/gloves/yellow/unsulated
 	desc = "These gloves are not electrically insulated."
 	name = "unsulated gloves"
+	scramble_prints = 1
 	can_be_charged = 0
 	max_uses = 0
 	setupProperties()
@@ -384,6 +391,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
 	material_prints = "red leather fibers"
+	scramble_prints = 1
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
@@ -436,6 +444,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	material_prints = "insulative fibers and nanomachines"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 4
+	scramble_prints = 1
 	flags = HAS_EQUIP_CLICK
 
 	var/spam_flag = 0
@@ -453,7 +462,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
 		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
-		if(slot != SLOT_GLOVES) return 0 
+		if(slot != SLOT_GLOVES) return 0
 
 		var/netnum = 0
 		if(src.overridespecial)
