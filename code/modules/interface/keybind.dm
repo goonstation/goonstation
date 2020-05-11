@@ -5,6 +5,9 @@
 ///Global list holding all of the keybind style datums - Intitalized in World preload.
 var/global/list/datum/keybind_style/keybind_styles = null
 
+///Global list holding keybind style datums that we needed to instantiate - lazy
+var/global/list/datum/keybind_style/instantiated_styles = null
+
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
 //base -> base_wasd -> human -> human_wasd for example
 //If you switch to a different mobtype, such as a robot, you would reset the keymap, and successive calls of build_keymap will apply_keybind
