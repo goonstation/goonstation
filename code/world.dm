@@ -327,7 +327,7 @@ var/f_color_selector_handler/F_Color_Selector
 		for(var/A in childrentypesof(/datum/faction))
 			var/datum/faction/R = new A()
 			factions.Add(R.id)
-			factions[R.id] = R
+			factions[R.id] = Rs
 
 		Z_LOG_DEBUG("Preload", "  /datum/statusEffect")
 		for(var/A in childrentypesof(/datum/statusEffect))

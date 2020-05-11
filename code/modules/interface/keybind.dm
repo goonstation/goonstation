@@ -1,17 +1,13 @@
-/*
- * This file is intended to hold the following keybind-related data:
- * datum/keybind_style - Preset keybinding data for players to use as a template.
- * list/keybind_styles - Global list holding all of these for access
+/**
+ * This file is intended to hold all data pertaining to keybind_style datums and related functionality
  */
 
-///Global list holding all of the keybind style datums
+///Global list holding all of the keybind style datums - Intitalized in World preload.
 var/global/list/datum/keybind_style/keybind_styles = null
 
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
 //base -> base_wasd -> human -> human_wasd for example
-//If you switch to a different mobtype, such as a robot,
-//You would reset the keymap, and successive calls of build_keymap will apply_keybind
-
+//If you switch to a different mobtype, such as a robot, you would reset the keymap, and successive calls of build_keymap will apply_keybind
 
 ///List on each client containing the styles we've applied so we don't double-apply.
 /client/var/list/applied_keybind_styles = list()
@@ -24,16 +20,12 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/get_keybind_style_datum(style_name)
 	PROTECTED_PROC(TRUE)
 
-	if (!keybind_styles)
-		keybind_styles = typesof(/datum/keybind_style/)
-
-	for (var/datum/keybind_style/found_style in keybind_styles)
-		if (found_style.name == "[style_name]")
+	for (var/found in keybind_styles)
+		var/datum/keybind_style/found_style = found
+		if (initial(found_style.name) == style_name)
 			return found_style
 	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
-//!!
-//TODO: Use this proc to apply a custom keybind datum saved in user cloud
 /** apply_keys: Takes a keybind_style to apply to the src client
  *	Internal use only.
  *	Merges the given keybind_style onto the client. Also adds it to the client's tracking list.
@@ -55,6 +47,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/apply_keybind(style_str)
 	apply_keys(get_keybind_style_datum(style_str))
 
+
+//////////////TODO: ORDER IN MOST COMMON
 
 ///
 ///	BASE MOB KEYBINDS

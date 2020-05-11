@@ -292,42 +292,41 @@ var/list/dirty_keystates = list()
 	var/move_scheduled = 0
 	var/last_move_ticklag = MIN_TICKLAG //if ticklag changes big inc, can interrupt hold-press. we needa save this to counteract!
 
-	proc
-		proc/keys_changed(keys, changed)
-			//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
-			// stub
+	proc/keys_changed(keys, changed)
+		//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
+		// stub
 
-		proc/process_move(keys)
-			// stub
+	proc/process_move(keys)
+		// stub
 
-		proc/attempt_move()
-			src.internal_process_move(src.client ? src.client.key_state : 0)
+	proc/attempt_move()
+		src.internal_process_move(src.client ? src.client.key_state : 0)
 
-		proc/recheck_keys()
-			if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+	proc/recheck_keys()
+		if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 
-		//mbc : so this is fucky : ticklag values of 0.42 and 0.21 just dont work here.
-		//i dont understand why. it *must* be a rounding error or math thing. i couldnt find it sorry bro
-		//ALSO last_move_ticklag, it compensates for the change in ticklag while we hold a key. It's also not consistent at all values, probably rounding errors again
-		//ticklag values that are multiples of 0.2 appear to work best  :)  so i've set the time dilation thing to move in 0.2inc notches.
-		proc/internal_process_move(keys)
-			var/delay = src.process_move(keys)
-			if (isnull(delay))
-				return
+	//mbc : so this is fucky : ticklag values of 0.42 and 0.21 just dont work here.
+	//i dont understand why. it *must* be a rounding error or math thing. i couldnt find it sorry bro
+	//ALSO last_move_ticklag, it compensates for the change in ticklag while we hold a key. It's also not consistent at all values, probably rounding errors again
+	//ticklag values that are multiples of 0.2 appear to work best  :)  so i've set the time dilation thing to move in 0.2inc notches.
+	proc/internal_process_move(keys)
+		var/delay = src.process_move(keys)
+		if (isnull(delay))
+			return
 
-			var/actual_delay = max(ceil(delay / world.tick_lag), 1) * world.tick_lag
-			var/next = world.time + actual_delay
-			var/lmt = max(last_move_ticklag - world.tick_lag, 0)
+		var/actual_delay = max(ceil(delay / world.tick_lag), 1) * world.tick_lag
+		var/next = world.time + actual_delay
+		var/lmt = max(last_move_ticklag - world.tick_lag, 0)
 
-			// Tolerance of 0.01 seconds due to byond float weirdness -Spy
-			if ((src.move_scheduled - world.time) <= 0.01 + lmt || src.move_scheduled + lmt > next)
+		// Tolerance of 0.01 seconds due to byond float weirdness -Spy
+		if ((src.move_scheduled - world.time) <= 0.01 + lmt || src.move_scheduled + lmt > next)
 
-				src.move_scheduled = next
-				SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
-					src.internal_process_move(src.client ? src.client.key_state : 0)
+			src.move_scheduled = next
+			SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
+				src.internal_process_move(src.client ? src.client.key_state : 0)
 
-			last_move_ticklag = world.tick_lag
+		last_move_ticklag = world.tick_lag
 
 /datum/keymap
 	var/list/keys = list()
