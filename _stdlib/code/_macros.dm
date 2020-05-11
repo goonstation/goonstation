@@ -3,7 +3,7 @@
 
 // comment this line to disable or enable spawn debugging. it's pretty cheap and safe for the live servers though.
 // #define ENABLE_SPAWN_DEBUG
-#define ENABLE_SPAWN_DEBUG_2
+// #define ENABLE_SPAWN_DEBUG_2
 
 // for this to work, use SPAWN_DBG() instead of spawn(). thank you for loving pupkin. -singh
 #ifdef ENABLE_SPAWN_DEBUG
