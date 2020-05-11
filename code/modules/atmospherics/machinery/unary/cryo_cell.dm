@@ -136,11 +136,11 @@
 		return
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
-		else if(air_contents.temperature > 225)
+		else if(air_contents.temperature > 170)
 			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
 		else
 			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
@@ -187,7 +187,7 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
-		if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+		if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()
@@ -324,7 +324,7 @@
 		if(ishuman(occupant))
 			if(isdead(occupant))
 				return
-			occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 			occupant.changeStatus("burning",-100)
 			var/mob/living/carbon/human/H = 0

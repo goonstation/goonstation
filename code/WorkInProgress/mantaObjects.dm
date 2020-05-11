@@ -702,7 +702,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_hand(mob/user as mob)
 		if(busy) return
 		if(get_dist(usr, src) > 1 || usr.z != src.z) return
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
 		flick("englrt1", src)

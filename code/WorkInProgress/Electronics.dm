@@ -218,7 +218,7 @@
 			for(var/obj/item/electronics/P in src.contents)
 				dat += "[P.name]: <A href='?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
 
-				user.machine = src
+				src.add_dialog(user)
 				user.Browse("<HEAD><TITLE>Frame</TITLE></HEAD><TT>[dat]</TT>", "window=fkit")
 				onclose(user, "fkit")
 
@@ -254,7 +254,7 @@
 	if (usr.stat)
 		return
 	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		switch(href_list["tp"])
 			if("move")
@@ -270,7 +270,7 @@
 		updateDialog()
 	else
 		usr.Browse(null, "window=fkit")
-		usr.machine = null
+		src.remove_dialog(usr)
 	return
 
 /obj/item/electronics/frame/proc/deploy()
@@ -622,7 +622,7 @@
 
 	dat += "<HR>"
 
-	user.machine = src
+	src.add_dialog(user)
 	user.Browse("<HEAD><TITLE>Ruckingenur Kit Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=rkit")
 	onclose(user, "rkit")
 
@@ -630,7 +630,7 @@
 	if (usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		switch(href_list["tp"])
 
@@ -661,7 +661,7 @@
 		updateDialog()
 	else
 		usr.Browse(null, "window=rkit")
-		usr.machine = null
+		src.remove_dialog(usr)
 	return
 
 /obj/item/deconstructor

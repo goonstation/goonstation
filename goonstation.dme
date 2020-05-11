@@ -41,6 +41,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\_layer.dm"
 #include "_stdlib\code\_list.dm"
 #include "_stdlib\code\_plane.dm"
+#include "_stdlib\code\_robot.dm"
 #include "_stdlib\code\_vox.dm"
 #include "_stdlib\code\_z_material_properties.dm"
 
@@ -1030,6 +1031,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\morgue.dm"
 #include "code\obj\noticeboard.dm"
 #include "code\obj\npc.dm"
+#include "code\obj\objDialog.dm"
 #include "code\obj\playable_piano.dm"
 #include "code\obj\portal.dm"
 #include "code\obj\posters.dm"

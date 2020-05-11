@@ -173,7 +173,7 @@
 		return
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 	for (var/i = 1; i <= gases.len; i++)
 		dat += "[gases[i]]: <A HREF='?src=\ref[src];tg=[1 << (i - 1)]'>[(src.f_mask & 1 << (i - 1)) ? "Releasing" : "Passing"]</A><BR><br>"
@@ -199,7 +199,7 @@
 	if(usr.restrained() || usr.lying)
 		return
 	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["close"])
 			usr << browse(null, "window=pipefilter;")
 			usr.machine = null

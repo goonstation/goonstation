@@ -248,6 +248,7 @@
 			logTheThing("combat", src, null, "'s AI controlled cyborg body was destroyed [log_health(src)] at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 			src.mainframe.return_to(src)
 		setdead(src)
+		borg_death_alert()
 		src.canmove = 0
 
 		if (src.camera)
@@ -2322,6 +2323,38 @@
 			oil = 0
 			src.remove_stun_resist_mod("robot_oil", 25)
 
+	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
+		var/message = null
+		var/mailgroup = "medresearch"
+		var/net_id = generate_net_id(src)
+		var/frequency = 1149
+		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
+		var/area/myarea = get_area(src)
+
+		switch(modifier)
+			if (ROBOT_DEATH_MOD_NONE)	//normal death and gib
+				message = "CONTACT LOST: [src] in [myarea]"
+			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
+				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
+			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
+				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
+			else	//Someone passed us an unkown modifier
+				message = "UNKNOWN ERROR: [src] in [myarea]"
+
+		if (message && mailgroup && radio_connection)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "text_message"
+			newsignal.data["sender_name"] = "CYBORG-DAEMON"
+			newsignal.data["message"] = message
+			newsignal.data["address_1"] = "00000000"
+			newsignal.data["group"] = mailgroup
+			newsignal.data["sender"] = net_id
+
+			radio_connection.post_signal(src, newsignal)
+			radio_controller.remove_object(src, "[frequency]")
+
 	proc/handle_regular_status_updates()
 		if(src.stat) src.camera.camera_status = 0.0
 
@@ -2401,6 +2434,8 @@
 			if (src.part_head)
 				src.part_head.set_loc(src.loc)
 				src.part_head = null
+				//no chest means you are dead. Placed here to avoid duplicate alert in event that head was already destroyed and you then destroy torso
+				borg_death_alert()
 
 			if (src.client)
 				var/mob/dead/observer/newmob = ghostize()
@@ -2417,6 +2452,7 @@
 				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
 
 			src.visible_message("<b>[src]</b> completely stops moving and shuts down...")
+			borg_death_alert()
 			logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Ditto (Convair880).
 
 			var/mob/dead/observer/newmob = ghostize()
@@ -2525,6 +2561,7 @@
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain()
 				src.update_appearance()
+				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 
 	process_locks()
@@ -2920,6 +2957,7 @@
 			src.part_chest = null
 		if (istype(part,/obj/item/parts/robot_parts/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
+			borg_death_alert()//no head means you dead
 			if (src.brain)
 				src.brain.set_loc(get_turf(src))
 			src.part_head.brain = null

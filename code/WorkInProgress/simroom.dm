@@ -70,7 +70,7 @@
 			user.Browse(null, "window=mm")
 			return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=mm'>Close</A><br><br>"
 
@@ -111,7 +111,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["setup"])
 			if(active)
 				boutput(usr, "System already set up.")
@@ -217,7 +217,7 @@
 		if(..())
 			return
 		var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"
-		user.machine = src
+		src.add_dialog(user)
 		var/d2
 		if (src.timing)
 			d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
@@ -314,7 +314,7 @@
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"
-	user.machine = src
+	src.add_dialog(user)
 	var/d2
 	if (src.timing)
 		d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
@@ -377,7 +377,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["time"])
 			if(src.allowed(usr))
 				src.timing = text2num(href_list["time"])
@@ -412,11 +412,11 @@
 /obj/machinery/sim/programcomp/proc/interacted(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=mm")
 			return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=mm'>Close</A><br><br>"
 
@@ -446,7 +446,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		switch(href_list["set"])
 			if("grass")
 				Setup_Vspace("grass",network)

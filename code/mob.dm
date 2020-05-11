@@ -43,7 +43,6 @@
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
-	var/obj/machinery/machine = null // todo : look into rewriting the way this works. its a lingering ref to the last machine the mob touched, and machines have to search thru all clients to check this var when they update their screens
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
@@ -247,7 +246,7 @@
 		return
 
 	//for item specials
-	if (src.restrain_time > world.timeofday)
+	if (src.restrain_time > TIME)
 		return
 
 	if (src.buckled)
@@ -283,9 +282,6 @@
 
 	if (ghost && ghost.corpse == src)
 		ghost.corpse = null
-
-	if (src.machine)
-		src.machine.current_user = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -464,7 +460,6 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
-	src.machine = null
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -1268,6 +1263,7 @@
 	return
 
 /mob/proc/drop_item(obj/item/W)
+	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
@@ -1282,7 +1278,7 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 		u_equip(W)
-		if (W)
+		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
 				if (V.throw_dropped_items_overboard == 1)
@@ -1295,13 +1291,15 @@
 				W.set_loc(src.loc)
 			if (W)
 				W.layer = initial(W.layer)
-		var/turf/T = get_turf(src.loc)
-		T.Entered(W)
+
+			var/turf/T = get_turf(src.loc)
+			T.Entered(W)
+			.= 1
+		else
+			.= 0
 		if (origW)
 			origW.holding = null
 			actions.stopId("magpickerhold", src)
-		return 1
-	return 0
 
 //throw the dropped item
 /mob/proc/drop_item_throw()
@@ -1545,7 +1543,7 @@
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	src.set_eye(null)
-	src.machine = null
+	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 

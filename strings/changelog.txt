@@ -1,5 +1,22 @@
 
+(t)sun may 10 20
+(u)mbc
+(p)650
+(e)|
+(+)Did a big behind-the-scenes optimizing of machine popup window refresh handling. You shouldn't notice anything different, but if any new bugs turn up please report them.
+(u)UrsulaMajor
+(p)638
+(e)🆕|enhancement
+(+)As a clown, give your diploma to someone! See what happens!
 (t)sat may 09 20
+(u)Sovexe
+(p)592
+(e)🆕|enhancement
+(*)Added borg death alert PDA messages for medresearch
+(u)Tarmunora
+(p)617
+(e)⚖|balance
+(+)Increased active cooling rate on cryotubes
 (u)Carbadox
 (p)610
 (e)⚖🆕|balance, enhancement

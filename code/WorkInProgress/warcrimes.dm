@@ -549,7 +549,7 @@ var/bombini_saved = 0
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!johnbus_active)
@@ -616,7 +616,7 @@ var/bombini_saved = 0
 
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)

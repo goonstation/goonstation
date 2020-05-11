@@ -20,7 +20,7 @@ HAND_TELE
 	m_amt = 400
 
 /obj/item/locator/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -43,7 +43,7 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)

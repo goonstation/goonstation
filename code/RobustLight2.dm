@@ -131,6 +131,7 @@ datum/light
 		disable(queued_run = 1) //dont queue... we wanna actually disable it before remove_from_turf etc
 		remove_from_turf()
 		detach()
+		..()
 
 	proc
 		set_brightness(brightness, queued_run = 0)

@@ -721,6 +721,7 @@ var/list/mechanics_telepads = new/list()
 
 	disposing()
 		loosen()
+		..()
 
 	proc/tripped()
 		mechanics.fireOutgoing(mechanics.newSignal(mechanics.outputSignal))

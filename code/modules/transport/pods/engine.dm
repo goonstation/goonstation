@@ -34,7 +34,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)

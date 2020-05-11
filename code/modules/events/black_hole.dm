@@ -114,6 +114,7 @@
 
 	disposing()
 		processing_items.Remove(src)
+		..()
 
 	Bumped(atom/A)
 		if (isliving(A))

@@ -973,7 +973,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		return
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 		return show_lock_panel(user)
 
@@ -1232,7 +1232,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.host.add_dialog(usr)
 
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
@@ -1265,7 +1265,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.host.add_dialog(usr)
 
 		if(href_list["key"])
 			if(istype(usr.equipped(), /obj/item/device/key/cheget) && !src.inserted_key)

@@ -99,7 +99,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Telepad</title></head><body>"
 
@@ -128,7 +128,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
 				return
@@ -1013,7 +1013,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			dat += "<br>Linked Pad Number: <a href='?src=\ref[src];setpad=1'>[src.padNum]</a><br>"
 			dat += net_switch_html()
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "window=t_computer;size=400x600")
 		onclose(user, "t_computer")
 		return
@@ -1033,7 +1033,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	updateUsrDialog(var/updateReadout)
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				if (updateReadout)
 					M << output(url_encode(src.readout), "t_computer.browser:updateReadout")
 				else
@@ -1041,7 +1041,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (updateReadout)
 						usr << output(url_encode(src.readout), "t_computer.browser:updateReadout")
 					else
@@ -1051,7 +1051,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (..(href, href_list))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
 
 		if (href_list["scan"])

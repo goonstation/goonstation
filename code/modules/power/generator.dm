@@ -100,7 +100,7 @@
 		user << browse(null, "window=teg")
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
 

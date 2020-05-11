@@ -83,7 +83,7 @@
 		if(..())
 			return
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["type"])
 				create(lowertext(href_list["type"]))

@@ -794,7 +794,7 @@
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		var/dat = "<center><h4>Vault Computer</h4></center>"
@@ -810,7 +810,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["unlock"])

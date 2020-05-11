@@ -407,7 +407,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
 		if (user.client)
-			user.machine = src
+			src.add_dialog(user)
 			show_window(user.client)
 			onclose(user, "wp_station")
 

@@ -44,7 +44,7 @@ var/list/magnet_locations = list()
 			</body>
 			"}
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 		user.Browse(html, "window=lrporter;size=250x380;can_resize=0;can_minimize=0;can_close=1;override_setting=1")
 		onclose(user, "lrporter", src)

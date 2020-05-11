@@ -1112,6 +1112,6 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 20
-	ammo_type = new /datum/projectile/bullet/gun
+	ammo_type = new /datum/projectile/special/spawner/gun
 	caliber = 3 //idk what caliber to actually make it but apparently its diameter of the tube so i figure it should be 3 inches????
 	delete_on_reload = 1

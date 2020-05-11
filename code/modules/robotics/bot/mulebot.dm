@@ -279,7 +279,7 @@
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			switch(href_list["op"])
 				if("lock", "unlock")
@@ -365,7 +365,7 @@
 					auto_pickup = !auto_pickup
 
 				if("close")
-					usr.machine = null
+					src.remove_dialog(usr)
 					usr.Browse(null,"window=mulebot")
 
 				if("wirecut")
@@ -406,7 +406,7 @@
 			updateDialog()
 		else
 			usr.Browse(null, "window=mulebot")
-			usr.machine = null
+			src.remove_dialog(usr)
 		return
 
 	// returns true if the bot has power

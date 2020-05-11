@@ -791,6 +791,7 @@ obj/decoration/ceilingfan
 	disposing()
 		if (light)
 			light.dispose()
+		..()
 
 /obj/decoration/rustykrab
 	name = "rusty krab sign"

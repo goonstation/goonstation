@@ -274,7 +274,7 @@
 		if (isghostcritter(usr)) return
 		if (doing_a_thing) return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["card"])
@@ -473,7 +473,7 @@
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
 			return
-		user.machine = src
+		src.add_dialog(user)
 		/*
 		src.update_html()
 		user.Browse("<TITLE>[dispenser_name] Dispenser</TITLE>[dispenser_name] dispenser:<BR>[src.HTML]", "window=chem_dispenser;size=500x800;title=Chemistry Dispenser")
