@@ -28,7 +28,7 @@
 		stats["Shift Time Spacer"] = -1
 		stats["Shift Time:"] = 0
 		stats["Shuttle:"] = 0
-xx
+
 		src.update()
 
 	proc/update()
