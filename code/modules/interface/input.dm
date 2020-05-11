@@ -1,13 +1,5 @@
 var/list/dirty_keystates = list()
 
-#define MODIFIER_NONE   0x0000
-#define MODIFIER_SHIFT  0x0001
-#define MODIFIER_ALT    0x0002
-#define MODIFIER_CTRL   0x0004
-//o no
-//defines in here
-//o noooo
-
 /client
 	var/key_state = 0
 	var/last_keys = 0
@@ -490,8 +482,3 @@ var/list/dirty_keystates = list()
 		while (1)
 			process_keystates()
 			sleep(world.tick_lag)
-
-/datum/bind_set
-	var/name = ""
-	var/keys = 0
-	var/actions = list()

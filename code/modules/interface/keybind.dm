@@ -229,13 +229,13 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	)
 
 /datum/keybind_style/robot/azerty
-	name = "human_azerty"
+	name = "robot_azerty"
 	changed_keys = list(
 		"A" = "unequip"
 	)
 
 /datum/keybind_style/robot/arrow
-	name = "human_arrow"
+	name = "robot_arrow"
 	changed_keys = list(
 		"NORTHEAST" = "swaphand",
 		"SOUTHEAST" = "attackself",

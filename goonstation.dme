@@ -19,7 +19,10 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\__build.dm"
 #include "_stdlib\_accessLevels.dm"
 #include "_stdlib\_mapDefines.dm"
+
+#include "_stdlib\defines\_input.dm"
 #include "_stdlib\_setup.dm"
+
 #include "_stdlib\code\_macros.dm"
 #include "_stdlib\color.dm"
 #include "_stdlib\component_defines.dm"
@@ -35,7 +38,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\code\spaceman_dmm.dm"
 
 #include "_stdlib\code\_antag_popups.dm"
-#include "_stdlib\code\_controls.dm"
 #include "_stdlib\code\_dmm_suite.dm"
 #include "_stdlib\code\_fluid_defines.dm"
 #include "_stdlib\code\_layer.dm"
@@ -769,6 +771,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\hydroponics\plants_herb.dm"
 #include "code\modules\hydroponics\plants_veg.dm"
 #include "code\modules\hydroponics\plants_weed.dm"
+#include "code\modules\interface\action_associations.dm"
 #include "code\modules\interface\input.dm"
 #include "code\modules\interface\keybind.dm"
 #include "code\modules\interface\keybind_menu_chui.dm"

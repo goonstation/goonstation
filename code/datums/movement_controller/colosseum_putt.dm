@@ -101,3 +101,5 @@
 	modify_keymap(datum/keymap/keymap, client/C)
 		..()
 		C.apply_keybind("colputt")
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("base_arrow")
