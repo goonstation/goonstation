@@ -1058,9 +1058,7 @@
 	..(C)
 	C.apply_keybind("human")
 
-	if (C.preferences.use_wasd)
-		C.apply_keybind("human_wasd")
-	else
+	if (!C.preferences.use_wasd)
 		C.apply_keybind("human_arrow")
 
 	if (C.preferences.use_azerty)

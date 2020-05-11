@@ -336,9 +336,9 @@ var/list/dirty_keystates = list()
 			for (var/key in data)
 				keys[parse_keybind(key)] = data[key]
 
-	proc/merge(datum/keymap/other)
-		for (var/key in other.keys)
-			src.keys[key] = other.keys[key]
+	proc/merge(datum/keymap/init_keymap)
+		for (var/key in init_keymap.keys)
+			src.keys[key] = init_keymap.keys[key]
 
 	proc/overwrite_by_action(datum/keymap/writer)
 		if (!writer) return

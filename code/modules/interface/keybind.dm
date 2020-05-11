@@ -20,9 +20,13 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/get_keybind_style_datum(style_name)
 	PROTECTED_PROC(TRUE)
 
+	if (!keybind_styles)
+		keybind_styles = typesof(/datum/keybind_style)
+
 	for (var/found in keybind_styles)
 		var/datum/keybind_style/found_style = found
 		if (initial(found_style.name) == style_name)
+			boutput("[found_style]")
 			return found_style
 	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
@@ -33,11 +37,13 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/apply_keys(datum/keybind_style/style)
 	PROTECTED_PROC(TRUE)
 
-	if (applied_keybind_styles.Find("[style.name]"))
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [style.name] to [src] when already present.")
+	if (applied_keybind_styles.Find(initial(style.name)))
+		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to add [initial(style.name)] to [src] when already present.")
 		return
-	src.applied_keybind_styles.Add(style.name)
-	src.keymap.merge(style.changed_keys)
+	src.applied_keybind_styles.Add(initial(style.name))
+	var/datum/keybind_style/init_style = new style //Can't do static referencing from this point onwards
+	var/datum/keymap/init_keymap = new /datum/keymap(init_style.changed_keys)
+	src.keymap.merge(init_keymap)
 
 //Applies a given style onto the client after getting the datum
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
@@ -171,12 +177,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	name = "human_azerty"
 	changed_keys = list(
 		"A" = "drop"
-	)
-
-/datum/keybind_style/human/wasd
-	name = "human_wasd"
-	changed_keys = list(
-		"Q" = "drop"
 	)
 
 /datum/keybind_style/human/arrow

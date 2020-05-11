@@ -1201,6 +1201,8 @@
 /mob/proc/build_keybind_styles(client/C)
 	SHOULD_CALL_PARENT(TRUE)
 
+	C.keymap = new
+
 	C.apply_keybind("base")
 
 	if (C.preferences.use_wasd)
