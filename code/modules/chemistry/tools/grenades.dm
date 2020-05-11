@@ -412,8 +412,13 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		B1.reagents.add_reagent("voltagen", 40)
-		beakers += B1
+		var/obj/item/reagent_containers/glass/B2 = new(src)
+
+		B1.reagents.add_reagent("voltagen", 25)
+		B1.reagents.add_reagent("sugar",25)
+
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
