@@ -166,10 +166,7 @@
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		updateicon()
 
-	for(var/mob/M in viewers(1, src))
-		if (M.using_dialog_of(src))
-			src.interacted(M)
-	AutoUpdateAI(src)
+	src.updateDialog()
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick

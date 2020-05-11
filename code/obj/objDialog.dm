@@ -1,3 +1,6 @@
+//hey, so later on you can convert most of the procs within this file to be #defines (or wait until lummox adds proc inlining)
+//keeping them procs for now so we can profile etc
+
 
 var/global/list/objects_using_dialogs
 /obj/var/list/clients_operating

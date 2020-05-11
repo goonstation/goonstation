@@ -164,10 +164,7 @@
 		updateicon()
 
 	if(autorefresh)
-		for(var/mob/M in viewers(1, src))
-			if (M.using_dialog_of(src))
-				src.interacted(M)
-		AutoUpdateAI(src)
+		src.updateDialog()
 
 /obj/machinery/power/pt_laser/proc/power_sold()
 	if (round(output) == 0)

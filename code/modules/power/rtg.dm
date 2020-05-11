@@ -15,10 +15,7 @@
 			updateicon()
 
 		// shamelessly stolen from the SMES code, this is kinda stupid
-		for(var/mob/M in range(1, src))
-			if (M.using_dialog_of(src))
-				src.interacted(M)
-		AutoUpdateAI(src)
+		src.updateDialog()
 
 	attack_ai(mob/user)
 		add_fingerprint(user)
