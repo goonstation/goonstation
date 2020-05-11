@@ -1147,7 +1147,7 @@
 			return
 
 		if(src.host)
-			src.add_dialog(usr).host
+			src.host.add_dialog(usr)
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -1267,7 +1267,7 @@
 			return
 
 		if(src.host)
-			src.add_dialog(usr).host
+			src.host.add_dialog(usr)
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))

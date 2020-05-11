@@ -1232,7 +1232,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if(src.host)
-			src.add_dialog(usr).host
+			src.host.add_dialog(usr)
 
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
@@ -1265,7 +1265,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if(src.host)
-			src.add_dialog(usr).host
+			src.host.add_dialog(usr)
 
 		if(href_list["key"])
 			if(istype(usr.equipped(), /obj/item/device/key/cheget) && !src.inserted_key)

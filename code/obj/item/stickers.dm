@@ -473,7 +473,7 @@
 	proc/set_internal_camera()
 		if (!ishuman(usr) || !src.camera)
 			return
-		src.add_dialog(usr).camera
+		src.camera.add_dialog(usr)
 		if (!src.HTML)
 			src.generate_html()
 		usr.Browse(src.HTML, "window=sticker_internal_camera;title=Sticker Internal Camera")
