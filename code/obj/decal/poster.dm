@@ -655,7 +655,7 @@
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
-		
+
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
 			desc = "No... it can't be... the original?! This is a vintage!!"
@@ -687,6 +687,13 @@
 			name = "Garbage Garbs sign"
 			icon = 'icons/effects/96x32.dmi' //Maybe not the best place but it was the only ready 96x32 dmi
 			icon_state = "garbagegarbs"
+			bound_width  = 96
+
+		fuq3
+			desc = "What the fuq?"
+			name = "Fuq III"
+			icon = 'icons/effects/96x32.dmi'
+			icon_state = "fuq3"
 			bound_width  = 96
 
 ///////////////////////////////////////

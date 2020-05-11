@@ -1872,6 +1872,10 @@ area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
 	icon_state = "green"
 
+area/station/crewquarters/fuq3 // Donut 3's clothing store... be afraid
+	name = "Fuq 3 clothing store"
+	icon_state = "fuq3"
+
 area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
