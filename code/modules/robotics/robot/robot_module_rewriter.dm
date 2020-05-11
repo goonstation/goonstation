@@ -54,7 +54,6 @@
 /obj/machinery/computer/robot_module_rewriter/attack_hand(mob/user as mob)
 	if (!user)
 		return
-	user.machine = src
 	src.add_fingerprint(user)
 	if (src.status & (BROKEN | NOPOWER))
 		return
