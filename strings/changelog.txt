@@ -1,5 +1,9 @@
 
 (t)sun may 10 20
+(u)mbc
+(p)650
+(e)|
+(+)Did a big behind-the-scenes optimizing of machine popup window refresh handling. You shouldn't notice anything different, but if any new bugs turn up please report them.
 (u)UrsulaMajor
 (p)638
 (e)🆕|enhancement
