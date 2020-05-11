@@ -3,6 +3,8 @@
 // All the player specific info should be handled directly in mob/stat().
 //I know its really ugly ok i'm sorry
 
+#define saveStat(key, value) stats[key] = value
+
 /datum/mob_stat_thinker
 	var/last_update = 0
 	var/update_interval = 11
@@ -26,12 +28,8 @@
 		stats["Shift Time Spacer"] = -1
 		stats["Shift Time:"] = 0
 		stats["Shuttle:"] = 0
-
+xx
 		src.update()
-
-	//Todo : Save on proc calls by just doing this operation inline
-	proc/saveStat(var/a, var/b = 0)
-		stats[a] = b
 
 	proc/update()
 		last_update = world.time
@@ -223,3 +221,5 @@ var/global/datum/mob_stat_thinker/mobStat = new
 
 	if (is_near_colosseum())
 		colosseum_controller.Stat()
+
+#undef saveStat
