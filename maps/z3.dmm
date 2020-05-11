@@ -2520,7 +2520,7 @@
 "aWx" = (/turf/space,/obj/grille/catwalk,/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/airless/plating/catwalk,/area/abandonedoutpostthing)
 "aWy" = (/turf/space,/obj/grille/catwalk,/turf/simulated/floor/airless/plating/catwalk,/area/abandonedoutpostthing)
 "aWz" = (/obj/machinery/recharge_station{desc = "It looks like some of the safety interlocks are damaged."; name = "Malfunctioning Docking Station"},/turf/simulated/floor/white/grime,/area/abandonedmedicalship/robot_trader)
-"aWA" = (/obj/submachine/robomoduler,/turf/simulated/floor/white/grime,/area/abandonedmedicalship/robot_trader)
+"aWA" = (/obj/machinery/computer/robot_module_rewriter,/turf/simulated/floor/white/grime,/area/abandonedmedicalship/robot_trader)
 "aWB" = (/turf/space,/obj/grille/catwalk{icon_state = "catwalk_cross"},/turf/simulated/floor/airless/plating/catwalk{dir = 5; icon_state = "catwalk_cross"},/area)
 "aWC" = (/turf/space,/obj/grille/catwalk{dir = 4},/turf/simulated/floor/airless/plating/catwalk{dir = 5; icon_state = "catwalk_cross"},/area)
 "aWD" = (/obj/cable{d2 = 4; icon_state = "0-4"},/obj/machinery/power/apc{dir = 8; environ = 2; equipment = 0; lighting = 0; name = "Remote W APC"; pixel_x = -24},/obj/cable{icon_state = "0-2"},/turf/simulated/floor,/area/h7/control)
