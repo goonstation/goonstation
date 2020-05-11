@@ -1114,10 +1114,10 @@ var/list/fun_images = list()
 					src.mob.x = x
 					src.mob.y = y
 					src.mob.z = curZ
-					SLEEP_DBG(delay)
+					sleep(delay)
 					winset(src, null, "command=\".screenshot auto\"")
 					out(src, "Screenshot taken at ([x], [y], [z])")
-					SLEEP_DBG(delay)
+					sleep(delay)
 			if (curZ != world.maxz)
 				var/pause = alert("Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", "Ok", "Cancel")
 				if (pause == "Cancel")
@@ -1129,10 +1129,10 @@ var/list/fun_images = list()
 				src.mob.x = x
 				src.mob.y = y
 				src.mob.z = z
-				SLEEP_DBG(delay)
+				sleep(delay)
 				winset(src, null, "command=\".screenshot auto\"")
 				out(src, "Screenshot taken at ([x], [y], [z])")
-				SLEEP_DBG(delay)
+				sleep(delay)
 
 	alert("Mapping complete!", "Yay!", "Ok")
 
@@ -1460,7 +1460,7 @@ var/list/fun_images = list()
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
-		SLEEP_DBG(1.5 SECONDS)
+		sleep(1.5 SECONDS)
 
 	var/mob/O = src.mob
 	src.mob.ghostize()
