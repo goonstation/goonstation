@@ -1,5 +1,10 @@
 /**
  * This file is intended to hold all data pertaining to keybind_style datums and related functionality
+ *
+ * To add a new keybind:
+ *	Add it in the right keybind_style below.
+ *	Then, you need to update action_names to allow the menu to translate into human-readable format.
+ *	Depending on what you're adding, you'll need to update action_verbs as well.
  */
 
 ///Global list holding all of the keybind style datums - Intitalized in World preload.

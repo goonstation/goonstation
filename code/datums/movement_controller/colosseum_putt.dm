@@ -98,7 +98,7 @@
 				walk(master, 0)
 				master.flying = 0
 
-	modify_keymap(datum/keymap/keymap, client/C)
+	modify_keymap(client/C)
 		..()
 		C.apply_keybind("colputt")
 		if (!C.preferences.use_wasd)
