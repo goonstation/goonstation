@@ -96,7 +96,8 @@
 		BLOCK_BOOK
 		return
 
-	proc/process()
+	process()
+		..()
 		if(readers.len)
 			var/mob/living/L = pick(readers)
 			var/turf/oovTile = get_oov_tile(L)
