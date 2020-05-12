@@ -2139,9 +2139,7 @@
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Operative"
 	limit = 1 // backup during HELL WEEK. players will probably like it
-#if !ASS_JAM
 	requires_whitelist = 1
-#endif
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
