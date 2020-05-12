@@ -1,5 +1,9 @@
 
 (t)tue may 12 20
+(u)system86
+(p)616
+(e)🆕|enhancement
+(+)DWAINE "eval" improvements and additions. New/fixed commands: # . .s del ' (single quote)
 (u)Tarmunora
 (p)541
 (e)🍑|ass-jam
