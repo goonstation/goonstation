@@ -82,7 +82,7 @@
 	name = "Tomacco"
 	name_suffix = " Tomacco"
 	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	//iconmod = "kiltom" //TODO: make growthsprites, use basic tomato in interim
+	iconmod = "TomatoTomacco" //ayy potayto potato tomayto tomacco ya dig
 
 // Corn Mutations
 
