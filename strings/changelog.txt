@@ -1,5 +1,9 @@
 
 (t)tue may 12 20
+(u)Sovexe
+(p)646
+(e)🆕🎨|enhancement, sprites
+(*)Added a cyborg battery distress indicator. Conveys that a robot is likely in desperate need of outside assistance.
 (u)Kyle
 (p)608
 (e)⚖|balance
