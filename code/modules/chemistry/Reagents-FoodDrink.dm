@@ -3246,9 +3246,7 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+					M.add_stam_mod_regen("tripletriple", 3333)
 				if(prob(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
