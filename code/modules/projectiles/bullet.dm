@@ -512,8 +512,8 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS, optional = 8)
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+			M.changeStatus("slowed", 0.5 SECONDS)
+			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
 	power = 1
