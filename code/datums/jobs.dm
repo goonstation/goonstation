@@ -144,6 +144,14 @@
 		..()
 		src.access = get_all_accesses()
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		if(prob(5*ASS_JAM))
+			M.unequip_all()
+			M.tommyize_reshape()
+
 	derelict
 		//name = "NT-SO Commander"
 		name = null
@@ -253,6 +261,9 @@
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
 		JOB_XP(M, "Head of Security", 1)
+		if(prob(ASS_JAM * 5))
+			M.unequip_all()
+			M.machoize()
 
 	derelict
 		name = null//"NT-SO Special Operative"
@@ -2117,7 +2128,9 @@
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Operative"
 	limit = 1 // backup during HELL WEEK. players will probably like it
+#if !ASS_JAM
 	requires_whitelist = 1
+#endif
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
@@ -2195,8 +2208,12 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
-	limit = 0
+	limit = 0 + (ASS_JAM * 300)
+#if ASS_JAM
+	announce_on_join = 1
+#else
 	allow_traitors = 0
+#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null

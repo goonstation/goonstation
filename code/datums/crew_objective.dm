@@ -124,7 +124,7 @@
 			medal_name = "Monkey Duty"
 			check_completion()
 				for(var/mob/living/carbon/human/M in mobs)
-					if(M.job == "Clown" && !isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 || istype(get_area(M),/area/station/security/brig))
+					if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
 						return 1
 				return 0
 #if ASS_JAM

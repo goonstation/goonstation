@@ -412,7 +412,7 @@
 #if ASS_JAM
 	name = "Kinetitech"
 	desc = "A restricted weapon vendor, banned by the Space Geneva Convention in 2036 for being a 'warcrime'. Where the hell did the Head of Security find this?"
-	mats = 42069 //Yes its not traitor restricted, but good luck getting more of these. If you manage to get this, you deserve it
+	mats = 6669 //Yes its not traitor restricted, but good luck getting more of these. If you manage to get this, you deserve it
 #else
 	name = "AmmoTech"
 	desc = "A restricted ammunition vendor."
@@ -440,6 +440,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3 * (ASS_JAM * 20))
 #if ASS_JAM
 		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/ak47, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/tommy_gun, 6)
 		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/tactical_shotgun, 6)
 		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/hunting_rifle, 6)
 		product_list += new/datum/data/vending_product(/obj/item/baton/classic, 6)
@@ -448,6 +449,8 @@
 		if(prob(10))
 			product_list += new/datum/data/vending_product(/obj/item/gun/energy/howitzer, 1)
 		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188, 200)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pouch, 6)
 		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/stinger, 10)
 		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/frag, 10)
 		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/high_explosive, 10)
@@ -457,6 +460,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/aex, 20)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 40)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/rifle_3006, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 9999999)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/seeker, 20)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
 
