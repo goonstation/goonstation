@@ -109,7 +109,7 @@
 /datum/plantmutation/orange/blood
 	name = "Blood Orange"
 	name_prefix = "Blood "
-	//iconmod = "OrangeBlood" //TODO: make growthsprites
+	iconmod = "OrangeBlood"
 	assoc_reagents = list("bloodc") // heh
 
 /datum/plantmutation/orange/clockwork
