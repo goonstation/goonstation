@@ -2031,14 +2031,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("r_coffee", 2)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_coffee", 2)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("r_coffee")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						remove_buff = M.remove_stam_mod_regen("r_coffee")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2072,13 +2074,15 @@ datum
 			stun_resist = 10
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
-					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("caffeine-rush", src.caffeine_rush)
 				..()
 
 			on_remove()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("caffeine rush")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.remove_stam_mod_regen("caffeine-rush")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3236,8 +3240,9 @@ datum
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("tripletriple")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.remove_stam_mod_regen("tripletriple")
 
 				return
 
@@ -3247,8 +3252,9 @@ datum
 
 				REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					holder.my_atom:add_stam_mod_regen("tripletriple", 3333)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
 				if(prob(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
