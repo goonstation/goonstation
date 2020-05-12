@@ -394,11 +394,11 @@
 	item_state = "tasers"
 	force = 8.0
 	two_handed = 1
-	click_delay = 15
 	can_dual_wield = 0
+	shoot_delay = 6
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
+		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt)
 		..()
@@ -410,6 +410,12 @@
 			set_icon_state("tasers[ratio]")
 			return
 
+	attack_self()
+		..()
+		if(istype(current_projectile, /datum/projectile/energy_bolt))
+			shoot_delay = 4
+		else
+			shoot_delay = 6
 
 
 ////////////////////////////////////VUVUV
