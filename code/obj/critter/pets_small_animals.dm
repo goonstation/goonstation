@@ -155,6 +155,14 @@
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 1
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 	on_revive()
 		..()
 		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")

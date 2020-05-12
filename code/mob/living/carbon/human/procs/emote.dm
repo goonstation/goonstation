@@ -1278,22 +1278,23 @@
 								//playsound(get_turf(src), src.sound_malescream, 80, 0, 0, src.get_age_pitch())
 							//else
 							playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
-						SPAWN_DBG(0.5 SECONDS)
-							var/possumMax = 15
-							for (var/obj/critter/opossum/responsePossum in range(4, src))
-								if (!responsePossum.alive)
-									continue
-								if (possumMax-- < 0)
-									break
-								responsePossum.CritterDeath() // startled into playing dead!
-							for (var/mob/living/critter/small_animal/opossum/P in mobs) // is this more or less intensive than a range(4)?
-								if (P.z != src.z) // they're on a different world, maaaan
-									continue
-								if (P.playing_dead) // already out
-									continue
-								if (get_dist(P, src) > 4) // out of range
-									continue
-								P.play_dead(rand(20,40)) // shorter than the regular "death" stun
+						var/possumMax = 15
+						for (var/poss in by_type[/obj/critter/opossum])
+							var/obj/critter/opossum/responsePossum = poss
+							if (!responsePossum.alive)
+								continue
+							if(!DIST_CHECK(responsePossum, src, 4))
+								continue
+							if (possumMax-- < 0)
+								break
+							responsePossum.CritterDeath() // startled into playing dead!
+						for (var/poss in by_type[/mob/living/critter/small_animal/opossum]) // is this more or less intensive than a range(4)?
+							var/mob/living/critter/small_animal/opossum/P = poss
+							if (P.playing_dead) // already out
+								continue
+							if(!DIST_CHECK(P, src, 4))
+								continue
+							P.play_dead(rand(20,40)) // shorter than the regular "death" stun
 					else
 						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
