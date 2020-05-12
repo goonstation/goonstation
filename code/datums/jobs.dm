@@ -213,6 +213,7 @@
 #if ASS_JAM
 	requires_whitelist = 0
 	high_priority_job = 1
+	change_name_on_spawn = 1
 #else
 	requires_whitelist = 1
 #endif
