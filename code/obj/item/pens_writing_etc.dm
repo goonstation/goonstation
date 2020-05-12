@@ -281,15 +281,13 @@
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
+				..(user)
 				src.color = random_color()
 				src.font_color = src.color
 				src.color_name = hex2color_name(src.color)
 				src.name = "[src.color_name] crayon"
-
-				if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)))
-					user.visible_message("<span class='alert'><b>[user] fumbles [src]!</b></span>")
-					src.throw_impact(user)
-					JOB_XP(user, "Clown", 3)
+				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+				JOB_XP(user, "Clown", 1)
 
 
 
@@ -378,7 +376,7 @@
 	random
 		New()
 			..()
-			src.color = "#[num2hex(rand(0, 255))][num2hex(rand(0, 255))][num2hex(rand(0, 255))]"
+			src.color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)]"
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] chalk"
@@ -651,7 +649,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 		if (usr.contents.Find(src))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["pen"])
 				if (src.pen)
 					usr.put_in_hand_or_drop(src.pen)
@@ -692,12 +690,7 @@
 
 				src.add_fingerprint(usr)
 
-			if (ismob(src.loc))
-				var/mob/M = src.loc
-				if (M.machine == src)
-					SPAWN_DBG( 0 )
-						src.attack_self(M)
-						return
+			src.updateSelfDialog()
 		return
 
 	attack_hand(mob/user as mob)

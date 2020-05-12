@@ -320,12 +320,12 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 /obj/item/flamethrower/Topic(href,href_list[])
 	if (href_list["close"])
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 		return
 	if(usr.stat || usr.restrained() || usr.lying || src.loc != usr)
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["light"])
 		if(!src.part4 || !src.part5)	return
 		lit = !(lit)
@@ -354,7 +354,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 	if (href_list["removefuel"])
 		if(!src.part5)	return
@@ -370,20 +370,19 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			oxy = "_oxy"
 		icon_state = "flamethrower[oxy]_no_fuel"
 		item_state = "flamethrower0"
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
-	for(var/mob/M in viewers(1, src.loc))
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+
+	src.updateDialog()
 	return
 
 
 /obj/item/flamethrower/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = text("<TT><B>Flamethrower")
 	if(src.part4 && src.part5)
 		dat += text("(<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>")
@@ -526,9 +525,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		sleep(0.1 SECONDS)
 
 	operating = 0
-	for(var/mob/M in viewers(1, src.loc))
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+	src.updateSelfDialog()
 	return 1
 
 /obj/item/flamethrower/proc/spray_turf(turf/target,var/transferamt)

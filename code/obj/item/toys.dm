@@ -24,7 +24,7 @@
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	if(src.busy)
 		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
 	else
@@ -932,6 +932,8 @@ var/list/figure_patreon_rarity = list(\
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
+	var/redeemer = null
+	var/receiver = null
 
 /obj/item/toy/diploma/New()
 	..()

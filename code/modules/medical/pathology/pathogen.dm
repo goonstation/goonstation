@@ -926,6 +926,7 @@ datum/pathogen
 
 	disposing()
 		clear()
+		..()
 
 	proc/clear()
 		name = ""
@@ -1278,7 +1279,7 @@ datum/pathogen
 					suppressed = result
 			if (advance_speed > 0)
 				if (prob(min(advance_speed, 4)))
-					if (suppressed < 1)	
+					if (suppressed < 1)
 						advance()
 					else if (stage > 3)
 						reduce()
@@ -1537,7 +1538,7 @@ proc/num2hexoc(num, pad)
 					logTheThing("pathology", null, null, "Num2hexoc error: overflow on [num].")
 				if (neg)
 					digit += 8
-				return "[dig2hex(digit)][ret]"
+				return "[num2hex(digit,0)][ret]"
 		while (digs <= pad)
 			if (neg)
 				ret = "F[ret]"

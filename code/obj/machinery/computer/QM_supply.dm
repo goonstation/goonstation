@@ -166,7 +166,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return
 
 	var/timer = shippingmarket.get_market_timeleft()
-	user.machine = src
+	src.add_dialog(user)
 	post_signal("supply")
 	var/HTML
 
@@ -602,7 +602,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
 

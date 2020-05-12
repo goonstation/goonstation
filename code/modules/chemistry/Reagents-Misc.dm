@@ -1726,7 +1726,7 @@ datum
 			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
 				if (method == INGEST)
 					if (ishuman(M))
-						M:blood_color = "#[num2hex(rand(0, 255))][num2hex(rand(0, 255))][num2hex(rand(0, 255))]"
+						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -3664,12 +3664,12 @@ datum
 				if(M && our_amt > 20)
 					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))
 						M.bioHolder.AddEffect("fat")
-				for (var/obj/V in orange(CLAMP(our_amt / 5, 2,10),M))
+				for (var/obj/V in orange(clamp(our_amt / 5, 2,10),M))
 					if (V.anchored)
 						continue
 					step_towards(V,M)
 
-				for (var/mob/living/N in orange(CLAMP(our_amt / 5, 2,10),M))
+				for (var/mob/living/N in orange(clamp(our_amt / 5, 2,10),M))
 					step_towards(N,M)
 					if(ishuman(N) && prob(1))
 						N.say("[M.name] is an ocean of muscle.")

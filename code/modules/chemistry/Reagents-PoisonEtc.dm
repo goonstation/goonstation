@@ -1880,7 +1880,7 @@ datum
 							H.emote("scream") //It REALLY hurts
 							H.TakeDamage(zone="All", brute=rand(2,5) * mult)
 
-					if(prob(CLAMP(data/1.5, 100, 30))) //At least 30% risk of oxy damage
+					if(prob(clamp(data/1.5, 100, 30))) //At least 30% risk of oxy damage
 						if(prob(50))H.emote(pick("gasp", "choke", "cough"))
 						H.losebreath += rand(1,3) * mult
 

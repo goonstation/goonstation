@@ -249,7 +249,7 @@
 /obj/item/device/light/candle
 	name = "candle"
 	desc = "It's a big candle."
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle-off"
 	density = 0
 	anchored = 0

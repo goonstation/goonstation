@@ -1517,7 +1517,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		switch(href_list["action"]) //Yeah, this is weirdly set up. Planning to expand it later.
 			if("trigger")
 				switch(href_list["spec"])
@@ -1595,7 +1595,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (user.stat || user.restrained() || user.lying)
 		return
 	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
-		user.machine = src
+		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
@@ -1604,7 +1604,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		onclose(user, "timer")
 	else
 		user.Browse(null, "window=timer")
-		user.machine = null
+		src.remove_dialog(user)
 
 	src.add_fingerprint(user)
 	return
@@ -1659,7 +1659,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			attack_hand(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
-				if (M.client && (M.machine == src))
+				if (M.using_dialog_of(src))
 					src.attack_hand(M)
 
 	return

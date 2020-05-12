@@ -2031,16 +2031,14 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_coffee", 2)
+				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
+					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						remove_buff = M.remove_stam_mod_regen("r_coffee")
+					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
+						holder.my_atom:remove_stam_mod_regen("consumable_good")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2074,15 +2072,13 @@ datum
 			stun_resist = 10
 
 			on_add()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("caffeine-rush", src.caffeine_rush)
+				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
+					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
 				..()
 
 			on_remove()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					remove_buff = M.remove_stam_mod_regen("caffeine-rush")
+				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
+					holder.my_atom:remove_stam_mod_regen("caffeine rush")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3222,7 +3218,8 @@ datum
 			bladder_value = -2
 
 			on_add(var/mob/M)
-				APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+				if (ismob(M))
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
@@ -3240,9 +3237,8 @@ datum
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					remove_buff = M.remove_stam_mod_regen("tripletriple")
+				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
+					holder.my_atom:remove_stam_mod_regen("tripletriple")
 
 				return
 
@@ -3250,11 +3246,8 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
-
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
+					holder.my_atom:add_stam_mod_regen("tripletriple", 3333)
 				if(prob(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
@@ -3782,3 +3775,13 @@ datum
 			on_mob_life_complete(var/mob/living/carbon/human/M)
 				if(M)
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
+
+		fooddrink/alcoholic/hottoddy
+			name = "Hot Toddy"
+			id = "hottoddy"
+			fluid_r = 255
+			fluid_g = 220
+			fluid_b = 95
+			alch_strength = 0.4
+			description = "A warm, late night drink, usually enjoyed during long winter nights."
+			reagent_state = LIQUID

@@ -29,7 +29,7 @@
 		if (namecheck.len >= 2)
 			namecheck.Insert(2, H.client.preferences.name_middle)
 			G.fields["full_name"] = jointext(namecheck, " ")
-	G.fields["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7)), 6)]"
+	G.fields["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7), 0), 6)]"
 	M.fields["name"] = G.fields["name"]
 	M.fields["id"] = G.fields["id"]
 	S.fields["name"] = G.fields["name"]

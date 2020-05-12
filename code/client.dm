@@ -120,6 +120,9 @@
 
 	src.images.Cut() //Probably not needed but eh.
 
+	if (src.mob)
+		src.mob.remove_dialogs()
+
 	clients -= src
 	if(src.holder)
 		onlineAdmins.Remove(src)
@@ -893,7 +896,7 @@ var/global/curr_day = null
 		if ("mach_close")
 			var/window = href_list["window"]
 			var/t1 = text("window=[window]")
-			usr.machine = null
+			usr.remove_dialogs()
 			usr.Browse(null, t1)
 			//Special cases
 			switch (window)

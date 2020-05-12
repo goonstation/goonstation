@@ -17,7 +17,8 @@
 			return
 		if (href_list["close"])
 			usr.Browse(null, "window=forcefield")
-			if (usr.machine == src) usr.machine = null
+			if (usr.using_dialog_of(src))
+				src.remove_dialog(usr)
 			src.updateUsrDialog()
 			return
 

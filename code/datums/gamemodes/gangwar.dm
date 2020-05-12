@@ -718,7 +718,7 @@
 			if (ismob(owner))
 				M = owner
 			if (M && M.mind && M.mind.gang)
-				icon = 'icons/obj/decals.dmi'
+				icon = 'icons/obj/decals/graffiti.dmi'
 				icon_state = "gangtag[M.mind.gang.gang_tag]"
 				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
 				switch (speedup)

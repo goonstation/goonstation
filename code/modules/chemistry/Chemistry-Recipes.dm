@@ -1176,6 +1176,10 @@ datum
 			mix_phrase = "The drink turns a deep brown as the coffee settles in."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_b_russian/espresso
+			id = "b_russian_espresso"
+			required_reagents = list("vodka" = 1, "espresso" = 1)
+
 		cocktail_w_russian
 			name = "White Russian"
 			id = "w_russian"
@@ -1587,6 +1591,26 @@ datum
 			result_amount = 4
 			mix_phrase = "The drink honks at you! What the fuck?"
 			mix_sound = 'sound/misc/drinkfizz_honk.ogg'
+			drinkrecipe = 1
+
+		cola
+			name = "cola"
+			id = "cola"
+			result = "cola"
+			required_reagents = list("sodawater" = 1, "sugar" = 1)
+			result_amount = 2
+			mix_phrase = "The mixture begins to fizz."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		hot_toddy
+			name = "Hot Toddy"
+			id = "hottoddy"
+			result = "hottoddy"
+			required_reagents = list("sweet_tea", "bourbon" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "The drink suddenly fills the room with a festive aroma."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
 		squeeze
@@ -2287,16 +2311,6 @@ datum
 						boutput(M, "<span class='alert'>The solution bubbles rapidly but dissipates into nothing!</span>")
 					holder.clear_reagents()
 				return
-
-		cola
-			name = "cola"
-			id = "cola"
-			result = "cola"
-			required_reagents = list("sodawater" = 1, "sugar" = 1)
-			result_amount = 2
-			mix_phrase = "The mixture begins to fizz."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-			drinkrecipe = 1
 
 		anti_fart
 			name = "Simethicone"

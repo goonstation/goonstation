@@ -40,7 +40,7 @@
 				var/obj/item/gift/G = new /obj/item/gift(src.loc)
 				G.size = W.w_class
 				G.w_class = G.size + 1
-				G.icon_state = "gift[CLAMP(G.size, 1, 3)]-[src.style]"
+				G.icon_state = "gift[clamp(G.size, 1, 3)]-[src.style]"
 				G.gift = W
 				W.set_loc(G)
 				G.add_fingerprint(user)
