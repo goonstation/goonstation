@@ -37,8 +37,11 @@
 	for (var/mob/new_player/player in mobs)
 		if (player.client && player.ready)
 			num_players++
-
-	var/num_synds = max(1, min(round(num_players / (4 / (ASS_JAM * 2)), agents_possible))
+#if ASS_JAM
+	var/num_synds = max(1, min(round(num_players / 2), agents_possible))
+#else
+	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
