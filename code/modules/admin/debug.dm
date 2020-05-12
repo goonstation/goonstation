@@ -1261,6 +1261,21 @@ var/datum/flock/testflock
 		text += "</body></html>"
 
 		usr.Browse(text, "window=spawndbg;size=800x600")
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+/client/proc/spawn_dbg()
+	set category = "Debug"
+	set name = "Debug Spawn"
+	set desc = "Displays all the spawns that've happened so far or dies trying"
+	if(src.holder)
+		if(!src.mob)
+			return
+		var/fname = "spawn_dbg.json"
+		if (fexists(fname))
+			fdel(fname)
+		text2file(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
+		var/tmp_file = file(fname)
+		usr << ftp(tmp_file)
+		fdel(fname)
 #endif
 
 /proc/debugAddComponent(var/datum/target = null)

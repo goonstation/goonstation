@@ -33,6 +33,7 @@
 		for(var/token in voxtokens)
 			var/list/sounds = voxsounds_flag_sorted[token]
 			sounds -= src
+		..()
 
 	proc/matches_id(var/t)
 		. = id == lowertext(t)

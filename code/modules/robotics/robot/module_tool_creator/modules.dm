@@ -8,7 +8,7 @@
  * - mining
  */
 
-/datum/robot/module_item_creator/recursive/module/brobocop
+/datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
 		/obj/item/noisemaker,
 		/obj/item/robot_foodsynthesizer,
@@ -30,7 +30,7 @@
 		// TODO: make ticketting machine?
 	)
 
-/datum/robot/module_item_creator/recursive/module/chemistry
+/datum/robot/module_tool_creator/recursive/module/chemistry
 	definitions = list(
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
@@ -46,7 +46,7 @@
 		/obj/item/extinguisher, // TODO: make large version?
 	)
 
-/datum/robot/module_item_creator/recursive/module/civilian
+/datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
 		/obj/item/extinguisher, // TODO: make large version
 		/obj/item/pen, // TODO: make more versatile version
@@ -66,7 +66,7 @@
 		// TODO: portable oven
 	)
 
-/datum/robot/module_item_creator/recursive/module/common
+/datum/robot/module_tool_creator/recursive/module/common
 	definitions = list(
 		/obj/item/device/light/flashlight,
 		/obj/item/tool/omnitool,
@@ -76,17 +76,17 @@
 		/obj/item/robojumper,
 	)
 
-/datum/robot/module_item_creator/recursive/module/construction_ai
+/datum/robot/module_tool_creator/recursive/module/construction_ai
 	definitions = list(
 		/obj/item/rcd,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/room_planner,
 		/obj/item/room_marker,
-		/datum/robot/module_item_creator/item_type/amount/cable_coil,
+		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
-/datum/robot/module_item_creator/recursive/module/construction_worker
+/datum/robot/module_tool_creator/recursive/module/construction_worker
 	definitions = list(
 		/obj/item/weldingtool,
 		/obj/item/electronics/scanner,
@@ -95,14 +95,14 @@
 		/obj/item/room_marker,
 		/obj/item/extinguisher,
 		/obj/item/rcd,
-		/datum/robot/module_item_creator/item_type/amount/steel_tile,
-		/datum/robot/module_item_creator/item_type/amount/steel_rod,
-		/datum/robot/module_item_creator/item_type/amount/steel_sheet,
-		/datum/robot/module_item_creator/item_type/amount/glass_sheet,
-		/datum/robot/module_item_creator/item_type/amount/cable_coil,
+		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
+		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
+		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
-/datum/robot/module_item_creator/recursive/module/engineering
+/datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
 		/obj/item/extinguisher, // TODO: make large version
@@ -111,14 +111,14 @@
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/rcd,
-		/datum/robot/module_item_creator/item_type/amount/steel_tile,
-		/datum/robot/module_item_creator/item_type/amount/steel_rod,
-		/datum/robot/module_item_creator/item_type/amount/steel_sheet,
-		/datum/robot/module_item_creator/item_type/amount/glass_sheet,
-		/datum/robot/module_item_creator/item_type/amount/cable_coil,
+		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
+		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
+		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
-/datum/robot/module_item_creator/recursive/module/medical
+/datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
 		/obj/item/robodefibrillator,
 		/obj/item/scalpel,
@@ -143,7 +143,7 @@
 		/obj/item/reagent_containers/dropper,
 	)
 
-/datum/robot/module_item_creator/recursive/module/mining
+/datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)
 		/obj/item/mining_tool/drill,

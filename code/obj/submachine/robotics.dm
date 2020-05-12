@@ -1,5 +1,8 @@
 // Robotics Stuff
 
+/**
+ * @deprecated
+ */
 /obj/submachine/robomoduler
 	name = "Module Rewriter"
 	desc = "A device used to rewrite robotic and cybernetic software modules."

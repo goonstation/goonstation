@@ -926,6 +926,7 @@ datum/pathogen
 
 	disposing()
 		clear()
+		..()
 
 	proc/clear()
 		name = ""
