@@ -865,6 +865,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
@@ -874,6 +875,10 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
 					src.link.master = src
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	receive_signal(datum/signal/signal)
 		if(status & (NOPOWER|BROKEN) || !src.link)
