@@ -691,7 +691,7 @@ toxic - poisons
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
 #if ASS_JAM
-			if (P.data || prob(100))) //Removing the data check would mean indenting is fucked, and im lazy
+			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
 #else
 			if (P.data || prob(10))
 #endif
