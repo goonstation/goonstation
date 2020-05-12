@@ -256,40 +256,38 @@
 	if (!thing || !target) return
 	var/diff_x = target.x
 	var/diff_y = target.y
-	SPAWN_DBG(0)
-		if (target && thing) //I want these to be recent, but sometimes they can be deleted during course of a spawn
-			diff_x = diff_x - thing.x
-			diff_y = diff_y - thing.y
+	if (target && thing) //I want these to be recent, but sometimes they can be deleted during course of a spawn
+		diff_x = diff_x - thing.x
+		diff_y = diff_y - thing.y
 
-		if (ismob(thing))
-			var/mob/M = thing
+	if (ismob(thing))
+		var/mob/M = thing
 
-			if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
-				return
+		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
+			return
 
-			var/obj/item/I = target
-			if (I && !isgrab(I))
-				M.attack_particle.icon = I.icon
-				M.attack_particle.icon_state = I.icon_state
-			else
-				M.attack_particle.icon = 'icons/mob/mob.dmi'
-				M.attack_particle.icon_state = "[M.a_intent]"
+		var/obj/item/I = target
+		if (I && !isgrab(I))
+			M.attack_particle.icon = I.icon
+			M.attack_particle.icon_state = I.icon_state
+		else
+			M.attack_particle.icon = 'icons/mob/mob.dmi'
+			M.attack_particle.icon_state = "[M.a_intent]"
 
-			M.attack_particle.alpha = 200
-			M.attack_particle.loc = thing.loc
-			M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
-			M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
+		M.attack_particle.alpha = 200
+		M.attack_particle.loc = thing.loc
+		M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
+		M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
 
-			var/matrix/start = matrix()//(I.transform)
-			M.attack_particle.transform = start
-			var/matrix/t_size = matrix()
-			t_size.Scale(0.3,0.3)
-			t_size.Turn(rand(-40,40))
+		var/matrix/start = matrix()//(I.transform)
+		M.attack_particle.transform = start
+		var/matrix/t_size = matrix()
+		t_size.Scale(0.3,0.3)
+		t_size.Turn(rand(-40,40))
 
-			animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
-			animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
-			SPAWN_DBG(1 DECI SECOND)
-				animate(M.attack_particle, alpha = 0, time = 1, flags = ANIMATION_PARALLEL)
+		animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
+		animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
+		animate(alpha = 0, time = 1)
 
 
 /proc/pull_particle(var/mob/M, var/atom/target)

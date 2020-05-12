@@ -108,13 +108,14 @@
 	proc/timeleft()
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
-		SPAWN_DBG(0)
-			src.checkLotteryTime()
-
+		// TODO move this into process or something, currently it gets checked in mob/Stat
 		if(timeleft <= 0)
 			payday()
 			src.time_until_payday = ticker.round_elapsed_ticks + time_between_paydays
 			return 0
+		if(lottery_active && src.time_until_lotto <= ticker.round_elapsed_ticks)
+			lotteryDay()
+			src.time_until_lotto = ticker.round_elapsed_ticks + time_between_lotto
 
 		return timeleft
 
@@ -167,7 +168,8 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/obj/item/lotteryTicket/T in world)
+		for(var/x in by_type[/obj/item/lotteryTicket])
+			var/obj/item/lotteryTicket/T = x
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -939,6 +941,7 @@
 
 	// Give a random set of numbers
 	New()
+		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound
 
@@ -951,6 +954,10 @@
 			dat += "[numbers[i]] "
 
 		desc = "The numbers on this ticket are: [dat]. This is for round [lotteryRound]."
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 proc/FindBankAccountByName(var/nametosearch)
 	if (!nametosearch) return

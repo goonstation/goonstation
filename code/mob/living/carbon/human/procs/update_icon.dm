@@ -657,7 +657,7 @@
 
 	if (world.time - src.last_show_inv <= 30 SECONDS)
 		for (var/client/C in src.showing_inv)
-			if (C.mob)
+			if (C && C.mob)
 				if (get_dist(src,C.mob) <= 1)
 					SPAWN_DBG (0)
 						src.show_inv(C.mob)

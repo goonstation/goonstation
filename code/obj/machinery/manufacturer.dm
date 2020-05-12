@@ -69,6 +69,7 @@
 #define WIRE_SHOCK 4
 
 	New()
+		START_TRACKING
 		..()
 		src.area_name = src.loc.loc.name
 
@@ -91,6 +92,7 @@
 			src.build_icon()
 
 	disposing()
+		STOP_TRACKING
 		manuf_controls.manufacturing_units -= src
 		src.work_display = null
 		src.activity_display = null
