@@ -693,7 +693,7 @@ toxic - poisons
 #if ASS_JAM
 			if (P.data || prob(100))) //Removing the data check would mean indenting is fucked, and im lazy
 #else
-			if (P.data || prob(10)))
+			if (P.data || prob(10))
 #endif
 				..()
 			else
