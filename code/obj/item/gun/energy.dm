@@ -398,7 +398,7 @@
 	shoot_delay = 6
 
 	New()
-		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
+		cell = new/obj/item/ammo/power_cell/high_power
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt)
 		..()
