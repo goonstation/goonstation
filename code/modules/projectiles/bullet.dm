@@ -690,7 +690,11 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10 + (ASS_JAM * 90))) //maybe, still explodes on ass jam, I think? maybe?
+#if ASS_JAM
+			if (P.data || prob(100))) //Removing the data check would mean indenting is fucked, and im lazy
+#else
+			if (P.data || prob(10)))
+#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)
