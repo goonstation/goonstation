@@ -18,7 +18,12 @@
 /datum/movement_modifier/proc/modifiers(mob/user, turf/move_target, running)
 	return list(0,0) // list(additive_slowdown, multiplicative_slowdown)
 
+// equipment
+
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
+
+/datum/movement_modifier/mech_boots
+	multiplicative_slowdown = 0.5
 
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
