@@ -1466,7 +1466,7 @@
 			if (src.parry_or_dodge(M))
 				return
 
-			if (src.mob_flags && IS_RELIQUARY_SOLDIER)
+			if (src.mob_flags & IS_RELIQUARY_SOLDIER)
 				M.visible_message("<span class='alert'><B>[M] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 				random_brute_damage(M, rand(2,5))
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
