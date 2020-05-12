@@ -1,4 +1,9 @@
 
+(t)tue may 12 20
+(u)Kyle
+(p)608
+(e)⚖|balance
+(+)Stamina buffs and debuffs of different reagents now stack with eachother. You can use two stamina buff chems to add their effects together.
 (t)mon may 11 20
 (u)pali
 (p)657
