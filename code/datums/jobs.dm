@@ -149,9 +149,11 @@
 		..()
 		if (!M)
 			return
-		if(prob(5*ASS_JAM))
+#if ASS_JAM
+		if(prob(5))
 			M.unequip_all()
 			M.tommyize_reshape()
+#endif
 
 	derelict
 		//name = "NT-SO Commander"
@@ -264,9 +266,11 @@
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
 		JOB_XP(M, "Head of Security", 1)
-		if(prob(ASS_JAM * 5))
+#if ASS_JAM
+		if(prob(5)
 			M.unequip_all()
 			M.machoize()
+#endif
 
 	derelict
 		name = null//"NT-SO Special Operative"
