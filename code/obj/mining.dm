@@ -2260,7 +2260,7 @@ var/global/list/cargopads = list()
 			cargopads.Remove(src)
 		..()
 
-	was_built_from_frame(mob/user)
+	was_built_from_frame(mob/user, newly_built)
 		if (!cargopads.Find(src))
 			cargopads.Add(src)
 		..()
