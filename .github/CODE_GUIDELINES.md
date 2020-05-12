@@ -100,3 +100,6 @@ There is also an undocumented keyword called `static` that has the same behavior
 
 ### Target Dummy
 * You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.
+
+### Signals and Components
+* ninjanomnom from TG has written up a [useful primer](https://tgstation13.org/phpBB/viewtopic.php?f=5&t=22674) on signals and components. Most of the stuff there applies, although elements do not exist in this codebase.

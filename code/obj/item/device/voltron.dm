@@ -203,12 +203,12 @@
 				power--
 				handle_overlay()
 				if(power == 20)
-					boutput(target, "<span style=\"color:red\">The [src] is dangerously low on power. Your energy pattern is destabilizing.</span>")
+					boutput(target, "<span class='alert'>The [src] is dangerously low on power. Your energy pattern is destabilizing.</span>")
 				if(power < 20)
 					random_brute_damage(target, 4)
 					target.updatehealth()
 				if(power <= 0)
-					boutput(target, "<span style=\"color:red\">The [src] is out of energy.</span>")
+					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
 					var/mob/old_trg = target
 					deactivate()
 					old_trg.changeStatus("stunned", 200)
@@ -250,7 +250,7 @@
 		if(locate(/obj/cable) in get_turf(src))
 
 			if(on_cooldown)
-				boutput(usr, "<span style=\"color:red\">The [src] is still recharging.</span>")
+				boutput(usr, "<span class='alert'>The [src] is still recharging.</span>")
 				return
 
 			activating = 1
@@ -273,16 +273,16 @@
 			active = 1
 			activating = 0
 		else
-			boutput(usr, "<span style=\"color:red\">This needs to be used while standing on a cable.</span>")
+			boutput(usr, "<span class='alert'>This needs to be used while standing on a cable.</span>")
 
 	attack_self(mob/user as mob)
 		if(activating) return
 
 		if(active)
-			boutput(target, "<span style=\"color:blue\">You deactivate the [src].</span>")
+			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
 			deactivate()
 		else
-			boutput(user, "<span style=\"color:blue\">You activate the [src].</span>")
+			boutput(user, "<span class='notice'>You activate the [src].</span>")
 			activate()
 			power -= 5
 			handle_overlay()

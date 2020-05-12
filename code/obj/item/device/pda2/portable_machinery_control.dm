@@ -197,7 +197,7 @@
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
 					if (!(our_loc.cameras && our_loc.cameras.len))
-						boutput(usr, "<span style=\"color:red\">This area is not within your range of influence.</span>")
+						boutput(usr, "<span class='alert'>This area is not within your range of influence.</span>")
 						return
 
 				// Z-level check bypass for Port-a-Sci.

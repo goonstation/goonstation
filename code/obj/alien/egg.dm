@@ -21,7 +21,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.health <= 0)
-			src.visible_message("<span style=\"color:red\"><B>[user] has destroyed the egg!</B></span>")
+			src.visible_message("<span class='alert'><B>[user] has destroyed the egg!</B></span>")
 			src.death()
 			return
 

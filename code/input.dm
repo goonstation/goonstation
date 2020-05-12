@@ -290,7 +290,7 @@ var/list/dirty_keystates = list()
 			var/wasd = src.preferences.use_wasd
 			src.preferences.use_wasd = !wasd
 			//set_macro(src.preferences.use_wasd ? "macro_wasd" : "macro_arrow")
-			boutput(src, "<span style=\"color:blue\">WASD mode toggled [!wasd ? "on" : "off"]. Note that this setting will not save unless you manually do so in Character Preferences.</style>")
+			boutput(src, "<span class='notice'>WASD mode toggled [!wasd ? "on" : "off"]. Note that this setting will not save unless you manually do so in Character Preferences.</style>")
 			src.mob.update_keymap()
 			return 1
 

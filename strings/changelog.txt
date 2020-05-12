@@ -1,4 +1,176 @@
 
+(t)tue may 12 20
+(u)Tarmunora
+(p)541
+(e)🍑|ass-jam
+(+)ASS_JAM: experimental change to newsmoke spreading
+(u)Sovexe
+(p)646
+(e)🆕🎨|enhancement, sprites
+(*)Added a cyborg battery distress indicator. Conveys that a robot is likely in desperate need of outside assistance.
+(u)Kyle
+(p)608
+(e)⚖|balance
+(+)Stamina buffs and debuffs of different reagents now stack with eachother. You can use two stamina buff chems to add their effects together.
+(t)mon may 11 20
+(u)pali
+(p)657
+(e)⚖🆕|balance, enhancement
+(*)Complete darkness is now black.
+(u)Mordent
+(p)622
+(e)🆕🗺🎨|enhancement, mapping, sprites
+(*)Reworked cyborg module rewriter to let users re-order or remove tools from the inserted module.
+(u)Tarmunora
+(p)583
+(e)⚖🆕|balance, enhancement
+(+)Added plastic cuffs, which take a shorter amount of time to break out of, to security vendors.
+(t)sun may 10 20
+(u)mbc
+(p)650
+(e)|
+(+)Did a big behind-the-scenes optimizing of machine popup window refresh handling. You shouldn't notice anything different, but if any new bugs turn up please report them.
+(u)UrsulaMajor
+(p)638
+(e)🆕|enhancement
+(+)As a clown, give your diploma to someone! See what happens!
+(t)sat may 09 20
+(u)Sovexe
+(p)592
+(e)🆕|enhancement
+(*)Added borg death alert PDA messages for medresearch
+(u)Tarmunora
+(p)617
+(e)⚖|balance
+(+)Increased active cooling rate on cryotubes
+(u)Carbadox
+(p)610
+(e)⚖🆕|balance, enhancement
+(+)Loosened the job restrictions for Syndicate items like sonic grenade, amplified vuvuzela, pickpocket gun, hotdog grenade, moustache grenade, poison bottles and syndicate sauce.
+(u)Dabir
+(p)609
+(e)🆕|enhancement
+(+)Hand teleporters now work when implanted as a chest item.
+(u)Flaborized
+(p)535
+(e)🆕🎨|enhancement, sprites
+(*)Security department roles now start with badges that they can show off!
+(u)RichardGere
+(p)554
+(e)⚖|balance
+(+)Dashing with a katana no longer delimbs, but instead applies a disorient.
+(u)Kyle
+(*)High tier Janitor XP rewards moved to debris field instead of being spawnable. This is to bring them in line with our general philosophy on XP rewards; which is that having a higher job level should not give you a competitive advantage.
+(t)fri may 08 20
+(u)Sovexe
+(p)624
+(e)🆕|enhancement
+(+)Clicking an airlock that you don't have permission to open with the help intent will now cause you to knock on the door
+(u)Tarmunora
+(p)605
+(e)🍑|ass-jam
+(+)ASS JAM: Changed pulse to pullse
+(u)glassofmilk
+(p)597
+(e)🆕|enhancement
+(+)Changed to allow more configuration for guardbuddy and navbeacon settings
+(t)thu may 07 20
+(u)Kubius
+(p)614
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch seventeen: mainly the engine again.
+(u)glassofmilk
+(p)529
+(e)🆕🎨|enhancement, sprites
+(*)Added a Radio Scanner Component to the MechComp Dispenser. It can monitor voice radio channels and output a packet accordingly.
+(u)Kyle
+(p)606
+(e)🆕|enhancement
+(*)Added Clown Job XP and Rewards. Get it from doing Clown things.
+(t)wed may 06 20
+(u)Carbadox
+(p)573
+(e)🆕|enhancement
+(+)Removed Port-a-brig from Security Equipment Crate and moved it to it's own seperate purchase
+(+)Added general Security gear like belt, helmet and vest in place of the Brig
+(u)Naksu
+(p)576
+(e)|
+(+)Triple triple now has a constant multiplier effect rather than a speed-dependent additive or multiplicative effect. It should still go plenty fast.
+(t)tue may 05 20
+(u)Tarmunora
+(p)457
+(e)⚖|balance
+(+)Tweaked stun gloves use the stunbaton special (spark throw) as an unarmed special attack override, replacing their old behaviour outright
+(u)Kyle
+(p)582
+(e)|
+(*)New gang mode event: Kidnapping. A target is selected from the crew that is not a member of the currently winning gang that . The rest of the gangs have to stop the target from being kidnapped or killed.
+(*)Gang members wearing their gang clothes get slight passive heal and stun reduction if they are on turf that they own corresponding to the inverse of the distance between them and their gang locker.
+(t)mon may 04 20
+(u)Goonstation Administration Team:
+(*)Removed player access to starter pathogen samples
+(u)Kyle
+(+)Gang members should now be able to pull members of their own gang without movespeed penalty. That is pulls, not grabs.
+(u)Gannets
+(p)578
+(e)🎨|sprites
+(+)New sprites for 9mm pistol, tranqulizer pistol, .22 magazines, gun cases + attache cases.
+(u)Erinexx
+(p)546
+(e)🗺🎨|mapping, sprites
+(*)Some new grenade sprites
+(t)sun may 03 20
+(u)Kubius
+(p)567
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 16: wrestling enhancements and more.
+(u)mbc
+(p)566
+(e)|
+(*)You can chain a block into an attack directly now (instead of needing to swap hands / drop the block). To balance this utility, beginning a block now applies combat click delay just like a punch or a throw would.
+(u)Tarmunora
+(p)560
+(e)⚖|balance
+(+)Numbers tweak on backpack blocks.
+(u)Naksu
+(p)557
+(e)🆕|enhancement
+(+)Added preliminary chat window theming support
+(u)mbc
+(p)559
+(e)|
+(*)Bonus protection when blocking incoming damage with a proper weapon raised to give +2 protection instead of +1.
+(+)Fixed bug where chair flips could be executed while lying/stunned
+(u)Tarmunora
+(p)544
+(e)⚖|balance
+(+)Changed the damage type of crafted spears from blunt to stabbing.
+(u)Tarmunora
+(p)547
+(e)⚖|balance
+(+)Made sarin grenades more concentrated and changed the delivery mechanism of capsaicin grenades
+(t)sat may 02 20
+(u)Kyle
+(*)The HoS now has a pet turtle named Sylvester. He starts in the HoS office and wears an adorable beret.
+(u)mbc
+(p)549
+(e)|
+(*)The suture can be used for limb attachment as well as the stapler now.
+(+)Fixed a bug where a limb's surgery state could get 'stuck' and not mendable.
+(+)Adjusted speed at which an open surgical incision would increase your bleeding amount.
+(u)UrsulaMajor
+(p)516
+(e)⚖🎨|balance, sprites
+(+)Adjusted the .22 Suppressed Pistol Box to have 2 mags of hollow point rounds and 2 mags of regular ammo
+(u)glassofmilk
+(p)538
+(e)|
+(+)Added signal changing toggle to Delay Component
+(u)Naksu
+(p)527
+(e)|
+(+)UpdateOverlays should be a touch faster.
 (t)fri may 01 20
 (u)Kyle
 (p)508

@@ -272,10 +272,10 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	var/list/miningZ = list()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
-		boutput(world, "<span style=\"color:red\">Skipping Mining Generation!</span>")
+		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
 		return
 	else
-		boutput(world, "<span style=\"color:red\">Generating Mining Level ...</span>")
+		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
 
 	for(var/turf/T)
 		if(T.z == AST_ZLEVEL)
@@ -312,7 +312,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 	miningZ = D.generate(miningZ)
 
-	boutput(world, "<span style=\"color:red\">Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	if (map_currently_underwater)
 		hotspot_controller.generate_map()

@@ -137,7 +137,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	return crossed
 
 proc/get_angle(atom/a, atom/b)
-    .= atan2(b.y - a.y, b.x - a.x)
+    .= arctan(b.y - a.y, b.x - a.x)
 
 //list2params without the dumb encoding
 /proc/list2params_noencode(var/list/L)
@@ -243,62 +243,6 @@ proc/get_angle(atom/a, atom/b)
 			. = locate(1, world.maxy, A.z)
 
 
-//Returns an integer given a hex input, supports negative values "-ff"
-//skips preceding invalid characters
-//breaks when hittin invalid characters thereafter
-/proc/hex2num(hex)
-	. = 0
-	var/place = 1
-	for(var/i in length(hex) to 1 step -1)
-		var/num = text2ascii(hex, i)
-		switch(num)
-			if(48 to 57)
-				num -= 48	//0-9
-			if(97 to 102)
-				num -= 87	//a-f
-			if(65 to 70)
-				num -= 55	//A-F
-			if(45)
-				return . * -1 // -
-			else
-				CRASH("Malformed hex number")
-
-		. += num * place
-		place *= 16
-
-
-//Returns the hex value of a decimal number
-//len == length of returned string
-//if len < 0 then the returned string will be as long as it needs to be to contain the data
-//Only supports positive numbers
-//if an invalid number is provided, it assumes num==0
-//Note, unlike previous versions, this one works from low to high <-- that way
-/proc/num2hex(num, len=2)
-	if(!isnum(num))
-		num = 0
-	num = round(abs(num))
-	. = ""
-	var/i=0
-	while(1)
-		if(len<=0)
-			if(!num)
-				break
-		else
-			if(i>=len)
-				break
-		var/remainder = num/16
-		num = round(remainder)
-		remainder = (remainder - num) * 16
-		switch(remainder)
-			if(9,8,7,6,5,4,3,2,1)
-				. = "[remainder]" + .
-			if(10,11,12,13,14,15)
-				. = ascii2text(remainder+87) + .
-			else
-				. = "0" + .
-		i++
-	return .
-
 /proc/invertHTML(HTMLstring)
 
 	if (!( istext(HTMLstring) ))
@@ -312,9 +256,9 @@ proc/get_angle(atom/a, atom/b)
 	var/r = hex2num(textr)
 	var/g = hex2num(textg)
 	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
+	textr = num2hex(255 - r, 2)
+	textg = num2hex(255 - g, 2)
+	textb = num2hex(255 - b, 2)
 	if (length(textr) < 2)
 		textr = text("0[]", textr)
 	if (length(textg) < 2)
@@ -810,10 +754,7 @@ proc/get_angle(atom/a, atom/b)
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//boutput(world, "[src] was [src.mob.machine], setting to null")
-		if(src.mob.machine && istype(src.mob.machine, /obj/machinery))
-			src.mob.machine.current_user = null
-		src.mob.machine = null
+		src.mob.remove_dialogs()
 	return
 
 /proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
@@ -1739,10 +1680,10 @@ proc/countJob(rank)
 			if (text_messages.len >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
-		text_chat_alert = "<span style=\"color:blue\"><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_added = "<span style=\"color:blue\"><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_failed = "<span style=\"color:red\"><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
-		text_chat_toolate = "<span style=\"color:red\"><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
+		text_chat_added = "<span class='notice'><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
+		text_chat_failed = "<span class='alert'><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_toolate = "<span class='alert'><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
@@ -1945,13 +1886,13 @@ proc/countJob(rank)
 			return
 
 	if (removal_type == "death")
-		boutput(M, "<h2><span style=\"color:red\">Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
+		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
 		SHOW_MINDSLAVE_DEATH_TIPS(M)
 	else if (removal_type == "override")
-		boutput(M, "<h2><span style=\"color:red\">Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
+		boutput(M, "<h2><span class='alert'>Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
 		SHOW_MINDSLAVE_OVERRIDE_TIPS(M)
 	else
-		boutput(M, "<h2><span style=\"color:red\">Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
+		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
 		SHOW_MINDSLAVE_EXPIRED_TIPS(M)
 
 	return
@@ -2211,7 +2152,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (M.mind.special_role)
 			var/special = uppertext(copytext(M.mind.special_role, 1, 2)) + copytext(M.mind.special_role, 2)
 			if (!strip)
-				special = "<span style='color: red;'>[special]</span>"
+				special = "<span class='alert'>[special]</span>"
 
 			role += " \[[special]]"
 
@@ -2371,7 +2312,7 @@ proc/vector_magnitude(x,y)
   * Transforms a supplied vector x & y to a direction
   */
 proc/vector_to_dir(x,y)
-	.= angle_to_dir(atan2(y,x))
+	.= angle_to_dir(arctan(y,x))
 
 /**
   * Transforms a given angle to a cardinal/ordinal direction
@@ -2425,7 +2366,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			var/mob/M = TA.loc
 			M.show_text("[TA] identifies and removes a harmful substance.", "red")
 		else
-			TA.visible_message("<span style=\"color:red\">[TA] identifies and removes a harmful substance.</span>")
+			TA.visible_message("<span class='alert'>[TA] identifies and removes a harmful substance.</span>")
 
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)

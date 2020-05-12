@@ -386,7 +386,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span style=\"color:red\">Car already occupied by [driver.name].</span>")
+			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
 			return
 
 		var/mob/M = usr
@@ -520,7 +520,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span style=\"color:red\">Car already occupied by [driver.name].</span>")
+			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
 			return
 
 		var/mob/M = usr

@@ -1,6 +1,4 @@
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1
-
 #if defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
 

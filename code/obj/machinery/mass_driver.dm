@@ -22,7 +22,7 @@
 			O_limit++
 			if(O_limit >= 20)
 				for(var/mob/M in hearers(src, null))
-					boutput(M, "<span style=\"color:blue\">The mass driver lets out a screech, it mustn't be able to handle any more items.</span>")
+					boutput(M, "<span class='notice'>The mass driver lets out a screech, it mustn't be able to handle any more items.</span>")
 				break
 			use_power(500)
 			SPAWN_DBG( 0 )

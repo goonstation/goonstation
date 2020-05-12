@@ -318,7 +318,7 @@ datum/controller/pathogen
 					if ("infect")
 						var/mob/living/carbon/human/target = input("Who would you like to infect with this mutation?", "Infect") as mob in mobs//world
 						if (!istype(target))
-							boutput(usr, "<span style=\"color:red\">Cannot infect that. Must be human.</span>")
+							boutput(usr, "<span class='alert'>Cannot infect that. Must be human.</span>")
 						else
 							target.infected(reference)
 							message_admins("[key_name(usr)] infected [target] with [name].")
@@ -398,10 +398,10 @@ datum/controller/pathogen
 		if (!usr || !usr.client)
 			return
 		if (!usr.client.holder)
-			boutput(usr, "<span style=\"color:red\">Visitors of the CDC are not allowed to interact with the equipment!</span>")
+			boutput(usr, "<span class='alert'>Visitors of the CDC are not allowed to interact with the equipment!</span>")
 			return
 		if (usr.client.holder.level < LEVEL_PA)
-			boutput(usr, "<span style=\"color:red\">I'm sorry, you require a security clearance of Primary Researcher to go in there. Protocol and all. You know.</span>")
+			boutput(usr, "<span class='alert'>I'm sorry, you require a security clearance of Primary Researcher to go in there. Protocol and all. You know.</span>")
 			return
 		var/state = 1
 		if (usr.ckey in cdc_state)
@@ -926,6 +926,7 @@ datum/pathogen
 
 	disposing()
 		clear()
+		..()
 
 	proc/clear()
 		name = ""
@@ -1278,7 +1279,7 @@ datum/pathogen
 					suppressed = result
 			if (advance_speed > 0)
 				if (prob(min(advance_speed, 4)))
-					if (suppressed < 1)	
+					if (suppressed < 1)
 						advance()
 					else if (stage > 3)
 						reduce()
@@ -1537,7 +1538,7 @@ proc/num2hexoc(num, pad)
 					logTheThing("pathology", null, null, "Num2hexoc error: overflow on [num].")
 				if (neg)
 					digit += 8
-				return "[dig2hex(digit)][ret]"
+				return "[num2hex(digit,0)][ret]"
 		while (digs <= pad)
 			if (neg)
 				ret = "F[ret]"

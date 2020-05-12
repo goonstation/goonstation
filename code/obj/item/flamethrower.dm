@@ -156,7 +156,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	if (istype(W, /obj/item/device/igniter))
 		if (src.loc != user)
-			boutput(user, "<span style=\"color:red\">You need to be holding [src] to work on it!</span>")
+			boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
 			return
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
@@ -206,7 +206,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		qdel(src)
 		return
 	if (isscrewingtool(W))
-		user.show_message("<span style=\"color:blue\">The igniter is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The igniter is now secured!</span>", 1)
 		var/obj/item/flamethrower/R = new /obj/item/flamethrower(src.loc)
 		var/obj/item/assembly/w_r_ignite/S = src
 		R.part1 = S.part1
@@ -250,7 +250,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		return
 	if (istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/oxygen))
 		if(src.part4)
-			boutput(user, "<span style=\"color:red\">There already is an air tank loaded in the flamethrower!</span>")
+			boutput(user, "<span class='alert'>There already is an air tank loaded in the flamethrower!</span>")
 			return
 		src.part4 = W
 		W.set_loc(src)
@@ -265,7 +265,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	if (istype(W,/obj/item/reagent_containers/food/drinks/fueltank))
 		if(src.part5)
-			boutput(user, "<span style=\"color:red\">There already is a fuel tank loaded in the flamethrower!</span>")
+			boutput(user, "<span class='alert'>There already is a fuel tank loaded in the flamethrower!</span>")
 			return
 		src.part5 = W
 		W.set_loc(src)
@@ -305,7 +305,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		S.part3 = null
 		//S = null
 		qdel(S)
-		boutput(user, "<span style=\"color:blue\">The igniter is now unsecured!</span>")
+		boutput(user, "<span class='notice'>The igniter is now unsecured!</span>")
 
 
 	else	return	..()
@@ -320,12 +320,12 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 /obj/item/flamethrower/Topic(href,href_list[])
 	if (href_list["close"])
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 		return
 	if(usr.stat || usr.restrained() || usr.lying || src.loc != usr)
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["light"])
 		if(!src.part4 || !src.part5)	return
 		lit = !(lit)
@@ -354,7 +354,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 	if (href_list["removefuel"])
 		if(!src.part5)	return
@@ -370,20 +370,19 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			oxy = "_oxy"
 		icon_state = "flamethrower[oxy]_no_fuel"
 		item_state = "flamethrower0"
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
-	for(var/mob/M in viewers(1, src.loc))
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+
+	src.updateDialog()
 	return
 
 
 /obj/item/flamethrower/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = text("<TT><B>Flamethrower")
 	if(src.part4 && src.part5)
 		dat += text("(<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>")
@@ -437,7 +436,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/reagentperturf
 
 	if (part5.reagents.total_volume < 5)
-		boutput(usr, "<span style=\"color:red\">The fuel tank is empty.</span>")
+		boutput(usr, "<span class='alert'>The fuel tank is empty.</span>")
 		operating = 0
 		return
 
@@ -526,9 +525,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		sleep(0.1 SECONDS)
 
 	operating = 0
-	for(var/mob/M in viewers(1, src.loc))
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+	src.updateSelfDialog()
 	return 1
 
 /obj/item/flamethrower/proc/spray_turf(turf/target,var/transferamt)

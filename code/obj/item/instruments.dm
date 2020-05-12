@@ -162,7 +162,7 @@
 /obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
 	playsound(get_turf(src), pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg'), 50, 1, -1)
 	playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
-	user.visible_message("<span style=\"color:red\"><b>[user] bonks [M] with [src]!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
 
 /* -------------------- Bagpipe -------------------- */
 
@@ -206,10 +206,19 @@
 		else
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
-			boutput(user, "<span style='color:blue'>You add [W] to [src].</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			D.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
+
+	attack_self(mob/user as mob)
+		..()
+		//bad, but eh clowns...
+		if (prob(30))
+			for (var/mob/living/carbon/human/H in view(2, user))
+				if (H.hasStatus("weakened"))
+					JOB_XP(user, "Clown", 2)
+					break
 
 	is_detonator_attachment()
 		return 1
@@ -249,7 +258,7 @@
 			return
 		else
 			var/obj/machinery/bot/chefbot/D = new /obj/machinery/bot/chefbot
-			boutput(user, "<span style='color:blue'>You add [W] to [src].</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			D.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -392,7 +401,7 @@
 
 	play(mob/user as mob)
 		if (spam_flag)
-			boutput(user, "<span style='color:red'>\The [src] needs time to recharge its spooky strength!</span>")
+			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
 			..()
@@ -411,11 +420,11 @@
 		if (!istype(S))
 			return
 		if (S.mob_flags & IS_BONER)
-			S.visible_message("<span style='color:blue'><b>[S.name]</b> claks in appreciation!</span>")
+			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
 			playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
 			return
 		else
-			S.visible_message("<span style='color:red'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
+			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
 			playsound(get_turf(S), S.gender == "female" ? "sound/voice/screams/female_scream.ogg" : "sound/voice/screams/male_scream.ogg", 50, 0, 0, S.get_age_pitch())
 			playsound(get_turf(S), "sound/effects/bubbles.ogg", 50, 0)
 			playsound(get_turf(S), "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)

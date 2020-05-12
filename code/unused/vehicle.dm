@@ -100,7 +100,7 @@
 		A.set_loc(src.loc)
 		for(var/mob/O in view(src, null))
 			if ((O.client && !(O.blinded)))
-				boutput(O, text("<span style=\"color:blue\"><B> [] unloads [] from []!</B></span>", usr, A, src))
+				boutput(O, text("<span class='notice'><B> [] unloads [] from []!</B></span>", usr, A, src))
 
 		if (ismob(A))
 			var/mob/M = A
@@ -121,6 +121,6 @@
 				H.pulling.set_loc(src)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						boutput(O, text("<span style=\"color:blue\"><B> [] loads [] into []!</B></span>", H, H.pulling, src))
+						boutput(O, text("<span class='notice'><B> [] loads [] into []!</B></span>", H, H.pulling, src))
 
 				H.pulling = null

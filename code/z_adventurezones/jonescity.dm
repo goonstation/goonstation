@@ -29,7 +29,7 @@ JONES CITY TURFS
 		Entered(atom/movable/O)
 			..()
 			if (isliving(O))
-				boutput(O, "<span style=\"color:red\"> Wow, it stinks in here! </span>")
+				boutput(O, "<span class='alert'> Wow, it stinks in here! </span>")
 
 	complex
 		name = "Meowment Complex"
@@ -121,7 +121,7 @@ JONES CITY TURFS
 			if (src.givenfish == 0)
 				qdel(W)
 				givenfish++
-				boutput(user, "<span style=\"color:red\">You feed \the [W] to the [src]</span>")
+				boutput(user, "<span class='alert'>You feed \the [W] to the [src]</span>")
 				playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
 				src.visible_message("<span class='combat'><b>[src]</b> hisses!</span>")
 				SPAWN_DBG(12 SECONDS)
@@ -149,7 +149,7 @@ JONES CITY TURFS
 		if (special)
 			if (istype(W, /obj/item/fish/mahimahi))
 				boutput(user, "You slap the [src] with the [W]!")
-				src.visible_message("<span style=\"color:blue\"><b>[src] crumbles into dust!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
 				src.ReplaceWithSpace()
 
 ////////////////////////////////////////////hairball key parts
@@ -173,13 +173,13 @@ JONES CITY TURFS
 
 /obj/item/hairball/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/hairball))
-		boutput(user, "<span style=\"color:blue\">You begin adding \the [W.name] to \the [src.name].</span>")
+		boutput(user, "<span class='notice'>You begin adding \the [W.name] to \the [src.name].</span>")
 		if (!do_after(user, 30))
-			boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else
 			if (!user) return
-			user.visible_message("<span style=\"color:blue\"><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>")
+			user.visible_message("<span class='notice'><b>[user.name]</b> drops the objects in their hands to create an assembly.</span>")
 			user.u_equip(W)
 			user.u_equip(src)
 			var/obj/item/dynassembly/hairball/A = new /obj/item/dynassembly/hairball(get_turf(src))
@@ -206,7 +206,7 @@ JONES CITY TURFS
 				three++
 		if (one && two && three)
 			src.product = 1
-			src.desc += "<BR><span style=\"color:blue\">It looks like this assembly can be secured with a screwdriver.</span>"
+			src.desc += "<BR><span class='notice'>It looks like this assembly can be secured with a screwdriver.</span>"
 
 	createproduct(mob/user)
 		if (product == 1)
@@ -225,7 +225,7 @@ JONES CITY TURFS
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/device/key/hairball))
-			boutput(user, "<span style='color:blue'>You insert the [I.name] into the door and turn it. The door emits a loud click.</span>")
+			boutput(user, "<span class='notice'>You insert the [I.name] into the door and turn it. The door emits a loud click.</span>")
 			user.drop_item()
 			qdel(I)
 			playsound(src.loc, "sound/machines/door_open.ogg", 50, 1)
@@ -255,7 +255,7 @@ JONES CITY TURFS
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (issnippingtool(I) && !given)
-			boutput(user, "<span style='color:blue'>You trim the [src] with the [I]. A wad of hair tumbles out.</span>")
+			boutput(user, "<span class='notice'>You trim the [src] with the [I]. A wad of hair tumbles out.</span>")
 			icon_state = "garland-snipped"
 			new /obj/item/hairball/three(src.loc)
 			given++

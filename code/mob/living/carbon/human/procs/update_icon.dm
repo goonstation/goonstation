@@ -86,7 +86,7 @@
 // Uniform
 	if (src.w_uniform)
 		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span style=\"color:red\">You burst out of the [src.w_uniform.name]!</span>")
+			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
 			if (c)
@@ -351,7 +351,7 @@
 
 	if (src.wear_suit)
 		if (src.bioHolder && src.bioHolder.HasEffect("fat") && !(src.wear_suit.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span style=\"color:red\">You burst out of the [src.wear_suit.name]!</span>")
+			boutput(src, "<span class='alert'>You burst out of the [src.wear_suit.name]!</span>")
 			var/obj/item/clothing/c = src.wear_suit
 			src.u_equip(c)
 			if (c)
@@ -655,12 +655,17 @@
 			UpdateOverlays(I.implant_overlay, "implant--\ref[I]")
 			implant_images += I
 
-	if (world.time - src.last_show_inv <= 600) //icky mbc workaround doing viewers()... only try to update our inventory for nearby viewers if we were interacted with in the last 60sec
-		for (var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				SPAWN_DBG (0)
-					src.show_inv(M)
-					return
+	if (world.time - src.last_show_inv <= 30 SECONDS)
+		for (var/client/C in src.showing_inv)
+			if (C && C.mob)
+				if (get_dist(src,C.mob) <= 1)
+					SPAWN_DBG (0)
+						src.show_inv(C.mob)
+				else
+					src.remove_dialog(C.mob)
+			else
+				src.showing_inv -= C
+
 
 	src.last_b_state = src.stat
 
@@ -1253,7 +1258,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	if (..(parent))
 		return 1
 	src.UpdateDamage()
-	
+
 #endif
 
 /mob/living/carbon/human/UpdateDamageIcon()

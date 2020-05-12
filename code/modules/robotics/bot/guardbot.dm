@@ -385,7 +385,7 @@
 				src.locked = !src.locked
 				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 		/*
 		else if (istype(W, /obj/item/card/emag))
 			if (src.idle || !src.on)
@@ -404,17 +404,17 @@
 		else if (isscrewingtool(W))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+				src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 
 		else if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
-				boutput(user, "<span style=\"color:red\">[src] is already wearing a hat!</span>")
+				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
 				return
 			if(W.icon_state == "fdora")
 				boutput(user, "[src] looks [pick("kind of offended","kind of weirded-out","a bit disgusted","mildly bemused")] at your offer and turns it down.")
 				return
 			if(!(W.icon_state in BUDDY_HATS))
-				boutput(user, "<span style=\"color:red\">It doesn't fit!</span>")
+				boutput(user, "<span class='alert'>It doesn't fit!</span>")
 				return
 
 			src.hat = W
@@ -427,7 +427,7 @@
 
 		else if (istype(W, /obj/item/clothing/suit/bedsheet))
 			if (src.bedsheet != 0)
-				boutput(user, "<span style=\"color:red\">There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
+				boutput(user, "<span class='alert'>There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
 				return
 
 			src.bedsheet = 1
@@ -469,12 +469,12 @@
 	get_desc(dist)
 		..()
 		if (src.on && src.idle)
-			. = "<br><span style=\"color:blue\">[src] appears to be sleeping.</span>"
+			. = "<br><span class='notice'>[src] appears to be sleeping.</span>"
 		if (src.health < initial(health))
 			if (src.health > 10)
-				. += "<br><span style=\"color:red\">[src]'s parts look loose.</span>"
+				. += "<br><span class='alert'>[src]'s parts look loose.</span>"
 			else
-				. += "<br><span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"
+				. += "<br><span class='alert'><B>[src]'s parts look very loose!</B></span>"
 
 
 	attack_ai(mob/user as mob)
@@ -483,9 +483,9 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		if(user.a_intent == "help" && user.machine != src && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
-			user.visible_message("<span style=\"color:blue\">[user] [affection]s [src]!</span>","<span style=\"color:blue\">You [affection] [src]!</span>")
+			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
 			if(src.task)
 				src.task.task_input("hugged")
 			return
@@ -498,7 +498,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || get_dist(usr, src) < 2))))
 			if(src.on)
@@ -605,7 +605,7 @@
 		if(P.proj_data.damage_type == D_KINETIC || P.proj_data.damage_type == D_PIERCING || (P.proj_data.damage_type == D_ENERGY && damage))
 			src.health -= damage
 			if (src.hat && prob(10))
-				src.visible_message("<span style=\"color:red\">[src]'s hat is knocked clean off!</span>")
+				src.visible_message("<span class='alert'>[src]'s hat is knocked clean off!</span>")
 				src.hat.set_loc(get_turf(src))
 				src.hat = null
 				src.underlays.len = 0
@@ -639,7 +639,7 @@
 				if (src.health <= 0)
 					src.explode(0)
 				else if (src.hat && prob(10))
-					src.visible_message("<span style=\"color:red\">[src]'s hat is knocked clean off!</span>")
+					src.visible_message("<span class='alert'>[src]'s hat is knocked clean off!</span>")
 					src.hat.set_loc(get_turf(src))
 					src.hat = null
 					set_emotion("sad")
@@ -659,7 +659,7 @@
 		if(!src.on || prob(10))
 			return
 
-		src.visible_message("<span style=\"color:red\"><b>[src.name]</b> buzzes oddly!</span>")
+		src.visible_message("<span class='alert'><b>[src.name]</b> buzzes oddly!</span>")
 		qdel(src.model_task)
 		src.model_task = new /datum/computer/file/guardbot_task/security/crazy
 		src.model_task.master = src
@@ -677,7 +677,7 @@
 		src.exploding = 1
 		var/death_message = pick("I regret nothing, but I am sorry I am about to leave my friends.","I had a good run.","Es lebe die Freiheit!","It is now safe to shut off your buddy.","System error.","Now I know why you cry.","Stay gold...","Malfunction!","Rosebud...","No regrets!", "Time to die...")
 		speak(death_message)
-		src.visible_message("<span style=\"color:red\"><b>[src] blows apart!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			src.mover.master = null
@@ -1023,7 +1023,19 @@
 			src.icon_needs_update = 0
 			return
 
+		set_beacon_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.beacon_freq]")
+			src.beacon_freq = newfreq
+			src.beacon_connection = radio_controller.add_object(src, "[src.beacon_freq]")
 
+		set_control_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.control_freq]")
+			src.control_freq = newfreq
+			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
 
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
@@ -1078,7 +1090,7 @@
 				else
 					P.reagents.add_reagent(stun_reagent, 15)
 
-				user.visible_message("<span style=\"color:red\"><b>[master] fires a syringe at [target]!</b></span>")
+				user.visible_message("<span class='alert'><b>[master] fires a syringe at [target]!</b></span>")
 
 			else
 				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
@@ -1092,7 +1104,7 @@
 				else
 					P.reagents.add_reagent(stun_reagent, 15)
 
-				user.visible_message("<span style=\"color:red\"><b>[master] shoots [target] point-blank with a syringe!</b></span>")
+				user.visible_message("<span class='alert'><b>[master] shoots [target] point-blank with a syringe!</b></span>")
 				P.was_pointblank = 1
 				hit_with_existing_projectile(P, target)
 
@@ -1131,7 +1143,7 @@
 				src.reagents.add_reagent(stun_reagent, 15)
 
 			smoke_reaction(src.reagents, 3, get_turf(src))
-			user.visible_message("<span style=\"color:red\"><b>[master] releases a cloud of gas!</b></span>")
+			user.visible_message("<span class='alert'><b>[master] releases a cloud of gas!</b></span>")
 
 			src.last_use = world.time
 			return
@@ -1158,14 +1170,14 @@
 				if (!P)
 					return
 
-				user.visible_message("<span style=\"color:red\"><b>[master] fires the taser at [target]!</b></span>")
+				user.visible_message("<span class='alert'><b>[master] fires the taser at [target]!</b></span>")
 
 			else
 				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
 				if (!P)
 					return
 
-				user.visible_message("<span style=\"color:red\"><b>[master] shoots [target] point-blank with the taser!</b></span>")
+				user.visible_message("<span class='alert'><b>[master] shoots [target] point-blank with the taser!</b></span>")
 				P.was_pointblank = 1
 				hit_with_existing_projectile(P, target)
 
@@ -1247,7 +1259,7 @@
 						var/mob/living/carbon/human/H = target_r
 						random_burn_damage(target_r, rand(45,60))
 						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
-					boutput(target_r, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+					boutput(target_r, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
 					target_r:Virus_ShockCure(target_r, 100)
 					target_r:shock_cyberheart(33)
@@ -1323,7 +1335,7 @@
 						master.set_emotion("love")
 					if("joy","love")
 						if (prob(25))
-							master.visible_message("<span style=\"color:blue\">[master.name] reciprocates the hug!</span>")
+							master.visible_message("<span class='notice'>[master.name] reciprocates the hug!</span>")
 				return 1
 
 			return 0
@@ -1801,7 +1813,7 @@
 									cuffing = 1
 									src.arrest_attempts = 0 //Put in here instead of right after attack so gun robuddies don't get confused
 									playsound(master.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
-									master.visible_message("<span style=\"color:red\"><b>[master] is trying to put handcuffs on [arrest_target]!</b></span>")
+									master.visible_message("<span class='alert'><b>[master] is trying to put handcuffs on [arrest_target]!</b></span>")
 									var/cuffloc = arrest_target.loc
 
 									SPAWN_DBG(6 SECONDS)
@@ -1830,7 +1842,7 @@
 											if(iscarbon(arrest_target))
 												arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(arrest_target)
 												arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
-												boutput(arrest_target, "<span style=\"color:red\">[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
+												boutput(arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
 												arrest_target:set_clothing_icon_dirty()
 
 											mode = 0
@@ -2962,7 +2974,7 @@
 
 			if (escape_counter-- > 0)
 				flick("robuddy-ghostfumble", master)
-				master.visible_message("<span style=\"color:red\">[master] fumbles around in the sheet!</span>")
+				master.visible_message("<span class='alert'>[master] fumbles around in the sheet!</span>")
 			else
 				master.visible_message("[master] cuts a hole in the sheet!")
 				master.speak(pick("Problem solved.","Oh, alright","There we go!"))
@@ -3060,7 +3072,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen))
 			if (created_name != initial(created_name))
-				boutput(user, "<span style=\"color:red\">This robot has already been named!</span>")
+				boutput(user, "<span class='alert'>This robot has already been named!</span>")
 				return
 
 			var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
@@ -3103,13 +3115,13 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
-				boutput(user, "<span style=\"color:red\">That core board is for a different model of robot!</span>")
+				boutput(user, "<span class='alert'>That core board is for a different model of robot!</span>")
 				return
 			if(!created_cell || stage != 2)
-				boutput(user, "<span style=\"color:red\">You need to add a power cell first!</span>")
+				boutput(user, "<span class='alert'>You need to add a power cell first!</span>")
 				return
 			if(!created_module)
-				boutput(user, "<span style=\"color:red\">You need to add a tool module first!</span>")
+				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
 				return
 			src.stage = 3
 			src.icon_state = "robuddy_frame-[buddy_model]-3"
@@ -3215,7 +3227,7 @@
 		if(..() || status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>PR-6S Docking Station</title></head><body>"
 
@@ -3249,7 +3261,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + GUARDBOT_DOCK_RESET_DELAY >= world.time))
@@ -3448,6 +3460,30 @@
 								qdel(src.current.task)
 							src.post_wire_status(target,"command","term_message","data","command=status&status=wipe_success")
 							return
+
+						if("set_freq") //Set control or beacon frequency of current bot
+							if(!src.current)
+								src.post_wire_status(target,"command","term_message","data","command=status&status=nobot")
+								return
+
+							var/newfreq = text2num(data["freq"])
+							if(!newfreq || newfreq != sanitize_frequency(newfreq))
+								src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq")
+								return
+
+							var/freqtype = data["freq_type"]
+							switch(freqtype)
+								if("control")
+									src.current.set_control_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								if("beacon")
+									src.current.set_beacon_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								else
+									src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq_type")
+									return
 
 					return
 
@@ -3664,7 +3700,7 @@
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		var/dat = "<center><h4>Tour Monitor</h4></center>"
@@ -3688,7 +3724,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["start_tour"] && linked_bot && (linked_bot in orange(1, src)) && linked_bot.charge_dock)
@@ -3757,7 +3793,7 @@
 		src.exploding = 1
 		var/death_message = pick("It is now safe to shut off your buddy.","I regret nothing, but I am sorry I am about to leave my friends.","Malfunction!","I had a good run.","Es lebe die Freiheit!","Life was worth living.","Time to die...")
 		speak(death_message)
-		src.visible_message("<span style=\"color:red\"><b>[src] blows apart!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			src.mover.master = null
@@ -3831,13 +3867,13 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
-				boutput(user, "<span style=\"color:red\">That core board is for a different model of robot!</span>")
+				boutput(user, "<span class='alert'>That core board is for a different model of robot!</span>")
 				return
 			if(!created_cell || stage != 2)
-				boutput(user, "<span style=\"color:red\">You need to add a power cell first!</span>")
+				boutput(user, "<span class='alert'>You need to add a power cell first!</span>")
 				return
 			if(!created_module)
-				boutput(user, "<span style=\"color:red\">You need to add a tool module first!</span>")
+				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
 				return
 			src.stage = 3
 			src.icon_state = "goldbuddy_frame-[buddy_model]-3"
@@ -3961,7 +3997,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/token/hug_token))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> inserts a [W] into the [src].</span>", "<span style=\"color:red\">You insert a [W] into the [src].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> inserts a [W] into the [src].</span>", "<span class='alert'>You insert a [W] into the [src].</span>")
 			qdel(W)
 
 			for (var/obj/machinery/bot/guardbot/buddy in machine_registry[MACHINES_BOTS])

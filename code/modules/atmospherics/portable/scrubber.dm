@@ -104,10 +104,10 @@
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/atmosporter))
 		var/canamt = W.contents.len
-		if (canamt >= W:capacity) boutput(user, "<span style=\"color:red\">Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span style=\"color:red\">\The [src] is attached!</span>")
+		if (canamt >= W:capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
-			user.visible_message("<span style=\"color:blue\">[user] collects the [src].</span>", "<span style=\"color:blue\">You collect the [src].</span>")
+			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -123,7 +123,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
 
-	user.machine = src
+	src.add_dialog(user)
 	var/holding_text
 
 	if(holding)
@@ -152,7 +152,7 @@ Target Pressure: <A href='?src=\ref[src];volume_adj=-100'>-</A> <A href='?src=\r
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["power"])
 			on = !on

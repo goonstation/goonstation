@@ -66,7 +66,7 @@
 		pool(gas)
 		gas = null
 	..()
-	
+
 /obj/machinery/atmoalter/heater/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -75,7 +75,7 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/tt
 	switch(src.t_status)
 		if(1.0)
@@ -112,7 +112,7 @@
 	if (usr.stat || usr.restrained())
 		return
 	if (((get_dist(src, usr) <= 1 || usr.telekinesis == 1) && istype(src.loc, /turf)) || (isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["c"])
 			var/c = text2num(href_list["c"])
 			switch(c)
@@ -189,16 +189,16 @@
 			if (src.c_status)
 				src.anchored = initial(src.anchored)
 				src.c_status = 0
-				user.show_message("<span style=\"color:blue\">You have disconnected the heater.</span>", 1)
+				user.show_message("<span class='notice'>You have disconnected the heater.</span>", 1)
 				if(con)
 					con.connected = null
 			else
 				if (con && !con.connected)
 					src.anchored = 1
 					src.c_status = 3
-					user.show_message("<span style=\"color:blue\">You have connected the heater.</span>", 1)
+					user.show_message("<span class='notice'>You have connected the heater.</span>", 1)
 					con.connected = src
 				else
-					user.show_message("<span style=\"color:blue\">There is no connector here to attach the heater to.</span>", 1)
+					user.show_message("<span class='notice'>There is no connector here to attach the heater to.</span>", 1)
 	return
 

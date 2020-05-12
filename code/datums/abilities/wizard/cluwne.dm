@@ -19,7 +19,7 @@
 		if (!istype(H))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
-		holder.owner.visible_message("<span style=\"color:red\"><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 
 		if (do_mob(holder.owner, target, 15))
 			holder.owner.say("NWOLC EGNEVER")
@@ -31,20 +31,20 @@
 			smoke.start()
 
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span style=\"color:red\">[H] has divine protection from magic.</span>")
-				H.visible_message("<span style=\"color:red\">The spell has no effect on [H]!</span>")
+				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
 				return
 
 			if (iswizard(H))
-				H.visible_message("<span style=\"color:red\">The spell has no effect on [H]!</span>")
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
 				return
 
 			if(check_target_immunity( H ))
-				H.visible_message("<span style='color:red'>[H] seems to be warded from the effects!</span>")
+				H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
 				return 1
 
 			if (H.job != "Cluwne")
-				boutput(H, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
+				boutput(H, "<span class='alert'><B>You HONK painfully!</B></span>")
 				H.take_brain_damage(50)
 				H.stuttering = 120
 				H.job = "Cluwne"
@@ -67,7 +67,7 @@
 				SPAWN_DBG (25) // Don't remove.
 					if (H) H.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
 			else
-				boutput(H, "<span style=\"color:red\"><b>You don't feel very funny.</b></span>")
+				boutput(H, "<span class='alert'><b>You don't feel very funny.</b></span>")
 				H.take_brain_damage(-120)
 				H.stuttering = 0
 				if (H.mind)

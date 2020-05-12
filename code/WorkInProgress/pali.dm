@@ -1,29 +1,5 @@
 // im pali
 
-/datum/projectile/bullet/beepsky
-	name = "Beepsky"
-	window_pass = 0
-	icon = 'icons/obj/aibots.dmi'
-	icon_state = "secbot1"
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	power = 5
-	dissipation_delay = 30
-	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
-	caliber = 2
-	icon_turf_hit = "secbot1-spaz"
-	implanted = null
-
-	on_hit(atom/hit)
-		var/obj/machinery/bot/secbot/autopatrol/beepsky = new(get_turf(hit))
-		if(istype(hit, /mob))
-			var/mob/hitguy = hit
-			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
-			if(istype(hitguy, /mob/living/carbon))
-				beepsky.target = hitguy
-
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
 	name = "beepsky box"
@@ -31,7 +7,8 @@
 	icon_state = "lmg_ammo"
 	amount_left = 10.0
 	max_amount = 10.0
-	ammo_type = new/datum/projectile/bullet/beepsky
+	ammo_type = new/datum/projectile/special/spawner/beepsky
+
 	caliber = 2
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
@@ -61,17 +38,17 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
-		current_projectile = new/datum/projectile/bullet/beepsky
+		current_projectile = new/datum/projectile/special/spawner/beepsky
 		..()
 
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.4)
-	
+
 	afterattack(atom/A, mob/user as mob)
 		if(istype(A, /obj/machinery/bot/secbot))
 			src.ammo.amount_left += 1
-			user.visible_message("<span style=\"color:red\">[user] loads \the [A] into \the [src].</span>", "<span style=\"color:red\">You load \the [A] into \the [src].</span>")
+			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
 			qdel(A)
 			return
 		else
@@ -122,7 +99,7 @@
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
-	
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -139,19 +116,19 @@
 		if (!isdead(src))
 			src.reagents.add_reagent("crime", 10)
 			src.fix_pulling_sprite() // just in case
-	
+
 	set_pulling(atom/movable/A)
 		. = ..()
 		src.fix_pulling_sprite()
-	
+
 	hotkey(name)
 		. = ..()
 		src.fix_pulling_sprite()
-	
+
 	Bump(atom/movable/AM as mob|obj, yes)
 		. = ..()
 		src.fix_pulling_sprite()
-	
+
 	Move(atom/NewLoc, direct)
 		. = ..()
 		if(src.pulling)
@@ -211,14 +188,15 @@
 			C.images -= src
 		src.loc = null
 		src.unique_id = 0
-	
+		..()
+
 	proc/bump_up(how_much = 8, invis = 0)
 		src.bumped++
 		if(invis)
 			animate(src, alpha = 0, maptext_y = src.maptext_y + how_much, time = 4)
 		else
 			animate(src, maptext_y = src.maptext_y + how_much, time = 4)
-	
+
 	proc/show_to(var/client/who)
 		if(!istype(who))
 			return
@@ -293,7 +271,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		if(slep)
 			sleep(0)
 		boutput(user, "time: [TIME - start]")
-	
+
 	attackby(obj/item/I, mob/user)
 		. = ..()
 		if(istype(I, /obj/item/spacecash))

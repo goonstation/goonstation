@@ -193,9 +193,8 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
-		var/dll = world.GetConfig("env", "EXTOOLS_DLL")
-		if (dll)
-			call(dll, "debug_initialize")()
+		enable_extools_debugger()
+
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
 		world.Profile(PROFILE_START)
@@ -318,6 +317,14 @@ var/f_color_selector_handler/F_Color_Selector
 		//REMIND ME TO TRIM THIS CRAP DOWN -Keelin
 		Z_LOG_DEBUG("Preload", "Beginning more setup things.")
 
+		//YO, most of this crap below can be removed using initial() on the typepath in interations on the list, e.g.,
+		/*
+		/proc/baz(arg)
+			for var/bar in list_of_foo_subtypes
+				var/datum/foo/foobar = bar
+				if initial(foobar.variable) == Arg
+					do_thing
+		*/
 
 		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
 		for(var/A in childrentypesof(/datum/generatorPrefab))
@@ -602,7 +609,7 @@ var/f_color_selector_handler/F_Color_Selector
 		//we're already holding and in the reboot retry loop, do nothing
 		if (mapSwitcher.holdingReboot && !retry) return
 
-		out(world, "<span style='color: blue;'><b>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</b></span>")
+		out(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
 		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
 
 		mapSwitcher.holdingReboot = 1
@@ -1254,7 +1261,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who)
 				if (M.client)
-					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]", "admin")
 					for (var/mob/K in mobs)
@@ -1263,9 +1270,9 @@ var/f_color_selector_handler/F_Color_Selector
 								if (K.client.player_mode && !K.client.player_mode_mhelp)
 									continue
 								else
-									boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(K, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
 							else
-								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(K, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1342,7 +1349,7 @@ var/f_color_selector_handler/F_Color_Selector
 						M.full_heal()
 						logTheThing("admin", nick, M, "healed / revived %target%")
 						logTheThing("diary", nick, M, "healed / revived %target%", "admin")
-						message_admins("<span style=\"color:red\">Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
+						message_admins("<span class='alert'>Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
 
 						var/ircmsg[] = new()
 						ircmsg["type"] = "heal"
@@ -1572,7 +1579,7 @@ var/opt_inactive = null
 /world/proc/KickInactiveClients()
 	for(var/client/C in clients)
 		if(!C.holder && ((C.inactivity/10)/60) >= 15)
-			boutput(C, "<span style=\"color:red\">You have been inactive for more than 15 minutes and have been disconnected.</span>")
+			boutput(C, "<span class='alert'>You have been inactive for more than 15 minutes and have been disconnected.</span>")
 			del(C)
 
 /// EXPERIMENTAL STUFF

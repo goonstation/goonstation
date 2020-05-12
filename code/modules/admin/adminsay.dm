@@ -50,7 +50,7 @@
 
 	logTheThing("admin", usr, null, "forced everyone to say: [msg]")
 	logTheThing("diary", usr, null, "forced everyone to say: [msg]", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] forced everyone to say: [msg]</span>")
+	message_admins("<span class='notice'>[key_name(usr)] forced everyone to say: [msg]</span>")
 
 /client/proc/cmd_admin_murraysay(msg as text)
 	set category = "Special Verbs"
@@ -76,7 +76,7 @@
 
 	logTheThing("admin", usr, null, "forced Murray to beep: [msg]")
 	logTheThing("diary", usr, null, "forced Murray to beep: [msg]", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] forced Murray to beep: [msg]</span>")
+	message_admins("<span class='notice'>[key_name(usr)] forced Murray to beep: [msg]</span>")
 
 
 // more copies than a kinkos
@@ -101,7 +101,7 @@
 		maybeHS.speak(msg)
 		logTheThing("admin", usr, null, "forced HeadSurgeon to beep: [msg]")
 		logTheThing("diary", usr, null, "forced HeadSurgeon: [msg]", "admin")
-		message_admins("<span style=\"color:blue\">[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
+		message_admins("<span class='notice'>[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
 		return
 
 	for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/maybeHS in world)
@@ -109,7 +109,7 @@
 		maybeHS.speak(msg)
 		logTheThing("admin", usr, null, "forced HeadSurgeon to beep: [msg]")
 		logTheThing("diary", usr, null, "forced HeadSurgeon: [msg]", "admin")
-		message_admins("<span style=\"color:blue\">[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
+		message_admins("<span class='notice'>[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
 		return
 
 
@@ -135,4 +135,4 @@
 
 	logTheThing("admin", usr, null, "forced Bradbury II to beep: [msg]")
 	logTheThing("diary", usr, null, "forced Bradbury II to beep: [msg]", "admin")
-	message_admins("<span style=\"color:blue\">[key_name(usr)] forced Bradbury II to beep: [msg]</span>")
+	message_admins("<span class='notice'>[key_name(usr)] forced Bradbury II to beep: [msg]</span>")

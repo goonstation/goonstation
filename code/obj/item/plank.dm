@@ -21,7 +21,7 @@
 	attack_self(mob/user as mob)
 		var/turf/T = get_turf(user)
 		if (locate(/obj/structure/woodwall) in T)
-			boutput(usr, "<span style='color:red'>There's already a barricade here!</span>")
+			boutput(usr, "<span class='alert'>There's already a barricade here!</span>")
 			return
 		actions.start(new /datum/action/bar/icon/plank_build(src, 30), user)
 		return
@@ -53,7 +53,7 @@
 				new /obj/machinery/door/unpowered/wood(T)
 				qdel(src)
 				qdel(C)
-			boutput(usr, "<span style=\"color:red\">There's already a door here!</span>")
+			boutput(usr, "<span class='alert'>There's already a door here!</span>")
 			return
 		else
 			return
@@ -93,11 +93,11 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] begins constructing a wooden barricade!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins constructing a wooden barricade!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] constructs a wooden barricade!</span>")
+		owner.visible_message("<span class='notice'>[owner] constructs a wooden barricade!</span>")
 		plank.construct(owner)
 
 
@@ -133,9 +133,9 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] begins constructing a wooden door!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins constructing a wooden door!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] constructs a wooden door!</span>")
+		owner.visible_message("<span class='notice'>[owner] constructs a wooden door!</span>")
 		plank.construct_door(otherplank, owner)

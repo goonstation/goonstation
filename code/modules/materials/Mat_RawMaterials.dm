@@ -45,29 +45,29 @@
 		if(istype(W, /obj/item/material_piece) && W.material)
 
 			if(src.stack_item(W))
-				boutput(usr, "<span style=\"color:blue\">You stack \the [W]!</span>")
+				boutput(usr, "<span class='notice'>You stack \the [W]!</span>")
 		return
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
-			boutput(usr, "<span style=\"color:red\">Quit that! You're dead!</span>")
+			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
 		if(!istype(over_object, /obj/screen/hud))
 			if (get_dist(usr,src) > 1)
-				boutput(usr, "<span style=\"color:red\">You're too far away from it to do that.</span>")
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 			if (get_dist(usr,over_object) > 1)
-				boutput(usr, "<span style=\"color:red\">You're too far away from it to do that.</span>")
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
 		if (istype(over_object,/obj/item/material_piece)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
 			targetObject.stack_item(src)
-			usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [src]!</span>")
+			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
-				usr.visible_message("<span style=\"color:blue\">[usr.name] splits the stack of [src]!</span>")
+				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 				var/toSplit = round(amount / 2)
 				var/atom/movable/splitStack = split_stack(toSplit)
 				if(splitStack)
@@ -81,7 +81,7 @@
 					if (!src.check_valid_stack(I))
 						continue
 					src.stack_item(I)
-				usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [src]!</span>")
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(istype(over_object, /obj/screen/hud))
 			var/obj/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
@@ -92,12 +92,12 @@
 						else if (istype(dude.l_hand, /obj/item/material_piece))
 							var/obj/item/material_piece/DP = dude.l_hand
 							DP.stack_item(src)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
 					else
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 1)
 				if("rhand")
@@ -106,12 +106,12 @@
 						else if (istype(dude.r_hand, /obj/item/material_piece))
 							var/obj/item/material_piece/DP = dude.r_hand
 							DP.stack_item(src)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
 					else
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span style=\"color:blue\">[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
 	block

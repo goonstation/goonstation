@@ -178,24 +178,25 @@
 			return
 
 		if (!loaded_glowstick)
-			boutput(user, "<span style=\"color:red\">The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
+			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
 			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
 			return
 
 		if (!loaded_glowstick.on)
-			boutput(user, "<span style=\"color:red\">The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
+			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
 			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
 			return
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and cuts \himself.</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
+		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
 	if (src.active)
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 		light_c.update(1)
-		boutput(user, "<span style=\"color:blue\">The sword is now active.</span>")
+		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user))
@@ -213,7 +214,7 @@
 	else
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 		light_c.update(0)
-		boutput(user, "<span style=\"color:blue\">The sword can now be concealed.</span>")
+		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user))
@@ -235,7 +236,7 @@
 	if (!src.active)
 		return 0
 
-	user.visible_message("<span style='color:red'><b>[user] stabs [src] through [his_or_her(user)] chest.</b></span>")
+	user.visible_message("<span class='alert'><b>[user] stabs [src] through [his_or_her(user)] chest.</b></span>")
 	take_bleeding_damage(user, null, 250, DAMAGE_STAB)
 	user.TakeDamage("chest", 200, 0)
 	user.updatehealth()
@@ -250,7 +251,7 @@
 
 	if (isscrewingtool(W))
 		if (src.active)
-			boutput(user, "<span style=\"color:red\">The sword has to be off before you open it!</span>")
+			boutput(user, "<span class='alert'>The sword has to be off before you open it!</span>")
 			return
 
 		if (!src.open)
@@ -270,7 +271,7 @@
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
 		if (!W:on)
-			boutput(user, "<span style=\"color:red\">The glowstick needs to be on to act as a beam focus for the sword!</span>")
+			boutput(user, "<span class='alert'>The glowstick needs to be on to act as a beam focus for the sword!</span>")
 			return
 		else
 			user.visible_message("<b>[user]</b> loads a glowstick into [src].")
@@ -359,7 +360,7 @@
 		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 
 		if (prob(30))
-			boutput(user, "<span style=\"color:red\">The sword shorted out! The laser turned off!</span>")
+			boutput(user, "<span class='alert'>The sword shorted out! The laser turned off!</span>")
 			hit_type = DAMAGE_BLUNT
 			if(ishuman(user))
 				var/mob/living/carbon/human/U = user
@@ -468,7 +469,7 @@
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
-		
+
 	throw_impact(atom/A)
 		..()
 		usr.set_loc(get_turf(src))
@@ -494,7 +495,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
-			src.visible_message("<span style=\"color:red\">[src] gets embedded in [M]!</span>")
+			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			src.set_loc(M)
@@ -573,6 +574,8 @@
 				setProperty("movespeed", 0)
 				force = one_handed_force
 				src.setItemSpecial(/datum/item_special/simple)
+
+			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
 
 			can_disarm = src.status
 			item_state = status ? "quarterstaff2" : "quarterstaff1"
@@ -662,7 +665,7 @@
 /obj/item/knife/butcher/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
 	user.updatehealth()
@@ -719,13 +722,13 @@
 /obj/item/axe/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		boutput(user, "<span style=\"color:blue\">The axe is now energised.</span>")
+		boutput(user, "<span class='notice'>The axe is now energised.</span>")
 		src.hit_type = DAMAGE_BURN
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = 5
 	else
-		boutput(user, "<span style=\"color:blue\">The axe can now be concealed.</span>")
+		boutput(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.hit_type = DAMAGE_CUT
 		src.force = 40
 		src.icon_state = "axe0"
@@ -738,7 +741,7 @@
 /obj/item/axe/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
 	user.updatehealth()
@@ -799,7 +802,7 @@
 				set_values()
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
-					boutput(user, "<span style=\"color:red\">Can't switch to 2-handed while your other hand is full.</span>")
+					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
 				else
 					set_values()
 		..()
@@ -875,8 +878,8 @@
 	throw_range = 7
 
 /obj/item/banme/attack(mob/M, mob/user)
-	boutput(M, "<span style=\"color:red\"><b>You have been BANNED by [user]!</b></span>")
-	boutput(user, "<span style=\"color:red\"><b>You have BANNED [M]!</b></span>")
+	boutput(M, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
+	boutput(user, "<span class='alert'><b>You have BANNED [M]!</b></span>")
 	playsound(loc, 'sound/vox/banned.ogg', 60, 1)
 	return
 
@@ -918,15 +921,15 @@
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SWORD
 
-/obj/item/katana/attack(mob/target as mob, mob/user as mob)
-	if(target == user) //Can't cut off your own limbs, dumbo
+/obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
+	if(target == user || !ishuman(target)) //Can't cut off your own limbs, dumbo; only humans can currently be dismembered
 		return ..()
-	if(!ishuman(target))
-		return ..()  //Only humans can currently be dismembered
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
 		return
+	if (is_special)
+		return ..()
 	switch(zoney)
 		if("head")
 			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
@@ -976,7 +979,7 @@
 	return 0
 
 /obj/item/katana/suicide(var/mob/user as mob)
-	user.visible_message("<span style=\"color:red\"><b>[user] thrusts [src] through their stomach!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
 	var/say = pick("Kono shi wa watashinokazoku ni meiyo o ataeru","Haji no mae no shi", "Watashi wa kyo nagura reta.", "Teki ga katta", "Shinjiketo ga modotte kuru")
 	user.say(say)
 	blood_slash(user, 25)
@@ -1045,7 +1048,7 @@
 		return 0
 	else
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message("<span style=\"color:red\"><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
 		user.organHolder.drop_organ(organtokill)
 		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
 		user.TakeDamage("chest", 100, 0)
@@ -1074,7 +1077,7 @@
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message("<span style=\"color:red\"><b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b></span>")
 		user.organHolder.drop_organ("head")
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
@@ -1134,12 +1137,12 @@
 			W.set_loc(src)
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
-			boutput(user, "<span style=\"color:blue\">You sheathe [W] in [src].</span>")
+			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
 			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 70, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
-				boutput(user, "<span style=\"color:blue\">You can't sheathe the [W] while its attached to your arm.</span>")
+				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"
@@ -1155,7 +1158,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.type == /obj/item/katana)
-			boutput(user, "<span style=\"color:red\">The [W] can't fit into [src].</span>")
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()
 
@@ -1173,7 +1176,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.type == /obj/item/katana)
-			boutput(user, "<span style=\"color:red\">The [W] can't fit into [src].</span>")
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()
 
@@ -1217,7 +1220,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.type == /obj/item/katana)
-			boutput(user, "<span style=\"color:red\">The [W] can't fit into [src].</span>")
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		..()
 
@@ -1256,22 +1259,22 @@
 		BLOCK_SWORD
 
 
-	/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
-		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			if(!isdead(C))
-				force += 5
-				boutput(user, "<span style=\"color:red\">The [src] delights in the bloodshed, you can feel it grow stronger!</span>")
-				take_bleeding_damage(C, user, 5, DAMAGE_STAB)
-		..()
+/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
+	playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(!isdead(C))
+			force += 5
+			boutput(user, "<span class='alert'>The [src] delights in the bloodshed, you can feel it grow stronger!</span>")
+			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
+	..()
 
-	dropped(mob/user)
-		..()
-		if (isturf(src.loc))
-			user.visible_message("<span style='color:red'>As the [src] falls from [user]'s hands, it seems to become duller!</span>")
-			force = 5
-			return
+/obj/item/bloodthirsty_blade/dropped(mob/user)
+	..()
+	if (isturf(src.loc))
+		user.visible_message("<span class='alert'>As the [src] falls from [user]'s hands, it seems to become duller!</span>")
+		force = 5
+		return
 
 obj/item/fragile_sword
 	name = "fragile sword"
@@ -1303,7 +1306,7 @@ obj/item/fragile_sword
 			if(!isdead(C))
 				if(force >= minimum_force)
 					force -= 5
-					boutput(user, "<span style=\"color:red\">The [src]'s edge dulls slightly on impact!</span>")
+					boutput(user, "<span class='alert'>The [src]'s edge dulls slightly on impact!</span>")
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
 
@@ -1311,7 +1314,7 @@ obj/item/fragile_sword
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5
-				boutput(user, "<span style=\"color:blue\">You sharpen the blade of the [src] with the whetstone.</span>")
+				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
 				playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
 		..()
 
@@ -1365,7 +1368,7 @@ obj/item/whetstone
 				M.throw_at(throw_target, 2, 2)
 			if(force <= maximum_force)
 				force += 5
-				boutput(user, "<span style=\"color:red\">[src]'s generator builds charge!</span>")
+				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
 				take_bleeding_damage(M, user, 5, DAMAGE_STAB)
 		playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 		..()
@@ -1373,17 +1376,17 @@ obj/item/whetstone
 	dropped(mob/user)
 		..()
 		if (isturf(src.loc))
-			user.visible_message("<span style='color:red'>[src] falls from [user]'s hands and powers down!</span>")
+			user.visible_message("<span class='alert'>[src] falls from [user]'s hands and powers down!</span>")
 			force = 50
 			return
 
 	attack_self(mob/user as mob)
 		if(src.mode == 0)
-			boutput(user, "<span style=\"color:red\">You switch your grip on [src] enabling a ranged stab!</span>")
+			boutput(user, "<span class='alert'>You switch your grip on [src] enabling a ranged stab!</span>")
 			src.mode = 1
 			src.setItemSpecial(/datum/item_special/rangestab)
 		else
-			boutput(user, "<span style=\"color:red\">You switch your grip on [src] in order to swing wide!</span>")
+			boutput(user, "<span class='alert'>You switch your grip on [src] in order to swing wide!</span>")
 			src.mode = 0
 			src.setItemSpecial(/datum/item_special/swipe)
 		..()

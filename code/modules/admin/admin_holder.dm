@@ -213,7 +213,7 @@
 		buildmode_view = saved_buildmode_view
 
 		if (usr)
-			boutput(usr, "<span style=\"color:blue\">Admin preferences loaded.</span>")
+			boutput(usr, "<span class='notice'>Admin preferences loaded.</span>")
 
 	proc/save_admin_prefs()
 		if (!src.owner)
@@ -236,7 +236,7 @@
 		AP["[ckey]_buildmode_view"] << buildmode_view
 
 		if (usr)
-			boutput(usr, "<span style=\"color:blue\">Admin preferences saved.</span>")
+			boutput(usr, "<span class='notice'>Admin preferences saved.</span>")
 
 /client/proc/change_admin_prefs()
 	set category = "Admin"

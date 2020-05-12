@@ -152,7 +152,7 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/ticket/golden))
 			qdel(I)
-			boutput(user, "<span style=\"color:blue\">You insert the golden ticket into the GTM.</span>")
+			boutput(user, "<span class='notice'>You insert the golden ticket into the GTM.</span>")
 			src.current_tickets++
 			src.updateUsrDialog()
 		else
@@ -163,7 +163,7 @@
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 		dat += "<BR>Current balance: [src.current_tickets] tickets"
 
@@ -179,7 +179,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["redeem"])
 			src.temp = "<BR><B>Please select the rewards that you would like to redeem your tickets for:</B><BR><BR>"

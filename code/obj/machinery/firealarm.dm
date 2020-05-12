@@ -6,6 +6,7 @@
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	plane = PLANE_NOSHADOW_BELOW
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	var/alarm_frequency = "1437"
@@ -78,9 +79,9 @@
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
-			user.visible_message("<span style=\"color:red\">[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 		else
-			user.visible_message("<span style=\"color:red\">[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 	else if (src.icon_state == "fire0")
 		src.alarm()
 	else

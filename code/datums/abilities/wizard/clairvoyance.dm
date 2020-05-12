@@ -35,23 +35,23 @@
 		var/atom/target_loc = M.loc
 		if (isrestrictedz(holder.owner.z))
 			if (!isrestrictedz(M.z))
-				boutput(holder.owner, "<span style=\"color:blue\"><B>[M.real_name]</B> is in [target_loc.loc].</span>")
+				boutput(holder.owner, "<span class='notice'><B>[M.real_name]</B> is in [target_loc.loc].</span>")
 				return
 			else
-				boutput(holder.owner, "<span style=\"color:red\"><B>[M.real_name]</B> is in some strange place!</span>")
+				boutput(holder.owner, "<span class='alert'><B>[M.real_name]</B> is in some strange place!</span>")
 				return
 		if (M.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span style=\"color:red\">[M] has divine protection. Your scrying spell fails!</span>")
-			boutput(M, "<span style=\"color:red\">You sense a Wizard's scrying spell!</span>")
+			boutput(holder.owner, "<span class='alert'>[M] has divine protection. Your scrying spell fails!</span>")
+			boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
 		else if(check_target_immunity( M ))
-			boutput( holder.owner, "<span style='color:red'>[M] seems to be warded from the effects!</span>" )
+			boutput( holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
 			return 1
 		else
 			var/spellstring = "<B>[M.real_name]</B> is "
 			if (!istype(target_loc, /turf))
 				if (target_loc.loc.name == "Chapel")
-					spellstring = "<span style=\"color:red\">Your scrying spell fails! It just can't seem to find [M.real_name].</span>"
-					boutput(M, "<span style=\"color:red\">You sense a Wizard's scrying spell!</span>")
+					spellstring = "<span class='alert'>Your scrying spell fails! It just can't seem to find [M.real_name].</span>"
+					boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
 					return
 				if(ismob(target_loc))
 					spellstring += "somehow inside <b>[target_loc.name]</b> in <b>[target_loc.loc.loc]</b>."
@@ -62,4 +62,4 @@
 			if (isdead(M))
 				spellstring += " They also seem to be dead."
 
-			boutput(holder.owner, "<span style=\"color:blue\">[spellstring]</span>")
+			boutput(holder.owner, "<span class='notice'>[spellstring]</span>")

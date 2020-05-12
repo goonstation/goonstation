@@ -147,7 +147,7 @@
 		return
 	O.set_loc(src.loc)
 	if (user != O)
-		src.visible_message("<span style='color:red'>[user] stuffs [O] into [src]!</span>")
+		src.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>")
 			//Foreach goto(99)
 	return
 
@@ -211,13 +211,13 @@
 
 /obj/crematorium/attack_hand(mob/user as mob)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("<span style=\"color:red\">Uh-oh, that was a bad idea.</span>", 1)
+//		user.show_message("<span class='alert'>Uh-oh, that was a bad idea.</span>", 1)
 //		//boutput(usr, "Uh-oh, that was a bad idea.")
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
 	if (cremating)
-		boutput(usr, "<span style=\"color:red\">It's locked.</span>")
+		boutput(usr, "<span class='alert'>It's locked.</span>")
 		return
 	if ((src.connected && src.connected.loc != src) && (src.locked == 0))
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -289,10 +289,10 @@
 	if (src.cremating)
 		return //don't let you cremate something twice or w/e
 	if (!src.contents || !src.contents.len)
-		src.visible_message("<span style=\"color:red\">You hear a hollow crackle, but nothing else happens.</span>")
+		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
 		return
 
-	src.visible_message("<span style=\"color:red\">You hear a roar as \the [src.name] activates.</span>")
+	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
 	src.cremating = 1
 	src.locked = 1
 	var/ashes = 0
@@ -326,7 +326,7 @@
 
 	SPAWN_DBG(10 SECONDS)
 		if (src)
-			src.visible_message("<span style=\"color:red\">\The [src.name] finishes and shuts down.</span>")
+			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
 			src.cremating = 0
 			src.locked = 0
 			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -374,7 +374,7 @@
 		return
 	O.set_loc(src.loc)
 	if (user != O)
-		user.visible_message("<span style=\"color:red\">[user] stuffs [O] into [src]!</span>", "<span style=\"color:red\">You stuff [O] into [src]!</span>")
+		user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>", "<span class='alert'>You stuff [O] into [src]!</span>")
 	return
 
 /obj/machinery/crema_switch
@@ -407,7 +407,7 @@
 			if (!C.cremating)
 				C.cremate(user)
 	else
-		boutput(user, "<span style=\"color:red\">Access denied.</span>")
+		boutput(user, "<span class='alert'>Access denied.</span>")
 	return
 
 
@@ -445,7 +445,7 @@
 
 	attack_hand(mob/user as mob)
 		if (cremating)
-			boutput(usr, "<span style=\"color:red\">It's locked.</span>")
+			boutput(usr, "<span class='alert'>It's locked.</span>")
 			return
 		if ((src.connected && src.connected.loc != src) && (src.locked == 0))
 			for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -517,10 +517,10 @@
 		if (src.cremating)
 			return //don't let you cremate something twice or w/e
 		if (!src.contents || !src.contents.len)
-			src.visible_message("<span style=\"color:red\">You hear the lights turn on for a second, then turn off.</span>")
+			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
 			return
 
-		src.visible_message("<span style=\"color:red\">You hear a faint buzz as \the [src] activates.</span>")
+		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
 		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
 		src.cremating = 1
 		src.locked = 1
@@ -535,17 +535,17 @@
 						if (src.emagged)
 							H.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 							if (src.settime % 2) //message limiter
-								boutput(H, "<span style=\"color:red\">Your skin feels like it's on fire!</span>")
+								boutput(H, "<span class='alert'>Your skin feels like it's on fire!</span>")
 						else if (!H.wear_suit)
 							H.TakeDamage("All", 0, 2, 0, DAMAGE_BURN)
 							if (src.settime % 2) //limiter
-								boutput(H, "<span style=\"color:red\">Your skin feels hot!</span>")
+								boutput(H, "<span class='alert'>Your skin feels hot!</span>")
 						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses/tanning))) //Always wear protection
 							H.take_eye_damage(1, 2)
 							H.change_eye_blurry(2)
 							H.changeStatus("stunned", 1 SECOND)
 							H.change_misstep_chance(5)
-							boutput(H, "<span style=\"color:red\">Your eyes sting!</span>")
+							boutput(H, "<span class='alert'>Your eyes sting!</span>")
 						if (H.bioHolder.mobAppearance.s_tone)
 							var/currenttone = H.bioHolder.mobAppearance.s_tone
 							var/newtone = BlendRGB(currenttone, src.tanningcolor, src.tanningmodifier) //Make them tan slowly
@@ -560,7 +560,7 @@
 
 		SPAWN_DBG(src.settime * 10)
 			if (src)
-				src.visible_message("<span style=\"color:red\">The [src.name] finishes and shuts down.</span>")
+				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.cremating = 0
 				src.locked = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -612,7 +612,7 @@
 		..()
 		if (istype(P, /obj/item/light/tube) && !src.contents.len)
 			var/obj/item/light/tube/G = P
-			boutput(usr, "<span style=\"color:blue\">You put \the [G.name] into \the [src.name].</span>")
+			boutput(usr, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
@@ -624,7 +624,7 @@
 				light.set_brightness(0.5)
 
 		if (ispryingtool(P) && src.contents.len) //pry out the tube with a crowbar
-			boutput(usr, "<span style=\"color:blue\">You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
+			boutput(usr, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
 			generate_overlay_icon() //nulling overlay

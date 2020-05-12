@@ -68,7 +68,7 @@ var/image/blob_icon_cache
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
-				src.visible_message("<span style=\"color:red\"><b>The blob starts trying to absorb [H.name]!</b></span>")
+				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 
 	proc/right_click_action()
@@ -248,9 +248,9 @@ var/image/blob_icon_cache
 		if( istype(W,/obj/item/clothing/head) && overmind )
 			user.drop_item()
 			overmind.setHat(W)
-			user.visible_message( "<span style='color:blue'>[user] places the [W] on the blob!</span>" )
-			user.visible_message( "<span style='color:blue'>The blob disperses the hat!</span>" )
-			overmind.show_message( "<span style='color:blue'>[user] places the [W] on you!</span>" )
+			user.visible_message( "<span class='notice'>[user] places the [W] on the blob!</span>" )
+			user.visible_message( "<span class='notice'>The blob disperses the hat!</span>" )
+			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
 		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
@@ -380,7 +380,7 @@ var/image/blob_icon_cache
 				for (var/obj/blob/B in spread)
 					B.poison += amt
 		for (var/obj/material_deposit/M in src.loc)
-			visible_message("<span style=\"color:red\">[M] crumbles into dust!</span>")
+			visible_message("<span class='alert'>[M] crumbles into dust!</span>")
 			qdel(M)
 
 	proc/heal_damage(var/amount)
@@ -665,11 +665,11 @@ var/image/blob_icon_cache
 		. = ..()
 		if (user == overmind)
 			if (movable)
-				. += "<span style=\"color:blue\">Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
-			. += "<span style=\"color:blue\">It contains:</span>"
+				. += "<span class='notice'>Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
+			. += "<span class='notice'>It contains:</span>"
 			for (var/id in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[id]
-				. += "<span style=\"color:blue\">- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
+				. += "<span class='notice'>- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
 
 	proc/update_reagent_overlay()
 		if (disposed)
@@ -718,7 +718,7 @@ var/image/blob_icon_cache
 			return
 		..()
 		if (src.reagents && src.reagents.total_volume)
-			visible_message("<span style=\"color:red\">[src] bursts open, releasing the deposited reagents in a cloud!</span>")
+			visible_message("<span class='alert'>[src] bursts open, releasing the deposited reagents in a cloud!</span>")
 			smoke_reaction(reagents, 3, loc)
 
 	onMove(var/obj/blob/B)
@@ -776,7 +776,7 @@ var/image/blob_icon_cache
 					return
 			if (O.type == /obj/blob/deposit)
 				if (src.converting)
-					boutput(user, "<span style=\"color:red\">Something is already loaded into the replicator.</span>")
+					boutput(user, "<span class='alert'>Something is already loaded into the replicator.</span>")
 					return
 				var/obj/blob/deposit/D = O
 				if (D.overmind != user)
@@ -787,7 +787,7 @@ var/image/blob_icon_cache
 				converting.my_atom = src
 				converting.maximum_volume = converting.total_volume
 				O.reagents = null
-				boutput(user, "<span style=\"color:blue\">Reagents transferred to the replicator.</span>")
+				boutput(user, "<span class='notice'>Reagents transferred to the replicator.</span>")
 				qdel(O)
 				update_reagent_overlay()
 				progress.onUpdate()
@@ -809,7 +809,7 @@ var/image/blob_icon_cache
 			D.reagents.my_atom = D
 			src.reagents.trans_to(D, trans_amt)
 			D.update_reagent_overlay()
-			boutput(usr, "<span style=\"color:blue\">Transferred [trans_amt] reagents into a deposit.</span>")
+			boutput(usr, "<span class='notice'>Transferred [trans_amt] reagents into a deposit.</span>")
 			update_reagent_overlay()
 
 	reclaimer
@@ -880,7 +880,7 @@ var/image/blob_icon_cache
 				return
 		if (O.type == /obj/blob/deposit)
 			if (src.reagents && src.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">Something is already loaded into the slime launcher.</span>")
+				boutput(user, "<span class='alert'>Something is already loaded into the slime launcher.</span>")
 				return
 			var/obj/blob/deposit/D = O
 			if (D.overmind != user)
@@ -890,7 +890,7 @@ var/image/blob_icon_cache
 			reagents = O.reagents
 			reagents.my_atom = src
 			O.reagents = null
-			boutput(user, "<span style=\"color:blue\">Reagents transferred to the slime launcher.</span>")
+			boutput(user, "<span class='notice'>Reagents transferred to the slime launcher.</span>")
 			qdel(O)
 			update_reagent_underlay()
 
@@ -954,7 +954,7 @@ var/image/blob_icon_cache
 			overmind.usePoints(slime_cost)
 			L.color = overmind.color
 
-		visible_message("<span style=\"color:red\"><b>[src] fires slime at [Target]!</b></span>")
+		visible_message("<span class='alert'><b>[src] fires slime at [Target]!</b></span>")
 		L.launch()
 
 /datum/projectile/slime
@@ -1266,24 +1266,24 @@ var/image/blob_icon_cache
 
 	if (istype(src,/turf/space/))
 		if (feedback)
-			boutput(feedback, "<span style=\"color:red\">You can't spread the blob into space.</span>")
+			boutput(feedback, "<span class='alert'>You can't spread the blob into space.</span>")
 		return 0
 
 	if (!admin_overmind) //admins can spread wherever (within reason)
 		if (istype(src,/turf/unsimulated/) && !istype(src,/turf/unsimulated/floor/shuttle))
 			if (feedback)
-				boutput(feedback, "<span style=\"color:red\">You can't spread the blob onto that kind of tile.</span>")
+				boutput(feedback, "<span class='alert'>You can't spread the blob onto that kind of tile.</span>")
 			return 0
 
 	if (src.density)
 		if (feedback)
-			boutput(feedback, "<span style=\"color:red\">You can't spread the blob into a wall.</span>")
+			boutput(feedback, "<span class='alert'>You can't spread the blob into a wall.</span>")
 		return 0
 
 	for (var/obj/O in src.contents)
 		if (O.density)
 			if (feedback)
-				boutput(feedback, "<span style=\"color:red\">That tile is blocked by [O].</span>")
+				boutput(feedback, "<span class='alert'>That tile is blocked by [O].</span>")
 			return 0
 
 	if (skip_adjacent)
@@ -1297,7 +1297,7 @@ var/image/blob_icon_cache
 				return B
 
 	if (feedback)
-		boutput(feedback, "<span style=\"color:red\">There is no blob adjacent to this tile to spread from.</span>")
+		boutput(feedback, "<span class='alert'>There is no blob adjacent to this tile to spread from.</span>")
 
 	return 0
 

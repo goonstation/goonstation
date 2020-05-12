@@ -26,7 +26,7 @@
 		return 1
 
 	animate_movement = 2
-//	desc = "<span style=\"color:red\">HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
+//	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
 //heh no not really
 
 	var/_health = 100
@@ -58,7 +58,7 @@
 		*/
 		return
 	proc/onDestroy()
-		src.visible_message("<span style=\"color:red\"><b>[src] is destroyed.</b></span>")
+		src.visible_message("<span class='alert'><b>[src] is destroyed.</b></span>")
 		qdel(src)
 		return
 
@@ -116,6 +116,7 @@
 		mats = null
 		if (artifact && !isnum(artifact))
 			artifact:holder = null
+		remove_dialogs()
 		..()
 
 	proc/client_login(var/mob/user)
@@ -244,58 +245,6 @@
 /obj/proc/get_movement_controller(mob/user)
 	return
 
-/obj/proc/updateUsrDialog()
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			if(istype(src, /obj/npc/trader)) //This is not great. But making dialogues and trader windows work together is tricky. Needs a better solution.
-				var/obj/npc/trader/T = src
-				T.openTrade(M)
-			else
-				src.attack_hand(M)
-	if (issilicon(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.attack_ai(usr)
-	if (isAIeye(usr))
-		var/mob/dead/aieye/E = usr
-		if (E.client)
-			src.attack_ai(E)
-
-/obj/proc/updateDialog()
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			src.attack_hand(M)
-	AutoUpdateAI(src)
-
-/obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
-	var/list/nearby = viewers(1, get_turf(src))
-	for(var/mob/M in nearby)
-		if (isAI(M)) //Eyecam handling
-			var/mob/living/silicon/ai/AI = M
-			if (AI.deployed_to_eyecam)
-				M = AI.eyecam
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
-
-	for(var/mob/living/silicon/ai/M in AIs)
-		var/mob/AI = M
-		if (M.deployed_to_eyecam)
-			AI = M.eyecam
-		if ((AI.client && AI.machine == src))
-			src.attack_self(AI)
-
-/obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
-	if(istype(M))
-		if (isAI(M)) //Eyecam handling
-			var/mob/living/silicon/ai/AI = M
-			if (AI.deployed_to_eyecam)
-				M = AI.eyecam
-		if(M.client && M.machine == src)
-			src.attack_self(M)
-
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets."
@@ -353,12 +302,13 @@
 /obj/securearea
 	desc = "A warning sign which reads 'SECURE AREA'"
 	name = "SECURE AREA"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "securearea"
 	anchored = 1.0
 	opacity = 0
 	density = 0
-	layer=EFFECTS_LAYER_BASE
+	layer = EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_BELOW
 
 /obj/securearea/ex_act(severity)
 	ex_act_third(severity)
@@ -366,7 +316,7 @@
 /obj/joeq
 	desc = "Here lies Joe Q. Loved by all. He was a terrorist. R.I.P."
 	name = "Joe Q. Memorial Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -375,7 +325,7 @@
 /obj/fudad
 	desc = "In memory of Arthur \"F. U. Dad\" Muggins, the bravest, toughest Vice Cop SS13 has ever known. Loved by all. R.I.P."
 	name = "Arthur Muggins Memorial Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -384,7 +334,7 @@
 /obj/juggleplaque
 	desc = "In loving and terrified memory of those who discovered the dark secret of Jugglemancy. \"E. Shirtface, Juggles the Clown, E. Klein, A.F. McGee,  J. Flarearms.\""
 	name = "Funny-Looking Memorial Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -436,7 +386,7 @@
 			qdel(src)
 			return
 		if (istype(C, /obj/item/weldingtool) && C:welding)
-			boutput(user, "<span style=\"color:blue\">Slicing lattice joints ...</span>")
+			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			C:eyecheck(user)
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
@@ -444,7 +394,7 @@
 			var/obj/item/rods/R = C
 			if (R.amount >= 2)
 				R.amount -= 2
-				boutput(user, "<span style=\"color:blue\">You assemble a barricade from the lattice and rods.</span>")
+				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
 				new /obj/lattice/barricade(src.loc)
 				if (R.amount < 1)
 					user.u_equip(C)
@@ -472,7 +422,7 @@
 		if (istype(W, /obj/item/weldingtool))
 			var/obj/item/weldingtool/WELD = W
 			if(WELD.welding)
-				boutput(user, "<span style=\"color:blue\">You disassemble the barricade.</span>")
+				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
 				WELD.eyecheck(user)
 				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
 				R.amount = src.strength
@@ -482,19 +432,19 @@
 			var/obj/item/rods/R = W
 			var/difference = 5 - src.strength
 			if (difference <= 0)
-				boutput(user, "<span style=\"color:red\">This barricade is already fully reinforced.</span>")
+				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
 				return
 			if (R.amount > difference)
 				R.amount -= difference
 				src.strength = 5
-				boutput(user, "<span style=\"color:blue\">You reinforce the barricade.</span>")
-				boutput(user, "<span style=\"color:blue\">The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
+				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
+				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
 				return
 			else if (R.amount <= difference)
 				R.amount -= difference
 				src.strength = 5
-				boutput(user, "<span style=\"color:blue\">You use up the last of your rods to reinforce the barricade.</span>")
-				if (src.strength >= 5) boutput(user, "<span style=\"color:blue\">The barricade is now fully reinforced!</span>")
+				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
+				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
 				if (R.amount < 1)
 					user.u_equip(W)
 					qdel(W)
@@ -616,10 +566,10 @@
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
-	user.show_text("<span style=\"color:red\">You leap and slam against the inside of [src]! Ouch!</span>")
+	user.show_text("<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
 	user.changeStatus("paralysis", 40)
 	user.changeStatus("weakened", 4 SECONDS)
-	src.visible_message("<span style=\"color:red\"><b>[src]</b> emits a loud thump and rattles a bit.</span>")
+	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
 
@@ -636,7 +586,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_handcuffs"
 		return
 
@@ -645,11 +595,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/handcuffs, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_handcuffs0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no handcuffs left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no handcuffs left in the [src]!</span>")
 
 /obj/latexglovesdispenser
 	name = "latex gloves dispenser"
@@ -664,7 +614,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of latex gloves in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of latex gloves in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_gloves"
 		return
 
@@ -673,11 +623,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/clothing/gloves/latex, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of latex gloves from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of latex gloves from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_gloves0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no latex gloves left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no latex gloves left in the [src]!</span>")
 
 /obj/medicalmaskdispenser
 	name = "medical mask dispenser"
@@ -692,7 +642,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of medical masks in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of medical masks in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_mask"
 		return
 
@@ -701,11 +651,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/clothing/mask/medical, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of medical masks from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of medical masks from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_mask0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no medical masks left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no medical masks left in the [src]!</span>")
 
 /obj/glassesdispenser
 	name = "prescription glass dispenser"
@@ -720,7 +670,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span style=\"color:blue\">You put a pair of prescription glass in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='notice'>You put a pair of prescription glass in the [src]. [amount] left in the dispenser.</span>")
 			src.icon_state = "dispenser_glasses"
 		return
 
@@ -729,8 +679,8 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/clothing/glasses/regular, user.hand)
-			boutput(user, "<span style=\"color:red\">You take a pair of prescription glass from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, "<span class='alert'>You take a pair of prescription glass from the [src]. [amount] left in the dispenser.</span>")
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_glasses0"
 		else
-			boutput(user, "<span style=\"color:red\">There's no prescription glass left in the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no prescription glass left in the [src]!</span>")

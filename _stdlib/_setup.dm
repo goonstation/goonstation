@@ -392,16 +392,15 @@
 //various mob_flags go here
 #define MOB_HEARS_ALL 1 	//For mobs who can hear everything (mainly observer ghossts)
 #define SPEECH_REVERSE 2 	//God Ecaps
-#define SPEECH_INTRUDER 4   //thing
-#define SPEECH_BLOB 8		//yes
-#define SEE_THRU_CAMERAS 16	//for ai eye
-#define IS_BONER 32			//for skeletals
-#define IS_RELIQUARY 64 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_SOLDIER 128 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_GUARDIAN 256 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_TECHNICIAN 512 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_CURATOR 1024 //for Azungar's reliquary stuff
-#define AT_GUNPOINT 2048 	//quick check for guns holding me at gunpoint
+#define SPEECH_BLOB 4		//yes
+#define SEE_THRU_CAMERAS 8	//for ai eye
+#define IS_BONER 16			//for skeletals
+#define IS_RELIQUARY 32 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_SOLDIER 64 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_GUARDIAN 128 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
+#define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -782,6 +781,8 @@
 #define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
 #define BLOCK_ROPE		BLOCK_BOOK
 
+#define DEFAULT_BLOCK_PROTECTION_BONUS 2 //blocking to match damage type correctly gives you a -2 bonus on protection (unless this item grants Even More protection, that overrides this)
+
 // Process Scheduler defines
 // Process status defines
 #define PROCESS_STATUS_IDLE 1
@@ -792,11 +793,12 @@
 #define PROCESS_STATUS_HUNG 6
 
 // Process time thresholds
-#define PROCESS_DEFAULT_HANG_WARNING_TIME 	3000 // 300 seconds
-#define PROCESS_DEFAULT_HANG_ALERT_TIME 	6000 // 600 seconds
-#define PROCESS_DEFAULT_HANG_RESTART_TIME 	9000 // 900 seconds
+#define PROCESS_DEFAULT_HANG_WARNING_TIME 	300 SECONDS
+#define PROCESS_DEFAULT_HANG_ALERT_TIME 	600 SECONDS
+#define PROCESS_DEFAULT_HANG_RESTART_TIME 	900 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		15	// 15% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		20	// 20% of one tick
+#define MAX_TICK_USAGE 95 // 95% of a tick
 
 /** Delete queue defines */
 #define MIN_DELETE_CHUNK_SIZE 1
@@ -1035,8 +1037,7 @@ var/ZLOG_START_TIME
 #endif
 
 #define CRITTER_REACTION_LIMIT 50
-#define fucking_critter_bullshit_fuckcrap_limiter(x) if (x > CRITTER_REACTION_LIMIT) return; else x += 1
-#define get_fucked_clarks if (istype(my_atom, "/obj/critter/domestic_bee")) return my_atom.visible_message("<span style=\"color:red\">[my_atom] burps.</span>"); if (istype(my_atom, "/obj/item/reagent_containers/food/snacks/ingredient/honey")) return
+#define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
 //Activates the viscontents warps
 #define NON_EUCLIDEAN 1
@@ -1114,6 +1115,8 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//PATHOLOGY REMOVAL
+//#define CREATE_PATHOGENS 1
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
