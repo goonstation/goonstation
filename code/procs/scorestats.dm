@@ -209,10 +209,6 @@ var/datum/score_tracker/score_tracker
 
 
 
-
-		// for (var/X in )
-
-
 		// AND THE WINNER IS.....
 
 		var/department_score_sum = 0
@@ -280,9 +276,9 @@ var/datum/score_tracker/score_tracker
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
 		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name]<BR>"
-		if (islist(escaped_pets))
+		if (islist(pets_escaped))
 			var/who_escaped = ""
-			for (var/obj/critter/C in escaped_pets)
+			for (var/obj/critter/C in pets_escaped)
 				who_escaped += "C.name |"
 
 			. += "<B>Pets Escaped:</B> [copytext(1, length(who_escaped)-1)]<BR>"
