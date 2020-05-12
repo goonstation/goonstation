@@ -108,13 +108,14 @@
 	proc/timeleft()
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
-		SPAWN_DBG(0)
-			src.checkLotteryTime()
-
+		// TODO move this into process or something, currently it gets checked in mob/Stat
 		if(timeleft <= 0)
 			payday()
 			src.time_until_payday = ticker.round_elapsed_ticks + time_between_paydays
 			return 0
+		if(lottery_active && src.time_until_lotto <= ticker.round_elapsed_ticks)
+			lotteryDay()
+			src.time_until_lotto = ticker.round_elapsed_ticks + time_between_lotto
 
 		return timeleft
 
