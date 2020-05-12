@@ -1505,7 +1505,7 @@
 
 			if ("pee", "piss", "urinate")
 				if (src.emote_check(voluntary))
-					if (sims)
+					if (sims?.getValue("Bladder") != null)
 						var/bladder = sims.getValue("Bladder")
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
 						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
