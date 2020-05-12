@@ -1,9 +1,7 @@
-var/list/action_names = list(
-	"refocus" = "Focus Chat",
-	"say" = "Say",
-	"say_radio" = "Say Radio",
 
-	"drop" = "drop",
+///Used to translate internal action names to human-readable names.
+var/list/action_names = list(
+
 	"attackself" = "Use in-hand",
 	"togglethrow" = "Throw (Toggle)",
 	"swaphand" = "Swap Hand",
@@ -11,6 +9,20 @@ var/list/action_names = list(
 
 	"fart" = "Fart",
 	"flip" = "Flip",
+	"eyebrow" = "Raise Eyebrow",
+	"gasp" = "Gasp",
+	"raisehand" = "Raise Hand",
+	"dance" = "Dance",
+	"laugh" = "Laugh",
+	"nod" = "Nod",
+	"wave" = "Wave",
+	"wink" = "Wink",
+	"flex" = "Flex",
+	"yawn" = "Yawn",
+	"snap" = "Snap",
+	"scream" = "Scream",
+	"salute" = "Salute",
+	"burp" = "Burp",
 
 	"help" = "Help Intent",
 	"disarm" = "Disarm Intent",
@@ -21,6 +33,16 @@ var/list/action_names = list(
 	"look_s" = "Look South",
 	"look_w" = "Look West",
 	"look_e" = "Look East",
+
+	"say" = "Say",
+	"say_radio" = "Say Radio",
+	"dsay" = "Dead Say",
+	"asay" = "Admin Say",
+	"whisper" = "Whisper",
+	"ooc" = "OOC",
+
+	"screenshot"
+	"autoscreenshot"
 
 	"head" = "Target Head",
 	"chest" = "Target Chest",
@@ -38,19 +60,32 @@ var/list/action_names = list(
 	"module4" = "Module 4",
 
 	"unequip" = "Unequip",
+	"pickup" = "Pick Up",
+	"drop" = "Drop",
 
 	"fire" = "Fire",
 	"fire_secondary" = "Fire Secondary",
+	"stop" = "Stop",
+	"alt_fire" = "Alternate Fire",
 	"cycle" = "Cycle Shell",
 	"exit" = "Exit",
 
+	"mentorhelp" = "Mentor Help",
+	"adminhelp" = "Admin Help",
+
+	"togglepoint" = "Toggle Pointing",
 	"refocus"   = "Refocus Window",
 	"mainfocus" = "Focus Main Window",
 
-	"admin_interact" = "Admin Interact"
+	"admin_interact" = "Admin Interact",
+
+	"module1" = "Module 1"
+	"module2" = "Module 2"
+	"module3" = "Module 3"
+	"module4" = "Module 4"
 )
 
-///Used for literal input of actions, but also convient for display in most cases.
+///Used for literal input of actions
 var/list/action_verbs = list(
 	"say" = "say",
 	"say_radio" = "say_radio",
@@ -81,23 +116,23 @@ var/list/action_verbs = list(
 	"asay" = "asay",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
-	"options" = ".options",
 	"autoscreenshot" = ".autoscreenshot",
 	"screenshot" = ".screenshot",
-	"togglepoint" = ".action togglepoint",
+	"togglepoint" = "togglepoint",
 	"refocus"   = ".winset \\\"mainwindow.input.focus=true;mainwindow.input.text=\\\"\\\"\\\"",
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
 	"Admin Interact" = "admin_interact"
 )
 
+///Used to translate bitflags of hotkeys into human-readable names
 var/list/key_names = list(
 	"[KEY_FORWARD]" = "Up",
 	"[KEY_BACKWARD]" = "Down",
 	"[KEY_LEFT]" = "Left",
 	"[KEY_RIGHT]" = "Right",
 	"[KEY_RUN]" = "Run",
-	"[KEY_THROW]" = "Throw (Hold)",
+	"[KEY_THROW]" = "Throw",
 	"[KEY_POINT]" = "Point",
 	"[KEY_EXAMINE]" = "Examine",
 	"[KEY_PULL]" = "Pull",

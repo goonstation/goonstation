@@ -26,7 +26,7 @@ chui/window/keybind_menu
 
 		var/list/html = list()
 
-		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset{background-color: #f8d248; background: #f8d248}</style>"
+		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset,#reset_cloud{background: #f8d248}</style>"
 
 		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">This is a keybind menu for a shitty game engine. It's your fault if you type it in wrong.</span></i></b></td></tr></thead>"
 

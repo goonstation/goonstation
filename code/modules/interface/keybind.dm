@@ -88,60 +88,50 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 	var/name = "base"
 	var/changed_keys = list(
 	"W" = KEY_FORWARD,
-	"A" = KEY_BACKWARD,
-	"S" = KEY_LEFT,
+	"A" = KEY_LEFT,
+	"S" = KEY_BACKWARD,
 	"D" = KEY_RIGHT,
 	"B" = KEY_POINT,
 	"T" = "say",
 	"Y" = "say_radio",
-	"G" = "refocus",
+	"ALT+W" = "whisper",
+	"ALT+C" = "ooc",
+	"ALT+L" = "looc",
+	"ALT+T" = "dsay",
+	"CTRL+T" = "asay",
 	"F" = "fart",
 	"R" = "flip",
-	"ESCAPE" = "mainfocus",
-	"RETURN" = "mainfocus",
 	"CTRL+A" = "salute",
 	"CTRL+B" = "burp",
-	"ALT+C" = "ooc",
 	"CTRL+D" = "dance",
 	"CTRL+E" = "eyebrow",
 	"CTRL+F" = "fart",
 	"CTRL+G" = "gasp",
 	"CTRL+H" = "raisehand",
-	"ALT+L" = "looc",
 	"CTRL+L" = "laugh",
 	"CTRL+N" = "nod",
-	"CTRL+P" = "togglepoint",
 	"CTRL+Q" = "wave",
 	"CTRL+R" = "flip",
 	"CTRL+S" = "scream",
-	"ALT+T" = "dsay",
-	"CTRL+T" = "asay",
-	"ALT+W" = "whisper",
 	"CTRL+W" = "wink",
 	"CTRL+X" = "flex",
 	"CTRL+Y" = "yawn",
 	"CTRL+Z" = "snap",
-	"F1" = "adminhelp",
-	"CTRL+SHIFT+F1" = "options",
-	"F2" = "autoscreenshot",
-	"SHIFT+F2" = "screenshot",
-	"F3" = "mentorhelp",
 	"I" = "look_n",
 	"K" = "look_s",
 	"J" = "look_w",
 	"L" = "look_e",
 	"P" = "pickup",
+	"F1" = "adminhelp",
+	"F3" = "mentorhelp",
+	"CTRL+P" = "togglepoint",
+	"F2" = "autoscreenshot",
+	"SHIFT+F2" = "screenshot",
+	"G" = "refocus",
+	"ESCAPE" = "mainfocus",
+	"RETURN" = "mainfocus",
 	"`" = "admin_interact",
 	"~" = "admin_interact"
-	)
-
-/datum/keybind_style/wasd
-	name = "base_wasd"
-	changed_keys = list(
-		"W" = KEY_FORWARD,
-		"S" = KEY_BACKWARD,
-		"A" = KEY_LEFT,
-		"D" = KEY_RIGHT
 	)
 
 /datum/keybind_style/arrow
@@ -192,9 +182,9 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"-" = "walk",
 		"=" = "rest",
 		"V" = "equip",
+		"Q" = "drop",
 		"E" = "swaphand",
 		"C" = "attackself",
-		"Q" = "drop",
 		"DELETE" = "togglethrow"
 	)
 

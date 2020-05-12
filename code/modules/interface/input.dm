@@ -430,11 +430,7 @@ var/list/dirty_keystates = list()
 		for (var/key in action_names)
 			if (string == key)
 				return action_names[key]
-		//must be a dastardly action verb
-		for (var/key in action_verbs)
-			if (string == key)
-				return action_verbs[key]
-		return "not a string in action_names/verbs you fucko"
+		return "ZeWaka/Keybinds: not a string in action_names you fucko"
 
 	///Converts from bitflag to a human-readable description
 	///Assuming we're not passed a combination, because fuck that
@@ -443,7 +439,7 @@ var/list/dirty_keystates = list()
 		for (var/key in key_names)
 			if (bitflag == key)
 				return key_names[key]
-		return "not a bitflag in key_names you fucko"
+		return "ZeWaka/Keybinds: not a bitflag in key_names you fucko"
 
 	proc/check_keybind(pressed_key, modifier)
 		//If there is a modifier command on this key, then use that
