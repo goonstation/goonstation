@@ -1211,7 +1211,7 @@
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
 					if(SA.contents.len >= SA.maxitems)
-						boutput(user, "<span class='alert'>Your satchel is full! You have to dump the rest on the floor.</span>")
+						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
