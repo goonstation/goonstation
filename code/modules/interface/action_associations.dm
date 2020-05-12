@@ -41,8 +41,8 @@ var/list/action_names = list(
 	"whisper" = "Whisper",
 	"ooc" = "OOC",
 
-	"screenshot"
-	"autoscreenshot"
+	"screenshot" = "Screenshot",
+	"autoscreenshot" = "Auto Screenshot",
 
 	"head" = "Target Head",
 	"chest" = "Target Chest",
@@ -79,9 +79,9 @@ var/list/action_names = list(
 
 	"admin_interact" = "Admin Interact",
 
-	"module1" = "Module 1"
-	"module2" = "Module 2"
-	"module3" = "Module 3"
+	"module1" = "Module 1",
+	"module2" = "Module 2",
+	"module3" = "Module 3",
 	"module4" = "Module 4"
 )
 

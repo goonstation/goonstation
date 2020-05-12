@@ -254,9 +254,6 @@ var/list/dirty_keystates = list()
 		//Checks if any of the input keys are pressed
 		return (src.key_state & keys)
 
-	proc/set_keymap(datum/keymap/map)
-		src.keymap = map
-
 		// oh god
 		/*
 		I have removed a heap of commented out shit.

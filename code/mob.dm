@@ -1233,14 +1233,13 @@
 /** reset_keymap: Builds the mob's keymap, checks for valid movement controllers, and finally sets the keymap.
  *  Called on: Login, Vehicle change, WASD/TG toggle, Keybind menu Reset
  */
-/mob/proc/reset_keymap(reset_custom = FALSE)
+/mob/proc/reset_keymap()
 	if (src.client)
-		build_keybind_styles(src.client, !reset_custom)
+		build_keybind_styles(src.client)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
-				controller.modify_keymap(src.client.keymap, src.client)
-		src.client.set_keymap(src.client.keymap)
+				controller.modify_keymap(src.client)
 
 /mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
