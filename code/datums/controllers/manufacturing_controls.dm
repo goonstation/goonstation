@@ -8,7 +8,8 @@ var/datum/manufacturing_controller/manuf_controls
 	proc/set_up()
 		for (var/M in childrentypesof(/datum/manufacture))
 			src.normal_schematics += new M
-		for (var/obj/machinery/manufacturer/M in world)
+		for (var/x in by_type[/obj/machinery/manufacturer])
+			var/obj/machinery/manufacturer/M = x
 			src.manufacturing_units += M
 			M.set_up_schematics()
 

@@ -599,7 +599,7 @@ todo: add more small animals!
 				src.visible_message("<span class='alert'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
 				"<span class='alert'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
 				src.set_density(0)
-			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
+			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)
@@ -1538,7 +1538,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span class='alert'><b>You play dead!</b></span>")
 				src.set_density(0)
-			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
+			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)

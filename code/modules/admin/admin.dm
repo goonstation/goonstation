@@ -1450,35 +1450,6 @@ var/global/noir = 0
 						amt = INFINITY
 					M.cubeize(amt, CT)
 
-		// hacks are all i'm made of - cirr
-		/*if ("makeintruder")
-			if( src.level < LEVEL_PA)
-				alert("You must be at least a Primary Administrator to make someone an intruder.")
-				return
-			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (alert("Make [M] an eldritch intruder?", "Make Intruder", "Yes", "No") == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind(  )
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				var/mob/living/intangible/intruder/In = M.intruderize()
-				if (!In)
-					if (!istype(mind.current, /mob/living/intangible/intruder))
-						boutput(usr, "<span class='alert'>Could not into intruder. Cirr is a dum and must be shamed.</span>")
-						return
-					else
-						In = mind.current
-				mind.special_role = "intruder"
-				ticker.mode.Agimmicks += mind
-				In.antagonist_overlay_refresh(1, 0)
-		*/
 		if ("makeflock")
 			if( src.level < LEVEL_PA)
 				alert("You must be at least a Primary Administrator to make someone a flockmind or flocktrace.")
@@ -1781,7 +1752,7 @@ var/global/noir = 0
 						return
 
 					var/list/offset = splittext(href_list["offset"],",")
-					var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
+					var/number = clamp(text2num(href_list["object_count"]), 1, 100)
 					var/X = offset.len > 0 ? text2num(offset[1]) : 0
 					var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 					var/Z = offset.len > 2 ? text2num(offset[3]) : 0

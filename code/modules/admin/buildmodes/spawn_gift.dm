@@ -46,7 +46,7 @@ change the direction of created objects.<br>
 				random_style = rand(1,8)
 			else
 				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "gift[CLAMP(G.size, 1, 3)]-[random_style]"
+			G.icon_state = "gift[clamp(G.size, 1, 3)]-[random_style]"
 		else if(ismob(A) || istype(A, /obj/critter))
 			G.size = 3
 			G.w_class = G.size + 1

@@ -2,7 +2,7 @@
  * - random instrument
  */
 
-/datum/robot/module_item_creator/item_type/random/instrument
+/datum/robot/module_tool_creator/item_type/random/instrument
 	name = "random instrument"
 	item_types = list(
 		/obj/item/instrument/bagpipe,

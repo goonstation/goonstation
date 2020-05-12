@@ -11,7 +11,7 @@ datum/controller/process/delete_queue
 #ifdef DELETE_QUEUE_DEBUG
 	var/tmp/datum/dynamicQueue/delete_queue = 0
 #endif
-	var/debuggy_mbc_thing_please_remove = 0
+	var/log_hard_deletions = 0
 
 	setup()
 		name = "DeleteQueue"
@@ -44,6 +44,13 @@ datum/controller/process/delete_queue
 				// If it isn't disposed, it got garbage collected and then a new thing used its ref.
 				gccount++
 				continue
+
+			if (log_hard_deletions == 1)
+				if (D.type == /obj/overlay)
+					var/obj/overlay/O = D
+					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state]")
+				else
+					logTheThing("debug", text="HardDel of [D.type]")
 
 			delcount++
 			D.qdeled = 0
@@ -88,12 +95,6 @@ datum/controller/process/delete_queue
 			// Because we have already logged it into the gc count in qdel.
 			#endif
 
-			if (debuggy_mbc_thing_please_remove == 1)
-				if (D.type == /obj/overlay)
-					var/obj/overlay/O = D
-					logTheThing("debug", text="Del of [D.type] -- iconstate [O.icon_state]")
-				else
-					logTheThing("debug", text="Del of [D.type]")
 			// Delete that bitch
 
 /*

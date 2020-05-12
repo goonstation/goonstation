@@ -297,7 +297,7 @@
 		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/wincheck = winexists(user, "pda2_\ref[src]")
 	//boutput(world, wincheck)
@@ -386,7 +386,7 @@
 			return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["return_to_host"])
 			if (src.host_program)
@@ -407,7 +407,7 @@
 
 		else if (href_list["close"])
 			usr.Browse(null, "window=pda2_\ref[src]")
-			usr.machine = null
+			src.remove_dialog(usr)
 
 		src.updateSelfDialog()
 		return

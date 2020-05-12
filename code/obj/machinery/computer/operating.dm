@@ -66,11 +66,11 @@
 /obj/machinery/computer/operating/proc/interacted(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isAI(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=op")
 			return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=op'>Close</A><br><br>" //| <A HREF='?src=\ref[user];update=1'>Update</A>"
 	if(src.table && (src.table.check_victim()))
@@ -103,7 +103,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 //		if (href_list["update"])
 //			src.interacted(usr)
 	return

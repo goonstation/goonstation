@@ -91,7 +91,7 @@
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		if (!beaker)
 			// This should only happen when the UI is out of date - refresh it
 			src.updateUsrDialog()
@@ -156,7 +156,7 @@
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/list/dat = list()
 
 		if(!beaker)
@@ -354,7 +354,7 @@
 
 		src.add_fingerprint(usr)
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["close"])
 			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
@@ -423,7 +423,7 @@
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
 			if (!pillvol || !src.beaker || !R)
 				return
-			pillvol = CLAMP(pillvol, 5, 100)
+			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [pillcount] [pillname] pills from [log_reagents(R)].")
@@ -515,7 +515,7 @@
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/40)", "Volume", 5) as null|num
 			if (!patchvol || !src.beaker || !R)
 				return
-			patchvol = CLAMP(patchvol, 5, 40)
+			patchvol = clamp(patchvol, 5, 40)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
 			logTheThing("combat",usr,null,"created [patchcount] [patchname] patches from [log_reagents(R)].")
@@ -570,7 +570,7 @@
 	attack_hand(mob/user as mob)
 		if (status & BROKEN)
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = ""
 		if (!beaker)
 			dat = "Please insert beaker.<BR>"
@@ -698,7 +698,7 @@ datum/chemicompiler_core/stationaryCore
 		if (status & BROKEN || !powered())
 			boutput( user, "<span class='alert'>You can't seem to power it on!</span>" )
 			return
-		user.machine = src
+		src.add_dialog(user)
 		executor.panel()
 		onclose(usr, "chemicompiler")
 		return

@@ -304,7 +304,7 @@
 		if (usr.stat || usr.restrained())
 			return
 		if (get_dist(src, usr) <= 1)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["slurp"])
 				slurping = 1
@@ -329,7 +329,7 @@
 		return
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/offtext
 		var/intext
 		var/outtext

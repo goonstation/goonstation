@@ -134,6 +134,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		return 0
 
+	logTheThing("debug", null, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
+
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 

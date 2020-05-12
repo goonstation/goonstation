@@ -101,10 +101,6 @@
 #if ASS_JAM //timestop stuff
 	var/paused = FALSE
 #endif
-	/////////////////////////////////////////////////////////////
-	// INTRUDER VARS AND PROCS
-	var/selected = 0
-	/////////////////////////////////////////////////////////////
 
 	proc/tokenized_message(var/message, var/target)
 		if (!message || !length(message))
@@ -433,15 +429,12 @@
 		step_to(src, towhat)
 
 	Bump(M as mob|obj)
-		SPAWN_DBG(0)
-			if (istype(M, /obj/machinery/door/))
-				var/obj/machinery/door/D = M
-				D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-			else if ((isliving(M)) && (!src.anchored))
-				src.set_loc(M:loc)
-				src.frustration = 0
-			return
-		return
+		if (istype(M, /obj/machinery/door/))
+			var/obj/machinery/door/D = M
+			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
+		else if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M:loc)
+			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0

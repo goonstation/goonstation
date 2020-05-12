@@ -96,7 +96,7 @@
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
 
-	user.machine = src
+	src.add_dialog(user)
 	var/holding_text
 
 	if(holding)
@@ -127,7 +127,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["power"])
 			on = !on

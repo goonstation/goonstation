@@ -424,14 +424,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 33) //lol @ consumable_good, yeah right
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_initropidril", 33)
 				return
 
 			on_remove()
 				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_initropidril")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -699,13 +701,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -10)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_cholesterol", -10)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_cholesterol")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -905,13 +907,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -20)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_pancuronium", -30)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_pancuronium")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -983,13 +985,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -30)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_sodium_thiopental", -30)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_sodium_thiopental")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1038,13 +1040,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -20)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_ketamine", -20)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_ketamine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1) // sped this up a bit due to mob loop changes
@@ -1086,13 +1088,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -10)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_sulfonal", -10)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_sulfonal")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1878,7 +1880,7 @@ datum
 							H.emote("scream") //It REALLY hurts
 							H.TakeDamage(zone="All", brute=rand(2,5) * mult)
 
-					if(prob(CLAMP(data/1.5, 100, 30))) //At least 30% risk of oxy damage
+					if(prob(clamp(data/1.5, 100, 30))) //At least 30% risk of oxy damage
 						if(prob(50))H.emote(pick("gasp", "choke", "cough"))
 						H.losebreath += rand(1,3) * mult
 

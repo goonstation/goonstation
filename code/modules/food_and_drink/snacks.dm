@@ -1337,9 +1337,6 @@
 	real_name = "Hetz's Cup"
 	var/unwrapped = 0
 
-	disposing()
-		unwrapped = 1
-
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to unwrap them first, you greedy beast!</span>")

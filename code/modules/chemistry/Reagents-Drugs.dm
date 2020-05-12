@@ -28,14 +28,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 3)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_bathsalts", 3)
 				return
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_bathsalts")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1) // commence bad times
@@ -471,14 +473,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 1)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_nicotine", 1)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						remove_buff = M.remove_stam_mod_regen("r_nicotine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -546,14 +550,16 @@ datum
 			stun_resist = 11
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("nicotine2", 3)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_nicotine2", 3)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("nicotine2")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						remove_buff = M.remove_stam_mod_regen("r_nicotine2")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -832,8 +838,9 @@ datum
 			stun_resist = 98
 
 			on_remove()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("triplemeth")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_regen("triplemeth")
 
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -845,8 +852,7 @@ datum
 				if(ishuman(M))
 					if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
 
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-						holder.my_atom:add_stam_mod_regen("triplemeth", 1000)
+					M.add_stam_mod_regen("triplemeth", 1000)
 
 					if(hascall(holder.my_atom,"addOverlayComposition"))
 						holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -917,8 +923,9 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 3)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_methamphetamine", 3)
 				if (ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
@@ -926,8 +933,9 @@ datum
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						remove_buff = M.remove_stam_mod_regen("r_methamphetamine")
 				if(holder && ismob(holder.my_atom))
 					holder.del_reagent("triplemeth")
 				if (ismob(holder?.my_atom))

@@ -141,7 +141,7 @@
 				return 1
 
 		src.add_fingerprint(user)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = ""
 
@@ -216,7 +216,7 @@
 			return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["time"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
@@ -241,7 +241,7 @@
 					// People do use sleepers for grief from time to time.
 					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by %target%) by [t] seconds at [log_loc(src.our_sleeper)].")
 				//src.time = min(180, max(0, src.time + t))
-				src.time = CLAMP(src.time + (t*10), 0, 1800)
+				src.time = clamp(src.time + (t*10), 0, 1800)
 
 		if (href_list["rejuv"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
@@ -260,7 +260,7 @@
 		if (href_list["eject_occupant"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
 				src.our_sleeper.go_out()
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, "window=sleeper")
 
 		if (istype(src, /obj/machinery/sleep_console/portable))

@@ -138,7 +138,7 @@
 /obj/submachine/mixing_desk/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<a href='byond://?src=\ref[src];state=1'>[src.state_name]</a>"
 	if(state)
 		dat += "<center><h4>Mixing Desk</h4></center>"
