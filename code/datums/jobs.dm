@@ -201,7 +201,12 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
+#if ASS_JAM
+	requires_whitelist = 0
+	high_priority_job = 1
+#else
 	requires_whitelist = 1
+#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
@@ -209,6 +214,7 @@
 	announce_on_join = 1
 	receives_disk = 1
 	recieves_implant = /obj/item/implant/health/security
+
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
