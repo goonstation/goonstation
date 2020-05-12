@@ -842,7 +842,7 @@
 
 		// collect modifiers from the datum
 		. += modifier.additive_slowdown
-		multiplier += modifier.multiplicative_slowdown
+		multiplier *= modifier.multiplicative_slowdown
 		health_deficiency_adjustment += modifier.health_deficiency_adjustment
 		pushpull_multiplier *= modifier.pushpull_multiplier
 		aquatic_movement += modifier.aquatic_movement
