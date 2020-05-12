@@ -168,7 +168,8 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/obj/item/lotteryTicket/T in world)
+		for(var/x in by_type[/obj/item/lotteryTicket])
+			var/obj/item/lotteryTicket/T = x
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -940,6 +941,7 @@
 
 	// Give a random set of numbers
 	New()
+		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound
 
@@ -952,6 +954,10 @@
 			dat += "[numbers[i]] "
 
 		desc = "The numbers on this ticket are: [dat]. This is for round [lotteryRound]."
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 proc/FindBankAccountByName(var/nametosearch)
 	if (!nametosearch) return
