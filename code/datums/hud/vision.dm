@@ -2,7 +2,6 @@
 	var/obj/screen/hud
 		scan
 		color_mod
-		color_mod_floor //hi it's ZeWaka adding a hack to a hack
 		dither
 		flash
 
@@ -26,7 +25,6 @@
 
 		remove_screen(scan)
 		remove_screen(color_mod)
-		remove_screen(color_mod_floor)
 		remove_screen(dither)
 		remove_screen(flash)
 
@@ -55,13 +53,10 @@
 
 		set_color_mod(color)
 			color_mod.color = color
-			color_mod_floor.color = color
 			if (color == "#000000")
 				remove_screen(color_mod)
-				remove_screen(color_mod_floor)
 			else
 				add_screen(color_mod)
-				add_screen(color_mod_floor)
 
 		animate_color_mod(color, duration)
 			animate(color_mod, color = color, time = duration)
