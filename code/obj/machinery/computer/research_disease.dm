@@ -26,7 +26,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat
 	if (src.temp)
@@ -105,7 +105,7 @@ Confirm Identity: <A href='?src=\ref[src];scan=1'>[src.scan ? src.scan.name : "-
 	if (!( data_core.medical.Find(src.active2) ))
 		src.active2 = null
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["temp"])
 			src.temp = null
 		if (href_list["scan"])

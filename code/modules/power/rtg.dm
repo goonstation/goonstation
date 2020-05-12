@@ -15,10 +15,7 @@
 			updateicon()
 
 		// shamelessly stolen from the SMES code, this is kinda stupid
-		for(var/mob/M in range(1, src))
-			if (M.client && M.machine == src)
-				src.interacted(M)
-		AutoUpdateAI(src)
+		src.updateDialog()
 
 	attack_ai(mob/user)
 		add_fingerprint(user)
@@ -49,7 +46,7 @@
 			return
 		if (href_list["close"])
 			usr.Browse(null, "window=rtg")
-			usr.machine = null
+			src.remove_dialog(usr)
 		else if (href_list["eject"] && in_range(src, usr))
 			fuel_pellet.loc = src.loc
 			usr.put_in_hand_or_eject(src.fuel_pellet) // try to eject it into the users hand, if we can
@@ -59,11 +56,11 @@
 
 	proc/interacted(mob/user)
 		if (get_dist(src, user) > 1 && !isAI(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=rtg")
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/t = "<B>Radioisotope Thermoelectric Generator</B><br>"
 		t += "Output: [src.lastgen]W<br>"

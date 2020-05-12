@@ -365,7 +365,7 @@
 	attack_hand(mob/user as mob)
 		if(status & BROKEN)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Dye Bottle Dispenser Unit</B><BR><HR><BR>"
 
@@ -408,7 +408,7 @@
 			return
 
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["eject"])
 				if(src.bottle)
@@ -432,7 +432,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.attack_hand(M)
 		else
 			usr.Browse(null, "window=dye_dispenser")

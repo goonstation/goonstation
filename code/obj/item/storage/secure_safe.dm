@@ -95,7 +95,7 @@
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 	return show_lock_panel(user)
 

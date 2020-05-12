@@ -81,7 +81,7 @@
 	return
 
 /obj/machinery/computer/arcade/proc/show_ui(var/mob/user)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
@@ -143,7 +143,7 @@
 			src.arcade_action()
 
 	if (href_list["close"])
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything

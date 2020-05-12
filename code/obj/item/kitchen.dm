@@ -748,8 +748,8 @@ TRAYS
 		return "[health_desc] [food_desc]" //heres yr desc you *bastard*
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		user.changeStatus("weakened", rand(1,2) SECONDS)
+		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
+		M.changeStatus("weakened", 2 SECONDS)
 		M.updatehealth()
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")

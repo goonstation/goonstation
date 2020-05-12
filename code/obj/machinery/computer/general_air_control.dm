@@ -20,7 +20,7 @@ obj/machinery/computer/general_air_control
 
 	attack_hand(mob/user)
 		user.Browse(return_text(),"window=computer")
-		user.machine = src
+		src.add_dialog(user)
 		onclose(user, "computer")
 
 	process()
@@ -492,7 +492,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 	attack_hand(mob/user)
 		user.Browse(return_text(),"window=computer")
-		user.machine = src
+		src.add_dialog(user)
 		onclose(user, "computer")
 
 	process()
@@ -570,7 +570,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if(status & (BROKEN | NOPOWER))
 			return
 		user.Browse(return_text(),"window=computer")
-		user.machine = src
+		src.add_dialog(user)
 		onclose(user, "computer")
 
 	process()

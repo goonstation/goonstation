@@ -40,7 +40,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			return
 
 		using = user
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		//Other resources are loaded in the files like <link rel="stylesheet" type="text/css" href="{{resource("css/telescope.css")}}">

@@ -166,13 +166,13 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 	user.Browse(return_text(user),"window=atmos")
-	user.machine = src
+	src.add_dialog(user)
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")
 		return
 

@@ -217,7 +217,7 @@ Transponder Codes:<UL>"}
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			if(open && !locked)
-				usr.machine = src
+				src.add_dialog(usr)
 
 				if (href_list["freq"])
 					freq = sanitize_frequency(freq + text2num(href_list["freq"]))

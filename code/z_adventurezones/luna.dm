@@ -1281,7 +1281,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			icon_state = blinking ? "museum_control_blink" : "museum_control"
 
 	attack_hand(mob/user)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"<!DOCTYPE html>
 <html>
 <head>
@@ -1556,7 +1556,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(!(status & NOPOWER) && program)
@@ -1567,7 +1567,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	updateUsrDialog(var/reason)
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				if (reason || updateFlags)
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
@@ -1576,7 +1576,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (reason || updateFlags)
 						src.dynamicUpdate(usr, reason|updateFlags)
 						updateFlags = REASON_NONE

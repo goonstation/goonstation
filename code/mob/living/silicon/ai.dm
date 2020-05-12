@@ -1089,7 +1089,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		//src:cameraFollow = null
 		tracker.cease_track()
 		src:current = null
-		src:machine = null
 
 		if (src.health >= 0)
 			// sure keep trying to use power i guess.
@@ -1490,7 +1489,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "Cancel Camera View"
 
 	//src.set_eye(null)
-	src.machine = null
 	//src:cameraFollow = null
 	src.tracker.cease_track()
 	src.current = null
@@ -1499,7 +1497,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "Change Camera Network"
 	src.set_eye(null)
-	src.machine = null
+	src.remove_dialogs()
 	//src:cameraFollow = null
 	tracker.cease_track()
 	if (src.network == "SS13")
@@ -1765,7 +1763,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	if (!C)
-		src.machine = null
 		src.set_eye(null)
 		return 0
 	if (isdead(src) || C.network != src.network) return 0
@@ -1779,7 +1776,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if (t.isStuck)
 				t.hide()
 
-	src.machine = src
 	if (!src.deployed_to_eyecam)
 		src.eye_view()
 	src.eyecam.set_loc(get_turf(C))

@@ -36,7 +36,7 @@
 
 	attack_hand(mob/user)
 		if(..()) return
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"
 			<body>
 				<h1>Announcement Computer</h1>

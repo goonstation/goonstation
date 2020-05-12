@@ -483,7 +483,7 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		if(user.a_intent == "help" && user.machine != src && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
 			if(src.task)
@@ -498,7 +498,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || get_dist(usr, src) < 2))))
 			if(src.on)
@@ -3227,7 +3227,7 @@
 		if(..() || status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>PR-6S Docking Station</title></head><body>"
 
@@ -3261,7 +3261,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + GUARDBOT_DOCK_RESET_DELAY >= world.time))
@@ -3700,7 +3700,7 @@
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		var/dat = "<center><h4>Tour Monitor</h4></center>"
@@ -3724,7 +3724,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["start_tour"] && linked_bot && (linked_bot in orange(1, src)) && linked_bot.charge_dock)

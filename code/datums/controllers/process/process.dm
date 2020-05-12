@@ -72,16 +72,16 @@
 	var/tmp/run_start = 0
 
 	// Records the world.tick_usage (0 to 100) at which the process last began running
-	/var/tmp/tick_start = 0
+	var/tmp/tick_start = 0
 
 	// Records the total usage of the current run, each 100 = 1 byond tick
-	/var/tmp/current_usage = 0
+	var/tmp/current_usage = 0
 
 	// Records the total usage of the last run, each 100 = 1 byond tick
-	/var/tmp/last_usage = 0
+	var/tmp/last_usage = 0
 
 	// Records the total usage over the life of the process, each 100 = 1 byond tick
-	/var/tmp/total_usage = 0
+	var/tmp/total_usage = 0
 
 	// Records the number of times this process has been killed and restarted
 	var/tmp/times_killed

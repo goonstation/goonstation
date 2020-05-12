@@ -44,11 +44,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
-#if ASS_JAM
-	var/shoot_delay = 0
-#else
 	var/shoot_delay = 4
-#endif
 
 	buildTooltipContent()
 		var/Tcontent = ..()

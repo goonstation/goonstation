@@ -698,7 +698,7 @@ var/list/mechanics_telepads = new/list()
 					return
 				if("Set Range")
 					var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
-					range = CLAMP(rng, 1, 5)
+					range = clamp(rng, 1, 5)
 					boutput(user, "<span class='notice'>Range set to [range]!</span>")
 					if(level == 1)
 						rebeam()
@@ -721,6 +721,7 @@ var/list/mechanics_telepads = new/list()
 
 	disposing()
 		loosen()
+		..()
 
 	proc/tripped()
 		mechanics.fireOutgoing(mechanics.newSignal(mechanics.outputSignal))

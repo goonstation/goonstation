@@ -394,6 +394,7 @@
 
 	create_products()
 		..()
+		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
@@ -407,7 +408,6 @@
 #endif
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
-
 /obj/machinery/vending/security_ammo
 	name = "AmmoTech"
 	desc = "A restricted ammunition vendor."
@@ -818,7 +818,7 @@
 			return
 
 		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["cook"])
 				if(!pizcooking)
 					if((credit < 50)&&(!emagged))
@@ -1325,7 +1325,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
 //obj/machinery/vending
-/	var/const
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3
@@ -1588,7 +1587,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
@@ -1623,7 +1622,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
 

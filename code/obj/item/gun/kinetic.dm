@@ -1271,5 +1271,5 @@
 	New()
 		ammo = new /obj/item/ammo/bullets/gun
 		ammo.amount_left = 6 //spawn full please
-		current_projectile = new/datum/projectile/bullet/gun
+		current_projectile = new /datum/projectile/special/spawner/gun
 		..()

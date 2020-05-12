@@ -14,7 +14,6 @@
 	flags = FPRINT | FLUID_SUBMERGE
 
 	var/status = 0
-	var/mob/current_user = null //GC WOES (airlocks seem to capture current_user a lot and prevent mob gc)
 	var/power_usage = 0
 	var/power_channel = EQUIP
 	var/power_credit = 0
@@ -53,7 +52,7 @@
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
-	current_user = null
+
 	var/area/A = get_area(src)
 	if(A) A.machines -= src
 	..()

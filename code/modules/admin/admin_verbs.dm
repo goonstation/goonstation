@@ -412,6 +412,8 @@ var/list/admin_verbs = list(
 #ifdef ENABLE_SPAWN_DEBUG
 		/client/proc/cmd_modify_spawn_dbg_list,
 		/client/proc/spawn_dbg,
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+		/client/proc/spawn_dbg,
 #endif
 #ifdef INCLUDE_BUGGY_LUA_SHIT
 		/client/proc/RunLuaString,

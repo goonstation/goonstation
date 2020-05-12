@@ -406,7 +406,10 @@
 			var/mob/living/carbon/human/H = activator
 			if (H.mind.assigned_role == "Clown")
 				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
-				H.put_in_hand_or_drop(new /obj/item/toy/diploma)
+				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
+				D.redeemer = H.ckey
+				H.put_in_hand_or_drop(D)
+
 			else
 				boutput(H, "You're not a honking clown, you imposter!")
 		return
@@ -813,7 +816,6 @@
 		SPAWN_DBG(20 SECONDS)
 			if(activator && !isdead(activator))
 				activator.suiciding = 0
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
 /chui/window/contributorrewards
 	name = "Contributor Rewards"

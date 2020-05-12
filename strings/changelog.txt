@@ -1,4 +1,58 @@
 
+(t)tue may 12 20
+(u)Kyle
+(p)608
+(e)⚖|balance
+(+)Stamina buffs and debuffs of different reagents now stack with eachother. You can use two stamina buff chems to add their effects together.
+(t)mon may 11 20
+(u)pali
+(p)657
+(e)⚖🆕|balance, enhancement
+(*)Complete darkness is now black.
+(u)Mordent
+(p)622
+(e)🆕🗺🎨|enhancement, mapping, sprites
+(*)Reworked cyborg module rewriter to let users re-order or remove tools from the inserted module.
+(u)Tarmunora
+(p)583
+(e)⚖🆕|balance, enhancement
+(+)Added plastic cuffs, which take a shorter amount of time to break out of, to security vendors.
+(t)sun may 10 20
+(u)mbc
+(p)650
+(e)|
+(+)Did a big behind-the-scenes optimizing of machine popup window refresh handling. You shouldn't notice anything different, but if any new bugs turn up please report them.
+(u)UrsulaMajor
+(p)638
+(e)🆕|enhancement
+(+)As a clown, give your diploma to someone! See what happens!
+(t)sat may 09 20
+(u)Sovexe
+(p)592
+(e)🆕|enhancement
+(*)Added borg death alert PDA messages for medresearch
+(u)Tarmunora
+(p)617
+(e)⚖|balance
+(+)Increased active cooling rate on cryotubes
+(u)Carbadox
+(p)610
+(e)⚖🆕|balance, enhancement
+(+)Loosened the job restrictions for Syndicate items like sonic grenade, amplified vuvuzela, pickpocket gun, hotdog grenade, moustache grenade, poison bottles and syndicate sauce.
+(u)Dabir
+(p)609
+(e)🆕|enhancement
+(+)Hand teleporters now work when implanted as a chest item.
+(u)Flaborized
+(p)535
+(e)🆕🎨|enhancement, sprites
+(*)Security department roles now start with badges that they can show off!
+(u)RichardGere
+(p)554
+(e)⚖|balance
+(+)Dashing with a katana no longer delimbs, but instead applies a disorient.
+(u)Kyle
+(*)High tier Janitor XP rewards moved to debris field instead of being spawnable. This is to bring them in line with our general philosophy on XP rewards; which is that having a higher job level should not give you a competitive advantage.
 (t)fri may 08 20
 (u)Sovexe
 (p)624

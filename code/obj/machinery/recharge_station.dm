@@ -80,7 +80,7 @@
 			user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<B>[src.name]</B> <A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR><HR>"
 
@@ -260,7 +260,7 @@
 			return
 
 		if ((usr.contents.Find(src) || src.contents.Find(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["refresh"])
 				src.updateUsrDialog()

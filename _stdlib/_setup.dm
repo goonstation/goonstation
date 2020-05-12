@@ -392,16 +392,15 @@
 //various mob_flags go here
 #define MOB_HEARS_ALL 1 	//For mobs who can hear everything (mainly observer ghossts)
 #define SPEECH_REVERSE 2 	//God Ecaps
-#define SPEECH_INTRUDER 4   //thing
-#define SPEECH_BLOB 8		//yes
-#define SEE_THRU_CAMERAS 16	//for ai eye
-#define IS_BONER 32			//for skeletals
-#define IS_RELIQUARY 64 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_SOLDIER 128 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_GUARDIAN 256 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_TECHNICIAN 512 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_CURATOR 1024 //for Azungar's reliquary stuff
-#define AT_GUNPOINT 2048 	//quick check for guns holding me at gunpoint
+#define SPEECH_BLOB 4		//yes
+#define SEE_THRU_CAMERAS 8	//for ai eye
+#define IS_BONER 16			//for skeletals
+#define IS_RELIQUARY 32 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_SOLDIER 64 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_GUARDIAN 128 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
+#define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess

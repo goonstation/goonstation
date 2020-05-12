@@ -28,7 +28,7 @@
 
 		using = user
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 		user.Browse(grabResource("html/quantumTelescope.html"), "window=telescope;size=800x435;can_resize=0;can_minimize=0;can_close=1;override_setting=1")
 

@@ -272,7 +272,7 @@
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 
 		switch(src.state)
@@ -329,7 +329,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["type"])
 			if (href_list["type"] == "E")
@@ -478,7 +478,7 @@
 		if (!( data_core.bank.Find(src.active1) ))
 			src.active1 = null
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
 			if (href_list["scan"])
@@ -702,7 +702,7 @@
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 
 		switch(src.state)
@@ -770,7 +770,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		switch(href_list["operation"])
 

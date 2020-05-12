@@ -225,7 +225,7 @@
 				if (src.manuf_zap(user, 33))
 					return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/list/dat = list("<B>[src.name]</B>")
 
 		if (src.panelopen || isAI(user))
@@ -446,7 +446,7 @@
 					return
 
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr)) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
 				src.flip_out()

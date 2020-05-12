@@ -377,7 +377,7 @@
 	if (src.destroyed)
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/holding_text
 	var/safety_text
 	var/det_text
@@ -541,7 +541,7 @@
 	if (usr.stat || usr.restrained())
 		return
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["toggle"])
 			valve_open = !valve_open

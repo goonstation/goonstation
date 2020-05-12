@@ -234,13 +234,6 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
-							if ((src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50)) || (src.reagents && prob(src.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-								message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
-								src.u_equip(thing)
-								thing.set_loc(src.loc)
-								JOB_XP(src, "Clown", 1)
-							else
-								message = "<B>[src]</B> [pick("spins", "twirls")] [thing] around in [his_or_her(src)] hand."
 							thing.on_spin_emote(src)
 							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
 							animate(transform = turn(matrix(), 240), time = 0.7)

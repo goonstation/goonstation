@@ -163,6 +163,7 @@
 	var/special_sprint = SPRINT_NORMAL
 
 	var/last_show_inv = 0 //used to speedup update_clothing check. its hacky, im sorry
+	var/list/showing_inv
 
 	var/icon/flat_icon = null
 
@@ -500,6 +501,8 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	showing_inv = null
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -821,6 +824,9 @@
 	var/multiplier = 1 // applied before running multiplier
 	var/health_deficiency_adjustment = 0
 	var/maximum_slowdown = 100 // applied before pulling checks
+	var/pushpull_multiplier = 1
+	var/aquatic_movement = 0
+	var/space_movement = 0
 
 	var/datum/movement_modifier/modifier
 	for(var/type_or_instance in src.movement_modifiers)
@@ -828,13 +834,20 @@
 			modifier = movement_modifier_instances[type_or_instance]
 		else
 			modifier = type_or_instance
-		if (modifier.ask_proc)
+
+		if (modifier.ask_proc) // if we have to call a proc
 			var/list/r = modifier.modifiers(src, move_target, running)
 			. += r[1]
 			multiplier *= r[2]
+
+		// collect modifiers from the datum
 		. += modifier.additive_slowdown
 		multiplier += modifier.multiplicative_slowdown
 		health_deficiency_adjustment += modifier.health_deficiency_adjustment
+		pushpull_multiplier *= modifier.pushpull_multiplier
+		aquatic_movement += modifier.aquatic_movement
+		space_movement += modifier.space_movement
+
 		if (modifier.maximum_slowdown < maximum_slowdown)
 			maximum_slowdown = modifier.maximum_slowdown
 
@@ -852,15 +865,6 @@
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 25)
 
-	var/in_wheelchair = 0
-	if (src.buckled)
-		if (istype(src.buckled, /obj/stool/chair/comfy/wheelchair))
-			if (!src.l_hand)
-				in_wheelchair++
-				. *= 0.66
-			if (!src.r_hand)
-				in_wheelchair++
-				. *= 0.66
 	var/missing_legs = 0
 	var/missing_arms = 0
 	if (src.limbs)
@@ -870,78 +874,53 @@
 		if (!src.limbs.r_arm) missing_arms++
 	if (src.lying)
 		missing_legs = 2
+	else if (src.shoes && src.shoes.chained)
+		missing_legs = 2
 
-	switch(missing_legs)
-		if (0)
-			if (!in_wheelchair && src.shoes)
-				if (src.shoes.chained)
-					. += 15
-				else if (src.shoes.speedy) // miner boots, split off from the suit
-					. *= 0.5
-		if (1)
-			if (!in_wheelchair || (in_wheelchair && missing_arms))
-				. += 7
-			else if (in_wheelchair < 2)
-				. += 3
-			if (src.shoes && src.shoes.speedy) // miner boots, split off from the suit
-				. *= 0.75 //less effect if there's only one i guess
-		if (2)
-			if (!in_wheelchair)
-				. += 15
-			else if (in_wheelchair < 2)
-				. += 7
-			switch(missing_arms)
-				if (1)
-					. += 15 //can't pull yourself along too well
-				if (2)
-					. += 300 //haha good luck
+	if (missing_legs == 2)
+		. += 15 - ((2-missing_arms) * 2) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 2.
+	else
+		. += 7.5*missing_legs
 
 	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
 		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
 
-	var/has_fluid_move_gear = 0
-	var/has_space_move_gear = 0
+	var/turf/T = get_turf(src)
 
-	for(var/atom in src.get_equipped_items()) // maybe replace this with items adding movement modifiers as well?
-		var/obj/item/I = atom
-		. += I.getProperty("movespeed")
-		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
-		has_space_move_gear += I.getProperty("space_movespeed")
+	if (T)
+		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+			. -= space_movement
 
-
-	if (has_space_move_gear)
-		var/turf/T = get_turf(src)
-		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE))
-			. += has_space_move_gear
-
-	if (!(src.mutantrace && src.mutantrace.aquatic)) //aquatic race suffers no penalty on dry land OR in fluid
-		var/turf/T = get_turf(src)
-		if (T && has_fluid_move_gear)		//add tally : we are on dry land and have gear on
-			if (!T.active_liquid && !(T.turf_flags & FLUID_MOVE))
-				. += has_fluid_move_gear
-		else if (T && !has_fluid_move_gear) 	//add tally : we are in fluid but have no gear
-			if (T.active_liquid)
-				. += T.active_liquid.movement_speed_mod
-			else if (istype(T,/turf/space/fluid))
-				. += 4
+		if (!(src.mutantrace && src.mutantrace.aquatic))
+			if (aquatic_movement > 0)
+				if (T.active_liquid || T.turf_flags & FLUID_MOVE)
+					. -= aquatic_movement
+			else
+				if (T.active_liquid)
+					. += T.active_liquid.movement_speed_mod
+				else if (istype(T,/turf/space/fluid))
+					. += 4
 
 	. = min(., maximum_slowdown)
 
-	. *= pull_speed_modifier(move_target)
+	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
+		if (src.pulling)
+			. *= (pull_speed_modifier(move_target) * pushpull_multiplier)
 
-	if (!(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 		if (src.pushing && (src.pulling != src.pushing))
-			. *= max (src.pushing.p_class, 1)
+			. *= (max(src.pushing.p_class, 1) * pushpull_multiplier)
 
-		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
+		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
 			var/mob/M = G.affecting
-			if (isnull(M)) continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+			if (isnull(M))
+				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+
 			if (G.state == 0)
 				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
-						. *= max(M.p_class, 1)
+						. *= (max(M.p_class, 1) * pushpull_multiplier)
 			else
-				. *= max(M.p_class, 1)
+				. *= (max(M.p_class, 1) * pushpull_multiplier)
 
 	. *= multiplier
 
@@ -952,6 +931,31 @@
 
 #undef BASE_SPEED
 #undef RUN_SCALING
+
+/mob/living/carbon/human/pull_speed_modifier(var/atom/move_target = 0)
+	. = 1
+	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+		var/atom/movable/A = src.pulling
+		// hi grayshift sorry grayshift
+		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+			if(pull_slowing)
+				. *= max(A.p_class, 1)
+			else
+				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+					. *= max(A.p_class, 1)
+				// else, ignore p_class*/
+				if(ismob(A))
+					var/mob/M = A
+					//if they're lying, pull em slower, unless you have a gang and they are in your gang.
+					if(M.lying)
+						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+							. *= 1		//do nothing
+						else
+							. *= max(A.p_class, 1)
+				else if(istype(A, /obj/storage))
+					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
+					if (locate(/mob) in A.contents)
+						. *= max(A.p_class,1)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -1101,11 +1105,6 @@
 	u_equip(I)
 
 	I.set_loc(src.loc)
-
-	// u_equip() already calls I.dropped()
-	// no it doesn't
-	if (isitem(I))
-		I.dropped(src) // let it know it's been dropped
 
 	if (get_dist(src, target) > 0)
 		src.dir = get_dir(src, target)
@@ -1505,7 +1504,7 @@
 
 
 /mob/living/carbon/human/proc/show_inv(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = {"
 	<B><HR><FONT size=3>[src.name]</FONT></B>
 	<BR><HR>
@@ -2027,6 +2026,29 @@
 		W.dropped(src)
 		src.update_inhands()
 
+/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
+	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
+	if (!equipment_proxy)
+		equipment_proxy = new
+		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
+
+	// reset the modifiers to defaults
+	equipment_proxy.additive_slowdown = 0
+	equipment_proxy.aquatic_movement = 0
+	equipment_proxy.space_movement = 0
+
+	for (var/obj/item/I in src.get_equipped_items())
+		equipment_proxy.additive_slowdown += I.getProperty("movespeed")
+		var/fluidmove = I.getProperty("negate_fluid_speed_penalty")
+		if (fluidmove)
+			equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
+			equipment_proxy.aquatic_movement += fluidmove
+		var/spacemove = I.getProperty("space_movespeed")
+		if (spacemove)
+			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
+			equipment_proxy.space_movement += spacemove
+
+
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return 0
 	I.two_handed = twoHanded
@@ -2281,6 +2303,7 @@
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
 		src.update_clothing()
+
 
 /mob/living/carbon/human/proc/update_equipment_screen_loc()
 	hud.inventory_items.len = 0
@@ -3510,3 +3533,10 @@
 	if(istype(src.wear_id, /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.wear_id
 		return pda.ID_card
+
+/mob/living/carbon/human/is_hulk()
+	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
+		return 1
+	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
+		return 1
+	return 0

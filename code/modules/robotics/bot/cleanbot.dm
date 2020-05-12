@@ -181,7 +181,7 @@
 		if (!issilicon(usr) && !in_range(src, usr)) return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["start"])
 			src.toggle_power(0)

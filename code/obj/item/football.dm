@@ -234,6 +234,7 @@
 			if (src.carrier)
 				src.carrier.vis_contents -= indicator
 			src.indicator = null
+		..()
 
 	throw_impact(atom/hit_atom)
 		if (hit_atom)
