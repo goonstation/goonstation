@@ -958,10 +958,10 @@
 		getamount = max(getamount, 0)
 
 		if(getamount < 1)
-			boutput(user, "<span style=\"color:red\">You aren't able to harvest anything worth salvaging.</span>")
+			boutput(user, "<span class='alert'>You aren't able to harvest anything worth salvaging.</span>")
 			// We just don't bother if the output is below one.
 		else if(!getitem)
-			boutput(user, "<span style=\"color:red\">You can't seem to find anything that looks harvestable.</span>")
+			boutput(user, "<span class='alert'>You can't seem to find anything that looks harvestable.</span>")
 			// mostly a fix for a runtime error if getitem was null
 		else
 			var/cropcount = getamount
@@ -1211,7 +1211,7 @@
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
 					if(SA.contents.len >= SA.maxitems)
-						boutput(user, "<span style=\"color:red\">Your satchel is full! You have to dump the rest on the floor.</span>")
+						boutput(user, "<span class='alert'>Your satchel is full! You have to dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
