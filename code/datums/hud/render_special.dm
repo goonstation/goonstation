@@ -2,12 +2,18 @@
 	var
 		obj/screen/center_light
 		center_light_scale = 1
+		obj/screen/lighting_darkness // makes it so stuff poking outside view() gets hidden / darkened
 
 		// hi it's cirr adding a hack to a hack
 		obj/screen/left_fill
 		obj/screen/right_fill
 
 	New()
+		lighting_darkness = create_screen("", "", 'icons/effects/black.dmi', "", "WEST, SOUTH to EAST, NORTH", LIGHTING_LAYER_BG)
+		lighting_darkness.mouse_opacity = 0
+		lighting_darkness.plane = PLANE_LIGHTING
+		lighting_darkness.layer = BACKGROUND_LAYER // this is a special magic value that makes it display behind non-screen items
+
 		center_light = create_screen("", "", 'icons/effects/vision_default.dmi', "default", "CENTER-1, CENTER-1", LIGHTING_LAYER_BASE)
 		center_light.mouse_opacity = 0 // this is really a giant hack and shouldn't be in the HUD system, but there aren't many good ways to handle this
 		center_light.blend_mode = BLEND_ADD
