@@ -1918,19 +1918,20 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 // <bubs> baking soda, dropper, cocaine in oven makes crack
 
 	on_add()
-		if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-			holder.my_atom:add_stam_mod_regen("consumable_good", 200)
-		if(hascall(holder.my_atom,"addOverlayComposition"))
-			holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine)
+		if(ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			M.add_stam_mod_regen("r_cocaine", 200)
+			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
+		
 	on_remove()
-		if(remove_buff)
-			if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-				holder.my_atom:remove_stam_mod_regen("consumable_good")
-		if(hascall(holder.my_atom,"removeOverlayComposition"))
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine)
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
+		if(ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			if (remove_buff)
+				M.remove_stam_mod_regen("r_cocaine")
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 		return
 
 // grabbing shit from meth, crank and bathsalts for now, cause they do some stuff close to what I want

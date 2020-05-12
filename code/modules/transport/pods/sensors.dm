@@ -40,7 +40,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -65,7 +65,7 @@
 			return
 
 		if (usr.loc == ship)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["scan"] && !scanning)
 				scan(usr)
@@ -83,7 +83,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in ship)
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.opencomputer(M)
 		else
 			usr.Browse(null, "window=ship_sensor")
@@ -211,7 +211,7 @@
 		SPAWN_DBG(0)
 			begin_tracking(0)
 		for(var/mob/M in ship)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				src.opencomputer(M)
 
 //Doing nothing with the Z-level value right now.

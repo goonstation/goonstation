@@ -516,6 +516,7 @@
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("zombie")
 			mob.remove_stam_mod_regen("zombie")
+		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
 		return
@@ -608,6 +609,7 @@
 		if (ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
+		..()
 
 /datum/mutantrace/vamp_zombie
 	name = "vampiric zombie"
@@ -634,6 +636,7 @@
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("vamp_zombie")
 			//mob.remove_stam_mod_regen("vamp_zombie")
+		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
 		H.make_vampiric_zombie()
@@ -692,6 +695,7 @@
 	disposing()
 		if (ishuman(mob) && (mob.mob_flags & IS_BONER))
 			mob.mob_flags &= ~IS_BONER
+		..()
 
 /*
 /datum/mutantrace/ape

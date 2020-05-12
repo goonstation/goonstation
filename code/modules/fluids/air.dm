@@ -9,11 +9,16 @@ var/list/ban_from_airborne_fluid = list()
 	bonus_evaporation_time = 30 SECONDS
 
 	//max_alpha = 200
-
+#if ASS_JAM
+	required_to_spread = 5
+#else
 	required_to_spread = 15
-
+#endif
 	drains_floor = 0
-
+#if ASS_JAM
+	update_required_to_spread()
+		required_to_spread = min(15, max(0.1, (src.contained_amt**0.8)/30)+0.1) //wowowow magic numbers
+#endif
 //What follows is not for the faint of heart.
 // I have done a shitton of copy paste from the base obj/fluid type.
 // This is messy as fuck, but its the fastest solution i could think of CPU wise
@@ -101,7 +106,7 @@ var/list/ban_from_airborne_fluid = list()
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
-		var/react_volume = min(1,src.amt)
+		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20)
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
@@ -123,7 +128,7 @@ var/list/ban_from_airborne_fluid = list()
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
-		var/react_volume = src.amt > 10 ? max(6,src.amt / 3) : (src.amt)
+		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20)
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full

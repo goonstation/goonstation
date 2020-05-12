@@ -17,7 +17,7 @@
 		activations++
 		safe_area_names = list()
 		safe_areas = list()
-		var/num_safe_areas = CLAMP(6 - activations, 1, 5)
+		var/num_safe_areas = clamp(6 - activations, 1, 5)
 		var/area/temp = null
 		var/list/locations_copy = list()
 		for(var/A in safe_locations)

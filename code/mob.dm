@@ -38,11 +38,11 @@
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
+	var/last_door_knock_time = 0 //anti door knock spam, now seperate from emote anti-spam
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
-	var/obj/machinery/machine = null // todo : look into rewriting the way this works. its a lingering ref to the last machine the mob touched, and machines have to search thru all clients to check this var when they update their screens
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
@@ -246,7 +246,7 @@
 		return
 
 	//for item specials
-	if (src.restrain_time > world.timeofday)
+	if (src.restrain_time > TIME)
 		return
 
 	if (src.buckled)
@@ -254,11 +254,6 @@
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
 	else
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				//if (usr == G.assailant)
-				continue
-				G.shoot()
 		. = ..()
 
 	src.closeContextActions()
@@ -287,9 +282,6 @@
 
 	if (ghost && ghost.corpse == src)
 		ghost.corpse = null
-
-	if (src.machine)
-		src.machine.current_user = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -468,7 +460,6 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
-	src.machine = null
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -1239,6 +1230,7 @@
 	return
 
 /mob/proc/drop_item(var/obj/item/W)
+	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
@@ -1253,7 +1245,7 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 		u_equip(W)
-		if (W)
+		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
 				if (V.throw_dropped_items_overboard == 1)
@@ -1264,16 +1256,17 @@
 				W.set_loc(get_turf(src.loc))
 			else
 				W.set_loc(src.loc)
-			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
-		var/turf/T = get_turf(src.loc)
-		T.Entered(W)
+
+			var/turf/T = get_turf(src.loc)
+			T.Entered(W)
+			.= 1
+		else
+			.= 0
 		if (origW)
 			origW.holding = null
 			actions.stopId("magpickerhold", src)
-		return 1
-	return 0
 
 //throw the dropped item
 /mob/proc/drop_item_throw()
@@ -1356,7 +1349,7 @@
 /mob/proc/swap_hand()
 	return
 
-/mob/proc/u_equip(W as obj)
+/mob/proc/u_equip(obj/item/W)
 
 // I think this bit is handled by each method of dropping it, and it prevents dropping items in your hands and other procs using u_equip so I'll get rid of it for now.
 //	if (hasvar(W,"cant_self_remove"))
@@ -1378,6 +1371,8 @@
 		src.client.screen -= W
 
 	set_clothing_icon_dirty()
+
+	W.dropped(src)
 
 /*
 /mob/verb/dump_source()
@@ -1515,7 +1510,7 @@
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	src.set_eye(null)
-	src.machine = null
+	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
@@ -1959,7 +1954,7 @@
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
 	SPAWN_DBG(0) //multicluwne
-		duration = CLAMP(duration, 10, 100)
+		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
 		game_stats.Increment("violence")
@@ -2348,7 +2343,7 @@
 	src.take_ear_damage(-INFINITY, 1)
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
-	src.buckled = initial(src.buckled)
+	src.buckled = null
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
@@ -2736,13 +2731,7 @@
 		return 1
 	return 0
 
-/mob/living/carbon/human/is_hulk()
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
-		return 1
-	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
-		return 1
-	return 0
-
+/mob/proc/update_equipped_modifiers()
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
@@ -2929,12 +2918,6 @@
 	if(istype(src.equipped(), /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
-
-
-
-
-
-
 
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN

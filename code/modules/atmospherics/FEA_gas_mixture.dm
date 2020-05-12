@@ -968,5 +968,3 @@ What are the archived variables for?
 	//Similar to check_me_then_share(...) but also checks to see if amount of air moved is small enough
 	//	that group processing is still accurate for the sharer (aborts if not)
 	//Returns: 0 if the self-check failed then -1 if sharer-check failed then 1 if successful share
-
-

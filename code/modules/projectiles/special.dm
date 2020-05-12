@@ -519,7 +519,7 @@
 
 				var/setangle = 0
 				if (face_desired_dir)
-					setangle = atan2(desired_y,desired_x)
+					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
 				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
@@ -798,3 +798,72 @@
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+
+/datum/projectile/special/spawner //shoot stuff
+	name = "dimensional pocket"
+	power = 1
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon_state = "bullet"
+	implanted= null
+	casing = null
+	icon_turf_hit = null
+	var/typetospawn = null
+	var/hasspawned = null
+
+	on_launch(obj/projectile/O)
+		hasspawned = null
+
+	on_hit(atom/hit, direction, projectile)
+		if(ismob(hit)&&typetospawn)
+			hasspawned = new typetospawn(get_turf(hit))
+			return 1
+		
+
+	on_end(obj/projectile/O)
+		if(!hasspawned && typetospawn)
+			hasspawned = new typetospawn(get_turf(O))
+			return 1
+
+/datum/projectile/special/spawner/gun //shoot guns
+	name = "gun"
+	power = 20 //20 damage from getting beaned with a gun idk
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon_state = "gun"
+	implanted= null
+	casing = null
+	icon_turf_hit = null
+	typetospawn = /obj/item/gun/kinetic/derringer
+
+/datum/projectile/special/spawner/beepsky
+	name = "Beepsky"
+	window_pass = 0
+	icon = 'icons/obj/aibots.dmi'
+	icon_state = "secbot1"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 5
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1.0
+	caliber = 2
+	icon_turf_hit = "secbot1-spaz"
+	implanted = null
+	typetospawn = /obj/machinery/bot/secbot
+
+	on_hit(atom/hit)
+		if(..())
+			var/mob/hitguy = hit
+			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			var/obj/machinery/bot/secbot/beepsky = hasspawned
+			beepsky.emagged = 1
+			if(istype(hitguy, /mob/living/carbon))
+				beepsky.target = hitguy
+
+	on_end(obj/projectile/O)
+		if(..())
+			var/obj/machinery/bot/secbot/beepsky = hasspawned
+			beepsky.emagged = 1

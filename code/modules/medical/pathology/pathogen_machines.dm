@@ -719,7 +719,7 @@
 					src.manip.icon_state = "manipulator"
 				gui.sendToSubscribers({"{"exposed":[src.manip.exposed]}"}, "setUIState")
 		if (href_list["splice"])
-			var/slotid = CLAMP(text2num(href_list["splice"]), 1, src.manip.slots.len)
+			var/slotid = clamp(text2num(href_list["splice"]), 1, src.manip.slots.len)
 			src.manip.splicesource = slotid
 			gui.sendToSubscribers({"{"splice":{"selected":[src.manip.splicesource]}}"}, "setUIState")
 
@@ -812,14 +812,14 @@
 			var/rptr_index = text2num(href_list["rptr_index"])
 			var/t = text2num(href_list["target"])
 			if(t)
-				lptr_index = CLAMP(lptr_index+1, 1, src.manip.cache_target.len)
-				rptr_index = CLAMP(rptr_index+1, 1, src.manip.cache_target.len)
+				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_target.len)
+				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_target.len)
 				src.manip.sel_target_lptr = lptr_index
 				src.manip.sel_target_rptr = rptr_index
 				gui.sendToSubscribers({"{"splice":{"selTarget":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
 			else
-				lptr_index = CLAMP(lptr_index+1, 1, src.manip.cache_source.len)
-				rptr_index = CLAMP(rptr_index+1, 1, src.manip.cache_source.len)
+				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_source.len)
+				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_source.len)
 				src.manip.sel_source_lptr = lptr_index
 				src.manip.sel_source_rptr = rptr_index
 				gui.sendToSubscribers({"{"splice":{"selSource":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
@@ -834,10 +834,10 @@
 			if(direction == null || t_index == null || (direction != 0 && (s_index == null || s_len == null)) || (direction == 0 && t_len == null))
 				return
 
-			direction = CLAMP(direction, -1, 1)
+			direction = clamp(direction, -1, 1)
 			//Increase the positions by one since they are 0-indexed JS.
-			s_index = CLAMP(s_index+1, 1, src.manip.cache_source.len)
-			t_index = CLAMP(t_index+1, 1, src.manip.cache_target.len)
+			s_index = clamp(s_index+1, 1, src.manip.cache_source.len)
+			t_index = clamp(t_index+1, 1, src.manip.cache_target.len)
 
 			if(direction == 0) //Remove
 				if(src.manip.cache_target.len)
@@ -848,7 +848,7 @@
 			else	//Insert
 				direction = max(direction,0) //In case we're inserting before we don't want to subtract from the target index
 				if(src.manip.cache_source.len)
-					var/newpos = CLAMP(t_index + direction, 1, src.manip.cache_target.len+1) 	//Set the position to insert at
+					var/newpos = clamp(t_index + direction, 1, src.manip.cache_target.len+1) 	//Set the position to insert at
 					var/newseq = src.manip.cache_source.Copy(s_index, s_index + s_len) //Copy the elements from source we want to insert
 					src.manip.cache_target.Insert(newpos, newseq)	//Do the insertion
 					src.manip.cache_source.Cut(s_index, s_index + s_len) //Remove the DNA sequence from the source

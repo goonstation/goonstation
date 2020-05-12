@@ -10,10 +10,18 @@
 	var/multiplicative_slowdown = 0 // multiplicative slowdown, applied just before running. Stacks multiplicatively with other multiplicative modifiers, ie.
 	var/health_deficiency_adjustment = 0 // additive adjustment to health deficiency, mostly used by reagents which reduce the effect of damage on movement
 	var/maximum_slowdown = 100 // maximum slowdown, applied before pulling (and before multiplier)
+	var/pushpull_multiplier = 1 // multiplier for pushing/pulling speed
+	var/space_movement = 0
+	var/aquatic_movement = 0
 	var/ask_proc = 0
 
 /datum/movement_modifier/proc/modifiers(mob/user, turf/move_target, running)
 	return list(0,0) // list(additive_slowdown, multiplicative_slowdown)
+
+/datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
+
+/datum/movement_modifier/hulkstrong
+	pushpull_multiplier = 0
 
 /datum/movement_modifier/status_slowed // these are instantiated by the status effect and the slowdown adjusted there
 	additive_slowdown = 10
@@ -105,3 +113,37 @@
 				.[1] = 2
 			if (51 to 101)
 				.[1] = 3
+
+/datum/movement_modifier/wheelchair
+	ask_proc = 1
+
+/datum/movement_modifier/wheelchair/modifiers(mob/living/carbon/human/user, move_target, running)
+	var/missing_arms = 0
+	var/missing_legs = 0
+	if (user.limbs)
+		if (!user.limbs.l_leg)
+			missing_legs++
+		if (!user.limbs.r_leg)
+			missing_legs++
+		if (!user.limbs.l_arm)
+			missing_arms++
+		if (!user.limbs.r_arm)
+			missing_arms++
+
+	if (user.lying)
+		missing_legs = 2
+	else if (user.shoes && user.shoes.chained)
+		missing_legs = 2
+
+	if (missing_arms == 2)
+		return list(100,0) // this was snowflaked in as 300 in previous movement delay code
+	else
+		var/applied_modifier = 0
+		if (missing_legs == 2)
+			applied_modifier = 15 - ((2-missing_arms) * 2) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 2.
+		else
+			applied_modifier = 7.5*missing_legs
+
+		// apply a negative modifier to balance out what movement_delay would set, times half times the number of arms
+		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
+		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)

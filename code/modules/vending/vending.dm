@@ -394,6 +394,7 @@
 
 	create_products()
 		..()
+		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
@@ -588,6 +589,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/cashmoney, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/networkcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/radioscanner, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regreplace, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/relaycomp, 30)
@@ -851,7 +853,7 @@
 			return
 
 		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["cook"])
 				if(!pizcooking)
 					if((credit < 50)&&(!emagged))
@@ -1358,7 +1360,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
 //obj/machinery/vending
-/	var/const
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3
@@ -1621,7 +1622,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
@@ -1656,7 +1657,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
 

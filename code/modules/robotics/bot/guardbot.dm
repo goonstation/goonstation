@@ -483,7 +483,7 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		if(user.a_intent == "help" && user.machine != src && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
 			if(src.task)
@@ -498,7 +498,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || get_dist(usr, src) < 2))))
 			if(src.on)
@@ -1023,7 +1023,19 @@
 			src.icon_needs_update = 0
 			return
 
+		set_beacon_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.beacon_freq]")
+			src.beacon_freq = newfreq
+			src.beacon_connection = radio_controller.add_object(src, "[src.beacon_freq]")
 
+		set_control_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.control_freq]")
+			src.control_freq = newfreq
+			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
 
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
@@ -3215,7 +3227,7 @@
 		if(..() || status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>PR-6S Docking Station</title></head><body>"
 
@@ -3249,7 +3261,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + GUARDBOT_DOCK_RESET_DELAY >= world.time))
@@ -3448,6 +3460,30 @@
 								qdel(src.current.task)
 							src.post_wire_status(target,"command","term_message","data","command=status&status=wipe_success")
 							return
+
+						if("set_freq") //Set control or beacon frequency of current bot
+							if(!src.current)
+								src.post_wire_status(target,"command","term_message","data","command=status&status=nobot")
+								return
+
+							var/newfreq = text2num(data["freq"])
+							if(!newfreq || newfreq != sanitize_frequency(newfreq))
+								src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq")
+								return
+
+							var/freqtype = data["freq_type"]
+							switch(freqtype)
+								if("control")
+									src.current.set_control_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								if("beacon")
+									src.current.set_beacon_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								else
+									src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq_type")
+									return
 
 					return
 
@@ -3664,7 +3700,7 @@
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		var/dat = "<center><h4>Tour Monitor</h4></center>"
@@ -3688,7 +3724,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["start_tour"] && linked_bot && (linked_bot in orange(1, src)) && linked_bot.charge_dock)

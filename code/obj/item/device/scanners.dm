@@ -553,7 +553,7 @@ that cannot be itched
 
 		if(found == 0)
 			src.active1 = new /datum/data/record()
-			src.active1.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+			src.active1.fields["id"] = num2hex(rand(1, 1.6777215E7),6)
 			src.active1.fields["rank"] = "Unassigned"
 			//Update Information
 			src.active1.fields["name"] = M.name

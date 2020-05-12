@@ -1,3 +1,7 @@
+#define ROBOT_BATTERY_DISTRESS_INACTIVE 0
+#define ROBOT_BATTERY_DISTRESS_ACTIVE 1
+#define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+
 /datum/robot_cosmetic
 	var/head_mod = null
 	var/ches_mod = null
@@ -51,6 +55,8 @@
 	var/opened = 0
 	var/wiresexposed = 0
 	var/brainexposed = 0
+	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+	var/next_batteryDistressBoop = 0
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -68,6 +74,7 @@
 	var/sound_automaton_spaz = 'sound/misc/automaton_spaz.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
+	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
 
 	// moved up to silicon.dm
 	killswitch = 0
@@ -248,6 +255,7 @@
 			logTheThing("combat", src, null, "'s AI controlled cyborg body was destroyed [log_health(src)] at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 			src.mainframe.return_to(src)
 		setdead(src)
+		borg_death_alert()
 		src.canmove = 0
 
 		if (src.camera)
@@ -1610,40 +1618,47 @@
 		return ..()
 
 	movement_delay(var/atom/move_target = 0)
-		var/tally = 2
 
-		tally += movement_delay_modifier
+		. = 2 + movement_delay_modifier
 
-		if (src.oil) tally -= 0.5
+		if (src.oil)
+			. -= 0.5
 
 		if (!src.part_leg_l)
-			tally += 3.5
-			if (src.part_arm_l) tally -= 1
+			. += 3.5
+			if (src.part_arm_l)
+				. -= 1
 		if (!src.part_leg_r)
-			tally += 3.5
-			if (src.part_arm_r) tally -= 1
+			. += 3.5
+			if (src.part_arm_r)
+				. -= 1
 
 		var/add_weight = 0
 		for (var/obj/item/parts/robot_parts/P in src.contents)
-			if (P.weight > 0) add_weight += P.weight
-			if (P.speedbonus) tally -= P.speedbonus
+			if (P.weight > 0)
+				add_weight += P.weight
+			if (P.speedbonus)
+				. -= P.speedbonus
 
 		if (add_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/treads) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/treads)) tally += add_weight / 3
-			else tally += add_weight
+			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/treads) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/treads))
+				. += add_weight / 3
+			else
+				. += add_weight
 
 		for (var/obj/item/roboupgrade/R in src.upgrades)
 			if (istype(R, /obj/item/roboupgrade/speed) && R.activated)
-				if (src.part_leg_r) tally *= 0.75
-				if (src.part_leg_l) tally *= 0.75
+				if (src.part_leg_r)
+					. *= 0.75
+				if (src.part_leg_l)
+					. *= 0.75
 
 		//This is how it's done in humans, but since borg max health is a bunch of nonsense, I'm not going to add it.
 		// var/health_deficiency = (src.max_health - src.health)
 		// if (health_deficiency >= 90) tally += (health_deficiency / 25)
 
-		tally *= pull_speed_modifier(move_target)
-
-		return tally
+		if (src.pulling)
+			. *= pull_speed_modifier(move_target)
 
 	hotkey(name)
 		switch (name)
@@ -2272,11 +2287,18 @@
 					HealDamage("All", 6, 6)
 
 				setalive(src)
+
+			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				batteryDistress() // Execute distress mode
+			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
+				clearBatteryDistress() // Exit distress mode
+
 		else
 			if (isalive(src))
 				sleep(0)
 				src.lastgasp()
 			setunconscious(src)
+			batteryDistress() // No battery. Execute distress mode
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -2307,6 +2329,38 @@
 		if (oil <= 0)
 			oil = 0
 			src.remove_stun_resist_mod("robot_oil", 25)
+
+	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
+		var/message = null
+		var/mailgroup = "medresearch"
+		var/net_id = generate_net_id(src)
+		var/frequency = 1149
+		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
+		var/area/myarea = get_area(src)
+
+		switch(modifier)
+			if (ROBOT_DEATH_MOD_NONE)	//normal death and gib
+				message = "CONTACT LOST: [src] in [myarea]"
+			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
+				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
+			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
+				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
+			else	//Someone passed us an unkown modifier
+				message = "UNKNOWN ERROR: [src] in [myarea]"
+
+		if (message && mailgroup && radio_connection)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "text_message"
+			newsignal.data["sender_name"] = "CYBORG-DAEMON"
+			newsignal.data["message"] = message
+			newsignal.data["address_1"] = "00000000"
+			newsignal.data["group"] = mailgroup
+			newsignal.data["sender"] = net_id
+
+			radio_connection.post_signal(src, newsignal)
+			radio_controller.remove_object(src, "[frequency]")
 
 	proc/handle_regular_status_updates()
 		if(src.stat) src.camera.camera_status = 0.0
@@ -2387,6 +2441,8 @@
 			if (src.part_head)
 				src.part_head.set_loc(src.loc)
 				src.part_head = null
+				//no chest means you are dead. Placed here to avoid duplicate alert in event that head was already destroyed and you then destroy torso
+				borg_death_alert()
 
 			if (src.client)
 				var/mob/dead/observer/newmob = ghostize()
@@ -2403,6 +2459,7 @@
 				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
 
 			src.visible_message("<b>[src]</b> completely stops moving and shuts down...")
+			borg_death_alert()
 			logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Ditto (Convair880).
 
 			var/mob/dead/observer/newmob = ghostize()
@@ -2511,6 +2568,7 @@
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain()
 				src.update_appearance()
+				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 
 	process_locks()
@@ -2751,6 +2809,27 @@
 			UpdateOverlays(i_clothes, "clothes")
 		else
 			UpdateOverlays(null, "clothes")
+
+	var/image/i_batterydistress
+
+	/mob/living/silicon/robot/proc/batteryDistress()
+		if (!src.i_batterydistress) // we only need to build i_batterydistress once
+			src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
+			src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
+
+		if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
+			UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
+			src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
+			src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
+		else if(world.time >= src.next_batteryDistressBoop)
+			src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
+			playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
+
+
+	/mob/living/silicon/robot/proc/clearBatteryDistress()
+		src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+		ClearSpecificOverlays("batterydistress")
+
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null
 		switch(slot)
@@ -2906,6 +2985,7 @@
 			src.part_chest = null
 		if (istype(part,/obj/item/parts/robot_parts/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
+			borg_death_alert()//no head means you dead
 			if (src.brain)
 				src.brain.set_loc(get_turf(src))
 			src.part_head.brain = null
@@ -3301,3 +3381,6 @@
 		//STEP SOUND HANDLING OVER
 
 #undef can_step_sfx
+#undef ROBOT_BATTERY_DISTRESS_INACTIVE
+#undef ROBOT_BATTERY_DISTRESS_ACTIVE
+#undef ROBOT_BATTERY_DISTRESS_THRESHOLD

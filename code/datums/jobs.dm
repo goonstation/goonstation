@@ -18,6 +18,7 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
+	var/receives_badge = 0
 	var/announce_on_join = 0
 	var/list/alt_names = list()
 	var/slot_head = null
@@ -221,6 +222,7 @@
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
 
 
@@ -432,6 +434,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/rank/security
@@ -477,6 +480,7 @@
 	limit = 1
 	wages = 150
 	//allow_traitors = 0
+	receives_badge = 1
 	cant_spawn_as_rev = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/storage/belt/security/shoulder_holster
@@ -822,7 +826,7 @@
 	wages = 100
 	slot_belt = /obj/item/device/pda2/janitor
 	slot_jump = /obj/item/clothing/under/rank/janitor
-	slot_foot = /obj/item/clothing/shoes/black
+	slot_foot = /obj/item/clothing/shoes/galoshes
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
@@ -1016,6 +1020,7 @@
 	wages = 250
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_miranda = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
@@ -2095,7 +2100,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/pistol
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
@@ -2109,7 +2114,8 @@
 							/obj/item/device/pda2/heads,
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/powercell_medium)
+							/obj/item/storage/pouch/powercell_medium,
+							/obj/item/gun/kinetic/pistol)
 
 	New()
 		..()
@@ -2134,13 +2140,15 @@
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/clock_188
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
@@ -2149,7 +2157,8 @@
 	slot_poc2 = /obj/item/spacecash/fivehundred
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/clock)
+							/obj/item/storage/pouch/clock,
+							/obj/item/gun/kinetic/clock_188)
 
 	New()
 		..()

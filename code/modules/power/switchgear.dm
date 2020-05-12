@@ -64,12 +64,12 @@
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=switchgear")
 			return
 
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Switchgear Control</B><BR><A href='?src=\ref[src];close=1'>Close Panel</A><HR>"
 
 	if(!powernet)
@@ -125,14 +125,14 @@
 				boutput(usr, "<span class='alert'>You'd close the panel, if only you had hands.</span>")
 				return
 			usr.Browse(null, "window=switchgear")
-			usr.machine = null
+			src.remove_dialog(usr)
 			src.open = 0
 			icon_state = "c_unpowered"
 			// update icon to closed state
 			return
 	else
 		usr.Browse(null, "window=switchgear")
-		usr.machine = null
+		src.remove_dialog(usr)
 
 /obj/machinery/power/switchgear/process()
 	if(!(status & (NOPOWER|BROKEN)) )

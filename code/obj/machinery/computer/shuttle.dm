@@ -229,13 +229,13 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			src.send()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -298,7 +298,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
@@ -310,7 +310,7 @@
 					call_shuttle()
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -390,7 +390,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (isturf(src.loc) && in_range(src, usr))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["send"])
 			for(var/obj/machinery/shuttle/engine/propulsion/eng in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
 				if(eng.stat1 == 0 && eng.stat2 == 0 && eng.id == "zeta")
@@ -412,7 +412,7 @@
 					call_shuttle()
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -467,7 +467,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
@@ -478,7 +478,7 @@
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=ice_elevator")
 
 	src.add_fingerprint(usr)
@@ -531,7 +531,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
@@ -542,7 +542,7 @@
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=biodome_elevator")
 
 	src.add_fingerprint(usr)
@@ -578,7 +578,7 @@
 
 /obj/sign_accidents
 	name = "Elevator Safety Sign"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0

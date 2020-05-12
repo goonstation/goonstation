@@ -1028,6 +1028,12 @@
 		if (src.lying)
 			return
 		..()
+		if (src.buckled_guy == to_buckle)
+			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+
+	unbuckle()
+		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		return ..()
 
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */
@@ -1291,7 +1297,7 @@
 	// Seems to be the only way to get this stuff to auto-refresh properly, sigh (Convair880).
 	proc/control_interface(mob/user as mob)
 		if (!user.hasStatus("handcuffed") && isalive(user))
-			user.machine = src
+			src.add_dialog(user)
 
 			var/dat = ""
 

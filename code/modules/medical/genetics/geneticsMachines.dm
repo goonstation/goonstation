@@ -162,7 +162,7 @@ var/list/genetics_computers = list()
 				<span></span></body></html>
 				"}
 
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 
 	if(print == 1) //Hilariously hacky temporary print thing.
@@ -1322,7 +1322,7 @@ var/list/genetics_computers = list()
 
 							new/datum/genetics_appearancemenu(usr.client, subject)
 							usr << browse(null, "window=genetics")
-							usr.machine = null
+							src.remove_dialog(usr)
 				else
 					topbotbutton_html = ""
 					html_list += "<p>Can not change appearance of non-humans.</p>"

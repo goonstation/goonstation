@@ -297,6 +297,13 @@ var/global/list/airbridgeComputers = list()
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
 
+	initialize()
+		..()
+		update_status()
+		if (starts_established && links.len)
+			SPAWN_DBG(1 SECOND)
+				do_initial_extend()
+
 	disposing()
 		airbridgeComputers -= src
 		..()

@@ -230,17 +230,18 @@ datum
 			viscosity = 0.4
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					holder.my_atom:add_stam_mod_regen("aranesp", 15)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_regen("aranesp", 15)
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
 					holder.my_atom:add_stam_mod_max("aranesp", 25)
 				return
 
 			on_remove()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("aranesp")
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-					holder.my_atom:remove_stam_mod_max("aranesp")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_regen("aranesp")
+					M.remove_stam_mod_max("aranesp")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -287,17 +288,17 @@ datum
 			stun_resist = 1000
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					holder.my_atom:add_stam_mod_regen("stims", 500)
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					holder.my_atom:add_stam_mod_max("stims", 500)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_regen("stims", 500)
+					M.add_stam_mod_max("stims", 500)
 				..()
 
 			on_remove()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("stims")
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-					holder.my_atom:remove_stam_mod_max("stims")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_regen("stims")
+					M.remove_stam_mod_max("stims")
 				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -1725,7 +1726,7 @@ datum
 			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
 				if (method == INGEST)
 					if (ishuman(M))
-						M:blood_color = "#[num2hex(rand(0, 255))][num2hex(rand(0, 255))][num2hex(rand(0, 255))]"
+						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -2211,14 +2212,16 @@ datum
 					DEBUG_MESSAGE("<span class='notice'><b>Spun [O]: [dir_temp], [speed_temp]</b></span>")
 */
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_flip", 2)
 				..()
 
 			on_remove()
 				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_flip")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
 				..()
@@ -2343,14 +2346,16 @@ datum
 				animate_spin(T, dir_temp, speed_temp)
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 4)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_glowing_flip", 4)
 				..()
 
 			on_remove()
 				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_glowing_flip")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
 				..()
@@ -3659,12 +3664,12 @@ datum
 				if(M && our_amt > 20)
 					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))
 						M.bioHolder.AddEffect("fat")
-				for (var/obj/V in orange(CLAMP(our_amt / 5, 2,10),M))
+				for (var/obj/V in orange(clamp(our_amt / 5, 2,10),M))
 					if (V.anchored)
 						continue
 					step_towards(V,M)
 
-				for (var/mob/living/N in orange(CLAMP(our_amt / 5, 2,10),M))
+				for (var/mob/living/N in orange(clamp(our_amt / 5, 2,10),M))
 					step_towards(N,M)
 					if(ishuman(N) && prob(1))
 						N.say("[M.name] is an ocean of muscle.")

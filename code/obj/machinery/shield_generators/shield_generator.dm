@@ -398,15 +398,15 @@
 
 					if ("sgen_actvd")
 						src.print_text("<b>Alert:</b> Shield generator activated.")
-						if (master && master.current_user)
-							message_admins("<span class='notice'>[key_name(master.current_user)] activated shields</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] activated shields")
+						if (usr)
+							message_admins("<span class='notice'>[key_name(usr)] activated shields</span>")
+							logTheThing("station", null, null, "[key_name(usr)] activated shields")
 
 					if ("sgen_dactvd")
 						src.print_text("<b>Alert:</b> Shield generator deactivated.")
-						if (master && master.current_user)
-							message_admins("<span class='notice'>[key_name(master.current_user)] deactivated shields</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] deactivated shields")
+						if (usr)
+							message_admins("<span class='notice'>[key_name(usr)] deactivated shields</span>")
+							logTheThing("station", null, null, "[key_name(usr)] deactivated shields")
 				return
 		return
 
