@@ -3,7 +3,7 @@
 (u)pali
 (p)678
 (e)|
-(*)Ass jam changelog is now only shown during ass jam. Also it is pink and above the regular changelog.
+(*)Ass jam changelog is now only shown during ass jam. Also it is light brown (I tried ok, I'm not good at colours) and above the regular changelog.
 (u)Gannets
 (p)669
 (e)⚖|balance
