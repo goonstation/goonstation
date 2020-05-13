@@ -1,5 +1,9 @@
 
 (t)wed may 13 20
+(u)Gannets
+(p)669
+(e)⚖|balance
+(+)Reduced light machine gun slow effect by two thirds.
 (u)pali
 (p)676
 (e)🆕|enhancement
