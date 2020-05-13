@@ -4,23 +4,11 @@
 (p)669
 (e)⚖|balance
 (+)Reduced light machine gun slow effect by two thirds.
-(u)pali
-(p)676
-(e)🆕|enhancement
-(*)Ass day classic vote now appears in the Status tab (just like map votes).
 (t)tue may 12 20
-(u)RichardGere
-(p)665
-(e)🍑🆕|ass-jam, enhancement
-(*)ASS JAM: Added a third emag stage to securitrons
 (u)system86
 (p)616
 (e)🆕|enhancement
 (+)DWAINE "eval" improvements and additions. New/fixed commands: # . .s del ' (single quote)
-(u)Tarmunora
-(p)541
-(e)🍑|ass-jam
-(+)ASS_JAM: experimental change to newsmoke spreading
 (u)Sovexe
 (p)646
 (e)🆕🎨|enhancement, sprites
@@ -83,10 +71,6 @@
 (p)624
 (e)🆕|enhancement
 (+)Clicking an airlock that you don't have permission to open with the help intent will now cause you to knock on the door
-(u)Tarmunora
-(p)605
-(e)🍑|ass-jam
-(+)ASS JAM: Changed pulse to pullse
 (u)glassofmilk
 (p)597
 (e)🆕|enhancement
@@ -278,10 +262,6 @@
 (u)mbc
 (e)⚖|balance
 (*)Disorient statuseffect will no longer randomly make you drop items. Increased the likelihood of a changeling or vampire scream forcing you to drop items to compensate.
-(u)Fosstar
-(p)450
-(e)🍑⚖🗺|ass-jam, balance, mapping
-(*)Modernized and fixed up Donut 2 a bunch. The map is available during Ass Jam!
 (u)mbc
 (p)461
 (e)⚖|balance
@@ -568,14 +548,6 @@
 (+)Batch one of small improvements and fixes to Kondaru.
 (u)Erinexx
 (+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
-(u)ASS_JAM
-(*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
-(*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
-(*)Moonlol - New wizard spell: Timestop. "This very handy dandy feature surely wont cause any runtimes"
-(*)Polivilas - Disables zipgun, adds a slamgun. "I will pay out 100k spacebux for better sprites - contact 2027#2027 on discord for more details."
-(*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
-(*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
-(*)UrsulaMajor - Updated Density, map smol.
 (u)Flaborized
 (*)Added a few small items to the surplus crate!
 (u)Tarmunora
@@ -585,8 +557,6 @@
 (+)Changed pointblanking to hit with all the projectiles in a burst, not just one
 (+)Fixes up gunpoint grabs a little bit (should shoot more consistently)
 (t)sun apr 12 20
-(u)Goonstation Administration Team
-(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
 (u)Enfaeutchie
 (+)The Lawgiver now comes with an instructional pamphlet.
 (+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
@@ -664,7 +634,6 @@
 (*)Added Roach and Saxophone as spacebux rewards.
 (*)Disaster mode now includes a wraith at roundstart.
 (u)pali
-(*)Nukies on ass day can now get much wilder target locations.
 (+)Until we rework matsci somewhat light bulbs, light tubes and tripod bulbs are now 5 times more expensive when it comes to material cost
 (u)adharainspace
 (*)Added fancy new RCD sprites, courtesy of Flaborized!
@@ -1589,11 +1558,6 @@
 (u)Warcrimes
 (*)Y'know those shitty "cigars" they sell at the gas station, two fer a buck? Ya got those now.
 (*)I hear there's a shady brand out there that loads em with all sorts a spice and junk, know what i'm sayin Big J?
-(t)wed nov 13 19
-(u)Firebarrage and Hyrdofloric
-(*)A new Ass Day event: The Ass Day Arena!
-(*)Travel there with your ghost ability buttons, just like the afterlife bar
-(*)In the arena is a special artifact. If you pick it up and dont let anyone else pick it up for 30 seconds you will respawn!
 (t)sat nov 09 19
 (u)Kyle
 (*)Merge functional plates and trays patch by adhara. Put items on plates or trays and carry them around with you. Find trays in the kitchen vendomat.
