@@ -579,6 +579,86 @@
 		if (prob(35 * quality))
 			target.changeStatus("weakened", (4 * quality)*10)
 
+#if ASS_JAM
+/datum/limb/hot //because
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (!holder)
+			return
+		if(check_target_immunity( target ))
+			return
+
+
+		if (!istype(user))
+			target.attack_hand(user, params, location, control)
+			return
+
+		if (isobj(target))
+			switch (user.smash_through(target, list("window", "grille")))
+				if (0)
+					if (isitem(target))
+						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,target.loc)
+						user.visible_message("<span class='alert'>The [target] melts in [user]'s clutch</span>", "<span class='alert'>The [target] melts in your clutch!</span>")
+						qdel(target)
+						I.desc = "Looks like this was \an [target], melted by a man who was too much."
+						for(var/mob/M in AIviewers(5, target))
+							boutput(M, "<span class='alert'>\the [target] melts.</span>")
+						qdel(target)
+						return
+
+
+
+
+
+				if (1)
+					return
+
+		..()
+		return
+
+	proc/accident(mob/target, mob/living/user)
+		if(check_target_immunity( target ))
+			return 0
+
+		logTheThing("combat", user, target, "accidentally harms %target% with hot hands at [log_loc(user)].")
+		user.visible_message("<span class='alert'><b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally claw [target] while trying to [user.a_intent] them!</b></span>")
+		harm(target, user, 1)
+		return 0
+
+	help(mob/target, var/mob/living/user)
+		if (accident(target, user))
+			return
+		else
+			..()
+
+	disarm(mob/target, var/mob/living/user)
+		if (accident(target, user))
+			return
+		else
+			..()
+
+	grab(mob/target, var/mob/living/user)
+		if (accident(target, user))
+			return
+		else
+			..()
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if(check_target_immunity( target ))
+			return 0
+		var/quality = src.holder.quality
+		if (no_logs != 1)
+			logTheThing("combat", user, target, "melts %target% with hot hands at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, rand(9,10) * quality)
+		user.attack_effects(target, affecting)
+
+		msgs.base_attack_message = "<b><span class='alert'>[user] melts [target] with their clutch!</span></b>"
+		msgs.played_sound = "sound/impact_sounds/burn_sizzle.ogg"
+		msgs.damage_type = DAMAGE_BURN
+		msgs.flush(SUPPRESS_LOGS)
+
+
+#endif
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
