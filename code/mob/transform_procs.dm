@@ -853,15 +853,16 @@ var/respawn_arena_enabled = 0
 		boutput(src,"The respawn arena is not open right now. Tough luck!")
 		return
 
+	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
+		return
+
+	if (!src.client) return //ZeWaka: fix for null.preferences
+
 	if(!src.client || !src.client.player || ON_COOLDOWN(src.client.player, "ass day arena", 2 MINUTES))
 		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
 		return
 
-	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
-		return
-
 	var/mob/living/carbon/human/newbody = new()
-	if (!src.client) return //ZeWaka: fix for null.preferences
 	src.client.preferences.copy_to(newbody,src,1)
 	newbody.real_name = src.real_name
 
