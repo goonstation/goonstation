@@ -333,7 +333,6 @@ var/list/dirty_keystates = list()
 			if ((src.move_scheduled - world.time) <= 0.01 + lmt || src.move_scheduled + lmt > next)
 
 				src.move_scheduled = next
-				message_admins("AAA")
 				SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
 					src.internal_process_move(src.client ? src.client.key_state : 0)
 
