@@ -1193,7 +1193,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			else
 				if (!src.getStatusDuration("burning"))
 					if (src.grab_block())
-						src.last_resist = world.time + (COMBAT_CLICK_DELAY/2)
+						src.last_resist = world.time + COMBAT_BLOCK_DELAY
 					else
 						for (var/mob/O in AIviewers(src, null))
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
