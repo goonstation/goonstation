@@ -87,6 +87,8 @@
 #define COMBAT_CLICK_DELAY 10
 #define CLICK_GRACE_WINDOW 0//2.5
 
+#define COMBAT_BLOCK_DELAY (2)
+
 //Alignment around the turf. Any can be combined with center (top and bottom for horizontal centering, left and right for vertical).
 #define TOOLTIP_BOTTOM 0
 #define TOOLTIP_TOP 1
