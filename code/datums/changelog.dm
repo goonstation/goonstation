@@ -198,8 +198,8 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 <h1>Goon Station 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
 
 <ul class="links cf">
-    <li>Official Wiki<br><strong>https://wiki.ss13.co</strong><span></span></li>
-    <li>Official Forums<br><strong>https://forum.ss13.co</strong></li>
+    <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/">https://wiki.ss13.co</a></strong><span></span></li>
+    <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/">https://forum.ss13.co</a></strong></li>
 </ul>"}
 
 #if ASS_JAM
