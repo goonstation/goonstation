@@ -1,4 +1,9 @@
 
+(t)wed may 13 20
+(u)pali
+(p)676
+(e)🆕|enhancement
+(*)Ass day classic vote now appears in the Status tab (just like map votes).
 (t)tue may 12 20
 (u)RichardGere
 (p)665
