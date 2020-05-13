@@ -266,11 +266,6 @@
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
 		JOB_XP(M, "Head of Security", 1)
-#if ASS_JAM
-		if(prob(5))
-			M.unequip_all()
-			M.machoize()
-#endif
 
 	derelict
 		name = null//"NT-SO Special Operative"
