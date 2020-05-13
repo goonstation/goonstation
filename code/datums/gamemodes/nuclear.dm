@@ -11,7 +11,11 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
+#if ASS_JAM
+	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
+#else
 	var/const/agents_possible = 6 //If we ever need more syndicate agents. cogwerks - raised from 5
+#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -33,8 +37,11 @@
 	for (var/mob/new_player/player in mobs)
 		if (player.client && player.ready)
 			num_players++
-
+#if ASS_JAM
+	var/num_synds = max(1, min(round(num_players / 2), agents_possible))
+#else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 

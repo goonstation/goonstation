@@ -118,6 +118,7 @@
 						if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //split this up as it was long
 							return 1
 				return 0
+
 		brigstir
 			explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 			medal_name = "Monkey Duty"

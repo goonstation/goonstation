@@ -145,6 +145,16 @@
 		..()
 		src.access = get_all_accesses()
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+#if ASS_JAM
+		if(prob(5))
+			M.unequip_all()
+			M.tommyize_reshape()
+#endif
+
 	derelict
 		//name = "NT-SO Commander"
 		name = null
@@ -202,7 +212,13 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
+#if ASS_JAM
+	requires_whitelist = 0
+	high_priority_job = 1
+	change_name_on_spawn = 1
+#else
 	requires_whitelist = 1
+#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
@@ -211,6 +227,7 @@
 	receives_disk = 1
 	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
+
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
@@ -249,6 +266,11 @@
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
 		JOB_XP(M, "Head of Security", 1)
+#if ASS_JAM
+		if(prob(5)
+			M.unequip_all()
+			M.machoize()
+#endif
 
 	derelict
 		name = null//"NT-SO Special Operative"
@@ -2198,8 +2220,13 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
+#if ASS_JAM
+	announce_on_join = 1
+	limit = 300
+#else
 	limit = 0
 	allow_traitors = 0
+#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null
