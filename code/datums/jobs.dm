@@ -2018,6 +2018,8 @@
 		else
 			M.real_name = "Syndicate Agent"
 
+		bad_traitorify(M, "Syndicate Agent")
+
 		equip_syndicate(M)
 		return
 
