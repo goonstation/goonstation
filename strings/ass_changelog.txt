@@ -1,5 +1,18 @@
 
-(t)wed may 13 20
+(t)wed may 13 20(t)wed may 13 20
+(u)TrustworthyFella
+(p)661
+(e)🍑🆕|ass-jam, enhancement
+(*)Gave the HoS a 5% chance to be macho man Randy Savage
+(*)Gave the captain a 5% chance to be Tommy Wiseau
+(*)Brought back podseeker gibbing
+(*)Removed HoS whitelist
+(*)Made HoS a priority job
+(*)Replaced the Ammotech with a Kinetitech, which is filled with lethals and stuff security can't actually use.
+(*)Made the ratio of nuke ops to crew 1:2 rather than 1:4, and raised the maximum number of nuke ops to 30.
+(*)Adds 300 latejoin meatcube slots, which are able to be traitors.
+(+)Meatcubes are announced when they join, like heads of staff are.
+(+)Lets Heads of Security change their name when they spawn
 (u)pali
 (p)676
 (e)🆕|enhancement
