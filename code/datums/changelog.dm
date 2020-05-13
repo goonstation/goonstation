@@ -39,13 +39,13 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-/proc/changelog_parse(var/changes, var/title)
+/proc/changelog_parse(var/changes, var/title, var/logclasses)
 	var/list/html=list()
 	var/text = changes
 	if (!text)
 		diary << "Failed to load changelog."
 	else
-		html += "<ul class=\"log\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [vcs_revision]</li>"
+		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [vcs_revision]</li>"
 
 		var/list/collapsible_html = list()
 		var/added_collapsible_author = 0
@@ -202,6 +202,9 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
     <li>Official Forums<br><strong>https://forum.ss13.co</strong></li>
 </ul>"}
 
+#if ASS_JAM
+	html += changelog_parse(file2text("strings/ass_changelog.txt"), "Ass Jam Changelog", " ass")
+#endif
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog")
 	html += {"
 <h3>GoonStation 13 Development Team</h3>
