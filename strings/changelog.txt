@@ -1,5 +1,9 @@
 
 (t)wed may 13 20
+(u)pali
+(p)678
+(e)|
+(*)Ass jam changelog is now only shown during ass jam. Also it is pink and above the regular changelog.
 (u)Gannets
 (p)669
 (e)⚖|balance
