@@ -49,6 +49,13 @@ var/const/recently_time = 6000 // 10 mins
 	proc/update_name(new_name="Vote")
 		src.name = "<span style='color: green; text-decoration: underline;'>[new_name]</span>"
 
+	proc/chat_link()
+		return "<a href='?src=\ref[src]'>[src]</a>"
+
+	Topic(href, href_list)
+		. = ..()
+		Click()
+
 var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 
 
@@ -180,7 +187,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		vote_started = world.time
 		data = A
 		newVoteLinkStat.update_name(src.vote_name ? src.vote_name : "Vote")
-		process()
+		processing_items.Add(src)
 		..()
 
 	proc/process()
@@ -190,7 +197,6 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 			end_vote()
 			return
 		curr_win = get_winner()
-		SPAWN_DBG(2 SECONDS) process()
 
 	proc/show_to(var/client/C)
 		if(C in open_votes) return
@@ -198,7 +204,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 			boutput(C, "<span class='alert'><BIG>You may not vote as you were not present when the vote was started.</BIG></span>")
 			return
 		if((C.ckey in voted_ckey) || (C.computer_id in voted_id))
-			boutput(C, "<span class='alert'><BIG>You have already voted. Current winner : [curr_win]</BIG></span>")
+			boutput(C, "<span class='alert'><BIG>You have already voted. [curr_win ? "Current winner: [curr_win]":""]</BIG></span>")
 			return
 		open_votes += C
 		var/choice = input(C,details,vote_name,null) in options
@@ -238,7 +244,9 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		qdel(src)
 		return
 
-	proc/time_left()
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
 
 /datum/vote_new/mode
@@ -248,13 +256,8 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	vote_length = 1200 //2 Minutes
 
 	New(var/A)
-		for(var/client/C in clients)
-			C.verbs += /client/proc/viewnewvote
-			may_vote += C.ckey
-		vote_started = world.time
-		data = A
+		..()
 		details = "Change gamemode to '[A]' ?"
-		process()
 
 	end_vote()
 		vote_manager.active_vote = null
