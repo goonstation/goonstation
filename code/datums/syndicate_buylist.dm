@@ -216,7 +216,9 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	desc = "Think you're tough shit buddy?"
 	not_in_crates = 1 //see /datum/syndicate_buylist/surplus/bighat
-
+	#if ASS_JAM
+	cost = 1
+	return
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 

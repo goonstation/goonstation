@@ -184,6 +184,19 @@
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 					return
 
+		#if ASS_JAM
+			if ("coomer","coom")
+				if ((src.client && src.client.holder) && src.emote_check(voluntary, 50))
+					message = "<B>[src]</B> cooms."
+					playsound(src.loc, 'sound/vox/coomer.ogg', 50, 1)
+				else
+					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+					return
+		else
+					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+					return
+
+
 			if ("uguu")
 				if (istype(src.wear_mask, /obj/item/clothing/mask/anime) && !src.stat)
 
