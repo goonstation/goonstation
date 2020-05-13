@@ -38,7 +38,7 @@
 		if (player.client && player.ready)
 			num_players++
 #if ASS_JAM
-	var/num_synds = max(1, min(round(num_players / 2), agents_possible))
+	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
 #else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
 #endif
