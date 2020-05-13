@@ -222,7 +222,6 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
     <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" name="license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a><br/>
 
     <em>
-    	Except where otherwise noted, Goon Station 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>
-    	Rights are currently extended to SomethingAwful Goons only.
+    	Except where otherwise noted, Goon Station 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.
     </em>
 </p>"}
