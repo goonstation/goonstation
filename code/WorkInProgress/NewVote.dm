@@ -34,6 +34,24 @@ var/const/recently_time = 6000 // 10 mins
 
 	vote_manager.show_vote(src)
 
+
+/obj/newVoteLink
+	name = "<span style='color: green; text-decoration: underline;'>Vote</span>"
+
+	Click()
+		var/client/C = usr.client
+		if (!C) return
+		vote_manager.show_vote(C)
+
+	examine()
+		return list()
+
+	proc/update_name(new_name="Vote")
+		src.name = "<span style='color: green; text-decoration: underline;'>[new_name]</span>"
+
+var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
+
+
 /datum/vote_manager
 	var/datum/vote_new/active_vote = null
 
@@ -161,6 +179,7 @@ var/const/recently_time = 6000 // 10 mins
 			may_vote += C.ckey
 		vote_started = world.time
 		data = A
+		newVoteLinkStat.update_name(src.vote_name ? src.vote_name : "Vote")
 		process()
 		..()
 
@@ -219,6 +238,9 @@ var/const/recently_time = 6000 // 10 mins
 		qdel(src)
 		return
 
+	proc/time_left()
+
+
 /datum/vote_new/mode
 	options = list("Yes","No")
 	details = ""
@@ -236,18 +258,15 @@ var/const/recently_time = 6000 // 10 mins
 
 	end_vote()
 		vote_manager.active_vote = null
-		boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
-		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.5))
-				boutput(world, "<span class='success'><BIG><B>Minimum mode votes not reached (~50% of players).</B></BIG></span>")
-				qdel(src)
-				return
-			if(current_state == GAME_STATE_PREGAME)
-				boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
-				master_mode = lowertext(data)
-			else
-				boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
-				world.save_mode(lowertext(data))
+		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
+		if(get_winner() != "Yes" || get_winner_num() < round(clients.len * 0.5))
+			boutput(world, "<span class='alert'><BIG><B>Minimum mode votes not reached (~50% of players), game mode not changed.</B></BIG></span>")
+		else if(current_state == GAME_STATE_PREGAME)
+			boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
+			master_mode = lowertext(data)
+		else
+			boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
+			world.save_mode(lowertext(data))
 		qdel(src)
 		return
 

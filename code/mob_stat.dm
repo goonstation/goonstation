@@ -11,7 +11,7 @@
 	var/is_construction_mode = 0
 
 	var/list/stats = list()
-	var/list/statNames = list("Map:","Next Map:","Vote Link:","Map Vote Time:","Map Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Shuttle")
+	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Shuttle")
 	//above : ORDER IS IMPORANT
 
 	New()
@@ -19,9 +19,12 @@
 		//this shit is kind of messy to read but it is Quicker than repopulating the list each update()
 		stats["Map:"] = 0
 		stats["Next Map:"] = 0
-		stats["Vote Link:"] = 0
+		stats["Map Vote Link:"] = 0
 		stats["Map Vote Time:"] = 0
 		stats["Map Vote Spacer"] = -1
+		stats["Vote Link:"] = 0
+		stats["Vote Time:"] = 0
+		stats["Vote Spacer"] = -1
 		stats["Game Mode:"] = 0
 		stats["Time To Start:"] = 0
 		stats["Server Load:"] = 0
@@ -64,13 +67,23 @@
 				saveStat("Next Map:", nextMap)
 
 			if (mapSwitcher.playersVoting)
-				saveStat("Vote Link:",mapVoteLinkStat)
+				saveStat("Map Vote Link:",mapVoteLinkStat)
 
 				if (mapSwitcher.voteCurrentDuration)
 					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration) - world.time) / 10)] seconds remaining, [mapSwitcher.playerVotes.len] vote[mapSwitcher.playerVotes.len != 1 ? "s" : ""])")
 			else
-				stats["Vote Link:"] = 0
+				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
+
+		if (vote_manager?.active_vote)
+			stats["Vote Spacer"] = -1
+			saveStat("Vote Link:",newVoteLinkStat)
+			saveStat("Vote Time:", "([round(((vote_manager.active_vote.vote_started + vote_manager.active_vote.vote_length) - world.time) / 10)] seconds remaining, [vote_manager.active_vote.voted_ckey.len] vote[vote_manager.active_vote.voted_ckey.len != 1 ? "s" : ""])")
+			stats["Vote Spacer"] = -1
+		else
+			stats["Vote Link:"] = 0
+			stats["Vote Time:"] = 0
+			stats["Vote Spacer"] = 0
 
 		if (ticker)
 			saveStat("Game Mode:",ticker.hide_mode ? "secret" : "[master_mode]")

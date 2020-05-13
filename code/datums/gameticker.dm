@@ -65,7 +65,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
-	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started (use View Current Vote verb). Vote concludes in 120 seconds.</B>")
+	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started (click on the Status map as you do for map votes). Vote concludes in 120 seconds.</B>")
 	vote_manager.active_vote = new/datum/vote_new/mode("assday")
 	#endif
 
