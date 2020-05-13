@@ -1,5 +1,10 @@
 
 (t)wed may 13 20
+(u)pali
+(*)The ass arena is now a bit brighter
+(*)Dropping the ass relic now stops the respawn
+(*)Joining the arena now has a 2 minute cooldown (since you last <i>joined</i>)
+(*)The relic slows you down a bit
 (u)TrustworthyFella
 (p)685
 (e)🍑⚖|ass-jam, balance
