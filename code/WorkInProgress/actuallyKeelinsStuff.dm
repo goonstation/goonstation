@@ -3847,6 +3847,7 @@ var/list/lag_list = new/list()
 	var/list/modes = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
+	var/z_level_lock = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 1.0
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -3857,6 +3858,10 @@ var/list/lag_list = new/list()
 			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return
+		var/turf/T = get_turf(src)
+		if(z_level_lock && T.z != z_level_lock)
+			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
+			return
 		if(active_mode)
 			active_mode.used(user, target)
 		return
@@ -3903,6 +3908,8 @@ var/list/lag_list = new/list()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 
+/obj/item/engibox/station_locked
+	z_level_lock = 1 // 1 = station z level
 
 /obj/signpost
 	icon = 'icons/misc/old_or_unused.dmi'
