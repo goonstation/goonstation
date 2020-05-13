@@ -203,7 +203,9 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 </ul>"}
 
 #if ASS_JAM
+	html += "<a id='ass_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#main_changelog\") });'>Jump to regular changelog</a>"
 	html += changelog_parse(file2text("strings/ass_changelog.txt"), "Ass Jam Changelog", " ass")
+	html += "<a id='main_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#ass_changelog\") });'>Jump to ass jam changelog</a>"
 #endif
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog")
 	html += {"
