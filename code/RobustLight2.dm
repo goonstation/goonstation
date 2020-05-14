@@ -483,10 +483,6 @@ datum/light
 				ADDUPDATE(T.S)
 				ADDUPDATE(T.S.W)
 
-					//ang = get_angle(middle,T)
-					//if (ang > 45 || ang < -45)
-					//	continue
-
 	line
 		var/dist_cast = 0
 		precalc()
