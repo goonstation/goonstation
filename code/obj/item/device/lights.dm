@@ -49,7 +49,7 @@
 	col_b = 0.7
 	module_research = list("science" = 1, "devices" = 1)
 	light_type = /datum/light/line
-	brightness = 4
+	brightness = 4.6
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)

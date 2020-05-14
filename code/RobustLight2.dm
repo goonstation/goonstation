@@ -56,9 +56,10 @@ proc/get_moving_lights_stats()
 	if (src.loc?:force_fullbright) { break } \
 	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
 	var/exponent = 3.5 ;\
-	if (radius <= 2) { exponent = 0.8 }\
-	else if (lx+ly<=0) { atten *= 3 } \
-	if (ly != src.y && lx != src.x){ atten *= (max( abs(ly-src.y),abs(lx-src.x) )/radius)**exponent }\
+	if (ly != src.y && lx != src.x){ atten *= (max( abs(ly-src.y),abs(lx-src.x),0.85 )/radius)**exponent }\
+	if (radius <= 2) { atten *= 0.5 }\
+	else if (radius == 3) { atten *= 0.8 }\
+	else if (abs(src.x - lx)+abs(src.y - ly)<=1) { atten *= 2 } \
 	if (atten < 0) { break } \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
