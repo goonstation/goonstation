@@ -279,11 +279,10 @@ var/datum/score_tracker/score_tracker
 		if (islist(pets_escaped))
 			var/who_escaped = ""
 			for (var/atom/A in pets_escaped)
-				who_escaped += "[A.name] [bicon(A)]|"
+				who_escaped += " [A.name] [bicon(A)],"
+			. += "<B>Pets Escaped:</B>[copytext(who_escaped, 1, length(who_escaped)-1)]<BR><BR>"
 
-			. += "<B>Pets Escaped:</B> [copytext(who_escaped, 1, length(who_escaped)-1)]<BR>"
-
-		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]<BR>"
+		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
 		return .
 
