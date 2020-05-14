@@ -291,6 +291,7 @@ toxic - poisons
 	dissipation_rate = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
 	ks_ratio = 0.66
 	caliber = 0.41
