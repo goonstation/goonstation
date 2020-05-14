@@ -23,6 +23,7 @@ var/datum/score_tracker/score_tracker
 	var/score_text = null
 	var/tickets_text = null
 	var/mob/richest_escapee = null
+	var/richest_total = 0
 	var/mob/most_damaged_escapee = null
 	var/acula_blood = null
 	var/beepsky_alive = null
@@ -203,7 +204,8 @@ var/datum/score_tracker/score_tracker
 	/////////Escapee stuff///////////////
 	/////////////////////////////////////
 	proc/calculate_escape_stats()
-		var/richest_total = 0		//
+		//set the global total to zero on proc start, just in cases.
+		richest_total = 0
 		//search mobs in centcom
 		for (var/mob/M in mobs)
 			var/area/A = get_area(M)
@@ -219,30 +221,37 @@ var/datum/score_tracker/score_tracker
 					richest_escapee = M
 
 		pets_escaped = list()
-		//mobs can be in centcom proper, pets gotta be on the shuttle at calc time.
-		var/list/area_contents = get_area_all_atoms(/area/shuttle/escape/centcom)
-		for (var/obj/critter/C in area_contents)
+
+		//This is shit, I know, but what else can I do? Take solace in the fact that this only ever runs once.
+		var/list/escape_contents = get_area_all_atoms(map_settings.escape_centcom)
+		for (var/obj/critter/C in escape_contents)
+			//Dr. Acula
 			if (istype(C, /obj/critter/bat/doctor))
 				var/obj/critter/bat/doctor/P = C
 				if (P.alive)
 					pets_escaped += P
 					acula_blood = P.blood_volume
 
-			if (istype(C, /obj/critter/turtle/sylvester))
+			//Sylvester
+			else if (istype(C, /obj/critter/turtle/sylvester))
 				if (C.alive)
 					pets_escaped += C
 
-			if (istype(C, /obj/critter/cat/jones))
+			//Jones
+			else if (istype(C, /obj/critter/cat/jones))
 				if (C.alive)
 					pets_escaped += C
 
-			if (istype(C, /obj/critter/dog/george))
+			//George
+			else if (istype(C, /obj/critter/dog/george))
 				if (C.alive)
 					pets_escaped += C
 
-			if (istype(C, /obj/critter/domestic_bee/heisenbee))
+			//Heisenbee
+			else if (istype(C, /obj/critter/domestic_bee/heisenbee))
 				if (C.alive)
 					pets_escaped += C
+			//Don't really need to check for the mob variants. But maybe if we switch eventually??
 
 		if (locate(/obj/machinery/bot/secbot/beepsky) in world)
 			beepsky_alive = 1
@@ -253,25 +262,26 @@ var/datum/score_tracker/score_tracker
 		. = 0
 		for (var/I in A)
 			if (istype(I, /obj/item/storage))
-				. += get_cash_in_thing(A)
+				. += get_cash_in_thing(I)
 			if (istype(I, /obj/item/spacecash))
 				var/obj/item/spacecash/SC = I
 				. += SC.amount
 			if (istype(I, /obj/item/card/id))
 				var/obj/item/card/id/ID = I
 				. += ID.amount
+		boutput(world, .)
 
 	proc/escapee_facts()
 		. = ""
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
-		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name]<BR>"
-		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name]<BR>"
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
+		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]<BR>"		//it'll be kinda different from when it's calculated, but whatever.
 		if (islist(pets_escaped))
 			var/who_escaped = ""
-			for (var/obj/critter/C in pets_escaped)
-				who_escaped += "C.name |"
+			for (var/atom/A in pets_escaped)
+				who_escaped += "[A.name] |"
 
-			. += "<B>Pets Escaped:</B> [copytext(1, length(who_escaped)-1)]<BR>"
+			. += "<B>Pets Escaped:</B> [copytext(who_escaped, 1, length(who_escaped)-1)]<BR>"
 
 		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
