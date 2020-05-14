@@ -876,6 +876,15 @@
 			..()
 			src.Cards = new /obj/item/playing_cards/trading/booster(src)
 
+	storage
+		name = "trading card storage box"
+		desc = "A plain white box for storing a lot of playing cards."
+		icon_state = "box"
+		icon_closed = "box"
+		icon_open = "box-open"
+		icon_empty = "box-empty"
+		box_size = 400
+
 	clow
 		name = "\improper Clow Book"
 		desc = "Contents guaranteed to not go flying off in all directions upon opening! Hopefully."
