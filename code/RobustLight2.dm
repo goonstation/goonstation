@@ -513,7 +513,6 @@ datum/light
 				vy = -radius
 
 			var/turf/middle = locate(src.x, src.y, src.z)
-			//var/turf/target = locate((src.x+vx), (src.y+vy), src.z)
 			var/list/turfline = getstraightlinewalled(middle,vx,vy)
 			if (!turfline)
 				return
@@ -524,7 +523,6 @@ datum/light
 				T.RL_ApplyGeneration = generation
 				T.RL_UpdateGeneration = generation
 				. += T
-
 
 			for (var/X in .)
 				var/turf/T = X
@@ -550,6 +548,30 @@ datum/light
 				ADDUPDATE(T.S)
 				ADDUPDATE(T.S.W)
 
+			//account for blocked visibility (try to worm me way around somethin) also lol this is shit and doesnt work. maybe fix later :)
+			/*
+			if (dist_cast < radius && turfline.len)
+				var/turf/blockedturf = turfline[turfline.len]
+				if (vx)
+					if (vx > 0) vx -= dist_cast
+					else vx += dist_cast
+					var/turf/o1 = locate(blockedturf.x, blockedturf.y+1, blockedturf.z)
+					var/turf/o2 = locate(blockedturf.x, blockedturf.y-1, blockedturf.z)
+					turfline = getstraightlinewalled(o1,vx,vy,0) + getstraightlinewalled(o2,vx,vy,0)
+				else
+					if (vy > 0) vy -= dist_cast
+					else vy += dist_cast
+					var/turf/o1 = locate(blockedturf.x+1, blockedturf.y, blockedturf.z)
+					var/turf/o2 = locate(blockedturf.x-1, blockedturf.y, blockedturf.z)
+					turfline = getstraightlinewalled(o1,vx,vy,0) + getstraightlinewalled(o2,vx,vy,0)
+
+				for (var/turf/T in turfline)
+					if (T.RL_ApplyGeneration < generation)
+						T.RL_ApplyGeneration = generation
+						RL_APPLY_LIGHT_LINE(T, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
+					ADDUPDATE(T)
+
+			*/
 var
 	RL_Started = 0
 	RL_Suspended = 0

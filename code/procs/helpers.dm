@@ -530,13 +530,15 @@ proc/get_angle(atom/a, atom/b)
 			py+=sdy
 			. += locate(px,py,M.z)
 
-/proc/getstraightlinewalled(atom/M,vx,vy)//Ultra-Fast Bresenham Line-Drawing Algorithm
+/proc/getstraightlinewalled(atom/M,vx,vy,include_origin = 1)//hacky fuck for l ighting
 	if (!M) return null
 	var/turf/T = null
 	var/px=M.x		//starting x
 	var/py=M.y
-	. = list(locate(px,py,M.z))
-
+	if (include_origin)
+		. = list(locate(px,py,M.z))
+	else
+		.= list()
 	if (vx)
 		var/step = vx > 0 ? 1 : -1
 		vx = abs(vx)
