@@ -1172,21 +1172,26 @@
 	if (get_dist(src, target) > 0)
 		if(!dir_locked)
 			dir = get_dir(src, target)
+			src.update_directional_lights()
 
 /mob/proc/hotkey(name)
 	switch (name)
 		if ("look_n")
 			if(!dir_locked)
 				src.dir = NORTH
+				src.update_directional_lights()
 		if ("look_s")
 			if(!dir_locked)
 				src.dir = SOUTH
+				src.update_directional_lights()
 		if ("look_e")
 			if(!dir_locked)
 				src.dir = EAST
+				src.update_directional_lights()
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
+				src.update_directional_lights()
 		if ("admin_interact")
 			src.admin_interact_verb()
 		if ("stop_pull")

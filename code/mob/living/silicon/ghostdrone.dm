@@ -62,8 +62,8 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-		light = new /datum/light/point
-		light.set_brightness(0.5)
+		light = new /datum/light/line
+		light.set_brightness(2)
 		light.attach(src)
 
 		src.health = src.max_health

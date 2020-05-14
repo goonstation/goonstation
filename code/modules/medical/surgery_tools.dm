@@ -1212,7 +1212,7 @@ CONTAINS:
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7
-	brightness = 0.5
+	brightness = 2
 	module_research = list("science" = 1, "devices" = 1, "medicine" = 2)
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
