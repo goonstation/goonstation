@@ -4137,8 +4137,7 @@ var/global/noir = 0
 				if (location)
 					location.ReplaceWith(chosen, handle_air = 0)
 			else
-				var/atom/movable/A = new chosen()
-				A.set_loc(usr.loc)
+				var/atom/movable/A = new chosen(get_turf(usr)) // use build mode if you wanna spawn things inside of stuff
 				if (usr.client.flourish)
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")

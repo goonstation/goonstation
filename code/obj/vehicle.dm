@@ -2013,9 +2013,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/New()
 	..()
-	actual_light = new /datum/light/point
+	actual_light = new /datum/light/line
 	actual_light.set_color(0.5, 0.5, 0.1)
-	actual_light.set_brightness(0.8)
+	actual_light.set_brightness(3)
 	actual_light.attach(src)
 
 /obj/vehicle/forklift/examine()

@@ -1336,6 +1336,8 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
 /obj/item/proc/dropped(mob/user)
+	if (user)
+		src.dir = user.dir
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED

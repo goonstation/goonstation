@@ -1793,6 +1793,7 @@ obj/machinery/door/airlock
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	initialize()
+		..()
 		if(frequency)
 			set_frequency(frequency)
 

@@ -144,7 +144,7 @@
 
 		SPAWN_DBG(0.5 SECONDS)
 			circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp/right) in get_step(src,EAST)
+			circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
 			if(!circ1 || !circ2)
 				status |= BROKEN
 
@@ -198,6 +198,14 @@
 		var/datum/gas_mixture/hot_air = circ1.return_transfer_air()
 		var/datum/gas_mixture/cold_air = circ2.return_transfer_air()
 
+		var/swapped = 0
+
+		if(hot_air && cold_air && hot_air.temperature < cold_air.temperature)
+			var/swapTmp = hot_air
+			hot_air = cold_air
+			cold_air = swapTmp
+			swapped = 1
+
 		lastgen = 0
 
 		if(cold_air && hot_air)
@@ -225,6 +233,11 @@
 				// uncomment to debug
 				//logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 		// update icon overlays only if displayed level has changed
+
+		if(swapped)
+			var/swapTmp = hot_air
+			hot_air = cold_air
+			cold_air = swapTmp
 
 		if(hot_air)
 			circ1.air2.merge(hot_air)
