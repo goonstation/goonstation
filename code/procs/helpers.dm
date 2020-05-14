@@ -530,6 +530,35 @@ proc/get_angle(atom/a, atom/b)
 			py+=sdy
 			. += locate(px,py,M.z)
 
+/proc/getstraightlinewalled(atom/M,vx,vy)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	if (!M) return null
+	var/turf/T = null
+	var/px=M.x		//starting x
+	var/py=M.y
+	. = list(locate(px,py,M.z))
+
+	if (vx)
+		var/step = vx > 0 ? 1 : -1
+		vx = abs(vx)
+		while(vx > 0)
+			px += step
+			vx -= 1
+			T = locate(px,py,M.z)
+			if (T.opacity || T.opaque_atom_count > 0)
+				break
+			. += T
+	else if (vy)
+		var/step = vy > 0 ? 1 : -1
+		vy = abs(vy)
+		while(vy > 0)
+			py += step
+			vy -= 1
+			T = locate(px,py,M.z)
+			if (T.opacity || T.opaque_atom_count > 0)
+				break
+			. += T
+
+
 /proc/IsGuestKey(key)
 	//Wire note: This seems like it would work just fine and is a whole bunch shorter
 	return copytext(key, 1, 7) == "Guest-"
