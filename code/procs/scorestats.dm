@@ -196,10 +196,6 @@ var/datum/score_tracker/score_tracker
 			if(E.client)
 				if (E.client.preferences.view_score)
 					E.scorestats()
-		// for(var/client/C in clients)
-		// 	if(C)
-		// 		if (C.preferences.view_score)
-		// 			C.scorestats()
 
 		return
 
@@ -307,9 +303,9 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_eng)]%<BR>"
 		score_tracker.score_text += "<BR>"
 
-		// score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
-		// score_tracker.score_text += "Scores for this department are not done yet.<br>"
-		// score_tracker.score_text += "<BR>"
+		score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
+		score_tracker.score_text += "Scores for this department are not done yet.<br>"
+		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
 		score_tracker.score_text += "<B>Overall Station Cleanliness:</B> [round(score_tracker.score_cleanliness)]%<BR>"
@@ -323,12 +319,6 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += score_tracker.escapee_facts()
 
 		score_tracker.score_text += "<HR>"
-		//richest_escapee = null
-		//most_damaged_escapee = null
-		//pets_escaped = null
-		//acula_blood = null
-		//beepsky_alive = null
-		//clown_beatings = null
 
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
