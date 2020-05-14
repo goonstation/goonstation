@@ -495,7 +495,6 @@ datum/light
 		apply_to(turf/T)
 			RL_APPLY_LIGHT_LINE(T, src.x, src.y, src.dir, dist_cast, src.brightness, src.height**2, r, g, b)
 
-		#define ADDUPDATE(var) if (var.RL_UpdateGeneration < generation) { var.RL_UpdateGeneration = generation; . += var; }
 		apply_internal(generation, r, g, b)
 			. = list()
 			var/height2 = src.height**2
