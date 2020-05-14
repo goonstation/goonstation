@@ -66,9 +66,9 @@ obj/machinery/atmospherics/mixer
 					initialize_directions = NORTH|EAST|SOUTH
 			if(EAST)
 				if(flipped)
-					initialize_directions = EAST|SOUTH|WEST
-				else
 					initialize_directions = EAST|NORTH|WEST
+				else
+					initialize_directions = EAST|SOUTH|WEST
 			if(SOUTH)
 				if(flipped)
 					initialize_directions = SOUTH|EAST|NORTH
