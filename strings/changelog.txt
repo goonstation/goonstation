@@ -1,5 +1,9 @@
 
 (t)thu may 14 20
+(u)Keiya
+(p)695
+(e)🆕|enhancement
+(+)Card boxes now have varying sizes. Notably, you can now put tarot decks back in their box easily.
 (u)mbc
 (p)690
 (e)🆕|enhancement
