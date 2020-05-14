@@ -132,6 +132,7 @@
 	hit_ground_chance = 10
 	ks_ratio = 1.0
 	shot_sound = 'sound/effects/syringeproj.ogg'
+	shot_number = 1
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		if (ismob(hit))
