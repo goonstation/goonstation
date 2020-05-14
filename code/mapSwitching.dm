@@ -500,6 +500,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			var/obj/item/I = M.equipped()
 			if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("space_fungus"))
 				chosenMap = "Mushroom"
+			if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("reversium"))
+				chosenMap = "1 pamgoC"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
 
