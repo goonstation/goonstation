@@ -3,7 +3,7 @@
 (u)mbc
 (p)690
 (e)🆕|enhancement
-(*)write later
+(*)Added directional lights. They are in use for most things that would make sense (flashlights hard hats pods etc). A Bonus of this is that they are less laggy than normal lights (because they cover less tiles)!
 (u)Fosstar
 (p)430
 (e)🆕🎨|enhancement, sprites
