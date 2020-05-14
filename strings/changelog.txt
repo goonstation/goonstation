@@ -1,5 +1,9 @@
 
 (t)thu may 14 20
+(u)Fosstar
+(p)430
+(e)🆕🎨|enhancement, sprites
+(+)Adds a stethoscope to the MD's medical bag that can be used to diagnose many conditions. Be careful though, your ears are at risk if you use it without the proper training or if you're a clown!
 (u)Carbadox and Gannets
 (p)607
 (e)🎨|sprites
