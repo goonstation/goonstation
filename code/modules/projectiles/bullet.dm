@@ -169,7 +169,7 @@ toxic - poisons
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
-				M.changeStatus("slowed", 1 SECOND)
+				M.changeStatus("slowed", 1 SECOND, optional = 2)
 
 
 /datum/projectile/bullet/nine_mm_NATO/burst
@@ -1245,5 +1245,4 @@ toxic - poisons
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 300, 1)
 		return
-
 
