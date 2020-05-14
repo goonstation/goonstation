@@ -8,7 +8,7 @@ obj/machinery/atmospherics/mixer
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 
-	var/flipped = 0 // no sprite yet, sorry
+	var/flipped = 0
 
 	var/id_tag
 	var/master_id
@@ -35,7 +35,7 @@ obj/machinery/atmospherics/mixer
 
 	update_icon()
 		if(node_in1&&node_in2&&node_out)
-			icon_state = "intact_[on?("on"):("off")]"
+			icon_state = "intact[flipped?"_flipped":""]_[on?"on":"off"]"
 		else
 			var/node_in1_direction = get_dir(src, node_in1)
 			var/node_in2_direction = get_dir(src, node_in2)
@@ -444,3 +444,7 @@ obj/machinery/atmospherics/mixer
 			node_out = null
 
 		return null
+
+/obj/machinery/atmospherics/mixer/flipped
+	icon_state = "intact_flipped_off"
+	flipped = 1
