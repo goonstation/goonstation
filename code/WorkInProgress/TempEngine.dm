@@ -200,7 +200,7 @@
 
 		var/swapped = 0
 
-		if(hot_air.temperature < cold_air.temperature)
+		if(hot_air && cold_air && hot_air.temperature < cold_air.temperature)
 			var/swapTmp = hot_air
 			hot_air = cold_air
 			cold_air = swapTmp
