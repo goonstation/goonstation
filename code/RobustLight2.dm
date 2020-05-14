@@ -52,14 +52,25 @@ proc/get_moving_lights_stats()
 	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
 	} while(false)
 
-#define RL_APPLY_LIGHT_LINE(src, lx, ly, radius, brightness, height2, r, g, b) do { \
+#define RL_APPLY_LIGHT_LINE(src, lx, ly, dir, radius, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
 	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
 	var/exponent = 3.5 ;\
-	if (ly != src.y && lx != src.x){ atten *= (max( abs(ly-src.y),abs(lx-src.x),0.85 )/radius)**exponent }\
+	atten *= (max( abs(ly-src.y),abs(lx-src.x),0.85 )/radius)**exponent ;\
 	if (radius <= 2) { atten *= 0.5 }\
 	else if (radius == 3) { atten *= 0.8 }\
-	else if (abs(src.x - lx)+abs(src.y - ly)<=1) { atten *= 2 } \
+	else{\
+		var/mult_atten = 1;\
+		var/line_len = (abs(src.x - lx)+abs(src.y - ly));\
+		if (line_len<=1) { mult_atten = 3.3 } \
+		else if (line_len<=2) { mult_atten = 1.5 }\
+		switch(dir){ \
+			if (NORTH){ if (ly - src.y < 0){ atten *= mult_atten } }\
+			if (WEST){ if (lx - src.x > 0){ atten *= mult_atten } }\
+			if (EAST){ if (lx - src.x < 0){ atten *= mult_atten } }\
+			if (SOUTH){ if (ly - src.y > 0){ atten *= mult_atten } }\
+		}\
+	}\
 	if (atten < 0) { break } \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
@@ -484,7 +495,7 @@ datum/light
 
 
 		apply_to(turf/T)
-			RL_APPLY_LIGHT_LINE(T, src.x, src.y, dist_cast, src.brightness, src.height**2, r, g, b)
+			RL_APPLY_LIGHT_LINE(T, src.x, src.y, src.dir, dist_cast, src.brightness, src.height**2, r, g, b)
 
 		#define ADDUPDATE(var) if (var.RL_UpdateGeneration < generation) { var.RL_UpdateGeneration = generation; . += var; }
 		apply_internal(generation, r, g, b)
@@ -507,10 +518,12 @@ datum/light
 			var/turf/middle = locate(src.x, src.y, src.z)
 			//var/turf/target = locate((src.x+vx), (src.y+vy), src.z)
 			var/list/turfline = getstraightlinewalled(middle,vx,vy)
+			if (!turfline)
+				return
 			dist_cast = max(turfline.len,2)
 
 			for (var/turf/T in turfline)
-				RL_APPLY_LIGHT_LINE(T, src.x, src.y, dist_cast, src.brightness, height2, r, g, b)
+				RL_APPLY_LIGHT_LINE(T, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 				T.RL_ApplyGeneration = generation
 				T.RL_UpdateGeneration = generation
 				. += T
@@ -521,18 +534,18 @@ datum/light
 
 				if (T.E && T.E.RL_ApplyGeneration < generation)
 					T.E.RL_ApplyGeneration = generation
-					RL_APPLY_LIGHT_LINE(T.E, src.x, src.y, dist_cast, src.brightness, height2, r, g, b)
+					RL_APPLY_LIGHT_LINE(T.E, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					ADDUPDATE(T.E)
 					ADDUPDATE(T.S.E)
 
 				if (T.N && T.N.RL_ApplyGeneration < generation)
 					T.N.RL_ApplyGeneration = generation
-					RL_APPLY_LIGHT_LINE(T.N, src.x, src.y, dist_cast, src.brightness, height2, r, g, b)
+					RL_APPLY_LIGHT_LINE(T.N, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					ADDUPDATE(T.N)
 					ADDUPDATE(T.N.W)
 
 				if (T.NE && T.NE.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT_LINE(T.NE, src.x, src.y, dist_cast, src.brightness, height2, r, g, b)
+					RL_APPLY_LIGHT_LINE(T.NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					T.NE.RL_ApplyGeneration = generation
 					ADDUPDATE(T.NE)
 
