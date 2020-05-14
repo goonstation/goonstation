@@ -62,14 +62,16 @@ proc/get_moving_lights_stats()
 	else{\
 		var/mult_atten = 1;\
 		var/line_len = (abs(src.x - lx)+abs(src.y - ly));\
-		if (line_len<=1) { mult_atten = 3.3 } \
-		else if (line_len<=2) { mult_atten = 1.5 }\
+		if (line_len <= 1.1) { mult_atten = 4.6 } \
+		else if (line_len<=1.5) { mult_atten = 2 } \
+		else if (line_len<=2.5) { mult_atten = 1.2 } \
 		switch(dir){ \
-			if (NORTH){ if (ly - src.y < 0){ atten *= mult_atten } }\
-			if (WEST){ if (lx - src.x > 0){ atten *= mult_atten } }\
-			if (EAST){ if (lx - src.x < 0){ atten *= mult_atten } }\
-			if (SOUTH){ if (ly - src.y > 0){ atten *= mult_atten } }\
+			if (NORTH){ if (round(ly) - src.y < 0){ atten *= mult_atten } }\
+			if (WEST){ if (ceil(lx) - src.x > 0){ atten *= mult_atten } }\
+			if (EAST){ if (round(lx) - src.x < 0){ atten *= mult_atten } }\
+			if (SOUTH){ if (ceil(ly) - src.y > 0){ atten *= mult_atten } }\
 		}\
+		if (round(line_len) >= radius) { atten *= 0.4 } \
 	}\
 	if (atten < 0) { break } \
 	src.RL_LumR += r*atten ; \
@@ -801,6 +803,9 @@ atom
 	var
 		RL_Attached = null
 
+		old_dir = null //rl only right now
+		next_light_dir_update = 0
+
 	movable
 		Move(atom/target)
 			var/old_loc = src.loc
@@ -817,6 +822,14 @@ atom
 				var/turf/NL = src.loc
 				if(istype(NL)) ++NL.opaque_atom_count
 			*/
+
+		proc/update_directional_lights()
+			if (src.dir != old_dir && src.RL_Attached && TIME > next_light_dir_update)
+				next_light_dir_update = TIME + 0.2 SECONDS
+				old_dir = src.dir
+				for (var/datum/light/line/light in src.RL_Attached)
+					light.move(src.x + light.attach_x, src.y + light.attach_y, src.z, src.dir)
+
 
 		set_loc(atom/target)
 			if (opacity)
