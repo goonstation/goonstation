@@ -1,5 +1,9 @@
 
 (t)thu may 14 20
+(u)mbc
+(p)690
+(e)🆕|enhancement
+(*)write later
 (u)Fosstar
 (p)430
 (e)🆕🎨|enhancement, sprites
