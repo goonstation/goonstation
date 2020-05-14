@@ -390,6 +390,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	corpse
 		name = "Corpse"
 		cost = 15000
+		carries_over = 0
 
 		Create(var/mob/living/M)
 			setdead(M)

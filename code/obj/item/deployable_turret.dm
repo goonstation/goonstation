@@ -113,6 +113,8 @@
 		src.transform = M.Turn(src.external_angle)
 		if (!(src in processing_items))
 			processing_items.Add(src)
+		if(active)
+			set_projectile()
 		
 	disposing()
 		processing_items.Remove(src)

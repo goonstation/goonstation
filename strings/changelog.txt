@@ -1,4 +1,17 @@
 
+(t)thu may 14 20
+(u)Fosstar
+(p)430
+(e)🆕🎨|enhancement, sprites
+(+)Adds a stethoscope to the MD's medical bag that can be used to diagnose many conditions. Be careful though, your ears are at risk if you use it without the proper training or if you're a clown!
+(u)Carbadox and Gannets
+(p)607
+(e)🎨|sprites
+(*)Added a roundstart cocktail shaker item for bartenders! Press C to shake like a real classy dude.
+(u)pali
+(p)688
+(e)|
+(+)"Corpse" spacebux purchase now doesn't carry over between rounds.
 (t)wed may 13 20
 (u)pali
 (p)678
