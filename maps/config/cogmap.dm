@@ -1,5 +1,5 @@
 #if ASS_JAM
-#include "..\cogmap-Donut2Engine.dmm"
+#include "..\cogmap-'cognut_12'.dmm"
 #else
 #include "..\cogmap.dmm"
 #endif
