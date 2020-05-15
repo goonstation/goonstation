@@ -806,6 +806,16 @@ datum
 					dispersal = R.dispersal
 			return dispersal
 
+		proc/get_smoke_spread_mod()
+			if (!total_volume)
+				return 0
+			var/smoke_spread_mod = 9999
+			for (var/id in reagent_list)
+				var/datum/reagent/R = reagent_list[id]
+				if (R.smoke_spread_mod < smoke_spread_mod)
+					smoke_spread_mod = R.smoke_spread_mod
+			return smoke_spread_mod
+
 
 		// redirect my_atom.on_reagent_change() through this function
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added

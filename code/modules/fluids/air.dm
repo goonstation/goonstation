@@ -15,7 +15,7 @@ var/list/ban_from_airborne_fluid = list()
 	drains_floor = 0
 
 	update_required_to_spread()
-		required_to_spread = min(15, max(0.1, (src.contained_amt**0.8)/30)+0.1) //wowowow magic numbers
+		required_to_spread = min(15, max(0.25+src.reagents.get_smoke_spread_mod(), (src.contained_amt**0.8)/30)+0.65) //wowowow magic numbers
 
 //What follows is not for the faint of heart.
 // I have done a shitton of copy paste from the base obj/fluid type.
