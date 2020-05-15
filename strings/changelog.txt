@@ -1,5 +1,9 @@
 
 (t)fri may 15 20
+(u)TrustworthyFella
+(p)694
+(e)⚖|balance
+(+)Buffed derringer damage from 50 to 80. Higher falloff given to compensate.
 (u)Tarmunora
 (p)651
 (e)⚖|balance
