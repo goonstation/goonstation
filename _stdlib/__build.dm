@@ -88,6 +88,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
+//#define MAP_OVERRIDE_PAMGOC			// Pamgoc
 
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES

@@ -185,6 +185,7 @@
 		*/
 		R.unlock_medal("Damned", 1)
 		R.eject_brain()
+		R.borg_death_alert(ROBOT_DEATH_MOD_SUICIDE)
 
 /mob/living/silicon/ghostdrone/do_suicide()
 	src.visible_message("<span class='alert'><b>[src] forcefully rips it's own soul from its body!</b></span>")

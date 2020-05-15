@@ -99,9 +99,9 @@
 			available_job_roles.Add(JOB)
 
 	// Wiggle it like a pissy caterpillar
-	available_job_roles = shuffle(available_job_roles)
+	shuffle_list(available_job_roles)
 	// Wiggle the players too so that priority isn't determined by key alphabetization
-	unassigned = shuffle(unassigned)
+	shuffle_list(unassigned)
 
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
@@ -463,6 +463,12 @@
 				D.data_type = "cloning_record"
 				D.name = "data disk - '[src.real_name]'"
 
+			if(JOB.receives_badge)
+				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
+				src.equip_if_possible(B, slot_in_backpack)
+				B.badge_owner_name = src.real_name
+				B.badge_owner_job = src.job
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
@@ -667,6 +673,25 @@
 	update_inhands()
 
 	return
+
+// this proc is shit, make a better one 2day
+proc/bad_traitorify(mob/living/carbon/human/H, traitor_role="hard-mode traitor")
+	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+	var/num_objectives = rand(1,3)
+	var/datum/objective/new_objective = null
+	for(var/i = 0, i < num_objectives, i++)
+		var/select_objective = pick(eligible_objectives)
+		new_objective = new select_objective
+		new_objective.owner = H.mind
+		new_objective.set_up()
+		H.mind.objectives += new_objective
+
+	H.mind.special_role = traitor_role
+	H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+	if(!(H.mind in ticker.mode.traitors))
+		ticker.mode.traitors += H.mind
+	if (H.mind.current)
+		H.mind.current.antagonist_overlay_refresh(1, 0)
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //

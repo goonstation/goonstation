@@ -53,7 +53,7 @@ obj/machinery/air_vendor
 		return round(src.target_pressure * src.holding.air_contents.volume * src.air_cost)
 
 	proc/fill()
-		if(!holding || !scan) return
+		if(!holding) return
 		gas_prototype.volume = holding.air_contents.volume
 		gas_prototype.temperature = T20C
 
@@ -106,7 +106,7 @@ obj/machinery/air_vendor
 		src.updateUsrDialog()
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/html = ""
 		html += "<TT><b>Welcome!</b><br>"
 		html += "<b>Current balance: [src.credits] credits</b><br>"
@@ -135,7 +135,7 @@ obj/machinery/air_vendor
 		if (usr.stat || usr.restrained())
 			return
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 			src.add_fingerprint(usr)
 
 			if(href_list["eject"])

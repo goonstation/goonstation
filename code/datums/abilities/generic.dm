@@ -75,6 +75,7 @@
 
 		if (istype(M.buckled,/obj/stool/chair))
 			var/obj/stool/chair/C = M.buckled
+			M.buckled.unbuckle()
 			C.buckledIn = 0
 			C.buckled_guy = 0
 		M.pixel_y = 0

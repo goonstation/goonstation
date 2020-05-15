@@ -19,15 +19,15 @@
 	desc = "This isn't that old, you just spilled mugwort tea on it the other day."
 
 /obj/item/teleportation_scroll/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = ""
 	if (!iswizard(user))
-		user.machine = null
+		src.remove_dialog(user)
 		boutput(user, "<span class='alert'><b>The text is illegible!</b></span>")
 		return
 	if (!src.uses)
 		boutput(user, "<span class='notice'><b>The depleted scroll vanishes in a puff of smoke!</b></span>")
-		user.machine = null
+		src.remove_dialog(user)
 		user.Browse(null,"window=scroll")
 		qdel(src)
 		return
@@ -46,7 +46,7 @@
 	if (!( ishuman(H)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
 				src.uses -= 1
@@ -215,7 +215,7 @@
 /obj/magicmirror
 	desc = "An old mirror. A bit eeky and ooky."
 	name = "Magic Mirror"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0

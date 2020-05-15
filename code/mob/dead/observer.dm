@@ -228,6 +228,8 @@
 		abilityHolder.owner = src
 
 	updateButtons()
+	if (render_special)
+		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 	SPAWN_DBG(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))

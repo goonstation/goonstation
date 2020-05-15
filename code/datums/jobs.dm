@@ -18,6 +18,7 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
+	var/receives_badge = 0
 	var/announce_on_join = 0
 	var/list/alt_names = list()
 	var/slot_head = null
@@ -144,6 +145,16 @@
 		..()
 		src.access = get_all_accesses()
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+#if ASS_JAM
+		if(prob(5))
+			M.unequip_all()
+			M.tommyize_reshape()
+#endif
+
 	derelict
 		//name = "NT-SO Commander"
 		name = null
@@ -201,14 +212,22 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
+#if ASS_JAM
+	requires_whitelist = 0
+	high_priority_job = 1
+	change_name_on_spawn = 1
+#else
 	requires_whitelist = 1
+#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
+
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
@@ -415,6 +434,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/rank/security
@@ -460,6 +480,7 @@
 	limit = 1
 	wages = 150
 	//allow_traitors = 0
+	receives_badge = 1
 	cant_spawn_as_rev = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/storage/belt/security/shoulder_holster
@@ -771,6 +792,7 @@
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_ears = /obj/item/device/radio/headset/civilian
 	slot_poc1 = /obj/item/paper/book/pocketguide/bartending
+	slot_lhan = /obj/item/reagent_containers/food/drinks/cocktailshaker
 	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
 
 	New()
@@ -805,7 +827,7 @@
 	wages = 100
 	slot_belt = /obj/item/device/pda2/janitor
 	slot_jump = /obj/item/clothing/under/rank/janitor
-	slot_foot = /obj/item/clothing/shoes/black
+	slot_foot = /obj/item/clothing/shoes/galoshes
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
@@ -999,6 +1021,7 @@
 	wages = 250
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_miranda = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
@@ -1996,9 +2019,33 @@
 		else
 			M.real_name = "Syndicate Agent"
 
+		bad_traitorify(M, "Syndicate Agent")
+
 		equip_syndicate(M)
 		return
 
+/datum/job/special/syndicate_weak
+	linkcolor = "#880000"
+	name = "Junior Syndicate Operative"
+	limit = 0
+	slot_back = /obj/item/storage/backpack/satchel
+	slot_belt = null
+	slot_jump = /obj/item/clothing/under/misc/syndicate
+	slot_suit = /obj/item/clothing/suit/armor/vest
+	slot_head = /obj/item/clothing/head/helmet/swat
+	slot_foot = /obj/item/clothing/shoes/swat
+	slot_ears =  null
+	slot_mask = /obj/item/clothing/mask/breath
+	slot_card = null		///obj/item/card/id/
+	slot_poc1 = /obj/item/reagent_containers/pill/tox
+	slot_poc2 = /obj/item/storage/pouch/bullet_9mm
+	slot_lhan = null
+	slot_rhan = /obj/item/gun/kinetic/pistol
+
+/datum/job/special/syndicate_weak/no_ammo
+	name = "Poorly Equipped Junior Syndicate Operative"
+	slot_poc2 = null
+	slot_poc1 = null
 // hidden jobs for nt-so vs syndicate spec-ops
 
 /datum/job/special/syndicate_specialist
@@ -2056,7 +2103,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/pistol
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
@@ -2070,7 +2117,8 @@
 							/obj/item/device/pda2/heads,
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/powercell_medium)
+							/obj/item/storage/pouch/powercell_medium,
+							/obj/item/gun/kinetic/pistol)
 
 	New()
 		..()
@@ -2093,13 +2141,15 @@
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/clock_188
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
@@ -2108,7 +2158,8 @@
 	slot_poc2 = /obj/item/spacecash/fivehundred
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/clock)
+							/obj/item/storage/pouch/clock,
+							/obj/item/gun/kinetic/clock_188)
 
 	New()
 		..()
@@ -2167,8 +2218,13 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
+#if ASS_JAM
+	announce_on_join = 1
+	limit = 300
+#else
 	limit = 0
 	allow_traitors = 0
+#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null

@@ -1219,8 +1219,8 @@
 						if(istype(callobj.loc, /obj/machinery/computer3))
 							calling_term = callobj.loc
 						if(istype(calling_term))
-							if(calling_term.current_user)
-								logUser = calling_term.current_user
+							if(usr)
+								logUser = usr
 							else
 								logUser = "Terminal \[[src.useracc.user_id]]"
 

@@ -512,8 +512,8 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS, optional = 8)
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+			M.changeStatus("slowed", 0.5 SECONDS)
+			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
 	power = 1
@@ -690,7 +690,11 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10)) //maybe
+#if ASS_JAM
+			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
+#else
+			if (P.data || prob(10))
+#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)
@@ -1207,6 +1211,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
+				JOB_XP(H, "Clown", 1)
 		return
 
 /datum/projectile/bullet/mininuke //Assday only.
@@ -1233,27 +1238,4 @@ toxic - poisons
 		return
 
 
-/datum/projectile/bullet/gun //shoot guns
-	name = "gun"
-	power = 20 //20 damage from getting beaned with a gun idk
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	shot_sound = 'sound/weapons/rocket.ogg'
-	icon_state = "gun"
-	implanted= null
-	casing = null
-	icon_turf_hit = null
-	var/already_gun_made = 0 //has a gun already been made?
 
-	on_launch(obj/projectile/O) //we only want 1 gun per fire
-		already_gun_made = 0
-
-	on_hit(atom/hit)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(hit))
-			already_gun_made = 1
-
-	on_end(obj/projectile/O)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(O))
-			already_gun_made = 1

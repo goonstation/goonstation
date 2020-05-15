@@ -245,7 +245,7 @@
 		del(camera)
 		if(interior_area)
 			interior_area = null
-		return
+		..()
 
 	attack_hand(mob/user as mob)
 		return MouseDrop_T(user, user)

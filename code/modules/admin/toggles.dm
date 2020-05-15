@@ -193,6 +193,15 @@ var/global/IP_alerts = 1
 	src.holder.buildmode_view = !src.holder.buildmode_view
 	boutput(usr, "<span class='notice'>Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!</span>")
 
+/client/proc/toggle_spawn_in_loc()
+	set category = "Toggles"
+	set name = "Toggle Spawn in Loc"
+	set desc = "Toggles if buildmode changes your view"
+	admin_only
+
+	src.holder.spawn_in_loc = !src.holder.spawn_in_loc
+	boutput(usr, "<span class='notice'>Toggled spawn verb spawning in your loc [src.holder.spawn_in_loc ?"off":"on"]!</span>")
+
 /client/proc/cmd_admin_playermode()
 	set name = "Toggle Player mode"
 	set category = "Toggles"

@@ -66,7 +66,7 @@ Contains:
 				.= 1
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!(src.air_contents))
 			return
 
@@ -95,7 +95,7 @@ Contains:
 		if (usr.stat|| usr.restrained())
 			return
 		if (src.loc == usr)
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["dist_p"])
 				var/cp = text2num(href_list["dist_p"])
 				src.distribute_pressure += cp
@@ -112,9 +112,7 @@ Contains:
 				return
 
 			src.add_fingerprint(usr)
-			for(var/mob/M in viewers(1, src.loc))
-				if ((M.client && M.machine == src))
-					src.attack_self(M)
+			src.updateSelfDialog()
 		else
 			usr.Browse(null, "window=tank")
 			return

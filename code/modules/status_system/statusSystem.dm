@@ -1067,6 +1067,8 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
 							var/obj/stool/bed/B = H.buckled
 							B.sleep_in(H)
+						else
+							sleepcount = 3 SECONDS
 
 			.=..()
 

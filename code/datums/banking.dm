@@ -108,13 +108,14 @@
 	proc/timeleft()
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
-		SPAWN_DBG(0)
-			src.checkLotteryTime()
-
+		// TODO move this into process or something, currently it gets checked in mob/Stat
 		if(timeleft <= 0)
 			payday()
 			src.time_until_payday = ticker.round_elapsed_ticks + time_between_paydays
 			return 0
+		if(lottery_active && src.time_until_lotto <= ticker.round_elapsed_ticks)
+			lotteryDay()
+			src.time_until_lotto = ticker.round_elapsed_ticks + time_between_lotto
 
 		return timeleft
 
@@ -167,7 +168,8 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/obj/item/lotteryTicket/T in world)
+		for(var/x in by_type[/obj/item/lotteryTicket])
+			var/obj/item/lotteryTicket/T = x
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -272,7 +274,7 @@
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 
 		switch(src.state)
@@ -329,7 +331,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["type"])
 			if (href_list["type"] == "E")
@@ -478,7 +480,7 @@
 		if (!( data_core.bank.Find(src.active1) ))
 			src.active1 = null
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
 			if (href_list["scan"])
@@ -639,7 +641,6 @@
 			return
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
-			return
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I
@@ -702,7 +703,7 @@
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 
 		switch(src.state)
@@ -770,7 +771,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		switch(href_list["operation"])
 
@@ -939,6 +940,7 @@
 
 	// Give a random set of numbers
 	New()
+		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound
 
@@ -951,6 +953,10 @@
 			dat += "[numbers[i]] "
 
 		desc = "The numbers on this ticket are: [dat]. This is for round [lotteryRound]."
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 proc/FindBankAccountByName(var/nametosearch)
 	if (!nametosearch) return

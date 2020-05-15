@@ -595,7 +595,7 @@ WET FLOOR SIGN
 	name = "cheese-shaped sponge"
 	desc = "Wait a minute! This isn't cheese..."
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "cheese-sponge"
+	icon_state = "sponge-cheese"
 	item_state = "sponge"
 
 

@@ -317,6 +317,14 @@ var/f_color_selector_handler/F_Color_Selector
 		//REMIND ME TO TRIM THIS CRAP DOWN -Keelin
 		Z_LOG_DEBUG("Preload", "Beginning more setup things.")
 
+		//YO, most of this crap below can be removed using initial() on the typepath in interations on the list, e.g.,
+		/*
+		/proc/baz(arg)
+			for var/bar in list_of_foo_subtypes
+				var/datum/foo/foobar = bar
+				if initial(foobar.variable) == Arg
+					do_thing
+		*/
 
 		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
 		for(var/A in childrentypesof(/datum/generatorPrefab))

@@ -1045,6 +1045,7 @@
 			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
 			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
 			user.u_equip(src)
+			JOB_XP(user, "Clown", 2)
 			src.set_loc(get_turf(user))
 			src.oh_no_the_ring()
 			return
@@ -1172,11 +1173,14 @@
 	material_prints = "deep scratches"
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "gloves" && (!user.bioHolder || !user.bioHolder.HasEffect("hulk")))
-			boutput(user, "You feel your muscles swell to an immense size.")
+		if (slot == "gloves")
+			if (!user.bioHolder || !user.bioHolder.HasEffect("hulk"))
+				boutput(user, "You feel your muscles swell to an immense size.")
+			APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/hulkstrong, src.type)
 		return ..()
 
 	unequipped(var/mob/user)
+		REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/hulkstrong, src.type)
 		if (!user.bioHolder || !user.bioHolder.HasEffect("hulk"))
 			boutput(user, "Your muscles shrink back down.")
 		return ..()

@@ -105,7 +105,7 @@ var/list/rollList = list()
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
 
 		if (src.dicePals.len)
-			shuffle(src.dicePals) // so they don't all roll in the same order they went into the pile
+			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
 				D.set_loc(get_turf(src))
 				if (prob(75))
@@ -467,7 +467,7 @@ var/list/rollList = list()
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
 
 		if (src.dicePals.len)
-			shuffle(src.dicePals) // so they don't all roll in the same order they went into the pile
+			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
 				D.set_loc(get_turf(src))
 				if (prob(75))

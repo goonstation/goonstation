@@ -66,8 +66,8 @@ var/datum/score_tracker/score_tracker
 
 		score_crew_survival_rate = get_percentage_of_fraction_and_whole(fatalities,crew_count)
 
-		score_crew_survival_rate = CLAMP(score_crew_survival_rate,0,100)
-		score_enemy_failure_rate = CLAMP(score_enemy_failure_rate,0,100)
+		score_crew_survival_rate = clamp(score_crew_survival_rate,0,100)
+		score_enemy_failure_rate = clamp(score_enemy_failure_rate,0,100)
 
 		final_score_sec = (score_crew_survival_rate + score_enemy_failure_rate) * 0.5
 
@@ -104,8 +104,8 @@ var/datum/score_tracker/score_tracker
 		score_power_outages = get_percentage_of_fraction_and_whole(apcs_powered,apc_count)
 		score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
 
-		score_power_outages = CLAMP(score_power_outages,0,100)
-		score_structural_damage = CLAMP(score_structural_damage,0,100)
+		score_power_outages = clamp(score_power_outages,0,100)
+		score_structural_damage = clamp(score_structural_damage,0,100)
 
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
@@ -128,8 +128,8 @@ var/datum/score_tracker/score_tracker
 
 		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,station_areas)
 
-		score_expenses = CLAMP(score_expenses,0,100)
-		score_cleanliness = CLAMP(score_cleanliness,0,100)
+		score_expenses = clamp(score_expenses,0,100)
+		score_cleanliness = clamp(score_cleanliness,0,100)
 		final_score_civ = (score_expenses + score_cleanliness) * 0.5
 
 		var/xp_winner = null
@@ -198,7 +198,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
-			score_tracker.score_text += "nice"
+			score_tracker.score_text += " <b>nice<b>"
 		score_tracker.score_text += "<BR>"
 		score_tracker.score_text += "<B><U>GRADE: [score_tracker.grade]</U></B><BR>"
 		score_tracker.score_text += "<BR>"

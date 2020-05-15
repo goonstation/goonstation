@@ -32,7 +32,7 @@
 		return attack_hand(user)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
 		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
 		var/dat = list()
@@ -752,9 +752,9 @@
 		return attack_hand(user)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
-		var/dat = "<B>Reagent Extractor</B><BR><HR>"
+		var/list/dat = list("<B>Reagent Extractor</B><BR><HR>")
 		if (src.mode == "overview")
 			dat += "<b><u>Extractor Overview</u></b><br><br>"
 			// Overview mode is just a general outline of what's in the machine at the time
@@ -848,7 +848,7 @@
 		dat += "<HR>"
 		dat += "<b><u>Mode:</u></b> <A href='?src=\ref[src];page=1'>(Overview)</A> <A href='?src=\ref[src];page=2'>(Extraction)</A> <A href='?src=\ref[src];page=3'>(Transference)</A>"
 
-		user.Browse(dat, "window=rextractor;size=370x500")
+		user.Browse(dat.Join(), "window=rextractor;size=370x500")
 		onclose(user, "rextractor")
 
 	handle_event(var/event, var/sender)
@@ -1123,7 +1123,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<B>[src.name]</B><BR><HR>"
 		dat += "<b>Amount to Vend</b>: <A href='?src=\ref[src];amount=1'>[src.vendamt]</A><br>"
 		if (src.category)

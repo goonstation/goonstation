@@ -29,6 +29,7 @@
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
+				JOB_XP(user, "Clown", 2)
 				return
 
 			var/turf/T = get_turf(src)

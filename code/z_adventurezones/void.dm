@@ -217,7 +217,7 @@ CONTENTS:
 
 	proc/display_ui(var/mob/user)
 		var/T
-		user.machine = src
+		src.add_dialog(user)
 		if(active)
 			if(!used)
 				T = {"<span style="display: block">

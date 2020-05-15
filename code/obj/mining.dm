@@ -628,7 +628,7 @@
 		return
 
 	proc/generate_interface(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<BR><B>Magnet Status:</B><BR>"
 		dat += "<u>Condition:</u> "
@@ -710,7 +710,7 @@
 		if (!rangecheck)
 			boutput(usr, "<span class='alert'>You aren't in range of the controls.</span>")
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (!istype(src))
 			boutput(usr, "Error. Magnet not detected.")
@@ -840,7 +840,7 @@
 		if (istype(linked_magnet))
 			linked_magnet.generate_interface(user)
 		else
-			user.machine = src
+			src.add_dialog(user)
 			var/dat = "<B>Mineral Mining Magnet Terminal</B><HR>"
 			dat += "<A href='?src=\ref[src];scan_for_connection=1'>Scan for Magnets</A><BR><BR>"
 			dat += "<B>Choose linked magnet:</B><BR>"
@@ -864,7 +864,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
 
@@ -2260,7 +2260,7 @@ var/global/list/cargopads = list()
 			cargopads.Remove(src)
 		..()
 
-	was_built_from_frame(mob/user)
+	was_built_from_frame(mob/user, newly_built)
 		if (!cargopads.Find(src))
 			cargopads.Add(src)
 		..()

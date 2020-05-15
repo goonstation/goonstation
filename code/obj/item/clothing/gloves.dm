@@ -303,9 +303,9 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			..()
 			if(istype(src.material))
 				if(src.material.hasProperty("density"))//linear function, 10 points of disarm-block for every 25 density, starting from density==10
-					src.setProperty("disarmblock", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
+					src.setProperty("deflection", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
 				else
-					src.setProperty("disarmblock", 0)
+					src.setProperty("deflection", 0)
 				if(src.material.hasProperty("hard"))//Curve hits 0.5 at 30 (fibrilith), 1 at 60 (carbon fibre), 1.2 at 85 (starstone, aka maximum)
 					src.setProperty("rangedprot", round(max(0,-0.5034652-(-0.04859378/0.02534389)*(1-eulers**(-0.02534398*src.material.getProperty("hard")))),0.1)) //holy best-fit curve batman!
 				else
@@ -323,7 +323,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
-		setProperty("disarmblock", 20)
+		setProperty("deflection", 20)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."

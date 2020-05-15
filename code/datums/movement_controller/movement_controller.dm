@@ -12,7 +12,3 @@
 			// stub
 
 		update_owner_dir(var/atom/movable/owner)
-
-
-	disposing()
-		..()

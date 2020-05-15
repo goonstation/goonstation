@@ -40,7 +40,7 @@
 
 	..()
 
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["remove"])
 		var/obj/item/P = locate(href_list["remove"])
 		if ((P && P.loc == src))

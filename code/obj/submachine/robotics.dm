@@ -1,5 +1,8 @@
 // Robotics Stuff
 
+/**
+ * @deprecated
+ */
 /obj/submachine/robomoduler
 	name = "Module Rewriter"
 	desc = "A device used to rewrite robotic and cybernetic software modules."
@@ -16,7 +19,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Module Rewriter</B><BR>
 			<HR><BR>

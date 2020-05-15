@@ -1818,11 +1818,11 @@ datum/preferences
 	if (copytext(hcolor, 1, 2) == "#")
 		adj = 1
 	//DEBUG_MESSAGE("HAIR initial: [hcolor]")
-	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25))
+	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25), 2)
 	//DEBUG_MESSAGE("HAIR R: [hR_adj]")
-	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5))
+	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5), 2)
 	//DEBUG_MESSAGE("HAIR G: [hG_adj]")
-	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10))
+	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("HAIR B: [hB_adj]")
 	var/return_color = "#" + hR_adj + hG_adj + hB_adj
 	//DEBUG_MESSAGE("HAIR final: [return_color]")
@@ -1835,11 +1835,11 @@ datum/preferences
 	if (copytext(ecolor, 1, 2) == "#")
 		adj = 1
 	//DEBUG_MESSAGE("EYE initial: [ecolor]")
-	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10))
+	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE R: [eR_adj]")
-	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10))
+	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE G: [eG_adj]")
-	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10))
+	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE B: [eB_adj]")
 	var/return_color = "#" + eR_adj + eG_adj + eB_adj
 	//DEBUG_MESSAGE("EYE final: [return_color]")

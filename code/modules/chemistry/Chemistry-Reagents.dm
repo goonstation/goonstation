@@ -152,6 +152,7 @@ datum
 						M.ailments += AD
 					else */if (AD)
 						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
 /*					if (ishuman(M) && thirst_value)
@@ -209,6 +210,12 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
+				if (H.organHolder)
+					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+						deplRate /= 2
+					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+						deplRate /= 2
+
 				if (H.sims)
 					if (src.thirst_value)
 						H.sims.affectMotive("Thirst", thirst_value)

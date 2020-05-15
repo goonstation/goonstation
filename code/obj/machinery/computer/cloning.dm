@@ -168,7 +168,7 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN|NOPOWER))

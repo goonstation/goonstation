@@ -166,7 +166,7 @@
 		if(angry)
 			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = updatemenu()
 		if(!temp)
 			dat += {"[src.greeting]<HR>
@@ -190,7 +190,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//
 		///////////////////////////////

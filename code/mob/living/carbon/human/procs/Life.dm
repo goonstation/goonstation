@@ -1143,7 +1143,7 @@
 		if(src.getStatusDuration("food_disease_resist"))
 			resist_prob += 80
 
-		resist_prob = CLAMP(resist_prob,0,100)
+		resist_prob = clamp(resist_prob,0,100)
 		return resist_prob
 
 	proc/get_rad_protection()
@@ -1216,8 +1216,8 @@
 		// Resistance from Clothing
 		for(var/atom in src.get_equipped_items())
 			var/obj/item/C = atom
-			if(C.hasProperty("disarmblock"))
-				var/curr = C.getProperty("disarmblock")
+			if(C.hasProperty("deflection"))
+				var/curr = C.getProperty("deflection")
 				protection += curr
 
 		return min(protection, 90-STAMINA_BLOCK_CHANCE)
@@ -1547,12 +1547,12 @@
 
 		if (src.bleeding && src.blood_volume)
 
-			var/final_bleed = CLAMP(src.bleeding, 0, 5) // trying this at 5 being the max
-			//var/final_bleed = CLAMP(src.bleeding, 0, 10) // still don't want this above 10
+			var/final_bleed = clamp(src.bleeding, 0, 5) // trying this at 5 being the max
+			//var/final_bleed = clamp(src.bleeding, 0, 10) // still don't want this above 10
 
 			if (src.reagents)
 				var/anticoag_amt = src.reagents.has_reagent("heparin") // anticoagulant
-				final_bleed += round(CLAMP((anticoag_amt / 10), 0, 2), 1)
+				final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
 
 			if (prob(max(0, min(final_bleed, 10)) * 5)) // up to 50% chance to make a big bloodsplatter
 				bleed(src, final_bleed, 5)
@@ -1682,7 +1682,7 @@
 				UpdateOverlays(null, "sleep_bubble")
 
 		if (src.sleeping)
-			src.changeStatus("paralysis", 4 SECONDS)
+			src.changeStatus("paralysis", 4 SECONDS * mult)
 			if (prob(10) && (health > 0))
 				emote("snore")
 			if (!src.hasStatus("resting")) src.sleeping--

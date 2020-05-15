@@ -44,7 +44,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 
 	if(!href_list["operation"] || (dd_hasprefix(href_list["operation"], "ai-") && !issilicon(usr) && !isAI(usr)))
 		return
@@ -225,7 +225,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<head><title>Communications Console</title></head><body>"
 	if (emergency_shuttle.online && emergency_shuttle.location == SHUTTLE_LOC_CENTCOM)
 		var/timeleft = emergency_shuttle.timeleft()

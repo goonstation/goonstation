@@ -124,7 +124,7 @@
 				next.color = COLOR_MATRIX_IDENTITY
 			else
 				next.icon_state = "down_dis"
-				prev.color = COLOR_MATRIX_GRAYSCALE
+				next.color = COLOR_MATRIX_GRAYSCALE
 
 			for (var/i = items_screen, i < i_max, i++)
 				if (i > master.module.modules.len)

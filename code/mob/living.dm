@@ -780,39 +780,6 @@
 
 		return
 
-	//Overmind handling - Cirr
-	// this code duplication is pretty bad. todo: fix the code duplication, hopefully
-	if (src.mob_flags & SPEECH_INTRUDER)
-		var/scrambledMessage = src.say_quote(stutter(say_superdrunk(message)))
-		message = src.say_quote(message)
-		var/rendered = "<span class='game astralsay'>"
-		rendered += "<span class='prefix'>ASTRAL:</span> "
-		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
-		rendered += "<span class='message'>[message]</span>"
-		rendered += "</span>"
-
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
-				continue
-
-			if (M.client)
-				if((istype(M, /mob/living/intangible/intruder) || M.client.holder))
-					var/thisR = rendered
-					if (M.client.holder && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
-					boutput(M, thisR)
-				else
-					if(prob(30))
-						boutput(M, "<em>A strange, unnatural voice enters your mind... [scrambledMessage]</em>")
-					else if(prob(20))
-						var/description = "[pick("chimes", "croaks", "shines", "whispers", "sings", "echoes")] "
-						description += "[pick("strangely", "hollowly", "incomprehensibly", "menacingly", "peacefully", "softly")]"
-						boutput(M, "<em>A strange, unnatural voice [description].</em>")
-
-		return
-
-
-
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
 
@@ -1154,11 +1121,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50))
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [src] drops it!"
 				thing.set_loc(src.loc)
+				JOB_XP(src, "Clown", 2)
 			else if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(50))
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [M] drops it!"
 				thing.set_loc(M.loc)
 			else if (M.put_in_hand(thing))
 				message = "<B>[src]</B> hands [thing] to [M]."
+				if(istype(thing,/obj/item/toy/diploma))
+					var/obj/item/toy/diploma/D = thing
+					if(!D.receiver && D.redeemer == src.ckey)
+						M.unlock_medal( "Unlike the director, I went to college", 1 )
+						D.receiver = M.ckey
+						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
@@ -1169,7 +1143,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
-	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 		var/atom/movable/A = src.pulling
 		// hi grayshift sorry grayshift
 		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
@@ -1178,21 +1152,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			else
 				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
 					. *= max(A.p_class, 1)
-				// else, ignore p_class*/
-				else if (ishuman(src))
-					if(ismob(A))
-						var/mob/M = A
-						//if they're lying, pull em slower, unless you have a gang and they are in your gang.
-						if(M.lying)
-							if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
-								. *= 1		//do nothing
-							else
-								. *= max(A.p_class, 1)
-					else if(istype(A, /obj/storage))
-						// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-						if (locate(/mob) in A.contents)
-							. *= max(A.p_class,1)
-	return .
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
@@ -1234,7 +1193,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			else
 				if (!src.getStatusDuration("burning"))
 					if (src.grab_block())
-						src.last_resist = world.time + (COMBAT_CLICK_DELAY/2)
+						src.last_resist = world.time + COMBAT_BLOCK_DELAY
 					else
 						for (var/mob/O in AIviewers(src, null))
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")

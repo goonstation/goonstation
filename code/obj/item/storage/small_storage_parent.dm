@@ -95,7 +95,7 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
+	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
 		if (W.cant_drop)
 			return
 		if (islist(src.can_hold) && src.can_hold.len)

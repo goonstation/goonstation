@@ -1,15 +1,3 @@
-/proc/shuffle(var/list/shufflelist)
-	if(!shufflelist)
-		return
-	. = list()
-	var/list/old_list = shufflelist.Copy()
-	while(old_list.len)
-		var/item = pick(old_list)
-		. += item
-		if(old_list[item])
-			.[item] = old_list[item]
-		old_list -= item
-
 /proc/uniquelist(var/list/L)
 	. = list()
 	for(var/item in L)

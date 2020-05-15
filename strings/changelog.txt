@@ -1,5 +1,124 @@
 
+(t)thu may 14 20
+(u)Keiya
+(p)695
+(e)🆕|enhancement
+(+)Card boxes now have varying sizes. Notably, you can now put tarot decks back in their box easily.
+(u)mbc
+(p)690
+(e)🆕|enhancement
+(*)Added directional lights. They are in use for most things that would make sense (flashlights hard hats pods etc). A Bonus of this is that they are less laggy than normal lights (because they cover less tiles)!
+(u)Fosstar
+(p)430
+(e)🆕🎨|enhancement, sprites
+(+)Adds a stethoscope to the MD's medical bag that can be used to diagnose many conditions. Be careful though, your ears are at risk if you use it without the proper training or if you're a clown!
+(u)Carbadox and Gannets
+(p)607
+(e)🎨|sprites
+(*)Added a roundstart cocktail shaker item for bartenders! Press C to shake like a real classy dude.
+(u)pali
+(p)688
+(e)|
+(+)"Corpse" spacebux purchase now doesn't carry over between rounds.
+(t)wed may 13 20
+(u)pali
+(p)678
+(e)|
+(*)Ass jam changelog is now only shown during ass jam. Also it is light brown (I tried ok, I'm not good at colours) and above the regular changelog.
+(u)Gannets
+(p)669
+(e)⚖|balance
+(+)Reduced light machine gun slow effect by two thirds.
+(t)tue may 12 20
+(u)system86
+(p)616
+(e)🆕|enhancement
+(+)DWAINE "eval" improvements and additions. New/fixed commands: # . .s del ' (single quote)
+(u)Sovexe
+(p)646
+(e)🆕🎨|enhancement, sprites
+(*)Added a cyborg battery distress indicator. Conveys that a robot is likely in desperate need of outside assistance.
+(u)Kyle
+(p)608
+(e)⚖|balance
+(+)Stamina buffs and debuffs of different reagents now stack with eachother. You can use two stamina buff chems to add their effects together.
+(t)mon may 11 20
+(u)pali
+(p)657
+(e)⚖🆕|balance, enhancement
+(*)Complete darkness is now black.
+(u)Mordent
+(p)622
+(e)🆕🗺🎨|enhancement, mapping, sprites
+(*)Reworked cyborg module rewriter to let users re-order or remove tools from the inserted module.
+(u)Tarmunora
+(p)583
+(e)⚖🆕|balance, enhancement
+(+)Added plastic cuffs, which take a shorter amount of time to break out of, to security vendors.
+(t)sun may 10 20
+(u)mbc
+(p)650
+(e)|
+(+)Did a big behind-the-scenes optimizing of machine popup window refresh handling. You shouldn't notice anything different, but if any new bugs turn up please report them.
+(u)UrsulaMajor
+(p)638
+(e)🆕|enhancement
+(+)As a clown, give your diploma to someone! See what happens!
+(t)sat may 09 20
+(u)Sovexe
+(p)592
+(e)🆕|enhancement
+(*)Added borg death alert PDA messages for medresearch
+(u)Tarmunora
+(p)617
+(e)⚖|balance
+(+)Increased active cooling rate on cryotubes
+(u)Carbadox
+(p)610
+(e)⚖🆕|balance, enhancement
+(+)Loosened the job restrictions for Syndicate items like sonic grenade, amplified vuvuzela, pickpocket gun, hotdog grenade, moustache grenade, poison bottles and syndicate sauce.
+(u)Dabir
+(p)609
+(e)🆕|enhancement
+(+)Hand teleporters now work when implanted as a chest item.
+(u)Flaborized
+(p)535
+(e)🆕🎨|enhancement, sprites
+(*)Security department roles now start with badges that they can show off!
+(u)RichardGere
+(p)554
+(e)⚖|balance
+(+)Dashing with a katana no longer delimbs, but instead applies a disorient.
+(u)Kyle
+(*)High tier Janitor XP rewards moved to debris field instead of being spawnable. This is to bring them in line with our general philosophy on XP rewards; which is that having a higher job level should not give you a competitive advantage.
+(t)fri may 08 20
+(u)Sovexe
+(p)624
+(e)🆕|enhancement
+(+)Clicking an airlock that you don't have permission to open with the help intent will now cause you to knock on the door
+(u)glassofmilk
+(p)597
+(e)🆕|enhancement
+(+)Changed to allow more configuration for guardbuddy and navbeacon settings
+(t)thu may 07 20
+(u)Kubius
+(p)614
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch seventeen: mainly the engine again.
+(u)glassofmilk
+(p)529
+(e)🆕🎨|enhancement, sprites
+(*)Added a Radio Scanner Component to the MechComp Dispenser. It can monitor voice radio channels and output a packet accordingly.
+(u)Kyle
+(p)606
+(e)🆕|enhancement
+(*)Added Clown Job XP and Rewards. Get it from doing Clown things.
 (t)wed may 06 20
+(u)Carbadox
+(p)573
+(e)🆕|enhancement
+(+)Removed Port-a-brig from Security Equipment Crate and moved it to it's own seperate purchase
+(+)Added general Security gear like belt, helmet and vest in place of the Brig
 (u)Naksu
 (p)576
 (e)|
@@ -168,10 +287,6 @@
 (u)mbc
 (e)⚖|balance
 (*)Disorient statuseffect will no longer randomly make you drop items. Increased the likelihood of a changeling or vampire scream forcing you to drop items to compensate.
-(u)Fosstar
-(p)450
-(e)🍑⚖🗺|ass-jam, balance, mapping
-(*)Modernized and fixed up Donut 2 a bunch. The map is available during Ass Jam!
 (u)mbc
 (p)461
 (e)⚖|balance
@@ -458,14 +573,6 @@
 (+)Batch one of small improvements and fixes to Kondaru.
 (u)Erinexx
 (+)Resprited janitor equipment (mops, buckets, laundry machines, ...).
-(u)ASS_JAM
-(*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
-(*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
-(*)Moonlol - New wizard spell: Timestop. "This very handy dandy feature surely wont cause any runtimes"
-(*)Polivilas - Disables zipgun, adds a slamgun. "I will pay out 100k spacebux for better sprites - contact 2027#2027 on discord for more details."
-(*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
-(*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
-(*)UrsulaMajor - Updated Density, map smol.
 (u)Flaborized
 (*)Added a few small items to the surplus crate!
 (u)Tarmunora
@@ -475,8 +582,6 @@
 (+)Changed pointblanking to hit with all the projectiles in a burst, not just one
 (+)Fixes up gunpoint grabs a little bit (should shoot more consistently)
 (t)sun apr 12 20
-(u)Goonstation Administration Team
-(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
 (u)Enfaeutchie
 (+)The Lawgiver now comes with an instructional pamphlet.
 (+)Fixed a couple of Lawgiver typos, and a bug where knockout was listed as detain in examine text.
@@ -554,7 +659,6 @@
 (*)Added Roach and Saxophone as spacebux rewards.
 (*)Disaster mode now includes a wraith at roundstart.
 (u)pali
-(*)Nukies on ass day can now get much wilder target locations.
 (+)Until we rework matsci somewhat light bulbs, light tubes and tripod bulbs are now 5 times more expensive when it comes to material cost
 (u)adharainspace
 (*)Added fancy new RCD sprites, courtesy of Flaborized!
@@ -1479,11 +1583,6 @@
 (u)Warcrimes
 (*)Y'know those shitty "cigars" they sell at the gas station, two fer a buck? Ya got those now.
 (*)I hear there's a shady brand out there that loads em with all sorts a spice and junk, know what i'm sayin Big J?
-(t)wed nov 13 19
-(u)Firebarrage and Hyrdofloric
-(*)A new Ass Day event: The Ass Day Arena!
-(*)Travel there with your ghost ability buttons, just like the afterlife bar
-(*)In the arena is a special artifact. If you pick it up and dont let anyone else pick it up for 30 seconds you will respawn!
 (t)sat nov 09 19
 (u)Kyle
 (*)Merge functional plates and trays patch by adhara. Put items on plates or trays and carry them around with you. Find trays in the kitchen vendomat.

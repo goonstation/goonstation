@@ -754,6 +754,7 @@
 	slot = "l_leg"
 	icon_state_base = "legL"
 	step_image_state = "footprintsL"
+	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
@@ -770,7 +771,7 @@
 	speedbonus = 0.25
 	powerdrain = 2.5
 	step_image_state = "tracksL"
-	movement_modifier = /datum/movement_modifier/robotleg_left
+	movement_modifier = /datum/movement_modifier/robottread_left
 
 /obj/item/parts/robot_parts/leg/right
 	name = "standard cyborg right leg"
@@ -778,6 +779,7 @@
 	slot = "r_leg"
 	icon_state_base = "legR"
 	step_image_state = "footprintsR"
+	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
@@ -794,7 +796,7 @@
 	speedbonus = 0.25
 	powerdrain = 2.5
 	step_image_state = "tracksR"
-	movement_modifier = /datum/movement_modifier/robotleg_right
+	movement_modifier = /datum/movement_modifier/robottread_right
 
 /obj/item/parts/robot_parts/leg/treads
 	name = "cyborg treads"

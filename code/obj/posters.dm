@@ -3,7 +3,7 @@
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
 // so things don't have to grab a new instance of this every time they need it
-var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unknown")
+var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wanted-unknown")
 
 // admin poster generation thing
 /proc/gen_poster(var/target)
@@ -226,7 +226,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 /obj/item/poster
 	name = "poster"
 	desc = null
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_nt"
 	throwforce = 0
 	w_class = 1.0
@@ -382,7 +382,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 /obj/decal/cleanable/ripped_poster
 	name = "ripped poster"
 	desc = "Someone didn't want this here, but a little bit is always left."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_nt-rip2"
 
 /obj/submachine/poster_creator
@@ -407,7 +407,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
 		if (user.client)
-			user.machine = src
+			src.add_dialog(user)
 			show_window(user.client)
 			onclose(user, "wp_station")
 
@@ -529,7 +529,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 			if (isnull(pnum) || get_dist(usr,src) > 1)
 				return
 			logTheThing("speech", usr, null, "printed out [pnum] wanted poster(s) [log_loc(src)] contents: name [src.plist["name"]], subtitle [src.plist["subtitle"]], wanted [src.plist["wanted"]], for [src.plist["for"]], notes [src.plist["notes"]]")
-			for (var/i = CLAMP(pnum, 1, src.papers), i>0, i--)
+			for (var/i = clamp(pnum, 1, src.papers), i>0, i--)
 				if (src.papers <= 0)
 					break
 				src.print_poster(usr)
