@@ -70,6 +70,7 @@
 			"Follow Thing",\
 			"Possess",\
 			"Create Poster",\
+			"Delete",\
 
 			"Gib",\
 			"Polymorph",\
