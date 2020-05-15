@@ -1307,22 +1307,21 @@
 				TakeDamage("r_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
 
 	proc/handle_chemicals_in_body()
-		if (src.nodamage) return
+		if (src.nodamage)
+			return
 
 		if (reagents)
 
-			var/reagent_time_passed = min(max(tick_spacing, world.timeofday - last_reagent_process), cap_tick_spacing)
+			var/reagent_time_multiplier = clamp(world.timeofday - last_reagent_process, tick_spacing, cap_tick_spacing) / tick_spacing
 
-			//temp_reagents does some weird "approach body temp" shit... we should jjust call it multiple times so i dont have to rework all the math
-			for(var/x = 0, x < (reagent_time_passed), x+=tick_spacing)
-				reagents.temperature_reagents(src.bodytemperature-30, 100)
+			reagents.temperature_reagents(src.bodytemperature, 100, 35/reagent_time_multiplier, 15*reagent_time_multiplier)
 
 			if (blood_system && reagents.get_reagent("blood"))
-				var/blood2absorb = min(src.blood_absorption_rate, src.reagents.get_reagent_amount("blood")) * (reagent_time_passed / tick_spacing)
+				var/blood2absorb = min(src.blood_absorption_rate, src.reagents.get_reagent_amount("blood")) * reagent_time_multiplier
 				reagents.remove_reagent("blood", blood2absorb)
 				src.blood_volume += blood2absorb
 			if (metabolizes)
-				reagents.metabolize(src, multiplier = (reagent_time_passed / tick_spacing))
+				reagents.metabolize(src, multiplier = reagent_time_multiplier)
 
 		src.last_reagent_process = world.timeofday
 
@@ -1333,8 +1332,6 @@
 			src.contract_disease(/datum/ailment/malady/hypoglycemia, null, null, 1)
 
 		src.updatehealth()
-
-		return //TODO: DEFERRED
 
 	proc/handle_blood_pressure(var/mult = 1)
 		if (!blood_system)

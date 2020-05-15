@@ -361,13 +361,12 @@ datum
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.2
 			thirst_value = -0.03
+			minimum_reaction_temperature = T0C+400
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/myvol = volume
-				if(exposed_temperature > T0C + 400) //Turns into a neurotoxin.
-					volume = 0
-					holder.add_reagent("neurotoxin", myvol, null)
-				return
+				holder.del_reagent(id)
+				holder.add_reagent("neurotoxin", myvol, null)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
