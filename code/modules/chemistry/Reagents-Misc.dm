@@ -233,10 +233,10 @@ datum
 
 			on_add()
 				var/mob/M = holder?.my_atom
-        if(istype(M))
-				  var/amount = holder.get_reagent_amount(src.id)
-				  M.add_stam_mod_regen("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
-				  M.add_stam_mod_max("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
+				if(istype(M))
+					var/amount = holder.get_reagent_amount(src.id)
+					M.add_stam_mod_regen("aranesp", ceil(clamp(1.1979**(amount - theraputicamount), 1, 30)))
+					M.add_stam_mod_max("aranesp", ceil(clamp(1.1979**(amount - theraputicamount), 1, 30)))
 				return
 
 			on_remove()
@@ -270,8 +270,8 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(blood_system)
 							H.blood_volume += 1	* mult
-						H.mod_stam_regen("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
-						H.mod_stam_max("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
+						H.mod_stam_regen("aranesp", ceil(clamp(1.1979**(amount - theraputicamount), 1, 30)))
+						H.mod_stam_max("aranesp", ceil(clamp(1.1979**(amount - theraputicamount), 1, 30)))
 					M.nutrition -= 1 * mult
 				..()
 				return
