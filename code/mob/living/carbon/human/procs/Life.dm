@@ -1890,18 +1890,11 @@
 					setalive(src)
 
 			else	//Not stunned.
-				if (must_lie)
-					src.lying = 1
-				else
-					src.lying = 0
+				src.lying = must_lie ? 1 : 0
 				setalive(src)
 
 		else //Dead.
-			//if ((src.reagents && src.reagents.has_reagent("montaguone_extra")) || cant_lie) src.lying = 0
-			if (cant_lie)
-				src.lying = 0
-			else
-				src.lying = 1
+			src.lying = cant_lie ? 0 : 1
 			src.blinded = 1
 			setdead(src)
 
