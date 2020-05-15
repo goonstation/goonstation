@@ -251,6 +251,12 @@
 	desc = "Chewy leaves often manufactured for use in radiation treatment medicine."
 	icon_state = "nureous"
 
+/obj/item/plant/herb/nureous/fuzzy
+	name = "nureous leaves"
+	crop_suffix	= " leaves"
+	desc = "Chewy leaves often manufactured for use in radiation treatment medicine. They seem strangely hairy."
+	icon_state = "nureousfuzzy"
+
 /obj/item/plant/herb/asomna
 	name = "asomna bark"
 	crop_suffix	= " bark"

@@ -317,6 +317,7 @@
 /datum/plantmutation/nureous/fuzzy
 	name = "Fuzzy Nureous"
 	name_prefix = "Fuzzy "
+	crop = /obj/item/plant/herb/nureous/fuzzy
 	iconmod = "NureousFuzzy"
 	assoc_reagents = list("hairgrownium")
 
