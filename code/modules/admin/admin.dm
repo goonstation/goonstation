@@ -190,6 +190,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
 				src.show_pref_window(usr)
+		if ("toggle_spawn_in_loc")
+			if (src.level >= LEVEL_MOD)
+				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc
+				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
 				src.auto_stealth = !(src.auto_stealth)
@@ -4137,8 +4141,11 @@ var/global/noir = 0
 				if (location)
 					location.ReplaceWith(chosen, handle_air = 0)
 			else
-				var/atom/movable/A = new chosen()
-				A.set_loc(usr.loc)
+				var/atom/movable/A
+				if (usr.client.holder.spawn_in_loc)
+					A = new chosen(usr.loc)
+				else
+					A = new chosen(get_turf(usr))
 				if (usr.client.flourish)
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
