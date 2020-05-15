@@ -2742,9 +2742,9 @@ datum
 				if (exposed_temperature > T0C + 100)
 					reacting = 1
 					var/count = 0
-					for (var/mob/living/L in oview(5, holder.my_atom))
+					for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
 						count++
-					for (var/mob/living/L in oview(5, holder.my_atom))
+					for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
 						arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
 
 					holder.del_reagent(id)
