@@ -1,6 +1,10 @@
 
 (t)fri may 15 20
 (u)Tarmunora
+(p)651
+(e)⚖|balance
+(+)Tweaked the delivery mechanism in shock grenades; they now smoke voltagen instead of leaving puddles behind.
+(u)Tarmunora
 (p)674
 (e)⚖|balance
 (+)Haloperidol is slightly better at tranquilizing.
