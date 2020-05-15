@@ -44,6 +44,9 @@
 	stamina_mods_max.Add(key)
 	stamina_mods_max[key] = value
 	return 1
+	
+/mob/proc/mod_stam_max(var/key, var/value)
+	return 0
 
 /mob/living/carbon/mod_stam_max(var/key, var/value)
 	if(!isnum(value)) 
@@ -89,6 +92,9 @@
 	stamina_mods_regen.Add(key)
 	stamina_mods_regen[key] = value
 	return 1
+
+/mob/proc/mod_stam_regen(var/key, var/value)
+	return 0
 
 /mob/living/carbon/mod_stam_regen(var/key, var/value)
 	if(!isnum(value)) 
