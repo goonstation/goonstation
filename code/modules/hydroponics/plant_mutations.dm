@@ -317,7 +317,7 @@
 /datum/plantmutation/nureous/fuzzy
 	name = "Fuzzy Nureous"
 	name_prefix = "Fuzzy "
-	//iconmod = "NureousFuzzy" //TODO: make growthsprites
+	iconmod = "NureousFuzzy"
 	assoc_reagents = list("hairgrownium")
 
 // Asomna Mutations
