@@ -286,13 +286,14 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 100
+	power = 120
 	dissipation_delay = 1
-	dissipation_rate = 25
+	dissipation_rate = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.5
+	ks_ratio = 0.66
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
