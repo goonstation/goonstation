@@ -233,6 +233,7 @@ datum
 
 			on_add()
 				var/mob/M = holder?.my_atom
+				var/amount = holder.get_reagent_amount(src.id)
 				M.add_stam_mod_regen("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
 				M.add_stam_mod_max("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
 				return
@@ -245,12 +246,13 @@ datum
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				var/amount = holder.get_reagent_amount(src.id)
 				if (!M)
 					M = holder.my_atom
 				if(istype(M))
-					if(holder.get_reagent_amount(src.id) > theraputicamount)
-						if (prob(90))
-							if(holder.get_reagent_amount(src.id) > dangerzone)
+					if(amount > theraputicamount)
+						if(prob(90))
+							if(amount > dangerzone)
 								M.take_toxin_damage(3 * mult) // Winners don't do drugs
 							else
 								M.take_toxin_damage(1 * mult)
@@ -258,7 +260,7 @@ datum
 							M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
 						if (prob(8))
 							boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
-						if (prob(5) || ((holder.get_reagent_amount(src.id) > dangerzone) && prob(10)))
+						if (prob(5) || (amount > dangerzone) && prob(10))
 							boutput(M, "<span class='alert'>You cannot breathe!</span>")
 							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
 							M.take_oxygen_deprivation(15 * mult)
@@ -267,9 +269,9 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(blood_system)
 							H.blood_volume += 1	* mult
-					M.nutrition -= 1	* mult
-					M.mod_stam_regen("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
-					M.mod_stam_max("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
+						H.mod_stam_regen("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
+						H.mod_stam_max("aranesp", ceil(CLAMP(1.1979**(amount - theraputicamount), 1, 30)))
+					M.nutrition -= 1 * mult
 				..()
 				return
 
