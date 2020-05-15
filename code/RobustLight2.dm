@@ -16,6 +16,7 @@ proc/get_moving_lights_stats()
 // TODO readd counters for debugging
 #define RL_UPDATE_LIGHT(src) do { \
 	if (src.fullbright || src.loc?:force_fullbright) { break } \
+	if(paint_turfs) { src.alpha = 170 } ; \
 	src.RL_MulOverlay.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		src.E.RL_LumR, src.E.RL_LumG, src.E.RL_LumB, 0, \
@@ -39,10 +40,17 @@ proc/get_moving_lights_stats()
 	} else { if(src.RL_AddOverlay) { pool(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
 	} while(false)
 
-#define RL_APPLY_LIGHT(src, lx, ly, brightness, height2, r, g, b) do { \
+var/paint_turfs = 0
+/mob/verb/toggle_paint_turfs()
+	paint_turfs = !paint_turfs
+
+
+// requires atten to be defined outside
+#define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
-	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
-	if (atten < 0) { break } \
+	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
+	if (atten < 0) { if(paint_turfs) src.color = "#ff0000"; break } \
+	if(paint_turfs) { src.color = "#00ff00"; src.maptext = "[atten]"} ; \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
 	src.RL_LumB += b*atten ; \
@@ -50,6 +58,11 @@ proc/get_moving_lights_stats()
 	src.RL_AddLumG = clamp((src.RL_LumG - 1) * 0.5, 0, 0.3) ; \
 	src.RL_AddLumB = clamp((src.RL_LumB - 1) * 0.5, 0, 0.3) ; \
 	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
+	} while(false)
+
+#define RL_APPLY_LIGHT(src, lx, ly, brightness, height2, r, g, b) do { \
+	var/atten ; \
+	 RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) ; \
 	} while(false)
 
 #define RL_APPLY_LIGHT_LINE(src, lx, ly, dir, radius, brightness, height2, r, g, b) do { \
@@ -73,7 +86,7 @@ proc/get_moving_lights_stats()
 		}\
 		if (round(line_len) >= radius) { atten *= 0.4 } \
 	}\
-	if (atten < 0) { break } \
+	if (atten < RL_Atten_Threshold) { break } \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
 	src.RL_LumB += b*atten ; \
@@ -87,6 +100,7 @@ proc/get_moving_lights_stats()
 
 #define RL_Atten_Quadratic 2.2 // basically just brightness scaling atm
 #define RL_Atten_Constant -0.11 // constant subtracted at every point to make sure it goes <0 after some distance
+#define RL_Atten_Threshold 2/256 // imperceptible change
 #define RL_MaxRadius 6 // maximum allowed light.radius value. if any light ends up needing more than this it'll cap and look screwy
 #define DLL 0 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
 
@@ -341,7 +355,8 @@ datum/light
 			src.premul_r = src.r * src.brightness
 			src.premul_g = src.g * src.brightness
 			src.premul_b = src.b * src.brightness
-			src.radius = min(round(sqrt(max((brightness * RL_Atten_Quadratic) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius)
+			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic - 0.3)) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius)
+			//src.radius = min(round(sqrt(max((brightness * RL_Atten_Quadratic) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius)
 
 		apply()
 			if (!RL_Started)
@@ -442,42 +457,47 @@ datum/light
 			. = list()
 			var/height2 = src.height**2
 			var/turf/middle = locate(src.x, src.y, src.z)
-			outer:
-				for (var/turf/T in view(src.radius, middle))
-					if (T.opacity)
-						continue
-					/*
-					for (var/atom/A in T)
-						if (A.opacity)
-							continue outer
-					*/
-					if(T.opaque_atom_count > 0)
+			var/atten
+			for (var/turf/T in view(src.radius, middle))
+				if (T.opacity)
+					continue
+				/*
+				for (var/atom/A in T)
+					if (A.opacity)
 						continue outer
+				*/
+				if(T.opaque_atom_count > 0)
+					continue
 
-					RL_APPLY_LIGHT(T, src.x, src.y, src.brightness, height2, r, g, b)
-					T.RL_ApplyGeneration = generation
-					T.RL_UpdateGeneration = generation
-					. += T
+				RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, src.brightness, height2, r, g, b)
+				if(atten < RL_Atten_Threshold)
+					continue
+				T.RL_ApplyGeneration = generation
+				T.RL_UpdateGeneration = generation
+				. += T
 
 			for (var/X in .)
 				var/turf/T = X
 
 				if (T.E && T.E.RL_ApplyGeneration < generation)
-					T.E.RL_ApplyGeneration = generation
-					RL_APPLY_LIGHT(T.E, src.x, src.y, src.brightness, height2, r, g, b)
-					ADDUPDATE(T.E)
-					ADDUPDATE(T.S.E)
+					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.E, src.x, src.y, src.brightness, height2, r, g, b)
+					if(atten >= RL_Atten_Threshold)
+						T.E.RL_ApplyGeneration = generation
+						ADDUPDATE(T.E)
+						ADDUPDATE(T.S.E)
 
 				if (T.N && T.N.RL_ApplyGeneration < generation)
-					T.N.RL_ApplyGeneration = generation
-					RL_APPLY_LIGHT(T.N, src.x, src.y, src.brightness, height2, r, g, b)
-					ADDUPDATE(T.N)
-					ADDUPDATE(T.N.W)
+					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.N, src.x, src.y, src.brightness, height2, r, g, b)
+					if(atten >= RL_Atten_Threshold)
+						T.N.RL_ApplyGeneration = generation
+						ADDUPDATE(T.N)
+						ADDUPDATE(T.N.W)
 
 				if (T.NE && T.NE.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT(T.NE, src.x, src.y, src.brightness, height2, r, g, b)
-					T.NE.RL_ApplyGeneration = generation
-					ADDUPDATE(T.NE)
+					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.NE, src.x, src.y, src.brightness, height2, r, g, b)
+					if(atten >= RL_Atten_Threshold)
+						T.NE.RL_ApplyGeneration = generation
+						ADDUPDATE(T.NE)
 
 				ADDUPDATE(T.W)
 				ADDUPDATE(T.S)
@@ -680,7 +700,7 @@ turf
 			//	return
 
 			var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)**2 + (src.y - ly)**2 + height2) + RL_Atten_Constant
-			if (atten < 0)
+			if (atten < RL_Atten_Threshold)
 				return
 			RL_LumR += r*atten
 			RL_LumG += g*atten
