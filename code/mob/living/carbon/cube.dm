@@ -99,7 +99,7 @@
 
 	/mob/living/carbon/cube/build_keymap(client/C)
 		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("human"))
+		keymap.merge(client.get_keymap("cube"))
 		return keymap
 
 	proc/get_cube_idle()
