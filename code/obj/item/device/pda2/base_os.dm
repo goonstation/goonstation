@@ -293,11 +293,9 @@
 				if(src.master.scan_program)
 					src.master.scan_program = null
 
-#ifdef UNDERWATER_MAP
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)
 					hotspot_controller.show_map(usr.client)
-#endif
 
 			else if(href_list["input"])
 				switch(href_list["input"])
