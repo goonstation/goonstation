@@ -120,7 +120,7 @@
 	genome = 7
 	special_proc = 1
 	assoc_reagents = list("synthflesh")
-	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,/datum/plantmutation/synthmeat/organ)
+	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,/datum/plantmutation/synthmeat/eye)
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/unstable)
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
