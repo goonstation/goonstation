@@ -16,7 +16,6 @@ proc/get_moving_lights_stats()
 // TODO readd counters for debugging
 #define RL_UPDATE_LIGHT(src) do { \
 	if (src.fullbright || src.loc?:force_fullbright) { break } \
-	if(paint_turfs) { src.alpha = 170 } ; \
 	src.RL_MulOverlay.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		src.E.RL_LumR, src.E.RL_LumG, src.E.RL_LumB, 0, \
@@ -40,17 +39,12 @@ proc/get_moving_lights_stats()
 	} else { if(src.RL_AddOverlay) { pool(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
 	} while(false)
 
-var/paint_turfs = 0
-/mob/verb/toggle_paint_turfs()
-	paint_turfs = !paint_turfs
-
 
 // requires atten to be defined outside
 #define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
 	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
-	if (atten < 0) { if(paint_turfs) src.color = "#ff0000"; break } \
-	if(paint_turfs) { src.color = "#00ff00"; src.maptext = "[atten]"} ; \
+	if (atten < 0) { break } \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
 	src.RL_LumB += b*atten ; \
@@ -483,15 +477,15 @@ datum/light
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.E, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
 						T.E.RL_ApplyGeneration = generation
-						ADDUPDATE(T.E)
 						ADDUPDATE(T.S.E)
+					ADDUPDATE(T.E)
 
 				if (T.N && T.N.RL_ApplyGeneration < generation)
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.N, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
 						T.N.RL_ApplyGeneration = generation
-						ADDUPDATE(T.N)
 						ADDUPDATE(T.N.W)
+					ADDUPDATE(T.N)
 
 				if (T.NE && T.NE.RL_ApplyGeneration < generation)
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.NE, src.x, src.y, src.brightness, height2, r, g, b)
