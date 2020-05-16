@@ -86,7 +86,8 @@ proc/get_moving_lights_stats()
 
 #define RL_Atten_Quadratic 2.2 // basically just brightness scaling atm
 #define RL_Atten_Constant -0.11 // constant subtracted at every point to make sure it goes <0 after some distance
-#define RL_Radius_Scale_Constant 0.2 //Subtracted from the quadratic constant for light.radius
+#define RL_Rad_QuadConstant 0.9 //Subtracted from the quadratic constant for light.radius
+#define RL_Rad_ConstConstant 0.03 //Added to the -linear constant for light.radius
 #define RL_MaxRadius 6 // maximum allowed light.radius value. if any light ends up needing more than this it'll cap and look screwy
 #define DLL 0 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
 
@@ -311,7 +312,7 @@ datum/light
 			src.premul_r = src.r * src.brightness
 			src.premul_g = src.g * src.brightness
 			src.premul_b = src.b * src.brightness
-			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic - RL_Radius_Scale_Constant)) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius)
+			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic - RL_Rad_QuadConstant)) / (-RL_Atten_Constant + RL_Rad_ConstConstant) - src.height**2, 0))), RL_MaxRadius)
 
 		apply()
 			if (!RL_Started)
