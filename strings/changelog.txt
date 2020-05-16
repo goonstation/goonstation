@@ -1,5 +1,22 @@
 
+(t)fri may 15 20
+(u)TrustworthyFella
+(p)694
+(e)⚖|balance
+(+)Buffed derringer damage from 50 to 80. Higher falloff given to compensate.
+(u)Tarmunora
+(p)651
+(e)⚖|balance
+(+)Tweaked the delivery mechanism in shock grenades; they now smoke voltagen instead of leaving puddles behind.
+(u)Tarmunora
+(p)674
+(e)⚖|balance
+(+)Haloperidol is slightly better at tranquilizing.
 (t)thu may 14 20
+(u)Keiya
+(p)695
+(e)🆕|enhancement
+(+)Card boxes now have varying sizes. Notably, you can now put tarot decks back in their box easily.
 (u)mbc
 (p)690
 (e)🆕|enhancement

@@ -922,7 +922,7 @@
 		BLOCK_SWORD
 
 /obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
-	if(target == user || !ishuman(target)) //Can't cut off your own limbs, dumbo; only humans can currently be dismembered
+	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
