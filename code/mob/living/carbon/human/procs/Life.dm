@@ -1852,7 +1852,6 @@
 					if (!cant_lie) src.lying = 1
 					setStat = 1
 				if (isalive(src) && setStat == 1)
-					sleep(0)
 					if (src && src.mind)
 						src.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
