@@ -1,5 +1,9 @@
 
 (t)sat may 16 20
+(u)mbc
+(p)715
+(e)⚖|balance
+(*)Blocking reduces the chance of being disarmed. May be subject to change later!
 (u)zjdtmkhzt
 (p)710
 (e)⚖🆕|balance, enhancement
