@@ -1137,6 +1137,7 @@
 	examine(mob/user)
 		if (user.client && hotspot_controller)
 			hotspot_controller.show_map(user.client)
+			return list()
 		else
 			return ..()
 
