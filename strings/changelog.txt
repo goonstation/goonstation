@@ -1,6 +1,10 @@
 
 (t)sat may 16 20
 (u)mbc
+(p)714
+(e)⚖|balance
+(*)Self surgery does a bit more damage.
+(u)mbc
 (p)715
 (e)⚖|balance
 (*)Blocking reduces the chance of being disarmed. May be subject to change later!
