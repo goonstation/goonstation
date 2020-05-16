@@ -254,18 +254,24 @@
 	icon_opened = "pizzabox_open"
 	icon_closed = "pizzabox"
 
+	New()
+		..()
+		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+
 // New crates woo. (Gannets)
 
 /obj/storage/crate/packing
 	name = "packing crate"
 	desc = "A packing crate."
 	icon_state = "packingcrate1"
+
 	New()
 		..()
 		var/n = rand(1,12)
 		icon_state = "packingcrate[n]"
 		icon_opened = "packingcrate[n]_open"
 		icon_closed = "packingcrate[n]"
+		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/wooden
 	name = "wooden crate"

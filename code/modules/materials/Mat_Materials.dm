@@ -940,6 +940,19 @@
 		setProperty("stable", 53)
 		return ..()
 
+/datum/material/organic/cardboard
+	mat_id = "cardboard"
+	name = "cardboard"
+	desc = "Perfect for making boxes."
+	color = "#d3b173"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 25)
+		setProperty("hard", 25)
+		setProperty("flammable", 67)
+		return ..()
+
 /datum/material/organic/chitin
 	mat_id = "chitin"
 	name = "chitin"
