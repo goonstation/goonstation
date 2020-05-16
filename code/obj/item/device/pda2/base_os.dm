@@ -87,6 +87,8 @@
 					. += "<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"
 #ifdef UNDERWATER_MAP
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Trench Map</a></li>"
+#else
+					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Mining Map</a></li>"
 #endif
 //					. += "<li><a href='byond://?src=\ref[src];flight=1'>[src.master.fon ? "Disable" : "Enable"] Flashlight</a></li>"
 
