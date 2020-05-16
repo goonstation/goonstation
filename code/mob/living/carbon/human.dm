@@ -467,9 +467,6 @@
 			return
 		return 0
 
-/mob/living/carbon/human/proc/is_changeling()
-	return ischangeling(src)
-
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
 
@@ -2767,7 +2764,7 @@
 
 	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
-			if (src.is_changeling())
+			if (ischangeling(src))
 				boutput(src, "<span class='notice'>You briefly shrink your hands to remove your handcuffs.</span>")
 				src.handcuffs.drop_handcuffs(src)
 				return

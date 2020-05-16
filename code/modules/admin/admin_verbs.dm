@@ -1221,7 +1221,7 @@ var/list/fun_images = list()
 			is_in_hivemind = 1
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (H.is_changeling())
+			if (ischangeling(H))
 				is_in_hivemind = 1
 
 		if (M.client && (is_in_hivemind || M.client.holder && !M.client.player_mode))
