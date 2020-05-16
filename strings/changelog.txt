@@ -1,5 +1,9 @@
 
 (t)sat may 16 20
+(u)UrsulaMajor
+(p)660
+(e)⚖|balance
+(*)Removed Bladder and Energy motives from RP. Made Hygiene motive cosmetic only.
 (u)mbc
 (p)714
 (e)⚖|balance
