@@ -116,7 +116,7 @@
 	name = "Clockwork Orange"
 	name_prefix = "Clockwork "
 	crop = /obj/item/reagent_containers/food/snacks/plant/orange/clockwork
-	//iconmod = "OrangeClockwork" //TODO: make growthsprites
+	iconmod = "OrangeClockwork"
 	assoc_reagents = list("iron")
 	ENrange = list(30,null)
 	chance = 20
