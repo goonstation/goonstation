@@ -18,7 +18,7 @@
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
-	var/hat_icon = 'icons/obj/aibots.dmi' //yeah just use the buddy hats whatever close enough
+	var/hat_icon = 'icons/obj/bots/aibots.dmi' //yeah just use the buddy hats whatever close enough
 	var/hat_x_offset = -4
 	var/hat_y_offset = -2
 

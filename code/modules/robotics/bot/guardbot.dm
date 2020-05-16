@@ -92,7 +92,7 @@
 /obj/machinery/bot/guardbot
 	name = "Guardbuddy"
 	desc = "The corporate security model of the popular PR-6 Robuddy."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy0"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -124,7 +124,7 @@
 	var/last_dock_id = null
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
-	var/hat_icon = 'icons/obj/aibots.dmi'
+	var/hat_icon = 'icons/obj/bots/aibots.dmi'
 	var/hat_x_offset = 0
 	var/hat_y_offset = 0
 	var/icon_needs_update = 1 //Call update_icon() in process
@@ -3060,7 +3060,7 @@
 /obj/item/guardbot_core
 	name = "Guardbuddy mainboard"
 	desc = "The primary circuitry of a PR-6S Guardbuddy."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
 	mats = 6
 	w_class = 2.0
@@ -3089,7 +3089,7 @@
 /obj/item/guardbot_frame
 	name = "Guardbuddy frame"
 	desc = "The external casing of a PR-6S Guardbuddy."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_frame-6-1"
 	mats = 5
 	var/stage = 1
@@ -3187,7 +3187,7 @@
 /obj/machinery/guardbot_dock
 	name = "docking station"
 	desc = "A recharging and command station for PR-6S Guardbuddies."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
 	mats = 8
 	anchored = 1
@@ -3849,7 +3849,7 @@
 
 /obj/item/guardbot_frame/old/golden
 	desc = "The external casing of a PR-4 Robuddy. This one is gold plated."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "goldbuddy_frame-4-1"
 	spawned_bot_type = /obj/machinery/bot/guardbot/golden
 	created_name = "Goldbuddy"
