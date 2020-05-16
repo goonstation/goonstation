@@ -1055,8 +1055,8 @@
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
-	if(src.mind && !gibbed)
-		src.mind.death_icon = getFlatIcon(src,SOUTH)
+	//if(src.mind && !gibbed)
+	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
 		src.damn()
 		return
@@ -1172,21 +1172,26 @@
 	if (get_dist(src, target) > 0)
 		if(!dir_locked)
 			dir = get_dir(src, target)
+			src.update_directional_lights()
 
 /mob/proc/hotkey(name)
 	switch (name)
 		if ("look_n")
 			if(!dir_locked)
 				src.dir = NORTH
+				src.update_directional_lights()
 		if ("look_s")
 			if(!dir_locked)
 				src.dir = SOUTH
+				src.update_directional_lights()
 		if ("look_e")
 			if(!dir_locked)
 				src.dir = EAST
+				src.update_directional_lights()
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
+				src.update_directional_lights()
 		if ("admin_interact")
 			src.admin_interact_verb()
 		if ("stop_pull")

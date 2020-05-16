@@ -45,13 +45,13 @@ limbs are their own thing not included here.
 		if(patient.lying)
 			return 1 // surgery is okay
 		else if (patient == surgeon)
-			return 2 // surgery is okay but hurts more
+			return 3.5 // surgery is okay but hurts more
 
 	else if (locate(/obj/stool/bed, patient.loc)) // is the patient on a bed and lying?
 		if(patient.lying)
 			return 1 // surgery is okay
 		else if (patient == surgeon)
-			return 2 // surgery is okay but hurts more
+			return 3.5 // surgery is okay but hurts more
 
 	else if (locate(/obj/table, patient.loc) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
 		return 1 // surgery is okay

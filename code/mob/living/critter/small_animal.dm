@@ -1496,6 +1496,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pet_text = list("gently baps", "pets", "cuddles")
 	var/playing_dead = 0
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 	setup_hands()
 		..() // both of these do no damage (in return, possums are basically immortal)
 		var/datum/handHolder/HH = hands[1]

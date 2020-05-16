@@ -13,6 +13,7 @@
 
 	New()
 		..()
+		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
 			new_hotspot = new
@@ -25,31 +26,38 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-
+		#endif
 		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
 		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
 
   		//var/obj/A = new /obj(locate(1,1,1))
   		//A.icon = map
 
+	#ifdef UNDERWATER_MAP
+	var/list/map_colors = list(
+		empty = rgb(0, 0, 50),
+		solid = rgb(0, 0, 255),
+		station = rgb(255, 153, 58),
+		other = rgb(120, 200, 120))
+	#else
+	var/list/map_colors = list(
+		empty = rgb(30, 30, 45),
+		solid = rgb(180,180,180),
+		station = rgb(27, 163, 186),
+		other = rgb(186, 0, 60))
+	#endif
 
 	proc/generate_map()
 		if (!map)
 			Z_LOG_DEBUG("Hotspot Map", "Generating map ...")
-			var/list/map_colors = list(
-				empty = rgb(0, 0, 50),
-				solid = rgb(0, 0, 255),
-				station = rgb(255, 153, 58),
-				other = rgb(120, 200, 120))
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
 			for (var/x = 1, x <= world.maxx, x++)
 				for (var/y = 1, y <= world.maxy, y++)
 					var/turf/T = locate(x,y,5)
-
 					if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
 						turf_color = "solid"
-					else if (T.name == "trench floor")
+					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
 						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
@@ -58,6 +66,11 @@
 							turf_color = "other"
 
 					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
+
+			for (var/beacon in warp_beacons)
+				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
+					var/turf/T = get_turf_loc(beacon)
+					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
 			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
 			generate_map_html()
@@ -76,7 +89,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Trench Map</title>
+	[map_currently_underwater?"<title>Trench Map</title>":"<title>Mining Map</title>"]
 	<meta http-equiv="X-UA-Compatible" content="IE=edge;">
 	<style type="text/css">
 		body {
@@ -124,12 +137,11 @@
 			width: 1em;
 			border: 1px solid white;
 		}
-		.empty { background-color: rgb(0, 0, 50); }
-		.solid { background-color: rgb(0, 0, 255); }
-		.station { background-color: rgb(255, 153, 58); }
-		.other { background-color: rgb(120, 200, 120); }
+		.empty { background-color: [map_colors["empty"]]; }
+		.solid { background-color: [map_colors["solid"]]; }
+		.station { background-color: [map_colors["station"]]; }
+		.other { background-color: [map_colors["other"]]; }
 		.vent { background-color: rgb(255, 120, 120); }
-
 	</style>
 </head>
 <body>
@@ -141,8 +153,8 @@
 			<span><span class='solid'></span> Solid Rock</span>
 			<span><span class='station'></span> NT Asset</span>
 			<span><span class='other'></span> Unknown</span>
-			<span><span class='vent'></span> Hotspot</span>
-		</div>
+			[map_currently_underwater?"<span><span class='vent'></span> Hotspot</span>":""]
+			</div>
 </body>
 </html>
 "}
@@ -1125,6 +1137,7 @@
 	examine(mob/user)
 		if (user.client && hotspot_controller)
 			hotspot_controller.show_map(user.client)
+			return list()
 		else
 			return ..()
 

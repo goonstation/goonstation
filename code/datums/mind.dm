@@ -66,7 +66,7 @@ datum/mind
 	var/damned = 0 // If 1, they go to hell when are die
 
 	// Capture when they die. Used in the round-end credits
-	var/icon/death_icon = null
+	//var/icon/death_icon = null
 
 	New(mob/M)
 		..()

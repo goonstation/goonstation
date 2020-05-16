@@ -198,7 +198,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
-			score_tracker.score_text += "nice"
+			score_tracker.score_text += " <b>nice<b>"
 		score_tracker.score_text += "<BR>"
 		score_tracker.score_text += "<B><U>GRADE: [score_tracker.grade]</U></B><BR>"
 		score_tracker.score_text += "<BR>"

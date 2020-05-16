@@ -1588,7 +1588,7 @@ datum
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (prob(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
-					else if (progress_timer > 10)
+					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						M.UpdateName()
 

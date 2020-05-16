@@ -286,13 +286,14 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 100
+	power = 120
 	dissipation_delay = 1
-	dissipation_rate = 25
+	dissipation_rate = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.5
+	ks_ratio = 0.66
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
@@ -512,8 +513,8 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS, optional = 8)
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+			M.changeStatus("slowed", 0.5 SECONDS)
+			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
 	power = 1
@@ -690,7 +691,11 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10)) //maybe
+#if ASS_JAM
+			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
+#else
+			if (P.data || prob(10))
+#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)

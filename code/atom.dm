@@ -639,8 +639,9 @@
 	return null
 
 /atom/proc/examine(mob/user)
+	RETURN_TYPE(/list)
 	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
-		return
+		return list()
 
 	var/dist = get_dist(src, user)
 	if (istype(user, /mob/dead/target_observer))

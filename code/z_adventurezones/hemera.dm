@@ -355,6 +355,14 @@ Obsidian Crown
 					if (3)
 						hear_voidSpeak("How lucky you are, Friend, how truly blessed!  Companions guarding your form entirely from the risks of the material!")
 
+		if(isrestrictedz(host.z) && prob(3))
+			hear_voidSpeak("<small>...the sun...</small>")
+		var/area/A = get_area(src)
+		if(A.type == /area/solarium && prob(20))
+			if(prob(10))
+				hear_voidSpeak("Let them touch the sun.")
+			else
+				hear_voidSpeak("THE SUN")
 
 		else if (ishuman(host) && istype(host:wear_suit, /obj/item/clothing/suit/armor/ancient))
 			armor_paired = 1
@@ -404,14 +412,24 @@ Obsidian Crown
 				s.start()
 				var/list/randomturfs = new/list()
 
-				. = isrestrictedz(host.z)
-				for(var/turf/T in orange(M, 25))
-					if(T.density)
-						continue
-					if (. && T.loc != get_area(M)) //If we're in a telesci area and this is a change in area.
-						continue
-
-					randomturfs.Add(T)
+				if(isrestrictedz(host.z))
+					for(var/turf/T in view(M, 4))
+						if (T.loc != get_area(M) && T.loc.type != /area) //If we're in a telesci area and this is a change in area.
+							continue
+						if(T.density)
+							continue
+						for(var/atom/AT in T)
+							if(AT.density)
+								continue
+						randomturfs.Add(T)
+				else
+					for(var/turf/T in orange(M, 25))
+						if(T.density)
+							continue
+						for(var/atom/AT in T)
+							if(AT.density)
+								continue
+						randomturfs.Add(T)
 
 				boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
 				M.visible_message("<span class='combat'>[M] is warped away!</span>")

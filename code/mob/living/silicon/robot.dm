@@ -2810,26 +2810,6 @@
 		else
 			UpdateOverlays(null, "clothes")
 
-	var/image/i_batterydistress
-
-	/mob/living/silicon/robot/proc/batteryDistress()
-		if (!src.i_batterydistress) // we only need to build i_batterydistress once
-			src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
-			src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
-
-		if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
-			UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
-			src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
-			src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
-		else if(world.time >= src.next_batteryDistressBoop)
-			src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
-			playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
-
-
-	/mob/living/silicon/robot/proc/clearBatteryDistress()
-		src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-		ClearSpecificOverlays("batterydistress")
-
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null
 		switch(slot)
@@ -3037,6 +3017,26 @@
 
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
+
+/mob/living/silicon/robot/var/image/i_batterydistress
+
+/mob/living/silicon/robot/proc/batteryDistress()
+	if (!src.i_batterydistress) // we only need to build i_batterydistress once
+		src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
+		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
+
+	if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
+		UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
+		src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
+		src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
+	else if(world.time >= src.next_batteryDistressBoop)
+		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
+		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
+
+
+/mob/living/silicon/robot/proc/clearBatteryDistress()
+	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+	ClearSpecificOverlays("batterydistress")
 
 /mob/living/silicon/robot/verb/open_nearest_door()
 	set category = "Robot Commands"

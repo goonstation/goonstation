@@ -24,7 +24,6 @@
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
 
-	var/speedy = 0 		//for industrial booties, to avoid type checks on shoe
 	var/magnetic = 0    //for magboots, to avoid type checks on shoe
 
 	setupProperties()
@@ -221,7 +220,14 @@
 	module_research = list("efficiency" = 5, "engineering" = 5, "mining" = 10)
 	laces = LACES_NONE
 	kick_bonus = 2
-	speedy = 1
+
+/obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
+	. = ..()
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
+
+/obj/item/clothing/shoes/industrial/unequipped(mob/user)
+	. = ..()
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
