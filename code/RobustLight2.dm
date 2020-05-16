@@ -63,8 +63,8 @@ proc/get_moving_lights_stats()
 	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
 	var/exponent = 3.5 ;\
 	atten *= (max( abs(ly-src.y),abs(lx-src.x),0.85 )/radius)**exponent ;\
-	if (radius < 1) { atten *= 7 }\
-	if (radius <= 2) { atten *= 0.5 }\
+	if (radius <= 1) { atten *= 0.1 }\
+	else if (radius <= 2) { atten *= 0.5 }\
 	else if (radius == 3) { atten *= 0.8 }\
 	else{\
 		var/mult_atten = 1;\
@@ -501,7 +501,7 @@ datum/light
 			var/list/turfline = getstraightlinewalled(middle,vx,vy)
 			if (!turfline)
 				return
-			dist_cast = max(turfline.len,2)
+			dist_cast = max(turfline.len,1)
 
 			for (var/turf/T in turfline)
 				RL_APPLY_LIGHT_LINE(T, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
