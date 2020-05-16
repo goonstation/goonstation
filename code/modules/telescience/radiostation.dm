@@ -176,7 +176,7 @@
 		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
 		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>(%target%)</b>)")
 		var/original_name = usr.real_name
-		usr.real_name = copytext(voice, 1, 32)
+		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
 		usr.say(message)
 		usr.real_name = original_name
 
