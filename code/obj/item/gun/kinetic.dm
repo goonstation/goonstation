@@ -869,6 +869,7 @@
 /obj/item/gun/kinetic/assault_rifle
 	name = "M19A4 assault rifle"
 	desc = "A modified Syndicate battle rifle fitted with several fancy, tactically useless attachments."
+	icon = 'icons/obj/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	force = 20.0
@@ -921,6 +922,7 @@
 /obj/item/gun/kinetic/light_machine_gun
 	name = "M90 machine gun"
 	desc = "Looks pretty heavy to me."
+	icon = 'icons/obj/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
@@ -954,6 +956,7 @@
 /obj/item/gun/kinetic/grenade_launcher
 	desc = "A 40mm hand-held grenade launcher able to fire a variety of explosives."
 	name = "grenade launcher"
+	icon = 'icons/obj/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	force = 5.0
@@ -1111,9 +1114,9 @@
 /obj/item/gun/kinetic/sniper
 	name = "S90A1 marksman's rifle"
 	desc = "The Syndicate standard issue bolt-action sniper rifle, for engaging hostiles at range."
-	icon = 'icons/obj/48x32.dmi' // big guns get big icons
+	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
-	item_state = "sniper" //using old sniper inhands atm
+	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
 	caliber = 0.308
