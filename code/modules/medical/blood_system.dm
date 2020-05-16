@@ -390,7 +390,7 @@ this is already used where it needs to be used, you can probably ignore it.
 /* ---------- bleed() ---------- */
 /* ============================= */
 
-/proc/bleed(var/mob/living/some_idiot as mob, var/num_amount as num, var/vis_amount as num, var/turf/T as turf)
+/proc/bleed(var/mob/living/some_idiot, var/num_amount, var/vis_amount, var/turf/T as turf)
 
 	if (!T)
 		T = get_turf(some_idiot)
@@ -416,9 +416,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
 			B.color = blood_color_to_pass
 
-		if (istype(H))
-			if (H.is_changeling())
-				B.ling_blood = 1
+		if (ischangeling(H))
+			B.ling_blood = 1
 
 		if (some_idiot.bioHolder)
 			B.blood_DNA = some_idiot.bioHolder.Uid
@@ -461,7 +460,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			if (H.blood_color)
 				B.color = H.blood_color
 
-		if (H.is_changeling())
+		if (ischangeling(H))
 			B.ling_blood = 1
 
 		B.blood_DNA = some_idiot.bioHolder.Uid
