@@ -1137,7 +1137,7 @@
 		var/list/choices = list()
 
 		var/bladder = H.sims?.getValue("Bladder")
-		if (((bladder != null) && (bladder <= 65)) || ((bladder == null) && (H.urine >= 2)))
+		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 			choices += "pee in it"
 		if (src.in_glass)
 			choices += "remove [src.in_glass]"
@@ -1159,7 +1159,7 @@
 
 		if (selection == "pee in it")
 			bladder = H.sims?.getValue("Bladder")
-			if (((bladder != null) && (bladder <= 65)) || ((bladder == null) && (H.urine >= 2)))
+			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
 				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)
