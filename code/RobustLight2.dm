@@ -1,5 +1,4 @@
-var
-	RL_Generation = 0
+var/RL_Generation = 0
 
 //#define DEBUG_LIGHT_STRIP_APPLY
 // #define DEBUG_MOVING_LIGHTS_STATS
@@ -87,6 +86,7 @@ proc/get_moving_lights_stats()
 
 #define RL_Atten_Quadratic 2.2 // basically just brightness scaling atm
 #define RL_Atten_Constant -0.11 // constant subtracted at every point to make sure it goes <0 after some distance
+#define RL_Radius_Scale_Constant 0.2 //Subtracted from the quadratic constant for light.radius
 #define RL_MaxRadius 6 // maximum allowed light.radius value. if any light ends up needing more than this it'll cap and look screwy
 #define DLL 0 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
 
@@ -99,56 +99,53 @@ proc/get_moving_lights_stats()
 //#define SHOULD_QUEUE ((world.tick_usage > LIGHTING_MAX_TICKUSAGE || light_update_queue.cur_size) && current_state > GAME_STATE_SETTING_UP && !queued_run)
 #define SHOULD_QUEUE (( light_update_queue.cur_size || world.tick_usage > LIGHTING_MAX_TICKUSAGE || RL_Suspended) && !queued_run && current_state > GAME_STATE_SETTING_UP)
 datum/light
-	var
-		x
-		y
-		z
+	var/x
+	var/y
+	var/z
 
-		x_des
-		y_des
-		z_des
+	var/x_des
+	var/y_des
+	var/z_des
 
-		dir
-		dir_des
+	var/dir
+	var/dir_des
 
-		r = 1
-		g = 1
-		b = 1
+	var/r = 1
+	var/g = 1
+	var/b = 1
 
-		r_des = 1
-		g_des = 1
-		b_des = 1
+	var/r_des = 1
+	var/g_des = 1
+	var/b_des = 1
 
-		brightness = 1
+	var/brightness = 1
 
-		brightness_des = 1
+	var/brightness_des = 1
 
-		height = 1
+	var/height = 1
 
-		height_des = 1
+	var/height_des = 1
 
-		enabled = 0
+	var/enabled = 0
 
-		radius = 1
-		premul_r = 1
-		premul_g = 1
-		premul_b = 1
+	var/radius = 1
+	var/premul_r = 1
+	var/premul_g = 1
+	var/premul_b = 1
 
-		atom/attached_to = null
-		attach_x = 0.5
-		attach_y = 0.5
+	var/atom/attached_to = null
+	var/attach_x = 0.5
+	var/attach_y = 0.5
 
-		dirty_flags = 0
+	var/dirty_flags = 0
 
 #ifdef DEBUG_MOVING_LIGHTS_STATS
-		atom/first_attached_to = null
+	var/atom/first_attached_to = null
 #endif
 
 #ifdef DEBUG_LIGHT_STRIP_APPLY
-		apply_level = 0
+	var/apply_level = 0
 #endif
-
-		//queued_run = 0
 
 	New(x=0, y=0, z=0)
 		src.x = x
@@ -199,33 +196,6 @@ datum/light
 
 			if (src.r == red && src.g == green && src.b == blue && !queued_run)
 				return
-
-			/*
-			src.r_des = red
-			src.g_des = green
-			src.b_des = blue
-			*/
-
-			//hello yes now it's ZeWaka exporting my hellcode implementations across the code
-			//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
-			/*
-			var/R_sr = ((red + src.r*255) /2) //average value of R components in the two compared colors
-
-			var/deltaR2 = abs(red   - (src.r*255))**2
-			var/deltaG2 = abs(blue  - (src.b*255))**2
-			var/deltaB2 = abs(green - (src.g*255))**2
-			*/
-			//this is our weighted euclidean distance function, weights based on red component
-			//var/color_delta =( (2+(R_sr/256))*deltaR2 + (4*deltaG2) + (2+((255-R_sr)/256))*deltaB2 )
-
-			//DEBUG_MESSAGE("[x],[y]:[temperature], d:[color_delta], [red]|[green]|[blue] vs [src.*255]|[src.*255]|[src.*255]")
-
-			/*
-			// This breaks everything if a light's value is 0, so, begone
-			if (color_delta < 144) //determined via E'' sampling in science paper above, 144=12^2
-				Z_LOG_DEBUG("Lighting", "Color update would be ignored due to color_delta ([color_delta]) under 144. ([R_sr], [deltaR2] [deltaG2] [deltaB2])")
-				return
-			*/
 
 			if (src.enabled)
 				if (SHOULD_QUEUE)
@@ -341,7 +311,7 @@ datum/light
 			src.premul_r = src.r * src.brightness
 			src.premul_g = src.g * src.brightness
 			src.premul_b = src.b * src.brightness
-			src.radius = min(round(sqrt(max((brightness * RL_Atten_Quadratic) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius)
+			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic - RL_Radius_Scale_Constant)) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius)
 
 		apply()
 			if (!RL_Started)
@@ -489,7 +459,7 @@ datum/light
 			src.premul_r = src.r * src.brightness
 			src.premul_g = src.g * src.brightness
 			src.premul_b = src.b * src.brightness
-			src.radius = min(round(sqrt(max((brightness * RL_Atten_Quadratic) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius) * 0.6
+			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic - RL_Radius_Scale_Constant)) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius) * 0.6
 
 
 		apply_to(turf/T)
