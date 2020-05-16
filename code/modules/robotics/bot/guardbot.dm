@@ -221,7 +221,7 @@
 	golden
 		name = "Goldbuddy"
 		desc = "A gold plated PR-4 Guardbuddy from a limited time raffle from like, a decade ago."
-		icon = 'icons/misc/oldbots.dmi'
+		icon = 'icons/obj/bots/oldbots.dmi'
 		icon_state = "Goldbuddy0"
 
 		update_icon()
@@ -3736,7 +3736,7 @@
 /obj/machinery/bot/guardbot/old
 	name = "Robuddy"
 	desc = "A PR-4 Robuddy. That's two models back by now! You didn't know any of these were still around."
-	icon = 'icons/misc/oldbots.dmi'
+	icon = 'icons/obj/bots/oldbots.dmi'
 
 	setup_no_costumes = 1
 	no_camera = 1
