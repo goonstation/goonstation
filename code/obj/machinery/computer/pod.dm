@@ -20,6 +20,7 @@
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 
 /obj/machinery/computer/pod/old/swf
+	icon_state = "wizteleport"
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
 
@@ -29,6 +30,12 @@
 			return
 		else
 			return ..()
+
+/obj/wizcomputerscreen //makes the screen glow in the dark
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "wizteleport_screen"
+	plane = 21
+	mouse_opacity = 0
 
 /obj/machinery/computer/pod/proc/alarm()
 	if(status & (NOPOWER|BROKEN))
