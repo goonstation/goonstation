@@ -13,6 +13,7 @@
 
 	New()
 		..()
+		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
 			new_hotspot = new
@@ -25,7 +26,7 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-
+		#endif
 		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
 		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
 
