@@ -96,8 +96,8 @@ Contains:
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		if (ismob(T) || istype(T, /obj/item/storage))
+			T = get_turf(src)
 		if (src.part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -314,8 +314,8 @@ Contains:
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		if (ismob(T) || istype(T, /obj/item/storage))
+			T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -493,8 +493,8 @@ Contains:
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		if (ismob(T) || istype(T, /obj/item/storage))
+			T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -681,8 +681,8 @@ Contains:
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		if (ismob(T) || istype(T, /obj/item/storage))
+			T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -771,8 +771,8 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		if (ismob(T) || istype(T, /obj/item/storage))
+			T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -842,8 +842,8 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		if (ismob(T) || istype(T, /obj/item/storage))
+			T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
