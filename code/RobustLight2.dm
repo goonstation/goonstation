@@ -459,7 +459,7 @@ datum/light
 			src.premul_r = src.r * src.brightness
 			src.premul_g = src.g * src.brightness
 			src.premul_b = src.b * src.brightness
-			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic - RL_Radius_Scale_Constant)) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius) * 0.6
+			src.radius = min(round(sqrt(max((brightness * (RL_Atten_Quadratic)) / -RL_Atten_Constant - src.height**2, 0))), RL_MaxRadius) * 0.6
 
 
 		apply_to(turf/T)
