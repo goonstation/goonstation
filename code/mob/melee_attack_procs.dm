@@ -441,8 +441,9 @@
 	var/obj/item/I = target.equipped()
 	if (I)
 		var/disarm_item_prob = 37
-		if (src.check_block())
-			disarm_item_prob = 9
+		if (target.check_block())
+			disarm_item_prob = 8
+
 		if (I.temp_flags & IS_LIMB_ITEM)
 			if (prob(disarm_item_prob * mult))
 				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [I.loc] and forces [target]'s to hit themselves[DISARM_WITH_ITEM_TEXT]!</B></span>"
