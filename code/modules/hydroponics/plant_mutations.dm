@@ -326,6 +326,7 @@
 /datum/plantmutation/asomna/robust
 	name = "Robust Asomna"
 	name_prefix = "Robust "
+	crop = /obj/item/plant/herb/asomna/robust
 	iconmod = "AsomnaRobust"
 	assoc_reagents = list("methamphetamine")
 	chance = 10

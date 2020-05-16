@@ -265,6 +265,14 @@
 	brewable = 1
 	brew_result = "tea"
 
+/obj/item/plant/herb/asomna/robust
+	name = "asomna bark"
+	crop_suffix	= " bark"
+	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties. This particular chunk looks extra spicy."
+	icon_state = "asomnarobust"
+	brewable = 1
+	brew_result = "tea"
+
 /obj/item/plant/herb/commol
 	name = "commol root"
 	crop_suffix	= " root"
