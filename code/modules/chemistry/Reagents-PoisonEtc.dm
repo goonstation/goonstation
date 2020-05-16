@@ -1579,7 +1579,7 @@ datum
 				if (!M) M = holder.my_atom
 				//M.changeStatus("radiation", 30, 1)
 				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
-					var/datum/reagent/blood/cheating = holder.reagent_list["blood"]
+					var/datum/reagent/blood/cheating = holder.reagent_list["blood", "bloodc"]
 					if (cheating && istype(cheating.data, /datum/bioHolder))
 						src.data = cheating.data
 
