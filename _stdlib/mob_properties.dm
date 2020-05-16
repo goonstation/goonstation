@@ -1,6 +1,8 @@
 #define MOB_PROPERTY_ACTIVE_VALUE 1
 #define MOB_PROPERTY_SOURCES_LIST 2
 
+#define PROP_CANTMOVE "cantmove"
+
 #define APPLY_MOB_PROPERTY(target, property, source, value) \
 	do { \
 		var/list/_L = target.mob_properties; \
@@ -10,10 +12,10 @@
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 			if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] < _V) { \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _V; \
-			} \
+			}; \
 		} else { \
-			_L[property] = list(_V, list(_S = _V); \
-		} \
+			_L[property] = list(_V, list(_S = _V)); \
+		}; \
 	} while (0)
 
 #define GET_MOB_PROPERTY(target, property) (target.mob_properties[property] ? target.mob_properties[property][MOB_PROPERTY_ACTIVE_VALUE] : null)
@@ -25,7 +27,7 @@
 	do { \
 		var/list/_L = target.mob_properties; \
 		if (_L[property]) { \
-			_L[property][MOB_PROPERTY_SOURCES_LIST] -= sources; \
+			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				_L -= property; \
 			} else { \

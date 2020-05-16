@@ -32,6 +32,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\math.dm"
 #include "_stdlib\pathfinding.dm"
 #include "_stdlib\text.dm"
+#include "_stdlib\mob_properties.dm"
 #include "_stdlib\code\spaceman_dmm.dm"
 
 #include "_stdlib\code\_antag_popups.dm"
