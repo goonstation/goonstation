@@ -38,7 +38,7 @@ var/global/list/hydro_controller_queue = list(
 		// You need to do plants after the others or they won't set up properly due to mutations and strains
 		// not having been set up yet
 		for (var/A in typesof(/datum/plant))
-			if (A == /datum/plant)
+			if (length(typesof(A)) > 1) //TODO: Replace with IS_ABSTRACT(A) when pali merges the functionality
 				continue
 			src.plant_species += new A(src)
 
