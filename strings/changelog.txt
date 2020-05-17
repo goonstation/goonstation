@@ -1,5 +1,9 @@
 
 (t)sun may 17 20
+(u)Erinexx
+(p)723
+(e)🗺🎨|mapping, sprites
+(*)Added perspective robuddy, cleanbot, and mulebot sprites!
 (u)Naksu
 (p)706
 (e)🐛|bug
