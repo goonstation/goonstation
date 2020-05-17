@@ -1191,11 +1191,6 @@
 		if (!O)
 			return null
 
-		if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter
-			var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-			newbio.CopyOther(src.bioHolder)
-			O.bioHolder = newbio
-
 		O.icon = ghost_icon
 		O.icon_state = ghost_icon_state
 
