@@ -1,5 +1,9 @@
 
 (t)sun may 17 20
+(u)Naksu
+(p)706
+(e)🐛|bug
+(+)Reagents inside mobs no longer get adjusted towards body temperature - 30, but body temperature. Reagent temperature reactions do not happen if there was no change in temperature.
 (u)Mordent
 (p)726
 (e)|
