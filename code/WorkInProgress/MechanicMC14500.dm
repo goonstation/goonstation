@@ -67,8 +67,8 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 					if (user.stat || get_dist(user, src) > 2)
 						return
 
-					if (!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
-						boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
+					if (!user.find_tool_in_hand(TOOL_PULSING))
+						boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 						return
 
 					. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))

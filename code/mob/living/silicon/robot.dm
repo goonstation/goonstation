@@ -650,7 +650,7 @@
 				src.internal_pda.owner = "[src]"
 				return
 			else
-				newname = strip_html(newname, 32, 1)
+				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
 					src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 					continue
@@ -816,6 +816,10 @@
 				dmgmult = 0.2
 			if(D_TOXIC)
 				dmgmult = 0
+		
+		if(P.proj_data.ks_ratio == 0)
+			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 		log_shot(P,src)
 		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
@@ -3303,7 +3307,7 @@
 /mob/living/silicon/robot/buddy
 	name = "Robot"
 	real_name = "Robot"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy1"
 	health = 1000
 	custom = 1
