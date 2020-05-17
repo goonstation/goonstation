@@ -4,13 +4,16 @@
 
 Contains a system to apply fast-to-check properties onto mobs, with different stacking behaviors.
 
-To get the value of ANY property regardless of the behavior used, use:area
+To get the value of ANY property regardless of the behavior used, use:
 
 	GET_MOB_PROPERTY(mob, property)
 
 If you only want to know whether a property exists, use:
 
 	HAS_MOB_PROPERTY(mob, property)
+
+To set the values of properties, helper procs exist on the mob type:
+
 
 Behavior-dependent macros:
 
@@ -147,9 +150,17 @@ To remove:
 #define MOB_PROPERTY_PRIORITY_PRIO 1
 #define MOB_PROPERTY_PRIORITY_VALUE 2
 
-#define PROP_CANTMOVE "cantmove"
 
+// Property defines
+//
+// Property strings must be prefixed with the following identifiers:
+//
+// Simple properties: i
+// Max properties: m
+// Sum properties: s
+// Priority properties: p
 
+#define PROP_CANTMOVE "i_cantmove"
 
 
 
@@ -282,7 +293,7 @@ To remove:
 			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				_L -= property; \
-			} else if (_L[property_MOB_PROPERTY_ACTIVE_VALUE] == _S_V) { \ /* we removed the active value */ \
+			} else if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _S_V) { \ /* we removed the active value */ \
 				var/_TO_APPLY_PRIO = -INFINITY; \
 				var/_TO_APPLY_VALUE; \
 				for (var/list/_K in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
