@@ -253,7 +253,7 @@
 
 /obj/item/plant/herb/nureous/fuzzy
 	name = "nureous leaves"
-	crop_suffix	= " leaves"
+	crop_suffix = " leaves"
 	desc = "Chewy leaves often manufactured for use in radiation treatment medicine. They seem strangely hairy."
 	icon_state = "nureousfuzzy"
 
