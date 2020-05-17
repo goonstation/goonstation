@@ -102,6 +102,9 @@ var/datum/job_controller/job_controls
 		dat += "<A href='?src=\ref[src];ChangeName=1'>Can Change Name on Spawn:</A> [src.job_creator.change_name_on_spawn ? "Yes":"No"]<br>"
 		dat += "<A href='?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location ? locate(src.job_creator.spawn_x,src.job_creator.spawn_y,src.job_creator.spawn_z) : "Default"]<br>"
 		dat += "<A href='?src=\ref[src];EditObjective=1'>Custom Objective:</A> [src.job_creator.objective][src.job_creator.objective ? (src.job_creator.spawn_miscreant ? " (Miscreant)" : " (Crew Objective)") : ""]<br>"
+		dat += "<A href='?src=\ref[src];ToggleAnnounce=1'>Head of Staff-style Announcement:</A> [src.job_creator.announce_on_join?"Yes":"No"]<br>"
+		dat += "<A href='?src=\ref[src];ToggleRadioAnnounce=1'>Radio Announcement:</A> [src.job_creator.radio_announcement?"Yes":"No"]<br>"
+		dat += "<A href='?src=\ref[src];ToggleManifest=1'>Add To Manifest:</A> [src.job_creator.add_to_manifest?"Yes":"No"]<br>"
 		dat += "<A href='?src=\ref[src];EditMob=1'>Mob Type:</A> [src.job_creator.mob_type]<br>"
 		dat += "<BR>"
 		if (ispath(src.job_creator.mob_type, /mob/living/carbon/human))
@@ -821,6 +824,18 @@ var/datum/job_controller/job_controls
 							src.job_creator.spawn_miscreant = 0
 			src.job_creator()
 
+		if(href_list["ToggleAnnounce"])
+			src.job_creator.announce_on_join = !src.job_creator.announce_on_join
+			src.job_creator()
+
+		if(href_list["ToggleRadioAnnounce"])
+			src.job_creator.radio_announcement = !src.job_creator.radio_announcement
+			src.job_creator()
+
+		if(href_list["ToggleManifest"])
+			src.job_creator.add_to_manifest = !src.job_creator.add_to_manifest
+			src.job_creator()
+
 		if(href_list["ChangeName"])
 			if (src.job_creator.change_name_on_spawn == 0)
 				src.job_creator.change_name_on_spawn = 1
@@ -879,6 +894,9 @@ var/datum/job_controller/job_controls
 				JOB.spawn_z = src.job_creator.spawn_z
 				JOB.bio_effects = src.job_creator.bio_effects
 				JOB.objective = src.job_creator.objective
+				JOB.announce_on_join = src.job_creator.announce_on_join
+				JOB.radio_announcement = src.job_creator.radio_announcement
+				JOB.add_to_manifest = src.job_creator.add_to_manifest
 				JOB.spawn_miscreant = src.job_creator.spawn_miscreant
 				JOB.recieves_implant = src.job_creator.recieves_implant
 				JOB.items_in_backpack = src.job_creator.items_in_backpack

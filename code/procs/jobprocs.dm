@@ -368,7 +368,7 @@
 		return
 
 
-	if (ishuman(src))
+	if (ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -411,7 +411,7 @@
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
-		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO)//!ismap("DESTINY") && !ismap("CLARION"))
+		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)

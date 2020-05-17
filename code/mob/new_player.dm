@@ -318,7 +318,7 @@ mob/new_player
 					starting_loc = pick(rp_latejoin)
 
 				if (istype(starting_loc))
-					starting_loc.add_person_to_queue(character)
+					starting_loc.add_person_to_queue(character, JOB)
 				else
 					starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
 					character.set_loc(starting_loc)

@@ -65,6 +65,9 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_receives_implant"] << src.job_creator.recieves_implant
 	F["[profileNum]_items_in_backpack"] << src.job_creator.items_in_backpack
 	F["[profileNum]_items_in_belt"] << src.job_creator.items_in_belt
+	F["[profileNum]_announce_on_join"] << src.job_creator.announce_on_join
+	F["[profileNum]_add_to_manifest"] << src.job_creator.add_to_manifest
+	F["[profileNum]_radio_announcement"] << src.job_creator.radio_announcement
 
 	return 1
 
@@ -127,6 +130,10 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_items_in_belt"] >> src.job_creator.items_in_belt
 	if(isnull(src.job_creator.items_in_belt))
 		src.job_creator.items_in_belt = list()
+	F["[profileNum]_announce_on_join"] >> src.job_creator.announce_on_join
+	F["[profileNum]_add_to_manifest"] >> src.job_creator.add_to_manifest
+	F["[profileNum]_radio_announcement"] >> src.job_creator.radio_announcement
+
 
 
 	return 1
