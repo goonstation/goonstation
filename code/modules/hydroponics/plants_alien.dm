@@ -9,7 +9,7 @@
 /datum/plant/artifact/pukeplant
 	name = "Puker"
 	growthmode = "weed"
-	override_icon_state = "puker"
+	override_icon_state = "Puker"
 	unique_seed = /obj/item/seed/alien/pukeplant
 	nothirst = 1
 	starthealth = 80
@@ -33,7 +33,7 @@
 /datum/plant/artifact/peeker
 	name = "Peeker"
 	growthmode = "weed"
-	override_icon_state = "peeker"
+	override_icon_state = "Peeker"
 	unique_seed = /obj/item/seed/alien/peeker
 	nothirst = 1
 	starthealth = 120
