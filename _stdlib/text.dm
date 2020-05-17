@@ -22,7 +22,7 @@
 
 /**
   * Returns true if given string is just space characters
-	* Apparently BYOND doesn't count various whitespace characters as whitespace. - Sov
+  * Apparently BYOND doesn't count various whitespace characters as whitespace. - Sov
   */
 var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u205F\u3000])*$"}) // fuck me
 /proc/is_blank_string(var/txt)

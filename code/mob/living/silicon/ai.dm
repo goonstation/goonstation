@@ -2161,7 +2161,7 @@ proc/get_mobs_trackable_by_AI()
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
 			else if (is_blank_string(newname))
-				src.show_text("Your name cannot contain only spaces. Please choose a different name.", "red")
+				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
