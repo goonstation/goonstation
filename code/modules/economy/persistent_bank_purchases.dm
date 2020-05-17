@@ -111,6 +111,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					R.clothes["head"] = O
 					O.set_loc(R)
 					equip_success = 1
+				if(equip_success)
+					R.update_appearance()
 
 
 		//The AI can't really wear items...
