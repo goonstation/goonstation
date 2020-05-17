@@ -942,7 +942,7 @@
 
 	if (src.loc == user)
 		var/in_pocket = 0
-		if(issilicon(user)) //if it's a botg's shit, stop here
+		if(issilicon(user)) //if it's a borg's shit, stop here
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
