@@ -196,9 +196,6 @@
 		var/datum/bioHolder/original = new/datum/bioHolder(W)
 		original.CopyOther(src.bioHolder)
 		W.bioHolder = original
-	if (issmallanimal(W))
-		var/mob/living/critter/small_animal/small = W
-		small.setup_overlays()
 
 	var/mob/selfmob = src
 	src = null
@@ -213,6 +210,11 @@
 			ticker.minds += W.mind
 			W.mind.key = key
 			W.mind.current = W
+
+	if (issmallanimal(W))
+		var/mob/living/critter/small_animal/small = W
+		small.setup_overlays() // this requires the small animal to have a client to set things up properly
+
 	SPAWN_DBG(1 DECI SECOND)
 		qdel(selfmob)
 	return W
