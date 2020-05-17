@@ -1,5 +1,9 @@
 
 (t)sun may 17 20
+(u)Mordent
+(p)726
+(e)|
+(+)Fixed non-humans being unable to connect mechanics components even if holding a multitool.
 (u)pali
 (p)721
 (e)|
