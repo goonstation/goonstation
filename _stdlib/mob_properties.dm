@@ -18,7 +18,8 @@ To set the values of properties, helper procs exist on the mob type:
 
 	/mob/proc/remove_property(property, source)
 
-These work regardless of the type of property, as long as the property is properly prefixed (see property definitions below)
+These work regardless of the type of property, as long as the property is properly prefixed (see property definitions below).
+
 
 Behavior-dependent macros:
 
@@ -165,14 +166,23 @@ To remove:
 // Sum properties: s
 // Priority properties: p
 
-#define PROP_CANTMOVE "i_cantmove"
+#define PROP_CANTMOVE(x) x("i_cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define TRIPLE_GET_1ST(a, b, c) a
+#define TRIPLE_GET_2ND(a, b, c) b
+#define TRIPLE_GET_3RD(a, b, c) c
 
+#define TRIPLE_1ST(x) x(TRIPLE_GET_1ST)
+#define TRIPLE_2ND(x) x(TRIPLE_GET_2ND)
+#define TRIPLE_3RD(x) x(TRIPLE_GET_3RD)
 
+#define APPLY_MOB_PROPERTY(target, property, etc...) TRIPLE_2ND(property)(target, TRIPLE_1ST(property), ##etc)
 
-#define GET_MOB_PROPERTY(target, property) (target.mob_properties[property] ? target.mob_properties[property][MOB_PROPERTY_ACTIVE_VALUE] : null)
+#define REMOVE_MOB_PROPERTY(target, property, source) TRIPLE_3RD(property)(target, TRIPLE_1ST(property), source)
+
+#define GET_MOB_PROPERTY(target, property) (target.mob_properties[property] ? target.mob_properties[TRIPLE_1ST(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
 
 // sliiiiiiiightly faster if you don't care about the value
-#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[property] ? TRUE : FALSE)
+#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? TRUE : FALSE)
 
 
 #define APPLY_MOB_PROPERTY_MAX(target, property, source, value) \
@@ -312,3 +322,4 @@ To remove:
 			} \
 		} \
 	} while (0)
+
