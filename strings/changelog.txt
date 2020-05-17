@@ -1,5 +1,9 @@
 
 (t)sun may 17 20
+(u)Flourish
+(p)718
+(e)🆕🎨|enhancement, sprites
+(+)You can now draw faces on cardboard boxes and deconstruct packing crates and pizza boxes for cardboard sheets.
 (u)Erinexx
 (p)723
 (e)🗺🎨|mapping, sprites
