@@ -280,7 +280,7 @@ var/datum/score_tracker/score_tracker
 			var/list/who_escaped = list()
 			for (var/atom/A in pets_escaped)
 				who_escaped += "[A.name] [bicon(A)]"
-			. += "<B>Pets Escaped:</B>[who_escaped.Join(", ")]<BR><BR>"
+			. += "<B>Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
 
 		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
