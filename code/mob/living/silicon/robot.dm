@@ -650,7 +650,7 @@
 				src.internal_pda.owner = "[src]"
 				return
 			else
-				newname = strip_html(newname, 32, 1)
+				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
 					src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 					continue
