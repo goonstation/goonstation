@@ -1,4 +1,10 @@
 
+(t)sun may 17 20
+(u)TrustworthyFella
+(p)696
+(e)⚖|balance
+(+)Makes the clock work on armored targets, gives it additional slow(capped at 3s), and increases fire rate. 9mm NATO also has a higher(75%) chance of hitting prone targets.
+(+)Adds clock ammo to the Ammotech + Sectech
 (t)sat may 16 20
 (u)UrsulaMajor
 (p)660
