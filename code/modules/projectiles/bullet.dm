@@ -155,6 +155,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 6
 	ks_ratio = 0.9
+	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 36
@@ -162,6 +163,14 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
+
+	on_hit(atom/hit)
+		..()
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
+				M.changeStatus("slowed", 1 SECOND, optional = 2)
+
 
 /datum/projectile/bullet/nine_mm_NATO/burst
 	shot_number = 3
@@ -1237,6 +1246,4 @@ toxic - poisons
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 300, 1)
 		return
-
-
 

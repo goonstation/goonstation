@@ -68,7 +68,7 @@
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/armor_value_bullet) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/armor_value_bullet, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (armor_value_bullet > 1)
