@@ -33,7 +33,7 @@
 				implants += I
 
 			H.in_fakedeath = 1
-			APPLY_MOB_PROPERTY(C, PROP_CANTMOVE, "fakedeath", 1)
+			APPLY_MOB_PROPERTY_SIMPLE(C, PROP_CANTMOVE, "fakedeath")
 
 			C.lying = 1
 			C.canmove = 0
@@ -70,7 +70,7 @@
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0
-				REMOVE_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
+				REMOVE_MOB_PROPERTY_SIMPLE(C, PROP_CANTMOVE, src.type)
 		return 0
 
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)

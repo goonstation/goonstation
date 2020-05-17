@@ -84,7 +84,7 @@
 
 	dropped()
 		dropped += 1
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY_SIMPLE(src.assailant, PROP_CANTMOVE, src.type)
 		qdel(src)
 
 	process(var/mult = 1)
@@ -256,7 +256,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY_SIMPLE(src.assailant, PROP_CANTMOVE, src.type)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -299,7 +299,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type, 1)
+			APPLY_MOB_PROPERTY_SIMPLE(H, PROP_CANTMOVE, src.type)
 			H.update_canmove()
 
 		if (ishuman(src.affecting))
