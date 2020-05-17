@@ -14,6 +14,11 @@ If you only want to know whether a property exists, use:
 
 To set the values of properties, helper procs exist on the mob type:
 
+	/mob/proc/apply_property(property, source, value = null, priority = null)
+
+	/mob/proc/remove_property(property, source)
+
+These work regardless of the type of property, as long as the property is properly prefixed (see property definitions below)
 
 Behavior-dependent macros:
 
@@ -231,7 +236,7 @@ To remove:
 		var/_V = value; \
 		var/_S = source; \
 		if (_L[property]) { \
-			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \ /* if the value already exists from this source, adjust */ \
+			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] -= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
 				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] += _V; \
@@ -293,7 +298,7 @@ To remove:
 			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				_L -= property; \
-			} else if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _S_V) { \ /* we removed the active value */ \
+			} else if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _S_V) { \
 				var/_TO_APPLY_PRIO = -INFINITY; \
 				var/_TO_APPLY_VALUE; \
 				for (var/list/_K in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
