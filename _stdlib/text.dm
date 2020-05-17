@@ -18,7 +18,7 @@
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
 /proc/isVowel(var/t as text)
-	return findtextEx(lowertext(t), "aeiou���") > 0
+	return findtextEx(lowertext(t), "aeiouåäö") > 0
 
 /**
   * Returns true if given string is just space characters
