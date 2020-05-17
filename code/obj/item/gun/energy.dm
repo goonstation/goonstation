@@ -434,7 +434,7 @@
 
 //////////////////////////////////////Crabgun
 #if ASS_JAM
-/obj/item/gun/energy/Crabgun
+/obj/item/gun/energy/crabgun
 	name = "a strange crab"
 	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
 	icon = 'icons/obj/crabgun.dmi'
