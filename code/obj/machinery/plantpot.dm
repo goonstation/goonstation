@@ -1189,15 +1189,14 @@
 					seedcount++
 				getamount--
 
-			var/harvest_string = "You harvest [cropcount] item"
+			var/list/harvest_string = list("You harvest [cropcount] item")
 			if (cropcount > 1)
 				harvest_string += "s"
 			if(seedcount)
 				harvest_string += " and [seedcount] seed"
 				if (seedcount > 1)
 					harvest_string += "s"
-			harvest_string += ".</span>"
-			boutput(user, "<span style=\"color:blue\">[harvest_string]</span>")
+			boutput(user, "<span class='notice'>[harvest_string.Join()]</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
