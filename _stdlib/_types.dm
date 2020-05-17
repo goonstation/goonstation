@@ -19,7 +19,23 @@ for(var/type in typesof(/datum/test))
 Useful for parent types you don't want to be instantiated in places that use istype like this
 Note that the ABSTRACT_TYPE annotation *WILL* mark all predecesors of the type abstract too!
 That is a feature, not a bug.
+
+Turn on ABSTRACT_VIOLATION_CRASH or ABSTRACT_VIOLATION_WARN to get the server to yell at you
+when you instantiate an abstract type. CRASH will runtime, WARN will log it. Don't turn it on
+*permanently* on the live server (though turning it on once in a while is probably fine to see
+if there are any violations).
 */
+#ifdef ABSTRACT_VIOLATION_CRASH
+/datum/New()
+	..()
+	if(IS_ABSTRACT(src.type))
+		CRASH("Attempt to instantiate abstract type '[src.type]'.")
+#elif defined(ABSTRACT_VIOLATION_WARN)
+/datum/New()
+	..()
+	if(IS_ABSTRACT(src.type))
+		logTheThing("debug", src, null, "Attempt to instantiate abstract type '[src.type]'.")
+#endif
 
 
 /*
