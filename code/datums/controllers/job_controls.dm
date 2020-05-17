@@ -93,7 +93,7 @@ var/datum/job_controller/job_controls
 
 	proc/job_creator()
 		src.check_user_changed()
-		var/dat = "<html><body><title>Job Creation</title>"
+		var/list/dat = list("<html><body><title>Job Creation</title>")
 		dat += "<b><u>Job Creator</u></b><HR>"
 
 		dat += "<A href='?src=\ref[src];EditName=1'>Job Name:</A> [src.job_creator.name]<br>"
@@ -120,6 +120,11 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [src.job_creator.slot_poc2]<br>"
 			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [src.job_creator.slot_lhan]<br>"
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [src.job_creator.slot_rhan]<br>"
+			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.recieves_implant]<br>"
+			for(var/i in 1 to 4)
+				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [src.job_creator.items_in_backpack.len >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
+			for(var/i in 1 to 4)
+				dat += "<A href='?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [src.job_creator.items_in_belt.len >= i ? src.job_creator.items_in_belt[i] : null]<br>"
 			dat += "<A href='?src=\ref[src];GetAccess=1'>Set Access Permissions </A>"
 			if (src.job_creator.access.len > 1)
 				dat += " "
@@ -160,7 +165,7 @@ var/datum/job_controller/job_controls
 
 		dat += "</body></html>"
 
-		usr.Browse(dat,"window=jobcreator;size=500x650")
+		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
 
 	Topic(href, href_list[])
 		// JOB CONFIG COMMANDS
@@ -685,6 +690,97 @@ var/datum/job_controller/job_controls
 
 			src.job_creator()
 
+		if(href_list["EditImpl"])
+			switch(alert("Clear or reselect implant?","Job Creator","Clear","Reselect"))
+				if("Clear")
+					src.job_creator.recieves_implant = null
+
+				if("Reselect")
+					var/list/L = list()
+					var/search_for = input(usr, "Search for implants (or leave blank for complete list)", "Select implant") as null|text
+					if (search_for)
+						for (var/R in typesof(/obj/item/implant))
+							if (findtext("[R]", search_for)) L += R
+					else
+						L = typesof(/obj/item/implant)
+
+					var/picker = null
+					if (L.len == 1)
+						picker = L[1]
+					else if (L.len > 1)
+						picker = input(usr,"Select implant:","Job Creator",null) as null|anything in L
+					else
+						usr.show_text("No shoes implant that name", "red")
+						return
+
+					src.job_creator.recieves_implant = picker
+
+			src.job_creator()
+
+
+		if(href_list["EditBpItem"])
+			var/slot_num = text2num(href_list["EditBpItem"])
+			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
+				if("Clear")
+					if(src.job_creator.items_in_backpack.len >= slot_num)
+						src.job_creator.items_in_backpack[slot_num] = null
+
+				if("Reselect")
+					var/list/L = list()
+					var/search_for = input(usr, "Search for item (or leave blank for complete list)", "Select backpack item [slot_num]") as null|text
+					if (search_for)
+						for (var/R in typesof(/obj/item/))
+							if (findtext("[R]", search_for)) L += R
+					else
+						L = typesof(/obj/item/)
+
+					var/picker = null
+					if (L.len == 1)
+						picker = L[1]
+					else if (L.len > 1)
+						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
+					else
+						usr.show_text("No item matching that name", "red")
+						return
+
+					while(src.job_creator.items_in_backpack.len < slot_num)
+						src.job_creator.items_in_backpack += null
+					src.job_creator.items_in_backpack[slot_num] = picker
+
+			src.job_creator()
+
+
+		if(href_list["EditBeltItem"])
+			var/slot_num = text2num(href_list["EditBeltItem"])
+			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
+				if("Clear")
+					if(src.job_creator.items_in_belt.len >= slot_num)
+						src.job_creator.items_in_belt[slot_num] = null
+
+				if("Reselect")
+					var/list/L = list()
+					var/search_for = input(usr, "Search for item (or leave blank for complete list)", "Select belt item [slot_num]") as null|text
+					if (search_for)
+						for (var/R in typesof(/obj/item/))
+							if (findtext("[R]", search_for)) L += R
+					else
+						L = typesof(/obj/item/)
+
+					var/picker = null
+					if (L.len == 1)
+						picker = L[1]
+					else if (L.len > 1)
+						picker = input(usr,"Select item:","Job Creator",null) as null|anything in L
+					else
+						usr.show_text("No item matching that name", "red")
+						return
+
+					while(src.job_creator.items_in_belt.len < slot_num)
+						src.job_creator.items_in_belt += null
+					src.job_creator.items_in_belt[slot_num] = picker
+
+			src.job_creator()
+
 		if(href_list["GetAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
 			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
@@ -784,6 +880,9 @@ var/datum/job_controller/job_controls
 				JOB.bio_effects = src.job_creator.bio_effects
 				JOB.objective = src.job_creator.objective
 				JOB.spawn_miscreant = src.job_creator.spawn_miscreant
+				JOB.recieves_implant = src.job_creator.recieves_implant
+				JOB.items_in_backpack = src.job_creator.items_in_backpack
+				JOB.items_in_belt = src.job_creator.items_in_belt
 				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
 				logTheThing("admin", usr, null, "created special job [JOB.name]")
 				logTheThing("diary", usr, null, "created special job [JOB.name]", "admin")

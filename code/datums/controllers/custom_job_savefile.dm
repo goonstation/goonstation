@@ -62,6 +62,9 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_bio_effects"] << src.job_creator.bio_effects
 	F["[profileNum]_objective"] << src.job_creator.objective
 	F["[profileNum]_spawn_miscreant"] << src.job_creator.spawn_miscreant
+	F["[profileNum]_receives_implant"] << src.job_creator.recieves_implant
+	F["[profileNum]_items_in_backpack"] << src.job_creator.items_in_backpack
+	F["[profileNum]_items_in_belt"] << src.job_creator.items_in_belt
 
 	return 1
 
@@ -117,6 +120,14 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_bio_effects"] >> src.job_creator.bio_effects
 	F["[profileNum]_objective"] >> src.job_creator.objective
 	F["[profileNum]_spawn_miscreant"] >> src.job_creator.spawn_miscreant
+	F["[profileNum]_receives_implant"] >> src.job_creator.recieves_implant
+	F["[profileNum]_items_in_backpack"] >> src.job_creator.items_in_backpack
+	if(isnull(src.job_creator.items_in_backpack))
+		src.job_creator.items_in_backpack = list()
+	F["[profileNum]_items_in_belt"] >> src.job_creator.items_in_belt
+	if(isnull(src.job_creator.items_in_belt))
+		src.job_creator.items_in_belt = list()
+
 
 	return 1
 
