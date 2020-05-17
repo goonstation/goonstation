@@ -147,7 +147,7 @@
 	force_seed_on_harvest = 1
 	special_proc = 1 // for tuna plant
 	harvested_proc = 1 // for tuna plant
-	isgrass = 0 // for some reason, isgrass forces you not to gave a G3 sprite and stops a bunch of the "fully grown plant" shit from happening :[ //TODO: REVIEW IF THIS IS STILL RELEVANT WITH G4s!!!
+	isgrass = 0
 	endurance = 0
 	vending = 1
 	genome = 1
