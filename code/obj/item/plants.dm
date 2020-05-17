@@ -267,7 +267,7 @@
 
 /obj/item/plant/herb/asomna/robust
 	name = "asomna bark"
-	crop_suffix	= " bark"
+	crop_suffix = " bark"
 	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties. This particular chunk looks extra spicy."
 	icon_state = "asomnarobust"
 	brewable = 1
