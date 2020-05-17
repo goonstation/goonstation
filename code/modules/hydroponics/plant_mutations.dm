@@ -222,15 +222,6 @@
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 
-// Bean Mutations
-
-/datum/plantmutation/beans/jelly
-	name = "Jelly Bean"
-	name_prefix = "jelly"
-	iconmod = "BeanJelly"
-	assoc_reagents = list("VHFCS")
-	crop = /obj/item/reagent_containers/food/snacks/candy/everyflavor
-
 // Synthmeat Mutations
 
 /datum/plantmutation/synthmeat/butt
