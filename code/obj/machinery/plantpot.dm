@@ -1248,7 +1248,7 @@
 			HYPkillplant()
 
 		//do we have to run the next life tick manually? maybe
-		playsound(src.loc, "rustle", 50, 1, -5, 2) //TODO: replace with a real harvest sound
+		playsound(src.loc, "rustle", 50, 1, -5, 2)
 		update_icon()
 		update_name()
 
