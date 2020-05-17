@@ -205,6 +205,8 @@
 
 	src.organHolder = new(src)
 
+	src.ensure_bp_list()
+
 	if (!bioHolder)
 		bioHolder = new/datum/bioHolder(src)
 	if (!abilityHolder)

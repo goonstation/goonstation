@@ -1168,7 +1168,6 @@
 
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.ensure_bp_list()
 		if (H.blood_pressure["total"] > 585)
 			msgs.visible_message_self("<span class='alert'><I>[user] gasps and wheezes from the exertion!</I></span>")
 			user.losebreath += rand(1,2)
