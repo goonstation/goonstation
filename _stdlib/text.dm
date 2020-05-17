@@ -18,4 +18,14 @@
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
 /proc/isVowel(var/t as text)
-	return findtextEx(lowertext(t), "aeiouåäö") > 0
+	return findtextEx(lowertext(t), "aeiouï¿½ï¿½ï¿½") > 0
+
+/**
+  * Returns true if given string is just space characters
+	* [ Â ] is used instead of \s because apparently BYOND doesn't count non breaking spaces as whitespace AHHHHH - Sov
+  */
+var/static/regex/is_blank_string_regex = new(@{"^[ Â ]*$"})
+/proc/is_blank_string(var/txt)
+	if (is_blank_string_regex.Find(txt))
+		return 1
+	return 0 //not blank
