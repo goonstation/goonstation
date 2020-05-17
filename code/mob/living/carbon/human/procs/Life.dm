@@ -724,7 +724,7 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (src.is_changeling() || (src.bioHolder && src.bioHolder.HasEffect("breathless") || (src.mutantrace && !src.mutantrace.needs_oxy)))
+		if (ischangeling(src) || (src.bioHolder && src.bioHolder.HasEffect("breathless") || (src.mutantrace && !src.mutantrace.needs_oxy)))
 			if (src.losebreath)
 				src.losebreath = 0
 			if (src.get_oxygen_deprivation())
@@ -1377,7 +1377,7 @@
 		src.blood_pressure["total"] = current_blood_amt
 		src.blood_pressure["status"] = (current_blood_amt < 415) ? "HYPOTENSIVE" : (current_blood_amt > 584) ? "HYPERTENSIVE" : "NORMAL"
 
-		if (src.is_changeling())
+		if (ischangeling(src))
 			return
 
 		//special case
@@ -1600,7 +1600,7 @@
 			oH.brain = null
 
 		if (!oH.heart && !src.nodamage)
-			if (!src.is_changeling())
+			if (!ischangeling(src))
 				if (src.get_oxygen_deprivation())
 					src.take_brain_damage(3)
 				else if (prob(10))
@@ -1693,7 +1693,7 @@
 			//src.drop_item()
 			src.emote("twitch")
 
-		var/is_chg = is_changeling()
+		var/is_chg = ischangeling(src)
 		//if (src.brain_op_stage == 4.0) // handled above in handle_organs() now
 			//death()
 		if (src.get_brain_damage() >= 120 || death_health <= -500) //-200) a shitty test here // let's lower the weight of oxy

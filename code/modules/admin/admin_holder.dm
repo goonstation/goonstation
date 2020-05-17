@@ -20,6 +20,7 @@
 	var/hear_prayers = 0 //Ok
 	var/audible_prayers = 0 // 0 = silent, 1 = ping, 2 = dectalk (oh god why)
 	var/buildmode_view = 0 //change view when using buildmode?
+	var/spawn_in_loc = 0 //spawn verb spawning in loc?
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
 
@@ -69,6 +70,7 @@
 			"Follow Thing",\
 			"Possess",\
 			"Create Poster",\
+			"Delete",\
 
 			"Gib",\
 			"Polymorph",\
@@ -115,6 +117,7 @@
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
+		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<br><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
@@ -212,6 +215,12 @@
 			saved_buildmode_view = 0
 		buildmode_view = saved_buildmode_view
 
+		var/saved_spawn_in_loc
+		AP["[ckey]_spawn_in_loc"] >> saved_spawn_in_loc
+		if (isnull(saved_spawn_in_loc))
+			saved_spawn_in_loc = 0
+		spawn_in_loc = saved_spawn_in_loc
+
 		if (usr)
 			boutput(usr, "<span class='notice'>Admin preferences loaded.</span>")
 
@@ -234,6 +243,7 @@
 		AP["[ckey]_hear_prayers"] << hear_prayers
 		AP["[ckey]_audible_prayers"] << audible_prayers
 		AP["[ckey]_buildmode_view"] << buildmode_view
+		AP["[ckey]_spawn_in_loc"] << spawn_in_loc
 
 		if (usr)
 			boutput(usr, "<span class='notice'>Admin preferences saved.</span>")

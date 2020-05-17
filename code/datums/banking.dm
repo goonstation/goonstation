@@ -641,7 +641,6 @@
 			return
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
-			return
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I

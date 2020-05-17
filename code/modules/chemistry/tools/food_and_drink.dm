@@ -1136,7 +1136,8 @@
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
 
-		if ((H.sims && H.sims.getValue("Bladder") <= 65) || (!H.sims && H.urine >= 2))
+		var/bladder = H.sims?.getValue("Bladder")
+		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 			choices += "pee in it"
 		if (src.in_glass)
 			choices += "remove [src.in_glass]"
@@ -1157,7 +1158,8 @@
 		var/obj/item/eat_thing
 
 		if (selection == "pee in it")
-			if ((H.sims && H.sims.getValue("Bladder") <= 65) || (!H.sims && H.urine >= 2))
+			bladder = H.sims?.getValue("Bladder")
+			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
 				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)
@@ -1460,7 +1462,8 @@
 	icon_state = "fancycoffee"
 	item_state = "coffee"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE //see _setup.dm
-	initial_volume = 10
+	initial_volume = 20
+	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever
 	var/glass_style = "fancycoffee"
 
@@ -1484,7 +1487,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 40
+	initial_volume = 80
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1601,3 +1604,25 @@
 	g_amt = 5
 	initial_volume = 40
 	initial_reagents = list("bojack"=40)
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker
+	name = "cocktail shaker"
+	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "GannetsCocktailer"
+	initial_volume = 120
+
+	New()
+		..()
+		src.reagents.inert = 1
+
+	attack_self(mob/user)
+		if (src.reagents.total_volume > 0)
+			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
+			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			sleep (0.3 SECONDS)
+			src.reagents.inert = 0
+			src.reagents.handle_reactions()
+			src.reagents.inert = 1
+		else
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")

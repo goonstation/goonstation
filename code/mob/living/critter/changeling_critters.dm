@@ -286,7 +286,7 @@
 	name = "eyespider"
 	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
-	density = 1
+	density = 0
 	icon_state = "eyespider"
 	icon_state_dead = "eyespider-dead"
 	abilityHolder

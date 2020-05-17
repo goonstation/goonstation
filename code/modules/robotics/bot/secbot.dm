@@ -466,7 +466,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							if (!isturf(src.target.loc))
 								uncuffable = 1
 
-							if(iscarbon(src.target) && !uncuffable)
+							if(ishuman(src.target) && !uncuffable)
 								src.target.handcuffs = new /obj/item/handcuffs(src.target)
 								src.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 

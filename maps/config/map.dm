@@ -32,6 +32,9 @@
 #elif defined(MAP_OVERRIDE_SAMEDI)
 #include "samedi.dm"
 
+#elif defined(MAP_OVERRIDE_PAMGOC)
+#include "pamgoc.dm"
+
 #elif defined(MAP_OVERRIDE_OSHAN)
 #include "oshan.dm"
 

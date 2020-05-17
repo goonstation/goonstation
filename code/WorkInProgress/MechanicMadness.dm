@@ -347,7 +347,7 @@ var/list/mechanics_telepads = new/list()
 		if(usr.stat)
 			return
 
-		if(!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
+		if (!usr.find_tool_in_hand(TOOL_PULSING))
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 

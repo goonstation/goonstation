@@ -942,6 +942,8 @@
 
 	if (src.loc == user)
 		var/in_pocket = 0
+		if(issilicon(user)) //if it's a borg's shit, stop here
+			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
@@ -1336,6 +1338,8 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
 /obj/item/proc/dropped(mob/user)
+	if (user)
+		src.dir = user.dir
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED

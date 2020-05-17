@@ -692,6 +692,7 @@
 /obj/item/material_piece/gold
 	name = "stamped bullion"
 	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	default_material = "gold"
 
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"

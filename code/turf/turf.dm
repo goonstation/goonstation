@@ -855,6 +855,9 @@ var/global/client/ff_debugger = null
 		name = "The NSS Manta"
 		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
 	#endif
+	#if defined(REVERSED_MAP)
+		transform = list(-1, 0, 0, 0, 1, 0)
+	#endif
 		lobby_titlecard = src
 
 	proc/educate()

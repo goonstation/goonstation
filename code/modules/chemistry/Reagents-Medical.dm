@@ -738,7 +738,7 @@ datum
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
 							M.cure_disease(virus)
 				if(prob(20)) M.take_brain_damage(1 * mult)
-				if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
+				if(prob(50)) M.drowsyness = max(M.drowsyness, 6)
 				if(prob(10)) M.emote("drool")
 				..()
 				return
