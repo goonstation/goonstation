@@ -126,7 +126,7 @@
 /obj/item/seed/grass/
 	name = "grass seed"
 	seedcolor = "#CCFF99"
-	auxillary_datum = /datum/plant/grass
+	auxillary_datum = /datum/plant/herb/grass
 
 /obj/item/seed/maneater/
 	name = "strange seed"
@@ -135,7 +135,7 @@
 /obj/item/seed/creeper/
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
-	auxillary_datum = /datum/plant/creeper
+	auxillary_datum = /datum/plant/weed/creeper
 
 /obj/item/seed/crystal/
 	name = "crystal seed"
@@ -145,7 +145,7 @@
 /obj/item/seed/cannabis/
 	name = "cannabis seed"
 	seedcolor = "#00FF00"
-	auxillary_datum = /datum/plant/cannabis
+	auxillary_datum = /datum/plant/herb/cannabis
 
 // weird alien plants
 

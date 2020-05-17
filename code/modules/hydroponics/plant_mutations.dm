@@ -498,7 +498,7 @@
 					radrange = 3
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))
 				var/datum/plant/growing = C.current
-				if (istype(growing,/datum/plant/radweed)) continue
+				if (istype(growing,/datum/plant/weed/radweed)) continue
 				if (growing) C.HYPmutateplant(radrange * 2)
 
 /datum/plantmutation/radweed/redweed
