@@ -384,7 +384,7 @@
 /obj/death_button/clean_gunsim
 	name = "button that will clean the murderbox"
 	desc = "push this to clean the murderbox and probably not get killed. takes a minute."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
 	var/area/sim/gunsim/gunsim

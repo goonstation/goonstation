@@ -3,7 +3,7 @@
 /obj/machinery/bot/goosebot
 	name = "THE GOOSE"
 	desc = "How did this manage to pass Nanotrasen's safety regulations?"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "goosebot"
 	layer = 5.0 //TODO LAYER
 	density = 0

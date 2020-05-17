@@ -3307,7 +3307,7 @@
 /mob/living/silicon/robot/buddy
 	name = "Robot"
 	real_name = "Robot"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy1"
 	health = 1000
 	custom = 1
