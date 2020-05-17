@@ -21,18 +21,18 @@
 		if (istype(T,/turf/simulated/floor))
 			T.icon = 'icons/misc/beach.dmi'
 			T.icon_state = "sand"
-			SPAWN_DBG(10 SECONDS)
-				T.icon = initial(T.icon)
-				T.icon_state = initial(T.icon_state)
+			animate(T, time = 10 SECONDS)
+			animate(icon_state = initial(T.icon_state))
+			animate(icon = initial(T.icon))
 	on_hit(atom/hit)
 		..()
 		var/turf/simulated/T2 = get_turf(hit)
 		if (isturf(T2))
 			T2.icon = 'icons/misc/beach.dmi'
 			T2.icon_state = "sand"
-			SPAWN_DBG(10 SECONDS)
-				T2.icon = initial(T2.icon)
-				T2.icon_state = initial(T2.icon_state)
+			animate(T2, time = 10 SECONDS)
+			animate(icon_state = initial(T2.icon_state))
+			animate(icon = initial(T2.icon))
 		if (istype(hit, /mob/living/carbon/))
 			if (hit.getStatusDuration("stunned") > 0)
 				var/mob/living/carbon/human/H = hit
