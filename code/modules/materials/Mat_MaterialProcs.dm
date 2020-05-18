@@ -463,6 +463,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
+		
+/datum/materialProc/soulsteel_add
+	desc = "It is almost impossible to grasp."
+
+	execute(var/atom/owner)
+		owner.event_handler_flags |= USE_HASENTERED
+		return
 
 /datum/materialProc/soulsteel_entered
 	var/lastTrigger = 0
