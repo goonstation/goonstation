@@ -1,5 +1,10 @@
 
 (t)sun may 17 20
+(u)Erinexx
+(p)717
+(e)🔄🎨|rework, sprites
+(*)Resprited all non-artifact plants
+(*)Added unique sprites to several mutant plants
 (u)pali
 (+)AIs that buy a hat for spacebux should now start with that hat equipped
 (u)Flourish
