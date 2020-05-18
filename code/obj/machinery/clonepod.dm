@@ -325,7 +325,6 @@
 			return
 
 		else if (src.occupant.health < src.heal_level)
-			src.failed_tick_counter = 0
 
 			src.occupant.changeStatus("paralysis", 60)
 
@@ -363,11 +362,15 @@
 				src.send_pda_message("Low Biomatter")
 				src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
-				src.failed_tick_counter ++
+				src.failed_tick_counter = 1
 
 			use_power(7500) //This might need tweaking.
 
 			var/heal_delta = (src.occupant.health - previous_heal)
+			if(heal_delta <= 0)
+				src.failed_tick_counter++
+			else
+				src.failed_tick_counter = 0
 			previous_heal = src.occupant.health
 			if (heal_delta <= 0 && src.occupant.health > 50 && !eject_wait)
 				src.connected_message("Cloning Process Complete.")
