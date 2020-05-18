@@ -54,6 +54,9 @@
 	ex_act()
 		return
 
+	meteorhit(obj/meteor)
+		return
+
 	proc/add_person_to_queue(var/mob/living/person, var/datum/job/job)
 		if (!istype(person) || job?.special_spawn_location)
 			return 0
