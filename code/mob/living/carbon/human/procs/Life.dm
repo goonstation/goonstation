@@ -1647,7 +1647,6 @@
 				UpdateOverlays(sleep_bubble, "sleep_bubble")
 		else
 			if (last_sleep) // we were previously asleep but aren't anymore
-				last_sleep = sleeping
 				UpdateOverlays(null, "sleep_bubble")
 
 		if (prob(50) && src.hasStatus("disorient"))
