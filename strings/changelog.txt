@@ -1,4 +1,9 @@
 
+(t)mon may 18 20
+(u)Tarmunora
+(p)664
+(e)⚖|balance
+(+)Buffed taser shotgun
 (t)sun may 17 20
 (u)Erinexx
 (p)717
