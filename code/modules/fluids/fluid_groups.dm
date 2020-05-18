@@ -123,8 +123,9 @@
 		can_update = 0
 
 		for (var/fluid in src.members)
-			var/obj/fluid/M = fluid
-			M.group = 0
+			if(fluid)
+				var/obj/fluid/M = fluid
+				M.group = 0
 
 		//if (src in processing_fluid_groups)
 		//	processing_fluid_groups.Remove(src)
