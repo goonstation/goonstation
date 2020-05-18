@@ -3,7 +3,7 @@
 /obj/machinery/bot/duckbot
 	name = "Amusing Duck"
 	desc = "Bump'n go action! Ages 3 and up."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "duckbot"
 	layer = 5.0 //TODO LAYER
 	density = 0

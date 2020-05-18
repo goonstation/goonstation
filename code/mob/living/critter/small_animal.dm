@@ -123,16 +123,14 @@ todo: add more small animals!
 		eye_color = "#FFFFF"
 
 	setup_overlays()
-		if (src.bioHolder)
-			fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
-
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -1245,16 +1243,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 
 	setup_overlays()
-		if (src.bioHolder)
-			fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "roach_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -2427,17 +2424,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_overlays()
 		if(!src.colorkey_overlays)
 			return
-		if (src.bioHolder)
-			// purple only
-			// fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
+		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()

@@ -368,7 +368,7 @@
 		return
 
 
-	if (ishuman(src))
+	if (ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -411,7 +411,7 @@
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
-		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO)//!ismap("DESTINY") && !ismap("CLARION"))
+		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
@@ -434,7 +434,8 @@
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
 		if (istype(src.back, /obj/item/storage))
 			for (var/X in JOB.items_in_backpack)
-				src.equip_new_if_possible(X, slot_in_backpack)
+				if(ispath(X))
+					src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, slot_in_backpack)
@@ -479,9 +480,10 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
 			if (src.traitHolder && src.traitHolder.hasTrait("immigrant") && istype(src.belt, /obj/item/device/pda2))
 				del(src.belt) //UGHUGHUGHUGUUUUUUUU
-		if (JOB.items_in_belt.len && istype(src.belt, /obj/item/storage))
+		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
-				src.equip_new_if_possible(X, slot_in_belt)
+				if(ispath(X))
+					src.equip_new_if_possible(X, slot_in_belt)
 
 	if (JOB.slot_foot)
 		src.equip_new_if_possible(JOB.slot_foot, slot_shoes)
@@ -633,9 +635,10 @@
 
 	if (JOB.slot_back)
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
-	if (JOB.slot_back && JOB.items_in_backpack.len)
+	if (JOB.slot_back && JOB?.items_in_backpack.len)
 		for (var/X in JOB.items_in_backpack)
-			src.equip_new_if_possible(X, slot_in_backpack)
+			if(ispath(X))
+				src.equip_new_if_possible(X, slot_in_backpack)
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 	if (JOB.slot_belt)

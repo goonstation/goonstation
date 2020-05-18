@@ -440,8 +440,12 @@
 
 	var/obj/item/I = target.equipped()
 	if (I)
+		var/disarm_item_prob = 37
+		if (target.check_block())
+			disarm_item_prob = 8
+
 		if (I.temp_flags & IS_LIMB_ITEM)
-			if (prob(37 * mult))
+			if (prob(disarm_item_prob * mult))
 				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [I.loc] and forces [target]'s to hit themselves[DISARM_WITH_ITEM_TEXT]!</B></span>"
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 				msgs.disarm_RNG_result = "attack_self_with_item"
@@ -455,7 +459,7 @@
 			msgs.show_self.Add("<span class='alert'>Something is binding [I] to [target]. You won't be able to disarm [him_or_her(target)].</span>")
 			msgs.show_target.Add("<span class='alert'>Something is binding [I] to you. It cannot be knocked out of your hands.</span>")
 
-		else if (prob(37 * mult))
+		else if (prob(disarm_item_prob * mult))
 			if (ishuman(src))
 				var/mob/living/carbon/human/H2 = src
 				for (var/uid in H2.pathogens)

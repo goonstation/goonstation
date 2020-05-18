@@ -629,9 +629,9 @@ datum/projectile
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			if(ks_ratio == 0) //stun projectiles only
 				impact_image_effect("T", hit)
-				if (isliving(hit))
-					var/mob/living/L = hit
-					stun_bullet_hit(O,L)
+//				if (isliving(hit))
+//					var/mob/living/L = hit
+//					stun_bullet_hit(O,L)
 			return
 		tick(var/obj/projectile/O)
 			return

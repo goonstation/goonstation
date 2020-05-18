@@ -97,7 +97,7 @@
 		pop()
 		return
 
-	/mob/living/carbon/cube/build_keymap(client/C)
+	build_keymap(client/C)
 		var/datum/keymap/keymap = ..()
 		keymap.merge(client.get_keymap("cube"))
 		return keymap

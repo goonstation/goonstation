@@ -206,7 +206,7 @@
 
 /datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current)
+	if (!rev_mind?.current)
 		return 0
 
 	if (rev_mind in revolutionaries)

@@ -222,7 +222,6 @@
 				. += "<br><span class='alert'><B>[src.name] is bleeding very badly!</B></span>"
 */
 	if (!isvampire(src)) // Added a check for vampires (Convair880).
-		src.ensure_bp_list()
 		switch (src.blood_pressure["total"])
 			if (-INFINITY to 0) // welp
 				. += "<br><span class='alert'><B>[src.name] is pale as a ghost!</B></span>"
