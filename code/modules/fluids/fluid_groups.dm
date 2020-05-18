@@ -616,7 +616,7 @@
 					.+= C
 					created++
 
-				if ((members.len + created)<=0) //this can happen somehow
+				if ((members?.len + created)<=0) //this can happen somehow
 					continue
 
 				amt_per_tile = contained_amt / (members.len + created)
