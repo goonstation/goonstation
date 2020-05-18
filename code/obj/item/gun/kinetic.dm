@@ -964,6 +964,7 @@
 	caliber = 1.57
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
+	can_dual_wield = 0
 
 	New()
 		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
