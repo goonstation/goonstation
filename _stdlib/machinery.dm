@@ -1,12 +1,15 @@
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
-
-// Uncomment and adjust PROCESSING_MAX_IN_USE as needed
 #define PROCESSING_QUARTER   3
-//#define PROCESSING_EIGHTH    4
-//#define PROCESSING_SIXTEENTH 5
+#define PROCESSING_EIGHTH    4
+#define PROCESSING_SIXTEENTH 5
+#define PROCESSING_32TH			 6
+// Uncomment and adjust PROCESSING_MAX_IN_USE as needed
 
-#define PROCESSING_MAX_IN_USE PROCESSING_QUARTER
+//
+//
+
+#define PROCESSING_MAX_IN_USE PROCESSING_32TH
 
 #define MACHINES_CONVEYORS				1 // Conveyor belts
 #define MACHINES_ATMOSALERTS			2 // /obj/machinery/computer/atmosphere/alerts
@@ -52,7 +55,7 @@ var/global/list/machine_registry = generate_machine_registry()
 /proc/generate_machinery_processing_buckets()
 	. = new /list(PROCESSING_MAX_IN_USE)
 	for(var/i in 1 to PROCESSING_MAX_IN_USE)
-		.[i] = new /list(1<<(i-1)) // 1 list for index 1, 2 for 2, 4 for 3, 8 for 4, 16 for 5
+		.[i] = new /list(1<<(i-1)) // 1 list for index 1, 2 for 2, 4 for 3, 8 for 4, 16 for 5, 32 for 6
 		for (var/j in 1 to length(.[i]))
 			.[i][j] = list()
 
