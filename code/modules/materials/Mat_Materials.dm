@@ -414,6 +414,7 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -1211,6 +1212,7 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre
