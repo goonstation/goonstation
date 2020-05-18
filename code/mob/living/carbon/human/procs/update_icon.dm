@@ -670,8 +670,6 @@
 
 	clothing_dirty = 0
 
-	stack_trace("\[DEBUG\] UpdateClothing call")
-
 #undef wear_sanity_check
 #undef inhand_sanity_check
 
