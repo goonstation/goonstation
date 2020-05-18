@@ -310,6 +310,7 @@ menu "menu"
 		command = "set-tg-layout"
 		category = "&Interface"
 		can-check = true
+		is-checked = true
 		saved-params = "is-checked"
 	elem "tg_controls"
 		name = "&Use /TG/ style controls"
