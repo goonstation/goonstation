@@ -469,6 +469,10 @@ datum/light
 							T.NE.RL_ApplyGeneration = generation
 							ADDUPDATE(T.NE)
 
+				ADDUPDATE(T.W)
+				ADDUPDATE(T.S)
+				ADDUPDATE(T.S.W)
+
 	line
 		var/dist_cast = 0
 		precalc()
