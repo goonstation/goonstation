@@ -366,6 +366,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			Contact CDC &middot;
 			Traders
+			RockBox Controls
 		</div>
 	</div>
 	<div id="topBar">
@@ -380,7 +381,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<a href='[topicLink("viewmarket")]'>Shipping Market</a>
 			<br>
 			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
-			<a href='[topicLink("trader_list")]'>Traders</a>
+			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
+			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
 		</div>
 	</div>
 
@@ -596,6 +598,45 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		return .
 
+	rockbox_controls(subaction, href_list)
+		switch (subaction)
+			if (null, "list")
+				. = "<h2>Rockbox&trade; Ore Cloud Storage Service Settings:</h2><ul><br>"
+
+				. += "<B>Rockbox&trade; Fees:</B> $[!rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0] per ore [!rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>"
+				. += "<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_client_fee_pct]%</A><BR>"
+				. += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_client_fee_min]</A><BR>"
+				. += {"</ul>"}
+				return .
+
+			if ("premium_service")
+				var/response = ""
+				response = alert(usr,"Would you like to purchase the Rockbox&trade; Premium Service for 10000 Credits?",,"Yes","No")
+				if(response == "Yes")
+					if(wagesystem.shipping_budget >= 10000)
+						wagesystem.shipping_budget -= 10000
+						rockbox_premium_purchased = 1
+						. = {"Congratulations on your purchase of RockBox&trade; Premium!"}
+					else
+						. = {"Not enough money in the budget!"}
+
+
+			if ("fee_pct")
+				var/fee_pct = null
+				fee_pct = input(usr,"What fee percent would you like to set? (Min 0)","Fee Percent per Transaction:",null) as num
+				fee_pct = max(0,fee_pct)
+				rockbox_client_fee_pct = fee_pct
+				. = {"Fee Percent per Transaction is now [rockbox_client_fee_pct]%"}
+
+			if ("fee_min")
+				var/fee_min = null
+				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
+				fee_min = max(0,fee_min)
+				rockbox_client_fee_min = fee_min
+				. = {"Minimum Fee per Transaction is now $[rockbox_client_fee_min]"}
+
+		return .
+
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 	if(..())
@@ -616,6 +657,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		if ("requests")
 			src.temp = requests(subaction, href_list)
 
+		if("rockbox_controls")
+			src.temp = rockbox_controls(subaction,href_list)
 
 		if ("viewmarket")
 			if(shippingmarket.last_market_update != last_market_update) //Okay, the market has updated and we need a new price list
