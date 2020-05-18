@@ -743,7 +743,7 @@
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	var/spread_angle = 30
+	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
