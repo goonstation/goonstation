@@ -923,7 +923,7 @@
 			if (amt > 0)
 				src.charge = min(src.charge + amt, src.max_charge)
 				src.update_icon()
-				return 1
+				return src.charge < src.max_charge //if we're fully charged, let other things know immediately
 			else
 				return 0
 
