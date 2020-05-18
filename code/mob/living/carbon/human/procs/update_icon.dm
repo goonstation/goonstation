@@ -670,6 +670,11 @@
 
 	clothing_dirty = 0
 
+	fake_debug_runtime()
+
+proc/fake_debug_runtime()
+	CRASH("\[DEBUG\] UpdateClothing call")
+
 #undef wear_sanity_check
 #undef inhand_sanity_check
 
