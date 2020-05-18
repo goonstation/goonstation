@@ -929,6 +929,7 @@
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user as mob)
+	..()
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)

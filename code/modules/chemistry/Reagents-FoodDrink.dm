@@ -565,7 +565,7 @@ datum
 							if (istype(H.wear_id, /obj/item/card/id))
 								H.wear_id:registered = H.real_name
 								H.wear_id:name = "[H.real_name]'s ID ([H.wear_id:assignment])"
-							else if (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)
+							else if ((istype(H.wear_id, /obj/item/device/pda2) || istype(H.wear_id, /obj/item/clothing/lanyard)) && H.wear_id:ID_card)
 								H.wear_id:ID_card:registered = H.real_name
 								H.wear_id:ID_card:name = "[H.real_name]'s ID ([H.wear_id:ID_card:assignment])"
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))

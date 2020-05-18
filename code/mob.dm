@@ -2923,6 +2923,9 @@
 	if(istype(src.equipped(), /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
+	if(istype(src.equipped(), /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/L = src.equipped()
+		return L.ID_card
 
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN

@@ -2,7 +2,7 @@
 	var/obj/screen/hud
 		boxes
 		close
-	var/obj/item/storage/master
+	var/datum/component/storage/master
 	var/list/obj_locs = null // hi, haine here, I'm gunna crap up this efficient code with REGEX BULLSHIT YEAHH!!
 
 	New(master)
@@ -59,7 +59,7 @@
 							px = temp
 
 						//ddumb hack for offset storage
-						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
+						var/turfd = (isturf(master.owner.loc) && !istype(master, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
 						if (usr && usr.client && usr.client.tg_layout && !turfd)
@@ -92,7 +92,7 @@
 		var sy = master.slots + 1
 		var/turfd = 0
 
-		if (isturf(master.loc) && !istype(master, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		if (isturf(master.owner.loc) && !istype(master, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
 			sx = (master.slots + 1) / 2
@@ -145,7 +145,7 @@
 			I.screen_loc = final_loc
 			src.obj_locs[obj_loc] = I
 			i++
-		master.update_icon()
+		//master.update_icon()
 
 	proc/add_item(obj/item/I)
 		update()

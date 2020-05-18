@@ -2350,6 +2350,8 @@
 				return 1
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return 1
+			if (istype(I, /obj/item/clothing/lanyard) && src.w_uniform)
+				return 1
 		if (slot_back)
 			if (I.flags & ONBACK)
 				return 1
@@ -3530,6 +3532,9 @@
 	if(istype(src.wear_id, /obj/item/device/pda2))
 		var/obj/item/device/pda2/pda = src.wear_id
 		return pda.ID_card
+	if(istype(src.wear_id, /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/L = src.wear_id
+		return L.ID_card
 
 /mob/living/carbon/human/is_hulk()
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))

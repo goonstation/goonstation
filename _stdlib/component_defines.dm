@@ -41,6 +41,13 @@
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
 
+// obj signals
+/// When an obj is attacked by an item
+#define COMSIG_OBJ_ATTACK_BY "obj_attack_by"
+/// When an obj is attacked by a user's hands
+#define COMSIG_OBJ_ATTACK_HAND "obj_attack_hand"
+// When an object is moved by a user
+#define COMSIG_OBJ_MOVE_TRIGGER "obj_move_trigger"
 
 // item signals
 /// When an item is equipped (user, slot)

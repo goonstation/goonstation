@@ -123,6 +123,10 @@
 		var/obj/item/device/pda2/P = I
 		if (P.ID_card)
 			I = P.ID_card
+	else if (istype(I, /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/L = I
+		if (L.ID_card)
+			I = L.ID_card
 	else if (istype(I, /obj/item/magtractor))
 		var/obj/item/magtractor/mag = I
 		if (istype(mag.holding, /obj/item/card/id))

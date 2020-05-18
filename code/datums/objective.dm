@@ -431,6 +431,9 @@ proc/create_fluff(var/datum/mind/target)
 			for (var/obj/item/device/pda2/PDA in L)
 				if (PDA.ID_card)
 					current_cash += PDA.ID_card.money
+			for (var/obj/item/clothing/lanyard/LAN in L)
+				if (LAN.ID_card)
+					current_cash += LAN.ID_card.money
 			for (var/obj/item/spacecash/C in L)
 				current_cash += C.amount
 

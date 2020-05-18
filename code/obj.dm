@@ -23,6 +23,7 @@
 			x = x.loc
 		if (!x || isarea(x))
 			return 0
+		SEND_SIGNAL(src, COMSIG_OBJ_MOVE_TRIGGER, M, kindof)
 		return 1
 
 	animate_movement = 2
@@ -184,7 +185,8 @@
 	proc/initialize()
 
 	attackby(obj/item/I as obj, mob/user as mob)
-// grabsmash
+		SEND_SIGNAL(src, COMSIG_OBJ_ATTACK_BY, I, user)
+		// grabsmash
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
 			if  (!grab_smash(G, user))
@@ -192,6 +194,8 @@
 			else return
 		return ..(I, user)
 
+	attack_hand(mob/user as mob)
+		SEND_SIGNAL(src, COMSIG_OBJ_ATTACK_HAND, user)
 
 	MouseDrop(atom/over_object as mob|obj|turf)
 		..()

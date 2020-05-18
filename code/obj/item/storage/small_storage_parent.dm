@@ -8,13 +8,6 @@
 	icon_state = "box_blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
-	var/list/can_hold = null//new/list()
-	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
-	var/datum/hud/storage/hud
-	var/sneaky = 0 //Don't print a visible message on use.
-	var/does_not_open_in_pocket = 1
-	var/max_wclass = 2
-	var/slots = 7 // seems that even numbers are what breaks the on-ground hud layout
 	var/list/spawn_contents = list()
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
@@ -34,25 +27,18 @@
 		return Tcontent
 
 	New()
-		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.make_my_stuff()
+		AddComponent(/datum/component/storage, src.spawn_contents)
 
-	disposing()
-		if (hud)
-			for (var/mob/M in hud.mobs)
-				if (M.s_active == src)
-					M.s_active = null
-		qdel(hud)
-		hud = null
+	attackby(obj/item/W, mob/user, params)
 		..()
+		if (istype(W, /obj/item/card/id))
+			var/obj/item/card/id/ID = W
+			src.registered = ID.registered
 
-	move_trigger(var/mob/M, kindof)
-		if (..())
-			for (var/obj/O in contents)
-				if (O.move_triggered)
-					O.move_trigger(M, kindof)
+	attack_self(mob/user)
+		attack_hand(user)
+		..()
 
 	emp_act()
 		if (src.contents.len)
@@ -62,26 +48,8 @@
 					I.emp_act()
 		return
 
-	proc/update_icon()
-		return
-
-	proc/make_my_stuff() // use this rather than overriding the container's New()
-		if (!islist(src.spawn_contents) || !src.spawn_contents.len)
-			return 0
-		var/total_amt = 0
-		for (var/thing in src.spawn_contents)
-			var/amt = 1
-			if (!ispath(thing))
-				continue
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			total_amt += amt
-			for (amt, amt>0, amt--)
-				new thing(src)
-		if (total_amt > slots)
-			logTheThing("debug", null, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
-		total_amt = null
-		return 1
+	/*proc/update_icon()
+		return*/
 
 	attack(mob/M as mob, mob/user as mob)
 		if (surgeryCheck(M, user))
@@ -95,74 +63,10 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 
-	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
 	dropped(mob/user as mob)
 		if (hud)
 			hud.update()
 		..()
-
-	proc/mousetrap_check(mob/user)
-		if (!ishuman(user) || user.stat)
-			return
-		for (var/obj/item/mousetrap/MT in src)
-			if (MT.armed)
-				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a mousetrap!</B></span>",\
-				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
-				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-				. = 1
-		for (var/obj/item/mine/M in src)
-			if (M.armed && M.used_up != 1)
-				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
-				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
-				M.triggered(user)
-				. = 1
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
@@ -217,53 +121,9 @@
 								M.triggered(usr)
 						hud.remove_item(I)
 
-	attack_hand(mob/user as mob)
-		if (!src.sneaky)
-			playsound(src.loc, "rustle", 50, 1, -2)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (H.limbs) // this check is probably dumb. BUT YOU NEVER KNOW
-					if ((src == H.l_hand && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)) || (src == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-						return
-			if (user.s_active)
-				user.detach_hud(user.s_active)
-				user.s_active = null
-			if (src.mousetrap_check(user))
-				return
-			user.s_active = src.hud
-			hud.update()
-			user.attach_hud(src.hud)
-			src.add_fingerprint(user)
-			animate_storage_rustle(src)
-		else
-			..()
-			for (var/mob/M in hud.mobs)
-				if (M != user)
-					M.detach_hud(hud)
-			hud.update()
-
 	attack_self(mob/user as mob)
 		..()
 		attack_hand(user)
-
-	proc/get_contents()
-		RETURN_TYPE(/list)
-		var/list/cont = src.contents.Copy()
-		for(var/atom/A in cont)
-			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
-				cont.Remove(A)
-		return cont
-
-	proc/add_contents(obj/item/I)
-		I.set_loc(src)
-
-	proc/get_all_contents()
-		var/list/L = list()
-		L += get_contents()
-		for (var/obj/item/storage/S in get_contents())
-			L += S.get_all_contents()
-		return L
 
 /obj/item/storage/box
 	name = "box"

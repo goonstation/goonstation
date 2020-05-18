@@ -1212,6 +1212,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\clothing\hats.dm"
 #include "code\obj\item\clothing\helmets.dm"
 #include "code\obj\item\clothing\injector_mask_belt.dm"
+#include "code\obj\item\clothing\lanyards.dm"
 #include "code\obj\item\clothing\masks.dm"
 #include "code\obj\item\clothing\nonhuman.dm"
 #include "code\obj\item\clothing\shoes.dm"

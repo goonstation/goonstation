@@ -293,5 +293,5 @@
 				|| (iscritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \
 				&& istype(target:wear_id, /obj/item/card/id/syndicate)) \
-				|| (target:wear_id && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \
+				|| (target:wear_id && (istype(target:wear_id, /obj/item/device/pda2) || istype(target:wear_id, /obj/item/clothing/lanyard)) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \
 				||  !istype(target.loc, /turf)))
