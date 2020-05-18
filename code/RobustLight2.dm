@@ -426,11 +426,6 @@ datum/light
 			for (var/turf/T in view(src.radius, middle))
 				if (T.opacity)
 					continue
-				/*
-				for (var/atom/A in T)
-					if (A.opacity)
-						continue outer
-				*/
 				if(T.opaque_atom_count > 0)
 					continue
 
