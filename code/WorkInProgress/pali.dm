@@ -149,8 +149,8 @@
 	var/bumped = 0
 	var/list/client/visible_to = list()
 	bumped = 0
-	layer = 0
-	plane = PLANE_HUD - 1
+	layer = HUD_LAYER_UNDER_1
+	plane = PLANE_HUD
 	maptext_x = -64
 	maptext_y = 28
 	maptext_width = 160
