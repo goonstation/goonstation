@@ -276,7 +276,7 @@ var/datum/score_tracker/score_tracker
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
 		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
-		if (islist(pets_escaped))		//The reason I don't just use the pets_escaped list is because that list will send the info to goonhub, and I don't wanna send the bicons too.
+		if (islist(pets_escaped) && pets_escaped.len)		//The reason I don't just use the pets_escaped list is because that list will send the info to goonhub, and I don't wanna send the bicons too.
 			var/list/who_escaped = list()
 			for (var/atom/A in pets_escaped)
 				who_escaped += "[A.name] [bicon(A)]"
