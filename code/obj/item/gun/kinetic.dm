@@ -456,7 +456,7 @@
 	caliber = 0.72
 	max_ammo_capacity = 8
 	auto_eject = 1
-	can_dual_wield = 0
+	can_dual_wield = 1
 
 	New()
 		if(prob(10))
