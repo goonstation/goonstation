@@ -3004,6 +3004,8 @@ var/global/noir = 0
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
 						job_controls.job_config()
+					if("respawn_panel")
+						src.s_respawn()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
@@ -3083,7 +3085,7 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("s_rez")
-			if (src.level >= LEVEL_SHITGUY)
+			if (src.level >= LEVEL_PA)
 				switch(href_list["type"])
 					if("spawn_syndies")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
@@ -3103,7 +3105,7 @@ var/global/noir = 0
 
 					if("spawn_job")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
 						if(!job) return
 						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
@@ -3562,6 +3564,7 @@ var/global/noir = 0
 	dat += {"<hr><div class='optionGroup' style='border-color:#FF6961'><b class='title' style='background:#FF6961'>Admin Tools</b>
 				<A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Respawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>

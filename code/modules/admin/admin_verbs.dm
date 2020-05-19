@@ -221,6 +221,7 @@ var/list/admin_verbs = list(
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
+		/client/proc/rspawn_panel,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -262,7 +263,6 @@ var/list/admin_verbs = list(
 		// LEVEL_SHITGUY, shit person
 		/datum/admins/proc/togglesoundwaiting,
 		/datum/admins/proc/pixelexplosion,
-		/client/proc/rspawn_panel,
 		/proc/mod_color,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,

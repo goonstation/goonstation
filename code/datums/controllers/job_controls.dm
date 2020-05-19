@@ -3,6 +3,7 @@ var/datum/job_controller/job_controls
 /datum/job_controller/
 	var/list/staple_jobs = list()
 	var/list/special_jobs = list()
+	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/job_creator = null
 
@@ -144,6 +145,7 @@ var/datum/job_controller/job_controls
 				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
 
 		dat += "<BR>"
+		dat += "<A href='?src=\ref[src];CreateJob=1;Hidden=1'><b>Create Job but make it hidden and only available in the respawn panel</b></A>"
 		dat += "<A href='?src=\ref[src];CreateJob=1'><b>Create Job</b></A>"
 		dat += "<BR><BR>"
 
@@ -864,7 +866,10 @@ var/datum/job_controller/job_controls
 				return
 			else
 				var/datum/job/created/JOB = new /datum/job/created(src)
-				src.special_jobs += JOB
+				if(href_list["Hidden"])
+					src.hidden_jobs += JOB
+				else
+					src.special_jobs += JOB
 				wagesystem.jobs[JOB.name] = src.job_creator.wages
 
 				JOB.name = src.job_creator.name
