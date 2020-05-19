@@ -1,5 +1,10 @@
 
 (t)tue may 19 20
+(u)Gannets
+(p)746
+(e)⚖🎨|balance, sprites
+(*)New sprites for many nuclear operative class weapons.
+(*)Nuclear operative grenade launcher is now two-handed.
 (u)Keiya
 (p)749
 (e)|
