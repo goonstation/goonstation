@@ -1,5 +1,9 @@
 
 (t)tue may 19 20
+(u)Keiya
+(p)749
+(e)|
+(*)Compost and high-capacity water tanks can now be bolted down or released with a screwdriver or wrench.
 (u)Sovexe
 (p)748
 (e)🐛|bug
