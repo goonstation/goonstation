@@ -67,13 +67,13 @@
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 
 		SPAWN_DBG(0)
-			if (recieves_implant && ispath(recieves_implant) && ishuman(M))
+			if (recieves_implant && ispath(recieves_implant))
 				var/mob/living/carbon/human/H = M
-				var/obj/item/implant/I = new recieves_implant(H)
+				var/obj/item/implant/I = new recieves_implant(M)
 				I.implanted = 1
-				H.implant.Add(I)
-				I.implanted(H)
-				if (receives_disk)
+				if(ishuman(M)) H.implant.Add(I)
+				I.implanted(M)
+				if (receives_disk && ishuman(M))
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
 						if (D)
