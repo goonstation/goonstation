@@ -102,6 +102,7 @@ var/datum/job_controller/job_controls
 		dat += "<A href='?src=\ref[src];EditLimit=1'>Job Limit:</A> [src.job_creator.limit]<br>"
 		dat += "<A href='?src=\ref[src];ChangeName=1'>Can Change Name on Spawn:</A> [src.job_creator.change_name_on_spawn ? "Yes":"No"]<br>"
 		dat += "<A href='?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location ? locate(src.job_creator.spawn_x,src.job_creator.spawn_y,src.job_creator.spawn_z) : "Default"]<br>"
+		dat += "<A href='?src=\ref[src];SpawnId=1'>Spawns with ID:</A> [src.job_creator.spawn_id ? "Yes" : "No"]<br>"
 		dat += "<A href='?src=\ref[src];EditObjective=1'>Custom Objective:</A> [src.job_creator.objective][src.job_creator.objective ? (src.job_creator.spawn_miscreant ? " (Miscreant)" : " (Crew Objective)") : ""]<br>"
 		dat += "<A href='?src=\ref[src];ToggleAnnounce=1'>Head of Staff-style Announcement:</A> [src.job_creator.announce_on_join?"Yes":"No"]<br>"
 		dat += "<A href='?src=\ref[src];ToggleRadioAnnounce=1'>Radio Announcement:</A> [src.job_creator.radio_announcement?"Yes":"No"]<br>"
@@ -838,6 +839,10 @@ var/datum/job_controller/job_controls
 			src.job_creator.add_to_manifest = !src.job_creator.add_to_manifest
 			src.job_creator()
 
+		if(href_list["SpawnId"])
+			src.job_creator.spawn_id = !src.job_creator.spawn_id
+			src.job_creator()
+
 		if(href_list["ChangeName"])
 			if (src.job_creator.change_name_on_spawn == 0)
 				src.job_creator.change_name_on_spawn = 1
@@ -906,6 +911,7 @@ var/datum/job_controller/job_controls
 				JOB.recieves_implant = src.job_creator.recieves_implant
 				JOB.items_in_backpack = src.job_creator.items_in_backpack
 				JOB.items_in_belt = src.job_creator.items_in_belt
+				JOB.spawn_id = src.job_creator.spawn_id
 				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
 				logTheThing("admin", usr, null, "created special job [JOB.name]")
 				logTheThing("diary", usr, null, "created special job [JOB.name]", "admin")

@@ -31,6 +31,7 @@
 	var/slot_suit = null
 	var/slot_jump = null
 	var/slot_card = /obj/item/card/id
+	var/spawn_id = 1 // will override slot_card if 1
 	var/slot_glov = null
 	var/slot_foot = null
 	var/slot_back = /obj/item/storage/backpack
