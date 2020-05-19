@@ -234,7 +234,7 @@ MATERIAL
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
 		var/counter = 1
 		var/list/L = list(  )
-		if (src.material && src.material.material_flags & MATERIAL_METAL)
+		if (src?.material.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				L["retable"] = "Reinforced Table Parts (2 Sheets)"
 				L["remetal"] = "Remove Reinforcement"
@@ -255,11 +255,13 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
-		if (src.material && src.material.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
+		if (src?.material.mat_id == "cardboard")
+			L["c_box"] = "Cardboard Box (2 Sheets)"
 
 		for(var/t in L)
 			counter++
@@ -403,6 +405,15 @@ MATERIAL
 					a_icon = 'icons/obj/large_storage.dmi'
 					a_icon_state = "closed"
 					a_name = "a closet"
+
+				if("c_box")
+					if (!amount_check(2,usr)) return
+					a_type = /obj/item/clothing/suit/cardboard_box
+					a_amount = 1
+					a_cost = 2
+					a_icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
+					a_icon_state = "c_box"
+					a_name = "a cardboard box"
 
 				if("pipef")
 					if (!amount_check(3,usr)) return

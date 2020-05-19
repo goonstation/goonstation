@@ -71,8 +71,8 @@
 
 	New()
 		..()
-		light = new /datum/light/point
-		light.set_brightness(1)
+		light = new /datum/light/line
+		light.set_brightness(4.5)
 		light.set_height(1.8)
 		light.set_color(0.9, 0.9, 1)
 		light.attach(src)
@@ -301,8 +301,8 @@
 
 	New()
 		..()
-		light = new /datum/light/point
-		light.set_brightness(1)
+		light = new /datum/light/line
+		light.set_brightness(4.5)
 		light.set_height(1.8)
 		light.set_color(1, 1, 0.9)
 		light.attach(src)

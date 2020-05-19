@@ -110,7 +110,7 @@
 
 /mob/living/carbon/human/Life(datum/controller/process/mobs/parent)
 	set invisibility = 0
-	if (..(parent))
+	if (..())
 		return 1
 
 	if (farty_party)
@@ -119,15 +119,10 @@
 	if (src.transforming)
 		return
 
-	if (!bioHolder)
-		bioHolder = new/datum/bioHolder(src)
-
 	var/life_time_passed = max(tick_spacing, world.timeofday - last_life_tick)
 
-	parent.setLastTask("update_item_abilities", src)
 	update_item_abilities()
 
-	parent.setLastTask("update_objectives", src)
 	update_objectives()
 
 	// Jewel's attempted fix for: null.return_air()
@@ -139,26 +134,24 @@
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 
-			parent.setLastTask("handle_material_triggers", src)
-
 			if(src.no_gravity)
 				src.no_gravity = 0
 				animate(src, transform = matrix(), time = 1)
 
 			for (var/obj/item/I in src)
-				if (I.no_gravity) src.no_gravity = 1
-				if (!I.material) continue
+				if (I.no_gravity)
+					src.no_gravity = 1
+				if (!I.material)
+					continue
 				I.material.triggerOnLife(src, I)
 
 			if(src.no_gravity)
 				animate_levitate(src, -1, 10, 1)
 
 			//Chemicals in the body
-			parent.setLastTask("handle_chemicals_in_body", src)
 			handle_chemicals_in_body()
 
 			//Mutations and radiation
-			parent.setLastTask("handle_mutations_and_radiation", src)
 			handle_mutations_and_radiation()
 
 			//Attaching a limb that didn't originally belong to you can do stuff
@@ -180,13 +173,12 @@
 					if(D.original_holder && src != D.original_holder)
 						D.foreign_limb_effect()
 
-			parent.setLastTask("breath checks", src)
 			//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 			if (manualbreathing)
 				breathtimer++
 				switch(breathtimer)
 					if (0 to 15)
-						breathe()
+						breathe(environment)
 					if (34)
 						boutput(src, "<span class='alert'>You need to breathe!</span>")
 					if (35 to 51)
@@ -204,15 +196,13 @@
 						hud.update_oxy_indicator(1)
 						take_oxygen_deprivation(breathtimer/6)
 			else // plain old automatic breathing
-				breathe()
+				breathe(environment)
 
 			if (istype(loc, /obj/))
-				parent.setLastTask("handle_internal_lifeform", src)
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		else if (isdead(src))
-			parent.setLastTask("handle_decomposition", src)
+		else
 			handle_decomposition()
 
 		//Apparently, the person who wrote this code designed it so that
@@ -221,29 +211,21 @@
 		//to find it.
 		src.blinded = null
 
-		parent.setLastTask("handle_mutantrace_life", src)
-
-
-
 		if (src.mutantrace)
 			var/mutant_time_passed = max(tick_spacing, world.timeofday - last_mutantrace_process)
 			src.mutantrace.onLife(mult = (mutant_time_passed / tick_spacing))
 		last_mutantrace_process = world.timeofday
 
 		//Disease Check
-		parent.setLastTask("handle_virus_updates", src)
 		handle_virus_updates()
 
 		//Handle temperature/pressure differences between body and environment
-		parent.setLastTask("handle_environment", src)
 		handle_environment(environment)
 
 		//stuff in the stomach
-		parent.setLastTask("handle_stomach", src)
 		handle_stomach()
 
 		//Disabilities
-		parent.setLastTask("handle_disabilities", src)
 		handle_disabilities(mult = (life_time_passed / tick_spacing))
 
 	handle_burning()
@@ -251,53 +233,40 @@
 	handle_skinstuff((life_time_passed / tick_spacing))
 	//Status updates, death etc.
 	clamp_values()
-	parent.setLastTask("handle_regular_status_updates", src)
 	handle_regular_status_updates(parent,mult = (life_time_passed / tick_spacing))
 
-	parent.setLastTask("handle_stuns_lying", src)
 	handle_stuns_lying(parent)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
 
 		var/blood_time_passed = min(max(tick_spacing, world.timeofday - last_blood_process), cap_tick_spacing)
 
-		parent.setLastTask("handle_blood", src)
 		handle_blood(mult = (blood_time_passed / tick_spacing))
 
-		parent.setLastTask("handle_blood_pressure", src)
 		handle_blood_pressure(mult = (blood_time_passed / tick_spacing))
 
 		last_blood_process = world.timeofday
 
 		//Gonna use blood time for organs, why not?
-		parent.setLastTask("handle_organs", src)
 		handle_organs(mult = (life_time_passed / tick_spacing))
 
-		parent.setLastTask("sims", src)
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			sims.Life()
 
 		if (prob(1) && prob(5))
-			parent.setLastTask("handle_random_emotes", src)
 			handle_random_emotes()
 
-	parent.setLastTask("handle pathogens", src)
 	handle_pathogens()
 
 	if (client)
-		parent.setLastTask("handle_regular_hud_updates", src)
 		handle_regular_hud_updates()
-		parent.setLastTask("handle_regular_sight_updates", src)
 		handle_regular_sight_updates()
-		parent.setLastTask("handle_blindness_overlays", src)
 		handle_blindness_overlays()
 
 	//Being buckled to a chair or bed
-	parent.setLastTask("check_if_buckled", src)
 	check_if_buckled()
 
 	// Yup.
-	parent.setLastTask("update_canmove", src)
 	update_canmove()
 
 	clamp_values()
@@ -403,12 +372,10 @@
 			O.onLife(src)
 
 	// Icons
-	parent.setLastTask("update_icons", src)
 	update_icons_if_needed()
 
 	if (src.client) //ov1
 		// overlays
-		parent.setLastTask("update_screen_overlays", src)
 		src.updateOverlaysClient(src.client)
 		src.antagonist_overlay_refresh(0, 0)
 
@@ -418,10 +385,10 @@
 				src.updateOverlaysClient(x.client)
 
 	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-		parent.setLastTask("obj/item/grab.process() for [G]")
 		G.process((life_time_passed / tick_spacing))
 
-	if (!can_act(M=src,include_cuffs=0)) actions.interrupt(src, INTERRUPT_STUNNED)
+	if (!can_act(M=src,include_cuffs=0))
+		actions.interrupt(src, INTERRUPT_STUNNED)
 
 
 	//rev mutiny
@@ -487,9 +454,9 @@
 
 /mob/living/carbon/human
 	proc/clamp_values()
-		sleeping = max(min(sleeping, 20), 0)
-		stuttering = max(stuttering, 0)
-		losebreath = max(min(losebreath,25),0) // stop going up into the thousands, goddamn
+		sleeping = clamp(sleeping, 0, 20)
+		stuttering = clamp(stuttering, 0, 50)
+		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
 //		bleeding = max(min(bleeding, 10),0)
 //		blood_volume = max(blood_volume, 0)
 
@@ -678,7 +645,7 @@
 			SPAWN_DBG(1 SECOND)
 				new /obj/bomberman(get_turf(src))
 
-	proc/breathe()
+	proc/breathe(datum/gas_mixture/environment)
 		if (!loc)
 			return
 
@@ -709,11 +676,14 @@
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
 						F.just_do_the_apply_thing(src, hasmask = 1)
 
+		else if (istype(loc, /mob/living/object))
+			return // no breathing inside possessed objects
+		else if (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			return
+		//if (istype(loc, /obj/machinery/clonepod)) return
+
 		if (src.reagents)
 			if (src.reagents.has_reagent("lexorin")) return
-		if (istype(loc, /mob/living/object)) return // no breathing inside possessed objects
-		if (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		var/breath_time_passed = min(max(tick_spacing, world.timeofday - last_breath_process), cap_tick_spacing)
 																								//cutoff at max (dont wanna dael a shitton of breath dmaage all at once even in extreme lag)
@@ -724,7 +694,7 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (src.is_changeling() || (src.bioHolder && src.bioHolder.HasEffect("breathless") || (src.mutantrace && !src.mutantrace.needs_oxy)))
+		if (ischangeling(src) || (src.bioHolder && src.bioHolder.HasEffect("breathless") || (src.mutantrace && !src.mutantrace.needs_oxy)))
 			if (src.losebreath)
 				src.losebreath = 0
 			if (src.get_oxygen_deprivation())
@@ -737,7 +707,6 @@
 			if (prob(25) && losebreath > 0)
 				boutput(src, "<span class='alert'>You are drowning!</span>")
 
-		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath = null
 		// HACK NEED CHANGING LATER
 		//if (src.oxymax == 0 || (breathtimer > 15))
@@ -1307,22 +1276,21 @@
 				TakeDamage("r_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
 
 	proc/handle_chemicals_in_body()
-		if (src.nodamage) return
+		if (src.nodamage)
+			return
 
 		if (reagents)
 
-			var/reagent_time_passed = min(max(tick_spacing, world.timeofday - last_reagent_process), cap_tick_spacing)
+			var/reagent_time_multiplier = clamp(world.timeofday - last_reagent_process, tick_spacing, cap_tick_spacing) / tick_spacing
 
-			//temp_reagents does some weird "approach body temp" shit... we should jjust call it multiple times so i dont have to rework all the math
-			for(var/x = 0, x < (reagent_time_passed), x+=tick_spacing)
-				reagents.temperature_reagents(src.bodytemperature-30, 100)
+			reagents.temperature_reagents(src.bodytemperature, 100, 35/reagent_time_multiplier, 15*reagent_time_multiplier)
 
 			if (blood_system && reagents.get_reagent("blood"))
-				var/blood2absorb = min(src.blood_absorption_rate, src.reagents.get_reagent_amount("blood")) * (reagent_time_passed / tick_spacing)
+				var/blood2absorb = min(src.blood_absorption_rate, src.reagents.get_reagent_amount("blood")) * reagent_time_multiplier
 				reagents.remove_reagent("blood", blood2absorb)
 				src.blood_volume += blood2absorb
 			if (metabolizes)
-				reagents.metabolize(src, multiplier = (reagent_time_passed / tick_spacing))
+				reagents.metabolize(src, multiplier = reagent_time_multiplier)
 
 		src.last_reagent_process = world.timeofday
 
@@ -1334,12 +1302,9 @@
 
 		src.updatehealth()
 
-		return //TODO: DEFERRED
-
 	proc/handle_blood_pressure(var/mult = 1)
 		if (!blood_system)
 			return
-		src.ensure_bp_list()
 		// very low (90/60 or lower) (<375u)
 		// low (100/65) (<415u)
 		// normal (120/80) (500u)
@@ -1377,7 +1342,7 @@
 		src.blood_pressure["total"] = current_blood_amt
 		src.blood_pressure["status"] = (current_blood_amt < 415) ? "HYPOTENSIVE" : (current_blood_amt > 584) ? "HYPERTENSIVE" : "NORMAL"
 
-		if (src.is_changeling())
+		if (ischangeling(src))
 			return
 
 		//special case
@@ -1584,23 +1549,24 @@
 		oH.handle_organs(mult)
 
 
-		if (!oH.skull && !src.nodamage) // look okay it's close enough to an organ and there's no other place for it right now shut up
-			if (oH.head)
+		if (!oH.skull) // look okay it's close enough to an organ and there's no other place for it right now shut up
+			if (!src.nodamage && oH.head)
 				src.death()
 				src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
 				"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
 
 		//Wire note: Fix for Cannot read null.loc
-		if (oH.skull && oH.skull.loc != src)
+		else if (oH.skull.loc != src)
 			oH.skull = null
 
-		if (!oH.brain && !src.nodamage)
-			src.death()
-		else if (oH.brain && oH.brain.loc != src)
+		if (!oH.brain)
+			if (!src.nodamage)
+				src.death()
+		else if (oH.brain.loc != src)
 			oH.brain = null
 
 		if (!oH.heart && !src.nodamage)
-			if (!src.is_changeling())
+			if (!ischangeling(src))
 				if (src.get_oxygen_deprivation())
 					src.take_brain_damage(3)
 				else if (prob(10))
@@ -1665,41 +1631,34 @@
 		stamina_max = max((STAMINA_MAX + src.get_stam_mod_max()), 0)
 		stamina = min(stamina, stamina_max)
 
-		parent.setLastTask("status_updates implants organs and augmentations check", src)
 		for (var/obj/item/implant/I in src.implant)
 			I.on_life(mult)
 
-		//parent.setLastTask("status_updates max value calcs", src)
-
-		parent.setLastTask("status_updates sleep and paralysis calcs", src)
-		if (src.hasStatus("resting") && src.sleeping) src.sleeping = 4
-
-		if ((sleeping && !last_sleep) || (last_sleep && !sleeping))
-			last_sleep = sleeping
-			if (sleeping)
-				UpdateOverlays(sleep_bubble, "sleep_bubble")
-			else
-				UpdateOverlays(null, "sleep_bubble")
-
 		if (src.sleeping)
+			if (src.hasStatus("resting"))
+				src.sleeping = 4
+			else
+				src.sleeping--
 			src.changeStatus("paralysis", 4 SECONDS * mult)
 			if (prob(10) && (health > 0))
 				emote("snore")
-			if (!src.hasStatus("resting")) src.sleeping--
-
-		parent.setLastTask("status_updates health calcs", src)
+			if (!last_sleep) // we are asleep but weren't previously
+				last_sleep = 1
+				UpdateOverlays(sleep_bubble, "sleep_bubble")
+		else
+			if (last_sleep) // we were previously asleep but aren't anymore
+				last_sleep = 0
+				UpdateOverlays(null, "sleep_bubble")
 
 		if (prob(50) && src.hasStatus("disorient"))
 			//src.drop_item()
 			src.emote("twitch")
 
-		var/is_chg = is_changeling()
+		var/is_chg = ischangeling(src)
 		//if (src.brain_op_stage == 4.0) // handled above in handle_organs() now
 			//death()
 		if (src.get_brain_damage() >= 120 || death_health <= -500) //-200) a shitty test here // let's lower the weight of oxy
-			if (!is_chg)
-				death()
-			else if (src.suiciding)
+			if (!is_chg || src.suiciding)
 				death()
 
 		if (src.get_brain_damage() >= 100) // braindeath
@@ -1775,24 +1734,22 @@
 						boutput(src, "<span class='alert'><b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b></span>")
 						src.changeStatus("weakened", 3 SECONDS)
 
-		parent.setLastTask("status_updates blindness checks", src)
-
 		//todo : clothing blindles flags for less istypeing
 		if (getStatusDuration("blinded"))
 			src.blinded = 1
 
-		if (istype(src.glasses, /obj/item/clothing/glasses/))
+		else if (istype(src.glasses, /obj/item/clothing/glasses/))
 			var/obj/item/clothing/glasses/G = src.glasses
 			if (G.block_vision)
 				src.blinded = 1
 
-		if (istype(src.head, /obj/item/clothing/head))
+		else if (istype(src.head, /obj/item/clothing/head))
 			var/obj/item/clothing/head/H = src.head
 			if (H.block_vision)
 				src.blinded = 1
 
 		//A ghost costume without eyeholes is a bad idea.
-		if (istype(src.wear_suit, /obj/item/clothing/suit/bedsheet))
+		else if (istype(src.wear_suit, /obj/item/clothing/suit/bedsheet))
 			var/obj/item/clothing/suit/bedsheet/B = src.wear_suit
 			if (!B.eyeholes && !B.cape)
 				src.blinded = 1
@@ -1835,11 +1792,8 @@
 			src.take_eye_damage(-1, 1)
 			src.blinded = 1
 
-		// drsingh :wtc: why was there a runtime error about comparing "" to 50 here? varedit or something?
-		// welp thisll fix it
-		parent.setLastTask("status_updates disability checks", src)
-		src.stuttering = isnum(src.stuttering) ? min(src.stuttering, 50) : 0
-		if (src.stuttering) src.stuttering--
+		if (src.stuttering)
+			src.stuttering--
 
 		if (src.get_ear_damage(1)) // Temporary deafness.
 			src.take_ear_damage(-1, 1)
@@ -1850,12 +1804,10 @@
 		if (src.get_eye_blurry())
 			src.change_eye_blurry(-1)
 
-		if (src.druggy > 0)
-			src.druggy--
-			src.druggy = max(0, src.druggy)
+		if (src.druggy)
+			src.druggy = max(src.druggy-1, 0)
 
 		if (src.nodamage)
-			parent.setLastTask("status_updates nodamage reset", src)
 			src.HealDamage("All", 10000, 10000)
 			src.take_toxin_damage(-5000)
 			src.take_oxygen_deprivation(-5000)
@@ -1874,7 +1826,6 @@
 		return 1
 
 	proc/handle_stuns_lying(datum/controller/process/mobs/parent)
-		parent.setLastTask("status_updates lying/standing checks")
 		var/lying_old = src.lying
 		var/cant_lie = (src.limbs && istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, src.loc) && !locate(/obj/machinery/optable, src.loc))
 
@@ -1887,7 +1838,6 @@
 
 		if (!isdead(src)) //Alive.
 			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.hasStatus("resting")) //Stunned etc.
-				parent.setLastTask("status_updates lying/standing checks stun calcs")
 				var/setStat = src.stat
 				var/oldStat = src.stat
 				if (src.hasStatus("stunned"))
@@ -1899,15 +1849,13 @@
 					if (!cant_lie) src.lying = 1
 					setStat = 1
 				if (isalive(src) && setStat == 1)
-					parent.setLastTask("status_updates lying/standing checks last gasp")
-					sleep(0)
-					if (src && src.mind) src.lastgasp() // calling lastgasp() here because we just got knocked out
+					if (src && src.mind)
+						src.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
 					src.lying = 1
 
 				src.stat = setStat
 
-				parent.setLastTask("status_updates lying/standing checks item dropping")
 				var/h = src.hand
 				src.hand = 0
 				drop_item()
@@ -1917,7 +1865,6 @@
 				if (src.juggling())
 					src.drop_juggle()
 
-				parent.setLastTask("status_updates lying/standing checks recovery checks")
 				if (world.time - last_recovering_msg >= 60 || last_recovering_msg == 0)
 					if (prob(10))
 						last_recovering_msg = world.time
@@ -1935,24 +1882,19 @@
 							src.HealDamage("All", 0, 0, 0.2) ///adjsfkaljdsklf;ajs
 
 				else if ((oldStat == 1) && (!getStatusDuration("paralysis") && !getStatusDuration("stunned") && !getStatusDuration("weakened") && !changeling_fakedeath))
-					parent.setLastTask("status updates lying/standing checks wakeup ogg")
 					src << sound('sound/misc/molly_revived.ogg', volume=50)
 					setalive(src)
 
 			else	//Not stunned.
-				if (must_lie) src.lying = 1
-				else src.lying = 0
+				src.lying = must_lie ? 1 : 0
 				setalive(src)
 
 		else //Dead.
-			//if ((src.reagents && src.reagents.has_reagent("montaguone_extra")) || cant_lie) src.lying = 0
-			if (cant_lie) src.lying = 0
-			else src.lying = 1
+			src.lying = cant_lie ? 0 : 1
 			src.blinded = 1
 			setdead(src)
 
 		if (src.lying != lying_old)
-			parent.setLastTask("status_updates lying/standing checks update clothing")
 			update_lying()
 			src.set_density(!src.lying)
 
@@ -1963,7 +1905,7 @@
 		if (src.buckled)
 			if (src.buckled == src.loc)
 				src.lying = 1
-			if (istype(src.buckled, /obj/stool/bed))
+			else if (istype(src.buckled, /obj/stool/bed))
 				src.lying = 1
 			else
 				src.lying = 0

@@ -181,7 +181,7 @@
 				if ( A == src ) continue
 				if (src && src.reagents) // Erik: fix for cannot execute null.grenade effects()
 					src.reagents.grenade_effects(src, A)
-					src.reagents.reaction(A, 1, 10)
+					src.reagents.reaction(A, 1, 10, 0)
 
 		invisibility = 100 //Why am i doing this?
 		if (src.master) src.master.invisibility = 100
@@ -412,9 +412,21 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		B1.reagents.add_reagent("voltagen", 40)
-		beakers += B1
+		var/obj/item/reagent_containers/glass/B2 = new(src)
+		var/obj/item/reagent_containers/glass/B3 = new(src)
 
+		B1.reagents.add_reagent("voltagen", 25)
+		B1.reagents.add_reagent("sugar",25)
+
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
+
+		B3.reagents.add_reagent("voltagen", 25) //do a zap in addition to the smoke.
+
+		beakers += B1
+		beakers += B2
+		beakers += B3
+		
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
 	desc = "An non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."

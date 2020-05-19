@@ -106,7 +106,7 @@
 	New()
 		..()
 		if (!use_simple_light)
-			light = new /datum/light/point
+			light = new /datum/light/line
 			light.set_brightness(lumlevel)
 			light.set_color(1, 1, 1)
 			src.lensflare = image(src.flashlight_icon, src.flashlight_icon_state)
@@ -197,7 +197,7 @@
 /obj/item/device/pda_module/flashlight/dan
 	name = "Deluxe Dan's Fancy Flashlight Module"
 	desc = "What a name, what an experience."
-	lumlevel = 1.2
+	lumlevel = 3.5
 
 	toggle_light()
 		..()
@@ -206,7 +206,7 @@
 
 /obj/item/device/pda_module/flashlight/high_power
 	name = "high-power flashlight module"
-	lumlevel = 1
+	lumlevel = 3
 	flashlight_icon = 'icons/obj/items/pda.dmi'
 	flashlight_icon_state = "flashlight-2"
 	use_simple_light = 0

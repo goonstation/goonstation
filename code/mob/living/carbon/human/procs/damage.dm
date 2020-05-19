@@ -56,8 +56,7 @@
 	var/stun = 0 //HEY this doesnt actually stun. its the number to reduce stamina. gosh.
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		if (P.proj_data.ks_ratio > 0 || (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") )) //only if ks_ratio exceeds 0. we already make stuns and stamina apply in proj_data.on_hit. I dont wanna apply both this effect AND that one
-			stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
+		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 
 	var/armor_value_bullet = 1
 
@@ -68,7 +67,7 @@
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/armor_value_bullet) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/armor_value_bullet, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (armor_value_bullet > 1)
@@ -180,8 +179,8 @@
 
 			if (D_ENERGY)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/armor_value_bullet) * 30, 125)) //thanks to the odd scaling i have to cap this.
-					src.stamina_stun()
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1-P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = min(stun,  80), remove_stamina_below_zero = 0)
+					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 				if (isalive(src)) lastgasp()
 

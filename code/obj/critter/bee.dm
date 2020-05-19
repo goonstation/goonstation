@@ -62,6 +62,7 @@
 
 	var/shorn = 0
 	var/shorn_time = 0
+	var/shorn_item = null
 
 	var/lastattacker
 
@@ -634,6 +635,7 @@
 		cant_take_hat = 1
 		generic = 0
 		honey_color = rgb(0, 255, 0)
+		shorn_item = /obj/item/clothing/mask/beard
 
 	reindeer
 		desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types. It seems to have antlers?"
@@ -1027,15 +1029,15 @@
 		if (issnippingtool(W))
 			if(shorn)
 				boutput(user, "<b>[src]</b> has barely any beefuzz left. Stop it.")
-				return
 			else
 				shorn = 1
 				shorn_time = world.time
 				user.visible_message("<b>[user]</b> shears \the [src]!","You shear \the [src].")
 				var/obj/item/material_piece/cloth/beewool/BW = unpool(/obj/item/material_piece/cloth/beewool)
 				BW.set_loc(src.loc)
-				return
-
+				if (shorn_item)
+					new shorn_item(src.loc)
+			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
 				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
@@ -1699,6 +1701,11 @@
 			src.icon_state = "petbee_carton[ourEgg != null]"
 		else
 			src.icon_state = "petbee_carton"
+
+/obj/item/clothing/mask/beard
+	name = "bee beard"
+	desc = "A beard. From a bee."
+	icon_state = "beard"
 
 /obj/item/reagent_containers/food/snacks/beefood
 	name = "bee kibble"

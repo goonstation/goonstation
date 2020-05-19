@@ -1559,16 +1559,6 @@ datum
 			pathogen_nutrition = list("dna_mutagen")
 
 			var/tmp/progress_timer = 1
-/*
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/myvol = volume
-
-				if (exposed_temperature > 50 && !holder.has_reagent("stabiliser") || exposed_temperature > 300)
-					volume = 0
-					holder.add_reagent("mutagen", myvol, null)
-
-				return
-*/
 
 			pooled()
 				..()
@@ -1588,7 +1578,7 @@ datum
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (prob(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
-					else if (progress_timer > 10)
+					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						M.UpdateName()
 

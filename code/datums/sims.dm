@@ -271,6 +271,7 @@
 			if (value < 15 && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
 					holder.owner.bioHolder.AddEffect("sims_stinky")
+			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
 					if (H != holder.owner && prob(30 - value) * 2)
@@ -282,6 +283,7 @@
 				holder.owner.visible_message("<span class='alert'>[holder.owner] throws up all over \himself. Gross!</span>")
 				holder.owner.vomit()
 				showOwner("<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
+			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1))
 				var/datum/pathogen/P = unpool(/datum/pathogen)
@@ -657,8 +659,8 @@ var/global/datum/simsControl/simsController = new()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
 			addMotive(/datum/simsMotive/hygiene)
-			addMotive(/datum/simsMotive/bladder)
-			addMotive(/datum/simsMotive/energy)
+			//addMotive(/datum/simsMotive/bladder)
+			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
 
 	New(var/mob/living/L)

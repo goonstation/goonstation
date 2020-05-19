@@ -4,6 +4,7 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
+	var/add_to_manifest = 1
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
@@ -19,7 +20,8 @@
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
 	var/receives_badge = 0
-	var/announce_on_join = 0
+	var/announce_on_join = 0 // that's the head of staff announcement thing
+	var/radio_announcement = 1 // that's the latejoin announcement thing
 	var/list/alt_names = list()
 	var/slot_head = null
 	var/slot_mask = null

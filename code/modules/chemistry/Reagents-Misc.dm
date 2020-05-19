@@ -11,6 +11,7 @@ datum
 			fluid_b = 255
 			transparency = 128
 			volatility = 3
+			minimum_reaction_temperature = -INFINITY
 
 			// These figures are for original nitro explosions, new calculation is strictly linear <-- false by zewaka
 			// power = SQRT(10V)
@@ -150,6 +151,7 @@ datum
 			fluid_r = 128
 			fluid_g = 128
 			fluid_b = 128
+			minimum_reaction_temperature = -INFINITY
 
 			proc/pop(var/turf/T, var/amount=5)
 				playsound(T, 'sound/weapons/Gunshot.ogg', rand(1, min(amount*10, 50)), 1)
@@ -617,9 +619,6 @@ datum
 			transparency = 200
 			value = 3 // 1 1 1
 			viscosity = 0.14
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				return
 
 			reaction_turf(var/turf/target, var/volume)
 				src = null
@@ -1116,10 +1115,11 @@ datum
 			hygiene_value = -1.5
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.13
+			minimum_reaction_temperature = T0C + 200
 			var/min_req_fluid = 0.25 //at least 1/4 of the fluid needs to be oil for it to ignite
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > T0C + 200 && !src.reacting && (holder && !holder.has_reagent("chlorine"))) // need this to be higher to make propylene possible
+				if (!src.reacting && (holder && !holder.has_reagent("chlorine"))) // need this to be higher to make propylene possible
 					src.reacting = 1
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
@@ -2714,6 +2714,7 @@ datum
 			transparency = 230
 			overdose = 20
 			viscosity = 0.3
+			minimum_reaction_temperature = T0C+100
 			var/multiplier = 1
 			var/grenade_handled = 0
 			pooled()
@@ -2737,17 +2738,17 @@ datum
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				. = ..()
-				if (reacting) return
-				if (exposed_temperature > T0C + 100)
-					reacting = 1
-					var/count = 0
-					for (var/mob/living/L in oview(5, holder.my_atom))
-						count++
-					for (var/mob/living/L in oview(5, holder.my_atom))
-						arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+				if (reacting)
+					return
 
-					holder.del_reagent(id)
+				reacting = 1
+				var/count = 0
+				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
+					count++
+				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
+					arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+
+				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)
 
@@ -3071,19 +3072,19 @@ datum
 			id = "bloodc"
 			value = 3
 			hygiene_value = -4
+			minimum_reaction_temperature = T0C + 50
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > T0C + 50)
-					if (holder.my_atom)
-						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
-							boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
-					else
-						var/list/covered = holder.covered_turf()
-						for(var/turf/t in covered)
-							for (var/mob/O in AIviewers(t, null))
-								boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
-					holder.del_reagent(id)
-				return
+				if (holder.my_atom)
+					for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
+						boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
+				else
+					var/list/covered = holder.covered_turf()
+					for(var/turf/t in covered)
+						for (var/mob/O in AIviewers(t, null))
+							boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
+				holder.del_reagent(id)
+
 
 		vomit
 			name = "vomit"
@@ -3423,6 +3424,7 @@ datum
 			transparency = 225
 			reagent_state = LIQUID
 			depletion_rate = 1
+			minimum_reaction_temperature = -INFINITY
 
 
 
@@ -3475,7 +3477,6 @@ datum
 
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				..()
 				//TODO: if cold temperature, take up all the reagents in the holder into contents, calculate distribution amount based on volume
 				if( exposed_temperature < (T0C - 50) && !hardened)
 					// -50C, solidify polymer

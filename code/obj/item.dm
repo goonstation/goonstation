@@ -942,6 +942,8 @@
 
 	if (src.loc == user)
 		var/in_pocket = 0
+		if(issilicon(user)) //if it's a borg's shit, stop here
+			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
@@ -1166,7 +1168,6 @@
 
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.ensure_bp_list()
 		if (H.blood_pressure["total"] > 585)
 			msgs.visible_message_self("<span class='alert'><I>[user] gasps and wheezes from the exertion!</I></span>")
 			user.losebreath += rand(1,2)
@@ -1336,6 +1337,8 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
 /obj/item/proc/dropped(mob/user)
+	if (user)
+		src.dir = user.dir
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED

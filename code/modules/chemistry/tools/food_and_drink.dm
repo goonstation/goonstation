@@ -1136,7 +1136,8 @@
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
 
-		if ((H.sims && H.sims.getValue("Bladder") <= 65) || (!H.sims && H.urine >= 2))
+		var/bladder = H.sims?.getValue("Bladder")
+		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 			choices += "pee in it"
 		if (src.in_glass)
 			choices += "remove [src.in_glass]"
@@ -1157,7 +1158,8 @@
 		var/obj/item/eat_thing
 
 		if (selection == "pee in it")
-			if ((H.sims && H.sims.getValue("Bladder") <= 65) || (!H.sims && H.urine >= 2))
+			bladder = H.sims?.getValue("Bladder")
+			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
 				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)

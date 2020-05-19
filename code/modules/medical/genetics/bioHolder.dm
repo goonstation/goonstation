@@ -507,7 +507,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
 			newEffect.holder = src
-			newEffect.OnAdd()
+			if(owner)
+				newEffect.OnAdd()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)

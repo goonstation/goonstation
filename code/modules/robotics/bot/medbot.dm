@@ -5,7 +5,7 @@
 /obj/machinery/bot/medbot
 	name = "Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/obj/medbots.dmi'
+	icon = 'icons/obj/bots/medbots.dmi'
 	icon_state = "medibot"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -84,7 +84,7 @@
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon = 'icons/obj/medbots.dmi'
+	icon = 'icons/obj/bots/medbots.dmi'
 	icon_state = "medskin-firstaid"
 	item_state = "firstaid"
 	pixel_y = 4 // so we don't have to have two sets of the skin sprites, we're just gunna bump this up a bit
