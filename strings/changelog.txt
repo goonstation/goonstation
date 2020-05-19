@@ -1,4 +1,9 @@
 
+(t)tue may 19 20
+(u)Sovexe
+(p)748
+(e)🐛|bug
+(+)Fixed a bug that allowed DNA Reclaimer to wipe out surplus research materials
 (t)mon may 18 20
 (u)Tarmunora
 (p)664
