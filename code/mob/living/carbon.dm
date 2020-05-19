@@ -420,7 +420,7 @@
 									break
 						*/
 						var/atom/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0) src.throw_at(target, 12, 1, throw_type = THROW_CHAIRFLIP)
+						SPAWN_DBG(0) src.throw_at(target, 12, 1, throw_type = THROW_GUNIMPACT)
 					if (3) // superlube
 						src.pulling = null
 						src.changeStatus("weakened", 6 SECONDS)
