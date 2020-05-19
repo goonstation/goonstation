@@ -145,6 +145,10 @@ var/datum/job_controller/job_controls
 			if (src.job_creator.access.len > 1)
 				dat += " "
 				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
+				dat += ":<BR>"
+				for(var/X in src.job_creator.access)
+					dat += "[X], "
+				dat += "<BR>"
 
 		dat += "<BR>"
 		dat += "<A href='?src=\ref[src];CreateJob=1;Hidden=1'><b>Create Hidden Job (for admin respawning)</b></A><BR><BR>"
