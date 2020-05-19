@@ -3158,6 +3158,19 @@ var/global/noir = 0
 				href_list["target"] = "\ref[newM]"
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
+		if ("respawnas")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/client/C = M.client
+				if (!M) return
+				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+				var/datum/job/job = input(usr,"Select job to respawn [M] as:","Respawn As",null) as null|anything in jobs
+				if(!job) return
+				var/mob/new_player/newM = usr.client.respawn_target(M)
+				newM.AttemptLateSpawn(job, force=1)
+				href_list["target"] = "\ref[C.mob]"
+			else
+				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
 			if (src.level >= LEVEL_SA && alert("Are you sure you want to show this player the rules?", "PARENTAL CONTROL", "Sure thing!", "Not really.") == "Sure thing!")
 				var/mob/M = locate(href_list["target"])
