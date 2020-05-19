@@ -1,5 +1,29 @@
 
+(t)tue may 19 20
+(u)Gannets
+(p)746
+(e)⚖🎨|balance, sprites
+(*)New sprites for many nuclear operative class weapons.
+(*)Nuclear operative grenade launcher is now two-handed.
+(u)Keiya
+(p)749
+(e)|
+(*)Compost and high-capacity water tanks can now be bolted down or released with a screwdriver or wrench.
+(u)Sovexe
+(p)748
+(e)🐛|bug
+(+)Fixed a bug that allowed DNA Reclaimer to wipe out surplus research materials
+(t)mon may 18 20
+(u)Tarmunora
+(p)664
+(e)⚖|balance
+(+)Buffed taser shotgun
 (t)sun may 17 20
+(u)Erinexx
+(p)717
+(e)🔄🎨|rework, sprites
+(*)Resprited all non-artifact plants
+(*)Added unique sprites to several mutant plants
 (u)pali
 (+)AIs that buy a hat for spacebux should now start with that hat equipped
 (u)Flourish

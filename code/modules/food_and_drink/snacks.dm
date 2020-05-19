@@ -1794,7 +1794,7 @@
 /obj/item/reagent_containers/food/snacks/steak_h
 	name = "steak"
 	desc = "Made of people."
-	icon_state = "steak"
+	icon_state = "meat-grilled"
 	amount = 2
 	heal_amt = 3
 	var/hname = null
@@ -1807,7 +1807,7 @@
 /obj/item/reagent_containers/food/snacks/steak_m
 	name = "monkey steak"
 	desc = "You'll go bananas for it."
-	icon_state = "steak"
+	icon_state = "meat-grilled"
 	amount = 2
 	heal_amt = 3
 	food_color = "#999966"
@@ -1818,7 +1818,7 @@
 /obj/item/reagent_containers/food/snacks/steak_s
 	name = "synth-steak"
 	desc = "And they thought processed food was artificial..."
-	icon_state = "steak"
+	icon_state = "meat-plant-grilled"
 	amount = 2
 	heal_amt = 3
 	food_color = "#999966"

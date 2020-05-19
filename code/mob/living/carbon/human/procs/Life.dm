@@ -1643,11 +1643,11 @@
 			if (prob(10) && (health > 0))
 				emote("snore")
 			if (!last_sleep) // we are asleep but weren't previously
-				last_sleep = sleeping
+				last_sleep = 1
 				UpdateOverlays(sleep_bubble, "sleep_bubble")
 		else
 			if (last_sleep) // we were previously asleep but aren't anymore
-				last_sleep = sleeping
+				last_sleep = 0
 				UpdateOverlays(null, "sleep_bubble")
 
 		if (prob(50) && src.hasStatus("disorient"))

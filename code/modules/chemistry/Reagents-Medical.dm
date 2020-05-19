@@ -767,7 +767,7 @@ datum
 			overdose = 20
 			var/remove_buff = 0
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
-			stun_resist = 5
+			stun_resist = 10
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -1068,7 +1068,7 @@ datum
 			addiction_min = 10
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
-			stun_resist = 10
+			stun_resist = 15
 
 			pooled()
 				..()

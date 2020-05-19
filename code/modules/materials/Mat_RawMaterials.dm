@@ -211,7 +211,7 @@
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
-	desc = "Years of genetic engineering mean timber always comes in perfectly shaped cylindrical logs."
+	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
 	setup_material()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
