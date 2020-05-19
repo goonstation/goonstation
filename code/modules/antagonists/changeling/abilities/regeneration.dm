@@ -33,7 +33,7 @@
 				implants += I
 
 			H.in_fakedeath = 1
-			APPLY_MOB_PROPERTY(C, PROP_CANTMOVE, "fakedeath")
+			APPLY_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
 
 			C.lying = 1
 			C.canmove = 0
