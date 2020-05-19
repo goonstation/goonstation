@@ -2927,41 +2927,6 @@
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
 
-
-/mob/proc/apply_property(property, source, value = null, priority = null)
-	if (!source)
-		CRASH("Attempted to set priority without a source")
-	switch(property[1])
-		if ("i")
-			APPLY_MOB_PROPERTY_SIMPLE(src, property, source)
-		if ("p")
-			if (!value || !priority)
-				CRASH("Attempted to set priority property [property] without value or priority")
-			APPLY_MOB_PROPERTY_PRIORITY(src, property, source, value, priority)
-		if ("s")
-			if (!value)
-				CRASH("Attempted to set sum property [property] without a value")
-			APPLY_MOB_PROPERTY_SUM(src, property, source, value)
-		if ("m")
-			if (!value || !priority)
-				CRASH("Attempted to set max property [property] without value or priority")
-			APPLY_MOB_PROPERTY_MAX(src, property, source, value)
-		else
-			CRASH("Invalid mob property: [property]")
-
-/mob/proc/remove_property(property, source)
-	switch(property[1])
-		if ("i")
-			REMOVE_MOB_PROPERTY_SIMPLE(src, property, source)
-		if ("p")
-			REMOVE_MOB_PROPERTY_PRIORITY(src, property, source)
-		if ("s")
-			REMOVE_MOB_PROPERTY_SUM(src, property, source)
-		if ("m")
-			REMOVE_MOB_PROPERTY_MAX(src, property, source)
-		else
-			CRASH("Invalid mob property: [property]")
-
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK

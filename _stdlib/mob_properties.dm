@@ -12,14 +12,14 @@ If you only want to know whether a property exists, use:
 
 	HAS_MOB_PROPERTY(mob, property)
 
-To set the values of properties, helper procs exist on the mob type:
+To set the values of properties:
 
-	/mob/proc/apply_property(property, source, value = null, priority = null)
+	APPLY_MOB_PROPERTY(mob, property, source[, value[, priority]])
 
-	/mob/proc/remove_property(property, source)
+	value is REQUIRED for any property other than simple properties, omitting it will result in a compile error "incorrect number of macro arguments."
+	priority is likewise REQUIRED for priority properties.
 
-These work regardless of the type of property, as long as the property is properly prefixed (see property definitions below).
-
+	REMOVE_MOB_PROPERTY(mob, property, source)
 
 Behavior-dependent macros:
 
@@ -36,21 +36,21 @@ There work like flags, carrying no value. Their existence itself "is" the value.
 
 To set:
 
-	APPLY_MOB_PROPERTY_SIMPLE(mob, property, source)
+	APPLY_MOB_PROPERTY(mob, property, source)
 
 	for example:
 
 	/obj/item/example_stick/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_SIMPLE(user, PROP_EXAMPLE, src.type)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type)
 
 To remove:
 
-	REMOVE_MOB_PROPERTY_SIMPLE(mob, property, source)
+	REMOVE_MOB_PROPERTY(mob, property, source)
 
 	for example:
 
 	/obj/item/unexample_stick/attack_self(mob/user)
-		REMOVE_MOB_PROPERTY_SIMPLE(user, PROP_EXAMPLE, /obj/item/example_stick)
+		REMOVE_MOB_PROPERTY(user, PROP_EXAMPLE, /obj/item/example_stick)
 
 
 
@@ -60,26 +60,26 @@ The value of a sum property is the sum of applied values of the property from al
 
 To set:
 
-	APPLY_MOB_PROPERTY_SUM(mob, property, source, value)
+	APPLY_MOB_PROPERTY(mob, property, source, value)
 
 	for example:
 
 	/obj/item/example_stick_1/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_SUM(user, PROP_EXAMPLE, src.type, 1)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type, 1)
 
 	/obj/item/example_stick_2/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_SUM(user, PROP_EXAMPLE, src.type, 2)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type, 2)
 
 	Using example_stick_1 gives the user a PROP_EXAMPLE value of 1 if no value existed prior. Using example_stick_2 right after makes the value 3.
 
 To remove:
 
-	REMOVE_MOB_PROPERTY_SUM(mob, property, source)
+	REMOVE_MOB_PROPERTY(mob, property, source)
 
 	for example:
 
 	/obj/item/unexample_stick_1/attack_self(mob/user)
-		REMOVE_MOB_PROPERTY_SUM(user, PROP_EXAMPLE, /obj/item/example_stick_1)
+		REMOVE_MOB_PROPERTY(user, PROP_EXAMPLE, /obj/item/example_stick_1)
 
 
 
@@ -89,15 +89,15 @@ The value of a max property is the largest of the applied values on the property
 
 To set:
 
-	APPLY_MOB_PROPERTY_MAX(mob, property, source, value)
+	APPLY_MOB_PROPERTY(mob, property, source, value)
 
 	for example:
 
 	/obj/item/example_stick_1/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_MAX(user, PROP_EXAMPLE, src.type, 1)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type, 1)
 
 	/obj/item/example_stick_2/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_MAX(user, PROP_EXAMPLE, src.type, 2)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type, 2)
 
 	Using example_stick_1 gives the user a PROP_EXAMPLE value of 1 if no value existed prior,
 	or the existing value was smaller than 1.
@@ -105,12 +105,12 @@ To set:
 
 To remove:
 
-	REMOVE_MOB_PROPERTY_MAX(mob, property, source)
+	REMOVE_MOB_PROPERTY(mob, property, source)
 
 	for example:
 
 	/obj/item/unexample_stick_2/attack_self(mob/user)
-		REMOVE_MOB_PROPERTY_MAX(user, PROP_EXAMPLE, /obj/item/example_stick_2)
+		REMOVE_MOB_PROPERTY(user, PROP_EXAMPLE, /obj/item/example_stick_2)
 
 	Using unexample_stick_2 returns the value to 1, assuming both sticks have been applied.
 
@@ -122,15 +122,15 @@ The value of a priority property is the value with the largest priority
 
 To set:
 
-	APPLY_MOB_PROPERTY_MAX(mob, property, source, value, priority)
+	APPLY_MOB_PROPERTY(mob, property, source, value, priority)
 
 	for example:
 
 	/obj/item/example_stick_1/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_MAX(user, PROP_EXAMPLE, src.type, 1, 100)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type, 1, 100)
 
 	/obj/item/example_stick_2/attack_self(mob/user)
-		APPLY_MOB_PROPERTY_MAX(user, PROP_EXAMPLE, src.type, -300, 200)
+		APPLY_MOB_PROPERTY(user, PROP_EXAMPLE, src.type, -300, 200)
 
 	Using example_stick_1 gives the user a PROP_EXAMPLE value of 1 if no value existed prior,
 	or the existing value came from a priority smaller than 100.
@@ -151,22 +151,26 @@ To remove:
 
 */
 
+// Property defines
+//
+// These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
+
+/*  Macros used for testing, left here as examples:
+	#define PROP_TESTSIMPLE(x) x("test_simple", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+	#define PROP_TESTSUM(x) x("test_sum", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+	#define PROP_TESTMAX(x) x("test_max", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+	#define PROP_TESTPRIO(x) x("test_prio", APPLY_MOB_PROPERTY_PRIORITY, REMOVE_MOB_PROPERTY_PRIORITY)
+*/
+
+#define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+
+
+// In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1
 #define MOB_PROPERTY_SOURCES_LIST 2
 #define MOB_PROPERTY_PRIORITY_PRIO 1
 #define MOB_PROPERTY_PRIORITY_VALUE 2
 
-
-// Property defines
-//
-// Property strings must be prefixed with the following identifiers:
-//
-// Simple properties: i
-// Max properties: m
-// Sum properties: s
-// Priority properties: p
-
-#define PROP_CANTMOVE(x) x("i_cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define TRIPLE_GET_1ST(a, b, c) a
 #define TRIPLE_GET_2ND(a, b, c) b
 #define TRIPLE_GET_3RD(a, b, c) c
@@ -179,7 +183,7 @@ To remove:
 
 #define REMOVE_MOB_PROPERTY(target, property, source) TRIPLE_3RD(property)(target, TRIPLE_1ST(property), source)
 
-#define GET_MOB_PROPERTY(target, property) (target.mob_properties[property] ? target.mob_properties[TRIPLE_1ST(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
+#define GET_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? target.mob_properties[TRIPLE_1ST(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
 
 // sliiiiiiiightly faster if you don't care about the value
 #define HAS_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? TRUE : FALSE)
@@ -285,9 +289,9 @@ To remove:
 			if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] != _V) { \
 				var/_TO_APPLY_PRIO = -INFINITY; \
 				var/_TO_APPLY_VALUE; \
-				for (var/list/_K in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
-					var/list/_PRIOLIST = _L[property][MOB_PROPERTY_SOURCES_LIST][_K]; \
-					if (_PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO] > _TO_APPLY_PRIO) { \
+				for (var/_SOURCE in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
+					var/list/_PRIOLIST = _L[property][MOB_PROPERTY_SOURCES_LIST][_SOURCE]; \
+					if (_PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO] >= _TO_APPLY_PRIO) { \
 						_TO_APPLY_PRIO = _PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO]; \
 						_TO_APPLY_VALUE = _PRIOLIST[MOB_PROPERTY_PRIORITY_VALUE]; \
 					} \
@@ -311,9 +315,9 @@ To remove:
 			} else if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _S_V) { \
 				var/_TO_APPLY_PRIO = -INFINITY; \
 				var/_TO_APPLY_VALUE; \
-				for (var/list/_K in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
-					var/list/_PRIOLIST = _L[property][MOB_PROPERTY_SOURCES_LIST][_K]; \
-					if (_PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO] > _TO_APPLY_PRIO) { \
+				for (var/_SOURCE in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
+					var/list/_PRIOLIST = _L[property][MOB_PROPERTY_SOURCES_LIST][_SOURCE]; \
+					if (_PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO] >= _TO_APPLY_PRIO) { \
 						_TO_APPLY_PRIO = _PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO]; \
 						_TO_APPLY_VALUE = _PRIOLIST[MOB_PROPERTY_PRIORITY_VALUE]; \
 					} \
@@ -322,4 +326,3 @@ To remove:
 			} \
 		} \
 	} while (0)
-
