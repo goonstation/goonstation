@@ -79,7 +79,10 @@
 						if (D)
 							D.data["imp"] = "\ref[I]"
 
-			if (iscritter(M))
+			var/give_access_implant = iscritter(M)
+			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
+				give_access_implant = 1
+			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
 				I.uses = -1
