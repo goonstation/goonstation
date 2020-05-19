@@ -427,7 +427,7 @@
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0) src.throw_at(target, 30, 1, throw_type = THROW_CHAIRFLIP)
+						SPAWN_DBG(0) src.throw_at(target, 30, 1, throw_type = THROW_GUNIMPACT)
 						random_brute_damage(src, 10)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
