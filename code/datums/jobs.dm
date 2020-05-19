@@ -88,6 +88,11 @@
 				I.access.access = src.access.Copy()
 				I.uses = -1
 				I.set_loc(M)
+				I.implanted = 1
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.implant.Add(I)
+				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
 				M.loc = locate(spawn_x,spawn_y,spawn_z)
