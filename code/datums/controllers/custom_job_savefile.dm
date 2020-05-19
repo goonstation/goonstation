@@ -69,6 +69,7 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_add_to_manifest"] << src.job_creator.add_to_manifest
 	F["[profileNum]_radio_announcement"] << src.job_creator.radio_announcement
 	F["[profileNum]_spawn_id"] << src.job_creator.spawn_id
+	F["[profileNum]_starting_mutantrace"] << src.job_creator.starting_mutantrace
 
 	return 1
 
@@ -135,6 +136,7 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_add_to_manifest"] >> src.job_creator.add_to_manifest
 	F["[profileNum]_radio_announcement"] >> src.job_creator.radio_announcement
 	F["[profileNum]_spawn_id"] >> src.job_creator.spawn_id
+	F["[profileNum]_starting_mutantrace"] >> src.job_creator.starting_mutantrace
 
 
 

@@ -110,6 +110,7 @@ var/datum/job_controller/job_controls
 		dat += "<A href='?src=\ref[src];EditMob=1'>Mob Type:</A> [src.job_creator.mob_type]<br>"
 		dat += "<BR>"
 		if (ispath(src.job_creator.mob_type, /mob/living/carbon/human))
+			dat += "<A href='?src=\ref[src];EditMutantrace=1'>Mutantrace:</A> [src.job_creator.starting_mutantrace]<br>"
 			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [src.job_creator.slot_head]<br>"
 			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [src.job_creator.slot_mask]<br>"
 			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [src.job_creator.slot_ears]<br>"
@@ -250,6 +251,34 @@ var/datum/job_controller/job_controls
 
 			src.job_creator.mob_type = picker
 			src.job_creator()
+
+		if(href_list["EditMutantrace"])
+			switch(alert("Clear or reselect mutantrace?","Job Creator","Clear","Reselect"))
+				if("Clear")
+					src.job_creator.starting_mutantrace = null
+
+				if("Reselect")
+					var/list/L = list()
+					var/search_for = input(usr, "Search for mutantrace (or leave blank for complete list)", "Select mutantrace") as null|text
+					if (search_for)
+						for (var/R in typesof(/datum/mutantrace))
+							if (findtext("[R]", search_for)) L += R
+					else
+						L = typesof(/datum/mutantrace)
+
+					var/picker = null
+					if (L.len == 1)
+						picker = L[1]
+					else if (L.len > 1)
+						picker = input(usr,"Select mutantrace:","Job Creator",null) as null|anything in L
+					else
+						usr.show_text("No mutantrace matching that name", "red")
+						return
+
+					src.job_creator.starting_mutantrace = picker
+
+			src.job_creator()
+
 
 		if(href_list["EditHeadgear"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
@@ -912,6 +941,7 @@ var/datum/job_controller/job_controls
 				JOB.items_in_backpack = src.job_creator.items_in_backpack
 				JOB.items_in_belt = src.job_creator.items_in_belt
 				JOB.spawn_id = src.job_creator.spawn_id
+				JOB.starting_mutantrace = src.job_creator.starting_mutantrace
 				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
 				logTheThing("admin", usr, null, "created special job [JOB.name]")
 				logTheThing("diary", usr, null, "created special job [JOB.name]", "admin")

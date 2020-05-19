@@ -44,6 +44,7 @@
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
 	var/mob/living/mob_type = /mob/living/carbon/human
+	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = 0
 	var/special_spawn_location = 0
 	var/spawn_x = 0
@@ -96,6 +97,10 @@
 				if (picklist && picklist.len >= 1)
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
+
+			if (ishuman(M) && src.starting_mutantrace)
+				var/mob/living/carbon/human/H = M
+				H.set_mutantrace(src.starting_mutantrace)
 
 			if (src.objective)
 				var/datum/objective/newObjective = spawn_miscreant ? new /datum/objective/miscreant : new /datum/objective/crew
@@ -1392,12 +1397,7 @@
 	name = "Test Subject"
 	slot_jump = /obj/item/clothing/under/shorts
 	change_name_on_spawn = 1
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.set_mutantrace(/datum/mutantrace/monkey)
+	starting_mutantrace = /datum/mutantrace/monkey
 
 /datum/job/special/random/musician
 	name = "Musician"
@@ -2014,6 +2014,7 @@
 	slot_foot = null
 	slot_back = null
 	slot_belt = null
+	spawn_id = 0
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
