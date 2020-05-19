@@ -147,7 +147,7 @@ var/datum/job_controller/job_controls
 				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
 
 		dat += "<BR>"
-		dat += "<A href='?src=\ref[src];CreateJob=1;Hidden=1'><b>Create Job but make it hidden and only available in the respawn panel</b></A><BR>"
+		dat += "<A href='?src=\ref[src];CreateJob=1;Hidden=1'><b>Create Hidden Job (for admin respawning)</b></A><BR><BR>"
 		dat += "<A href='?src=\ref[src];CreateJob=1'><b>Create Job</b></A>"
 		dat += "<BR><BR>"
 
