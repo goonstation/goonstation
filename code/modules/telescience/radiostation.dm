@@ -595,7 +595,7 @@
 /obj/item/radio_tape/advertisement/danitos_burritos
 	name = "compact tape - 'Descuento Danito's Burritos'"
 	audio = "sound/radio_station/danitos_burritos.ogg"
-	name_of_thing = "Descuento Danitor's Burritos"
+	name_of_thing = "Descuento Danito's Burritos"
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
