@@ -375,7 +375,7 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		boutput(C, "You pull your clown box out from your - wait, what?")
-		new /obj/item/clothing/suit/cardboard_box/clown(get_turf(C.mob))
+		new /obj/item/clothing/suit/cardboard_box/colorful/clown(get_turf(C.mob))
 		return
 
 /datum/jobXpReward/clown10
