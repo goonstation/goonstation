@@ -2530,7 +2530,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			return ..()
 
-#if ASS_JAM//crab critter as a mob so people can be it
 /mob/living/critter/small_animal/crab
 	name = "crab"
 	real_name = "crab"
@@ -2562,7 +2561,3 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "beak"
 		HH.name = "right claw"
 		HH.limb_name = "claw"
-
-
-
-#endif

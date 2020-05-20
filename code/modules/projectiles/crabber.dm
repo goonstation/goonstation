@@ -1,4 +1,3 @@
-#if ASS_JAM
 /datum/projectile/claw
 
 	name = "crab claw"
@@ -59,5 +58,3 @@
 					playsound(T2, 'sound/effects/splort.ogg', 50, 1)
 					C.change_misstep_chance(30)
 					C.stuttering = 40
-#endif
-

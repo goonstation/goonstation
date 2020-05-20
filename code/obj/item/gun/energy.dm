@@ -439,7 +439,6 @@
 			src.icon_state = "vuvuzela[ratio]"
 
 //////////////////////////////////////Crabgun
-#if ASS_JAM
 /obj/item/gun/energy/crabgun
 	name = "a strange crab"
 	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
@@ -462,7 +461,6 @@
 		current_projectile = new/datum/projectile/claw
 		projectiles = list(current_projectile)
 		..()
-#endif
 
 
 
