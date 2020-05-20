@@ -574,7 +574,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		sleep(0.2 SECONDS)
 
 		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus("weakened") && !A.hasStatus("paralysis"))
+		if (!A.hasStatus(list("weakened", "paralysis")))
 			A.transform = start
 		A.pixel_x = old_x
 		A.pixel_y = old_y
