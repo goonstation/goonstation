@@ -328,7 +328,6 @@ var/list/clients_move_scheduled = list()
 
 			var/actual_delay = max(ceil(delay / world.tick_lag), 1) * world.tick_lag
 			var/next = world.time + actual_delay
-			var/lmt = max(last_move_ticklag - world.tick_lag, 0)
 
 			src.move_scheduled = next
 			if (client)
