@@ -1,5 +1,9 @@
 
 (t)tue may 19 20
+(u)Erinexx
+(p)750
+(e)🎨|sprites
+(*)Updated powernet & Artsci sprites
 (u)Gannets
 (p)746
 (e)⚖🎨|balance, sprites
