@@ -1483,8 +1483,8 @@
 
 	New()
 		..()
-		size = rand(2,4)
-		time = rand(100,300)
+		size = rand(4, 6)
+		time = rand(100, 300)
 
 /datum/targetable/geneticsAbility/erebokinesis
 	name = "Erebokinesis"
@@ -1508,9 +1508,8 @@
 		var/turf/T = get_turf(target)
 		owner.visible_message("<span class='alert'><b>[owner]</b> raises [his_or_her(owner)] hands into the air!</span>")
 		playsound(owner.loc, "sound/voice/chanting.ogg", 50, 0)
-		new /obj/darkness_field(T,field_time)
-		for(var/turf/TD in circular_range(T,field_size))
-			new /obj/darkness_field(TD,field_time)
+		new /obj/overlay/darkness_field(T, field_time, radius = 0.5 + field_size, max_alpha = 250)
+		new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, field_time, radius = 0.5 + field_size, max_alpha = 250)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

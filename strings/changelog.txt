@@ -1,4 +1,7 @@
 
+(t)wed may 20 20
+(u)pali
+(*)Erebokinesis and darkness artifact should now be slightly less infuriating.
 (t)tue may 19 20
 (u)Flourish
 (p)764
