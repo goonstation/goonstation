@@ -1,5 +1,9 @@
 
 (t)wed may 20 20
+(u)TrustworthyFella
+(p)701
+(e)🆕|enhancement
+(+)Made Original Sin blood floods size and reagent depend on the amount of blood in you, and what your blood reagent is.
 (u)pali
 (*)Erebokinesis and darkness artifact should now be slightly less infuriating.
 (t)tue may 19 20
