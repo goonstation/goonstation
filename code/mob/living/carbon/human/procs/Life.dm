@@ -782,12 +782,7 @@
 		return null
 
 	proc/update_canmove()
-		if (hasStatus("paralysis") || hasStatus("stunned") || hasStatus("weakened") || hasStatus("pinned"))
-			canmove = 0
-			return
-
-		var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-		if (C && C.in_fakedeath)
+		if (HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
 			canmove = 0
 			return
 
@@ -808,12 +803,6 @@
 		if (emote_lock)
 			canmove = 0
 			return
-
-		//cant move while we pin someone down
-		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			if (G.state == GRAB_PIN)
-				canmove = 0
-				return
 
 		canmove = 1
 

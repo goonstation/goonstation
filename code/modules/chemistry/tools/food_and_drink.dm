@@ -549,11 +549,9 @@
 
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
-				boutput(user, "<span class='notice'>You fill [src] with [F.group.amt_per_tile] units of [target].</span>")
-				F.group.reagents.trans_to_direct(src.reagents,F.group.amt_per_tile)
-				if (!F.group) return
-				F.group.contained_amt = F.group.reagents.total_volume
-				F.group.remove(F,0,F.group.updating)
+				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)

@@ -32,6 +32,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\math.dm"
 #include "_stdlib\pathfinding.dm"
 #include "_stdlib\text.dm"
+#include "_stdlib\mob_properties.dm"
 #include "_stdlib\code\spaceman_dmm.dm"
 
 #include "_stdlib\code\_antag_popups.dm"
@@ -924,6 +925,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\projectiles\40mm.dm"
 #include "code\modules\projectiles\bfg.dm"
 #include "code\modules\projectiles\bullet.dm"
+#include "code\modules\projectiles\crabber.dm"
 #include "code\modules\projectiles\disruptor_bolt.dm"
 #include "code\modules\projectiles\energy_bolt.dm"
 #include "code\modules\projectiles\laser.dm"

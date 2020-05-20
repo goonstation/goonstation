@@ -438,6 +438,32 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "vuvuzela[ratio]"
 
+//////////////////////////////////////Crabgun
+/obj/item/gun/energy/crabgun
+	name = "a strange crab"
+	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
+	icon = 'icons/obj/crabgun.dmi'
+	icon_state = "crabgun"
+	item_state = "crabgun-world"
+	inhand_image_icon = 'icons/obj/crabgun.dmi'
+	w_class = 4.0
+	force = 12.0
+	throw_speed = 8
+	throw_range = 12
+	rechargeable = 0
+	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
+	current_projectile = new/datum/projectile/claw
+	projectiles = null
+	is_syndicate = 1
+	custom_cell_max_capacity = 15000 //endless crab
+
+	New()
+		current_projectile = new/datum/projectile/claw
+		projectiles = list(current_projectile)
+		..()
+
+
+
 //////////////////////////////////////Disruptor
 /obj/item/gun/energy/disruptor
 	name = "Disruptor"
@@ -910,6 +936,7 @@
 
 	update_icon()
 		return
+
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
