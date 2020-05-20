@@ -984,7 +984,6 @@ datum
 								cube_mob(M,volume_passed)
 						else
 							cube_mob(M,volume_passed)
-				M.bodytemperature = 0
 
 				src = null
 
