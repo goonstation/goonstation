@@ -345,7 +345,7 @@ toxic - poisons
 					M.organHolder.damage_organ(proj.power/2, 0, 0, pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix"))
 
 			if(prob(proj.power/2) && power > 50)
-					M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg")) //BLEW IT CLEAN OFF
+				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg")) //BLEW IT CLEAN OFF
 			..()
 
 	weak
