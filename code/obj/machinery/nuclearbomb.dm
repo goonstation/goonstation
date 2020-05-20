@@ -134,6 +134,7 @@
 									src.UpdateOverlays(src.image_light, "light")
 								//src.icon_state = "nuclearbomb2"
 								src.det_time = ticker.round_elapsed_ticks + src.timer_default
+								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 								world << sound('sound/machines/bomb_planted.ogg')
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
