@@ -1,5 +1,4 @@
 var/list/dirty_keystates = list()
-var/list/clients_move_scheduled = list()
 
 #define MODIFIER_SHIFT 1
 #define MODIFIER_ALT 2
@@ -328,12 +327,14 @@ var/list/clients_move_scheduled = list()
 
 			var/actual_delay = max(ceil(delay / world.tick_lag), 1) * world.tick_lag
 			var/next = world.time + actual_delay
+			var/lmt = max(last_move_ticklag - world.tick_lag, 0)
 
-			src.move_scheduled = next
-			if (client)
-				clients_move_scheduled += client
-			//SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
-			//	src.internal_process_move(src.client ? src.client.key_state : 0)
+			// Tolerance of 0.01 seconds due to byond float weirdness -Spy
+			if ((src.move_scheduled - world.time) <= 0.01 + lmt || src.move_scheduled + lmt > next)
+
+				src.move_scheduled = next
+				SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
+					src.internal_process_move(src.client ? src.client.key_state : 0)
 
 			last_move_ticklag = world.tick_lag
 
@@ -413,12 +414,6 @@ var/list/clients_move_scheduled = list()
 	SPAWN_DBG(0)
 		while (1)
 			process_keystates()
-
-			for(var/client/C in clients_move_scheduled)
-				if (C.mob && world.time >= C.mob.move_scheduled-1) // subtract 1. why???? idk. Matches speed of spawn() loop we used to have, there's some timing weirdness otherwise
-					C.mob.internal_process_move(C.key_state)
-					clients_move_scheduled -= C
-
 			sleep(world.tick_lag)
 
 /client/Move()
