@@ -1,3 +1,9 @@
+/datum/rockbox_globals_template
+	var/rockbox_client_fee_min = 1
+	var/rockbox_client_fee_pct = 10
+	var/rockbox_premium_purchased = 0
+
+var/global/datum/rockbox_globals_template/rockbox_globals = new /datum/rockbox_globals_template
 
 /proc/build_qm_categories()
 	QM_CategoryList.Cut()
@@ -603,9 +609,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 				. = "<h2>Rockbox&trade; Ore Cloud Storage Service Settings:</h2><ul><br>"
 
-				. += "<B>Rockbox&trade; Fees:</B> $[!rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0] per ore [!rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>"
-				. += "<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_client_fee_pct]%</A><BR>"
-				. += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_client_fee_min]</A><BR>"
+				. += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>"
+				. += "<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>"
+				. += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>"
 				. += {"</ul>"}
 				return .
 
@@ -615,7 +621,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				if(response == "Yes")
 					if(wagesystem.shipping_budget >= 10000)
 						wagesystem.shipping_budget -= 10000
-						rockbox_premium_purchased = 1
+						rockbox_globals.rockbox_premium_purchased = 1
 						. = {"Congratulations on your purchase of RockBox&trade; Premium!"}
 					else
 						. = {"Not enough money in the budget!"}
@@ -625,17 +631,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				var/fee_pct = null
 				fee_pct = input(usr,"What fee percent would you like to set? (Min 0)","Fee Percent per Transaction:",null) as num
 				fee_pct = max(0,fee_pct)
-				rockbox_client_fee_pct = fee_pct
-				. = {"Fee Percent per Transaction is now [rockbox_client_fee_pct]%"}
+				rockbox_globals.rockbox_client_fee_pct = fee_pct
+				. = {"Fee Percent per Transaction is now [rockbox_globals.rockbox_client_fee_pct]%"}
 
 			if ("fee_min")
 				var/fee_min = null
 				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
 				fee_min = max(0,fee_min)
-				rockbox_client_fee_min = fee_min
-				. = {"Minimum Fee per Transaction is now $[rockbox_client_fee_min]"}
+				rockbox_globals.rockbox_client_fee_min = fee_min
+				. = {"Minimum Fee per Transaction is now $[rockbox_globals.rockbox_client_fee_min]"}
 
-		return .
+		return
 
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)

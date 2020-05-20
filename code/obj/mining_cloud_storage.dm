@@ -1,8 +1,3 @@
-#define ROCKBOX_STANDARD_FEE 5
-var/global/rockbox_client_fee_min = 1
-var/global/rockbox_client_fee_pct = 10
-var/global/rockbox_premium_purchased = 0
-
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox&trade; Ore Cloud Storage Container"
 	desc = "This thing stores ore in \"the cloud\" for the station to use. Best not to think about it too hard."
@@ -10,14 +5,22 @@ var/global/rockbox_premium_purchased = 0
 	icon_state = "ore_storage_unit"
 	density = 1
 	anchored = 1
-	var/base_material_class = /obj/item/raw_material/
 	var/list/sell_price = list()
 	var/list/for_sale = list()
 	var/list/ores = list()
 	var/list/sellable_ores = list()
+
 	var/health = 100
 	var/broken = 0
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 
@@ -48,7 +51,7 @@ var/global/rockbox_premium_purchased = 0
 			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
 			for (var/obj/item/M in O.contents)
-				if (!istype(M,src.base_material_class))
+				if (!istype(M,/obj/item/raw_material/))
 					continue
 				src.load_item(M)
 				amtload++
@@ -62,9 +65,6 @@ var/global/rockbox_premium_purchased = 0
 			src.update_ores()
 
 		else
-			boutput(world,"[O.type] is O type")
-			if(isitem(O))
-				boutput(world,"[O] is item")
 			..()
 
 		src.updateUsrDialog()
@@ -77,15 +77,15 @@ var/global/rockbox_premium_purchased = 0
 		for(var/obj/item/M in view(1,user))
 			if (!M)
 				continue
-			if (M.name != O.name)
+			if (M.type != O.type)
 				continue
-			if (!istype(M,src.base_material_class))
+			if (!istype(M,/obj/item/raw_material/))
 				continue
 			if (O.loc == user)
 				continue
 			if (O in user.contents)
 				continue
-				src.load_item(M)
+			src.load_item(M)
 			M.set_loc(src)
 			playsound(get_turf(src), sound_load, 40, 1)
 			sleep(0.5)
@@ -94,7 +94,7 @@ var/global/rockbox_premium_purchased = 0
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, src.base_material_class) && src.accept_loading(user))
+		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 			src.update_ores()
@@ -107,27 +107,27 @@ var/global/rockbox_premium_purchased = 0
 	proc/check_health()
 		if(!src.health)
 			src.broken = 1
+			src.visible_message("<span class='alert'>[src] breaks!</span>")
 			src.icon_state = "ore_storage_unit-broken"
 			src.update_sellable()
 
-	proc/load_item(var/obj/item/O,var/mob/living/user)
-		if (!O)
+	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
+		if (!R)
 			return
-		if(O.amount == 1)
-			O.set_loc(src)
-			if (user && O)
-				user.u_equip(O)
-				O.dropped()
-		else if(O.amount>1)
-			O.set_loc(src)
-			for(O.amount,O.amount > 0, O.amount--)
-				new O.type(src)
-			if (user && O)
-				user.u_equip(O)
-				O.dropped()
-			qdel(O)
-		else
-			return // uhhhhhh
+		if(R.amount == 1)
+			R.set_loc(src)
+			if (user && R)
+				user.u_equip(R)
+				R.dropped()
+		else if(R.amount>1)
+			R.set_loc(src)
+			for(R.amount,R.amount > 0, R.amount--)
+				var/obj/item/raw_material/new_mat = unpool(R.type)
+				new_mat.loc = src
+			if (user && R)
+				user.u_equip(R)
+				R.dropped()
+			pool(R)
 
 
 	proc/accept_loading(var/mob/user,var/allow_silicon = 0)
@@ -147,7 +147,7 @@ var/global/rockbox_premium_purchased = 0
 	proc/update_ores()
 		src.ores.len = 0
 		for(var/obj/item/raw_material/R in src.contents)
-			if(!(R.material_name in ores)) //Using material_name to group materials is dangerous in general. However, since we are only accepting raw_materials, this should be fine.
+			if(!ores[R.material_name]) //Using material_name to group materials is dangerous in general. However, since we are only accepting raw_materials, this should be fine.
 				ores += R.material_name
 				ores[R.material_name] = 1
 

@@ -1120,6 +1120,9 @@ var/ZLOG_START_TIME
 //PATHOLOGY REMOVAL
 //#define CREATE_PATHOGENS 1
 
+//ROCKBOX
+#define ROCKBOX_STANDARD_FEE 5
+
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
 

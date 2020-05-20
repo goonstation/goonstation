@@ -295,23 +295,17 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
-				dat+= src.temp
-				dat+="<HR>"
-			else
-				dat+= src.temp
-				dat+="<HR>"
-		else
-			dat+= src.temp
-			dat+="<HR>"
+		dat+= src.temp
+		dat+="<HR>"
 
 		dat += "<B>Ores Available for Purchase:</B><br><small>"
-		for(var/obj/machinery/ore_cloud_storage_container/S in world)
+		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
 			var/list/ores = S.sellable_ores
 			if(ores.len)
-				dat += "[S.name] at [get_area(get_turf(S))]:<br>"
+				dat += "[S.name] at [get_area(S)]:<br>"
 				for(var/ore in ores)
-					var/taxes = round(max(rockbox_client_fee_min,abs(S.sell_price[ore]*rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-					dat += "<B>[ore]:</B> [ores[ore]] ($[S.sell_price[ore]+taxes+(!rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
+					var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(S.sell_price[ore]*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+					dat += "<B>[ore]:</B> [ores[ore]] ($[S.sell_price[ore]+taxes+(!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
 
 		dat += "</small><HR>"
 
@@ -680,28 +674,14 @@
 				if (src.scan) src.scan = null
 				else
 					var/obj/item/I = usr.equipped()
-					if (istype(I, /obj/item/card/id))
-						boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-						var/datum/data/record/account = null
-						account = FindBankAccountByName(I:registered)
-						if(account)
-							var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
-							if (enterpin == I:pin)
-								boutput(usr, "<span class='notice'>Card authorized.</span>")
-								src.scan = I
-							else
-								boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
-								src.scan = null
-						else
-							boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
-							src.scan = null
+					src.scan_card(I)
 
 			if (href_list["purchase"])
 				var/obj/machinery/ore_cloud_storage_container/storage = locate(href_list["storage"])
 				var/ore = href_list["ore"]
 				var/list/ores = storage.sellable_ores
 				var/price = storage.sell_price[ore]
-				var/taxes = round(max(rockbox_client_fee_min,abs(price*rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
 				if(!scan)
 					src.temp = {"You have to scan a card in first.<BR>"}
@@ -723,7 +703,7 @@
 					if(ores[ore] >= quantity)
 						var/subtotal = round(price * quantity)
 						var/sum_taxes = round(taxes * quantity)
-						var/rockbox_fees = (!rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0) * quantity
+						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0) * quantity
 						var/total = subtotal + sum_taxes + rockbox_fees
 						if(account.fields["current_money"] >= total)
 							account.fields["current_money"] -= total
@@ -934,6 +914,9 @@
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
+		else if(scan_card(W))
+			return
+
 		else
 			..()
 			user.lastattacked = src
@@ -954,6 +937,29 @@
 					src.take_damage(damage)
 
 		src.updateUsrDialog()
+
+	proc/scan_card(var/obj/item/I)
+		if (istype(I, /obj/item/device/pda2))
+			var/obj/item/device/pda2/P = I
+			if(P.ID_card)
+				I = P.ID_card
+		if (istype(I, /obj/item/card/id))
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(I:registered)
+			if(account)
+				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				if (enterpin == I:pin)
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					src.scan = I
+					return 1
+				else
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					src.scan = null
+			else
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				src.scan = null
+		return 0
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
