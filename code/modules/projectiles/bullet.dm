@@ -317,12 +317,13 @@ toxic - poisons
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
-	dissipation_delay = 3//2
-	dissipation_rate = 15
+	dissipation_delay = 2//2
+	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72 // roughly
 	icon_turf_hit = "bhole"
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
 	casing = /obj/item/casing/shotgun_red
 
@@ -339,10 +340,17 @@ toxic - poisons
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
+
+			if(proj.power > 60)
+				if (M.organHolder && prob(125-proj.power)) //50% delimb at pointblank, down to 25% at a few tiles. yes I know this ignores armor
+					for (var/i in 1 to 5) //OH LAWD BUCKSHOT EVERYWHERE IN THERE, SHREDDING ORGANS
+						M.organHolder.damage_organ(proj.power/2, 0, 0, pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix"))
+				else
+					M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg")) //BLEW IT CLEAN OFF
 			..()
 
 	weak
-		power = 30
+		power = 50 //can have a little throwing, as a treat
 
 
 /datum/projectile/bullet/airzooka

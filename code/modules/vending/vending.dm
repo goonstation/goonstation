@@ -476,7 +476,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
 
 #else
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 1, hidden=1) // this may be a bad idea, but it's only one box
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 #endif
 /obj/machinery/vending/cola
 	name = "soda machine"
