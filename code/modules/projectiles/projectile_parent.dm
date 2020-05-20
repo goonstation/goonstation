@@ -105,7 +105,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-
+		src.power = src.proj_data.power - max(0,((get_dist(src.orig_turf, A))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
@@ -352,9 +352,8 @@
 				y32 = -y32
 		var/max_t
 		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
-			max_t = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
-		else
-			max_t = proj_data.max_range // why not
+			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
+		max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -420,12 +419,10 @@
 		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.dissipation_delay || src.dissipation_ticker > src.proj_data.max_range)
-			src.power -= src.proj_data.dissipation_rate
-			if (src.power <= 0 || src.dissipation_ticker > src.proj_data.max_range)
-				proj_data.on_max_range_die(src)
-				die()
-				return
+		if (src.dissipation_ticker > src.proj_data.max_range)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 		proj_data.tick(src)
 		if (disposed)
 			return
