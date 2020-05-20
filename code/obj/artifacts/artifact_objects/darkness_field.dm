@@ -55,3 +55,8 @@
 		if(!isnull(duration))
 			SPAWN_DBG(duration)
 				src.deactivate()
+
+	proc/deactivate()
+		animate(src, time = 2 SECONDS, alpha = 0, easing = LINEAR_EASING)
+		SPAWN_DBG(2 SECONDS)
+			qdel(src)
