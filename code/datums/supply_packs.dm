@@ -471,8 +471,8 @@
 					/obj/item/reagent_containers/food/drinks/bottle/bojackson,
 					/obj/item/reagent_containers/food/drinks/curacao,
 					/obj/item/reagent_containers/food/drinks/cocktailshaker,
-					/obj/item/storage/box/cocktail_umbrellas = 4,
-					/obj/item/storage/box/cocktail_doodads = 4,
+					/obj/item/storage/box/cocktail_umbrellas = 2,
+					/obj/item/storage/box/cocktail_doodads = 2,
 					/obj/item/storage/box/fruit_wedges = 1,
 					/obj/item/shaker/salt = 1)
 	cost = 500
