@@ -23,6 +23,8 @@
 	var/anyone_can_activate = 0 // allows non-nukies to deploy the bomb
 	var/boom_size = "nuke" // varedit to number to get an explosion instead
 
+	var/started_light_animation = 0
+
 	flags = FPRINT
 	var/image/image_light = null
 	p_class = 1.5
@@ -58,6 +60,11 @@
 				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
 				qdel(S)
 
+		if(det_time && src.simple_light && !src.started_light_animation && det_time - ticker.round_elapsed_ticks <= 2 MINUTES)
+			src.started_light_animation = 1
+			var/matrix/trans = matrix()
+			trans.Scale(3)
+			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && ticker.round_elapsed_ticks >= det_time)
 			explode()
