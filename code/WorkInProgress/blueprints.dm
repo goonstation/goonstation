@@ -194,7 +194,7 @@
 				V.set_density(0)
 				V.layer = EFFECTS_LAYER_BASE
 
-				sleep(0.25 SECONDS)
+				sleep(1.5 SECONDS)
 
 				qdel(V)
 
@@ -203,7 +203,8 @@
 						qdel(O)
 						break
 				if(T.tiletype != null)
-					var/turf/newTile = new T.tiletype(pos)
+					var/turf/newTile = get_turf(pos)
+					newTile.ReplaceWith(T.tiletype)
 					newTile.icon_state = T.state
 					newTile.dir = T.direction
 					newTile.inherit_area()
@@ -455,7 +456,7 @@
 			roomList.Remove(target)
 		else
 			roomList.Add(target)
-			roomList[target] = image('icons/misc/old_or_unused.dmi',target,"tiletag", layer = EFFECTS_LAYER_BASE)
+			roomList[target] = image('icons/misc/old_or_unused.dmi',target,"tiletag", layer = HUD_LAYER)
 			updateOverlays()
 
 		return
