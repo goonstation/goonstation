@@ -421,14 +421,14 @@
 /datum/plantmutation/fungus/psilocybin
 	name = "Magic Mushroom"
 	name_prefix = "Magic "
-	iconmod = "magmush" //TODO: rename to MagicMushroom
+	iconmod = "FungusMagic"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
 	assoc_reagents = list("psilocybin")
 
 /datum/plantmutation/fungus/amanita
 	name = "Amanita"
 	name_prefix = "Amanita "
-	iconmod = "deathcap" //TODO: rename to Amanita
+	iconmod = "FungusAmanita"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	ENrange = list(null,10)
 	PTrange = list(30,null)
