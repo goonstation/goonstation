@@ -1119,6 +1119,10 @@
 	name = "Crashed Transport"
 	icon_state = "purple"
 
+/area/water_treatment
+	name = "Water Treatment Facility"
+	icon_state = "purple"
+
 
 //////////////////////////// zewaka - vspace areas
 

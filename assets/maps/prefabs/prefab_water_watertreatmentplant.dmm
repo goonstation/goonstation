@@ -1,0 +1,31 @@
+"a" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/water_treatment)
+"b" = (/turf/variableTurf/clear,/area/noGenerate)
+"c" = (/turf/variableTurf/clear,/area/water_treatment)
+"d" = (/turf/simulated/wall/auto/reinforced/supernorn,/area)
+"e" = (/obj/machinery/door/poddoor,/turf/space,/area/sea_mining)
+"f" = (/obj/machinery/door/poddoor,/turf/variableTurf/clear,/area/water_treatment)
+"g" = (/obj/window/crystal/reinforced/pyro,/turf/variableTurf/clear,/area/water_treatment)
+"h" = (/obj/forcefield/energyshield/perma,/turf/variableTurf/clear,/area/water_treatment)
+
+(1,1,1) = {"
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbaaaaaabbb
+bbbbbbbbbbbaccccabbb
+bbdeffffaaaaccccabbb
+bbacccccgcccccccabbb
+bbacccccgcccccccabbb
+bbacccccgcccccccabbb
+bbahhhhhgcccccccabbb
+bbacccccccccccccaaaa
+bbacccccccccccccccca
+bbacccccccccccccccca
+bbacccccccccccccccca
+bbacccccccccccccccca
+bbacccccccccccccccca
+bbacccccccccccccccaa
+bbacccccccccccccccab
+bbdaaaaaaaaaaaaaaaab
+bbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+"}
