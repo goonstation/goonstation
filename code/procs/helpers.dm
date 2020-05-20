@@ -546,7 +546,7 @@ proc/get_angle(atom/a, atom/b)
 			px += step
 			vx -= 1
 			T = locate(px,py,M.z)
-			if (T.opacity || T.opaque_atom_count > 0)
+			if (!T || T.opacity || T.opaque_atom_count > 0)
 				break
 			. += T
 	else if (vy)
@@ -556,7 +556,7 @@ proc/get_angle(atom/a, atom/b)
 			py += step
 			vy -= 1
 			T = locate(px,py,M.z)
-			if (T.opacity || T.opaque_atom_count > 0)
+			if (!T || T.opacity || T.opaque_atom_count > 0)
 				break
 			. += T
 
