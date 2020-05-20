@@ -2209,18 +2209,6 @@ var/regex/nameRegex = regex("\\xFF.","g")
 	return text
 
 /**
-  * Returns true if given string is just space characters
-  */
-/proc/is_blank_string(var/txt)
-	if (!istext(txt))
-		return 1 // if it's not a string I guess it's kinda blank??
-	for (var/i=1, i <= length(txt), i++)
-		if (copytext(txt, i, i+1) != " ")
-			return 0 // we say NAW GURL IT'S GOT OTHER STUFF TOO,
-
-	return 1 // otherwise YEAH GURL THAT SHIT IS HELLA BLANK
-
-/**
   * Returns true if given mob/client/mind is an admin
   */
 /proc/isadmin(person)
