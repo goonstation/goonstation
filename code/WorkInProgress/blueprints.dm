@@ -194,7 +194,7 @@
 				V.set_density(0)
 				V.layer = EFFECTS_LAYER_BASE
 
-				sleep(1.5 SECONDS)
+				sleep(0.25 SECONDS)
 
 				qdel(V)
 
@@ -202,6 +202,11 @@
 					if(O.loc == pos)
 						qdel(O)
 						break
+				if(T.tiletype != null)
+					var/turf/newTile = new T.tiletype(pos)
+					newTile.icon_state = T.state
+					newTile.dir = T.direction
+					newTile.inherit_area()
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
@@ -211,10 +216,6 @@
 					A.pixel_x = O.px
 					A.pixel_y = O.py
 
-				if(T.tiletype != null)
-					var/turf/newTile = new T.tiletype(pos)
-					newTile.icon_state = T.state
-					newTile.dir = T.direction
 
 			for(var/obj/J in src)
 				qdel(J)
