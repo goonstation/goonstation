@@ -385,7 +385,8 @@
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
 		if (!src.affecting) return 0
-
+		if (get_dist(user, src.affecting) > 1)
+			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
 			user.u_equip(src)
