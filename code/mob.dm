@@ -215,6 +215,7 @@
 	var/dir_locked = FALSE
 
 	var/list/cooldowns = null
+	var/list/mob_properties
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -231,12 +232,14 @@
 	render_special = new
 	traitHolder = new(src)
 	cooldowns = new
-	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
+	if (!src.bioHolder)
+		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
+	mob_properties = list()
 
 /mob/proc/is_spacefaring()
 	return 0

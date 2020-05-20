@@ -75,7 +75,8 @@
 				logTheThing("combat", src.assailant, src.affecting, "drops their pin on %target%")
 			else
 				logTheThing("combat", src.assailant, src.affecting, "drops their grab on %target%")
-			if (affecting.grabbed_by) affecting.grabbed_by -= src
+			if (affecting.grabbed_by)
+				affecting.grabbed_by -= src
 			affecting = null
 
 		assailant = null
@@ -83,6 +84,7 @@
 
 	dropped()
 		dropped += 1
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		qdel(src)
 
 	process(var/mult = 1)
@@ -101,6 +103,7 @@
 			if (ishuman(src.assailant))
 				var/mob/living/carbon/human/HH = src.assailant
 				HH.remove_stamina(STAMINA_REGEN * 0.5 * mult)
+
 
 		if (src.state == GRAB_KILL)
 			//src.affecting.losebreath++
@@ -253,6 +256,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -295,6 +299,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
 			H.update_canmove()
 
 		if (ishuman(src.affecting))
