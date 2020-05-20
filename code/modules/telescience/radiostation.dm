@@ -593,7 +593,7 @@
 	name_of_thing = "Discount Dan's Quik Noodles"
 
 /obj/item/radio_tape/advertisement/danitos_burritos
-	name = "compact tape - 'Descuento Danitor's Burritos'"
+	name = "compact tape - 'Descuento Danito's Burritos'"
 	audio = "sound/radio_station/danitos_burritos.ogg"
 	name_of_thing = "Descuento Danitor's Burritos"
 
