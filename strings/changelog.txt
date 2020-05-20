@@ -1,5 +1,9 @@
 
 (t)tue may 19 20
+(u)Flourish
+(p)764
+(e)🆕🎨|enhancement, sprites
+(+)Added a cardboard clown car box as a level 5 clown job reward. Sprites by Erinexx.
 (u)Sovexe
 (p)731
 (e)🐛|bug
