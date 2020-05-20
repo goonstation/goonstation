@@ -1,5 +1,10 @@
 
 (t)tue may 19 20
+(u)Sovexe
+(p)731
+(e)🐛|bug
+(+)AIs and Borgs can no longer be given blank names.
+(+)You can no longer specify a blank name in the character creator.
 (u)Tarmunora
 (p)756
 (e)🆕🔄|enhancement, rework
