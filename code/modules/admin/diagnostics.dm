@@ -589,7 +589,8 @@ proc/debug_color_of(var/thing)
 				var/atom/A = X
 				num += 1 + A.overlays.len + A.underlays.len
 				for(var/O in A.overlays + A.underlays)
-					num += O:overlays.len + O:underlays.len
+					var/atom/A2 = O
+					num += A2.overlays.len + A2.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
 	count_atoms
