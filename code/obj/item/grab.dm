@@ -84,7 +84,8 @@
 
 	dropped()
 		dropped += 1
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		if(src.assailant)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		qdel(src)
 
 	process(var/mult = 1)
