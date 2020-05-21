@@ -1175,6 +1175,11 @@
 	if (get_dist(src, target) > 0)
 		if(!dir_locked)
 			dir = get_dir(src, target)
+			if(dir & (dir-1))
+				if (dir & EAST)
+					dir = EAST
+				else if (dir & WEST)
+					dir = WEST
 			src.update_directional_lights()
 
 /mob/proc/hotkey(name)
