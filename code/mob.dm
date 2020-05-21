@@ -6,7 +6,7 @@
 
 	flags = FPRINT | FLUID_SUBMERGE
 	event_handler_flags = USE_CANPASS
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND | LONG_GLIDE
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
 
@@ -425,7 +425,7 @@
 
 	world.update_status()
 
-	src.sight |= SEE_SELF
+	src.sight |= SEE_SELF | SEE_BLACKNESS
 
 	..()
 
@@ -1520,7 +1520,7 @@
 	src.set_eye(null)
 	src.remove_dialogs()
 	if (!isliving(src))
-		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (air_group || (height==0)) return 1
@@ -2020,7 +2020,7 @@
 		playsound(floorcluwne.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 60, 2)
 		src.set_loc(the_turf)
 		src.layer=0
-		src.plane = -100
+		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		SPAWN_DBG(duration+5)
 			src.death(1)
@@ -2863,7 +2863,7 @@
 			src.unequip_all()
 		src.set_loc(the_turf)
 		src.layer = 0
-		src.plane = -100
+		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		src.emote("scream") // AAAAAAAAAAAA
 		SPAWN_DBG(duration+5)
