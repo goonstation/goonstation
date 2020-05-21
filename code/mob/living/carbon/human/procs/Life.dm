@@ -1159,7 +1159,7 @@
 				if (G != src.equipped()) // bare handed block is less protective
 					protection += G.can_block(damage_type)
 
-		if (!protection) //weird hack, but it works, since we can set protection to a null value in the clothing protection, we need to turn it to 0 for stuff to work right
+		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
 			protection = 0
 		return protection
 
