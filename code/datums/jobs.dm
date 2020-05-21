@@ -2120,7 +2120,7 @@
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
+	slot_ears = /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = /obj/item/spacecash/fivehundred
@@ -2162,7 +2162,7 @@
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
+	slot_ears =  /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
 
