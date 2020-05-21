@@ -31,6 +31,10 @@
 #elif defined(MAP_OVERRIDE_SAMEDI)
 
 
+#elif defined(MAP_OVERRIDE_PAMGOC)
+
+#define REVERSED_MAP
+
 #elif defined(MAP_OVERRIDE_OSHAN)
 
 #define UNDERWATER_MAP 1

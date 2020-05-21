@@ -74,7 +74,7 @@
 	var/emote_lock = 0
 
 	var/canbegrabbed = 1
-	var/grabresistmessage = null //Format: target.visible_message("<span style=\"color:red\"><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
+	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
 //#ifdef MAP_OVERRIDE_DESTINY
 	var/hibernating = 0 // if they're stored in the cryotron, Life() gets skipped
@@ -139,9 +139,9 @@
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
 				emergency_shuttle.incall()
-				boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 				world << csound("sound/misc/shuttle_enroute.ogg")
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
@@ -281,6 +281,21 @@
 			W.onMouseUp(object,location,control,params)
 	return
 
+/mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
+	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
+		// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
+		var/obj/item/organ/dropping_organ = dropped
+		var/success = dropping_organ.attach_organ(src, dropping_user)
+		if (success)
+			return
+	else if (istype(dropped, /obj/item/parts/human_parts/))
+		var/obj/item/parts/dropping_limb = dropped
+		dropping_limb.attach(src, dropping_user)
+	else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+		var/obj/item/parts/robot_parts/dropping_limb = dropped
+		dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+	return ..()
+
 /mob/living/hotkey(name)
 	switch (name)
 		if ("togglepoint")
@@ -319,7 +334,7 @@
 //#endif
 
 		if (src.client && src.client.check_key(KEY_EXAMINE))
-			target.examine() // in theory, usr should be us, this is shit though
+			src.examine_verb(target)
 			return
 
 		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
@@ -330,7 +345,7 @@
 
 	if (src.restrained())
 		if (src.hasStatus("handcuffed"))
-			boutput(src, "<span style=\"color:red\">You are handcuffed! Use Resist to attempt removal.</span>")
+			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
 	if (!src.stat && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
@@ -340,7 +355,7 @@
 				var/mult = S.sims.getMoodActionMultiplier()
 				if (mult < 0.5)
 					if (prob((0.5 - mult) * 200))
-						boutput(src, pick("<span style=\"color:red\">You're not in the mood to attack that.</span>", "<span style=\"color:red\">You don't feel like doing that.</span>"))
+						boutput(src, pick("<span class='alert'>You're not in the mood to attack that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
 						return
 
 
@@ -371,7 +386,8 @@
 				return
 		else
 			var/reach = can_reach(src, target)
-
+			if (src.pre_attack_modify())
+				equipped = src.equipped() //might have changed from successful modify
 			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
@@ -380,7 +396,7 @@
 					for (var/obj/item/cloaking_device/I in src)
 						if (I.active)
 							I.deactivate(src)
-							src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+							src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -410,11 +426,19 @@
 						ship.sensors.quick_obtain_target(target_pod)
 				else
 					if (istype(target, /obj/machinery/vehicle))
-						boutput(src, "<span style=\"color:red\">Sensors are inactive, unable to target craft!</span>")
+						boutput(src, "<span class='alert'>Sensors are inactive, unable to target craft!</span>")
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
 			src.next_click += grace_penalty
+
+/mob/living/proc/pre_attack_modify()
+	.=0
+	var/obj/item/grab/block/G = src.check_block()
+	if (G)
+		qdel(G)
+		.= 1
+
 
 /mob/living/update_cursor()
 	..()
@@ -465,7 +489,7 @@
 
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
-		src.visible_message("<span style='color:#605b59'><b>[src]</b> points to [target].</span>")
+		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
@@ -535,11 +559,11 @@
 		return
 
 	if(!src.canspeak)
-		boutput(src, "<span style=\"color:red\">You can not speak!</span>")
+		boutput(src, "<span class='alert'>You can not speak!</span>")
 		return
 
 	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		boutput(src, "<span style=\"color:red\">You are completely paralysed and can't speak!</span>")
+		boutput(src, "<span class='alert'>You are completely paralysed and can't speak!</span>")
 		return
 
 	if (isdead(src))
@@ -562,15 +586,15 @@
 
 	// Mute disability
 	if (src.bioHolder && src.bioHolder.HasEffect("mute"))
-		boutput(src, "<span style=\"color:red\">You seem to be unable to speak.</span>")
+		boutput(src, "<span class='alert'>You seem to be unable to speak.</span>")
 		return
 
 	if (src.wear_mask && src.wear_mask.is_muzzle)
-		boutput(src, "<span style=\"color:red\">Your muzzle prevents you from speaking.</span>")
+		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
 #if ASS_JAM //no speak in timestop
 	if(paused)
-		boutput(src, "<span style=\"color:red\">Can't speak in stopped time dummy!.</span>")
+		boutput(src, "<span class='alert'>Can't speak in stopped time dummy!.</span>")
 		return
 #endif
 	if (ishuman(src))
@@ -755,39 +779,6 @@
 				M.show_message(thisR, 2)
 
 		return
-
-	//Overmind handling - Cirr
-	// this code duplication is pretty bad. todo: fix the code duplication, hopefully
-	if (src.mob_flags & SPEECH_INTRUDER)
-		var/scrambledMessage = src.say_quote(stutter(say_superdrunk(message)))
-		message = src.say_quote(message)
-		var/rendered = "<span class='game astralsay'>"
-		rendered += "<span class='prefix'>ASTRAL:</span> "
-		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
-		rendered += "<span class='message'>[message]</span>"
-		rendered += "</span>"
-
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
-				continue
-
-			if (M.client)
-				if((istype(M, /mob/living/intangible/intruder) || M.client.holder))
-					var/thisR = rendered
-					if (M.client.holder && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
-					boutput(M, thisR)
-				else
-					if(prob(30))
-						boutput(M, "<em>A strange, unnatural voice enters your mind... [scrambledMessage]</em>")
-					else if(prob(20))
-						var/description = "[pick("chimes", "croaks", "shines", "whispers", "sings", "echoes")] "
-						description += "[pick("strangely", "hollowly", "incomprehensibly", "menacingly", "peacefully", "softly")]"
-						boutput(M, "<em>A strange, unnatural voice [description].</em>")
-
-		return
-
-
 
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
@@ -1130,48 +1121,37 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50))
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [src] drops it!"
 				thing.set_loc(src.loc)
+				JOB_XP(src, "Clown", 2)
 			else if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(50))
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [M] drops it!"
 				thing.set_loc(M.loc)
 			else if (M.put_in_hand(thing))
 				message = "<B>[src]</B> hands [thing] to [M]."
+				if(istype(thing,/obj/item/toy/diploma))
+					var/obj/item/toy/diploma/D = thing
+					if(!D.receiver && D.redeemer == src.ckey)
+						M.unlock_medal( "Unlike the director, I went to college", 1 )
+						D.receiver = M.ckey
+						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
-	src.visible_message("<span style=\"color:#888888\">[message]</span>")
+	src.visible_message("<span class='subtle'>[message]</span>")
 
 /mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
-	var/mod = 1
-	if (src.pulling && istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/M = src.pulling
+	. = 1
+	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+		var/atom/movable/A = src.pulling
 		// hi grayshift sorry grayshift
-		if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 			if(pull_slowing)
-				mod *= max(M.p_class, 1)
+				. *= max(A.p_class, 1)
 			else
-				if(istype(M,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-					mod *= max(M.p_class, 1)
-				// else, ignore p_class*/
-				else if (ishuman(src))
-					if(ishuman(M))
-						// if they're not on help intent and also not standing, THEN we might deign to use the p_class
-						var/mob/living/carbon/human/H = M
-						if(istype(H) && H.intent != INTENT_HELP && H.lying)
-							mod *= max(H.p_class, 1)
-					else if(istype(M, /obj/storage))
-						// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-						var/contains_unwilling_mobs = 0
-						var/obj/storage/S = M
-						for(var/mob/B in M.contents)
-							if(B.intent != INTENT_HELP && B.lying)
-								contains_unwilling_mobs = 1
-								break
-						if(contains_unwilling_mobs)
-							mod *= max(S.p_class, 1)
-	return mod
+				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+					. *= max(A.p_class, 1)
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
@@ -1189,7 +1169,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/turf/T = get_turf(src)
 	if (T.active_liquid && src.lying)
 		T.active_liquid.HasEntered(src, T)
-		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
+		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
 	if (!src.stat && !src.restrained())
 		var/struggled_grab = 0
@@ -1212,12 +1192,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))
-
 					if (src.grab_block())
-						src.last_resist = world.time + 5
+						src.last_resist = world.time + COMBAT_BLOCK_DELAY
 					else
 						for (var/mob/O in AIviewers(src, null))
-							O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
+							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)

@@ -54,20 +54,20 @@
 		if(deflecting_sword)
 			if(deflecting_sword.active == 0)  // turn the sword on if it's off
 				deflecting_sword.attack_self(src)
-				src.visible_message("<span style=\"color:red\">[src] instinctively switches his [deflecting_sword] on in response to the incoming [P.name]!</span>")
+				src.visible_message("<span class='alert'>[src] instinctively switches his [deflecting_sword] on in response to the incoming [P.name]!</span>")
 			var/datum/abilityHolder/cyalume_knight/my_ability_holder = src.get_ability_holder(/datum/abilityHolder/cyalume_knight)
 			var/force_drain_multiplier = 0.3  // projectile's damage(power) is multiplied by this and then subtracted from ability holder's points
 			var/drained_force = 5 + (P.power * force_drain_multiplier)
 			my_ability_holder.points -= drained_force
 			if(my_ability_holder.points > 0) // we didn't run out of ability holder points, deflect successful
 				if(P.proj_data.damage_type == D_ENERGY || P.proj_data.damage_type == D_BURNING || P.proj_data.damage_type == D_TOXIC || P.proj_data.damage_type == D_RADIOACTIVE) // energy-related damage types
-					src.visible_message("<span style=\"color:red\">[src] deflects the [P.name] with his [deflecting_sword]!</span>")
+					src.visible_message("<span class='alert'>[src] deflects the [P.name] with his [deflecting_sword]!</span>")
 					shoot_reflected_to_sender(P, src)
 					P.die()
 					playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 60, 0.1, 0, 2.6)
 					return
 				else
-					src.visible_message("<span style=\"color:red\">[src] vaporizes the [P.name] in its trajectory with [deflecting_sword]!</span>")
+					src.visible_message("<span class='alert'>[src] vaporizes the [P.name] in its trajectory with [deflecting_sword]!</span>")
 					P.die()
 					playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 90, 0.1, 0, 2.6)
 					return
@@ -108,11 +108,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='hint'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -134,7 +134,7 @@
 	usesPoints = 1
 	regenRate = 3
 	tabName = "Cyalume Knight"
-	// notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 100
 	pointName = "force"
 	//var/obj/screen/kudzu/meter/nutrients_meter = null
@@ -183,26 +183,26 @@
 
 
 		if(!istype(holder.owner, /mob/living/carbon/human/cyalume_knight))
-			boutput(holder.owner, "<span style=\"color:red\">You aren't a true cyalume knight to be able to recall your sword!</span>")
+			boutput(holder.owner, "<span class='alert'>You aren't a true cyalume knight to be able to recall your sword!</span>")
 			return 1
 
 		var/mob/living/carbon/human/cyalume_knight/my_mob = holder.owner
 
 		if(!my_mob.my_sword)
-			boutput(holder.owner, "<span style=\"color:red\">Your sword appears to have been banished from the physical realm!</span>")
+			boutput(holder.owner, "<span class='alert'>Your sword appears to have been banished from the physical realm!</span>")
 			return 1
 		var/obj/item/sword = my_mob.my_sword
 
-		my_mob.visible_message("<span style=\"color:red\"><b>[holder.owner] raises his hand into the air wide open!</b></span>")
+		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
 		playsound(get_turf(sword), 'sound/effects/gust.ogg', 70, 1)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
-				boutput(holder.owner, "<span style=\"color:red\">You're already holding your [sword]!</span>")
+				boutput(holder.owner, "<span class='alert'>You're already holding your [sword]!</span>")
 				return 1
 			else
 				var/mob/HH = sword.loc
-				HH.visible_message("<span style=\"color:red\">[sword] somehow escapes [HH]'s grasp!</span>", "<span style=\"color:red\">The [sword] somehow escapes your grasp!</span>")
+				HH.visible_message("<span class='alert'>[sword] somehow escapes [HH]'s grasp!</span>", "<span class='alert'>The [sword] somehow escapes your grasp!</span>")
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
 		if (istype(sword.loc, /obj/item/storage))
@@ -210,7 +210,7 @@
 			var/datum/hud/storage/H_temp = S_temp.hud
 			H_temp.remove_object(sword)
 			sword.set_loc(get_turf(sword))
-			sword.visible_message("<span style=\"color:red\">[sword] somehow escapes the [S_temp] that it was inside of!</span>")
+			sword.visible_message("<span class='alert'>[sword] somehow escapes the [S_temp] that it was inside of!</span>")
 
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
@@ -219,9 +219,9 @@
 				playsound(get_turf(my_mob), 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
-					my_mob.visible_message("<span style=\"color:red\"><b>[my_mob] catches the [sword]!</b></span>")
+					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
 				else
-					my_mob.visible_message("<span style=\"color:red\"><b>[sword] lands at [my_mob]'s feet!</b></span>")
+					my_mob.visible_message("<span class='alert'><b>[sword] lands at [my_mob]'s feet!</b></span>")
 				i=100
 			sleep(0.1 SECONDS)
 
@@ -272,11 +272,11 @@
 
 		var/turf/S = get_turf(holder.owner)
 		if (get_turf(target) == S)
-			boutput(holder.owner, "<span style=\"color:red\">You have to aim in a direction!</span>")
+			boutput(holder.owner, "<span class='alert'>You have to aim in a direction!</span>")
 			return 1
 
 		var/mob/owner_mob = holder.owner
-		owner_mob.visible_message("<span style=\"color:red\"><b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b></span>")
+		owner_mob.visible_message("<span class='alert'><b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b></span>")
 		playsound(get_turf(holder.owner), 'sound/effects/gust.ogg', 50, 1)
 		var/increment_value = (end_angle - start_angle) / (num_projectiles - 1)
 		var/current_angle = start_angle
@@ -308,7 +308,7 @@
 		var/turf/S = get_turf(holder.owner)
 		var/turf/target_turf = get_turf(target)
 		if (target_turf == S)
-			boutput(holder.owner, "<span style=\"color:red\">You have to aim in a direction!</span>")
+			boutput(holder.owner, "<span class='alert'>You have to aim in a direction!</span>")
 			return 1
 
 		var/mob/living/M = holder.owner
@@ -321,14 +321,14 @@
 				target_turf = get_step_away(target_turf, M)
 
 			if(get_dist(holder.owner, target_turf) < (radius + 1)) // we could have hit the edge of the map or otherwise couldn't maneuver into a proper distance
-				boutput(M, "<span style=\"color:red\">That's too close, you could end up frying yourself.</span>")
+				boutput(M, "<span class='alert'>That's too close, you could end up frying yourself.</span>")
 				return 1
 
 		var/list/lightning_targets = list()
 		for (var/turf/T in range(radius, target_turf))
 			lightning_targets += T
 
-		M.visible_message("<span style=\"color:red\"><b>[M] starts to release a storm of lightning from his hands!</b></span>")
+		M.visible_message("<span class='alert'><b>[M] starts to release a storm of lightning from his hands!</b></span>")
 
 		actions.start(new/datum/action/bar/icon/force_lightning_action(M,holder,target_turf,src,lightning_targets), M)
 
@@ -401,9 +401,9 @@
 	onInterrupt()
 		..()
 		if (H.points == 0)
-			boutput(M, "<span style=\"color:red\">You don't have enough energy to continue casting the lightning.</span>")
+			boutput(M, "<span class='alert'>You don't have enough energy to continue casting the lightning.</span>")
 		else
-			boutput(M, "<span style=\"color:red\">Your lightning ability was interrupted.</span>")
+			boutput(M, "<span class='alert'>Your lightning ability was interrupted.</span>")
 
 /datum/targetable/cyalume_knight/force_choke
 	name = "Telekinetic Grip"
@@ -421,7 +421,7 @@
 			return 1
 
 		if (target == holder.owner)
-			boutput(holder.owner, "<span style=\"color:red\">No choking yourself!</span>")
+			boutput(holder.owner, "<span class='alert'>No choking yourself!</span>")
 			return 1
 
 		var/mob/living/M = holder.owner
@@ -430,18 +430,18 @@
 
 		var/original_pixel_y = mob_target.pixel_y
 
-		M.visible_message("<span style=\"color:red\"><b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b></span>")
+		M.visible_message("<span class='alert'><b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b></span>")
 		mob_target.changeStatus("stunned", 150)
 		mob_target.force_laydown_standup()
 
 		sleep(1.5 SECONDS)
-		M.visible_message("<span style=\"color:red\"><b>[M] begins lifting his hand, with [mob_target] following!</b></span>")
+		M.visible_message("<span class='alert'><b>[M] begins lifting his hand, with [mob_target] following!</b></span>")
 		var/i
 		for(i = 0; i < 12; i++)
 			mob_target.pixel_y += 2
 			sleep(0.1 SECONDS)
 		sleep(0.5 SECONDS)
-		M.visible_message("<span style=\"color:red\"><b>[M] closes his grip!</b></span>")
+		M.visible_message("<span class='alert'><b>[M] closes his grip!</b></span>")
 		mob_target.losebreath += 10
 
 		actions.start(new/datum/action/bar/icon/force_choke_action(M,holder,mob_target,src,original_pixel_y), M)
@@ -490,7 +490,7 @@
 
 		if(HH.losebreath < 8)
 			HH.losebreath += 5
-			HH.visible_message("<span style=\"color:red\"><b>[HH] is grasping their neck desperately trying to breathe in!</b></span>", "<span style=\"color:red\"><b>Something is constricting your throat, you cannot breathe!</b></span>")
+			HH.visible_message("<span class='alert'><b>[HH] is grasping their neck desperately trying to breathe in!</b></span>", "<span class='alert'><b>Something is constricting your throat, you cannot breathe!</b></span>")
 		HH.changeStatus("stunned", 10 SECONDS)
 
 		H.points -= 5
@@ -506,9 +506,9 @@
 		..()
 		HH.pixel_y = original_pixel_y
 		if (H.points == 0)
-			boutput(M, "<span style=\"color:red\">You don't have enough energy to continue gripping the target.</span>")
+			boutput(M, "<span class='alert'>You don't have enough energy to continue gripping the target.</span>")
 		else
-			boutput(M, "<span style=\"color:red\">Your grip ability was interrupted.</span>")
+			boutput(M, "<span class='alert'>Your grip ability was interrupted.</span>")
 
 /datum/targetable/cyalume_knight/force_heal
 	name = "Heal"
@@ -524,7 +524,7 @@
 
 		var/mob/living/M = holder.owner
 
-		M.visible_message("<span style=\"color:red\"><b>[M] stands still, focused in meditation!</b></span>", "<span style=\"color:red\"><b>You begin meditation.</b></span>")
+		M.visible_message("<span class='alert'><b>[M] stands still, focused in meditation!</b></span>", "<span class='alert'><b>You begin meditation.</b></span>")
 
 		actions.start(new/datum/action/bar/icon/force_heal_action(M,holder,src), M)
 
@@ -570,10 +570,10 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.updatehealth()
-			M.visible_message("<span style=\"color:red\">Some of [M]'s wounds slowly fade away!</span>", "<span style=\"color:red\">Your wounds begin to fade away.</span>")
+			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
 			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
 		else
-			boutput(M, "<span style=\"color:red\">You don't have any lingering wounds to heal.</span>")
+			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -589,6 +589,6 @@
 	onInterrupt()
 		..()
 		if (H.points == 0)
-			boutput(M, "<span style=\"color:red\">You don't have enough energy to continue healing.</span>")
+			boutput(M, "<span class='alert'>You don't have enough energy to continue healing.</span>")
 		else
-			boutput(M, "<span style=\"color:red\">Your healing meditation was interrupted.</span>")
+			boutput(M, "<span class='alert'>Your healing meditation was interrupted.</span>")

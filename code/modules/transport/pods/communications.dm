@@ -32,7 +32,7 @@
 			for(var/obj/machinery/mining_magnet/MM in range(7,src.ship))
 				MM.generate_interface(usr)
 				return null
-			boutput(usr, "<span style=\"color:red\">No magnet found in range of seven meters.</span>")
+			boutput(usr, "<span class='alert'>No magnet found in range of seven meters.</span>")
 			return null
 
 	syndicate

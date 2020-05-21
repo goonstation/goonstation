@@ -59,14 +59,14 @@
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
-	/obj/machinery/light_area_manager/ex_act(severity)
-		return
+/obj/machinery/light_area_manager/ex_act(severity)
+	return
 
-	/obj/machinery/light_area_manager/process()
-		if(my_area && my_area.power_light && my_area.lightswitch)
-			..()
-			var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
-			use_power(thepower * lights.len, LIGHT)
+/obj/machinery/light_area_manager/process()
+	if(my_area && my_area.power_light && my_area.lightswitch)
+		..()
+		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
+		use_power(thepower * lights.len, LIGHT)
 
 
 // the standard tube light fixture
@@ -79,18 +79,19 @@
 	icon_state = "tube1"
 	desc = "A lighting fixture."
 	anchored = 1
-	layer = EFFECTS_LAYER_UNDER_1  					// They were appearing under mobs which is a little weird - Ostaf
-	var/on = 0					// 1 if on, 0 if off
-	var/brightness = 1.6			// luminosity when on, also used in power calculation
-	var/light_status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_ABOVE
+	var/on = 0 // 1 if on, 0 if off
+	var/brightness = 1.6 // luminosity when on, also used in power calculation
+	var/light_status = LIGHT_OK	// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 
-	var/obj/item/light/light_type = /obj/item/light/tube		// the type of the inserted light item
-	var/allowed_type = /obj/item/light/tube					// the type of allowed light items
+	var/obj/item/light/light_type = /obj/item/light/tube // the type of the inserted light item
+	var/allowed_type = /obj/item/light/tube // the type of allowed light items
 	var/light_name = "light tube"				// the name of the inserted light item
 
 	var/fitting = "tube"
-	var/switchcount = 0			// count of number of times switched on/off
-								// this is used to calc the probability the light burns out
+	var/switchcount = 0	// count of number of times switched on/off
+											// this is used to calc the probability the light burns out
 
 	var/wallmounted = 1
 	var/nostick = 1 //If set to true, overrides the autopositioning.
@@ -342,10 +343,10 @@
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span style=\"color:red\">[src] can now be moved.</span>")
+				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
 				src.on = 0
 			else
-				boutput(user, "<span style=\"color:red\">[src] is now secured.</span>")
+				boutput(user, "<span class='alert'>[src] is now secured.</span>")
 				src.on = 1
 
 			update()
@@ -512,19 +513,21 @@
 	update()
 
 // examine verb
-/obj/machinery/light/examine()
-	set src in oview(1)
-	set category = "Local"
-	if(usr && !usr.stat)
-		switch(light_status)
-			if(LIGHT_OK)
-				boutput(usr, "[desc] It is turned [on? "on" : "off"].")
-			if(LIGHT_EMPTY)
-				boutput(usr, "[desc] The [fitting] has been removed.")
-			if(LIGHT_BURNED)
-				boutput(usr, "[desc] The [fitting] is burnt out.")
-			if(LIGHT_BROKEN)
-				boutput(usr, "[desc] The [fitting] has been smashed.")
+/obj/machinery/light/examine(mob/user)
+	. = ..()
+
+	if(!user || user.stat)
+		return
+
+	switch(light_status)
+		if(LIGHT_OK)
+			. += "[desc] It is turned [on? "on" : "off"]."
+		if(LIGHT_EMPTY)
+			. += "[desc] The [fitting] has been removed."
+		if(LIGHT_BURNED)
+			. += "[desc] The [fitting] is burnt out."
+		if(LIGHT_BROKEN)
+			. += "[desc] The [fitting] has been smashed."
 
 
 

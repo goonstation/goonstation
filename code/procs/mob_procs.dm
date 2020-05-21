@@ -270,11 +270,11 @@
 		for (var/obj/item/cloaking_device/C in src)
 			if (C.active)
 				C.deactivate(src)
-				src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+				src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 		for (var/obj/item/device/disguiser/D in src)
 			if (D.on)
 				D.disrupt(src)
-				src.visible_message("<span style=\"color:blue\"><b>[src]'s disguiser is disrupted!</b></span>")
+				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
 
 	return
 
@@ -359,7 +359,7 @@
 	//DEBUG_MESSAGE("Apply_sonic_stun() called for [src] at [log_loc(src)]. W: [weak], S: [stun], MS: [misstep], SL: [slow], DI: [drop_item], ED: [ears_damage], EF: [ear_tempdeaf]")
 
 	// Stun target mob.
-	boutput(src, "<span style=\"color:red\"><b>You hear an extremely loud noise!</b></span>")
+	boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
 
 
 #ifdef USE_STAMINA_DISORIENT
@@ -993,7 +993,7 @@
 		if (S == "window" && istype(target, /obj/window))
 			var/obj/window/W = target
 			if (show_message)
-				src.visible_message("<span style=\"color:red\">[src] smashes through the window.</span>", "<span style=\"color:blue\">You smash through the window.</span>")
+				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span class='notice'>You smash through the window.</span>")
 			W.health = 0
 			W.smash()
 			return 1
@@ -1002,7 +1002,7 @@
 			var/obj/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
-					G.visible_message("<span style=\"color:red\"><b>[src]</b> violently slashes [G]!</span>")
+					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
 				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
 				G.damage_slashing(15)
 				return 1

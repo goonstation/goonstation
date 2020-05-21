@@ -450,12 +450,12 @@
 	else if(input == "Artifact") R = artifact_research
 	else if(input == "Robotics") R = robotics_research
 	else
-		boutput(usr, "<span style=\"color:red\">Invalid Research type.</span>")
+		boutput(usr, "<span class='alert'>Invalid Research type.</span>")
 		return 0
 
 	var/input2 = input("Which tier?", "Which?", null) as num
 	if (input2 > R.max_tiers)
-		boutput(usr, "<span style=\"color:red\">This research doesn't have that many tiers!</span>")
+		boutput(usr, "<span class='alert'>This research doesn't have that many tiers!</span>")
 		return
 	if (input2 < 1) return
 
@@ -467,7 +467,7 @@
 		unfinished += a
 
 	if (!count)
-		boutput(usr, "<span style=\"color:red\">Nothing left to research in that tier.</span>")
+		boutput(usr, "<span class='alert'>Nothing left to research in that tier.</span>")
 		return
 	var/complete = input("Give which research?", "Which?", null) as null|anything in unfinished
 	if (!complete) return
@@ -487,12 +487,12 @@
 	else if(input == "Artifact") R = artifact_research
 	else if(input == "Robotics") R = robotics_research
 	else
-		boutput(usr, "<span style=\"color:red\">Invalid Research type.</span>")
+		boutput(usr, "<span class='alert'>Invalid Research type.</span>")
 		return 0
 
 	var/input2 = input("Which tier?", "Which?", null) as num
 	if (input2 > R.max_tiers)
-		boutput(usr, "<span style=\"color:red\">This research doesn't have that many tiers!</span>")
+		boutput(usr, "<span class='alert'>This research doesn't have that many tiers!</span>")
 		return
 	if (input2 < 1) return
 
@@ -513,12 +513,12 @@
 	else if(input == "Artifact") R = artifact_research
 	else if(input == "Robotics") R = robotics_research
 	else
-		boutput(usr, "<span style=\"color:red\">Invalid Research type.</span>")
+		boutput(usr, "<span class='alert'>Invalid Research type.</span>")
 		return 0
 
 	var/input2 = input("Which tier?", "Which?", null) as num
 	if (input2 > R.max_tiers)
-		boutput(usr, "<span style=\"color:red\">This research doesn't have that many tiers!</span>")
+		boutput(usr, "<span class='alert'>This research doesn't have that many tiers!</span>")
 		return
 	if (input2 < 1) return
 
@@ -529,7 +529,7 @@
 		unfinished += a
 
 	if (!count)
-		boutput(usr, "<span style=\"color:red\">Nothing has been researched in that tier.</span>")
+		boutput(usr, "<span class='alert'>Nothing has been researched in that tier.</span>")
 		return
 	var/complete = input("Revoke which research?", "Which?", null) as null|anything in unfinished
 	if (!complete) return
@@ -549,12 +549,12 @@
 	else if(input == "Artifact") R = artifact_research
 	else if(input == "Robotics") R = robotics_research
 	else
-		boutput(usr, "<span style=\"color:red\">Invalid Research type.</span>")
+		boutput(usr, "<span class='alert'>Invalid Research type.</span>")
 		return 0
 
 	var/input2 = input("Which tier?", "Which?", null) as num
 	if (input2 > R.max_tiers)
-		boutput(usr, "<span style=\"color:red\">This research doesn't have that many tiers!</span>")
+		boutput(usr, "<span class='alert'>This research doesn't have that many tiers!</span>")
 		return
 	if (input2 < 1) return
 

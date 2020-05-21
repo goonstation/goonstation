@@ -118,6 +118,7 @@
 						if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //split this up as it was long
 							return 1
 				return 0
+
 		brigstir
 			explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 			medal_name = "Monkey Duty"
@@ -236,7 +237,7 @@
 					if (istype(S) && istype(get_area(S), /area/station/hydroponics))
 						return 0
 				for (var/obj/machinery/plantpot/PP in machine_registry[MACHINES_PLANTPOTS])
-					if (PP.current && istype(PP.current, /datum/plant/cannabis))
+					if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
 						if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
 							return 0
 				return 1

@@ -58,7 +58,7 @@
 			var/mob/living/carbon/human/H = src.loc
 			if (!H.bioHolder || !H.bioHolder.mobAppearance)
 				return
-			H.visible_message("<span style=\"color:blue\"><b>[H]'s [src.name] is disrupted!</b></span>")
+			H.visible_message("<span class='notice'><b>[H]'s [src.name] is disrupted!</b></span>")
 			src.disrupt(H)
 		return
 

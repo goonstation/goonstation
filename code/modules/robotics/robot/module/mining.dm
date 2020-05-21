@@ -4,7 +4,7 @@
 	icon_state = "mining"
 	mod_hudicon = "mining"
 	included_cosmetic = /datum/robot_cosmetic/mining
-	included_items = /datum/robot/module_item_creator/recursive/module/mining
+	included_tools = /datum/robot/module_tool_creator/recursive/module/mining
 	radio_type = /obj/item/device/radio/headset/engineer
 
 /datum/robot_cosmetic/mining

@@ -168,7 +168,7 @@
 	onStart()
 		..()
 		if(owner && target)
-			boutput(owner, "<span class='text-blue'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
+			boutput(owner, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
 			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 50, 1)
 
 			// do effect
@@ -242,7 +242,7 @@
 	onStart()
 		..()
 		if(owner && target)
-			boutput(owner, "<span class='text-blue'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
+			boutput(owner, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
 			if(duration <= 30)
 				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 			else
@@ -301,14 +301,14 @@
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			F.canmove = 0
-		boutput(owner, "<span class='text-blue'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
+		boutput(owner, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
 
 	onEnd()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
 		if(F && F.flock)
 			F.canmove = 1
-			F.visible_message("<span class='text-red'>[owner] deploys some sort of device!</span>", "<span class='text-blue'>You deploy a second-stage assembler.</span>")
+			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)
 			playsound(get_turf(F), "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
 			F.pay_resources(100)
@@ -343,9 +343,9 @@
 		if(target)
 			var/mob/living/critter/flock/F = owner
 			if(F)
-				F.tri_message("<span class='text-blue'>[owner] begins spraying glowing fibres onto [target].</span>",
-					F, "<span class='text-blue'>You begin repairing [target.real_name]. You will both need to stay still for this to work.</span>",
-					target, "<span class='text-blue'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+				F.tri_message("<span class='notice'>[owner] begins spraying glowing fibres onto [target].</span>",
+					F, "<span class='hint'>You begin repairing [target.real_name]. You will both need to stay still for this to work.</span>",
+					target, "<span class='hint'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
 					"You hear hissing and spraying.")
 				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 				if(target.is_npc)
@@ -389,9 +389,9 @@
 		if(target)
 			var/mob/living/critter/flock/F = owner
 			if(F)
-				F.tri_message("<span class='text-blue'>[owner] begins forming a cuboid structure around [target].</span>",
-					F, "<span class='text-blue'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
-					target, "<span class='text-red'>[F] is forming a structure around you!</span>",
+				F.tri_message("<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
+					F, "<span class='notice'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
+					target, "<span class='alert'>[F] is forming a structure around you!</span>",
 					"You hear strange building noises.")
 				// do effect
 				src.decal = unpool(/obj/decal/flock_build_wall)
@@ -412,6 +412,6 @@
 		var/mob/living/critter/flock/F = owner
 		if(F)
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
-			cage.visible_message("<span class='text-red>[src] forms around [target], entombing them completely!</span>")
+			cage.visible_message("<span class='alert'>[src] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
 			playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)

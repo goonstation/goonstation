@@ -154,11 +154,12 @@
 					return
 
 				M.pulling = null
-				boutput(M, "<span style=\"color:blue\">You slipped on the PDA!</span>")
+				boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 				if (M.bioHolder.HasEffect("clumsy"))
 					M.changeStatus("stunned", 80)
 					M.changeStatus("weakened", 5 SECONDS)
+					JOB_XP(M, "Clown", 1)
 				else
 					M.changeStatus("weakened", 2 SECONDS)
 				M.force_laydown_standup()
@@ -293,10 +294,10 @@
 
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.literate)
-		boutput(user, "<span class='text-red'>You don't know how to read, the screen is meaningless to you.</span>")
+		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/wincheck = winexists(user, "pda2_\ref[src]")
 	//boutput(world, wincheck)
@@ -385,7 +386,7 @@
 			return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["return_to_host"])
 			if (src.host_program)
@@ -406,7 +407,7 @@
 
 		else if (href_list["close"])
 			usr.Browse(null, "window=pda2_\ref[src]")
-			usr.machine = null
+			src.remove_dialog(usr)
 
 		src.updateSelfDialog()
 		return
@@ -420,17 +421,17 @@
 	if (istype(C, /obj/item/disk/data/cartridge) && isnull(src.cartridge))
 		user.drop_item()
 		C.set_loc(src)
-		boutput(user, "<span style=\"color:blue\">You insert [C] into [src].</span>")
+		boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
 		src.cartridge = C
 		src.updateSelfDialog()
 
 	else if (istype(C, /obj/item/device/pda_module))
 		if(src.closed)
-			boutput(user, "<span style=\"color:red\">The casing is closed!</span>")
+			boutput(user, "<span class='alert'>The casing is closed!</span>")
 			return
 
 		if(src.module)
-			boutput(user, "<span style=\"color:red\">There is already a module installed!</span>")
+			boutput(user, "<span class='alert'>There is already a module installed!</span>")
 			return
 
 		user.drop_item()
@@ -450,7 +451,7 @@
 			return
 
 		if(src.closed)
-			boutput(user, "<span style=\"color:red\">The casing is closed!</span>")
+			boutput(user, "<span class='alert'>The casing is closed!</span>")
 			return
 
 		src.module.set_loc(get_turf(src))
@@ -462,30 +463,29 @@
 	else if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!ID.registered)
-			boutput(user, "<span style=\"color:red\">This ID isn't registered to anyone!</span>")
+			boutput(user, "<span class='alert'>This ID isn't registered to anyone!</span>")
 			return
 		if (!src.owner)
 			src.owner = ID.registered
 			src.ownerAssignment = ID.assignment
 			src.name = "PDA-[src.owner]"
-			boutput(user, "<span style=\"color:blue\">Card scanned.</span>")
+			boutput(user, "<span class='notice'>Card scanned.</span>")
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
-				boutput(user, "<span style=\"color:blue\">You swap [ID] and [src.ID_card].</span>")
+				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
 				return
 			else if (!src.ID_card)
 				src.insert_id_card(ID, user)
-				boutput(user, "<span style=\"color:blue\">You insert [ID] into [src].</span>")
+				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
 /obj/item/device/pda2/examine()
-	..()
-	boutput(usr, "The back cover is [src.closed ? "closed" : "open"].")
+	. = ..()
+	. += "The back cover is [src.closed ? "closed" : "open"]."
 	if (src.ID_card)
-		boutput(usr, "[ID_card] has been inserted into it.")
-	return
+		. += "[ID_card] has been inserted into it."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return
@@ -546,7 +546,7 @@
 		scan_dat = scan_atmospheric(A, visible = 1) // Replaced with global proc (Convair880).
 
 	if(scan_dat)
-		A.visible_message("<span style=\"color:red\">[user] has scanned [A]!</span>")
+		A.visible_message("<span class='alert'>[user] has scanned [A]!</span>")
 		user.show_message(scan_dat, 1)
 
 	return
@@ -781,7 +781,7 @@
 	proc/explode()
 		if (src.bombproof)
 			if (ismob(src.loc))
-				boutput(src.loc, "<span style=\"color:red\"><b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked.</span>")
+				boutput(src.loc, "<span class='alert'><b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked.</span>")
 			return
 
 		if(src in bible_contents)
@@ -798,7 +798,7 @@
 
 		if (ismob(src.loc))
 			var/mob/M = src.loc
-			M.show_message("<span style=\"color:red\">Your [src] explodes!</span>", 1)
+			M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
 
 		if(T)
 			T.hotspot_expose(700,125)

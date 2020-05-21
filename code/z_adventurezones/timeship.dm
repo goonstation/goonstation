@@ -97,7 +97,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 /obj/machinery/bot/guardbot/future
 	name = "Wally-392"
 	desc = "A PR-7 Robuddy!  Whoa, these don't even exist yet!  Why does this one look so old then?"
-	icon = 'icons/misc/newbots.dmi'
+	icon = 'icons/obj/bots/newbots.dmi'
 	health = 50
 	setup_unique_name = 1
 	hat_x_offset = -6
@@ -271,7 +271,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 					dialogChecklist |= WD_SLEEPER_SCREAM
 
 					src.master.speak("Oh no oh no oh no no no no")
-					src.master.visible_message( "<span style=\"color:red\">[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]</span>")
+					src.master.visible_message( "<span class='alert'>[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]</span>")
 					src.master.set_emotion("screaming")
 					SPAWN_DBG (40)
 						if (src.master)

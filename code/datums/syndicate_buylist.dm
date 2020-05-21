@@ -75,6 +75,14 @@ proc/build_syndi_buylist_cache()
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
 	blockedmode = list(/datum/game_mode/revolution)
 
+#if ASS_JAM
+/datum/syndicate_buylist/generic/crabgun
+	name = "Crabgun"
+	item = /obj/item/gun/energy/crabgun
+	cost = 6
+	desc = "This genetically modified crab can shoot claws containing strands of part its own DNA, allowing you to instantly transform targets into crabs. No need to feed it, it's battery powered."
+#endif
+
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
 	item = /obj/item/storage/box/emp_kit
@@ -324,6 +332,13 @@ proc/build_syndi_buylist_cache()
 	item = /obj/item/lightbreaker
 	cost = 3
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound."
+
+/datum/syndicate_buylist/traitor/sonicgrenades
+	name = "Sonic Grenades"
+	item = /obj/item/storage/box/sonic_grenade_kit
+	cost = 2
+	desc = "Each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/surplus
 	name = "Surplus Crate"
@@ -620,7 +635,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/pickpocket
 	cost = 3
 	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	job = list("Engineer", "Chief Engineer", "Mechanic")
+	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -628,7 +643,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
 	desc = "A bottle of poison. Which poison? Who knows."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Barman")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Barman")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chemicompiler
@@ -673,7 +688,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/food/snacks/condiment/syndisauce
 	cost = 1
 	desc = "Our patented secret blend of herbs and spices! Guaranteed to knock even the harshest food critic right off their feet! And into the grave. Because this is poison."
-	job = list("Chef")
+	job = list("Chef", "Barman")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/donkpockets
@@ -714,7 +729,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/vuvuzela_gun
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/moustache_grenade
@@ -722,7 +737,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/old_grenade/moustache
 	cost = 1
 	desc = "A disturbingly hairy grenade."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/hotdog_bomb
@@ -730,16 +745,8 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gimmickbomb/hotdog
 	cost = 1
 	desc = "Turn your worst enemies into hotdogs."
-	job = list("Chef", "Sous-Chef", "Waiter")
+	job = list("Chef", "Sous-Chef", "Waiter", "Clown")
 	blockedmode = list(/datum/game_mode/revolution)
-
-/datum/syndicate_buylist/traitor/sonicgrenades
-	name = "Sonic Grenades"
-	item = /obj/item/storage/box/sonic_grenade_kit
-	cost = 2
-	desc = "Each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
-	job = list("Scientist")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chemgrenades
 	name = "Chem Grenade Starter Kit"

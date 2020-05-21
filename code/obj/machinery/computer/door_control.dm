@@ -26,7 +26,7 @@
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>Brig Computer</B><br><br>"
-	user.machine = src
+	src.add_dialog(user)
 	for(var/obj/machinery/door/window/brigdoor/M in doors)  //DOORS OH MY GOD (was previously looping through WORLD)
 		if(M.id == 1)
 			dat += text("<A href='?src=\ref[src];setid=1'>Door 1: [(M.density ? "Closed" : "Opened")]</A><br>")
@@ -51,7 +51,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["setid"])
 			if(src.allowed(usr))
 				src.id = text2num(href_list["setid"])

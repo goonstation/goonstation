@@ -36,7 +36,7 @@
 				return
 			if (prob(8)) H.emote(pick("pale", "shudder"))
 			if (prob(5))
-				boutput(H, "<span style=\"color:red\">Your abdomen hurts!</span>")
+				boutput(H, "<span class='alert'>Your abdomen hurts!</span>")
 			if (prob(10))
 				H.show_text(pick_string("organ_disease_messages.txt", "appendicitis0"), "red")
 		if (2)
@@ -47,9 +47,9 @@
 				return
 			if (prob(10))
 				H.vomit()
-				H.visible_message("<span style=\"color:red\">[H] suddenly and violently vomits!</span>")
+				H.visible_message("<span class='alert'>[H] suddenly and violently vomits!</span>")
 			else if (prob(2))
-				H.visible_message("<span style=\"color:red\">[H] vomits blood!</span>")
+				H.visible_message("<span class='alert'>[H] vomits blood!</span>")
 				playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(H, rand(5,8))
 				bleed(H, rand(5,8), 5)
@@ -58,9 +58,9 @@
 				H.bodytemperature += 4
 				H.show_text(pick_string("organ_disease_messages.txt", "appendicitis1"), "red")
 			if (prob(5))
-				boutput(H, "<span style=\"color:red\">Your back aches terribly!</span>")
+				boutput(H, "<span class='alert'>Your back aches terribly!</span>")
 			if (prob(3))
-				boutput(H, "<span style=\"color:red\">You feel excruciating pain in your upper-right adbomen!</span>")
+				boutput(H, "<span class='alert'>You feel excruciating pain in your upper-right adbomen!</span>")
 				// H.organHolder.takepancreas
 
 			if (prob(5)) H.emote(pick("faint", "collapse", "groan"))
@@ -78,8 +78,10 @@
 
 					if (prob(20))
 						H.reagents.add_reagent("toxin", 20)
+					#ifdef CREATE_PATHOGENS
 					add_pathogens(H, 30)
-					boutput(H, "<span style=\"color:red\">Your appendix has burst! Seek medical help!</span>")
+					#endif
+					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
 
 			H.take_toxin_damage(1)
 			H.updatehealth()

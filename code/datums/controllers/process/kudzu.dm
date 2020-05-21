@@ -23,7 +23,7 @@ datum/controller/process/kudzu
 					//make cocoon
 					var/obj/icecube/kudzu/cube = new /obj/icecube/kudzu(get_turf(M), M)
 					M.set_loc(cube)
-					cube.visible_message("<span style=\"color:red\"><B>[M] is covered by the vines!</span>")
+					cube.visible_message("<span class='alert'><B>[M] is covered by the vines!</span>")
 			// return
 
 		for (var/obj/spacevine/K in kudzu)

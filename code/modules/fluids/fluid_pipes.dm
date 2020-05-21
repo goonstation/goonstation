@@ -284,7 +284,7 @@ proc/flow_through(var/list/obj/fluid_pipe/path, max_allowed_flow)
 	for(var/obj/fluid_pipe/pipe in path)
 		if(pipe.capacity - pipe.used_capacity < min_capacity)
 			min_capacity = pipe.capacity - pipe.used_capacity
-	min_capacity = CLAMP(min_capacity,0,max_allowed_flow)
+	min_capacity = clamp(min_capacity,0,max_allowed_flow)
 	DEBUG_MESSAGE("Pushing [min_capacity] through this path.")
 	for(var/obj/fluid_pipe/pipe in path)
 		pipe.used_capacity += min_capacity

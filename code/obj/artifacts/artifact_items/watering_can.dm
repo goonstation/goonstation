@@ -156,8 +156,7 @@
 			..()
 
 	examine()
-		boutput(usr, "[desc]")
-		return
+		return list(desc)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

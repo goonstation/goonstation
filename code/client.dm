@@ -120,6 +120,9 @@
 
 	src.images.Cut() //Probably not needed but eh.
 
+	if (src.mob)
+		src.mob.remove_dialogs()
+
 	clients -= src
 	if(src.holder)
 		onlineAdmins.Remove(src)
@@ -230,7 +233,7 @@
 	if (isbanned)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span style=\"color:blue\">Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		if (announce_banlogin) message_admins("<span class='notice'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
 		SPAWN_DBG(0)
 			var/banstring = {"
 								<!doctype html>
@@ -266,17 +269,11 @@
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
 			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span style=\"color:blue\">Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
+			if (announce_banlogin) message_admins("<span class='notice'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
-
-	//if (((world.address == src.address || !(src.address)) && !(host)))
-		//host = src.key
-		//src.holder = new /datum/admins(src)
-		//src.holder.rank = "Host"
-		//world.update_status()
 
 	if(player_capa)
 		var/howmany = 0
@@ -350,7 +347,7 @@
 			if(!preferences.savefile_load(src))
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
-				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
+				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
 
@@ -362,8 +359,7 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog)
 				if (!cdn)
-					src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
-					src << browse_rsc(file("browserassets/images/changelog/somerights20.png"))
+					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
 				changes()
 
@@ -384,9 +380,9 @@
 					return
 
 
-			if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-				if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-					src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
+			// if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
+			// 	if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
+			// 		src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
 
 
 		else
@@ -395,6 +391,8 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+			if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+				boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
 		src.update_world()
@@ -514,7 +512,7 @@
 */
 
 /client/proc/init_admin()
-	if(!address)
+	if(!address || (world.address == src.address))
 		admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
 		src.holder = new /datum/admins(src)
@@ -772,6 +770,8 @@ var/global/curr_day = null
 
 	if (!src.holder)//todo : maybe give admins a toggle
 		sleep(1.2 SECONDS) //and make this number larger
+	else
+		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))
@@ -792,7 +792,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style=\"color:blue\" class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
+			boutput(src.mob, "<span class='notice' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
 
@@ -800,7 +800,7 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("pm", ircmsg)
 
@@ -824,7 +824,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 			logTheThing("mentor_help", src, null, "<b>Mentor PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "Mentor PM'd [target]: [t]", "admin")
 
@@ -832,7 +832,7 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("mentorpm", ircmsg)
 
@@ -843,9 +843,9 @@ var/global/curr_day = null
 						if (K.client.player_mode && !K.client.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 
 		if ("mentor_msg")
 			if (M)
@@ -865,14 +865,14 @@ var/global/curr_day = null
 					return
 
 				if (src.holder)
-					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
-						boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 					else
-						boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					boutput(usr, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing("mentor_help", src.mob, M, "Mentor PM'd %target%: [t]")
 				logTheThing("diary", src.mob, M, "Mentor PM'd %target%: [t]", "admin")
@@ -891,14 +891,14 @@ var/global/curr_day = null
 							if (K.client.player_mode && !K.client.player_mode_mhelp)
 								continue
 							else
-								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 		if ("mach_close")
 			var/window = href_list["window"]
 			var/t1 = text("window=[window]")
-			usr.machine = null
+			usr.remove_dialogs()
 			usr.Browse(null, t1)
 			//Special cases
 			switch (window)
@@ -913,7 +913,7 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span style='color:blue;'><b>Preload completed.</b></span>")
+			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
 			return
 

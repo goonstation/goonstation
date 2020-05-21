@@ -159,7 +159,7 @@
 		return
 
 	src.icon_state = "doubleghost"
-	src.visible_message("<span style=\"color:red\"><b>[src] is busted!</b></span>","<span style=\"color:red\">You are demateralized into a state of further death!</span>")
+	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
 		wig.loc = src.loc
@@ -228,6 +228,8 @@
 		abilityHolder.owner = src
 
 	updateButtons()
+	if (render_special)
+		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 	SPAWN_DBG(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
@@ -264,6 +266,7 @@
 			src.hell_respawn(src.mind)
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
+		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
 			if (OS)
@@ -348,11 +351,6 @@
 		O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
 
 
-
-		var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-		newbio.CopyOther(src.bioHolder, copyActiveEffects = 0)
-		O.bioHolder = newbio
-
 	return O
 
 /mob/living/silicon/robot/ghostize()
@@ -398,7 +396,7 @@
 	set category = "Ghost"
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	if(!ticker || !ticker.centralized_ai_laws)
@@ -538,7 +536,7 @@
 	// ooooo its a secret, oooooo!!
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	var/x = input("Enter view width in tiles: (Capped at 59)", "Width", 15)

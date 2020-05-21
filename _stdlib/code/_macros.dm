@@ -3,11 +3,15 @@
 
 // comment this line to disable or enable spawn debugging. it's pretty cheap and safe for the live servers though.
 // #define ENABLE_SPAWN_DEBUG
+// #define ENABLE_SPAWN_DEBUG_2
 
 // for this to work, use SPAWN_DBG() instead of spawn(). thank you for loving pupkin. -singh
 #ifdef ENABLE_SPAWN_DEBUG
 var/list/global_spawn_dbg = list()
 #define SPAWN_DBG(x) global_spawn_dbg["spawn at [__FILE__]:[__LINE__]"]++; spawn(x)
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+var/list/detailed_spawn_dbg = list()
+#define SPAWN_DBG(x) detailed_spawn_dbg += list(list("[__FILE__]:[__LINE__]", TIME, TIME + x)); spawn(x)
 #else
 #define SPAWN_DBG(x) spawn(x)
 #endif
@@ -106,9 +110,8 @@ var/list/global_spawn_dbg = list()
 
 #define DEBUG_MESSAGE(x) if (debug_messages) message_coders(x)
 #define DEBUG_MESSAGE_VARDBG(x,d) if (debug_messages) message_coders_vardbg(x,d)
-#define __red(x) text("<span style='color:red'>[]</span>", x)  //deprecated for some reason
-#define __blue(x) text("<span style='color:blue'>[]</span>", x) //deprecated for some reason
-#define __green(x) text("<span style='color:green'>[]</span>", x) //deprecated for some reason
+#define __red(x) text("<span class='alert'>[]</span>", x)  //deprecated for some reason
+#define __blue(x) text("<span class='notice'>[]</span>", x) //deprecated for some reason
 
 #define TimeOfHour world.timeofday % 36000
 //#endif
@@ -183,3 +186,9 @@ var/list/global_spawn_dbg = list()
 
 //used for pods
 #define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
+
+
+// num2hex, hex2num
+#define num2hex(X, len) num2text(X, len, 16)
+
+#define hex2num(X) text2num(X, 16)

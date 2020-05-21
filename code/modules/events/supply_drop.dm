@@ -21,7 +21,7 @@
 			SPAWN_DBG(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in battle_pass_holders)
-			boutput(M.current, "<span style=\"color:blue\">A supply drop will happen soon in the [A.name]</span>")
+			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
 
 /obj/effect/supplymarker
 	name = ""

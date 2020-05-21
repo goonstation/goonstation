@@ -13,7 +13,7 @@
 /area
 	var
 		force_fullbright = 0
-		ambient_light = rgb(0.025 * 255, 0.025 * 255, 0.025 * 255)
+		ambient_light = null //rgb(0.025 * 255, 0.025 * 255, 0.025 * 255)
 
 	New()
 		..()

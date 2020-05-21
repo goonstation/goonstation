@@ -256,40 +256,38 @@
 	if (!thing || !target) return
 	var/diff_x = target.x
 	var/diff_y = target.y
-	SPAWN_DBG(0)
-		if (target && thing) //I want these to be recent, but sometimes they can be deleted during course of a spawn
-			diff_x = diff_x - thing.x
-			diff_y = diff_y - thing.y
+	if (target && thing) //I want these to be recent, but sometimes they can be deleted during course of a spawn
+		diff_x = diff_x - thing.x
+		diff_y = diff_y - thing.y
 
-		if (ismob(thing))
-			var/mob/M = thing
+	if (ismob(thing))
+		var/mob/M = thing
 
-			if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
-				return
+		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
+			return
 
-			var/obj/item/I = target
-			if (I && !isgrab(I))
-				M.attack_particle.icon = I.icon
-				M.attack_particle.icon_state = I.icon_state
-			else
-				M.attack_particle.icon = 'icons/mob/mob.dmi'
-				M.attack_particle.icon_state = "[M.a_intent]"
+		var/obj/item/I = target
+		if (I && !isgrab(I))
+			M.attack_particle.icon = I.icon
+			M.attack_particle.icon_state = I.icon_state
+		else
+			M.attack_particle.icon = 'icons/mob/mob.dmi'
+			M.attack_particle.icon_state = "[M.a_intent]"
 
-			M.attack_particle.alpha = 200
-			M.attack_particle.loc = thing.loc
-			M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
-			M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
+		M.attack_particle.alpha = 200
+		M.attack_particle.loc = thing.loc
+		M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
+		M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
 
-			var/matrix/start = matrix()//(I.transform)
-			M.attack_particle.transform = start
-			var/matrix/t_size = matrix()
-			t_size.Scale(0.3,0.3)
-			t_size.Turn(rand(-40,40))
+		var/matrix/start = matrix()//(I.transform)
+		M.attack_particle.transform = start
+		var/matrix/t_size = matrix()
+		t_size.Scale(0.3,0.3)
+		t_size.Turn(rand(-40,40))
 
-			animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
-			animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
-			SPAWN_DBG(1 DECI SECOND)
-				animate(M.attack_particle, alpha = 0, time = 1, flags = ANIMATION_PARALLEL)
+		animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
+		animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
+		animate(alpha = 0, time = 1)
 
 
 /proc/pull_particle(var/mob/M, var/atom/target)
@@ -421,6 +419,57 @@ proc/fuckup_attack_particle(var/mob/M)
 		x *= 22
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
+	if (!M || !M.attack_particle || !origin || !target || !muzzle_anim) return
+
+	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
+	var/firing_angle = get_angle(origin, target)
+	var/firing_dir = angle_to_dir(firing_angle)
+	switch(firing_dir) //so we apply the correct offset
+		if (NORTH)
+			M.attack_particle.pixel_y = 32
+		if (SOUTH)
+			M.attack_particle.pixel_y = -32
+		if (EAST)
+			M.attack_particle.pixel_x = offset
+		if (WEST)
+			M.attack_particle.pixel_x = -offset
+		if (NORTHEAST) //diags look a little weird but what can you do
+			M.attack_particle.pixel_y = offset
+			M.attack_particle.pixel_x = offset
+		if (NORTHWEST)
+			M.attack_particle.pixel_y = offset
+			M.attack_particle.pixel_x = -offset
+		if (SOUTHEAST)
+			M.attack_particle.pixel_y = -offset
+			M.attack_particle.pixel_x = offset
+		if (SOUTHWEST)
+			M.attack_particle.pixel_y = -offset
+			M.attack_particle.pixel_x = -offset
+
+	var/matrix/start = matrix()
+	M.attack_particle.transform = start
+
+	M.attack_particle.Turn(firing_angle)
+	M.attack_particle.layer = MOB_INHAND_LAYER //so it looks like its from the weapon maybe??
+
+	M.attack_particle.set_loc(M) //so it doesnt linger when we move part 1
+	M.vis_contents.Add(M.attack_particle) //so it doesnt linger when we move part 2
+	M.attack_particle.invisibility = M.invisibility
+	M.last_interact_particle = world.time
+	M.attack_particle.alpha = 255
+	M.attack_particle.icon = 'icons/mob/mob.dmi'
+	if (M.attack_particle.icon_state == muzzle_anim)
+		flick(muzzle_anim,M.attack_particle)
+	M.attack_particle.icon_state = muzzle_anim
+
+	SPAWN_DBG(1.7 DECI SECONDS) //clears all the bs we had to do
+		M.attack_particle.alpha = 0
+		M.attack_particle.pixel_x = 0
+		M.attack_particle.pixel_y = 0
+		M.vis_contents.Remove(M.attack_particle)
+		M.attack_particle.layer = EFFECTS_LAYER_BASE
 
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))

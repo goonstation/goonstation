@@ -104,10 +104,11 @@ datum
 			var/current_cycle = 0
 			var/datum/controller/process/air_system/parent_controller = null
 
-			var/turf/space/sample = 0 //instead of repeatedly using locate() to find space, we should just cache a space tile ok
+			var/turf/space/space_sample = 0 //instead of repeatedly using locate() to find space, we should just cache a space tile ok
 
 			proc
 				setup(datum/controller/process/air_system/controller)
+					update_space_sample()
 					//Call this at the start to setup air groups geometry
 					//Warning: Very processor intensive but only must be done once per round
 
@@ -163,17 +164,13 @@ datum
 					if (!(air_group in groups_to_rebuild))
 						groups_to_rebuild += air_group
 
-				get_space_sample()
-					if (!sample || !sample.turf_flags & CAN_BE_SPACE_SAMPLE)
-#ifdef UNDERWATER_MAP
-						sample = locate(/turf/space/fluid)
-#else
-						sample = locate(/turf/space)
-#endif
-
-
-
-					.= sample
+				update_space_sample()
+					if (!space_sample || !space_sample.turf_flags & CAN_BE_SPACE_SAMPLE)
+						if (map_currently_underwater)
+							space_sample = locate(/turf/space/fluid)
+						else
+							space_sample = locate(/turf/space)
+						return space_sample
 
 			setup(datum/controller/process/air_system/controller)
 				set_controller(controller)
@@ -182,7 +179,7 @@ datum
 				return
 				#else
 
-				boutput(world, "<span style=\"color:red\">Processing Geometry...</span>")
+				boutput(world, "<span class='alert'>Processing Geometry...</span>")
 
 				var/start_time = world.timeofday
 
@@ -198,7 +195,7 @@ datum
 				for(var/obj/movable/floor/S in world) //Update all pathing and border information as well
 					S.update_air_properties()
 */
-				boutput(world, "<span style=\"color:red\">Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
+				boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
 				#endif
 
 			assemble_group_turf(turf/simulated/base)

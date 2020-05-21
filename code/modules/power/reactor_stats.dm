@@ -81,6 +81,8 @@
 
 		/* sample loop gasses from sensors */
 		for(var/obj/machinery/power/stats_meter/M in meters)
+			if (!M.target)
+				continue
 			var/list/T[] = sample_air(M.target.return_air(), 1)
 			M.set_bars(T["thermal_energy"])
 			T["tag"] = M.tag
@@ -1609,7 +1611,7 @@
 	"})
 	html.addToHead(kstyle)
 
-	user.machine = src
+	src.add_dialog(user)
 	if(user.client)
 		luser = user.client
 

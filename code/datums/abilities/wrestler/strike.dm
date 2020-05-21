@@ -30,14 +30,14 @@
 			boutput(M, __red("[target] is too far away."))
 			return 1
 		if(check_target_immunity( target ))
-			M.visible_message("<span style='color:red'>You seem to attack [target]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
 		if (M.invisibility > 0)
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		var/turf/T = get_turf(M)
 		if (T && isturf(T) && target && isturf(target.loc))
@@ -52,7 +52,7 @@
 					if (M && (T && isturf(T) && get_dist(M, T) <= 1))
 						M.set_loc(T)
 
-			M.visible_message("<span style=\"color:red\"><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
+			M.visible_message("<span class='alert'><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
 			random_brute_damage(target, 15, 1)
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 

@@ -6,9 +6,9 @@
 
 	initialize()
 		selection = unpool(/obj/adventurepuzzle/marker)
-		boutput(usr, "<span style=\"color:blue\">Left click a triggerer to select it. Left click a triggerable while a triggerer is selected to assign, right click to unassign. Ctrl+click to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">Valid triggerers: trigger, button, pressure pad, key, remote control</span>")
-		boutput(usr, "<span style=\"color:blue\">Valid triggerables: door, spawn location, light emitter, sliding wall, traps</span>")
+		boutput(usr, "<span class='notice'>Left click a triggerer to select it. Left click a triggerable while a triggerer is selected to assign, right click to unassign. Ctrl+click to finish.</span>")
+		boutput(usr, "<span class='notice'>Valid triggerers: trigger, button, pressure pad, key, remote control</span>")
+		boutput(usr, "<span class='notice'>Valid triggerables: door, spawn location, light emitter, sliding wall, traps</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
@@ -43,7 +43,7 @@
 					selected.special_trigger_input(object)
 					object.overlays += selection
 			else if (istype(object, /obj/adventurepuzzle/triggerable) || use_as == "triggerable")
-				boutput(usr, "<span style=\"color:red\">Select a triggerer first!</span>")
+				boutput(usr, "<span class='alert'>Select a triggerer first!</span>")
 		else if (pa.Find("right"))
 			if (T)
 				if (istype(object, /obj/adventurepuzzle/triggerable))
@@ -55,6 +55,7 @@
 	disposing()
 		clear_markers()
 		pool(selection)
+		..()
 
 	proc/clear_markers()
 		if (!selected)

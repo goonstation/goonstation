@@ -33,6 +33,7 @@
 				implants += I
 
 			H.in_fakedeath = 1
+			APPLY_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
 
 			C.lying = 1
 			C.canmove = 0
@@ -56,12 +57,12 @@
 					C.reagents.clear_reagents()
 					C.lying = 0
 					C.canmove = 1
-					boutput(C, "<span style=\"color:blue\">We have regenerated.</span>")
+					boutput(C, "<span class='notice'>We have regenerated.</span>")
 					logTheThing("combat", C, null, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
 					C.visible_message(__red("<B>[C] appears to wake from the dead, having healed all wounds.</span>"))
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))
-							boutput(C, "<span style=\"color:red\">\an [I] falls out of your abdomen.</span>")
+							boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 							I.on_remove(C)
 							C.implant.Remove(I)
 							I.set_loc(C.loc)
@@ -69,6 +70,7 @@
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0
+				REMOVE_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
 		return 0
 
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)
@@ -87,10 +89,10 @@
 			if (C.blood_volume < 500)
 				C.blood_volume += 10 * mult
 				//changelings can get this somehow and it stops speed regen ever turning off otherwise
-			boutput(C, "<span style=\"color:blue\">You feel your flesh knitting back together.</span>")
+			boutput(C, "<span class='notice'>You feel your flesh knitting back together.</span>")
 			for(var/obj/item/implant/I in implants)
 				if (istype(I, /obj/item/implant/projectile))
-					boutput(C, "<span style=\"color:red\">\an [I] falls out of your abdomen.</span>")
+					boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 					I.on_remove(C)
 					C.implant.Remove(I)
 					I.set_loc(C.loc)
@@ -105,7 +107,7 @@
 				C.limbs.l_arm.holder = C
 				C.limbs.l_arm:original_holder = C
 				C.limbs.l_arm:set_skin_tone()
-				C.visible_message("<span style=\"color:red\"><B> [C]'s left arm grows back!</span>")
+				C.visible_message("<span class='alert'><B> [C]'s left arm grows back!</span>")
 				C.set_body_icon_dirty()
 				C.hud.update_hands()
 
@@ -117,7 +119,7 @@
 				C.limbs.r_arm.holder = C
 				C.limbs.r_arm:original_holder = C
 				C.limbs.r_arm:set_skin_tone()
-				C.visible_message("<span style=\"color:red\"><B> [C]'s right arm grows back!</span>")
+				C.visible_message("<span class='alert'><B> [C]'s right arm grows back!</span>")
 				C.set_body_icon_dirty()
 				C.hud.update_hands()
 
@@ -126,7 +128,7 @@
 				C.limbs.l_leg.holder = C
 				C.limbs.l_leg:original_holder = C
 				C.limbs.l_leg:set_skin_tone()
-				C.visible_message("<span style=\"color:red\"><B> [C]'s left leg grows back!</span>")
+				C.visible_message("<span class='alert'><B> [C]'s left leg grows back!</span>")
 				C.set_body_icon_dirty()
 
 			if (!C.limbs.r_leg && prob(limb_regen_prob))
@@ -134,14 +136,14 @@
 				C.limbs.r_leg.holder = C
 				C.limbs.r_leg:original_holder = C
 				C.limbs.r_leg:set_skin_tone()
-				C.visible_message("<span style=\"color:red\"><B> [C]'s right leg grows back!</span>")
+				C.visible_message("<span class='alert'><B> [C]'s right leg grows back!</span>")
 				C.set_body_icon_dirty()
 
 		C.organHolder.create_organs()
 
 		if (prob(25))
 			if (changer)
-				C.visible_message("<span style=\"color:red\"><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
 
 /datum/targetable/changeling/regeneration
 	name = "Speed Regeneration"
@@ -163,7 +165,7 @@
 			return 1
 
 		if (!src.cooldowncheck())
-			boutput(holder.owner, "<span style=\"color:red\">That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
 			return 1
 
 		var/mob/living/carbon/human/C = holder.owner

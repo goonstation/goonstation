@@ -120,33 +120,33 @@
 		return ..()
 	if (isscrewingtool(W))
 		if(bypassed)
-			user.show_message(text("<span style=\"color:red\">Remove the foreign wires first!</span>"), 1)
+			user.show_message(text("<span class='alert'>Remove the foreign wires first!</span>"), 1)
 			return
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
+		user.show_message(text("<span class='alert'>Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
 		sleep(3 SECONDS)
 		locked =! locked
-		user.show_message(text("<span style=\"color:red\">Done!</span>"),1)
+		user.show_message(text("<span class='alert'>Done!</span>"),1)
 		src.updateicon()
 		return
 	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
 		if(src.locked)
-			user.show_message(text("<span style=\"color:red\">You must remove the panel first!</span>"),1)
+			user.show_message(text("<span class='alert'>You must remove the panel first!</span>"),1)
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.use(4))
-			user.show_message(text("<span style=\"color:red\">You unravel some cable..</span>"),1)
+			user.show_message(text("<span class='alert'>You unravel some cable..</span>"),1)
 		else
-			user.show_message(text("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>"),1)
+			user.show_message(text("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>"),1)
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
+		user.show_message(text("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
 		sleep(10 SECONDS)
 		bypassed = 1
 		src.updateicon()
 		return
 	if (issnippingtool(W) && bypassed)
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
+		user.show_message(text("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
 		sleep(5 SECONDS)
 		bypassed = 0
 		src.updateicon()
@@ -155,7 +155,7 @@
 		emagged++
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
+			O.show_message(text("<span class='alert'>[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('pipes2.dmi', "filter-spark")
 		sleep(0.6 SECONDS)
 		src.updateicon()
@@ -173,7 +173,7 @@
 		return
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 	for (var/i = 1; i <= gases.len; i++)
 		dat += "[gases[i]]: <A HREF='?src=\ref[src];tg=[1 << (i - 1)]'>[(src.f_mask & 1 << (i - 1)) ? "Releasing" : "Passing"]</A><BR><br>"
@@ -199,7 +199,7 @@
 	if(usr.restrained() || usr.lying)
 		return
 	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["close"])
 			usr << browse(null, "window=pipefilter;")
 			usr.machine = null
@@ -212,7 +212,7 @@
 				src.f_mask ^= text2num(href_list["tg"])
 				src.updateicon()
 		else
-			usr.see("<span style=\"color:red\">Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
+			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
