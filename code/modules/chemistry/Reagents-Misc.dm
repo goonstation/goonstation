@@ -1191,7 +1191,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				switch(counter++)
+				switch(counter += (1 * mult))
 					if (1 to 5)
 						M.change_eye_blurry(10, 10)
 					if (6 to 10)
