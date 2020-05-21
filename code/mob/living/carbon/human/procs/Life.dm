@@ -1045,12 +1045,9 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
-
-/*
 		for(var/atom in src.get_equipped_items())
 			var/obj/item/C = atom
-			thermal_protection += C.getProperty("coldprot")*/
+			thermal_protection += C.getProperty("coldprot")
 
 		/*
 		// Resistance from covered body parts
@@ -1068,7 +1065,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = clamp(thermal_protection, 0, 100)
+		thermal_protection = max(0,min(thermal_protection,100))
 		return thermal_protection
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
