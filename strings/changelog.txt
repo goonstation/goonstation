@@ -1,6 +1,10 @@
 
 (t)thu may 21 20
 (u)Bubs
+(p)780
+(e)⚖|balance
+(+)Fixes pinning so the pinner still has some stamina regen instead of none and makes pins a bit harder to break out of
+(u)Bubs
 (p)781
 (e)🎨|sprites
 (+)Frag grenades now have an distinct icon when they're armed.
