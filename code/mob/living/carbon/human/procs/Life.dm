@@ -1193,9 +1193,6 @@
 
 		// Resistance from Clothing
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_HEATPROT)
-/*		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			thermal_protection += C.getProperty("heatprot")*/
 
 		/*
 		// Resistance from covered body parts
