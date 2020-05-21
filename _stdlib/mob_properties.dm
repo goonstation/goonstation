@@ -164,6 +164,13 @@ To remove:
 
 #define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 
+//armour properties
+#define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_RANGEDPROT(x) x("rangedprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_RADPROT(x) x("radprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_COLDPROT(x) x("coldprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_HEATPROT(x) x("heatprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1

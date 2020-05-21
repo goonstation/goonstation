@@ -269,6 +269,9 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "-[propVal] dmg"
 
+		head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
+			id = "meleeprot_head"
+
 	rangedprot
 		name = "Resistance (Ranged)"
 		id = "rangedprot"

@@ -1146,16 +1146,22 @@
 			a_zone = "chest"
 		if(a_zone=="All")
 			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-		else
-			// Resistance from Clothing
-			for(var/atom in src.get_equipped_items())
+
+		else //this is where protection is actually calculated
+
+			if (a_zone == "chest")
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+			else //can only be head
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+
+/*			for(var/atom in src.get_equipped_items())
 				var/obj/item/C = atom
 				if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
 				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
 					a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
 					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
 					var/curr = C.getProperty("meleeprot")
-					protection = max(curr, protection)
+					protection = max(curr, protection)*/
 
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
@@ -1163,6 +1169,7 @@
 				if (G != src.equipped()) // bare handed block is less protective
 					protection += G.can_block(damage_type)
 
+		boutput(world, "[protection]")
 		return protection
 
 	get_deflection()

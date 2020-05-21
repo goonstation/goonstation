@@ -778,6 +778,20 @@
 		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 		equipment_proxy.space_movement += spacemove
 
+	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
+		return
+	if (src.hasProperty("meleeprot"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src.type, src.getProperty("meleeprot"))
+	if (src.hasProperty("meleeprot_head"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src.type, src.getProperty("meleeprot_head"))
+	if (src.hasProperty("rangedprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, src.type, src.getProperty("rangedprot"))
+	if (src.hasProperty("radprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RADPROT, src.type, src.getProperty("radprot"))
+	if (src.hasProperty("heatprot"))
+		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src.type, src.getProperty("heatprot"))
+	if (src.hasProperty("coldprot"))
+		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src.type, src.getProperty("coldprot"))
 
 /obj/item/proc/unequipped(var/mob/user)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
@@ -796,6 +810,25 @@
 	if (spacemove)
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
+
+//TODO: FIX THIS! NEEDS TO WORK!!!
+
+	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
+		return
+	var/value = 0
+	if (src.hasProperty("meleeprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src.type)
+	if (src.hasProperty("meleeprot_head"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src.type)
+	if (src.hasProperty("rangedprot"))
+		value = clamp((GET_MOB_PROPERTY(user, PROP_RANGEDPROT) - src.getProperty("rangedprot")), 0, INFINITY)
+		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, src.type, value)
+	if (src.hasProperty("radprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RADPROT, src.type, -(src.getProperty("radprot")))
+	if (src.hasProperty("heatprot"))
+		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src.type, -(src.getProperty("heatprot")))
+	if (src.hasProperty("coldprot"))
+		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src.type, -(src.getProperty("coldprot")))
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
