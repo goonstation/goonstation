@@ -200,7 +200,8 @@ To remove:
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _V; \
 			} \
 		} else { \
-			_L[property] = list(_V, list(_S = _V)); \
+			_L[property] = list(_V, list()); \
+			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 		} \
 	} while (0)
 
@@ -299,7 +300,8 @@ To remove:
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _TO_APPLY_VALUE; \
 			} \
 		} else { \
-			_L[property] = list(_V, list(_S = list(_P, _V))); \
+			_L[property] = list(_V, list()); \
+			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = list(_P, _V); \
 		}; \
 	} while (0)
 
