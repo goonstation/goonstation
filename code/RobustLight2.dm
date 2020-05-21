@@ -70,8 +70,8 @@ proc/get_moving_lights_stats()
 		var/mult_atten = 1;\
 		var/line_len = (abs(src.x - lx)+abs(src.y - ly));\
 		if (line_len <= 1.1) { mult_atten = 4.6 } \
-		else if (line_len<=1.5) { mult_atten = 2 } \
-		else if (line_len<=2.5) { mult_atten = 1.2 } \
+		else if (line_len<=1.5) { mult_atten = 3 } \
+		else if (line_len<=2.5) { mult_atten = 2 } \
 		switch(dir){ \
 			if (NORTH){ if (round(ly) - src.y < 0){ atten *= mult_atten } }\
 			if (WEST){ if (ceil(lx) - src.x > 0){ atten *= mult_atten } }\
