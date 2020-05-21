@@ -811,11 +811,8 @@
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
 
-//TODO: FIX THIS! NEEDS TO WORK!!!
-
 	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
 		return
-	var/value = 0
 	if (src.hasProperty("meleeprot"))
 		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src.type)
 	if (src.hasProperty("meleeprot_head"))
@@ -828,30 +825,6 @@
 		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, src.type)
 	if (src.hasProperty("coldprot"))
 		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, src.type)
-
-
-/obj/item/clothing/suit/armor_2
-	name = "armor"
-	desc = "A suit worn primarily for protection against injury."
-	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
-	icon_state = "armor"
-	item_state = "armor"
-	body_parts_covered = TORSO|LEGS|ARMS
-
-	setupProperties()
-		..()
-		setProperty("coldprot", 10)
-		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1)
-
-	onMaterialChanged()
-		return
-
-	attack_self(mob/user)
-		var/num = input(user, "what num", "NUMBER", 0)
-		setProperty("meleeprot", num)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
