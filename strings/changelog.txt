@@ -1,5 +1,9 @@
 
 (t)thu may 21 20
+(u)Bubs
+(p)781
+(e)🎨|sprites
+(+)Frag grenades now have an distinct icon when they're armed.
 (u)Jicksaw
 (p)783
 (e)🐛|bug
