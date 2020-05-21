@@ -271,6 +271,8 @@ var/list/globalPropList = null
 
 		head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
 			id = "meleeprot_head"
+		all //ugly hack but I'm not sorry, this is used for barriers
+			id = "meleeprot_all"
 
 	rangedprot
 		name = "Resistance (Ranged)"
