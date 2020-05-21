@@ -453,8 +453,10 @@
 					else
 						playsound(get_turf(src), 'sound/voice/uguu.ogg', 80, 0, 0, src.get_age_pitch())
 					SPAWN_DBG(1 SECOND)
+						var/obj/item/clothing/mask/anime/mask = src.wear_mask
+						mask.set_loc(src.loc)
+						src.wear_mask = null
 						src.gib()
-						new /obj/item/clothing/mask/anime(src.loc)
 						return
 				else
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
