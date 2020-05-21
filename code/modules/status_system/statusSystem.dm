@@ -770,7 +770,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned"))) //consider later : a way to group effects to check a bunch in one proc call and save sonme cpu
+			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned"))) 
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
