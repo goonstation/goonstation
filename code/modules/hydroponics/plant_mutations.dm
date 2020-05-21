@@ -428,7 +428,7 @@
 /datum/plantmutation/fungus/amanita
 	name = "Amanita"
 	name_prefix = "Amanita "
-	iconmod = "deathcap" //TODO: rename to Amanita
+	iconmod = "FungusAmanita"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	ENrange = list(null,10)
 	PTrange = list(30,null)
