@@ -96,10 +96,6 @@
 			if(H) H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 			src.affecting.set_density(0)
 
-		if (src.state == GRAB_PIN)
-			if (ishuman(src.assailant))
-				var/mob/living/carbon/human/HH = src.assailant
-
 		if (src.state == GRAB_KILL)
 			//src.affecting.losebreath++
 			//if (src.affecting.paralysis < 2)
