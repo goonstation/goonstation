@@ -421,7 +421,7 @@
 /datum/plantmutation/fungus/psilocybin
 	name = "Magic Mushroom"
 	name_prefix = "Magic "
-	iconmod = "magmush" //TODO: rename to MagicMushroom
+	iconmod = "FungusMagic"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
 	assoc_reagents = list("psilocybin")
 
