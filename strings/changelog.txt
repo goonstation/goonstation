@@ -1,5 +1,9 @@
 
 (t)thu may 21 20
+(u)Jicksaw
+(p)783
+(e)🐛|bug
+(+)Wireless computer signals now appear on Packet Sniffer
 (u)Phuzzy
 (p)775
 (e)🗺|mapping
