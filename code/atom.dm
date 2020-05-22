@@ -1030,7 +1030,7 @@
 	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.restrained())
+	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
 		return
 
 	if (!can_reach(user, src))
