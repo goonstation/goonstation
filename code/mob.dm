@@ -215,6 +215,7 @@
 	var/dir_locked = FALSE
 
 	var/list/cooldowns = null
+	var/list/mob_properties
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -231,12 +232,14 @@
 	render_special = new
 	traitHolder = new(src)
 	cooldowns = new
-	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
+	if (!src.bioHolder)
+		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
+	mob_properties = list()
 
 /mob/proc/is_spacefaring()
 	return 0
@@ -1172,6 +1175,11 @@
 	if (get_dist(src, target) > 0)
 		if(!dir_locked)
 			dir = get_dir(src, target)
+			if(dir & (dir-1))
+				if (dir & EAST)
+					dir = EAST
+				else if (dir & WEST)
+					dir = WEST
 			src.update_directional_lights()
 
 /mob/proc/hotkey(name)
@@ -2947,12 +2955,12 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(obj/A as obj in view(1))
 	set name = "Pick Up / Interact"
 	set category = "Local"
 	A.interact(src)
 
-/mob/verb/pickup_verb()
+/mob/living/verb/pickup_verb()
 	set name = "Pick Up"
 	set hidden = 1
 

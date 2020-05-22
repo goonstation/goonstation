@@ -363,9 +363,8 @@
 		// ok so all the below shit checks if you're a human.
 		// that's well and good but we need to be operating on possible_new_mob now,
 		// because that's what the player is, not the one we were initially given.
-		// I guess you could set src = possible_new_mob, but for now, let's try this:
-		boutput(possible_new_mob, "<tt><b>(DEBUG)</b> While creating your character, you were put into a new mob. This is normal! If you get any weird issues or things break, that's <em>not</em> normal and you should adminhelp it by pushing F1.</tt>")
-		return
+
+		src = possible_new_mob // let's hope this breaks nothing
 
 
 	if (ishuman(src) && JOB.add_to_manifest)
@@ -667,7 +666,7 @@
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
 
-	if (ishuman(src) && JOB.name != "Syndicate") // Sorry!
+	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(rank)
 
 	JOB.special_setup(src, no_special_spawn)

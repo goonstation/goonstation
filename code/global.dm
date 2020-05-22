@@ -51,6 +51,7 @@ var/global
 	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
 	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
 	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
+	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
 
 	turf/buzztile = null
 

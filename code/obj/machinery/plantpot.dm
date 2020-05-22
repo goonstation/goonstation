@@ -68,7 +68,7 @@
 	density = 1
 	mats = 2
 	flags = NOSPLASH
-	processing_tier = PROCESSING_HALF
+	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New

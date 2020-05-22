@@ -15,10 +15,6 @@
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
 #endif
 
-#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-#warn Only using one z-level. This will fuck everything up. You're gonna have a bad time.
-#endif
-
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
 //   Start profiling immediately, save profiler data when world is rebooting (data/profile/xxxxxxxx-full.log)
@@ -963,7 +959,11 @@
 //JOB EXPERIENCE STUFF END
 
 //This is here because it's used literally everywhere in the codebase below this.
+#ifdef SPACEMAN_DMM
+#define LAGCHECK(x)
+#else
 #define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
+#endif
 
 //Define clientside tick lag seperately from world.tick_lag
 //'cause smoothness looks good.

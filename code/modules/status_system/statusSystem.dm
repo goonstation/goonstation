@@ -768,6 +768,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			unique = 1
 			maxDuration = 30 SECONDS
 
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
 		weakened
 			id = "weakened"
 			name = "Knocked-down"
@@ -775,6 +787,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "weakened"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			pinned
 				id = "pinned"
@@ -820,6 +844,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "paralysis"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 		dormant
 			id = "dormant"

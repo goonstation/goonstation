@@ -732,7 +732,7 @@
 		return
 
 	var/turf/reappear_turf = get_turf(src)
-	if (!antag_removal)
+	if (!antag_removal && !isrestrictedz(reappear_turf.z))
 		for (var/turf/simulated/floor/S in orange(7))
 			if (S == reappear_turf) continue
 			if (prob(50)) //Try to appear on a turf other than the one we die on.
@@ -1557,7 +1557,12 @@
 /mob/living/carbon/human/Topic(href, href_list)
 	if (istype(usr.loc,/obj/dummy/spell_invis/) || isghostdrone(usr))
 		return
-	if (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
+	var/canmove_or_pinning = usr.canmove
+	for (var/obj/item/grab/G in usr.equipped_list(check_for_magtractor = 0))
+		if (G.state == GRAB_PIN)
+			canmove_or_pinning = 1
+
+	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
 		if (href_list["slot"] == "handcuff")
 			actions.start(new/datum/action/bar/icon/handcuffRemovalOther(src), usr)
 		else if (href_list["slot"] == "internal")

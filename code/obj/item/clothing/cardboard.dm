@@ -13,7 +13,7 @@
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	permeability_coefficient = 0.8
 	var/eyeholes = FALSE
-	var/moustache = FALSE
+	var/accessory = FALSE
 	var/face = null
 
 	New()
@@ -68,11 +68,11 @@
 				user.visible_message("<span class='notice'>[user] draws a [emotion] face on [src].</span>",\
 				"<span class='notice'>You draw a [emotion] face on [src].</span>")
 		else if (istype(W, /obj/item/clothing/mask/moustache))
-			if (src.moustache)
-				boutput(user, "<span class='notice'>[src] already has a moustache!</span>")
+			if (src.accessory)
+				boutput(user, "<span class='notice'>[src] already has an accessory!</span>")
 			else
-				src.moustache = TRUE
-				src.UpdateOverlays(image(src.icon, "moustache"), "moustache")
+				src.accessory = TRUE
+				src.UpdateOverlays(image(src.icon, "moustache"), "accessory")
 				src.wear_image.overlays += image(src.wear_image_icon, "moustache")
 				user.visible_message("<span class='notice'>[user] adds [W] to [src]!</span>",\
 				"<span class='notice'>You add [W] to [src]!</span>")
@@ -113,3 +113,12 @@
 	name = "cardboard box - 'Captain'"
 	desc = "The Captain looks a lot different today!"
 	face = "cap"
+
+/obj/item/clothing/suit/cardboard_box/colorful
+	desc = "There are paint splatters on this box. Paint splatters? Blood splatters. Colorful blood splatters."
+	icon_state = "c_box-colorful"
+
+/obj/item/clothing/suit/cardboard_box/colorful/clown
+	name = "cardboard box - 'Clown'"
+	desc = "Much like a real clown car, it's more spacious on the inside. Must be, to fit the clown."
+	face = "clown"

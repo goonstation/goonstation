@@ -196,6 +196,7 @@
 					newsignal.data_file = signal.data_file.copy_file()
 				newsignal.encryption = src.code
 				newsignal.transmission_method = TRANSMISSION_RADIO
+				newsignal.source = src
 				if(src.net_mode)
 					if(!newsignal.data["address_1"])
 						//Net_mode demands an address_1 value!
@@ -230,6 +231,7 @@
 				newsignal.data["address_1"] = "ping"
 				newsignal.data["sender"] = src.net_id
 				newsignal.transmission_method = TRANSMISSION_RADIO
+				newsignal.source = src
 				src.radio_connection.post_signal(src, newsignal, broadcast_range)
 				return 0
 
@@ -261,7 +263,7 @@
 			if(signal.data["address_1"] != src.net_id)
 				if((signal.data["address_1"] == "ping") && signal.data["sender"])
 					var/datum/signal/pingsignal = get_free_signal()
-					pingsignal.source = host
+					pingsignal.source = src
 					pingsignal.data["device"] = "WNET_ADAPTER"
 					pingsignal.data["netid"] = src.net_id
 					pingsignal.data["address_1"] = signal.data["sender"]
@@ -358,6 +360,7 @@
 			newsignal.data["sender"] = src.net_id //Override whatever jerk info they put here.
 			newsignal.encryption = src.code
 			newsignal.transmission_method = TRANSMISSION_WIRE
+			newsignal.source = src
 			src.link.post_signal(src, newsignal)
 			return 0
 
@@ -379,6 +382,7 @@
 				newsignal.data["net"] = "[net_number]"
 
 			newsignal.transmission_method = TRANSMISSION_WIRE
+			newsignal.source = src
 			src.link.post_signal(src, newsignal)
 			return 0
 
@@ -419,6 +423,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
+				pingsignal.source = src
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
@@ -488,6 +493,7 @@
 				newsignal.data["sender"] = src.net_id //Override whatever jerk info they put here.
 				newsignal.encryption = src.code
 				newsignal.transmission_method = TRANSMISSION_WIRE
+				newsignal.source = src
 				src.link.post_signal(src, newsignal)
 
 
@@ -550,6 +556,7 @@
 						newsignal.data["net"] = "[net_number]"
 
 					newsignal.transmission_method = TRANSMISSION_WIRE
+					newsignal.source = src
 					src.link.post_signal(src, newsignal)
 
 				else if (dd_hasprefix(command, "subnet"))
@@ -617,6 +624,7 @@
 					if (src.mode == 1)
 						newsignal.data["sender"] = src.net_id
 					newsignal.transmission_method = TRANSMISSION_RADIO
+					newsignal.source = src
 					src.wireless_link.post_signal(src, newsignal, (src.mode == 1 ? 0 : src.wireless_range))
 					return 0
 
@@ -632,6 +640,7 @@
 
 					newsignal.data["sender"] = src.net_id
 					newsignal.transmission_method = TRANSMISSION_WIRE
+					newsignal.source = src
 					src.wired_link.post_signal(src, newsignal)
 					return 0
 
@@ -690,6 +699,7 @@
 						newsignal.data["sender"] = src.net_id
 
 						newsignal.transmission_method = TRANSMISSION_RADIO
+						newsignal.source = src
 						src.wireless_link.post_signal(src, newsignal)
 
 						return 0
@@ -710,6 +720,7 @@
 							newsignal.data["net"] = "[subnet]"
 
 						newsignal.transmission_method = TRANSMISSION_WIRE
+						newsignal.source = src
 						src.wired_link.post_signal(src, newsignal)
 
 						return 0
@@ -752,6 +763,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = src.mode == 2 ? TRANSMISSION_WIRE : TRANSMISSION_RADIO
+				pingsignal.source = src
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if (src.mode == 2 && src.wired_link)
 						src.wired_link.post_signal(src, pingsignal)

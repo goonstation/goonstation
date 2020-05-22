@@ -782,12 +782,7 @@
 		return null
 
 	proc/update_canmove()
-		if (hasStatus("paralysis") || hasStatus("stunned") || hasStatus("weakened") || hasStatus("pinned"))
-			canmove = 0
-			return
-
-		var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-		if (C && C.in_fakedeath)
+		if (HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
 			canmove = 0
 			return
 
@@ -808,12 +803,6 @@
 		if (emote_lock)
 			canmove = 0
 			return
-
-		//cant move while we pin someone down
-		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			if (G.state == GRAB_PIN)
-				canmove = 0
-				return
 
 		canmove = 1
 
@@ -1680,57 +1669,57 @@
 
 
 		if (src.health < 0 && !isdead(src))
-			if (prob(5))
+			if (prob(5) * mult)
 				src.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
 			if (src.stuttering <= 5)
 				src.stuttering+=5
 			if (src.get_eye_blurry() <= 5)
 				src.change_eye_blurry(5)
-			if (prob(7))
+			if (prob(7) * mult)
 				src.change_misstep_chance(2)
-			if (prob(5))
+			if (prob(5) * mult)
 				src.changeStatus("paralysis", 3 SECONDS)
 			switch(src.health)
 				if (-INFINITY to -100)
-					src.take_oxygen_deprivation(1)
-					if (prob(src.health * -0.1))
+					src.take_oxygen_deprivation(1 * mult)
+					if (prob(src.health * -0.1  * mult))
 						src.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 						//boutput(world, "\b LOG: ADDED FLATLINE TO [src].")
-					if (prob(src.health * -0.2))
+					if (prob(src.health * -0.2  * mult))
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (isalive(src))
 						if (src && src.mind)
 							src.lastgasp() // if they were ok before dropping below zero health, call lastgasp() before setting them unconscious
-					setStatus("paralysis", max(getStatusDuration("paralysis"), 30))
+					setStatus("paralysis", max(getStatusDuration("paralysis"), 15 * mult))
 				if (-99 to -80)
-					src.take_oxygen_deprivation(1)
-					if (prob(4))
+					src.take_oxygen_deprivation(1 * mult)
+					if (prob(4 * mult))
 						boutput(src, "<span class='alert'><b>Your chest hurts...</b></span>")
 						src.changeStatus("paralysis", 2 SECONDS)
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 				if (-79 to -51)
-					src.take_oxygen_deprivation(1)
-					if (prob(10)) // shock added back to crit because it wasn't working as a bloodloss-only thing
+					src.take_oxygen_deprivation(1 * mult)
+					if (prob(10 * mult)) // shock added back to crit because it wasn't working as a bloodloss-only thing
 						src.contract_disease(/datum/ailment/malady/shock,null,null,1)
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
-					if (prob(src.health * -0.08))
+					if (prob(src.health * -0.08) * mult)
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
-					if (prob(6))
+					if (prob(6) * mult)
 						boutput(src, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
 						src.setStatus("weakened", max(src.getStatusDuration("weakened"), 30))
-					if (prob(3))
+					if (prob(3) * mult)
 						src.changeStatus("paralysis", 2 SECONDS)
 				if (-50 to 0)
-					src.take_oxygen_deprivation(0.25)
+					src.take_oxygen_deprivation(0.25 * mult)
 					/*if (src.reagents)
 						if (!src.reagents.has_reagent("inaprovaline") && prob(50))
 							src.take_oxygen_deprivation(1)*/
-					if (prob(3))
+					if (prob(3) * mult)
 						src.contract_disease(/datum/ailment/malady/shock,null,null,1)
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
-					if (prob(5))
+					if (prob(5) * mult)
 						boutput(src, "<span class='alert'><b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b></span>")
 						src.changeStatus("weakened", 3 SECONDS)
 

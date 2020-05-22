@@ -2529,3 +2529,35 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
+
+/mob/living/critter/small_animal/crab
+	name = "crab"
+	real_name = "crab"
+	desc = "Snip snap"
+	icon_state = "crab_party"
+	hand_count = 2
+	speechverb_say = "snips"
+	speechverb_exclaim = "snaps"
+	butcherable = 1
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
+
+	New()
+		..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "left claw"
+		HH.limb_name = "claw"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "right claw"
+		HH.limb_name = "claw"

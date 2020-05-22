@@ -43,7 +43,7 @@ proc/get_moving_lights_stats()
 #define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
 	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
-	if (atten < 0) { break } \
+	if (atten < RL_Atten_Threshold) { break } \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
 	src.RL_LumB += b*atten ; \
@@ -70,8 +70,8 @@ proc/get_moving_lights_stats()
 		var/mult_atten = 1;\
 		var/line_len = (abs(src.x - lx)+abs(src.y - ly));\
 		if (line_len <= 1.1) { mult_atten = 4.6 } \
-		else if (line_len<=1.5) { mult_atten = 2 } \
-		else if (line_len<=2.5) { mult_atten = 1.2 } \
+		else if (line_len<=1.5) { mult_atten = 3 } \
+		else if (line_len<=2.5) { mult_atten = 2 } \
 		switch(dir){ \
 			if (NORTH){ if (round(ly) - src.y < 0){ atten *= mult_atten } }\
 			if (WEST){ if (ceil(lx) - src.x > 0){ atten *= mult_atten } }\
@@ -426,11 +426,6 @@ datum/light
 			for (var/turf/T in view(src.radius, middle))
 				if (T.opacity)
 					continue
-				/*
-				for (var/atom/A in T)
-					if (A.opacity)
-						continue outer
-				*/
 				if(T.opaque_atom_count > 0)
 					continue
 
@@ -443,26 +438,31 @@ datum/light
 
 			for (var/X in .)
 				var/turf/T = X
-
+				var/E_new = 0
 				if (T.E && T.E.RL_ApplyGeneration < generation)
+					E_new = 1
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.E, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
 						T.E.RL_ApplyGeneration = generation
 						ADDUPDATE(T.S.E)
-					ADDUPDATE(T.E)
+						ADDUPDATE(T.E)
 
 				if (T.N && T.N.RL_ApplyGeneration < generation)
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.N, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
 						T.N.RL_ApplyGeneration = generation
 						ADDUPDATE(T.N.W)
-					ADDUPDATE(T.N)
+						ADDUPDATE(T.N)
 
-				if (T.NE && T.NE.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT_EXPOSED_ATTEN(T.NE, src.x, src.y, src.brightness, height2, r, g, b)
-					if(atten >= RL_Atten_Threshold)
-						T.NE.RL_ApplyGeneration = generation
-						ADDUPDATE(T.NE)
+					// this if is a bit more complicated because we don't want to do NE
+					// if the turf will get updated some other relevant turf's E or N
+					// because we'd lose the south or west neighbour update this way
+					// i.e. it should only get updated if both T.E and T.N are not added in the view() phase
+					if (E_new && T.NE && T.NE.RL_ApplyGeneration < generation)
+						RL_APPLY_LIGHT_EXPOSED_ATTEN(T.NE, src.x, src.y, src.brightness, height2, r, g, b)
+						if(atten >= RL_Atten_Threshold)
+							T.NE.RL_ApplyGeneration = generation
+							ADDUPDATE(T.NE)
 
 				ADDUPDATE(T.W)
 				ADDUPDATE(T.S)
