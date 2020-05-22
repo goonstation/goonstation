@@ -20,23 +20,6 @@
 	. = ..()
 	STOP_TRACKING
 
-// Old inspect code showed exact amounts of each chem inside. Thats no good.
-
-// /obj/mopbucket/get_desc(dist)
-// 	if (dist > 1)
-// 		return
-// 	if (!reagents)
-// 		return
-// 	. = "<br><span class='notice'>It contains:</span>"
-// 	if(reagents.reagent_list.len)
-// 		for(var/current_id in reagents.reagent_list)
-// 			var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-// 			. += "<br><span class='notice'>[current_reagent.volume] units of [current_reagent.name]</span>"
-// 	else
-// 		. += "<br><span class='notice'>Nothing. The answer is nothing.</span>"
-
-// This is basically ripped straight from ChemistruTools.dm
-
 /obj/mopbucket/get_desc(dist, mob/user)
 	if (dist > 2)
 		return

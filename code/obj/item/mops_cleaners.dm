@@ -217,22 +217,6 @@ WET FLOOR SIGN
 
 	return
 
-// Old inspect code showed exact amounts of each chem inside. Not cool.
-
-// /obj/item/spraybottle/get_desc()
-// 	..()
-// 	if (!reagents)
-// 		return
-// 	. = "<br><span class='notice'>It contains: </span>"
-// 	if(reagents.reagent_list.len)
-// 		for(var/current_id in reagents.reagent_list)
-// 			var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-// 			. += "<br><span class='notice'>[current_reagent.volume] units of [current_reagent.name]</span>"
-// 	else
-// 		. += "<br><span class='notice'>Nothing. Nada. Zip. Zilch.</span>"
-
-// This is basically ripped straight from ChemistruTools.dm
-
 /obj/item/spraybottle/get_desc(dist, mob/user)
 	if (dist > 2)
 		return
