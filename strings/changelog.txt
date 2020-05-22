@@ -1,5 +1,9 @@
 
 (t)fri may 22 20
+(u)Comrade f191
+(p)801
+(e)🗺|mapping
+(+)Added AI Intercoms to a few maps; Manta, Oshan, Clarion, Destiny, Cogmap1 and Cogmap2.
 (u)tloy-x
 (p)798
 (e)|
