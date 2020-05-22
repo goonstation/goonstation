@@ -424,6 +424,11 @@ var/list/key_names = list(
 						"E" = "exit",
 						"Q" = "exit"
 					))
+			if ("just exit")
+				return new /datum/keymap(list(
+						"E" = "exit",
+						"Q" = "exit"
+					))
 			if ("cube")
 				if (src.preferences.use_azerty)
 					return new /datum/keymap(list(
