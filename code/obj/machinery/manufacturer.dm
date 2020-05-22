@@ -954,14 +954,15 @@
 			if(P.ID_card)
 				I = P.ID_card
 		if (istype(I, /obj/item/card/id))
+			var/obj/item/card/id/ID = I
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/data/record/account = null
-			account = FindBankAccountByName(I:registered)
+			account = FindBankAccountByName(ID.registered)
 			if(account)
 				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
-				if (enterpin == I:pin)
+				if (enterpin == ID.pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
-					src.scan = I
+					src.scan = ID
 					return 1
 				else
 					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
