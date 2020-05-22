@@ -1788,24 +1788,24 @@
 
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
-/mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/O)
-	O.render_target = "*\ref[O]"
-	var/image/left_arm = image(null, O)
-	left_arm.render_source = O.render_target
+/mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+	H.render_target = "*\ref[H]"
+	var/image/left_arm = image(null, H)
+	left_arm.render_source = H.render_target
 	left_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
 	left_arm.appearance_flags = KEEP_APART
-	var/image/right_arm = image(null, O)
-	right_arm.render_source = O.render_target
+	var/image/right_arm = image(null, H)
+	right_arm.render_source = H.render_target
 	right_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
 	right_arm.appearance_flags = KEEP_APART
-	var/image/torso = image(null, O)
-	torso.render_source = O.render_target
+	var/image/torso = image(null, H)
+	torso.render_source = H.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
-	O.emote_lock = TRUE
-	O.update_canmove()
-	O.dir = SOUTH
-	O.dir_locked = TRUE
+	APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
+	H.update_canmove()
+	H.dir = SOUTH
+	H.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
 	world << torso
 	world << right_arm
@@ -1828,7 +1828,7 @@
 		qdel(right_arm)
 		left_arm.loc = null
 		qdel(left_arm)
-		O.emote_lock = FALSE
-		O.update_canmove()
-		O.dir_locked = FALSE
-		O.render_target = "\ref[O]"
+		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
+		H.update_canmove()
+		H.dir_locked = FALSE
+		H.render_target = "\ref[H]"
