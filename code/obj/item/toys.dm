@@ -318,7 +318,7 @@
 				playsound(get_turf(src), "sound/items/toys/figure-headlock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
-				playsound(get_turf(src), "sound/items/toys/figure-bang.ogg", 15, 1)
+				playsound(get_turf(src), "sound/impact_sounds/Flesh_Break_1.ogg", 15, 1, 0.1, 2.5)
 				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
