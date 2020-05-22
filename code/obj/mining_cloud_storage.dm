@@ -1,3 +1,8 @@
+/datum/ore_cloud_data
+	var/amount
+	var/price
+	var/for_sale
+
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox&trade; Ore Cloud Storage Container"
 	desc = "This thing stores ore in \"the cloud\" for the station to use. Best not to think about it too hard."
@@ -5,14 +10,14 @@
 	icon_state = "ore_storage_unit"
 	density = 1
 	anchored = 1
-	var/list/sell_price = list()
-	var/list/for_sale = list()
+
 	var/list/ores = list()
-	var/list/sellable_ores = list()
 
 	var/health = 100
 	var/broken = 0
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
+
+	var/output_target = null
 
 	New()
 		. = ..()
@@ -21,6 +26,48 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	MouseDrop(over_object, src_location, over_location)
+		if(!istype(usr,/mob/living/))
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
+			return
+
+		if(get_dist(over_object,src) > 1)
+			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
+			return
+
+		if(get_dist(over_object,usr) > 1)
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			return
+
+		if (istype(over_object,/obj/storage/crate/))
+			var/obj/storage/crate/C = over_object
+			if (C.locked || C.welded)
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+			else
+				src.output_target = over_object
+				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+
+		if (istype(over_object,/obj/storage/cart/))
+			var/obj/storage/cart/C = over_object
+			if (C.locked || C.welded)
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
+			else
+				src.output_target = over_object
+				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+
+		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
+			var/obj/O = over_object
+			src.output_target = O.loc
+			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
+
+		else if (istype(over_object,/turf) && !over_object:density)
+			src.output_target = over_object
+			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+
+		else
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 
@@ -44,8 +91,13 @@
 			return
 
 		else if (istype(O, /obj/storage/crate/)  || istype(O, /obj/storage/cart/))
-			if (O:welded || O:locked)
+			var/obj/storage/crate/C = O
+			if(istype(C) && (C.welded || C.locked))
 				boutput(user, "<span class='alert'>You cannot load from a crate that cannot open!</span>")
+				return
+			var/obj/storage/cart/Ct = O
+			if(istype(Ct) && (Ct.welded || Ct.locked))
+				boutput(user, "<span class='alert'>You cannot load from a cart that cannot open!</span>")
 				return
 
 			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
@@ -57,13 +109,10 @@
 				amtload++
 			if (amtload)
 				boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
-				src.update_ores()
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
 		else if (isitem(O))
 			quickload(user,O)
-			src.update_ores()
-
 		else
 			..()
 
@@ -81,6 +130,8 @@
 				continue
 			if (!istype(M,/obj/item/raw_material/))
 				continue
+			if(!isSameMaterial(O.material,M.material))
+				continue
 			if (O.loc == user)
 				continue
 			if (O in user.contents)
@@ -97,7 +148,6 @@
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
-			src.update_ores()
 
 		else
 			src.health = max(src.health-W.force,0)
@@ -105,17 +155,18 @@
 			..()
 
 	proc/check_health()
-		if(!src.health)
+		if(!src.health && !broken)
 			src.broken = 1
 			src.visible_message("<span class='alert'>[src] breaks!</span>")
 			src.icon_state = "ore_storage_unit-broken"
-			src.update_sellable()
 
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
 		if (!R)
 			return
+		var/amount_loaded = 0
 		if(R.amount == 1)
 			R.set_loc(src)
+			amount_loaded++
 			if (user && R)
 				user.u_equip(R)
 				R.dropped()
@@ -124,10 +175,12 @@
 			for(R.amount,R.amount > 0, R.amount--)
 				var/obj/item/raw_material/new_mat = unpool(R.type)
 				new_mat.loc = src
+				amount_loaded++
 			if (user && R)
 				user.u_equip(R)
 				R.dropped()
 			pool(R)
+		update_ore_amount(R.material_name,amount_loaded)
 
 
 	proc/accept_loading(var/mob/user,var/allow_silicon = 0)
@@ -144,41 +197,42 @@
 			return 0
 		return 1
 
-	proc/update_ores()
-		src.ores.len = 0
-		for(var/obj/item/raw_material/R in src.contents)
-			if(!ores[R.material_name]) //Using material_name to group materials is dangerous in general. However, since we are only accepting raw_materials, this should be fine.
-				ores += R.material_name
-				ores[R.material_name] = 1
+	proc/update_ore_amount(var/material_name,var/delta)
+		if(ores[material_name])
+			var/datum/ore_cloud_data/OCD = ores[material_name]
+			OCD.amount += delta
+			OCD.amount = max(OCD.amount,0)
+			ores[material_name] = OCD
+		else if (delta > 0)
+			ores += material_name
+			var/datum/ore_cloud_data/OCD = new /datum/ore_cloud_data
+			OCD.amount += delta
+			OCD.for_sale = 0
+			OCD.price = 0
+			ores[material_name] = OCD
 
+	proc/update_ore_for_sale(var/material_name,var/new_for_sale)
+		if(ores[material_name])
+			var/datum/ore_cloud_data/OCD = ores[material_name]
+			if(isnull(new_for_sale))
+				OCD.for_sale = !OCD.for_sale
 			else
-				ores[R.material_name]++
-		src.update_sellable()
+				OCD.for_sale = new_for_sale
+			ores[material_name] = OCD
 		return
 
-	proc/update_sellable()
-		src.sellable_ores.len = 0
-		if(src.broken)
-			return
-		for(var/ore in src.ores)
-			if(ore in src.for_sale)
-				if(for_sale[ore])
-					if(!(ore in sellable_ores))
-						sellable_ores += ore
-						sellable_ores[ore] = ores[ore]
-					else
-						continue
-				else
-					continue
+	proc/update_ore_price(var/material_name,var/new_price)
+		if(ores[material_name])
+			var/datum/ore_cloud_data/OCD = ores[material_name]
+			OCD.price = max(0,new_price)
+			ores[material_name] = OCD
+		return
 
 	attack_hand(var/mob/user as mob)
 
-		var/list/ores = src.ores
-
 		src.add_dialog(user)
-		var/dat = "<B>[src.name]</B>"
 
-		dat += "<br><HR>"
+		var/dat = ""
 
 		if (status & BROKEN || status & NOPOWER)
 			dat = "The screen is blank."
@@ -186,19 +240,33 @@
 			onclose(user, "mining_dropbox")
 			return
 
+		dat = "<B>[src.name]</B>"
+
+		dat += "<br><HR>"
+
+		dat += "<B>Rockbox&trade; Ore Cloud Storage Service Settings:</B>"
+
+		dat += "<br><small>"
+
+		dat += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>"
+		dat += "<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>"
+		dat += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>"
+
+		dat += "</small><HR>"
+
 		if(ores.len)
 			for(var/ore in ores)
 				var/sellable = 0
 				var/price = 0
-				if(src.sell_price[ore] != null)
-					price = sell_price[ore]
-				if(src.for_sale[ore] != null)
-					sellable = src.for_sale[ore]
-				dat += "<B>[ore]:</B> [ores[ore]] (<A href='?src=\ref[src];sellable=[ore]'>[sellable ? "For Sale" : "Not For Sale"]</A>) (<A href='?src=\ref[src];price=[ore]'>$[price] per ore</A>) (<A href='?src=\ref[src];eject=[ore]'>Eject</A>)<br>"
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if(OCD)
+					price = OCD.price
+					sellable = OCD.for_sale
+				dat += "<B>[ore]:</B> [OCD.amount] (<A href='?src=\ref[src];sellable=[ore]'>[sellable ? "For Sale" : "Not For Sale"]</A>) (<A href='?src=\ref[src];price=[ore]'>$[price] per ore</A>) (<A href='?src=\ref[src];eject=[ore]'>Eject</A>)<br>"
 		else
 			dat += "No ores currently loaded.<br>"
 
-		user << browse(dat, "window=mining_dropbox;size=450x500")
+		user << browse(dat, "window=mining_dropbox;size=500x500")
 		onclose(user, "mining_dropbox")
 
 
@@ -216,49 +284,75 @@
 
 			if (href_list["eject"])
 				var/ore = href_list["eject"]
-				var/turf/ejectturf = get_turf(usr)
-
-				src.eject_ores(ore,ejectturf,0,0,usr)
+				src.eject_ores(ore,null,0,0,usr)
 
 			if (href_list["price"])
 				var/ore = href_list["price"]
 				var/new_price = null
 				new_price = input(usr,"What price would you like to set? (Min 0)","Set Sale Price",null) as num
-				new_price = max(0,new_price)
-				if(src.sell_price[ore])
-					sell_price[ore] = new_price
-				else
-					sell_price += ore
-					sell_price[ore] = new_price
+				update_ore_price(ore,new_price)
 
 			if (href_list["sellable"])
 				var/ore = href_list["sellable"]
-				if(src.for_sale[ore])
-					for_sale[ore] = !for_sale[ore]
-				else
-					for_sale += ore
-					for_sale[ore] = 1
-				update_sellable()
+				update_ore_for_sale(ore)
 
 			src.updateUsrDialog()
 		return
 
-	proc/eject_ores(var/ore, var/turf/ejectturf, var/ejectamt, var/transmit = 0, var/user as mob)
+	proc/eject_ores(var/ore, var/eject_location, var/ejectamt, var/transmit = 0, var/user as mob)
+		var/amount_ejected = 0
+		if(!eject_location)
+			eject_location = get_output_location()
 		for(var/obj/item/raw_material/R in src.contents)
 			if (R.material_name == ore)
 				if (!ejectamt)
 					ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
 				if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
 					break
-				if (!ejectturf)
+				if (!eject_location)
 					break
-				R.set_loc(ejectturf)
+				R.set_loc(eject_location)
 				ejectamt--
+				amount_ejected++
 				if (ejectamt <= 0)
 					break
 		if(transmit)
 			flick("ore_storage_unit-transmit",src)
-			showswirl(ejectturf)
-			leaveresidual(ejectturf)
+			showswirl(eject_location)
+			leaveresidual(eject_location)
 
-		src.update_ores()
+		update_ore_amount(ore,-amount_ejected)
+
+	proc/get_output_location()
+		if (!src.output_target)
+			return src.loc
+
+		if (get_dist(src.output_target,src) > 1)
+			src.output_target = null
+			return src.loc
+
+		if (istype(src.output_target,/obj/storage/crate/))
+			var/obj/storage/crate/C = src.output_target
+			if (C.locked || C.welded)
+				src.output_target = null
+				return src.loc
+			else
+				if (C.open)
+					return C.loc
+				else
+					return C
+		if (istype(src.output_target,/obj/storage/cart/))
+			var/obj/storage/cart/C = src.output_target
+			if (C.locked || C.welded)
+				src.output_target = null
+				return src.loc
+			else
+				if (C.open)
+					return C.loc
+				else
+					return C
+
+		if (istype(src.output_target,/turf/))
+			return src.output_target
+
+		return src.loc

@@ -300,12 +300,16 @@
 
 		dat += "<B>Ores Available for Purchase:</B><br><small>"
 		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
-			var/list/ores = S.sellable_ores
-			if(ores.len)
-				dat += "[S.name] at [get_area(S)]:<br>"
-				for(var/ore in ores)
-					var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(S.sell_price[ore]*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-					dat += "<B>[ore]:</B> [ores[ore]] ($[S.sell_price[ore]+taxes+(!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
+			if(S.broken)
+				continue
+			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if(!OCD.for_sale || !OCD.amount)
+					continue
+				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
 
 		dat += "</small><HR>"
 
@@ -679,9 +683,15 @@
 			if (href_list["purchase"])
 				var/obj/machinery/ore_cloud_storage_container/storage = locate(href_list["storage"])
 				var/ore = href_list["ore"]
-				var/list/ores = storage.sellable_ores
-				var/price = storage.sell_price[ore]
+				var/datum/ore_cloud_data/OCD = storage.ores[ore]
+				var/price = OCD.price
 				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+
+				if(!storage)
+					return
+
+				if(storage.broken)
+					return
 
 				if(!scan)
 					src.temp = {"You have to scan a card in first.<BR>"}
@@ -700,14 +710,14 @@
 
 					////////////
 
-					if(ores[ore] >= quantity)
+					if(OCD.amount >= quantity)
 						var/subtotal = round(price * quantity)
 						var/sum_taxes = round(taxes * quantity)
 						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0) * quantity
 						var/total = subtotal + sum_taxes + rockbox_fees
 						if(account.fields["current_money"] >= total)
 							account.fields["current_money"] -= total
-							storage.eject_ores(ore, get_turf(usr), quantity, transmit=1, user=usr)
+							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
 							 // This next bit is stolen from PTL Code
 							var/list/accounts = list()
