@@ -71,8 +71,6 @@
 	var/caneat = 1
 	var/candrink = 1
 
-	var/emote_lock = 0
-
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
