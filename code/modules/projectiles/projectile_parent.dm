@@ -95,6 +95,10 @@
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
+	proc/get_power(obj/O)
+		return src.proj_data.power - max(0,((get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
+
+
 	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
@@ -105,7 +109,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-		src.power = src.proj_data.power - max(0,((get_dist(src.orig_turf, A))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
+		src.power = src.get_power(A)
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
