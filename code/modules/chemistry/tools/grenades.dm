@@ -25,8 +25,8 @@
 	stamina_crit_chance = 0
 
 	New()
-		fluid_image1 = image('icons/obj/chemical.dmi', "grenade-chem-fluid1", -1) //its 01:34 and im tired im sorry for this
-		fluid_image2 = image('icons/obj/chemical.dmi', "grenade-chem-fluid2", -1)
+		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
+		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		var/datum/reagents/R = new/datum/reagents(150000)
 		reagents = R
 		R.my_atom = src
