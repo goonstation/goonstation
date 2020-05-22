@@ -408,7 +408,7 @@
 		call_reason = "No reason given."
 
 	emergency_shuttle.incall()
-	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", color = "notice")
+	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 	return 0
 
 /proc/cancel_call_proc(var/mob/user)

@@ -288,7 +288,7 @@ var/global/noir = 0
 						if(!call_reason)
 							return
 						emergency_shuttle.incall()
-						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", color = "notice")
+						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -303,7 +303,7 @@ var/global/noir = 0
 								if(!call_reason)
 									call_reason = "No reason given."
 								emergency_shuttle.incall()
-								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", color = "notice")
+								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
