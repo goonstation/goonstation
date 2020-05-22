@@ -498,7 +498,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
-	item_state = "flight"
+	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
