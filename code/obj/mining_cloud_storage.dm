@@ -102,14 +102,20 @@
 
 			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
 			var/amtload = 0
+			var/rejected = 0
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,/obj/item/raw_material/))
 					continue
+				if(istype(M,/obj/item/raw_material/miracle) && !(M.material.name == "miraclium"))
+					rejected += M.amount
+					continue
+				amtload += M.amount
 				src.load_item(M)
-				amtload++
+
 			if (amtload)
-				boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
-			else boutput(user, "<span class='alert'>No material loaded!</span>")
+				boutput(user, "<span class='notice'>[amtload] ores loaded from [O]!</span>")
+				boutput(user, "<span class='alert'>[src] rejects [rejected] anomalous ore(s).</span>")
+			else boutput(user, "<span class='alert'>No ore loaded!</span>")
 
 		else if (isitem(O))
 			quickload(user,O)
@@ -121,6 +127,8 @@
 	proc/quickload(var/mob/living/user,var/obj/item/O)
 		if (!user || !O)
 			return
+		if(istype(O,/obj/item/raw_material/miracle) && !(O.material.name == "miraclium"))
+			boutput(user, "<span class='notice'>[src] rejects the anomalous ore.</span>")
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
@@ -132,6 +140,8 @@
 				continue
 			if(!isSameMaterial(O.material,M.material))
 				continue
+			if(istype(M,/obj/item/raw_material/miracle) && !(M.material.name == "miraclium"))
+				continue // I eventually want to resolve this in a better way, but I legitimatly can't think of one right now - Urs
 			if (O.loc == user)
 				continue
 			if (O in user.contents)
@@ -146,6 +156,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
+			if(istype(W,/obj/item/raw_material/miracle) && !(W.material.name == "miraclium"))
+				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
+				return // I eventually want to resolve this in a better way, but I legitimatly can't think of one right now - Urs
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
