@@ -341,8 +341,10 @@ toxic - poisons
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
 			if (M.organHolder)
+				var/targetorgan
 				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
-					M.organHolder.damage_organ(proj.power/1+M.get_ranged_protection(), 0, 0, pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix"))
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
 
 			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
 				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
