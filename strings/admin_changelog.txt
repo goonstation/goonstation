@@ -1,4 +1,9 @@
 
+(t)fri may 22 20
+(u)pali
+(*)Added the <i>legs</i> component for when you want an object to have AI legs
+(*)Just for reference: Open the Edit Variables menu on an object, click Add Component and select the right one. There's a couple of fun ones
+(*)Added a controlled_by_mob component for when you want to actually play as the fridge with legs. When adding the component choose number of arguments = 1, argument type "mob reference" and choose the mob that's supposed to control the object
 (t)tue may 19 20
 (u)pali
 (*)The respawn panel is now available to PA. It is also in the Game Panel now. And you can create hidden jobs in the job panel which are only available through the respawn panel and not visible to players.
