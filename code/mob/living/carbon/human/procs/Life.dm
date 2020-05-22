@@ -1818,7 +1818,9 @@
 		var/lying_old = src.lying
 		var/cant_lie = (src.limbs && istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, src.loc) && !locate(/obj/machinery/optable, src.loc))
 
-		var/must_lie = hasStatus("resting") || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/list/statusList = src.getStatusList()
+
+		var/must_lie = statusList["resting"] || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
 
 		var/changeling_fakedeath = 0
 		var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
@@ -1826,20 +1828,21 @@
 			changeling_fakedeath = 1
 
 		if (!isdead(src)) //Alive.
-			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.hasStatus("resting")) //Stunned etc.
+			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || statusList["resting"]) //Stunned etc.
 				var/setStat = src.stat
 				var/oldStat = src.stat
-				if (src.hasStatus("stunned"))
+				if (statusList["stunned"])
 					setStat = 0
-				if (src.hasStatus("weakened") || src.hasStatus("pinned") && !src.fakedead)
-					if (!cant_lie) src.lying = 1
+				if (statusList["weakened"] || statusList["pinned"] && !src.fakedead)
+					if (!cant_lie)
+						src.lying = 1
 					setStat = 0
-				if (src.hasStatus("paralysis"))
-					if (!cant_lie) src.lying = 1
+				if (statusList["paralysis"])
+					if (!cant_lie)
+						src.lying = 1
 					setStat = 1
-				if (isalive(src) && setStat == 1)
-					if (src && src.mind)
-						src.lastgasp() // calling lastgasp() here because we just got knocked out
+				if (isalive(src) && setStat == 1 && src.mind)
+					src.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
 					src.lying = 1
 
@@ -1870,7 +1873,7 @@
 						else if (healtype == 4)
 							src.HealDamage("All", 0, 0, 0.2) ///adjsfkaljdsklf;ajs
 
-				else if ((oldStat == 1) && (!getStatusDuration("paralysis") && !getStatusDuration("stunned") && !getStatusDuration("weakened") && !changeling_fakedeath))
+				else if ((oldStat == 1) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
 					src << sound('sound/misc/molly_revived.ogg', volume=50)
 					setalive(src)
 

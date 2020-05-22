@@ -60,7 +60,7 @@
 					src.updateOverlaysClient(x.client)
 
 /mob/living/silicon/proc/update_canmove()
-	canmove = !(getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened") || buckled)
+	canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return

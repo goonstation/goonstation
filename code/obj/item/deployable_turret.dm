@@ -115,7 +115,7 @@
 			processing_items.Add(src)
 		if(active)
 			set_projectile()
-		
+
 	disposing()
 		processing_items.Remove(src)
 		..()
@@ -405,7 +405,7 @@
 			return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.hasStatus("resting") || H.hasStatus("weakened") || H.hasStatus("stunned") || H.hasStatus("paralysis")) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return 0
 		if (is_friend(C))
 			return 0
