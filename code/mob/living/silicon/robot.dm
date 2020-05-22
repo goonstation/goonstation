@@ -654,6 +654,9 @@
 				if (!length(newname))
 					src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 					continue
+				else if (is_blank_string(newname))
+					src.show_text("Your name cannot be blank. Please choose a different name.", "red")
+					continue
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 						src.real_name = newname
@@ -816,7 +819,7 @@
 				dmgmult = 0.2
 			if(D_TOXIC)
 				dmgmult = 0
-		
+
 		if(P.proj_data.ks_ratio == 0)
 			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional

@@ -294,10 +294,10 @@ mob/new_player
 		return 0
 
 
-	proc/AttemptLateSpawn(var/datum/job/JOB)
+	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (JOB && IsJobAvailable(JOB))
+		if (JOB && (force || IsJobAvailable(JOB)))
 			var/mob/character = create_character(JOB, JOB.allow_traitors)
 			if (isnull(character))
 				return

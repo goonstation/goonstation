@@ -666,7 +666,7 @@
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
 
-	if (ishuman(src) && JOB.name != "Syndicate") // Sorry!
+	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(rank)
 
 	JOB.special_setup(src, no_special_spawn)

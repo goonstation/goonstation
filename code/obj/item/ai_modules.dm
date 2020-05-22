@@ -265,6 +265,9 @@ AI MODULES
 	lawTarget = "404 Name Not Found"
 
 	get_law_text()
+		if (is_blank_string(lawTarget)) //no blank names allowed
+			lawTarget = pick(ai_names)
+			return lawTarget
 		return lawTarget
 
 	get_desc()

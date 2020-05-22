@@ -375,7 +375,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			M.set_clothing_icon_dirty()
 
 	disposing()
-		var/obj/decal/bloodtrace/B = locate() in src
+		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if (!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			diseases = list()
 			B = new /obj/decal/bloodtrace(src.loc)
@@ -445,7 +445,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	disposing()
 		diseases = list()
-		var/obj/decal/bloodtrace/B = locate() in src
+		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if(!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA

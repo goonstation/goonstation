@@ -581,6 +581,18 @@ proc/debug_color_of(var/thing)
 				num += 1 + A.overlays.len + A.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
+	count_atoms_plus_overlays_rec
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			var/num = 0
+			for(var/X in theTurf.contents + theTurf)
+				var/atom/A = X
+				num += 1 + A.overlays.len + A.underlays.len
+				for(var/O in A.overlays + A.underlays)
+					var/atom/A2 = O
+					num += A2.overlays.len + A2.underlays.len
+			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
+
 	count_atoms
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0

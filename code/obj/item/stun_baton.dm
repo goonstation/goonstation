@@ -603,7 +603,7 @@
 			if (src.status)
 				w_class = 4
 				flags &= ~ONBELT //haha NO
-				setProperty("meleeprot", 9)
+				setProperty("meleeprot_all", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
 				setProperty("disorient_resist", 65)
@@ -616,7 +616,7 @@
 			else
 				w_class = 2
 				flags |= ONBELT
-				delProperty("meleeprot", 0)
+				delProperty("meleeprot_all", 0)
 				delProperty("rangedprot", 0)
 				delProperty("movespeed", 0)
 				delProperty("disorient_resist", 0)
@@ -684,7 +684,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot_all", 9)
 		setProperty("rangedprot", 1.5)
 		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 65)
