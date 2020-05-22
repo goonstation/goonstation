@@ -309,19 +309,23 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
+				playsound(get_turf(src), "sound/items/toys/figure-kiss.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
 			else if(user:a_intent == INTENT_DISARM)
+				playsound(get_turf(src), "sound/items/toys/figure-knock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
 			else if(user:a_intent == INTENT_GRAB)
+				playsound(get_turf(src), "sound/items/toys/figure-headlock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
+				playsound(get_turf(src), "sound/items/toys/figure-bang.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
 			if (src.icon_state != "fig-shelterfrog-dead")
 				make_cleanable(/obj/decal/cleanable/blood,get_turf(src))
 				src.icon_state = "fig-shelterfrog-dead"
-			user.lastattacked = src
+		user.lastattacked = src
 		return 0
 
 	attack_self(mob/user as mob)
