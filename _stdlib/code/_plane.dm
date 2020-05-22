@@ -13,9 +13,6 @@
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
 
-/atom
-	plane = PLANE_DEFAULT
-
 /obj/screen/plane_parent
 	name = ""
 	icon = null

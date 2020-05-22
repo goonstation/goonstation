@@ -3,6 +3,9 @@
 #define DESERIALIZE_NEED_POSTPROCESS 2
 #define DESERIALIZE_NOT_IMPLEMENTED 4
 
+/atom
+	plane = PLANE_DEFAULT
+
 /datum/sandbox
 	var/list/context = list()
 
@@ -584,6 +587,9 @@
 	else
 		last_turf = 0
 
+	if(src.medium_lights)
+		update_medium_light_visibility()
+
 /atom/movable/proc/pull()
 	//set name = "Pull"
 	//set src in oview(1)
@@ -915,7 +921,8 @@
 	else
 		last_turf = 0
 
-
+	if(src.medium_lights)
+		update_medium_light_visibility()
 
 	return src
 

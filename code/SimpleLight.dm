@@ -241,12 +241,5 @@
 		src.hide_medium_light()
 		src.hide_simple_light()
 
-/atom/movable/Move()
-	. = ..()
-	if(src.medium_lights)
-		update_medium_light_visibility()
-
-/atom/movable/set_loc(newloc)
-	. = ..()
-	if(src.medium_lights)
-		update_medium_light_visibility()
+// update_medium_light_visibility() is called in /atom/Move and /atom/set_loc
+// see atom.dm for details
