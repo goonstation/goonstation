@@ -107,7 +107,7 @@ var/datum/particleMaster/particleMaster = new
 			var/count = 1
 			for (var/datum/particleSystem/system in particleSystems)
 				if (!(count++ % allowed_particles_per_tick))
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 				if (!istype(system.location))
 					system.state = PS_FINISHED

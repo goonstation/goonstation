@@ -43,7 +43,7 @@ var/list/genetics_computers = list()
 	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if (do_after(user, 20))
-			boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -76,23 +76,6 @@ var/list/genetics_computers = list()
 				var/type_to_make = pick(typesof(/datum/dna_chromosome))
 				var/datum/dna_chromosome/C = new type_to_make(src)
 				src.saved_chromosomes += C
-
-			/*
-			// Old rewards
-			var/rewardpicker = rand(1,3)
-			switch(rewardpicker)
-				if(1)
-					boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded materials.")
-					genResearch.researchMaterial += 40
-				if(2)
-					boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded the ability to break one encryption automatically.")
-					genResearch.lock_breakers += 1
-				if(3)
-					boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded a new chromosome.")
-					var/type_to_make = pick(typesof(/datum/dna_chromosome))
-					var/datum/dna_chromosome/C = new type_to_make(src)
-					src.saved_chromosomes += C
-			*/
 
 		else
 			src.attack_hand(user)
@@ -179,7 +162,7 @@ var/list/genetics_computers = list()
 				<span></span></body></html>
 				"}
 
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 
 	if(print == 1) //Hilariously hacky temporary print thing.
@@ -254,7 +237,7 @@ var/list/genetics_computers = list()
 
 /obj/machinery/computer/genetics/Topic(href, href_list)
 	if (!can_reach(usr,src))
-		boutput(usr, "<span style=\"color:red\">You can't reach the computer from there.</span>")
+		boutput(usr, "<span class='alert'>You can't reach the computer from there.</span>")
 		return
 #ifdef HALLOWEEN
 	if(prob(1))
@@ -445,9 +428,9 @@ var/list/genetics_computers = list()
 
 		var/result = C.apply(E)
 		if(istext(result))
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Splice failed: [result]</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Splice failed: [result]</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\"><b>SCANNER ALERT:</b> Splice successful.</span>")
+			boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Splice successful.</span>")
 			src.saved_chromosomes -= C
 			qdel(C)
 			src.to_splice = null
@@ -511,7 +494,7 @@ var/list/genetics_computers = list()
 		backpage = null
 		var/mob/living/subject = get_scan_subject()
 		if (!subject)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Subject not found.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Subject not found.</span>")
 			return
 
 		src.log_me(subject, "mutation added", E)
@@ -558,7 +541,7 @@ var/list/genetics_computers = list()
 				usr << link("byond://?src=\ref[src];menu=storedmuts")
 				return
 
-		boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Combination unsuccessful.</span>")
+		boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Combination unsuccessful.</span>")
 		combining = list()
 		usr << link("byond://?src=\ref[src];menu=storedmuts")
 		return
@@ -583,15 +566,15 @@ var/list/genetics_computers = list()
 			return
 
 		if (!src.equipment_available("injector",E))
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> That equipment is on cooldown.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> That equipment is on cooldown.</span>")
 			return
 
 		var/price = genResearch.injector_cost
 		if (genResearch.researchMaterial < price)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>")
 			return
 		if (!E.can_make_injector)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Cannot make an injector using this gene.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Cannot make an injector using this gene.</span>")
 			return
 
 		src.equipment_cooldown(1,400)
@@ -616,7 +599,6 @@ var/list/genetics_computers = list()
 		var/datum/bioEffect/E = locate(href_list["send_booth"])
 		if (bioEffect_sanity_check(E,0)) return
 		var/mob/living/L = get_scan_subject()
-		//if (!L.bioHolder.HasEffect(E.id) && !saved_mutations.Find(E))
 		if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
 			message_admins("[key_name(usr)] tried to create a [E.id] injector but failed href validation (maybe they're a dirty cheat)!")
 			logTheThing("debug", usr, null, "tried to create a [E.id] injector but failed href validation.")
@@ -624,15 +606,15 @@ var/list/genetics_computers = list()
 			return
 
 		if (!src.equipment_available("genebooth",E))
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> That equipment is not connected.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> That equipment is not connected.</span>")
 			return
 
 		var/price = genResearch.genebooth_cost
 		if (genResearch.researchMaterial < price)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>")
 			return
 		if (!E.can_make_injector)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Cannot sell this gene.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Cannot sell this gene.</span>")
 			return
 
 		//src.equipment_cooldown(1,400)
@@ -655,7 +637,7 @@ var/list/genetics_computers = list()
 					P.desc = booth_effect_desc
 					P.cost = booth_effect_cost
 					P.registered_sale_id = registered_id
-					boutput(usr, "<span style=\"color:blue\">Sent 5 of '[P.name]' to gene booth.</span>")
+					boutput(usr, "<span class='notice'>Sent 5 of '[P.name]' to gene booth.</span>")
 					GB.reload_contexts()
 					break
 
@@ -665,15 +647,8 @@ var/list/genetics_computers = list()
 				GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id) //uses will start at 5
 				if (GB.offered_genes.len == 1)
 					GB.just_pick_anything()
-				boutput(usr, "<span style=\"color:blue\">Sent 5 of '[NEW.name]' to gene booth.</span>")
+				boutput(usr, "<span class='notice'>Sent 5 of '[NEW.name]' to gene booth.</span>")
 				GB.reload_contexts()
-
-
-		//var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
-		//I.name = "dna injector - [E.name]"
-		//var/datum/bioEffect/NEW = newa E.type(I)
-		//copy_datum_vars(E,NEW)
-		//I.BE = NEW // valid. still, wtf
 
 		SPAWN_DBG(0)
 			if (backpage == "storedmuts")
@@ -691,11 +666,11 @@ var/list/genetics_computers = list()
 			return
 		if (bioEffect_sanity_check(E,0)) return
 		if (!src.equipment_available("activator",E))
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> That equipment is on cooldown.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> That equipment is on cooldown.</span>")
 			return
 
 		if (!E.can_make_injector)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Cannot make an activator using this gene.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Cannot make an activator using this gene.</span>")
 			return
 		src.equipment_cooldown(1,200)
 
@@ -719,7 +694,7 @@ var/list/genetics_computers = list()
 			return
 
 		if (saved_mutations.len >= genResearch.max_save_slots)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> No more room in this scanner for stored mutations.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No more room in this scanner for stored mutations.</span>")
 			return
 
 		src.log_me(subject, "mutation removed", E)
@@ -822,7 +797,7 @@ var/list/genetics_computers = list()
 			boutput(usr, "<b>SCANNER:</b> Reclamation failed.")
 		else
 			var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
-			if (waste == E.reclaim_mats)
+			if (waste >= E.reclaim_mats)
 				boutput(usr, "<b>SCANNER ALERT:</b> Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.")
 				return
 			else
@@ -862,17 +837,17 @@ var/list/genetics_computers = list()
 		E = subject.bioHolder.GetEffectFromPool(E.id)
 		if(E)
 			if (istext(E.req_mut_research) && GetBioeffectResearchLevelFromGlobalListByID(E.id) < 2)
-				boutput(usr, "<span style=\"color:red\"><b>SCANNER ERROR:</b> Genetic structure unknown. Cannot alter mutation.</span>")
+				boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Genetic structure unknown. Cannot alter mutation.</span>")
 				return
 			if(href_list["setseq1"])
 				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
 				if (!bp || bp.marker == "locked")
-					boutput(usr, "<span style=\"color:red\"><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>")
+					boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>")
 					return
 			else if(href_list["setseq2"])
 				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
 				if (!bp || bp.marker == "locked")
-					boutput(usr, "<span style=\"color:red\"><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>")
+					boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>")
 					return
 
 		var/input = input(usr, "Select:", "[src.name]","Swap") as null|anything in list("Swap","G","C","A","T","G>C","C>G","A>T","T>A")
@@ -923,17 +898,17 @@ var/list/genetics_computers = list()
 			return
 		var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["themark"])]
 		if (istext(E.req_mut_research) && GetBioeffectResearchLevelFromGlobalListByID(E.id) < 2)
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ERROR:</b> Genetic structure unknown. Cannot alter mutation.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Genetic structure unknown. Cannot alter mutation.</span>")
 			return
 
 		if(bp.marker == "locked")
-			boutput(usr, "<span style=\"color:blue\"><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>")
+			boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>")
 			var/characters = ""
 			for(var/X in E.lockedChars)
 				characters += "[X] "
-			boutput(usr, "<span style=\"color:blue\">Possible characters in this code: [characters]</span>")
+			boutput(usr, "<span class='notice'>Possible characters in this code: [characters]</span>")
 			if(genResearch.lock_breakers > 0)
-				boutput(usr, "<span style=\"color:blue\">[genResearch.lock_breakers] auto-decryptions available. Enter UNLOCK as the code to expend one.</span>")
+				boutput(usr, "<span class='notice'>[genResearch.lock_breakers] auto-decryptions available. Enter UNLOCK as the code to expend one.</span>")
 			var/code = input("Enter decryption code.","Genetic Decryption") as null|text
 			if(!code)
 				return
@@ -945,24 +920,24 @@ var/list/genetics_computers = list()
 					bp.bpp1 = bpc.bpp1
 					bp.bpp2 = bpc.bpp2
 					bp.marker = "green"
-					boutput(usr, "<span style=\"color:blue\"><b>SCANNER ALERT:</b> Base pair unlocked.</span>")
+					boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Base pair unlocked.</span>")
 					if (E.dnaBlocks.sequenceCorrect())
 						E.dnaBlocks.ChangeAllMarkers("white")
 					usr << link("byond://?src=\ref[src];viewpool=\ref[E]")
 					return
 				else
-					boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
+					boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
 					return
 
 			if(lentext(code) != lentext(bp.lockcode))
-				boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Invalid code length.</span>")
+				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Invalid code length.</span>")
 				return
 			if (code == bp.lockcode)
 				var/datum/basePair/bpc = E.dnaBlocks.blockList[text2num(href_list["themark"])]
 				bp.bpp1 = bpc.bpp1
 				bp.bpp2 = bpc.bpp2
 				bp.marker = "green"
-				boutput(usr, "<span style=\"color:blue\"><b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked.</span>")
+				boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked.</span>")
 				if (E.dnaBlocks.sequenceCorrect())
 					E.dnaBlocks.ChangeAllMarkers("white")
 			else
@@ -971,7 +946,7 @@ var/list/genetics_computers = list()
 					for (var/c = E.lockedDiff, c > 0, c--)
 						bp.lockcode += pick(E.lockedChars)
 					bp.locktries = E.lockedTries
-					boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
+					boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
 				else
 					bp.locktries--
 					var/length = lentext(bp.lockcode)
@@ -995,10 +970,10 @@ var/list/genetics_computers = list()
 							if (lockcode_list[current] <= 0)
 								lockcode_list -= current
 
-					boutput(usr, "<span style=\"color:red\"><b>SCANNER ALERT:</b> Decryption code \"[code]\" failed.</span>")
-					boutput(usr, "<span style=\"color:red\">[correct_char]/[length] correct characters in entered code.</span>")
-					boutput(usr, "<span style=\"color:red\">[correct_full]/[length] characters in correct position.</span>")
-					boutput(usr, "<span style=\"color:red\">Attempts remaining: [bp.locktries].</span>")
+					boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption code \"[code]\" failed.</span>")
+					boutput(usr, "<span class='alert'>[correct_char]/[length] correct characters in entered code.</span>")
+					boutput(usr, "<span class='alert'>[correct_full]/[length] characters in correct position.</span>")
+					boutput(usr, "<span class='alert'>Attempts remaining: [bp.locktries].</span>")
 		else
 			switch(bp.marker)
 				if("green")
@@ -1073,7 +1048,7 @@ var/list/genetics_computers = list()
 		if (sample_sanity_check(sample)) return
 
 		if (!genResearch.addResearch(E))
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ERROR:</b> Unable to begin research.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Unable to begin research.</span>")
 		else
 			boutput(usr, "<b>SCANNER:</b> Research initiated successfully.")
 
@@ -1089,7 +1064,7 @@ var/list/genetics_computers = list()
 			boutput(usr, "<b>SCANNER:</b> Research initiated successfully.")
 			usr << link("byond://?src=\ref[src];menu=resopen")
 		else
-			boutput(usr, "<span style=\"color:red\"><b>SCANNER ERROR:</b> Unable to begin research.</span>")
+			boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Unable to begin research.</span>")
 		return
 
 	else if(href_list["track_research"])
@@ -1216,14 +1191,14 @@ var/list/genetics_computers = list()
 						if (research_time)
 							research_time = round(research_time / 10)
 
-						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>• [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
+						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>ï¿½ [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
 
 			if("resrunning")
 				backpage = "research"
 				topbotbutton_html = "<p><b>Research in Progress</b></p>"
 				html_list += "<p>"
 				for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
-					html_list += "• [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
+					html_list += "ï¿½ [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
 					if (R != src.tracked_research)
 						html_list += " <small><a href='?src=\ref[src];track_research=\ref[R]'>(Track)</a></small>"
 					html_list += "<br>"
@@ -1314,7 +1289,7 @@ var/list/genetics_computers = list()
 
 					for(var/datum/geneticsResearchEntry/C in tierList)
 						if(C.isResearched == 0 || C.isResearched == -1) continue
-						html_list += "• [C.name]<br>"
+						html_list += "ï¿½ [C.name]<br>"
 				html_list += "</p>"
 
 			if("dna_samples")
@@ -1347,7 +1322,7 @@ var/list/genetics_computers = list()
 
 							new/datum/genetics_appearancemenu(usr.client, subject)
 							usr << browse(null, "window=genetics")
-							usr.machine = null
+							src.remove_dialog(usr)
 				else
 					topbotbutton_html = ""
 					html_list += "<p>Can not change appearance of non-humans.</p>"
@@ -1485,7 +1460,7 @@ var/list/genetics_computers = list()
 	if (genResearch.cost_discount)
 		research_cost -= round(research_cost * genResearch.cost_discount)
 
-	var/list/build = ""
+	var/list/build = list()
 	var/datum/bioEffect/global_BE = E.get_global_instance()
 	if (!global_BE)
 		build += "<p>Genetic structure unknown. Research currently impossible.</p>"
@@ -1512,7 +1487,7 @@ var/list/genetics_computers = list()
 		else
 			build += "<p>[E.desc]</p>"
 
-	return build
+	return build.Join()
 
 /obj/machinery/computer/genetics/proc/ui_build_sequence(var/datum/bioEffect/E, var/screen = "pool")
 	if (!E)

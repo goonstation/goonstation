@@ -248,7 +248,7 @@
 
 	Topic(href, href_list)
 		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You need to be closer to the rack to do that!</span>")
+			boutput(usr, "<span class='alert'>You need to be closer to the rack to do that!</span>")
 			return
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
@@ -314,7 +314,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
 			if(user)
-				boutput(user, "<span style=\"color:blue\">You disable the [src]'s cardlock!</span>")
+				boutput(user, "<span class='notice'>You disable the [src]'s cardlock!</span>")
 			src.hacked = 1
 			src.updateUsrDialog()
 			return 1

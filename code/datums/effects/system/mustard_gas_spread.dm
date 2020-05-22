@@ -43,7 +43,7 @@
 				else
 					direction = pick(alldirs)
 			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
+				sleep(1 SECOND)
 				step(smoke,direction)
 			SPAWN_DBG(10 SECONDS)
 				qdel(smoke)

@@ -33,7 +33,7 @@
 			return
 
 		var/mob/ownerMob = owner
-		ownerMob.show_message("<span style=\"color:blue\">We must hold still for a moment...</span>", 1)
+		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
 
 	onEnd()
 		..()
@@ -43,8 +43,8 @@
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
-			boutput(ownerMob, "<span style=\"color:blue\">We devour [target]!</span>")
-			ownerMob.visible_message(text("<span style=\"color:red\"><B>[ownerMob] hungrily devours [target]!</B></span>"))
+			boutput(ownerMob, "<span class='notice'>We devour [target]!</span>")
+			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
 			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 			logTheThing("combat", ownerMob, target, "devours %target% as a changeling in horror form [log_loc(owner)].")
 
@@ -53,7 +53,7 @@
 
 	onInterrupt()
 		..()
-		boutput(owner, "<span style=\"color:red\">Our feasting on [target] has been interrupted!</span>")
+		boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
 
 /datum/targetable/changeling/devour
 	name = "Devour"
@@ -76,13 +76,13 @@
 		var/mob/living/carbon/human/T = G.affecting
 
 		if (!istype(T))
-			boutput(C, "<span style=\"color:red\">This creature is not compatible with our biology.</span>")
+			boutput(C, "<span class='alert'>This creature is not compatible with our biology.</span>")
 			return 1
 		if (ismonkey(T))
-			boutput(C, "<span style=\"color:red\">Our hunger will not be satisfied by this lesser being.</span>")
+			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
-			boutput(usr, "<span style=\"color:red\">This creature has already been drained...</span>")
+			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
 
 		actions.start(new/datum/action/bar/icon/abominationDevour(T, src), C)
@@ -120,13 +120,13 @@
 		var/done = world.time - started
 		var/complete = max(min((done / duration), 1), 0)
 		if (complete >= 0.2 && last_complete < 0.2)
-			boutput(ownerMob, "<span style=\"color:blue\">We extend a proboscis.</span>")
-			ownerMob.visible_message(text("<span style=\"color:red\"><B>[ownerMob] extends a proboscis!</B></span>"))
+			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
+			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] extends a proboscis!</B></span>"))
 
 		if (complete > 0.6 && last_complete <= 0.6)
-			boutput(ownerMob, "<span style=\"color:blue\">We stab [target] with the proboscis.</span>")
-			ownerMob.visible_message(text("<span style=\"color:red\"><B>[ownerMob] stabs [target] with the proboscis!</B></span>"))
-			boutput(target, "<span style=\"color:red\"><B>You feel a sharp stabbing pain!</B></span>")
+			boutput(ownerMob, "<span class='notice'>We stab [target] with the proboscis.</span>")
+			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] stabs [target] with the proboscis!</B></span>"))
+			boutput(target, "<span class='alert'><B>You feel a sharp stabbing pain!</B></span>")
 			random_brute_damage(target, 40)
 
 		last_complete = complete
@@ -139,7 +139,7 @@
 
 		var/mob/ownerMob = owner
 		target.vamp_beingbitten = 1
-		ownerMob.show_message("<span style=\"color:blue\">We must hold still...</span>", 1)
+		ownerMob.show_message("<span class='notice'>We must hold still...</span>", 1)
 
 		if (ishuman(target))
 			target:was_harmed(owner, special = "ling")
@@ -154,8 +154,8 @@
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
-			boutput(ownerMob, "<span style=\"color:blue\">We have absorbed [target]!</span>")
-			ownerMob.visible_message(text("<span style=\"color:red\"><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
+			boutput(ownerMob, "<span class='notice'>We have absorbed [target]!</span>")
+			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
 			logTheThing("combat", ownerMob, target, "absorbs %target% as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0
@@ -167,7 +167,7 @@
 	onInterrupt()
 		..()
 		target.vamp_beingbitten = 0
-		boutput(owner, "<span style=\"color:red\">Our absorbtion of [target] has been interrupted!</span>")
+		boutput(owner, "<span class='alert'>Our absorbtion of [target] has been interrupted!</span>")
 
 /datum/targetable/changeling/absorb
 	name = "Absorb DNA"
@@ -190,13 +190,13 @@
 		var/mob/living/carbon/human/T = G.affecting
 
 		if (!istype(T))
-			boutput(C, "<span style=\"color:red\">This creature is not compatible with our biology.</span>")
+			boutput(C, "<span class='alert'>This creature is not compatible with our biology.</span>")
 			return 1
 		if (ismonkey(T))
-			boutput(C, "<span style=\"color:red\">Our hunger will not be satisfied by this lesser being.</span>")
+			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
-			boutput(usr, "<span style=\"color:red\">This creature has already been drained...</span>")
+			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(T, src), C)

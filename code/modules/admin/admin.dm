@@ -23,14 +23,12 @@ var/global/noir = 0
 				continue
 		else
 			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
-		LAGCHECK(LAG_LOW)
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/mob/M in mobs)
 		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
 
 /proc/message_coders_vardbg(var/text, var/datum/d)
 	var/rendered
@@ -39,14 +37,12 @@ var/global/noir = 0
 			var/dbg_html = M.client.debug_variable("", d, 0)
 			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/mob/M in mobs)
 		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_MOD && M.client.holder.attacktoggle && !M.client.player_mode)
 			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
 
 /proc/rank_to_level(var/rank)
 	var/level = 0
@@ -99,7 +95,7 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
-		message_admins("<span style=\"color:blue\">[key_name(usr)] has attempted to override the admin panel!</span>")
+		message_admins("<span class='notice'>[key_name(usr)] has attempted to override the admin panel!</span>")
 		logTheThing("admin", usr, null, "tried to use the admin panel without authorization.")
 		logTheThing("diary", usr, null, "tried to use the admin panel without authorization.", "admin")
 		return
@@ -194,10 +190,14 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
 				src.show_pref_window(usr)
+		if ("toggle_spawn_in_loc")
+			if (src.level >= LEVEL_MOD)
+				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc
+				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
 				src.auto_stealth = !(src.auto_stealth)
-				boutput(usr, "<span style=\"color:blue\">Auto Stealth [src.auto_stealth ? "enabled" : "disabled"].</span>")
+				boutput(usr, "<span class='notice'>Auto Stealth [src.auto_stealth ? "enabled" : "disabled"].</span>")
 				if (src.auto_stealth)
 					if (src.auto_alt_key)
 						src.auto_alt_key = 0
@@ -209,14 +209,14 @@ var/global/noir = 0
 						var/new_key = input("Enter your desired display name.", "Fake Key", usr.client.key) as null|text
 						if (!new_key)
 							src.auto_stealth_name = null
-							boutput(usr, "<span style=\"color:blue\">Auto Stealth name removed.</span>")
+							boutput(usr, "<span class='notice'>Auto Stealth name removed.</span>")
 							return src.show_pref_window(usr)
 						if (alert("Use \"[new_key]\" as your Auto Stealth name?", "Confirmation", "OK", "Cancel") == "OK")
 							src.auto_stealth_name = new_key
 							src.set_stealth_mode(src.auto_stealth_name)
 						else
 							src.auto_stealth_name = null
-							boutput(usr, "<span style=\"color:blue\">Auto Stealth name removed.</span>")
+							boutput(usr, "<span class='notice'>Auto Stealth name removed.</span>")
 							return src.show_pref_window(usr)
 				src.show_pref_window(usr)
 		if ("set_auto_stealth_name")
@@ -224,19 +224,19 @@ var/global/noir = 0
 				var/new_key = input("Enter your desired display name.", "Fake Key", usr.client.key) as null|text
 				if (!new_key)
 					src.auto_stealth_name = null
-					boutput(usr, "<span style=\"color:blue\">Auto Stealth name removed.</span>")
+					boutput(usr, "<span class='notice'>Auto Stealth name removed.</span>")
 					return
 				if (alert("Use \"[new_key]\" as your Auto Stealth name?", "Confirmation", "OK", "Cancel") == "OK")
 					src.auto_stealth_name = new_key
 					src.show_pref_window(usr)
 				else
 					src.auto_stealth_name = null
-					boutput(usr, "<span style=\"color:blue\">Auto Stealth name removed.</span>")
+					boutput(usr, "<span class='notice'>Auto Stealth name removed.</span>")
 					return
 		if ("toggle_auto_alt_key")
 			if (src.level >= LEVEL_SA)
 				src.auto_alt_key = !(src.auto_alt_key)
-				boutput(usr, "<span style=\"color:blue\">Auto Alt Key [src.auto_alt_key ? "enabled" : "disabled"].</span>")
+				boutput(usr, "<span class='hint'>Auto Alt Key [src.auto_alt_key ? "enabled" : "disabled"].</span>")
 				if (src.auto_alt_key)
 					if (src.auto_stealth)
 						src.auto_stealth = 0
@@ -248,14 +248,14 @@ var/global/noir = 0
 						var/new_key = input("Enter your desired display name.", "Alt Key", usr.client.key) as null|text
 						if (!new_key)
 							src.auto_alt_key_name = null
-							boutput(usr, "<span style=\"color:blue\">Auto Alt Key removed.</span>")
+							boutput(usr, "<span class='hint'>Auto Alt Key removed.</span>")
 							return src.show_pref_window(usr)
 						if (alert("Use \"[new_key]\" as your Auto Alt Key?", "Confirmation", "OK", "Cancel") == "OK")
 							src.auto_alt_key_name = new_key
 							src.set_alt_key(src.auto_alt_key_name)
 						else
 							src.auto_alt_key_name = null
-							boutput(usr, "<span style=\"color:blue\">Auto Alt Key removed.</span>")
+							boutput(usr, "<span class='hint'>Auto Alt Key removed.</span>")
 							return src.show_pref_window(usr)
 				src.show_pref_window(usr)
 		if ("set_auto_alt_key_name")
@@ -263,14 +263,14 @@ var/global/noir = 0
 				var/new_key = input("Enter your desired display name.", "Alt Key", usr.client.key) as null|text
 				if (!new_key)
 					src.auto_alt_key_name = null
-					boutput(usr, "<span style=\"color:blue\">Auto Alt Key removed.</span>")
+					boutput(usr, "<span class='notice'>Auto Alt Key removed.</span>")
 					return
 				if (alert("Use \"[new_key]\" as your Auto Alt Key?", "Confirmation", "OK", "Cancel") == "OK")
 					src.auto_alt_key_name = new_key
 					src.show_pref_window(usr)
 				else
 					src.auto_alt_key_name = null
-					boutput(usr, "<span style=\"color:blue\">Auto Alt Key removed.</span>")
+					boutput(usr, "<span class='notice'>Auto Alt Key removed.</span>")
 					return
 
 		if ("refreshoptions")
@@ -288,12 +288,12 @@ var/global/noir = 0
 						if(!call_reason)
 							return
 						emergency_shuttle.incall()
-						boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
-						boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> [call_reason]<B></span>")
-						boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+						boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+						boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
+						boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-						message_admins("<span style=\"color:blue\">[key_name(usr)] called the Emergency Shuttle to the station</span>")
+						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 
 					if("2")
 						if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
@@ -305,18 +305,18 @@ var/global/noir = 0
 								if(!call_reason)
 									call_reason = "<span class='italic'>No reason given.</span>"
 								emergency_shuttle.incall()
-								boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
-								boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> [call_reason]<B></span>")
-								boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+								boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+								boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
+								boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-								message_admins("<span style=\"color:blue\">[key_name(usr)] called the Emergency Shuttle to the station</span>")
+								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 							if(1)
 								emergency_shuttle.recall()
-								boutput(world, "<span style=\"color:blue\"><B>Alert: The shuttle is going back!</B></span>")
+								boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>")
 								logTheThing("admin", usr, null, "sent the Emergency Shuttle back")
 								logTheThing("diary", usr, null, "sent the Emergency Shuttle back", "admin")
-								message_admins("<span style=\"color:blue\">[key_name(usr)] recalled the Emergency Shuttle</span>")
+								message_admins("<span class='notice'>[key_name(usr)] recalled the Emergency Shuttle</span>")
 			else
 				alert("You need to be at least a Secondary Administrator to do a shuttle call.")
 
@@ -328,7 +328,7 @@ var/global/noir = 0
 				emergency_shuttle.settimeleft(timeleft)
 				logTheThing("admin", usr, null, "edited the Emergency Shuttle's timeleft to [timeleft]")
 				logTheThing("diary", usr, null, "edited the Emergency Shuttle's timeleft to [timeleft]", "admin")
-				message_admins("<span style='color:blue'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
+				message_admins("<span class='notice'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to edit the shuttle timer.")
 
@@ -337,7 +337,7 @@ var/global/noir = 0
 				emergency_shuttle.disabled = !emergency_shuttle.disabled
 				logTheThing("admin", usr, null, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle")
 				logTheThing("diary", usr, null, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle", "admin")
-				message_admins("<span style='color:blue'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
+				message_admins("<span class='notice'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
@@ -352,7 +352,7 @@ var/global/noir = 0
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
 				logTheThing("admin", usr, null, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle")
 				logTheThing("diary", usr, null, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle", "admin")
-				message_admins("<span style='color:blue'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
+				message_admins("<span class='notice'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
 			else
 				alert("You need to be at least a Primary Administrator to enable/disable shuttle recalling.")
 
@@ -389,7 +389,7 @@ var/global/noir = 0
 
 							logTheThing("admin", usr, null, "deleted note [noteId] belonging to [player].")
 							logTheThing("diary", usr, null, "deleted note [noteId] belonging to [player].", "admin")
-							message_admins("<span style=\"color:blue\">[key_name(usr)] deleted note [noteId] belonging to <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>.</span>")
+							message_admins("<span class='notice'>[key_name(usr)] deleted note [noteId] belonging to <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>.</span>")
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
@@ -411,7 +411,7 @@ var/global/noir = 0
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] added a note for <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>: [the_note]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] added a note for <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>: [the_note]</span>")
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
@@ -488,7 +488,7 @@ var/global/noir = 0
 			if(jobban_isbanned(M, "Captain"))
 				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'><font color=red>Captain</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'>Captain</a> " //why doesn't this work 
+				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'>Captain</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Head of Security"))
 				jobs += "<a href='?src=\ref[src];action=jobban;type=Head of Security;target=\ref[M]'><font color=red>Head of Security</font></a> "
@@ -498,7 +498,7 @@ var/global/noir = 0
 			if(jobban_isbanned(M, "Syndicate"))
 				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'><font color=red>[replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'>[replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work 
+				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'>[replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Special Respawn"))
 				jobs += " <a href='?src=\ref[src];action=jobban;type=Special Respawn;target=\ref[M]'><font color=red>[replacetext("Special Respawn", " ", "&nbsp")]</font></a> "
@@ -566,14 +566,14 @@ var/global/noir = 0
 							return
 					logTheThing("admin", usr, M, "unbanned %target% from [job]")
 					logTheThing("diary", usr, M, "unbanned %target% from [job]", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
 					jobban_unban(M, job)
-					if (announce_jobbans) boutput(M, "<span style=\"color:red\"><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
+					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
 				else
 					logTheThing("admin", usr, M, "banned %target% from [job]")
 					logTheThing("diary", usr, M, "banned %target% from [job]", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] banned [key_name(M)] from [job]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
 						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
@@ -598,7 +598,7 @@ var/global/noir = 0
 							if(jobban_keylist.Find(text("[M.ckey] - [Trank4]")))
 								jobban_unban(M,Trank4)
 					jobban_fullban(M, job)
-					if (announce_jobbans) boutput(M, "<span style=\"color:red\"><b>[key_name(usr)] has job-banned you from [job].</b></span>")
+					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has job-banned you from [job].</b></span>")
 			else
 				alert("You need to be at least a Secondary Administrator to work with job bans.")
 
@@ -612,7 +612,7 @@ var/global/noir = 0
 				if(t)
 					logTheThing("admin", usr, null, "removed [t]")
 					logTheThing("diary", usr, null, "removed [t]", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] removed [t]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] removed [t]</span>")
 					jobban_remove(t)
 			else
 				alert("You need to be at least a Coder to remove job bans.")
@@ -629,7 +629,7 @@ var/global/noir = 0
 						muted = 1
 					logTheThing("admin", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%")
 					logTheThing("diary", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%.", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
+					message_admins("<span class='notice'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
 			else
 				alert("You need to be at least a Moderator to mute people.")
@@ -646,7 +646,7 @@ var/global/noir = 0
 						muted = 1
 					logTheThing("admin", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%")
 					logTheThing("diary", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%.", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
+					message_admins("<span class='notice'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
 			else
 				alert("You need to be at least a Moderator to mute people.")
@@ -662,7 +662,7 @@ var/global/noir = 0
 						oocban_unban(M)
 					logTheThing("admin", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%")
 					logTheThing("diary", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%.", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
+					message_admins("<span class='notice'>[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
 
 		if ("toggle_hide_mode")
 			if (src.level >= LEVEL_SA)
@@ -728,7 +728,7 @@ var/global/noir = 0
 				if (requestedMode in valid_modes)
 					logTheThing("admin", usr, null, "set the mode as [requestedMode].")
 					logTheThing("diary", usr, null, "set the mode as [requestedMode].", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] set the mode as [requestedMode].</span>")
+					message_admins("<span class='notice'>[key_name(usr)] set the mode as [requestedMode].</span>")
 					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
@@ -742,9 +742,9 @@ var/global/noir = 0
 						lobby_titlecard.icon_state = "title_manta"
 					#endif
 					if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
-						boutput(world, "<span style=\"color:blue\"><b>The mode is now: [requestedMode]</b></span>")
+						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
-					boutput(usr, "<span style=\"color:red\"><b>That is not a valid game mode!</b></span>")
+					boutput(usr, "<span class='alert'><b>That is not a valid game mode!</b></span>")
 			else
 				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
 
@@ -753,10 +753,10 @@ var/global/noir = 0
 				var/newmode = href_list["type"]
 				logTheThing("admin", usr, null, "set the next round's mode as [newmode].")
 				logTheThing("diary", usr, null, "set the next round's mode as [newmode].", "admin")
-				message_admins("<span style=\"color:blue\">[key_name(usr)] set the next round's mode as [newmode].</span>")
+				message_admins("<span class='notice'>[key_name(usr)] set the next round's mode as [newmode].</span>")
 				world.save_mode(newmode)
 				if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
-					boutput(world, "<span style=\"color:blue\"><b>The next round's mode will be: [newmode]</b></span>")
+					boutput(world, "<span class='notice'><b>The next round's mode will be: [newmode]</b></span>")
 			else
 				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
 
@@ -769,10 +769,10 @@ var/global/noir = 0
 					var/mob/living/carbon/human/N = M
 					logTheThing("admin", usr, M, "attempting to monkeyize %target%")
 					logTheThing("diary", usr, M, "attempting to monkeyize %target%", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
 					N.monkeyize()
 				else
-					boutput(usr, "<span style=\"color:red\">You can't transform that mob type into a monkey.</span>")
+					boutput(usr, "<span class='alert'>You can't transform that mob type into a monkey.</span>")
 					return
 			else
 				alert("You need to be at least a Secondary Adminstrator to monkeyize players.")
@@ -788,7 +788,7 @@ var/global/noir = 0
 					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
 					logTheThing("admin", usr, M, "forced %target% to say: [speech]")
 					logTheThing("diary", usr, M, "forced %target% to say: [speech]", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to force players to say things.")
 
@@ -825,8 +825,8 @@ var/global/noir = 0
 				logTheThing("admin", usr, M, "sent %target% to the thunderdome. ([team])")
 				logTheThing("diary", usr, M, "sent %target% to the thunderdome. ([team])", "admin")
 				message_admins("[key_name(usr)] has sent [key_name(M)] to the thunderdome. ([team])")
-				boutput(M, "<span style=\"color:blue\"><b>You have been sent to the Thunderdome. You are on [team].</b></span>")
-				boutput(M, "<span style=\"color:blue\"><b>Prepare for combat. If you are not let out of the preparation area within a few minutes, please adminhelp. (F1 key)</b></span>")
+				boutput(M, "<span class='notice'><b>You have been sent to the Thunderdome. You are on [team].</b></span>")
+				boutput(M, "<span class='notice'><b>Prepare for combat. If you are not let out of the preparation area within a few minutes, please adminhelp. (F1 key)</b></span>")
 
 			else
 				alert("You need to be at least a Secondary Adminstrator to send players to Thunderdome.")
@@ -840,7 +840,7 @@ var/global/noir = 0
 						return
 					if(config.allow_admin_rev)
 						M.revive()
-						message_admins("<span style=\"color:red\">Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
+						message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 						logTheThing("admin", usr, M, "healed / revived %target%")
 						logTheThing("diary", usr, M, "healed / revived %target%", "admin")
 					else
@@ -1043,7 +1043,7 @@ var/global/noir = 0
 					alert("This secret can only be used on human mobs.")
 					return
 				var/mob/living/carbon/human/H = M
-				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber")
+				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow")
 				if (!which)
 					return
 				. = 0
@@ -1077,8 +1077,10 @@ var/global/noir = 0
 						droneize(H, 0)
 					if("Flubber")
 						H.set_mutantrace(/datum/mutantrace/flubber)
+					if ("Cow")
+						H.set_mutantrace(/datum/mutantrace/cow)
 				if(.)
-					message_admins("<span style=\"color:blue\">[key_name(usr)] transformed [H.real_name] into a [which].</span>")
+					message_admins("<span class='notice'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
 
@@ -1099,7 +1101,7 @@ var/global/noir = 0
 				if (picklist && picklist.len >= 1)
 					var/string_version
 					for(pick in picklist)
-						X.bioHolder.AddEffect(pick)
+						X.bioHolder.AddEffect(pick, magical = 1)
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""
@@ -1151,7 +1153,7 @@ var/global/noir = 0
 				var/atom/A = locate(href_list["target"])
 				if (A)
 					usr.client.cmd_admin_check_health(A)
-
+					return
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1188,7 +1190,7 @@ var/global/noir = 0
 				if(!amount) return
 
 				X.reagents.add_reagent(reagent.id, amount)
-				boutput(usr, "<span style=\"color:green\">Added [amount] units of [reagent.id] to [X.name]</span>")
+				boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [X.name]</span>")
 
 				logTheThing("admin", usr, X, "added [amount] units of [reagent.id] to [X] at [log_loc(X)].")
 				logTheThing("diary", usr, X, "added [amount] units of [reagent.id] to [X] at [log_loc(X)].", "admin")
@@ -1360,7 +1362,7 @@ var/global/noir = 0
 				var/mob/wraith/Wr = M.wraithize()
 				if (!Wr)
 					if (!iswraith(mind.current))
-						boutput(usr, "<span style=\"color:red\">Wraithization failed! Call 1-800-MARQUESAS for help.</span>")
+						boutput(usr, "<span class='alert'>Wraithization failed! Call 1-800-MARQUESAS for help.</span>")
 						return
 					else
 						Wr = mind.current
@@ -1420,18 +1422,6 @@ var/global/noir = 0
 			if (alert("Make [M] a macho man?", "Make Macho", "Yes", "No") == "Yes")
 				M.machoize()
 
-		if ("makewelder")
-			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a Welder.")
-				return
-			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (alert("Make [M] a welder? Best used on a ghost.", "Make Welder", "Yes", "No") == "Yes")
-				M.make_welder()
-
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
 				alert("You must be at least a Primary Administrator to make someone a Critter.")
@@ -1464,35 +1454,6 @@ var/global/noir = 0
 						amt = INFINITY
 					M.cubeize(amt, CT)
 
-		// hacks are all i'm made of - cirr
-		/*if ("makeintruder")
-			if( src.level < LEVEL_PA)
-				alert("You must be at least a Primary Administrator to make someone an intruder.")
-				return
-			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (alert("Make [M] an eldritch intruder?", "Make Intruder", "Yes", "No") == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind(  )
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				var/mob/living/intangible/intruder/In = M.intruderize()
-				if (!In)
-					if (!istype(mind.current, /mob/living/intangible/intruder))
-						boutput(usr, "<span style=\"color:red\">Could not into intruder. Cirr is a dum and must be shamed.</span>")
-						return
-					else
-						In = mind.current
-				mind.special_role = "intruder"
-				ticker.mode.Agimmicks += mind
-				In.antagonist_overlay_refresh(1, 0)
-		*/
 		if ("makeflock")
 			if( src.level < LEVEL_PA)
 				alert("You must be at least a Primary Administrator to make someone a flockmind or flocktrace.")
@@ -1519,7 +1480,7 @@ var/global/noir = 0
 				var/mob/living/intangible/flock/F = M.flockerize(chosen)
 				if (!F)
 					if (!istype(mind.current, /mob/living/intangible/flock))
-						boutput(usr, "<span style=\"color:red\">Could not into flockmind. Cirr is a dum and must be shamed.</span>")
+						boutput(usr, "<span class='alert'>Could not into flockmind. Cirr is a dum and must be shamed.</span>")
 						return
 					else
 						F = mind.current
@@ -1795,7 +1756,7 @@ var/global/noir = 0
 						return
 
 					var/list/offset = splittext(href_list["offset"],",")
-					var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
+					var/number = clamp(text2num(href_list["object_count"]), 1, 100)
 					var/X = offset.len > 0 ? text2num(offset[1]) : 0
 					var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 					var/Z = offset.len > 2 ? text2num(offset[3]) : 0
@@ -1874,7 +1835,7 @@ var/global/noir = 0
 				if (tokens <= 0)
 					logTheThing("admin", usr, M, "Removed all antag tokens from %target%")
 					logTheThing("diary", usr, M, "Removed all antag tokens from %target%", "admin")
-					message_admins("<span style=\"color:blue\">[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
+					message_admins("<span class='notice'>[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
 				else
 					logTheThing("admin", usr, M, "Set %target%'s Antag tokens  to [tokens].")
 					logTheThing("diary", usr, M, "Set %target%'s Antag tokens  to [tokens].")
@@ -1918,14 +1879,14 @@ var/global/noir = 0
 				if (!M) return
 				var/suc = M.revoke_medal( "Contributor" )
 				if(!suc)
-					boutput( usr, "<span style='color:red'>Revoke failed, couldn't contact hub!</span>" )
+					boutput( usr, "<span class='alert'>Revoke failed, couldn't contact hub!</span>" )
 				else if(suc)
-					boutput( usr, "<span style='color:red'>Contributor medal revoked.</span>" )
+					boutput( usr, "<span class='alert'>Contributor medal revoked.</span>" )
 					logTheThing("admin", usr, M, "revoked %target%'s contributor status.")
 					logTheThing("diary", usr, M, "revoked %target%'s contributor status.")
 					message_admins( "[key_name(usr)] revoked [key_name(M)]'s contributor status." )
 				else
-					boutput( usr, "<span style='color:red'>Failed to revoke, did they have the medal to begin with?</span>" )
+					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
 			else
 				alert("You need to be at least a Coder to revoke the medal.")
 		if ("grantclown")
@@ -1944,14 +1905,14 @@ var/global/noir = 0
 				if (!M) return
 				var/suc = M.revoke_medal( "Unlike the director, I went to college" )
 				if(!suc)
-					boutput( usr, "<span style='color:red'>Revoke failed, couldn't contact hub!</span>" )
+					boutput( usr, "<span class='alert'>Revoke failed, couldn't contact hub!</span>" )
 				else if(suc)
-					boutput( usr, "<span style='color:red'>Clown college diploma revoked.</span>" )
+					boutput( usr, "<span class='alert'>Clown college diploma revoked.</span>" )
 					logTheThing("admin", usr, M, "revoked %target%'s clown college diploma.")
 					logTheThing("diary", usr, M, "revoked %target%'s clown college diploma.")
 					message_admins( "[key_name(usr)] revoked [key_name(M)]'s clown college diploma." )
 				else
-					boutput( usr, "<span style='color:red'>Failed to revoke, did they have the medal to begin with?</span>" )
+					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
 			else
 				alert("You need to be at least an SA to revoke this.")
 
@@ -2010,7 +1971,7 @@ var/global/noir = 0
 							alert("This secret can only be used on human mobs.")
 							return
 						var/mob/living/carbon/human/H = who
-						var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman")
+						var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
 						if (!which)
 							return
 						switch(which)
@@ -2026,12 +1987,14 @@ var/global/noir = 0
 								H.set_mutantrace(/datum/mutantrace/skeleton)
 							if("Flashman")
 								H.set_mutantrace(/datum/mutantrace/flashy)
-						message_admins("<span style=\"color:blue\">[key_name(usr)] transformed [H.real_name] into a [which].</span>")
+							if ("Cow")
+								H.set_mutantrace(/datum/mutantrace/cow)
+						message_admins("<span class='notice'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed [H.real_name] into a [which].")
 						logTheThing("diary", usr, null, "transformed [H.real_name] into a [which].", "admin")
 
 					if("transform_all")
-						var/which = input("Transform everyone into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman")
+						var/which = input("Transform everyone into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
 						for(var/mob/living/carbon/human/H in mobs)
 							switch(which)
 								if("Monkey") H.monkeyize()
@@ -2046,15 +2009,17 @@ var/global/noir = 0
 									H.set_mutantrace(/datum/mutantrace/skeleton)
 								if("Flashman")
 									H.set_mutantrace(/datum/mutantrace/flashy)
+								if("Cow")
+									H.set_mutantrace(/datum/mutantrace/cow)
 							LAGCHECK(LAG_LOW)
-						message_admins("<span style=\"color:blue\">[key_name(usr)] transformed everyone into a [which].</span>")
+						message_admins("<span class='notice'>[key_name(usr)] transformed everyone into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed everyone into a [which].")
 						logTheThing("diary", usr, null, "transformed everyone into a [which].", "admin")
 					if("prisonwarp")
 						if(!ticker)
 							alert("The game hasn't started yet!", null, null, null, null, null)
 							return
-						message_admins("<span style=\"color:blue\">[key_name(usr)] teleported all players to the prison zone.</span>")
+						message_admins("<span class='notice'>[key_name(usr)] teleported all players to the prison zone.</span>")
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
@@ -2104,7 +2069,7 @@ var/global/noir = 0
 								if(checktraitor(H)) continue
 								evilize(H, which_traitor, hardmode, custom_objective, escape_objective)
 
-							message_admins("<span style=\"color:blue\">[key_name(usr)] made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]</span>")
+							message_admins("<span class='notice'>[key_name(usr)] made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]</span>")
 							logTheThing("admin", usr, null, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]")
 							logTheThing("diary", usr, null, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]", "admin")
 						else
@@ -2124,20 +2089,20 @@ var/global/noir = 0
 										var/Message = rand(1,4)
 										switch(Message)
 											if(1)
-												M.show_message(text("<span style=\"color:blue\">You shudder as if cold...</span>"), 1)
+												M.show_message(text("<span class='notice'>You shudder as if cold...</span>"), 1)
 											if(2)
-												M.show_message(text("<span style=\"color:blue\">You feel something gliding across your back...</span>"), 1)
+												M.show_message(text("<span class='notice'>You feel something gliding across your back...</span>"), 1)
 											if(3)
-												M.show_message(text("<span style=\"color:blue\">Your eyes twitch, you feel like something you can't see is here...</span>"), 1)
+												M.show_message(text("<span class='notice'>Your eyes twitch, you feel like something you can't see is here...</span>"), 1)
 											if(4)
-												M.show_message(text("<span style=\"color:blue\">You notice something moving out of the corner of your eye, but nothing is there...</span>"), 1)
+												M.show_message(text("<span class='notice'>You notice something moving out of the corner of your eye, but nothing is there...</span>"), 1)
 										for(var/obj/W in orange(5,M))
 											if(prob(25) && !W.anchored)
 												step_rand(W)
 							sleep(rand(100,1000))
 						for(var/mob/M in mobs)
 							if(M.client && !isdead(M))
-								M.show_message(text("<span style=\"color:blue\">The chilling wind suddenly stops...</span>"), 1)
+								M.show_message(text("<span class='notice'>The chilling wind suddenly stops...</span>"), 1)
 							LAGCHECK(LAG_LOW)
 					if("stupify")
 						if (src.level >= LEVEL_SHITGUY)
@@ -2187,9 +2152,9 @@ var/global/noir = 0
 							var/timedelay = input(usr,"Delay before time warp? 10 = 1 second",src.name) as num|null
 							if (!isnum(timedelay) || timedelay < 1)
 								return
-							boutput(usr, text("<span style=\"color:red\"><B>Preparing to warp time</B></span>"))
+							boutput(usr, text("<span class='alert'><B>Preparing to warp time</B></span>"))
 							timeywimey(timedelay)
-							boutput(usr, text("<span style=\"color:red\"><B>Time warped!</B></span>"))
+							boutput(usr, text("<span class='alert'><B>Time warped!</B></span>"))
 							logTheThing("admin", usr, null, "triggered a time warp.")
 							logTheThing("diary", usr, null, "triggered a time warp.", "admin")
 						else
@@ -2322,7 +2287,7 @@ var/global/noir = 0
 												X.bioHolder.AddEffect(pick)
 											else
 												X.bioHolder.RemoveEffect(pick)
-										sleep(1)
+										sleep(0.1 SECONDS)
 
 								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
 								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
@@ -2365,7 +2330,7 @@ var/global/noir = 0
 											else
 												if (X.reagents)
 													X.reagents.remove_reagent(pick,amt)
-										sleep(1)
+										sleep(0.1 SECONDS)
 
 								message_admins("[key_name(usr)] [adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] everyone.")
 								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] everyone.")
@@ -2491,7 +2456,7 @@ var/global/noir = 0
 							for(var/obj/item/W in world)
 								if(istype(W, /obj/item/clothing) || istype(W, /obj/item/card/id) || istype(W, /obj/item/disk) || istype(W, /obj/item/tank))
 									continue
-								W.icon = 'icons/obj/gun.dmi'
+								W.icon = 'icons/obj/items/gun.dmi'
 								W.icon_state = "revolver"
 								W.item_state = "gun"
 								LAGCHECK(LAG_LOW)
@@ -3039,6 +3004,8 @@ var/global/noir = 0
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
 						job_controls.job_config()
+					if("respawn_panel")
+						src.s_respawn()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
@@ -3118,7 +3085,7 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("s_rez")
-			if (src.level >= LEVEL_SHITGUY)
+			if (src.level >= LEVEL_PA)
 				switch(href_list["type"])
 					if("spawn_syndies")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
@@ -3138,7 +3105,7 @@ var/global/noir = 0
 
 					if("spawn_job")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
 						if(!job) return
 						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
@@ -3166,11 +3133,6 @@ var/global/noir = 0
 						logTheThing("diary", src, null, "has spawned a Smiling Man.", "admin")
 	*/
 
-					if("spawn_welder")
-						var/datum/special_respawn/SR = new /datum/special_respawn
-						SR.spawn_welder(1)
-						logTheThing("admin", src, null, "has spawned a Welder.")
-
 					if("spawn_custom")
 						var/datum/special_respawn/SR = new /datum/special_respawn
 						var/blType = input(usr, "Select a mob type", "Spawn Custom") as null|anything in typesof(/mob/living)
@@ -3194,6 +3156,19 @@ var/global/noir = 0
 				if (!M) return
 				var/mob/newM = usr.client.respawn_target(M)
 				href_list["target"] = "\ref[newM]"
+			else
+				alert ("You must be at least a Secondary Admin to respawn a target.")
+		if ("respawnas")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/client/C = M.client
+				if (!M) return
+				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+				var/datum/job/job = input(usr,"Select job to respawn [M] as:","Respawn As",null) as null|anything in jobs
+				if(!job) return
+				var/mob/new_player/newM = usr.client.respawn_target(M)
+				newM.AttemptLateSpawn(job, force=1)
+				href_list["target"] = "\ref[C.mob]"
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
@@ -3373,7 +3348,7 @@ var/global/noir = 0
 				return alert("You must be at least a Primary Admin to do this.")
 
 			usr.client.disable_deletions()
-		
+
 		////////////
 
 		if ("toggle_dj")
@@ -3387,7 +3362,7 @@ var/global/noir = 0
 			world << "Undefined action [href_list["action"]]"
 
 	//Wires bad hack part 2
-	sleep(5)
+	sleep(0.5 SECONDS)
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
@@ -3447,7 +3422,7 @@ var/global/noir = 0
 				<td>[M.name]</td>
 				<td>[M.real_name ? "[M.real_name]" : "<em>no real_name</em>"]</td>
 				<td>[M.mind ? M.mind.assigned_role : "<em>(no mind/role?)</em>"]</td>
-				<td><a href='?src=\ref[src];action=traitor;target=\ref[M]'>[M.mind ? (M.mind.special_role ? "<strong style='color: red;'>" + M.mind.special_role + "</strong>" : "<em>(none)</em>") : "<em>(no mind?)</em>"]</td>
+				<td><a href='?src=\ref[src];action=traitor;target=\ref[M]'>[M.mind ? (M.mind.special_role ? "<strong class='alert'>" + M.mind.special_role + "</strong>" : "<em>(none)</em>") : "<em>(no mind?)</em>"]</td>
 				<td>[M.type]</td>
 				<td align="center">[M.computer_id ? M.computer_id : "None"]</td>
 				<td align="center">[M.lastKnownIP]</td>
@@ -3472,7 +3447,6 @@ var/global/noir = 0
 			<A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A><BR>
 			<A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A><BR>
 			<A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Welder</A><BR>
 			<A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A><BR>
 			"}
 	usr.Browse(dat, "window=SRespawn")
@@ -3603,6 +3577,7 @@ var/global/noir = 0
 	dat += {"<hr><div class='optionGroup' style='border-color:#FF6961'><b class='title' style='background:#FF6961'>Admin Tools</b>
 				<A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Respawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
@@ -3749,7 +3724,7 @@ var/global/noir = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		boutput(world, "<span style=\"color:red\"><b>Restarting world!</b></span> <span style=\"color:blue\">Initiated by [admin_key(usr.client, 1)]!</span>")
+		boutput(world, "<span class='alert'><b>Restarting world!</b></span> <span class='notice'>Initiated by [admin_key(usr.client, 1)]!</span>")
 		logTheThing("admin", usr, null, "initiated a reboot.")
 		logTheThing("diary", usr, null, "initiated a reboot.", "admin")
 
@@ -3761,7 +3736,7 @@ var/global/noir = 0
 
 		round_end_data(2) //Wire: Export round end packet (manual restart)
 
-		sleep(30)
+		sleep(3 SECONDS)
 		Reboot_server()
 
 /datum/admins/proc/announce()
@@ -3772,7 +3747,7 @@ var/global/noir = 0
 	if (message)
 		if(usr.client.holder.rank != "Coder" && usr.client.holder.rank != "Host")
 			message = adminscrub(message,500)
-		boutput(world, "<span style=\"color:blue\"><b>[admin_key(usr.client, 1)] Announces:</b><br>&emsp; [message]</span>")
+		boutput(world, "<span class='notice'><b>[admin_key(usr.client, 1)] Announces:</b><br>&emsp; [message]</span>")
 		logTheThing("admin", usr, null, ": [message]")
 		logTheThing("diary", usr, null, ": [message]", "admin")
 
@@ -3894,25 +3869,25 @@ var/global/noir = 0
 
 /datum/admins/proc/evilize(mob/M as mob, var/traitor_type, var/special = null, var/mass_traitor_obj = null, var/mass_traitor_esc = null)
 	if (!M || !traitor_type)
-		boutput(usr, "<span style=\"color:red\">No mob or traitor type specified.</span>")
+		boutput(usr, "<span class='alert'>No mob or traitor type specified.</span>")
 		return
 	if (!src.level >= LEVEL_SA)
-		boutput(usr, "<span style=\"color:red\">You need to be a Secondary Administrator or above to use this command.</span>")
+		boutput(usr, "<span class='alert'>You need to be a Secondary Administrator or above to use this command.</span>")
 		return
 	if(isdead(M) || isobserver(M))
-		boutput(usr, "<span style=\"color:red\">You cannot make someone who is dead an antagonist.</span>")
+		boutput(usr, "<span class='alert'>You cannot make someone who is dead an antagonist.</span>")
 		return
 	if (istype(M,/mob/new_player/))
-		boutput(usr, "<span style=\"color:red\">You cannot make someone who has not entered the game an antagonist.</span>")
+		boutput(usr, "<span class='alert'>You cannot make someone who has not entered the game an antagonist.</span>")
 		return
 	if (!M.client)
-		boutput(usr, "<span style=\"color:red\">You cannot make someone who is logged out an antagonist.</span>")
+		boutput(usr, "<span class='alert'>You cannot make someone who is logged out an antagonist.</span>")
 		return
 	if(checktraitor(M))
-		boutput(usr, "<span style=\"color:red\">That person is already an antagonist.</span>")
+		boutput(usr, "<span class='alert'>That person is already an antagonist.</span>")
 		return
 	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
-		boutput(usr, "<span style=\"color:red\">Gang Leaders are currently restricted to gang mode only.</span>")
+		boutput(usr, "<span class='alert'>Gang Leaders are currently restricted to gang mode only.</span>")
 		return
 
 	traitor_type = lowertext(traitor_type)
@@ -3971,7 +3946,7 @@ var/global/noir = 0
 					new_objective.set_up()
 					M.mind.objectives += new_objective
 				else
-					boutput(usr, "<span style=\"color:red\">No text was entered. Objective not given.</span>")
+					boutput(usr, "<span class='alert'>No text was entered. Objective not given.</span>")
 			else
 				new_objective = new select_objective
 				new_objective.owner = M.mind
@@ -3979,7 +3954,7 @@ var/global/noir = 0
 				M.mind.objectives += new_objective
 
 		if (M.mind.objectives.len < 1)
-			boutput(usr, "<span style=\"color:red\">Not enough objectives specified.</span>")
+			boutput(usr, "<span class='alert'>Not enough objectives specified.</span>")
 			return
 
 	if (isAI(M))
@@ -3990,7 +3965,7 @@ var/global/noir = 0
 	else if (isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if (R.dependent)
-			boutput(usr, "<span style=\"color:red\">You can't evilize AI-controlled shells.</span>")
+			boutput(usr, "<span class='alert'>You can't evilize AI-controlled shells.</span>")
 			return
 		R.syndicate = 1
 		R.syndicate_possible = 1
@@ -4045,16 +4020,16 @@ var/global/noir = 0
 					if(istype(G))
 						G.generate_gang(M.mind)
 					else
-						boutput(usr, "<span class='text-red'>The game mode isn't gang (or something is deeply fucked up).</span>")
+						boutput(usr, "<span class='alert'>The game mode isn't gang (or something is deeply fucked up).</span>")
 						return
 
 				boutput(M, "<h1><font color=red>You are the leader of the [M.mind.gang.gang_name] gang!</font></h1>")
-				boutput(M, "<span style=\"color:red\">You must recruit people to your cause and fight other gangs!</span>")
-				boutput(M, "<span style=\"color:red\">You may kill anyone you want, but are advised to convince them to join you instead!</span>")
-				boutput(M, "<span style=\"color:red\">You can use the Set Gang Base command once which will make your current area into your gang's base and spawn a locker.</span>")
-				boutput(M, "<span style=\"color:red\">You can get gear from your gang's locker. You must store guns, drugs and cash there for points.</span>")
-				boutput(M, "<span style=\"color:red\">People can join your gang by reading a flyer, obtained from your gang locker.</span>")
-				boutput(M, "<span style=\"color:red\">Your objectives are to <b>kill the opposing gang leaders</b>, and <b>stash guns, drugs and cash in your locker</b>.</span>")
+				boutput(M, "<span class='alert'>You must recruit people to your cause and fight other gangs!</span>")
+				boutput(M, "<span class='alert'>You may kill anyone you want, but are advised to convince them to join you instead!</span>")
+				boutput(M, "<span class='alert'>You can use the Set Gang Base command once which will make your current area into your gang's base and spawn a locker.</span>")
+				boutput(M, "<span class='alert'>You can get gear from your gang's locker. You must store guns, drugs and cash there for points.</span>")
+				boutput(M, "<span class='alert'>People can join your gang by reading a flyer, obtained from your gang locker.</span>")
+				boutput(M, "<span class='alert'>Your objectives are to <b>kill the opposing gang leaders</b>, and <b>stash guns, drugs and cash in your locker</b>.</span>")
 				M.verbs += /client/proc/set_gang_base
 				alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
 			if("omnitraitor")
@@ -4096,7 +4071,7 @@ var/global/noir = 0
 	if(!mass_traitor_obj)
 		logTheThing("admin", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].")
 		logTheThing("diary", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].", "admin")
-		message_admins("<span style=\"color:blue\">[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
+		message_admins("<span class='notice'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
 
 /datum/admins/proc/get_item_desc(var/target)
@@ -4182,8 +4157,11 @@ var/global/noir = 0
 				if (location)
 					location.ReplaceWith(chosen, handle_air = 0)
 			else
-				var/atom/movable/A = new chosen()
-				A.set_loc(usr.loc)
+				var/atom/movable/A
+				if (usr.client.holder.spawn_in_loc)
+					A = new chosen(usr.loc)
+				else
+					A = new chosen(get_turf(usr))
 				if (usr.client.flourish)
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
@@ -4219,14 +4197,14 @@ var/global/noir = 0
 		return
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
 	if(C.cloud_get( "adminhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' style='color:red'>Adminhelp Mute</a> (Last by [C.cloud_get( "adminhelp_banner" )])<br/>"
+		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.cloud_get( "adminhelp_banner" )])<br/>"
 		logTheThing("admin", src, C, "unmuted %target% from adminhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
 		logTheThing("admin", src, C, "muted %target% from adminhelping.")
 
 	if(C.cloud_get( "mentorhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' style='color:red'>Mentorhelp Mute</a> (Last by [C.cloud_get( "mentorhelp_banner" )])<br/>"
+		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.cloud_get( "mentorhelp_banner" )])<br/>"
 		logTheThing("admin", src, C, "unmuted %target% from mentorhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"

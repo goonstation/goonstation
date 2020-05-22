@@ -56,16 +56,14 @@
 			src.turnOff()
 
 	examine()
-		..()
-		var/msg = "<span style='color: blue;'>"
+		. = ..()
 		if (src.occupant)
-			msg += "[src.occupant] is currently using it."
-		out(usr, "[msg]</span>")
+			. += "<span class='notice'>[src.occupant] is currently using it.</span>"
 
 	proc/turnOn(mob/living/silicon/ghostdrone/G)
 		if (!G || G.getStatusDuration("stunned")) return 0
 
-		out(G, "<span style='color: blue;'>The [src] grabs you as you float by and begins charging your power cell.</span>")
+		out(G, "<span class='notice'>The [src] grabs you as you float by and begins charging your power cell.</span>")
 		src.set_density(1)
 		G.canmove = 0
 
@@ -84,7 +82,7 @@
 	proc/turnOff(reason)
 		if (!src.occupant || src.occupant.newDrone) return 0
 
-		var/msg = "<span style='color: blue;'>"
+		var/msg = "<span class='notice'>"
 		if (reason == "nopower")
 			msg += "The [src] spits you out seconds before running out of power."
 		else if (reason == "fullcharge")

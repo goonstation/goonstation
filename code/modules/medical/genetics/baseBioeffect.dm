@@ -260,18 +260,18 @@ var/const/effectTypeFood = 4
 		var/mob/living/user = usr
 
 		if (!istype(user) || !istype(owner))
-			boutput(user, "<span style=\"color:red\">Oh christ something's gone completely batshit. Report this to a coder.</span>")
+			boutput(user, "<span class='alert'>Oh christ something's gone completely batshit. Report this to a coder.</span>")
 			return
 
 		if (!owner.cooldowncheck())
-			boutput(user, "<span style=\"color:red\">That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
+			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
 			return
 
 		if (!owner.targeted)
 			owner.handleCast()
 			return
 		else
-			user.targeting_spell = owner
+			user.targeting_ability = owner
 			user.update_cursor()
 
 	get_controlling_mob()
@@ -323,7 +323,7 @@ var/const/effectTypeFood = 4
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
-			boutput(holder.owner, "<span style=\"color:red\">That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 			return 999
 
 		if (has_misfire)

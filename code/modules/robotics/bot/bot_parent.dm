@@ -1,7 +1,7 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
 /obj/machinery/bot
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	object_flags = CAN_REPROGRAM_ACCESS
@@ -43,12 +43,18 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
+		attack_particle(user,src)
+		hit_twitch(src)
+		if (W.hitsound)
+			playsound(src,W.hitsound,50,1)
 		..()
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
+
+		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
@@ -84,3 +90,11 @@
 					return 1
 				else
 					return 0
+
+/obj/machinery/bot/examine()
+	. = ..()
+	if (src.health < 20)
+		if (src.health > 15)
+			. += "<span class='alert'>[src]'s parts look loose.</span>"
+		else
+			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"

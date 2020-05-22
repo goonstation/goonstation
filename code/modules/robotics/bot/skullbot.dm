@@ -3,7 +3,7 @@
 /obj/machinery/bot/skullbot
 	name = "skullbot"
 	desc = "A skull on a leg. Useful, somehow. I guess."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "skullbot"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -45,12 +45,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
-		switch (W.damtype)
-			if ("fire")
-				src.health -= W.force * 0.5
-			if ("brute")
-				src.health -= W.force * 0.5
-			else
+		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 

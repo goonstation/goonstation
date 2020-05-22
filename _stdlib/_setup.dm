@@ -15,10 +15,6 @@
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
 #endif
 
-#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-#warn Only using one z-level. This will fuck everything up. You're gonna have a bad time.
-#endif
-
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
 //   Start profiling immediately, save profiler data when world is rebooting (data/profile/xxxxxxxx-full.log)
@@ -87,6 +83,8 @@
 #define COMBAT_CLICK_DELAY 10
 #define CLICK_GRACE_WINDOW 0//2.5
 
+#define COMBAT_BLOCK_DELAY (2)
+
 //Alignment around the turf. Any can be combined with center (top and bottom for horizontal centering, left and right for vertical).
 #define TOOLTIP_BOTTOM 0
 #define TOOLTIP_TOP 1
@@ -97,15 +95,6 @@
 #define TOOLTIP_ALWAYS 1
 #define TOOLTIP_NEVER 2
 #define TOOLTIP_ALT 3
-
-var/list/RARITY_COLOR = list(
-	"#9d9d9d",
-	"#ffffff",
-	"#1eff00",
-	"#0070dd",
-	"#a335ee",
-	"#ff8000",
-	"#ff0000" )
 
 //Action defines
 #define INTERRUPT_ALWAYS -1 //Internal flag that will always interrupt any action.
@@ -177,7 +166,7 @@ var/list/RARITY_COLOR = list(
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
-
+#define MOB_NAME_MAX_LENGTH 50
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
@@ -332,7 +321,14 @@ var/list/RARITY_COLOR = list(
 #define SLEEVELESS 64			// ain't got no sleeeeeves
 #define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
 #define IS_JETPACK 256
-#define EQUIPPED_WHILE_HELD 512	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
+#define BLOCK_TOOLTIP 4096				//whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_CUT 8192					//block an extra point of cut damage when used to block
+#define BLOCK_STAB 16384				//block an extra point of stab damage when used to block
+#define BLOCK_BURN 32768				//block an extra point of burn damage when used to block
+#define BLOCK_BLUNT 65536				//block an extra point of blunt damage when used to block
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -394,16 +390,15 @@ var/list/RARITY_COLOR = list(
 //various mob_flags go here
 #define MOB_HEARS_ALL 1 	//For mobs who can hear everything (mainly observer ghossts)
 #define SPEECH_REVERSE 2 	//God Ecaps
-#define SPEECH_INTRUDER 4   //thing
-#define SPEECH_BLOB 8		//yes
-#define SEE_THRU_CAMERAS 16	//for ai eye
-#define IS_BONER 32			//for skeletals
-#define IS_RELIQUARY 64 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_SOLDIER 128 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_GUARDIAN 256 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_TECHNICIAN 512 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_CURATOR 1024 //for Azungar's reliquary stuff
-#define AT_GUNPOINT 2048 	//quick check for guns holding me at gunpoint
+#define SPEECH_BLOB 4		//yes
+#define SEE_THRU_CAMERAS 8	//for ai eye
+#define IS_BONER 16			//for skeletals
+#define IS_RELIQUARY 32 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_SOLDIER 64 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_GUARDIAN 128 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
+#define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -545,6 +540,8 @@ var/list/RARITY_COLOR = list(
 #define ui_rest "CENTER+6, SOUTH"
 #define ui_abiltoggle "CENTER-6, SOUTH"
 #define ui_stats "CENTER+7, SOUTH"
+#define ui_legend "CENTER+7:16, SOUTH"
+
 
 #define ui_zone_sel "CENTER+4, SOUTH"
 #define ui_storage_area "1,8 to 1,1"
@@ -568,6 +565,7 @@ var/list/RARITY_COLOR = list(
 #define tg_ui_ears "WEST+2:10,SOUTH+2:9"
 #define tg_ui_mask "WEST+1:8,SOUTH+2:9"
 #define tg_ui_head "WEST+1:8,SOUTH+3:11"
+#define tg_ui_legend "WEST+2:10, SOUTH+3:11"
 #define tg_ui_throwing "EAST-1:28,SOUTH+1:7"
 #define tg_ui_intent "EAST-3:24,SOUTH:5"
 #define tg_ui_mintent "EAST-2:26,SOUTH:5"
@@ -767,6 +765,21 @@ var/list/RARITY_COLOR = list(
 #define DAMAGE_BURN 8					// a) this is an excellent idea and b) why do we still use damtype strings then
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
+#define DAMAGE_TYPE_TO_STRING(x) (x == DAMAGE_BLUNT ? "blunt" : x == DAMAGE_CUT ? "cut" : x == DAMAGE_STAB ? "stab" : x == DAMAGE_BURN ? "burn" : x == DAMAGE_CRUSH ? "crush" : "")
+
+//some different generalized block weapon shapes that i can re use instead of copy paste
+#define BLOCK_SETUP		src.c_flags |= BLOCK_TOOLTIP; RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE) //makes the magic work
+#define BLOCK_ALL		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_LARGE		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_SWORD		BLOCK_LARGE
+#define BLOCK_ROD 		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT)
+#define BLOCK_TANK		BLOCK_SETUP; src.c_flags |= (BLOCK_BLUNT | BLOCK_CUT | BLOCK_BURN)
+#define BLOCK_SOFT		BLOCK_SETUP; src.c_flags |= (BLOCK_STAB | BLOCK_BURN)
+#define BLOCK_KNIFE		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
+#define BLOCK_ROPE		BLOCK_BOOK
+
+#define DEFAULT_BLOCK_PROTECTION_BONUS 2 //blocking to match damage type correctly gives you a -2 bonus on protection (unless this item grants Even More protection, that overrides this)
 
 // Process Scheduler defines
 // Process status defines
@@ -778,11 +791,12 @@ var/list/RARITY_COLOR = list(
 #define PROCESS_STATUS_HUNG 6
 
 // Process time thresholds
-#define PROCESS_DEFAULT_HANG_WARNING_TIME 	3000 // 300 seconds
-#define PROCESS_DEFAULT_HANG_ALERT_TIME 	6000 // 600 seconds
-#define PROCESS_DEFAULT_HANG_RESTART_TIME 	9000 // 900 seconds
+#define PROCESS_DEFAULT_HANG_WARNING_TIME 	300 SECONDS
+#define PROCESS_DEFAULT_HANG_ALERT_TIME 	600 SECONDS
+#define PROCESS_DEFAULT_HANG_RESTART_TIME 	900 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		15	// 15% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		20	// 20% of one tick
+#define MAX_TICK_USAGE 95 // 95% of a tick
 
 /** Delete queue defines */
 #define MIN_DELETE_CHUNK_SIZE 1
@@ -813,6 +827,9 @@ var/list/RARITY_COLOR = list(
 //I feel like these should be a thing, ok
 #define true 1
 #define false 0
+
+//For statusEffects
+#define INFINITE_STATUS null
 
 //How much stuff is allowed in the pools before the lifeguard throws them into the deletequeue instead. A shameful lifeguard.
 #define DEFAULT_POOL_SIZE 150
@@ -899,7 +916,7 @@ var/list/RARITY_COLOR = list(
 #define SHUTTLE_LOC_RETURNED 2
 
 //moved from guardbot.dm because i wanna use this list of buddy hats on some critters
-#define BUDDY_HATS list("detective","hoscap","hardhat0","hardhat1","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
+#define BUDDY_HATS list("detective","hoscap","hardhat","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
 
 #define EYEBLIND_L 1 // for calculating human eye funkery
 #define EYEBLIND_R 2
@@ -942,7 +959,11 @@ var/list/RARITY_COLOR = list(
 //JOB EXPERIENCE STUFF END
 
 //This is here because it's used literally everywhere in the codebase below this.
+#ifdef SPACEMAN_DMM
+#define LAGCHECK(x)
+#else
 #define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
+#endif
 
 //Define clientside tick lag seperately from world.tick_lag
 //'cause smoothness looks good.
@@ -1018,8 +1039,7 @@ var/ZLOG_START_TIME
 #endif
 
 #define CRITTER_REACTION_LIMIT 50
-#define fucking_critter_bullshit_fuckcrap_limiter(x) if (x > CRITTER_REACTION_LIMIT) return; else x += 1
-#define get_fucked_clarks if (istype(my_atom, "/obj/critter/domestic_bee")) return my_atom.visible_message("<span style=\"color:red\">[my_atom] burps.</span>"); if (istype(my_atom, "/obj/item/reagent_containers/food/snacks/ingredient/honey")) return
+#define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
 //Activates the viscontents warps
 #define NON_EUCLIDEAN 1
@@ -1097,6 +1117,8 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//PATHOLOGY REMOVAL
+//#define CREATE_PATHOGENS 1
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))

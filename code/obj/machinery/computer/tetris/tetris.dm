@@ -36,7 +36,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
 
-	desc = "Instructions: Left/Right Arrows: move, Up Arrow: turn, Down Arrow: faster, Space: auto place | HIGHSCORE: 0"
+	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
 	machine_registry_idx = MACHINES_MISC
 	var/highscore = 0
 	var/highscoreholder
@@ -48,7 +48,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -62,7 +62,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/tetris/M = new /obj/item/circuitboard/tetris( A )
@@ -89,7 +89,7 @@
 /obj/machinery/computer/tetris/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = replacetext(tetriscode, "{{HIGHSCORE}}", num2text(highscore))
 	dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
 

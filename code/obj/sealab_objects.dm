@@ -54,7 +54,7 @@
 		if (drop_type && issnippingtool(W))
 			var/obj/item/drop = new drop_type
 			drop.set_loc(src.loc)
-			src.visible_message("<span style=\"color:red\">[user] cuts down [src].</span>")
+			src.visible_message("<span class='alert'>[user] cuts down [src].</span>")
 			qdel(src)
 		..()
 
@@ -95,7 +95,6 @@
 	//else if (istype(A,/obj/storage))
 	//	return 1
 	else return 1
-	..()
 
 /obj/sea_plant/HasExited(atom/movable/A as mob|obj)
 	..()

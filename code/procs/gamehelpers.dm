@@ -105,7 +105,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 				var/Y = source:y
 				var/Z = source:z
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
-					boutput(user, "<span style=\"color:red\">Your telekinetic powers don't seem to work here.</span>")
+					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
 					return 0
 				SPAWN_DBG(0)
 					//I really shouldnt put this here but i dont have a better idea
@@ -201,16 +201,6 @@ var/obj/item/dummy/click_dummy = new
 			L = L.loc
 	return 0
 
-/proc/AutoUpdateAI(obj/subject)
-	if (!subject)
-		return
-	for(var/mob/living/silicon/ai/M in AIs)
-		var/mob/AI = M
-		if (M.deployed_to_eyecam)
-			AI = M.eyecam
-
-		if (AI && AI.client && AI.machine == subject)
-			subject.attack_ai(AI)
 
 /proc/get_viewing_AIs(center = null, distance = 7)
 	. = list()
@@ -263,7 +253,7 @@ var/obj/item/dummy/click_dummy = new
 
 /proc/can_act(var/mob/M, var/include_cuffs = 1)
 	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.handcuffed) return 0
+	if(include_cuffs && M.hasStatus("handcuffed")) return 0
 	if(M.getStatusDuration("stunned")) return 0
 	if(M.getStatusDuration("weakened")) return 0
 	if(M.getStatusDuration("paralysis")) return 0
@@ -350,21 +340,23 @@ var/obj/item/dummy/click_dummy = new
 	return message
 
 
-/proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
+/proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(!current) return 0
-		if(current.opacity) return 0
+	if(current == target_turf)
+		return TRUE
+	if(get_dist(current, target_turf) > length)
+		return FALSE
+	current = get_step_towards(source, target_turf)
+	while((current != target_turf))
+		if(current.opacity)
+			return FALSE
 		for(var/atom/A in current)
-			if(A.opacity) return 0
+			if(A.opacity)
+				return FALSE
 		current = get_step_towards(current, target_turf)
-		steps++
+	return TRUE
 
-	return 1
 
 
 /mob/proc/get_equipped_items()
@@ -373,8 +365,27 @@ var/obj/item/dummy/click_dummy = new
 	if(src.ears) . += src.ears
 	if(src.wear_mask) . += src.wear_mask
 
-	if(src.l_hand && src.l_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.l_hand
-	if(src.r_hand && src.r_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.r_hand
+	if(src.l_hand)
+		if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD)
+			. += src.l_hand
+		else if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1)
+			. += src.l_hand
+
+		if (src.l_hand.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/G in src.l_hand)
+				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1))
+					. += G
+
+	if(src.r_hand)
+		if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD)
+			. += src.r_hand
+		else if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0)
+			. += src.r_hand
+
+		if (src.r_hand.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/G in src.r_hand)
+				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0))
+					. += G
 
 
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)

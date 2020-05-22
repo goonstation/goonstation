@@ -2,7 +2,7 @@
 /client/proc/cmd_admin_gib(mob/M as mob in world)
 	set category = null
 	set name = "Gib"
-	set popup_menu = 1
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -107,7 +107,7 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be icegibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be icegibbed.</span>")
 		return
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
@@ -128,7 +128,7 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be goldgibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be goldgibbed.</span>")
 		return
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
@@ -150,7 +150,7 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be spidergibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be spidergibbed.</span>")
 		return
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
@@ -171,7 +171,7 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be imploded.</span>")
+		boutput(src, "<span class='alert'>Only humans can be imploded.</span>")
 		return
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
@@ -192,7 +192,7 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be buttgibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be buttgibbed.</span>")
 		return
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
@@ -320,7 +320,7 @@
 //						startx = 2
 				boutput(tysontarget, "Uh oh.")
 				tysontarget << sound('sound/misc/Boxingbell.ogg')
-				sleep(200)
+				sleep(20 SECONDS)
 				startx = tysontarget.x - rand(-11, 11)
 				starty = tysontarget.y - rand(-11, 11)
 //				pickedstarter = get_turf(pick(tysontarget:range(10)))
@@ -332,11 +332,11 @@
 				Q.tysonreason = reason
 				Q.timelimit = time
 				Q.tysonspeed = speed
-//				boutput(tysontarget, "<span style=\"color:red\"><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(tysontarget, "<span style=\"color:red\">This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
+//				boutput(tysontarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
+//				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
 //				logTheThing("admin", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.")
 				logTheThing("diary", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span style=\"color:blue\">[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+//				message_admins("<span class='notice'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
 	set category = null
@@ -376,11 +376,11 @@
 	Q.tysontarget2 = tysontarget
 	Q.caller = usr
 	Q.tysonspeed = speed
-//				boutput(tysontarget, "<span style=\"color:red\"><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(tysontarget, "<span style=\"color:red\">This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
+//				boutput(tysontarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
+//				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
 //				logTheThing("admin", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
 //				logTheThing("diary", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span style=\"color:blue\">[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+//				message_admins("<span class='notice'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 
 /obj/bantyson/
@@ -393,7 +393,7 @@
 	anchored = 0
 	var/mob/tysontarget2 = null
 	var/tysonmins2 = null
-	var/caller = null
+	var/mob/caller = null
 	var/tysonreason = null
 	var/tysoncantreach = 0
 	var/timelimit = 6
@@ -407,7 +407,7 @@
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -425,7 +425,7 @@
 				return
 			else if (get_dist(src, src.tysontarget2) <= 1)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> punches [tysontarget2]!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
@@ -433,13 +433,13 @@
 				return
 			else
 				walk_towards(src, src.tysontarget2, tysonspeed)
-				sleep(10)
+				sleep(1 SECOND)
 				tysoncantreach++
 
 	proc/banproc()
 		// drsingh for various cannot read null.
 		for(var/mob/O in AIviewers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src]</B> bans [tysontarget2] in one punch!</span>", 1)
+			O.show_message("<span class='alert'><B>[src]</B> bans [tysontarget2] in one punch!</span>", 1)
 		playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
 		if(tysontarget2 && tysontarget2.client)
 			if(tysontarget2.client.holder)
@@ -454,11 +454,11 @@
 			addData["akey"] = caller:ckey
 			addData["mins"] = tysonmins2
 			addBan(addData)
-			boutput(tysontarget2, "<span style=\"color:red\"><BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG></span>")
-			boutput(tysontarget2, "<span style=\"color:red\">This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
+			boutput(tysontarget2, "<span class='alert'><BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG></span>")
+			boutput(tysontarget2, "<span class='alert'>This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
 			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
 			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
-			message_admins("<span style=\"color:blue\">[caller:client.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
+			message_admins("<span class='notice'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
 //			if(ishuman(tysontarget2))
@@ -480,7 +480,7 @@
 	anchored = 0
 	var/mob/tysontarget2 = null
 	var/tysonspeed = 1
-	var/caller = null
+	var/mob/caller = null
 
 	New()
 		SPAWN_DBG(0) process()
@@ -490,7 +490,7 @@
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1
-		sleep(1)
+		sleep(0.1 SECONDS)
 		var/turf/T = get_turf(M)
 		src.x = T.x
 		src.y = T.y
@@ -499,34 +499,34 @@
 		while (!disposed)
 			if (get_dist(src, src.tysontarget2) <= 1)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> punches [tysontarget2]!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
 				icon_state = "punch"
-				sleep(5)
+				sleep(0.5 SECONDS)
 				icon_state = "idle"
 				gibproc()
 				return
 			else
 				walk_towards(src, src.tysontarget2, tysonspeed)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/gibproc()
 		// drsingh for various cannot read null.
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if (get_dist(src, src.tysontarget2) <= 1)
 			for(var/mob/O in AIviewers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
+				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
 			if(tysontarget2 && tysontarget2.client)
 				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
 				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
-				message_admins("<span style=\"color:blue\">[caller:client.ckey] has tysongibbed [tysontarget2.ckey].</span>")
+				message_admins("<span class='notice'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
-			sleep(5)
+			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(src)
 		else
 			process()

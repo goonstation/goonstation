@@ -6,13 +6,14 @@
 
 	flags = FPRINT | FLUID_SUBMERGE
 	event_handler_flags = USE_CANPASS
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND | LONG_GLIDE
 
 	var/datum/mind/mind
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	var/datum/targetable/targeting_spell = null
+
+	var/targeting_ability = null
 
 	var/last_move_trigger = 0
 
@@ -22,7 +23,7 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = list()
+	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
 	var/last_resist = 0
 
@@ -37,11 +38,11 @@
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
+	var/last_door_knock_time = 0 //anti door knock spam, now seperate from emote anti-spam
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
-	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
@@ -60,7 +61,6 @@
 	var/blinded = null
 	var/druggy = 0
 	var/sleeping = 0.0
-	var/resting = 0.0
 	var/lying = 0.0
 	var/lying_old = 0
 	var/canmove = 1.0
@@ -70,8 +70,8 @@
 	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
-	var/bodytemperature = 310.055 // 98.7F / 37C
-	var/base_body_temp = 310.055
+	var/bodytemperature = T0C + 37
+	var/base_body_temp = T0C + 37
 	var/temp_tolerance = 15 // iterations between each temperature state
 	var/thermoregulation_mult = 0.025 // how quickly the body's temperature tries to correct itself, higher = faster
 	var/innate_temp_resistance = 0.16  // how good the body is at resisting environmental temperature, lower = more resistant
@@ -91,7 +91,7 @@
 	var/m_intent = "run"
 	var/lastKnownIP = null
 	var/obj/stool/buckled = null
-	var/obj/item/handcuffs/handcuffed = null
+	var/obj/item/handcuffs/handcuffs = null
 	var/obj/item/l_hand = null
 	var/obj/item/r_hand = null
 	var/obj/item/back = null
@@ -104,6 +104,8 @@
 	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
+	var/list/movement_modifiers = list()
+
 	var/misstep_chance = 0
 
 	var/datum/hud/storage/s_active
@@ -112,10 +114,10 @@
 
 	var/obj/hud/hud_used = null
 
-	var/list/organs = list(  )
-	var/list/grabbed_by = list(  )
+	var/list/organs = null
+	var/list/grabbed_by = null
 
-	var/datum/traitHolder/traitHolder
+	var/datum/traitHolder/traitHolder = null
 
 	var/inertia_dir = 0
 	var/footstep = 1
@@ -138,7 +140,6 @@
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
 	var/mob/dead/observer/ghost = null
-	var/twitching = 0
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
@@ -156,8 +157,8 @@
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
-	var/list/resistances = list()
-	var/list/ailments = list()
+	var/list/resistances = null
+	var/list/ailments = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -171,7 +172,7 @@
 
 	var/icon/cursor = null
 
-	var/list/datum/hud/huds = list()
+	var/list/datum/hud/huds = null
 
 	var/client/last_client // actually the current client, used by Logout due to BYOND
 	var/joined_date = null
@@ -201,10 +202,20 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-
+//start of needed for timestop
+#if ASS_JAM
+	var/paused = FALSE
+	var/pausedbrute = 0
+	var/pausedburn = 0
+	var/pausedtox = 0
+	var/pausedoxy = 0
+	var/pausedbrain = 0
+#endif
+//end of needed for timestop
 	var/dir_locked = FALSE
 
-	var/cooldowns = list()
+	var/list/cooldowns = null
+	var/list/mob_properties
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -212,14 +223,23 @@
 
 // mob procs
 /mob/New()
-	traitHolder = new(src)
-	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
+	hallucinations = new
+	organs = new
+	grabbed_by = new
+	resistances = new
+	ailments = new
+	huds = new
 	render_special = new
+	traitHolder = new(src)
+	cooldowns = new
+	if (!src.bioHolder)
+		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
+	mob_properties = list()
 
 /mob/proc/is_spacefaring()
 	return 0
@@ -229,7 +249,7 @@
 		return
 
 	//for item specials
-	if (src.restrain_time > world.timeofday)
+	if (src.restrain_time > TIME)
 		return
 
 	if (src.buckled)
@@ -237,11 +257,6 @@
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
 	else
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				//if (usr == G.assailant)
-				continue
-				G.shoot()
 		. = ..()
 
 	src.closeContextActions()
@@ -270,9 +285,6 @@
 
 	if (ghost && ghost.corpse == src)
 		ghost.corpse = null
-
-	if (src.machine)
-		src.machine.current_user = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -308,6 +320,9 @@
 	if (src.abilityHolder)
 		src.abilityHolder.disposing()
 
+	if (src.targeting_ability)
+		src.targeting_ability = null
+
 	if (zone_sel)
 		if (zone_sel.master == src)
 			zone_sel.master = null
@@ -321,7 +336,7 @@
 	energy_shield = null
 	hallucinations = null
 	buckled = null
-	handcuffed = null
+	handcuffs = null
 	l_hand = null
 	r_hand = null
 	back = null
@@ -336,6 +351,7 @@
 	ghost = null
 	resistances = null
 	ailments = null
+	cooldowns = null
 	..()
 
 /mob/Login()
@@ -359,12 +375,7 @@
 	src.update_cursor()
 	src.update_keymap()
 
-	SPAWN_DBG(3 SECONDS)
-		if (src && src.client) //Wire: fix for runtime error: Cannot execute null.setup macros().
-			src.client.setup_macros()
-
-	if (src.client)
-		src.client.mouse_pointer_icon = src.cursor
+	src.client.mouse_pointer_icon = src.cursor
 
 	logTheThing("diary", null, src, "Login: %target% from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
@@ -452,7 +463,6 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
-	src.machine = null
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -490,7 +500,7 @@
 		if (ishuman(tmob))
 			if (tmob.bioHolder.HasEffect("fat"))
 				if (prob(40) && !src.bioHolder.HasEffect("fat"))
-					src.visible_message("<span style=\"color:red\"><B>[src] fails to push [tmob] out of the way.</B></span>")
+					src.visible_message("<span class='alert'><B>[src] fails to push [tmob] out of the way.</B></span>")
 					src.now_pushing = 0
 					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
 					deliver_move_trigger("bump")
@@ -510,7 +520,7 @@
 					// like repels - bimp them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
 					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, 1)
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
@@ -523,7 +533,7 @@
 				tmob.next_spammable_chem_reaction_time = world.time + 1
 				src.now_pushing = 0
 				var/atom/source = get_turf(tmob)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
 				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
@@ -542,7 +552,7 @@
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> and <B>[tmob]</B>'s opposite magnetic fields cause a minor magnetic blowout!</span>")
+					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s opposite magnetic fields cause a minor magnetic blowout!</span>")
 					//src.bioHolder.RemoveEffect("magnets_pos")
 					//src.bioHolder.RemoveEffect("magnets_neg")
 					var/atom/source = get_turf(tmob)
@@ -562,7 +572,7 @@
 						if(M.anchored || M == source) continue
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(50)
+					sleep(5 SECONDS)
 					src.now_pushing = 0
 
 					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
@@ -610,13 +620,13 @@
 				// so yeah, i copy+pasted this from process_move.
 				if (src.pulling != AM && old_loc != src.loc) //causes infinite pull loop without these checks. lol
 					var/list/pulling = list()
-					if (src.pulling)
-						if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
-							src.pulling = null
-							//hud.update_pulling() // FIXME
-						else
-							pulling += src.pulling
+					if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+						src.pulling = null
+						//hud.update_pulling() // FIXME
+					else
+						pulling += src.pulling
 					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+						if (G.affecting == src) continue
 						pulling += G.affecting
 					for (var/atom/movable/A in pulling)
 						if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
@@ -713,12 +723,12 @@
 		src.client.mouse_pointer_icon = cursor
 
 /mob/proc/update_cursor()
-	if (src.targeting_spell)
-		if(client)
+	if (client)
+		if (src.targeting_ability)
 			src.set_cursor(cursors_selection[client.preferences.target_cursor])
 			return
-		else
-			src.set_cursor('icons/cursors/target/default.dmi')
+		if (src.client.admin_intent)
+			src.set_cursor('icons/cursors/admin.dmi')
 			return
 	src.set_cursor(null)
 
@@ -763,7 +773,7 @@
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return
-//			boutput(src, "<span style=\"color:red\">You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
+//			boutput(src, "<span class='alert'>You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
 
 /mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
@@ -782,13 +792,13 @@
 	set name = "Medals"
 
 	if (IsGuestKey(src.key))
-		boutput(src, "<span style=\"color:red\">Sorry, you are a guest and cannot have medals.</span>")
+		boutput(src, "<span class='alert'>Sorry, you are a guest and cannot have medals.</span>")
 		return
 	else if (!config)
-		boutput(src, "<span style=\"color:red\">Sorry, medal information is currently not available.</span>")
+		boutput(src, "<span class='alert'>Sorry, medal information is currently not available.</span>")
 		return
 	else if (!config.medal_hub || !config.medal_password)
-		boutput(src, "<span style=\"color:red\">Sorry, this server does not have medals enabled.</span>")
+		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
 		return
 
 	boutput(src, "Retrieving your medal information...")
@@ -797,7 +807,7 @@
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
 		if (isnull(medals))
-			boutput(src, "<span style=\"color:red\">Sorry, could not contact the BYOND hub for your medal information.</span>")
+			boutput(src, "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>")
 			return
 
 		if (!medals)
@@ -822,7 +832,7 @@
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
 			src.mind.dnr = 1
-			boutput(src, "<span style=\"color:red\">DNR status set!</span>")
+			boutput(src, "<span class='alert'>DNR status set!</span>")
 		else
 			src << alert("There was an error setting this status. Perhaps you are a ghost?")
 	return
@@ -939,12 +949,18 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch(src)
+#if ASS_JAM//pausing damage for timestop
+	if(src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
+#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone), burn-get_melee_protection(zone))
+	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -1041,9 +1057,9 @@
 /mob/proc/death(gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
-		message_admins("<span style=\"color:red\">Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
-	if(src.mind && !gibbed)
-		src.mind.death_icon = getFlatIcon(src,SOUTH)
+		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
+	//if(src.mind && !gibbed)
+	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
 		src.damn()
 		return
@@ -1056,7 +1072,7 @@
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
 /mob/proc/restrained()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 1
 
 /mob/proc/key_down(var/key)
@@ -1065,54 +1081,79 @@
 /mob/proc/click(atom/target, params)
 	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
 
-	if (src.targeting_spell)
-		var/datum/targetable/S = src.targeting_spell
+	if (src.targeting_ability)
+		if (istype(src.targeting_ability, /datum/targetable))
+			var/datum/targetable/S = src.targeting_ability
+			src.targeting_ability = null
+			update_cursor()
 
-		src.targeting_spell = null
-		update_cursor()
+			if (!S.target_anything && !ismob(target))
+				src.show_text("You have to target a person.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (S.check_range && (get_dist(src, target) > S.max_range))
+				src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
+				src.show_text("It would have no effect on this target.", "red")
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			if (!S.castcheck(src))
+				if(S.sticky)
+					src.targeting_ability = S
+					update_cursor()
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				S.handleCast(target)
+				if(S)
+					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
+						if(src)
+							src.targeting_ability = S
+							src.update_cursor()
+			return 100
 
-		if (!S.target_anything && !ismob(target))
-			src.show_text("You have to target a person.", "red")
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
+		else if (istype(src.targeting_ability, /obj/ability_button))
+			var/obj/ability_button/B = src.targeting_ability
+
+			if (!B.target_anything && !ismob(target) && !istype(target, B))
+				src.show_text("You have to target a person.", "red")
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (!isturf(target.loc) && !isturf(target) && !istype(target, B))
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (!B.ability_allowed())
+				src.targeting_ability = null
+				src.update_cursor()
+				return 100
+			if (istype(target, B))
+				return 100
+			actions.interrupt(src, INTERRUPT_ACTION)
+			SPAWN_DBG(0)
+				B.execute_ability(target)
+				src.targeting_ability = null
+				src.update_cursor()
 			return 100
-		if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (S.check_range && (get_dist(src, target) > S.max_range))
-			src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
-			src.show_text("It would have no effect on this target.", "red")
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		if (!S.castcheck(src))
-			if(S.sticky)
-				src.targeting_spell = S
-				update_cursor()
-			return 100
-		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
-			S.handleCast(target)
-			if(S)
-				if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
-					if(src)
-						src.targeting_spell = S
-						src.update_cursor()
-		return 100
 
 	if (abilityHolder)
 		if (abilityHolder.topBarRendered)
@@ -1134,22 +1175,33 @@
 	if (get_dist(src, target) > 0)
 		if(!dir_locked)
 			dir = get_dir(src, target)
+			if(dir & (dir-1))
+				if (dir & EAST)
+					dir = EAST
+				else if (dir & WEST)
+					dir = WEST
+			src.update_directional_lights()
 
 /mob/proc/hotkey(name)
 	switch (name)
 		if ("look_n")
 			if(!dir_locked)
 				src.dir = NORTH
+				src.update_directional_lights()
 		if ("look_s")
 			if(!dir_locked)
 				src.dir = SOUTH
+				src.update_directional_lights()
 		if ("look_e")
 			if(!dir_locked)
 				src.dir = EAST
+				src.update_directional_lights()
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
-
+				src.update_directional_lights()
+		if ("admin_interact")
+			src.admin_interact_verb()
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)
@@ -1191,6 +1243,7 @@
 	return
 
 /mob/proc/drop_item(var/obj/item/W)
+	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
@@ -1205,7 +1258,7 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 		u_equip(W)
-		if (W)
+		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
 				if (V.throw_dropped_items_overboard == 1)
@@ -1216,16 +1269,17 @@
 				W.set_loc(get_turf(src.loc))
 			else
 				W.set_loc(src.loc)
-			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
-		var/turf/T = get_turf(src.loc)
-		T.Entered(W)
+
+			var/turf/T = get_turf(src.loc)
+			T.Entered(W)
+			.= 1
+		else
+			.= 0
 		if (origW)
 			origW.holding = null
 			actions.stopId("magpickerhold", src)
-		return 1
-	return 0
 
 //throw the dropped item
 /mob/proc/drop_item_throw()
@@ -1308,7 +1362,7 @@
 /mob/proc/swap_hand()
 	return
 
-/mob/proc/u_equip(W as obj)
+/mob/proc/u_equip(obj/item/W)
 
 // I think this bit is handled by each method of dropping it, and it prevents dropping items in your hands and other procs using u_equip so I'll get rid of it for now.
 //	if (hasvar(W,"cant_self_remove"))
@@ -1319,8 +1373,8 @@
 	if (W == src.l_hand)
 		src.l_hand = null
 
-	if (W == src.handcuffed)
-		src.handcuffed = null
+	if (W == src.handcuffs)
+		src.handcuffs = null
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.wear_mask)
@@ -1330,6 +1384,8 @@
 		src.client.screen -= W
 
 	set_clothing_icon_dirty()
+
+	W.dropped(src)
 
 /*
 /mob/verb/dump_source()
@@ -1419,7 +1475,7 @@
 		return
 
 	if(!isobserver(usr) || !(ticker))
-		boutput(usr, "<span style=\"color:blue\"><B>You must be a ghost to use this!</B></span>")
+		boutput(usr, "<span class='notice'><B>You must be a ghost to use this!</B></span>")
 		return
 
 	logTheThing("diary", usr, null, "used abandon mob.", "game")
@@ -1458,7 +1514,7 @@
 		return
 
 	if (src.health < 0)
-		boutput(src, "<span style=\"color:blue\">You have given up life and succumbed to death.</span>")
+		boutput(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
@@ -1467,7 +1523,7 @@
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	src.set_eye(null)
-	src.machine = null
+	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
@@ -1527,7 +1583,7 @@
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
-		src.visible_message("<span style=\"color:red\">[src] is hit by the [P]!</span>")
+		src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	return
@@ -1551,18 +1607,18 @@
 			else
 				src.changeStatus("weakened", (stun/2)*15)
 			src.set_clothing_icon_dirty()
-			src.show_text("<span style=\"color:red\">You are shocked by the impact of [P]!</span>")
+			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
 			src.stuttering += stun
 			src.drowsyness += stun/10
-			src.show_text("<span style=\"color:red\">You feel a wave of sickness as [P] impacts [src.loc]!</span>")
+			src.show_text("<span class='alert'>You feel a wave of sickness as [P] impacts [src.loc]!</span>")
 
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	return
 
 /mob/proc/can_use_hands()
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		return 0
 	if (src.buckled && istype(src.buckled, /obj/stool/bed)) // buckling does not restrict hands
 		return 0
@@ -1911,7 +1967,7 @@
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
 	SPAWN_DBG(0) //multicluwne
-		duration = CLAMP(duration, 10, 100)
+		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
 		game_stats.Increment("violence")
@@ -2165,7 +2221,7 @@
 
 		OL = sortList(OL)
 
-		selection
+		selection:
 		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
 		if (!IP || !output_target || !ismob(output_target))
@@ -2220,7 +2276,7 @@
 			client.pixel_x = amplitude * sin(0.008 * dizziness * world.time)
 			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_dizzy = 0
 	if (client)
@@ -2256,7 +2312,7 @@
 		pixel_x = old_x + rand(-amplitude, amplitude)
 		pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
 	pixel_x = old_x
@@ -2300,8 +2356,9 @@
 	src.take_ear_damage(-INFINITY, 1)
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
-	src.buckled = initial(src.buckled)
-	src.handcuffed = initial(src.handcuffed)
+	src.buckled = null
+	if (src.hasStatus("handcuffed"))
+		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)
@@ -2450,15 +2507,15 @@
 				eardeaf += 1
 
 			if (13 to 15)
-				boutput(src, "<span style=\"color:red\">Your ears ring a bit!</span>")
+				boutput(src, "<span class='alert'>Your ears ring a bit!</span>")
 				eardeaf += rand(2, 3)
 
 			if (15 to 24)
-				boutput(src, "<span style=\"color:red\">Your ears are really starting to hurt!</span>")
+				boutput(src, "<span class='alert'>Your ears are really starting to hurt!</span>")
 				eardeaf += src.ear_damage * 0.5
 
 			if (25 to INFINITY)
-				boutput(src, "<span style=\"color:red\"><b>Your ears ring very badly!</b></span>")
+				boutput(src, "<span class='alert'><b>Your ears ring very badly!</b></span>")
 
 				if (src.bioHolder && prob(src.ear_damage - 10 + 5))
 					src.show_text("<b>You go deaf!</b>", "red")
@@ -2476,9 +2533,9 @@
 		src.ear_deaf = max(0, src.ear_deaf + eardeaf)
 
 		if (src.ear_deaf == 0 && deaf_bypass == 0 && suppress_message == 0)
-			boutput(src, "<span style=\"color:blue\">The ringing in your ears subsides enough to let you hear again.</span>")
+			boutput(src, "<span class='notice'>The ringing in your ears subsides enough to let you hear again.</span>")
 		else if (eardeaf > 0 && deaf_bypass == 0 && suppress_message == 0)
-			boutput(src, "<span style=\"color:red\">The ringing overpowers your ability to hear momentarily.</span>")
+			boutput(src, "<span class='alert'>The ringing overpowers your ability to hear momentarily.</span>")
 
 	//DEBUG_MESSAGE("Ear damage applied: [amount]. Tempdeaf: [tempdeaf == 0 ? "N" : "Y"]")
 	return 1
@@ -2583,6 +2640,9 @@
 /mob/proc/find_in_equipment(var/eqtype)
 	return null
 
+/mob/proc/get_slot_from_item(var/obj/item/I)
+	return null
+
 /mob/proc/is_in_hands(var/obj/O)
 	return 0
 
@@ -2608,7 +2668,7 @@
 		if (!newname)
 			return
 		else
-			newname = strip_html(newname, 32, 1)
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
@@ -2684,13 +2744,7 @@
 		return 1
 	return 0
 
-/mob/living/carbon/human/is_hulk()
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
-		return 1
-	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
-		return 1
-	return 0
-
+/mob/proc/update_equipped_modifiers()
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
@@ -2719,7 +2773,7 @@
 			return
 	if (src.mind)
 		if(src.mind.damned)
-			boutput(src, "<span style=\"color:red\">You can never escape.</span>")
+			boutput(src, "<span class='alert'>You can never escape.</span>")
 		else // uhhhhh how did you get here. You didnt sin enough! Go back and try harder!
 			return
 
@@ -2851,15 +2905,15 @@
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
 	if (isdiabolical(src))
-		boutput(src, "<span style=\"color:blue\">You collect souls, why would you want to sell yours?</span>")
+		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
 		return 0
 	if(istype(src, /mob/living/carbon/human) && src:unkillable) //shield of souls interaction
-		boutput(src,"<span style=\"color:red\"><b>Your soul is shielded and cannot be sold!</b></span>")
+		boutput(src,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 		return 0
 	if(amount > src.mind.soul)
-		boutput(src, "<span style=\"color:red\"><b>You don't have enough of a soul to sell!</b></span>")
+		boutput(src, "<span class='alert'><b>You don't have enough of a soul to sell!</b></span>")
 		return 0
-	boutput(src, "<span style=\"color:red\"><b>You feel a portion of your soul rip away from your body!</b></span>")
+	boutput(src, "<span class='alert'><b>You feel a portion of your soul rip away from your body!</b></span>")
 	if(reduce_health)
 		var/current_penalty = src.hasStatus("maxhealth-")?:change
 		src.setStatus("maxhealth-", null, current_penalty - amount / 4 * 3)
@@ -2868,6 +2922,52 @@
 	if(src.mind.soul <= 0)
 		total_souls_sold++
 		total_souls_value++
-		src.mind.damned = 1
 
 	return 1
+
+/mob/proc/get_id()
+	if(istype(src.equipped(), /obj/item/card/id))
+		return src.equipped()
+	if(istype(src.equipped(), /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = src.equipped()
+		return pda.ID_card
+
+// http://www.byond.com/forum/post/1326139&page=2
+//MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
+// ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
+
+/mob/verb/point(atom/A as mob|obj|turf in view())
+	set name = "Point"
+	src.point_at(A)
+
+/mob/proc/point_at(var/atom/target) //overriden by living and dead
+	.=0
+
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
+	set name = "Pull"
+	set category = "Local"
+	A.pull()
+
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view())
+	set name = "Examine"
+	set category = "Local"
+	var/list/result = A.examine(src)
+	boutput(src, result.Join("\n"))
+
+
+/mob/living/verb/interact_verb(obj/A as obj in view(1))
+	set name = "Pick Up / Interact"
+	set category = "Local"
+	A.interact(src)
+
+/mob/living/verb/pickup_verb()
+	set name = "Pick Up"
+	set hidden = 1
+
+	var/list/items = list()
+	for(var/obj/item/I in view(1,src))
+		if (I.loc == get_turf(I))
+			items += I
+	if (items.len)
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
+		A.interact(src)

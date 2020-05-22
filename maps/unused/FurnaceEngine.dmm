@@ -257,7 +257,7 @@
 "eW" = (/obj/closet/wardrobe/engineering_yellow,/turf/simulated/floor/yellow/side{dir = 1},/area)
 "eX" = (/turf/simulated/floor/yellow/side{dir = 5},/area)
 "eY" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor/bot,/area)
-"eZ" = (/obj/machinery/ai_status_display,/turf/simulated/wall/r_wall,/area)
+"eZ" = (/turf/simulated/wall/r_wall,/area)
 "fa" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor,/area)
 "fb" = (/obj/table{icon_state = "tabledir"; dir = 4},/obj/item/storage/toolbox/mechanical,/turf/simulated/floor/grime,/area)
 "fc" = (/obj/table{icon_state = "tabledir"; dir = 8},/obj/item/sheet/r_metal,/turf/simulated/floor/grime,/area)

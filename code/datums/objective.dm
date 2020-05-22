@@ -877,7 +877,7 @@ proc/create_fluff(var/datum/mind/target)
 	onWeakened()
 		if (success)
 			success = 0
-			boutput(owner.current, "<span style=\"color:red\">You lose the astral essence of your target!</span>")
+			boutput(owner.current, "<span class='alert'>You lose the astral essence of your target!</span>")
 
 	check_completion()
 		return success

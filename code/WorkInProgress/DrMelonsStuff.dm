@@ -17,14 +17,14 @@
 	process()
 		if(reagents.has_reagent("radium"))
 			src.reagents.clear_reagents()
-			src.visible_message("<span style=\"color:red\">The <B>[src]</B> makes an odd sound, and releases a puff of green steam.</span>")
+			src.visible_message("<span class='alert'>The <B>[src]</B> makes an odd sound, and releases a puff of green steam.</span>")
 
 		if(on == 1)
 			if(reagents.reagent_list.len < 1 || reagents.total_volume < 1)
 				on = 0
 				icon_state = "fogmachine0"
 
-				src.visible_message("<span style=\"color:red\">The <B>[src]</B> splutters to a halt.</span>")
+				src.visible_message("<span class='alert'>The <B>[src]</B> splutters to a halt.</span>")
 				playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			else
 				SPAWN_DBG(5 SECONDS)
@@ -83,13 +83,13 @@
 	attack_hand(mob/user as mob)
 		if(on == 0)
 			on = 1
-			boutput(user, "<span style=\"color:blue\">You flip the switch on the FogMachine-3000 to the On position.</span>")
+			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the On position.</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
 			return
 		if(on == 1)
 			on = 0
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			boutput(user, "<span style=\"color:blue\">You flip the switch on the FogMachine-3000 to the Off position.</span>")
+			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the Off position.</span>")
 			return
 
 /obj/machinery/bathtub
@@ -117,7 +117,7 @@
 			return
 		if (!reagents)
 			return
-		. += "<br><span style=\"color:blue\">[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]</span>"
+		. += "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]</span>"
 		return
 
 	on_reagent_change()
@@ -140,10 +140,10 @@
 	attack_hand(mob/user as mob)
 		if (user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user)) return
 		if (src.myuser)
-			boutput(user, "<span style=\"color:red\">You pull [src.myuser] out of the bath!</span>")
+			boutput(user, "<span class='alert'>You pull [src.myuser] out of the bath!</span>")
 			src.eject_user()
 		else
-			boutput(user, "<span style=\"color:blue\">You pull the plug.</span>")
+			boutput(user, "<span class='notice'>You pull the plug.</span>")
 			src.reagents.clear_reagents()
 			src.on_reagent_change()
 			var/count = 0
@@ -151,7 +151,7 @@
 				count++
 				qdel(O)
 			if (count > 0)
-				boutput(user, "<span style=\"color:red\">...and flush something down the drain. Damn!</span>")
+				boutput(user, "<span class='alert'>...and flush something down the drain. Damn!</span>")
 		return
 
 	proc/eject_user()
@@ -167,7 +167,7 @@
 
 	relaymove(mob/user as mob, dir)
 		src.eject_user()
-		boutput(user, "<span style=\"color:blue\">You get out of the bath.</span>")
+		boutput(user, "<span class='notice'>You get out of the bath.</span>")
 
 
 	process()
@@ -196,11 +196,11 @@
 
 		if(target == user && !user.stat)	// if drop self, then climbed in
 			msg = "[user.name] climbs into [src]."
-			boutput(user, "<span style=\"color:blue\">You climb into [src].</span>")
+			boutput(user, "<span class='notice'>You climb into [src].</span>")
 
 		else if(target != user && !user.restrained())
 			msg = "[user.name] push [target.name] into the [src]!"
-			boutput(user, "<span style=\"color:blue\">You push [target.name] into the [src]!</span>")
+			boutput(user, "<span class='notice'>You push [target.name] into the [src]!</span>")
 
 		else
 			return
@@ -227,24 +227,24 @@
     set category = "Local"
     if (get_dist(usr, src) <= 1 && !usr.stat)
         src.reagents.add_reagent(default_reagent,120)
-        usr.visible_message("<span style=\"color:red\">[usr] draws a bath.</span>",\
-        "<span style=\"color:green\">You draw a nice bath!</span>")
+        usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
+        "<span class='success'>You draw a nice bath!</span>")
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()
 		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/wizard))
 			for (var/obj/item/mop/M in orange(5,src))
-				src.visible_message("<span style=\"color:red\">[src] begins to twitch and move!</span>")
+				src.visible_message("<span class='alert'>[src] begins to twitch and move!</span>")
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)
 				//make the mops move
 				if (istype(moveto, /turf/simulated/floor) || istype(moveto, /turf/simulated/floor/shuttle) || istype(moveto, /turf/simulated/aprilfools/floor) || istype(moveto, /turf/unsimulated/floor) || istype(moveto, /turf/unsimulated/aprilfools)) step_towards(M, moveto)
 				SPAWN_DBG(5 SECONDS)
-					src.visible_message("<span style=\"color:blue\">Thankfully, [src] settles down.</span>")
+					src.visible_message("<span class='notice'>Thankfully, [src] settles down.</span>")
 		else
 			for (var/obj/item/mop/M in orange(5,src))
-				src.visible_message("<span style=\"color:red\">[src] begins to twitch and mov- oh. No. No it doesn't.</span>")
+				src.visible_message("<span class='alert'>[src] begins to twitch and mov- oh. No. No it doesn't.</span>")
 
 /obj/item/clothing/head/apprentice/equipped(var/mob/user, var/slot)
-	boutput(user, "<span style=\"color:blue\">Your head tingles with magic! Or asbestos. Probably asbestos.</span>")
+	boutput(user, "<span class='notice'>Your head tingles with magic! Or asbestos. Probably asbestos.</span>")
 	src.fantasia()
 	..()

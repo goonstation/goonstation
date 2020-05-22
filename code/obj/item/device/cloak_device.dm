@@ -1,6 +1,6 @@
 /obj/item/cloaking_device
 	name = "cloaking device"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	uses_multiple_icon_states = 1
 	var/active = 0.0
@@ -79,7 +79,7 @@
 			return
 
 	emp_act()
-		usr.visible_message("<span style=\"color:blue\"><b>[usr]'s cloak is disrupted!</b></span>")
+		usr.visible_message("<span class='notice'><b>[usr]'s cloak is disrupted!</b></span>")
 		src.deactivate(usr)
 		return
 

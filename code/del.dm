@@ -1,6 +1,6 @@
 var/datum/dynamicQueue/delete_queue = new /datum/dynamicQueue(100) //List of items that want to be deleted
 
-var/datum/list/delete_queue_2[DELQUEUE_SIZE][0]
+var/list/datum/delete_queue_2[DELQUEUE_SIZE][0]
 var/datum/delqueue_pos = 1
 
 // hi i fucked up this file p bad. if it ends up being as bad as
@@ -99,6 +99,8 @@ proc/qdel(var/datum/O)
 
 // override this in children for your type specific disposing implementation, make sure to call ..() so the root disposing runs too
 /datum/proc/disposing()
+	SHOULD_CALL_PARENT(TRUE)
+
 	src.tag = null // not part of components but definitely should happen
 
 	signal_enabled = FALSE
@@ -133,5 +135,6 @@ proc/qdel(var/datum/O)
 // don't override this one, just call it instead of delete to get rid of something cheaply
 /datum/proc/dispose()
 	if (!disposed)
+		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()
 		disposed = 1

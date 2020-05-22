@@ -7,18 +7,19 @@
 			return
 		if (!isturf(usr.loc))
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			usr:targeting_spell = owner
+			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
 			SPAWN_DBG(0)
 				spell.handleCast()
+		return
 
 /datum/abilityHolder/critter
 	usesPoints = 0
@@ -76,7 +77,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || M.stat || M.hasStatus(list("paralysis", "stunned", "weakened"))
 
 	castcheck()
 		if (incapacitationCheck())

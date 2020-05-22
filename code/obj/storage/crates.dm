@@ -100,7 +100,7 @@
 
 	cdc
 		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."	
+		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
 		spawn_contents = list(/obj/item/reagent_containers/syringe,
 		/obj/item/paper/cdc_pamphlet)
 
@@ -111,7 +111,7 @@
 /obj/storage/crate/bin
 	name = "large bin"
 	desc = "A large bin."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
 	icon_closed = "largebin"
@@ -254,18 +254,24 @@
 	icon_opened = "pizzabox_open"
 	icon_closed = "pizzabox"
 
+	New()
+		..()
+		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+
 // New crates woo. (Gannets)
 
 /obj/storage/crate/packing
 	name = "packing crate"
 	desc = "A packing crate."
 	icon_state = "packingcrate1"
+
 	New()
 		..()
 		var/n = rand(1,12)
 		icon_state = "packingcrate[n]"
 		icon_opened = "packingcrate[n]_open"
 		icon_closed = "packingcrate[n]"
+		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/wooden
 	name = "wooden crate"
@@ -363,7 +369,7 @@
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
-		/obj/item/storage/backpack/syndicate_medic_satchel,
+		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 

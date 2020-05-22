@@ -70,7 +70,7 @@
 				src.centcom_message = "Our [pick("probes", "sensors", "listening devices", "wiretaps", "informants", "well-informed sources")] indicate the presence of a hostile intruder aboard the [station_or_ship()]. Security level elevated."
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
-		message_admins("<span style=\"color:blue\">Setting up alien invasion event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
+		message_admins("<span class='notice'>Setting up alien invasion event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
 		logTheThing("admin", null, null, "Setting up alien invasion event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.

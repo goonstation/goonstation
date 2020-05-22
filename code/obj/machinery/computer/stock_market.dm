@@ -20,7 +20,7 @@
 /obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	var/css={"<style>
 .company {
@@ -147,19 +147,19 @@ a.updated {
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
-		boutput(user, "<span style=\"color:blue\">You swipe the ID card.</span>")
+		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 		var/datum/data/record/account = null
 		account = FindBankAccountByName(ID.registered)
 		if(account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
 			if (enterpin == ID.pin)
-				boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.logged_in = ID.registered
 			else
-				boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 				src.logged_in = null
 		else
-			boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.logged_in = null
 	else src.attack_hand(user)
 	return
@@ -169,15 +169,15 @@ a.updated {
 		return
 	var/li = logged_in
 	if (!li)
-		boutput(user, "<span style='color:red'>No active account on the console!</span>")
+		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	var/b = balance()
 	if (!isnum(b))
-		boutput(user, "<span style='color:red'>No active account on the console!</span>")
+		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	var/avail = S.shareholders[logged_in]
 	if (!avail)
-		boutput(user, "<span style='color:red'>This account does not own any shares of [S.name]!</span>")
+		boutput(user, "<span class='alert'>This account does not own any shares of [S.name]!</span>")
 		return
 	var/price = S.current_value
 	var/amt = round(input(user, "How many shares? (Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
@@ -191,27 +191,27 @@ a.updated {
 		return
 	b = balance()
 	if (!isnum(b))
-		boutput(user, "<span style='color:red'>No active account on the console!</span>")
+		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	if (amt > S.shareholders[logged_in])
-		boutput(user, "<span style='color:red'>You do not own that many shares!</span>")
+		boutput(user, "<span class='alert'>You do not own that many shares!</span>")
 		return
 	var/total = amt * S.current_value
 	if (!S.sellShares(logged_in, amt))
-		boutput(user, "<span style='color:red'>Could not complete transaction.</span>")
+		boutput(user, "<span class='alert'>Could not complete transaction.</span>")
 		return
-	boutput(user, "<span style='color:blue'>Sold [amt] shares of [S.name] for [total] credits.</span>")
+	boutput(user, "<span class='notice'>Sold [amt] shares of [S.name] for [total] credits.</span>")
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
 	if (!user || !S)
 		return
 	var/li = logged_in
 	if (!li)
-		boutput(user, "<span style='color:red'>No active account on the console!</span>")
+		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	var/b = balance()
 	if (!isnum(b))
-		boutput(user, "<span style='color:red'>No active account on the console!</span>")
+		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	var/avail = S.available_shares
 	var/price = S.current_value
@@ -227,32 +227,32 @@ a.updated {
 		return
 	b = balance()
 	if (!isnum(b))
-		boutput(user, "<span style='color:red'>No active account on the console!</span>")
+		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	if (amt > S.available_shares)
-		boutput(user, "<span style='color:red'>That many shares are not available!</span>")
+		boutput(user, "<span class='alert'>That many shares are not available!</span>")
 		return
 	var/total = amt * S.current_value
 	if (total > b)
-		boutput(user, "<span style='color:red'>Insufficient funds.</span>")
+		boutput(user, "<span class='alert'>Insufficient funds.</span>")
 		return
 	if (!S.buyShares(logged_in, amt))
-		boutput(user, "<span style='color:red'>Could not complete transaction.</span>")
+		boutput(user, "<span class='alert'>Could not complete transaction.</span>")
 		return
-	boutput(user, "<span style='color:blue'>Bought [amt] shares of [S.name] for [total] credits.</span>")
+	boutput(user, "<span class='notice'>Bought [amt] shares of [S.name] for [total] credits.</span>")
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
 	if (B.stock.borrow(B, logged_in))
-		boutput(user, "<span style='color:blue'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
+		boutput(user, "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
 	else
-		boutput(user, "<span style='color:red'>Could not complete transaction. Check your account balance.</span>")
+		boutput(user, "<span class='alert'>Could not complete transaction. Check your account balance.</span>")
 
 /obj/machinery/computer/stockexchange/Topic(href, href_list)
 	if (..())
 		return 1
 
 	if (usr in range(1, src))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	if (href_list["viewhistory"])
 		var/datum/stock/S = locate(href_list["viewhistory"])

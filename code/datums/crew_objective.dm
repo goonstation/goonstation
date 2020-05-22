@@ -49,7 +49,7 @@
 				boutput(crewMind.current, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 			boutput(crewMind.current, "<B>Objective #[obj_count]</B>: [newObjective.explanation_text]")
 			obj_count++
-		
+
 		var/mob/crewmob = crewMind.current
 		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist") && prob(20))
 			/*var/conspiracy_text = ""
@@ -60,7 +60,7 @@
 			conspiracy_text = "The [noun] are [conspiracy] in order to [reason]. [objective]"
 			conspiracy_text = replacetext(conspiracy_text, "%THING%", pick_string("conspiracy_theories.txt", "thing"))*/
 			var/conspiracy_text = pick_smart_string("conspiracy_theories.txt", "conspiracy_text")
-			
+
 			boutput(crewmob, "<B>Objective #[obj_count]</B>: [conspiracy_text]")
 
 		return
@@ -106,7 +106,7 @@
 			medal_name = "Suitable? How about the Oubliette?!"
 			check_completion()
 				for(var/datum/mind/M in ticker.minds)
-					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.handcuffed) //think that's everything...
+					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
 						return 1
 				return 0
 		centcom
@@ -114,10 +114,11 @@
 			medal_name = "Dead or alive, you're coming with me"
 			check_completion()
 				for(var/datum/mind/M in ticker.minds)
-					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),map_settings.escape_centcom) && M.current.handcuffed)
+					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),map_settings.escape_centcom) && M.current.hasStatus("handcuffed"))
 						if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //split this up as it was long
 							return 1
 				return 0
+
 		brigstir
 			explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 			medal_name = "Monkey Duty"
@@ -152,7 +153,7 @@
 			medal_name = "Suitable? How about the Oubliette?!"
 			check_completion()
 				for(var/datum/mind/M in ticker.minds)
-					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.handcuffed) //think that's everything...
+					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
 						return 1
 				return 0
 		*/
@@ -161,7 +162,7 @@
 			medal_name = "Dead or alive, you're coming with me"
 			check_completion()
 				for(var/datum/mind/M in ticker.minds)
-					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),map_settings.escape_centcom) && M.current.handcuffed)
+					if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),map_settings.escape_centcom) && M.current.hasStatus("handcuffed"))
 						if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //split this up as it was long
 							return 1
 				return 0
@@ -236,7 +237,7 @@
 					if (istype(S) && istype(get_area(S), /area/station/hydroponics))
 						return 0
 				for (var/obj/machinery/plantpot/PP in machine_registry[MACHINES_PLANTPOTS])
-					if (PP.current && istype(PP.current, /datum/plant/cannabis))
+					if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
 						if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
 							return 0
 				return 1

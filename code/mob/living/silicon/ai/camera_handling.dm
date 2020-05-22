@@ -6,7 +6,11 @@
 	//try to find the closest working camera in the same area, switch to it
 
 	var/area/A = get_area(src)
-	if (A && A.type == /area || usr:tracker.tracking) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if (A && A.type == /area) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if(istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/anAI = usr
+		if(anAI.tracker.tracking)
+			return
 
 	var/best_dist = INFINITY //infinity
 	var/best_cam = null
@@ -26,7 +30,9 @@
 	if(!best_cam)
 		return
 	//usr:cameraFollow = null
-	usr:tracker.cease_track()
+	if(istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/anAI = usr
+		anAI.tracker.cease_track()
 	usr:switchCamera(best_cam)
 
 /mob/living/silicon/ai/proc/ai_camera_list()
@@ -163,8 +169,6 @@
 	if (isdead(src) || !src.classic_move)
 		return
 
-	user.machine = src
-
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in cameras)
 		L.Add(C)
@@ -216,14 +220,13 @@
 		owner = null
 		tracking = null
 		global.tracking_list -= src
+		..()
 
 	proc/begin_track(mob/target as mob)
 		if(!owner || !target)
 			return
 
 		tracking = target
-		if(!owner.machine)
-			owner.machine = owner
 
 		if (!owner.deployed_to_eyecam)
 			if (!owner.deployed_to_eyecam)

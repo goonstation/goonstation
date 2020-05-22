@@ -42,10 +42,10 @@
 		..()
 
 	// user interaction
-	interact(mob/user, var/ai=0)
+	interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		var/dat = "<head><title>Mail Transport Unit</title></head><body><TT><B>Mail Transport Unit: [src.mail_tag ? (capitalize(src.mail_tag)) : "GENERIC"]</B><HR>"
@@ -72,7 +72,7 @@
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "window=mailchute;size=360x270")
 		onclose(user, "mailchute")
 
@@ -86,10 +86,10 @@
 			return
 
 		if (in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["close"])
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, "window=mailchute")
 				return
 
@@ -127,7 +127,7 @@
 				eject()
 		else
 			usr.Browse(null, "window=mailchute")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		return
 
@@ -180,9 +180,9 @@
 
 		air_contents.zero()		// new empty gas resv.
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -244,9 +244,9 @@
 
 			H.init(src)	// copy the contents of disposer to holder
 
-			sleep(10)
+			sleep(1 SECOND)
 			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-			sleep(5) // wait for animation to finish
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 
 			H.start(src) // start the holder processing movement

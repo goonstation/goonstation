@@ -2,6 +2,9 @@
 	var/datum/abilityHolder/changeling/O = src.get_ability_holder(/datum/abilityHolder/changeling)
 	if (O)
 		return
+	var/mob/living/L = src
+	if(istype(L))
+		L.blood_id = "bloodc"
 
 	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != "omnitraitor"))
 		src.Browse(grabResource("html/traitorTips/changelingTips.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
@@ -54,30 +57,31 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc) && !spell.can_use_in_container)
-			boutput(owner.holder.owner, "<span style=\"color:red\">Using that in here will do just about no good for you.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>Using that in here will do just about no good for you.</span>")
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)
 				spell.handleCast()
+		return
 
 /datum/abilityHolder/changeling
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Changeling"
-	notEnoughPointsMessage = "<span style=\"color:red\">We are not strong enough to do this.</span>"
+	notEnoughPointsMessage = "<span class='alert'>We are not strong enough to do this.</span>"
 	var/list/absorbed_dna = list()
 	var/in_fakedeath = 0
 	var/absorbtions = 0
@@ -99,7 +103,7 @@
 	proc/addDna(var/mob/living/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
-			boutput(owner, "<span style=\"color:blue\">[M] was a changeling! We have absorbed their entire genetic structure!</span>")
+			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed their entire genetic structure!</span>")
 			logTheThing("combat", owner, M, "absorbs %target% as a changeling [log_loc(owner)].")
 
 			if (headspider_override != 1) // Headspiders shouldn't be free.
@@ -244,6 +248,7 @@
 
 			original_controller_name = null
 			original_controller_real_name = null
+		obs.can_exit_hivemind_time = world.time + 1 MINUTE
 		return obs
 
 	proc/return_control_to_master()

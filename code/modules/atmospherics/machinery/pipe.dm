@@ -350,7 +350,7 @@ obj/machinery/atmospherics/pipe
 			if(istype(W, /obj/item/weldingtool) && W:welding)
 
 				if(!ruptured)
-					boutput(user, "<span style=\"color:red\">That isn't damaged!</span>")
+					boutput(user, "<span class='alert'>That isn't damaged!</span>")
 					return
 
 				if(!W:try_weld(user, 1, noisy=0))
@@ -363,7 +363,7 @@ obj/machinery/atmospherics/pipe
 				if (do_after(user, 20))
 					ruptured --
 				else
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				if(!ruptured)
 					boutput(user, "You have fully repaired the [src.name].")

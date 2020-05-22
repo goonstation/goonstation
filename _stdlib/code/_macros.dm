@@ -3,11 +3,15 @@
 
 // comment this line to disable or enable spawn debugging. it's pretty cheap and safe for the live servers though.
 // #define ENABLE_SPAWN_DEBUG
+// #define ENABLE_SPAWN_DEBUG_2
 
 // for this to work, use SPAWN_DBG() instead of spawn(). thank you for loving pupkin. -singh
 #ifdef ENABLE_SPAWN_DEBUG
 var/list/global_spawn_dbg = list()
 #define SPAWN_DBG(x) global_spawn_dbg["spawn at [__FILE__]:[__LINE__]"]++; spawn(x)
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+var/list/detailed_spawn_dbg = list()
+#define SPAWN_DBG(x) detailed_spawn_dbg += list(list("[__FILE__]:[__LINE__]", TIME, TIME + x)); spawn(x)
 #else
 #define SPAWN_DBG(x) spawn(x)
 #endif
@@ -64,8 +68,8 @@ var/list/global_spawn_dbg = list()
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == "spy_thief")
 
 // Why the separate mask check? NPCs don't use assigned_role and we still wanna play the cluwne-specific sound effects.
-#define iscluwne(x) ((x?.mind?.assigned_role == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
-#define ishorse(x) (istype(x, /mob/living/carbon/human) && ((x:mind && x:mind.assigned_role && x:mind:assigned_role == "Horse") || istype(x:wear_mask, /obj/item/clothing/mask/horse_mask/cursed)))
+#define iscluwne(x) ((x?.job == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
+#define ishorse(x) (istype(x, /mob/living/carbon/human) && ((x.mind?.assigned_role == "Horse") || istype(x.wear_mask, /obj/item/clothing/mask/horse_mask/cursed)))
 #define isdiabolical(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:diabolical == 1)
 #define iswelder(x) istype(x, /mob/living/carbon/human/welder)
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
@@ -106,9 +110,8 @@ var/list/global_spawn_dbg = list()
 
 #define DEBUG_MESSAGE(x) if (debug_messages) message_coders(x)
 #define DEBUG_MESSAGE_VARDBG(x,d) if (debug_messages) message_coders_vardbg(x,d)
-#define __red(x) text("<span style='color:red'>[]</span>", x)  //deprecated for some reason
-#define __blue(x) text("<span style='color:blue'>[]</span>", x) //deprecated for some reason
-#define __green(x) text("<span style='color:green'>[]</span>", x) //deprecated for some reason
+#define __red(x) text("<span class='alert'>[]</span>", x)  //deprecated for some reason
+#define __blue(x) text("<span class='notice'>[]</span>", x) //deprecated for some reason
 
 #define TimeOfHour world.timeofday % 36000
 //#endif
@@ -122,7 +125,8 @@ var/list/global_spawn_dbg = list()
 #define issimulatedturf(x) istype(x, /turf/simulated)
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
 
-#define DIST_CHECK(A, B, R) (get_dist(A, B) <= (R) && get_step(A, 0).z == get_step(B, 0).z)
+#define GET_MANHATTAN_DIST(A, B) ((!(A) || !(B)) ? 0 : abs((A).x - (B).x) + abs((A).y - (B).y))
+#define DIST_CHECK(A, B, range) (get_dist(A, B) <= (range) && get_step(A, 0).z == get_step(B, 0).z)
 
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return
 
@@ -148,10 +152,15 @@ var/list/global_spawn_dbg = list()
 #define GLOBAL_PROC "THIS_IS_A_GLOBAL_PROC_CALLBACK" //used instead of null because clients can be callback targets and then go null from disconnect before invoked, and we need to be able to differentiate when that happens or when it's just a global proc.
 #define CALLBACK new /datum/callback //not a macro to make it 510 compatible
 
+#ifdef SPACEMAN_DMM // just don't ask
+#define START_TRACKING
+#define STOP_TRACKING
+#else
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
 // to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
 #define START_TRACKING do { var/_type = text2path(replacetext("[.disposing]", "/disposing", "")); if(!by_type[_type]) { by_type[_type] = list(src) } else { by_type[_type].Add(src) } } while (FALSE)
 #define STOP_TRACKING do { var/_type = text2path(replacetext("[.disposing]", "/disposing", "")); by_type[_type].Remove(src) } while (FALSE)
+#endif
 
 // replacement for world.timeofday that shouldn't break around midnight, please use this
 #define TIME ((world.timeofday - server_start_time + 24 HOURS) % (24 HOURS))
@@ -173,3 +182,13 @@ var/list/global_spawn_dbg = list()
 //some reliquary stuff - azungar
 
 #define isreliquary(x) (istype(x, /mob/living/critter/reliquary) || istype(x, /mob/living/critter/reliquarymonstrosity) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/reliquary_soldier))
+
+
+//used for pods
+#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
+
+
+// num2hex, hex2num
+#define num2hex(X, len) num2text(X, len, 16)
+
+#define hex2num(X) text2num(X, 16)

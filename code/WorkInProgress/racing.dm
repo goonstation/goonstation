@@ -386,7 +386,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span style=\"color:red\">Car already occupied by [driver.name].</span>")
+			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
 			return
 
 		var/mob/M = usr
@@ -435,7 +435,7 @@
 		SPAWN_DBG(0)
 			for(var/i=0, i<magnitude, i++)
 				src.dir = turn(src.dir, 90)
-				sleep(1)
+				sleep(0.1 SECONDS)
 		return
 
 	proc/boost()
@@ -520,7 +520,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span style=\"color:red\">Car already occupied by [driver.name].</span>")
+			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
 			return
 
 		var/mob/M = usr

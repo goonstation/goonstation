@@ -8,6 +8,8 @@ obj/machinery/atmospherics/mixer
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 
+	var/flipped = 0
+
 	var/id_tag
 	var/master_id
 	var/on = 0
@@ -33,7 +35,7 @@ obj/machinery/atmospherics/mixer
 
 	update_icon()
 		if(node_in1&&node_in2&&node_out)
-			icon_state = "intact_[on?("on"):("off")]"
+			icon_state = "intact[flipped?"_flipped":""]_[on?"on":"off"]"
 		else
 			var/node_in1_direction = get_dir(src, node_in1)
 			var/node_in2_direction = get_dir(src, node_in2)
@@ -58,13 +60,25 @@ obj/machinery/atmospherics/mixer
 		..()
 		switch(dir)
 			if(NORTH)
-				initialize_directions = NORTH|EAST|SOUTH
+				if(flipped)
+					initialize_directions = NORTH|WEST|SOUTH
+				else
+					initialize_directions = NORTH|EAST|SOUTH
 			if(EAST)
-				initialize_directions = EAST|SOUTH|WEST
+				if(flipped)
+					initialize_directions = EAST|NORTH|WEST
+				else
+					initialize_directions = EAST|SOUTH|WEST
 			if(SOUTH)
-				initialize_directions = SOUTH|WEST|NORTH
+				if(flipped)
+					initialize_directions = SOUTH|EAST|NORTH
+				else
+					initialize_directions = SOUTH|WEST|NORTH
 			if(WEST)
-				initialize_directions = WEST|NORTH|EAST
+				if(flipped)
+					initialize_directions = WEST|SOUTH|EAST
+				else
+					initialize_directions = WEST|NORTH|EAST
 
 		air_in1 = unpool(/datum/gas_mixture)
 		air_in2 = unpool(/datum/gas_mixture)
@@ -332,7 +346,7 @@ obj/machinery/atmospherics/mixer
 		if(node_in1 && node_out) return
 
 		var/node_out_connect = dir
-		var/node_in1_connect = turn(dir, -90)
+		var/node_in1_connect = flipped ? turn(dir, 90) : turn(dir, -90)
 		var/node_in2_connect = turn(dir, -180)
 
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_in1_connect))
@@ -430,3 +444,7 @@ obj/machinery/atmospherics/mixer
 			node_out = null
 
 		return null
+
+/obj/machinery/atmospherics/mixer/flipped
+	icon_state = "intact_flipped_off"
+	flipped = 1

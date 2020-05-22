@@ -32,7 +32,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
@@ -60,7 +60,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
 				var/tturf = get_turf(target)

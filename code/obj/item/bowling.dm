@@ -10,19 +10,19 @@
 /obj/item/bowling_ball
 	name = "bowling ball"
 	desc = "Just keep rollin' rollin'."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bowling_ball"
 	w_class = 3.0
 	force = 5
 	throw_speed = 1
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 5, 10, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 10, 15, user)
 

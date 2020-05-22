@@ -196,6 +196,7 @@
 					newsignal.data_file = signal.data_file.copy_file()
 				newsignal.encryption = src.code
 				newsignal.transmission_method = TRANSMISSION_RADIO
+				newsignal.source = src
 				if(src.net_mode)
 					if(!newsignal.data["address_1"])
 						//Net_mode demands an address_1 value!
@@ -230,6 +231,7 @@
 				newsignal.data["address_1"] = "ping"
 				newsignal.data["sender"] = src.net_id
 				newsignal.transmission_method = TRANSMISSION_RADIO
+				newsignal.source = src
 				src.radio_connection.post_signal(src, newsignal, broadcast_range)
 				return 0
 
@@ -261,7 +263,7 @@
 			if(signal.data["address_1"] != src.net_id)
 				if((signal.data["address_1"] == "ping") && signal.data["sender"])
 					var/datum/signal/pingsignal = get_free_signal()
-					pingsignal.source = host
+					pingsignal.source = src
 					pingsignal.data["device"] = "WNET_ADAPTER"
 					pingsignal.data["netid"] = src.net_id
 					pingsignal.data["address_1"] = signal.data["sender"]
@@ -358,6 +360,7 @@
 			newsignal.data["sender"] = src.net_id //Override whatever jerk info they put here.
 			newsignal.encryption = src.code
 			newsignal.transmission_method = TRANSMISSION_WIRE
+			newsignal.source = src
 			src.link.post_signal(src, newsignal)
 			return 0
 
@@ -379,6 +382,7 @@
 				newsignal.data["net"] = "[net_number]"
 
 			newsignal.transmission_method = TRANSMISSION_WIRE
+			newsignal.source = src
 			src.link.post_signal(src, newsignal)
 			return 0
 
@@ -419,6 +423,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
+				pingsignal.source = src
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
@@ -488,6 +493,7 @@
 				newsignal.data["sender"] = src.net_id //Override whatever jerk info they put here.
 				newsignal.encryption = src.code
 				newsignal.transmission_method = TRANSMISSION_WIRE
+				newsignal.source = src
 				src.link.post_signal(src, newsignal)
 
 
@@ -550,6 +556,7 @@
 						newsignal.data["net"] = "[net_number]"
 
 					newsignal.transmission_method = TRANSMISSION_WIRE
+					newsignal.source = src
 					src.link.post_signal(src, newsignal)
 
 				else if (dd_hasprefix(command, "subnet"))
@@ -617,6 +624,7 @@
 					if (src.mode == 1)
 						newsignal.data["sender"] = src.net_id
 					newsignal.transmission_method = TRANSMISSION_RADIO
+					newsignal.source = src
 					src.wireless_link.post_signal(src, newsignal, (src.mode == 1 ? 0 : src.wireless_range))
 					return 0
 
@@ -632,6 +640,7 @@
 
 					newsignal.data["sender"] = src.net_id
 					newsignal.transmission_method = TRANSMISSION_WIRE
+					newsignal.source = src
 					src.wired_link.post_signal(src, newsignal)
 					return 0
 
@@ -690,6 +699,7 @@
 						newsignal.data["sender"] = src.net_id
 
 						newsignal.transmission_method = TRANSMISSION_RADIO
+						newsignal.source = src
 						src.wireless_link.post_signal(src, newsignal)
 
 						return 0
@@ -710,6 +720,7 @@
 							newsignal.data["net"] = "[subnet]"
 
 						newsignal.transmission_method = TRANSMISSION_WIRE
+						newsignal.source = src
 						src.wired_link.post_signal(src, newsignal)
 
 						return 0
@@ -752,6 +763,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = src.mode == 2 ? TRANSMISSION_WIRE : TRANSMISSION_RADIO
+				pingsignal.source = src
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if (src.mode == 2 && src.wired_link)
 						src.wired_link.post_signal(src, pingsignal)
@@ -912,7 +924,7 @@
 			src.vend_prize()
 			src.last_vend = world.time
 		else
-			boutput(user, "<span style=\"color:red\">[src] isn't ready to dispense a prize yet.</span>")
+			boutput(user, "<span class='alert'>[src] isn't ready to dispense a prize yet.</span>")
 
 		return
 
@@ -951,7 +963,7 @@
 				prize = new /obj/item/wrench/gold(prize_location)
 			if(7)
 				prize = new /obj/item/firework( prize_location )
-				prize.icon = 'icons/obj/device.dmi'
+				prize.icon = 'icons/obj/items/device.dmi'
 				prize.icon_state = "shield0"
 				prize.name = "decloaking device"
 				prize.desc = "A device for removing cloaks. Made in Space-Taiwan."
@@ -1143,11 +1155,11 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.host.add_dialog(usr)
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -1263,11 +1275,11 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.host.add_dialog(usr)
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))
@@ -1410,14 +1422,14 @@
 			if(host)
 				for(var/mob/M in hearers(host, null))
 					if(M.client)
-						M.show_message(text("<span style=\"color:red\">You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
+						M.show_message(text("<span class='alert'>You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
 				// add a sound effect maybe
 				sleep(rand(50,100))
 				if(host)
 					if(prob(50))
 						for(var/mob/M in AIviewers(host, null))
 							if(M.client)
-								M.show_message("<span style=\"color:red\"><B>The [src.host.name] explodes!</B></span>", 1)
+								M.show_message("<span class='alert'><B>The [src.host.name] explodes!</B></span>", 1)
 						var/turf/T = get_turf(src.host.loc)
 						if(T)
 							T.hotspot_expose(700,125)
@@ -1427,7 +1439,7 @@
 						return
 					for(var/mob/M in AIviewers(host, null))
 						if(M.client)
-							M.show_message("<span style=\"color:red\"><B>The [src.host.name] catches on fire!</B></span>", 1)
+							M.show_message("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>", 1)
 						fireflash(src.host.loc, 0)
 						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
 						src.host.set_broken()

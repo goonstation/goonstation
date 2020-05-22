@@ -32,6 +32,7 @@ client/verb/hotkeys()
 			<li><b>4:</b> Harm intent</li>
 			<li><b>R:</b> Flip</li>
 			<li><b>F:</b> Fart</li>
+			<li><b>Z:</b> Resist</li>
 		<p>
 		<h3>Arrow Keys Mode Specific Keys</h3>
 			<li><b>PgUp:</b> Switch active hand</li>
@@ -60,6 +61,8 @@ client/verb/hotkeys()
 			<li><b>Ctrl+W:</b> Wink</li>
 			<li><b>Ctrl+Y:</b> Yawn</li>
 			<li><b>Ctrl+Z:</b> Snap</li>
+		<h3>Admin</h3>
+			<li><b>~:</b> Open common admin atom verbs</li>
 	</ul>"}, "window=hotkeys;title=Hotkeys" )
 	//src.Browse('browserassets/html/admin/hotkeys.html', "window=help")
 	return

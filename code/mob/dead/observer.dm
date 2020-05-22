@@ -75,8 +75,7 @@
 	src.invisibility = src.invisibility_old
 
 
-/mob/dead/observer/verb/point(var/atom/target as mob|obj|turf in oview())
-	set name = "Point"
+/mob/dead/observer/point_at(var/atom/target)
 	if (!isturf(src.loc))
 		return
 
@@ -160,7 +159,7 @@
 		return
 
 	src.icon_state = "doubleghost"
-	src.visible_message("<span style=\"color:red\"><b>[src] is busted!</b></span>","<span style=\"color:red\">You are demateralized into a state of further death!</span>")
+	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
 		wig.loc = src.loc
@@ -229,6 +228,8 @@
 		abilityHolder.owner = src
 
 	updateButtons()
+	if (render_special)
+		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 	SPAWN_DBG(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
@@ -259,11 +260,13 @@
 
 
 /mob/proc/ghostize()
+	RETURN_TYPE(/mob/dead/observer)
 	if(src.key || src.client)
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			src.hell_respawn(src.mind)
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
+		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
 			if (OS)
@@ -348,20 +351,6 @@
 		O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
 
 
-
-		var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-		newbio.CopyOther(src.bioHolder)
-		O.bioHolder = newbio
-		// cirr fix for mutations carrying over to ghosts leading to awful side-effects like ghostly irradiating
-		// for now keep glow because it amuses me very much, but we'll take that out if people abuse it
-		var/datum/bioEffect/glowy/G = null
-		if(O.bioHolder.HasEffect("glowy"))
-			G = O.bioHolder.GetEffect("glowy")
-		O.bioHolder.RemoveAllEffects()
-		// add the glow back if it exists
-		if(istype(G))
-			O.bioHolder.AddEffect(G)
-
 	return O
 
 /mob/living/silicon/robot/ghostize()
@@ -407,7 +396,7 @@
 	set category = "Ghost"
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	if(!ticker || !ticker.centralized_ai_laws)
@@ -547,7 +536,7 @@
 	// ooooo its a secret, oooooo!!
 
 	if(!mind || !mind.dnr)
-		boutput( usr, "<span style='color:red'>You must enable DNR to use this.</span>" )
+		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
 	var/x = input("Enter view width in tiles: (Capped at 59)", "Width", 15)

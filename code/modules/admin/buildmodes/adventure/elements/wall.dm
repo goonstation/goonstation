@@ -12,7 +12,7 @@
 		if (wall_type in icons)
 			wall_icon = icons[wall_type]
 		wall_name = input("Wall name", "Wall name", "strange wall") as text
-		boutput(usr, "<span style=\"color:blue\">Left click to place walls. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Left click to place walls. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -69,11 +69,11 @@
 					waited++
 					if (waited == 5)
 						break
-					sleep(1)
+					sleep(0.1 SECONDS)
 				if (waiting.loc != target)
 					set_loc(target)
 				sliding = 0
 				return
 
 	attack_hand(mob/user as mob)
-		usr.show_message("<span style=\"color:red\">[src] seems to be movable, but you cannot muster the strength to displace it.</span>")
+		usr.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")

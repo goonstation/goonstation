@@ -20,8 +20,12 @@
 	var/hear_prayers = 0 //Ok
 	var/audible_prayers = 0 // 0 = silent, 1 = ping, 2 = dectalk (oh god why)
 	var/buildmode_view = 0 //change view when using buildmode?
+	var/spawn_in_loc = 0 //spawn verb spawning in loc?
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
+
+	var/static/list/admin_interact_verbs
+	var/static/list/admin_interact_atom_verbs
 
 	New()
 		..()
@@ -30,6 +34,70 @@
 				var/client/C = src.owner
 				C.chatOutput.getContextFlag()
 				src.load_admin_prefs()
+
+		if (!admin_interact_atom_verbs || admin_interact_atom_verbs.len <= 0)
+			admin_interact_atom_verbs = list(\
+			"Spin",\
+			"Rotate",\
+			"Scale",\
+			"Emag",\
+			)
+
+		if (!admin_interact_verbs || admin_interact_verbs.len <= 0)
+			admin_interact_verbs = list()
+			admin_interact_verbs["obj"] = list(\
+			"Get Thing",\
+			"Follow Thing",\
+			"Add Reagents",\
+			"Check Reagents",\
+			"View Variables",\
+			"View Fingerprints",\
+			"Delete",\
+			"Possess",\
+			"Create Poster"\
+			)
+			admin_interact_verbs["mob"] = list(\
+			"Player Options",\
+			"Private Message",\
+			"Subtle Message",\
+			"Check Health",\
+			"Heal",\
+
+			"Add Reagents",\
+			"Check Reagents",\
+			"View Variables",\
+			"Get Thing",\
+			"Follow Thing",\
+			"Possess",\
+			"Create Poster",\
+			"Delete",\
+
+			"Gib",\
+			"Polymorph",\
+			"Modify Organs",\
+			"Modify Parts",\
+			"Modify Module",\
+			"Swap Minds",\
+			"Transfer Client To",\
+			"Shamecube",\
+			"Create Poster"\
+			)
+			admin_interact_verbs["turf"] = list(\
+			"Jump To Turf",\
+			"Air Status",\
+			"Create Explosion",\
+			"Create Fluid",\
+			"Create Smoke",\
+			"Create Portal",\
+			"Get Telesci Coords",\
+
+			"View Variables",\
+			"View Fingerprints",\
+			"Delete",\
+			"Create Poster"\
+			)
+
+
 
 	proc/show_pref_window(mob/user)
 		var/HTML = "<html><head><title>Admin Preferences</title></head><body>"
@@ -49,6 +117,7 @@
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
+		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<br><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
@@ -133,7 +202,7 @@
 		if (isnull(saved_hear_prayers))
 			saved_hear_prayers = 0
 		hear_prayers = saved_hear_prayers
-		
+
 		var/saved_audible_prayers
 		AP["[ckey]_audible_prayers"] >> saved_audible_prayers
 		if (isnull(saved_audible_prayers))
@@ -146,8 +215,14 @@
 			saved_buildmode_view = 0
 		buildmode_view = saved_buildmode_view
 
+		var/saved_spawn_in_loc
+		AP["[ckey]_spawn_in_loc"] >> saved_spawn_in_loc
+		if (isnull(saved_spawn_in_loc))
+			saved_spawn_in_loc = 0
+		spawn_in_loc = saved_spawn_in_loc
+
 		if (usr)
-			boutput(usr, "<span style=\"color:blue\">Admin preferences loaded.</span>")
+			boutput(usr, "<span class='notice'>Admin preferences loaded.</span>")
 
 	proc/save_admin_prefs()
 		if (!src.owner)
@@ -168,9 +243,10 @@
 		AP["[ckey]_hear_prayers"] << hear_prayers
 		AP["[ckey]_audible_prayers"] << audible_prayers
 		AP["[ckey]_buildmode_view"] << buildmode_view
+		AP["[ckey]_spawn_in_loc"] << spawn_in_loc
 
 		if (usr)
-			boutput(usr, "<span style=\"color:blue\">Admin preferences saved.</span>")
+			boutput(usr, "<span class='notice'>Admin preferences saved.</span>")
 
 /client/proc/change_admin_prefs()
 	set category = "Admin"

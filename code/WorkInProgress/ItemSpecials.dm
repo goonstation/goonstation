@@ -1,9 +1,9 @@
-/client/proc/dbg_itemspecial(var/obj/item/I in world)
+/obj/item/proc/dbg_itemspecial()
 	set name = "Give Special"
 	var/sel = input(usr,"Type:","Select type") in childrentypesof(/datum/item_special)
-	I.max_stack = INFINITY
-	I.amount = INFINITY
-	I.setItemSpecial(sel)
+	src.max_stack = INFINITY
+	src.amount = INFINITY
+	src.setItemSpecial(sel)
 	return
 
 /datum/limb/proc/dbg_itemspecial()
@@ -49,7 +49,7 @@
 	if(params["icon-y"])
 		dy += (text2num(params["icon-y"]) - 16)
 
-	var/angle = atan2(dy,dx)
+	var/angle = arctan(dy,dx)
 	//boutput(world, "[dx] : [dy] ::: makes for [angle]")
 
 	//oh no ! i'm bad!!!!!!!!!!!
@@ -240,6 +240,9 @@
 		if(user.a_intent == "help" || user.a_intent == "grab")
 			return 0
 
+		if (user.check_block())
+			return 0
+
 		if (!istype(user.loc, /turf))
 			return 0
 
@@ -268,7 +271,7 @@
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
 		if(restrainDuration)
-			person.restrain_time = world.timeofday + restrainDuration
+			person.restrain_time = TIME + restrainDuration
 
 	rush
 		cooldown = 100
@@ -621,7 +624,7 @@
 			if (istype(master,/obj/item/mining_tool))
 				var/obj/item/mining_tool/M = master
 				if (M.status)
-					M.process_charges(3)
+					M.process_charges(30)
 
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
@@ -903,6 +906,7 @@
 
 		var/secondhit_delay = 1
 		var/stamina_damage = 50
+		var/mult = 1
 
 
 		pixelaction(atom/target, params, mob/user, reach)
@@ -937,14 +941,26 @@
 						for(var/atom/movable/A in spark.loc)
 							if(A in attacked) continue
 							if(isTarget(A))
-								on_hit(A)
+								on_hit(A, mult)
 								attacked += A
 								hit = 1
 								break
 
 				if(master && istype(master, /obj/item/baton))
 					master:process_charges(-1, user)
+				if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
+					var/obj/item/clothing/gloves/G = master
+					G.uses = max(0, G.uses - 1)
+					if (G.uses < 1)
+						G.icon_state = "yellow"
+						G.item_state = "ygloves"
+						user.update_clothing() // Was missing (Convair880).
 
+					if (G.uses <= 0)
+						user.show_text("The gloves are no longer electrically charged.", "red")
+						G.overridespecial = 0
+					else
+						user.show_text("The gloves have [G.uses]/[G.max_uses] charges left!", "red")
 				afterUse(user)
 				//if (!hit)
 				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
@@ -1122,15 +1138,15 @@
 				if (master)
 					if(istype(master,/obj/item/device/light/zippo))
 						var/obj/item/device/light/zippo/Z = master
-						if (Z.fuel > 0)
-							Z.fuel--
+						if (Z.reagents.get_reagent_amount("fuel"))
+							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
 					if (istype(master,/obj/item/weldingtool))
 						var/obj/item/weldingtool/WT = master
-						if (WT.get_fuel())
-							WT.use_fuel(1)
+						if (WT.reagents.get_reagent_amount("fuel"))
+							WT.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
@@ -1308,16 +1324,16 @@
 				K.start.loc = T1
 				K.start.dir = direction
 				flick(K.start.icon_state, K.start)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				if (T4)
 					K.mid1.loc = T2
 					K.mid1.dir = direction
 					flick(K.mid1.icon_state, K.mid1)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.mid2.loc = T3
 					K.mid2.dir = direction
 					flick(K.mid2.icon_state, K.mid2)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.end.loc = T4
 					K.end.dir = direction
 					flick(K.end.icon_state, K.end)
@@ -1325,7 +1341,7 @@
 					K.mid1.loc = T2
 					K.mid1.dir = direction
 					flick(K.mid1.icon_state, K.mid1)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					K.end.loc = T3
 					K.end.dir = direction
 					flick(K.end.icon_state, K.end)
@@ -1355,6 +1371,9 @@
 			return
 
 		proc/on_hit(var/mob/hit)
+			if (ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				H.do_disorient(src.stamina_damage, stunned = 10)
 			return
 
 	katana_dash/reverse
@@ -1471,7 +1490,7 @@
 						var/obj/item/tile = F.pry_tile(master, user, params)
 						if (tile)
 							hit = 1
-							user.visible_message("<span style='color:red'><b>[user] flings a tile from [turf] into the air!</b></span>")
+							user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
 							logTheThing("combat", user, "fling throws a floor tile ([F]) from [turf].")
 
 							user.lastattacked = user //apply combat click delay
@@ -1667,10 +1686,10 @@
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected(P, src)
+				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
-				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")
+				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

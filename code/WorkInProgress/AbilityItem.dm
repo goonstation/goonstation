@@ -1,7 +1,10 @@
 #define ITEM_ABILITIES_WRAP_AT 15
 
-//There is no stunned etc. check when clicking the buttons.
-//If you want one, code it. (the_mob var on the buttons).
+//i did a bit of work to make these more versatile?
+//im not like, a code goddess or anything tho, so its not really that great
+//you can now make targeted item abilities
+//item abilities also now check for statuses like stunned, and do a restrained check on the mob too
+//also hopefully optimised it a tiny bit?
 
 //oh my god what the fuck is going on in this file jesus wow
 //save me from this freak horror show aaaaaa
@@ -19,24 +22,24 @@
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				boutput(the_mob, "<span style=\"color:red\">The nozzle is clogged!</span>")
+				boutput(the_mob, "<span class='alert'>The nozzle is clogged!</span>")
 				return
 
 		for (var/reagent in E.melting_reagents)
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				the_mob.visible_message("<span style=\"color:red\">[E] melts!</span>")
+				the_mob.visible_message("<span class='alert'>[E] melts!</span>")
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(the_mob))
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span style=\"color:red\">[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
 		SPAWN_DBG(3 SECONDS) if (the_mob) the_mob.transforming = 0
-		sleep(30)
+		sleep(3 SECONDS)
 
 		var/theturf
 		var/list/spraybits = new/list()
@@ -73,7 +76,7 @@
 		if (the_mob) playsound(the_mob, 'sound/effects/spray.ogg', 75, 1, 0)
 		//E.reagents.clear_reagents()
 
-		sleep(5)
+		sleep(0.5 SECONDS)
 		E.special = 0
 
 		SPAWN_DBG(0)
@@ -98,7 +101,8 @@
 					if(is_blocked_turf(SP.loc))
 						spraybits -= SP
 						qdel(SP)
-				sleep(5)
+				sleep(0.5 SECONDS)
+		..()
 
 	OnDrop()
 		if (the_mob) the_mob.transforming = 0
@@ -136,7 +140,36 @@
 			icon_state = "welddown"
 
 			W.flip_up()
+		..()
 
+
+/obj/ability_button/labcoat_toggle
+	name = "(Un)Button Labcoat"
+	icon_state = "labcoat"
+
+	execute_ability()
+		var/obj/item/clothing/suit/labcoat/W = the_item
+		if(W.buttoned)
+			W.unbutton()
+		else
+			W.button()
+		..()
+
+/obj/ability_button/magboot_toggle
+	name = "(De)Activate Magboots"
+	icon_state = "shieldceon"
+
+	execute_ability()
+		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(W.magnetic)
+			W.deactivate()
+			boutput(the_mob, "You power off your magnetic boots")
+		else
+			W.activate()
+			boutput(the_mob, "You power on your magnetic boots")
+		the_mob.update_equipped_modifiers()
+		the_mob.update_clothing()
+		..()
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tank_valve_toggle
@@ -151,6 +184,7 @@
 		var/obj/item/tank/T = the_item
 		if (!T) return
 		T.toggle_valve() // the tank valve toggle handles the icon updates since its also used by tank/Topic
+		..()
 
 ////////////////////////////////////////////////////////////
 ///////////Sonic + Rocket Shoe Abilities & Smoke////////////
@@ -166,14 +200,14 @@
 		var/obj/item/clothing/shoes/rocket/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
 		R.uses--
 
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
-			boutput(the_mob, "<span style=\"color:red\">Your rocket shoes are empty.</span>")
+			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
 			R.abilities.Cut()
 			qdel(src)
 			return
@@ -181,7 +215,7 @@
 		playsound(get_turf(the_mob), 'sound/effects/bamf.ogg', 100, 1)
 
 		if(prob(explosion_chance) || R.emagged)
-			boutput(the_mob, "<span style=\"color:red\">The rocket shoes blow up!</span>")
+			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
 			explosion(src, get_turf(the_mob), -1, -1, 1, 1)
 			qdel(the_item)
 			qdel(src)
@@ -204,10 +238,10 @@
 						the_mob:update_burning(10)
 						if(prob(30))
 							the_mob.emote("scream")
-						sleep(1)
+						sleep(0.1 SECONDS)
 					else
 						the_mob:update_burning(1)
-						sleep(3)
+						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
 				the_mob.gib()
 
@@ -228,9 +262,10 @@
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
 							pool(A)
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 			the_mob.throw_at(curr, 16, 3)
+			..()
 
 
 /obj/ability_button/sonic
@@ -242,7 +277,7 @@
 		var/obj/item/clothing/shoes/sonic/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
 		playsound(get_turf(the_mob), "sound/effects/bamf.ogg", 100, 1)
@@ -258,6 +293,7 @@
 						pool(A)
 				if (!step(the_mob, the_mob.dir) && R.sonicbreak) break
 				sleep(10 - R.soniclevel)
+			..()
 
 /obj/effect/smoketemp
 	name = "smoke"
@@ -287,6 +323,7 @@
 	execute_ability()
 		var/obj/item/storage/belt/utility/ceshielded/C = the_item
 		C.toggle()
+		..()
 		//if(C.active) icon_state = "shieldceoff"
 		//else icon_state = "shieldceon"
 
@@ -303,6 +340,7 @@
 		J.attack_self(the_mob)
 		if(J.on) icon_state = "off"
 		else  icon_state = "on"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -317,6 +355,7 @@
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -331,6 +370,7 @@
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -343,6 +383,7 @@
 		J.attack_self(the_mob)
 		if(J.on) icon_state = "off"
 		else  icon_state = "on"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -355,6 +396,7 @@
 		J.attack_self(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -367,6 +409,7 @@
 		J.toggle()
 		if(J.on) icon_state = "jet2off"
 		else  icon_state = "jet2on"
+		..()
 
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
@@ -377,6 +420,7 @@
 		J.toggle()
 		if(J.on) icon_state = "jetoff"
 		else  icon_state = "jeton"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -388,6 +432,7 @@
 		var/obj/item/clothing/shoes/jetpack/J = the_item
 		J.toggle()
 		icon_state = "jet[J.on ? "off" : "on"]"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -400,6 +445,7 @@
 		if (!istype(M)) return
 		M.toggleHighPower()
 		icon_state = "magtractor[M.highpower]"
+		..()
 
 /obj/ability_button/magtractor_drop
 	name = "Release Item"
@@ -412,6 +458,7 @@
 			return
 		if (M.releaseItem() && !M.holding)
 			icon_state = "mag_drop0"
+		..()
 
 ////////////////////////////////////////////////////////////
 
@@ -422,11 +469,11 @@
 
 	ability_allowed()
 		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
-			boutput(the_mob, "<span style=\"color:red\">You need to be ready on your feet to use this ability.</span>")
+			boutput(the_mob, "<span class='alert'>You need to be ready on your feet to use this ability.</span>")
 			return 0
 
 		if(ishuman(the_mob) && the_mob:wear_suit != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing [the_item] to use this ability.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing [the_item] to use this ability.</span>")
 			return 0
 
 		if(!..())
@@ -445,6 +492,8 @@
 
 		the_mob:rush()
 		icon_state = "rushoff"
+
+		..()
 		return 1
 
 	on_cooldown()
@@ -489,47 +538,49 @@
 			else
 				usr.client.view = "15x15"
 				icon_state = "airoff"
+		..()
 
 ////////////////////////////////////////////////////////////
 
 /* this version moves the center of your view */
 
 /obj/ability_button/scope_toggle
-    name = "Toggle Scope"
-    var/off_icon = "northoff"
-    var/on_icon = "northon"
-    var/distance = 200
-    var/x_mult = 0
-    var/y_mult = 0
-    var/zoomed = 0
+	name = "Toggle Scope"
+	var/off_icon = "northoff"
+	var/on_icon = "northon"
+	var/distance = 200
+	var/x_mult = 0
+	var/y_mult = 0
+	var/zoomed = 0
 
-    New()
-        icon_state = off_icon
-        ..()
+	New()
+		icon_state = off_icon
+		..()
 
-    OnDrop()
-        set_zoom(0)
-        ..()
+	OnDrop()
+		set_zoom(0)
+		..()
 
-    execute_ability()
-        set_zoom(!zoomed)
+	execute_ability()
+		set_zoom(!zoomed)
+		..()
 
 /obj/ability_button/scope_toggle/proc/set_zoom(var/new_zoomed)
-    if(new_zoomed == zoomed)
-        return
-    if(new_zoomed) // we unzoom all the other buttons
-        for(var/obj/ability_button/scope_toggle/S in the_item.ability_buttons)
-            S.set_zoom(0)
-    zoomed = new_zoomed
-    if(zoomed)
-        usr.client.pixel_x += distance * x_mult
-        usr.client.pixel_y += distance * y_mult
-        icon_state = on_icon
-		//todo playsound here
-    else
-        usr.client.pixel_x -= distance * x_mult
-        usr.client.pixel_y -= distance * y_mult
-        icon_state = off_icon
+	if(new_zoomed == zoomed)
+		return
+	if(new_zoomed) // we unzoom all the other buttons
+		for(var/obj/ability_button/scope_toggle/S in the_item.ability_buttons)
+			S.set_zoom(0)
+			zoomed = new_zoomed
+			if(zoomed)
+				usr.client.pixel_x += distance * x_mult
+				usr.client.pixel_y += distance * y_mult
+				icon_state = on_icon
+			//todo playsound here
+			else
+				usr.client.pixel_x -= distance * x_mult
+				usr.client.pixel_y -= distance * y_mult
+				icon_state = off_icon
 
 /obj/ability_button/scope_toggle/north
 	name = "Zoom North"
@@ -566,6 +617,7 @@
 		//var/mob/M = holder.owner
 		usr.set_eye(null)
 		usr.client.view = world.view
+		..()
 
 //////////////////////////////////////////////////////////////////////////////
 /mob/var/list/item_abilities = new/list()
@@ -690,6 +742,7 @@
 		if(!the_mob) return
 		the_mob.item_abilities = list()
 
+//HEY this should be moved over to use /obj/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
 /obj/ability_button
 	name = "baseButton"
 	desc = ""
@@ -703,17 +756,23 @@
 	var/cooldown = 0
 	var/last_use_time = 0
 
+	var/targeted = 0 //does activating this ability let you click on something to target it?
+	var/target_anything = 0 //can you target any atom, not just people?
+
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
 
-	Click()
-		if(ability_allowed())
-			if(execute_ability())
-				last_use_time = world.time
-
-				//I'm hideous, don't look at meeeeeee!
-				SPAWN_DBG(cooldown)
-					on_cooldown()
+	RawClick()
+		if(src.ability_allowed())
+			if (src.targeted)
+				if (src.the_mob.targeting_ability)
+					src.the_mob.targeting_ability = null
+					src.the_mob.update_cursor()
+					return
+				src.the_mob.targeting_ability = src
+				src.the_mob.update_cursor()
+			else
+				src.execute_ability()
 
 	attackby()
 		return
@@ -734,13 +793,26 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
+	disposing() //probably best to do this?
+		if (src.the_item)
+			src.the_item = null
+		if (src.the_mob)
+			src.the_mob = null
+		..()
+
 	proc/ability_allowed()
-		if (!the_item)
+		if (!src.the_item)
 			return 0
-		if (!the_mob || !the_mob.canmove)
+		if (!src.the_mob)
 			return 0
-		if (cooldown > 0 && ( last_use_time + cooldown ) > world.time)
-			boutput(the_mob, "<span style=\"color:red\">This ability is recharging. ([round((cooldown/10)-((world.time - last_use_time)/10))] seconds left)</span>")
+		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
+			return 0
+		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
+			var/mob/living/carbon/human/H = the_mob
+			if (H.restrained())
+				return 0
+		if (src.last_use_time && src.cooldown && ( src.last_use_time + cooldown ) > TIME)
+			boutput(src.the_mob, "<span class='alert'>This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)</span>")
 			return 0
 		return 1
 
@@ -748,8 +820,16 @@
 	proc/on_cooldown()
 		return
 
+	//please call back to parent to trigger handle cooldown
 	proc/execute_ability()
+		src.handle_cooldown()
 		return
 
 	proc/OnDrop()
 		return
+
+	proc/handle_cooldown() //copy and pasted from Click() - which is dead now
+		if (src.cooldown)
+			src.last_use_time = TIME
+			sleep(src.cooldown)
+			src.on_cooldown()

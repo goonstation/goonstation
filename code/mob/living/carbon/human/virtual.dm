@@ -26,7 +26,7 @@
 		if (!escape_vr)
 			var/area/A = get_area(src)
 			if ((T && !(T.z == 2)) || (A && !A.virtual))
-				boutput(src, "<span style=\"color:red\">Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
+				boutput(src, "<span class='alert'>Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
 				src.gib()
 				return
 
@@ -45,7 +45,6 @@
 
 		qdel(src)
 		return
-		..()
 
 	disposing()
 		if (isghost && src.client)
@@ -148,14 +147,14 @@
 		if (!spell.holder)
 			return
 
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)

@@ -122,7 +122,7 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey) mobType = "NPC"
 
-	var/data
+	var/list/data = list()
 	if (name)
 		if (type == "diary")
 			data += name
@@ -146,8 +146,8 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		if (type == "diary")
 			data += " \[DEAD\]"
 		else
-			data += " \[<span class='text-red'>DEAD</span>\]"
-	return data
+			data += " \[<span class='alert'>DEAD</span>\]"
+	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
@@ -204,12 +204,12 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
 /proc/log_loc(var/atom/A as turf|obj|mob)
-	if (!istype(A))
+	if (!A)
 		return
-	var/turf/our_turf = null
-	if (!isturf(A.loc))
-		our_turf = get_turf(A)
-	return "([our_turf ? "[showCoords(our_turf.x, our_turf.y, our_turf.z)]" : "[showCoords(A.x, A.y, A.z)]"] in [get_area(A)])"
+	var/turf/our_turf = get_turf(A)
+	if (!our_turf)
+		return
+	return "([showCoords(our_turf.x, our_turf.y, our_turf.z)] in [our_turf.loc])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).
 /proc/log_atmos(var/atom/A as turf|obj|mob)

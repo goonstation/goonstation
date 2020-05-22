@@ -7,6 +7,20 @@ git:
 
 matrix:
   include:
+    - name: "Run Linters"
+      addons:
+        apt:
+          packages:
+            - rustc
+            - cargo
+      cache:
+        directories:
+          - $HOME/SpacemanDMM
+      install:
+        - tools/travis/install_spaceman_dmm.sh dreamchecker
+        - touch +secret/__secret.dme
+      script:
+        - ~/dreamchecker
     - name: "Compile"
       addons:
         apt:

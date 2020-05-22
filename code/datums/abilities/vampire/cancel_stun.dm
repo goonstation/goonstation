@@ -33,18 +33,17 @@
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
-			M.visible_message("<span style=\"color:red\"><B>[M] contorts their body and judders upright!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)
 			boutput(M, __blue("You feel your flesh knitting itself back together."))
 		else
 			boutput(M, __blue("You feel refreshed and ready to get back into the fight."))
 
-		if (M.resting)
-			M.resting = 0
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.hud.update_resting()
+		M.delStatus("resting")
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.hud.update_resting()
 
 		M.force_laydown_standup()
 
