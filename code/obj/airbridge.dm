@@ -74,7 +74,7 @@ var/global/list/airbridge_controllers = list()
 		working = 1
 
 		SPAWN_DBG(0)
-			sleep(50)
+			sleep(5 SECONDS)
 
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
@@ -198,7 +198,7 @@ var/global/list/airbridge_controllers = list()
 									SPAWN_DBG(2 SECONDS) qdel(D)
 
 				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 			working = 0
 			updateComps()
@@ -235,7 +235,7 @@ var/global/list/airbridge_controllers = list()
 
 					playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 
-					sleep(7)
+					sleep(0.7 SECONDS)
 			else
 				for(var/turf/T in path_reverse)
 					maintaining_turfs.Add(new/turf/simulated/floor/plating/airless/asteroid(T))
@@ -248,7 +248,7 @@ var/global/list/airbridge_controllers = list()
 
 					playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 
-					sleep(7)
+					sleep(0.7 SECONDS)
 
 			maintaining_turfs.Cut()
 			working = 0
@@ -297,6 +297,13 @@ var/global/list/airbridgeComputers = list()
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
 
+	initialize()
+		..()
+		update_status()
+		if (starts_established && links.len)
+			SPAWN_DBG(1 SECOND)
+				do_initial_extend()
+
 	disposing()
 		airbridgeComputers -= src
 		..()
@@ -335,7 +342,7 @@ var/global/list/airbridgeComputers = list()
 		var/sanity_counter = 0
 		while (C.working && sanity_counter < 30)
 			sanity_counter++
-			sleep(20)
+			sleep(2 SECONDS)
 
 		C.pressurize()
 		starts_established = 0
@@ -423,24 +430,24 @@ var/global/list/airbridgeComputers = list()
 		if (href_list["create"])
 			if (src.emergency && emergency_shuttle)
 				if (emergency_shuttle.location != SHUTTLE_LOC_STATION)
-					boutput(usr, "<span style=\"color:red\">The airbridge cannot be deployed while the shuttle is not in position.</span>")
+					boutput(usr, "<span class='alert'>The airbridge cannot be deployed while the shuttle is not in position.</span>")
 					return
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span style=\"color:red\">Access denied.</span>")
+				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.establish_bridge())
 				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span style=\"color:red\">Access denied.</span>")
+				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.remove_bridge())
 				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span style=\"color:red\">Access denied.</span>")
+				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.pressurize())
 				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
@@ -490,7 +497,7 @@ var/global/list/airbridgeComputers = list()
 
 	attack_hand(mob/user as mob)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(usr, "<span style=\"color:blue\">[C.toggle_bridge()]</span>")
+			boutput(usr, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break
 		return
 
@@ -507,22 +514,22 @@ var/global/list/airbridgeComputers = list()
 			if(NORTH)
 				while(pixel_y < 32)
 					pixel_y += 4
-					sleep(1)
+					sleep(0.1 SECONDS)
 				return 1
 			if(SOUTH)
 				while(pixel_y > -32)
 					pixel_y -= 4
-					sleep(1)
+					sleep(0.1 SECONDS)
 				return 1
 			if(EAST)
 				while(pixel_x < 32)
 					pixel_x += 4
-					sleep(1)
+					sleep(0.1 SECONDS)
 				return 1
 			if(WEST)
 				while(pixel_x > -32)
 					pixel_x -= 4
-					sleep(1)
+					sleep(0.1 SECONDS)
 				return 1
 		return 0
 

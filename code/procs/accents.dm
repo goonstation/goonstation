@@ -834,14 +834,14 @@
 
 
 /proc/finnishify(var/string)
-	var/modded = ""
-	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
 	if(prob(50))
 		string = replacetextEx(string, " a ", "")
 		string = replacetextEx(string, " an ", "")
 	if(prob(25))
 		string = replacetextEx(string, " the ", "")
+
+	var/modded = ""
+	var/datum/text_roamer/T = new/datum/text_roamer(string)
 
 	for (var/i = 0, i < length(string), i=i)
 		var/datum/parse_result/P = finnish_parse(T)

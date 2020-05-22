@@ -1,6 +1,9 @@
-/datum/plant/lettuce
-	name = "Lettuce"
+/datum/plant/veg
+	plant_icon = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"
+
+/datum/plant/veg/lettuce
+	name = "Lettuce"
 	seedcolor = "#006622"
 	crop = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	starthealth = 30
@@ -13,9 +16,8 @@
 	genome = 12
 	commuts = list(/datum/plant_gene_strain/reagent_adder,/datum/plant_gene_strain/damage_res/bad)
 
-/datum/plant/cucumber
+/datum/plant/veg/cucumber
 	name = "Cucumber"
-	category = "Vegetable"
 	seedcolor = "#005622"
 	crop = /obj/item/reagent_containers/food/snacks/plant/cucumber
 	starthealth = 25
@@ -28,9 +30,8 @@
 	genome = 19
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
-/datum/plant/carrot
+/datum/plant/veg/carrot
 	name = "Carrot"
-	category = "Vegetable"
 	seedcolor = "#774400"
 	crop = /obj/item/reagent_containers/food/snacks/plant/carrot
 	starthealth = 20
@@ -44,9 +45,8 @@
 	nectarlevel = 10
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/mutations/bad)
 
-/datum/plant/potato
+/datum/plant/veg/potato
 	name = "Potato"
-	category = "Vegetable"
 	seedcolor = "#555500"
 	crop = /obj/item/reagent_containers/food/snacks/plant/potato
 	starthealth = 40
@@ -60,9 +60,8 @@
 	nectarlevel = 6
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
-/datum/plant/onion
+/datum/plant/veg/onion
 	name = "Onion"
-	category = "Vegetable"
 	seedcolor = "#DDFFDD"
 	crop = /obj/item/reagent_containers/food/snacks/plant/onion
 	starthealth = 20
@@ -74,9 +73,8 @@
 	genome = 13
 	commuts = list(/datum/plant_gene_strain/splicing,/datum/plant_gene_strain/reagent_adder/toxic)
 
-/datum/plant/garlic
+/datum/plant/veg/garlic
 	name = "Garlic"
-	category = "Vegetable"
 	seedcolor = "#BBDDBB"
 	crop = /obj/item/reagent_containers/food/snacks/plant/garlic
 	starthealth = 20

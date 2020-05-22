@@ -67,7 +67,7 @@
 		if(!num_agents)
 			return
 
-		sleep(300) //30s to let the signal play
+		sleep(30 SECONDS) //30s to let the signal play
 		var/mob/living/carbon/human/H = null
 		num_agents = min(num_agents,candidates.len)
 		for(var/i = 0, i<num_agents,i++)
@@ -85,7 +85,7 @@
 		var/list/sleepers = list()
 		for(var/mob/listener in listeners)
 			sleepers += new/obj/machinery/sleeper(get_turf(listener))
-		sleep(30)
+		sleep(3 SECONDS)
 		for(var/atom/sleeper in sleepers)
 			qdel(sleeper)
 #endif
@@ -129,7 +129,7 @@
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span style=\"color:blue\">A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
+					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
 					if(H.client && !checktraitor(H) && H.client.preferences.be_traitor && !(H.mind.assigned_role in list("Head of Security", "Security Officer")))
 						candidates += H
 				break
@@ -140,7 +140,7 @@
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)
 					listeners += R
-					boutput(R, "<span style=\"color:blue\">A peculiar noise intrudes upon your radio frequency.</span>")
+					boutput(R, "<span class='notice'>A peculiar noise intrudes upon your radio frequency.</span>")
 
 	proc/broadcast_sound(var/soundfile)
 		for (var/mob/M in listeners)
@@ -159,7 +159,7 @@
 			broadcast_sound(period)
 			batch++
 			if (batch >= 3)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	proc/get_tens(var/n)
 		if (n >= 20)

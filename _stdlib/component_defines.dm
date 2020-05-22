@@ -35,8 +35,6 @@
 #define COMSIG_COMPONENT_REMOVING "component_removing"
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
-/// just after a datum's disposing()
-#define COMSIG_PARENT_POST_DISPOSING "parent_post_disposing"
 
 
 // atom/movable signals
@@ -55,3 +53,20 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
+
+// blocking signals
+/// After  an item block is set up
+#define COMSIG_ITEM_BLOCK_BEGIN "itm_block_begin"
+/// When an item block is disposed
+#define COMSIG_ITEM_BLOCK_END "itm_block_end"
+/// After an unarmed block is set up
+#define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
+/// When an item block is created
+#define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
+// human signals
+///when a human Life tick occurs
+#define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
+
+// mob signals
+///At the beginning of when an attackresults datum is being set up
+#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"

@@ -105,7 +105,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 				var/Y = source:y
 				var/Z = source:z
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
-					boutput(user, "<span style=\"color:red\">Your telekinetic powers don't seem to work here.</span>")
+					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
 					return 0
 				SPAWN_DBG(0)
 					//I really shouldnt put this here but i dont have a better idea
@@ -201,16 +201,6 @@ var/obj/item/dummy/click_dummy = new
 			L = L.loc
 	return 0
 
-/proc/AutoUpdateAI(obj/subject)
-	if (!subject)
-		return
-	for(var/mob/living/silicon/ai/M in AIs)
-		var/mob/AI = M
-		if (M.deployed_to_eyecam)
-			AI = M.eyecam
-
-		if (AI && AI.client && AI.machine == subject)
-			subject.attack_ai(AI)
 
 /proc/get_viewing_AIs(center = null, distance = 7)
 	. = list()
@@ -375,8 +365,27 @@ var/obj/item/dummy/click_dummy = new
 	if(src.ears) . += src.ears
 	if(src.wear_mask) . += src.wear_mask
 
-	if(src.l_hand && src.l_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.l_hand
-	if(src.r_hand && src.r_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.r_hand
+	if(src.l_hand)
+		if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD)
+			. += src.l_hand
+		else if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1)
+			. += src.l_hand
+
+		if (src.l_hand.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/G in src.l_hand)
+				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1))
+					. += G
+
+	if(src.r_hand)
+		if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD)
+			. += src.r_hand
+		else if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0)
+			. += src.r_hand
+
+		if (src.r_hand.c_flags & HAS_GRAB_EQUIP)
+			for(var/obj/item/grab/G in src.r_hand)
+				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0))
+					. += G
 
 
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)

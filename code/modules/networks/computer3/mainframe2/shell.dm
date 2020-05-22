@@ -326,8 +326,9 @@
 								return 1
 
 						continue
-
-
+					if ("cls", "clear")
+						message_user("Screen cleared.", "clear")
+						continue
 					//SCRIPTING COMMANDS FOLLOW:
 					//If - Evaluate an expression.  If true, set SCRIPT_IF_TRUE in scriptstat and continue piping
 					//if false, unset SCRIPT_IF_TRUE and continue to the next line
@@ -538,7 +539,7 @@
 				scriptline++
 
 			scriptline = (shscript.len) ? scriptline : 0
-				//sleep(10)
+				//sleep(1 SECOND)
 			if (!shscript.len && !scriptprocess)
 
 //				if (scriptprocess)
@@ -572,7 +573,7 @@
 
 		//Something something immersion something something 32-bit signed someting fixed point something.
 		script_clampvalue(var/clampnum)
-			//return round( min( max(text2num(clampnum), -2147483647), 2147483648) )
+			//return round( min( max(text2num(clampnum), -2147483647), 2147483648) ) // good riddance
 			return round( min( max(clampnum, -2147483647), 2147483600), 0.01 ) // 2147483648
 
 		script_isNumResult(var/current, var/result)
@@ -598,6 +599,7 @@
 					continue
 
 				var/result = null
+
 				switch ( lowertext(current_command) )
 					if ("+") //(1X 2X -- (1X + 2X))
 						if (stack.len < 2)
@@ -834,7 +836,7 @@
 							stack.len++
 							stack[stack.len] = stack[stack.len-1]
 
-					if ("&#39;")
+					if ("&#39;","'") // bodge alert, "'" added because this command doesnt seem to work at all
 						var/newString
 						while (command_stream.len)
 							if (command_stream[1] == "\'" || command_stream[1] == "&#39;")
@@ -894,6 +896,15 @@
 						//todo
 						continue
 
+					if ("#") // gets how many information turdnuggets you have stored up
+						stack.len++
+						stack[stack.len]="[stack.len-1]"
+
+					if ("del") //  removes the topmost item from the stack (most recently added)
+						if (!stack.len)
+							return ERR_STACK_UNDER
+						stack.len--
+
 					if ("value", "to") //Define/Set a variable value.
 						if (!stack.len)
 							return ERR_STACK_UNDER
@@ -907,6 +918,20 @@
 
 						scriptvars["[valueName]"] = stack[stack.len]
 						stack.len--
+
+					if (".s") // print the whole goddamn stack! stolen from forth, doesnt consume the stack.
+						message_user("<[stack.len]>") // does not check if its in a script or not
+						if(stack.len<1) 			  // piping "eval" to some other program and doing . or .s could be handy
+							continue
+						for(var/i = 1 to stack.len)
+							message_user("[stack[i]]")
+						message_user(" ") //honk.
+
+					if (".") // print JUST the most recent stack item. also stolen from forth
+						if(stack.len<1) // same as above, no script check "eval 3 2 . 4 | echo" -> "2" output
+							return ERR_STACK_UNDER
+						message_user("[stack[stack.len]]")
+						stack.len-- //consume it, because thats what forth does
 
 					else
 						//boutput(world, "\[[lowertext(ckeyEx(current_command))]] in script vars?")

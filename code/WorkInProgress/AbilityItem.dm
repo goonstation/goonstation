@@ -22,24 +22,24 @@
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				boutput(the_mob, "<span style=\"color:red\">The nozzle is clogged!</span>")
+				boutput(the_mob, "<span class='alert'>The nozzle is clogged!</span>")
 				return
 
 		for (var/reagent in E.melting_reagents)
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				the_mob.visible_message("<span style=\"color:red\">[E] melts!</span>")
+				the_mob.visible_message("<span class='alert'>[E] melts!</span>")
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(the_mob))
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span style=\"color:red\">[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
 		SPAWN_DBG(3 SECONDS) if (the_mob) the_mob.transforming = 0
-		sleep(30)
+		sleep(3 SECONDS)
 
 		var/theturf
 		var/list/spraybits = new/list()
@@ -76,7 +76,7 @@
 		if (the_mob) playsound(the_mob, 'sound/effects/spray.ogg', 75, 1, 0)
 		//E.reagents.clear_reagents()
 
-		sleep(5)
+		sleep(0.5 SECONDS)
 		E.special = 0
 
 		SPAWN_DBG(0)
@@ -101,7 +101,7 @@
 					if(is_blocked_turf(SP.loc))
 						spraybits -= SP
 						qdel(SP)
-				sleep(5)
+				sleep(0.5 SECONDS)
 		..()
 
 	OnDrop()
@@ -142,6 +142,34 @@
 			W.flip_up()
 		..()
 
+
+/obj/ability_button/labcoat_toggle
+	name = "(Un)Button Labcoat"
+	icon_state = "labcoat"
+
+	execute_ability()
+		var/obj/item/clothing/suit/labcoat/W = the_item
+		if(W.buttoned)
+			W.unbutton()
+		else
+			W.button()
+		..()
+
+/obj/ability_button/magboot_toggle
+	name = "(De)Activate Magboots"
+	icon_state = "shieldceon"
+
+	execute_ability()
+		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(W.magnetic)
+			W.deactivate()
+			boutput(the_mob, "You power off your magnetic boots")
+		else
+			W.activate()
+			boutput(the_mob, "You power on your magnetic boots")
+		the_mob.update_equipped_modifiers()
+		the_mob.update_clothing()
+		..()
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tank_valve_toggle
@@ -172,14 +200,14 @@
 		var/obj/item/clothing/shoes/rocket/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
 		R.uses--
 
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
-			boutput(the_mob, "<span style=\"color:red\">Your rocket shoes are empty.</span>")
+			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
 			R.abilities.Cut()
 			qdel(src)
 			return
@@ -187,7 +215,7 @@
 		playsound(get_turf(the_mob), 'sound/effects/bamf.ogg', 100, 1)
 
 		if(prob(explosion_chance) || R.emagged)
-			boutput(the_mob, "<span style=\"color:red\">The rocket shoes blow up!</span>")
+			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
 			explosion(src, get_turf(the_mob), -1, -1, 1, 1)
 			qdel(the_item)
 			qdel(src)
@@ -210,10 +238,10 @@
 						the_mob:update_burning(10)
 						if(prob(30))
 							the_mob.emote("scream")
-						sleep(1)
+						sleep(0.1 SECONDS)
 					else
 						the_mob:update_burning(1)
-						sleep(3)
+						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
 				the_mob.gib()
 
@@ -234,7 +262,7 @@
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
 							pool(A)
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 			the_mob.throw_at(curr, 16, 3)
 			..()
@@ -249,7 +277,7 @@
 		var/obj/item/clothing/shoes/sonic/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
 		playsound(get_turf(the_mob), "sound/effects/bamf.ogg", 100, 1)
@@ -441,11 +469,11 @@
 
 	ability_allowed()
 		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
-			boutput(the_mob, "<span style=\"color:red\">You need to be ready on your feet to use this ability.</span>")
+			boutput(the_mob, "<span class='alert'>You need to be ready on your feet to use this ability.</span>")
 			return 0
 
 		if(ishuman(the_mob) && the_mob:wear_suit != the_item)
-			boutput(the_mob, "<span style=\"color:red\">You must be wearing [the_item] to use this ability.</span>")
+			boutput(the_mob, "<span class='alert'>You must be wearing [the_item] to use this ability.</span>")
 			return 0
 
 		if(!..())
@@ -728,8 +756,8 @@
 	var/cooldown = 0
 	var/last_use_time = 0
 
-	var/targeted = 0 //does clicking this let you click on something to target it?
-	var/target_anything = 0 //can you target any atom, not just people
+	var/targeted = 0 //does activating this ability let you click on something to target it?
+	var/target_anything = 0 //can you target any atom, not just people?
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
@@ -777,14 +805,14 @@
 			return 0
 		if (!src.the_mob)
 			return 0
-		if (src.the_mob.hasStatus("paralysis") || src.the_mob.hasStatus("stunned") || src.the_mob.hasStatus("weakened")) //stun check
+		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
 			return 0
 		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
 			var/mob/living/carbon/human/H = the_mob
 			if (H.restrained())
 				return 0
-		if (src.cooldown > 0 && ( src.last_use_time + cooldown ) > world.time)
-			boutput(src.the_mob, "<span style=\"color:red\">This ability is recharging. ([round((src.cooldown/10)-((world.time - src.last_use_time)/10))] seconds left)</span>")
+		if (src.last_use_time && src.cooldown && ( src.last_use_time + cooldown ) > TIME)
+			boutput(src.the_mob, "<span class='alert'>This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)</span>")
 			return 0
 		return 1
 
@@ -794,6 +822,7 @@
 
 	//please call back to parent to trigger handle cooldown
 	proc/execute_ability()
+		src.handle_cooldown()
 		return
 
 	proc/OnDrop()
@@ -801,6 +830,6 @@
 
 	proc/handle_cooldown() //copy and pasted from Click() - which is dead now
 		if (src.cooldown)
-			src.last_use_time = world.time
+			src.last_use_time = TIME
 			sleep(src.cooldown)
 			src.on_cooldown()

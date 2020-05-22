@@ -19,6 +19,10 @@
 	module_research = list("tools" = 4, "metals" = 2)
 	rand_pos = 1
 
+	New()
+		..()
+		BLOCK_ROD
+
 /obj/item/wrench/gold
 	name = "golden wrench"
 	desc = "A generic wrench, but now with gold plating!"

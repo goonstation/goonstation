@@ -52,8 +52,9 @@
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-
-
+#if ASS_JAM
+	var/projectile_paused = FALSE //for time stopping
+#endif
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -68,7 +69,7 @@
 		yo = y
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : atan2(y,x)))
+			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
 			src.transform = null
 			facing_dir = angle2dir(angle_override)
@@ -86,6 +87,10 @@
 			src.setup()
 		is_processing = 1
 		while (!disposed)
+#if ASS_JAM //dont move while in timestop
+			while(src.projectile_paused)
+				sleep(1 SECOND)
+#endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -105,8 +110,8 @@
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
 			log_shot(src, A, 1)
-			A.visible_message("<b><span style=\"color:red\">The projectile narrowly misses [A]!</span></b>")
-			//A.visible_message("<b><span style=\"color:red\">The projectile thuds into [A] uselessly!</span></b>")
+			A.visible_message("<b><span class='alert'>The projectile narrowly misses [A]!</span></b>")
+			//A.visible_message("<b><span class='alert'>The projectile thuds into [A] uselessly!</span></b>")
 			//die()
 			return
 
@@ -159,14 +164,15 @@
 						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 							if (proj_data.hit_mob_sound)
 								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
+							proj_data.on_hit(X, angle_to_dir(src.angle), src)
 						for (var/obj/item/cloaking_device/S in X.contents)
 							if (S.active)
 								S.deactivate(X)
-								src.visible_message("<span style=\"color:blue\"><b>[X]'s cloak is disrupted!</b></span>")
+								src.visible_message("<span class='notice'><b>[X]'s cloak is disrupted!</b></span>")
 						for (var/obj/item/device/disguiser/D in A.contents)
 							if (D.on)
 								D.disrupt(X)
-								src.visible_message("<span style=\"color:blue\"><b>[X]'s disguiser is disrupted!</b></span>")
+								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
 						if (ishuman(X))
 							var/mob/living/carbon/human/H = X
 							H.stamina_stun()
@@ -182,11 +188,11 @@
 			for (var/obj/item/cloaking_device/S in A.contents)
 				if (S.active)
 					S.deactivate(A)
-					src.visible_message("<span style=\"color:blue\"><b>[A]'s cloak is disrupted!</b></span>")
+					src.visible_message("<span class='notice'><b>[A]'s cloak is disrupted!</b></span>")
 			for (var/obj/item/device/disguiser/D in A.contents)
 				if (D.on)
 					D.disrupt(A)
-					src.visible_message("<span style=\"color:blue\"><b>[A]'s disguiser is disrupted!</b></span>")
+					src.visible_message("<span class='notice'><b>[A]'s disguiser is disrupted!</b></span>")
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()
@@ -536,7 +542,7 @@ datum/projectile
 		cost = 1                 // How much ammo this costs
 		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles. 
+		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
 		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
@@ -590,7 +596,7 @@ datum/projectile
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
-	var/ticks_between_mob_hits = 0
+	var/ticks_between_mob_hits = 1
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 
@@ -623,9 +629,9 @@ datum/projectile
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			if(ks_ratio == 0) //stun projectiles only
 				impact_image_effect("T", hit)
-				if (isliving(hit))
-					var/mob/living/L = hit
-					stun_bullet_hit(O,L)
+//				if (isliving(hit))
+//					var/mob/living/L = hit
+//					stun_bullet_hit(O,L)
 			return
 		tick(var/obj/projectile/O)
 			return
@@ -771,25 +777,24 @@ datum/projectile/snowball
 		var/immunity = check_target_immunity(T) // Point-blank overrides, such as stun bullets (Convair880).
 		if (immunity)
 			log_shot(P, T, 1)
-			T.visible_message("<b><span style=\"color:red\">...but the projectile bounces off uselessly!</span></b>")
+			T.visible_message("<b><span class='alert'>...but the projectile bounces off uselessly!</span></b>")
 			P.die()
 			return
 		if (P.proj_data)
 			P.proj_data.on_pointblank(P, T)
 	P.collide(T) // The other immunity check is in there (Convair880).
 
-/proc/shoot_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T)
+/proc/shoot_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, target)
+	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay(S, DATA, target)
+				shoot_projectile_relay(S, DATA, T, remote_sound_source)
 	return Q
 
 /proc/shoot_projectile_ST_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
@@ -797,13 +802,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, target, pox, poy)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel(S, DATA, target, pox, poy)
+				shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
 	return Q
 
 /proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle)
@@ -811,31 +815,30 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
+				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
 	return Q
 
-/proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir)
+/proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
 	var/turf/T = get_step(get_turf(S), dir)
 	if (T)
-		return shoot_projectile_ST(S, DATA, T)
+		return shoot_projectile_ST(S, DATA, T, remote_sound_source)
 	return null
 
-/proc/shoot_projectile_relay(var/atom/movable/S, var/datum/projectile/DATA, var/T)
+/proc/shoot_projectile_relay(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/P = initialize_projectile_ST(S, DATA, T)
+	var/obj/projectile/P = initialize_projectile_ST(S, DATA, T, remote_sound_source)
 	if (P)
 		P.launch()
 	return P
@@ -883,14 +886,14 @@ datum/projectile/snowball
 		P.launch()
 	return P
 
-/proc/initialize_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T)
+/proc/initialize_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
-	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S)
+	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source)
 
 /proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
 	if (!S)
@@ -910,7 +913,7 @@ datum/projectile/snowball
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null)
+/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source)
 	if (!S)
 		return
 	var/obj/projectile/P = unpool(/obj/projectile)
@@ -927,6 +930,9 @@ datum/projectile/snowball
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
+
+	if(remote_sound_source)
+		shooter = remote_sound_source
 
 	if (narrator_mode)
 		playsound(S, 'sound/vox/shoot.ogg', 50, 1)
@@ -952,7 +958,7 @@ datum/projectile/snowball
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 
-/proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
@@ -962,7 +968,7 @@ datum/projectile/snowball
 	Q.launch()
 	return Q
 
-/proc/shoot_cardinal_normal_reflected(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector)
 	if (!P.incidence || !(P.incidence in cardinal))
 		return null
 

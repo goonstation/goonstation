@@ -64,6 +64,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	pregame_timeleft = 150 // raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
+	#if ASS_JAM
+	vote_manager.active_vote = new/datum/vote_new/mode("assday")
+	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	#endif
 
 	// let's try doing this here, yoloooo
 	if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
@@ -79,7 +83,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	#endif
 
 	while(current_state <= GAME_STATE_PREGAME)
-		sleep(10)
+		sleep(1 SECOND)
 		if (!game_start_delayed)
 			pregame_timeleft--
 
@@ -129,6 +133,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		return 0
 
+	logTheThing("debug", null, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
+
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 
@@ -154,7 +160,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
 
 	// Give said clients time to animate the fadeout before we do this...
-	sleep(5)
+	sleep(0.5 SECONDS)
 
 	//Distribute jobs
 	distribute_jobs()
@@ -203,10 +209,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		if (istype(random_events,/datum/event_controller/))
 			SPAWN_DBG(random_events.minor_events_begin)
-				message_admins("<span style=\"color:blue\">Minor Event cycle has been started.</span>")
+				message_admins("<span class='notice'>Minor Event cycle has been started.</span>")
 				random_events.minor_event_cycle()
 			SPAWN_DBG(random_events.events_begin)
-				message_admins("<span style=\"color:blue\">Random Event cycle has been started.</span>")
+				message_admins("<span class='notice'>Random Event cycle has been started.</span>")
 				random_events.event_cycle()
 			random_events.next_event = random_events.events_begin
 			random_events.next_minor_event = random_events.minor_events_begin
@@ -237,7 +243,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
-		boutput(world, "<span style=\"color:blue\"><b>Tip:</b> [pick(tips)]</span>")
+		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -293,7 +299,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
-					player.AIize()
+					var/mob/living/silicon/ai/A = player.AIize()
+					A.Equip_Bank_Purchase(A.mind.purchased_bank_item)
 
 				else if (player.mind && player.mind.special_role == "wraith")
 					player.close_spawn_windows()
@@ -418,9 +425,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			SPAWN_DBG(5 SECONDS)
 				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
 
-				boutput(world, "<span style=\"font-weight: bold; color: blue;\">A new round will begin soon.</span>")
+				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
 
-				sleep(600)
+				sleep(60 SECONDS)
 				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 
 				if (game_end_delayed == 1)
@@ -497,12 +504,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			count++
 			if(CO.check_completion())
 				crewMind.completed_objs++
-				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span style=\"color:green\"><B>Success</B></span>")
+				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='success'><B>Success</B></span>")
 				logTheThing("diary",crewMind,null,"completed objective: [CO.explanation_text]")
 				if (!isnull(CO.medal_name) && !isnull(crewMind.current))
 					crewMind.current.unlock_medal(CO.medal_name, CO.medal_announce)
 			else
-				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span style=\"color:red\">Failed</span>")
+				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='alert'>Failed</span>")
 				logTheThing("diary",crewMind,null,"failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0
@@ -525,6 +532,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		final_score = 0
 	else
 		final_score = 100
+
+	boutput(world, score_tracker.escapee_facts())
+
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	for (var/mob/living/silicon/ai/aiPlayer in AIs)
@@ -647,7 +657,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				bank_earnings.badguy = 1
 				player_dead = 0
 			//some might not actually have a wage
-			if (isnukeop(player) || iswizard(player) || isblob(player) || iswraith(player) || iswizard(player))
+			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
 				earnings = 800
 
 			if (player.mind.completed_objs > 0)
@@ -677,6 +687,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.held_item = player.client.persistent_bank_item
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
+
+		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+			P.build_curr_contents()
 
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
@@ -730,7 +743,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					spawn_meteors()
 				if (src.timeleft <= 0 && src.timing)
 					src.timeup()
-				sleep(10)
+				sleep(1 SECOND)
 			while(src.processing)
 			return
 //Standard extended process (incorporates most game modes).
@@ -739,10 +752,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			do
 				check_win()
 				ticker.AItime += 10
-				sleep(10)
+				sleep(1 SECOND)
 				if (ticker.AItime == 6000)
 					boutput(world, "<FONT size = 3><B>Cent. Com. Update</B> AI Malfunction Detected</FONT>")
-					boutput(world, "<span style=\"color:red\">It seems we have provided you with a malfunctioning AI. We're very sorry.</span>")
+					boutput(world, "<span class='alert'>It seems we have provided you with a malfunctioning AI. We're very sorry.</span>")
 			while(src.processing)
 			return
 //malfunction process
@@ -761,7 +774,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					spawn_meteors()
 				if (src.timeleft <= 0 && src.timing)
 					src.timeup()
-				sleep(10)
+				sleep(1 SECOND)
 			while(src.processing)
 			return
 //meteor mode!!! MORE METEORS!!!

@@ -99,6 +99,8 @@ proc/qdel(var/datum/O)
 
 // override this in children for your type specific disposing implementation, make sure to call ..() so the root disposing runs too
 /datum/proc/disposing()
+	SHOULD_CALL_PARENT(TRUE)
+
 	src.tag = null // not part of components but definitely should happen
 
 	signal_enabled = FALSE
@@ -135,5 +137,4 @@ proc/qdel(var/datum/O)
 	if (!disposed)
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()
-		SEND_SIGNAL(src, COMSIG_PARENT_POST_DISPOSING)
 		disposed = 1

@@ -56,10 +56,10 @@
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
 
-		if(src.client)
+		if(src.last_client)
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
-				src.client.images -= I
+				src.last_client.images -= I
 
 		.=..()
 
@@ -113,7 +113,7 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
-		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.getStatusDuration("weakened") && !src.mainframe.getStatusDuration("paralysis") && !src.mainframe.getStatusDuration("stunned"))
+		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 				var/obj/O = target
 				O.receive_silicon_hotkey(src)
@@ -263,7 +263,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span style=\"color:red\">You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 		return
 
 	verb/ai_view_crew_manifest()
@@ -676,20 +676,24 @@ var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
 	if(aiDirty == 2)
+		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		ma.plane = PLANE_HUD
+		ma.layer = 100
+		ma.color = "#777777"
+		ma.dir = pick(alldirs)
+		ma.appearance_flags = TILE_BOUND | KEEP_APART
+		ma.name = " "
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue
 			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
 
-			t.aiImage = image('icons/misc/static.dmi', t, "static")
+			t.aiImage = new
+			t.aiImage.appearance = ma
 			t.aiImage.loc = t
-			t.aiImage.plane = PLANE_HUD
-			t.aiImage.layer = 100
-			t.aiImage.color = "#777777"
-			t.aiImage.name = " "
-			t.aiImage.dir = pick(alldirs)
-			t.aiImage.appearance_flags = TILE_BOUND | KEEP_APART
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
+
+			LAGCHECK(100)
 
 		aiDirty = 1
 	for(var/obj/machinery/camera/C in cameras)

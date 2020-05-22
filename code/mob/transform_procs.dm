@@ -73,7 +73,7 @@
 	if (src.transforming || !src.bioHolder)
 		return
 	if (iswizard(src))
-		src.visible_message("<span style=\"color:red\"><b>[src] magically resists being transformed!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] magically resists being transformed!</b></span>")
 		return
 
 	src.unequip_all()
@@ -83,8 +83,7 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
-	..()
-	return
+	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
 	if (src.transforming)
@@ -197,9 +196,6 @@
 		var/datum/bioHolder/original = new/datum/bioHolder(W)
 		original.CopyOther(src.bioHolder)
 		W.bioHolder = original
-	if (issmallanimal(W))
-		var/mob/living/critter/small_animal/small = W
-		small.setup_overlays()
 
 	var/mob/selfmob = src
 	src = null
@@ -214,6 +210,11 @@
 			ticker.minds += W.mind
 			W.mind.key = key
 			W.mind.current = W
+
+	if (issmallanimal(W))
+		var/mob/living/critter/small_animal/small = W
+		small.setup_overlays() // this requires the small animal to have a client to set things up properly
+
 	SPAWN_DBG(1 DECI SECOND)
 		qdel(selfmob)
 	return W
@@ -289,7 +290,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
 	O.name = "alien"
@@ -323,7 +324,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
 	O.name = "alien queen"
@@ -427,7 +428,7 @@
 
 		if (src.mind)
 			if (shitty)
-				boutput(src, "<span style=\"color:blue\">You are being bombarded by energetic macho waves!</span>")
+				boutput(src, "<span class='notice'>You are being bombarded by energetic macho waves!</span>")
 				src.mind.transfer_to(W)
 				W.mind.special_role = "faustian macho man"
 				ticker.mode.Agimmicks.Add(W)
@@ -470,10 +471,10 @@
 					) //they can keep macho heal
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
-			boutput(W, "<span style=\"color:blue\">You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
+			boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
 
 		else
-			boutput(W, "<span style=\"color:blue\">You are now a macho man!</span>")
+			boutput(W, "<span class='notice'>You are now a macho man!</span>")
 
 		return W
 	return 0
@@ -592,7 +593,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	// get the mind
@@ -621,7 +622,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='text-red'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
 		if (alert(src, "Are you sure you want to respawn as an animal? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
@@ -676,12 +677,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!(src.client.player.mentor || src.client.holder))
-		boutput(src, "<span class='text-red'>You aren't even a mentor, how did you get here?!</span>")
+		boutput(src, "<span class='alert'>You aren't even a mentor, how did you get here?!</span>")
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	// get the mind
@@ -711,7 +712,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		else
 			time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='text-red'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
 		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
@@ -722,7 +723,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		// you can be an animal
 		var/turf/spawnpoint = get_turf(src)
 		if(spawnpoint.density)
-			boutput(src, "<span class='text-red'>The wall is in the way.</span>")
+			boutput(src, "<span class='alert'>The wall is in the way.</span>")
 			return
 		// be critter
 
@@ -750,12 +751,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!src.client.holder)
-		boutput(src, "<span class='text-red'>You aren't even an admin, how did you get here?!</span>")
+		boutput(src, "<span class='alert'>You aren't even an admin, how did you get here?!</span>")
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	if (alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", "Yes", "No") != "Yes")
@@ -857,8 +858,13 @@ var/respawn_arena_enabled = 0
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 
-	var/mob/living/carbon/human/newbody = new()
 	if (!src.client) return //ZeWaka: fix for null.preferences
+
+	if(!src.client || !src.client.player || ON_COOLDOWN(src.client.player, "ass day arena", 2 MINUTES))
+		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
+		return
+
+	var/mob/living/carbon/human/newbody = new()
 	src.client.preferences.copy_to(newbody,src,1)
 	newbody.real_name = src.real_name
 
@@ -951,6 +957,6 @@ var/respawn_arena_enabled = 0
 		boutput(O, "<span class='bold'>Your loyalty is to the flock and to the flockmind. Spread drones, convert the station, aid in the construction of the Relay.</span>")
 		boutput(O, "<span class='bold'>In this form, you cannot be harmed, but you can't do anything to the world at large.</span>")
 		boutput(O, "<span class='italic'>Tip: click-drag yourself onto unoccupied drones to take direct control of them.</span>")
-		boutput(O, "<span class='text-blue'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
+		boutput(O, "<span class='notice'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
 		return O
 	return null

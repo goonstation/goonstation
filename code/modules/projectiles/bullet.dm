@@ -50,9 +50,10 @@ toxic - poisons
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
 //Any special things when it hits shit?
-	on_hit(atom/hit, direction, projectile)
+	on_hit(atom/hit, direction, obj/projectile/P)
 		if (ishuman(hit) && src.hit_type)
 			take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
+			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		..()//uh, what the fuck, call your parent
 		//return // BULLETS CANNOT BLEED, HAINE
 
@@ -67,6 +68,12 @@ toxic - poisons
 	caliber = 0.22
 	icon_turf_hit = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
+
+/datum/projectile/bullet/bullet_22/HP
+	power = 35
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_22HP
 
 /datum/projectile/bullet/bullet_9mm
 	name = "bullet"
@@ -148,6 +155,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 6
 	ks_ratio = 0.9
+	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 36
@@ -155,6 +163,14 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
+
+	on_hit(atom/hit)
+		..()
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
+				M.changeStatus("slowed", 1 SECOND, optional = 2)
+
 
 /datum/projectile/bullet/nine_mm_NATO/burst
 	shot_number = 3
@@ -188,9 +204,7 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
-		impact_image_effect("K", hit)
+		..()
 
 /datum/projectile/bullet/rifle_762_NATO //like .308 but military
 	name = "bullet"
@@ -219,9 +233,7 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
-
+		..()
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
 	power = 10
@@ -283,13 +295,14 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 100
+	power = 120
 	dissipation_delay = 1
-	dissipation_rate = 25
+	dissipation_rate = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.5
+	ks_ratio = 0.66
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
@@ -297,11 +310,7 @@ toxic - poisons
 	on_hit(atom/hit)
 		if(ismob(hit) && hasvar(hit, "stunned"))
 			hit:stunned += 5
-		if (ishuman(hit))
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
-				impact_image_effect("K", hit)
-		return
+		..()
 
 /datum/projectile/bullet/a12
 	name = "buckshot"
@@ -309,7 +318,7 @@ toxic - poisons
 	power = 70
 	ks_ratio = 1.0
 	dissipation_delay = 3//2
-	dissipation_rate = 20
+	dissipation_rate = 15
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72 // roughly
@@ -320,23 +329,21 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			if(proj.power > 30)
-#ifdef USE_STAMINA_DISORIENT
+			if(proj.power >= 30)
 				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
-#else
-				M.changeStatus("stunned", 50)
-				M.changeStatus("weakened", 5 SECONDS)
-#endif
-			if(proj.power > 70)
+
+			if(proj.power >= 40)
+				var/throw_range = (proj.power > 50) ? 6 : 3
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
-					M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
+					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+					M.update_canmove()
+			..()
 
 	weak
 		power = 30
+
 
 /datum/projectile/bullet/airzooka
 	name = "airburst"
@@ -345,8 +352,8 @@ toxic - poisons
 	ks_ratio = 1.0
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
-	dissipation_delay = 6
-	dissipation_rate = 5
+	dissipation_delay = 15
+	dissipation_rate = 2
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	icon_turf_hit = "bhole"
@@ -370,9 +377,9 @@ toxic - poisons
 	power = 15
 	ks_ratio = 1.0
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "crescent_white"
-	dissipation_delay = 6
-	dissipation_rate = 5
+	icon_state = "40mmgatling"
+	dissipation_delay = 15
+	dissipation_rate = 4
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	icon_turf_hit = "bhole"
@@ -381,12 +388,12 @@ toxic - poisons
 	cost = 2
 
 	on_hit(atom/hit, dirflag)
+		fireflash(get_turf(hit), 1)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
 			SPAWN_DBG(0)
 				if(!M.stat) M.emote("scream")
-				fireflash(get_turf(M), 2)
 				M.do_disorient(15, weakened = 25)
 				M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
@@ -408,8 +415,8 @@ toxic - poisons
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 1)
 
-	lawgiver
-		name = "lawgiver"
+	lawbringer
+		name = "lawbringer"
 		power = 1
 		cost = 150
 
@@ -441,6 +448,7 @@ toxic - poisons
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
@@ -472,6 +480,7 @@ toxic - poisons
 					M.changeStatus("weakened", 2 SECONDS)
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/minigun
 	name = "bullet"
@@ -510,10 +519,11 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 	var/slow = 1
 
-	on_hit(atom/hit, dirflag)
+	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS, optional = 8)
+			M.changeStatus("slowed", 0.5 SECONDS)
+			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
 	power = 1
@@ -605,9 +615,10 @@ toxic - poisons
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/shotgun_orange
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
 			fireflash(get_turf(hit), 0)
+			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		else if (isturf(hit))
 			fireflash(hit, 0)
 		else
@@ -648,6 +659,16 @@ toxic - poisons
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
 
+	knocker
+		name = "breaching round"
+		power = 10
+		on_hit(atom/hit)
+			if(istype(hit , /obj/machinery/door))
+				var/obj/machinery/door/D = hit
+				if(!D.cant_emag)
+					D.take_damage(D.health/2) //fuck up doors without needing ex_act(1)
+			explosion_new(null, get_turf(hit), 4, 1.75)
+
 	plasma_orb
 		name = "fusion orb"
 		damage_type = D_BURNING
@@ -674,9 +695,26 @@ toxic - poisons
 
 	seeker
 		name = "drone-seeking grenade"
+		power = 50 //even if they don't explode, you FEEL this one
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
+		on_hit(atom/hit, angle, var/obj/projectile/P)
+#if ASS_JAM
+			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
+#else
+			if (P.data || prob(10))
+#endif
+				..()
+			else
+				new /obj/effects/rendersparks(hit.loc)
+				if(ishuman(hit))//copypasted shamelessly from singbuster rockets
+					var/mob/living/carbon/human/M = hit
+					boutput(M, "<span class='alert'>You are struck by an autocannon round! Thankfully it was not armed.</span>")
+					M.do_disorient(stunned = 40)
+					if (!M.stat)
+						M.emote("scream")
+
 
 		on_launch(var/obj/projectile/P)
 			var/D = locate(type_to_seek) in range(15, P)
@@ -774,13 +812,13 @@ toxic - poisons
 			for (var/mob/living/carbon/human/M in view(hit, 2))
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				if (M.get_ranged_protection()>=1.5)
-					boutput(M, "<span style=\"color:red\">Your armor blocks the shrapnel!</span>")
+					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 					implanted.owner = M
 					M.implant += implanted
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
+					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 					if (!M.stat)
 						M.emote("scream")
 
@@ -977,6 +1015,16 @@ toxic - poisons
 	dissipation_delay = 3
 	damage_type = D_KINETIC
 
+/datum/projectile/bullet/nails
+	name = "nails"
+	sname = "nails"
+	icon_state = "trace"
+	power = 4
+	dissipation_rate = 3
+	dissipation_delay = 4
+	damage_type = D_SLASHING
+	casing = /obj/item/casing/shotgun_gray
+
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0
@@ -1109,8 +1157,7 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
-			if (src.hit_type)
-				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
+		..()
 
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
@@ -1138,7 +1185,7 @@ toxic - poisons
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
-				boutput(M, "<span style=\"color:red\">You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
 				M.do_disorient(stunned = 40)
 				if (!M.stat)
 					M.emote("scream")
@@ -1174,7 +1221,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
-
+				JOB_XP(H, "Clown", 1)
 		return
 
 /datum/projectile/bullet/mininuke //Assday only.
@@ -1200,28 +1247,3 @@ toxic - poisons
 			explosion_new(null, T, 300, 1)
 		return
 
-
-/datum/projectile/bullet/gun //shoot guns
-	name = "gun"
-	power = 20 //20 damage from getting beaned with a gun idk
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	shot_sound = 'sound/weapons/rocket.ogg'
-	icon_state = "gun"
-	implanted= null
-	casing = null
-	icon_turf_hit = null
-	var/already_gun_made = 0 //has a gun already been made?
-
-	on_launch(obj/projectile/O) //we only want 1 gun per fire
-		already_gun_made = 0
-
-	on_hit(atom/hit)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(hit))
-			already_gun_made = 1
-
-	on_end(obj/projectile/O)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(O))
-			already_gun_made = 1

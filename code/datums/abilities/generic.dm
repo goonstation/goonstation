@@ -75,6 +75,7 @@
 
 		if (istype(M.buckled,/obj/stool/chair))
 			var/obj/stool/chair/C = M.buckled
+			M.buckled.unbuckle()
 			C.buckledIn = 0
 			C.buckled_guy = 0
 		M.pixel_y = 0
@@ -132,7 +133,7 @@
 					M.changeStatus("weakened", 7 SECONDS * effect_mult)
 					M.force_laydown_standup()
 			else if (M.traitHolder.hasTrait("training_security")) //consider rremoving this, prrobably not necessarry any more
-				M.visible_message("<span style=\"color:red\"><B>[src]</B></span> does a flying flip into <span style=\"color:red\">[M]</span>, but <span style=\"color:red\">[M]</span> skillfully slings them away!")
+				M.visible_message("<span class='alert'><B>[src]</B></span> does a flying flip into <span class='alert'>[M]</span>, but <span class='alert'>[M]</span> skillfully slings them away!")
 				src.changeStatus("weakened", 6 SECONDS)
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				src.throw_at(target, 3, 10)

@@ -97,7 +97,6 @@
 			//src:cameraFollow = null
 			src.tracker.cease_track()
 			src:current = null
-			src:machine = null
 
 		src.updatehealth()
 
@@ -142,7 +141,7 @@
 							SPAWN_DBG(5 SECONDS)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
 									src.death_timer -= 1
-									sleep(50)
+									sleep(5 SECONDS)
 							*/
 
 		src.check_power()
@@ -255,7 +254,7 @@
 
 	return_mainframe()
 		if(!isAI(src.mainframe) || !src.mind)
-			boutput(src, "<span style=\"color:red\">--Host System Error</span>")
+			boutput(src, "<span class='alert'>--Host System Error</span>")
 			return 1
 
 		src.mind.transfer_to(src.mainframe)

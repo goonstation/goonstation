@@ -29,7 +29,7 @@
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		if(istype(hit, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = hit
-			boutput(H, "<span style=\"color:red\"><B>You catch the kiss and save it for later.</B></span>")
+			boutput(H, "<span class='alert'><B>You catch the kiss and save it for later.</B></span>")
 
 /datum/projectile/special/acid
 	name = "acid"
@@ -131,6 +131,7 @@
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
 
@@ -141,6 +142,18 @@
 	on_hit(var/atom/A,var/obj/projectile/P)
 		if(split_type == 1)
 			split(P)
+
+	on_pointblank(obj/projectile/O, mob/target)
+		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
+			return
+		var/datum/projectile/F = new spread_projectile_type()
+		var/turf/PT = get_turf(O)
+		var/pellets = pellets_to_fire
+		while (pellets > 0)
+			pellets--
+			var/obj/projectile/FC = initialize_projectile(PT, F, O.xo, O.yo, O.shooter)
+			hit_with_existing_projectile(FC, target)
+
 
 	proc/new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		return
@@ -190,6 +203,17 @@
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.dissipation_ticker = rand(0,dissipation_variance)
 		FC.launch()
+
+/datum/projectile/special/spreader/buckshot_burst/nails
+	name = "nails"
+	sname = "nails"
+	cost = 1
+	pellets_to_fire = 8
+	spread_projectile_type = /datum/projectile/bullet/nails
+	casing = /obj/item/casing/shotgun_gray
+	spread_angle_variance = 10
+	damage_type = D_SPECIAL
+	power = 32
 
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
@@ -495,7 +519,7 @@
 
 				var/setangle = 0
 				if (face_desired_dir)
-					setangle = atan2(desired_y,desired_x)
+					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
 				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
@@ -710,17 +734,16 @@
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	shot_number = 0
 	cost = 37.5
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/energy_bolt/tasershotgun
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	var/spread_angle = 30
+	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
@@ -729,10 +752,6 @@
 		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
-
-	on_hit(atom/A, angle, obj/projectile/P)
-		if(isliving(A))
-			stun_bullet_hit(P,A)
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
@@ -780,13 +799,71 @@
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
-	on_pointblank(var/obj/projectile/O, var/mob/target)
-		if (!O)
-			return
-		if (!target)
-			return
-		var/turf/T = get_turf(target)
-		if(T)
-			for(var/i=0, i < 4, i++)
-				throw_egg(T)
-		return
+/datum/projectile/special/spawner //shoot stuff
+	name = "dimensional pocket"
+	power = 1
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon_state = "bullet"
+	implanted= null
+	casing = null
+	icon_turf_hit = null
+	var/typetospawn = null
+	var/hasspawned = null
+
+	on_launch(obj/projectile/O)
+		hasspawned = null
+
+	on_hit(atom/hit, direction, projectile)
+		if(ismob(hit)&&typetospawn)
+			hasspawned = new typetospawn(get_turf(hit))
+			return 1
+
+
+	on_end(obj/projectile/O)
+		if(!hasspawned && typetospawn)
+			hasspawned = new typetospawn(get_turf(O))
+			return 1
+
+/datum/projectile/special/spawner/gun //shoot guns
+	name = "gun"
+	power = 20 //20 damage from getting beaned with a gun idk
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon_state = "gun"
+	implanted= null
+	casing = null
+	icon_turf_hit = null
+	typetospawn = /obj/item/gun/kinetic/derringer
+
+/datum/projectile/special/spawner/beepsky
+	name = "Beepsky"
+	window_pass = 0
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "secbot1"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 5
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1.0
+	caliber = 2
+	icon_turf_hit = "secbot1-spaz"
+	implanted = null
+	typetospawn = /obj/machinery/bot/secbot
+
+	on_hit(atom/hit)
+		if(..())
+			var/mob/hitguy = hit
+			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			var/obj/machinery/bot/secbot/beepsky = hasspawned
+			beepsky.emagged = 1
+			if(istype(hitguy, /mob/living/carbon))
+				beepsky.target = hitguy
+
+	on_end(obj/projectile/O)
+		if(..())
+			var/obj/machinery/bot/secbot/beepsky = hasspawned
+			beepsky.emagged = 1

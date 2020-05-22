@@ -227,7 +227,7 @@
 				traitor.current.unequip_all(1)
 
 				if (wizardstart.len == 0)
-					boutput(traitor.current, "<B><span style=\"color:red\">A starting location for you could not be found, please report this bug!</span></B>")
+					boutput(traitor.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 				else
 					var/starting_loc = pick(wizardstart)
 					traitor.current.set_loc(starting_loc)

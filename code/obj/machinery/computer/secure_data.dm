@@ -29,7 +29,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -43,7 +43,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
@@ -114,7 +114,7 @@
 	if (!( data_core.security.Find(src.active2) ))
 		src.active2 = null
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr) || isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["temp"])
 			src.temp = null
 		if (href_list["scan"])
@@ -367,7 +367,7 @@
 																if (href_list["new_r"])
 																	var/datum/data/record/G = new /datum/data/record(  )
 																	G.fields["name"] = "New Record"
-																	G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+																	G.fields["id"] = num2hex(rand(1, 1.6777215E7), 6)
 																	G.fields["rank"] = "Unassigned"
 																	G.fields["sex"] = "Male"
 																	G.fields["age"] = "Unknown"
@@ -460,7 +460,7 @@
 																						if (href_list["print_p"])
 																							if (!( src.printing ))
 																								src.printing = 1
-																								sleep(50)
+																								sleep(5 SECONDS)
 																								var/obj/item/paper/P = new /obj/item/paper( src.loc )
 																								P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 																								if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))

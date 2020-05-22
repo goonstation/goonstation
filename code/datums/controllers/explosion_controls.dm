@@ -42,10 +42,6 @@ var/datum/explosion_controller/explosions
 		var/p
 		var/last_touched
 
-
-
-		var/iteration = 0
-
 		for (var/turf/T in queued_turfs)
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
@@ -55,21 +51,14 @@ var/datum/explosion_controller/explosions
 					A.ex_act(1, last_touched, p)
 					if (istype(A, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
-					//LAGCHECK(LAG_REALTIME)
 			else if (p >= 3)
 				for (var/atom/A as obj|mob in T)
 					A.ex_act(2, last_touched, p)
 					if (istype(A, /obj/cable))
 						needrebuild = 1
-					//LAGCHECK(LAG_REALTIME)
 			else
 				for (var/atom/A as obj|mob in T)
 					A.ex_act(3, last_touched, p)
-					//LAGCHECK(LAG_REALTIME)
-
-			iteration++
-			if((iteration % 100) == 0)
-				LAGCHECK(LAG_REALTIME)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
 		for (var/turf/T in queued_turfs)

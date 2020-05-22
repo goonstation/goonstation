@@ -579,3 +579,8 @@
 
 /datum/proc/AdminAddComponent(...)
 	_AddComponent(args)
+
+//for being appended to tooltips.    //Never iterate over all components on an item when making a tooltip, at least until someone refactors my code -Tarmunora
+/datum/component/proc/getTooltipDesc()
+	SHOULD_CALL_PARENT(1)
+	return list()

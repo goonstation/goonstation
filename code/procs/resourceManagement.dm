@@ -82,7 +82,7 @@
 	admin_only
 
 	disableResourceCache = !disableResourceCache
-	boutput(usr, "<span style=\"color:blue\">Toggled the resource cache [disableResourceCache ? "off" : "on"]</span>")
+	boutput(usr, "<span class='notice'>Toggled the resource cache [disableResourceCache ? "off" : "on"]</span>")
 	logTheThing("admin", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
 	logTheThing("diary", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
 	message_admins("[key_name(usr)] toggled the resource cache [disableResourceCache ? "off" : "on"]")
@@ -171,7 +171,7 @@
 //A thing for coders locally testing to use (as they might be offline = can't reach the CDN)
 /client/proc/loadResources()
 	if (cdn || src.resourcesLoaded) return 0
-	boutput(src, "<span style='color: blue;'><b>Resources are now loading, browser windows will open normally when complete.</b></span>")
+	boutput(src, "<span class='notice'><b>Resources are now loading, browser windows will open normally when complete.</b></span>")
 
 	src.loadResourcesFromList(localResources)
 

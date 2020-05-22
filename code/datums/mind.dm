@@ -33,13 +33,10 @@ datum/mind
 	var/list/blob_absorb_victims = list()
 	var/list/spy_stolen_items = list()
 
-	var/welder_knife = null
 	var/datum/gang/gang = null //Associate a leader with their gang.
 
 	//Ability holders.
 	var/datum/abilityHolder/changeling/is_changeling = 0
-	var/datum/abilityHolder/wizard/is_wizard = 0
-	var/datum/abilityHolder/vampire/is_vampire = 0
 
 	var/list/intrinsic_verbs = list()
 
@@ -69,7 +66,7 @@ datum/mind
 	var/damned = 0 // If 1, they go to hell when are die
 
 	// Capture when they die. Used in the round-end credits
-	var/icon/death_icon = null
+	//var/icon/death_icon = null
 
 	New(mob/M)
 		..()

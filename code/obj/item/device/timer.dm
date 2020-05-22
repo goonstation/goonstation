@@ -62,19 +62,10 @@
 		last_tick = world.time
 
 		if (!src.master)
-			if (ismob(src.loc))
-				attack_self(src.loc)
-			else
-				for(var/mob/M in viewers(1, src))
-					if (M.client && (M.machine == src.master || M.machine == src))
-						src.attack_self(M)
+			src.updateDialog()
 		else
-			if (ismob(src.master.loc))
-				src.attack_self(src.master.loc)
-			else
-				for(var/mob/M in viewers(1, src.master))
-					if (M.client && (M.machine == src.master || M.machine == src))
-						src.attack_self(M)
+			src.master.updateDialog()
+
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.
 		src.c_state(0)
@@ -111,7 +102,7 @@
 		return
 
 	if ((src in user) || (src.master && (src.master in user)) || (get_dist(src, user) <= 1 && istype(src.loc, /turf)) || src.is_detonator_trigger())
-		user.machine = src
+		src.add_dialog(user)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
 		var/detonator_trigger = src.is_detonator_trigger()
@@ -123,7 +114,7 @@
 		onclose(user, "timer")
 	else
 		user.Browse(null, "window=timer")
-		user.machine = null
+		src.remove_dialog(user)
 
 	return
 
@@ -140,7 +131,7 @@
 		return
 	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
 	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_range(src, usr) && istype(src.loc, /turf))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
 			if(timing)
@@ -171,25 +162,14 @@
 
 		if (href_list["close"])
 			usr.Browse(null, "window=timer")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 
 		if (!src.master)
-			if (ismob(src.loc))
-				attack_self(src.loc)
-			else
-				for(var/mob/M in viewers(1, src))
-					if (M.client && (M.machine == src.master || M.machine == src))
-						src.attack_self(M)
+			src.updateDialog()
 		else
-			if (can_use_detonator)
-				src.attack_self(usr)
-			if (ismob(src.master.loc))
-				src.attack_self(src.master.loc)
-			else
-				for(var/mob/M in viewers(1, src.master))
-					if (M.client && (M.machine == src.master || M.machine == src))
-						src.attack_self(M)
+			src.master.updateDialog()
+
 		src.add_fingerprint(usr)
 	else
 		usr.Browse(null, "window=timer")

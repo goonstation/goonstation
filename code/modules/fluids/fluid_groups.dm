@@ -123,8 +123,9 @@
 		can_update = 0
 
 		for (var/fluid in src.members)
-			var/obj/fluid/M = fluid
-			M.group = 0
+			if(fluid)
+				var/obj/fluid/M = fluid
+				M.group = 0
 
 		//if (src in processing_fluid_groups)
 		//	processing_fluid_groups.Remove(src)
@@ -200,7 +201,6 @@
 		//	contained_amt = src.reagents.total_volume
 		//	amt_per_tile = contained_amt
 
-		LAGCHECK(LAG_HIGH)
 		if (!guarantee_is_member)
 			if (!members.len || !(F in members))
 				members += F
@@ -415,6 +415,9 @@
 		if (!(src in processing_fluid_spreads))
 			processing_fluid_spreads.Add(src)
 
+	proc/update_required_to_spread()
+		return
+
 	proc/update_once(force = 0) //this would be called every time the fluid.dm process procs.
 		if (src.qdeled || !can_update) return 1
 		if (!members || !members.len)
@@ -424,7 +427,7 @@
 		var/fluids_to_create = 0 //try to create X amount of new tiles (based on how much fluid and tiles we currently hold)
 
 		src.update_viscosity()
-
+		src.update_required_to_spread()
 		if (SPREAD_CHECK(src) || force)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return 1
@@ -526,6 +529,9 @@
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		fluid_ma.color = targetcolor
+		fluid_ma.alpha = targetalpha
+
 		for(var/fluid in src.members)
 			var/obj/fluid/F = fluid
 			if (!F || F.pooled || src.qdeled) continue
@@ -533,27 +539,24 @@
 			//Same shit here with update_icon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			F.name = src.master_reagent_name //maybe obscure later?
+			fluid_ma.name = src.master_reagent_name //maybe obscure later?
 
 			F.finalalpha = targetalpha
 			F.finalcolor = targetcolor
-
-			F.color = F.finalcolor
-			F.alpha = F.finalalpha
 
 
 			if (F.do_iconstate_updates)
 				last_icon = F.icon_state
 
 				if (F.last_spread_was_blocked || (src.amt_per_tile > src.required_to_spread))
-					F.icon_state = "15"
+					fluid_ma.icon_state = "15"
 				else
 					var/dirs = 0
 					for (var/dir in cardinal)
 						var/turf/simulated/T = get_step(F, dir)
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
-					F.icon_state = num2text(dirs)
+					fluid_ma.icon_state = num2text(dirs)
 
 					if (F.overlay_refs && F.overlay_refs.len)
 						if (F)
@@ -561,13 +564,17 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
+			else
+				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			F.opacity = master_opacity
+			UNLINT(fluid_ma.opacity = master_opacity) //TODO: ZeWaka: Stop unlinting this when DreamChecker +1.4 comes out
+
+			F.appearance = fluid_ma
 
 
 		src.last_contained_amt = src.contained_amt
@@ -610,7 +617,7 @@
 					.+= C
 					created++
 
-				if ((members.len + created)<=0) //this can happen somehow
+				if ((members?.len + created)<=0) //this can happen somehow
 					continue
 
 				amt_per_tile = contained_amt / (members.len + created)

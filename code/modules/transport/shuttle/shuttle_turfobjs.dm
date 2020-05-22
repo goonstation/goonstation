@@ -111,14 +111,14 @@
 	mouse_opacity = 0
 
 	examine()
-		return
+		return list()
 
 
 /obj/indestructible/invisible_block/opaque
 	opacity = 1
 
 	examine()
-		return
+		return list()
 
 
 /turf/simulated/shuttle/wall/cockpit
