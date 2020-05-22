@@ -555,8 +555,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
@@ -569,8 +569,8 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
