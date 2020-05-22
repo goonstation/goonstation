@@ -26,7 +26,6 @@
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	var/allow_unbuckle = 1
-	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
 	var/securable = 0
 	var/list/scoot_sounds = null
@@ -81,23 +80,25 @@
 		else
 			return ..()
 
-	proc/can_buckle(var/mob/M, var/mob/user)
-		.= 0
+	can_buckle(mob/M, mob/user)
+		return FALSE
 
-	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
-		if (!can_buckle(to_buckle,user)) return
+	buckle_mob(mob/M, mob/user)
+		. = ..()
+		M.setStatus("buckled", duration = INFINITE_STATUS)
+		src.add_fingerprint(user)
 
-		if (to_buckle == user)
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
+	unbuckle_mob(mob/M, mob/user)
+		..()
+		if (buckled_mob == M)
+			spawn(0)
+			M.end_chair_flip_targeting()
+
+	mob_buckled(mob/M, mob/user)
+		if (M == user)
+			user.visible_message("<span class='notice'><b>[M]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 		else
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
-
-		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		return
-
-	proc/unbuckle() //Ditto but for unbuckling
-		if (src.buckled_guy)
-			src.buckled_guy.end_chair_flip_targeting()
+			user.visible_message("<span class='notice'><b>[M]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
 
 	proc/toggle_secure(mob/user as mob)
 		if (user)
@@ -275,9 +276,9 @@
 
 	Move()
 		. = ..()
-		if (. && src.buckled_guy)
-			var/mob/living/carbon/C = src.buckled_guy
-			C.buckled = null
+		if (. && src.buckled_mob)
+			var/mob/living/carbon/C = src.buckled_mob
+			C.buckled = null // This is some ugly hack, leaving it be for now.
 			C.Move(src.loc)
 			C.buckled = src
 
@@ -296,78 +297,56 @@
 		if (src.Sheet)
 			src.untuck_sheet(user)
 		for (var/mob/M in src.loc)
-			src.unbuckle_mob(M, user)
+			src.unbuckle(M, user)
 		return
 
 	can_buckle(var/mob/living/carbon/C, var/mob/user)
 		if (!C || (C.loc != src.loc))
-			return 0// yeesh
-
+			return FALSE// yeesh
+		if (!allow_unbuckle)
+			user.show_text("Seems like the buckle is firmly locked into place.", "red")
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
-			return 0
-
-		if(src.buckled_guy && src.buckled_guy.buckled == src)
+			return FALSE
+		if(src.buckled_mob && src.buckled_mob.buckled == src)
 			user.show_text("There's already someone buckled in [src]!", "red")
-			return 0
-
+			return FALSE
 		if (!ticker)
 			user.show_text("You can't buckle anyone in before the game starts.", "red")
-			return 0
+			return FALSE
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
-			return 0
+			return FALSE
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
-			return 0
-		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
-			return 0
+			return FALSE
+		if (!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")))
+			return FALSE
+		return TRUE
 
-		return 1
-
-	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
-		if (M.buckled && !user.restrained())
-			if (allow_unbuckle)
-				if (M != user)
-					user.visible_message("<span class='notice'><b>[M]</b> is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
-				else
-					user.visible_message("<span class='notice'><b>[M]</b> unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
-				unbuckle()
-			else
-				user.show_text("Seems like the buckle is firmly locked into place.", "red")
-
-			src.add_fingerprint(user)
-
-	buckle_in(mob/living/to_buckle, mob/living/user)
-		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			return
-		if (!can_buckle(to_buckle,user))
-			return
-
-		if (to_buckle == user)
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
-		else
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
-
-		to_buckle.lying = 1
+	buckle_mob(mob/M)
+		. = ..()
+		M.lying = 1
+		M.set_loc(src.loc)
+		M.set_clothing_icon_dirty()
 		if (src.anchored)
-			to_buckle.anchored = 1
-		to_buckle.buckled = src
-		src.buckled_guy = to_buckle
-		to_buckle.set_loc(src.loc)
+			M.anchored = 1
 
-		to_buckle.set_clothing_icon_dirty()
+	mob_buckled(mob/M, mob/user)
+		if (M == user)
+			user.visible_message("<span class='notice'><b>[M]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
+		else
+			user.visible_message("<span class='notice'><b>[M]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 
-	unbuckle()
-		..()
-		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			buckled_guy.anchored = 0
-			buckled_guy.buckled = null
-			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+	mob_unbuckled(mob/M)
+		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+
+	unbuckle_mob(mob/M)
+		if (buckled_mob && buckled_mob == M)
+			..()
+			M.force_laydown_standup()
+			M.anchored = 0
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newSheet as obj, var/mob/user as mob)
 		if (!newSheet || newSheet.cape || (src.Sheet == newSheet && newSheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -390,8 +369,8 @@
 			mutual_attach(src, newSheet)
 
 			var/mob/somebody
-			if (src.buckled_guy)
-				somebody = src.buckled_guy
+			if (src.buckled_mob)
+				somebody = src.buckled_mob
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody && somebody.lying)
@@ -413,8 +392,8 @@
 
 		if (user)
 			var/mob/somebody
-			if (src.buckled_guy)
-				somebody = src.buckled_guy
+			if (src.buckled_mob)
+				somebody = src.buckled_mob
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody && somebody.lying)
@@ -444,7 +423,7 @@
 				return
 
 		else if (ismob(A))
-			src.buckle_in(A, user)
+			src.buckle(A, user)
 			var/mob/M = A
 			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/area = get_area(M)
@@ -455,12 +434,6 @@
 			return ..()
 
 	disposing()
-		for (var/mob/M in src.loc)
-			if (M.buckled == src)
-				M.buckled = null
-				src.buckled_guy = null
-				M.lying = 0
-				M.anchored = 0
 		if (src.Sheet && src.Sheet.Bed == src)
 			src.Sheet.Bed = null
 			src.Sheet = null
@@ -497,7 +470,6 @@
 	desc = "A four-legged metal chair, rigid and slightly uncomfortable. Helpful when you don't want to use your legs at the moment."
 	icon_state = "chair"
 	var/comfort_value = 3
-	var/buckledIn = 0
 	var/status = 0
 	var/rotatable = 1
 	var/foldable = 1
@@ -525,8 +497,8 @@
 			else
 				src.layer = OBJ_LAYER
 
-			if (src.buckled_guy)
-				var/mob/living/carbon/C = src.buckled_guy
+			if (src.buckled_mob)
+				var/mob/living/carbon/C = src.buckled_mob
 				C.buckled = null
 				C.Move(src.loc)
 				C.buckled = src
@@ -593,7 +565,7 @@
 					user.show_text("Seems like the buckle is firmly locked into place.", "red")
 					return
 
-		if (!src.buckledIn)
+		if (!src.buckled_mob)
 			if (src.foldable)
 				user.visible_message("<b>[user.name] folds [src].</b>")
 				if ((chump) && (chump != user))
@@ -623,13 +595,13 @@
 		if (M == usr)
 			if (usr.a_intent == INTENT_GRAB)
 				if(climbable)
-					buckle_in(M, user, 1)
+					buckle(M, user, 1)
 				else
 					boutput(user, "<span class='alert'>[src] isn't climbable.</span>")
 			else
-				buckle_in(M,user)
+				buckle(M,user)
 		else
-			buckle_in(M,user)
+			buckle(M,user)
 			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/A = get_area(M)
 				if (istype(A))
@@ -642,87 +614,48 @@
 		..()
 
 	can_buckle(var/mob/M, var/mob/user)
-		if (!ticker)
-			boutput(user, "You can't buckle anyone in before the game starts.")
-			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
-			return 0
-		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
+		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+			return FALSE
+		if(src.buckled_mob && src.buckled_mob.buckled == src && src.buckled_mob != M)
 			user.show_text("There's already someone buckled in [src]!", "red")
-			return 0
-		return 1
+			return FALSE
+		if(M.buckled && M.buckled != src)
+			return M.buckled.can_unbuckle(M, user)
+		return TRUE
 
-	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
-		if(!istype(to_buckle)) return
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
-
-		if (!can_buckle(to_buckle,user))
-			return
-
-		if(stand)
-			if(ishuman(to_buckle))
-				user.visible_message("<span class='notice'><b>[to_buckle]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
-
-				var/mob/living/carbon/human/H = to_buckle
-				to_buckle.set_loc(src.loc)
-				to_buckle.pixel_y = 10
-				if (src.anchored)
-					to_buckle.anchored = 1
-				H.on_chair = src
-				to_buckle.buckled = src
-				src.buckled_guy = to_buckle
-				src.buckledIn = 1
-				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-				H.start_chair_flip_targeting()
-		else
-			if (to_buckle == usr)
-				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
-			else
-				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
-
+	buckle_mob(mob/living/carbon/human/H, mob/user)
+		. = ..()
+		if (istype(H))
 			if (src.anchored)
-				to_buckle.anchored = 1
-			to_buckle.buckled = src
-			src.buckled_guy = to_buckle
-			to_buckle.set_loc(src.loc)
-			src.buckledIn = 1
-			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+				H.anchored = 1
+			H.on_chair = src
+			H.start_chair_flip_targeting()
+		H.set_loc(src.loc)
+		H.pixel_y = 10
 
+	unbuckle_mob(mob/living/carbon/human/H, mob/user)
+		if (istype(H) && H.on_chair)
+			H.pixel_y = 0
+			H.anchored = 0
+		buckled_mob.force_laydown_standup()
+		return ..()
 
-	unbuckle()
-		..()
-		if(!src.buckled_guy) return
+	mob_buckled(mob/M, mob/user)
+		if (ishuman(M))
+			M.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
+		else
+			if (M == user)
+				user.visible_message("<span class='notice'><b>[M]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
+			else
+				user.visible_message("<span class='notice'><b>[M]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
+			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
-		var/mob/living/M = src.buckled_guy
-		var/mob/living/carbon/human/H = src.buckled_guy
-
-		M.end_chair_flip_targeting()
-
-		if (istype(H) && H.on_chair)// == 1)
-			M.pixel_y = 0
-			M.anchored = 0
-			M.buckled = null
-			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
-			SPAWN_DBG (5)
-				H.on_chair = 0
-				src.buckledIn = 0
-		else if ((M.buckled))
-			M.anchored = 0
-			M.buckled = null
-			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
-			SPAWN_DBG (5)
-				src.buckledIn = 0
-
+	mob_unbuckled(mob/M)
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 	ex_act(severity)
-		for (var/mob/M in src.loc)
-			if (M.buckled == src)
-				M.buckled = null
-				src.buckled_guy = null
+		if (buckled_mob)
+			unbuckle_mob(buckled_mob)
 		switch (severity)
 			if (1.0)
 				qdel(src)
@@ -739,19 +672,7 @@
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
-			for (var/mob/M in src.loc)
-				if (M.buckled == src)
-					M.buckled = null
-					src.buckled_guy = null
 			qdel(src)
-
-	disposing()
-		for (var/mob/M in src.loc)
-			if (M.buckled == src)
-				M.buckled = null
-				src.buckled_guy = null
-		..()
-		return
 
 	Click(location,control,params)
 		var/lpm = params2list(params)
@@ -776,8 +697,8 @@
 				src.layer = FLY_LAYER+1
 			else
 				src.layer = OBJ_LAYER
-			if (buckled_guy)
-				var/mob/living/carbon/C = src.buckled_guy
+			if (buckled_mob)
+				var/mob/living/carbon/C = src.buckled_mob
 				C.dir = dir
 		return
 
@@ -895,8 +816,8 @@
 		src.dir = turn(src.dir, 90)
 //		src.overl.dir = src.dir
 		src.update_icon()
-		if (buckled_guy)
-			var/mob/living/carbon/C = src.buckled_guy
+		if (buckled_mob)
+			var/mob/living/carbon/C = src.buckled_mob
 			C.dir = dir
 		return
 
@@ -993,10 +914,10 @@
 	proc/fall_over(var/turf/T)
 		if (src.lying)
 			return
-		if (src.buckled_guy)
-			var/mob/living/M = src.buckled_guy
+		if (src.buckled_mob)
+			var/mob/living/M = src.buckled_mob
 			src.unbuckle()
-			if (M && !src.buckled_guy)
+			if (M && !src.buckled_mob)
 				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
 				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
@@ -1024,15 +945,17 @@
 		else
 			return ..()
 
-	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
+	can_buckle(mob/living/to_buckle, mob/living/user)
 		if (src.lying)
-			return
-		..()
-		if (src.buckled_guy == to_buckle)
-			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+			return FALSE
+		return ..()
 
-	unbuckle()
-		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+	buckle_mob(mob/M, mob/user)
+		. = ..()
+		APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/wheelchair, src.type)
+
+	unbuckle_mob(mob/M, mob/user)
+		REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
 /* ======================================================= */
@@ -1152,7 +1075,7 @@
 
 	attack_hand(mob/user as mob)
 		if (!user) return
-		if (damaged || buckled_guy) return ..()
+		if (damaged || buckled_mob) return ..()
 
 		user.lastattacked = src
 
@@ -1323,9 +1246,9 @@
 		else if (href_list["lethal"])
 			toggle_lethal()
 		else if (href_list["shock"])
-			if (src.buckled_guy)
+			if (src.buckled_mob)
 				// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
-				logTheThing("combat", usr, src.buckled_guy, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking %target% at [log_loc(src)].")
+				logTheThing("combat", usr, src.buckled_mob, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking %target% at [log_loc(src)].")
 			shock(lethal)
 
 		src.control_interface(usr)
@@ -1397,8 +1320,8 @@
 			else
 				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
 
-		if (src.buckled_guy && ishuman(src.buckled_guy))
-			var/mob/living/carbon/human/H = src.buckled_guy
+		if (src.buckled_mob && ishuman(src.buckled_mob))
+			var/mob/living/carbon/human/H = src.buckled_mob
 
 			if (src.lethal)
 				var/net = src.get_connection() // Are we wired-powered (Convair880)?

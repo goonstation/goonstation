@@ -137,43 +137,49 @@
 	var/mob/living/con_user = null
 
 /obj/machinery/sim/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if (!ticker)
-		boutput(user, "You can't buckle anyone in before the game starts.")
-		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
-		return
-	if (M.buckled)	return
+	buckle(M, user)
 
-	if (M == usr)
+/obj/machinery/sim/chair/can_buckle(mob/living/carbon/C, mob/user)
+	if (( istype(C)  || get_dist(src, user) > 1 || C.loc != src.loc || user.restrained() || user.stat ) && ..())
+		return TRUE
+	return FALSE
+
+/obj/machinery/sim/chair/buckle_mob(mob/living/carbon/C, mob/user)
+	. = ..()
+	C.anchored = 1
+	C.set_loc(src.loc)
+	C.network_device = src
+	src.con_user = C
+	src.active = 1
+	Station_VNet.Enter_Vspace(C, C.network_device,C.network_device:network)
+	if (user)
+		src.add_fingerprint(user)
+
+/obj/machinery/sim/chair/unbuckle_mob(mob/living/carbon/C, mob/user)
+	C.anchored = 0
+	C.network_device = null
+	src.active = 0
+	src.con_user = null
+	if (user)
+		src.add_fingerprint(user)
+	return ..()
+
+/obj/machinery/sim/chair/mob_buckled(mob/M, mob/user)
+	if (M == user)
 		user.visible_message("<span class='notice'>[user] buckles in!</span>")
 	else
 		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
 
-	M.anchored = 1
-	M.buckled = src
-	M.set_loc(src.loc)
-	M.network_device = src
-	src.con_user = M
-	src.active = 1
-	Station_VNet.Enter_Vspace(M, M.network_device,M.network_device:network)
-	src.add_fingerprint(user)
-	return
+/obj/machinery/sim/chair/mob_unbuckled(mob/M, mob/user)
+	if (M != user)
+		M.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>")
+	else
+		M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
+
 
 /obj/machinery/sim/chair/attack_hand(mob/user as mob)
 	if (src.con_user)
-		var/mob/living/M = src.con_user
-		if (M != user)
-			M.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>")
-		else
-			M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
-
-		M.anchored = 0
-		M.buckled = null
-		M.network_device = null
-		src.active = 0
-		src.con_user = null
-		src.add_fingerprint(user)
-	return
+		unbuckle(src.con_user, user)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //A VR-Bed to replace the stupid chairs.

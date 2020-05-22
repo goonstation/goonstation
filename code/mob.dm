@@ -90,7 +90,7 @@
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null
-	var/obj/stool/buckled = null
+	var/obj/buckled = null
 	var/obj/item/handcuffs/handcuffs = null
 	var/obj/item/l_hand = null
 	var/obj/item/r_hand = null
@@ -299,6 +299,9 @@
 		bioHolder.owner = null
 		bioHolder = null
 
+	if (buckled)
+		buckled.unbuckle_mob(src)
+
 	for (var/datum/hud/H in huds)
 		for (var/obj/screen/hud/S in H.objects)
 			if (S:master == src)
@@ -335,7 +338,6 @@
 	internals = null
 	energy_shield = null
 	hallucinations = null
-	buckled = null
 	handcuffs = null
 	l_hand = null
 	r_hand = null
@@ -2356,7 +2358,8 @@
 	src.take_ear_damage(-INFINITY, 1)
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
-	src.buckled = null
+	if (src.buckled)
+		src.buckled.unbuckle_mob(src)
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp

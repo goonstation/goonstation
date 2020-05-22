@@ -442,10 +442,7 @@ obj/decal/fakeobjects/teleport_pad
 		return 1
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
-		if (can_buckle(M,user))
-			M.set_loc(src.loc)
-			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
-			buckle_in(M, user, 1)
+		buckle(M, user, 1)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)

@@ -419,8 +419,9 @@ var/global/debug_messages = 0
 		var/obj/S = locate(text("start*AI"))
 		if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
 			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
+			if (M.buckled)
+				M.buckled.unbuckle_mob(M)
 			M.set_loc(S.loc)
-			M.buckled = null
 		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
 		logTheThing("admin", src, M, "AIized %target%")
 		logTheThing("diary", src, M, "AIized %target%", "admin")

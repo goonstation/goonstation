@@ -178,11 +178,7 @@
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				if (src.affecting.buckled)
-					src.affecting.buckled.attack_hand(src.assailant)
-					src.affecting.force_laydown_standup() //safety because buckle code is a mess
-					if (src.affecting.targeting_ability == src.affecting.chair_flip_ability) //fuCKKK
-						src.affecting.end_chair_flip_targeting()
-					src.affecting.buckled = null
+					src.affecting.buckled.unbuckle_mob(src.affecting, src.assailant)
 
 				else if (user.is_hulk() || prob(75))
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on %target%")
@@ -295,7 +291,6 @@
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
 			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
-			H.update_canmove()
 
 		if (ishuman(src.affecting))
 			src.affecting:was_harmed(src.assailant)

@@ -1803,7 +1803,6 @@
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
 	APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
-	H.update_canmove()
 	H.dir = SOUTH
 	H.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
@@ -1829,6 +1828,5 @@
 		left_arm.loc = null
 		qdel(left_arm)
 		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
-		H.update_canmove()
 		H.dir_locked = FALSE
 		H.render_target = "\ref[H]"

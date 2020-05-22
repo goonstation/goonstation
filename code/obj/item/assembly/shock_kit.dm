@@ -55,7 +55,7 @@
 /obj/item/assembly/shock_kit/receive_signal()
 	if (src.master && istype(src.master, /obj/stool/chair/e_chair))
 		var/obj/stool/chair/e_chair/C = src.master
-		if (C.buckled_guy)
-			logTheThing("signalers", usr, C.buckled_guy, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking %target% at [log_loc(C)].") // Added (Convair880).
+		if (C.buckled_mob)
+			logTheThing("signalers", usr, C.buckled_mob, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking %target% at [log_loc(C)].") // Added (Convair880).
 		C.shock()
 	return

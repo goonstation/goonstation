@@ -152,7 +152,8 @@
 		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
-			M.buckled = next_conveyor
+			unbuckle_mob(M)
+			next_conveyor.buckle_mob(M)
 		if(!next_conveyor.operating)
 			walk(AM, 0)
 			return
@@ -162,13 +163,23 @@
 		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto the cold, hard floor.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Unbuckle
-			M.buckled = null
+			unbuckle_mob(M)
 			new /obj/item/cable_coil/cut(M.loc)
 		walk(AM, 0)
 
+/obj/machinery/conveyor/buckle_mob(mob/M, mob/user)
+	. = ..()
+	if (user)
+		src.add_fingerprint(user)
+	M.lying = 1
+	M.set_clothing_icon_dirty()
+
+/obj/machinery/conveyor/unbuckle_mob(mob/M, mob/user)
+	if (user)
+		src.add_fingerprint(user)
+	return ..()
 
 // attack with item, place item on conveyor
-
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/grab))	// special handling if grabbing a mob
 		var/obj/item/grab/G = I
@@ -188,11 +199,10 @@
 					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
-			M.buckled = src.loc
-			src.add_fingerprint(user)
+			buckle_mob(M, user)
+
 			I:use(1)
-			M.lying = 1
-			M.set_clothing_icon_dirty()
+
 			return
 
 			// else if no mob in loc, then allow coil to be placed
@@ -200,8 +210,7 @@
 	else if (issnippingtool(I))
 		var/mob/M = locate() in src.loc
 		if(M && M.buckled == src)
-			M.buckled = null
-			src.add_fingerprint(user)
+			unbuckle_mob(M)
 			if (M == user)
 				src.visible_message("<span class='notice'>[M] cuts \himself free from the conveyor.</span>")
 			else

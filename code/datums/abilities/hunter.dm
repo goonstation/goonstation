@@ -39,7 +39,8 @@
 		if (M.hasStatus("handcuffed"))
 			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
 			M.handcuffs.destroy_handcuffs(M)
-		M.buckled = null
+		if (M.buckled)
+			M.buckled.unbuckle_mob(M)
 
 		if (M.mutantrace)
 			qdel(M.mutantrace)

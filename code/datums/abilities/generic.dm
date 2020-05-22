@@ -73,14 +73,8 @@
 		extrarange = 0
 
 
-		if (istype(M.buckled,/obj/stool/chair))
-			var/obj/stool/chair/C = M.buckled
-			M.buckled.unbuckle()
-			C.buckledIn = 0
-			C.buckled_guy = 0
-		M.pixel_y = 0
-		M.buckled = null
-		M.anchored = 0
+		if (M.buckled)
+			M.buckled.unbuckle(M, M)
 
 		M.targeting_ability = null
 		M.update_cursor()
@@ -150,7 +144,13 @@
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
+/mob/throw_begin()
+	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+		src.force_laydown_standup()
+		APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "throwing")
+
 /mob/throw_end()
 	if (src.throwing & THROW_CHAIRFLIP)
 		src.changeStatus("weakened", 1.7 SECONDS)
 		src.force_laydown_standup()
+	REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "throwing")

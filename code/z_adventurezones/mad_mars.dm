@@ -509,7 +509,7 @@
 			C.show_message("<span class='combat'><B>[rider] is flung over the [src]'s handlebars!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
+		unbuckle_mob(rider)
 		rider = null
 
 		update()
@@ -520,7 +520,7 @@
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from the [src].", 1)
-	rider.buckled = null
+	unbuckle_mob(rider)
 	rider = null
 	update()
 	return
@@ -558,7 +558,7 @@
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	if(rider.restrained() || rider.stat)
-		rider.buckled = src
+		buckle_mob(rider)
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)

@@ -703,7 +703,7 @@
 		if (istype(A, /obj/stool/chair/comfy/wheelchair))
 			var/obj/stool/chair/comfy/wheelchair/W = A
 			if (!W.lying && prob(40))
-				if (W.buckled_guy && W.buckled_guy.m_intent == "walk")
+				if (W.buckled_mob && W.buckled_mob.m_intent == "walk")
 					return ..()
 				else
 					W.fall_over(src)

@@ -137,10 +137,8 @@
 			SPAWN_DBG(50 SECONDS)
 				if (src && !isdead(src))
 					src.suiciding = 0
-			src.pixel_y = 0
-			src.anchored = 0
-			src.on_chair = 0
-			src.buckled = null
+			if (src.buckled)
+				src.buckled.unbuckle_mob(src)
 			return
 		else if (istype(selection))
 			selection.suicide(src)

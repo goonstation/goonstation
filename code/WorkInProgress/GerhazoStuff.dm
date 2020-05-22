@@ -247,7 +247,6 @@
 				//if(!M.stat) M.emote("scream")
 				M.do_disorient(15, weakened = 10)
 				M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
-				M.update_canmove()
 
 /datum/targetable/cyalume_knight/push
 	name = "Push"

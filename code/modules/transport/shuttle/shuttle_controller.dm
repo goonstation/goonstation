@@ -230,9 +230,9 @@ datum/shuttle_controller
 								var/obj/stool/O = A
 								if( !O.anchored )
 									var/atom/target = get_edge_target_turf(O, pick(alldirs))
-									if( O.buckled_guy )
-										boutput( O.buckled_guy, "<span class='alert'>The [O] shoots off due to being unsecured!</span>" )
-										O.unbuckle()
+									if( O.buckled_mob )
+										boutput( O.buckled_mob, "<span class='alert'>The [O] shoots off due to being unsecured!</span>" )
+										O.unbuckle_mob(O.buckled_mob, O.buckled_mob)
 									if( target )
 										SPAWN_DBG(0)
 											O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this

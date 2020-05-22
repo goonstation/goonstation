@@ -1011,6 +1011,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\airbridge.dm"
 #include "code\obj\blob.dm"
 #include "code\obj\bookcase.dm"
+#include "code\obj\buckling.dm"
 #include "code\obj\cement.dm"
 #include "code\obj\construction_frame.dm"
 #include "code\obj\deathbutton.dm"

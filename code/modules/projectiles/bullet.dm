@@ -338,7 +338,6 @@ toxic - poisons
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-					M.update_canmove()
 			..()
 
 	weak
@@ -447,7 +446,6 @@ toxic - poisons
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-					M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
@@ -479,7 +477,6 @@ toxic - poisons
 					M.changeStatus("stunned", 1 SECONDS)
 					M.changeStatus("weakened", 2 SECONDS)
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-					M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/minigun

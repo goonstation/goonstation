@@ -67,7 +67,9 @@
 	var/area/thearea = theareas[A]
 
 	var/atom/movable/overlay/animation = null
-	usr.buckled = usr.loc
+	if (isliving(usr))
+		var/mob/living/L = usr
+		APPLY_MOB_PROPERTY(L, PROP_CANTMOVE, "teleport")
 	animation = new(usr.loc)
 	animation.icon_state = "enshield"
 	animation.icon = 'icons/effects/effects.dmi'
@@ -75,7 +77,9 @@
 
 	sleep(3 SECONDS)
 	qdel(animation)
-	usr.buckled = null
+	if (isliving(usr))
+		var/mob/living/L = usr
+		REMOVE_MOB_PROPERTY(L, PROP_CANTMOVE, "teleport")
 	if(!usr.stat)
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, usr.loc)

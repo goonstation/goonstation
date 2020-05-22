@@ -61,6 +61,10 @@
 
 /mob/living/silicon/proc/update_canmove()
 	canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
+	if (!canmove)
+		APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "update_canmove")
+	else
+		REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "update_canmove")
 
 /mob/living/silicon/proc/use_power()
 	return

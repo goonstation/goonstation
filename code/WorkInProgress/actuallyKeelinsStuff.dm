@@ -3267,7 +3267,7 @@ var/list/electiles = list()
 		if (get_dist(user,src) < 1 && target == user)
 			src.attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/living/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -3284,7 +3284,7 @@ var/list/electiles = list()
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
-			user.buckled = src
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, src.type)
 			sleep(0.3 SECONDS)
 			user.pixel_x = -3
 			sleep(0.3 SECONDS)
@@ -3311,7 +3311,7 @@ var/list/electiles = list()
 			sleep(0.2 SECONDS)
 			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
 			user.layer = MOB_LAYER
-			user.buckled = null
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, src.type)
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
 				user.throw_at(target, 5, 1)
 				user:changeStatus("weakened", 2 SECONDS)

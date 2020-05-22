@@ -67,7 +67,7 @@
 	if (src == target)
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
-			S.buckle_in(src,src)
+			S.buckle(src,src)
 		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
 			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
@@ -198,7 +198,7 @@
 
 	var/obj/stool/S = (locate(/obj/stool) in src.loc)
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		S.buckle_in(src,src,1)
+		S.buckle(src,src,1)
 	else
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src)
 		G.assailant = src

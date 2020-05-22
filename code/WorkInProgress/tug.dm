@@ -208,7 +208,7 @@
 				C.show_message("<span class='alert'><B>[rider] is flung off of [src]!</B></span>", 1)
 			var/turf/target = get_edge_target_turf(src, src.dir)
 			rider.throw_at(target, 5, 1)
-			rider.buckled = null
+			unbuckle_mob(rider)
 			rider = null
 			overlays = null
 			return
@@ -219,7 +219,7 @@
 					continue
 				C.show_message("<B>[rider]</B> dismounts from [src].", 1)
 		if (rider)
-			rider.buckled = null
+			unbuckle_mob(rider)
 		rider = null
 		overlays = null
 		return
@@ -285,7 +285,7 @@
 		rider.pixel_y = 6
 		overlays += rider
 		if (rider.restrained() || rider.stat)
-			rider.buckled = src
+			buckle_mob(rider)
 
 		if (target.client)
 			var/x_btt = 1

@@ -1,13 +1,19 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
+	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
+	throwforce = 1
+	flags = FPRINT | TABLEPASS
+	pressure_resistance = 50
+
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
-	throwforce = 1//4
 	var/r_speed = 1.0
 	var/health = 4 // burn faster
 	var/burn_point = 15000  // this already exists but nothing uses it???
@@ -20,16 +26,14 @@
 	var/burning_last_process = 0
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
-	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
+
 	var/cant_self_remove = 0 //Can't remove from non-hand slots
 	var/cant_other_remove = 0 //Can't be removed from non-hand slots by others
 	var/cant_drop = 0 //Cant' be removed in general. I guess.
 
-	flags = FPRINT | TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
 
-	pressure_resistance = 50
 	var/obj/item/master = null
 	var/amount = 1
 	var/max_stack = 1

@@ -132,7 +132,7 @@
 					return
 				var/mob/living/M = AM
 				if (M.buckled)
-					M.buckled = null
+					M.buckled.unbuckle_mob(M)
 				boutput(M, "You fall into the [src].")
 				src.visible_message("[M] falls into the [src].")
 				M.set_loc(src)
@@ -346,7 +346,7 @@
 					return
 				var/mob/living/M = AM
 				if (M.buckled)
-					M.buckled = null
+					M.buckled.unbuckle_mob(M)
 				boutput(M, "You fall into the [src].")
 				src.visible_message("[M] falls into [src].")
 				M.set_loc(src)

@@ -18,34 +18,42 @@ they're trapped
 	var/health = 10
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
-		if (!ticker)
-			boutput(user, "You can't buckle anyone in before the game starts.")
+		if (!ismob(M))
 			return
-		if ((!( ismob(M) ) || get_dist(src, user) > 1 || user.restrained() || usr.stat))
-			return
-		for(var/mob/O in viewers(user, null))
-			if ((O.client && !( O.blinded )))
-				boutput(O, text("<span class='notice'>[M] is absorbed by the cocoon!</span>"))
+		buckle(M, user)
+
+	can_buckle(mob/M, mob/user)
+		if (get_dist(src, user) > 1 || user.restrained() || usr.stat && ..())
+			return TRUE
+		return FALSE
+
+	buckle_mob(mob/M, mob/user)
+		. = ..()
 		M.anchored = 1
-		M.buckled = src
 		M.set_loc(src.loc)
 		src.add_fingerprint(user)
-		return
 
-	attack_hand(mob/user as mob)
-		if(health <= 0)
-			for(var/mob/M in src.loc)
-				if (M.buckled)
-					src.visible_message("<span class='notice'>[M] appears from the cocoon.</span>")
-		//			boutput(world, "[M] is no longer buckled to [src]")
-					M.anchored = 0
-					M.buckled = null
-					src.add_fingerprint(user)
+	unbuckle_mob(mob/M)
+		M.anchored = 0
+		src.add_fingerprint(user)
+		return ..()
+
+	mob_unbuckled(mob/M)
+		src.visible_message("<span class='notice'>[M] appears from [src].</span>")
+
+	mob_buckled(mob/M)
+		src.visible_message("<span class='notice'>[M] is absorbed by [src].</span>")
+
+	attack_hand(mob/user)
+		if(health <= 0 && buckled_mob)
+			unbuckle(buckled_mob, user)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><B>[user] has destroyed the cocoon.</B></span>")
+			if (buckled_mob)
+				unbuckle_mob(buckled_mob, user)
 			src.death()
 			return
 

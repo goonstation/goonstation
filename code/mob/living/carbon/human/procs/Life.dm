@@ -266,9 +266,6 @@
 	//Being buckled to a chair or bed
 	check_if_buckled()
 
-	// Yup.
-	update_canmove()
-
 	clamp_values()
 
 	if (arrestIcon) // Update security hud icon
@@ -780,27 +777,6 @@
 					src.internals.icon_state = "internal0"
 
 		return null
-
-	proc/update_canmove()
-		if (HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
-			canmove = 0
-			return
-
-		if (buckled && buckled.anchored)
-			if (istype(src.buckled, /obj/stool/chair)) //this check so we can still rotate the chairs on their slower delay even if we are anchored
-				var/obj/stool/chair/chair = src.buckled
-				if (!chair.rotatable)
-					canmove = 0
-					return
-			else
-				canmove = 0
-				return
-
-		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
-			canmove = 0
-			return
-
-		canmove = 1
 
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		if (src.nodamage) return
@@ -1905,7 +1881,6 @@
 		if (processScheduler.hasProcess("Mob"))
 			var/datum/controller/process/P = processScheduler.nameToProcessMap["Mob"]
 			src.handle_stuns_lying(P)
-			src.update_canmove()
 
 			src.handle_blindness_overlays()
 
@@ -2201,7 +2176,7 @@
 	proc/check_if_buckled()
 		if (src.buckled)
 			if (src.buckled.loc != src.loc)
-				src.buckled = null
+				src.buckled.unbuckle_mob(src)
 				return
 			src.lying = istype(src.buckled, /obj/stool/bed) || istype(src.buckled, /obj/machinery/conveyor)
 			if (src.lying)

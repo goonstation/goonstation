@@ -279,7 +279,7 @@ Contains:
 			C.show_message("<span class='alert'><B>[rider] is flung over \the [src]'s handlebars!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
+		unbuckle_mob(rider)
 		rider = null
 		//overlays = null
 		update()
@@ -290,7 +290,7 @@ Contains:
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
-	rider.buckled = null
+	unbuckle_mob(rider)
 	rider = null
 	//overlays = null
 	update()
@@ -442,7 +442,7 @@ Contains:
 	src.UpdateOverlays(rider, "rider")
 	//overlays += rider
 	if(rider.restrained() || rider.stat)
-		rider.buckled = src
+		buckle_mob(rider)
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -730,7 +730,7 @@ Contains:
 			C.show_message("<span class='alert'><B>[rider] is flung over \the [src]'s handlebars!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
+		unbuckle_mob(rider)
 		rider = null
 		//overlays = null
 		update()
@@ -741,7 +741,7 @@ Contains:
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
-	rider.buckled = null
+	unbuckle_mob(rider)
 	rider = null
 	//overlays = null
 	update()
@@ -802,7 +802,7 @@ Contains:
 	//overlays += rider
 	src.UpdateOverlays(rider, "rider")
 	if(rider.restrained() || rider.stat)
-		rider.buckled = src
+		buckle_mob(rider)
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1164,7 +1164,7 @@ Contains:
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
+		unbuckle_mob(rider)
 		rider = null
 		icon_state = "clowncar"
 		if(prob(40) && src.contents.len)
@@ -1186,7 +1186,7 @@ Contains:
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> climbs out of the [src].", 1)
-	rider.buckled = null
+	unbuckle_mob(rider)
 	rider = null
 	icon_state = "clowncar"
 	return
@@ -1410,7 +1410,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung over the [src]'s head!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
+		unbuckle_mob(rider)
 		rider = null
 		overlays = null
 		return
@@ -1420,7 +1420,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from the [src].", 1)
-	rider.buckled = null
+	unbuckle_mob(rider)
 	rider = null
 	overlays = null
 	return
@@ -1461,7 +1461,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider.pixel_y = 5
 	overlays += rider
 	if(rider.restrained() || rider.stat)
-		rider.buckled = src
+		buckle_mob(rider)
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1852,7 +1852,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
+		unbuckle_mob(rider)
 		rider = null
 		icon_state = nonmoving_state
 		if(prob(40) && src.contents.len)
@@ -1877,7 +1877,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> climbs out of the [src].", 1)
-	rider.buckled = null
+	unbuckle_mob(rider)
 	rider = null
 	icon_state = nonmoving_state
 	return
