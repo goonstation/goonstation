@@ -1,5 +1,9 @@
 
 (t)fri may 22 20
+(u)Kubius
+(p)806
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 19: second janitor spawn, atmospheric forcefields, assorted tweaks.
 (u)Comrade f191
 (p)801
 (e)🗺|mapping
