@@ -800,10 +800,6 @@
 			canmove = 0
 			return
 
-		if (emote_lock)
-			canmove = 0
-			return
-
 		canmove = 1
 
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
