@@ -1045,9 +1045,12 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
+		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
+
+/*
 		for(var/atom in src.get_equipped_items())
 			var/obj/item/C = atom
-			thermal_protection += C.getProperty("coldprot")
+			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
 		// Resistance from covered body parts
@@ -1065,7 +1068,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = max(0,min(thermal_protection,100))
+		thermal_protection = clamp(thermal_protection, 0, 100)
 		return thermal_protection
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
@@ -1112,14 +1115,12 @@
 		var/rad_protection = 0
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			rad_protection += C.getProperty("radprot")
+		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
 		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
-		rad_protection = max(0,min(rad_protection,100))
+		rad_protection = clamp(rad_protection, 0, 100)
 		return rad_protection
 
 	get_ranged_protection()
@@ -1129,11 +1130,7 @@
 		var/protection = 1
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			if(C.hasProperty("rangedprot"))
-				var/curr = C.getProperty("rangedprot")
-				protection += curr
+		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
 
 		return protection
 
@@ -1146,23 +1143,24 @@
 			a_zone = "chest"
 		if(a_zone=="All")
 			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-		else
-			// Resistance from Clothing
-			for(var/atom in src.get_equipped_items())
-				var/obj/item/C = atom
-				if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
-					a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
-					var/curr = C.getProperty("meleeprot")
-					protection = max(curr, protection)
 
+		else
+
+			//protection from clothing
+			if (a_zone == "chest")
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+			else //can only be head
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+
+			//protection from blocks
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
 				protection += 1
 				if (G != src.equipped()) // bare handed block is less protective
 					protection += G.can_block(damage_type)
 
+		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
+			protection = 0
 		return protection
 
 	get_deflection()
@@ -1194,9 +1192,7 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			thermal_protection += C.getProperty("heatprot")
+		thermal_protection += GET_MOB_PROPERTY(src, PROP_HEATPROT)
 
 		/*
 		// Resistance from covered body parts
@@ -1213,7 +1209,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = max(0,min(thermal_protection,100))
+		thermal_protection = clamp(thermal_protection, 0, 100)
 		return thermal_protection
 
 	proc/add_fire_protection(var/temp)
