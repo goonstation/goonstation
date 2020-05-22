@@ -791,8 +791,6 @@ datum
 				M.drowsyness = max(M.drowsyness-5, 0)
 				if(M.sleeping && prob(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1)
-				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 15 * mult)
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -1192,7 +1190,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.jitteriness = max(M.jitteriness-20,0)
 				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 3 * mult)
+					holder.remove_reagent("histamine", 15 * mult)
 				if(holder.has_reagent("itching"))
 					holder.remove_reagent("itching", 3 * mult)
 				if(prob(7)) M.emote("yawn")
