@@ -3,7 +3,7 @@
 (u)Tarmunroa
 (p)794
 (e)⚖|balance
-(+)Made critical health a little more punishing
+(+)Fixed some probability rolls for critical effects (losing HP, falling over, etc) that were lower than expected
 (u)Sovexe
 (p)786
 (e)🎨|sprites
