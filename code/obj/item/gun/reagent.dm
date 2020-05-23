@@ -1,7 +1,6 @@
 /obj/item/gun/reagent
 	name = "reagent gun"
 	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "ecto100"
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
