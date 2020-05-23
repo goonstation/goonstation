@@ -10,7 +10,7 @@
 	organ_holder_required_op_stage = 2.0
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
-	temp_tolerance = T0C+66
+	var/temp_tolerance = T0C+66
 
 	on_life(var/mult = 1)
 		if (!..())
