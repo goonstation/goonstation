@@ -1,5 +1,9 @@
 
 (t)fri may 22 20
+(u)Erinexx
+(p)810
+(e)🎨|sprites
+(+)Added inhand sprites for the hand labeler!
 (u)Flourish
 (p)795
 (e)🆕|enhancement
