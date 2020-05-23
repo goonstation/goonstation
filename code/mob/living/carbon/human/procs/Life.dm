@@ -800,10 +800,6 @@
 			canmove = 0
 			return
 
-		if (emote_lock)
-			canmove = 0
-			return
-
 		canmove = 1
 
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
@@ -1045,9 +1041,12 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
+		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
+
+/*
 		for(var/atom in src.get_equipped_items())
 			var/obj/item/C = atom
-			thermal_protection += C.getProperty("coldprot")
+			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
 		// Resistance from covered body parts
@@ -1065,7 +1064,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = max(0,min(thermal_protection,100))
+		thermal_protection = clamp(thermal_protection, 0, 100)
 		return thermal_protection
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
@@ -1112,14 +1111,12 @@
 		var/rad_protection = 0
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			rad_protection += C.getProperty("radprot")
+		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
 		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
-		rad_protection = max(0,min(rad_protection,100))
+		rad_protection = clamp(rad_protection, 0, 100)
 		return rad_protection
 
 	get_ranged_protection()
@@ -1129,11 +1126,7 @@
 		var/protection = 1
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			if(C.hasProperty("rangedprot"))
-				var/curr = C.getProperty("rangedprot")
-				protection += curr
+		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
 
 		return protection
 
@@ -1146,23 +1139,24 @@
 			a_zone = "chest"
 		if(a_zone=="All")
 			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-		else
-			// Resistance from Clothing
-			for(var/atom in src.get_equipped_items())
-				var/obj/item/C = atom
-				if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
-					a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
-					var/curr = C.getProperty("meleeprot")
-					protection = max(curr, protection)
 
+		else
+
+			//protection from clothing
+			if (a_zone == "chest")
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+			else //can only be head
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+
+			//protection from blocks
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
 				protection += 1
 				if (G != src.equipped()) // bare handed block is less protective
 					protection += G.can_block(damage_type)
 
+		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
+			protection = 0
 		return protection
 
 	get_deflection()
@@ -1194,9 +1188,7 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			thermal_protection += C.getProperty("heatprot")
+		thermal_protection += GET_MOB_PROPERTY(src, PROP_HEATPROT)
 
 		/*
 		// Resistance from covered body parts
@@ -1213,7 +1205,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = max(0,min(thermal_protection,100))
+		thermal_protection = clamp(thermal_protection, 0, 100)
 		return thermal_protection
 
 	proc/add_fire_protection(var/temp)
@@ -1818,7 +1810,9 @@
 		var/lying_old = src.lying
 		var/cant_lie = (src.limbs && istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, src.loc) && !locate(/obj/machinery/optable, src.loc))
 
-		var/must_lie = hasStatus("resting") || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/list/statusList = src.getStatusList()
+
+		var/must_lie = statusList["resting"] || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
 
 		var/changeling_fakedeath = 0
 		var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
@@ -1826,20 +1820,21 @@
 			changeling_fakedeath = 1
 
 		if (!isdead(src)) //Alive.
-			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.hasStatus("resting")) //Stunned etc.
+			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || statusList["resting"]) //Stunned etc.
 				var/setStat = src.stat
 				var/oldStat = src.stat
-				if (src.hasStatus("stunned"))
+				if (statusList["stunned"])
 					setStat = 0
-				if (src.hasStatus("weakened") || src.hasStatus("pinned") && !src.fakedead)
-					if (!cant_lie) src.lying = 1
+				if (statusList["weakened"] || statusList["pinned"] && !src.fakedead)
+					if (!cant_lie)
+						src.lying = 1
 					setStat = 0
-				if (src.hasStatus("paralysis"))
-					if (!cant_lie) src.lying = 1
+				if (statusList["paralysis"])
+					if (!cant_lie)
+						src.lying = 1
 					setStat = 1
-				if (isalive(src) && setStat == 1)
-					if (src && src.mind)
-						src.lastgasp() // calling lastgasp() here because we just got knocked out
+				if (isalive(src) && setStat == 1 && src.mind)
+					src.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
 					src.lying = 1
 
@@ -1870,7 +1865,7 @@
 						else if (healtype == 4)
 							src.HealDamage("All", 0, 0, 0.2) ///adjsfkaljdsklf;ajs
 
-				else if ((oldStat == 1) && (!getStatusDuration("paralysis") && !getStatusDuration("stunned") && !getStatusDuration("weakened") && !changeling_fakedeath))
+				else if ((oldStat == 1) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
 					src << sound('sound/misc/molly_revived.ogg', volume=50)
 					setalive(src)
 

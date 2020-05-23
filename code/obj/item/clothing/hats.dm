@@ -16,7 +16,7 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 5)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 
 /obj/item/clothing/head/red
 	desc = "A knit cap in red."
@@ -76,7 +76,7 @@
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
 
@@ -95,7 +95,7 @@
 	icon_state = "ntbiohood"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/emerg
 	name = "Emergency Hood"
@@ -123,7 +123,7 @@
 		..()
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
 
@@ -218,7 +218,7 @@
 	desc = "A symbol of the captain's rank, and the source of all his power."
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
@@ -227,7 +227,7 @@
 	item_state = "centcom"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 	red
 		icon_state = "centcom-red"
@@ -248,7 +248,7 @@
 	item_state = "det_hat"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
@@ -467,7 +467,7 @@
 	item_state = "plunger"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
@@ -477,7 +477,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen Beret"
@@ -578,7 +578,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/fancy/rank
 	name = "officer's hat"
@@ -586,7 +586,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/wizard
 	name = "blue wizard hat"
@@ -677,7 +677,7 @@
 	body_parts_covered = HEAD
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/DONOTSTEAL
 	desc = "Baby's first hat ALSO BY ME WRONGEND DON'T STEAL" // You are a fucking disgrace hat HOW DID YOU BREAK HELMET CODE AND MAKE THE RSC NOT WORK FUCK please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me
@@ -774,7 +774,7 @@
 	item_state = "bigtex"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/beret
 	name = "beret"
@@ -824,7 +824,7 @@
 	icon_state = "laurels"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 	gold
 		name = "gold laurels"
@@ -859,7 +859,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
+		setProperty("meleeprot_head", 6)
 
 	New()
 		..()
