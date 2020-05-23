@@ -298,6 +298,9 @@
 			if(spazzing < 0)
 				spazzing = 0
 
+/obj/critter/spider/aggressive
+	aggressive = 1
+
 /obj/critter/spider/baby
 	name = "li'l space spider"
 	desc = "A li'l tiny spider, from space. In space. A space spider."
