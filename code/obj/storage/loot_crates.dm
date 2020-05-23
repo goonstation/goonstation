@@ -266,7 +266,7 @@
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+							items += /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 							item_amounts += 5
 						if(2)
 							items += /obj/item/clothing/ears/earmuffs/yeti

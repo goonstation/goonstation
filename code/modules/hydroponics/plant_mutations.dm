@@ -56,13 +56,14 @@
 
 // Tomato Mutations
 
-/datum/plantmutation/tomato/explosive
+/datum/plantmutation/tomato/incendiary
 	name = "Seething Tomato"
 	name_prefix = "Seething "
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	iconmod = "exptom"
+	assoc_reagents = list("fuel")
 
-	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
+/*	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		. = ..()
 		if (.)
 			return .
@@ -71,7 +72,7 @@
 			explosion_new(POT, get_turf(user), 10, 1)
 			return 399
 		return 0
-
+*/
 /datum/plantmutation/tomato/killer
 	name = "Suspicious Tomato"
 	name_prefix = "Suspicious "

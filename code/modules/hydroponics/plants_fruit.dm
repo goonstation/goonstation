@@ -21,7 +21,7 @@
 		switch(reagent)
 			if("phlogiston","infernite","thalmerite","sorium")
 				if (prob(33))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/explosive)
+					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/incendiary)
 			if("strange_reagent")
 				if (prob(50))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/killer)
