@@ -84,13 +84,11 @@ var/list/all_toilets = null
 
 /obj/item/storage/toilet/buckle_mob(mob/M, mob/user)
 	. = ..()
-	M.anchored = 1
 	M.set_loc(src.loc)
 	if (user)
 		src.add_fingerprint(user)
 
 /obj/item/storage/toilet/unbuckle_mob(mob/M, mob/user)
-	M.anchored = 0
 	if (user)
 		src.add_fingerprint(user)
 	return ..()
@@ -102,7 +100,7 @@ var/list/all_toilets = null
 		M.visible_message("<span class='notice'>[M] is seated on [src] by [user]!</span>")
 
 
-/obj/item/storage/toilet/attack_hand(mob/user as mob)
+/obj/item/storage/toilet/attack_hand(mob/user)
 #if ASS_JAM //timestop toilets
 	if(timestopped == 1)
 		if(prob(20))
@@ -117,9 +115,7 @@ var/list/all_toilets = null
 			user.visible_message("<span class='notice'>[buckled_mob] is zipped up by [user]. That's... that's honestly pretty creepy.</span>")
 		else
 			user.visible_message("<span class='notice'>[buckled_mob] zips up.</span>", "<span class='notice'>You zip up.</span>")
-//			boutput(world, "[M] is no longer buckled to [src]")
-		unbuckle_mob(buckled_mob)
-		src.add_fingerprint(user)
+		unbuckle_mob(buckled_mob, user)
 	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
 		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)

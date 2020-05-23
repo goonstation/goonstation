@@ -78,7 +78,7 @@ mob
 				src.glide_size = glide
 				next_move = world.time + (running ? 0.5 : 1.5)
 				return (running ? 0.5 : 1.5)
-			if (!GET_MOB_PROPERTY(src, PROP_CANTMOVE))
+			if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
 				if (src.restrained())
 					for(var/mob/M in range(src, 1))
 						if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)

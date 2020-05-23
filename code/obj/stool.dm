@@ -91,7 +91,6 @@
 	unbuckle_mob(mob/M, mob/user)
 		..()
 		if (buckled_mob == M)
-			spawn(0)
 			M.end_chair_flip_targeting()
 
 	mob_buckled(mob/M, mob/user)
