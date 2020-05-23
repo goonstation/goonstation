@@ -1,5 +1,10 @@
 
 (t)sat may 23 20
+(u)Carbadox
+(p)769
+(e)🆕|feature
+(+)Added a cocktail party supplies crate. Available through QM!
+(+)Added a cocktail shaker to the booze vending machine.
 (u)Flourish
 (p)816
 (e)🆕|feature
