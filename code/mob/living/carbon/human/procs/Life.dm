@@ -934,7 +934,7 @@
 				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
 					src.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (breath.temperature > min(organHolder.left_lung.temp_tolerance, organholder.left_lung.temp_tolerance) && !src.is_heat_resistant()) // Hot air hurts :(
+		if (breath.temperature > min(organHolder.left_lung.temp_tolerance, organholder.right_lung.temp_tolerance) && !src.is_heat_resistant()) // Hot air hurts :(
 			var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
 			TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
 			if (prob(20))
