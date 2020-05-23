@@ -284,13 +284,11 @@ var/global/noir = 0
 					if("1")
 						if ((!( ticker ) || emergency_shuttle.location))
 							return
-						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","<span class='italic'>No reason given.</span>") as null|text
+						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
 						if(!call_reason)
 							return
 						emergency_shuttle.incall()
-						boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-						boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-						boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -303,11 +301,9 @@ var/global/noir = 0
 								emergency_shuttle.incall()
 								var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","") as null|text
 								if(!call_reason)
-									call_reason = "<span class='italic'>No reason given.</span>"
+									call_reason = "No reason given."
 								emergency_shuttle.incall()
-								boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-								boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-								boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")

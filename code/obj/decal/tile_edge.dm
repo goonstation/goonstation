@@ -16,6 +16,8 @@
 			if (!T)
 				return ..()
 			var/image/I = image(src.icon, T, src.icon_state, src.layer, src.dir)
+			I.pixel_x = src.pixel_x
+			I.pixel_y = src.pixel_y
 			I.appearance_flags = RESET_COLOR
 			if (src.color)
 				I.color = src.color

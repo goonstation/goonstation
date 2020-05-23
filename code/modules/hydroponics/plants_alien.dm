@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact
 	name = "Unknown"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
