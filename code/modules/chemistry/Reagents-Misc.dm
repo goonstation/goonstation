@@ -1183,28 +1183,31 @@ datum
 			value = 6 // 4c + 1c + 1c
 			viscosity = 0.13
 			var/counter = 1
+			var/fakedeathed = 0
 
 			pooled()
 				..()
 				counter = 1
+				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				switch(counter++)
+				switch(counter += (1 * mult))
 					if (1 to 5)
 						M.change_eye_blurry(10, 10)
-					if (6 to 10)
+					if (6 to 11)
 						M.drowsyness  = max(M.drowsyness, 10)
-					if (11)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
-						M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
-						M.setStatus("resting", INFINITE_STATUS)
-						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					if (12 to 60) // Capped at ~2 minutes, that is 60 cycles + 10 paralysis (normally wears off at one per cycle).
 						M.changeStatus("paralysis", 30 * mult)
 					if (61 to INFINITY)
 						M.change_eye_blurry(10, 10)
+				if (counter >= 11 && !fakedeathed)
+					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
+					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
+					M.setStatus("resting", INFINITE_STATUS)
+					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
 
 				M.updatehealth()
 				..()
@@ -1220,18 +1223,22 @@ datum
 			value = 28 // 6c + 9c + 13c
 			viscosity = 0.17
 			var/counter = 1
+			var/fakedeathed = 0
 
 			pooled()
 				..()
 				counter = 1
+				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if (counter == 10)
+				if (counter += (1*mult) >= 10 && !fakedeathed)
 					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
+
 
 				M.updatehealth()
 				..()
