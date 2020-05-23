@@ -1,5 +1,18 @@
 
 (t)fri may 22 20
+(u)Kubius
+(p)806
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 19: second janitor spawn, atmospheric forcefields, assorted tweaks.
+(u)Comrade f191
+(p)801
+(e)🗺|mapping
+(+)Added AI Intercoms to a few maps; Manta, Oshan, Clarion, Destiny, Cogmap1 and Cogmap2.
+(u)tloy-x
+(p)798
+(e)|
+(+)Fixed spray bottle not showing contents upon inspection.
+(*)Changed how spray bottle and mop bucket show contents upon inspection to act more like beakers. They now show a general description instead of an exact listing of all chems, like a spectroscopic scan.
 (u)pali
 (+)Personal lockers can no longer be unlocked by any random id
 (t)thu may 21 20

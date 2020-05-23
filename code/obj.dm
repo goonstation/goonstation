@@ -83,22 +83,6 @@
 			else
 		return
 
-	proc/ex_act_third(severity)
-		switch(severity)
-			if(1.0)
-				qdel(src)
-				return
-			if(2.0)
-				if (prob(66))
-					qdel(src)
-					return
-			if(3.0)
-				if (prob(33))
-					qdel(src)
-					return
-			else
-		return
-
 
 	onMaterialChanged()
 		..()
