@@ -2220,9 +2220,6 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				else if (prob(33))
 					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
 					src.heal_amt = 0
-				else
-					flavor = "sugar"
-				src.reagents.add_reagent(flavor, 50)
 
 				src.food_color = src.reagents.get_master_color()
 				src.icon += src.food_color
