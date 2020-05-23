@@ -2206,6 +2206,48 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 		boutput(M, "[color][phrase]! That tasted like [flavor]...</span>")
 
+/obj/item/reagent_containers/food/snacks/candy/everyflavor/some
+	name = "\improper Farty Snott's Some Flavour Bean"
+	desc = "A home-grown organic version of the original favorite halloween sweet!"
+
+	New()
+		..()
+		SPAWN_DBG(0)
+			if (src.reagents)
+				if (prob(33))
+					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
+					src.heal_amt = 1
+				else if (prob(33))
+					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
+					src.heal_amt = 0
+				else
+					flavor = "sugar"
+				src.reagents.add_reagent(flavor, 50)
+
+				src.food_color = src.reagents.get_master_color()
+				src.icon += src.food_color
+
+				src.reagents.add_reagent("sugar", 50)
+				if (src.reagents.total_volume <= 60)
+					src.reagents.add_reagent("sugar", 40)
+
+	heal(var/mob/M)
+		var/flavor
+		var/phrase
+		var/color
+
+		if(prob(50))
+			flavor = pick("cardboard", "human souls", "", "egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
+			phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+			color = "<span class='alert'>"
+		else
+			flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
+			phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
+			color = "<span class='notice'>"
+
+		boutput(M, "[color][phrase]! That tasted like [flavor]...</span>")
+
+
 /obj/item/kitchen/everyflavor_box
 	amount = 6
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'

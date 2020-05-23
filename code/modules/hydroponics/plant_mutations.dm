@@ -190,7 +190,7 @@
 	name_prefix = "jelly"
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
-	crop = /obj/item/reagent_containers/food/snacks/candy/everyflavor
+	crop = /obj/item/reagent_containers/food/snacks/candy/everyflavor/some
 
 // Chili Mutations
 
