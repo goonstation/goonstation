@@ -442,13 +442,15 @@ var/datum/action_controller/actions
 	var/mob/living/carbon/human/target  //The target of the action
 	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
+	var/hidden
 
 
-	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0)
+	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
 		source = Source
 		target = Target
 		item = Item
 		slot = Slot
+		hidden = Hidden
 
 		if(item)
 			if(item.duration_put > 0)
@@ -470,7 +472,6 @@ var/datum/action_controller/actions
 		..()
 
 	onStart()
-		..()
 
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
@@ -492,11 +493,12 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			logTheThing("combat", source, target, "tries to put \an [item] on %target% at at [log_loc(target)].")
+			icon = item.icon
+			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
 		else
 			var/obj/item/I = target.get_slot(slot)
-
 			if(!I)
 				boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
 				interrupt(INTERRUPT_ALWAYS)
@@ -511,11 +513,17 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			*/
-
 			logTheThing("combat", source, target, "tries to remove \an [I] from %target% at [log_loc(target)].")
+			var/name = "something"
+			if (!hidden)
+				icon = I.icon
+				icon_state = I.icon_state
+				name = I.name
 
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to remove something from [target]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[source] tries to remove [name] from [target]!</B></span>", 1)
+
+		..() // we call our parents here because we need to set our icon and icon_state before calling them
 
 	onEnd()
 		..()
