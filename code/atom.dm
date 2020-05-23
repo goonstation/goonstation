@@ -3,9 +3,6 @@
 #define DESERIALIZE_NEED_POSTPROCESS 2
 #define DESERIALIZE_NOT_IMPLEMENTED 4
 
-/atom
-	plane = PLANE_DEFAULT
-
 /datum/sandbox
 	var/list/context = list()
 
@@ -86,6 +83,7 @@
 
 /atom
 	layer = TURF_LAYER
+	plane = PLANE_DEFAULT
 	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
