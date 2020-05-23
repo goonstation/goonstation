@@ -1,5 +1,9 @@
 
 (t)fri may 22 20
+(u)tloy-x
+(p)803
+(e)|
+(+)Added "Back to Setup" option in Job Preferences Window.
 (u)Erinexx
 (p)808
 (e)🎨|sprites
