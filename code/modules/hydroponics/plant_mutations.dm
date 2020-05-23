@@ -182,6 +182,16 @@
 			POT.pixel_x = 0
 			POT.pixel_y = 0
 
+
+// Bean Mutations
+
+/datum/plantmutation/beans/jelly // hehehe
+	name = "Jelly Bean"
+	name_prefix = "jelly"
+	iconmod = "BeanJelly"
+	assoc_reagents = list("VHFCS")
+	crop = /obj/item/reagent_containers/food/snacks/candy/everyflavor
+
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
