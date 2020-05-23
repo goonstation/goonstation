@@ -167,8 +167,6 @@
 		walk(AM, 0)
 
 
-// attack with item, place item on conveyor
-
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/grab))	// special handling if grabbing a mob
 		var/obj/item/grab/G = I
@@ -207,17 +205,6 @@
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
-
-	else if(istype(I, /obj/item/ore_scoop))
-		// this is handled in the ore scoop's afterattack proc
-		return
-	// otherwise drop and place on conveyor
-
-	if (issilicon(user))
-		return
-	user.drop_item()
-	if(I && I.loc)	I.set_loc(src.loc)
-	return
 
 // attack with hand, move pulled object onto conveyor
 
