@@ -84,23 +84,6 @@
 			else
 		return
 
-	proc/ex_act_third(severity)
-		switch(severity)
-			if(1.0)
-				qdel(src)
-				return
-			if(2.0)
-				if (prob(66))
-					qdel(src)
-					return
-			if(3.0)
-				if (prob(33))
-					qdel(src)
-					return
-			else
-		return
-
-
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
@@ -313,9 +296,6 @@
 	density = 0
 	layer = EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_BELOW
-
-/obj/securearea/ex_act(severity)
-	ex_act_third(severity)
 
 /obj/joeq
 	desc = "Here lies Joe Q. Loved by all. He was a terrorist. R.I.P."
