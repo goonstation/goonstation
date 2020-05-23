@@ -615,7 +615,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/syringegun
 	name = "Syringe Gun"
-	item = /obj/item/gun/syringe
+	item = /obj/item/gun/reagent/syringe
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
 	job = list("Medical Doctor","Medical Director", "Research Director")
