@@ -178,6 +178,7 @@
 						else if (src.cell.charge <= 0)
 							user.show_text("The [src.name] is now out of charge!", "red")
 							src.stamina_damage = initial(src.stamina_damage)
+							src.status = 0
 				else if (amount > 0)
 					src.cell.charge(src.cost_normal * amount)
 
@@ -308,6 +309,10 @@
 		if (src.uses_electricity == 0)
 			return
 
+		if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0)
+			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+			return
+
 		src.regulate_charge()
 		src.status = !src.status
 
@@ -317,10 +322,10 @@
 			return
 
 		if (src.status)
-			user.show_text("The [src.name] is now on.", "blue")
+			boutput(user, "<span class='notice'>The [src.name] is now on.</span>")
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 		else
-			user.show_text("The [src.name] is now off.", "blue")
+			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 
 		src.update_icon()
