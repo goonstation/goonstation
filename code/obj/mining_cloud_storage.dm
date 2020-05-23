@@ -104,16 +104,16 @@
 			var/amtload = 0
 			var/rejected = 0
 			for (var/obj/item/raw_material/M in O.contents)
-				if(M.material.name != M.initial_material_name)
+				if(M.material?.name != M.initial_material_name)
 					rejected += M.amount
 					continue
 				amtload += M.amount
 				src.load_item(M)
 
-			if (amtload)
-				boutput(user, "<span class='notice'>[amtload] ores loaded from [O]!</span>")
 			if(rejected)
 				boutput(user, "<span class='alert'>[src] rejects [rejected] anomalous ore(s).</span>")
+			if (amtload)
+				boutput(user, "<span class='notice'>[amtload] ores loaded from [O]!</span>")
 			else boutput(user, "<span class='alert'>No ore loaded!</span>")
 
 		else if (isitem(O))
@@ -128,7 +128,7 @@
 			return
 		if(istype(O,/obj/item/raw_material/))
 			var/obj/item/raw_material/R = O
-			if(R.material.name != R.initial_material_name)
+			if(R.material?.name != R.initial_material_name)
 				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
 				return
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
@@ -140,7 +140,7 @@
 				continue
 			if(!isSameMaterial(O.material,M.material))
 				continue
-			if(M.material.name != M.initial_material_name)
+			if(M.material?.name != M.initial_material_name)
 				continue
 			if (O.loc == user)
 				continue
@@ -157,7 +157,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			var/obj/item/raw_material/R = W
-			if(R.material.name != R.initial_material_name)
+			if(R.material?.name != R.initial_material_name)
 				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -216,9 +216,7 @@
 			var/datum/ore_cloud_data/OCD = ores[material_name]
 			OCD.amount += delta
 			OCD.amount = max(OCD.amount,0)
-			ores[material_name] = OCD
 		else if (delta > 0)
-			ores += material_name
 			var/datum/ore_cloud_data/OCD = new /datum/ore_cloud_data
 			OCD.amount += delta
 			OCD.for_sale = 0
@@ -232,14 +230,12 @@
 				OCD.for_sale = !OCD.for_sale
 			else
 				OCD.for_sale = new_for_sale
-			ores[material_name] = OCD
 		return
 
 	proc/update_ore_price(var/material_name,var/new_price)
 		if(ores[material_name])
 			var/datum/ore_cloud_data/OCD = ores[material_name]
 			OCD.price = max(0,new_price)
-			ores[material_name] = OCD
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -262,7 +258,7 @@
 
 		dat += "<br><small>"
 
-		dat += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>"
+		dat += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>"
 		dat += "<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>"
 		dat += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>"
 

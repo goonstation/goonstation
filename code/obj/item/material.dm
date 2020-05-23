@@ -22,7 +22,8 @@
 		src.pixel_x = rand(0 - wiggle, wiggle)
 		src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
-		initial_material_name = src.material.name
+		if(src.material?.name)
+			initial_material_name = src.material.name
 
 	unpooled()
 		..()
@@ -32,6 +33,7 @@
 
 	pooled()
 		..()
+		name = initial(name)
 
 	proc/setup_material()
 		.= 0

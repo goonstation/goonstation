@@ -1,9 +1,10 @@
-/datum/rockbox_globals_template
+/datum/rockbox_globals
+	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
 	var/rockbox_client_fee_pct = 10
 	var/rockbox_premium_purchased = 0
 
-var/global/datum/rockbox_globals_template/rockbox_globals = new /datum/rockbox_globals_template
+var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 /proc/build_qm_categories()
 	QM_CategoryList.Cut()
@@ -609,7 +610,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 				. = "<h2>Rockbox&trade; Ore Cloud Storage Service Settings:</h2><ul><br>"
 
-				. += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? ROCKBOX_STANDARD_FEE : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>"
+				. += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>"
 				. += "<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>"
 				. += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>"
 				. += {"</ul>"}
