@@ -1,6 +1,10 @@
 
 (t)fri may 22 20
 (u)Erinexx
+(p)808
+(e)🎨|sprites
+(+)Added unique inhands for autoinjectors!
+(u)Erinexx
 (p)810
 (e)🎨|sprites
 (+)Added inhand sprites for the hand labeler!
