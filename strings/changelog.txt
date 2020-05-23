@@ -1,5 +1,10 @@
 
 (t)sat may 23 20
+(u)adharainspace
+(p)819
+(e)🆕🎨|feature, sprites
+(+)Batons auto switch off when de-powered, and cant be switched back on until they're charged.
+(+)Batons now have activated/deactivated sprites that show on your mob, instead of just on the item.
 (u)Sovexe
 (p)822
 (e)⚖🐛|balance, bug
