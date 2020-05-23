@@ -675,7 +675,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && W:on) || W.burning)
+		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
