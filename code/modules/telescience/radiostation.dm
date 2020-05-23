@@ -176,7 +176,7 @@
 		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
 		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>(%target%)</b>)")
 		var/original_name = usr.real_name
-		usr.real_name = copytext(voice, 1, 32)
+		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
 		usr.say(message)
 		usr.real_name = original_name
 
@@ -591,6 +591,11 @@
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
+
+/obj/item/radio_tape/advertisement/danitos_burritos
+	name = "compact tape - 'Descuento Danito's Burritos'"
+	audio = "sound/radio_station/danitos_burritos.ogg"
+	name_of_thing = "Descuento Danito's Burritos"
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"

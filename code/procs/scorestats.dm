@@ -22,6 +22,14 @@ var/datum/score_tracker/score_tracker
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
 	var/tickets_text = null
+	var/mob/richest_escapee = null
+	var/richest_total = 0
+	var/mob/most_damaged_escapee = null
+	var/acula_blood = null
+	var/beepsky_alive = null
+	var/clown_beatings = null
+	var/list/pets_escaped = null
+
 
 	proc/calculate_score()
 		if (score_calculated != 0)
@@ -144,6 +152,8 @@ var/datum/score_tracker/score_tracker
 		else
 			most_xp = "No one. Dang."
 
+		calculate_escape_stats()
+
 		// AND THE WINNER IS.....
 
 		var/department_score_sum = 0
@@ -190,6 +200,93 @@ var/datum/score_tracker/score_tracker
 
 		return
 
+	/////////////////////////////////////
+	/////////Escapee stuff///////////////
+	/////////////////////////////////////
+	proc/calculate_escape_stats()
+		//set the global total to zero on proc start, just in cases.
+		richest_total = 0
+		//search mobs in centcom
+		for (var/mob/M in mobs)
+			var/area/A = get_area(M)
+			if (istype(A, /area/shuttle/escape/centcom))// || istype(A, /area/centcom))
+				if (!most_damaged_escapee)
+					most_damaged_escapee = M
+				else if (M.get_damage() < most_damaged_escapee.get_damage())
+					most_damaged_escapee = M
+
+				var/cash_total = get_cash_in_thing(M)
+				if (richest_total < cash_total)
+					richest_total = cash_total
+					richest_escapee = M
+
+		pets_escaped = list()
+
+		//This is shit, I know, but what else can I do? Take solace in the fact that this only ever runs once.
+		var/list/escape_contents = get_area_all_atoms(map_settings.escape_centcom)
+		for (var/obj/critter/C in escape_contents)
+			//Dr. Acula
+			if (istype(C, /obj/critter/bat/doctor))
+				var/obj/critter/bat/doctor/P = C
+				if (P.alive)
+					pets_escaped += P
+					acula_blood = P.blood_volume
+
+			//Sylvester
+			else if (istype(C, /obj/critter/turtle/sylvester))
+				if (C.alive)
+					pets_escaped += C
+
+			//Jones
+			else if (istype(C, /obj/critter/cat/jones))
+				if (C.alive)
+					pets_escaped += C
+
+			//George
+			else if (istype(C, /obj/critter/dog/george))
+				if (C.alive)
+					pets_escaped += C
+
+			//Heisenbee
+			else if (istype(C, /obj/critter/domestic_bee/heisenbee))
+				if (C.alive)
+					pets_escaped += C
+			//Don't really need to check for the mob variants. But maybe if we switch eventually??
+
+		if (locate(/obj/machinery/bot/secbot/beepsky) in world)
+			beepsky_alive = 1
+
+		return
+
+	proc/get_cash_in_thing(var/atom/A)
+		. = 0
+		for (var/I in A)
+			if (istype(I, /obj/item/storage))
+				. += get_cash_in_thing(I)
+			if (istype(I, /obj/item/spacecash))
+				var/obj/item/spacecash/SC = I
+				. += SC.amount
+			if (istype(I, /obj/item/card/id))
+				var/obj/item/card/id/ID = I
+				. += ID.amount
+		boutput(world, .)
+
+	proc/escapee_facts()
+		. = ""
+		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
+		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
+		if (islist(pets_escaped) && pets_escaped.len)		//The reason I don't just use the pets_escaped list is because that list will send the info to goonhub, and I don't wanna send the bicons too.
+			var/list/who_escaped = list()
+			for (var/atom/A in pets_escaped)
+				who_escaped += "[A.name] [bicon(A)]"
+			. += "<B>Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+
+		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
+		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
+		return .
+
+
 /mob/proc/scorestats()
 	if (score_tracker.score_calculated == 0)
 		return
@@ -227,6 +324,9 @@ var/datum/score_tracker/score_tracker
 	 /* until this is actually done or being worked on im just going to comment it out
 		score_tracker.score_text += "<B>Most Experienced:</B> [score_tracker.most_xp]<BR>"
 		*/
+		score_tracker.score_text += "<B><U>STATISTICS</U></B><BR>"
+		score_tracker.score_text += score_tracker.escapee_facts()
+
 		score_tracker.score_text += "<HR>"
 
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")

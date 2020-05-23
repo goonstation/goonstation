@@ -24,7 +24,7 @@
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/mask/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/voice_changer))
@@ -128,7 +128,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/mask/moustache/safe
 	name = "discount fake moustache"
@@ -217,7 +217,7 @@
 	item_state = "death_commando_mask"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 
 /obj/item/clothing/mask/clown_hat
@@ -351,7 +351,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 10)
 
 /obj/item/paper_mask

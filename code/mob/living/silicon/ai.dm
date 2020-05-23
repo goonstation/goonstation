@@ -2156,9 +2156,12 @@ proc/get_mobs_trackable_by_AI()
 			src.name = src.real_name
 			return
 		else
-			newname = strip_html(newname, 32, 1)
-			if (!length(newname) || copytext(newname,1,2) == " ")
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			if (!length(newname))
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+				continue
+			else if (is_blank_string(newname))
+				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")

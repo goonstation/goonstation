@@ -149,6 +149,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			transparency = 190
+			minimum_reaction_temperature = -INFINITY
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(exposed_temperature <= T0C + 7)
@@ -1935,6 +1936,7 @@ datum
 			transparency = 255
 			hunger_value = 1
 			viscosity = 0.5
+			minimum_reaction_temperature = -INFINITY
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(it_is_ass_day)
@@ -2176,8 +2178,9 @@ datum
 			addiction_prob = 1
 			addiction_prob2 = 1
 			addiction_min = 10
+			minimum_reaction_temperature = -INFINITY
 
-			reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
+			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
 					name = "iced tea"
 					description = "Tea, but cold!"

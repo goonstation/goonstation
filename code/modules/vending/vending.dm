@@ -402,6 +402,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
@@ -435,6 +436,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
@@ -1267,6 +1269,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)

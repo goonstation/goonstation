@@ -689,7 +689,7 @@
 		handle_hud_overlays()
 		src.antagonist_overlay_refresh(0, 0)
 
-		if (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened") || getStatusDuration("dormant"))
+		if (src.hasStatus(list("weakened", "paralysis", "stunned", "dormant")))
 			canmove = 0
 		else
 			canmove = 1
@@ -702,7 +702,7 @@
 			if (!sleeping)
 				src.on_wake()
 
-		var/may_deliver_recovery_warning = (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
+		var/may_deliver_recovery_warning = (src.hasStatus(list("weakened", "paralysis", "stunned")))
 
 		if (may_deliver_recovery_warning)
 			empty_hands()
@@ -1190,11 +1190,6 @@
 		var/mob/dead/observer/O = ..()
 		if (!O)
 			return null
-
-		if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter
-			var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-			newbio.CopyOther(src.bioHolder)
-			O.bioHolder = newbio
 
 		O.icon = ghost_icon
 		O.icon_state = ghost_icon_state

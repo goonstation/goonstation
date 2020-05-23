@@ -883,6 +883,7 @@ datum/preferences
 </style>
 
 <div style="float: right;">
+	<a href="byond://?src=\ref[src];preferences=1;closejobswindow=1">Back to Setup</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;jobswindow=1">Refresh</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;resetalljobs=1"><b>Reset All Jobs</b></a>
 </div>
@@ -1605,8 +1606,8 @@ datum/preferences
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
-					if( length( newname ) < 3 || length( newname ) > 32 )
-						alert( user, "The name must be between 3 and 32 letters!" )
+					if( length( newname ) < 3 || length( newname ) > MOB_NAME_MAX_LENGTH )
+						alert( user, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!" )
 					else
 						var/ret = src.cloudsave_save( user.client, newname )
 						if( istext( ret ) )

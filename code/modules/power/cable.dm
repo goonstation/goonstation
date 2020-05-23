@@ -73,6 +73,7 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
 
 	var/insulator_default = "synthrubber"
@@ -292,7 +293,7 @@
 	for (var/obj/cable/new_cable_d2 in src.get_connections_one_dir(is_it_d2 = 1))
 		cable_d2 = new_cable_d2
 		break
-	
+
 	// due to the first two lines of this proc it can happen that some cables are left at netnum 0, oh no
 	// this is bad and should be fixed, probably by having a queue of stuff to process once current makepowernets finishes
 	// but I'm too lazy to do that, so here's a bandaid
@@ -387,7 +388,7 @@
 			else if(M.netnum != src.netnum)
 				request_rebuild = 1
 				break
-	
+
 	if(request_rebuild)
 		makepowernets()
 

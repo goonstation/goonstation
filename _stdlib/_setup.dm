@@ -15,10 +15,6 @@
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
 #endif
 
-#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-#warn Only using one z-level. This will fuck everything up. You're gonna have a bad time.
-#endif
-
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
 //   Start profiling immediately, save profiler data when world is rebooting (data/profile/xxxxxxxx-full.log)
@@ -170,7 +166,7 @@
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
-
+#define MOB_NAME_MAX_LENGTH 50
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
@@ -510,6 +506,46 @@
 // These are for the Syndicate headset randomizer proc.
 #define R_FREQ_BLACKLIST_HEADSET list(R_FREQ_DEFAULT, R_FREQ_COMMAND, R_FREQ_SECURITY, R_FREQ_ENGINEERING, R_FREQ_RESEARCH, R_FREQ_MEDICAL, R_FREQ_CIVILIAN, R_FREQ_SYNDICATE, R_FREQ_GANG, R_FREQ_MULTI)
 #define R_FREQ_BLACKLIST_INTERCOM list(R_FREQ_INTERCOM_COLOSSEUM, R_FREQ_INTERCOM_MEDICAL, R_FREQ_INTERCOM_SECURITY, R_FREQ_INTERCOM_BRIG, R_FREQ_INTERCOM_RESEARCH, R_FREQ_INTERCOM_ENGINEERING, R_FREQ_INTERCOM_CARGO, R_FREQ_INTERCOM_CATERING, R_FREQ_INTERCOM_AI, R_FREQ_INTERCOM_BRIDGE)
+
+
+proc/default_frequency_color(freq)
+	switch(freq)
+		if(R_FREQ_DEFAULT)
+			return RADIOC_STANDARD
+		if(R_FREQ_COMMAND)
+			return RADIOC_COMMAND
+		if(R_FREQ_SECURITY)
+			return RADIOC_SECURITY
+		if(R_FREQ_ENGINEERING)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_RESEARCH)
+			return RADIOC_RESEARCH
+		if(R_FREQ_MEDICAL)
+			return RADIOC_MEDICAL
+		if(R_FREQ_CIVILIAN)
+			return RADIOC_CIVILIAN
+		if(R_FREQ_SYNDICATE)
+			return RADIOC_SYNDICATE
+		if(R_FREQ_GANG)
+			return RADIOC_SYNDICATE
+		if(R_FREQ_INTERCOM_MEDICAL)
+			return RADIOC_MEDICAL
+		if(R_FREQ_INTERCOM_SECURITY)
+			return RADIOC_SECURITY
+		if(R_FREQ_INTERCOM_BRIG)
+			return "#FF5000"
+		if(R_FREQ_INTERCOM_RESEARCH)
+			return RADIOC_RESEARCH
+		if(R_FREQ_INTERCOM_ENGINEERING)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_INTERCOM_CARGO)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_INTERCOM_CATERING)
+			return RADIOC_CIVILIAN
+		if(R_FREQ_INTERCOM_AI)
+			return RADIOC_COMMAND
+		if(R_FREQ_INTERCOM_BRIDGE)
+			return RADIOC_COMMAND
 
 //   HOLIDAYS
 // #define HALLOWEEN 1
@@ -920,7 +956,7 @@
 #define SHUTTLE_LOC_RETURNED 2
 
 //moved from guardbot.dm because i wanna use this list of buddy hats on some critters
-#define BUDDY_HATS list("detective","hoscap","hardhat0","hardhat1","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
+#define BUDDY_HATS list("detective","hoscap","hardhat","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
 
 #define EYEBLIND_L 1 // for calculating human eye funkery
 #define EYEBLIND_R 2
@@ -963,7 +999,11 @@
 //JOB EXPERIENCE STUFF END
 
 //This is here because it's used literally everywhere in the codebase below this.
+#ifdef SPACEMAN_DMM
+#define LAGCHECK(x)
+#else
 #define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
+#endif
 
 //Define clientside tick lag seperately from world.tick_lag
 //'cause smoothness looks good.

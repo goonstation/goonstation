@@ -71,8 +71,6 @@
 	var/caneat = 1
 	var/candrink = 1
 
-	var/emote_lock = 0
-
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
@@ -252,7 +250,7 @@
 			W.afterattack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/W = src.equipped()
 		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
 			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -268,14 +266,14 @@
 	return
 */
 /mob/living/onMouseDown(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
 	return
 
 /mob/living/onMouseUp(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)
@@ -348,7 +346,7 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
-	if (!src.stat && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		if (target != src && ishuman(src))
 			var/mob/living/carbon/human/S = src
 			if (S.sims)
@@ -823,7 +821,7 @@
 
 			switch (message_mode)
 				if ("internal 1")
-					if (R1 && !(A.stat || A.getStatusDuration("stunned")|| A.getStatusDuration("weakened"))) // Mainframe may be stunned when the shell isn't.
+					if (R1 && !(A.stat || A.hasStatus(list("stunned", "weakened")))) // Mainframe may be stunned when the shell isn't.
 						R1.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
@@ -831,7 +829,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("internal 2")
-					if (R2 && !(A.stat || A.getStatusDuration("stunned") || A.getStatusDuration("weakened")))
+					if (R2 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
 						R2.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1
@@ -839,7 +837,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("monitor")
-					if (R3 && !(A.stat || A.getStatusDuration("stunned") || A.getStatusDuration("weakened")))
+					if (R3 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
 						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1

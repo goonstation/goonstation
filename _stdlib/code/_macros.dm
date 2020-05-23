@@ -87,8 +87,6 @@ var/list/detailed_spawn_dbg = list()
 
 #define isitem(x) istype(x, /obj/item)
 
-#define childrentypesof(x) (typesof(x) - x)
-
 #define istool(x,y) (isitem(x) && (x:tool_flags & (y)))
 #define iscuttingtool(x) (istool(x, TOOL_CUTTING))
 #define ispulsingtool(x) (istool(x, TOOL_PULSING))

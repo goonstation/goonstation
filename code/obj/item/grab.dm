@@ -75,7 +75,8 @@
 				logTheThing("combat", src.assailant, src.affecting, "drops their pin on %target%")
 			else
 				logTheThing("combat", src.assailant, src.affecting, "drops their grab on %target%")
-			if (affecting.grabbed_by) affecting.grabbed_by -= src
+			if (affecting.grabbed_by)
+				affecting.grabbed_by -= src
 			affecting = null
 
 		assailant = null
@@ -83,6 +84,8 @@
 
 	dropped()
 		dropped += 1
+		if(src.assailant)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		qdel(src)
 
 	process(var/mult = 1)
@@ -96,11 +99,6 @@
 		if (src.state >= GRAB_NECK)
 			if(H) H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 			src.affecting.set_density(0)
-
-		if (src.state == GRAB_PIN)
-			if (ishuman(src.assailant))
-				var/mob/living/carbon/human/HH = src.assailant
-				HH.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 
 		if (src.state == GRAB_KILL)
 			//src.affecting.losebreath++
@@ -253,6 +251,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -295,6 +294,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
 			H.update_canmove()
 
 		if (ishuman(src.affecting))
@@ -353,7 +353,7 @@
 			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
-				src.assailant.remove_stamina(29)
+				src.assailant.remove_stamina(19)
 				src.affecting.remove_stamina(10)
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
@@ -385,7 +385,8 @@
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
 		if (!src.affecting) return 0
-
+		if (get_dist(user, src.affecting) > 1)
+			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
 			user.u_equip(src)

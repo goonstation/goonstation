@@ -743,7 +743,7 @@
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	var/spread_angle = 30
+	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
@@ -818,7 +818,7 @@
 		if(ismob(hit)&&typetospawn)
 			hasspawned = new typetospawn(get_turf(hit))
 			return 1
-		
+
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
@@ -840,7 +840,7 @@
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
 	window_pass = 0
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT

@@ -411,6 +411,7 @@
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
 	icon_state = "clock-188-beige"
+	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
 	caliber = 0.355
@@ -869,6 +870,7 @@
 /obj/item/gun/kinetic/assault_rifle
 	name = "M19A4 assault rifle"
 	desc = "A modified Syndicate battle rifle fitted with several fancy, tactically useless attachments."
+	icon = 'icons/obj/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	force = 20.0
@@ -921,6 +923,7 @@
 /obj/item/gun/kinetic/light_machine_gun
 	name = "M90 machine gun"
 	desc = "Looks pretty heavy to me."
+	icon = 'icons/obj/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
@@ -954,13 +957,15 @@
 /obj/item/gun/kinetic/grenade_launcher
 	desc = "A 40mm hand-held grenade launcher able to fire a variety of explosives."
 	name = "grenade launcher"
+	icon = 'icons/obj/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	force = 5.0
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
-	two_handed = 0
+	two_handed = 1
+	can_dual_wield = 0
 
 	New()
 		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
@@ -1111,9 +1116,9 @@
 /obj/item/gun/kinetic/sniper
 	name = "S90A1 marksman's rifle"
 	desc = "The Syndicate standard issue bolt-action sniper rifle, for engaging hostiles at range."
-	icon = 'icons/obj/48x32.dmi' // big guns get big icons
+	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
-	item_state = "sniper" //using old sniper inhands atm
+	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
 	caliber = 0.308

@@ -53,7 +53,7 @@ obj/machinery/air_vendor
 		return round(src.target_pressure * src.holding.air_contents.volume * src.air_cost)
 
 	proc/fill()
-		if(!holding || !scan) return
+		if(!holding) return
 		gas_prototype.volume = holding.air_contents.volume
 		gas_prototype.temperature = T20C
 

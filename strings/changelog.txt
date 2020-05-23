@@ -1,5 +1,189 @@
 
+(t)sat may 23 20
+(u)pali & Cameron
+(p)813
+(e)🗺🎨|mapping, sprites
+(*)New intercom sprites.
+(t)fri may 22 20
+(u)tloy-x
+(p)803
+(e)|
+(+)Added "Back to Setup" option in Job Preferences Window.
+(u)Erinexx
+(p)808
+(e)🎨|sprites
+(+)Added unique inhands for autoinjectors!
+(u)Erinexx
+(p)810
+(e)🎨|sprites
+(+)Added inhand sprites for the hand labeler!
+(u)Flourish
+(p)795
+(e)🆕|enhancement
+(+)Made the emergency shuttle call message an actual station announcement.
+(u)Kubius
+(p)806
+(e)🆕🗺|enhancement, mapping
+(+)Kondaru fix batch 19: second janitor spawn, atmospheric forcefields, assorted tweaks.
+(u)Comrade f191
+(p)801
+(e)🗺|mapping
+(+)Added AI Intercoms to a few maps; Manta, Oshan, Clarion, Destiny, Cogmap1 and Cogmap2.
+(u)tloy-x
+(p)798
+(e)|
+(+)Fixed spray bottle not showing contents upon inspection.
+(*)Changed how spray bottle and mop bucket show contents upon inspection to act more like beakers. They now show a general description instead of an exact listing of all chems, like a spectroscopic scan.
+(u)pali
+(+)Personal lockers can no longer be unlocked by any random id
+(t)thu may 21 20
+(u)Tarmunroa
+(p)794
+(e)⚖|balance
+(+)Fixed some probability rolls for critical effects (losing HP, falling over, etc) that were lower than expected
+(u)Sovexe
+(p)786
+(e)🎨|sprites
+(+)Added NT Headset and radio icon
+(u)Bubs
+(p)780
+(e)⚖|balance
+(+)Fixes pinning so the pinner still has some stamina regen instead of none and makes pins a bit harder to break out of
+(u)Bubs
+(p)781
+(e)🎨|sprites
+(+)Frag grenades now have an distinct icon when they're armed.
+(u)Jicksaw
+(p)783
+(e)🐛|bug
+(+)Wireless computer signals now appear on Packet Sniffer
+(u)Phuzzy
+(p)775
+(e)🗺|mapping
+(*)New ad tape for the radio station!
+(t)wed may 20 20
+(u)pali
+(p)772
+(e)🐛|bug
+(+)Scooping up fluids with a beaker now removes only as much fluid as can fit in the beaker
+(u)pali
+(p)771
+(e)⚖|balance
+(+)Activated nuclear bombs now glow softly.
+(u)TrustworthyFella
+(p)701
+(e)🆕|enhancement
+(+)Made Original Sin blood floods size and reagent depend on the amount of blood in you, and what your blood reagent is.
+(u)pali
+(*)Erebokinesis and darkness artifact should now be slightly less infuriating.
+(t)tue may 19 20
+(u)Flourish
+(p)764
+(e)🆕🎨|enhancement, sprites
+(+)Added a cardboard clown car box as a level 5 clown job reward. Sprites by Erinexx.
+(u)Sovexe
+(p)731
+(e)🐛|bug
+(+)AIs and Borgs can no longer be given blank names.
+(+)You can no longer specify a blank name in the character creator.
+(u)Tarmunora
+(p)756
+(e)🆕🔄|enhancement, rework
+(*)Magboots made more versatile, and toggleable, at the cost of a minor slowdown
+(u)Erinexx
+(p)750
+(e)🎨|sprites
+(*)Updated powernet & Artsci sprites
+(u)Gannets
+(p)746
+(e)⚖🎨|balance, sprites
+(*)New sprites for many nuclear operative class weapons.
+(*)Nuclear operative grenade launcher is now two-handed.
+(u)Keiya
+(p)749
+(e)|
+(*)Compost and high-capacity water tanks can now be bolted down or released with a screwdriver or wrench.
+(u)Sovexe
+(p)748
+(e)🐛|bug
+(+)Fixed a bug that allowed DNA Reclaimer to wipe out surplus research materials
+(t)mon may 18 20
+(u)Tarmunora
+(p)664
+(e)⚖|balance
+(+)Buffed taser shotgun
+(t)sun may 17 20
+(u)Erinexx
+(p)717
+(e)🔄🎨|rework, sprites
+(*)Resprited all non-artifact plants
+(*)Added unique sprites to several mutant plants
+(u)pali
+(+)AIs that buy a hat for spacebux should now start with that hat equipped
+(u)Flourish
+(p)718
+(e)🆕🎨|enhancement, sprites
+(+)You can now draw faces on cardboard boxes and deconstruct packing crates and pizza boxes for cardboard sheets.
+(u)Erinexx
+(p)723
+(e)🗺🎨|mapping, sprites
+(*)Added perspective cleanbot and mulebot sprites!
+(u)Naksu
+(p)706
+(e)🐛|bug
+(+)Reagents inside mobs no longer get adjusted towards body temperature - 30, but body temperature. Reagent temperature reactions do not happen if there was no change in temperature.
+(u)Mordent
+(p)726
+(e)|
+(+)Fixed non-humans being unable to connect mechanics components even if holding a multitool.
+(u)pali
+(p)721
+(e)|
+(+)Increased max name length to 50 letters.
+(u)TrustworthyFella
+(p)696
+(e)⚖|balance
+(+)Makes the clock work on armored targets, gives it additional slow(capped at 3s), and increases fire rate. 9mm NATO also has a higher(75%) chance of hitting prone targets.
+(+)Adds clock ammo to the Ammotech + Sectech
+(t)sat may 16 20
+(u)UrsulaMajor
+(p)660
+(e)⚖|balance
+(*)Removed Bladder and Energy motives from RP. Made Hygiene motive cosmetic only.
+(u)mbc
+(p)714
+(e)⚖|balance
+(*)Self surgery does a bit more damage.
+(u)mbc
+(p)715
+(e)⚖|balance
+(*)Blocking reduces the chance of being disarmed. May be subject to change later!
+(u)zjdtmkhzt
+(p)710
+(e)⚖🆕|balance, enhancement
+(*)The mining z-level now has a map. Find it in your PDA!
+(t)fri may 15 20
+(u)TrustworthyFella
+(p)694
+(e)⚖|balance
+(+)Buffed derringer damage from 50 to 80. Higher falloff given to compensate.
+(u)Tarmunora
+(p)651
+(e)⚖|balance
+(+)Tweaked the delivery mechanism in shock grenades; they now smoke voltagen instead of leaving puddles behind.
+(u)Tarmunora
+(p)674
+(e)⚖|balance
+(+)Haloperidol is slightly better at tranquilizing.
 (t)thu may 14 20
+(u)Keiya
+(p)695
+(e)🆕|enhancement
+(+)Card boxes now have varying sizes. Notably, you can now put tarot decks back in their box easily.
+(u)mbc
+(p)690
+(e)🆕|enhancement
+(*)Added directional lights. They are in use for most things that would make sense (flashlights hard hats pods etc). A Bonus of this is that they are less laggy than normal lights (because they cover less tiles)!
 (u)Fosstar
 (p)430
 (e)🆕🎨|enhancement, sprites

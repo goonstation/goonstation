@@ -355,10 +355,10 @@ Obsidian Crown
 					if (3)
 						hear_voidSpeak("How lucky you are, Friend, how truly blessed!  Companions guarding your form entirely from the risks of the material!")
 
-		if(isrestrictedz(host.z) && prob(3))
-			hear_voidSpeak("<small>...the sun...</small>")
+		if(isrestrictedz(host.z) && prob(0.5))
+			hear_voidSpeak("...the sun...", "<small>", "</small>")
 		var/area/A = get_area(src)
-		if(A.type == /area/solarium && prob(20))
+		if(A.type == /area/solarium && prob(3))
 			if(prob(10))
 				hear_voidSpeak("Let them touch the sun.")
 			else
@@ -451,7 +451,7 @@ Obsidian Crown
 		host.updatehealth()
 		return
 
-	proc/hear_voidSpeak(var/message)
+	proc/hear_voidSpeak(var/message, var/prefix, var/suffix)
 		if (!message)
 			return
 		var/mob/wearer = src.loc
@@ -459,7 +459,7 @@ Obsidian Crown
 			return
 		var/voidMessage = voidSpeak(message)
 		if (voidMessage)
-			boutput(wearer, "[voidMessage]")
+			boutput(wearer, "[prefix][voidMessage][suffix]")
 		return
 
 	proc/abandonHost()
