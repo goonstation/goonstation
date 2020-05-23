@@ -63,16 +63,6 @@
 	iconmod = "TomatoExplosive"
 	assoc_reagents = list("fuel")
 
-/*	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
-		. = ..()
-		if (.)
-			return .
-		if (prob(5) || (user.client && user.client.hellbanned && prob(50)))
-			boutput(user, "<span class='alert'>A tomato explodes as you pick it off the plant!</span>")
-			explosion_new(POT, get_turf(user), 10, 1)
-			return 399
-		return 0
-*/
 /datum/plantmutation/tomato/killer
 	name = "Suspicious Tomato"
 	name_prefix = "Suspicious "
