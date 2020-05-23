@@ -1,5 +1,6 @@
 // Not all that crazy shit
 
+ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special
 	name = "special"
 	icon = 'icons/obj/projectiles.dmi'

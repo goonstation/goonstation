@@ -525,6 +525,7 @@
 		src.tracked_blood = null
 		return
 
+ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
 	var

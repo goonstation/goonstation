@@ -8,6 +8,7 @@
 // obj/machinery/plantpot.dm: The plantpot file, where most of the Stuff happens.
 // obj/submachine/seed.dm: The splicer and reagent extractor are in here.
 
+ABSTRACT_TYPE(/datum/plant)
 /datum/plant/
 	// Standard variables for plants are added here.
 	var/name = "plant species name" // Name of the plant species
