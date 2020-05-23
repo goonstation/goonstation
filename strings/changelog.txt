@@ -1,5 +1,9 @@
 
 (t)sat may 23 20
+(u)Sovexe
+(p)822
+(e)⚖🐛|balance, bug
+(+)Space spiders from syndicate sponge capsules are now aggressive.
 (u)pali & Cameron
 (p)813
 (e)🗺🎨|mapping, sprites
