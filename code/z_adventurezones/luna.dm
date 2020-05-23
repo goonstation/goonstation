@@ -1081,7 +1081,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.attacking = 1
 		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
@@ -1100,7 +1100,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.dir = pick(alldirs)
 
