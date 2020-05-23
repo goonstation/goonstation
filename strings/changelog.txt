@@ -1,5 +1,9 @@
 
 (t)sat may 23 20
+(u)Flourish
+(p)816
+(e)🆕|feature
+(+)When you try to put or remove something from someone, the progress bar will display the item's icon. Removing items from pockets will continue to show up as secret though!
 (u)adharainspace
 (p)819
 (e)🆕🎨|feature, sprites
