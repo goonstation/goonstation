@@ -1,5 +1,5 @@
 // ----------------------------------
-// spasm around
+// writhe around
 // ----------------------------------
 /datum/targetable/critter/writhe
 	name = "Writhe"
