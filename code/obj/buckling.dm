@@ -15,7 +15,7 @@
 	if (to_buckle.buckled && to_buckle.buckled != src)
 		to_buckle.buckled.unbuckle_mob(to_buckle)
 	buckled_mob = to_buckle
-
+	to_buckle.buckled = src
 	mob_buckled(to_buckle, user)
 	to_buckle.buckled(src)
 

@@ -329,8 +329,6 @@
 		M.lying = 1
 		M.set_loc(src.loc)
 		M.set_clothing_icon_dirty()
-		if (src.anchored)
-			M.anchored = 1
 
 	mob_buckled(mob/M, mob/user)
 		if (M == user)
@@ -343,10 +341,8 @@
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 	unbuckle_mob(mob/M)
-		if (buckled_mob && buckled_mob == M)
-			..()
-			M.force_laydown_standup()
-			M.anchored = 0
+		. = ..()
+		M.force_laydown_standup()
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newSheet as obj, var/mob/user as mob)
 		if (!newSheet || newSheet.cape || (src.Sheet == newSheet && newSheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -626,8 +622,6 @@
 	buckle_mob(mob/living/carbon/human/H, mob/user)
 		. = ..()
 		if (istype(H))
-			if (src.anchored)
-				H.anchored = 1
 			H.on_chair = src
 			H.start_chair_flip_targeting()
 		H.set_loc(src.loc)
@@ -636,7 +630,6 @@
 	unbuckle_mob(mob/living/carbon/human/H, mob/user)
 		if (istype(H) && H.on_chair)
 			H.pixel_y = 0
-			H.anchored = 0
 		buckled_mob.force_laydown_standup()
 		return ..()
 

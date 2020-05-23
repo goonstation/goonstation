@@ -16,6 +16,7 @@
 	var/artifact = null
 	var/move_triggered = 0
 	var/object_flags = 0
+
 	var/mob/living/buckled_mob
 
 	proc/move_trigger(var/mob/M, var/kindof)
@@ -83,6 +84,22 @@
 			else
 		return
 
+	proc/ex_act_third(severity)
+		switch(severity)
+			if(1.0)
+				qdel(src)
+				return
+			if(2.0)
+				if (prob(66))
+					qdel(src)
+					return
+			if(3.0)
+				if (prob(33))
+					qdel(src)
+					return
+			else
+		return
+
 
 	onMaterialChanged()
 		..()
@@ -101,9 +118,9 @@
 		mats = null
 		if (artifact && !isnum(artifact))
 			artifact:holder = null
-		remove_dialogs()
 		if (buckled_mob)
 			unbuckle_mob(buckled_mob)
+		remove_dialogs()
 		..()
 
 	proc/client_login(var/mob/user)
@@ -232,6 +249,277 @@
 /obj/proc/get_movement_controller(mob/user)
 	return
 
+/obj/bedsheetbin
+	name = "linen bin"
+	desc = "A bin for containing bedsheets."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "bedbin"
+	var/amount = 23.0
+	anchored = 1.0
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/clothing/suit/bedsheet))
+			qdel(W)
+			src.amount++
+		return
+
+	attack_hand(mob/user as mob)
+		add_fingerprint(user)
+		if (src.amount >= 1)
+			src.amount--
+			new /obj/item/clothing/suit/bedsheet(src.loc)
+			if (src.amount <= 0)
+				src.icon_state = "bedbin0"
+		else
+			boutput(user, "There's no bedsheets left in [src]!")
+
+	get_desc()
+		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
+
+/obj/towelbin
+	name = "towel bin"
+	desc = "A bin for containing towels."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "bedbin"
+	var/amount = 23.0
+	anchored = 1.0
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/clothing/under/towel))
+			qdel(W)
+			src.amount++
+		return
+
+	attack_hand(mob/user as mob)
+		add_fingerprint(user)
+		if (src.amount >= 1)
+			src.amount--
+			new /obj/item/clothing/under/towel(src.loc)
+			if (src.amount <= 0)
+				src.icon_state = "bedbin0"
+		else
+			boutput(user, "There's no towels left in [src]!")
+
+	get_desc()
+		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
+
+/obj/securearea
+	desc = "A warning sign which reads 'SECURE AREA'"
+	name = "SECURE AREA"
+	icon = 'icons/obj/decals/wallsigns.dmi'
+	icon_state = "securearea"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+	layer = EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_BELOW
+
+/obj/securearea/ex_act(severity)
+	ex_act_third(severity)
+
+/obj/joeq
+	desc = "Here lies Joe Q. Loved by all. He was a terrorist. R.I.P."
+	name = "Joe Q. Memorial Plaque"
+	icon = 'icons/obj/decals/wallsigns.dmi'
+	icon_state = "rip"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/fudad
+	desc = "In memory of Arthur \"F. U. Dad\" Muggins, the bravest, toughest Vice Cop SS13 has ever known. Loved by all. R.I.P."
+	name = "Arthur Muggins Memorial Plaque"
+	icon = 'icons/obj/decals/wallsigns.dmi'
+	icon_state = "rip"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/juggleplaque
+	desc = "In loving and terrified memory of those who discovered the dark secret of Jugglemancy. \"E. Shirtface, Juggles the Clown, E. Klein, A.F. McGee,  J. Flarearms.\""
+	name = "Funny-Looking Memorial Plaque"
+	icon = 'icons/obj/decals/wallsigns.dmi'
+	icon_state = "rip"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/lattice
+	desc = "A lightweight support lattice."
+	name = "lattice"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "lattice"
+	density = 0
+	stops_space_move = 1
+	anchored = 1.0
+	layer = LATTICE_LAYER
+	//	flags = CONDUCT
+
+	blob_act(var/power)
+		if(prob(75))
+			qdel(src)
+			return
+
+	ex_act(severity)
+		if(src.material)
+			src.material.triggerExp(src, severity)
+		switch(severity)
+			if(1.0)
+				qdel(src)
+				return
+			if(2.0)
+				qdel(src)
+				return
+			if(3.0)
+				return
+			else
+		return
+
+	attackby(obj/item/C as obj, mob/user as mob)
+
+		if (istype(C, /obj/item/tile))
+
+			C:build(get_turf(src))
+			C:amount--
+			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			C.add_fingerprint(user)
+
+			if (C:amount < 1)
+				user.u_equip(C)
+				qdel(C)
+			qdel(src)
+			return
+		if (istype(C, /obj/item/weldingtool) && C:welding)
+			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
+			C:eyecheck(user)
+			new /obj/item/rods/steel(src.loc)
+			qdel(src)
+		if (istype(C, /obj/item/rods))
+			var/obj/item/rods/R = C
+			if (R.amount >= 2)
+				R.amount -= 2
+				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
+				new /obj/lattice/barricade(src.loc)
+				if (R.amount < 1)
+					user.u_equip(C)
+					qdel(C)
+				qdel(src)
+		return
+
+/obj/lattice/barricade
+	name = "barricade"
+	desc = "A lattice that has been turned into a makeshift barricade."
+	icon_state = "girder"
+	density = 1
+	var/strength = 2
+
+	proc/barricade_damage(var/hitstrength)
+		strength -= hitstrength
+		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+		if (strength < 1)
+			src.visible_message("The barricade breaks!")
+			if (prob(50)) new /obj/item/rods/steel(src.loc)
+			qdel(src)
+			return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WELD = W
+			if(WELD.welding)
+				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
+				WELD.eyecheck(user)
+				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
+				R.amount = src.strength
+				qdel(src)
+				return
+		else if (istype(W,/obj/item/rods))
+			var/obj/item/rods/R = W
+			var/difference = 5 - src.strength
+			if (difference <= 0)
+				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
+				return
+			if (R.amount > difference)
+				R.amount -= difference
+				src.strength = 5
+				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
+				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
+				return
+			else if (R.amount <= difference)
+				R.amount -= difference
+				src.strength = 5
+				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
+				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
+				if (R.amount < 1)
+					user.u_equip(W)
+					qdel(W)
+				return
+		else
+			if (W.force > 8)
+				user.lastattacked = src
+				src.barricade_damage(W.force / 8)
+				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+			..()
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				qdel(src)
+				return
+			if(2.0) src.barricade_damage(3)
+			if(3.0) src.barricade_damage(1)
+		return
+
+	blob_act(var/power)
+		src.barricade_damage(2 * power / 20)
+
+	meteorhit()
+		src.barricade_damage(1)
+
+/obj/overlay
+	name = "overlay"
+	mat_changename = 0
+	mat_changedesc = 0
+	event_handler_flags = IMMUNE_MANTA_PUSH
+
+	updateHealth()
+		return
+
+	meteorhit(obj/M as obj)
+		if (isrestrictedz(src.z))
+			return
+		else
+			return ..()
+
+	ex_act(severity)
+		if (isrestrictedz(src.z))
+			return
+		else
+			return ..()
+
+	track_blood()
+		src.tracked_blood = null
+		return
+
+/obj/overlay/self_deleting
+	New(newloc, deleteTimer)
+		..()
+		if (deleteTimer)
+			SPAWN_DBG(deleteTimer)
+				qdel(src)
+
+/obj/projection
+	name = "Projection"
+	anchored = 1.0
+
+/obj/deskclutter
+	name = "desk clutter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "deskclutter"
+	desc = "What a mess..."
+	anchored = 1
+
+/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
 /obj/proc/alter_health()
 	return 1
 
@@ -289,3 +577,114 @@
 
 	animate_storage_thump(src)
 
+/obj/handcuffdispenser
+	name = "handcuff dispenser"
+	desc = "A handy dispenser for handcuffs."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "dispenser_handcuffs"
+	pixel_y = 28
+	var/amount = 3
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/handcuffs))
+			user.u_equip(W)
+			qdel(W)
+			src.amount++
+			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
+			src.icon_state = "dispenser_handcuffs"
+		return
+
+	attack_hand(mob/user as mob)
+		add_fingerprint(user)
+		if (src.amount >= 1)
+			src.amount--
+			user.put_in_hand_or_drop(new/obj/item/handcuffs, user.hand)
+			boutput(user, "<span class='alert'>You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
+			if (src.amount <= 0)
+				src.icon_state = "dispenser_handcuffs0"
+		else
+			boutput(user, "<span class='alert'>There's no handcuffs left in the [src]!</span>")
+
+/obj/latexglovesdispenser
+	name = "latex gloves dispenser"
+	desc = "A handy dispenser for latex gloves."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "dispenser_gloves"
+	pixel_y = 28
+	var/amount = 3
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/clothing/gloves/latex))
+			user.u_equip(W)
+			qdel(W)
+			src.amount++
+			boutput(user, "<span class='notice'>You put a pair of latex gloves in the [src]. [amount] left in the dispenser.</span>")
+			src.icon_state = "dispenser_gloves"
+		return
+
+	attack_hand(mob/user as mob)
+		add_fingerprint(user)
+		if (src.amount >= 1)
+			src.amount--
+			user.put_in_hand_or_drop(new/obj/item/clothing/gloves/latex, user.hand)
+			boutput(user, "<span class='alert'>You take a pair of latex gloves from the [src]. [amount] left in the dispenser.</span>")
+			if (src.amount <= 0)
+				src.icon_state = "dispenser_gloves0"
+		else
+			boutput(user, "<span class='alert'>There's no latex gloves left in the [src]!</span>")
+
+/obj/medicalmaskdispenser
+	name = "medical mask dispenser"
+	desc = "A handy dispenser for medical masks."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "dispenser_mask"
+	pixel_y = 28
+	var/amount = 3
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/clothing/mask/medical))
+			user.u_equip(W)
+			qdel(W)
+			src.amount++
+			boutput(user, "<span class='notice'>You put a pair of medical masks in the [src]. [amount] left in the dispenser.</span>")
+			src.icon_state = "dispenser_mask"
+		return
+
+	attack_hand(mob/user as mob)
+		add_fingerprint(user)
+		if (src.amount >= 1)
+			src.amount--
+			user.put_in_hand_or_drop(new/obj/item/clothing/mask/medical, user.hand)
+			boutput(user, "<span class='alert'>You take a pair of medical masks from the [src]. [amount] left in the dispenser.</span>")
+			if (src.amount <= 0)
+				src.icon_state = "dispenser_mask0"
+		else
+			boutput(user, "<span class='alert'>There's no medical masks left in the [src]!</span>")
+
+/obj/glassesdispenser
+	name = "prescription glass dispenser"
+	desc = "A handy dispenser for prescription glasses."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "dispenser_glasses"
+	pixel_y = 28
+	var/amount = 3
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/clothing/glasses/regular))
+			user.u_equip(W)
+			qdel(W)
+			src.amount++
+			boutput(user, "<span class='notice'>You put a pair of prescription glass in the [src]. [amount] left in the dispenser.</span>")
+			src.icon_state = "dispenser_glasses"
+		return
+
+	attack_hand(mob/user as mob)
+		add_fingerprint(user)
+		if (src.amount >= 1)
+			src.amount--
+			user.put_in_hand_or_drop(new/obj/item/clothing/glasses/regular, user.hand)
+			boutput(user, "<span class='alert'>You take a pair of prescription glass from the [src]. [amount] left in the dispenser.</span>")
+			if (src.amount <= 0)
+				src.icon_state = "dispenser_glasses0"
+		else
+			boutput(user, "<span class='alert'>There's no prescription glass left in the [src]!</span>")

@@ -60,7 +60,6 @@
 
 		var/mob/M = holder.owner
 
-
 		if (get_dist(M,target) > 3 + extrarange)
 			var/steps = 0
 			var/turf/T = get_turf(M)
@@ -72,21 +71,13 @@
 
 		extrarange = 0
 
-
 		if (M.buckled)
-			M.buckled.unbuckle(M, M)
+			M.buckled.unbuckle_mob(M, M)
 
 		M.targeting_ability = null
 		M.update_cursor()
-
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.on_chair = 0
-
 		playsound(M.loc, "sound/effects/flip.ogg", 50, 1)
 		M.throw_at(target, 10, 1, throw_type = THROW_CHAIRFLIP)
-
-
 		if (!iswrestler(M) && M.traitHolder && !M.traitHolder.hasTrait("glasscannon"))
 			M.remove_stamina(STAMINA_FLIP_COST)
 			M.stamina_stun()

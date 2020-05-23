@@ -207,7 +207,6 @@
 	if (reagents)
 		reagents.physical_shock(14)
 	src.throwing = throw_type
-
 	src.throw_traveled = 0
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
