@@ -1,5 +1,9 @@
 
 (t)fri may 22 20
+(u)Flourish
+(p)795
+(e)🆕|enhancement
+(+)Made the emergency shuttle call message an actual station announcement.
 (u)Kubius
 (p)806
 (e)🆕🗺|enhancement, mapping
