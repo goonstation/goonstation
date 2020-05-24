@@ -291,14 +291,14 @@
 		var/floormod1 = rand(0, 32)
 		var/floormod2 = rand(0, 32)
 		if(usr.plane == -100)
-			usr.plane = 0
+			usr.plane = PLANE_DEFAULT
 			usr.layer = 4
 			animate_slide(floorturf, floormod1, floormod2, 5)
 			animate_slide(floorturf, 0, 0, 5)
 
 		else
 			usr.layer = 4
-			usr.plane = -100
+			usr.plane = PLANE_UNDERFLOOR
 			animate_slide(floorturf, floormod1, floormod2, 5)
 			animate_slide(floorturf, 0, 0, 5)
 
@@ -329,5 +329,5 @@
 	var/grabtime = 65
 
 	cast(mob/target)
-		usr.plane = -100
+		usr.plane = PLANE_UNDERFLOOR
 		target.cluwnegib(grabtime)

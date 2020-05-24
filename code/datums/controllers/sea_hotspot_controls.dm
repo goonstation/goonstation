@@ -474,7 +474,7 @@
 	item_state = "dowsing"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
-	plane = 11
+	plane = PLANE_LIGHTING + 1
 	throwforce = 6
 	w_class = 2.0
 	force = 6
