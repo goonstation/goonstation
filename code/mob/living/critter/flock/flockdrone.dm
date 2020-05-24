@@ -777,37 +777,20 @@
 					actions.start(new/datum/action/bar/flock_repair(F), user)
 
 
-/datum/limb/flock_converter/help(atom/target, var/mob/living/critter/flock/drone/user)
+/datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// REPAIR FLOCKDRONE/door
-	if(istype(target, /mob/living/critter/flock/drone))
-		var/mob/living/critter/flock/drone/F = target
-		if(isflock(F))
-			if(F.get_health_percentage() >= 1.0)
-				boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
-			if(user.resources < 10)
-				boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-			else
-				actions.start(new/datum/action/bar/flock_repair(F), user)
+	var/mob/living/critter/flock/drone/F = target
+	if(isflock(F))
+		if(F.get_health_percentage() >= 1.0)
+			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+		if(user.resources < 10)
+			boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
 		else
-			..()
-
-/*	else if(istype(target, /obj/machinery/door/feather))
-		if(target.health = target.max_health)
-			boutput(user,"<span class='alert'>The Solid Seal Aperture is in perfect condition.</span>")
-		else if(target.broken)
-			if(user.resources < 10)
-				boutput(user, "<span class='alert'>Not enough resources to repair it in it's critical condition.(you need 10).</span>")
-			else
-				//addactionlater
-		else
-			if(user.resources < 5)
-				boutput(user, "<span class='alert'>Not enough resources to repair (you need 5).</span>")
-			else
-*/
+			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
 		..()
 
