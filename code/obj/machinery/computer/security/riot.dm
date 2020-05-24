@@ -110,14 +110,28 @@
 				authorize()
 				return
 
-			src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (H.bioHolder.Uid in src.authorized)
+					boutput(user, "You have already authorized - fingerprints on file! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+					return
+				src.authorized += H.bioHolder.Uid
+			else
+				src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
 			src.authorized_registered += W:registered
+
 			if (src.authorized.len < auth_need)
 				print_auth_needed(user)
 			else
 				authorize()
 
 		if("Repeal")
-			src.authorized -= user
+
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				src.authorized -= H.bioHolder.Uid
+			else
+				src.authorized -= user
 			src.authorized_registered -= W:registered
+
 			print_auth_needed(user)
