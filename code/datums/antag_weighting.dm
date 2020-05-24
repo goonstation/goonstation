@@ -7,7 +7,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 /datum/antagWeighter
 	var/debug = 0 //print a shit load of debug messages or not
-	var/variance = 10 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
+	var/variance = 100 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
 	var/minPlayed = 5 //minimum amount of rounds participated in required for the antag weighter to consider a person a valid choice
 
 
@@ -241,7 +241,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 			//Variance triggered, go pick a random player
 			if (historyLookup.len && prob(src.variance))
-				cckey = pick(historyLookup)
+				cckey = pick(ckeyMinds)
 				weight = historyLookup[cckey]["weight"]
 				seen = historyLookup[cckey]["seen"]
 				historyLookup -= cckey
