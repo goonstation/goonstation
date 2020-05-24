@@ -459,7 +459,6 @@ var/global/list/soundCache = list(
  	"sound/items/zipper.ogg" = 'sound/items/zipper.ogg',\
  	"sound/items/zippo_close.ogg" = 'sound/items/zippo_close.ogg',\
  	"sound/items/zippo_open.ogg" = 'sound/items/zippo_open.ogg',\
-	"sound/items/toys/figure-bang.ogg" = 'sound/items/toys/figure-bang.ogg',\
 	"sound/items/toys/figure-headlock.ogg" = 'sound/items/toys/figure-headlock.ogg',\
 	"sound/items/toys/figure-kiss.ogg" = 'sound/items/toys/figure-kiss.ogg',\
 	"sound/items/toys/figure-knock.ogg" = 'sound/items/toys/figure-knock.ogg',\
