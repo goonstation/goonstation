@@ -79,7 +79,7 @@ See: `if(x)` vs `if (x)`
 
 Nobody cares about this. This is heavily frowned upon for changing with little to no reason.
 
-### Abstract types an typesof
+### Abstract types and typesof
 
 Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(type)` macro.
 
