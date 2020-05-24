@@ -17,6 +17,7 @@ var/datum/preMapLoad/preMapLoad = new
 
 //Standard Library Inclusions
 #include "_stdlib\__build.dm"
+#include "_stdlib\_metamacros.dm"
 #include "_stdlib\_accessLevels.dm"
 #include "_stdlib\_mapDefines.dm"
 #include "_stdlib\_setup.dm"
