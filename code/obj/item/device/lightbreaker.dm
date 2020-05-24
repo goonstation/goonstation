@@ -15,6 +15,7 @@
 	stamina_cost = 10
 	stamina_crit_chance = 15
 	var/ammo = 4
+	var/ammo_max = 4
 
 	examine()
 		. = ..()
@@ -48,12 +49,15 @@
 
 	attackby(obj/item/W, mob/user, params)
 		if(isscrewingtool(W))
-			actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind"), user)
+			if(ammo < ammo_max)
+				actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind",round(300*(1-ammo/ammo_max))), user)
+			else
+				boutput(user, "<span class='alert'>It's already fully rewound!</span>")
 			return
 		return ..()
 
 	proc/rewind()
-		ammo = 4
+		ammo = ammo_max
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 
 /datum/action/bar/icon/rewind_tape
