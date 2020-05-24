@@ -164,7 +164,20 @@
 	desc = "A specialised high-pressure water tank for holding large amounts of water."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertankbig"
+	anchored = 0
 	amount_per_transfer_from_this = 25
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 1
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 0
+			return
 
 	New()
 		..()
@@ -369,6 +382,7 @@
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "compost"
+	anchored = 0
 	amount_per_transfer_from_this = 30
 
 	New()
@@ -383,6 +397,16 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 1
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 0
+			return
 		var/load = 1
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
 		else if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom/)) src.reagents.add_reagent("poo", 25)

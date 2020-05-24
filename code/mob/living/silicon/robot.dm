@@ -1,3 +1,7 @@
+#define ROBOT_BATTERY_DISTRESS_INACTIVE 0
+#define ROBOT_BATTERY_DISTRESS_ACTIVE 1
+#define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+
 /datum/robot_cosmetic
 	var/head_mod = null
 	var/ches_mod = null
@@ -51,6 +55,8 @@
 	var/opened = 0
 	var/wiresexposed = 0
 	var/brainexposed = 0
+	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+	var/next_batteryDistressBoop = 0
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -65,9 +71,10 @@
 	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
-	var/sound_automaton_spaz = 'sound/misc/automaton_spaz.ogg'
+	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
+	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
 
 	// moved up to silicon.dm
 	killswitch = 0
@@ -470,7 +477,7 @@
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise."
 						else
-							playsound(src.loc, src.sound_automaton_spaz, 50, 1)
+							playsound(src.loc, src.sound_automaton_scratch, 50, 1)
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
@@ -643,9 +650,12 @@
 				src.internal_pda.owner = "[src]"
 				return
 			else
-				newname = strip_html(newname, 32, 1)
+				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
 					src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+					continue
+				else if (is_blank_string(newname))
+					src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 					continue
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
@@ -809,6 +819,10 @@
 				dmgmult = 0.2
 			if(D_TOXIC)
 				dmgmult = 0
+
+		if(P.proj_data.ks_ratio == 0)
+			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 		log_shot(P,src)
 		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
@@ -2280,11 +2294,18 @@
 					HealDamage("All", 6, 6)
 
 				setalive(src)
+
+			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				batteryDistress() // Execute distress mode
+			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
+				clearBatteryDistress() // Exit distress mode
+
 		else
 			if (isalive(src))
 				sleep(0)
 				src.lastgasp()
 			setunconscious(src)
+			batteryDistress() // No battery. Execute distress mode
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -2795,6 +2816,7 @@
 			UpdateOverlays(i_clothes, "clothes")
 		else
 			UpdateOverlays(null, "clothes")
+
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null
 		switch(slot)
@@ -3002,6 +3024,26 @@
 
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
+
+/mob/living/silicon/robot/var/image/i_batterydistress
+
+/mob/living/silicon/robot/proc/batteryDistress()
+	if (!src.i_batterydistress) // we only need to build i_batterydistress once
+		src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
+		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
+
+	if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
+		UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
+		src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
+		src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
+	else if(world.time >= src.next_batteryDistressBoop)
+		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
+		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
+
+
+/mob/living/silicon/robot/proc/clearBatteryDistress()
+	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
+	ClearSpecificOverlays("batterydistress")
 
 /mob/living/silicon/robot/verb/open_nearest_door()
 	set category = "Robot Commands"
@@ -3268,7 +3310,7 @@
 /mob/living/silicon/robot/buddy
 	name = "Robot"
 	real_name = "Robot"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy1"
 	health = 1000
 	custom = 1
@@ -3346,3 +3388,6 @@
 		//STEP SOUND HANDLING OVER
 
 #undef can_step_sfx
+#undef ROBOT_BATTERY_DISTRESS_INACTIVE
+#undef ROBOT_BATTERY_DISTRESS_ACTIVE
+#undef ROBOT_BATTERY_DISTRESS_THRESHOLD

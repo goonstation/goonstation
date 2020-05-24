@@ -163,6 +163,7 @@
 	var/special_sprint = SPRINT_NORMAL
 
 	var/last_show_inv = 0 //used to speedup update_clothing check. its hacky, im sorry
+	var/list/showing_inv
 
 	var/icon/flat_icon = null
 
@@ -203,6 +204,8 @@
 	arrestIconsAll.Add(arrestIcon)
 
 	src.organHolder = new(src)
+
+	src.ensure_bp_list()
 
 	if (!bioHolder)
 		bioHolder = new/datum/bioHolder(src)
@@ -466,9 +469,6 @@
 			return
 		return 0
 
-/mob/living/carbon/human/proc/is_changeling()
-	return ischangeling(src)
-
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
 
@@ -500,6 +500,8 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	showing_inv = null
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -730,7 +732,7 @@
 		return
 
 	var/turf/reappear_turf = get_turf(src)
-	if (!antag_removal)
+	if (!antag_removal && !isrestrictedz(reappear_turf.z))
 		for (var/turf/simulated/floor/S in orange(7))
 			if (S == reappear_turf) continue
 			if (prob(50)) //Try to appear on a turf other than the one we die on.
@@ -839,7 +841,7 @@
 
 		// collect modifiers from the datum
 		. += modifier.additive_slowdown
-		multiplier += modifier.multiplicative_slowdown
+		multiplier *= modifier.multiplicative_slowdown
 		health_deficiency_adjustment += modifier.health_deficiency_adjustment
 		pushpull_multiplier *= modifier.pushpull_multiplier
 		aquatic_movement += modifier.aquatic_movement
@@ -1463,7 +1465,7 @@
 			if (src.parry_or_dodge(M))
 				return
 
-			if (src.mob_flags && IS_RELIQUARY_SOLDIER)
+			if (src.mob_flags & IS_RELIQUARY_SOLDIER)
 				M.visible_message("<span class='alert'><B>[M] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 				random_brute_damage(M, rand(2,5))
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
@@ -1501,7 +1503,7 @@
 
 
 /mob/living/carbon/human/proc/show_inv(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = {"
 	<B><HR><FONT size=3>[src.name]</FONT></B>
 	<BR><HR>
@@ -1555,13 +1557,18 @@
 /mob/living/carbon/human/Topic(href, href_list)
 	if (istype(usr.loc,/obj/dummy/spell_invis/) || isghostdrone(usr))
 		return
-	if (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
+	var/canmove_or_pinning = usr.canmove
+	for (var/obj/item/grab/G in usr.equipped_list(check_for_magtractor = 0))
+		if (G.state == GRAB_PIN)
+			canmove_or_pinning = 1
+
+	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
 		if (href_list["slot"] == "handcuff")
 			actions.start(new/datum/action/bar/icon/handcuffRemovalOther(src), usr)
 		else if (href_list["slot"] == "internal")
 			actions.start(new/datum/action/bar/icon/internalsOther(src), usr)
 		else if (href_list["item"])
-			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"])) , usr)
+			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"]), 0, href_list["item"] == "pockets") , usr)
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
@@ -2764,7 +2771,7 @@
 
 	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
-			if (src.is_changeling())
+			if (ischangeling(src))
 				boutput(src, "<span class='notice'>You briefly shrink your hands to remove your handcuffs.</span>")
 				src.handcuffs.drop_handcuffs(src)
 				return

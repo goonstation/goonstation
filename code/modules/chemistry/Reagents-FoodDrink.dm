@@ -149,6 +149,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			transparency = 190
+			minimum_reaction_temperature = -INFINITY
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(exposed_temperature <= T0C + 7)
@@ -1935,6 +1936,7 @@ datum
 			transparency = 255
 			hunger_value = 1
 			viscosity = 0.5
+			minimum_reaction_temperature = -INFINITY
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(it_is_ass_day)
@@ -2176,8 +2178,9 @@ datum
 			addiction_prob = 1
 			addiction_prob2 = 1
 			addiction_min = 10
+			minimum_reaction_temperature = -INFINITY
 
-			reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
+			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
 					name = "iced tea"
 					description = "Tea, but cold!"
@@ -3246,8 +3249,7 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					holder.my_atom:add_stam_mod_regen("tripletriple", 3333)
+					M.add_stam_mod_regen("tripletriple", 3333)
 				if(prob(10))
 					new /obj/decal/cleanable/urine(M.loc)
 

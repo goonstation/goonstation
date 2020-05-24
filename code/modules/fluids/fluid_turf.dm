@@ -433,7 +433,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
@@ -444,7 +444,7 @@
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=sea_elevator")
 
 	src.add_fingerprint(usr)

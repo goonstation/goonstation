@@ -221,6 +221,7 @@ var/list/admin_verbs = list(
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
+		/client/proc/rspawn_panel,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -262,7 +263,6 @@ var/list/admin_verbs = list(
 		// LEVEL_SHITGUY, shit person
 		/datum/admins/proc/togglesoundwaiting,
 		/datum/admins/proc/pixelexplosion,
-		/client/proc/rspawn_panel,
 		/proc/mod_color,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
@@ -411,6 +411,8 @@ var/list/admin_verbs = list(
 #endif
 #ifdef ENABLE_SPAWN_DEBUG
 		/client/proc/cmd_modify_spawn_dbg_list,
+		/client/proc/spawn_dbg,
+#elif defined(ENABLE_SPAWN_DEBUG_2)
 		/client/proc/spawn_dbg,
 #endif
 #ifdef INCLUDE_BUGGY_LUA_SHIT
@@ -1210,21 +1212,21 @@ var/list/fun_images = list()
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 	var/adminrendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
-	for (var/mob/M in mobs)
+	for (var/client/C in clients)
+		var/mob/M = C.mob
 		if(istype(M, /mob/new_player))
 			continue
 
 		var/is_in_hivemind = 0
 		if (istype(M,/mob/living/critter/changeling) || istype(M,/mob/dead/target_observer/hivemind_observer))
 			is_in_hivemind = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.is_changeling())
-				is_in_hivemind = 1
 
-		if (M.client && (is_in_hivemind || M.client.holder && !M.client.player_mode))
+		else if (ischangeling(M))
+			is_in_hivemind = 1
+
+		if (is_in_hivemind || C.holder && !C.player_mode)
 			var/thisR = rendered
-			if (M.client.holder && src.mob.mind)
+			if (C.holder && src.mob.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 

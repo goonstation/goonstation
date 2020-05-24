@@ -31,7 +31,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (!( ticker ))
 		return
@@ -181,7 +181,7 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["modify"])
 		if (src.modify)
 			src.modify.update_name()

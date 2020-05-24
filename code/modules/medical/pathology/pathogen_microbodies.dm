@@ -72,10 +72,9 @@ datum/microbody
 	var/amount = 0.07
 
 	disposing()
+		SHOULD_CALL_PARENT(FALSE) //Looks like these should never be deleted.
 		CRASH("ALERT MICROBODY IS BEING DELETED")
 
-	disposing()
-		CRASH("ALERT MICROBODY IS BEING DISPOSED")
 
 datum/microbody/virus
 	name = "Virus"

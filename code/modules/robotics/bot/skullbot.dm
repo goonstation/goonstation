@@ -3,7 +3,7 @@
 /obj/machinery/bot/skullbot
 	name = "skullbot"
 	desc = "A skull on a leg. Useful, somehow. I guess."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "skullbot"
 	layer = 5.0 //TODO LAYER
 	density = 0

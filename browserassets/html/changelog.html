@@ -7,6 +7,7 @@
 	.links li span {position: absolute; top: 0; right: 0; bottom: 0; width: 1px; background: #ccc;}
 
 	.log {list-style-type: none; padding: 0; background: #f9f9f9; margin: 20px 5px; border: 1px solid #ccc; font-size: 1em; color: #333;}
+
 	.log li {overflow: visible; padding: 5px 5px 5px 20px; border-top: 1px solid #ccc; line-height: 1.4}
 	.log li.title {background: #efefef; font-size: 1.7em; color: #115FD5; padding: 10px 10px; border-top: 0;}
 	.log li.date {background: #f1f1f1; font-size: 1.1em; font-weight: bold; padding: 8px 5px; border-bottom: 2px solid #bbb;}
@@ -14,6 +15,11 @@
 	.log li.admin span {color: #2A76E7;}
 	.log li.collapse-button { background: rgb(243, 243, 243); padding-left: 5px; cursor: pointer;}
 	.log .collapsible { max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out;}
+
+	.log.ass {background: #ffe9de;}
+	.log.ass li.title {background: #fce5cb;}
+	.log.ass li.date {background: #fce5cb;}
+	.log.ass li.collapse-button { background: #fce9d9; }
 
 	h3 {padding: 0 10px; margin: 0; color: #58B4DC;}
 	.team, .lic {padding: 10px; margin: 0; line-height: 1.4;}
@@ -31,6 +37,10 @@
 
 	li.collapse-button.active, li.collapse-button:hover {
 		background: rgb(225, 225, 225);
+	}
+
+	.log.ass li.collapse-button.active, .log.ass li.collapse-button:hover {
+		background: #ffd4b0;
 	}
 
 	a.pr_link {

@@ -14,14 +14,13 @@
 	flags = FPRINT | FLUID_SUBMERGE
 
 	var/status = 0
-	var/mob/current_user = null //GC WOES (airlocks seem to capture current_user a lot and prevent mob gc)
 	var/power_usage = 0
 	var/power_channel = EQUIP
 	var/power_credit = 0
 	var/wire_powered = 0
 	var/allow_stunned_dragndrop = 0
 	var/processing_bucket = 1
-	var/processing_tier = PROCESSING_FULL
+	var/processing_tier = PROCESSING_EIGHTH
 	var/current_processing_tier
 	var/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 
@@ -35,13 +34,14 @@
 		machine_registry[initial(machine_registry_idx)] += src
 
 	var/static/machines_counter = 0
-	src.processing_bucket = machines_counter++ & 15 // this is just modulo 16 but faster due to power-of-two memes
+	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
 	if (current_state > GAME_STATE_WORLD_INIT)
 		SPAWN_DBG(5 DECI SECONDS)
 			src.power_change()
 			var/area/A = get_area(src)
-			A.machines += src
+			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/New()
+				A.machines += src
 
 /obj/machinery/initialize()
 	..()
@@ -53,7 +53,7 @@
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
-	current_user = null
+
 	var/area/A = get_area(src)
 	if(A) A.machines -= src
 	..()

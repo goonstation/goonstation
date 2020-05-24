@@ -74,6 +74,26 @@
 		)
 	bicon_override = "ai"
 
+/obj/item/device/radio/headset/command/nt
+	name = "NT Headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_colors = list(
+		"h" = RADIOC_COMMAND,
+		"g" = RADIOC_SECURITY,
+		"e" = RADIOC_ENGINEERING,
+		"r" = RADIOC_RESEARCH,
+		"m" = RADIOC_MEDICAL,
+		"c" = RADIOC_CIVILIAN,
+		)
+	bicon_override = "nt"
+
 /obj/item/device/radio/headset/command/captain
 	name = "Captain's Headset"
 	icon_state = "captain headset"
@@ -277,7 +297,7 @@
 	secure_colors = list(RADIOC_OTHER)
 
 /obj/item/device/radio/headset/multifreq/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/t1
 	if (src.b_stat)
 		t1 = {"
@@ -313,7 +333,7 @@ Secure Frequency:
 	if (usr.stat)
 		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["sfreq"])
 			var/new_frequency = sanitize_frequency(text2num("[secure_frequencies["h"]]") + text2num(href_list["sfreq"]))
 			set_secure_frequency("h", new_frequency)

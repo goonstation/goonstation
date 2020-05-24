@@ -120,6 +120,9 @@
 
 	src.images.Cut() //Probably not needed but eh.
 
+	if (src.mob)
+		src.mob.remove_dialogs()
+
 	clients -= src
 	if(src.holder)
 		onlineAdmins.Remove(src)
@@ -388,6 +391,8 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+			if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+				boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
 		src.update_world()
@@ -893,7 +898,7 @@ var/global/curr_day = null
 		if ("mach_close")
 			var/window = href_list["window"]
 			var/t1 = text("window=[window]")
-			usr.machine = null
+			usr.remove_dialogs()
 			usr.Browse(null, t1)
 			//Special cases
 			switch (window)

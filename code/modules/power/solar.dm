@@ -72,7 +72,7 @@
 	anchored = 1
 	density = 1
 	directwired = 1
-	processing_tier = PROCESSING_QUARTER // Uncomment this and line 175 for an experimental optimization
+	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
 	var/health = 10.0
 	var/id = 1
 	var/obscured = 0
@@ -333,12 +333,12 @@
 	if(status & (BROKEN | NOPOWER)) return
 	if ( (get_dist(src, user) > 1 ))
 		if (!isAI(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=solcon")
 			return
 
 	add_fingerprint(user)
-	user.machine = src
+	src.add_dialog(user)
 
 	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	t += "Generated power : [round(lastgen)] W<BR><BR>"
@@ -365,11 +365,11 @@
 /obj/machinery/power/solar_control/Topic(href, href_list)
 	if(..())
 		usr.Browse(null, "window=solcon")
-		usr.machine = null
+		src.remove_dialog(usr)
 		return
 	if(href_list["close"] )
 		usr.Browse(null, "window=solcon")
-		usr.machine = null
+		src.remove_dialog(usr)
 		return
 
 	if(href_list["dir"])

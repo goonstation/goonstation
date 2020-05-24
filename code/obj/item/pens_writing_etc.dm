@@ -498,7 +498,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
-	item_state = "flight"
+	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
@@ -649,7 +649,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 		if (usr.contents.Find(src))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["pen"])
 				if (src.pen)
 					usr.put_in_hand_or_drop(src.pen)
@@ -690,12 +690,7 @@
 
 				src.add_fingerprint(usr)
 
-			if (ismob(src.loc))
-				var/mob/M = src.loc
-				if (M.machine == src)
-					SPAWN_DBG( 0 )
-						src.attack_self(M)
-						return
+			src.updateSelfDialog()
 		return
 
 	attack_hand(mob/user as mob)
@@ -777,7 +772,7 @@
 	Topic(var/href, var/href_list)
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis") || usr.hasStatus("stunned") || usr.hasStatus("weakened") || usr.hasStatus("resting"))
+		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
 			return
 		..()
 

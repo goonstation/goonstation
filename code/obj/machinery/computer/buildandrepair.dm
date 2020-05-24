@@ -84,6 +84,9 @@
 /obj/item/circuitboard/robotics
 	name = "Circuit board (Robotics Control)"
 	computertype = "/obj/machinery/computer/robotics"
+/obj/item/circuitboard/robot_module_rewriter
+	name = "circuit board (Cyborg Module Rewriter)"
+	computertype = "/obj/machinery/computer/robot_module_rewriter"
 /obj/item/circuitboard/cloning
 	name = "Circuit board (Cloning)"
 	computertype = "/obj/machinery/computer/cloning"

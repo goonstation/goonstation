@@ -127,7 +127,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
-		
+
 #if ASS_JAM
 		src.addAbility(/datum/targetable/ghost_observer/ass_day_arena)
 #endif
@@ -325,7 +325,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	desc = "Go to the Respawn Arena."
 	icon_state = "ass_day_arena"
 	targeted = 0
-	cooldown = 15
+	cooldown = 0
 
 	cast(atom/target)
 		if (holder && istype(holder.owner, /mob/dead/observer))

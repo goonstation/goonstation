@@ -424,14 +424,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 33) //lol @ consumable_good, yeah right
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_initropidril", 33)
 				return
 
 			on_remove()
 				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_initropidril")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -699,13 +701,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -10)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_cholesterol", -10)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_cholesterol")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -905,13 +907,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -20)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_pancuronium", -30)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_pancuronium")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -983,13 +985,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -30)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_sodium_thiopental", -30)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_sodium_thiopental")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1038,13 +1040,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -20)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_ketamine", -20)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_ketamine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1) // sped this up a bit due to mob loop changes
@@ -1086,13 +1088,13 @@ datum
 
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("consumable_bad", -10)
+					remove_buff = holder.my_atom:add_stam_mod_max("r_sulfonal", -10)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("consumable_bad")
+						holder.my_atom:remove_stam_mod_max("r_sulfonal")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1557,16 +1559,6 @@ datum
 			pathogen_nutrition = list("dna_mutagen")
 
 			var/tmp/progress_timer = 1
-/*
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/myvol = volume
-
-				if (exposed_temperature > 50 && !holder.has_reagent("stabiliser") || exposed_temperature > 300)
-					volume = 0
-					holder.add_reagent("mutagen", myvol, null)
-
-				return
-*/
 
 			pooled()
 				..()
@@ -1577,16 +1569,21 @@ datum
 				if (!M) M = holder.my_atom
 				//M.changeStatus("radiation", 30, 1)
 				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
-					var/datum/reagent/blood/cheating = holder.reagent_list["blood"]
-					if (cheating && istype(cheating.data, /datum/bioHolder))
-						src.data = cheating.data
+					if(holder.has_reagent("bloodc"))
+						var/datum/reagent/blood/cheating = holder.reagent_list["bloodc"]
+						if (cheating && istype(cheating.data, /datum/bioHolder))
+							src.data = cheating.data
+					else if(holder.has_reagent("blood"))
+						var/datum/reagent/blood/cheating = holder.reagent_list["blood"]
+						if (cheating && istype(cheating.data, /datum/bioHolder))
+							src.data = cheating.data
 
 				if (src.data && M.bioHolder && progress_timer <= 10)
 
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (prob(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
-					else if (progress_timer > 10)
+					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						M.UpdateName()
 

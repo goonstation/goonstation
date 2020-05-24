@@ -246,14 +246,29 @@ var/list/statusGroupLimits = list("Food"=4)
 					break
 
 	proc/hasStatus(statusId, optionalArgs = null)
-		.= null
 		if(statusEffects)
-			var/datum/statusEffect/status = 0
-			for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+			if (!islist(statusId))
+				var/datum/statusEffect/status
+				for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+					status = S
+					if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
+						return status
+			else
+				var/list/idlist = statusId
+				var/datum/statusEffect/status
+				for(var/S in statusEffects)
+					status = S
+					if((status.id in idlist) && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
+						return status
+
+	proc/getStatusList(optionalArgs = null)
+		. = list()
+		if (statusEffects)
+			var/datum/statusEffect/status
+			for(var/S in statusEffects)
 				status = S
-				if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
-					.= status
-					break
+				if((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs))
+					.[status.id] = status
 
 	proc/delStatus(var/status)
 		if(statusEffects == null)
@@ -755,7 +770,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus("stunned") && !owner.hasStatus("weakened") && !owner.hasStatus("paralysis") && !owner.hasStatus("pinned")) //consider later : a way to group effects to check a bunch in one proc call and save sonme cpu
+			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned"))) 
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -768,6 +783,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			unique = 1
 			maxDuration = 30 SECONDS
 
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
 		weakened
 			id = "weakened"
 			name = "Knocked-down"
@@ -775,6 +802,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "weakened"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			pinned
 				id = "pinned"
@@ -820,6 +859,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "paralysis"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 		dormant
 			id = "dormant"
@@ -888,7 +939,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 		onUpdate(var/timedPassed)
 			counter += timedPassed
-			if (counter >= count && owner && !owner.hasStatus("weakened") && !owner.hasStatus("paralysis"))
+			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
 				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1145,9 +1196,14 @@ var/list/statusGroupLimits = list("Food"=4)
 					if (H.bleeding && prob(100*buff_mult))
 						repair_bleeding_damage(H, 5, 1)
 
-					if(H.hasStatus("paralysis")) H.changeStatus("paralysis", -3*buff_mult)
-					if(H.hasStatus("stunned")) H.changeStatus("stunned", -3*buff_mult)
-					if(H.hasStatus("weakened")) H.changeStatus("weakened", -3*buff_mult)
+					var/list/statusList = H.getStatusList()
+
+					if(statusList["paralysis"])
+						H.changeStatus("paralysis", -3*buff_mult)
+					if(statusList["stunned"])
+						H.changeStatus("stunned", -3*buff_mult)
+					if(statusList["weakened"])
+						H.changeStatus("weakened", -3*buff_mult)
 
 					H.updatehealth()
 			else

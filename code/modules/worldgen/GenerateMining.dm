@@ -314,8 +314,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
-	if (map_currently_underwater)
-		hotspot_controller.generate_map()
+	hotspot_controller.generate_map()
 
 /proc/pickPrefab()
 	var/list/eligible = list()
@@ -483,7 +482,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_janitor.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 15
-	
+
 	pie_ship // Urs's ship originally built for the pie eating contest event
 		maxNum = 1
 		probability = 20

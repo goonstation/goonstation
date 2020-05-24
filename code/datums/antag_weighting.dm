@@ -270,6 +270,13 @@ var/global/datum/antagWeighter/antagWeighter
 			for (var/datum/mind/M in chosen)
 				record[M.ckey] = role
 				logTheThing("debug", null, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
+			for (var/datum/mind/M in pool)
+				if(!M.ckey)
+					continue
+				if(M in chosen)
+					continue
+				logTheThing("debug", null, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
+
 
 			src.recordMultiple(players = record)
 

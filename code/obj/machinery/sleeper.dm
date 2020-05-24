@@ -141,7 +141,7 @@
 				return 1
 
 		src.add_fingerprint(user)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = ""
 
@@ -216,7 +216,7 @@
 			return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["time"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
@@ -260,7 +260,7 @@
 		if (href_list["eject_occupant"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
 				src.our_sleeper.go_out()
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, "window=sleeper")
 
 		if (istype(src, /obj/machinery/sleep_console/portable))

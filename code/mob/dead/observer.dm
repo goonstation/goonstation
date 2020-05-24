@@ -228,6 +228,8 @@
 		abilityHolder.owner = src
 
 	updateButtons()
+	if (render_special)
+		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 	SPAWN_DBG(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
@@ -264,6 +266,7 @@
 			src.hell_respawn(src.mind)
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
+		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
 			if (OS)
@@ -347,11 +350,6 @@
 		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
 		O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
 
-
-
-		var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-		newbio.CopyOther(src.bioHolder, copyActiveEffects = 0)
-		O.bioHolder = newbio
 
 	return O
 

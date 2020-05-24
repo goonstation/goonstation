@@ -523,7 +523,7 @@
 			if (H.decomp_stage == 4)
 				boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
 				return 1
-			if (H.is_changeling())
+			if (ischangeling(H))
 				boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
 				return 1
 			if (!H.bioHolder)

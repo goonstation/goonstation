@@ -18,7 +18,7 @@
 	can_revive = 1
 	chase_text = "tackles"
 	var/boredom_countdown = 0
-	var/spazzing = 0
+	var/flailing = 0
 	var/frenzied = 0
 	var/king = 0
 
@@ -346,21 +346,21 @@
 				src.icon_state = "wendigo"
 		return
 
-	proc/spaz()
-		if (spazzing)
+	proc/flail()
+		if (flailing)
 			return
 
-		spazzing = 25
+		flailing = 25
 		SPAWN_DBG(0)
-			while(spazzing-- > 0)
+			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
-			if(spazzing < 0)
-				spazzing = 0
+			if(flailing < 0)
+				flailing = 0
 
 
 	// go crazy and make a huge goddamn mess
@@ -375,7 +375,7 @@
 				playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>")
 			SPAWN_DBG(1 DECI SECOND)
-				if(!spazzing) src.spaz()
+				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )

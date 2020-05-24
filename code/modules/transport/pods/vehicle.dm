@@ -178,7 +178,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob.machine == src && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
@@ -188,7 +188,7 @@
 		//////Main Computer Code		//////
 		//////////////////////////////////////
 		if (usr.loc == src)
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["dengine"])
 				if (usr != pilot)
 					boutput(usr, "[ship_message("Only the pilot may do this!")]")
@@ -262,7 +262,7 @@
 
 			src.add_fingerprint(usr)
 			for (var/mob/M in src)
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.access_computer(M)
 			myhud.update_states()
 		///////////////////////////////////////
@@ -278,7 +278,7 @@
 				lock.show_lock_panel(usr, 0)
 				return
 
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["unengine"])
 				if (src.engine)
 					engine.deactivate()
@@ -1156,7 +1156,7 @@
 		lock.show_lock_panel(usr, 0)
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = "<TT><B>[src] Maintenance Panel</B><BR><HR><BR>"
 	//Air and Fuel tanks
@@ -1231,7 +1231,7 @@
 /obj/machinery/vehicle/proc/access_computer(mob/user as mob)
 	if(user.loc != src)
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = "<TT><B>[src] Control Console</B><BR><HR><BR>"
 	dat += "<B>Hull Integrity:</B> [src.health/src.maxhealth * 100]%<BR>"

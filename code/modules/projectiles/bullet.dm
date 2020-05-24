@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/projectile/bullet)
 /datum/projectile/bullet
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45
@@ -155,6 +156,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 6
 	ks_ratio = 0.9
+	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 36
@@ -162,6 +164,14 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
+
+	on_hit(atom/hit)
+		..()
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
+				M.changeStatus("slowed", 1 SECOND, optional = 2)
+
 
 /datum/projectile/bullet/nine_mm_NATO/burst
 	shot_number = 3
@@ -286,13 +296,14 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 100
+	power = 120
 	dissipation_delay = 1
-	dissipation_rate = 25
+	dissipation_rate = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.5
+	ks_ratio = 0.66
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
@@ -512,8 +523,8 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS, optional = 8)
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+			M.changeStatus("slowed", 0.5 SECONDS)
+			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
 	power = 1
@@ -690,7 +701,11 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10)) //maybe
+#if ASS_JAM
+			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
+#else
+			if (P.data || prob(10))
+#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)
@@ -1233,28 +1248,3 @@ toxic - poisons
 			explosion_new(null, T, 300, 1)
 		return
 
-
-/datum/projectile/bullet/gun //shoot guns
-	name = "gun"
-	power = 20 //20 damage from getting beaned with a gun idk
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	shot_sound = 'sound/weapons/rocket.ogg'
-	icon_state = "gun"
-	implanted= null
-	casing = null
-	icon_turf_hit = null
-	var/already_gun_made = 0 //has a gun already been made?
-
-	on_launch(obj/projectile/O) //we only want 1 gun per fire
-		already_gun_made = 0
-
-	on_hit(atom/hit)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(hit))
-			already_gun_made = 1
-
-	on_end(obj/projectile/O)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(O))
-			already_gun_made = 1

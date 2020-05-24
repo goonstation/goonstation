@@ -245,7 +245,7 @@ AI MODULES
 		sender.unlock_medal("Format Complete", 1)
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
-		for (var/mob/living/silicon/S in mobs)//world)
+		for (var/mob/living/silicon/S in mobs)
 			LAGCHECK(LAG_LOW)
 			if (isAI(S) && isdead(S))
 				setalive(S)
@@ -254,7 +254,7 @@ AI MODULES
 					S.ghost.mind.transfer_to(S)
 					qdel(S.ghost)
 					do_admin_logging(" revived the AI", sender)
-			S.show_message("Your laws have been reset by [sender].", "blue")
+			S.show_message("<span class='notice'>Your laws have been reset by [sender].</span>")
 		do_admin_logging("reset the centralized AI law set", sender)
 
 /******************** Rename ********************/
@@ -265,6 +265,9 @@ AI MODULES
 	lawTarget = "404 Name Not Found"
 
 	get_law_text()
+		if (is_blank_string(lawTarget)) //no blank names allowed
+			lawTarget = pick(ai_names)
+			return lawTarget
 		return lawTarget
 
 	get_desc()

@@ -448,7 +448,7 @@
 	return
 
 /obj/item/bball_uplink/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.selfdestruct)
 		dat = "Self Destructing..."
@@ -485,7 +485,7 @@
 	if (!( ishuman(H)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["spell_nova"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -523,7 +523,7 @@
 */
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=radio")
 			var/obj/item/device/radio/T = src.origradio
 			var/obj/item/bball_uplink/R = src

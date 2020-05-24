@@ -390,6 +390,7 @@ datum
 			fluid_g = 40
 			fluid_b = 160
 			transparency = 222
+			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
 			pooled()
@@ -397,14 +398,13 @@ datum
 				reacted_to_temp = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(exposed_temperature >= T0C + 100 && !reacted_to_temp)
+				if(!reacted_to_temp)
 					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
 						holder.del_reagent(id)
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -534,14 +534,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_sugar", 2)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -725,6 +727,7 @@ datum
 			hygiene_value = 1.33
 			bladder_value = -0.2
 			taste = "bland"
+			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
@@ -909,17 +912,16 @@ datum
 			transparency = 200
 			thirst_value = 0.8909
 			bladder_value = -0.2
+			minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 			taste = "cold"
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(exposed_temperature > T0C)
-					var/prev_vol = volume
-					volume = 0
-					if(holder)
-						holder.add_reagent("water", prev_vol, null, T0C + 1)
-					if(holder)
-						holder.del_reagent(id)
-				return
+				var/prev_vol = volume
+				volume = 0
+				if(holder)
+					holder.add_reagent("water", prev_vol, null, T0C + 1)
+				if(holder)
+					holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
 				src = null

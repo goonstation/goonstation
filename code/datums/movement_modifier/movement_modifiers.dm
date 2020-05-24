@@ -7,7 +7,7 @@
 
 /datum/movement_modifier // These could be just /list(2) or whatever but i like to keep my options open, IIRC kevinz's system on tg has more toggles
 	var/additive_slowdown = 0 // additive slowdown, applied first
-	var/multiplicative_slowdown = 0 // multiplicative slowdown, applied just before running. Stacks multiplicatively with other multiplicative modifiers, ie.
+	var/multiplicative_slowdown = 1 // multiplicative slowdown, applied just before running. Stacks multiplicatively with other multiplicative modifiers
 	var/health_deficiency_adjustment = 0 // additive adjustment to health deficiency, mostly used by reagents which reduce the effect of damage on movement
 	var/maximum_slowdown = 100 // maximum slowdown, applied before pulling (and before multiplier)
 	var/pushpull_multiplier = 1 // multiplier for pushing/pulling speed
@@ -18,7 +18,12 @@
 /datum/movement_modifier/proc/modifiers(mob/user, turf/move_target, running)
 	return list(0,0) // list(additive_slowdown, multiplicative_slowdown)
 
+// equipment
+
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
+
+/datum/movement_modifier/mech_boots
+	multiplicative_slowdown = 0.5
 
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0

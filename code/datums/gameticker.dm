@@ -64,6 +64,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	pregame_timeleft = 150 // raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
+	#if ASS_JAM
+	vote_manager.active_vote = new/datum/vote_new/mode("assday")
+	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	#endif
 
 	// let's try doing this here, yoloooo
 	if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
@@ -99,11 +103,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
-
-	#if ASS_JAM //who the hell knows if this works, i can't be arsed to check.
-	if(prob(10))
-		src.mode = "assday"
-	#endif
 
 	if(hide_mode)
 		#ifdef RP_MODE
@@ -533,6 +532,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		final_score = 0
 	else
 		final_score = 100
+
+	boutput(world, score_tracker.escapee_facts())
+
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	for (var/mob/living/silicon/ai/aiPlayer in AIs)

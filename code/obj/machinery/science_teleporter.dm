@@ -104,7 +104,7 @@ var/ZSUBTRACT = 0
 			for (var/datum/teleporter_bookmark/b in bookmarks)
 				dat += "<br>[b.name] ([b.x]/[b.y]/[b.z]) <A href='?src=\ref[src];restorebookmark=\ref[b]'>Restore</A> <A href='?src=\ref[src];deletebookmark=\ref[b]'>Delete</A>"
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse("<TITLE>Teleport Computer</TITLE><b>Target Coordinates</b><BR>[dat]", "window=t_computer;size=400x600")
 		onclose(user, "t_computer")
 		return

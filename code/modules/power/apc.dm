@@ -136,23 +136,7 @@ var/zapLimiter = 0
 		flagIndex+=1
 	return apcwires
 
-/obj/machinery/power/apc/updateUsrDialog()
-	var/list/nearby = viewers(1, src)
-	if (!(status & BROKEN)) // unbroken
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				src.interacted(M)
-	if (issilicon(usr) || isAI(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.interacted(usr)
 
-/obj/machinery/power/apc/updateDialog()
-	if(!(status & BROKEN)) // unbroken
-		for(var/client/C)
-			if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
-				src.interacted(C.mob)
-	AutoUpdateAI(src)
 
 /obj/machinery/power/apc/New()
 	..()
@@ -566,7 +550,7 @@ var/zapLimiter = 0
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user) && !isAI(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=apc")
 			return
 		else if ((issilicon(user) || isAI(user)) && src.aidisabled)
@@ -574,7 +558,7 @@ var/zapLimiter = 0
 			user.Browse(null, "window=apc")
 			return
 	if(wiresexposed && (!isAI(user)))
-		user.machine = src
+		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
 		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
 		var/list/apcwires = list(
@@ -598,7 +582,7 @@ var/zapLimiter = 0
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
 	if((locked || (setup_networkapc > 1)) && (!issilicon(user) && !isAI(user)))
@@ -829,7 +813,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/cut(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -852,7 +836,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -878,7 +862,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -905,7 +889,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -947,7 +931,7 @@ var/zapLimiter = 0
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["apcwires"] && wiresexposed)
 			var/t1 = text2num(href_list["apcwires"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -1068,11 +1052,11 @@ var/zapLimiter = 0
 			update()
 		else if( href_list["close"] )
 			usr.Browse(null, "window=apc")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		else if (href_list["close2"])
 			usr.Browse(null, "window=apcwires")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 
 		else if (href_list["overload"])
@@ -1093,7 +1077,7 @@ var/zapLimiter = 0
 
 	else
 		usr.Browse(null, "window=apc")
-		usr.machine = null
+		src.remove_dialog(usr)
 
 	return
 

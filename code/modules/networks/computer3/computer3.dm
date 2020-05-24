@@ -331,7 +331,7 @@
 		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 		return
 
-	if ((user.machine == src) && (src.current_user == user))
+	if (user.using_dialog_of(src))
 		if (!src.temp)
 			user << output(null, "comp3.browser:con_clear")
 
@@ -343,12 +343,8 @@
 				src.temp_add = null
 */
 		update_peripheral_menu(user)
-		src.current_user = user
-
 	else
-
-		user.machine = src
-		src.current_user = user
+		src.add_dialog(user)
 
 		if (src.temp_add)
 			src.temp += temp_add
@@ -567,7 +563,7 @@ function lineEnter (ev)
 	if(..())
 		return
 
-	usr.machine = src
+	src.add_dialog(usr)
 
 	if((href_list["command"]) && src.active_program)
 		usr << output(null, "comp3.browser:input_clear")
@@ -650,7 +646,7 @@ function lineEnter (ev)
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
-			user.machine = src
+			src.add_dialog(user)
 			user.drop_item()
 			W.set_loc(src)
 			src.diskette = W
@@ -1066,7 +1062,7 @@ function lineEnter (ev)
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
-				user.machine = src
+				src.add_dialog(user)
 				user.drop_item()
 				W.set_loc(src)
 				src.diskette = W

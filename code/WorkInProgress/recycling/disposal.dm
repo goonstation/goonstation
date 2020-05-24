@@ -836,6 +836,11 @@
 		dpdir = dir | turn(dir, 180)
 		update()
 
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		dpdir = dir | turn(dir, 180)
+		update()
+
 	transfer(var/obj/disposalholder/H)
 
 		if (H.contents.len)
@@ -1519,7 +1524,7 @@
 		if(usr.stat)
 			return
 
-		if(!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
+		if (!usr.find_tool_in_hand(TOOL_PULSING))
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 

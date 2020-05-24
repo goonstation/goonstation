@@ -97,9 +97,9 @@
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
-			if(!open && user.machine == src)
+			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
-				user.machine = null
+				src.remove_dialog(user)
 		else if (istype(I, /obj/item/wrench))
 			if (user)
 				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
@@ -129,7 +129,7 @@
 			dat += " <A href='?src=\ref[src];op=set_temp'> [set_temperature]&deg;C </A>"
 			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A> <A href='?src=\ref[src];op=temp;val=10'>++</A><BR>"
 
-			user.machine = src
+			src.add_dialog(user)
 			user.Browse("<HEAD><TITLE>Space Heater Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=spaceheater")
 			onclose(user, "spaceheater")
 
@@ -157,7 +157,7 @@
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			switch(href_list["op"])
 				if("set_temp")
@@ -199,7 +199,7 @@
 			updateDialog()
 		else
 			usr.Browse(null, "window=spaceheater")
-			usr.machine = null
+			src.remove_dialog(usr)
 		return
 
 
@@ -322,9 +322,9 @@
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
-			if(!open && user.machine == src)
+			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=saunastove")
-				user.machine = null
+				src.remove_dialog(user)
 		else
 			..()
 		return
@@ -349,7 +349,7 @@
 			dat += " [set_temperature]&deg;C "
 			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A> <A href='?src=\ref[src];op=temp;val=10'>++</A><BR>"
 
-			user.machine = src
+			src.add_dialog(user)
 			user.Browse("<HEAD><TITLE>Sauna Stove Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=saunastove")
 			onclose(user, "spaceheater")
 
@@ -372,7 +372,7 @@
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			switch(href_list["op"])
 
@@ -405,7 +405,7 @@
 			updateDialog()
 		else
 			usr.Browse(null, "window=saunastove")
-			usr.machine = null
+			src.remove_dialog(usr)
 		return
 
 
