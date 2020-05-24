@@ -8,12 +8,13 @@
 		if((slot in valid_slots) && istype(equipper, mobtype))
 			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_BEGIN, .proc/on_block_begin, TRUE)
 			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_END, .proc/on_block_end, TRUE)
+			var/obj/item/grab/block/B
 			if(istype(equipper.l_hand, /obj/item/grab/block))
-				affectedBlock = equipper.l_hand
+				B = equipper.l_hand
 			else if(istype(equipper.r_hand, /obj/item/grab/block))
-				affectedBlock = equipper.r_hand
-			if(affectedBlock)
-				on_block_begin(equipper, affectedBlock)
+				B = equipper.r_hand
+			if(B)
+				on_block_begin(equipper, B)
 		else
 			UnregisterSignal(equipper, COMSIG_UNARMED_BLOCK_BEGIN)
 			UnregisterSignal(equipper, COMSIG_UNARMED_BLOCK_END)
@@ -31,8 +32,7 @@
 /datum/component/wearertargeting/unarmedblock/proc/on_block_begin(var/mob/living/carbon/source, var/obj/item/grab/block/B)
 	if(affectedBlock)
 		on_block_end(source, affectedBlock)
-	else
-		affectedBlock = B
+	affectedBlock = B
 	RegisterSignal(source, signals, proctype, TRUE)
 	SHOULD_CALL_PARENT(1)
 
