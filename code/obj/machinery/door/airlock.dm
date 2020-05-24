@@ -120,8 +120,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 
 /obj/machinery/door/airlock/check_access(obj/item/I)
-	if (no_access) //we are weldmagged or some shit... skip the rest of the ID checks, its not gonna open.
-		return 0							//and look i know this appears to be the same as isblocked... DO NOT call isblocked. it is inherited by children and will kill access
+	if (no_access) //nope :)
+		return 0
 	.= ..()
 
 /obj/machinery/door/airlock/command
