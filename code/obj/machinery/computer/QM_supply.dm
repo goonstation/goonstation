@@ -608,13 +608,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	rockbox_controls(subaction, href_list)
 		switch (subaction)
 			if (null, "list")
-				. = "<h2>Rockbox&trade; Ore Cloud Storage Service Settings:</h2><ul><br>"
+				. = {"<h2>Rockbox&trade; Ore Cloud Storage Service Settings:</h2><ul><br>
+					<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
+					<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>
+					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>
+					</ul>"}
 
-				. += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>"
-				. += "<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>"
-				. += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>"
-				. += {"</ul>"}
-				return .
+				return
 
 			if ("premium_service")
 				var/response = ""

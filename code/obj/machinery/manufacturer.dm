@@ -287,18 +287,15 @@
 		dat += "<br>"
 		dat += build_material_list()
 
-		dat += "<HR>"
-
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+		dat +="<HR><B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
 		dat+= src.temp
-		dat+="<HR>"
 
-		dat += "<B>Ores Available for Purchase:</B><br><small>"
+		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
 			if(S.broken)
 				continue

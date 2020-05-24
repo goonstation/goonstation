@@ -242,27 +242,20 @@
 
 		src.add_dialog(user)
 
-		var/dat = ""
-
 		if (status & BROKEN || status & NOPOWER)
-			dat = "The screen is blank."
+			var/dat = "The screen is blank."
 			user << browse(dat, "window=mining_dropbox;size=400x500")
 			onclose(user, "mining_dropbox")
 			return
 
-		dat = "<B>[src.name]</B>"
-
-		dat += "<br><HR>"
-
-		dat += "<B>Rockbox&trade; Ore Cloud Storage Service Settings:</B>"
-
-		dat += "<br><small>"
-
-		dat += "<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>"
-		dat += "<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>"
-		dat += "<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>"
-
-		dat += "</small><HR>"
+		var/list/dat = list({"<B>[src.name]</B>
+			<br><HR>
+			<B>Rockbox&trade; Ore Cloud Storage Service Settings:</B>
+			<br><small>
+			<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
+			<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>
+			<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>
+			</small><HR>"})
 
 		if(ores.len)
 			for(var/ore in ores)
@@ -275,7 +268,7 @@
 		else
 			dat += "No ores currently loaded.<br>"
 
-		user << browse(dat, "window=mining_dropbox;size=500x500")
+		user << browse(dat.Join(), "window=mining_dropbox;size=500x500")
 		onclose(user, "mining_dropbox")
 
 
