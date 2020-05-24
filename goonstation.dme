@@ -1395,6 +1395,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\computer\stock_market.dm"
 #include "code\obj\machinery\computer\teleporter.dm"
 #include "code\obj\machinery\computer\workstation.dm"
+#include "code\obj\machinery\computer\security\riot.dm"
 #include "code\obj\machinery\computer\security\sec_camera_move.dm"
 #include "code\obj\machinery\computer\security\security_cameras_chui.dm"
 #include "code\obj\machinery\computer\tetris\tetris.dm"
