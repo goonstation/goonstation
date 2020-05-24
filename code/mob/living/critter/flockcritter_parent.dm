@@ -322,7 +322,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 10
 
-	var/mob/living/critter/flock/drone/target
+	var/atom/target
 
 	New(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
 		..()
@@ -335,6 +335,7 @@
 		..()
 		var/mob/living/critter/flock/F = owner
 		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(10)))
+			world.log << "SCREM"
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -342,20 +343,40 @@
 		..()
 		if(target)
 			var/mob/living/critter/flock/F = owner
+			var/mob/living/critter/flock/T
+			if(istype(target, /mob/living/critter/flock))
+				T = target
 			if(F)
-				F.tri_message("<span class='text-blue'>[owner] begins spraying glowing fibres onto [target].</span>",
-					F, "<span class='text-blue'>You begin repairing [target.real_name]. You will both need to stay still for this to work.</span>",
-					target, "<span class='text-blue'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
-					"You hear hissing and spraying.")
-				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
-				if(target.is_npc)
-					target.ai.wait()
+				if(T)
+					F.tri_message("<span class='text-blue'>[owner] begins spraying glowing fibres onto [T].</span>",
+						F, "<span class='text-blue'>You begin repairing [T.real_name]. You will both need to stay still for this to work.</span>",
+						T, "<span class='text-blue'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+						"You hear hissing and spraying.")
+				else
+					F.tri_message("<span class='text-blue'>[owner] begins spraying glowing fibres onto [T].</span>",
+						F, "<span class='text-blue'>You begin repairing [T]. You will both need to stay still for this to work.</span>",
+						T, "<span class='text-blue'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+						"You hear hissing and spraying.")
+				playsound(T, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+				if(T?.is_npc)
+					T.ai.wait()
 
 	onEnd()
 		..()
 		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/T
+		if(istype(target, /mob/living/critter/flock))
+			T = target
 		if(F)
-			target.HealDamage("All", target.health_brute / 3, target.health_burn / 3)
+			if(istype(target, /obj/machinery/door/feather))
+//				dothin
+				var/obj/machinery/door/feather/D = target
+				D.health  = min(20, D.health_max - D.health) + D.health
+				if(D.broken && D.health_max/2 < D.health)
+					D.broken = 0 //fix the damn thing
+					D.icon_state = "door1"//make it not look broke
+			else
+				T.HealDamage("All", T.health_brute / 3, T.health_burn / 3)
 			F.pay_resources(10)
 
 /////////////////////////////////////////////////////////////////////////////////
