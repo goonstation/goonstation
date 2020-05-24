@@ -45,3 +45,65 @@
 				continue
 			HH.apply_sonic_stun(0, 0, 40, 0, 15, 8, 12)
 		return 1
+
+	attackby(obj/item/W, mob/user, params)
+		if(isscrewingtool(W))
+			actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind"), user)
+			return
+		return ..()
+
+	proc/rewind()
+		ammo = 4
+		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
+
+/datum/action/bar/icon/rewind_tape
+	id = "rewind_tape"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 300
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/item/lightbreaker/the_breaker
+	var/obj/item/the_tool
+	var/interaction = "rewind"
+
+	New(var/obj/item/lightbreaker/brkr, var/obj/item/tool, var/interact, var/duration_i)
+		..()
+		if (brkr)
+			the_breaker = brkr
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (interact)
+			interaction = interact
+		if (duration_i)
+			duration = duration_i
+
+	onUpdate()
+		..()
+		if (the_breaker == null || the_tool == null || owner == null || get_dist(owner, the_breaker) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		var/verbing = "rewinding"
+		switch (interaction)
+			if ("rewind")
+				verbing = "rewinding"
+				playsound(get_turf(the_breaker), "sound/items/Screwdriver.ogg", 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_breaker].</span>")
+
+	onEnd()
+		..()
+		var/verbens = "rewinds"
+		switch (interaction)
+			if ("rewind")
+				verbens = "rewinds"
+				the_breaker.rewind()
+		owner.visible_message("<span class='notice'>[owner] [verbens] [the_breaker].</span>")
