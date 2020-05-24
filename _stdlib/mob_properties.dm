@@ -178,22 +178,18 @@ To remove:
 #define MOB_PROPERTY_PRIORITY_PRIO 1
 #define MOB_PROPERTY_PRIORITY_VALUE 2
 
-#define TRIPLE_GET_1ST(a, b, c) a
-#define TRIPLE_GET_2ND(a, b, c) b
-#define TRIPLE_GET_3RD(a, b, c) c
+#define PROP_NAME GET_TRIPLE_1
+#define PROP_ADD_MACRO GET_TRIPLE_2
+#define PROP_REMOVE_MACRO GET_TRIPLE_3
 
-#define TRIPLE_1ST(x) x(TRIPLE_GET_1ST)
-#define TRIPLE_2ND(x) x(TRIPLE_GET_2ND)
-#define TRIPLE_3RD(x) x(TRIPLE_GET_3RD)
+#define APPLY_MOB_PROPERTY(target, property, etc...) PROP_ADD_MACRO(property)(target, PROP_NAME(property), ##etc)
 
-#define APPLY_MOB_PROPERTY(target, property, etc...) TRIPLE_2ND(property)(target, TRIPLE_1ST(property), ##etc)
+#define REMOVE_MOB_PROPERTY(target, property, source) PROP_REMOVE_MACRO(property)(target, PROP_NAME(property), source)
 
-#define REMOVE_MOB_PROPERTY(target, property, source) TRIPLE_3RD(property)(target, TRIPLE_1ST(property), source)
-
-#define GET_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? target.mob_properties[TRIPLE_1ST(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
+#define GET_MOB_PROPERTY(target, property) (target.mob_properties[PROP_NAME(property)] ? target.mob_properties[PROP_NAME(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
 
 // sliiiiiiiightly faster if you don't care about the value
-#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? TRUE : FALSE)
+#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[PROP_NAME(property)] ? TRUE : FALSE)
 
 
 #define APPLY_MOB_PROPERTY_MAX(target, property, source, value) \
