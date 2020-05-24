@@ -227,8 +227,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 		//Set up segmented list for variance
 		var/list/historyLookup = list()
-		if (history.len > amount)
-			historyLookup = history.Copy()
+		historyLookup = history.Copy()
 
 		//Build our final list of chosen people, to the max of "amount"
 		var/cCount = 0
