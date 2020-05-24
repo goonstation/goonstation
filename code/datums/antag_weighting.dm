@@ -228,7 +228,7 @@ var/global/datum/antagWeighter/antagWeighter
 		//Set up segmented list for variance
 		var/list/historyLookup = list()
 		if (history.len > amount)
-			historyLookup = history.Copy(amount + 1)
+			historyLookup = history.Copy()
 
 		//Build our final list of chosen people, to the max of "amount"
 		var/cCount = 0
@@ -241,7 +241,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 			//Variance triggered, go pick a random player
 			if (historyLookup.len && prob(src.variance))
-				cckey = pick(ckeyMinds)
+				cckey = pick(historyLookup)
 				weight = historyLookup[cckey]["weight"]
 				seen = historyLookup[cckey]["seen"]
 				historyLookup -= cckey
