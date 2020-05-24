@@ -103,7 +103,7 @@
 			if (user in src.authorized)
 				boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
 				return
-			if (W:registered in src.authorized)
+			if (W:registered in src.authorized_registered)
 				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
 				return
 			if (access_maxsec in W:access)
