@@ -122,6 +122,9 @@
 			//die()
 			return
 
+		var/sigreturn = 0
+		if(proj_data && goes_through_walls)
+			sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -143,7 +146,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			var/turf/T = A
-			if (T.density && !goes_through_walls)
+			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
 				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -159,10 +162,6 @@
 				if (proj_data && proj_data.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
-#ifdef COMSIG_PROJ_PASS_DENSE_TURF
-			if(proj_data && goes_through_walls)
-				SEND_SIGNAL(src, COMSIG_PROJ_PASS_DENSE_TURF, A)
-#endif
 		else if (ismob(A))
 			if(pierces_left != 0) //try to hit other targets on the tile
 				var/turf/T = get_turf(A)
@@ -216,7 +215,7 @@
 				pierces_left--
 
 		else if (isobj(A))
-			if (A.density && !goes_through_walls)
+			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
 				if (iscritter(A))
 					if (proj_data && proj_data.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -224,10 +223,6 @@
 					if (proj_data && proj_data.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
-#ifdef COMSIG_PROJ_PASS_DENSE_OBJ
-			if(proj_data && goes_through_walls)
-				SEND_SIGNAL(src, COMSIG_PROJ_PASS_DENSE_OBJ, A)
-#endif
 		else
 			die()
 

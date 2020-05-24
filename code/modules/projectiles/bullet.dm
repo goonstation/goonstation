@@ -223,7 +223,7 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	goes_through_walls = 1
 	on_launch(obj/projectile/O)
-		O.AddComponent(/datum/component/limited_wallpierce, 2) //pierces 2 walls/lockers/doors/etc
+		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
 				
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(ishuman(hit))
