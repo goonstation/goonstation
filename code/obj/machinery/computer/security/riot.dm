@@ -17,7 +17,7 @@
 		if (!armory_area || armory_area.contents.len <= 1)
 			armory_area = get_area_by_type(/area/station/security/armory)
 
-		for (var/obj/machinery/door/airlock/D in doors)
+		for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		..()
@@ -28,7 +28,7 @@
 		authed = 1
 		icon_state = "drawbr-alert"
 
-		for (var/obj/machinery/door/airlock/D in doors)
+		for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.req_access = list(access_security)
 				D.no_access = 0
