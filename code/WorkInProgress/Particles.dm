@@ -34,6 +34,7 @@
 		animate(src)
 
 	disposing()
+		src.set_loc(null) // so they don't linger around when pooled
 		particleMaster.active_particles -= src
 		..()
 
