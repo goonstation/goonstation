@@ -2858,7 +2858,8 @@ area/station/security/visitation
 	sound_environment = 12
 	icon_state = "ai_foyer"
 
-
+/area/station/turret_protected/armory_outside
+	name = "Armory Outer Perimeter"
 
 
 /////////////////////////////// OLD AREAS THAT ARE NOT USED BUT ARE IN HERE
