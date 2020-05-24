@@ -1,5 +1,9 @@
 
 (t)sun may 24 20
+(u)Sovexe
+(p)814
+(e)🆕🗺|feature, mapping
+(*)Added a new underwater Z5 location - Water Treatment Facility
 (u)UrsulaMajor
 (p)738
 (e)⚖🗺🎨|balance, mapping, sprites
