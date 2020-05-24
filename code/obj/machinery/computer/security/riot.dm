@@ -3,6 +3,7 @@
 	icon_state = "drawbr0"
 	var/auth_need = 3.0
 	var/list/authorized
+	var/list/authorized_registered
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
 	lr = 1
@@ -27,6 +28,9 @@
 		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
 		authed = 1
 		icon_state = "drawbr-alert"
+
+		src.authorized = null
+		src.authorized_registered = null
 
 		for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
@@ -90,6 +94,7 @@
 
 	if (!src.authorized)
 		src.authorized = list()
+		src.authorized_registered = list()
 
 	var/choice = alert(user, text("Would you like to (un)authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
 	if(get_dist(user, src) > 1) return
@@ -98,19 +103,21 @@
 			if (user in src.authorized)
 				boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
 				return
+			if (W:registered in src.authorized)
+				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+				return
 			if (access_maxsec in W:access)
 				authorize()
-				src.authorized = null
 				return
 
 			src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
-
+			src.authorized_registered += W:registered
 			if (src.authorized.len < auth_need)
 				print_auth_needed(user)
 			else
 				authorize()
-				src.authorized = null
 
 		if("Repeal")
 			src.authorized -= user
+			src.authorized_registered -= W:registered
 			print_auth_needed(user)
