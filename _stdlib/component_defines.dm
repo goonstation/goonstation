@@ -70,3 +70,10 @@
 // mob signals
 ///At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
+
+
+// projectile signals
+/// After a wall-piercing projectile passes through a dense object
+#define COMSIG_PROJ_PASS_DENSE_OBJ "proj_pierce_obj"
+/// After a wall-piercing projectile passes through a dense turf
+#define COMSIG_PROJ_PASS_DENSE_TURF "proj_pierce_turf"
