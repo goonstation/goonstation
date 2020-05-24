@@ -782,7 +782,7 @@
 		return
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
-	// REPAIR FLOCKDRONE/door
+	// REPAIR FLOCKDRONE
 	var/mob/living/critter/flock/drone/F = target
 	if(isflock(F))
 		if(F.get_health_percentage() >= 1.0)
