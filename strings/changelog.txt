@@ -1,5 +1,9 @@
 
 (t)sun may 24 20
+(u)pali
+(p)791
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)PDA lights now have higher range (and are slightly less bright).
 (u)system86
 (p)815
 (e)🎨|sprites
