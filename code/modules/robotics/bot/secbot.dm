@@ -202,7 +202,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.anchored = 0
 			src.mode = SECBOT_IDLE
 			walk_to(src,0)
-			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			src.updateUsrDialog()
 
 		switch(href_list["operation"])
@@ -232,7 +232,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.oldtarget_name = null
 		mode = SECBOT_IDLE
 		src.anchored = 0
-		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		walk_to(src,0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -250,7 +250,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.anchored = 0
 			src.emagged++
 			src.on = 1
-			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			mode = SECBOT_IDLE
 			src.target = null
 
@@ -375,7 +375,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.icon_state = "secbot-c[src.emagged >= 2 ? "-spaz" : null]"
+						src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 						var/mob/living/carbon/M = src.target
 						var/maxstuns = 4
 						var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
@@ -398,7 +398,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 								sleep(0.3 SECONDS)
 
 						SPAWN_DBG(0.2 SECONDS)
-							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 						if (src.target.getStatusDuration("weakened"))
 							mode = SECBOT_PREP_ARREST
 							src.anchored = 1

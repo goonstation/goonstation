@@ -756,7 +756,7 @@
 			else if (ishuman(occupant) && src.conversion_chamber)
 				var/mob/living/carbon/human/H = occupant
 				if (prob(80))
-					playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_spaz.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
+					playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_scratch.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
 					if (prob(15)) src.visible_message("<span class='alert'>[src] [pick("whirs","grinds","rumbles","clatters","clangs")] [pick("horribly","in a grisly manner","horrifyingly","scarily")]!</span>")
 					if (prob(25))
 						SPAWN_DBG(0.3 SECONDS)

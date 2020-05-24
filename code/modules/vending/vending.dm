@@ -1038,7 +1038,7 @@
 	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
 	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
 	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
 	lr = 0.3
@@ -1061,7 +1061,7 @@
 	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
 	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
 	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
 	lr = 0.3
