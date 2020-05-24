@@ -62,6 +62,8 @@
 	var/static/list/text_flipout_adjective = list("an awful","a terrible","a loud","a horrible","a nasty","a horrendous")
 	var/static/list/text_flipout_noun = list("noise","racket","ruckus","clatter","commotion","din")
 	var/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
+	var/obj/item/card/id/scan = null
+	var/temp = null
 
 #define WIRE_EXTEND 1
 #define WIRE_POWER 2
@@ -284,6 +286,27 @@
 		dat += build_control_panel()
 		dat += "<br>"
 		dat += build_material_list()
+
+		dat +="<HR><B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+		if(scan)
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			if (account)
+				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
+		dat+= src.temp
+
+		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
+		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
+			if(S.broken)
+				continue
+			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if(!OCD.for_sale || !OCD.amount)
+					continue
+				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
 
 		dat += "</small><HR>"
 
@@ -648,6 +671,78 @@
 					src.pulse(twire)
 				src.build_icon()
 
+			if (href_list["card"])
+				if (src.scan) src.scan = null
+				else
+					var/obj/item/I = usr.equipped()
+					src.scan_card(I)
+
+			if (href_list["purchase"])
+				var/obj/machinery/ore_cloud_storage_container/storage = locate(href_list["storage"])
+				var/ore = href_list["ore"]
+				var/datum/ore_cloud_data/OCD = storage.ores[ore]
+				var/price = OCD.price
+				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+
+				if(storage?.broken)
+					return
+
+				if(!scan)
+					src.temp = {"You have to scan a card in first.<BR>"}
+					src.updateUsrDialog()
+					return
+				else
+					src.temp = null
+				if (src.scan.registered in FrozenAccounts)
+					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+					return
+				var/datum/data/record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (account)
+					var/quantity = 1
+					quantity = input("How many units do you want to purchase?", "Ore Purchase", null, null) as num
+
+					////////////
+
+					if(OCD.amount >= quantity)
+						var/subtotal = round(price * quantity)
+						var/sum_taxes = round(taxes * quantity)
+						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
+						var/total = subtotal + sum_taxes + rockbox_fees
+						if(account.fields["current_money"] >= total)
+							account.fields["current_money"] -= total
+							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
+
+							 // This next bit is stolen from PTL Code
+							var/list/accounts = list()
+							for(var/datum/data/record/t in data_core.bank)
+								if(t.fields["job"] == "Chief Engineer")
+									accounts += t
+									accounts += t //fuck it x2
+								else if(t.fields["job"] == "Miner")
+									accounts += t
+
+
+							//any non-divisible amounts go to the shipping budget
+							var/leftovers = 0
+							if(accounts.len)
+								leftovers = subtotal%accounts.len
+								var/divisible_amount = subtotal - leftovers
+								if(divisible_amount)
+									for(var/datum/data/record/t in accounts)
+										t.fields["current_money"] += divisible_amount/accounts.len
+							else
+								leftovers = subtotal
+							wagesystem.shipping_budget += (leftovers + sum_taxes)
+
+							src.temp = {"Enjoy your purchase!<BR>"}
+						else
+							src.temp = {"You don't have enough dosh, bucko.<BR>"}
+					else
+						src.temp = {"I don't have that many for sale, champ.<BR>"}
+				else
+					src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
+
 			src.updateUsrDialog()
 		return
 
@@ -823,6 +918,9 @@
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
+		else if(scan_card(W))
+			return
+
 		else
 			..()
 			user.lastattacked = src
@@ -843,6 +941,30 @@
 					src.take_damage(damage)
 
 		src.updateUsrDialog()
+
+	proc/scan_card(var/obj/item/I)
+		if (istype(I, /obj/item/device/pda2))
+			var/obj/item/device/pda2/P = I
+			if(P.ID_card)
+				I = P.ID_card
+		if (istype(I, /obj/item/card/id))
+			var/obj/item/card/id/ID = I
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(ID.registered)
+			if(account)
+				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				if (enterpin == ID.pin)
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					src.scan = ID
+					return 1
+				else
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					src.scan = null
+			else
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				src.scan = null
+		return 0
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
