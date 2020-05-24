@@ -45,6 +45,7 @@ datum/preferences
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
+	var/auto_capitalization = 1
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	//var/use_tg = 0 //Are they animals and want to use TG's keybinds? // mbc moved to dropdowns
@@ -622,6 +623,8 @@ datum/preferences
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
 			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads </a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(!src.auto_capitalization)] Auto capitalize your messages </a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
+
 		</td>
 	</tr>
 	<tr>
@@ -1445,6 +1448,9 @@ datum/preferences
 		if (link_tags["flying_chat_hidden"])
 			src.flying_chat_hidden = !(src.flying_chat_hidden)
 
+		if (link_tags["auto_capitalization"])
+			src.auto_capitalization = !(src.auto_capitalization)
+
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
 			src.admin_music_volume = max(0,min(src.admin_music_volume,100))
@@ -1662,6 +1668,7 @@ datum/preferences
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			auto_capitalization = 1
 			listen_ooc = 1
 			view_changelog = 1
 			view_score = 1
