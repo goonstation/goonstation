@@ -1,5 +1,9 @@
 
 (t)sun may 24 20
+(u)system86
+(p)815
+(e)🎨|sprites
+(+)New ThinkTape sprite.
 (u)Sovexe
 (p)814
 (e)🆕🗺|feature, mapping
