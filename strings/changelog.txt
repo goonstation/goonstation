@@ -1,4 +1,9 @@
 
+(t)sun may 24 20
+(u)UrsulaMajor
+(p)738
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Adds the RockBox Cloud Storage Device, a storage container for ores that also allows the crew to buy said ores from any manufacturing unit.
 (t)sat may 23 20
 (u)Carbadox
 (p)769
