@@ -93,6 +93,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		playsound(get_turf(the_breaker), "sound/misc/winding.ogg", 50, 1)
 
 	onStart()
 		..()
@@ -100,7 +101,6 @@
 		switch (interaction)
 			if ("rewind")
 				verbing = "rewinding"
-				playsound(get_turf(the_breaker), "sound/items/Screwdriver.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_breaker].</span>")
 
 	onEnd()
