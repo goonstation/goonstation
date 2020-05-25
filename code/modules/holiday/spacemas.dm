@@ -1125,7 +1125,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
 						playsound(src.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 75, 0.7)
-						H.UpdateDamage()
+						health_update_queue |= H
 						H.UpdateDamageIcon()
 						sleep(1.5 SECONDS)
 				else

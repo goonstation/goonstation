@@ -481,7 +481,7 @@
 		playsound(src, "sound/weapons/shotgunshot.ogg", 100, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = make_cleanable( /obj/decal/cleanable/blood/gibs,get_turf(user))
 		gib.streak(turn(user.dir,180))
-		user.updatehealth()
+		health_update_queue |= user
 		return 1
 
 	engineer

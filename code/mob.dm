@@ -1031,6 +1031,7 @@
 	icon_rebuild_flag &= ~BODY
 
 /mob/proc/UpdateDamage()
+	updatehealth()
 	return
 
 /mob/proc/set_damage_icon_dirty()
@@ -2362,7 +2363,7 @@
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)
-	src.updatehealth()
+	health_update_queue |= src
 
 /mob/proc/infected(var/datum/pathogen/P)
 	return
@@ -2390,11 +2391,13 @@
 /mob/proc/take_toxin_damage(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1
+	health_update_queue |= src
 	return 0
 
 /mob/proc/take_oxygen_deprivation(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1
+	health_update_queue |= src
 	return 0
 
 /mob/proc/get_eye_damage(var/tempblind = 0)

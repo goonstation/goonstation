@@ -909,7 +909,6 @@ About the new airlock wires panel:
 		return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))

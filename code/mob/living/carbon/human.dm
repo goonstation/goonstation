@@ -1252,7 +1252,6 @@
 
 			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
 			src.UpdateDamageIcon()
-		src.updatehealth()
 	else if (prob(20))
 		src.gib()
 
@@ -2695,7 +2694,6 @@
 					src.throw_at(targetTurf, 200, 4)
 	shock_cyberheart(shock_damage)
 	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	src.updatehealth()
 	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))

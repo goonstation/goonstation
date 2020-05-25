@@ -142,7 +142,7 @@
 					dat += "Left Leg Unit Missing<br>"
 
 				if (!dmgalerts && occupant.health < occupant.max_health)
-					occupant.updatehealth()
+					health_update_queue |= occupant
 
 				if (dmgalerts == 0) dat += "No abnormalities detected.<br>"
 

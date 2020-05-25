@@ -84,7 +84,6 @@
 					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
 
 			H.take_toxin_damage(1)
-			H.updatehealth()
 
 //stolen from the admin button because I know fuck all about pathogens - Kyle
 /datum/ailment/disease/appendicitis/proc/add_pathogens(var/mob/living/A, var/amount)

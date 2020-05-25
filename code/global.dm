@@ -71,6 +71,7 @@ var/global
 	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
+	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()

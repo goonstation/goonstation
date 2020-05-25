@@ -167,13 +167,10 @@
 				random_burn_damage(src.target, damage)
 			if ("toxin")
 				M.take_toxin_damage(damage)
-				M.updatehealth()
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
-				M.updatehealth()
 			if ("radiation")
 				M.changeStatus("radiation", damage*10, 3)
-				M.updatehealth()
 
 	CritterAttack(mob/N)
 		if (!melee)

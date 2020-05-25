@@ -104,7 +104,7 @@
 					var/obj/item/affecting = C.organs["head"]
 					if (affecting)
 						affecting.take_damage(9, 0)
-						C.UpdateDamage()
+						health_update_queue |= C
 						C.UpdateDamageIcon()
 					C.changeStatus("weakened", 1 SECOND)
 				else

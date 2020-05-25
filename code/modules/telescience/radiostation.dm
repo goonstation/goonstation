@@ -271,7 +271,6 @@
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))

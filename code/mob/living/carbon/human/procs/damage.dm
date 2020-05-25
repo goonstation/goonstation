@@ -576,13 +576,13 @@
 
 		if (update)
 			src.UpdateDamageIcon()
-			src.UpdateDamage()
+			health_update_queue |= src
 	else
 		var/obj/item/E = src.organs[zone]
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))
 				src.UpdateDamageIcon()
-				src.UpdateDamage()
+				health_update_queue |= src
 		else
 			return 0
 		return
@@ -683,14 +683,14 @@
 
 		if (update)
 			src.UpdateDamageIcon()
-			src.UpdateDamage()
+			health_update_queue |= src
 		return 1
 	else
 		var/obj/item/E = src.organs["[zone]"]
 		if (isitem(E))
 			if (E.heal_damage(brute, burn, tox))
 				src.UpdateDamageIcon()
-				src.UpdateDamage()
+				health_update_queue |= src
 				return 1
 		else
 			return 0
