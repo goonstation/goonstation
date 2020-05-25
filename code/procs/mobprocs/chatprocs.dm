@@ -736,7 +736,7 @@
 		return
 
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
-	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] auto capitalizing messages.</span>")
+	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "No longer": "Now"] auto capitalizing messages.</span>")
 
 /mob/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
