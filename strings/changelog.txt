@@ -7,6 +7,9 @@
 (e)🎨|sprites
 (+)Animated stunbaton inhands
 (u)UrsulaMajor
+(e)⚖|balance
+(+)Lightbreaker now costs 4TC instead of 3TC and has a shorter stun duration.
+(u)UrsulaMajor
 (p)835
 (e)⚖|balance
 (+)Suppressed .22 Traitor Item now starts with all Hollow Point ammo
