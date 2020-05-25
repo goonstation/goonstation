@@ -88,7 +88,6 @@
 "Hl" = (/turf/simulated/floor/purpleblack{dir = 4},/area/station/bee_sanctuary)
 "Hr" = (/obj/stool/chair/office/blue{dir = 1; pixel_y = 8; tag = "icon-office_chair_blue (NORTH)"},/turf/simulated/floor/green/side{dir = 6},/area/station/bee_sanctuary)
 "Hs" = (/obj/decal/cleanable/dirt/dirt4,/obj/reagent_dispensers/compostbin,/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 10},/turf/simulated/floor/caution/corner/se,/area/station/bee_sanctuary)
-"Hu" = (/turf/simulated/wall/auto/reinforced/supernorn,/area)
 "HE" = (/obj/critter/zombie/scientist,/turf/simulated/floor/purpleblack{dir = 6},/area/station/bee_sanctuary)
 "IJ" = (/obj/disposaloutlet/south{name = "river loop outlet"},/turf/unsimulated/grass,/area/station/bee_sanctuary)
 "IN" = (/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/unsimulated/grass,/area/station/bee_sanctuary)
@@ -177,7 +176,7 @@ ZzQaWZWZamamamZzKIKIZznWbPgOTRYkYddoZzZzZzZzxHnGBhKdLGUXkeOHOHqlrDZz
 ZzUGIVWZWZWZWZJVWZWZJVTRTRWuaATRXbdtZzucDPLpaTthOHEhZYoXfBOHOHnLrDZz
 ZzZzZzWZewWZWZJVWZewJVTRTRAuUgdoRReLZzFmdVgWZzryRwYUGYUDYUpQGYsHAVZz
 OsOsZzZzZzpHpHZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzJqQnfzQnQnXoQnNwQnHrZz
-OsOsOsOsZzWZWZZzOsOsOsOsOsOsOsOsOsOsOsOsOsOsHuHuHuHuHuHuHuHuHuHuHuHu
+OsOsOsOsZzWZWZZzOsOsOsOsOsOsOsOsOsOsOsOsOsOsZzZzZzZzZzZzZzZzZzZzZzZz
 OsOsOsOsZzRFtpZzOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOs
 OsOsOsOsZzpHpHZzOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOs
 OsOsOsOsfQfQfQfQOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOs
