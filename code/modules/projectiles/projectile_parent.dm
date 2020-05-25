@@ -122,9 +122,7 @@
 			//die()
 			return
 
-		var/sigreturn = 0
-		if(proj_data && goes_through_walls)
-			sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
