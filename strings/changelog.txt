@@ -1,5 +1,9 @@
 
 (t)sun may 24 20
+(u)Flourish
+(p)793
+(e)🆕|feature
+(+)There are now sound effects for when you click together figures.
 (u)mbc
 (p)836
 (e)🗺|mapping
