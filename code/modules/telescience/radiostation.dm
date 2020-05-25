@@ -594,6 +594,11 @@
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
 
+/obj/item/radio_tape/advertisement/danitos_burritos
+	name = "compact tape - 'Descuento Danito's Burritos'"
+	audio = "sound/radio_station/danitos_burritos.ogg"
+	name_of_thing = "Descuento Danito's Burritos"
+
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
 	audio = "sound/radio_station/bill_movie.ogg"

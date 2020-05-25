@@ -5,7 +5,7 @@
 	icon = 'icons/misc/halloween.dmi'
 #else
 	desc = "A little security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 #endif
 	icon_state = "secbot0"
 	layer = 5.0 //TODO LAYER
@@ -33,7 +33,7 @@
 	var/report_arrests = 0 //If true, report arrests over PDA messages.
 
 	var/botcard_access = "Head of Security" //Job access for doors.
-	var/hat = null //Add an overlay from aibots.dmi with this state.  hats.
+	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
 	var/loot_baton_type = /obj/item/baton
 	var/stun_type = "stun"
@@ -130,7 +130,7 @@
 /obj/item/secbot_assembly
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	var/build_step = 0
@@ -159,7 +159,7 @@
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
 			if(src.hat)
-				src.overlays += image('icons/obj/aibots.dmi', "hat-[src.hat]")
+				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 
 	attack_hand(mob/user as mob, params)
 		var/dat
@@ -202,7 +202,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.anchored = 0
 			src.mode = SECBOT_IDLE
 			walk_to(src,0)
-			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			src.updateUsrDialog()
 
 		switch(href_list["operation"])
@@ -232,7 +232,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.oldtarget_name = null
 		mode = SECBOT_IDLE
 		src.anchored = 0
-		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		walk_to(src,0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -250,7 +250,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.anchored = 0
 			src.emagged++
 			src.on = 1
-			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			mode = SECBOT_IDLE
 			src.target = null
 
@@ -375,7 +375,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.icon_state = "secbot-c[src.emagged >= 2 ? "-spaz" : null]"
+						src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 						var/mob/living/carbon/M = src.target
 						var/maxstuns = 4
 						var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
@@ -398,7 +398,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 								sleep(0.3 SECONDS)
 
 						SPAWN_DBG(0.2 SECONDS)
-							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-spaz" : null]"
+							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 						if (src.target.getStatusDuration("weakened"))
 							mode = SECBOT_PREP_ARREST
 							src.anchored = 1
@@ -960,7 +960,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)
 		Sa.build_step = 1
-		Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+		Sa.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 		Sa.created_name = src.name
 		Sa.beacon_freq = src.beacon_freq
 		Sa.hat = src.hat
@@ -1066,13 +1066,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	if ((istype(W, /obj/item/weldingtool)) && (!src.build_step))
 		if(W:try_weld(user, 1))
 			src.build_step++
-			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 			boutput(user, "You weld a hole in [src]!")
 
 	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.build_step == 1))
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
-		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
+		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
 
@@ -1080,7 +1080,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.build_step++
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
-		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
+		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
 		qdel(W)
 
 	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 3))

@@ -95,6 +95,10 @@
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
+	proc/get_power(obj/O)
+		return src.proj_data.power - max(0,((get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
+
+
 	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
@@ -105,7 +109,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-
+		src.power = src.get_power(A)
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
@@ -352,9 +356,8 @@
 				y32 = -y32
 		var/max_t
 		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
-			max_t = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
-		else
-			max_t = proj_data.max_range // why not
+			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
+		max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -420,12 +423,10 @@
 		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.dissipation_delay || src.dissipation_ticker > src.proj_data.max_range)
-			src.power -= src.proj_data.dissipation_rate
-			if (src.power <= 0 || src.dissipation_ticker > src.proj_data.max_range)
-				proj_data.on_max_range_die(src)
-				die()
-				return
+		if (src.dissipation_ticker > src.proj_data.max_range)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 		proj_data.tick(src)
 		if (disposed)
 			return
@@ -525,6 +526,7 @@
 		src.tracked_blood = null
 		return
 
+ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
 	var
@@ -629,9 +631,9 @@ datum/projectile
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			if(ks_ratio == 0) //stun projectiles only
 				impact_image_effect("T", hit)
-				if (isliving(hit))
-					var/mob/living/L = hit
-					stun_bullet_hit(O,L)
+//				if (isliving(hit))
+//					var/mob/living/L = hit
+//					stun_bullet_hit(O,L)
 			return
 		tick(var/obj/projectile/O)
 			return

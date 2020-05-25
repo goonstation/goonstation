@@ -377,7 +377,6 @@
 			affected_mob.cure_disease(D)
 			return
 
-		H.ensure_bp_list()
 		var/cureprob = 0
 		if (H.blood_pressure["total"] < 666) // very high bp
 			cureprob += 5

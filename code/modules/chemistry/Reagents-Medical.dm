@@ -69,13 +69,15 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					remove_buff = M.add_stam_mod_regen("r_morphine", -5)
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				return
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(remove_buff)
 						M.remove_stam_mod_regen("r_morphine")
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -251,6 +253,16 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(10 * mult))
 				..()
 				return
+
+			on_add()
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/salicylic_acid, src.type)
+
+			on_remove()
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/salicylic_acid, src.type)
 
 		medical/menthol
 			name = "menthol"
@@ -755,7 +767,7 @@ datum
 			overdose = 20
 			var/remove_buff = 0
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
-			stun_resist = 5
+			stun_resist = 10
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -1056,7 +1068,7 @@ datum
 			addiction_min = 10
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
-			stun_resist = 10
+			stun_resist = 15
 
 			pooled()
 				..()

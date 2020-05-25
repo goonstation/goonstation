@@ -29,7 +29,7 @@
 	.= ..()
 	if(showTooltip)
 		var/datum/component/storage/SC = parent.GetComponent(/datum/component/storage)
-		. += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[round(SC?.get_contents().len/3)])")
+		. += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[ceil(SC?.get_contents().len/3)])")
 		. += itemblock_tooltip_entry("minus.png", "Contents ejected when attacked")
 
 /datum/component/itemblock/backpackblock/proc/updateblock()

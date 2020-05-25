@@ -114,6 +114,8 @@
 							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
+		else
+			..()
 	block
 		// crystal, rubber
 		name = "block"
@@ -211,7 +213,7 @@
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
-	desc = "Years of genetic engineering mean timber always comes in perfectly shaped cylindrical logs."
+	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
 	setup_material()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)

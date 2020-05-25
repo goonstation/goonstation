@@ -153,7 +153,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
-	icon = 'icons/misc/xmas_buddy.dmi'
+	icon = 'icons/obj/bots/xmasbuddy.dmi'
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
@@ -442,7 +442,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
-	plane = 21
+	plane = PLANE_BLACKNESS + 1
 
 	density = 1
 	var/on_fire = 0

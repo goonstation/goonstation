@@ -366,15 +366,16 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/clown5
-	name = "Nothing!"
-	desc = "Nothing Again!"
+	name = "Clown Box"
+	desc = "It's a really cool box."
 	required_levels = list("Clown"=5)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "Nothing seems to happen!")
+		boutput(C, "You pull your clown box out from your - wait, what?")
+		new /obj/item/clothing/suit/cardboard_box/colorful/clown(get_turf(C.mob))
 		return
 
 /datum/jobXpReward/clown10
@@ -410,7 +411,7 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		boutput(C, "You get a \"banana\"!")
-		var/obj/item/banana = null 
+		var/obj/item/banana = null
 		if (prob(1))
 			banana = new/obj/item/old_grenade/banana()
 		else

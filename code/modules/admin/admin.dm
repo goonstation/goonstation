@@ -284,13 +284,11 @@ var/global/noir = 0
 					if("1")
 						if ((!( ticker ) || emergency_shuttle.location))
 							return
-						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","<span class='italic'>No reason given.</span>") as null|text
+						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
 						if(!call_reason)
 							return
 						emergency_shuttle.incall()
-						boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-						boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-						boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -303,11 +301,9 @@ var/global/noir = 0
 								emergency_shuttle.incall()
 								var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","") as null|text
 								if(!call_reason)
-									call_reason = "<span class='italic'>No reason given.</span>"
+									call_reason = "No reason given."
 								emergency_shuttle.incall()
-								boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-								boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-								boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -3004,6 +3000,8 @@ var/global/noir = 0
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
 						job_controls.job_config()
+					if("respawn_panel")
+						src.s_respawn()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
@@ -3083,7 +3081,7 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("s_rez")
-			if (src.level >= LEVEL_SHITGUY)
+			if (src.level >= LEVEL_PA)
 				switch(href_list["type"])
 					if("spawn_syndies")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
@@ -3103,7 +3101,7 @@ var/global/noir = 0
 
 					if("spawn_job")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
 						if(!job) return
 						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
@@ -3154,6 +3152,19 @@ var/global/noir = 0
 				if (!M) return
 				var/mob/newM = usr.client.respawn_target(M)
 				href_list["target"] = "\ref[newM]"
+			else
+				alert ("You must be at least a Secondary Admin to respawn a target.")
+		if ("respawnas")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/client/C = M.client
+				if (!M) return
+				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+				var/datum/job/job = input(usr,"Select job to respawn [M] as:","Respawn As",null) as null|anything in jobs
+				if(!job) return
+				var/mob/new_player/newM = usr.client.respawn_target(M)
+				newM.AttemptLateSpawn(job, force=1)
+				href_list["target"] = "\ref[C.mob]"
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
@@ -3562,6 +3573,7 @@ var/global/noir = 0
 	dat += {"<hr><div class='optionGroup' style='border-color:#FF6961'><b class='title' style='background:#FF6961'>Admin Tools</b>
 				<A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Respawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>

@@ -498,7 +498,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
-	item_state = "flight"
+	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
@@ -772,7 +772,7 @@
 	Topic(var/href, var/href_list)
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis") || usr.hasStatus("stunned") || usr.hasStatus("weakened") || usr.hasStatus("resting"))
+		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
 			return
 		..()
 

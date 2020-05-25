@@ -230,7 +230,7 @@
 				return
 			else if (src.personal && istype(W, /obj/item/card/id))
 				var/obj/item/card/id/I = W
-				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
+				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")

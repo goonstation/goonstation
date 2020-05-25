@@ -4,6 +4,7 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
+	var/add_to_manifest = 1
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
@@ -19,7 +20,8 @@
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
 	var/receives_badge = 0
-	var/announce_on_join = 0
+	var/announce_on_join = 0 // that's the head of staff announcement thing
+	var/radio_announcement = 1 // that's the latejoin announcement thing
 	var/list/alt_names = list()
 	var/slot_head = null
 	var/slot_mask = null
@@ -29,6 +31,7 @@
 	var/slot_suit = null
 	var/slot_jump = null
 	var/slot_card = /obj/item/card/id
+	var/spawn_id = 1 // will override slot_card if 1
 	var/slot_glov = null
 	var/slot_foot = null
 	var/slot_back = /obj/item/storage/backpack
@@ -41,6 +44,7 @@
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
 	var/mob/living/mob_type = /mob/living/carbon/human
+	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = 0
 	var/special_spawn_location = 0
 	var/spawn_x = 0
@@ -64,23 +68,31 @@
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 
 		SPAWN_DBG(0)
-			if (recieves_implant && ispath(recieves_implant) && ishuman(M))
+			if (recieves_implant && ispath(recieves_implant))
 				var/mob/living/carbon/human/H = M
-				var/obj/item/implant/I = new recieves_implant(H)
+				var/obj/item/implant/I = new recieves_implant(M)
 				I.implanted = 1
-				H.implant.Add(I)
-				I.implanted(H)
-				if (receives_disk)
+				if(ishuman(M)) H.implant.Add(I)
+				I.implanted(M)
+				if (receives_disk && ishuman(M))
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
 						if (D)
 							D.data["imp"] = "\ref[I]"
 
-			if (iscritter(M))
+			var/give_access_implant = iscritter(M)
+			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
+				give_access_implant = 1
+			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
 				I.uses = -1
 				I.set_loc(M)
+				I.implanted = 1
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.implant.Add(I)
+				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
 				M.loc = locate(spawn_x,spawn_y,spawn_z)
@@ -90,6 +102,10 @@
 				if (picklist && picklist.len >= 1)
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
+
+			if (ishuman(M) && src.starting_mutantrace)
+				var/mob/living/carbon/human/H = M
+				H.set_mutantrace(src.starting_mutantrace)
 
 			if (src.objective)
 				var/datum/objective/newObjective = spawn_miscreant ? new /datum/objective/miscreant : new /datum/objective/crew
@@ -1386,12 +1402,7 @@
 	name = "Test Subject"
 	slot_jump = /obj/item/clothing/under/shorts
 	change_name_on_spawn = 1
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.set_mutantrace(/datum/mutantrace/monkey)
+	starting_mutantrace = /datum/mutantrace/monkey
 
 /datum/job/special/random/musician
 	name = "Musician"
@@ -2008,6 +2019,7 @@
 	slot_foot = null
 	slot_back = null
 	slot_belt = null
+	spawn_id = 0
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2108,7 +2120,7 @@
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
+	slot_ears = /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = /obj/item/spacecash/fivehundred
@@ -2150,7 +2162,7 @@
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
+	slot_ears =  /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
 

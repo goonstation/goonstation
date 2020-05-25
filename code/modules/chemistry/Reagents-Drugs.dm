@@ -361,13 +361,12 @@ datum
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.2
 			thirst_value = -0.03
+			minimum_reaction_temperature = T0C+400
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/myvol = volume
-				if(exposed_temperature > T0C + 400) //Turns into a neurotoxin.
-					volume = 0
-					holder.add_reagent("neurotoxin", myvol, null)
-				return
+				holder.del_reagent(id)
+				holder.add_reagent("neurotoxin", myvol, null)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -802,9 +801,9 @@ datum
 									fake_attackEx(M, 'icons/misc/critter.dmi', "cat-ghost", "ghost cat")
 									M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
 							if(2)
-								var/spazcats = rand(1,3)
-								for(var/i = 0, i < spazcats, i++)
-									fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-spaz", "wild cat")
+								var/wildcats = rand(1,3)
+								for(var/i = 0, i < wildcats, i++)
+									fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-wild", "wild cat")
 									M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
 					if(prob(20))
 						M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)

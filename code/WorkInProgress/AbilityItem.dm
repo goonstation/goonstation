@@ -155,6 +155,21 @@
 			W.button()
 		..()
 
+/obj/ability_button/magboot_toggle
+	name = "(De)Activate Magboots"
+	icon_state = "shieldceon"
+
+	execute_ability()
+		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(W.magnetic)
+			W.deactivate()
+			boutput(the_mob, "You power off your magnetic boots")
+		else
+			W.activate()
+			boutput(the_mob, "You power on your magnetic boots")
+		the_mob.update_equipped_modifiers()
+		the_mob.update_clothing()
+		..()
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tank_valve_toggle
@@ -241,6 +256,8 @@
 
 			SPAWN_DBG(0)
 				for(var/i=0, i<15, i++)
+					if(isnull(the_mob))
+						break
 					var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
 					A.set_loc(the_mob.loc)
 					SPAWN_DBG(1 SECOND)
@@ -790,7 +807,7 @@
 			return 0
 		if (!src.the_mob)
 			return 0
-		if (src.the_mob.hasStatus("paralysis") || src.the_mob.hasStatus("stunned") || src.the_mob.hasStatus("weakened")) //stun check
+		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
 			return 0
 		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
 			var/mob/living/carbon/human/H = the_mob

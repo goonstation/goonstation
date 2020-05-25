@@ -69,6 +69,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	name = "synthmeat"
 	desc = "Synthetic meat grown in hydroponics."
+	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
 	initial_reagents = list("synthflesh"=2)
