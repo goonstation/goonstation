@@ -309,12 +309,14 @@
 						<br>
 						<a href='[playeropt_link(M, "polymorph")]'>Edit Appearance</a> &bull;
 						<a href='[playeropt_link(M, "modifylimbs")]'>Modify Limbs/Organs</a> &bull;
-						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a>
+						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
+						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
 				"} : {"
 						Only human mobs can be transformed.
 						<br><a href='[playeropt_link(M, "humanize")]'>Humanize</a> &bull;
 						<a href='[playeropt_link(M, "makecritter")]'>Make Critter</a> &bull;
-						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a>
+						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
+						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
 				"}]
 					</div>
 				</div>

@@ -34,6 +34,31 @@ var/const/recently_time = 6000 // 10 mins
 
 	vote_manager.show_vote(src)
 
+
+/obj/newVoteLink
+	name = "<span style='color: green; text-decoration: underline;'>Vote</span>"
+
+	Click()
+		var/client/C = usr.client
+		if (!C) return
+		vote_manager.show_vote(C)
+
+	examine()
+		return list()
+
+	proc/update_name(new_name="Vote")
+		src.name = "<span style='color: green; text-decoration: underline;'>[new_name]</span>"
+
+	proc/chat_link()
+		return "<a href='?src=\ref[src]'>[src]</a>"
+
+	Topic(href, href_list)
+		. = ..()
+		Click()
+
+var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
+
+
 /datum/vote_manager
 	var/datum/vote_new/active_vote = null
 
@@ -161,25 +186,19 @@ var/const/recently_time = 6000 // 10 mins
 			may_vote += C.ckey
 		vote_started = world.time
 		data = A
-		process()
+		newVoteLinkStat.update_name(src.vote_name ? src.vote_name : "Vote")
+		SPAWN_DBG(vote_length)
+			end_vote()
 		..()
 
-	proc/process()
-		if(kill)
-			return
-		if(world.time - vote_started >= vote_length)
-			end_vote()
-			return
-		curr_win = get_winner()
-		SPAWN_DBG(2 SECONDS) process()
-
 	proc/show_to(var/client/C)
+		if(kill) return
 		if(C in open_votes) return
 		if(!(C.ckey in may_vote))
 			boutput(C, "<span class='alert'><BIG>You may not vote as you were not present when the vote was started.</BIG></span>")
 			return
 		if((C.ckey in voted_ckey) || (C.computer_id in voted_id))
-			boutput(C, "<span class='alert'><BIG>You have already voted. Current winner : [curr_win]</BIG></span>")
+			boutput(C, "<span class='alert'><BIG>You have already voted. Current winner: [get_winner()]</BIG></span>")
 			return
 		open_votes += C
 		var/choice = input(C,details,vote_name,null) in options
@@ -194,6 +213,8 @@ var/const/recently_time = 6000 // 10 mins
 		voted_id += C.computer_id
 
 	proc/get_winner()
+		if(ON_COOLDOWN(global, "new vote get_winner", 2 SECONDS))
+			return src.curr_win
 		var/winner = null
 		var/winner_num = 0
 		for(var/A in options)
@@ -202,7 +223,8 @@ var/const/recently_time = 6000 // 10 mins
 					winner_num = options[A]
 					winner = A
 		if(!winner) winner = "none"
-		return(winner)
+		src.curr_win = winner
+		return src.curr_win
 
 	proc/get_winner_num()
 		var/winner_num = 0
@@ -217,37 +239,30 @@ var/const/recently_time = 6000 // 10 mins
 		for(var/client/C in clients)
 			C.verbs -= /client/proc/viewnewvote
 		qdel(src)
-		return
+
 
 /datum/vote_new/mode
 	options = list("Yes","No")
 	details = ""
-	vote_name = "Vote gamemode"
+	vote_name = "Change gamemode"
 	vote_length = 1200 //2 Minutes
 
 	New(var/A)
-		for(var/client/C in clients)
-			C.verbs += /client/proc/viewnewvote
-			may_vote += C.ckey
-		vote_started = world.time
-		data = A
 		details = "Change gamemode to '[A]' ?"
-		process()
+		vote_name = "Change gamemode to [A]"
+		..()
 
 	end_vote()
-		vote_manager.active_vote = null
-		boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
-		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.5))
-				boutput(world, "<span class='success'><BIG><B>Minimum mode votes not reached (~50% of players).</B></BIG></span>")
-				qdel(src)
-				return
-			if(current_state == GAME_STATE_PREGAME)
-				boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
-				master_mode = lowertext(data)
-			else
-				boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
-				world.save_mode(lowertext(data))
+		. = ..()
+		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
+		if(get_winner() != "Yes" || get_winner_num() < round(clients.len * 0.5))
+			boutput(world, "<span class='alert'><BIG><B>Minimum mode votes not reached (~50% of players), game mode not changed.</B></BIG></span>")
+		else if(current_state == GAME_STATE_PREGAME)
+			boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
+			master_mode = lowertext(data)
+		else
+			boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
+			world.save_mode(lowertext(data))
 		qdel(src)
 		return
 
@@ -258,7 +273,7 @@ var/const/recently_time = 6000 // 10 mins
 	vote_length = 1200 //2 Minutes
 
 	end_vote()
-		vote_manager.active_vote = null
+		. = ..()
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
 			if(get_winner_num() < round(clients.len * 0.5))

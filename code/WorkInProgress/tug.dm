@@ -182,8 +182,8 @@
 		..()
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
-		light = new /datum/light/point
-		light.set_brightness(0.7)
+		light = new /datum/light/line
+		light.set_brightness(3)
 		light.attach(src)
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()

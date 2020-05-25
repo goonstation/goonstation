@@ -271,6 +271,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			.= bicon(hosIcon)
 		else if (bicon_override == "clown")
 			.= bicon(clownIcon)
+		else if (bicon_override == "nt")
+			.= bicon(ntIcon)
 		else
 			.= bicon(civIcon)
 	else

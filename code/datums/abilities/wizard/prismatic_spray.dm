@@ -18,7 +18,7 @@
 	//the number of projectiles we want to fire in a single cast
 	var/num_projectiles = 12
 	//what projectiles do we *NOT* want to add to the pool of random projectiles?
-	var/list/blacklist = list(/datum/projectile,/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile)
+	var/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile)
 	//If random == 0, use the special prismatic projectile datum. Else, pick from the pool of all projectiles minus the blacklisted ones
 	var/random = 0
 	//the list of projectile types to pick from if random is set to 1
@@ -28,9 +28,12 @@
 
 	New()
 		..()
-		for (var/X in typesof(/datum/projectile) - src.blacklist)
+		for (var/X in filtered_concrete_typesof(/datum/projectile, .proc/filter_projectile))
 			var/datum/projectile/A = new X
 			proj_types += A
+
+	proc/filter_projectile(proj_type)
+		return !(proj_type in src.blacklist)
 
 	cast(atom/target)
 		if (holder.owner.wizard_spellpower() || istype(src, /datum/targetable/spell/prismatic_spray/admin))

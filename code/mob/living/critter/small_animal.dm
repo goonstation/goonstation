@@ -123,16 +123,14 @@ todo: add more small animals!
 		eye_color = "#FFFFF"
 
 	setup_overlays()
-		if (src.bioHolder)
-			fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
-
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -1245,16 +1243,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 
 	setup_overlays()
-		if (src.bioHolder)
-			fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "roach_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -1422,7 +1419,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				animate_spin(src, pick("L","R"))
 
 			if (prob(10))
-				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","spazzes out","wiggles","wobbles")]!")
+				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles")]!")
 
 			if (src.freakout-- < 1)
 				src.visible_message("[src] calms down.")
@@ -1495,6 +1492,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
 	var/playing_dead = 0
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	setup_hands()
 		..() // both of these do no damage (in return, possums are basically immortal)
@@ -2419,17 +2424,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_overlays()
 		if(!src.colorkey_overlays)
 			return
-		if (src.bioHolder)
-			// purple only
-			// fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
+		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -2527,3 +2529,35 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
+
+/mob/living/critter/small_animal/crab
+	name = "crab"
+	real_name = "crab"
+	desc = "Snip snap"
+	icon_state = "crab_party"
+	hand_count = 2
+	speechverb_say = "snips"
+	speechverb_exclaim = "snaps"
+	butcherable = 1
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
+
+	New()
+		..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "left claw"
+		HH.limb_name = "claw"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "right claw"
+		HH.limb_name = "claw"

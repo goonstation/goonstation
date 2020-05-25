@@ -121,7 +121,7 @@
 	//
 	MouseDrop_T(mob/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
@@ -134,7 +134,7 @@
 		var/turf/Q = target.loc
 		sleep (5)
 		//heyyyy maybe we should check distance AFTER the sleep??											//If you get stunned while *climbing* into a chute, you can still go in
-		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || ((user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened")) && user != target))
+		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || ((user.stat || hasStatus(list("weakened", "paralysis", "stunned"))) && user != target))
 			return
 
 		if(target == user && !user.stat)	// if drop self, then climbed in
@@ -525,7 +525,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 		if (user) //ZeWaka: Fix for null.loc
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
-			user.updatehealth()
+			health_update_queue |= user
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

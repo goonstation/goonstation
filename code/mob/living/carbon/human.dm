@@ -205,6 +205,8 @@
 
 	src.organHolder = new(src)
 
+	src.ensure_bp_list()
+
 	if (!bioHolder)
 		bioHolder = new/datum/bioHolder(src)
 	if (!abilityHolder)
@@ -466,9 +468,6 @@
 				src.holder.set_body_icon_dirty()
 			return
 		return 0
-
-/mob/living/carbon/human/proc/is_changeling()
-	return ischangeling(src)
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
@@ -733,7 +732,7 @@
 		return
 
 	var/turf/reappear_turf = get_turf(src)
-	if (!antag_removal)
+	if (!antag_removal && !isrestrictedz(reappear_turf.z))
 		for (var/turf/simulated/floor/S in orange(7))
 			if (S == reappear_turf) continue
 			if (prob(50)) //Try to appear on a turf other than the one we die on.
@@ -842,7 +841,7 @@
 
 		// collect modifiers from the datum
 		. += modifier.additive_slowdown
-		multiplier += modifier.multiplicative_slowdown
+		multiplier *= modifier.multiplicative_slowdown
 		health_deficiency_adjustment += modifier.health_deficiency_adjustment
 		pushpull_multiplier *= modifier.pushpull_multiplier
 		aquatic_movement += modifier.aquatic_movement
@@ -1256,7 +1255,6 @@
 
 			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
 			src.UpdateDamageIcon()
-		src.updatehealth()
 	else if (prob(20))
 		src.gib()
 
@@ -1561,13 +1559,18 @@
 /mob/living/carbon/human/Topic(href, href_list)
 	if (istype(usr.loc,/obj/dummy/spell_invis/) || isghostdrone(usr))
 		return
-	if (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
+	var/canmove_or_pinning = usr.canmove
+	for (var/obj/item/grab/G in usr.equipped_list(check_for_magtractor = 0))
+		if (G.state == GRAB_PIN)
+			canmove_or_pinning = 1
+
+	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_range(src, usr) && ticker && usr.can_strip(src))
 		if (href_list["slot"] == "handcuff")
 			actions.start(new/datum/action/bar/icon/handcuffRemovalOther(src), usr)
 		else if (href_list["slot"] == "internal")
 			actions.start(new/datum/action/bar/icon/internalsOther(src), usr)
 		else if (href_list["item"])
-			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"])) , usr)
+			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"]), 0, href_list["item"] == "pockets") , usr)
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
@@ -2694,7 +2697,6 @@
 					src.throw_at(targetTurf, 200, 4)
 	shock_cyberheart(shock_damage)
 	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	src.updatehealth()
 	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
@@ -2770,7 +2772,7 @@
 
 	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
-			if (src.is_changeling())
+			if (ischangeling(src))
 				boutput(src, "<span class='notice'>You briefly shrink your hands to remove your handcuffs.</span>")
 				src.handcuffs.drop_handcuffs(src)
 				return

@@ -72,7 +72,7 @@
 	anchored = 1
 	density = 1
 	directwired = 1
-	processing_tier = PROCESSING_QUARTER // Uncomment this and line 175 for an experimental optimization
+	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
 	var/health = 10.0
 	var/id = 1
 	var/obscured = 0

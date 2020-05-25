@@ -99,7 +99,7 @@ proc/ass_jam_init()
 	trinket_safelist = childrentypesof(/obj/item) - ass_trinket_blacklist
 
 	for(var/datum/job/job in job_controls.special_jobs)
-		if(prob(4))
+		if(prob(4) && !istype(job, /datum/job/special/machoman))
 			job.limit += rand(1, 5)
 
 #endif

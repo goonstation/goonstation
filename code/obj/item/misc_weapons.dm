@@ -150,7 +150,7 @@
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned") || H.hasStatus("weakened") || H.hasStatus("paralysis")))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
 			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
 			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
@@ -239,7 +239,6 @@
 	user.visible_message("<span class='alert'><b>[user] stabs [src] through [his_or_her(user)] chest.</b></span>")
 	take_bleeding_damage(user, null, 250, DAMAGE_STAB)
 	user.TakeDamage("chest", 200, 0)
-	user.updatehealth()
 	SPAWN_DBG(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
@@ -668,7 +667,6 @@
 	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
-	user.updatehealth()
 	return 1
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
@@ -744,7 +742,6 @@
 	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
-	user.updatehealth()
 	return 1
 
 /obj/item/axe/vr
@@ -922,7 +919,7 @@
 		BLOCK_SWORD
 
 /obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
-	if(target == user || !ishuman(target)) //Can't cut off your own limbs, dumbo; only humans can currently be dismembered
+	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
@@ -984,7 +981,6 @@
 	user.say(say)
 	blood_slash(user, 25)
 	user.TakeDamage("chest", 150, 0)
-	user.updatehealth()
 	SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0
@@ -1052,7 +1048,6 @@
 		user.organHolder.drop_organ(organtokill)
 		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
 		user.TakeDamage("chest", 100, 0)
-		user.updatehealth()
 		SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0

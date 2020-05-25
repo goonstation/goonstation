@@ -6,10 +6,56 @@
 	anchored = 0
 	var/mob/occupant = null
 	var/locked = 0
+	var/homeloc = null
 
 	New()
 		..()
+
+		if (!islist(portable_machinery))
+			portable_machinery = list()
+		portable_machinery.Add(src)
+
+		src.homeloc = src.loc
+
 		genetics_computers += src
+		return
+
+	disposing()
+		if (islist(portable_machinery))
+			portable_machinery.Remove(src)
+		..()
+
+	examine()
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]."
+
+	MouseDrop(over_object, src_location, over_location)
+		..()
+		if (isobserver(usr) || isintangible(usr))
+			return
+		if ((usr in src.contents) || !isturf(usr.loc))
+			return
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+			return
+		if (get_dist(src, usr) > 1)
+			usr.show_text("You are too far away to do this!", "red")
+			return
+		if (get_dist(over_object, src) > 1)
+			usr.show_text("The [src.name] is too far away from the target!", "red")
+			return
+		if (!istype(over_object,/turf/simulated/floor/))
+			usr.show_text("You can't set this target as the home location.", "red")
+			return
+		var/turf/check_loc = over_object
+		if (check_loc && isturf(check_loc) && isrestrictedz(check_loc.z))
+			usr.show_text("You can't set this target as the home location.", "red")
+			return
+
+		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+			src.homeloc = over_object
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
+			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)

@@ -1,7 +1,7 @@
 /datum/plantmutation/
 	var/name = null // If this is set, plants will use this instead of regular plant name
 	var/crop = null // What crop does it give?
-	var/special_dmi = null // same as in base plant thing really
+	var/plant_icon = null // same as in base plant thing really
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
@@ -60,7 +60,7 @@
 	name = "Seething Tomato"
 	name_prefix = "Seething "
 	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
-	iconmod = "exptom"
+	iconmod = "TomatoExplosive"
 
 	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		. = ..()
@@ -76,19 +76,19 @@
 	name = "Suspicious Tomato"
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
-	iconmod = "kiltom"
+	iconmod = "TomatoKiller"
 
 /datum/plantmutation/tomato/tomacco
 	name = "Tomacco"
 	name_suffix = " Tomacco"
 	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	iconmod = "kiltom"
+	iconmod = "TomatoTomacco" //ayy potayto potato tomayto tomacco ya dig
 
 // Corn Mutations
 
 /datum/plantmutation/corn/clear
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn/clear
-	iconmod = "Clearcorn"
+	iconmod = "CornClear"
 	assoc_reagents = list("ethanol")
 
 // Grape Mutations
@@ -96,12 +96,12 @@
 /datum/plantmutation/grapes/green
 	name_prefix = "green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
-	iconmod = "Ggrape"
+	iconmod = "GrapeGreen"
 
 /datum/plantmutation/grapes/fruit
 	name = "Grapefruit"
 	crop = /obj/item/reagent_containers/food/snacks/plant/grapefruit
-	iconmod = "Grapefruit"
+	iconmod = "GrapeFruit"
 	assoc_reagents = list("juice_grapefruit")
 
 // Orange Mutations
@@ -109,12 +109,14 @@
 /datum/plantmutation/orange/blood
 	name = "Blood Orange"
 	name_prefix = "Blood "
+	iconmod = "OrangeBlood"
 	assoc_reagents = list("bloodc") // heh
 
 /datum/plantmutation/orange/clockwork
 	name = "Clockwork Orange"
 	name_prefix = "Clockwork "
 	crop = /obj/item/reagent_containers/food/snacks/plant/orange/clockwork
+	iconmod = "OrangeClockwork"
 	assoc_reagents = list("iron")
 	ENrange = list(30,null)
 	chance = 20
@@ -125,7 +127,7 @@
 	name = "Delicious Apple"
 	name_prefix = "Delicious "
 	crop = /obj/item/reagent_containers/food/snacks/plant/apple/poison
-	iconmod = "poison"
+	iconmod = "ApplePoison"
 	assoc_reagents = list("capulettium")
 	ENrange = list(40,null)
 	chance = 10
@@ -136,26 +138,28 @@
 	name = "Rainbow Melons"
 	name_prefix = "Rainbow "
 	crop = /obj/item/reagent_containers/food/snacks/plant/melon/george
+	iconmod = "MelonRainbow"
 	assoc_reagents = list("george_melonium")
 
 /datum/plantmutation/melon/balloon
 	name = "Balloon Melons"
 	name_prefix = "Balloon "
 	crop = /obj/item/reagent_containers/balloon
-	iconmod = "balloon"
+	iconmod = "MelonBalloon"
 	assoc_reagents = list("helium")
 
 /datum/plantmutation/melon/hindenballoon
 	name = "Balloon... Melons?"
 	name_prefix = "Balloon "
 	crop = /obj/item/reagent_containers/balloon
-	iconmod = "balloon"
+	iconmod = "MelonBalloon"
 	assoc_reagents = list("hydrogen")
 
 /datum/plantmutation/melon/bowling
 	name = "Bowling Melons"
 	name_prefix = "Bowling "
 	crop = /obj/item/reagent_containers/food/snacks/plant/melon/bowling
+	iconmod = "MelonBowling"
 	ENrange = list(12,null)
 	chance = 20
 	special_proc_override = 1
@@ -181,16 +185,16 @@
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
-	name = "chilly"
+	name = "Chilly"
 	name_prefix = "chilly "
-	iconmod = "chilly"
+	iconmod = "ChiliChilly" // IM SORRY THIS IS ALL IN THE NAME OF A VAGUELY CONSISTENT AND PREDICTABLE NAMING CONVENTION
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	assoc_reagents = list("cryostylane")
 
 /datum/plantmutation/chili/ghost
-	name = "fiery chili"
+	name = "Fiery Chili"
 	name_prefix = "fiery "
-	iconmod = "ghost"
+	iconmod = "ChiliGhost"
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
 	chance = 10
@@ -199,22 +203,22 @@
 // Eggplant Mutations
 
 /datum/plantmutation/eggplant/literal
-	name = "free range eggplant"
+	name = "Free-Range Eggplant"
 	name_prefix = "free range "
-	iconmod = "eggs"
+	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
 
 // Wheat Mutations
 
 /datum/plantmutation/wheat/durum
-	name = "durum wheat"
+	name = "Durum Wheat"
 	name_prefix = "durum "
 	crop = /obj/item/plant/wheat/durum
 
 /datum/plantmutation/wheat/steelwheat
 	name = "steel wheat"
 	name_prefix = "steel "
-	iconmod = "steelwheat"
+	iconmod = "WheatSteel"
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 
@@ -222,7 +226,7 @@
 
 /datum/plantmutation/synthmeat/butt
 	name = "Synthbutt"
-	iconmod = "butts"
+	iconmod = "SynthButts"
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = 1
@@ -244,22 +248,35 @@
 /datum/plantmutation/synthmeat/limb
 	name = "Synthlimb"
 	dont_rename_crop = true
-	iconmod = "limbs" // haine has farted up a shitty recolored sprite for these, everyone rejoice
+	iconmod = "SynthLimbs" // im sorry Haine i made a new sprite
 	crop = list(/obj/item/parts/human_parts/arm/left/synth, /obj/item/parts/human_parts/arm/right/synth,
 	            /obj/item/parts/human_parts/leg/left/synth, /obj/item/parts/human_parts/leg/right/synth,
 	            /obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/right/synth/bloom,
 	            /obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/right/synth/bloom)
 
-/datum/plantmutation/synthmeat/organ
+/datum/plantmutation/synthmeat/heart
+	name = "Synthheart"
+	dont_rename_crop = true
+	iconmod = "SynthHearts"
+	crop = list(/obj/item/organ/heart/synth)
+
+/datum/plantmutation/synthmeat/eye
 	name = "Synthorgan"
 	dont_rename_crop = true
-	iconmod = "limbs"
-	crop = list(/obj/item/organ/heart/synth, /obj/item/organ/brain/synth, /obj/item/organ/eye/synth) // Just slap your new organ in there.
+	iconmod = "SynthEyes"
+	crop = list(/obj/item/organ/eye/synth)
+
+
+/datum/plantmutation/synthmeat/brain
+	name = "Synthbrain"
+	dont_rename_crop = true
+	iconmod = "SynthBrains"
+	crop = list(/obj/item/organ/brain/synth)
 
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
 	dont_rename_crop = true
-	iconmod = "butts"
+	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
 
 // Soy Mutations
@@ -268,21 +285,21 @@
 	name = "Strange soybean"
 	name_prefix = "Strange "
 	crop = /obj/item/reagent_containers/food/snacks/plant/soylent
-	iconmod = "soylent"
+	iconmod = "Soylent"
 
 // Contusine Mutations
 
 /datum/plantmutation/contusine/shivering
 	name = "Shivering Contusine"
 	name_prefix = "Shivering "
-	iconmod = "shivercon"
+	iconmod = "ContusineShivering"
 	assoc_reagents = list("salbutamol")
 	chance = 20
 
 /datum/plantmutation/contusine/quivering
 	name = "Quivering Contusine"
 	name_prefix = "Quivering "
-	iconmod = "shivercon"
+	iconmod = "ContusineShivering"
 	assoc_reagents = list("curare")
 	chance = 10
 
@@ -291,6 +308,8 @@
 /datum/plantmutation/nureous/fuzzy
 	name = "Fuzzy Nureous"
 	name_prefix = "Fuzzy "
+	crop = /obj/item/plant/herb/nureous/fuzzy
+	iconmod = "NureousFuzzy"
 	assoc_reagents = list("hairgrownium")
 
 // Asomna Mutations
@@ -298,7 +317,8 @@
 /datum/plantmutation/asomna/robust
 	name = "Robust Asomna"
 	name_prefix = "Robust "
-	iconmod = "AsomnaR"
+	crop = /obj/item/plant/herb/asomna/robust
+	iconmod = "AsomnaRobust"
 	assoc_reagents = list("methamphetamine")
 	chance = 10
 
@@ -307,7 +327,7 @@
 /datum/plantmutation/commol/burning
 	name = "Burning Commol"
 	name_prefix = "Burning "
-	iconmod = "CommolB"
+	iconmod = "CommolBurning"
 	assoc_reagents = list("phlogiston")
 	chance = 10
 
@@ -316,7 +336,7 @@
 /datum/plantmutation/venne/toxic
 	name = "Black Venne"
 	name_prefix = "Black "
-	iconmod = "venneT"
+	iconmod = "VenneToxic"
 	crop = /obj/item/plant/herb/venne/toxic
 	assoc_reagents = list("atropine")
 	chance = 10
@@ -324,7 +344,7 @@
 /datum/plantmutation/venne/curative
 	name = "Sunrise Venne"
 	name_prefix = "Sunrise "
-	iconmod = "venneC"
+	iconmod = "VenneCurative"
 	crop = /obj/item/plant/herb/venne/curative
 	assoc_reagents = list("oculine","mannitol","mutadone")
 	chance = 5
@@ -333,7 +353,7 @@
 
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
-	iconmod = "Wcordata"
+	iconmod = "Wholetuna"
 	crop = /obj/item/fish/random
 	special_proc_override = 1
 
@@ -361,14 +381,14 @@
 /datum/plantmutation/cannabis/rainbow
 	name = "Rainbow Weed"
 	name_prefix = "Rainbow "
-	iconmod = "megaweed"
+	iconmod = "CannabisRainbow"
 	crop = /obj/item/plant/herb/cannabis/mega
 	assoc_reagents = list("LSD")
 
 /datum/plantmutation/cannabis/death
 	name = "Deathweed"
 	name_prefix = "Black "
-	iconmod = "deathweed"
+	iconmod = "CannabisDeath"
 	crop = /obj/item/plant/herb/cannabis/black
 	PTrange = list(null,30)
 	ENrange = list(10,30)
@@ -378,7 +398,7 @@
 /datum/plantmutation/cannabis/white
 	name = "Lifeweed"
 	name_prefix = "White "
-	iconmod = "lifeweed"
+	iconmod = "CannabisLife"
 	crop = /obj/item/plant/herb/cannabis/white
 	PTrange = list(30,null)
 	ENrange = list(30,50)
@@ -388,7 +408,7 @@
 /datum/plantmutation/cannabis/ultimate
 	name = "Omega Weed"
 	name_prefix = "Glowing "
-	iconmod = "Oweed"
+	iconmod = "CannabisGlowing"
 	crop = /obj/item/plant/herb/cannabis/omega
 	PTrange = list(420,null)
 	chance = 100
@@ -401,14 +421,14 @@
 /datum/plantmutation/fungus/psilocybin
 	name = "Magic Mushroom"
 	name_prefix = "Magic "
-	iconmod = "magmush"
+	iconmod = "FungusMagic"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
 	assoc_reagents = list("psilocybin")
 
 /datum/plantmutation/fungus/amanita
-	name = "White Fungus"
-	name_prefix = "White "
-	iconmod = "deathcap"
+	name = "Amanita"
+	name_prefix = "Amanita "
+	iconmod = "FungusAmanita"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	ENrange = list(null,10)
 	PTrange = list(30,null)
@@ -431,7 +451,7 @@
 	name = "Blooming Lasher"
 	name_prefix = "Blooming "
 	dont_rename_crop = true
-	iconmod = "lashberry"
+	iconmod = "LasherBerries"
 	harvest_override = 1
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	chance = 20
@@ -441,7 +461,7 @@
 /datum/plantmutation/radweed/safeweed
 	name = "White Radweed"
 	name_prefix = "White "
-	iconmod = "whiterad"
+	iconmod = "RadweedWhite"
 	special_proc_override = 1
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -452,7 +472,7 @@
 
 		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( POT.loc )
-			B.icon = 'icons/obj/hydroponics/hydromisc.dmi'
+			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1
@@ -469,13 +489,13 @@
 					radrange = 3
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))
 				var/datum/plant/growing = C.current
-				if (istype(growing,/datum/plant/radweed)) continue
+				if (istype(growing,/datum/plant/weed/radweed)) continue
 				if (growing) C.HYPmutateplant(radrange * 2)
 
 /datum/plantmutation/radweed/redweed
 	name = "Smoldering Radweed"
 	name_prefix = "Smoldering "
-	iconmod = "redweed"
+	iconmod = "RadweedRed"
 	assoc_reagents = list("phlogiston")
 
 // Slurrypod Mutations
@@ -483,7 +503,7 @@
 /datum/plantmutation/slurrypod/omega
 	name = "Glowing Slurrypod"
 	name_prefix = "Glowing "
-	iconmod = "omegaS"
+	iconmod = "SlurrypodOmega"
 	crop = /obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega
 	assoc_reagents = list("omega_mutagen")
 
@@ -518,20 +538,20 @@
 /datum/plantmutation/tree/money
 	name = "Money Tree"
 	name_prefix = "Money "
-	iconmod = "Cash"
+	iconmod = "TreeCash"
 	crop = /obj/item/spacecash
 	chance = 20
 
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
 	name_prefix = "Paper "
-	iconmod = "Paper"
+	iconmod = "TreePaper"
 	crop = /obj/item/paper
 	chance = 20
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
-	iconmod = "Dogwood"
+	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1
 
@@ -561,7 +581,7 @@
 	name = "Rubber Tree"
 	dont_rename_crop = true
 	name_prefix = "Rubber "
-	iconmod = "Rubber"
+	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
 	chance = 20
 
@@ -569,7 +589,7 @@
 	name = "Sassafras Tree"
 	dont_rename_crop = true
 	name_prefix = "Sassafras "
-	iconmod = "Sassafras"
+	iconmod = "TreeSassafras"
 	assoc_reagents = list("safrole")
 	crop = /obj/item/plant/herb/sassafras
 
@@ -579,7 +599,7 @@
 	name = "Peanutbutter Sandwich"
 	name_suffix = "butter Sandwich"
 	crop = /obj/item/reagent_containers/food/snacks/sandwich/pb
-	iconmod = "Peanut"
+	iconmod = "PeanutSandwich"
 
 //Tobacco mutations
 

@@ -428,6 +428,9 @@
 				volumes = json_decode(decoded)
 				volumes.len = cur
 
+		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
+
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available

@@ -203,7 +203,7 @@ Returns:
 	S.filters += filter(type="layer", render_source = "*hidden_game_plane")
 	S.filters += filter(type="color", color=list(0.2,0.05,0.05, 0.1,0.3,0.2, 0.1,0.1,0.4, 0,0,0)) //Alpha method preserves interaction but you can use object outside your range and alpha gets destroyed
 	S.filters += filter(type="alpha", render_source="*test")										//Going with this because i only need visibility
-	//S.plane = 9  //If we want lighting
+	//S.plane = PLANE_LIGHTING - 1  //If we want lighting
 	usr << I
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
@@ -3321,7 +3321,6 @@ var/list/electiles = list()
 				SPAWN_DBG(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
-						user.updatehealth()
 						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
@@ -3847,6 +3846,7 @@ var/list/lag_list = new/list()
 	var/list/modes = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
+	var/z_level_lock = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 1.0
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -3857,6 +3857,10 @@ var/list/lag_list = new/list()
 			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return
+		var/turf/T = get_turf(src)
+		if(z_level_lock && T.z != z_level_lock)
+			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
+			return
 		if(active_mode)
 			active_mode.used(user, target)
 		return
@@ -3903,6 +3907,8 @@ var/list/lag_list = new/list()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 
+/obj/item/engibox/station_locked
+	z_level_lock = 1 // 1 = station z level
 
 /obj/signpost
 	icon = 'icons/misc/old_or_unused.dmi'

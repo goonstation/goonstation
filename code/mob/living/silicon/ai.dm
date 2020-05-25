@@ -127,11 +127,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/TakeDamage(zone, brute, burn)
 	bruteloss += brute
 	fireloss += burn
+	health_update_queue |= src
 	notify_attacked()
 
 /mob/living/silicon/ai/HealDamage(zone, brute, burn)
 	bruteloss = max(0, bruteloss - brute)
 	fireloss = max(0, fireloss - burn)
+	health_update_queue |= src
 
 /mob/living/silicon/ai/get_brute_damage()
 	return bruteloss
@@ -536,7 +538,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/blob_act(var/power)
 	if (!isdead(src))
 		src.bruteloss += power
-		src.updatehealth()
+		health_update_queue |= src
 		src.update_appearance()
 		return 1
 	return 0
@@ -566,7 +568,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				b_loss += rand(30,60)
 	src.bruteloss = b_loss
 	src.fireloss = f_loss
-	src.updatehealth()
+	health_update_queue |= src
 	src.update_appearance()
 
 /mob/living/silicon/ai/emp_act()
@@ -625,7 +627,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.bruteloss += 30
 		if ((O.icon_state == "flaming"))
 			src.fireloss += 40
-		src.updatehealth()
+		health_update_queue |= src
 	return
 
 /mob/living/silicon/ai/show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
@@ -1088,7 +1090,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (..(parent))
 		return 1
 
-	src.updatehealth()
 	if (isalive(src))
 		if (src.health < 0)
 			death()
@@ -2163,9 +2164,12 @@ proc/get_mobs_trackable_by_AI()
 			src.name = src.real_name
 			return
 		else
-			newname = strip_html(newname, 32, 1)
-			if (!length(newname) || copytext(newname,1,2) == " ")
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			if (!length(newname))
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+				continue
+			else if (is_blank_string(newname))
+				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")

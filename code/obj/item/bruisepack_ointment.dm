@@ -89,12 +89,11 @@
 						M.unlock_medal("Oh, Doctor!", 1)
 						user.unlock_medal("Oh, Doctor!", 1)
 			else
-				H.UpdateDamage()
+				health_update_queue |= H
 		else
 			M.HealDamage("All", src.heal_brute, src.heal_burn)
 
 		repair_bleeding_damage(M, 50, 1)
-		M.updatehealth()
 
 		src.amount--
 		if (src.amount <= 0)

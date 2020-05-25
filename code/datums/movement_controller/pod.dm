@@ -137,11 +137,11 @@
 		if (delay)
 			var/target_turf = get_step(owner, velocity_dir)
 
+			owner.glide_size = (32 / delay) * world.tick_lag
 			for(var/mob/M in owner) //hey maybe move this somewhere better later. idk man its all chill thou, its all cool, dont worry about it buddy
 				M.glide_size = owner.glide_size
 				M.animate_movement = SYNC_STEPS
 
-			owner.glide_size = (32 / delay) * world.tick_lag
 			step(owner, velocity_dir)
 			owner.glide_size = (32 / delay) * world.tick_lag
 

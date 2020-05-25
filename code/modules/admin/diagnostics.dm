@@ -581,6 +581,18 @@ proc/debug_color_of(var/thing)
 				num += 1 + A.overlays.len + A.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
+	count_atoms_plus_overlays_rec
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			var/num = 0
+			for(var/X in theTurf.contents + theTurf)
+				var/atom/A = X
+				num += 1 + A.overlays.len + A.underlays.len
+				for(var/O in A.overlays + A.underlays)
+					var/atom/A2 = O
+					num += A2.overlays.len + A2.underlays.len
+			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
+
 	count_atoms
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0
@@ -594,6 +606,31 @@ proc/debug_color_of(var/thing)
 
 			if(val)
 				img.app.overlays = list(src.makeText(round(val), RESET_ALPHA))
+
+	trace_gases // also known as Fart-o-Vision
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			var/air_group_trace = 0
+			var/direct_trace = 0
+			var/turf/simulated/sim = theTurf
+			if (istype(sim) && sim.air)
+				for(var/datum/gas/tg in sim.air.trace_gases)
+					img.app.desc += "[tg.type] [tg.moles]<br>"
+					direct_trace = 1
+				if(sim?.parent?.air)
+					for(var/datum/gas/tg in sim.parent.air.trace_gases)
+						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
+						air_group_trace = 1
+			if(air_group_trace && direct_trace)
+				img.app.color = "#ff0000"
+			else if(air_group_trace)
+				img.app.color = "#ff8800"
+			else if(direct_trace)
+				img.app.color = "#ffff00"
+			else
+				img.app.color = "#ffffff"
+				img.app.alpha = 50
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

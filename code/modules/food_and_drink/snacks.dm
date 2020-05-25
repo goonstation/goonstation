@@ -660,7 +660,6 @@
 			take_bleeding_damage(H, null, 0, DAMAGE_STAB, 0)
 			bleed(H, rand(10,30), rand(1,3))
 			H.UpdateDamageIcon()
-			H.updatehealth()
 			src.hasPrize = 0
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
@@ -1137,7 +1136,6 @@
 		user.u_equip(src)
 		user.visible_message("<span class='alert'><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -1237,7 +1235,6 @@
 			H.changeStatus("weakened", 3 SECONDS)
 			affecting.take_damage(10, 0)
 			H.UpdateDamageIcon()
-			H.updatehealth()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
@@ -1794,7 +1791,7 @@
 /obj/item/reagent_containers/food/snacks/steak_h
 	name = "steak"
 	desc = "Made of people."
-	icon_state = "steak"
+	icon_state = "meat-grilled"
 	amount = 2
 	heal_amt = 3
 	var/hname = null
@@ -1807,7 +1804,7 @@
 /obj/item/reagent_containers/food/snacks/steak_m
 	name = "monkey steak"
 	desc = "You'll go bananas for it."
-	icon_state = "steak"
+	icon_state = "meat-grilled"
 	amount = 2
 	heal_amt = 3
 	food_color = "#999966"
@@ -1818,7 +1815,7 @@
 /obj/item/reagent_containers/food/snacks/steak_s
 	name = "synth-steak"
 	desc = "And they thought processed food was artificial..."
-	icon_state = "steak"
+	icon_state = "meat-plant-grilled"
 	amount = 2
 	heal_amt = 3
 	food_color = "#999966"

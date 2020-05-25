@@ -173,9 +173,6 @@
 						src.target.resistances += D.type
 						src.target.ailments -= D
 						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")*/
-
-			src.updatehealth()
-
 			if (src)
 				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
 
@@ -440,8 +437,12 @@
 
 	var/obj/item/I = target.equipped()
 	if (I)
+		var/disarm_item_prob = 37
+		if (target.check_block())
+			disarm_item_prob = 8
+
 		if (I.temp_flags & IS_LIMB_ITEM)
-			if (prob(37 * mult))
+			if (prob(disarm_item_prob * mult))
 				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [I.loc] and forces [target]'s to hit themselves[DISARM_WITH_ITEM_TEXT]!</B></span>"
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 				msgs.disarm_RNG_result = "attack_self_with_item"
@@ -455,7 +456,7 @@
 			msgs.show_self.Add("<span class='alert'>Something is binding [I] to [target]. You won't be able to disarm [him_or_her(target)].</span>")
 			msgs.show_target.Add("<span class='alert'>Something is binding [I] to you. It cannot be knocked out of your hands.</span>")
 
-		else if (prob(37 * mult))
+		else if (prob(disarm_item_prob * mult))
 			if (ishuman(src))
 				var/mob/living/carbon/human/H2 = src
 				for (var/uid in H2.pathogens)
@@ -781,7 +782,6 @@
 
 	if (damage > 0)
 		random_brute_damage(target, damage)
-		target.updatehealth()
 		target.UpdateDamageIcon()
 
 	logTheThing("combat", user, target, "punches %target% at [log_loc(user)].")
@@ -1029,7 +1029,6 @@
 				owner.attack_finished(target)
 				target.attackby_finished(owner)
 			target.UpdateDamageIcon()
-			target.updatehealth()
 
 
 			if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)

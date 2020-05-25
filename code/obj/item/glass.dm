@@ -283,7 +283,6 @@ SHARDS
 				H.weakened = max(3, H.weakened)
 				affecting.take_damage(5, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 	..()
 
 // CRYSTAL
@@ -331,4 +330,3 @@ SHARDS
 				H.weakened = max(3, H.weakened)
 				affecting.take_damage(10, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()

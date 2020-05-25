@@ -809,9 +809,21 @@
 		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
 			boutput(activator, "<span style=\"color:red\">Absolutely Not.</span>")
 			return
+		var/blood_id = "blood"
+		var/blood_amount = 500
+		var/blood_mult = 6.9
+		var/mob/living/L = activator
+		if(istype(L))
+			var/mob/living/carbon/human/H = activator
+			if(L.blood_id)
+				blood_id = L.blood_id
+			if(istype(H) && H.blood_volume)
+				blood_amount = H.blood_volume
 		activator.suiciding = 1
 		var/turf/T = get_turf(activator)
-		T.fluid_react_single("blood",2000)
+		if(L?.traitHolder?.hasTrait("hemophilia"))
+			blood_mult = blood_mult + 3
+		T.fluid_react_single(blood_id,blood_mult * blood_amount)
 		activator.gib()
 		SPAWN_DBG(20 SECONDS)
 			if(activator && !isdead(activator))

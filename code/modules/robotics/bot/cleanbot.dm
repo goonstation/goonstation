@@ -4,7 +4,7 @@
 /obj/item/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3.0
 	throwforce = 10.0
@@ -37,7 +37,7 @@
 /obj/machinery/bot/cleanbot
 	name = "cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = 5
 	density = 0

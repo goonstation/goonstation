@@ -129,7 +129,7 @@
 		return movement_controller
 
 	attack_hand(mob/user as mob)
-		if(src.controller && !src.controller.loc == src)
+		if(src.controller && src.controller.loc != src)
 			src.exit(0)
 
 		if(inUse) return

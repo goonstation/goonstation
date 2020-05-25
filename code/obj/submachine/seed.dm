@@ -536,8 +536,8 @@
 					P.sprite = dominantspecies.sprite
 				else
 					P.sprite = dominantspecies.name
-				P.special_icon = dominantspecies.special_icon
-				P.special_dmi = dominantspecies.special_dmi
+				P.override_icon_state = dominantspecies.override_icon_state
+				P.plant_icon = dominantspecies.plant_icon
 				P.crop = dominantspecies.crop
 				P.force_seed_on_harvest = dominantspecies.force_seed_on_harvest
 				P.harvestable = dominantspecies.harvestable
