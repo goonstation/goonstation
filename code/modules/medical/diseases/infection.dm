@@ -30,7 +30,6 @@
 				boutput(affected_mob, "<span class='alert'>You feel feverish!</span>")
 				affected_mob.bodytemperature += rand(5,10)
 				affected_mob.take_toxin_damage(1)
-				affected_mob.updatehealth()
 
 			if(prob(4)) affected_mob.emote("groan")
 		if(3)
@@ -47,10 +46,8 @@
 				affected_mob.bodytemperature += rand(10,30)
 				random_burn_damage(affected_mob,1)
 				affected_mob.take_toxin_damage(1)
-				affected_mob.updatehealth()
 			if(prob(5))
 				boutput(affected_mob, "<span class='alert'>You feel sick!</span>")
 				affected_mob.change_misstep_chance(5)
 				affected_mob.take_toxin_damage(1)
-				affected_mob.updatehealth()
 			if(prob(3)) affected_mob.emote(pick("faint","groan","shiver"))

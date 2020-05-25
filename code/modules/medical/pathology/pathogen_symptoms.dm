@@ -276,12 +276,10 @@ datum/pathogeneffects/malevolent/indigestion
 				if (prob(5))
 					M.take_toxin_damage(origin.stage - 2)
 					M.show_message("<span class='alert'>Your stomach hurts.</span>")
-					M.updatehealth()
 			if (4 to 5)
 				if (prob(8))
 					M.take_toxin_damage(2)
 					M.show_message("<span class='alert'>Your stomach hurts.</span>")
-					M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "saline")
@@ -303,11 +301,9 @@ datum/pathogeneffects/malevolent/muscleache
 			if (1 to 3)
 				if (prob(5))
 					M.show_message("<span class='alert'>Your muscles ache.</span>")
-					M.updatehealth()
 			if (4 to 5)
 				if (prob(8))
 					M.show_message("<span class='alert'>Your muscles ache.</span>")
-					M.updatehealth()
 					if (prob(15))
 						M.TakeDamage("All", origin.stage-3, 0)
 
@@ -1426,30 +1422,25 @@ datum/pathogeneffects/malevolent/liverdamage
 				if (prob(4) && M.reagents.has_reagent("ethanol"))
 					M.show_message("<span class='alert'>You feel a slight burning in your gut.</span>")
 					M.take_toxin_damage(3)
-					M.updatehealth()
 			if (2)
 				if (prob(6) && M.reagents.has_reagent("ethanol"))
 					M.show_message("<span class='alert'>You feel a burning sensation in your gut.</span>")
 					M.take_toxin_damage(4)
-					M.updatehealth()
 			if (3)
 				if (prob(8) && M.reagents.has_reagent("ethanol"))
 					M.visible_message("[M] clutches their chest in pain!","<span class='alert'>You feel a searing pain in your chest!</span>")
 					M.take_toxin_damage(5)
 					M.changeStatus("stunned", 2 SECONDS)
-					M.updatehealth()
 			if (4)
 				if (prob(10) && M.reagents.has_reagent("ethanol"))
 					M.visible_message("[M] clutches their chest in pain!","<span class='alert'>You feel a horrible pain in your chest!</span>")
 					M.take_toxin_damage(8)
 					M.changeStatus("stunned", 2 SECONDS)
-					M.updatehealth()
 			if (5)
 				if (prob(12) && M.reagents.has_reagent("ethanol"))
 					M.visible_message("[M] falls to the ground, clutching their chest!", "<span class='alert'>The pain overwhelms you!</span>", "<span class='alert'>You hear someone fall.</span>")
 					M.take_toxin_damage(5)
 					M.changeStatus("weakened", 400)
-					M.updatehealth()
 
 	may_react_to()
 		return "The pathogen appears to be capable of processing certain beverages."
@@ -1485,7 +1476,6 @@ datum/pathogeneffects/malevolent/fever
 				if (prob(11))
 					M.bodytemperature += 4
 					M.TakeDamage("chest", 0, 1)
-					M.updatehealth()
 					M.show_message("<span class='alert'>You feel hot.</span>")
 			if (4)
 				if (prob(13))
@@ -1493,7 +1483,6 @@ datum/pathogeneffects/malevolent/fever
 					M.TakeDamage("chest", 0, 1)
 					if (prob(40))
 						M.take_toxin_damage(1)
-					M.updatehealth()
 					M.show_message("<span class='alert'>You feel hot.</span>")
 
 
@@ -1523,7 +1512,6 @@ datum/pathogeneffects/malevolent/acutefever
 				if (prob(11))
 					M.bodytemperature += 11
 					M.TakeDamage("chest", 0, 1)
-					M.updatehealth()
 					M.show_message("<span class='alert'>You feel hot.</span>")
 				if (prob(2))
 					H.update_burning(15)
@@ -1537,7 +1525,6 @@ datum/pathogeneffects/malevolent/acutefever
 				if (prob(15))
 					M.bodytemperature += 17
 					M.TakeDamage("chest", 0, 2)
-					M.updatehealth()
 					M.show_message("<span class='alert'>You feel rather hot.</span>")
 				if (prob(3))
 					H.update_burning(25)
@@ -1573,7 +1560,6 @@ datum/pathogeneffects/malevolent/ultimatefever
 				if (prob(12))
 					M.bodytemperature += 20
 					M.TakeDamage("chest", 0, 2)
-					M.updatehealth()
 					M.show_message("<span class='alert'>You feel extremely hot.</span>")
 				if (prob(5))
 					H.update_burning(25)
@@ -1587,7 +1573,6 @@ datum/pathogeneffects/malevolent/ultimatefever
 				if (prob(17))
 					M.bodytemperature += 25
 					M.TakeDamage("chest", 0, 2)
-					M.updatehealth()
 					M.show_message("<span class='alert'>You feel rather hot.</span>")
 				if (prob(5))
 					H.update_burning(35)
@@ -1851,7 +1836,6 @@ datum/pathogeneffects/malevolent/farts/plasma
 		if (origin.stage > 2 && prob(origin.stage * 3))
 			M.take_toxin_damage(1)
 			M.take_oxygen_deprivation(2)
-			M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "infernite" || R == "phlogiston")
@@ -1880,7 +1864,6 @@ datum/pathogeneffects/malevolent/farts/co2
 		if (origin.stage > 2 && prob(origin.stage * 3))
 			M.take_toxin_damage(1)
 			M.take_oxygen_deprivation(4)
-			M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "infernite" || R == "phlogiston")

@@ -936,7 +936,6 @@
 				return
 
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-			user.updatehealth()
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(user, 100)

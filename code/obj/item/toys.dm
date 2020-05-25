@@ -299,7 +299,6 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b></span>")
 		user.take_oxygen_deprivation(175)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -894,7 +893,6 @@ var/list/figure_patreon_rarity = list(\
 		playsound(loc, 'sound/items/gavel.ogg', 75, 1)
 		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

@@ -504,7 +504,6 @@
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)

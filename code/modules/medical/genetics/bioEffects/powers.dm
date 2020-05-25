@@ -195,7 +195,6 @@
 					continue
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
-			owner.updatehealth()
 
 		using = 0
 		return

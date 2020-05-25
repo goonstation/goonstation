@@ -264,7 +264,6 @@
 	if (burn > 0)
 		src.update_burning(burn)
 		src.TakeDamage("head", 0, 5)
-		src.updatehealth()
 
 	if (prob(max(0, min(uncloak_prob, 100))))
 		for (var/obj/item/cloaking_device/C in src)

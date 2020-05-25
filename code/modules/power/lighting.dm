@@ -725,7 +725,6 @@
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
 			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
-			H.updatehealth()
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand

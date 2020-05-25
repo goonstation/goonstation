@@ -239,7 +239,6 @@
 	user.visible_message("<span class='alert'><b>[user] stabs [src] through [his_or_her(user)] chest.</b></span>")
 	take_bleeding_damage(user, null, 250, DAMAGE_STAB)
 	user.TakeDamage("chest", 200, 0)
-	user.updatehealth()
 	SPAWN_DBG(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
@@ -668,7 +667,6 @@
 	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
-	user.updatehealth()
 	return 1
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
@@ -744,7 +742,6 @@
 	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
-	user.updatehealth()
 	return 1
 
 /obj/item/axe/vr
@@ -984,7 +981,6 @@
 	user.say(say)
 	blood_slash(user, 25)
 	user.TakeDamage("chest", 150, 0)
-	user.updatehealth()
 	SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0
@@ -1052,7 +1048,6 @@
 		user.organHolder.drop_organ(organtokill)
 		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
 		user.TakeDamage("chest", 100, 0)
-		user.updatehealth()
 		SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0

@@ -93,7 +93,6 @@ TRAYS
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("chest", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/fork/plastic
@@ -163,7 +162,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/knife/plastic
@@ -247,7 +245,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/knife/pizza_cutter
@@ -270,7 +267,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] rolls [src] repeatedly over [his_or_her(user)] own throat and slices it wide open!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/spoon
@@ -296,7 +292,6 @@ TRAYS
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/spoon/plastic
@@ -487,7 +482,6 @@ TRAYS
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		M.updatehealth()
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))
@@ -750,7 +744,6 @@ TRAYS
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)

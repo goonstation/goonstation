@@ -448,7 +448,7 @@ Obsidian Crown
 		host.drowsyness = max(0,host.drowsyness-10)
 		host.sleeping = 0
 
-		host.updatehealth()
+		health_update_queue |= host
 		return
 
 	proc/hear_voidSpeak(var/message, var/prefix, var/suffix)
@@ -498,7 +498,6 @@ Obsidian Crown
 
 			humHost.decomp_stage = 4
 			humHost.bioHolder.RemoveEffect("eaten")
-			humHost.updatehealth()
 			humHost.set_body_icon_dirty()
 			humHost.set_face_icon_dirty()
 
