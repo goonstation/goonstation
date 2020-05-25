@@ -1,4 +1,9 @@
 
+(t)mon may 25 20
+(u)Chickenish
+(p)821
+(e)🐛|bug
+(+)fixed broken lungs and kidneys being effectively the same as healthy ones.
 (t)sun may 24 20
 (u)Flourish
 (p)793
