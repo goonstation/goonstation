@@ -888,3 +888,7 @@
 		return src.organHolder.brain.get_damage()
 	//leaving this just in case, should never be called I assume
 	..()
+
+/mob/living/carbon/human/UpdateDamage()
+	..()
+	src.hud.update_health_indicator()
