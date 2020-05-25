@@ -36,7 +36,7 @@
 	nodamage = 1
 	anchored = 1
 	layer = 0
-	plane = -100
+	plane = PLANE_UNDERFLOOR
 
 	var/name_override = "floor cluwne"
 	New()
@@ -54,7 +54,7 @@
 
 /mob/living/carbon/human/cluwne/floor/gimmick
 	layer = 4
-	plane = 0
+	plane = PLANE_DEFAULT
 	nodamage = 0
 
 	New()
@@ -72,7 +72,7 @@
 	nodamage = 1
 	anchored = 1
 	layer = 0
-	plane = -100
+	plane = PLANE_UNDERFLOOR
 	New()
 		..()
 		SPAWN_DBG(0)
@@ -86,7 +86,7 @@
 /mob/living/carbon/human/satan/gimmick
 	anchored = 1
 	layer = 4
-	plane = 0
+	plane = PLANE_DEFAULT
 
 	New()
 		..()

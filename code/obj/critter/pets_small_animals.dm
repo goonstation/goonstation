@@ -1885,7 +1885,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				animate_spin(src, pick("L","R"), 1, 0)
 
 			if (prob(10))
-				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","spazzes out","wiggles","wobbles","dooks")]!")
+				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles","dooks")]!")
 
 			src.freakout--
 			if (!src.freakout)

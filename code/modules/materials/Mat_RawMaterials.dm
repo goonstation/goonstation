@@ -114,6 +114,8 @@
 							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
+		else
+			..()
 	block
 		// crystal, rubber
 		name = "block"

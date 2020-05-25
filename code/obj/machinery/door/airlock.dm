@@ -100,6 +100,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/HTML = null
 	var/has_panel = 1
 
+	var/no_access = 0
+
 	autoclose = 1
 	power_usage = 50
 	operation_time = 6
@@ -115,6 +117,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+
+/obj/machinery/door/airlock/check_access(obj/item/I)
+	if (no_access) //nope :)
+		return 0
+	.= ..()
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'

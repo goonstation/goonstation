@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/projectile/bullet)
 /datum/projectile/bullet
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45

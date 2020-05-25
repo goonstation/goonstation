@@ -5,6 +5,7 @@
 	force = 4
 	throwforce = 6
 	var/material_name = "Ore" //text to display for this ore in manufacturers
+	var/initial_material_name = null // used to store what the ore is
 	var/metal = 0  // what grade of metal is it?
 	var/conductor = 0
 	var/dense = 0
@@ -21,6 +22,8 @@
 		src.pixel_x = rand(0 - wiggle, wiggle)
 		src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
+		if(src.material?.name)
+			initial_material_name = src.material.name
 
 	unpooled()
 		..()
@@ -30,6 +33,7 @@
 
 	pooled()
 		..()
+		name = initial(name)
 
 	proc/setup_material()
 		.= 0
@@ -150,6 +154,8 @@
 							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
+		else
+			..()
 
 /obj/item/raw_material/rock
 	name = "rock"

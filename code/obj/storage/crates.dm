@@ -361,7 +361,7 @@
 	medic
 		name = "Class Crate - Combat Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, some poison and a syringe gun delivery system."
-		spawn_contents = list(/obj/item/gun/syringe,
+		spawn_contents = list(/obj/item/gun/reagent/syringe,
 		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/storage/box/donkpocket_w_kit,

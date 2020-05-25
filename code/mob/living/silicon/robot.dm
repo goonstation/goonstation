@@ -71,7 +71,7 @@
 	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
-	var/sound_automaton_spaz = 'sound/misc/automaton_spaz.ogg'
+	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
 	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
@@ -477,7 +477,7 @@
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise."
 						else
-							playsound(src.loc, src.sound_automaton_spaz, 50, 1)
+							playsound(src.loc, src.sound_automaton_scratch, 50, 1)
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
