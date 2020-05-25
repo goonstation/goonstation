@@ -1,5 +1,10 @@
 
 (t)sun may 24 20
+(u)mbc
+(p)836
+(e)🗺|mapping
+(*)Added armory authorization computer - Officers can now put in 3 individual authorizations to open the armory. HoS can still open it by themselves using the Authorization PC.
+(+)Boost disorient resist of the heavy riot armor
 (u)pali
 (p)791
 (e)🆕🗺🎨|feature, mapping, sprites
