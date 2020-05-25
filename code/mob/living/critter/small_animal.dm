@@ -1419,7 +1419,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				animate_spin(src, pick("L","R"))
 
 			if (prob(10))
-				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","spazzes out","wiggles","wobbles")]!")
+				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles")]!")
 
 			if (src.freakout-- < 1)
 				src.visible_message("[src] calms down.")

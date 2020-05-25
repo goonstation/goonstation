@@ -609,18 +609,3 @@
 			B.delivery_area = pick(possible_areas)
 
 	return
-
-
-
-proc/get_accessible_spy_station_areas() //sorry
-	// All areas
-	var/list/L = list()
-	var/list/areas = childrentypesof(/area/station)
-	for(var/A in areas)
-		var/area/instance = locate(A)
-		for(var/turf/T in instance)
-			if(istype(T,/area/station/test_area))
-				continue
-			L[instance.name] = instance
-			break
-	return L

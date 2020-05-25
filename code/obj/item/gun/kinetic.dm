@@ -631,8 +631,8 @@
 	muzzle_flash = 0 //stealthy gun
 
 	New()
-		ammo = new/obj/item/ammo/bullets/bullet_22
-		current_projectile = new/datum/projectile/bullet/bullet_22
+		ammo = new/obj/item/ammo/bullets/bullet_22HP
+		current_projectile = new/datum/projectile/bullet/bullet_22/HP
 		..()
 
 	update_icon()

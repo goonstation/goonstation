@@ -141,6 +141,7 @@
 	layer = TURF_LAYER
 
 /obj/indestructible/shuttle_corner
+	plane = PLANE_WALL
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced. This appears to be a corner."
 	icon = 'icons/turf/walls_shuttle.dmi'
