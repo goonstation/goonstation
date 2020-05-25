@@ -1397,7 +1397,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						continue
 					affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
 				H.UpdateDamageIcon()
-				health_update_queue |= target
 				H.bodytemperature = H.base_body_temp
 		else
 			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src]!</span>")

@@ -2,24 +2,21 @@
 datum/controller/process/healthupdates
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
-	var/tmp/list/health_update_queue
 
 	setup()
 		name = "HealthUpdate"
 		schedule_interval = 5
-
 		detailed_count = new
-
-		src.health_update_queue = global.health_update_queue
 
 	doWork()
 		var/c
 		for(var/mob/M in global.health_update_queue)
 			M.UpdateDamage()
-			global.health_update_queue -= M
 			if (!(c++ % 20))
 				scheck()
-
+	
+	onFinish()
+		global.health_update_queue.len = 0
 
 	tickDetail()
 		if (detailed_count && detailed_count.len)

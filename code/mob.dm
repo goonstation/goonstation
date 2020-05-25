@@ -2363,7 +2363,6 @@
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)
-	health_update_queue |= src
 
 /mob/proc/infected(var/datum/pathogen/P)
 	return
