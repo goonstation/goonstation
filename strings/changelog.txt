@@ -1,5 +1,9 @@
 
 (t)mon may 25 20
+(u)Sovexe
+(p)839
+(e)🆕🗺|feature, mapping
+(*)Added a new underwater Z5 location - Bee Sanctuary
 (u)Tarmunora
 (+)Faster health updates when you take damage instead of waiting for the next Life tick.
 (u)Erinexx
