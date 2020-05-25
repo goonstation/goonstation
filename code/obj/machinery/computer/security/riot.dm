@@ -1,6 +1,7 @@
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
 	icon_state = "drawbr0"
+	density = 0
 	var/auth_need = 3.0
 	var/list/authorized
 	var/list/authorized_registered
