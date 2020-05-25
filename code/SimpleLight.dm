@@ -204,18 +204,20 @@
 	if(src.medium_lights[1].invisibility == 101) // toggled off
 		return
 	if(!istype(src.loc, /turf))
-		for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
-			light.invisibility = 102
+		for(var/x in src.medium_lights)
+			var/obj/overlay/simple_light/medium/light = x
+			src:vis_contents -= light
 		return
-	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
+	for(var/x in src.medium_lights)
+		var/obj/overlay/simple_light/medium/light = x
 		if(light.icon_state == "medium_center")
-			light.invisibility = 0
+			src:vis_contents += light
 			continue
 		var/turf/T = get_step(get_turf(src), light.dir)
 		if(T.opacity || T.opaque_atom_count)
-			light.invisibility = 102
+			src:vis_contents -= light
 		else
-			light.invisibility = 0
+			src:vis_contents += light
 
 /atom/proc/add_sm_light(id, list/rgba, medium=null)
 	if(isnull(medium)) // medium = choose automatically whether to use simple or medium
