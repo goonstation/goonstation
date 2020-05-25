@@ -1,5 +1,9 @@
 
 (t)mon may 25 20
+(u)Tarmunora
+(p)827
+(e)⚖|balance
+(+)Buffed nuclear operative sniper rifle
 (u)Sovexe
 (p)839
 (e)🆕🗺|feature, mapping
