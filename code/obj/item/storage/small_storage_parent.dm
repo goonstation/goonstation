@@ -30,100 +30,8 @@
 		..()
 		AddComponent(/datum/component/storage, src.spawn_contents)
 
-	attackby(obj/item/W, mob/user, params)
-		..()
-		if (istype(W, /obj/item/card/id))
-			var/obj/item/card/id/ID = W
-			src.registered = ID.registered
-
-	attack_self(mob/user)
-		attack_hand(user)
-		..()
-
-	emp_act()
-		if (src.contents.len)
-			for (var/atom/A in src.contents)
-				if (isitem(A))
-					var/obj/item/I = A
-					I.emp_act()
-		return
-
 	/*proc/update_icon()
 		return*/
-
-	attack(mob/M as mob, mob/user as mob)
-		if (surgeryCheck(M, user))
-			insertChestItem(M, user)
-			return
-		..()
-
-	afterattack(obj/O as obj, mob/user as mob)
-		if (O in src.contents)
-			user.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
-				O.attack_hand(user)
-
-	dropped(mob/user as mob)
-		if (hud)
-			hud.update()
-		..()
-
-	MouseDrop(atom/over_object, src_location, over_location)
-		..()
-		var/obj/screen/hud/S = over_object
-		if (istype(S))
-			playsound(src.loc, "rustle", 50, 1, -5)
-			if (!usr.restrained() && !usr.stat && src.loc == usr)
-				if (S.id == "rhand")
-					if (!usr.r_hand)
-						usr.u_equip(src)
-						usr.put_in_hand(src, 0)
-				else
-					if (S.id == "lhand")
-						if (!usr.l_hand)
-							usr.u_equip(src)
-							usr.put_in_hand(src, 1)
-				return
-		if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
-			if (usr.s_active)
-				usr.detach_hud(usr.s_active)
-				usr.s_active = null
-			if (src.mousetrap_check(usr))
-				return
-			usr.s_active = src.hud
-			hud.update()
-			usr.attach_hud(src.hud)
-			return
-		if (usr.is_in_hands(src))
-			var/turf/T = over_object
-			if (istype(T, /obj/table))
-				T = get_turf(T)
-			if (!(usr in range(1, T)))
-				return
-			if (istype(T))
-				for (var/obj/O in T)
-					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
-						return
-				if (!T.density)
-					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
-					for (var/obj/item/I in src)
-						I.set_loc(T)
-						I.layer = initial(I.layer)
-						if (istype(I, /obj/item/mousetrap))
-							var/obj/item/mousetrap/MT = I
-							if (MT.armed)
-								MT.visible_message("<span class='alert'>[MT] triggers as it falls on the ground!</span>")
-								MT.triggered(usr, null)
-						else if (istype(I, /obj/item/mine))
-							var/obj/item/mine/M = I
-							if (M.armed && M.used_up != 1)
-								M.visible_message("<span class='alert'>[M] triggers as it falls on the ground!</span>")
-								M.triggered(usr)
-						hud.remove_item(I)
-
-	attack_self(mob/user as mob)
-		..()
-		attack_hand(user)
 
 /obj/item/storage/box
 	name = "box"
@@ -134,7 +42,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
+			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
+			for (var/obj/item/I in SC?.get_contents())
 				if (..(I, user, null, S) == 0)
 					break
 			return

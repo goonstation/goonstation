@@ -2095,7 +2095,7 @@
 	L += src.contents // Item slots.
 
 	for (var/obj/item/storage/S in src.contents) // Backpack, belt, briefcases etc.
-		var/list/T1 = S.get_all_contents()
+		var/list/T1 = S.GetComponent(/datum/component/storage)?.get_all_contents()
 		for (var/obj/O1 in T1)
 			if (!L.Find(O1)) L.Add(O1)
 
@@ -2103,13 +2103,13 @@
 		if (!L.Find(G.gift)) L += G.gift
 		if (istype(G.gift, /obj/item/storage))
 			var/obj/item/storage/S2 = G.gift
-			var/list/T2 = S2.get_all_contents()
+			var/list/T2 = S2.GetComponent(/datum/component/storage)?.get_all_contents()
 			for (var/obj/O2 in T2)
 				if (!L.Find(O2)) L.Add(O2)
 
 	for (var/obj/item/storage/backpack/BP in src.contents) // Backpack boxes etc.
 		for (var/obj/item/storage/S3 in BP.contents)
-			var/list/T3 = S3.get_all_contents()
+			var/list/T3 = S3.GetComponent(/datum/component/storage)?.get_all_contents()
 			for (var/obj/O3 in T3)
 				if (!L.Find(O3)) L.Add(O3)
 
@@ -2117,13 +2117,13 @@
 			if (!L.Find(G2.gift)) L += G2.gift
 			if (istype(G2.gift, /obj/item/storage))
 				var/obj/item/storage/S4 = G2.gift
-				var/list/T4 = S4.get_all_contents()
+				var/list/T4 = S4.GetComponent(/datum/component/storage)?.get_all_contents()
 				for (var/obj/O4 in T4)
 					if (!L.Find(O4)) L.Add(O4)
 
 	for (var/obj/item/storage/belt/BL in src.contents) // Stealth storage in belts etc.
 		for (var/obj/item/storage/S5 in BL.contents)
-			var/list/T5 = S5.get_all_contents()
+			var/list/T5 = S5.GetComponent(/datum/component/storage)?.get_all_contents()
 			for (var/obj/O5 in T5)
 				if (!L.Find(O5)) L.Add(O5)
 
@@ -2131,13 +2131,13 @@
 			if (!L.Find(G3.gift)) L += G3.gift
 			if (istype(G3.gift, /obj/item/storage))
 				var/obj/item/storage/S6 = G3.gift
-				var/list/T6 = S6.get_all_contents()
+				var/list/T6 = S6.GetComponent(/datum/component/storage)?.get_all_contents()
 				for (var/obj/O6 in T6)
 					if (!L.Find(O6)) L.Add(O6)
 
 	for (var/obj/item/storage/box/syndibox/SB in L) // For those "belt-in-stealth storage-in-backpack" situations.
 		for (var/obj/item/storage/S7 in SB.contents)
-			var/list/T7 = S7.get_all_contents()
+			var/list/T7 = S7.GetComponent(/datum/component/storage)?.get_all_contents()
 			for (var/obj/O7 in T7)
 				if (!L.Find(O7)) L.Add(O7)
 
@@ -2145,7 +2145,7 @@
 			if (!L.Find(G4.gift)) L += G4.gift
 			if (istype(G4.gift, /obj/item/storage))
 				var/obj/item/storage/S8 = G4.gift
-				var/list/T8 = S8.get_all_contents()
+				var/list/T8 = S8.GetComponent(/datum/component/storage)?.get_all_contents()
 				for (var/obj/O8 in T8)
 					if (!L.Find(O8)) L.Add(O8)
 

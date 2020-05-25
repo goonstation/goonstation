@@ -9,15 +9,14 @@
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
-	max_wclass = 3
 	wear_image_icon = 'icons/mob/back.dmi'
-	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
 	New()
 		..()
 		BLOCK_LARGE
 		AddComponent(/datum/component/itemblock/backpackblock)
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, max_wclass = 3, does_not_open_in_pocket = 0)
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -86,8 +85,6 @@
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	w_class = 4.0
-	max_wclass = 3
-	does_not_open_in_pocket = 0
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
@@ -96,6 +93,7 @@
 	New()
 		..()
 		BLOCK_ROPE
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, max_wclass = 3, does_not_open_in_pocket = 0)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -119,8 +117,6 @@
 	icon_state = "belt"
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
-	max_wclass = 2
-	does_not_open_in_pocket = 0
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
@@ -128,6 +124,7 @@
 	New()
 		..()
 		BLOCK_ROPE
+		AddComponent(/datum/component/storage, max_wclass = 2, does_not_open_in_pocket = 0)
 
 	proc/can_use()
 		.= 1
@@ -154,7 +151,8 @@
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
+			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
+			for (var/obj/item/I in SC?.get_contents())
 				if (..(I, user, null, S) == 0)
 					break
 			return
@@ -180,13 +178,11 @@
 	var/obj/decal/ceshield/overlay
 	var/lastTick = 0
 	var/chargeTime = 50 //world.time Ticks per charge increase. 50 works out to be roughly 45 seconds from 0 -> 10 under normal conditions.
-	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo)
-	in_list_or_max = 1
 
 	New()
 		..()
 		processing_items.Add(src)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/rcd, /obj/item/rcd_ammo), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
 
 	proc/toggle()
 		if(active)
@@ -293,45 +289,40 @@
 	name = "medical belt"
 	icon_state = "injectorbelt"
 	item_state = "injector"
-	can_hold = list(
-		/obj/item/robodefibrillator
-	)
-	in_list_or_max = 1
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/robodefibrillator), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
 
 /obj/item/storage/belt/mining
 	name = "miner's belt"
 	desc = "Can hold various mining tools."
 	icon_state = "minerbelt"
 	item_state = "utility"
-	can_hold = list(
-		/obj/item/mining_tool,
-		/obj/item/mining_tools
-	)
-	in_list_or_max = 1
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/mining_tool, /obj/item/mining_tools), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
 	icon_state = "minerbelt"
 	item_state = "utility"
-	max_wclass = 3
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = 0)
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
 	desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."
 	icon_state = "secbelt"
 	item_state = "secbelt"
-	can_hold = list(/obj/item/baton, // not included in this list are guns that are already small enough to fit (like the detective's gun)
-	/obj/item/gun/energy/taser_gun,
-	/obj/item/gun/energy/phaser_gun,
-	/obj/item/gun/energy/laser_gun,
-	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawbringer,
-	/obj/item/gun/energy/lawbringer/old,
-	/obj/item/gun/energy/wavegun,
-	/obj/item/gun/kinetic/revolver,
-	/obj/item/gun/kinetic/zipgun)
-	in_list_or_max = 1
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/baton, /obj/item/gun), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
 
 // kiki's detective shoulder (holster)
 // get it? like kiki's delivery service? ah, i'll show myself out.
@@ -356,8 +347,10 @@
 	desc = "A rugged belt fitted with ammo pouches."
 	icon_state = "minerbelt"
 	item_state = "utility"
-	can_hold = list(/obj/item/ammo/bullets)
-	in_list_or_max = 0
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo/bullets), in_list_or_max = 0, max_wclass = 2, does_not_open_in_pocket = 0)
 
 // fancy shoulder sling for grenades
 
@@ -366,11 +359,10 @@
 	desc = "A sturdy shoulder-sling for storing various grenades."
 	icon_state = "grenade_bandolier"
 	item_state = "grenade_bandolier"
-	can_hold = list(/obj/item/old_grenade,
-	/obj/item/chem_grenade,
-	/obj/item/storage/grenade_pouch,
-	/obj/item/ammo/bullets/grenade_round)
-	in_list_or_max = 0
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/storage/grenade_pouch, /obj/item/ammo/bullets/grenade_round), in_list_or_max = 0, max_wclass = 2, does_not_open_in_pocket = 0)
 
 // combat medic storage 7 slot
 

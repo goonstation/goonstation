@@ -9,7 +9,6 @@ var/list/bible_contents = list()
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	max_wclass = 2
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	var/mob/affecting = null
 	var/heal_amt = 10
@@ -124,14 +123,15 @@ var/list/bible_contents = list()
 		var/list/L = list()
 		L += bible_contents
 		for (var/obj/item/storage/S in bible_contents)
-			L += S.get_all_contents()
+			L += S.GetComponent(/datum/component/storage)?.get_all_contents()
 		return L
 
 	add_contents(obj/item/I)
 		bible_contents += I
 		I.set_loc(null)
 		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
-			bible.hud.update() // fuck bibles
+			var/datum/component/storage/SC = bible.GetComponent(/datum/component/storage)
+			SC.hud.update() // fuck bibles
 
 	custom_suicide = 1
 	suicide_distance = 0

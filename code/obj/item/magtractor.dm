@@ -192,7 +192,8 @@
 
 		if (istype(oldloc, /obj/item/storage)) //For removing items from containers with the tractor
 			var/obj/item/storage/S = oldloc
-			S.hud.remove_item(W) // ugh
+			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
+			SC.hud.remove_item(W) // ugh
 			W.layer = 3 //why is this necessary aaaaa!.
 
 		src.holding = W

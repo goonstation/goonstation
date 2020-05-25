@@ -59,7 +59,8 @@
 							px = temp
 
 						//ddumb hack for offset storage
-						var/turfd = (isturf(master.owner.loc) && !istype(master, /obj/item/storage/bible))
+						var/atom/movable/storage = master.parent
+						var/turfd = (isturf(storage.loc) && !istype(storage, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
 						if (usr && usr.client && usr.client.tg_layout && !turfd)
@@ -92,7 +93,8 @@
 		var sy = master.slots + 1
 		var/turfd = 0
 
-		if (isturf(master.owner.loc) && !istype(master, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		var/atom/movable/storage = master.parent
+		if (isturf(storage.loc) && !istype(storage, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
 			sx = (master.slots + 1) / 2
@@ -137,7 +139,8 @@
 
 		src.obj_locs = list()
 		var/i = 0
-		for (var/obj/item/I in master.get_contents())
+		var/datum/component/storage/SC = master.GetComponent(/datum/component/storage)
+		for (var/obj/item/I in SC.get_contents())
 			if (!(I in src.objects)) // ugh
 				add_object(I, HUD_LAYER+1)
 			var/obj_loc = "[x+(i%sx)],[y-round(i/sx)]" //no pixel coords cause that makes click detection harder above

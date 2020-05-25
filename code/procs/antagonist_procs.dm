@@ -77,21 +77,21 @@
 		loc = "on your belt"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.get_contents()
+		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
 		for (var/obj/item/device/radio/foo in L)
 			R = foo
 			loc = "in the [S.name] in your left hand"
 			break
 	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.get_contents()
+		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
 		for (var/obj/item/device/radio/foo in L)
 			R = foo
 			loc = "in the [S.name] in your right hand"
 			break
 	if (!R && istype(traitor_mob.back, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.get_contents()
+		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
 		for (var/obj/item/device/radio/foo in L)
 			R = foo
 			loc = "in the [S.name] in your backpack"
@@ -161,21 +161,21 @@
 		loc = "In your pocket"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.get_contents()
+		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
 		for (var/obj/item/device/pda2/foo in L)
 			R = foo
 			loc = "in the [S.name] in your left hand"
 			break
 	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.get_contents()
+		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
 		for (var/obj/item/device/pda2/foo in L)
 			R = foo
 			loc = "in the [S.name] in your right hand"
 			break
 	if (!R && istype(traitor_mob.back, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.get_contents()
+		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
 		for (var/obj/item/device/pda2/foo in L)
 			R = foo
 			loc = "in the [S.name] in your backpack"

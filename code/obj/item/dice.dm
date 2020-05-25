@@ -733,10 +733,8 @@ var/list/rollList = list()
 	name = "dice pouch"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
-	max_wclass = 1
 	w_class = 1
 	var/setcolor
-	can_hold=list(/obj/item/dice)
 	spawn_contents = list(/obj/item/dice/d4,/obj/item/dice,/obj/item/dice/d8,/obj/item/dice/d10,/obj/item/dice/d12,/obj/item/dice/d20,/obj/item/dice/d100)
 
 	proc/colorpick()
@@ -744,8 +742,9 @@ var/list/rollList = list()
 		for(var/obj/item/dice/i in src)
 			i.color = src.setcolor
 
-	make_my_stuff()
+	New()
 		..()
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, can_hold = list(/obj/item/dice), max_wclass = 1)
 		colorpick()
 
 

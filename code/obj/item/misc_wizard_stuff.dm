@@ -136,8 +136,9 @@
 			var/mob/HH = src.loc
 			HH.u_equip(src)
 		if (istype(src.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = src.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
+			var/obj/item/storage/S = src.loc
+			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
+			var/datum/hud/storage/H_temp = SC.hud
 			H_temp.remove_object(src)
 		if(istype(src.loc, /obj/critter/snake))
 			var/atom/movable/snake = src

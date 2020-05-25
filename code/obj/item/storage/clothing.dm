@@ -257,7 +257,7 @@
 	name = "meth scientist costume"
 	spawn_contents = list(/obj/item/clothing/mask/waltwhite)
 
-	make_my_stuff()
+	New()
 		..()
 		var/obj/item/clothing/under/color/orange/jump = new /obj/item/clothing/under/color/orange(src)
 		jump.name = "meth scientist uniform"
@@ -266,7 +266,7 @@
 /obj/item/storage/box/costume/crap/spiderman
 	name = "red alien costume"
 
-	make_my_stuff()
+	New()
 		..()
 		var/obj/item/clothing/mask/cmask = new /obj/item/clothing/mask/spiderman(src)
 		cmask.name = "red alien mask"
@@ -280,7 +280,7 @@
 	name = "victorian confectionery factory owner costume"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy)
 
-	make_my_stuff()
+	New()
 		..()
 		var/obj/item/clothing/head/chat = new /obj/item/clothing/head/that/purple(src)
 		chat.name = "victorian confectionery factory owner hat"
@@ -304,7 +304,7 @@
 	/obj/item/clothing/under/gimmick/anthy,
 	/obj/item/clothing/shoes/utenashoes)
 
-	make_my_stuff()
+	New()
 		..()
 		var/obj/item/e_g_g = new /obj/item/reagent_containers/food/snacks/ingredient/egg(src)
 		e_g_g.name = "e g g"

@@ -900,9 +900,10 @@
 
 		if(istype(old_loc, /obj/item/storage))
 			swapped_cell.set_loc(old_loc)
-			var/obj/item/storage/cell_container = old_loc
-			cell_container.hud.remove_item(src)
-			cell_container.hud.update()
+			var/obj/item/storage/S = old_loc
+			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
+			SC.hud.remove_item(src)
+			SC.hud.update()
 		else
 			usr.put_in_hand_or_drop(swapped_cell)
 

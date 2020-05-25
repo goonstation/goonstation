@@ -36,16 +36,21 @@
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
+// atom signals
+/// When an atom is attacked by an item by a mob
+#define COMSIG_ATOM_ATTACK_BY "atom_attack_by"
+/// When an atom is attacked by a mob's empty hand
+#define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
+/// MouseDrop
+#define COMSIG_ATOM_MOUSE_DROP "atom_mouse_drop"
 
 // atom/movable signals
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
+// when an AM is EMP'd
+#define COMSIG_MOVABLE_EMP_ACT "mov_act"
 
 // obj signals
-/// When an obj is attacked by an item
-#define COMSIG_OBJ_ATTACK_BY "obj_attack_by"
-/// When an obj is attacked by a user's hands
-#define COMSIG_OBJ_ATTACK_HAND "obj_attack_hand"
 // When an object is moved by a user
 #define COMSIG_OBJ_MOVE_TRIGGER "obj_move_trigger"
 
@@ -60,6 +65,10 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
+/// When a mob uses an item on a target
+#define COMSIG_ITEM_AFTER_ATTACK "itm_after_attack"
+/// When a mob uses an item in its active hand
+#define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
 
 // blocking signals
 /// After  an item block is set up

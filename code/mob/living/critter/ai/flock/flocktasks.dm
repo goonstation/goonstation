@@ -325,7 +325,7 @@
 /datum/aiTask/sequence/goalbased/rummage/get_targets()
 	var/list/targets = list()
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(I.contents.len > 0 && I.loc != holder.owner && I.does_not_open_in_pocket)
+		if(I.contents.len > 0 && I.loc != holder.owner)
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 10))
 				targets += I
@@ -375,7 +375,8 @@
 			else
 				// we've opened a HUD
 				// do a fake HUD click, because i am dedicated to this whole puppetry schtick
-				container_target.hud.clicked("boxes", F, dummy_params)
+				var/datum/component/storage/SC = container_target.GetComponent(/datum/component/storage)
+				SC?.hud.clicked("boxes", F, dummy_params)
 				sleep(0.3 SECONDS)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT

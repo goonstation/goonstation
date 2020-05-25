@@ -663,8 +663,9 @@
 	if (. == 1)
 		if (istype(oldloc,/obj/item/storage))
 			var/obj/item/storage/S = oldloc
+			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
 			//S.hud.remove_item(src)
-			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
+			SC.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/Bump(mob/M as mob)
 	SPAWN_DBG( 0 )
@@ -739,6 +740,7 @@
 	return null
 
 /obj/item/proc/attack_self(mob/user)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
 			var/obj/item/parts/human_parts/arm/left/item/I = src.loc
@@ -798,6 +800,7 @@
 		equipment_proxy.space_movement -= spacemove
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTER_ATTACK, target, user, reach, params)
 	return
 
 /obj/item/dummy/ex_act()
@@ -974,12 +977,14 @@
 	src.set_loc(user) // this is to fix some bugs with storage items
 	if (istype(oldloc, /obj/item/storage))
 		var/obj/item/storage/S = oldloc
-		S.hud.remove_item(src) // ugh
+		var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
+		SC.hud.remove_item(src) // ugh
 		oldloc_sfx = oldloc.loc
 	if (src in bible_contents)
 		bible_contents.Remove(src) // UNF
 		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
-			bible.hud.remove_item(src)
+			var/datum/component/storage/SC = bible.GetComponent(/datum/component/storage)
+			SC.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)

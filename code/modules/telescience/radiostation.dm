@@ -469,8 +469,10 @@
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "sleeve_1"
 	desc = "A sturdy record sleeve, designed to hold multiple records."
-	max_wclass = 3
-	can_hold = list(/obj/item/record)
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, max_wclass = 3, can_hold = list(/obj/item/record))
 
 /obj/item/storage/box/record/clown_collection
 	icon_state = "sleeve_2"

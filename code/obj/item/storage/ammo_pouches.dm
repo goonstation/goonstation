@@ -8,10 +8,10 @@
 	icon_state = "ammopouch"
 	desc = "A sturdy fabric pouch designed for carrying ammunition. Can be attatched to the webbing of a uniform to allow for quick access during combat."
 	w_class = 1.00
-	max_wclass = 1
-	slots = 5
-	does_not_open_in_pocket = 0
-	can_hold = list(/obj/item/ammo)
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo), max_wclass = 1, slots = 5, does_not_open_in_pocket = 0)
 
 	assault_rifle
 		name = "rifle magazine pouch"
@@ -54,7 +54,6 @@
 	sniper
 		name = "sniper magazine pouch"
 		icon_state = "ammopouch-double"
-		slots = 5
 		spawn_contents = list(/obj/item/ammo/bullets/rifle_762_NATO = 5)
 
 	shotgun
@@ -75,9 +74,10 @@
 	icon_state = "ammopouch"
 	desc = "A sturdy fabric pouch used to carry several grenades."
 	w_class = 1.00
-	slots = 6
-	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
-	does_not_open_in_pocket = 0
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade), slots = 6, does_not_open_in_pocket = 0)
 
 	frag
 		name = "frag grenade pouch"
@@ -105,20 +105,24 @@
 	name = "trauma field kit"
 	icon_state = "ammopouch-medic"
 	w_class = 1.00
-	slots = 4
-	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/bandage = 2,
 	/obj/item/item_box/medical_patches/mini_silver_sulf,
 	/obj/item/item_box/medical_patches/mini_synthflesh)
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, slots = 4, does_not_open_in_pocket = 0)
 
 /obj/item/storage/security_pouch
 	name = "security pouch"
 	desc = "A small pouch containing some essential security supplies. Keep out of reach of the clown."
 	icon_state = "ammopouch-sec"
 	w_class = 2.00
-	slots = 6
-	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/handcuffs/ = 3,\
 	/obj/item/ammo/power_cell/med_power,\
 	/obj/item/device/flash,\
 	/obj/item/instrument/whistle)
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, slots = 6, does_not_open_in_pocket = 0)

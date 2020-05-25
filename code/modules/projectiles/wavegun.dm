@@ -51,16 +51,16 @@ toxic - poisons
 	damage_type = D_ENERGY
 	sname = "transverse wave"
 	icon_state = "wave-g"
-		
 
 
-		
+
+
 
 /datum/projectile/wavegun/emp
 	shot_number = 1
 	power = 0
 	dissipation_delay = 0
-	dissipation_rate = -10 //only reliable past a few tiles 
+	dissipation_rate = -10 //only reliable past a few tiles
 	max_range = 18 //taser-and-a-half range
 	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
 	hit_ground_chance = 0
@@ -75,15 +75,18 @@ toxic - poisons
 			for(var/turf/tile in range(1,T))
 				for(var/atom/movable/O in tile.contents)
 					O.emp_act()
+					SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
 		if(prob(P.power*1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
 			for(var/atom/movable/O in T.contents)
 				O.emp_act()
+				SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
-	
-	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile. 
+
+	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile.
 		M.emp_act()
+		SEND_SIGNAL(M, COMSIG_MOVABLE_EMP_ACT)
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, M)
 		s.start()

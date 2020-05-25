@@ -45,7 +45,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
+			for (var/obj/item/I in S.GetComponent(/datum/component/storage)?.get_contents())
 				if (..(I, user, null, S) == 0)
 					break
 			return

@@ -48,7 +48,7 @@
 			return 1
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
+			for (var/obj/item/I in S.GetComponent(/datum/component/storage)?.get_contents())
 				if (!.(I, user))
 					break
 		else

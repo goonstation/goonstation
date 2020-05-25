@@ -800,6 +800,7 @@
 					if (M.allow_stunned_dragndrop == 1)
 						M.MouseDrop_T(src, usr)
 		return
+	SEND_SIGNAL(src, COMSIG_ATOM_MOUSE_DROP, over_object)
 	..()
 	return
 

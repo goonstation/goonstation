@@ -424,9 +424,9 @@
 					U.u_equip(target)
 				else if (istype(target.loc, /obj/item/storage))
 					var/obj/item/storage/U = target.loc
+					var/datum/component/storage/SC = U.GetComponent(/datum/component/storage)
 					U.contents -= target
-					if (U.hud)
-						U.hud.update()
+					SC?.hud.update()
 				target.loc = src
 				patches += target
 				update_overlay()

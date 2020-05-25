@@ -478,7 +478,7 @@ PIPE BOMBS + CONSTRUCTION
 					var/area/t = get_area(O)
 					if(t && t.sanctuary) continue
 					O.emp_act()
-
+					SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
 			qdel(grenade)
 		else
 			qdel(src)

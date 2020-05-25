@@ -185,7 +185,7 @@
 	proc/initialize()
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		SEND_SIGNAL(src, COMSIG_OBJ_ATTACK_BY, I, user)
+		SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BY, I, user)
 		// grabsmash
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
@@ -195,7 +195,7 @@
 		return ..(I, user)
 
 	attack_hand(mob/user as mob)
-		SEND_SIGNAL(src, COMSIG_OBJ_ATTACK_HAND, user)
+		SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user)
 
 	MouseDrop(atom/over_object as mob|obj|turf)
 		..()

@@ -203,7 +203,7 @@
 			update_icon()
 
 	update_icon()
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
 		else
@@ -228,7 +228,7 @@
 			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len >= slots)
 			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0
@@ -332,7 +332,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 
 	update_icon()
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
 		else
@@ -381,7 +381,7 @@ obj/item/storage/wall/clothingrack/hatrack
 			update_icon()
 
 	update_icon()
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "shelf"
 		else
@@ -406,7 +406,7 @@ obj/item/storage/wall/clothingrack/hatrack
 			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len >= slots)
 			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0
@@ -455,7 +455,7 @@ obj/item/storage/wall/clothingrack/hatrack
 			update_icon()
 
 	update_icon()
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "shelf"
 		else
@@ -480,7 +480,7 @@ obj/item/storage/wall/clothingrack/hatrack
 			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
-		var/list/my_contents = src.get_contents()
+		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
 		if (my_contents.len >= slots)
 			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0

@@ -127,13 +127,15 @@
 	desc = "Have fun!"
 	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler_box-close"
-	max_wclass = 1
-	slots = 5
 	spawn_contents = list(/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler)
 	var/open = 0
 
+	New()
+		..()
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, max_wclass = 1, slots = 5)
+
 	attack_hand(mob/user as mob)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()
 			else

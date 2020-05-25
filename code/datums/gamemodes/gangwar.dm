@@ -1308,13 +1308,16 @@
 	spawn_contents = list(/obj/item/gang_flyer = 7)
 	var/datum/gang/gang = null
 
-	make_my_stuff()
+	New(loc, var/datum/gang/G)
 		..() //spawn the flyers
+		src.name = "[G.gang_name] recruitment material"
+		src.desc = "A briefcase full of flyers advertising the [G.gang_name] gang."
+		src.gang = G
 
 		for(var/obj/item/gang_flyer/flyer in contents)
-			flyer.name = "[gang.gang_name] recruitment flyer"
-			flyer.desc = "A flyer offering membership in the [gang.gang_name] gang."
-			flyer.gang = gang
+			flyer.name = "[G.gang_name] recruitment flyer"
+			flyer.desc = "A flyer offering membership in the [G.gang_name] gang."
+			flyer.gang = G
 
 proc/get_gang_gear(var/mob/living/carbon/human/user)
 	if (!istype(user)) return 0
@@ -1367,10 +1370,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == "gang_leader")
-			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
-			case.name = "[user.mind.gang.gang_name] recruitment material"
-			case.desc = "A briefcase full of flyers advertising the [user.mind.gang.gang_name] gang."
-			case.gang = user.mind.gang //this updates the flyers once they are spawned
+			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc, user.mind.gang)
 			user.put_in_hand_or_drop(case)
 
 		user.mind.gang.gear_cooldown += user
