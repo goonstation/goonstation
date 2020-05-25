@@ -96,8 +96,7 @@
 		is_processing = 0
 
 	proc/get_power(obj/O)
-		return src.proj_data.power - max(0,((get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
-
+		return src.proj_data.power - max(0,((isnull(src.orig_turf)? 0 : get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
 
 	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
