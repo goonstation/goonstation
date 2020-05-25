@@ -73,7 +73,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
-				M.updatehealth()
 				..()
 				return
 
@@ -117,7 +116,6 @@ datum
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
 				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
-				M.updatehealth()
 				..()
 				return
 
@@ -202,9 +200,6 @@ datum
 							M.take_toxin_damage(-1.5 * mult)
 						else
 							H.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
-
-
-						H.updatehealth()
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -411,7 +406,6 @@ datum
 				if(holder.has_reagent("epinephrine"))
 					holder.remove_reagent("epinephrine", 2 * mult)
 				M.take_toxin_damage(1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -591,8 +585,6 @@ datum
 
 					if (prob(8))
 						M.take_toxin_damage(severity * mult)
-						M.updatehealth()
-
 				return
 
 		//WHY IS SWEET ***TEA*** A SUBTYPE OF SUGAR?!?!?!?!
@@ -836,7 +828,6 @@ datum
 						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
-						M.updatehealth()
 						reacted = 1
 					else if (method == TOUCH)
 						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")

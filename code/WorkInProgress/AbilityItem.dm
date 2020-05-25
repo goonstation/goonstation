@@ -256,6 +256,8 @@
 
 			SPAWN_DBG(0)
 				for(var/i=0, i<15, i++)
+					if(isnull(the_mob))
+						break
 					var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
 					A.set_loc(the_mob.loc)
 					SPAWN_DBG(1 SECOND)

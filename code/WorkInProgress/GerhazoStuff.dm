@@ -569,7 +569,6 @@
 			M.take_toxin_damage(-15)
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
-			M.updatehealth()
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
 			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
 		else

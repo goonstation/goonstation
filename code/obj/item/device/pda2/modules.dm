@@ -95,30 +95,31 @@
 	icon_state = "pdamod_light"
 	setup_use_menu_badge = 1
 	var/on = 0 //Are we currently on?
-	var/lumlevel = 0.5 //How bright are we?
+	var/lumlevel = 0.2 //How bright are we?
 	var/datum/light/light
 	abilities = list(/obj/ability_button/pda_flashlight_toggle)
 	var/flashlight_icon = 'icons/obj/items/pda.dmi'
 	var/flashlight_icon_state = "flashlight"
 	var/image/lensflare
-	var/use_simple_light = 1
+	var/use_simple_light = 0
+	var/use_medium_light = 1
 
 	New()
 		..()
-		if (!use_simple_light)
+		if (!use_simple_light && !use_medium_light)
 			light = new /datum/light/line
 			light.set_brightness(lumlevel)
 			light.set_color(1, 1, 1)
-			src.lensflare = image(src.flashlight_icon, src.flashlight_icon_state)
+		src.lensflare = image(src.flashlight_icon, src.flashlight_icon_state)
 
 	relay_pickup(mob/user)
 		..()
-		if (!use_simple_light)
+		if (!use_simple_light && !use_medium_light)
 			light.attach(user)
 		else if (on)
 			if (src.host)
-				src.host.remove_simple_light("pda\ref[src]")
-			user.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+				src.host.remove_sm_light("pda\ref[src]")
+			user.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
 
 
 	relay_drop(mob/user)
@@ -126,11 +127,16 @@
 		SPAWN_DBG(0)
 			if (src.host)
 				if (src.host.loc != user)
-					if (!use_simple_light)
+					if (!use_simple_light && !use_medium_light)
 						light.attach(src.host.loc)
 					else if (on)
-						user.remove_simple_light("pda\ref[src]")
-						src.host.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+						user.remove_sm_light("pda\ref[src]")
+						src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+				else
+					if (!use_simple_light && !use_medium_light)
+						light.detach()
+					else if (on)
+						user.remove_sm_light("pda\ref[src]")
 
 
 	return_menu_badge()
@@ -139,16 +145,17 @@
 
 	install(var/obj/item/device/pda2/pda)
 		..()
-		if (!use_simple_light)
+		if (!use_simple_light && !use_medium_light)
 			light.attach(pda)
 		else if (on)
-			pda.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+			pda.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
 
 	uninstall()
-		if (!use_simple_light)
+		if (!use_simple_light && !use_medium_light)
 			light.disable()
 		else if (on)
-			src.host.remove_simple_light("pda\ref[src]")
+			src.host.remove_sm_light("pda\ref[src]")
+			src.host.loc.remove_sm_light("pda\ref[src]") // user
 		src.on = 0
 		src.host.underlays -= src.lensflare
 		..()
@@ -162,31 +169,31 @@
 
 	proc/toggle_light()
 		src.on = !src.on
-		if (!use_simple_light)
+		if (!use_simple_light && !use_medium_light)
 			if (ismob(src.host.loc))
 				light.attach(src.host.loc)
 
 		if (src.on)
 			src.host.underlays += src.lensflare
-			if (!use_simple_light)
+			if (!use_simple_light && !use_medium_light)
 				light.enable()
 			else
 				if (!isturf(src.host.loc))
 					var/atom/A = src.host.loc
-					A.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+					A.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
 				else
-					src.host.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+					src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
 
 		else
 			src.host.underlays -= src.lensflare
-			if (!use_simple_light)
+			if (!use_simple_light && !use_medium_light)
 				light.disable()
 			else
 				if (!isturf(src.host.loc))
 					var/atom/A = src.host.loc
-					A.remove_simple_light("pda\ref[src]")
+					A.remove_sm_light("pda\ref[src]")
 				else
-					src.host.remove_simple_light("pda\ref[src]")
+					src.host.remove_sm_light("pda\ref[src]")
 
 		if (islist(src.ability_buttons))
 			for (var/obj/ability_button/pda_flashlight_toggle/B in src.ability_buttons)
@@ -197,7 +204,7 @@
 /obj/item/device/pda_module/flashlight/dan
 	name = "Deluxe Dan's Fancy Flashlight Module"
 	desc = "What a name, what an experience."
-	lumlevel = 3.5
+	lumlevel = 0.8
 
 	toggle_light()
 		..()
@@ -206,10 +213,11 @@
 
 /obj/item/device/pda_module/flashlight/high_power
 	name = "high-power flashlight module"
-	lumlevel = 3
+	lumlevel = 0.8
 	flashlight_icon = 'icons/obj/items/pda.dmi'
 	flashlight_icon_state = "flashlight-2"
 	use_simple_light = 0
+	use_medium_light = 1
 
 /obj/ability_button/pda_flashlight_toggle
 	name = "Toggle PDA Flashlight"

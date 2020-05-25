@@ -36,7 +36,6 @@
 		user.visible_message("<span class='alert'><b>[user] stabs and beats [his_or_her(user)]self with each tool in the [src] in rapid succession.</b></span>")
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
-		user.updatehealth()
 		return 1
 
 	proc/change_mode(var/new_mode, var/mob/holder)

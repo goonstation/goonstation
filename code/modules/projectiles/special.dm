@@ -851,7 +851,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
 	caliber = 2
-	icon_turf_hit = "secbot1-spaz"
+	icon_turf_hit = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot
 

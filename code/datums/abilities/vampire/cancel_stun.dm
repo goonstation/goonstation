@@ -66,7 +66,6 @@
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
 		M.losebreath = min(usr.losebreath - 3)
-		M.updatehealth()
 		boutput(M, __blue("You cancel your stuns and take [greatest_stun] damage in return."))
 
 		src.remove_stuns(3)
@@ -94,7 +93,6 @@
 			M.take_toxin_damage(-40)
 			M.take_oxygen_deprivation(-40)
 			M.losebreath = min(usr.losebreath - 40)
-			M.updatehealth()
 
 		src.remove_stuns(2)
 		return 0

@@ -42,7 +42,7 @@
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
 		playsound(get_turf(user), "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-		user.updatehealth()
+		health_update_queue |= user
 
 /* do not do this thing here:
 		for (var/mob/O in AIviewers(user, null)) // loop through all mobs that can see user kill themself

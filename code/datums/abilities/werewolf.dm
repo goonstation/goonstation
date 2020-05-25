@@ -219,7 +219,6 @@
 			if (healing > 0)
 				M.HealDamage("All", healing, healing)
 				M.add_stamina(healing)
-				M.updatehealth()
 
 		if ("spread")
 			var/mob/living/carbon/human/HH = target
@@ -273,7 +272,6 @@
 
 	if (damage > 0)
 		random_brute_damage(target, damage,1)
-		target.updatehealth()
 		target.UpdateDamageIcon()
 		target.set_clothing_icon_dirty()
 

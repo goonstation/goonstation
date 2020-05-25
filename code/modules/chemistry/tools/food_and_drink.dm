@@ -73,7 +73,6 @@
 			boutput(M, "<span class='alert'>Your injuries are too severe to heal by nourishment alone!</span>")
 		else
 			M.HealDamage("All", healing, healing)
-			M.updatehealth()
 
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
@@ -786,7 +785,6 @@
 			user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 			blood_slash(user, 25)
 			user.TakeDamage("head", 150, 0, 0, DAMAGE_CUT)
-			user.updatehealth()
 			SPAWN_DBG(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
@@ -1538,7 +1536,6 @@
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(M, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))

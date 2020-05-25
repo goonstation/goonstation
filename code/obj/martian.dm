@@ -55,7 +55,6 @@
 				boutput(user, "<span class='alert'>You manage to pull out your hand!</span>")
 				user.changeStatus("stunned", -100)
 				user.TakeDamage("All", 20, 0, DAMAGE_STAB)
-				user.updatehealth()
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 				gib.streak(user.dir)
 

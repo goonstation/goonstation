@@ -23,6 +23,8 @@ var
 									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
 /datum/proc/pooled(var/pooltype)
 	dispose()
+	if(istype(src, /atom/movable))
+		src:loc = null
 	// If this thing went through the delete queue and was rescued by the pool mechanism, we should reset the qdeled flag.
 	qdeled = 0
 	pooled = 1
