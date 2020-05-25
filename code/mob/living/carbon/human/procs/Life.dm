@@ -1602,7 +1602,7 @@
 
 	proc/handle_regular_status_updates(datum/controller/process/mobs/parent,var/mult = 1)
 
-		health = max_health - (get_oxygen_deprivation() + get_toxin_damage() + get_burn_damage() + get_brute_damage())
+		updatehealth()
 		var/death_health = src.health + (src.get_oxygen_deprivation() * 0.5) - (get_burn_damage() * 0.67) - (get_brute_damage() * 0.67) //lower weight of oxy, increase weight of brute/burn here
 		// I don't think the revenant needs any of this crap - Marq
 		if (src.bioHolder && src.bioHolder.HasEffect("revenant") || isdead(src)) //You also don't need to do a whole lot of this if the dude's dead.

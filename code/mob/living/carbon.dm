@@ -560,7 +560,7 @@
 
 /mob/living/carbon/take_toxin_damage(var/amount)
 	if (..())
-		return
+		return 1
 #if ASS_JAM //pausing damage for timestop
 	if(paused)
 		src.pausedtox = max(0,src.pausedtox + amount)
@@ -578,7 +578,7 @@
 
 /mob/living/carbon/take_oxygen_deprivation(var/amount)
 	if (..())
-		return
+		return 1
 
 	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
 		src.oxyloss = 0

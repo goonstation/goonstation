@@ -555,7 +555,7 @@
 	//Bandaid fix for tox damage being mysteriously unhooked in here.
 	if (tox)
 		tox = max(0, tox)
-		take_toxin_damage(tox)
+		take_toxin_damage(tox, updatedamage = 0)
 
 	if (zone == "All")
 		var/organCount = 0
@@ -850,7 +850,7 @@
 			themob.TakeDamage(pick(zones), 0, damage, 0, DAMAGE_BURN)
 
 //ignore_organs if true. Needed for when non-functioning/missing kidney/liver genetates tox damage
-/mob/living/carbon/human/take_toxin_damage(var/amount, var/ignore_organs = 0)
+/mob/living/carbon/human/take_toxin_damage(var/amount, var/ignore_organs = 0, var/updatedamage = 1)
 	if (..())
 		return
 	if (!ignore_organs)
@@ -861,7 +861,15 @@
 				src.organHolder.damage_organ(0, 0, amount/5, "right_kidney")
 			if (prob(30))
 				src.organHolder.damage_organ(0, 0, amount/12, "liver")
+	if(updatedamage)
+		src.UpdateDamage()
 	return
+
+/mob/living/carbon/human/take_oxygen_deprivation(var/amount, var/updatedamage = 1)
+	if(..())
+		return
+	if(updatedamage)
+		src.UpdateDamage()
 
 /mob/living/carbon/human/take_brain_damage(var/amount)
 	if (!isnum(amount) || amount == 0)
@@ -888,3 +896,12 @@
 		return src.organHolder.brain.get_damage()
 	//leaving this just in case, should never be called I assume
 	..()
+
+/mob/living/carbon/human/UpdateDamage()
+	if(updatingHealthDelay)
+		return
+	else
+		updatingHealthDelay = 1
+		SPAWN_DBG(1 DECI SECONDS)
+			src.updatehealth()
+			updatingHealthDelay = 0

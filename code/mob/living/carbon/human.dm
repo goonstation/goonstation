@@ -45,6 +45,8 @@
 	var/image/l_leg_damage_standing = null
 	var/image/r_leg_damage_standing = null
 
+	var/updatingHealthDelay = 0
+
 	var/image/image_eyes = null
 	var/image/image_cust_one = null
 	var/image/image_cust_two = null
