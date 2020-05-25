@@ -64,6 +64,6 @@
 				user.update_keymap()
 				user.client.eye = user
 
-	modify_keymap(datum/keymap/keymap, client/C)
+	modify_keymap(client/C)
 		..()
-		keymap.merge(C.get_keymap("just exit"))
+		C.apply_keymap("just exit")

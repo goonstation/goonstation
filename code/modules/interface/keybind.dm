@@ -337,3 +337,10 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"SPACE" = "fire",
 		"Q" = "cycle"
 	)
+
+/datum/keybind_style/exit
+	name = "just exit"
+	changed_keys = list(
+		"Q" = "exit",
+		"E" = "exit"
+	)

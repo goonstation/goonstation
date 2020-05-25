@@ -102,4 +102,4 @@
 		..()
 		C.apply_keybind("colputt")
 		if (!C.preferences.use_wasd)
-			C.apply_keybind("base_arrow")
+			C.apply_keybind("colputt_arrow")
