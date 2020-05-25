@@ -20,7 +20,7 @@
 	examine()
 		. = ..()
 		if(src.ammo > 0)
-			. += "It has [src.ammo] uses left out of [initial(src.ammo)]."
+			. += "It has [src.ammo] uses left out of [src.ammo_max]."
 		else
 			. += "The tape has worn out!"
 
@@ -35,7 +35,7 @@
 		return
 
 	proc/activate(mob/user as mob)
-		playsound(src.loc, "sound/effects/light_breaker.ogg", 50, 1)
+		playsound(src.loc, "sound/effects/light_breaker.ogg", 75, 1, 5)
 		for (var/obj/machinery/light/L in view(7, user))
 			if (L.status == 2 || L.status == 1)
 				continue
@@ -44,7 +44,7 @@
 		for (var/mob/living/HH in hearers(user, null))
 			if (HH == user)
 				continue
-			HH.apply_sonic_stun(0, 0, 40, 0, 15, 8, 12)
+			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
 		return 1
 
 	attackby(obj/item/W, mob/user, params)
@@ -93,7 +93,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(get_turf(the_breaker), "sound/misc/winding.ogg", 50, 1)
+		playsound(get_turf(the_breaker), "sound/misc/winding.ogg", 50, 1,3)
 
 	onStart()
 		..()
