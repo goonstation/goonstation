@@ -349,7 +349,6 @@
 		if (isliving(user))
 			var/mob/living/L = user
 			L.changeStatus("burning", 100)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

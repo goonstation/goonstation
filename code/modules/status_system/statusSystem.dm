@@ -1204,8 +1204,6 @@ var/list/statusGroupLimits = list("Food"=4)
 						H.changeStatus("stunned", -3*buff_mult)
 					if(statusList["weakened"])
 						H.changeStatus("weakened", -3*buff_mult)
-
-					H.updatehealth()
 			else
 				on_turf = 0
 
@@ -1258,8 +1256,6 @@ var/list/statusGroupLimits = list("Food"=4)
 
 				if (H.misstep_chance)
 					H.change_misstep_chance(-5)
-
-				H.updatehealth()
 			return
 
 	gang_drug_withdrawl
@@ -1289,8 +1285,6 @@ var/list/statusGroupLimits = list("Food"=4)
 			if (prob(20))
 				violent_twitch(owner)
 				M.make_jittery(rand(6,9))
-
-			M.updatehealth()
 			return
 
 	mutiny
