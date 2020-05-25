@@ -62,9 +62,8 @@ chui/window/keybind_menu
 				changed_keys = new/list()
 
 			else if (id == "reset")
-				boutput(world, "reset keymap")
-				who.mob.reset_keymap()
 				changed_keys = new/list()
+				who.mob.reset_keymap()
 			else if (id == "reset_cloud")
 				owner.cloud_put("keybind_data", null)
 			else if (id == "cancel")
@@ -75,8 +74,6 @@ chui/window/keybind_menu
 		var/action = href_list[ "_cact" ]
 		if( action == "changed_key" && href_list["action"] && href_list["key"])
 			add_to_changed(href_list["action"], uppertext(href_list["key"]) )
-			var/acte = href_list["action"]
-			var/keye = href_list["key"]
 
 	proc/add_to_changed(action, key)
 		changed_keys[action] = uppertext(key) //keys are always uppertext
