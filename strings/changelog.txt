@@ -1,5 +1,9 @@
 
 (t)mon may 25 20
+(u)UrsulaMajor
+(p)832
+(e)⚖|balance
+(+)You can now rewind the Lightbreaker using a screwdriver.
 (u)Chickenish
 (p)821
 (e)🐛|bug
