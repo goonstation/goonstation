@@ -50,6 +50,7 @@
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
+	var/list/hitlist //list of atoms collided with this tick
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 #if ASS_JAM
@@ -85,6 +86,8 @@
 	proc/process()
 		if (!src.was_setup)
 			src.setup()
+		if(hitlist.len)
+			hitlist.len = 0
 		is_processing = 1
 		while (!disposed)
 #if ASS_JAM //dont move while in timestop
@@ -102,6 +105,10 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
+		if (A in hitlist)
+			return
+		else
+			hitlist += A
 		if (A == shooter) return // never collide with the original shooter
 		if (ismob(A)) //don't doublehit
 			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
@@ -118,6 +125,7 @@
 			//die()
 			return
 
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -139,7 +147,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			var/turf/T = A
-			if (T.density && !goes_through_walls)
+			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
 				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -155,7 +163,6 @@
 				if (proj_data && proj_data.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
-
 		else if (ismob(A))
 			if(pierces_left != 0) //try to hit other targets on the tile
 				var/turf/T = get_turf(A)
@@ -209,7 +216,7 @@
 				pierces_left--
 
 		else if (isobj(A))
-			if (A.density && !goes_through_walls)
+			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
 				if (iscritter(A))
 					if (proj_data && proj_data.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -217,7 +224,6 @@
 					if (proj_data && proj_data.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
-
 		else
 			die()
 
@@ -251,6 +257,7 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
+		hitlist = null
 		transform = null
 		internal_speed = null
 		pierces_left = 0
@@ -302,6 +309,7 @@
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
 		goes_through_mobs = src.proj_data.goes_through_mobs
+		hitlist = list()
 		set_icon()
 		orig_turf = get_turf(src)
 
@@ -597,7 +605,7 @@ datum/projectile
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
-	var/ticks_between_mob_hits = 1
+	var/ticks_between_mob_hits = 0
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 
