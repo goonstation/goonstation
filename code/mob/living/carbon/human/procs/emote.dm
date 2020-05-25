@@ -230,6 +230,18 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
+				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(3))
+					var/glowsticktype = pick(/obj/item/device/light/glowstick,
+					/obj/item/device/light/glowstick/white,/obj/item/device/light/glowstick/yellow,
+					/obj/item/device/light/glowstick/blue,/obj/item/device/light/glowstick/purple,
+					/obj/item/device/light/glowstick/pink,/obj/item/device/light/glowstick/cyan,
+					/obj/item/device/light/glowstick/orange,/obj/item/device/light/glowstick/red)
+					var/obj/item/device/light/glowstick/G = new glowsticktype
+					G.set_loc(src.loc)
+					G.turnon()
+					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
+					G.throw_at(target,5,1)
+					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
 			if ("salute","bow","hug","wave", "blowkiss")
 				// visible targeted emotes
