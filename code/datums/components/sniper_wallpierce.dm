@@ -1,10 +1,6 @@
 /datum/component/sniper_wallpierce
 	var/pierces_left = 1 //default to 1 wall
 
-#define PROJ_PASSNONE 0
-#define PROJ_PASSWALL 1
-#define PROJ_PASSOBJ 2
-
 /datum/component/sniper_wallpierce/Initialize(var/num_pierces)
 	if(!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
