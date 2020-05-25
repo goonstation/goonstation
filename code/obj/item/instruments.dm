@@ -151,7 +151,7 @@
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"
-	sounds_instrument = list('sound/musical_instruments/Saxophone_CarelessWhisper.ogg', 'sound/musical_instruments/Saxophone_RunAway.ogg', 'sound/musical_instruments/Saxophone_BakerStreet.ogg', 'sound/musical_instruments/Saxophone_ComeSunday.ogg', 'sound/musical_instruments/Saxophone_GodOnlyKnows.ogg')
+	sounds_instrument = list('sound/musical_instruments/Saxophone_CarelessWhisper.ogg', 'sound/musical_instruments/Saxophone_RunAway.ogg', 'sound/musical_instruments/Saxophone_BakerStreet.ogg', 'sound/musical_instruments/Saxophone_ComeSunday.ogg', 'sound/musical_instruments/Saxophone_GodOnlyKnows.ogg', 'sound/musical_instruments/Saxophone_WhoCanItBe.ogg')
 	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
 	module_research = list("audio" = 7, "metals" = 3)
 
