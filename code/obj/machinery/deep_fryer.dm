@@ -169,7 +169,6 @@
 			var/amt = user.reagents.get_reagent_amount("dabs")
 			user.reagents.del_reagent("dabs")
 			user.reagents.add_reagent("deepfrieddabs",amt)
-		user.updatehealth()
 		SubscribeToProcess()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))

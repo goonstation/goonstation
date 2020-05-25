@@ -314,7 +314,7 @@
 		setProperty("meleeprot", 12)
 		setProperty("rangedprot", 3)
 		setProperty("pierceprot",25)
-		setProperty("disorient_resist", 25)
+		setProperty("disorient_resist", 45)
 		setProperty("movespeed", 2)
 
 /obj/item/clothing/suit/armor/death_commando

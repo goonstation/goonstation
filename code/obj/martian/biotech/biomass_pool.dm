@@ -28,7 +28,6 @@
     return
   // you idiot!!
   user.TakeDamage("All", 2, 2)
-  user.updatehealth()
   user.visible_message("<span class='alert'><b>[user]</b> burns themselves on the acid of the pool! What a moron!</span>", "<span class='alert'>You burn yourself on the acidic contents! Ouch!</span>")
   if(prob(50))
     user.emote("scream")
@@ -42,7 +41,6 @@
       if(!isdead(M))
         // DEVOUR, etc.
         M.TakeDamage("All", 5, 5)
-        M.updatehealth()
         if(prob(40)) // you poor bastard
           M.emote("scream")
           boutput(M, "<span style='color:red; font-weight: bold;'>[pick("OH GOD IT BURNS! THE PAIN!!", "FUCK! FUCK! AGH!!", "MAKE IT STOP!", "AUGH!!")]</span>")

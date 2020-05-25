@@ -13,7 +13,7 @@
 		color_mod = create_screen("", "", 'icons/effects/white.dmi', "", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_2)
 		color_mod.mouse_opacity = 0
 		color_mod.blend_mode = BLEND_MULTIPLY
-		color_mod.plane = PLANE_ABOVE_LIGHTING
+		color_mod.plane = PLANE_OVERLAY_EFFECTS
 
 		dither = create_screen("", "", 'icons/mob/hud_common.dmi', "dither_2", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_3)
 		dither.mouse_opacity = 0

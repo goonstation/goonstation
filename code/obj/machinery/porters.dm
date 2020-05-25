@@ -261,6 +261,27 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
 		return
 
+/obj/item/remote/porter/port_a_gene
+	name = "Port-A-Gene Remote"
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	desc = "A remote that summons a Port-A-Gene."
+	machinery_name = "Port-a-Gene"
+
+	get_machinery()
+		if (!src)
+			return
+
+		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)//world)
+			LAGCHECK(LAG_LOW)
+			var/turf/M_loc = get_turf(M)
+			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+				continue
+			if (!(M in src.machinerylist))
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+		return
+
 /obj/item/remote/busted
 	name = "Port-A-Busted Remote"
 	icon = 'icons/obj/porters.dmi'

@@ -916,7 +916,6 @@ MATERIAL
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-			user.updatehealth()
 
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))

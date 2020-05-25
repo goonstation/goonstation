@@ -584,7 +584,6 @@
 					var/shard_damage = force
 					affecting.take_damage(shard_damage, 0)
 					H.UpdateDamageIcon()
-					H.updatehealth()
 		..()
 
 	custom_suicide = 1
@@ -594,7 +593,6 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

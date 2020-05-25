@@ -1092,7 +1092,6 @@ PIPE BOMBS + CONSTRUCTION
 				var/damage = 30 / (get_dist(M, src) + 1)
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
-				M.updatehealth()
 
 			SPAWN_DBG (100)
 				if (src)

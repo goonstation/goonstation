@@ -70,3 +70,8 @@
 // mob signals
 ///At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
+
+
+// projectile signals
+/// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
+#define COMSIG_PROJ_COLLIDE "proj_collide_atom"

@@ -1,5 +1,56 @@
 
+(t)mon may 25 20
+(u)Tarmunora
+(p)827
+(e)⚖|balance
+(+)Buffed nuclear operative sniper rifle
+(u)Sovexe
+(p)839
+(e)🆕🗺|feature, mapping
+(*)Added a new underwater Z5 location - Bee Sanctuary
+(u)Tarmunora
+(+)Faster health updates when you take damage instead of waiting for the next Life tick.
+(u)Erinexx
+(p)842
+(e)🎨|sprites
+(+)Animated stunbaton inhands
+(u)UrsulaMajor
+(e)⚖|balance
+(+)Lightbreaker now costs 4TC instead of 3TC and has a shorter stun duration.
+(u)UrsulaMajor
+(p)835
+(e)⚖|balance
+(+)Suppressed .22 Traitor Item now starts with all Hollow Point ammo
+(u)UrsulaMajor
+(p)832
+(e)⚖|balance
+(+)You can now rewind the Lightbreaker using a screwdriver.
+(u)Chickenish
+(p)821
+(e)🐛|bug
+(+)fixed broken lungs and kidneys being effectively the same as healthy ones.
 (t)sun may 24 20
+(u)Flourish
+(p)793
+(e)🆕|feature
+(+)There are now sound effects for when you click together figures.
+(u)mbc
+(p)836
+(e)🗺|mapping
+(*)Added armory authorization computer - Officers can now put in 3 individual authorizations to open the armory. HoS can still open it by themselves using the Authorization PC.
+(+)Boost disorient resist of the heavy riot armor
+(u)pali
+(p)791
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)PDA lights now have higher range (and are slightly less bright).
+(u)system86
+(p)815
+(e)🎨|sprites
+(+)New ThinkTape sprite.
+(u)Sovexe
+(p)814
+(e)🆕🗺|feature, mapping
+(*)Added a new underwater Z5 location - Water Treatment Facility
 (u)UrsulaMajor
 (p)738
 (e)⚖🗺🎨|balance, mapping, sprites

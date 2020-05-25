@@ -43,7 +43,6 @@
 				cause_blindness(affected_mob)
 			if(prob(5))
 				affected_mob.TakeDamage("All", 0, 2, 0, DAMAGE_BURN)
-				affected_mob.updatehealth()
 				boutput(affected_mob, "<span class='alert'>You feel hot.</span>")
 		else if(D.stage < 7)
 			if(prob(25))
@@ -52,14 +51,12 @@
 				cause_blindness(affected_mob)
 			if(prob(10))
 				affected_mob.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
-				affected_mob.updatehealth()
 				boutput(affected_mob, "<span class='alert'>You feel very hot!</span>")
 		else
 			if(prob(80))
 				cause_blindness(affected_mob)
 			if(prob(20))
 				affected_mob.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
-				affected_mob.updatehealth()
 				boutput(affected_mob, "<span class='alert'>It burns!</span>")
 			if(prob(50))
 				// Stole this shit from GBS
