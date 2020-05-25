@@ -1693,7 +1693,7 @@
 				return ..()
 
 	build_keybind_styles(client/C)
-		..(C)
+		..()
 		C.apply_keybind("robot")
 
 		if (!C.preferences.use_wasd)

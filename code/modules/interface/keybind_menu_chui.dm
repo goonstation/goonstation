@@ -1,10 +1,4 @@
 
-/*
-needed:
-		smart key replacement - keep track of key and value from original and replace just that (deal with dupes) - not sure how to get orig keybind??
-		preference saving - use json_encode... shit into cloud somehow?
-*/
-
 chui/window/keybind_menu
 	name = "Keybinding Customization"
 	var/client/owner
@@ -20,7 +14,7 @@ chui/window/keybind_menu
 
 	Subscribe(client/who)
 		..()
-		changed_keys = list() //new one every time so we're not merging an ever-expanding list (feel free to change if other is cheaper)
+		changed_keys = list() //new one every time so we're not merging an ever-expanding list (feel free to change if cheaper)
 
 	GetBody()
 
@@ -32,10 +26,7 @@ chui/window/keybind_menu
 
 		html += "<tbody><tr><td>Action</td><td>Corresponding Keybind</td></tr>"
 
-		//boutput(world, "big shitter json: [json_encode(current_keymap.keys)]")
-
 		for (var/key in current_keymap.keys)
-			//message_coders("went through key: [key]")
 			if (key == "0NORTH" || key == "0SOUTH" || key == "0EAST" || key == "0WEST") continue //ignore arrow keys, fuck you for making obscure-ass names lummox
 			html += "<tr><td>[current_keymap.parse_action(current_keymap.keys[key])]</td><td><input class=\"input\" id=\"[current_keymap.keys[key]]\" type=\"text\" value=\"[current_keymap.unparse_keybind(key)]\"></td></tr>"
 
@@ -53,8 +44,6 @@ chui/window/keybind_menu
 		if(owner)
 			if (id == "confirm")
 				if (changed_keys.len)
-					boutput(world, "changed keys: [json_encode(changed_keys)]")
-
 					var/changed_keys_rev = list()
 
 					for (var/i in changed_keys)
@@ -62,14 +51,16 @@ chui/window/keybind_menu
 
 					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimal merge
 					owner.keymap.overwrite_by_action(keydat)
-
 					owner.cloud_put("keybind_data", json_encode(changed_keys_rev))
+
+			//TODO: FIX THIS SHIT
 			else if (id == "set_wasd")
 				changed_keys = new/list()
 			else if (id == "set_tg")
 				changed_keys = new/list()
 			else if (id == "set_azerty")
 				changed_keys = new/list()
+
 			else if (id == "reset")
 				boutput(world, "reset keymap")
 				who.mob.reset_keymap()
@@ -79,22 +70,19 @@ chui/window/keybind_menu
 			else if (id == "cancel")
 				Unsubscribe(who)
 
+	//This shitfuckery is because chui doesn't have proper JS interface junk.
 	OnTopic(client/myclient, href, href_list[] )
-		boutput(world, "bigtopic - [json_encode(href)]")
 		var/action = href_list[ "_cact" ]
 		if( action == "changed_key" && href_list["action"] && href_list["key"])
 			add_to_changed(href_list["action"], uppertext(href_list["key"]) )
 			var/acte = href_list["action"]
 			var/keye = href_list["key"]
-			boutput(world, "ADD CHANGE - [acte] - [keye]")
 
 	proc/add_to_changed(action, key)
-		key = uppertext(key) //keys are always uppertext
-		changed_keys[action] = key
-		boutput(world, "ADDED - [action] - [key]")
+		changed_keys[action] = uppertext(key) //keys are always uppertext
 
 /client/verb/modify_keybinds()
-	set name = "Modify your Keybinds!"
+	set name = "Modify Keybinds"
 	set desc = "Open up a handy window to change your keybinds"
 
 	if(!keybind_menu)

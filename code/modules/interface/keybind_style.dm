@@ -16,6 +16,7 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
 //base -> base_wasd -> human -> human_wasd for example
 //If you switch to a different mobtype, such as a robot, you would reset the keymap, and successive calls of build_keymap will apply_keybind
+//A more optimized solution would be to rebuild only what is needed, but what do you expect of me?
 
 ///List on each client containing the styles we've applied so we don't double-apply.
 /client/var/list/applied_keybind_styles = list()
@@ -53,20 +54,6 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 	var/datum/keymap/init_keymap = new /datum/keymap(init_style.changed_keys)
 	src.keymap.merge(init_keymap)
 
-/** unapply_keys: Takes a keybind_style to remove from the src client
- *  Internal use only.
- *  De-merges the given keybind_style onto the client. Also removes it from the client's tracking list.
- */
-/client/proc/unapply_keys(datum/keybind_style/style)
-	PROTECTED_PROC(TRUE)
-
-	if (!applied_keybind_styles.Find(initial(style.name)))
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to unapply [initial(style.name)] to [src] when not on them.")
-		return
-
-	src.applied_keybind_styles.Remove(initial(style.name))
-	///////////////////////////////////////////////////////TODO: REMOVING LOGIC + DEMERGE PROC ON KEYMAPS
-
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
  *	External use only.
  *	This is what external stuff should be calling when applying their additive styles.
@@ -74,20 +61,14 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 /client/proc/apply_keybind(style_str)
 	apply_keys(get_keybind_style_datum(style_str))
 
-/** unapply_keybind: Takes a given string style, and finds the datum, then unapplies it.
- *  External use only.
- *  This is what external stuff should be calling when wanting to remove an additive style.
- */
-/client/proc/unapply_keybind(style_str)
-	unapply_keys(get_keybind_style_datum(style_str))
 
 
 
-/// Keybinds are sub-sorted in order of most common, since then it'll be further up the global list of styles. Micro-optimizations whoo!
+// Keybinds are sub-sorted in order of most common, since then it'll be further up the global list of styles. Micro-optimizations whoo!
 
-///
-///	BASE MOB KEYBINDS
-///
+//
+//	BASE MOB KEYBINDS
+//
 
 /datum/keybind_style
 	var/name = "base"
@@ -163,9 +144,9 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"D" = KEY_RIGHT
 	)
 
-///
-///	HUMAN-SPECIFIC KEYBINDS
-///
+//
+//	HUMAN-SPECIFIC KEYBINDS
+//
 
 /datum/keybind_style/human
 	name = "human"
@@ -220,9 +201,9 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"A" = "drop"
 	)
 
-///
-///	ROBOT-SPECIFIC KEYBINDS
-///
+//
+//	ROBOT-SPECIFIC KEYBINDS
+//
 
 /datum/keybind_style/robot
 	name = "robot"
@@ -266,9 +247,9 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"A" = "unequip"
 	)
 
-///
-///	DRONE-SPECIFIC KEYBINDS
-///
+//
+//	DRONE-SPECIFIC KEYBINDS
+//
 
 /datum/keybind_style/drone
 	name = "drone"
@@ -297,9 +278,9 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"A" = "unequip"
 	)
 
-///
-///	MISC-SPECIFIC KEYBINDS
-///
+//
+//	MISC-SPECIFIC KEYBINDS
+//
 
 /datum/keybind_style/pod
 	name = "pod"

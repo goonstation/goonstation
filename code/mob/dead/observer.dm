@@ -301,7 +301,7 @@
 		return 0.75 + movement_delay_modifier
 
 /mob/dead/observer/build_keybind_styles(client/C)
-	..(C)
+	..()
 	C.apply_keybind("human")
 
 /mob/dead/observer/is_spacefaring()

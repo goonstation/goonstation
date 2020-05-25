@@ -1264,7 +1264,7 @@
 				return ..()
 
 	build_keybind_styles(client/C)
-		..(C)
+		..()
 		C.apply_keybind("drone")
 
 		if (!C.preferences.use_wasd)

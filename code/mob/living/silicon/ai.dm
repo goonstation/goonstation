@@ -406,7 +406,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	. = ..()
 
 /mob/living/silicon/ai/build_keybind_styles(client/C)
-	..(C)
+	..()
 	C.apply_keybind("robot")
 
 	if (!C.preferences.use_wasd)
