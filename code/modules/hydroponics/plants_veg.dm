@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant/veg)
 /datum/plant/veg
 	plant_icon = 'icons/obj/hydroponics/plants_veg.dmi'
 	category = "Vegetable"

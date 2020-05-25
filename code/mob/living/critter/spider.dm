@@ -7,9 +7,9 @@
 	density = 1
 	hand_count = 8 // spiders!!!
 	add_abilities = list(/datum/targetable/critter/spider_bite,
-						/datum/targetable/critter/spider_spaz,
+						/datum/targetable/critter/spider_flail,
 						/datum/targetable/critter/spider_drain)
-	var/spazzing = 0
+	var/flailing = 0
 	var/feeding = 0
 	var/venom1 = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	var/venom2 = "spiders"
