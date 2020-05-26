@@ -212,7 +212,7 @@
 
 /obj/item/cell/proc/explode()
 	if(src in bible_contents)
-		for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+		for(var/obj/item/bible/B in by_type[/obj/item/bible])
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)

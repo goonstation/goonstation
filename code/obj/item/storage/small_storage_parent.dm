@@ -8,7 +8,7 @@
 	icon_state = "box_blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
-	var/list/spawn_contents = list()
+	var/list/spawn_contents
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = 3.0
@@ -19,32 +19,21 @@
 	burn_possible = 1
 	health = 10
 
-	buildTooltipContent()
-		var/Tcontent = ..()
-		var/list/L = get_contents()
-		Tcontent += "<br>Holding [L.len]/[slots] objects"
-
-		return Tcontent
-
 	New()
 		..()
-		AddComponent(/datum/component/storage, src.spawn_contents)
-
-	/*proc/update_icon()
-		return*/
+		AddComponent(/datum/component/storage, spawn_contents = spawn_contents)
 
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
-	max_wclass = 2
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
-			for (var/obj/item/I in SC?.get_contents())
-				if (..(I, user, null, S) == 0)
+			var/list/cont = list()
+			SEND_SIGNAL(W, COMSIG_STORAGE_GET_CONTENTS, cont)
+			for (var/obj/item/I in cont)
+				if (..(I, user, null, W) == 0)
 					break
 			return
 		else
@@ -52,7 +41,7 @@
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	spawn_contents = list(/obj/item/clothing/mask/breath)
-	make_my_stuff()
+	New()
 		..()
 		if (prob(15))
 			new /obj/item/tank/emergency_oxygen(src)
@@ -68,10 +57,12 @@
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
-	can_hold = list(/obj/item/reagent_containers/pill)
 	w_class = 2.0
-	max_wclass = 1
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/reagent_containers/pill), max_wclass = 1)
 
 /obj/item/storage/briefcase
 	name = "briefcase"
@@ -82,7 +73,6 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0
-	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 35
 	stamina_cost = 30
@@ -94,6 +84,7 @@
 	New()
 		..()
 		BLOCK_BOOK
+		AddComponent(/datum/component/storage, max_wclass = 3)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
@@ -102,8 +93,6 @@
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
 	w_class = 4.0
-	max_wclass = 2
-	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
 	mechanics_type_override = /obj/item/storage/desk_drawer
 	var/locked = 0
 	var/id = null
@@ -135,18 +124,20 @@
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 4.0
-	max_wclass = 3
 
 	New()
 		..()
 		src.setItemSpecial(null)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/reagent_containers/pill), max_wclass = 3)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (target == loc)
 			return
-		if (!src.contents.len)
+		var/list/cont = list()
+		SEND_SIGNAL(src, COMSIG_STORAGE_GET_CONTENTS, cont)
+		if (!cont.len)
 			return
-		var/obj/item/I = pick(src.contents)
+		var/obj/item/I = pick(cont)
 		if (!I)
 			return
 
@@ -155,10 +146,7 @@
 			if (I)
 				I.throwforce -= 8
 
-		I.set_loc(get_turf(src.loc))
-		I.dropped()
-		src.hud.remove_item(I) //fix the funky UI stuff
-		I.layer = initial(I.layer)
+		SEND_SIGNAL(src, COMSIG_STORAGE_TRANSFER_ITEM, I, src.loc)
 		I.throw_at(target, 8, 2)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)

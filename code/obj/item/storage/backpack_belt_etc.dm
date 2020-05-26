@@ -16,7 +16,7 @@
 		..()
 		BLOCK_LARGE
 		AddComponent(/datum/component/itemblock/backpackblock)
-		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, max_wclass = 3, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -93,7 +93,7 @@
 	New()
 		..()
 		BLOCK_ROPE
-		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, max_wclass = 3, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -124,7 +124,7 @@
 	New()
 		..()
 		BLOCK_ROPE
-		AddComponent(/datum/component/storage, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 	proc/can_use()
 		.= 1
@@ -150,10 +150,10 @@
 			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
-			for (var/obj/item/I in SC?.get_contents())
-				if (..(I, user, null, S) == 0)
+			var/list/cont = list()
+			SEND_SIGNAL(W, COMSIG_STORAGE_GET_CONTENTS, cont)
+			for (var/obj/item/I in cont)
+				if (..(I, user, null, W) == 0)
 					break
 			return
 		else
@@ -182,7 +182,7 @@
 	New()
 		..()
 		processing_items.Add(src)
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/rcd, /obj/item/rcd_ammo), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/rcd, /obj/item/rcd_ammo), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 	proc/toggle()
 		if(active)
@@ -292,7 +292,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/robodefibrillator), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/robodefibrillator), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 /obj/item/storage/belt/mining
 	name = "miner's belt"
@@ -302,7 +302,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/mining_tool, /obj/item/mining_tools), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/mining_tool, /obj/item/mining_tools), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
@@ -312,7 +312,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
@@ -322,7 +322,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/baton, /obj/item/gun), in_list_or_max = 1, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/baton, /obj/item/gun), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 // kiki's detective shoulder (holster)
 // get it? like kiki's delivery service? ah, i'll show myself out.
@@ -350,7 +350,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo/bullets), in_list_or_max = 0, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo/bullets), max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 // fancy shoulder sling for grenades
 
@@ -362,7 +362,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/storage/grenade_pouch, /obj/item/ammo/bullets/grenade_round), in_list_or_max = 0, max_wclass = 2, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/storage/grenade_pouch, /obj/item/ammo/bullets/grenade_round), max_wclass = 2, does_not_open_in_pocket = FALSE)
 
 // combat medic storage 7 slot
 

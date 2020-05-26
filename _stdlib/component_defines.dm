@@ -27,6 +27,13 @@
 /// each component of the same type is consulted as to whether the duplicate should be allowed
 #define COMPONENT_DUPE_SELECTIVE		5
 
+// "so if a proc bound to a signal returns a value it's treated as bit flags" - Pali
+/// Success
+#define COMSIG_RETURN_SUCCESS 1
+/// Failure
+#define COMSIG_RETURN_FAILURE 2
+/// return early (don't complete rest of proc)
+#define COMSIG_RETURN_EARLY 4
 
 // /datum signals
 /// when a component is added to a datum: (/datum/component)
@@ -39,6 +46,8 @@
 // atom signals
 /// When an atom is attacked by an item by a mob
 #define COMSIG_ATOM_ATTACK_BY "atom_attack_by"
+/// When a mob attacks an atom with an empty hand (called before COMSIG_ATOM_ATTACK_HAND)
+#define COMSIG_ATOM_HAND_ATTACK "atom_hand_attack"
 /// When an atom is attacked by a mob's empty hand
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
 /// MouseDrop
@@ -51,7 +60,7 @@
 #define COMSIG_MOVABLE_EMP_ACT "mov_act"
 
 // obj signals
-// When an object is moved by a user
+/// When an object is moved by a user
 #define COMSIG_OBJ_MOVE_TRIGGER "obj_move_trigger"
 
 // item signals
@@ -65,10 +74,12 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
-/// When a mob uses an item on a target
+/// When a mob attacks a target with an item
 #define COMSIG_ITEM_AFTER_ATTACK "itm_after_attack"
 /// When a mob uses an item in its active hand
 #define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
+/// For building tooltips
+#define COMSIG_ITEM_BUILD_TOOLTIP "item_build_tooltip"
 
 // blocking signals
 /// After  an item block is set up
@@ -86,3 +97,15 @@
 // mob signals
 ///At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
+
+// storage signal
+/// Get contents of a storage component
+#define COMSIG_STORAGE_GET_CONTENTS "storage_get_contents"
+/// Get all contents of a storage component
+#define COMSIG_STORAGE_GET_ALL_CONTENTS "storage_get_all_contents"
+/// Find an item type in the storage component
+#define COMSIG_STORAGE_FIND_TYPE "storage_find_item"
+/// Transfer an item from storage component to target
+#define COMSIG_STORAGE_TRANSFER_ITEM "storage_transfer_item"
+/// See if an item can fit in the storage component
+#define COMSIG_STORAGE_CAN_FIT "storage_can_fit"

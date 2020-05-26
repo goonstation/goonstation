@@ -212,19 +212,18 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	max_wclass = 3 // The bowling ball won't fit into the bowling bag!
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
 	/obj/item/bowling_ball = 4)
 
 	New()
 		..()
 		BLOCK_BOOK
+		AddComponent(/datum/component/storage, max_wclass = 3)
 
 /obj/item/storage/football
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	max_wclass = 3
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
 	/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 
@@ -233,20 +232,20 @@
 			spawn_contents = list(/obj/item/clothing/suit/armor/football/red,/obj/item/clothing/head/helmet/football/red,\
 			/obj/item/clothing/under/football/red,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 		..()
+		AddComponent(/datum/component/storage, max_wclass = 3)
 
 /obj/item/storage/box/syndibox
 	name = "stealth storage"
 	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items."
 	icon_state = "box"
-	sneaky = 1
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = 2
-	max_wclass = 3
 
 	New()
 		..()
 		src.cloaked = 0
+		AddComponent(/datum/component/storage, max_wclass = 3, sneaky = TRUE)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

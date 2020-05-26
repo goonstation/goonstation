@@ -512,6 +512,8 @@
 					if (INTENT_GRAB)
 						if (HH.can_hold_items && can_grab)
 							L.grab(target, src)
+			else if (..())
+				return
 			else
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()

@@ -1,8 +1,9 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/list/bible_contents = list()
+var/global/list/bible_contents = list()
 
-/obj/item/storage/bible
+/obj/item/bible
 	name = "bible"
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="bible"
@@ -21,6 +22,7 @@ var/list/bible_contents = list()
 		ritualComponent.autoActive = 1
 		#endif
 		BLOCK_BOOK
+		AddComponent(/datum/component/storage/bible)
 
 	disposing()
 		..()
@@ -44,7 +46,7 @@ var/list/bible_contents = list()
 			M.HealDamage("All", heal_amt, heal_amt)
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/storage/bible))
+		if (istype(W, /obj/item/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
 			..()
@@ -116,23 +118,6 @@ var/list/bible_contents = list()
 			return
 		return ..()
 
-	get_contents()
-		return bible_contents
-
-	get_all_contents()
-		var/list/L = list()
-		L += bible_contents
-		for (var/obj/item/storage/S in bible_contents)
-			L += S.GetComponent(/datum/component/storage)?.get_all_contents()
-		return L
-
-	add_contents(obj/item/I)
-		bible_contents += I
-		I.set_loc(null)
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
-			var/datum/component/storage/SC = bible.GetComponent(/datum/component/storage)
-			SC.hud.update() // fuck bibles
-
 	custom_suicide = 1
 	suicide_distance = 0
 	suicide(var/mob/user as mob)
@@ -158,7 +143,7 @@ var/list/bible_contents = list()
 		user.gib()
 		return 0
 
-/obj/item/storage/bible/evil
+/obj/item/bible/evil
 	name = "frayed bible"
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -168,14 +153,14 @@ var/list/bible_contents = list()
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
 
-/obj/item/storage/bible/mini
+/obj/item/bible/mini
 	//Grif
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "minibible"
 	w_class = 2
 
-/obj/item/storage/bible/hungry
+/obj/item/bible/hungry
 	name = "hungry bible"
 	desc = "Huh."
 

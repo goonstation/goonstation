@@ -744,7 +744,7 @@ var/list/rollList = list()
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, can_hold = list(/obj/item/dice), max_wclass = 1)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/dice), max_wclass = 1)
 		colorpick()
 
 

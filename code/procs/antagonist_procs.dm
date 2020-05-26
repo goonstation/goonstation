@@ -76,29 +76,29 @@
 		R = traitor_mob.belt
 		loc = "on your belt"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
-		for (var/obj/item/device/radio/foo in L)
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.l_hand, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/radio/foo in cont)
 			R = foo
-			loc = "in the [S.name] in your left hand"
+			loc = "in the [traitor_mob.l_hand.name] in your left hand"
 			break
 	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
-		for (var/obj/item/device/radio/foo in L)
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.r_hand, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/radio/foo in cont)
 			R = foo
-			loc = "in the [S.name] in your right hand"
+			loc = "in the [traitor_mob.l_hand.name] in your right hand"
 			break
 	if (!R && istype(traitor_mob.back, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
-		for (var/obj/item/device/radio/foo in L)
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.back, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/radio/foo in cont)
 			R = foo
-			loc = "in the [S.name] in your backpack"
+			loc = "in the [traitor_mob.back.name] in your backpack"
 			break
 		if(!R)
 			R = new /obj/item/device/radio/headset(traitor_mob)
-			loc = "in the [S.name] in your backpack"
+			loc = "in the [R.name] in your backpack"
 			// Everything else failed and there's no room in the backpack either, oh no.
 			// I mean, we can't just drop a super-obvious uplink onto the floor. Hands might be full, too (Convair880).
 			if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
@@ -160,25 +160,25 @@
 		R = traitor_mob.l_store
 		loc = "In your pocket"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.l_hand, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/radio/foo in cont)
 			R = foo
-			loc = "in the [S.name] in your left hand"
+			loc = "in the [traitor_mob.l_hand.name] in your left hand"
 			break
 	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.r_hand, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/radio/foo in cont)
 			R = foo
-			loc = "in the [S.name] in your right hand"
+			loc = "in the [traitor_mob.r_hand.name] in your right hand"
 			break
 	if (!R && istype(traitor_mob.back, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.GetComponent(/datum/component/storage)?.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.back, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/radio/foo in cont)
 			R = foo
-			loc = "in the [S.name] in your backpack"
+			loc = "in the [traitor_mob.back.name] in your backpack"
 			break
 
 	if (!R) //They have no PDA. Make one!

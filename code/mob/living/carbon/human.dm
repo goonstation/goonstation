@@ -3073,7 +3073,8 @@
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
 		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
 			return
-
+	if (..())
+		return
 	if (mutantrace && mutantrace.override_attack)
 		mutantrace.custom_attack(target)
 	else

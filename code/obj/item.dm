@@ -138,6 +138,7 @@
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
+		SEND_SIGNAL(src, COMSIG_ITEM_BUILD_TOOLTIP, .)
 		. = jointext(., "")
 
 	MouseEntered(location, control, params)
@@ -628,8 +629,6 @@
 
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
-	var/oldloc = src.loc
-
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (!user.hand && user.r_hand == src) || (user.hand && user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -661,11 +660,7 @@
 		.= 0
 
 	if (. == 1)
-		if (istype(oldloc,/obj/item/storage))
-			var/obj/item/storage/S = oldloc
-			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
-			//S.hud.remove_item(src)
-			SC.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
+		SEND_SIGNAL(src.loc, COMSIG_STORAGE_TRANSFER_ITEM, src)
 
 /obj/item/Bump(mob/M as mob)
 	SPAWN_DBG( 0 )
@@ -1010,16 +1005,7 @@
 	var/atom/oldloc = src.loc
 	var/atom/oldloc_sfx = src.loc
 	src.set_loc(user) // this is to fix some bugs with storage items
-	if (istype(oldloc, /obj/item/storage))
-		var/obj/item/storage/S = oldloc
-		var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
-		SC.hud.remove_item(src) // ugh
-		oldloc_sfx = oldloc.loc
-	if (src in bible_contents)
-		bible_contents.Remove(src) // UNF
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
-			var/datum/component/storage/SC = bible.GetComponent(/datum/component/storage)
-			SC.hud.remove_item(src)
+	SEND_SIGNAL(oldloc, COMSIG_STORAGE_TRANSFER_ITEM, src)
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)

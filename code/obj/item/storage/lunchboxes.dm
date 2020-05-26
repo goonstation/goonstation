@@ -8,7 +8,6 @@
 	throw_speed = 1
 	throw_range = 8
 	w_class = 3.0
-	max_wclass = 2
 
 	New()
 		..()

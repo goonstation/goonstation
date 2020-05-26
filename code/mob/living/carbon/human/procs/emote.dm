@@ -103,7 +103,7 @@
 									karma_update(10, "SAINT", src)
 							fart_on_other = 1
 							break
-						for (var/obj/item/storage/bible/B in src.loc)
+						for (var/obj/item/bible/B in src.loc)
 							B.farty_heresy(src)
 							fart_on_other = 1
 							break
@@ -189,7 +189,7 @@
 
 							for(var/mob/living/H in mobs)
 								if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
-								if(locate(/obj/item/storage/bible) in get_turf(H))
+								if(locate(/obj/item/bible) in get_turf(H))
 									src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
 									src.gib()
 								else

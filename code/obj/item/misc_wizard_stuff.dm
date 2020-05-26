@@ -135,11 +135,7 @@
 		if (ismob(src.loc))
 			var/mob/HH = src.loc
 			HH.u_equip(src)
-		if (istype(src.loc, /obj/item/storage))
-			var/obj/item/storage/S = src.loc
-			var/datum/component/storage/SC = S.GetComponent(/datum/component/storage)
-			var/datum/hud/storage/H_temp = SC.hud
-			H_temp.remove_object(src)
+		SEND_SIGNAL(src.loc, COMSIG_STORAGE_TRANSFER_ITEM, src)
 		if(istype(src.loc, /obj/critter/snake))
 			var/atom/movable/snake = src
 			while(istype(snake.loc, /obj/critter/snake))

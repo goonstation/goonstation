@@ -318,7 +318,8 @@
 /obj/item/storage/box/costume/werewolf/odd
 	desc = "Huh, the contents look a little bit odd."
 
-	make_my_stuff()
+	New()
+		..()
 		var/my_color = random_color()
 		var/obj/item/clothing/suit/S = new /obj/item/clothing/suit/gimmick/werewolf/odd(src)
 		S.color = my_color

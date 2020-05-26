@@ -13,8 +13,6 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = 4.0
-	max_wclass = 3
-
 	//cogwerks - burn vars
 	burn_point = 4500
 	burn_output = 4800
@@ -25,9 +23,7 @@
 
 	New()
 		..()
-		if (src.type == /obj/item/storage/toolbox)
-			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
-			qdel(src)
+		AddComponent(/datum/component/storage, max_wclass = 3)
 		BLOCK_ROD
 
 	custom_suicide = 1
@@ -44,9 +40,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.GetComponent(/datum/component/storage)?.get_contents())
-				if (..(I, user, null, S) == 0)
+			var/list/cont = list()
+			SEND_SIGNAL(W, COMSIG_STORAGE_GET_CONTENTS, cont)
+			for (var/obj/item/I in cont)
+				if (..(I, user, null, W) == 0)
 					break
 			return
 		else

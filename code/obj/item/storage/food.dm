@@ -100,25 +100,20 @@
 	name = "cheese box"
 	icon_state = "cheesebox"
 	desc = "A cheap box for storing cheese."
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ingredient/cheese = 6)
 
-	make_my_stuff()
+	New()
 		..()
-		for (var/i=6,i>0,i--)
-			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
-
 		if (prob(10))
 			new /obj/item/sponge/cheese(src)
-		else
-			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
-
-		shuffle_list(src.contents)
+			shuffle_list(src.contents)
 
 /obj/item/storage/goodybag
 	name = "goodybag"
 	desc = "A bag designed to store Halloween candy."
 	icon_state = "goodybag"
 
-	make_my_stuff()
+	New()
 		..()
 		var/list/candytypes = typesof(/obj/item/reagent_containers/food/snacks/candy)
 		for (var/i=6, i>0, i--)

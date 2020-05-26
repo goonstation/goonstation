@@ -15,7 +15,7 @@
 	icon_state = "pdabox"
 	spawn_contents = list(/obj/item/device/pda2 = 4)
 
-	make_my_stuff()
+	New()
 		..()
 		//Let's spawn up some carts (Unless they shouldn't randomly show up, like detomaxes)
 		var/list/invalid_carts = list(/obj/item/disk/data/cartridge,
@@ -123,7 +123,7 @@
 	assorted
 		name = "assorted glowsticks"
 		spawn_contents = list()
-		make_my_stuff()
+		New()
 			..()
 			var/glowstick
 			for (var/i=7,i>0,i--)

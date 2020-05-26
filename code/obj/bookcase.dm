@@ -188,7 +188,7 @@
 		return shelf_overlay_list[book_count]
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/storage/bible))
+		if(istype(W, /obj/item/bible))
 			boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
 		else if (istype(W, /obj/item/paper/book))
 			if (!(bookshelf_contents.len >= capacity))

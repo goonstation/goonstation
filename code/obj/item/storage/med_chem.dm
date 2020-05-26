@@ -7,7 +7,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
-	max_wclass = 2
 	var/list/kit_styles = null
 
 	New()
@@ -326,7 +325,7 @@
 		name = "ocular prosthesis kit (surplus)"
 		desc = "A box containing some surplus cybereyes. Here's hoping they match!"
 		spawn_contents = list(/obj/item/surgical_spoon = 1)
-		make_my_stuff()
+		New()
 			..()
 			var/list/eyez = typesof(/obj/item/organ/eye/cyber)
 			if (eyez.len)
@@ -342,7 +341,7 @@
 	icon_state = "minimed"
 	spawn_contents = list()
 
-	make_my_stuff()
+	New()
 		..()
 		new /obj/item/bandage(src)
 		new /obj/item/storage/pill_bottle/salicylic_acid(src)

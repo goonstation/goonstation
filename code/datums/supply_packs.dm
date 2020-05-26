@@ -806,7 +806,7 @@
 	contains = list(/obj/item/body_bag = 10,
 					/obj/item/reagent_containers/glass/bottle/formaldehyde,
 					/obj/item/reagent_containers/syringe,
-					/obj/item/storage/bible)
+					/obj/item/bible)
 	cost = 10000
 	containertype = /obj/storage/closet/coffin
 	containername = "Morgue Supplies"

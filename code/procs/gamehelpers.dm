@@ -95,7 +95,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/in_range(atom/source, atom/user)
 	if(bounds_dist(source, user) == 0 || get_dist(source, user) <= 1) // fucking byond
 		return 1
-	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
+	else if (source in bible_contents && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return 1
 	else
 		if (iscarbon(user))
@@ -142,7 +142,7 @@ var/obj/item/dummy/click_dummy = new
 
 /proc/can_reach(mob/user, atom/target)
 	if (target in bible_contents)
-		target = locate(/obj/item/storage/bible) in range(1, user) // fuck bibles
+		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)

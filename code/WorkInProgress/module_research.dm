@@ -316,14 +316,6 @@
 		research_requirements = list("tools" = 15, "devices" = 5, "science" = 4, "hydroponics" = 10)
 		item_path = /obj/item/seedplanter
 
-	patch_stacks
-		name = "Patch Stack"
-		desc = "A patch stacking tool. Allows carrying and applying patches. New patches are added to the top of the stack, but only the top patch can be used."
-		cost = 40
-		size = 1.25
-		research_requirements = list("tools" = 5, "medicine" = 5, "science" = 2)
-		item_path = /obj/item/patch_stack
-
 	rcd
 		name = "Electrum RCD"
 		desc = "A rapid construction device. Uses internal energy reserves to create electrum matter."

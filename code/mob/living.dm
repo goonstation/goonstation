@@ -215,7 +215,7 @@
 	return 0
 
 /mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
-	target.attack_hand(src, params, location, control, origParams)
+	. = SEND_SIGNAL(target, COMSIG_ATOM_HAND_ATTACK, src, params, location, control, origParams) & COMSIG_RETURN_EARLY
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	.= 0

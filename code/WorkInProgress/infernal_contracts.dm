@@ -217,7 +217,6 @@
 	throw_range = 4
 	burn_possible = 0 //Only makes sense since it's from hell.
 	w_class = 4.0
-	max_wclass = 3
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
 	stamina_damage = 40
 	stamina_cost = 10
@@ -225,8 +224,9 @@
 	spawn_contents = list(/obj/item/paper/soul_selling_kit, /obj/item/storage/box/evil, /obj/item/clothing/under/misc/lawyer/red/demonic)
 	var/merchant = null
 
-	make_my_stuff()
+	New()
 		..()
+		AddComponent(/datum/component/storage, max_wclass = 3)
 		SPAWN_DBG(0.5 SECONDS) //to give the buylist enough time to assign a merchant var to the briefcase
 			var/list/contracts = list(/obj/item/contract/yeti,
 			/obj/item/contract/genetic/demigod,

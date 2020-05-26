@@ -132,7 +132,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, max_wclass = 1, slots = 5)
+		AddComponent(/datum/component/storage, max_wclass = 1, slots = 5)
 
 	attack_hand(mob/user as mob)
 		if (src.loc == user && (src == user.l_hand || src == user.r_hand))

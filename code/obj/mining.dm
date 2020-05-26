@@ -1931,10 +1931,7 @@ obj/item/clothing/gloves/concussive
 					return
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
-			if (istype(T.loc, /obj/item/storage))
-				var/obj/item/storage/S_temp = T.loc
-				var/datum/hud/storage/H_temp = S_temp.hud
-				H_temp.remove_object(T)
+			SEND_SIGNAL(T.loc, COMSIG_STORAGE_TRANSFER_ITEM, T, T.loc)
 
 			// And logs for good measure (Convair880).
 			var/is_locked = 0

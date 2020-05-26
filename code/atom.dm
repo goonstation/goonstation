@@ -680,7 +680,7 @@
 	return
 
 /atom/proc/attack_hand(mob/user as mob)
-	return
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user)
 
 /atom/proc/attack_ai(mob/user as mob)
 	return
@@ -690,11 +690,13 @@
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BY, W, user, params, is_special) & COMSIG_RETURN_EARLY)
+		return
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
 
-//This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
+//This will looks stupid on objects larger than 32x32. Might have  to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = getTexturedImage(src, texture, blendMode)//, key)
 	if (!I)
@@ -782,6 +784,7 @@
 	return null
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf)
+	SEND_SIGNAL(src, COMSIG_ATOM_MOUSE_DROP, over_object)
 	SPAWN_DBG( 0 )
 		if (istype(over_object, /atom))
 			if (isalive(usr))
@@ -804,7 +807,6 @@
 					if (M.allow_stunned_dragndrop == 1)
 						M.MouseDrop_T(src, usr)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_MOUSE_DROP, over_object)
 	..()
 	return
 

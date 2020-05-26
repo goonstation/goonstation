@@ -12,8 +12,6 @@
 	density = 0
 	mats = 8
 	deconstruct_flags = DECON_SIMPLE
-	max_wclass = 4
-	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user as mob)
@@ -22,13 +20,17 @@
 	New()
 		..()
 		lockers_and_crates.Add(src)
+		AddComponent(/datum/component/storage, max_wclass = 4, slots = 13)
+
+	proc/update_icon()
+		return
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
 	desc = "A wall-mounted storage container that has a few emergency supplies in it."
 	icon_state = "miniO2"
 
-	make_my_stuff()
+	New()
 		..()
 		if (prob(40))
 			new /obj/item/storage/toolbox/emergency(src)
@@ -54,7 +56,7 @@
 	desc = "A wall-mounted storage container that has a few firefighting supplies in it."
 	icon_state = "minifire"
 
-	make_my_stuff()
+	New()
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
@@ -68,7 +70,7 @@
 
 /obj/item/storage/wall/random
 	pixel_y = 32
-	make_my_stuff()
+	New()
 		..()
 		var/thing1 = pick(10;/obj/item/screwdriver, 10;/obj/item/wrench, 5;/obj/item/crowbar, 3;/obj/item/wirecutters)
 		if (ispath(thing1))
@@ -92,7 +94,7 @@
 	/obj/item/scissors,
 	/obj/item/stamp)
 
-	make_my_stuff()
+	New()
 		..()
 		var/markers = pick(66;/obj/item/storage/box/marker/basic, 34;/obj/item/storage/box/marker)
 		if (ispath(markers))
@@ -191,75 +193,22 @@
 	name = "clothing rack"
 	icon = 'icons/obj/large_storage.dmi'
 	density = 1
-	slots = 7
 	anchored = 1
 	icon_state = "clothingrack" //They start full so might as well
-	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
 	New()
-		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			update_icon()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/clothing/under, /obj/item/clothing/suit), slots = 7)
 
 	update_icon()
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len <= 0)
+		var/list/cont = list()
+		SEND_SIGNAL(src, COMSIG_STORAGE_GET_CONTENTS, cont)
+		if (cont.len <= 0)
 			src.icon_state = "clothingrack-empty"
 		else
 			src.icon_state = "clothingrack"
-
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
-
 
 /obj/item/storage/wall/clothingrack/dresses
 	spawn_contents = list(/obj/item/clothing/under/suit/red/dress = 1,
@@ -321,19 +270,15 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "hatrack"
 	density = 0
-	can_hold = list(/obj/item/clothing/head)
-
 
 	New()
-		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
-
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/clothing/head), slots = 7)
 
 	update_icon()
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len <= 0)
+		var/list/cont = list()
+		SEND_SIGNAL(src, COMSIG_STORAGE_GET_CONTENTS, cont)
+		if (cont.len <= 0)
 			src.icon_state = "hatrack-empty"
 		else
 			src.icon_state = "hatrack"
@@ -364,149 +309,38 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/aviator = 1,
 		/obj/item/clothing/head/cowboy = 1)
 
-/obj/item/storage/wall/toolshelf
-	name = "tool shelf"
+/obj/item/storage/wall/shelf
+	name = "shelf"
 	icon = 'icons/obj/64x64.dmi'
 	density = 0
-	slots = 7
 	anchored = 1
 	plane = PLANE_DEFAULT
-	icon_state = "toolshelf"
-	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
 	New()
-		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			update_icon()
 
 	update_icon()
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len <= 0)
+		var/list/cont = list()
+		SEND_SIGNAL(src, COMSIG_STORAGE_GET_CONTENTS, cont)
+		if (cont.len <= 0)
 			src.icon_state = "shelf"
 		else
-			src.icon_state = "toolshelf"
+			src.icon_state = initial(src.icon_state)
 
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
+/obj/item/storage/wall/shelf/tool
+	name = "tool shelf"
+	icon_state = "toolshelf"
 
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
+	New()
+		..()
+		AddComponent(/datum/component/storage, slots = 7)
 
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
-/obj/item/storage/wall/mineralshelf
+/obj/item/storage/wall/shelf/mineral
 	name = "mineral shelf"
-	icon = 'icons/obj/64x64.dmi'
-	density = 0
-	slots = 7
-	anchored = 1
-	icon_state = "mineralshelf"
-	plane = PLANE_DEFAULT
-	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
 	New()
-		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
-
-	update_icon()
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len <= 0)
-			src.icon_state = "shelf"
-		else
-			src.icon_state = "mineralshelf"
-
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.GetComponent(/datum/component/storage)?.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/raw_material,/obj/item/material_piece), slots = 7)

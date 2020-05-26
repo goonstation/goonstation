@@ -47,12 +47,7 @@
 			HH.u_equip(target)
 			var/atom/movable/AM = target
 			AM.set_loc(get_turf(target))
-		if (istype(target.loc, /obj/item/storage))
-			var/datum/component/storage/S_temp = target.loc.GetComponent(/datum/component/storage)
-			var/datum/hud/storage/H_temp = S_temp?.hud
-			H_temp.remove_object(target)
-			var/atom/movable/AM = target
-			AM.set_loc(get_turf(target))
+		SEND_SIGNAL(target.loc, COMSIG_STORAGE_TRANSFER_ITEM, target, get_turf(target))
 
 		if(!stick)
 			boutput(holder.owner, "<span class='alert'>You must target an item or a person holding one.</span>")

@@ -60,7 +60,7 @@
 
 						//ddumb hack for offset storage
 						var/atom/movable/storage = master.parent
-						var/turfd = (isturf(storage.loc) && !istype(storage, /obj/item/storage/bible))
+						var/turfd = (isturf(storage.loc) && !istype(storage, /obj/item/bible))
 
 						var/pixel_y_adjust = 0
 						if (usr && usr.client && usr.client.tg_layout && !turfd)
@@ -80,7 +80,7 @@
 							user.click(I, params)
 						else if (user.equipped())
 							//DEBUG_MESSAGE("clicking [src.master] with [user.equipped()] with params [list2params(params)]")
-							user.click(src.master, params)
+							user.click(storage, params)
 
 			if ("close")
 				user.detach_hud(src)
@@ -94,7 +94,7 @@
 		var/turfd = 0
 
 		var/atom/movable/storage = master.parent
-		if (isturf(storage.loc) && !istype(storage, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		if (isturf(storage.loc) && !istype(storage, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
 			sx = (master.slots + 1) / 2
@@ -139,8 +139,9 @@
 
 		src.obj_locs = list()
 		var/i = 0
-		var/datum/component/storage/SC = master.GetComponent(/datum/component/storage)
-		for (var/obj/item/I in SC.get_contents())
+		var/list/cont = list()
+		SEND_SIGNAL(storage, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/I in cont)
 			if (!(I in src.objects)) // ugh
 				add_object(I, HUD_LAYER+1)
 			var/obj_loc = "[x+(i%sx)],[y-round(i/sx)]" //no pixel coords cause that makes click detection harder above

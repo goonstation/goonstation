@@ -11,7 +11,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo), max_wclass = 1, slots = 5, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo), max_wclass = 1, slots = 5, does_not_open_in_pocket = FALSE)
 
 	assault_rifle
 		name = "rifle magazine pouch"
@@ -77,7 +77,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade), slots = 6, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade), slots = 6, does_not_open_in_pocket = FALSE)
 
 	frag
 		name = "frag grenade pouch"
@@ -111,7 +111,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, slots = 4, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, slots = 4, does_not_open_in_pocket = FALSE)
 
 /obj/item/storage/security_pouch
 	name = "security pouch"
@@ -125,4 +125,4 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, spawn_contents = spawn_contents, slots = 6, does_not_open_in_pocket = 0)
+		AddComponent(/datum/component/storage, slots = 6, does_not_open_in_pocket = FALSE)

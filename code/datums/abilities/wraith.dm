@@ -182,7 +182,7 @@
 			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return 1
 
-		if (!isitem(T) || istype(T, /obj/item/storage/bible))
+		if (!isitem(T) || istype(T, /obj/item/bible))
 			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")
 			return 1
 

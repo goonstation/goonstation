@@ -463,7 +463,7 @@
 	configure_mode = 0
 	random_code = 1
 
-	make_my_stuff()
+	New()
 		..()
 		var/loot = rand(1,9)
 		switch (loot)
