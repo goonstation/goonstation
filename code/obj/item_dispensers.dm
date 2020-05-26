@@ -86,7 +86,7 @@
 /obj/item_dispenser/perscription_glasses
 	name = "perscription glasses dispenser"
 	desc = "A storage container that easily dispenses perscription glasses."
-	icon_states = "dispenser_glasses"
+	icon_state = "dispenser_glasses"
 	filled_icon_state = "dispenser_glasses"
 	deposit_type = /obj/item/clothing/glasses/regular
 	withdraw_type = /obj/item/clothing/glasses/regular
