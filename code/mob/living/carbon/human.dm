@@ -10,6 +10,7 @@
 	p_class = 2 // 2 while standing, 3 while resting (see update_icon.dm for the place where this change happens)
 
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
 
 	var/dump_contents_chance = 20
 
