@@ -723,10 +723,10 @@
 
 		attack_hand(mob/user as mob)
 			if(src.alive && user.a_intent=="help")
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
-						O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [mob] the ASCII" : ""].",2)
+						O.show_message("<span class='emote'><b>[src]</b> beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].</span>",2)
 				return
 			else
 				..()
