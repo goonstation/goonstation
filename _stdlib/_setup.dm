@@ -770,8 +770,8 @@ proc/default_frequency_color(freq)
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out
 #define STAMINA_WINDED_SPEAK_MIN 0      //Can't speak below this point.
-#define STAMINA_SPRINT 50				//can only sprint above this number
-#define STAMINA_COST_SPRINT 8			//cost of moving in sprint
+#define STAMINA_SPRINT 60				//can only sprint above this number
+#define STAMINA_COST_SPRINT 7			//cost of moving in sprint
 
 //This is a bad solution. Optimally this should scale.
 #define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
