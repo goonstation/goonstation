@@ -53,7 +53,6 @@
 					C.delStatus("weakened")
 					C.delStatus("radiation")
 					C.health = 100
-					C.updatehealth()
 					C.reagents.clear_reagents()
 					C.lying = 0
 					C.canmove = 1

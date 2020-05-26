@@ -85,7 +85,6 @@
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 		if (3)
 			affected_mob.take_oxygen_deprivation(1)
-			affected_mob.updatehealth()
 			if (prob(8))
 				affected_mob.emote(pick("twitch", "gasp"))
 			if (prob(1)) // down from 5

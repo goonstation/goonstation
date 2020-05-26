@@ -330,8 +330,8 @@ proc/build_syndi_buylist_cache()
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
 	item = /obj/item/lightbreaker
-	cost = 3
-	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound."
+	cost = 4
+	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"
@@ -615,7 +615,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/syringegun
 	name = "Syringe Gun"
-	item = /obj/item/gun/syringe
+	item = /obj/item/gun/reagent/syringe
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
 	job = list("Medical Doctor","Medical Director", "Research Director")

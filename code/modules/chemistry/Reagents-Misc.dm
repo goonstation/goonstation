@@ -137,7 +137,6 @@ datum
 						else
 							H.TakeDamage("chest", 0, 2, 0, DAMAGE_BURN)
 						H.emote("scream")
-						H.updatehealth()
 						if (cauterised)
 							boutput(H, "<span class='notice'>The silver nitrate burns like hell as it cauterises some of your wounds.</span>")
 						else
@@ -323,7 +322,6 @@ datum
 					random_brute_damage(M, 1 * mult)
 					if (prob(10))
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
-				M.updatehealth()
 				..()
 				return
 
@@ -545,7 +543,6 @@ datum
 						M.take_oxygen_deprivation(-INFINITY)
 						M.take_toxin_damage(rand(0,15))
 						M.TakeDamage("chest", rand(0,15), rand(0,15), 0, DAMAGE_CRUSH)
-						M.updatehealth()
 						setalive(M)
 					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
 						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
@@ -584,7 +581,6 @@ datum
 				if (prob(10))
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-					M.updatehealth()
 
 				..()
 				return
@@ -1183,30 +1179,32 @@ datum
 			value = 6 // 4c + 1c + 1c
 			viscosity = 0.13
 			var/counter = 1
+			var/fakedeathed = 0
 
 			pooled()
 				..()
 				counter = 1
+				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				switch(counter++)
+				switch(counter += (1 * mult))
 					if (1 to 5)
 						M.change_eye_blurry(10, 10)
-					if (6 to 10)
+					if (6 to 11)
 						M.drowsyness  = max(M.drowsyness, 10)
-					if (11)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
-						M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
-						M.setStatus("resting", INFINITE_STATUS)
-						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					if (12 to 60) // Capped at ~2 minutes, that is 60 cycles + 10 paralysis (normally wears off at one per cycle).
 						M.changeStatus("paralysis", 30 * mult)
 					if (61 to INFINITY)
 						M.change_eye_blurry(10, 10)
+				if (counter >= 11 && !fakedeathed)
+					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
+					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
+					M.setStatus("resting", INFINITE_STATUS)
+					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
 
-				M.updatehealth()
 				..()
 
 		capulettium_plus
@@ -1220,20 +1218,23 @@ datum
 			value = 28 // 6c + 9c + 13c
 			viscosity = 0.17
 			var/counter = 1
+			var/fakedeathed = 0
 
 			pooled()
 				..()
 				counter = 1
+				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if (counter == 10)
+				if (counter += (1*mult) >= 10 && !fakedeathed)
 					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
 
-				M.updatehealth()
+
 				..()
 /*
 		montaguone
@@ -1268,7 +1269,6 @@ datum
 									M.lying = 1
 									M.emote("deathgasp")
 					data++
-					M.updatehealth()
 				..()
 */
 		life
@@ -1379,14 +1379,12 @@ datum
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
-					M.updatehealth()
 				else if (our_amt < 10)
 					if (prob(8))
 						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-					M.updatehealth()
 
 				else if (prob(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
@@ -1421,14 +1419,12 @@ datum
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
-					M.updatehealth()
 				else if (our_amt < 20)
 					if (prob(8))
 						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span class='alert'>You hoot all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-					M.updatehealth()
 				else if (prob(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 150 * mult))
@@ -1884,7 +1880,6 @@ datum
 						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
-				M.updatehealth()
 				..()
 				return
 
@@ -1897,7 +1892,6 @@ datum
 					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
-					M.updatehealth()
 				else
 					if(method == INGEST)
 						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
@@ -1939,7 +1933,6 @@ datum
 						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
-				M.updatehealth()
 				..()
 				return
 
@@ -1952,7 +1945,6 @@ datum
 					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
-					M.updatehealth()
 				else
 					if(method == INGEST)
 						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
@@ -2874,7 +2866,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -3719,7 +3710,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(0.16 * mult)
-				M.updatehealth()
 				..()
 				return
 

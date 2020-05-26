@@ -15,7 +15,6 @@ datum/pathogeneffects/benevolent/mending
 			return
 		//if (prob(origin.stage * 5))
 		M.HealDamage("All", origin.stage / 2, 0)
-		M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -35,7 +34,6 @@ datum/pathogeneffects/benevolent/healing
 			return
 		//if (prob(origin.stage * 5))
 		M.HealDamage("All", 0, origin.stage / 2)
-		M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -64,7 +62,6 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 					repair_bleeding_damage(M, 80, 2)
 			if (prob(50))
 				M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
-		M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -158,7 +155,6 @@ datum/pathogeneffects/benevolent/cleansing
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
 			M.take_toxin_damage(-origin.stage / 2)
-			M.updatehealth()
 			if (prob(12))
 				M.show_message("<span class='notice'>You feel cleansed.</span>")
 
@@ -191,7 +187,6 @@ datum/pathogeneffects/benevolent/oxygenconversion
 		if (M.get_oxygen_deprivation())
 			if (origin.stage != 0)
 				M.take_oxygen_deprivation(0 - (origin.stage / 2))
-			M.updatehealth()
 
 datum/pathogeneffects/benevolent/oxygenproduction
 	name = "Oxygen Production"
@@ -208,7 +203,6 @@ datum/pathogeneffects/benevolent/oxygenproduction
 			M:losebreath = 0
 		if (M.get_oxygen_deprivation())
 			M.take_oxygen_deprivation(0 - origin.stage)
-			M.updatehealth()
 
 datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
@@ -251,7 +245,6 @@ datum/pathogeneffects/benevolent/resurrection
 			M.changeStatus("paralysis", 150) 			// paralyze the person for a while, because coming back to life is hard work
 			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
 			M.stuttering = 15
-			M.updatehealth()
 			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
 				M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				M.ghost.mind.transfer_to(M)
