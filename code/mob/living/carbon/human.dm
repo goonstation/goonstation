@@ -954,7 +954,7 @@
 				src.attempt_move()
 				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
-				playsound(src.loc,"sound/effects/sprint_puff.ogg", 35, 1)
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
 #undef BASE_SPEED
 #undef RUN_SCALING
