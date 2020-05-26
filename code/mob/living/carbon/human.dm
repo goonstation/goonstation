@@ -814,7 +814,7 @@
 
 	return
 
-#define BASE_SPEED 1.8
+#define BASE_SPEED 1.65
 #define RUN_SCALING 0.12
 
 
