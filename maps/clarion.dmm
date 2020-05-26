@@ -1088,7 +1088,7 @@
 "auV" = (/obj/disposalpipe/segment/morgue,/obj/landmark{icon_state = "x3"; name = "peststart"},/turf/simulated/floor/sanitary/white,/area/station/medical/crematorium)
 "auW" = (/obj/machinery/light{dir = 8},/turf/simulated/floor/carpet/grime,/area/station/chapel/office{name = "Chaplain's Office"})
 "auX" = (/obj/table/wood/auto,/obj/item/clipboard,/obj/item/paper_bin,/obj/item/stamp,/obj/item/pen,/obj/item/clothing/suit/judgerobe,/obj/item/clothing/head/powdered_wig,/obj/item/device/light/candle/small{pixel_y = 4},/obj/item/matchbook{pixel_x = 2; pixel_y = -2},/turf/simulated/floor/carpet/grime,/area/station/chapel/office{name = "Chaplain's Office"})
-"auY" = (/obj/table/wood/auto,/obj/item/card_box/tarot,/obj/item/storage/bible,/obj/item/reagent_containers/glass/bottle/holywater,/turf/simulated/floor/carpet/grime,/area/station/chapel/office{name = "Chaplain's Office"})
+"auY" = (/obj/table/wood/auto,/obj/item/card_box/tarot,/obj/item/bible,/obj/item/reagent_containers/glass/bottle/holywater,/turf/simulated/floor/carpet/grime,/area/station/chapel/office{name = "Chaplain's Office"})
 "auZ" = (/obj/disposalpipe/segment,/obj/machinery/light{dir = 4},/obj/table/wood/auto,/obj/disposalpipe/segment/mail,/obj/machinery/computer3/generic/personal,/obj/machinery/power/data_terminal,/obj/cable,/turf/simulated/floor/carpet/grime,/area/station/chapel/office{name = "Chaplain's Office"})
 "ava" = (/obj/machinery/light{dir = 8},/obj/pool/perspective{dir = 8; tag = "icon-pool (WEST)"},/turf/simulated/floor/blue/checker,/area/station/crew_quarters/fitness)
 "avb" = (/turf/simulated/pool/no_animate,/area/station/crew_quarters/fitness)

@@ -109,7 +109,6 @@
 #define COMSIG_STORAGE_TRANSFER_ITEM "storage_transfer_item"
 /// See if an item can fit in the storage component
 #define COMSIG_STORAGE_CAN_FIT "storage_can_fit"
-=======
 
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)

@@ -2332,7 +2332,7 @@
 "aSR" = (/obj/table/wood/auto,/obj/item/reagent_containers/food/drinks/mug{pixel_x = 8; pixel_y = 8},/turf/simulated/floor/wood/two,/area/derelict_ai_sat)
 "aSS" = (/obj/item/extinguisher,/turf/simulated/floor/scorched2,/area/derelict_ai_sat)
 "aST" = (/obj/disposalpipe/trunk{desc = "An underfloor mail pipe."; dir = 1; name = "mail pipe"},/obj/machinery/disposal,/turf/simulated/floor/wood/two,/area/derelict_ai_sat)
-"aSU" = (/obj/item/storage/wall/random,/obj/stool/bed,/obj/item/clothing/suit/bedsheet/red,/obj/item/storage/bible/mini,/turf/simulated/floor/carpet,/area/derelict_ai_sat)
+"aSU" = (/obj/item/storage/wall/random,/obj/stool/bed,/obj/item/clothing/suit/bedsheet/red,/obj/item/bible/mini,/turf/simulated/floor/carpet,/area/derelict_ai_sat)
 "aSV" = (/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/turf/simulated/floor/plating/airless/asteroid,/area/fermid_hive)
 "aSW" = (/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/item/raw_material/claretine,/obj/item/raw_material/claretine,/obj/item/raw_material/claretine,/obj/item/raw_material/uqill,/turf/simulated/floor/plating/airless/asteroid,/area/fermid_hive)
 "aSX" = (/obj/item/raw_material/bohrum,/obj/item/raw_material/bohrum,/obj/critter/fermid,/turf/simulated/floor/plating/airless/asteroid,/area/fermid_hive)

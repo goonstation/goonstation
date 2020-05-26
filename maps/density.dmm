@@ -494,7 +494,7 @@
 "jz" = (/obj/machinery/door/unpowered/wood,/turf/simulated/floor/white,/area/station/crew_quarters/bathroom)
 "jA" = (/obj/crematorium{id = "crematorium"},/turf/simulated/floor/grass,/area/station/chapel/main/main)
 "jB" = (/obj/table/wood/auto,/obj/machinery/crema_switch{id = "crematorium"; pixel_x = 0; pixel_y = 5},/turf/simulated/floor/carpet{icon_state = "fred2"; dir = 8},/area/station/chapel/main/main)
-"jC" = (/obj/table/wood/auto,/obj/item/ghostboard,/obj/item/storage/bible{pixel_x = 2},/turf/simulated/floor/carpet{icon_state = "fred2"; dir = 4},/area/station/chapel/main/main)
+"jC" = (/obj/table/wood/auto,/obj/item/ghostboard,/obj/item/bible{pixel_x = 2},/turf/simulated/floor/carpet{icon_state = "fred2"; dir = 4},/area/station/chapel/main/main)
 "jD" = (/obj/morgue{icon_state = "morgue1"; dir = 2},/turf/simulated/floor/grass,/area/station/chapel/main/main)
 "jE" = (/obj/machinery/door/airlock/pyro/medical{dir = 4; name = "CMDS - Research Block"; req_access = null},/obj/access_spawn/research,/turf/simulated/floor/grass,/area/station/crew_quarters/garden)
 "jF" = (/obj/window/cubicle{icon_state = "cubicle"; dir = 2},/turf/simulated/floor/white,/area/station/crew_quarters/garden)

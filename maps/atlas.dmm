@@ -478,7 +478,7 @@
 "jG" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/station/security/main)
 "jH" = (/turf/simulated/wall/auto/supernorn{icon_state = "3"},/area/station/crew_quarters/kitchen)
 "jI" = (/turf/simulated/floor/red/side{dir = 4},/area/station/security/main)
-"jJ" = (/obj/table/wood/auto,/obj/item/storage/bible,/obj/item/device/microphone,/turf/simulated/floor/carpet{dir = 8; icon_state = "fred2"},/area/station/chapel/main)
+"jJ" = (/obj/table/wood/auto,/obj/item/bible,/obj/item/device/microphone,/turf/simulated/floor/carpet{dir = 8; icon_state = "fred2"},/area/station/chapel/main)
 "jK" = (/obj/machinery/flasher/portable,/obj/item/wrench,/turf/simulated/floor/bot,/area/station/security/main)
 "jL" = (/obj/machinery/camera{c_tag = "autotag"; dir = 4; name = "autoname - SS13"; pixel_x = -10; tag = ""},/obj/machinery/disposal/small{dir = 4},/obj/disposalpipe/trunk,/turf/simulated/floor,/area/station/hallway/secondary/exit)
 "jM" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/disposalpipe/segment,/turf/simulated/floor,/area/station/hallway/secondary/exit)
