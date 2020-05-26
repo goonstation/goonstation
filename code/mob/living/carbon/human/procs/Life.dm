@@ -446,9 +446,6 @@
 							boutput(O, __blue("<b>Your master seems to be inactive. You are permitted to use the Exit-Hivemind command.</b>"))
 		*/
 
-#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
-	src.UpdateDamage()
-#endif
 	last_life_tick = world.timeofday
 
 
@@ -800,10 +797,6 @@
 			canmove = 0
 			return
 
-		if (emote_lock)
-			canmove = 0
-			return
-
 		canmove = 1
 
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
@@ -938,19 +931,18 @@
 				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
 					src.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (breath.temperature > (T0C+66) && !src.is_heat_resistant()) // Hot air hurts :(
-			if (!has_cyberlungs || (has_cyberlungs && (breath.temperature > (T0C+500))))
-				var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
-				TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
-				if (prob(20))
-					boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
-					if (src.organHolder)
-						src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
+		if (breath.temperature > min(organHolder.left_lung?.temp_tolerance, organHolder.right_lung?.temp_tolerance) && !src.is_heat_resistant()) // Hot air hurts :(
+			var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
+			TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
+			if (prob(20))
+				boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
+				if (src.organHolder)
+					src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
 
-				hud.update_fire_indicator(1)
-				if (prob(4))
-					boutput(src, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
-					//src.contract_disease(new/datum/ailment/disability/cough, 1, 0) // cogwerks ailment project - lung damage from fire
+			hud.update_fire_indicator(1)
+			if (prob(4))
+				boutput(src, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
+				//src.contract_disease(new/datum/ailment/disability/cough, 1, 0) // cogwerks ailment project - lung damage from fire
 
 		else
 			hud.update_fire_indicator(0)
@@ -1045,9 +1037,12 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
+		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
+
+/*
 		for(var/atom in src.get_equipped_items())
 			var/obj/item/C = atom
-			thermal_protection += C.getProperty("coldprot")
+			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
 		// Resistance from covered body parts
@@ -1065,7 +1060,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = max(0,min(thermal_protection,100))
+		thermal_protection = clamp(thermal_protection, 0, 100)
 		return thermal_protection
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
@@ -1112,14 +1107,12 @@
 		var/rad_protection = 0
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			rad_protection += C.getProperty("radprot")
+		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
 		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
-		rad_protection = max(0,min(rad_protection,100))
+		rad_protection = clamp(rad_protection, 0, 100)
 		return rad_protection
 
 	get_ranged_protection()
@@ -1129,11 +1122,7 @@
 		var/protection = 1
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			if(C.hasProperty("rangedprot"))
-				var/curr = C.getProperty("rangedprot")
-				protection += curr
+		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
 
 		return protection
 
@@ -1146,23 +1135,24 @@
 			a_zone = "chest"
 		if(a_zone=="All")
 			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-		else
-			// Resistance from Clothing
-			for(var/atom in src.get_equipped_items())
-				var/obj/item/C = atom
-				if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
-					a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
-					var/curr = C.getProperty("meleeprot")
-					protection = max(curr, protection)
 
+		else
+
+			//protection from clothing
+			if (a_zone == "chest")
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+			else //can only be head
+				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+
+			//protection from blocks
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
 				protection += 1
 				if (G != src.equipped()) // bare handed block is less protective
 					protection += G.can_block(damage_type)
 
+		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
+			protection = 0
 		return protection
 
 	get_deflection()
@@ -1194,9 +1184,7 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			thermal_protection += C.getProperty("heatprot")
+		thermal_protection += GET_MOB_PROPERTY(src, PROP_HEATPROT)
 
 		/*
 		// Resistance from covered body parts
@@ -1213,7 +1201,7 @@
 				thermal_protection += 10
 		*/
 
-		thermal_protection = max(0,min(thermal_protection,100))
+		thermal_protection = clamp(thermal_protection, 0, 100)
 		return thermal_protection
 
 	proc/add_fire_protection(var/temp)
@@ -1289,7 +1277,7 @@
 		if (src.nutrition < 0)
 			src.contract_disease(/datum/ailment/malady/hypoglycemia, null, null, 1)
 
-		src.updatehealth()
+		//health_update_queue |= src //#843 uncomment this if things go funky maybe
 
 	proc/handle_blood_pressure(var/mult = 1)
 		if (!blood_system)
@@ -1564,7 +1552,6 @@
 				src.changeStatus("weakened", 5 SECONDS)
 				src.losebreath += 20
 				src.take_oxygen_deprivation(20)
-				src.updatehealth()
 		else
 			if (oH.heart.loc != src)
 				oH.heart = null
@@ -1583,7 +1570,6 @@
 				changeStatus("weakened", 2 SECONDS)
 				src.losebreath += 20
 				src.take_oxygen_deprivation(20)
-				src.updatehealth()
 			else if (src.organHolder.heart.get_damage() > 100)
 				src.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
@@ -1610,7 +1596,7 @@
 
 	proc/handle_regular_status_updates(datum/controller/process/mobs/parent,var/mult = 1)
 
-		health = max_health - (get_oxygen_deprivation() + get_toxin_damage() + get_burn_damage() + get_brute_damage())
+		//health_update_queue |= src //#843 uncomment this if things go funky maybe
 		var/death_health = src.health + (src.get_oxygen_deprivation() * 0.5) - (get_burn_damage() * 0.67) - (get_brute_damage() * 0.67) //lower weight of oxy, increase weight of brute/burn here
 		// I don't think the revenant needs any of this crap - Marq
 		if (src.bioHolder && src.bioHolder.HasEffect("revenant") || isdead(src)) //You also don't need to do a whole lot of this if the dude's dead.
@@ -1669,57 +1655,57 @@
 
 
 		if (src.health < 0 && !isdead(src))
-			if (prob(5))
+			if (prob(5) * mult)
 				src.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
 			if (src.stuttering <= 5)
 				src.stuttering+=5
 			if (src.get_eye_blurry() <= 5)
 				src.change_eye_blurry(5)
-			if (prob(7))
+			if (prob(7) * mult)
 				src.change_misstep_chance(2)
-			if (prob(5))
+			if (prob(5) * mult)
 				src.changeStatus("paralysis", 3 SECONDS)
 			switch(src.health)
 				if (-INFINITY to -100)
-					src.take_oxygen_deprivation(1)
-					if (prob(src.health * -0.1))
+					src.take_oxygen_deprivation(1 * mult)
+					if (prob(src.health * -0.1  * mult))
 						src.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 						//boutput(world, "\b LOG: ADDED FLATLINE TO [src].")
-					if (prob(src.health * -0.2))
+					if (prob(src.health * -0.2  * mult))
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (isalive(src))
 						if (src && src.mind)
 							src.lastgasp() // if they were ok before dropping below zero health, call lastgasp() before setting them unconscious
-					setStatus("paralysis", max(getStatusDuration("paralysis"), 30))
+					setStatus("paralysis", max(getStatusDuration("paralysis"), 15 * mult))
 				if (-99 to -80)
-					src.take_oxygen_deprivation(1)
-					if (prob(4))
+					src.take_oxygen_deprivation(1 * mult)
+					if (prob(4 * mult))
 						boutput(src, "<span class='alert'><b>Your chest hurts...</b></span>")
 						src.changeStatus("paralysis", 2 SECONDS)
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 				if (-79 to -51)
-					src.take_oxygen_deprivation(1)
-					if (prob(10)) // shock added back to crit because it wasn't working as a bloodloss-only thing
+					src.take_oxygen_deprivation(1 * mult)
+					if (prob(10 * mult)) // shock added back to crit because it wasn't working as a bloodloss-only thing
 						src.contract_disease(/datum/ailment/malady/shock,null,null,1)
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
-					if (prob(src.health * -0.08))
+					if (prob(src.health * -0.08) * mult)
 						src.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
-					if (prob(6))
+					if (prob(6) * mult)
 						boutput(src, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
 						src.setStatus("weakened", max(src.getStatusDuration("weakened"), 30))
-					if (prob(3))
+					if (prob(3) * mult)
 						src.changeStatus("paralysis", 2 SECONDS)
 				if (-50 to 0)
-					src.take_oxygen_deprivation(0.25)
+					src.take_oxygen_deprivation(0.25 * mult)
 					/*if (src.reagents)
 						if (!src.reagents.has_reagent("inaprovaline") && prob(50))
 							src.take_oxygen_deprivation(1)*/
-					if (prob(3))
+					if (prob(3) * mult)
 						src.contract_disease(/datum/ailment/malady/shock,null,null,1)
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
-					if (prob(5))
+					if (prob(5) * mult)
 						boutput(src, "<span class='alert'><b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b></span>")
 						src.changeStatus("weakened", 3 SECONDS)
 
@@ -1818,7 +1804,9 @@
 		var/lying_old = src.lying
 		var/cant_lie = (src.limbs && istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, src.loc) && !locate(/obj/machinery/optable, src.loc))
 
-		var/must_lie = hasStatus("resting") || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/list/statusList = src.getStatusList()
+
+		var/must_lie = statusList["resting"] || (!cant_lie && src.limbs && !src.limbs.l_leg && !src.limbs.r_leg) //hasn't got a leg to stand on... haaa
 
 		var/changeling_fakedeath = 0
 		var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
@@ -1826,20 +1814,21 @@
 			changeling_fakedeath = 1
 
 		if (!isdead(src)) //Alive.
-			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.hasStatus("resting")) //Stunned etc.
+			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || statusList["resting"]) //Stunned etc.
 				var/setStat = src.stat
 				var/oldStat = src.stat
-				if (src.hasStatus("stunned"))
+				if (statusList["stunned"])
 					setStat = 0
-				if (src.hasStatus("weakened") || src.hasStatus("pinned") && !src.fakedead)
-					if (!cant_lie) src.lying = 1
+				if (statusList["weakened"] || statusList["pinned"] && !src.fakedead)
+					if (!cant_lie)
+						src.lying = 1
 					setStat = 0
-				if (src.hasStatus("paralysis"))
-					if (!cant_lie) src.lying = 1
+				if (statusList["paralysis"])
+					if (!cant_lie)
+						src.lying = 1
 					setStat = 1
-				if (isalive(src) && setStat == 1)
-					if (src && src.mind)
-						src.lastgasp() // calling lastgasp() here because we just got knocked out
+				if (isalive(src) && setStat == 1 && src.mind)
+					src.lastgasp() // calling lastgasp() here because we just got knocked out
 				if (must_lie)
 					src.lying = 1
 
@@ -1870,7 +1859,7 @@
 						else if (healtype == 4)
 							src.HealDamage("All", 0, 0, 0.2) ///adjsfkaljdsklf;ajs
 
-				else if ((oldStat == 1) && (!getStatusDuration("paralysis") && !getStatusDuration("stunned") && !getStatusDuration("weakened") && !changeling_fakedeath))
+				else if ((oldStat == 1) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
 					src << sound('sound/misc/molly_revived.ogg', volume=50)
 					setalive(src)
 

@@ -883,6 +883,7 @@ datum/preferences
 </style>
 
 <div style="float: right;">
+	<a href="byond://?src=\ref[src];preferences=1;closejobswindow=1">Back to Setup</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;jobswindow=1">Refresh</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;resetalljobs=1"><b>Reset All Jobs</b></a>
 </div>

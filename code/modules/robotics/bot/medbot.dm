@@ -549,7 +549,7 @@
 					var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.","Please calm down, sir.","You need to calm down.","CODE BLUE.","You're going to be just fine.","Hold stIll.","Sedating patient.","ALERT.","I think we're losing them...","You're only hurting yourself.","MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00","ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a", "This will all be over soon.")
 					src.speak(message)
 				else
-					src.visible_message("<b>[src] [pick("spazzes out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
+					src.visible_message("<b>[src] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
 					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(src.loc, glitchsound, 50, 1)
 					// let's grustle a bit

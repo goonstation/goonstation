@@ -77,4 +77,3 @@
 				H.losebreath+=3
 
 			H.take_oxygen_deprivation(1)
-			H.updatehealth()

@@ -83,6 +83,7 @@
 
 /atom
 	layer = TURF_LAYER
+	plane = PLANE_DEFAULT
 	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
@@ -584,6 +585,9 @@
 	else
 		last_turf = 0
 
+	if(src.medium_lights)
+		update_medium_light_visibility()
+
 /atom/movable/proc/pull()
 	//set name = "Pull"
 	//set src in oview(1)
@@ -915,7 +919,8 @@
 	else
 		last_turf = 0
 
-
+	if(src.medium_lights)
+		update_medium_light_visibility()
 
 	return src
 
@@ -1030,7 +1035,7 @@
 	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.restrained())
+	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
 		return
 
 	if (!can_reach(user, src))

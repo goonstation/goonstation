@@ -67,7 +67,7 @@
 		var/list/sentences = list()
 		var/mob/zoldorf/user = holder.owner
 		var/infothing
-		var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+		var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 		var/maxlines
 
 		if((user.loc != user.homebooth)&&(user.homebooth != null))

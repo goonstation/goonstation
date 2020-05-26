@@ -271,7 +271,6 @@
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))
@@ -591,6 +590,11 @@
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
+
+/obj/item/radio_tape/advertisement/danitos_burritos
+	name = "compact tape - 'Descuento Danito's Burritos'"
+	audio = "sound/radio_station/danitos_burritos.ogg"
+	name_of_thing = "Descuento Danito's Burritos"
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"

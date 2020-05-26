@@ -109,7 +109,7 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 
-		updatehealth()
+		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
 		if (islist(src.add_abilities) && src.add_abilities.len)
@@ -689,7 +689,7 @@
 		handle_hud_overlays()
 		src.antagonist_overlay_refresh(0, 0)
 
-		if (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened") || getStatusDuration("dormant"))
+		if (src.hasStatus(list("weakened", "paralysis", "stunned", "dormant")))
 			canmove = 0
 		else
 			canmove = 1
@@ -702,7 +702,7 @@
 			if (!sleeping)
 				src.on_wake()
 
-		var/may_deliver_recovery_warning = (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
+		var/may_deliver_recovery_warning = (src.hasStatus(list("weakened", "paralysis", "stunned")))
 
 		if (may_deliver_recovery_warning)
 			empty_hands()
@@ -792,7 +792,6 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn)
-		updatehealth()
 
 	take_brain_damage(var/amount)
 		if (..())
@@ -871,7 +870,7 @@
 	HealDamage(zone, brute, burn, tox)
 		..()
 		TakeDamage(zone, -brute, -burn)
-		updatehealth()
+
 
 	updatehealth()
 		if (src.nodamage)

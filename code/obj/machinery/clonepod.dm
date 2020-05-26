@@ -559,7 +559,6 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 		src.occupant.bioHolder.AddEffect("premature_clone")
 	if (src.occupant.get_oxygen_deprivation())
 		src.occupant.take_oxygen_deprivation(-INFINITY)
-		src.occupant.updatehealth()
 
 	if (src.occupant.losebreath) // STOP FUCKING SUFFOCATING GOD DAMN
 		src.occupant.losebreath = 0

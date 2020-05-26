@@ -1,6 +1,6 @@
 
 //flowers n stuff
-
+ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower
 	plant_icon = 'icons/obj/hydroponics/plants_flower.dmi'
 	category = "Flower" //????

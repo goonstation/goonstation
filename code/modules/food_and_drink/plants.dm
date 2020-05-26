@@ -307,7 +307,6 @@
 		..()
 		boutput(M, "<span class='alert'>Eating that was a terrible idea!</span>")
 		random_brute_damage(M, rand(5, 15))
-		M.updatehealth()
 
 /obj/item/reagent_containers/food/snacks/plant/orange/synth
 	name = "synthorange"

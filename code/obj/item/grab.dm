@@ -84,7 +84,8 @@
 
 	dropped()
 		dropped += 1
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		if(src.assailant)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		qdel(src)
 
 	process(var/mult = 1)
@@ -98,12 +99,6 @@
 		if (src.state >= GRAB_NECK)
 			if(H) H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 			src.affecting.set_density(0)
-
-		if (src.state == GRAB_PIN)
-			if (ishuman(src.assailant))
-				var/mob/living/carbon/human/HH = src.assailant
-				HH.remove_stamina(STAMINA_REGEN * 0.5 * mult)
-
 
 		if (src.state == GRAB_KILL)
 			//src.affecting.losebreath++
@@ -358,7 +353,7 @@
 			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
-				src.assailant.remove_stamina(29)
+				src.assailant.remove_stamina(19)
 				src.affecting.remove_stamina(10)
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)

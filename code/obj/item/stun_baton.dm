@@ -1,3 +1,7 @@
+#define CLOSED_AND_OFF 1
+#define OPEN_AND_ON 2
+#define OPEN_AND_OFF 3
+
 // Contains:
 // - Baton parent
 // - Subtypes
@@ -11,7 +15,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "baton"
+	item_state = "baton-A"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
@@ -178,10 +182,18 @@
 						else if (src.cell.charge <= 0)
 							user.show_text("The [src.name] is now out of charge!", "red")
 							src.stamina_damage = initial(src.stamina_damage)
+							src.status = 0
+							src.item_state = "baton-D"
+							use_stamina_stun() //set stam damage amount
+							if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
+								var/obj/item/baton/ntso/B = src
+								B.state = OPEN_AND_OFF
+								B.item_state = "ntso-baton-d"
 				else if (amount > 0)
 					src.cell.charge(src.cost_normal * amount)
 
 		src.update_icon()
+		user.update_inhands()
 		return
 
 	proc/charge(var/amt)
@@ -308,6 +320,10 @@
 		if (src.uses_electricity == 0)
 			return
 
+		if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0)
+			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+			return
+
 		src.regulate_charge()
 		src.status = !src.status
 
@@ -317,13 +333,16 @@
 			return
 
 		if (src.status)
-			user.show_text("The [src.name] is now on.", "blue")
+			boutput(user, "<span class='notice'>The [src.name] is now on.</span>")
+			src.item_state = "baton-A"
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 		else
-			user.show_text("The [src.name] is now off.", "blue")
+			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
+			src.item_state = "baton-D"
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 
 		src.update_icon()
+		user.update_inhands()
 		use_stamina_stun() //set stam damage amount
 
 		return
@@ -434,11 +453,6 @@
 		..()
 		src.setItemSpecial(/datum/item_special/simple) //override spark of parent
 
-
-#define CLOSED_AND_OFF 1
-#define OPEN_AND_ON 2
-#define OPEN_AND_OFF 3
-
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Operatives in sleek NanoTrasen blue."
@@ -484,31 +498,46 @@
 			return
 
 		//move to next state
-		switch (state)
+		switch (src.state)
 			if (CLOSED_AND_OFF)		//move to open/on state
-				state = OPEN_AND_ON
+				if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
+					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+					src.state = OPEN_AND_OFF
+					src.status = 0
+					src.item_state = "ntso-baton-d"
+					src.w_class = 4
+					src.force = 7
+					playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
+					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
+					src.update_icon()
+					user.update_inhands()
+					use_stamina_stun() //set stam damage amount
+					return
+
+				//this is the stuff that normally happens
+				src.state = OPEN_AND_ON
 				src.status = 1
-				user.show_text("The [src.name] is now open and on.", "blue")
+				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
 				src.item_state = "ntso-baton-a"
 				src.w_class = 4
 				src.force = 7
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
-				state = OPEN_AND_OFF
+				src.state = OPEN_AND_OFF
 				src.status = 0
-				src.item_state = "ntso-baton-a"
+				src.item_state = "ntso-baton-d"
 				src.w_class = 4
 				src.force = 7
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
-				user.show_text("The [src.name] is now open and unpowered.", "blue")
+				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 				// playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_OFF)		//move to closed/off state
-				state = CLOSED_AND_OFF
+				src.state = CLOSED_AND_OFF
 				src.status = 0
 				src.item_state = "ntso-baton-c"
 				src.w_class = 2
 				src.force = 1
-				user.show_text("The [src.name] is now closed.", "blue")
+				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 
 		src.update_icon()
@@ -603,7 +632,7 @@
 			if (src.status)
 				w_class = 4
 				flags &= ~ONBELT //haha NO
-				setProperty("meleeprot", 9)
+				setProperty("meleeprot_all", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
 				setProperty("disorient_resist", 65)
@@ -616,7 +645,7 @@
 			else
 				w_class = 2
 				flags |= ONBELT
-				delProperty("meleeprot", 0)
+				delProperty("meleeprot_all", 0)
 				delProperty("rangedprot", 0)
 				delProperty("movespeed", 0)
 				delProperty("disorient_resist", 0)
@@ -684,7 +713,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot_all", 9)
 		setProperty("rangedprot", 1.5)
 		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 65)

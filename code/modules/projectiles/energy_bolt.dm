@@ -227,11 +227,8 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
-	var/hit = 0				//This hit var and the on_hit on_end nonsense was to make it so that if it hits a guy, the explosion starts on them and not one tile before, but if it hits a wall, it explodes on the floor tile in front of it
-
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
-
 		//lets make getting hit by the projectile a bit worse than getting the shockwave
 		//tasers have changed in production code, I'm not really sure what value is good to give it here...
 		if (isliving(O))
@@ -239,18 +236,11 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.do_disorient(stamina_damage = 2*P.power, weakened = 0, stunned = 0, disorient = P.power, remove_stamina_below_zero = 0)
 			L.emote("twitch_v")
-
-
-		hit = 1
-
 		detonate(O, P)
 
-	//do AOE stuff. This is not on on_hit because this effect should trigger when the projectile reaches the end of its distance OR hits things.
-	on_end(var/obj/projectile/O)
-		//if we hit a mob or something, that will handle the detonation, we don't need to do it on_end
-		if (!hit)
-			detonate(O, O)
-
+	on_max_range_die(obj/projectile/O)
+		detonate(O, O)
+		
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O

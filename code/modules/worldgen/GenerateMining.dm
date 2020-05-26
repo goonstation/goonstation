@@ -664,6 +664,22 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 21
 		prefabSizeY = 15
 
+	water_treatment // Sov's water treatment facility
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_watertreatment.dmm"
+		prefabSizeX = 33
+		prefabSizeY = 14
+
+	bee_sanctuary //Sov's Bee Sanctuary
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 19
+
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner
 		underwater = 1

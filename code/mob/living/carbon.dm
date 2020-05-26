@@ -559,6 +559,8 @@
 	return
 
 /mob/living/carbon/take_toxin_damage(var/amount)
+	if (!toxloss && amount < 0)
+		amount = 0
 	if (..())
 		return
 #if ASS_JAM //pausing damage for timestop
@@ -577,6 +579,8 @@
 	return
 
 /mob/living/carbon/take_oxygen_deprivation(var/amount)
+	if (!oxyloss && amount < 0)
+		return
 	if (..())
 		return
 

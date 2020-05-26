@@ -164,6 +164,13 @@ To remove:
 
 #define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 
+//armour properties
+#define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
+#define PROP_RANGEDPROT(x) x("rangedprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_RADPROT(x) x("radprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_COLDPROT(x) x("coldprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_HEATPROT(x) x("heatprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1
@@ -171,22 +178,18 @@ To remove:
 #define MOB_PROPERTY_PRIORITY_PRIO 1
 #define MOB_PROPERTY_PRIORITY_VALUE 2
 
-#define TRIPLE_GET_1ST(a, b, c) a
-#define TRIPLE_GET_2ND(a, b, c) b
-#define TRIPLE_GET_3RD(a, b, c) c
+#define GET_PROP_NAME TUPLE_GET_1
+#define GET_PROP_ADD TUPLE_GET_2
+#define GET_PROP_REMOVE TUPLE_GET_3
 
-#define TRIPLE_1ST(x) x(TRIPLE_GET_1ST)
-#define TRIPLE_2ND(x) x(TRIPLE_GET_2ND)
-#define TRIPLE_3RD(x) x(TRIPLE_GET_3RD)
+#define APPLY_MOB_PROPERTY(target, property, etc...) GET_PROP_ADD(property)(target, GET_PROP_NAME(property), ##etc)
 
-#define APPLY_MOB_PROPERTY(target, property, etc...) TRIPLE_2ND(property)(target, TRIPLE_1ST(property), ##etc)
+#define REMOVE_MOB_PROPERTY(target, property, source) GET_PROP_REMOVE(property)(target, GET_PROP_NAME(property), source)
 
-#define REMOVE_MOB_PROPERTY(target, property, source) TRIPLE_3RD(property)(target, TRIPLE_1ST(property), source)
-
-#define GET_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? target.mob_properties[TRIPLE_1ST(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
+#define GET_MOB_PROPERTY(target, property) (target.mob_properties[GET_PROP_NAME(property)] ? target.mob_properties[GET_PROP_NAME(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
 
 // sliiiiiiiightly faster if you don't care about the value
-#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[TRIPLE_1ST(property)] ? TRUE : FALSE)
+#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[GET_PROP_NAME(property)] ? TRUE : FALSE)
 
 
 #define APPLY_MOB_PROPERTY_MAX(target, property, source, value) \
@@ -200,7 +203,8 @@ To remove:
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _V; \
 			} \
 		} else { \
-			_L[property] = list(_V, list(_S = _V)); \
+			_L[property] = list(_V, list()); \
+			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 		} \
 	} while (0)
 
@@ -259,7 +263,8 @@ To remove:
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] += _V; \
 			} \
 		} else { \
-			_L[property] = list(_V, list(_S = _V)); \
+			_L[property] = list(_V, list()); \
+			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 		} \
 	} while (0)
 
@@ -299,7 +304,8 @@ To remove:
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _TO_APPLY_VALUE; \
 			} \
 		} else { \
-			_L[property] = list(_V, list(_S = list(_P, _V))); \
+			_L[property] = list(_V, list()); \
+			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = list(_P, _V); \
 		}; \
 	} while (0)
 
