@@ -17,22 +17,14 @@
 			var/new_key = key
 			var/act = writer.keys[key]
 
-			src.keys[new_key] = act
-			message_coders("added: [new_key]: [act]")
-
 			for (var/oldkey in src.keys)
-				var/k = src.keys[oldkey]
-				message_coders("key: [k], [act]")
-				if (text2num(act))
+				if (text2num(act)) //For number keys... needed ☹️
 					if (src.keys[oldkey] == text2num(act))
-						message_coders("rem1: [k], [act]")
 						src.keys.Remove(oldkey)
 						break
-				else
-					if (src.keys[oldkey] == act)
-						message_coders("rem2: [k], [act]")
-						src.keys.Remove(oldkey)
-						break
+				else if (src.keys[oldkey] == act)
+					src.keys.Remove(oldkey)
+					break
 
 			var/t2n = text2num(act)
 			if (t2n)

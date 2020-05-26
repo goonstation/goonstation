@@ -7,6 +7,8 @@
  *	Depending on what you're adding, you'll need to update action_verbs as well.
  */
 
+ ////////////////////////////TODO: AZERTY, TG, WASD/ARROW TOGGLES NEED TO RESET_KEYMAP
+
 ///Global list holding all of the keybind style datums - Intitalized in World preload.
 var/global/list/datum/keybind_style/keybind_styles = null
 

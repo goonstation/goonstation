@@ -40,6 +40,7 @@ var/list/action_names = list(
 	"asay" = "Admin Say",
 	"whisper" = "Whisper",
 	"ooc" = "OOC",
+	"looc" = "LOOC",
 
 	"screenshot" = "Screenshot",
 	"autoscreenshot" = "Auto Screenshot",
@@ -59,7 +60,7 @@ var/list/action_names = list(
 	"module3" = "Module 3",
 	"module4" = "Module 4",
 
-	"unequip" = "Unequip",
+	"unequip" = "Unequip (Silicon)",
 	"pickup" = "Pick Up",
 	"drop" = "Drop",
 

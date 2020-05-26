@@ -53,14 +53,6 @@ chui/window/keybind_menu
 					owner.keymap.overwrite_by_action(keydat)
 					owner.cloud_put("keybind_data", json_encode(changed_keys_rev))
 
-			//TODO: FIX THIS SHIT
-			else if (id == "set_wasd")
-				changed_keys = new/list()
-			else if (id == "set_tg")
-				changed_keys = new/list()
-			else if (id == "set_azerty")
-				changed_keys = new/list()
-
 			else if (id == "reset")
 				changed_keys = new/list()
 				who.mob.reset_keymap()
@@ -82,6 +74,6 @@ chui/window/keybind_menu
 	set name = "Modify Keybinds"
 	set desc = "Open up a handy window to change your keybinds"
 
-	if(!keybind_menu)
-		keybind_menu = new(src)
-	keybind_menu.Subscribe(src)
+	if(!src.keybind_menu)
+		src.keybind_menu = new
+	src.keybind_menu.Subscribe(src)
