@@ -14,7 +14,7 @@
 
 	var/installed_icon_state = "tube-empty"
 	var/installed_base_state = "tube"
-	desc = "Parts of a lighting fixture"
+	//desc = "Parts of a lighting fixture"
 	var/fixture_type = /obj/machinery/light
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
@@ -77,7 +77,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
-	desc = "A lighting fixture."
+	//desc = "A lighting fixture."
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -150,7 +150,7 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness = 1.2
-	desc = "A small lighting fixture."
+	//desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	light_name = "light bulb"
@@ -232,7 +232,7 @@
 /obj/machinery/light/small/floor
 	icon_state = "floor1"
 	base_state = "floor"
-	desc = "A small lighting fixture, embedded in the floor."
+	//desc = "A small lighting fixture, embedded in the floor."
 	plane = PLANE_FLOOR
 	allowed_type = /obj/item/light/bulb
 
@@ -278,7 +278,7 @@
 	base_state = "ebulb"
 	fitting = "bulb"
 	brightness = 1
-	desc = "A small light used to illuminate in emergencies."
+	//desc = "A small light used to illuminate in emergencies."
 	light_type = /obj/item/light/bulb/emergency
 	allowed_type = /obj/item/light/bulb/emergency
 	light_name = "emergency light bulb"
@@ -292,7 +292,7 @@
 
 /obj/machinery/light/runway_light
 	name = "runway light"
-	desc = "A small light used to guide pods into hangars."
+	//desc = "A small light used to guide pods into hangars."
 	icon_state = "runway10"
 	base_state = "runway1"
 	fitting = "bulb"
@@ -319,7 +319,7 @@
 
 /obj/machinery/light/beacon
 	name = "tripod light"
-	desc = "A large portable light tripod."
+	//desc = "A large portable light tripod."
 	density = 1
 	anchored = 1
 	icon_state = "tripod1"
@@ -370,7 +370,7 @@
 	base_state = "lamp"
 	fitting = "bulb"
 	brightness = 1
-	desc = "A desk lamp"
+	//desc = "A desk lamp"
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	light_name = "light bulb"
@@ -387,7 +387,7 @@
 /obj/machinery/light/lamp/green
 	icon_state = "green1"
 	base_state = "green"
-	desc = "A green-shaded desk lamp"
+	//desc = "A green-shaded desk lamp"
 	light_name = "green light bulb"
 
 	New()
@@ -446,7 +446,7 @@
 		base_state = "bulb"
 		fitting = "bulb"
 		brightness = 1.2
-		desc = "A small lighting fixture."
+		//desc = "A small lighting fixture."
 		light_type = /obj/item/light/bulb
 		light_name = "light bulb"
 
@@ -913,7 +913,7 @@
 
 /obj/item/light/tube
 	name = "light tube"
-	desc = "A replacement light tube."
+	//desc = "A replacement light tube."
 	icon_state = "tube-white"
 	base_state = "tube-white"
 	item_state = "c_tube"
@@ -1063,7 +1063,7 @@
 
 /obj/item/light/bulb
 	name = "light bulb"
-	desc = "A replacement light bulb."
+	//desc = "A replacement light bulb."
 	icon_state = "bulb-yellow"
 	base_state = "bulb-yellow"
 	item_state = "contvapour"
@@ -1219,7 +1219,7 @@
 
 /obj/item/light/big_bulb
 	name = "beacon bulb"
-	desc = "An immense replacement light bulb."
+	//desc = "An immense replacement light bulb."
 	icon_state = "tbulb"
 	base_state = "tbulb"
 	item_state = "contvapour"
