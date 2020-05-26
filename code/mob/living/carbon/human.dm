@@ -864,12 +864,12 @@
 		return .
 
 	if (src.drowsyness > 0)
-		. += 6
+		. += 5
 
 	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
 	if (health_deficiency >= 30)
-		. += (health_deficiency / 25)
+		. += (health_deficiency / 30)
 
 	var/missing_legs = 0
 	var/missing_arms = 0
@@ -884,12 +884,12 @@
 		missing_legs = 2
 
 	if (missing_legs == 2)
-		. += 15 - ((2-missing_arms) * 2) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 2.
+		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
 	else
-		. += 7.5*missing_legs
+		. += 7*missing_legs
 
 	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
+		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 15), 2.5)
 
 	var/turf/T = get_turf(src)
 
@@ -905,7 +905,7 @@
 				if (T.active_liquid)
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
-					. += 4
+					. += 3
 
 	. = min(., maximum_slowdown)
 
@@ -947,7 +947,7 @@
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			sprint_particle(src)
 
-			next_step_delay = max(src.next_move - world.time,0)
+			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
 			src.next_move = world.time
 			src.attempt_move()
 			next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
