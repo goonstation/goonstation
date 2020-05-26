@@ -946,14 +946,15 @@
 			begin_sniping()
 	else
 		if (!next_step_delay && world.time >= next_sprint_boost)
-			sprint_particle(src)
+			if (src.getStatusDuration("staggered") < 1 && !src.hasStatus("blocking"))
+				sprint_particle(src)
 
-			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-			src.next_move = world.time
-			src.attempt_move()
-			next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+				src.next_move = world.time
+				src.attempt_move()
+				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
-			playsound(src.loc,"sound/effects/sprint_puff.ogg", 50, 1)
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 35, 1)
 
 #undef BASE_SPEED
 #undef RUN_SCALING
