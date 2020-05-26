@@ -231,11 +231,10 @@
 						game_stats.Increment("farts")
 		#endif
 				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(3))
-					var/glowsticktype = pick(/obj/item/device/light/glowstick,
-					/obj/item/device/light/glowstick/white,/obj/item/device/light/glowstick/yellow,
-					/obj/item/device/light/glowstick/blue,/obj/item/device/light/glowstick/purple,
-					/obj/item/device/light/glowstick/pink,/obj/item/device/light/glowstick/cyan,
-					/obj/item/device/light/glowstick/orange,/obj/item/device/light/glowstick/red)
+					var/list/glowsticktypes = list()
+					for(var/type in typesof(/obj/item/device/light/glowstick))
+						glowsticktypes += type
+					var/glowsticktype = pick(glowsticktypes)
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
 					G.turnon()
