@@ -998,17 +998,19 @@
 	//invudidual score for an item
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
-		score += max(O.reagents.get_reagent_amount("bathsalts"))
-		score += max(O.reagents.get_reagent_amount("jenkem"))/2
-		score += max(O.reagents.get_reagent_amount("crank"))*1.5
-		score += max(O.reagents.get_reagent_amount("LSD"))/2
-		score += max(O.reagents.get_reagent_amount("space_drugs"))/4
-		score += max(O.reagents.get_reagent_amount("THC"))/8
-		score += max(O.reagents.get_reagent_amount("psilocybin"))/2
-		score += max(O.reagents.get_reagent_amount("krokodil"))
-		score += max(O.reagents.get_reagent_amount("catdrugs"))
-		score += max(O.reagents.get_reagent_amount("methamphetamine"))*1.5 //meth
+		score += O.reagents.get_reagent_amount("bathsalts")
+		score += O.reagents.get_reagent_amount("jenkem")/2
+		score += O.reagents.get_reagent_amount("crank")*1.5
+		score += O.reagents.get_reagent_amount("LSD")/2
+		score += O.reagents.get_reagent_amount("space_drugs")/4
+		score += O.reagents.get_reagent_amount("THC")/8
+		score += O.reagents.get_reagent_amount("psilocybin")/2
+		score += O.reagents.get_reagent_amount("krokodil")
+		score += O.reagents.get_reagent_amount("catdrugs")
+		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
 
+		if(istype(O, /obj/item/plant/herb/cannabis) && O.reagents.get_reagent_amount("THC")==0)
+			score += 7
 		return round(score)
 
 	proc/cash_amount()
