@@ -23,7 +23,7 @@
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
 /datum/movement_modifier/mech_boots
-	multiplicative_slowdown = 0.75
+	multiplicative_slowdown = 0.55
 
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
@@ -65,16 +65,16 @@
 
 // robot legs
 /datum/movement_modifier/robotleg_right
-	additive_slowdown = -0.12
+	additive_slowdown = -0.20
 
 /datum/movement_modifier/robotleg_left
-	additive_slowdown = -0.12
+	additive_slowdown = -0.20
 
 /datum/movement_modifier/robottread_right
-	additive_slowdown = -0.17
+	additive_slowdown = -0.25
 
 /datum/movement_modifier/robottread_left
-	additive_slowdown = -0.17
+	additive_slowdown = -0.25
 
 
 // bioeffects
