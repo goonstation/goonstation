@@ -886,7 +886,7 @@
 		. += 7*missing_legs
 
 	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 15), 2.5)
+		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 25), 2.5)
 
 	var/turf/T = get_turf(src)
 
