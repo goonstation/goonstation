@@ -10,6 +10,7 @@
 /datum/component/storage
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // old component gets passed new component's initialization args
 	var/datum/hud/storage/hud
+	// future: add stored_contents list and use that to keep track instead of source.contents
 	var/list/can_hold // if this exists, the storage checks it for what can be held
 	var/in_list_or_max = FALSE // if this is true, the storage allows items that are either in its can_hold list or items that have a lesser w_class than max_wclass
 	var/max_wclass = 2
@@ -18,7 +19,7 @@
 	var/does_not_open_in_pocket = TRUE
 
 /datum/component/storage/Initialize(var/list/spawn_contents, var/list/can_hold, var/in_list_or_max = FALSE, var/max_wclass = 2, var/slots = 7, var/sneaky = FALSE, var/does_not_open_in_pocket = TRUE)
-	if (!ismovable(parent))
+	if (!isobj(parent)) // future: allow all movable atoms
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_BY), .proc/attack_by)
 	RegisterSignal(parent, list(COMSIG_ATOM_HAND_ATTACK), .proc/hand_attack)
