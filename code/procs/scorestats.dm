@@ -269,7 +269,6 @@ var/datum/score_tracker/score_tracker
 			if (istype(I, /obj/item/card/id))
 				var/obj/item/card/id/ID = I
 				. += ID.amount
-		boutput(world, .)
 
 	proc/escapee_facts()
 		. = ""
