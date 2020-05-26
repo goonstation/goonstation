@@ -107,7 +107,7 @@
 	source.add_fingerprint(user)
 	animate_storage_rustle(source)
 	if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
-		user.visible_message("<span class='notice'>[user] has added [I] to [src.parent]!</span>", "<span class='notice'>You have added [I] to [src.parent].</span>")
+		user.visible_message("<span class='notice'>[user] has added [I] to [source]!</span>", "<span class='notice'>You have added [I] to [source].</span>")
 	playsound(source.loc, "rustle", 50, 1, -5)
 	return COMSIG_RETURN_EARLY
 

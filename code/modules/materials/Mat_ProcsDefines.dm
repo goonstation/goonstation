@@ -163,6 +163,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			O2.desc = "[!isnull(O2.real_desc) ? "[O2.real_desc]" : "[initial(O2.desc)]"] It is made of [mat1.name].[length(traitDesc) ? " " + traitDesc : ""]"
 		else
 			src.desc = "[initial(src.desc)] It is made of [mat1.name].[length(traitDesc) ? " " + traitDesc : ""]"
+		if (mat1.mat_id == "gold") //marks material gold as not a good choice to sell for people who dont already know
+			src.desc += " It's probably not very valuable to a reputable buyer."
 
 	var/set_color_alpha = 1
 	src.alpha = 255
