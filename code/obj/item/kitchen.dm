@@ -496,7 +496,7 @@ TRAYS
 			src.set_loc(shardturf)
 
 		SPAWN_DBG(0)
-			for (var/i in 1 to rand(2,3))
+			for (var/i in 1 to 2)
 				var/obj/O = unpool(/obj/item/raw_material/shard/glass)
 				O.set_loc(shardturf)
 				if(src.material)
