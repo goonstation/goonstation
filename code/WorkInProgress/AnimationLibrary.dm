@@ -148,17 +148,26 @@
 	src.attack_particle.filters = filter (type="blur", size=0.2)
 	src.attack_particle.filters += filter (type="drop_shadow", x=1, y=-1, size=0.7)
 
+	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
 /obj/particle/attack
 
 	disposing() //kinda slow but whatever, block that gc ok
 		for (var/mob/M in mobs)
 			if (M.attack_particle == src)
-				M.attack_particle = 0
+				M.attack_particle = null
+			if (M.sprint_particle == src)
+				M.sprint_particle = null
 		..()
 
+	sprint
+		icon = 'icons/mob/mob.dmi'
+		icon_state = "sprint_cloud"
+		layer = MOB_LAYER_BASE - 0.1
+		appearance_flags = TILE_BOUND
 
-/mob/var/obj/particle/attack/attack_particle = 0
+/mob/var/obj/particle/attack/attack_particle
+/mob/var/obj/particle/attack/sprint/sprint_particle
 
 ///obj/attackby(var/obj/item/I as obj, mob/user as mob)
 //	attack_particle(user,src)
@@ -470,6 +479,14 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.attack_particle.pixel_y = 0
 		M.vis_contents.Remove(M.attack_particle)
 		M.attack_particle.layer = EFFECTS_LAYER_BASE
+
+
+/proc/sprint_particle(var/mob/M)
+	if (!M || !M.sprint_particle) return
+	M.sprint_particle.loc = M.loc
+	flick("sprint_cloud",M.sprint_particle)
+	SPAWN_DBG(10)
+		M.sprint_particle.loc = null
 
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))

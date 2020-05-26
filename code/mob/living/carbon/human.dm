@@ -167,6 +167,9 @@
 
 	var/icon/flat_icon = null
 
+	var/next_step_delay = 0
+	var/next_sprint_boost = 0
+
 /mob/living/carbon/human/New()
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
@@ -810,8 +813,8 @@
 
 	return
 
-#define BASE_SPEED 1.3
-#define RUN_SCALING 0.2
+#define BASE_SPEED 1.8
+#define RUN_SCALING 0.1
 
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
@@ -849,6 +852,10 @@
 
 		if (modifier.maximum_slowdown < maximum_slowdown)
 			maximum_slowdown = modifier.maximum_slowdown
+
+	if (next_step_delay)
+		. += next_step_delay
+		next_step_delay = 0
 
 	if (m_intent == "walk")
 		. += 0.8
@@ -924,9 +931,28 @@
 	. *= multiplier
 
 	if (running)
-		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
+		var/minSpeed = (1.0- RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
+
+/mob/living/carbon/human/proc/start_sprint()
+	if (special_sprint && src.client && !src.client.tg_controls)
+		if (special_sprint & SPRINT_BAT)
+			spell_batpoof(src, cloak = 0)
+		if (special_sprint & SPRINT_BAT_CLOAKED)
+			spell_batpoof(src, cloak = 1)
+		if (special_sprint & SPRINT_SNIPER)
+			begin_sniping()
+	else
+		if (!next_step_delay && world.time >= next_sprint_boost)
+			sprint_particle(src)
+
+			next_step_delay = max(src.next_move - world.time,0)
+			src.next_move = world.time
+			src.attempt_move()
+			next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+			playsound(src.loc,"sound/effects/sprint_puff.ogg", 50, 1)
 
 #undef BASE_SPEED
 #undef RUN_SCALING
@@ -945,7 +971,7 @@
 				// else, ignore p_class*/
 				if(ismob(A))
 					var/mob/M = A
-					//if they're lying, pull em slower, unless you have a gang and they are in your gang.
+					//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 					if(M.lying)
 						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
 							. *= 1		//do nothing
@@ -1033,23 +1059,10 @@
 
 		//lol
 		if ("SHIFT")//bEGIN A SPRINT
-			if (special_sprint && src.client && !src.client.tg_controls)
-				if (special_sprint & SPRINT_BAT)
-					spell_batpoof(src, cloak = 0)
-				if (special_sprint & SPRINT_BAT_CLOAKED)
-					spell_batpoof(src, cloak = 1)
-				if (special_sprint & SPRINT_SNIPER)
-					begin_sniping()
+			start_sprint()
 			//else //indicate i am sprinting pls
 		if ("SPACE")
-			if (special_sprint && src.client && src.client.tg_controls)
-				if (special_sprint & SPRINT_BAT)
-					spell_batpoof(src, cloak = 0)
-				if (special_sprint & SPRINT_BAT_CLOAKED)
-					spell_batpoof(src, cloak = 1)
-				if (special_sprint & SPRINT_SNIPER)
-					begin_sniping()
-			//else //indicate i am sprinting pls
+			start_sprint()
 		else
 			return ..()
 
