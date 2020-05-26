@@ -231,7 +231,8 @@
 						game_stats.Increment("farts")
 		#endif
 				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(3))
-					var/obj/item/device/light/glowstick/G = new pick(typesof(/obj/item/device/light/glowstick))
+					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
+					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
 					G.turnon()
 					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
