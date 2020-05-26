@@ -977,8 +977,9 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.delStatus("burning")
-					M.bodytemperature=max(M.bodytemperature-volume_passed*2, 0)
-					volume_passed *= 0.75 //1 quarter of the chilling is done immidiately on touch reactions
+					if(!M.is_cold_resistant() || ischangeling(M))
+						M.bodytemperature=max(M.bodytemperature-volume_passed*2, 0)
+						volume_passed *= 0.75 //1 quarter of the chilling is done immidiately on touch reactions
 				if ((world.time > M.last_cubed + 5 SECONDS) && M.bioHolder)
 					if ((!M.is_cold_resistant() || ischangeling(M)) && isturf(M.loc) )
 						if (silent && volume_passed < 1)
