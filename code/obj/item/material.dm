@@ -604,9 +604,6 @@
 			var/datum/material/M = getMaterial("glass")
 			src.setMaterial(M, appearance = 1, setname = 1) // why were these set to 0 and 0, why would you use a glass shard to make some other kind of materialed thing when you could just use the base /obj/item/raw_material/shard
 
-		plate
-			icon_state = "shard"
-
 	plasmacrystal
 		setup_material()
 			..()
