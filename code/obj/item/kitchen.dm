@@ -430,6 +430,7 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
+	pickup_sfx = "sound/items/pickup_plate.ogg"
 	var/list/ordered_contents = list()
 	var/food_desc = null
 	var/max_food = 2
@@ -478,11 +479,10 @@ TRAYS
 				F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		sleep(0.3 SECONDS)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		playsound(src, "shatter", 70, 1)
+		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
 		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))
 		if(src.material)
@@ -491,8 +491,11 @@ TRAYS
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
-			sleep(0.3 SECONDS)
+			user.drop_item()
 			qdel(src)
+
+	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(src, "sound/items/plate_tap.ogg", 50, 1)
 
 	throw_impact(var/turf/T)
 		..()
@@ -604,6 +607,7 @@ TRAYS
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+			unique_tap_garbage_fluck(M,user)
 			logTheThing("combat", user, M, "taps %target% over the head with [src].")
 
 	attack_hand(mob/user as mob)
@@ -758,6 +762,8 @@ TRAYS
 
 		src.visible_message("\The [src] looks less sturdy now.")
 
+	unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(src, step_lattice, 50, 1)
 
 /obj/item/fish
 	throwforce = 3
