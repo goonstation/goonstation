@@ -814,7 +814,7 @@
 	return
 
 #define BASE_SPEED 1.8
-#define RUN_SCALING 0.1
+#define RUN_SCALING 0.12
 
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
