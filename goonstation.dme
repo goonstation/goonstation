@@ -58,6 +58,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_stdlib\__build.dm"
 #include "_stdlib\_accessLevels.dm"
 #include "_stdlib\_mapDefines.dm"
+#include "_stdlib\_metamacros.dm"
 #include "_stdlib\_setup.dm"
 #include "_stdlib\_types.dm"
 #include "_stdlib\color.dm"
