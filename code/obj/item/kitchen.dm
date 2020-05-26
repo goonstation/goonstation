@@ -479,23 +479,33 @@ TRAYS
 				F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
+		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
-		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
-		O.set_loc(get_turf(M))
-		if(src.material)
-			O.setMaterial(copyMaterial(src.material))
+		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+
+		var/turf/shardturf = get_turf(M)
+
 		if(src.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
-			qdel(src)
+			src.set_loc(shardturf)
+
+		SPAWN_DBG(0)
+			for (var/i in 1 to rand(2,3))
+				var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+				O.set_loc(shardturf)
+				if(src.material)
+					O.setMaterial(copyMaterial(src.material))
+				O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
+
+		qdel(src)
 
 	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
-		playsound(src, "sound/items/plate_tap.ogg", 50, 1)
+		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
 	throw_impact(var/turf/T)
 		..()
@@ -763,7 +773,7 @@ TRAYS
 		src.visible_message("\The [src] looks less sturdy now.")
 
 	unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
-		playsound(src, step_lattice, 50, 1)
+		playsound(src, "step_lattice", 50, 1)
 
 /obj/item/fish
 	throwforce = 3
