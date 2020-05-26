@@ -927,14 +927,14 @@
 
 	. *= multiplier
 
+	if (next_step_delay)
+		. += next_step_delay
+		next_step_delay = 0
+
 	if (running)
 		var/minSpeed = (1.0- RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
-
-	if (next_step_delay)
-		. += next_step_delay
-		next_step_delay = 0
 
 /mob/living/carbon/human/proc/start_sprint()
 	if (special_sprint && src.client)
