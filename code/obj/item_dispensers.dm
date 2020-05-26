@@ -6,6 +6,7 @@
 	name = "item dispenser"
 	desc = "A storage container that easily dispenses items."
 	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "dispenser_handcuffs"
 	pixel_y = 28
 	var/filled_icon_state = "" //i tried to do this in a smart way but it was a PITA so here have this stinky code instead
 	var/empty_icon_state = "" //autoset by the s y s t e m, dont set this yourself
@@ -61,6 +62,7 @@
 /obj/item_dispenser/handcuffs
 	name = "handcuffs dispenser"
 	desc = "A storage container that easily dispenses handcuffs."
+	icon_state = "dispenser_handcuffs"
 	filled_icon_state = "dispenser_handcuffs"
 	deposit_type = /obj/item/handcuffs
 	withdraw_type = /obj/item/handcuffs
@@ -68,6 +70,7 @@
 /obj/item_dispenser/latex_gloves
 	name = "latex gloves dispenser"
 	desc = "A storage container that easily dispenses latex gloves."
+	icon_state = "dispenser_gloves"
 	filled_icon_state = "dispenser_gloves"
 	deposit_type = /obj/item/clothing/gloves/latex
 	withdraw_type = /obj/item/clothing/gloves/latex
@@ -75,6 +78,7 @@
 /obj/item_dispenser/medical_mask
 	name = "medical mask dispenser"
 	desc = "A storage container that easily dispenses medical masks."
+	icon_state = "dispenser_mask"
 	filled_icon_state = "dispenser_mask"
 	deposit_type = /obj/item/clothing/mask/medical
 	withdraw_type = /obj/item/clothing/mask/medical
@@ -82,6 +86,7 @@
 /obj/item_dispenser/perscription_glasses
 	name = "perscription glasses dispenser"
 	desc = "A storage container that easily dispenses perscription glasses."
+	icon_states = "dispenser_glasses"
 	filled_icon_state = "dispenser_glasses"
 	deposit_type = /obj/item/clothing/glasses/regular
 	withdraw_type = /obj/item/clothing/glasses/regular
