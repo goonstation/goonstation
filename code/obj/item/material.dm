@@ -547,7 +547,7 @@
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
-	throwforce = 15.0
+	throwforce = 5.0
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
@@ -603,6 +603,9 @@
 			..()
 			var/datum/material/M = getMaterial("glass")
 			src.setMaterial(M, appearance = 1, setname = 1) // why were these set to 0 and 0, why would you use a glass shard to make some other kind of materialed thing when you could just use the base /obj/item/raw_material/shard
+
+		plate
+			icon_state = "shard"
 
 	plasmacrystal
 		setup_material()

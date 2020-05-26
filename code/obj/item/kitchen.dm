@@ -76,6 +76,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
 	dir = NORTH
+	throwforce = 7
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -139,7 +140,7 @@ TRAYS
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
-	throwforce = 5
+	throwforce = 9
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
