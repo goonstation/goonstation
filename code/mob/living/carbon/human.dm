@@ -936,7 +936,7 @@
 		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
 
 /mob/living/carbon/human/proc/start_sprint()
-	if (special_sprint && src.client && !src.client.tg_controls)
+	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
 		if (special_sprint & SPRINT_BAT_CLOAKED)
@@ -1059,10 +1059,12 @@
 
 		//lol
 		if ("SHIFT")//bEGIN A SPRINT
-			start_sprint()
+			if (!src.client.tg_controls)
+				start_sprint()
 			//else //indicate i am sprinting pls
 		if ("SPACE")
-			start_sprint()
+			if (src.client.tg_controls)
+				start_sprint()
 		else
 			return ..()
 
