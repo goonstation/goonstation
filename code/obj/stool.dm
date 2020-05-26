@@ -856,7 +856,6 @@
 			M.changeStatus("stunned", 4 SECONDS)
 			H.emote("scream")
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
-		//M.updatehealth()
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
 

@@ -1,6 +1,7 @@
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
 	icon_state = "drawbr0"
+	density = 0
 	var/auth_need = 3.0
 	var/list/authorized
 	var/list/authorized_registered
@@ -51,10 +52,10 @@
 	proc/print_auth_needed(var/mob/author)
 		if (author)
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early.\"</span></span>", 2)
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 		else
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early.\"</span></span>", 2)
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user as mob)

@@ -330,8 +330,8 @@ proc/build_syndi_buylist_cache()
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
 	item = /obj/item/lightbreaker
-	cost = 3
-	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound."
+	cost = 4
+	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"

@@ -109,7 +109,7 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 
-		updatehealth()
+		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
 		if (islist(src.add_abilities) && src.add_abilities.len)
@@ -794,7 +794,6 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn)
-		updatehealth()
 
 	take_brain_damage(var/amount)
 		if (..())
@@ -873,7 +872,7 @@
 	HealDamage(zone, brute, burn, tox)
 		..()
 		TakeDamage(zone, -brute, -burn)
-		updatehealth()
+
 
 	updatehealth()
 		if (src.nodamage)

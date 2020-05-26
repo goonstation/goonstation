@@ -178,18 +178,18 @@ To remove:
 #define MOB_PROPERTY_PRIORITY_PRIO 1
 #define MOB_PROPERTY_PRIORITY_VALUE 2
 
-#define PROP_NAME GET_TRIPLE_1
-#define PROP_ADD_MACRO GET_TRIPLE_2
-#define PROP_REMOVE_MACRO GET_TRIPLE_3
+#define GET_PROP_NAME TUPLE_GET_1
+#define GET_PROP_ADD TUPLE_GET_2
+#define GET_PROP_REMOVE TUPLE_GET_3
 
-#define APPLY_MOB_PROPERTY(target, property, etc...) PROP_ADD_MACRO(property)(target, PROP_NAME(property), ##etc)
+#define APPLY_MOB_PROPERTY(target, property, etc...) GET_PROP_ADD(property)(target, GET_PROP_NAME(property), ##etc)
 
-#define REMOVE_MOB_PROPERTY(target, property, source) PROP_REMOVE_MACRO(property)(target, PROP_NAME(property), source)
+#define REMOVE_MOB_PROPERTY(target, property, source) GET_PROP_REMOVE(property)(target, GET_PROP_NAME(property), source)
 
-#define GET_MOB_PROPERTY(target, property) (target.mob_properties[PROP_NAME(property)] ? target.mob_properties[PROP_NAME(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
+#define GET_MOB_PROPERTY(target, property) (target.mob_properties[GET_PROP_NAME(property)] ? target.mob_properties[GET_PROP_NAME(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
 
 // sliiiiiiiightly faster if you don't care about the value
-#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[PROP_NAME(property)] ? TRUE : FALSE)
+#define HAS_MOB_PROPERTY(target, property) (target.mob_properties[GET_PROP_NAME(property)] ? TRUE : FALSE)
 
 
 #define APPLY_MOB_PROPERTY_MAX(target, property, source, value) \

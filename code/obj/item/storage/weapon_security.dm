@@ -69,8 +69,7 @@
 	desc = "A box containing a sneaky pistol and some ammo."
 	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/silenced_22,\
-	/obj/item/ammo/bullets/bullet_22 = 2,\
-	/obj/item/ammo/bullets/bullet_22HP = 2)
+	/obj/item/ammo/bullets/bullet_22HP = 3)
 
 /obj/item/storage/box/derringer
 	name = "derringer box"

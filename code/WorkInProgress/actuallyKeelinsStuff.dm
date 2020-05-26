@@ -3321,7 +3321,6 @@ var/list/electiles = list()
 				SPAWN_DBG(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
-						user.updatehealth()
 						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0

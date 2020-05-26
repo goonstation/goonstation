@@ -31,7 +31,6 @@ datum
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -53,7 +52,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-					M.updatehealth()
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (bone_system)
@@ -174,7 +172,6 @@ datum
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
 							M.take_toxin_damage(-5 * mult)
-							M.updatehealth()
 						if (prob(25)) boutput(M, "<span class='notice'>Nice and cold! How refreshing!</span>")
 					else if (mytemp > T0C + 30) //Warm & disgusting.
 						M.emote("frown")
@@ -524,7 +521,6 @@ datum
 				if(!M) M = holder.my_atom
 				if (prob(15))
 					M.take_toxin_damage(1 * mult)
-					M.updatehealth()
 				..()
 				return
 
@@ -1089,8 +1085,6 @@ datum
 						M.reagents.remove_reagent(reagent_id, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
-					M.updatehealth()
-				M.updatehealth()
 				if(prob(20))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
 					M.vomit()
@@ -1796,7 +1790,6 @@ datum
 				if(prob(10))
 					M.emote(pick("cough"))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 * mult))
-				M.updatehealth()
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -1860,7 +1853,6 @@ datum
 				M.bodytemperature += rand(0,3) * mult
 				if(prob(10))
 					M.emote(pick("cough"))
-				M.updatehealth()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
@@ -2616,7 +2608,6 @@ datum
 					M.losebreath -= (1 * mult)
 				if(prob(45))
 					M.HealDamage("All", 6 * mult, 6 * mult)
-				M.updatehealth()
 				//M.UpdateDamageIcon()
 				return
 
@@ -2681,7 +2672,6 @@ datum
 						M.take_oxygen_deprivation(25 * mult)
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 100 * mult))
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 60 * mult))
-					M.updatehealth()
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -2777,7 +2767,6 @@ datum
 				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || prob(5)))
 					if (prob(10))
 						M.take_toxin_damage(rand(2.4) * mult)
-						M.updatehealth()
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40 * mult))
@@ -2863,7 +2852,6 @@ datum
 				if(M:losebreath)
 					M:losebreath -= (1 * mult)
 				M:HealDamage("All", 3 * mult, 3 * mult)
-				M:updatehealth()
 				M:UpdateDamageIcon()
 				..()
 				return
@@ -3202,7 +3190,6 @@ datum
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(rand(1,2) * -1) //I assume this was not supposed to be poison.
-						M.updatehealth()
 
 		fooddrink/cocktail_triple
 			name = "Triple Triple"
@@ -3228,7 +3215,6 @@ datum
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
-						M.updatehealth()
 					M.playsound_local(M, "sound/effects/bigwave.ogg", 50, 1)
 					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
 
@@ -3294,7 +3280,6 @@ datum
 			do_overdose(var/severity = 1, var/mob/M, var/mult = 1)
 				if (severity == 1)
 					M.take_toxin_damage(3 * mult)
-					M.updatehealth()
 					M.make_dizzy(33 * mult)
 
 					M.take_brain_damage(9 * mult)
@@ -3444,7 +3429,6 @@ datum
 				if (prob(5))
 					boutput(M, "<span class='alert'>GAH! My culture! Erased!</span>")
 					M.take_brain_damage(rand(1,2))
-					M.updatehealth()
 
 				return
 
@@ -3465,7 +3449,6 @@ datum
 				if (prob(5))
 					boutput(M, "<span class='alert'>GAH! My bones!</span>")
 					M.TakeDamage("All", 5, 0, 0, DAMAGE_CRUSH)
-					M.updatehealth()
 
 				return
 
@@ -3518,7 +3501,6 @@ datum
 				if (prob(8))
 					boutput(M, "<span class='alert'>You feel something squirming in your stomach. Your thoughts turn to cheese and you begin to sweat.</span>")
 					M.take_toxin_damage(rand(1,2) * mult)
-					M.updatehealth()
 
 				return
 

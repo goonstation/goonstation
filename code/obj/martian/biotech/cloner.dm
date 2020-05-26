@@ -84,7 +84,6 @@
         else
           // patch up damage
           M.HealDamage("All", 2, 2) // biotech working better than cloner because fuck who knows
-          M.updatehealth()
           // do you need to get out yet?
           var/health_percent = (M.health / M.max_health) * 100
           if(health_percent >= src.eject_at_health_percent)
@@ -97,7 +96,6 @@
     else
       // work on eating the current occupant
       M.TakeDamage("All", 2, 2)
-      M.updatehealth()
       if(!isdead(M) && prob(40)) // you poor bastard
         M.emote("scream")
         boutput(M, "<span style='color:red; font-weight: bold;'>[pick("OH GOD IT BURNS! THE PAIN!!", "FUCK! FUCK! AGH!!", "IT'S LIKE YOUR FLESH IS BEING REMODELLED BY A DRUNK TEAM OF ANGRY MONKEYS!", "AUGH!!")]</span>")
@@ -116,7 +114,6 @@
         src.occupant = M
         M.loc = src // the value of target has changed, do not edit this/delete this
         M.TakeDamage("All", 30, 30)
-        M.updatehealth()
         src.growing = 1
   else
     // look around for dead bodies and consume them

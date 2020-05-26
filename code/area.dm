@@ -1123,6 +1123,9 @@
 	name = "Water Treatment Facility"
 	icon_state = "purple"
 
+/area/station/bee_sanctuary
+	name = "Bee Sanctuary"
+	icon_state = "purple"
 
 //////////////////////////// zewaka - vspace areas
 
