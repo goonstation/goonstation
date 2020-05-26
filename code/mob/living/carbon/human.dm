@@ -866,7 +866,7 @@
 	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
 	if (health_deficiency >= 30)
-		. += (health_deficiency / 30)
+		. += (health_deficiency / 35)
 
 	var/missing_legs = 0
 	var/missing_arms = 0
