@@ -11,9 +11,9 @@
 		return  //do nothing if not in open hand
 	var/list/cont = list()
 	SEND_SIGNAL(parent, COMSIG_STORAGE_GET_CONTENTS, cont)
-	var/obj/item/I = pick(cont)
-	if (!I)
+	if (!cont.len)
 		return
+	var/obj/item/I = pick(cont)
 	var/turf/target = locate(M.x + rand(-4,4), M.y+rand(-4,4), M.z)
 	SEND_SIGNAL(parent, COMSIG_STORAGE_TRANSFER_ITEM, I, M.loc)
 	I.layer = initial(I.layer)

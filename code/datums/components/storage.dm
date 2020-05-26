@@ -74,7 +74,7 @@
 	..()
 
 // source attacked with I by user
-/datum/component/storage/proc/attack_by(atom/movable/source, obj/item/I, mob/user)
+/datum/component/storage/proc/attack_by(atom/source, obj/item/I, mob/user)
 	if (I.cant_drop)
 		return
 	if (islist(src.can_hold) && src.can_hold.len)
@@ -116,7 +116,7 @@
 	return src.handle_storage(user)
 
 // source click dragged to over_object (can be HUD or usr)
-/datum/component/storage/proc/mouse_drop(atom/movable/source, atom/over_object)
+/datum/component/storage/proc/mouse_drop(atom/source, atom/over_object)
 	var/obj/screen/hud/S = over_object
 	if (istype(S))
 		playsound(source.loc, "rustle", 50, 1, -5)
@@ -168,7 +168,7 @@
 							M.triggered(usr)
 					hud.remove_item(I)
 
-/datum/component/storage/proc/move_trigger(atom/movable/source, mob/user, kindof)
+/datum/component/storage/proc/move_trigger(atom/source, mob/user, kindof)
 	for (var/obj/O in source.contents)
 		if (O.move_triggered)
 			O.move_trigger(user, kindof)
@@ -184,7 +184,7 @@
 		return
 
 // after user attacks O with source
-/datum/component/storage/proc/after_attack(atom/movable/source, obj/O, mob/user)
+/datum/component/storage/proc/after_attack(atom/source, obj/O, mob/user)
 	if (O in source.contents)
 		user.drop_item()
 		SPAWN_DBG(1 DECI SECOND)
@@ -196,16 +196,16 @@
 		hud.update()
 
 // add text to passed tooltip desc
-/datum/component/storage/proc/build_tooltip(atom/movable/source, list/desc)
+/datum/component/storage/proc/build_tooltip(atom/source, list/desc)
 	desc += "<br>Holding [get_contents_len(source)]/[slots] objects"
 
 // get contents; filter for items and out for grabs
-/datum/component/storage/proc/get_contents(atom/movable/source, list/cont)
+/datum/component/storage/proc/get_contents(atom/source, list/cont)
 	for (var/obj/item/I in source.contents)
 		if(!istype(I, /obj/item/grab))
 			cont += I
 
-/datum/component/storage/proc/get_all_contents(atom/movable/source, list/cont)
+/datum/component/storage/proc/get_all_contents(atom/source, list/cont)
 	var/list/C = list()
 	src.get_contents(source, C)
 	cont += C
@@ -215,14 +215,14 @@
 		cont += cont2
 
 // find a certain type in contents
-/datum/component/storage/proc/find_type(atom/movable/source, item_type, list/found)
+/datum/component/storage/proc/find_type(atom/source, item_type, list/found)
 	for (var/A in source.contents)
 		if (istype(A, item_type))
 			found += A
 			return COMSIG_RETURN_SUCCESS
 
 // remove I from source hud and transfer it to target (if provided; may not be provided if I's loc is set again right after)
-/datum/component/storage/proc/transfer_item(atom/movable/source, obj/item/I, var/target)
+/datum/component/storage/proc/transfer_item(atom/source, obj/item/I, var/target)
 	if (target)
 		I.set_loc(target)
 	hud.remove_item(I)
@@ -233,7 +233,7 @@
 		return COMSIG_RETURN_FAILURE
 	return COMSIG_RETURN_SUCCESS
 
-/datum/component/storage/proc/emp_act(atom/movable/source)
+/datum/component/storage/proc/emp_act(atom/source)
 	if (source.contents.len)
 		for (var/atom/A in source.contents)
 			if (isitem(A))
@@ -243,7 +243,7 @@
 	return
 
 // convenience function
-/datum/component/storage/proc/get_contents_len(atom/movable/source)
+/datum/component/storage/proc/get_contents_len(atom/source)
 	var/items = 0
 	for (var/obj/item/I in source.contents)
 		if(!istype(I, /obj/item/grab))
@@ -251,7 +251,7 @@
 	return items
 
 // let user add I to source; does not have checks and should be internal
-/datum/component/storage/proc/add_item(atom/movable/source, obj/item/I, mob/user)
+/datum/component/storage/proc/add_item(atom/source, obj/item/I, mob/user)
 	user.u_equip(I)
 	I.dropped(user)
 	I.set_loc(source)
@@ -260,14 +260,14 @@
 
 // handles user opening the source and displaying the hud
 /datum/component/storage/proc/handle_storage(mob/user)
-	var/atom/movable/AM = src.parent
+	var/atom/A = src.parent
 	if (!src.sneaky)
-		playsound(AM.loc, "rustle", 50, 1, -2)
-	if (AM.loc == user && (!src.does_not_open_in_pocket || AM == user.l_hand || AM == user.r_hand))
+		playsound(A.loc, "rustle", 50, 1, -2)
+	if (A.loc == user && (!src.does_not_open_in_pocket || A == user.l_hand || A == user.r_hand))
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.limbs)
-				if ((AM == H.l_hand && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)) || (AM == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+				if ((A == H.l_hand && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)) || (A == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
 					return
 		if (user.s_active)
 			user.detach_hud(user.s_active)
@@ -277,8 +277,8 @@
 		user.s_active = hud
 		hud.update()
 		user.attach_hud(hud)
-		AM.add_fingerprint(user)
-		animate_storage_rustle(AM)
+		A.add_fingerprint(user)
+		animate_storage_rustle(A)
 		return COMSIG_RETURN_EARLY
 	else
 		for (var/mob/M in hud.mobs)
@@ -299,16 +299,16 @@
 	return 1
 
 /datum/component/storage/proc/mousetrap_check(mob/user)
-	var/atom/movable/AM = src.parent
+	var/atom/A = src.parent
 	if (!ishuman(user) || user.stat)
 		return
-	for (var/obj/item/mousetrap/MT in AM.contents)
+	for (var/obj/item/mousetrap/MT in A.contents)
 		if (MT.armed)
 			user.visible_message("<span class='alert'><B>[user] reaches into [src.parent] and sets off a mousetrap!</B></span>",\
 			"<span class='alert'><B>You reach into [src.parent], but there was a live mousetrap in there!</B></span>")
 			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 			. = 1
-	for (var/obj/item/mine/M in AM.contents)
+	for (var/obj/item/mine/M in A.contents)
 		if (M.armed && M.used_up != 1)
 			user.visible_message("<span class='alert'><B>[user] reaches into [src.parent] and sets off a [M]!</B></span>",\
 			"<span class='alert'><B>You reach into [src.parent], but there was a live [M] in there!</B></span>")
@@ -318,10 +318,10 @@
 // future: refactor into /datum/component/storage/shared
 /datum/component/storage/bible
 
-/datum/component/storage/bible/get_contents(atom/movable/source, list/cont)
+/datum/component/storage/bible/get_contents(atom/source, list/cont)
 	cont += bible_contents
 
-/datum/component/storage/bible/transfer_item(atom/movable/source, obj/item/I, var/target)
+/datum/component/storage/bible/transfer_item(atom/source, obj/item/I, var/target)
 	bible_contents -= I
 	..()
 	for (var/obj/item/bible/bible in by_type[/obj/item/bible])

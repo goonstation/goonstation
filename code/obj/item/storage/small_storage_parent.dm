@@ -138,9 +138,6 @@
 		if (!cont.len)
 			return
 		var/obj/item/I = pick(cont)
-		if (!I)
-			return
-
 		I.throwforce += 8 //Ugly. Who cares.
 		SPAWN_DBG(1.5 SECONDS)
 			if (I)
