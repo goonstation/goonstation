@@ -292,6 +292,7 @@ var/global/list/soundCache = list(
  	"sound/effects/splort.ogg" = 'sound/effects/splort.ogg',\
  	"sound/effects/spray.ogg" = 'sound/effects/spray.ogg',\
  	"sound/effects/spring.ogg" = 'sound/effects/spring.ogg',\
+ 	"sound/effects/sprint_puff.ogg" = 'sound/effects/sprint_puff.ogg',\
  	"sound/effects/static_horror.ogg" = 'sound/effects/static_horror.ogg',\
  	"sound/effects/stoneshift.ogg" = 'sound/effects/stoneshift.ogg',\
  	"sound/effects/stridorstethoscope.ogg" = 'sound/effects/stridorstethoscope.ogg',\
