@@ -1496,7 +1496,7 @@
 			if (src.reagents)
 				var/anticoag_amt = src.reagents.has_reagent("heparin") // anticoagulant
 				final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
-
+			final_bleed *= mult
 			if (prob(max(0, min(final_bleed, 10)) * 5)) // up to 50% chance to make a big bloodsplatter
 				bleed(src, final_bleed, 5)
 
