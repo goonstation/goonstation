@@ -1,4 +1,10 @@
 
+(t)tue may 26 20
+(u)mbc
+(p)854
+(e)⚖🎨|balance, sprites
+(*)Movement rebalance : Sprints are more effective at countering slows. Slows reduced across the board. Sprints activate instantaneously on button press instead of waiting for next step. Lower base movespeed. Sprint consumes a bit less stamina. And other small adjustments/fixes.
+(*)Note that the rebalance is subject to change after testing!!
 (t)mon may 25 20
 (u)Tarmunora
 (p)827
