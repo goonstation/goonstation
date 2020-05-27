@@ -1,5 +1,7 @@
 
 (t)wed may 27 20
+(u)mbc
+(*)Not exactly my fix, I just helped to report the issue. LummoxJR fixed the screen freeze bug - update  your BYOND version to the latest beta!
 (u)Tarmunora
 (p)870
 (e)⚖🐛|balance, bug
