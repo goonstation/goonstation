@@ -8,7 +8,7 @@
 	set name = "say"
 	//&& !src.client.holder
 
-	if (!client.preferences.auto_capitalization)
+	if (client.preferences.auto_capitalization)
 
 		if (copytext(message, 1, 2) == ";") //Checks if message is prefixed with General Frequency
 			message = copytext(message, 2) //Chops off prefix
@@ -736,7 +736,7 @@
 		return
 
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
-	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "No longer": "Now"] auto capitalizing messages.</span>")
+	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
 
 /mob/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
