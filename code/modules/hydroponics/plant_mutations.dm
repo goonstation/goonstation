@@ -12,7 +12,7 @@
 	var/attacked_proc_override = 0
 	var/name_prefix = ""	// Prepend to plant name
 	var/name_suffix = ""	// Append to plant name
-	var/dont_rename_crop = false	// If the crop should not be renamed based on the
+	var/dont_rename_crop = false	// If the crop should not be renamed based on the plant's mutation
 
 	// Ranges various genes have to be in to get the mutation to appear - lower and upper bound
 	var/list/GTrange = list(null,null) // null means there is no limit so an upper bound of 25
@@ -204,6 +204,7 @@
 
 /datum/plantmutation/eggplant/literal
 	name = "Free-Range Eggplant"
+	dont_rename_crop = true
 	name_prefix = "free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -537,6 +538,7 @@
 
 /datum/plantmutation/tree/money
 	name = "Money Tree"
+	dont_rename_crop = true
 	name_prefix = "Money "
 	iconmod = "TreeCash"
 	crop = /obj/item/spacecash
@@ -544,6 +546,7 @@
 
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
+	dont_rename_crop = true
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
@@ -551,6 +554,7 @@
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
+	dont_rename_crop = true
 	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1

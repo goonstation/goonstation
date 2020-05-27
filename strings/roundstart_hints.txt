@@ -123,3 +123,4 @@ Never be afraid to ask others for help, whether in game or through mentorhelp (F
 Completing traitor objectives isn't mandatory. Try to come up with your own goals and gimmicks.
 Being arrested isn't the end of the world.
 A talkative antagonist is fun for everyone.
+By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slows. 
