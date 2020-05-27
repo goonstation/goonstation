@@ -935,7 +935,6 @@
 			//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
 			var/lung_burn_left = min(max(breath.temperature - organHolder.left_lung?.temp_tolerance, 0), 10)
 			var/lung_burn_right = min(max(breath.temperature - organHolder.right_lung?.temp_tolerance, 0), 10)
-//			var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
 			if (breath.temperature > organHolder.left_lung ? organHolder.left_lung.temp_tolerance : INFINITY)
 				TakeDamage("chest", 0, (lung_burn_left / 2) + 3, 0, DAMAGE_BURN)
 				if(prob(20))
@@ -948,12 +947,7 @@
 					boutput(src, "<span class='alert'>This air is searing hot!</span>")
 					if (prob(80))
 						src.organHolder.damage_organ(0, lung_burn_right + 6, 0, "right_lung")
-/*		TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
-			if (prob(20))
-			boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
-			if (src.organHolder)
-				src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
-*/
+
 			hud.update_fire_indicator(1)
 			if (prob(4))
 				boutput(src, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
