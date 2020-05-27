@@ -971,27 +971,6 @@
 						sprint_particle(src, last)
 						playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
-/mob/living/carbon/human/proc/start_sprint()
-	if (special_sprint && src.client)
-		if (special_sprint & SPRINT_BAT)
-			spell_batpoof(src, cloak = 0)
-		if (special_sprint & SPRINT_BAT_CLOAKED)
-			spell_batpoof(src, cloak = 1)
-		if (special_sprint & SPRINT_SNIPER)
-			begin_sniping()
-	else
-		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (src.getStatusDuration("staggered") < 1 && !src.hasStatus("blocking"))
-				if (!hasStatus(list("stunned", "paralysis", "weakened")))
-					sprint_particle(src)
-
-					next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-					src.next_move = world.time
-					src.attempt_move()
-					next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
-
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
-
 #undef BASE_SPEED
 #undef RUN_SCALING
 #undef RUN_SCALING_LYING
