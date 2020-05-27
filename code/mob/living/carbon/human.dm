@@ -189,7 +189,7 @@
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
 	src.stamina_bar = new(src)
-	hud.add_object(src.stamina_bar, HUD_LAYER+1, "EAST-1, NORTH")
+	hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
 	if (global_sims_mode) // IF YOU ARE HERE TO DISABLE SIMS MODE, DO NOT TOUCH THIS. LOOK IN GLOBAL.DM
 #ifdef RP_MODE
@@ -816,7 +816,7 @@
 
 #define BASE_SPEED 1.65
 #define RUN_SCALING 0.12
-
+#define RUN_SCALING_LYING 0.2
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
 	. = BASE_SPEED
@@ -932,9 +932,16 @@
 		next_step_delay = 0
 
 	if (running)
-		var/minSpeed = (1.0- RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
+		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		var/minSpeed = (1.0- runScaling * BASE_SPEED) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
-		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
+		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
+
+/mob/living/carbon/human/keys_changed(keys, changed)
+	..()
+	if (changed & KEY_RUN)
+		if (hud)
+			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/carbon/human/proc/start_sprint()
 	if (special_sprint && src.client)
@@ -946,19 +953,27 @@
 			begin_sniping()
 	else
 		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (src.getStatusDuration("staggered") < 1 && !src.hasStatus("blocking"))
-				if (!hasStatus(list("stunned", "paralysis", "weakened")))
-					sprint_particle(src)
+			if (src.getStatusDuration("staggered") < 1)
+				if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
+					if (src.hasStatus("blocking"))
+						for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
+							qdel(G)
+
+					var/last = src.loc
+					var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
 
 					next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
 					src.next_move = world.time
 					src.attempt_move()
 					next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
+					if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
+						sprint_particle(src, last)
+						playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
 #undef BASE_SPEED
 #undef RUN_SCALING
+#undef RUN_SCALING_LYING
 
 /mob/living/carbon/human/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
