@@ -166,3 +166,78 @@
     "I'll go dispatch it. But if an ant has",
     "found its way here, more may arrive.",
     "It may be time to pack up shop.")
+
+
+
+//Mainframe stuff for the H7 spacejunk.
+/obj/machinery/networked/mainframe/seq_cloner
+	setup_drive_type = /obj/item/disk/data/memcard/seq_cloner
+
+/obj/item/disk/data/memcard/seq_cloner
+	file_amount = 1024
+
+	New()
+		..()
+		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
+		newfolder.name = "sys"
+		newfolder.metadata["permission"] = COMP_HIDDEN
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/shell(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/login(src) )
+
+		var/datum/computer/folder/subfolder = new /datum/computer/folder
+		subfolder.name = "drvr" //Driver prototypes.
+		newfolder.add_file( subfolder )
+		//subfolder.add_file ( new FILEPATH GOES HERE )
+		subfolder.add_file( new /datum/computer/file/mainframe_program/driver/mountable/databank(src) )
+		//subfolder.add_file( new /datum/computer/file/mainframe_program/driver/mountable/printer(src) )
+		//subfolder.add_file( new /datum/computer/file/mainframe_program/driver/nuke(src) )
+		//subfolder.add_file( new /datum/computer/file/mainframe_program/driver/mountable/guard_dock(src) )
+		//subfolder.add_file( new /datum/computer/file/mainframe_program/driver/mountable/radio(src) )
+		//subfolder.add_file( new /datum/computer/file/mainframe_program/driver/secdetector(src) )
+		//subfolder.add_file( new /datum/computer/file/mainframe_program/driver/apc(src) )
+		subfolder.add_file( new /datum/computer/file/mainframe_program/driver/mountable/user_terminal(src) )
+
+		newfolder = new /datum/computer/folder
+		newfolder.name = "bin" //Applications available to all users.
+		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/rm(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cat(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mkdir(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ln(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/chmod(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/chown(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/su(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cp(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mv(src) )
+		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/mount(src) )
+		//newfolder.add_file( new /datum/computer/file/mainframe_program/guardbot_interface(src) )
+
+		newfolder = new /datum/computer/folder
+		newfolder.name = "mnt"
+		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		src.root.add_file( newfolder )
+
+		newfolder = new /datum/computer/folder
+		newfolder.name = "conf"
+		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		src.root.add_file( newfolder )
+
+		var/datum/computer/file/record/testR = new
+		testR.name = "motd"
+		testR.fields += "Welcome to DWAINE System VI!"
+		testR.fields += "Glory to the Syndicate!"
+		newfolder.add_file( testR )
+
+		newfolder.add_file( new /datum/computer/file/record/dwaine_help(src) )
+
+		newfolder = new /datum/computer/folder
+		newfolder.name = "etc"
+		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		src.root.add_file( newfolder )
+
+		return
