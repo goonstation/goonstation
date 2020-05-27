@@ -10,6 +10,7 @@
 (p)869
 (e)🎨|sprites
 (*)New sprint hud icons
+(*)While blocking, beginning a sprint will instantly cancel the block (instead of doing nothing)
 (u)mbc
 (p)831
 (e)⚖|balance
