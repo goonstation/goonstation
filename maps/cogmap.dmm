@@ -4037,7 +4037,7 @@
 "bzH" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/item/device/radio/intercom{broadcasting = 0; dir = 1; frequency = 1445; name = "Station Intercom (Medical)"},/turf/simulated/floor/carpet{icon_state = "fred5"},/area/station/crew_quarters/hor)
 "bzI" = (/obj/machinery/atmospherics/valve{dir = 4; name = "gas mix supply valve"},/turf/simulated/floor/black,/area/station/engine/hotloop)
 "bzJ" = (/obj/machinery/atmospherics/portables_connector{dir = 8},/obj/item/device/radio/intercom{broadcasting = 0; dir = 1; frequency = 1448; name = "Engine Core Intercom"},/turf/simulated/floor/blue,/area/station/science/lab)
-"bzK" = (/obj/item/device/radio/intercom{broadcasting = 0; dir = 1; frequency = 1445; layer = 9.6; name = "Medical Intercom"},/obj/stool/chair/couch{dir = 4},/turf/simulated/floor/wood,/area/station/medical/medbay/lobby)
+"bzK" = (/obj/item/device/radio/intercom{broadcasting = 0; frequency = 1445; layer = 9.6; name = "Medical Intercom"},/obj/stool/chair/couch{dir = 4},/turf/simulated/floor/wood,/area/station/medical/medbay/lobby)
 "bzL" = (/obj/grille/catwalk/cross{dir = 9; tag = "icon-catwalk_cross (NORTHWEST)"},/obj/machinery/camera{c_tag = "autotag"; dir = 4; name = "autoname - SS13"; tag = ""},/turf/space,/turf/simulated/floor/airless/plating/catwalk{dir = 9},/area/station/quartermaster/refinery)
 "bzM" = (/obj/machinery/atmospherics/pipe/simple/insulated,/obj/window/reinforced{dir = 2},/turf/simulated/floor/delivery,/area/station/engine/core)
 "bzN" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/delivery,/area/station/engine/core)
