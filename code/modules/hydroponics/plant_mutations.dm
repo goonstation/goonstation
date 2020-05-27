@@ -554,7 +554,7 @@
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
-	dont_rename_crop = trues
+	dont_rename_crop = true
 	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1
