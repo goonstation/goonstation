@@ -1,4 +1,16 @@
 
+(t)wed may 27 20
+(u)Tarmunora
+(p)776
+(e)⚖|balance
+(*)Changed Spes-12 to blow off limbs and cause massive organ damage.
+(+)Replaced buckshot in armory with weaker variant.
+(t)tue may 26 20
+(u)mbc
+(p)854
+(e)⚖🎨|balance, sprites
+(*)Movement rebalance : Sprints are more effective at countering slows. Slows reduced across the board. Sprints activate instantaneously on button press instead of waiting for next step. Lower base movespeed. Sprint consumes a bit less stamina. And other small adjustments/fixes.
+(*)Note that the rebalance is subject to change after testing!!
 (t)mon may 25 20
 (u)Tarmunora
 (p)827
