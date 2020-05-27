@@ -1,5 +1,9 @@
 
 (t)wed may 27 20
+(u)mbc
+(p)831
+(e)⚖|balance
+(*)Temporarily disabled antag weighting.
 (u)Sovexe
 (p)855
 (e)🆕🗺|feature, mapping
