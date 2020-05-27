@@ -1,5 +1,9 @@
 
 (t)wed may 27 20
+(u)Tarmunora
+(p)870
+(e)⚖🐛|balance, bug
+(+)Doubled passive bleedout rate (fixes longstanding bug where passive bleedout was half intended rate)
 (u)mbc
 (p)869
 (e)🎨|sprites
