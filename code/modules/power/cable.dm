@@ -73,7 +73,7 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_DEFAULT
 	color = "#DD0000"
 
 	var/insulator_default = "synthrubber"

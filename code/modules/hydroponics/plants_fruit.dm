@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant/fruit)
 /datum/plant/fruit
 	plant_icon = 'icons/obj/hydroponics/plants_fruit.dmi'
 	category = "Fruit" // This is either Fruit, Vegetable, Herb or Miscellaneous (or Flower, apparently)

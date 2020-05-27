@@ -182,7 +182,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = -11
+	plane = PLANE_FLOOR
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID
@@ -840,7 +840,7 @@ var/global/client/ff_debugger = null
 	layer = 60
 	name = "Space Station 13"
 	desc = "The title card for it, at least."
-	plane = 11
+	plane = PLANE_OVERLAY_EFFECTS
 	pixel_x = -96
 
 	New()

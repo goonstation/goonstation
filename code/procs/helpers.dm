@@ -2364,14 +2364,16 @@ proc/angle_to_dir(angle)
 			.= SOUTH
 
 /**
-  * Transforms a supplied vector x & y to a direction
+  * Removes non-whitelisted reagents from the reagents of TA
   * user: the mob that adds a reagent to an atom that has a reagent whitelist
   * TA: Target Atom. The thing that the user is adding the reagent to
   */
 
-proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
+proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
 		return
+	if (!custom_message)
+		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
 
 	var/found = 0
 	for (var/reagent_id in TA.reagents.reagent_list)
@@ -2380,13 +2382,12 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			found = 1
 	if (found)
 		if (user)
-			user.show_text("[TA] identifies and removes a harmful substance.", "red") // haine: done -> //TODO: using usr in procs is evil shame on you
+			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
-			M.show_text("[TA] identifies and removes a harmful substance.", "red")
+			boutput(M, "[custom_message]")
 		else
-			TA.visible_message("<span class='alert'>[TA] identifies and removes a harmful substance.</span>")
-
+			TA.visible_message("[custom_message]")
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)
 	/*

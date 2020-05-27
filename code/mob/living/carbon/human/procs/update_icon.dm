@@ -1203,7 +1203,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.maptext_y = 32
 	src.maptext_width = 64
 	src.maptext_x = -16
-	src.UpdateDamage()
+	health_update_queue |= src
 #endif
 
 	if (src.bioHolder)
@@ -1214,8 +1214,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()
-	..()
 	var/prev = health
+	..()
 	src.updatehealth()
 	if (!isdead(src))
 		var/h_color = "#999999"
@@ -1234,8 +1234,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.maptext = ""
 #else
 /mob/living/carbon/human/tdummy/UpdateDamage()
-	..()
 	var/prev = health
+	..()
 	src.updatehealth()
 	if (!isdead(src))
 		var/h_color = "#999999"
@@ -1252,12 +1252,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
 	else
 		src.maptext = ""
-
-/mob/living/carbon/human/tdummy/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
-	src.UpdateDamage()
-
 #endif
 
 /mob/living/carbon/human/UpdateDamageIcon()

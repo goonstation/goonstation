@@ -239,7 +239,6 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 			pool(text)
 	return text
 
-
 /obj/maptext_spawner
 	var/loc_maptext = ""
 	var/loc_maptext_width = 32
@@ -253,3 +252,37 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		loc.maptext_x = loc_maptext_x
 		loc.maptext_y = loc_maptext_y
 		qdel(src)
+
+
+// I'm archiving a slightly improved version of the hell portal which is now gone
+
+/obj/hellportal
+	name = "hell portal"
+	desc = "This looks bad."
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "whole-massive"
+	pixel_x = -16
+	pixel_y = -16
+	var/number_left = 5
+	var/critter_type = /obj/critter/zombie
+
+/obj/hellportal/New()
+	src.transform = matrix() * 0
+	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
+	SPAWN_DBG(1 SECOND)
+		new /obj/effects/void_break(src.loc)
+		sleep(0.5 SECONDS)
+		critter_spam()
+
+/obj/hellportal/proc/critter_spam()
+	for(var/I = 1 to src.number_left)
+		var/atom/zomb = new src.critter_type(src.loc)
+		zomb.alpha = 0
+		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
+		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		sleep(2.5 SECONDS)
+		if(zomb.loc == src.loc)
+			step(zomb, pick(alldirs))
+	animate(src, transform = matrix() * 0, time = 1 SECOND, easing = SINE_EASING)
+	sleep(1 SECOND)
+	qdel(src)

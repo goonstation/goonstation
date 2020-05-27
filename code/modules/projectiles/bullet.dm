@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/projectile/bullet)
 /datum/projectile/bullet
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45
@@ -214,12 +215,17 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
-	dissipation_delay = 15
+	dissipation_delay = 10
+	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
+	projectile_speed = 56
+	max_range = 100
 	casing = /obj/item/casing/rifle
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
-
-	on_hit(atom/hit, dirflag)
+	on_launch(obj/projectile/O)
+		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
+				
+	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(power > 40)
@@ -234,6 +240,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 		..()
+	
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
 	power = 10

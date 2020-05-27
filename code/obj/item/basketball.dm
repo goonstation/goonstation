@@ -24,7 +24,6 @@
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
-	user.updatehealth()
 	SPAWN_DBG(30 SECONDS)
 		if (user)
 			user.suiciding = 0
@@ -237,7 +236,6 @@
 			if(affecting)
 				affecting.take_damage(0, 15)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 
 
 //BLOOD BOWL BALL

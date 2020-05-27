@@ -994,6 +994,9 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in job_controls.special_jobs)
 			if (J.name == string)
 				return J
+		for (var/datum/job/J in job_controls.hidden_jobs)
+			if (J.name == string)
+				return J
 	logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
 	return null
 

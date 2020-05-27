@@ -173,9 +173,6 @@
 						src.target.resistances += D.type
 						src.target.ailments -= D
 						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")*/
-
-			src.updatehealth()
-
 			if (src)
 				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
 
@@ -785,7 +782,6 @@
 
 	if (damage > 0)
 		random_brute_damage(target, damage)
-		target.updatehealth()
 		target.UpdateDamageIcon()
 
 	logTheThing("combat", user, target, "punches %target% at [log_loc(user)].")
@@ -1033,7 +1029,6 @@
 				owner.attack_finished(target)
 				target.attackby_finished(owner)
 			target.UpdateDamageIcon()
-			target.updatehealth()
 
 
 			if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)

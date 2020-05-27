@@ -125,8 +125,7 @@
 			src.death(0)
 			return
 		else if (src.health < src.max_health)
-			src.health += 1 * (life_time_passed / life_tick_spacing)
-			updatehealth()
+			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
 		last_life_update = world.timeofday
 
 	// No log entries for unaffected mobs (Convair880).
@@ -222,7 +221,7 @@
 		health = min(max_health, health)
 		if (src.health <= 0)
 			src.death(0)
-		updatehealth()
+		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)
 		TakeDamage(zone, -(brute / 3), -burn)

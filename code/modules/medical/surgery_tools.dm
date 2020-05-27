@@ -72,7 +72,6 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -138,7 +137,6 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -203,7 +201,6 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -486,7 +483,6 @@ CONTAINS:
 					patient.take_oxygen_deprivation(-50)
 					if (patient.organHolder && patient.organHolder.heart)
 						patient.get_organ("heart").heal_damage(10,10,10)
-					patient.updatehealth()
 				else
 					patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
@@ -618,7 +614,6 @@ CONTAINS:
 			return 0
 		user.visible_message("<span class='alert'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
 		user.take_oxygen_deprivation(160)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

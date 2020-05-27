@@ -20,7 +20,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -243,7 +242,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 2 * mult, 0)
-					M.updatehealth()
 				if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(10 * mult))
 				// I only put this following bit because wiki claims it "attempts to return temperature to normal"
@@ -280,7 +278,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 0, 2 * mult)
-					M.updatehealth()
 				if(M.bodytemperature > 280)
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),280)
 				..()
@@ -304,10 +301,8 @@ datum
 				for(var/reagent_id in M.reagents.reagent_list)
 					if(reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 5 * mult)
-				M.updatehealth()
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
-					M.updatehealth()
 				if(prob(6))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
 					M.vomit()
@@ -332,10 +327,8 @@ datum
 				for(var/reagent_id in M.reagents.reagent_list)
 					if(reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 6)
-				M.updatehealth()
 				if(M.health > 18)
 					M.take_toxin_damage(2)
-					M.updatehealth()
 				return  */
 
 
@@ -362,7 +355,6 @@ datum
 				M.take_oxygen_deprivation(-INFINITY)
 				if(prob(20))
 					M.take_brain_damage(1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -404,7 +396,6 @@ datum
 						boutput(M, "<span class='notice'>The synthetic flesh integrates itself into your wounds, healing you.</span>")
 
 					M.UpdateDamageIcon()
-					M.updatehealth()
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -520,7 +511,6 @@ datum
 					if (H.organHolder)
 						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 
-				M.updatehealth()
 				//M.UpdateDamageIcon()
 				..()
 				return
@@ -578,7 +568,6 @@ datum
 					var/mob/living/carbon/human/H = M
 					H.blood_volume += 1  * mult
 					H.nutrition += 1  * mult
-				M.updatehealth()
 				//M.UpdateDamageIcon()
 				..()
 				return
@@ -801,7 +790,6 @@ datum
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -980,7 +968,6 @@ datum
 				// Consequently, a single patch would heal ~200 damage (Convair880).
 				M.HealDamage("All", 0, 2 * mult)
 				M.UpdateDamageIcon()
-				M.updatehealth()
 				..()
 				return
 
@@ -1008,12 +995,10 @@ datum
 
 
 					M.UpdateDamageIcon()
-					M.updatehealth()
 				else if (method == INGEST)
 					boutput(M, "<span class='alert'>You feel sick...</span>")
 					if (volume_passed > 0)
 						M.take_toxin_damage(volume_passed/2)
-					M.updatehealth()
 
 
 		medical/mutadone // COGWERKS CHEM REVISION PROJECT. - marked for revision. Magic bullshit chem, ought to be related to mutagen somehow
@@ -1101,7 +1086,6 @@ datum
 					if (M.get_toxin_damage() && prob(25))
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -1153,7 +1137,6 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder)
 						H.organHolder.heal_organs(3*mult, 3*mult, 3*mult, target_organs)
-				M.updatehealth()
 				..()
 				return
 
@@ -1221,7 +1204,6 @@ datum
 				// Consequently, a single patch would heal ~200 damage (Convair880).
 				M.HealDamage("All", 2 * mult, 0)
 				M.UpdateDamageIcon()
-				M.updatehealth()
 				..()
 				return
 
@@ -1257,7 +1239,6 @@ datum
 						boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
 						M.emote("scream")
 					M.UpdateDamageIcon()
-					M.updatehealth()
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel gross!</span>")
 					if (volume_passed > 0)
@@ -1265,7 +1246,6 @@ datum
 						if (prob(1) && isliving(M))
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
-					M.updatehealth()
 
 		medical/cryoxadone // COGWERKS CHEM REVISION PROJECT. magic drug, but isn't working right correctly
 			name = "cryoxadone"
@@ -1310,7 +1290,6 @@ datum
 						if (H.organHolder)
 							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
 
-				M.updatehealth()
 				if(prob(25)) M.UpdateDamageIcon() // gonna leave this one on for now, but only call it a quarter of the time
 				..()
 
@@ -1372,7 +1351,6 @@ datum
 					M.take_toxin_damage(1 * mult)
 				if(M.reagents.has_reagent("sarin"))
 					M.reagents.remove_reagent("sarin",20 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -1401,7 +1379,6 @@ datum
 					if (H.organHolder)
 						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 
-				M.updatehealth()
 				..()
 				return
 
@@ -1440,15 +1417,11 @@ datum
 					M.losebreath = max(6, M.losebreath)
 				if(prob(33)) // has some slight healing properties due to tissue oxygenation
 					M.HealDamage("All", 1 * mult, 1 * mult)
-					M.updatehealth()
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder)
 						H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
-
-
-				M.updatehealth()
 				..()
 				return
 
@@ -1494,7 +1467,6 @@ datum
 					if (H.organHolder)
 						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 
-				M.updatehealth()
 				..()
 				return
 
@@ -1532,7 +1504,6 @@ datum
 				if(holder.has_reagent("ethanol")) holder.remove_reagent("ethanol", 8 * mult)
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-2 * mult)
-					M.updatehealth()
 				..()
 				return
 
@@ -1552,7 +1523,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
-				M.updatehealth()
 				if(prob(25))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
 					M.vomit()
