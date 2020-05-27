@@ -48,6 +48,7 @@
 	icon_state = "stamina_bar"
 	var/last_val = -123123
 	var/tooltipTheme = "stamina"
+	layer = HUD_LAYER-1
 
 	New(var/mob/living/carbon/C)
 		..()
@@ -74,17 +75,17 @@
 			src.transform = matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
 			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
-			animate(src, time = 3, color = rgb(255, 255, 255),  easing = LINEAR_EASING, loop = -1)
-			animate(time = 3, color = rgb(255, 0, 0),  easing = LINEAR_EASING, loop = -1)
+			animate(src, time = 1, color = rgb(255, 0, 0),  easing = LINEAR_EASING, loop = -1)
+			animate(time = 1, color = rgb(200, 200, 200),  easing = LINEAR_EASING, loop = -1)
 		else
 			//icon_state = "stamina_bar"
 			var/x = max(0, C.stamina)
 			var/scaling = x / C.stamina_max
-			var/red = ((1 - scaling) * 255)
+			//var/red = ((1 - scaling) * 255)
 			src.transform = matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
 			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
-			animate(src, time = 5, color = rgb(red, 255 - red, 1),  easing = LINEAR_EASING)
+			animate(src, time = 5, color = rgb(255, 255, 1),  easing = LINEAR_EASING)
 			//src.transform = M
 			//src.color = rgb(red, 255 - red, 1)
 
