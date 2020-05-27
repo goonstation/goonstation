@@ -1140,3 +1140,110 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			sleep(0.1 SECONDS)
 		A.pixel_x = 0
 		A.pixel_y = 0
+
+/obj/overlay/tile_effect/fake_fullbright
+	icon = 'icons/effects/white.dmi'
+	plane = PLANE_LIGHTING
+	layer = LIGHTING_LAYER_FULLBRIGHT
+	blend_mode = BLEND_OVERLAY
+
+/obj/overlay/tile_effect/sliding_turf
+	mouse_opacity = 0
+	New(turf/T)
+		. = ..()
+		src.icon = T.icon
+		src.icon_state = T.icon_state
+		src.dir = T.dir
+		src.color = T.color
+		src.layer = T.layer - 1
+		src.plane = T.plane
+
+
+/proc/animate_turf_slideout(turf/T, new_turf_type, dir, time)
+	var/image/orig = image(T.icon, T.icon_state, dir=T.dir)
+	var/was_fullbright = T.fullbright
+	orig.color = T.color
+	orig.appearance_flags |= RESET_TRANSFORM
+	T.ReplaceWith(new_turf_type)
+	T.underlays += orig
+	T.layer--
+	switch(dir)
+		if(WEST)
+			T.transform = list(1, 0, 32, 0, 1, 0)
+		if(EAST)
+			T.transform = list(1, 0, -32, 0, 1, 0)
+		if(SOUTH)
+			T.transform = list(1, 0, 0, 0, 1, 32)
+		if(NORTH)
+			T.transform = list(1, 0, 0, 0, 1, -32)
+	animate(T, transform=list(1, 0, 0, 0, 1, 0), time=time)
+	if(was_fullbright) // eww
+		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
+		full_light.color = orig.color
+		var/list/trans
+		switch(dir)
+			if(WEST)
+				trans = list(0, 0, -16, 0, 1, 0)
+			if(EAST)
+				trans = list(0, 0, 16, 0, 1, 0)
+			if(SOUTH)
+				trans = list(1, 0, 0, 0, 0, -16)
+			if(NORTH)
+				trans = list(1, 0, 0, 0, 0, 16)
+		animate(full_light, transform=trans, time=time)
+
+/proc/animate_turf_slideout_cleanup(turf/T)
+	T.layer++
+	T.underlays.Cut()
+	var/obj/overlay/tile_effect/fake_fullbright/full_light = locate() in T
+	if(full_light)
+		qdel(full_light)
+
+
+/proc/animate_turf_slidein(turf/T, new_turf_type, dir, time)
+	var/obj/overlay/tile_effect/sliding_turf/slide = new(T)
+	var/had_fullbright = T.fullbright
+	T.ReplaceWith(new_turf_type)
+	T.layer -= 2
+	var/list/tr
+	switch(dir)
+		if(WEST)
+			tr = list(1, 0, -32, 0, 1, 0)
+		if(EAST)
+			tr = list(1, 0, 32, 0, 1, 0)
+		if(SOUTH)
+			tr = list(1, 0, 0, 0, 1, -32)
+		if(NORTH)
+			tr = list(1, 0, 0, 0, 1, 32)
+	animate(slide, transform=tr, time=time)
+	if(!had_fullbright && T.fullbright) // eww
+		T.fullbright = 0
+		T.overlays -= /image/fullbright
+		T.RL_Init() // turning off fullbright
+		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
+		full_light.color = T.color
+		switch(dir)
+			if(WEST)
+				full_light.transform = list(0, 0, 16, 0, 1, 0)
+			if(EAST)
+				full_light.transform = list(0, 0, -16, 0, 1, 0)
+			if(SOUTH)
+				full_light.transform = list(1, 0, 0, 0, 0, 16)
+			if(NORTH)
+				full_light.transform = list(1, 0, 0, 0, 0, -16)
+		animate(full_light, transform=matrix(), time=time)
+
+/proc/animate_turf_slidein_cleanup(turf/T)
+	T.layer += 2
+	T.underlays.Cut()
+	var/obj/overlay/tile_effect/fake_fullbright/full_light = locate() in T
+	if(full_light)
+		qdel(full_light)
+	var/obj/overlay/tile_effect/sliding_turf/slide = locate() in T
+	if(slide)
+		qdel(slide)
+	if(initial(T.fullbright))
+		T.fullbright = 1
+		T.overlays += /image/fullbright
+		T.RL_Init()
+
