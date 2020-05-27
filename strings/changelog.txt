@@ -1,6 +1,10 @@
 
 (t)wed may 27 20
 (u)mbc
+(p)869
+(e)🎨|sprites
+(*)New sprint hud icons
+(u)mbc
 (p)831
 (e)⚖|balance
 (*)Temporarily disabled antag weighting.
