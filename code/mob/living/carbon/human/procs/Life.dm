@@ -933,8 +933,8 @@
 
 		if (breath.temperature > min(organHolder.left_lung ? organHolder.left_lung.temp_tolerance : INFINITY, organHolder.right_lung ? organHolder.right_lung.temp_tolerance : INFINITY) && !src.is_heat_resistant()) // Hot air hurts :(
 			//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
-			var/lung_burn_left = min(max(breath.temperature - organHolder.left_lung?.temp_tolerance, 0), 10)
-			var/lung_burn_right = min(max(breath.temperature - organHolder.right_lung?.temp_tolerance, 0), 10)
+			var/lung_burn_left = min(max(breath.temperature - organHolder.left_lung?.temp_tolerance, 0) / 3, 10)
+			var/lung_burn_right = min(max(breath.temperature - organHolder.right_lung?.temp_tolerance, 0) / 3, 10)
 			if (breath.temperature > organHolder.left_lung ? organHolder.left_lung.temp_tolerance : INFINITY)
 				TakeDamage("chest", 0, (lung_burn_left / 2) + 3, 0, DAMAGE_BURN)
 				if(prob(20))
