@@ -1,5 +1,9 @@
 
 (t)wed may 27 20
+(u)Primebie1
+(p)846
+(e)🐛|bug
+(+)Fixed drug score checks at the end of Gang War rounds.
 (u)mbc
 (*)Not exactly my fix, I just helped to report the issue. LummoxJR fixed the screen freeze bug - update  your BYOND version to the latest beta!
 (u)Tarmunora
