@@ -90,3 +90,17 @@
 	filled_icon_state = "dispenser_glasses"
 	deposit_type = /obj/item/clothing/glasses/regular
 	withdraw_type = /obj/item/clothing/glasses/regular
+
+/obj/item_dispenser/idcarddispenser
+	name = "ID card dispenser"
+	desc = "A storage container that easily dispenses fresh ID cards. It can be refilled with paper."
+	icon_state = "dispenser_id"
+	filled_icon_state = "dispenser_id"
+	deposit_type = /obj/item/paper
+	withdraw_type = /obj/item/card/id
+	amount = 7 
+
+	attack_hand(mob/user as mob)
+		if (!src.cant_withdraw && src.amount >= 1)
+			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
+		..()
