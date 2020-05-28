@@ -1,6 +1,10 @@
 
 (t)thu may 28 20
 (u)mbc
+(p)874
+(e)|
+(*)Fixed a bug where the hand-to-hand melee attack cost was being added to the cost of all item attacks. This meant every item cost 20 more stamina to swing than was intended
+(u)mbc
 (p)873
 (e)|
 (*)You can use a (less powerful) sprint while stagger (combat status effect) or blocking is active now.
