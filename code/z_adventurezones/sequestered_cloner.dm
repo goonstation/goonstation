@@ -52,6 +52,7 @@
 			During your education, we embeded a memetic mission.<br>
 			You are to blend in with the engineering crew in the nearby Nanotrasen station.<br>
 			You will be activated at a later time through the station's broadcast system, whenapon your mission will be remembered.<br>
+			Until then do your best to fit in, do not rock the boat, do not harm your "fellow employees".<br>
 			Grab your gear from the neigboring locker and ID dispenser.<br>
 			Destroy this message. Supplies are in the fridge to aid in it's destruction.<br>
 			Make us proud, agent.
