@@ -1,5 +1,9 @@
 
 (t)wed may 27 20
+(u)MarkNstein
+(p)862
+(e)⚖🗺|balance, mapping
+(+)Moved Cog1 AI chamber APC to be beside the AI, like Kondaru.
 (u)Primebie1
 (p)846
 (e)🐛|bug
