@@ -404,7 +404,7 @@
 			A:lastattacker = usr
 			A:lastattackertime = world.time
 		A.changeStatus("weakened", 6 SECONDS)
-		A.force_laydown_standup()
+		A:force_laydown_standup()
 		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
