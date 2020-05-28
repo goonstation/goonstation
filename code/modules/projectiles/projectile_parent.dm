@@ -260,6 +260,7 @@
 		hitlist = null
 		transform = null
 		internal_speed = null
+		orig_turf = null
 		pierces_left = 0
 		goes_through_walls = 0
 		goes_through_mobs = 0

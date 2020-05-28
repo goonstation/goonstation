@@ -1,5 +1,41 @@
 
+(t)thu may 28 20
+(u)mbc
+(p)874
+(e)|
+(*)Fixed a bug where the hand-to-hand melee attack cost was being added to the cost of all item attacks. This meant every item cost 20 more stamina to swing than was intended
+(u)mbc
+(p)873
+(e)|
+(*)You can use a (less powerful) sprint while stagger (combat status effect) or blocking is active now.
 (t)wed may 27 20
+(u)MarkNstein
+(p)862
+(e)⚖🗺|balance, mapping
+(+)Moved Cog1 AI chamber APC to be beside the AI, like Kondaru.
+(u)Primebie1
+(p)846
+(e)🐛|bug
+(+)Fixed drug score checks at the end of Gang War rounds.
+(u)mbc
+(*)Not exactly my fix, I just helped to report the issue. LummoxJR fixed the screen freeze bug - update  your BYOND version to the latest beta!
+(u)Tarmunora
+(p)870
+(e)⚖🐛|balance, bug
+(+)Doubled passive bleedout rate (fixes longstanding bug where passive bleedout was half intended rate)
+(u)mbc
+(p)869
+(e)🎨|sprites
+(*)New sprint hud icons
+(*)While blocking, beginning a sprint will instantly cancel the block (instead of doing nothing)
+(u)mbc
+(p)831
+(e)⚖|balance
+(*)Temporarily disabled antag weighting.
+(u)Sovexe
+(p)855
+(e)🆕🗺|feature, mapping
+(+)Added a Bee Sanctuary Z5 space variant.
 (u)Tarmunora
 (p)776
 (e)⚖|balance

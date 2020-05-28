@@ -828,14 +828,24 @@
 	if (!themob || !ismob(themob))
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
-	if (!zones || !zones.len)
-		themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
-	else
-		if (prob(100 / zones.len + 1))
+	if(checkarmor)
+		if (!zones || !zones.len)
 			themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
-			var/zone=pick(zones)
-			themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
+			if (prob(100 / zones.len + 1))
+				themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
+			else
+				var/zone=pick(zones)
+				themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
+	else
+		if (!zones || !zones.len)
+			themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
+		else
+			if (prob(100 / zones.len + 1))
+				themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
+			else
+				var/zone=pick(zones)
+				themob.TakeDamage(zone, damage, 0, 0, DAMAGE_BLUNT)
 
 /proc/random_burn_damage(var/mob/themob, var/damage) // do burn damage to a random organ
 	if (!themob || !ismob(themob))

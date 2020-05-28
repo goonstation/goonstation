@@ -42,6 +42,8 @@ datum/pipeline
 			//logTheThing("debug", null, null, "null air in pipeline([member ? "([showCoords(member.x, member.y, member.z)])" : "detached" ])")
 			dispose() // kill this network, something is bad
 			return
+		if(!air.volume)
+			return
 
 		//Check to see if pressure is within acceptable limits
 		var/pressure = air.return_pressure()
@@ -158,7 +160,7 @@ datum/pipeline
 		return network
 
 	proc/mingle_with_turf(turf/simulated/target, mingle_volume)
-		if (!target) return
+		if (!target || !air.volume) return
 		var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 		air_sample.volume = mingle_volume
 
