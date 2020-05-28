@@ -817,7 +817,7 @@
 #define BASE_SPEED 1.65
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.47
+#define RUN_SCALING_STAGGER 0.5
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
 	. = BASE_SPEED
