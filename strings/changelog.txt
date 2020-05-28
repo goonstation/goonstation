@@ -1,5 +1,9 @@
 
 (t)thu may 28 20
+(u)mbc
+(p)878
+(e)🎨|sprites
+(*)Added "sustained run" mechanic -  if you run in a straight line for a bit you will get a speed boost as long as you do not stop moving or change direction. This change is meant to address traveling around the station, make it smoother. It has a small visual indication (small puff) when this happens. Sprites/exact number values subject to change as usual.
 (u)Dabir
 (p)877
 (e)|
