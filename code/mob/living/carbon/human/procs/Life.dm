@@ -941,7 +941,7 @@
 					boutput(src, "<span class='alert'>This air is searing hot!</span>")
 					if (prob(80))
 						src.organHolder.damage_organ(0, lung_burn_left + 6, 0, "left_lung")
-			if (breath.temperature > organHolder.right_lung ? organHolder.right_lung.temp_tolerance : INFINITY)
+			if (breath.temperature > (organHolder.right_lung ? organHolder.right_lung.temp_tolerance : INFINITY))
 				TakeDamage("chest", 0, (lung_burn_right / 2) + 3, 0, DAMAGE_BURN)
 				if(prob(20))
 					boutput(src, "<span class='alert'>This air is searing hot!</span>")
