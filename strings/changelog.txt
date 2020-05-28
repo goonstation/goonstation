@@ -1,4 +1,9 @@
 
+(t)thu may 28 20
+(u)mbc
+(p)873
+(e)|
+(*)You can use a (less powerful) sprint while stagger (combat status effect) or blocking is active now.
 (t)wed may 27 20
 (u)MarkNstein
 (p)862
