@@ -817,6 +817,7 @@
 #define BASE_SPEED 1.65
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
+#define RUN_SCALING_STAGGER 0.47
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
 	. = BASE_SPEED
@@ -932,7 +933,10 @@
 		next_step_delay = 0
 
 	if (running)
+
 		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		if (src.hasStatus(list("staggered","blocking")))
+			runScaling = RUN_SCALING_STAGGER
 		var/minSpeed = (1.0- runScaling * BASE_SPEED) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
@@ -953,27 +957,27 @@
 			begin_sniping()
 	else
 		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (src.getStatusDuration("staggered") < 1)
-				if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
-					if (src.hasStatus("blocking"))
-						for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
-							qdel(G)
+			if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
+				//if (src.hasStatus("blocking"))
+				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
+				//		qdel(G)
 
-					var/last = src.loc
-					var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+				var/last = src.loc
+				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
 
-					next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-					src.next_move = world.time
-					src.attempt_move()
-					next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+				src.next_move = world.time
+				src.attempt_move()
+				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
-					if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
-						sprint_particle(src, last)
-						playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
+				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
+					sprint_particle(src, last)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
 #undef BASE_SPEED
 #undef RUN_SCALING
 #undef RUN_SCALING_LYING
+#undef RUN_SCALING_STAGGER
 
 /mob/living/carbon/human/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
