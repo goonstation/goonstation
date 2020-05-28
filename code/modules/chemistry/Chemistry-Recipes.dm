@@ -1613,6 +1613,55 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		bees_knees
+			name = "Bee's knees"
+			id = "beesknees"
+			result = "beesknees"
+			required_reagents = list("gin", "honey", "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "Placeholder"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		spiced_rum
+			name = "Spiced Rum"
+			id = "spicedrum"
+			result = "spicedrum"
+			required_reagents = list("rum", "capsaicin" = 1)
+			result_amount = 2
+			mix_phrase = "Placeholder"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		phil_collins
+			name = "Phil Collins"
+			id = "philcollins"
+			result = "philcollins"
+			required_reagents = list("vodka_tonic, lemonade" = 1)
+			result_amount = 2
+			mix_phrase = "You can feel it coming in the air tonight. Oh lord."
+			mix_sound = 'sound/misc/tom_high.ogg'
+			drinkrecipe = 1
+
+		duck_fart
+			name = "Duck Fart"
+			id = "duckfart"
+			result = "duckfart"
+			required_reagents = list("bourbon", "coffee", "milk" = 1)
+			result_amount =
+			mix_phrase = "Placeholder"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+			name = ""
+			id = ""
+			result = ""
+			required_reagents = list("" = 1)
+			result_amount =
+			mix_phrase = "Placeholder"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		squeeze
 			name = "Squeeze"
 			id = "squeeze"
