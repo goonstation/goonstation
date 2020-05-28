@@ -1009,6 +1009,8 @@
 		score += O.reagents.get_reagent_amount("catdrugs")
 		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
 
+		if(istype(O, /obj/item/plant/herb/cannabis) && O.reagents.get_reagent_amount("THC") == 0)
+			score += 7
 		return round(score)
 
 	proc/cash_amount()
