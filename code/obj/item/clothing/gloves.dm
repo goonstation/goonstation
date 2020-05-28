@@ -209,6 +209,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
+	scramble_prints = 0
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
 		..()
@@ -276,6 +277,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "latex"
 	item_state = "lgloves"
 	desc = "Custom made gloves."
+	scramble_prints = 0
 
 	insulating
 		onMaterialChanged()
@@ -318,6 +320,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "swat_syndie"
 	item_state = "swat_syndie"
 	protective_temperature = 1100
+	scramble_prints = 0
 	material_prints = "high-quality synthetic fibers"
 	setupProperties()
 		..()
@@ -329,6 +332,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
+	scramble_prints = 0
 
 /obj/item/clothing/gloves/stungloves/
 	name = "Stungloves"
@@ -383,6 +387,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	desc = "These gloves are for competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
+	scramble_prints = 0
 	material_prints = "red leather fibers"
 	crit_override = 1
 	bonus_crit_chance = 0
