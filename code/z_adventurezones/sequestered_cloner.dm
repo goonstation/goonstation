@@ -23,7 +23,7 @@
     aidisabled = 1
 
     // set channels depending on how much charge we have left
-    check_channle_thresholds()
+    check_channel_thresholds()
         if(cell.charge <= 0)					// zero charge, turn all off
             equipment = autoset(equipment, 0)
             lighting = autoset(lighting, 0)

@@ -1196,7 +1196,7 @@ var/zapLimiter = 0
 				environ = autoset(environ, 0)
 
 		// set channels depending on how much charge we have left
-		check_channle_thresholds()
+		check_channel_thresholds()
 
 		// now trickle-charge the cell
 
@@ -1250,7 +1250,7 @@ var/zapLimiter = 0
 	src.updateDialog()
 
 // set channels depending on how much charge we have left
-/obj/machinery/power/apc/proc/check_channle_thresholds()
+/obj/machinery/power/apc/proc/check_channel_thresholds()
 	if(cell.charge <= 0)					// zero charge, turn all off
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
