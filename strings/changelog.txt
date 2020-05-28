@@ -1,5 +1,39 @@
 
+(t)wed may 27 20
+(u)mbc
+(*)Not exactly my fix, I just helped to report the issue. LummoxJR fixed the screen freeze bug - update  your BYOND version to the latest beta!
+(u)Tarmunora
+(p)870
+(e)⚖🐛|balance, bug
+(+)Doubled passive bleedout rate (fixes longstanding bug where passive bleedout was half intended rate)
+(u)mbc
+(p)869
+(e)🎨|sprites
+(*)New sprint hud icons
+(u)mbc
+(p)831
+(e)⚖|balance
+(*)Temporarily disabled antag weighting.
+(u)Sovexe
+(p)855
+(e)🆕🗺|feature, mapping
+(+)Added a Bee Sanctuary Z5 space variant.
+(u)Tarmunora
+(p)776
+(e)⚖|balance
+(*)Changed Spes-12 to blow off limbs and cause massive organ damage.
+(+)Replaced buckshot in armory with weaker variant.
+(t)tue may 26 20
+(u)mbc
+(p)854
+(e)⚖🎨|balance, sprites
+(*)Movement rebalance : Sprints are more effective at countering slows. Slows reduced across the board. Sprints activate instantaneously on button press instead of waiting for next step. Lower base movespeed. Sprint consumes a bit less stamina. And other small adjustments/fixes.
+(*)Note that the rebalance is subject to change after testing!!
 (t)mon may 25 20
+(u)Tarmunora
+(p)827
+(e)⚖|balance
+(+)Buffed nuclear operative sniper rifle
 (u)Sovexe
 (p)839
 (e)🆕🗺|feature, mapping

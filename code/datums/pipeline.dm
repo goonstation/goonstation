@@ -158,7 +158,7 @@ datum/pipeline
 		return network
 
 	proc/mingle_with_turf(turf/simulated/target, mingle_volume)
-		if (!target) return
+		if (!target || !air.volume) return
 		var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 		air_sample.volume = mingle_volume
 

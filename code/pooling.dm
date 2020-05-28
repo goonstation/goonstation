@@ -24,7 +24,7 @@ var
 /datum/proc/pooled(var/pooltype)
 	dispose()
 	if(istype(src, /atom/movable))
-		src:loc = null
+		src:set_loc(null)
 	// If this thing went through the delete queue and was rescued by the pool mechanism, we should reset the qdeled flag.
 	qdeled = 0
 	pooled = 1

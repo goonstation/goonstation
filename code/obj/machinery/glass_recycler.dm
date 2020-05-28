@@ -32,7 +32,7 @@
 			user.u_equip(W)
 			qdel(W)
 			return 1
-		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/plate) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 				var/obj/item/reagent_containers/food/drinks/bottle/B = W
 				if (!B.broken) glass_amt += 1
@@ -46,6 +46,13 @@
 			else
 				qdel(W)
 			return 1
+		else if (istype(W, /obj/item/plate))
+			glass_amt += 2
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.u_equip(W)
+			qdel(W)
+			return 1
+
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -125,7 +132,7 @@
 				src.glass_amt -= 1
 			if("plate")
 				G = new /obj/item/plate(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("bowl")
 				G = new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
 				src.glass_amt -= 1

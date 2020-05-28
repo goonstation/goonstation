@@ -128,7 +128,7 @@ var/global/list/objects_using_dialogs
 	if (!showing_inv)
 		showing_inv = list(user.client)
 	else
-		showing_inv += user.client
+		showing_inv |= user.client
 
 /mob/living/carbon/human/remove_dialog(mob/user)
 	if (!user.client) return
