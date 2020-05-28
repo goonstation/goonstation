@@ -42,6 +42,8 @@ datum/pipeline
 			//logTheThing("debug", null, null, "null air in pipeline([member ? "([showCoords(member.x, member.y, member.z)])" : "detached" ])")
 			dispose() // kill this network, something is bad
 			return
+		if(!air.volume)
+			return
 
 		//Check to see if pressure is within acceptable limits
 		var/pressure = air.return_pressure()
