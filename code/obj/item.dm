@@ -1333,7 +1333,6 @@
 			if (M.trinket == src)
 				M.trinket = null
 
-
 	if (special_grab || chokehold)
 		drop_grab()
 
