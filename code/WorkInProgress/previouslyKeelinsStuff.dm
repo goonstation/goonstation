@@ -411,7 +411,7 @@ var/reverse_mode = 0
 						SPAWN_DBG(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
 						if (prob(1))
-							user.bioHolder.AddEffect("telekinesis", 0, 0, 1) //because really
+							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
 							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
