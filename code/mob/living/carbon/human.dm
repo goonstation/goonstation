@@ -3486,19 +3486,21 @@
 
 	if (.)
 		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
-			if(direct & last_move_dir)
+			if(move_dir & last_move_dir)
 				sustained_moves += 1
 				if (sustained_moves == SUSTAINED_RUN_REQ+1)
-					sprint_particle_small(src,get_step(NewLoc,turn(direct,180)),direct)
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 7, 1,extrarange = -25, pitch=2.5)
 			else
+				if (sustained_moves > 0 || move_dir == turn(last_move_dir,180))
+					sprint_particle_small(src,get_step(NewLoc,move_dir),turn(move_dir,180))
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 7, 1,extrarange = -25, pitch=2.8)
 				sustained_moves = 0
-				sprint_particle_small(src,get_step(NewLoc,turn(direct,180)),turn(direct,180))
-				playsound(src.loc,"sound/effects/sprint_puff.ogg", 7, 1,extrarange = -25, pitch=2.8)
+
 		else
 			sustained_moves = 0
 
-		last_move_dir = direct
+		last_move_dir = move_dir
 
 		// Call movement traits
 		if(src.traitHolder)
