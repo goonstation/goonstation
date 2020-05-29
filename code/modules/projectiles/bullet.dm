@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/projectile/bullet)
 /datum/projectile/bullet
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45
@@ -214,12 +215,17 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
-	dissipation_delay = 15
+	dissipation_delay = 10
+	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
+	projectile_speed = 56
+	max_range = 100
 	casing = /obj/item/casing/rifle
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
-
-	on_hit(atom/hit, dirflag)
+	on_launch(obj/projectile/O)
+		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
+				
+	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(power > 40)
@@ -234,6 +240,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 		..()
+	
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
 	power = 10
@@ -317,12 +324,13 @@ toxic - poisons
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
-	dissipation_delay = 3//2
-	dissipation_rate = 15
+	dissipation_delay = 2//2
+	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72 // roughly
 	icon_turf_hit = "bhole"
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
 	casing = /obj/item/casing/shotgun_red
 
@@ -339,10 +347,18 @@ toxic - poisons
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
+
+			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
+				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
 			..()
 
 	weak
-		power = 30
+		power = 50 //can have a little throwing, as a treat
 
 
 /datum/projectile/bullet/airzooka

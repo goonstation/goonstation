@@ -79,6 +79,37 @@ See: `if(x)` vs `if (x)`
 
 Nobody cares about this. This is heavily frowned upon for changing with little to no reason.
 
+### Abstract types and typesof
+
+Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(type)` macro.
+
+To get a list of all concrete (non-abstract) subtypes of a type you should use `concrete_typesof(type)`, the result is cached so no need to store it yourself. (As a consequence please `.Copy` the list if you want to make changes to it locally.) Proper usage of `ABSTRACT_TYPE` + `concrete_typesof` is preferred to using `typesof` and `childrentypesof` *usually* though exceptions apply.
+
+If you want to filter the results of `concrete_typesof` further (e.g. by the value of a var or by a blacklist) consider using `filtered_concrete_typesof(type, filter)`. `filter` is a proc that should return 1 if you want to include the item. Again, the result is cached (so the `filter` proc should not depend on outisde variables or randomness).
+
+Example:
+```javascript
+ABSTRACT_TYPE(/obj/item/hat)
+/obj/item/hat
+	var/is_cool = 0
+
+/obj/item/hat/uncool
+	name = "Uncool Hat"
+
+/obj/item/hat/cool
+	name = "Cool hat"
+	is_cool = 1
+
+proc/is_hat_cool(hat_type)
+	var/obj/item/hat/hat = hat_type
+	return initial(hat.is_cool)
+
+proc/random_cool_hat()
+	return pick(filtered_concrete_typesof(/obj/item/hat, /proc/is_hat_cool))
+```
+
+See `_stdlib/_types.dm` for details.
+
 ## Whack BYOND shit
 
 ### Startup/Runtime trade-offs with lists and the "hidden" init() proc

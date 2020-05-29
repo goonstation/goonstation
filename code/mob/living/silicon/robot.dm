@@ -71,7 +71,7 @@
 	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
-	var/sound_automaton_spaz = 'sound/misc/automaton_spaz.ogg'
+	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
 	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
@@ -477,7 +477,7 @@
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise."
 						else
-							playsound(src.loc, src.sound_automaton_spaz, 50, 1)
+							playsound(src.loc, src.sound_automaton_scratch, 50, 1)
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
@@ -1036,7 +1036,6 @@
 				var/repaired = HealDamage("All", 120, 0)
 				if(repaired || health < max_health)
 					src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s body.</span>")
-					src.updatehealth()
 				else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 				src.update_appearance()
 
@@ -1047,7 +1046,6 @@
 			if(repaired || health < max_health)
 				coil.use(1)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-				src.updatehealth()
 			else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 			src.update_appearance()
 
@@ -2043,13 +2041,11 @@
 			opened = 1
 			src.visible_message("<span class='alert'>[src]'s panel blows open!</span>")
 			src.TakeDamage("All", 30, 0)
-			src.updatehealth()
 			return 1
 		brainexposed = 1
 		//emagged = 1
 		src.visible_message("<span class='alert'>[src]'s head compartment blows open!</span>")
 		src.TakeDamage("All", 30, 0)
-		src.updatehealth()
 		return 1
 
 	verb/cmd_show_laws()
@@ -2896,6 +2892,7 @@
 				return 0
 			if (target_part.ropart_take_damage(brute, burn) == 1)
 				src.compborg_lose_limb(target_part)
+		health_update_queue |= src
 		return 1
 
 	HealDamage(zone, brute, burn)
@@ -2943,6 +2940,7 @@
 			if (!target_part)
 				return 0
 			target_part.ropart_mend_damage(brute, burn)
+		health_update_queue |= src
 		return 1
 
 	get_brute_damage()

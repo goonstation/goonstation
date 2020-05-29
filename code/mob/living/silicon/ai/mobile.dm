@@ -98,7 +98,7 @@
 			src.tracker.cease_track()
 			src:current = null
 
-		src.updatehealth()
+		health_update_queue |= src
 
 
 		if (src.health < 0)

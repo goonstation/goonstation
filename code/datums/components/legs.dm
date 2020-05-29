@@ -10,6 +10,7 @@
 /datum/component/legs/RegisterWithParent()
 	. = ..()
 	var/atom/movable/A = parent
+	legs.pixel_y = -14 - A.pixel_y
 	animate(A, pixel_y = A.pixel_y + 14, time = 5 DECI SECONDS, easing = SINE_EASING)
 	A.underlays += legs
 

@@ -315,7 +315,6 @@
 			return 0
 		user.visible_message("<span style='color:red;font-weight:bold'>[user] swallows [src] and [he_or_she(user)] begins to choke, [src] sounding shrilly!</span>")
 		user.take_oxygen_deprivation(155)
-		user.updatehealth()
 
 		user.u_equip(src) // leaves it in the mob's contents, but takes it out of their hands and off their hud. makes it kinda like swallowing the whistle, it'll still be in them if they gib  :)
 		playsound(get_turf(user), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)

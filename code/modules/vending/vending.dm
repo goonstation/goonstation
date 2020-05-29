@@ -476,7 +476,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
 
 #else
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 1, hidden=1) // this may be a bad idea, but it's only one box
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 #endif
 /obj/machinery/vending/cola
 	name = "soda machine"
@@ -1038,7 +1038,7 @@
 	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
 	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
 	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
 	lr = 0.3
@@ -1061,7 +1061,7 @@
 	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
 	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
 	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
 	lr = 0.3
@@ -1207,6 +1207,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_doodads, 4)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
 		product_list += new/datum/data/vending_product(/obj/item/shaker/salt, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)

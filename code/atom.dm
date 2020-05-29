@@ -83,6 +83,7 @@
 
 /atom
 	layer = TURF_LAYER
+	plane = PLANE_DEFAULT
 	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
@@ -417,7 +418,7 @@
 	var/l_spd = 0
 	var/list/attached_objs = null //List of attached objects. Objects in this list will follow this atom around as it moves. --SOMEPOTATO: THIS MAKES ME UNCOMFORTABLE
 	var/no_gravity = 0 //Continue moving until a wall or solid object is hit.
-	var/p_class = 3.0 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
+	var/p_class = 2.5 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 
 
 //some more of these event handler flag things are handled in set_loc far below . . .
@@ -583,6 +584,9 @@
 				T.checkinghasproximity++
 	else
 		last_turf = 0
+
+	if(src.medium_lights)
+		update_medium_light_visibility()
 
 /atom/movable/proc/pull()
 	//set name = "Pull"
@@ -915,7 +919,8 @@
 	else
 		last_turf = 0
 
-
+	if(src.medium_lights)
+		update_medium_light_visibility()
 
 	return src
 

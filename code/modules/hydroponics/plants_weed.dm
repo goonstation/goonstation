@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant/weed)
 /datum/plant/weed
 	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"

@@ -449,6 +449,5 @@
 		return 0
 	user.visible_message("<span class='alert'><b>[user] swallows [src] whole and begins to choke!</b></span>")
 	user.take_oxygen_deprivation(175)
-	user.updatehealth()
 	qdel(src)
 	return 1

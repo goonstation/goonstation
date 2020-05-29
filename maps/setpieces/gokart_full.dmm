@@ -200,7 +200,7 @@
 "dR" = (/turf/unsimulated/floor{icon_state = "carpetN"},/area/tdome/tdomea{name = "Thunderdome Lounge"})
 "dS" = (/obj/stool/chair/comfy{tag = "icon-chair_comfy (WEST)"; icon_state = "chair_comfy"; dir = 8},/turf/unsimulated/floor{icon_state = "carpetNE"},/area/tdome/tdomea{name = "Thunderdome Lounge"})
 "dT" = (/obj/table{icon_state = "tabledir"; dir = 10},/obj/machinery/computer/security/wooden_tv/small{pixel_y = 8},/turf/unsimulated/floor/delivery,/area/tdome/tdomea{name = "Thunderdome Lounge"})
-"dU" = (/obj/machinery/door_control{id = "thunderdome"; name = "TEAM ROOMS"; pixel_x = 0; pixel_y = 24},/obj/table{icon_state = "tabledir"; dir = 6},/obj/item/device/radio/intercom{layer = 7; name = "Thunderdome Intercom"; pixel_x = 0; pixel_y = 0},/turf/unsimulated/floor/delivery,/area/tdome/tdomea{name = "Thunderdome Lounge"})
+"dU" = (/obj/machinery/door_control{id = "thunderdome"; name = "TEAM ROOMS"; pixel_x = 0; pixel_y = 24},/obj/table{icon_state = "tabledir"; dir = 6},/obj/item/device/radio/intercom{layer = 7; name = "Thunderdome Intercom"},/turf/unsimulated/floor/delivery,/area/tdome/tdomea{name = "Thunderdome Lounge"})
 "dV" = (/obj/stool/chair/comfy{dir = 4},/turf/unsimulated/floor{icon_state = "carpetNW"},/area/tdome/tdomea{name = "Thunderdome Lounge"})
 "dW" = (/obj/disposalpipe/trunk{dir = 4},/obj/machinery/disposal{name = "RED TEAM CHUTE"},/turf/unsimulated/floor/delivery,/area/tdome/tdomea{name = "Thunderdome Lounge"})
 "dX" = (/obj/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/unsimulated/wall/other,/area/racing_track)

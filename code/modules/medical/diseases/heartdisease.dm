@@ -68,7 +68,6 @@
 				affected_mob.losebreath ++
 			if (prob(2))
 				affected_mob.take_oxygen_deprivation(1)
-				affected_mob.updatehealth()
 			if (prob(2))
 				affected_mob.emote("gasp")
 

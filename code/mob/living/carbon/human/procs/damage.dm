@@ -576,13 +576,13 @@
 
 		if (update)
 			src.UpdateDamageIcon()
-			src.UpdateDamage()
+			health_update_queue |= src
 	else
 		var/obj/item/E = src.organs[zone]
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))
 				src.UpdateDamageIcon()
-				src.UpdateDamage()
+				health_update_queue |= src
 		else
 			return 0
 		return
@@ -683,14 +683,14 @@
 
 		if (update)
 			src.UpdateDamageIcon()
-			src.UpdateDamage()
+			health_update_queue |= src
 		return 1
 	else
 		var/obj/item/E = src.organs["[zone]"]
 		if (isitem(E))
 			if (E.heal_damage(brute, burn, tox))
 				src.UpdateDamageIcon()
-				src.UpdateDamage()
+				health_update_queue |= src
 				return 1
 		else
 			return 0
@@ -828,14 +828,24 @@
 	if (!themob || !ismob(themob))
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
-	if (!zones || !zones.len)
-		themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
-	else
-		if (prob(100 / zones.len + 1))
+	if(checkarmor)
+		if (!zones || !zones.len)
 			themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
-			var/zone=pick(zones)
-			themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
+			if (prob(100 / zones.len + 1))
+				themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
+			else
+				var/zone=pick(zones)
+				themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
+	else
+		if (!zones || !zones.len)
+			themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
+		else
+			if (prob(100 / zones.len + 1))
+				themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
+			else
+				var/zone=pick(zones)
+				themob.TakeDamage(zone, damage, 0, 0, DAMAGE_BLUNT)
 
 /proc/random_burn_damage(var/mob/themob, var/damage) // do burn damage to a random organ
 	if (!themob || !ismob(themob))
@@ -888,3 +898,7 @@
 		return src.organHolder.brain.get_damage()
 	//leaving this just in case, should never be called I assume
 	..()
+
+/mob/living/carbon/human/UpdateDamage()
+	..()
+	src.hud.update_health_indicator()

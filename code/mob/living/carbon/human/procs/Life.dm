@@ -446,9 +446,6 @@
 							boutput(O, __blue("<b>Your master seems to be inactive. You are permitted to use the Exit-Hivemind command.</b>"))
 		*/
 
-#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
-	src.UpdateDamage()
-#endif
 	last_life_tick = world.timeofday
 
 
@@ -800,10 +797,6 @@
 			canmove = 0
 			return
 
-		if (emote_lock)
-			canmove = 0
-			return
-
 		canmove = 1
 
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
@@ -938,19 +931,19 @@
 				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
 					src.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (breath.temperature > (T0C+66) && !src.is_heat_resistant()) // Hot air hurts :(
-			if (!has_cyberlungs || (has_cyberlungs && (breath.temperature > (T0C+500))))
-				var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
-				TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
-				if (prob(20))
-					boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
-					if (src.organHolder)
-						src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
+		if (breath.temperature > min(organHolder.left_lung ? organHolder.left_lung.temp_tolerance : INFINITY, organHolder.right_lung ? organHolder.right_lung.temp_tolerance : INFINITY) && !src.is_heat_resistant()) // Hot air hurts :(
+			//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
+			var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
+			TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
+			if (prob(20))
+				boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
+				if (src.organHolder)
+					src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
 
-				hud.update_fire_indicator(1)
-				if (prob(4))
-					boutput(src, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
-					//src.contract_disease(new/datum/ailment/disability/cough, 1, 0) // cogwerks ailment project - lung damage from fire
+			hud.update_fire_indicator(1)
+			if (prob(4))
+				boutput(src, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
+				//src.contract_disease(new/datum/ailment/disability/cough, 1, 0) // cogwerks ailment project - lung damage from fire
 
 		else
 			hud.update_fire_indicator(0)
@@ -1285,7 +1278,7 @@
 		if (src.nutrition < 0)
 			src.contract_disease(/datum/ailment/malady/hypoglycemia, null, null, 1)
 
-		src.updatehealth()
+		//health_update_queue |= src //#843 uncomment this if things go funky maybe
 
 	proc/handle_blood_pressure(var/mult = 1)
 		if (!blood_system)
@@ -1503,7 +1496,7 @@
 			if (src.reagents)
 				var/anticoag_amt = src.reagents.has_reagent("heparin") // anticoagulant
 				final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
-
+			final_bleed *= mult
 			if (prob(max(0, min(final_bleed, 10)) * 5)) // up to 50% chance to make a big bloodsplatter
 				bleed(src, final_bleed, 5)
 
@@ -1560,7 +1553,6 @@
 				src.changeStatus("weakened", 5 SECONDS)
 				src.losebreath += 20
 				src.take_oxygen_deprivation(20)
-				src.updatehealth()
 		else
 			if (oH.heart.loc != src)
 				oH.heart = null
@@ -1579,7 +1571,6 @@
 				changeStatus("weakened", 2 SECONDS)
 				src.losebreath += 20
 				src.take_oxygen_deprivation(20)
-				src.updatehealth()
 			else if (src.organHolder.heart.get_damage() > 100)
 				src.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
@@ -1606,7 +1597,7 @@
 
 	proc/handle_regular_status_updates(datum/controller/process/mobs/parent,var/mult = 1)
 
-		health = max_health - (get_oxygen_deprivation() + get_toxin_damage() + get_burn_damage() + get_brute_damage())
+		//health_update_queue |= src //#843 uncomment this if things go funky maybe
 		var/death_health = src.health + (src.get_oxygen_deprivation() * 0.5) - (get_burn_damage() * 0.67) - (get_brute_damage() * 0.67) //lower weight of oxy, increase weight of brute/burn here
 		// I don't think the revenant needs any of this crap - Marq
 		if (src.bioHolder && src.bioHolder.HasEffect("revenant") || isdead(src)) //You also don't need to do a whole lot of this if the dude's dead.

@@ -170,8 +170,15 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar) src.stamina_bar.update_value(src)
+	if(src.stamina_bar)
+		src.stamina_bar.update_value(src)
 	return
+
+/mob/living/carbon/human/remove_stamina(var/x)
+	..()
+	if (x >= 30 && src.hud && src.hud.stamina_back)
+		flick("stamina_back", src.hud.stamina_back)
+
 
 //Sets stamina
 /mob/proc/set_stamina(var/x)
@@ -559,6 +566,8 @@
 	return
 
 /mob/living/carbon/take_toxin_damage(var/amount)
+	if (!toxloss && amount < 0)
+		amount = 0
 	if (..())
 		return
 #if ASS_JAM //pausing damage for timestop
@@ -577,6 +586,8 @@
 	return
 
 /mob/living/carbon/take_oxygen_deprivation(var/amount)
+	if (!oxyloss && amount < 0)
+		return
 	if (..())
 		return
 

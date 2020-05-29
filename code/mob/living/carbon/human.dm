@@ -7,9 +7,10 @@
 	icon_state = "blank"
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
-	p_class = 2 // 2 while standing, 3 while resting (see update_icon.dm for the place where this change happens)
+	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see update_icon.dm for the place where this change happens)
 
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
 
 	var/dump_contents_chance = 20
 
@@ -167,6 +168,11 @@
 
 	var/icon/flat_icon = null
 
+	var/next_step_delay = 0
+	var/next_sprint_boost = 0
+	var/sustained_moves = 0
+	var/last_move_dir = null
+
 /mob/living/carbon/human/New()
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
@@ -185,7 +191,7 @@
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
 	src.stamina_bar = new(src)
-	hud.add_object(src.stamina_bar, HUD_LAYER+1, "EAST-1, NORTH")
+	hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
 	if (global_sims_mode) // IF YOU ARE HERE TO DISABLE SIMS MODE, DO NOT TOUCH THIS. LOOK IN GLOBAL.DM
 #ifdef RP_MODE
@@ -810,13 +816,18 @@
 
 	return
 
-#define BASE_SPEED 1.3
-#define RUN_SCALING 0.2
-
+#define BASE_SPEED 1.65
+#define BASE_SPEED_SUSTAINED 1.5
+#define RUN_SCALING 0.12
+#define RUN_SCALING_LYING 0.2
+#define RUN_SCALING_STAGGER 0.5
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
-	. = BASE_SPEED
+	var/base_speed = BASE_SPEED
+	if (sustained_moves >= SUSTAINED_RUN_REQ)
+		base_speed = BASE_SPEED_SUSTAINED
 
+	. += base_speed
 	. += movement_delay_modifier
 
 
@@ -857,12 +868,12 @@
 		return .
 
 	if (src.drowsyness > 0)
-		. += 6
+		. += 5
 
 	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
 
 	if (health_deficiency >= 30)
-		. += (health_deficiency / 25)
+		. += (health_deficiency / 35)
 
 	var/missing_legs = 0
 	var/missing_arms = 0
@@ -877,12 +888,12 @@
 		missing_legs = 2
 
 	if (missing_legs == 2)
-		. += 15 - ((2-missing_arms) * 2) // each missing leg adds 7.5 of movement delay. Each functional arm reduces this by 2.
+		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
 	else
-		. += 7.5*missing_legs
+		. += 7*missing_legs
 
 	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-		. += min( ((((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 10)), 3)
+		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 30), 2.2)
 
 	var/turf/T = get_turf(src)
 
@@ -898,7 +909,7 @@
 				if (T.active_liquid)
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
-					. += 4
+					. += 3
 
 	. = min(., maximum_slowdown)
 
@@ -923,13 +934,56 @@
 
 	. *= multiplier
 
+	if (next_step_delay)
+		. += next_step_delay
+		next_step_delay = 0
+
 	if (running)
-		var/minSpeed = (0.75 - RUN_SCALING * BASE_SPEED) / (1 - RUN_SCALING) // ensures sprinting with 1.2 tally drops it to 0.75
-		if (pulling) minSpeed = BASE_SPEED // not so fast, fucko
-		. = min(., minSpeed + (. - minSpeed) * RUN_SCALING) // i don't know what I'm doing, help
+
+		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		if (src.hasStatus(list("staggered","blocking")))
+			runScaling = RUN_SCALING_STAGGER
+		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
+		if (pulling) minSpeed = base_speed // not so fast, fucko
+		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
+
+/mob/living/carbon/human/keys_changed(keys, changed)
+	..()
+	if (changed & KEY_RUN)
+		if (hud)
+			src.hud.set_sprint(keys & KEY_RUN)
+
+/mob/living/carbon/human/proc/start_sprint()
+	if (special_sprint && src.client)
+		if (special_sprint & SPRINT_BAT)
+			spell_batpoof(src, cloak = 0)
+		if (special_sprint & SPRINT_BAT_CLOAKED)
+			spell_batpoof(src, cloak = 1)
+		if (special_sprint & SPRINT_SNIPER)
+			begin_sniping()
+	else
+		if (!next_step_delay && world.time >= next_sprint_boost)
+			if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
+				//if (src.hasStatus("blocking"))
+				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
+				//		qdel(G)
+
+				var/last = src.loc
+				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+
+				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+				src.next_move = world.time
+				src.attempt_move()
+				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
+					sprint_particle(src, last)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
 #undef BASE_SPEED
 #undef RUN_SCALING
+#undef RUN_SCALING_LYING
+#undef RUN_SCALING_STAGGER
 
 /mob/living/carbon/human/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
@@ -945,7 +999,7 @@
 				// else, ignore p_class*/
 				if(ismob(A))
 					var/mob/M = A
-					//if they're lying, pull em slower, unless you have a gang and they are in your gang.
+					//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 					if(M.lying)
 						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
 							. *= 1		//do nothing
@@ -1033,23 +1087,12 @@
 
 		//lol
 		if ("SHIFT")//bEGIN A SPRINT
-			if (special_sprint && src.client && !src.client.tg_controls)
-				if (special_sprint & SPRINT_BAT)
-					spell_batpoof(src, cloak = 0)
-				if (special_sprint & SPRINT_BAT_CLOAKED)
-					spell_batpoof(src, cloak = 1)
-				if (special_sprint & SPRINT_SNIPER)
-					begin_sniping()
+			if (!src.client.tg_controls)
+				start_sprint()
 			//else //indicate i am sprinting pls
 		if ("SPACE")
-			if (special_sprint && src.client && src.client.tg_controls)
-				if (special_sprint & SPRINT_BAT)
-					spell_batpoof(src, cloak = 0)
-				if (special_sprint & SPRINT_BAT_CLOAKED)
-					spell_batpoof(src, cloak = 1)
-				if (special_sprint & SPRINT_SNIPER)
-					begin_sniping()
-			//else //indicate i am sprinting pls
+			if (src.client.tg_controls)
+				start_sprint()
 		else
 			return ..()
 
@@ -1252,7 +1295,6 @@
 
 			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
 			src.UpdateDamageIcon()
-		src.updatehealth()
 	else if (prob(20))
 		src.gib()
 
@@ -1568,7 +1610,7 @@
 		else if (href_list["slot"] == "internal")
 			actions.start(new/datum/action/bar/icon/internalsOther(src), usr)
 		else if (href_list["item"])
-			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"])) , usr)
+			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"]), 0, href_list["item"] == "pockets") , usr)
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
@@ -2695,7 +2737,6 @@
 					src.throw_at(targetTurf, 200, 4)
 	shock_cyberheart(shock_damage)
 	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	src.updatehealth()
 	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
@@ -3444,6 +3485,23 @@
 	. = ..()
 
 	if (.)
+		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
+			if(move_dir & last_move_dir)
+				sustained_moves += 1
+				if (sustained_moves == SUSTAINED_RUN_REQ+1)
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
+			else
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 || move_dir == turn(last_move_dir,180))
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+				sustained_moves = 0
+
+		else
+			sustained_moves = 0
+
+		last_move_dir = move_dir
+
 		// Call movement traits
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.moveTraits)

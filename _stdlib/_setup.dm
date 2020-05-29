@@ -399,6 +399,7 @@
 #define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
 #define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
 #define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
+#define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -506,6 +507,46 @@
 // These are for the Syndicate headset randomizer proc.
 #define R_FREQ_BLACKLIST_HEADSET list(R_FREQ_DEFAULT, R_FREQ_COMMAND, R_FREQ_SECURITY, R_FREQ_ENGINEERING, R_FREQ_RESEARCH, R_FREQ_MEDICAL, R_FREQ_CIVILIAN, R_FREQ_SYNDICATE, R_FREQ_GANG, R_FREQ_MULTI)
 #define R_FREQ_BLACKLIST_INTERCOM list(R_FREQ_INTERCOM_COLOSSEUM, R_FREQ_INTERCOM_MEDICAL, R_FREQ_INTERCOM_SECURITY, R_FREQ_INTERCOM_BRIG, R_FREQ_INTERCOM_RESEARCH, R_FREQ_INTERCOM_ENGINEERING, R_FREQ_INTERCOM_CARGO, R_FREQ_INTERCOM_CATERING, R_FREQ_INTERCOM_AI, R_FREQ_INTERCOM_BRIDGE)
+
+
+proc/default_frequency_color(freq)
+	switch(freq)
+		if(R_FREQ_DEFAULT)
+			return RADIOC_STANDARD
+		if(R_FREQ_COMMAND)
+			return RADIOC_COMMAND
+		if(R_FREQ_SECURITY)
+			return RADIOC_SECURITY
+		if(R_FREQ_ENGINEERING)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_RESEARCH)
+			return RADIOC_RESEARCH
+		if(R_FREQ_MEDICAL)
+			return RADIOC_MEDICAL
+		if(R_FREQ_CIVILIAN)
+			return RADIOC_CIVILIAN
+		if(R_FREQ_SYNDICATE)
+			return RADIOC_SYNDICATE
+		if(R_FREQ_GANG)
+			return RADIOC_SYNDICATE
+		if(R_FREQ_INTERCOM_MEDICAL)
+			return RADIOC_MEDICAL
+		if(R_FREQ_INTERCOM_SECURITY)
+			return RADIOC_SECURITY
+		if(R_FREQ_INTERCOM_BRIG)
+			return "#FF5000"
+		if(R_FREQ_INTERCOM_RESEARCH)
+			return RADIOC_RESEARCH
+		if(R_FREQ_INTERCOM_ENGINEERING)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_INTERCOM_CARGO)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_INTERCOM_CATERING)
+			return RADIOC_CIVILIAN
+		if(R_FREQ_INTERCOM_AI)
+			return RADIOC_COMMAND
+		if(R_FREQ_INTERCOM_BRIDGE)
+			return RADIOC_COMMAND
 
 //   HOLIDAYS
 // #define HALLOWEEN 1
@@ -729,8 +770,10 @@
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out
 #define STAMINA_WINDED_SPEAK_MIN 0      //Can't speak below this point.
-#define STAMINA_SPRINT 50				//can only sprint above this number
-#define STAMINA_COST_SPRINT 8			//cost of moving in sprint
+#define STAMINA_SPRINT 64				//can only sprint above this number
+#define STAMINA_COST_SPRINT 7			//cost of moving in sprint
+#define SUSTAINED_RUN_GRACE 0.5 SECONDS	//grace period where sustained run can be sustained
+#define SUSTAINED_RUN_REQ 8				//how many tiles to start sustained run
 
 //This is a bad solution. Optimally this should scale.
 #define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.

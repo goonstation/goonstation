@@ -76,6 +76,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
 	dir = NORTH
+	throwforce = 7
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -93,7 +94,6 @@ TRAYS
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("chest", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/fork/plastic
@@ -140,7 +140,7 @@ TRAYS
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
-	throwforce = 5
+	throwforce = 10
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
@@ -163,7 +163,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/knife/plastic
@@ -247,7 +246,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/knife/pizza_cutter
@@ -270,7 +268,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] rolls [src] repeatedly over [his_or_her(user)] own throat and slices it wide open!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/spoon
@@ -296,7 +293,6 @@ TRAYS
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/spoon/plastic
@@ -435,6 +431,7 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
+	pickup_sfx = "sound/items/pickup_plate.ogg"
 	var/list/ordered_contents = list()
 	var/food_desc = null
 	var/max_food = 2
@@ -483,22 +480,33 @@ TRAYS
 				F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		sleep(0.3 SECONDS)
+		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		M.updatehealth()
-		playsound(src, "shatter", 70, 1)
-		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
-		O.set_loc(get_turf(M))
-		if(src.material)
-			O.setMaterial(copyMaterial(src.material))
+		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+
+		var/turf/shardturf = get_turf(M)
+
 		if(src.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
-			sleep(0.3 SECONDS)
-			qdel(src)
+			user.drop_item()
+			src.set_loc(shardturf)
+
+		SPAWN_DBG(0)
+			for (var/i in 1 to 2)
+				var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+				O.set_loc(shardturf)
+				if(src.material)
+					O.setMaterial(copyMaterial(src.material))
+				O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
+
+		qdel(src)
+
+	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
 	throw_impact(var/turf/T)
 		..()
@@ -610,6 +618,7 @@ TRAYS
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+			unique_tap_garbage_fluck(M,user)
 			logTheThing("combat", user, M, "taps %target% over the head with [src].")
 
 	attack_hand(mob/user as mob)
@@ -750,7 +759,6 @@ TRAYS
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
@@ -765,6 +773,8 @@ TRAYS
 
 		src.visible_message("\The [src] looks less sturdy now.")
 
+	unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(src, "step_lattice", 50, 1)
 
 /obj/item/fish
 	throwforce = 3

@@ -130,7 +130,6 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		updatehealth()
 
 		// var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
 

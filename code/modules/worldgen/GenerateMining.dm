@@ -490,6 +490,13 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 16
 		prefabSizeY = 21
 
+	bee_sanctuary_space // Sov's Bee Sanctuary (Space Variant)
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_beesanctuary.dmm"
+		prefabSizeX = 41
+		prefabSizeY = 24
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -663,6 +670,22 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_water_sketchy.dmm"
 		prefabSizeX = 21
 		prefabSizeY = 15
+
+	water_treatment // Sov's water treatment facility
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_watertreatment.dmm"
+		prefabSizeX = 33
+		prefabSizeY = 14
+
+	bee_sanctuary //Sov's Bee Sanctuary
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 19
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner

@@ -28,7 +28,6 @@
 			R.emote("scream")
 			if (prob(25))
 				R.changeStatus("stunned", 1 SECOND)
-			R.updatehealth()
 	return
 
 /obj/effects/mustard_gas/HasEntered(mob/living/carbon/human/R as mob )
@@ -41,5 +40,4 @@
 		R.emote("scream")
 		if (prob(25))
 			R.changeStatus("stunned", 1 SECOND)
-		R.updatehealth()
 	return

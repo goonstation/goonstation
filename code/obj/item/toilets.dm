@@ -162,7 +162,7 @@ var/list/all_toilets = null
 				O.vomit()
 
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
-	user.updatehealth()
+	health_update_queue |= user
 	SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0

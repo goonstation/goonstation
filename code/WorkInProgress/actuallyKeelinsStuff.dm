@@ -203,7 +203,7 @@ Returns:
 	S.filters += filter(type="layer", render_source = "*hidden_game_plane")
 	S.filters += filter(type="color", color=list(0.2,0.05,0.05, 0.1,0.3,0.2, 0.1,0.1,0.4, 0,0,0)) //Alpha method preserves interaction but you can use object outside your range and alpha gets destroyed
 	S.filters += filter(type="alpha", render_source="*test")										//Going with this because i only need visibility
-	//S.plane = 9  //If we want lighting
+	//S.plane = PLANE_LIGHTING - 1  //If we want lighting
 	usr << I
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
@@ -3321,7 +3321,6 @@ var/list/electiles = list()
 				SPAWN_DBG(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
-						user.updatehealth()
 						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
