@@ -491,7 +491,8 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	M.sprint_particle.dir = null
 	flick("sprint_cloud",M.sprint_particle)
 	SPAWN_DBG(6)
-		M.sprint_particle.loc = null
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
 
 /proc/sprint_particle_small(var/mob/M, var/turf/T = null, var/direct = null)
 	if (!M || !M.sprint_particle) return
@@ -502,8 +503,9 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 
 	M.sprint_particle.dir = direct
 	flick("sprint_cloud_small",M.sprint_particle)
-	SPAWN_DBG(3)
-		M.sprint_particle.loc = null
+	SPAWN_DBG(4)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
 
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
