@@ -817,7 +817,7 @@
 	return
 
 #define BASE_SPEED 1.65
-#define BASE_SPEED_SUSTAINED 1.45
+#define BASE_SPEED_SUSTAINED 1.48
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
 #define RUN_SCALING_STAGGER 0.5
@@ -3485,15 +3485,20 @@
 	. = ..()
 
 	if (.)
-		if ((world.time < src.next_move + SUSTAINED_RUN_GRACE) && (last_move_dir == move_dir))
-			sustained_moves += 1
-			if (sustained_moves == SUSTAINED_RUN_REQ+1)
-				sprint_particle_small(src,get_step(NewLoc,turn(direct,180)))
-				playsound(src.loc,"sound/effects/sprint_puff.ogg", 7, 1,extrarange = -25, pitch=2.5)
+		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
+			if(direct & last_move_dir)
+				sustained_moves += 1
+				if (sustained_moves == SUSTAINED_RUN_REQ+1)
+					sprint_particle_small(src,get_step(NewLoc,turn(direct,180)),direct)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 7, 1,extrarange = -25, pitch=2.5)
+			else
+				sustained_moves = 0
+				sprint_particle_small(src,get_step(NewLoc,turn(direct,180)),turn(direct,180))
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 7, 1,extrarange = -25, pitch=2.8)
 		else
 			sustained_moves = 0
 
-		last_move_dir = move_dir
+		last_move_dir = direct
 
 		// Call movement traits
 		if(src.traitHolder)
