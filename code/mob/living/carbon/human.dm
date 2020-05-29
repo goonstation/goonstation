@@ -3493,7 +3493,7 @@
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
 			else
 				if (sustained_moves > 0 || move_dir == turn(last_move_dir,180))
-					sprint_particle_small(src,get_step(NewLoc,move_dir),turn(move_dir,180))
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
 				sustained_moves = 0
 
