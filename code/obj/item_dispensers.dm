@@ -8,6 +8,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dispenser_handcuffs"
 	pixel_y = 28
+	anchored = 1
 	var/filled_icon_state = "" //i tried to do this in a smart way but it was a PITA so here have this stinky code instead
 	var/empty_icon_state = "" //autoset by the s y s t e m, dont set this yourself
 	var/amount = 3 //how many items does it have?
@@ -90,3 +91,17 @@
 	filled_icon_state = "dispenser_glasses"
 	deposit_type = /obj/item/clothing/glasses/regular
 	withdraw_type = /obj/item/clothing/glasses/regular
+
+/obj/item_dispenser/idcarddispenser
+	name = "ID card dispenser"
+	desc = "A storage container that easily dispenses fresh ID cards. It can be refilled with paper."
+	icon_state = "dispenser_id"
+	filled_icon_state = "dispenser_id"
+	deposit_type = /obj/item/paper
+	withdraw_type = /obj/item/card/id
+	amount = 7 
+
+	attack_hand(mob/user as mob)
+		if (!src.cant_withdraw && src.amount >= 1)
+			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
+		..()
