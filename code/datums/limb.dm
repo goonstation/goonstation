@@ -599,7 +599,7 @@
 						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,target.loc)
 						user.visible_message("<span class='alert'>The [target] melts in [user]'s clutch</span>", "<span class='alert'>The [target] melts in your clutch!</span>")
 						qdel(target)
-						I.desc = "Looks like this was \an [target], melted by a man who was too much."
+						I.desc = "Looks like this was \an [target], melted by someone who was too much."
 						for(var/mob/M in AIviewers(5, target))
 							boutput(M, "<span class='alert'>\the [target] melts.</span>")
 						qdel(target)
