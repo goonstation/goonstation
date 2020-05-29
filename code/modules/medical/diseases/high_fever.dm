@@ -3,7 +3,8 @@
 	name = "High Fever"
 	max_stages = 5
 	stage_prob = 10
-	cure = "Incurable"
+	cure = "ice"
+	reagentcure = list("ice")
 
 	associated_reagent = "too much"
 	affected_species = list("Human")
@@ -22,7 +23,7 @@
 				affected_mob.bodytemperature += 10
 		if(4)
 			if(prob(10))
-				boutput(affected_mob, "<span class='alert'>You're REALLY starting to heat up...</span>")
+				boutput(affected_mob, "<span class='alert'>You're REALLY starhttps://github.com/mithsaxel/goonstation/blob/pear/code/modules/medical/diseases/high_fever.dmting to heat up...</span>")
 				affected_mob.bodytemperature += 15
 
 		if(5)
