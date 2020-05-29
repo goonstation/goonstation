@@ -394,11 +394,10 @@ var/reverse_mode = 0
 					if ("Bend the relic's power to your will")
 						using = 1
 						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
-						user:TakeDamage("chest", 0, 50)
-						user.bioHolder.AddEffect("telekinesis")
+						user.bioHolder.AddEffect("telekinesis_drag")
 						SPAWN_DBG(2 MINUTES)
 							using = 0
-							user.bioHolder.RemoveEffect("telekinesis")
+							user.bioHolder.RemoveEffect("telekinesis_drag")
 					if ("Use the relic's power to heal your wounds")
 						var/obj/shield/s = new/obj/shield( get_turf(src) )
 						s.name = "energy"
