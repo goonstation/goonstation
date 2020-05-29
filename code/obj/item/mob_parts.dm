@@ -89,10 +89,6 @@
 		return
 
 	proc/remove(var/show_message = 1)
-		#if ASS_JAM
-		if (src.limb_type == /datum/limb/hot)
-			return
-		#endif
 		if (!src.holder) // fix for Cannot read null.loc, hopefully - haine
 			if (remove_object)
 				src.remove_object = null
