@@ -1307,6 +1307,9 @@
 
 	var/turf/T = loc
 	if (!istype(T))
+		if(src.temp_flags & IS_LIMB_ITEM)
+			if(istype(src.loc, /obj/item/parts/human_parts/arm/right/item)||istype(src.loc, /obj/item/parts/human_parts/arm/left/item))
+				src.loc:remove(0)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.u_equip(src)
@@ -1329,6 +1332,7 @@
 		for(var/mob/living/carbon/human/M in mobs)
 			if (M.trinket == src)
 				M.trinket = null
+
 
 	if (special_grab || chokehold)
 		drop_grab()
