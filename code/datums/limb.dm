@@ -618,10 +618,11 @@
 	proc/accident(mob/target, mob/living/user)
 		if(check_target_immunity( target ))
 			return 0
-
-		logTheThing("combat", user, target, "accidentally harms %target% with hot hands at [log_loc(user)].")
-		user.visible_message("<span class='alert'><b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally claw [target] while trying to [user.a_intent] them!</b></span>")
-		harm(target, user, 1)
+		if (prob(15))
+			logTheThing("combat", user, target, "accidentally harms %target% with hot hands at [log_loc(user)].")
+			user.visible_message("<span class='alert'><b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally melt [target] while trying to [user.a_intent] them!</b></span>")
+			harm(target, user, 1)
+			return 1
 		return 0
 
 	help(mob/target, var/mob/living/user)
