@@ -773,7 +773,7 @@ proc/default_frequency_color(freq)
 #define STAMINA_SPRINT 64				//can only sprint above this number
 #define STAMINA_COST_SPRINT 7			//cost of moving in sprint
 #define SUSTAINED_RUN_GRACE 0.5 SECONDS	//grace period where sustained run can be sustained
-#define SUSTAINED_RUN_REQ 7				//how many tiles to start sustained run
+#define SUSTAINED_RUN_REQ 8				//how many tiles to start sustained run
 
 //This is a bad solution. Optimally this should scale.
 #define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
