@@ -109,7 +109,7 @@ obj/machinery/air_vendor
 		src.add_dialog(user)
 		var/html = ""
 		html += "<TT><b>Welcome!</b><br>"
-		html += "<b>Current balance: [src.credits] credits</b> <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A><br>"
+		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credits] credits</a></b><br>"
 		if (src.scan)
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
