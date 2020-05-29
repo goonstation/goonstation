@@ -1,4 +1,9 @@
 
+(t)fri may 29 20
+(u)mbc
+(p)889
+(e)|
+(*)The HoS can now walk in/out of the armory without using the auth computer.
 (t)thu may 28 20
 (u)mbc
 (p)879
