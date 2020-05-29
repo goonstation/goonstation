@@ -109,7 +109,7 @@ obj/machinery/air_vendor
 		src.add_dialog(user)
 		var/html = ""
 		html += "<TT><b>Welcome!</b><br>"
-		html += "<b>Current balance: [src.credits] credits</b><br>"
+		html += "<b>Current balance: [src.credits] credits</b> <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A><br>"
 		if (src.scan)
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
@@ -172,6 +172,16 @@ obj/machinery/air_vendor
 					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 				else
 					boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
+
+			if (href_list["return_credits"])
+				if (src.credits > 0)
+					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					returned.setup(src.loc, src.credits)
+
+					usr.put_in_hand_or_eject(returned)
+					src.credits = 0
+					boutput(usr, "<span class='notice'>You receive [returned].</span>")
+
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
 			update_icon()
