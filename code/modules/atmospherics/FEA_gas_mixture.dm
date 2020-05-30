@@ -22,10 +22,10 @@ What are the archived variables for?
 
 
 /datum/gas_mixture
-	#define _DEFINE_GASES(GAS, _) \
+	#define _DEFINE_GAS(GAS, _) \
 		var/GAS = 0; \
 		var/tmp/GAS ## _archived;
-	APPLY_TO_GASES(_DEFINE_GASES)
+	APPLY_TO_GASES(_DEFINE_GAS)
 
 	var/temperature = 0
 	var/tmp/temperature_archived
