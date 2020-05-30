@@ -218,6 +218,13 @@ proc/build_syndi_buylist_cache()
 	desc = "This kit contains innocuous stickers that you can use to broadcast audio and observe a video feed wirelessly."
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/generic/omnitool
+	name = "Syndicate Omnitool"
+	item = /obj/item/tool/omnitool/syndicate
+	cost = 2
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has a knife mode."
+	blockedmode = list(/datum/game_mode/revolution)
+
 /datum/syndicate_buylist/generic/bighat
 	name = "Syndicate Hat"
 	item = /obj/item/clothing/head/bighat/syndicate
