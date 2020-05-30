@@ -22,10 +22,10 @@ What are the archived variables for?
 
 
 /datum/gas_mixture
-	#define _DEFINE_GAS(GAS, ...) \
-		var/GAS = 0; \
-		var/tmp/GAS ## _archived;
+	#define _DEFINE_GAS(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_DEFINE_GAS)
+	#define _DEFINE_ARCH_GAS(GAS, ...) var/tmp/GAS;
+	APPLY_TO_ARCHIVED_GASES(_DEFINE_ARCH_GAS)
 
 	var/temperature = 0
 	var/tmp/temperature_archived
@@ -59,10 +59,9 @@ What are the archived variables for?
 	graphic_archived = initial(graphic_archived)
 	fuel_burnt = initial(fuel_burnt)
 	trace_gases = initial(trace_gases)
-	#define _UNPOOL_GAS(GAS, ...) \
-		GAS = initial(GAS); \
-		GAS ## _archived = initial(GAS ## _archived);
+	#define _UNPOOL_GAS(GAS, ...) GAS = initial(GAS);
 	APPLY_TO_GASES(_UNPOOL_GAS)
+	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
 	..()
 
 // Gas equation procs
