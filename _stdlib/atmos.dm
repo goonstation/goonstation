@@ -83,10 +83,10 @@
 #define SPECIFIC_HEAT_CO2		30
 
 #define APPLY_TO_GASES(MACRO) \
-	MACRO(oxygen, SPECIFIC_HEAT_O2) \
-	MACRO(nitrogen, SPECIFIC_HEAT_N2) \
-	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2) \
-	MACRO(toxins, SPECIFIC_HEAT_PLASMA)
+	MACRO(oxygen, SPECIFIC_HEAT_O2, "O2") \
+	MACRO(nitrogen, SPECIFIC_HEAT_N2, "N2") \
+	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2") \
+	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma")
 
 // gas calculation macros
 
