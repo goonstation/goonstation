@@ -55,18 +55,14 @@ What are the archived variables for?
 	temperature = initial(temperature)
 	group_multiplier = initial(group_multiplier)
 	graphic = initial(graphic)
-	oxygen_archived = initial(oxygen_archived)
-	carbon_dioxide_archived = initial(carbon_dioxide_archived)
-	nitrogen_archived = initial(nitrogen_archived)
-	toxins_archived = initial(toxins_archived)
 	temperature_archived = initial(temperature_archived)
 	graphic_archived = initial(graphic_archived)
 	fuel_burnt = initial(fuel_burnt)
 	trace_gases = initial(trace_gases)
-	oxygen = initial(oxygen)
-	carbon_dioxide = initial(carbon_dioxide)
-	nitrogen = initial(nitrogen)
-	toxins = initial(toxins)
+	#define _UNPOOL_GAS(GAS, _)
+		GAS = initial(GAS); \
+		GAS ## _archived = initial(GAS ## _archived)
+	APPLY_TO_GASES(_UNPOOL_GAS)
 	..()
 
 // Gas equation procs
