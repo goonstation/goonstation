@@ -40,9 +40,9 @@
 
 #define LEVEL_HOST 6
 #define LEVEL_CODER 5
-#define LEVEL_SHITGUY 4
+#define LEVEL_ADMIN 4
 #define LEVEL_PA 3
-#define LEVEL_ADMIN 2
+#define LEVEL_IA 2
 #define LEVEL_SA 1
 #define LEVEL_MOD 0
 #define LEVEL_BABBY -1
