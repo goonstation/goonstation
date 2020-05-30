@@ -163,12 +163,12 @@
 		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
-	var/fetched_keylist = C.cloud_get("keybind_data")
+	var/fetched_keylist = C.cloud_get("custom_keybind_data")
 	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
 		C.keymap.overwrite_by_action(fetched_keylist)
 
-/** reset_keymap: Builds the mob's keymap, checks for valid movement controllers, and finally sets the keymap.
- *  Called on: Login, Vehicle change, WASD/TG toggle, Keybind menu Reset
+/** reset_keymap: Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.
+ *  Called on: Login, Vehicle change, WASD/TG/AZERTY toggle, Keybind menu Reset
  */
 /mob/proc/reset_keymap()
 	if (src.client)

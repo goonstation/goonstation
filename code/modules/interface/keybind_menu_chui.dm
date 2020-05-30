@@ -5,6 +5,8 @@ chui/window/keybind_menu
 	windowSize = "700x550"
 	var/list/changed_keys //so we can keep track of what keys the user changes then merge later
 	var/datum/keymap/current_keymap
+	var/last_interact_time //To rate-limit
+	var/const/rate_limit_time = 1 SECOND
 
 	New(client/my_client)
 		..()
@@ -32,15 +34,14 @@ chui/window/keybind_menu
 
 		html += "<tr><td>[theme.generateButton("confirm", "Confirm")]</td><td>[theme.generateButton("cancel", "Cancel")]</td></tr></tbody>"
 
-		html += "<tfoot><tr><td>[theme.generateButton("reset", "Reset All Keybinds (Dangerous)")]</td><td>[theme.generateButton("reset_cloud", "Reset Cloud Data (Dangerous)")]</td></tr></tfoot></table>"
-
-		html += "<hr> <strong>Preset Templates:</strong> [theme.generateButton("set_arrow", "Arrow Keys")] [theme.generateButton("set_wasd", "WASD")] [theme.generateButton("set_tg", "/tg/")] [theme.generateButton("set_azerty", "AZERTY")] "
+		html += "<tfoot><tr><td>[theme.generateButton("reset", "Reset All Keybinds")]</td><td>[theme.generateButton("reset_cloud", "Reset Cloud Data (Caution!)")]</td></tr></tfoot></table>"
 
 		html += "<script language=\"JavaScript\">$(\".input\").on(\"change keyup paste\", function(){var elem=$(this); chui.bycall(\"changed_key\", {action:elem.attr(\"id\"), key:elem.val()})})</script>"
 
 		return html.Join()
 
 	OnClick(client/who, id)
+		if (TIME < last_interact_time + rate_limit_time) return
 		if(owner)
 			if (id == "confirm")
 				if (changed_keys.len)
@@ -51,15 +52,19 @@ chui/window/keybind_menu
 
 					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimal merge
 					owner.keymap.overwrite_by_action(keydat)
-					owner.cloud_put("keybind_data", json_encode(changed_keys_rev))
-
+					owner.cloud_put("custom_keybind_data", json_encode(changed_keys_rev))
+					boutput("<span class='notice'>Your custom keybinding data has been saved.</span>")
 			else if (id == "reset")
 				changed_keys = new/list()
 				who.mob.reset_keymap()
+				boutput("<span class='notice'>Your keymap has been reset. Please re-open the window.</span>")
+				Unsubscribe(who)
 			else if (id == "reset_cloud")
-				owner.cloud_put("keybind_data", null)
+				owner.cloud_put("custom_keybind_data", null)
+				boutput("<span class='notice'>Your saved cloud keybinding data has been deleted.</span>")
 			else if (id == "cancel")
 				Unsubscribe(who)
+			last_interact_time = TIME
 
 	//This shitfuckery is because chui doesn't have proper JS interface junk.
 	OnTopic(client/myclient, href, href_list[] )

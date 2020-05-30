@@ -47,7 +47,6 @@ datum/preferences
 	var/flying_chat_hidden = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
-	//var/use_tg = 0 //Are they animals and want to use TG's keybinds? // mbc moved to dropdowns
 	var/spessman_direction = SOUTH
 
 	var/job_favorite = null
@@ -1459,10 +1458,11 @@ datum/preferences
 
 		if (link_tags["use_wasd"])
 			src.use_wasd = !src.use_wasd
-			src.wasd_updated(user.client)
+			src.keybind_prefs_updated(user.client)
 
 		if (link_tags["use_azerty"])
 			src.use_azerty = !src.use_azerty
+			src.keybind_prefs_updated(user.client)
 
 		if (link_tags["preferred_map"])
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
@@ -1771,7 +1771,7 @@ datum/preferences
 		if (AH.s_tone == null || AH.s_tone == "#FFFFFF" || AH.s_tone == "#ffffff")
 			AH.s_tone = "#FEFEFE"
 
-	proc/wasd_updated(var/client/C)
+	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))
 			var/mob/M = C
 			if (ismob(M) && M.client)
@@ -1783,6 +1783,7 @@ datum/preferences
 			winset( C, "menu.wasd_controls", "is-checked=true" )
 		else
 			winset( C, "menu.wasd_controls", "is-checked=false" )
+		C.mob.reset_keymap()
 
 /* ---------------------- RANDOMIZER PROC STUFF */
 
