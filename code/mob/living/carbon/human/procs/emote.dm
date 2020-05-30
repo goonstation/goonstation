@@ -1685,7 +1685,7 @@
 						dab_id = I
 						dab_id.dab_count++
 					karma_update(4, "SIN", src)
-					if(locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
+					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
 						//if(src:wear_id && src:wear_id:registered)
