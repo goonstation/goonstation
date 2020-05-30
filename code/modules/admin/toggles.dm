@@ -23,7 +23,7 @@ var/list/popup_verbs_to_toggle = list(\
 		final_verblist += popup_verbs_to_toggle & admin_verbs[I] //So you only toggle verbs at your level
 
 	//The special A+ observer verbs
-	if(rank_to_level(src.holder.rank) >= LEVEL_ADMIN)
+	if(rank_to_level(src.holder.rank) >= LEVEL_IA)
 		final_verblist |= special_admin_observing_verbs
 		//And the special PA+ observer verbs why do we even use this? It's dumb imo
 		if(rank_to_level(src.holder.rank) >= LEVEL_PA)
@@ -93,7 +93,7 @@ var/list/server_toggles_tab_verbs = list(\
 		final_verblist += server_toggles_tab_verbs & admin_verbs[I] //So you only toggle verbs at your level
 
 	//The special A+ observer verbs
-	if (rank_to_level(src.holder.rank) >= LEVEL_ADMIN)
+	if (rank_to_level(src.holder.rank) >= LEVEL_IA)
 		final_verblist |= special_admin_observing_verbs
 		//And the special PA+ observer verbs why do we even use this? It's dumb imo
 		if (rank_to_level(src.holder.rank) >= LEVEL_PA)
@@ -345,7 +345,7 @@ var/global/IP_alerts = 1
 		src.holder.animtoggle = 0
 		boutput(src, "Atom Verbs Toggled On")
 
-		if (src.holder.level >= LEVEL_SHITGUY)
+		if (src.holder.level >= LEVEL_ADMIN)
 			src.verbs += /client/proc/cmd_emag_all
 			src.verbs += /client/proc/cmd_scale_all
 			src.verbs += /client/proc/cmd_rotate_all
@@ -418,7 +418,7 @@ var/global/IP_alerts = 1
 	set category = "Toggles (Server)"
 	set name = "Toggle Jobban Alerts"
 	set desc = "Toggles the announcement of job bans ON/OFF"
-	if (!(src.holder.rank in list("Host", "Coder", "Shit Person")))
+	if (!(src.holder.rank in list("Host", "Coder", "Administrator")))
 		NOT_IF_TOGGLES_ARE_OFF
 
 	if (announce_jobbans == 1) announce_jobbans = 0
