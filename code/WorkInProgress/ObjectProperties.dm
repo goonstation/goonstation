@@ -97,46 +97,42 @@ var/list/globalPropList = null
 	var/assocMobProp = null
 
 	proc/onAdd(var/obj/owner, var/value) //When property is added to an object
-		if(assocMobProp && isitem(owner) && (istype(owner.loc, /mob) || istype(owner, /obj/item/grab) && istype(owner.loc?.loc, /mob)))
+		if(assocMobProp && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
 			var/mob/M = null
-			var/block = 0
-			if(istype(owner.loc, /mob))
-				M = owner.loc
+			if(istype(owner, /obj/item/grab/block))
+				M = owner:affecting
 			else
-				M = owner.loc.loc
-				block = 1
+				M = owner.loc
 
-			if(M && (block || (owner in M.get_equipped_items())))
+			if(M && (owner in M.get_equipped_items()))
 				apply_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner, value)
+				RegisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING, .proc/onRemove)
 		return
 
 	proc/onChange(var/obj/owner, var/oldValue, var/newValue) //When property value changes.
-		if(assocMobProp && isitem(owner) && (istype(owner.loc, /mob) || istype(owner, /obj/item/grab) && istype(owner.loc?.loc, /mob)))
+		if(assocMobProp && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
 			var/mob/M = null
-			var/block = 0
-			if(istype(owner.loc, /mob))
-				M = owner.loc
+			if(istype(owner, /obj/item/grab/block))
+				M = owner:affecting
 			else
-				M = owner.loc.loc
-				block = 1
+				M = owner.loc
 
-			if(M && (block || (owner in M.get_equipped_items())))
+			if(M && (owner in M.get_equipped_items()))
 				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)	
 				apply_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner, newValue)
 		return
 
 	proc/onRemove(var/obj/owner, var/value) //When property is removed from an object.
-		if(assocMobProp && isitem(owner) && (istype(owner.loc, /mob) || istype(owner, /obj/item/grab) && istype(owner.loc?.loc, /mob)))
+		if(assocMobProp && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
 			var/mob/M = null
-			var/block = 0
-			if(istype(owner.loc, /mob))
-				M = owner.loc
+			if(istype(owner, /obj/item/grab/block))
+				M = owner:affecting
 			else
-				M = owner.loc.loc
-				block = 1
+				M = owner.loc
 
-			if(M && (block || (owner in M.get_equipped_items())))
-				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)		
+			if(M && (owner in M.get_equipped_items()))
+				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)
+				UnregisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING)
 		return
 
 	proc/onUpdate() //Stub; Not implemented.

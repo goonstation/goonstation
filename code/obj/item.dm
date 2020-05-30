@@ -1307,8 +1307,7 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
-	for(var/datum/objectProperty/P in src.properties)
-		P.onRemove(src)
+
 	var/turf/T = loc
 	if (!istype(T))
 		if (ismob(src.loc))
