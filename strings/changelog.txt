@@ -1,5 +1,9 @@
 
 (t)sat may 30 20
+(u)Tarmunora
+(p)774
+(e)⚖|balance
+(+)Reduced the immediate cooling effect of cryostylane.
 (u)zjdtmkhzt
 (p)897
 (e)🆕🎨|feature, sprites
