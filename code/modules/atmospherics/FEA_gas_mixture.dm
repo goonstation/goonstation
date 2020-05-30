@@ -553,7 +553,7 @@ What are the archived variables for?
 
 		var/delta_air = delta_oxygen+delta_nitrogen
 		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*deltra_nitrogen
+			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*delta_nitrogen
 			if(delta_air > 0)
 				heat_capacity_self_to_sharer += air_heat_capacity
 			else
@@ -690,7 +690,7 @@ What are the archived variables for?
 
 		var/delta_air = delta_oxygen+delta_nitrogen
 		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*deltra_nitrogen
+			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*delta_nitrogen
 			heat_transferred -= air_heat_capacity*model.temperature
 			heat_capacity_transferred -= air_heat_capacity
 
