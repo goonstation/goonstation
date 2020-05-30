@@ -515,6 +515,8 @@
 
 
 /mob/living/carbon/swap_hand()
+	var/obj/item/grab/block/B = src.check_block()
+	if(B) qdel(B)
 	src.hand = !src.hand
 
 /mob/living/carbon/lastgasp()

@@ -93,14 +93,50 @@ var/list/globalPropList = null
 	var/tooltipImg = "" //Stored in browserassets\images\tooltips
 	var/defaultValue = 1 //Default value. Used to get an idea of what's "normal" for any given property.
 	var/goodDirection = 1 //Dumb name. Tells us which direction the number should grow in for it to be considered "good", 1=positive, -1 negative
+	var/assocMobPropType = null //MAKE SURE THIS IS CORRECT FOR THE PROP YOU ARE USING: sum, simple, max, or priority
+	var/assocMobProp = null
 
 	proc/onAdd(var/obj/owner, var/value) //When property is added to an object
+		if(assocMobProp && isitem(owner) && (istype(owner.loc, /mob) || istype(owner, /obj/item/grab) && istype(owner.loc?.loc, /mob)))
+			var/mob/M = null
+			var/block = 0
+			if(istype(owner.loc, /mob))
+				M = owner.loc
+			else
+				M = owner.loc.loc
+				block = 1
+
+			if(M && (block || (owner in M.get_equipped_items())))
+				apply_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner, value)
 		return
 
 	proc/onChange(var/obj/owner, var/oldValue, var/newValue) //When property value changes.
+		if(assocMobProp && isitem(owner) && (istype(owner.loc, /mob) || istype(owner, /obj/item/grab) && istype(owner.loc?.loc, /mob)))
+			var/mob/M = null
+			var/block = 0
+			if(istype(owner.loc, /mob))
+				M = owner.loc
+			else
+				M = owner.loc.loc
+				block = 1
+
+			if(M && (block || (owner in M.get_equipped_items())))
+				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)	
+				apply_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner, newValue)
 		return
 
 	proc/onRemove(var/obj/owner, var/value) //When property is removed from an object.
+		if(assocMobProp && isitem(owner) && (istype(owner.loc, /mob) || istype(owner, /obj/item/grab) && istype(owner.loc?.loc, /mob)))
+			var/mob/M = null
+			var/block = 0
+			if(istype(owner.loc, /mob))
+				M = owner.loc
+			else
+				M = owner.loc.loc
+				block = 1
+
+			if(M && (block || (owner in M.get_equipped_items())))
+				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)		
 		return
 
 	proc/onUpdate() //Stub; Not implemented.
@@ -248,6 +284,8 @@ var/list/globalPropList = null
 		desc = "Protects from explosions." //Value is % protection.
 		tooltipImg = "explosion.png"
 		defaultValue = 10
+		assocMobProp = GET_PROP_NAME(PROP_EXPLOPROT)
+		assocMobPropType = GET_PROP_TYPE(PROP_EXPLOPROT)
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]"
 
@@ -280,6 +318,9 @@ var/list/globalPropList = null
 		desc = "Protects from ranged damage." //Value is divisor applied to bullet power on hit. For humans, the sum of all equipment is used. Base value is 1, so one item with 1 additional armor = 2, half the damage
 		tooltipImg = "bullet.png"
 		defaultValue = 0.15
+		assocMobProp = GET_PROP_NAME(PROP_RANGEDPROT)
+		assocMobPropType = GET_PROP_TYPE(PROP_RANGEDPROT)
+
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal] prot."
 

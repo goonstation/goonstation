@@ -795,6 +795,8 @@
 		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src, src.getProperty("heatprot"))
 	if (src.hasProperty("coldprot"))
 		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src, src.getProperty("coldprot"))
+	if (src.hasProperty("exploprot"))
+		APPLY_MOB_PROPERTY(user, PROP_EXPLOPROT, src, src.getProperty("exploprot"))
 
 /obj/item/proc/unequipped(var/mob/user)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
@@ -831,7 +833,8 @@
 		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, src)
 	if (src.hasProperty("coldprot"))
 		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, src)
-
+	if (src.hasProperty("exploprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, src)
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
 
@@ -1304,7 +1307,8 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
-
+	for(var/datum/objectProperty/P in src.properties)
+		P.onRemove(src)
 	var/turf/T = loc
 	if (!istype(T))
 		if (ismob(src.loc))

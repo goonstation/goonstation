@@ -162,15 +162,16 @@ To remove:
 	#define PROP_TESTPRIO(x) x("test_prio", APPLY_MOB_PROPERTY_PRIORITY, REMOVE_MOB_PROPERTY_PRIORITY)
 */
 
-#define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, "simple")
 
 //armour properties
-#define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
-#define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
-#define PROP_RANGEDPROT(x) x("rangedprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
-#define PROP_RADPROT(x) x("radprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
-#define PROP_COLDPROT(x) x("coldprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
-#define PROP_HEATPROT(x) x("heatprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX, "max")
+#define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX, "max")
+#define PROP_RANGEDPROT(x) x("rangedprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM, "sum")
+#define PROP_RADPROT(x) x("radprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM, "sum")
+#define PROP_COLDPROT(x) x("coldprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM, "sum")
+#define PROP_HEATPROT(x) x("heatprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM, "sum")
+#define PROP_EXPLOPROT(x) x("exploprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM, "sum")
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1
@@ -181,6 +182,7 @@ To remove:
 #define GET_PROP_NAME TUPLE_GET_1
 #define GET_PROP_ADD TUPLE_GET_2
 #define GET_PROP_REMOVE TUPLE_GET_3
+#define GET_PROP_TYPE TUPLE_GET_4
 
 #define APPLY_MOB_PROPERTY(target, property, etc...) GET_PROP_ADD(property)(target, GET_PROP_NAME(property), ##etc)
 
@@ -332,3 +334,27 @@ To remove:
 			} \
 		} \
 	} while (0)
+
+//A couple of wrapper procs. Only use these if you need to.
+
+/proc/apply_mob_prop_by_type(type, mob/target, property, source, value, priority)
+	switch(type)
+		if("simple")
+			APPLY_MOB_PROPERTY_SIMPLE(target, property, source)
+		if("max")
+			APPLY_MOB_PROPERTY_MAX(target, property, source, value) 
+		if("sum")
+			APPLY_MOB_PROPERTY_SUM(target, property, source, value)
+		if("priority")
+			APPLY_MOB_PROPERTY_PRIORITY(target, property, source, value, priority)
+
+/proc/remove_mob_prop_by_type(type, mob/target, property, source)
+	switch(type)
+		if("simple")
+			REMOVE_MOB_PROPERTY_SIMPLE(target, property, source)
+		if("max")
+			REMOVE_MOB_PROPERTY_MAX(target, property, source) 
+		if("sum")
+			REMOVE_MOB_PROPERTY_SUM(target, property, source)
+		if("priority")
+			REMOVE_MOB_PROPERTY_PRIORITY(target, property, source)
