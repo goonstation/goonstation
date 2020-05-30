@@ -2745,8 +2745,8 @@ var/global/noir = 0
 									if(istype(A, text2path(pathname)))
 										atoms_to_leg += A
 								if(atoms_to_leg.len >= 1)
-									logTheThing("admin", usr, null, "used give legs secret")
-									logTheThing("diary", usr, null, "used give legs secret", "admin")
+									logTheThing("admin", usr, null, "used Mass give things legs secret")
+									logTheThing("diary", usr, null, "used Mass give things legs secret", "admin")
 									for(var/atom/movable/A in atoms_to_leg)
 										if(!A)
 											continue
