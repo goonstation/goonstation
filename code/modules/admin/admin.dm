@@ -2737,7 +2737,7 @@ var/global/noir = 0
 					if("give-legs")
 						if(src.level >= LEVEL_ADMIN)
 							var/list/atoms_to_leg = list()
-							var/pathname = input("Path of the thing you want to leg like (/obj/item/paper_bin)","path:", null) as null|text
+							var/pathname = input("Path of the things you want to leg like (/obj/item/paper_bin)","path:", null) as null|text
 							if(!pathname)
 								return
 							if (alert("Do you really wanna give things legs?", "LEG LEG", "Sure thing!", "Not really.") == "Sure thing!")
@@ -3713,7 +3713,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=noir'>Noir</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=the_great_switcharoo'>The Great Switcharoo</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
-				<A href='?src=\ref[src];action=secretsfun;type=give-legs'>Give things legs</A><BR>
+				<A href='?src=\ref[src];action=secretsfun;type=give-legs'>Mass give things legs</A><BR>
 		"}
 
 	if (src.level >= LEVEL_ADMIN || (src.level == LEVEL_SA && usr.client.holder.state == 2))
