@@ -285,7 +285,6 @@ var/list/globalPropList = null
 		desc = "Protects from explosions." //Value is % protection.
 		tooltipImg = "explosion.png"
 		defaultValue = 10
-		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_EXPLOPROT))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]"
 
