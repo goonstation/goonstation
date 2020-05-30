@@ -553,21 +553,21 @@ What are the archived variables for?
 
 		var/delta_air = delta_oxygen+delta_nitrogen
 		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
+			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*deltra_nitrogen
 			if(delta_air > 0)
 				heat_capacity_self_to_sharer += air_heat_capacity
 			else
 				heat_capacity_sharer_to_self -= air_heat_capacity
 
 		if(delta_carbon_dioxide)
-			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CDO*delta_carbon_dioxide
+			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CO2*delta_carbon_dioxide
 			if(delta_carbon_dioxide > 0)
 				heat_capacity_self_to_sharer += carbon_dioxide_heat_capacity
 			else
 				heat_capacity_sharer_to_self -= carbon_dioxide_heat_capacity
 
 		if(delta_toxins)
-			var/toxins_heat_capacity = SPECIFIC_HEAT_TOXIN*delta_toxins
+			var/toxins_heat_capacity = SPECIFIC_HEAT_PLASMA*delta_toxins
 			if(delta_toxins > 0)
 				heat_capacity_self_to_sharer += toxins_heat_capacity
 			else
@@ -690,17 +690,17 @@ What are the archived variables for?
 
 		var/delta_air = delta_oxygen+delta_nitrogen
 		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
+			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*deltra_nitrogen
 			heat_transferred -= air_heat_capacity*model.temperature
 			heat_capacity_transferred -= air_heat_capacity
 
 		if(delta_carbon_dioxide)
-			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CDO*delta_carbon_dioxide
+			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CO2*delta_carbon_dioxide
 			heat_transferred -= carbon_dioxide_heat_capacity*model.temperature
 			heat_capacity_transferred -= carbon_dioxide_heat_capacity
 
 		if(delta_toxins)
-			var/toxins_heat_capacity = SPECIFIC_HEAT_TOXIN*delta_toxins
+			var/toxins_heat_capacity = SPECIFIC_HEAT_PLASMA*delta_toxins
 			heat_transferred -= toxins_heat_capacity*model.temperature
 			heat_capacity_transferred -= toxins_heat_capacity
 
