@@ -219,10 +219,10 @@ proc/build_syndi_buylist_cache()
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/omnitool
-	name = "Omnitool"
+	name = "Syndicate Omnitool"
 	item = /obj/item/tool/omnitool/syndicate
-	cost = 1
-	desc = "The one-stop-shop for your tool-needing agent in a hurry."
+	cost = 2
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the raisehand emote. Has a knife mode."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/bighat

@@ -739,6 +739,18 @@
 				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 				m_type = 1
 
+				for(var/atom in src.get_equipped_items())
+					var/obj/item/C = atom
+					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
+						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
+						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						drop_item()
+						O.set_loc(src)
+						equip_if_possible(O, drophand)
+						src.visible_message("<span class='alert'><B>[src] pulls a set of tools out of \the [C]!</B></span>")
+						playsound(src.loc, "rustle", 60, 1)
+						break
+
 			if ("crackknuckles","knuckles")
 				if (!src.restrained()) message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
 				else message = "<B>[src]</B> irritably shuffles around."

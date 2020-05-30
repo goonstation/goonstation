@@ -5,6 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
 	var/prefix = "omnitool"
+	var/has_cutting = 0
 
 	custom_suicide = 1
 
@@ -22,7 +23,13 @@
 			if ("screwing") new_mode = "pulsing"
 			if ("pulsing") new_mode = "snipping"
 			if ("snipping") new_mode = "wrenching"
-			if ("wrenching") new_mode = "prying"
+			if ("wrenching")
+				if(has_cutting)
+					new_mode = "cutting"
+				else
+					new_mode = "prying"
+			if("cutting")
+				new_mode = "prying"
 			else new_mode = "prying"
 		if (new_mode)
 			src.change_mode(new_mode, user)
@@ -116,8 +123,36 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 15/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+
+			if ("cutting")
+				src.omni_mode = "cutting"
+				//based on /obj/item/kitchen/utensil/knife
+				set_icon_state("[prefix]-cutting")
+				src.tool_flags = TOOL_CUTTING
+				src.force = 7
+				src.throwforce = 10
+				src.throw_range = 5
+				src.throw_speed = 2
+				// taken from wirecutters because I don't know what's going on here
+				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
+				src.stamina_cost = STAMINA_ITEM_COST * 10/18
+				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
+				src.hit_type = DAMAGE_CUT
+				src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+
 		if (holder)
 			holder.update_inhands()
 
 /obj/item/tool/omnitool/syndicate
 	prefix = "syndicate-omnitool"
+	has_cutting = 1
+
+	afterattack(obj/O as obj, mob/user as mob)
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+			boutput(user, "<span class='hint'>You hide the set of tools inside \the [O]. (Use the raisehand emote while wearing the clothing item to retrieve it.)</span>")
+			user.u_equip(src)
+			src.set_loc(O)
+			src.dropped(user)
+		else
+			..()
+		return
