@@ -795,6 +795,8 @@ proc/default_frequency_color(freq)
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
 
+#define DIAG_MOVE_DELAY_MULT 1.4
+
 //reagent_container bit flags
 #define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly (e.g. beaker)
 #define RC_VISIBLE	2		// reagent is visible inside, so color can be described

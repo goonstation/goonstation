@@ -3479,107 +3479,121 @@
 
 #define can_step_sfx(H)  (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 
+/mob/living/carbon/human/OnMove()
+	var/turf/NewLoc = get_turf(src)
+	var/steps = 1
+	if (move_dir & (move_dir-1))
+		steps *= DIAG_MOVE_DELAY_MULT
 
-/mob/living/carbon/human/Move(var/turf/NewLoc, direct)
-	//var/oldloc = loc
-	. = ..()
-
-	if (.)
-		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
-			if(move_dir & last_move_dir)
-				sustained_moves += 1
-				if (sustained_moves == SUSTAINED_RUN_REQ+1)
-					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
-			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1 || move_dir == turn(last_move_dir,180))
-					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
-				sustained_moves = 0
-
+	if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
+		if(move_dir & last_move_dir)
+			if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1)
+				sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
+			sustained_moves += steps
 		else
+			if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+				sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+			else if (move_dir == turn(last_move_dir,180))
+				sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+
 			sustained_moves = 0
 
-		last_move_dir = move_dir
+	else
+		sustained_moves = 0
 
-		// Call movement traits
-		if(src.traitHolder)
-			for(var/T in src.traitHolder.moveTraits)
-				var/obj/trait/O = getTraitById(T)
-				O.onMove(src)
+	last_move_dir = move_dir
 
-		//STEP SOUND HANDLING
-		if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
-			if (NewLoc.active_liquid)
-				if (NewLoc.active_liquid.step_sound)
-					if (src.m_intent == "run")
-						if (src.footstep >= 4)
-							src.footstep = 0
-						else
-							src.footstep++
-						if (src.footstep == 0)
-							playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
-					else
-						if (src.footstep >= 2)
-							src.footstep = 0
-						else
-							src.footstep++
-						if (src.footstep == 0)
-							playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
-			else if (src.shoes && src.shoes.step_sound && src.shoes.step_lots)
+	//STEP SOUND HANDLING
+	if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
+		if (NewLoc.active_liquid)
+			if (NewLoc.active_liquid.step_sound)
 				if (src.m_intent == "run")
+					if (src.footstep >= 4)
+						src.footstep = 0
+					else
+						src.footstep += steps
+					if (src.footstep == 0)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
+				else
 					if (src.footstep >= 2)
 						src.footstep = 0
 					else
-						src.footstep++
+						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, src.shoes.step_sound, 50, 1)
-				else
-					playsound(NewLoc, src.shoes.step_sound, 20, 1)
-
-			else
-				src.footstep++
-				if (can_step_sfx(src))
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
+		else if (src.shoes && src.shoes.step_sound && src.shoes.step_lots)
+			if (src.m_intent == "run")
+				if (src.footstep >= 2)
 					src.footstep = 0
-					if (NewLoc.step_material || !src.shoes || (src.shoes && src.shoes.step_sound))
-						var/priority = 0
+				else
+					src.footstep += steps
+				if (src.footstep == 0)
+					playsound(NewLoc, src.shoes.step_sound, 50, 1)
+			else
+				playsound(NewLoc, src.shoes.step_sound, 20, 1)
 
-						if (!NewLoc.step_material)
-							priority = -1
-						else if (src.shoes && !src.shoes.step_sound)
-							priority = 1
+		else
+			src.footstep += steps
+			if (can_step_sfx(src))
+				src.footstep = 0
+				if (NewLoc.step_material || !src.shoes || (src.shoes && src.shoes.step_sound))
+					var/priority = 0
 
-						if (!priority) //now we must resolve bc the floor and the shoe both wanna make noise
-							if (!src.shoes) //barefoot
-								priority = (STEP_PRIORITY_MAX > NewLoc.step_priority) ? -1 : 1
-							else //shoed
-								priority = (src.shoes.step_priority > NewLoc.step_priority) ? -1 : 1
+					if (!NewLoc.step_material)
+						priority = -1
+					else if (src.shoes && !src.shoes.step_sound)
+						priority = 1
 
-						if (priority)
-							if (priority > 0)
-								priority = NewLoc.step_material
-							else if (priority < 0)
-								priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
+					if (!priority) //now we must resolve bc the floor and the shoe both wanna make noise
+						if (!src.shoes) //barefoot
+							priority = (STEP_PRIORITY_MAX > NewLoc.step_priority) ? -1 : 1
+						else //shoed
+							priority = (src.shoes.step_priority > NewLoc.step_priority) ? -1 : 1
 
-							playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+					if (priority)
+						if (priority > 0)
+							priority = NewLoc.step_material
+						else if (priority < 0)
+							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-		//STEP SOUND HANDLING OVER
+						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
-		if (prob(5)) // Handling tied or cut shoelaces courtesy of /obj/item/gun/energy/pickpocket
-			if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
-				if (src.shoes.laces == LACES_TIED) // Laces tied
-					boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! <span class='alert'>FUCK!</span>")
-					src.changeStatus("weakened", 3 SECONDS)
-				else if (src.shoes.laces == LACES_CUT) // Laces cut
-					var/obj/item/clothing/shoes/S = src.shoes
-					src.u_equip(S)
-					S.set_loc(src.loc)
-					S.dropped(src)
-					S.layer = initial(S.layer)
-					if (prob(20)) boutput(src, "You run right the fuck out of your shoes. <span class='alert'>Shit!</span>")
+	//STEP SOUND HANDLING OVER
+
+	if (prob(5)) // Handling tied or cut shoelaces courtesy of /obj/item/gun/energy/pickpocket
+		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
+			if (src.shoes.laces == LACES_TIED) // Laces tied
+				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! <span class='alert'>FUCK!</span>")
+				src.changeStatus("weakened", 3 SECONDS)
+			else if (src.shoes.laces == LACES_CUT) // Laces cut
+				var/obj/item/clothing/shoes/S = src.shoes
+				src.u_equip(S)
+				S.set_loc(src.loc)
+				S.dropped(src)
+				S.layer = initial(S.layer)
+				if (prob(20)) boutput(src, "You run right the fuck out of your shoes. <span class='alert'>Shit!</span>")
+
+
+
+	// Call movement traits
+	if(src.traitHolder)
+		for(var/T in src.traitHolder.moveTraits)
+			var/obj/trait/O = getTraitById(T)
+			O.onMove(src)
+
 
 #undef can_step_sfx
 
+/mob/living/carbon/human/Move(var/turf/NewLoc, direct)
+	. = ..()
+	if (. && move_dir && !(direct & move_dir))
+		if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+		sustained_moves = 0
 
 /mob/living/carbon/human/set_loc(var/newloc as turf|mob|obj in world)
 	if (abilityHolder)
