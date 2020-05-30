@@ -2734,6 +2734,35 @@ var/global/noir = 0
 						logTheThing("admin", usr, null, "used Farty Party secret")
 						logTheThing("diary", usr, null, "used Farty Party secret", "admin")
 
+					if("give-legs")
+						if(src.level >= LEVEL_SHITGUY)
+							if (alert("Do you really wanna give things legs?", "LEG LEG", "Sure thing!", "Not really.") == "Sure thing!")
+								var/list/atoms_to_leg = list()
+								var/pathname = input("Path of the thing you want to leg like (/obj/item/paper_bin)","path:", null) as null|text
+								if(!pathname)
+									return
+								message_admins("[pathname] is pathname")
+								for(var/atom/movable/A in world) //Build the god forsaken list
+									if(istype(A, text2path(pathname)))
+										atoms_to_leg += A
+
+								message_admins("[atoms_to_leg.len] is the list's length")
+								if(atoms_to_leg.len >= 1)
+									message_admins("[key_name(usr)] did gave things with the path of '[pathname]' legs")
+									logTheThing("admin", usr, null, "used give legs secret")
+									logTheThing("diary", usr, null, "used give legs secret", "admin")
+
+									for(var/atom/A in atoms_to_leg)
+										if(!A)
+											continue
+										A.AddComponent(/datum/component/legs)
+
+
+							else
+								return
+						else
+							alert("Ha no")
+
 					else
 				if (usr) logTheThing("admin", usr, null, "used secret [href_list["secretsfun"]]")
 				logTheThing("diary", usr, null, "used secret [href_list["secretsfun"]]", "admin")
@@ -3691,6 +3720,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=noir'>Noir</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=the_great_switcharoo'>The Great Switcharoo</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
+				<A href='?src=\ref[src];action=secretsfun;type=give-legs'>Give things legs</A><BR>
 		"}
 
 	if (src.level >= LEVEL_SHITGUY || (src.level == LEVEL_SA && usr.client.holder.state == 2))
