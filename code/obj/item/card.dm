@@ -148,7 +148,7 @@ GAUNTLET CARDS
 
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
-	icon_state = "id_clown"
+	icon_state = "id_dab"
 	registered = "Dabber"
 	assignment = "Dabber"
 	desc = "This card authorizes the person wearing it to perform sick dabs."
