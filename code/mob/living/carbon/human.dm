@@ -3487,14 +3487,18 @@
 
 	if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
 		if(move_dir & last_move_dir)
-			sustained_moves += steps
-			if (sustained_moves == SUSTAINED_RUN_REQ+1)
+			if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1)
 				sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
+			sustained_moves += steps
 		else
-			if (sustained_moves >= SUSTAINED_RUN_REQ+1 || move_dir == turn(last_move_dir,180))
+			if (sustained_moves >= SUSTAINED_RUN_REQ+1)
 				sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+			else if (move_dir == turn(last_move_dir,180))
+				sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+
 			sustained_moves = 0
 
 	else
@@ -3585,9 +3589,10 @@
 
 /mob/living/carbon/human/Move(var/turf/NewLoc, direct)
 	. = ..()
-	if (. && !(direct & last_move_dir))
-		sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-		playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+	if (. && move_dir && !(direct & move_dir))
+		if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
 
 /mob/living/carbon/human/set_loc(var/newloc as turf|mob|obj in world)

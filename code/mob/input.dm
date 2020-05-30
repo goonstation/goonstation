@@ -192,7 +192,8 @@ mob
 
 						if (do_step)
 							step(src, move_dir)
-							OnMove()
+							if (src.loc != old_loc)
+								OnMove()
 
 						src.glide_size = glide // but Move will auto-set glide_size, so we need to override it again
 
