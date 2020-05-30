@@ -75,7 +75,7 @@
 
 #define FLOWFRAC 0.99				// fraction of gas transfered per process
 
-// gases
+// non-trace gases
 
 #define SPECIFIC_HEAT_PLASMA		200
 #define SPECIFIC_HEAT_O2		20
@@ -90,7 +90,7 @@
 
 // gas calculation macros
 
-#define _ZERO_GAS(GAS, MIXTURE) MIXTURE.GAS = 0
+#define _ZERO_GAS(GAS, _, _, MIXTURE) MIXTURE.GAS = 0;
 #define ZERO_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
 #define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
