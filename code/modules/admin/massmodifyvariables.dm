@@ -12,21 +12,21 @@
 		for(var/mob/M in mobs)
 			if (M.type == O.type)
 				M.vars[variable] = val
-				M.onVarChanged(variable, oldVal, val)			
+				M.onVarChanged(variable, oldVal, val)
 			LAGCHECK(LAG_LOW)
 
 	else if(istype(O, /obj))
 		for(var/obj/A in world)
 			if (A.type == O.type)
 				A.vars[variable] = val
-				A.onVarChanged(variable, oldVal, val)			
+				A.onVarChanged(variable, oldVal, val)
 			LAGCHECK(LAG_LOW)
 
 	else if(istype(O, /turf))
 		for(var/turf/T in world)
 			if (T.type == O.type)
 				T.vars[variable] = val
-				T.onVarChanged(variable, oldVal, val)			
+				T.onVarChanged(variable, oldVal, val)
 			LAGCHECK(LAG_LOW)
 
 /client/proc/massmodify_variables(var/atom/O)
@@ -46,7 +46,7 @@
 	var/var_value = O.vars[variable]
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		return
 
 	//Let's prevent people from promoting themselves, yes?

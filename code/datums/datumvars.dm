@@ -40,7 +40,7 @@
 		return
 	body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_SHITGUY ? " (\ref[V])" : ""] - Refresh button doesn't work."
+	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""] - Refresh button doesn't work."
 
 	//stole this from view_variables below
 	var/html = {"
@@ -100,7 +100,7 @@
 
 	if (istype(D, /atom))
 		var/atom/A = D
-		title = "[A.name][src.holder.level >= LEVEL_SHITGUY ? " (\ref[A])" : ""] = [A.type]"
+		title = "[A.name][src.holder.level >= LEVEL_ADMIN ? " (\ref[A])" : ""] = [A.type]"
 
 		#ifdef VARSICON
 		if (A.icon)
@@ -109,7 +109,7 @@
 	if(D == "GLOB")
 		title = "Global Variables"
 	else
-		title = "[D][src.holder.level >= LEVEL_SHITGUY ? " (\ref[D])" : ""] = [D.type]"
+		title = "[D][src.holder.level >= LEVEL_ADMIN ? " (\ref[D])" : ""] = [D.type]"
 
 	body += {"
 
@@ -327,11 +327,11 @@
 		var/dname = null
 		if ("name" in D.vars)
 			dname = " (" + html_encode( "[D.vars["name"]]" ) + ")"
-		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[D.type][src.holder.level >= LEVEL_SHITGUY ? " <em>\ref[value]</em>" : ""])"
+		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[D.type][src.holder.level >= LEVEL_ADMIN ? " <em>\ref[value]</em>" : ""])"
 
 	else if (isclient(value))
 		var/client/C = value
-		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[C] ([C.type][src.holder.level >= LEVEL_SHITGUY ? " <em class='value'>\ref[value]</em>" : ""])"
+		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[C] ([C.type][src.holder.level >= LEVEL_ADMIN ? " <em class='value'>\ref[value]</em>" : ""])"
 
 	else if (islist(value))
 		var/list/L = value
@@ -584,7 +584,7 @@
 		return
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
 		return
 
@@ -674,7 +674,7 @@
 		original_name = "Global Variable"
 	else
 		if (!istype(D, /atom))
-			original_name = "[src.holder.level >= LEVEL_SHITGUY ? "\ref[D] " : ""]([D])"
+			original_name = "[src.holder.level >= LEVEL_ADMIN ? "\ref[D] " : ""]([D])"
 		else
 			original_name = D:name
 
@@ -692,7 +692,7 @@
 				else
 					D.vars[variable] = null
 		if("ref")
-			if (!(src.holder.rank in list("Host", "Coder", "Shit Person")))
+			if (!(src.holder.rank in list("Host", "Coder", "Administrator")))
 				boutput( src, "<span class='alert'>This can super break shit so you can't use this. Sorry.</span> ")
 				return
 			var/theref = input("What ref?") as null|text
@@ -916,7 +916,7 @@
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
+				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)

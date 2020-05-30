@@ -318,11 +318,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.homeloc = src.loc
 
 	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-
-	disposing()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 		..()
@@ -682,11 +677,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						- list(/obj/critter/spider/ice/queen)
 
 	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-
-	disposing()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 		..()
@@ -871,11 +861,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		//Hidden
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/random, rand(1, 3), hidden=1)
-
-	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
 
 	disposing()
 		if (islist(portable_machinery))

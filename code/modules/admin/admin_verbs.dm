@@ -167,7 +167,7 @@ var/list/admin_verbs = list(
 		),
 
 	4 = list(
-		// LEVEL_ADMIN, admin
+		// LEVEL_IA, admin
 		/*
 		/client/proc/noclip,
 		/client/proc/cmd_admin_mute,
@@ -260,7 +260,7 @@ var/list/admin_verbs = list(
 
 
 	6 = list(
-		// LEVEL_SHITGUY, shit person
+		// LEVEL_ADMIN, Administrator
 		/datum/admins/proc/togglesoundwaiting,
 		/datum/admins/proc/pixelexplosion,
 		/proc/mod_color,
@@ -504,12 +504,12 @@ var/list/special_pa_observing_verbs = list(
 			src.holder.level = LEVEL_HOST
 		if ("Coder")
 			src.holder.level = LEVEL_CODER
-		if ("Shit Person")
-			src.holder.level = LEVEL_SHITGUY
-		if ("Primary Administrator")
-			src.holder.level = LEVEL_PA
 		if ("Administrator")
 			src.holder.level = LEVEL_ADMIN
+		if ("Primary Administrator")
+			src.holder.level = LEVEL_PA
+		if ("Intermediate Administrator")
+			src.holder.level = LEVEL_IA
 		if ("Secondary Administrator")
 			src.holder.level = LEVEL_SA
 		if ("Moderator")
@@ -543,10 +543,10 @@ var/list/special_pa_observing_verbs = list(
 			if ( src.holder.level > LEVEL_MOD)
 				src.deadchat = 1
 				src.verbs += special_admin_observing_verbs
-			if ( src.holder.level > LEVEL_ADMIN )
+			if ( src.holder.level > LEVEL_IA )
 				src.verbs += special_pa_observing_verbs
 		else
-			if ( src.holder.level > LEVEL_ADMIN)
+			if ( src.holder.level > LEVEL_IA)
 				src.deadchat = 1
 				src.verbs += special_admin_observing_verbs
 			if( src.holder.level > LEVEL_PA ) //SHIT GUY PLUS
@@ -1167,7 +1167,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level >= LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "BLOBSAY: [msg]")
 	logTheThing("diary", src, null, "BLOBSAY: [msg]", "admin")
@@ -1199,7 +1199,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level >= LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "HIVESAY: [msg]")
 	logTheThing("diary", src, null, "HIVESAY: [msg]", "admin")
@@ -1238,7 +1238,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level >= LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "DRONESAY: [msg]")
 	logTheThing("diary", src, null, "DRONESAY: [msg]", "admin")
@@ -1271,7 +1271,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level >= LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "MARSAY: [msg]")
 	logTheThing("diary", src, null, "MARSAY: [msg]", "admin")
@@ -1288,7 +1288,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level >= LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "FLOCKSAY: [msg]")
 	logTheThing("diary", src, null, "FLOCKSAY: [msg]", "admin")

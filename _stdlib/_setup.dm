@@ -40,9 +40,9 @@
 
 #define LEVEL_HOST 6
 #define LEVEL_CODER 5
-#define LEVEL_SHITGUY 4
+#define LEVEL_ADMIN 4
 #define LEVEL_PA 3
-#define LEVEL_ADMIN 2
+#define LEVEL_IA 2
 #define LEVEL_SA 1
 #define LEVEL_MOD 0
 #define LEVEL_BABBY -1
@@ -398,6 +398,7 @@
 #define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
 #define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
 #define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
+#define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -778,8 +779,10 @@ proc/default_frequency_color(freq)
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out
 #define STAMINA_WINDED_SPEAK_MIN 0      //Can't speak below this point.
-#define STAMINA_SPRINT 50				//can only sprint above this number
-#define STAMINA_COST_SPRINT 8			//cost of moving in sprint
+#define STAMINA_SPRINT 64				//can only sprint above this number
+#define STAMINA_COST_SPRINT 7			//cost of moving in sprint
+#define SUSTAINED_RUN_GRACE 0.5 SECONDS	//grace period where sustained run can be sustained
+#define SUSTAINED_RUN_REQ 8				//how many tiles to start sustained run
 
 //This is a bad solution. Optimally this should scale.
 #define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
@@ -800,6 +803,8 @@ proc/default_frequency_color(freq)
 #define STAMINA_DEFAULT_FART_COST 0  //How much farting costs. I am not even kidding.
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+#define DIAG_MOVE_DELAY_MULT 1.4
 
 //reagent_container bit flags
 #define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly (e.g. beaker)

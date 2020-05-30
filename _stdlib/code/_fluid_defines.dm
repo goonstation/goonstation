@@ -4,8 +4,8 @@
 #define SPREAD_CHECK(FG) (FG.members && FG.members.len && ((FG.members.len * FG.required_to_spread) <= FG.contained_amt))
 #define VALID_FLUID_CONNECTION(F, t) ( t  && t.active_liquid && (!t.active_liquid.group || F.group == t.active_liquid.group) && !t.active_liquid.pooled)
 
-#define viscosity_SLOW_COMPONENT(avg_viscosity, max_viscosity, max_speed_mod) (((avg_viscosity-1)/(max_viscosity-1)) * max_speed_mod * 0.6)
-#define DEPTH_SLOW_COMPONENT(amt, max_reagent_volume, max_speed_mod) (((amt)/(max_reagent_volume)) * max_speed_mod * 0.4)
+#define viscosity_SLOW_COMPONENT(avg_viscosity, max_viscosity, max_speed_mod) (((avg_viscosity-1)/(max_viscosity-1)) * max_speed_mod * 0.5)
+#define DEPTH_SLOW_COMPONENT(amt, max_reagent_volume, max_speed_mod) (((amt)/(max_reagent_volume)) * max_speed_mod * 0.3)
 
 //Used in obj/fluid procs only:
 #define IS_SOLID_TO_FLUID(A) (A.flags & ALWAYS_SOLID_FLUID || A.flags & IS_PERSPECTIVE_FLUID)

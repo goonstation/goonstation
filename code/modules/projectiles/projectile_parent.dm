@@ -50,8 +50,8 @@
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
-	var/list/hitlist //list of atoms collided with this tick
-
+	var/list/hitlist = list() //list of atoms collided with this tick
+	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 #if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
@@ -78,14 +78,13 @@
 	proc/launch()
 		if (proj_data)
 			proj_data.on_launch(src)
+		src.setup()
 		if (!disposed && !pooled && !qdeled)
 			SPAWN_DBG(-1)
 				if (!is_processing)
 					process()
 
 	proc/process()
-		if (!src.was_setup)
-			src.setup()
 		if(hitlist.len)
 			hitlist.len = 0
 		is_processing = 1
@@ -257,9 +256,10 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
-		hitlist = null
+		hitlist.len = 0
 		transform = null
 		internal_speed = null
+		orig_turf = null
 		pierces_left = 0
 		goes_through_walls = 0
 		goes_through_mobs = 0
@@ -268,6 +268,7 @@
 		collide_with_other_projectiles = 0
 		is_processing = 0
 		facing_dir = 1
+		reflectcount = 0
 		..()
 
 	//just in fuck in case
@@ -309,9 +310,7 @@
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
 		goes_through_mobs = src.proj_data.goes_through_mobs
-		hitlist = list()
 		set_icon()
-		orig_turf = get_turf(src)
 
 		var/len = sqrt(src.xo * src.xo + src.yo * src.yo)
 
@@ -936,6 +935,7 @@ datum/projectile/snowball
 	P.name = DATA.name
 	P.setMaterial(DATA.material)
 	P.power = DATA.power
+	P.orig_turf = S
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
@@ -967,19 +967,24 @@ datum/projectile/snowball
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 
-/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
+	if(P.reflectcount >= max_reflects)
+		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q
 
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
 	if (!P.incidence || !(P.incidence in cardinal))
 		return null
+	if(P.reflectcount >= max_reflects)
+		return
 
 	var/rx = 0
 	var/ry = 0
@@ -998,6 +1003,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
+	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"

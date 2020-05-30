@@ -1036,6 +1036,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\grille.dm"
 #include "code\obj\health_scanner.dm"
 #include "code\obj\item.dm"
+#include "code\obj\item_dispensers.dm"
 #include "code\obj\kitchenspike.dm"
 #include "code\obj\landmark.dm"
 #include "code\obj\machinery.dm"

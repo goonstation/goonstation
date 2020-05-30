@@ -24,6 +24,7 @@
 	var/skip_sims = 0
 	var/sims_score = 100
 	var/virtual = 0
+	var/is_centcom = 0 // for escape checks
 	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
@@ -501,6 +502,7 @@
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 	sound_group = "centcom"
+	is_centcom = 1
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -567,10 +569,13 @@
 	teleport_blocked = 1
 
 /area/shuttle/merchant_shuttle/left_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/right_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_station
 
