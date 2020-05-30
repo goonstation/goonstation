@@ -1358,6 +1358,7 @@
 		var/anticoag_amt = (src.reagents ? src.reagents.get_reagent_amount("heparin") : 0)
 		var/coag_amt = (src.reagents ? src.reagents.get_reagent_amount("proconvertin") : 0)
 		var/cho_amt = (src.reagents ? src.reagents.get_reagent_amount("cholesterol") : 0)
+		var/gnesis_amt = (src.reagents ? src.reagents.get_reagent_amount("flockdrone_fluid") : 0)
 		if (anticoag_amt)
 			current_blood_amt -= ((anticoag_amt / 4) + anticoag_amt) * mult// set the total back to what it would be without the heparin, then remove the total of the heparin
 		if (coag_amt)
@@ -1366,6 +1367,9 @@
 		if (cho_amt)
 			current_blood_amt -= (cho_amt / 4) * mult // same as proconvertin above
 			current_blood_amt += cho_amt * mult
+		if (gnesis_amt)
+			current_blood_amt -= (gnesis_amt / 4) * mult
+			current_blood_amt += (gnesis_amt / 2) * mult //makes it stay somewhat constant with regular spleen and conversion so you wont feel the effects of blood loss. since gnesis is flock blood and this is human blood so it must be similar right?
 		current_blood_amt = round(current_blood_amt, 1)
 
 		var/current_systolic = round((current_blood_amt * 0.24), 1)
