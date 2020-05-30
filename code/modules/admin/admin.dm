@@ -2735,7 +2735,7 @@ var/global/noir = 0
 						logTheThing("diary", usr, null, "used Farty Party secret", "admin")
 
 					if("give-legs")
-						if(src.level >= LEVEL_SHITGUY)
+						if(src.level >= LEVEL_ADMIN)
 							var/list/atoms_to_leg = list()
 							var/pathname = input("Path of the thing you want to leg like (/obj/item/paper_bin)","path:", null) as null|text
 							if(!pathname)
