@@ -1,5 +1,26 @@
 
+(t)fri may 29 20
+(u)Kubius
+(p)890
+(e)🆕🗺|feature, mapping
+(+)Small batch of Kondaru changes, including a space cooling loop in Toxins.
+(u)mbc
+(p)889
+(e)|
+(*)The HoS can now walk in/out of the armory without using the auth computer.
 (t)thu may 28 20
+(u)mbc
+(p)879
+(e)🎨|sprites
+(*)Smoothly cornering your turns (diagonally) will no longer cancel 'run sustain' boost.
+(u)mbc
+(p)878
+(e)🎨|sprites
+(*)Added "sustained run" mechanic -  if you run in a straight line for a bit you will get a speed boost as long as you do not stop moving or change direction. This change is meant to address traveling around the station, make it smoother. It has a small visual indication (small puff) when this happens. Sprites/exact number values subject to change as usual.
+(u)Dabir
+(p)877
+(e)|
+(+)Fixed a bug where when you moved after activating a hand tele but before picking your teleporter, the hand tele's portal would incorrectly appear on the spot it was first activated.
 (u)mbc
 (p)874
 (e)|

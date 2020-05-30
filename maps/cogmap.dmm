@@ -3027,7 +3027,7 @@
 "bgk" = (/obj/landmark{name = "blobstart"},/obj/disposalpipe/segment/mail,/obj/machinery/camera{c_tag = "autotag"; dir = 9; name = "autoname - SS13"; tag = ""},/turf/simulated/floor/plating,/area/station/maintenance/west)
 "bgl" = (/obj/stool/chair{dir = 4},/obj/machinery/recharger/wall/sticky,/turf/simulated/floor/black,/area/station/security/main)
 "bgm" = (/obj/disposalpipe/segment/mail{dir = 4},/turf/simulated/floor/red/side{dir = 8},/area/station/security/brig)
-"bgn" = (/obj/machinery/power/data_terminal,/obj/machinery/light_switch{name = "N light switch"; pixel_y = 24},/obj/filing_cabinet,/obj/cable{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/black,/area/station/security/checkpoint)
+"bgn" = (/obj/machinery/power/data_terminal,/obj/machinery/light_switch{name = "N light switch"; pixel_y = 24; pixel_x = -7},/obj/filing_cabinet,/obj/cable{d2 = 2; icon_state = "0-2"},/obj/item_dispenser/idcarddispenser{pixel_x = 6},/turf/simulated/floor/black,/area/station/security/checkpoint)
 "bgo" = (/obj/machinery/drainage,/turf/simulated/floor/specialroom/freezer,/area/station/crew_quarters/catering)
 "bgp" = (/obj/machinery/power/apc{dir = 8; name = "W APC"; pixel_x = -24},/obj/cable{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating,/area/station/maintenance/disposal)
 "bgq" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/disposal_pipedispenser,/turf/simulated/floor/plating,/area/station/maintenance/disposal)

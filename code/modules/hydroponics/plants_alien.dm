@@ -244,6 +244,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 /datum/plant/maneater
 	name = "Man-Eating"
+	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Maneater"
 	growthmode = "carnivore"
 	unique_seed = /obj/item/seed/maneater

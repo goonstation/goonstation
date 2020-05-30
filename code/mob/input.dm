@@ -115,7 +115,7 @@ mob
 							qdel(G)
 					for(var/grab in src.grabbed_by)
 						var/obj/item/grab/G = grab
-						if (get_dist(src, G.assailant) > 1)
+						if (istype(G) && get_dist(src, G.assailant) > 1)
 							if (G.state > 1)
 								delay += G.assailant.p_class
 							qdel(G)
