@@ -1,5 +1,9 @@
 
 (t)fri may 29 20
+(u)Flaborized
+(p)883
+(e)⚖|balance
+(+)Traitor barmen and scientists can now buy the syringe gun
 (u)UrsulaMajor
 (p)893
 (e)🎨|sprites
