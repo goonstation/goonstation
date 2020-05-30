@@ -106,7 +106,6 @@ var/list/globalPropList = null
 			if(M && (owner in M.get_equipped_items()))
 				for(var/prop in assocMobProps)
 					apply_mob_prop_by_type(assocMobProps[prop], M, prop, owner, value)
-				RegisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING, .proc/onRemove)
 		return
 
 	proc/onChange(var/obj/owner, var/oldValue, var/newValue) //When property value changes.
@@ -131,10 +130,9 @@ var/list/globalPropList = null
 			else
 				M = owner.loc
 
-			if(M && (owner in M.get_equipped_items()))
+			if(M)
 				for(var/prop in assocMobProps)
 					remove_mob_prop_by_type(assocMobProps[prop], M, prop, owner)	
-				UnregisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING)
 		return
 
 	proc/onUpdate() //Stub; Not implemented.
