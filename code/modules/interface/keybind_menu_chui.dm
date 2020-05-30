@@ -77,7 +77,8 @@ chui/window/keybind_menu
 
 /client/verb/modify_keybinds()
 	set name = "Modify Keybinds"
-	set desc = "Open up a handy window to change your keybinds"
+	set category = "Commands"
+	set desc = "Open up a window to change your keybinds"
 
 	if(!src.keybind_menu)
 		src.keybind_menu = new
