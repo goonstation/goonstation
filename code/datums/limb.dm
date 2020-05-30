@@ -592,25 +592,23 @@
 			target.attack_hand(user, params, location, control)
 			return
 
-		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille")))
-				if (0)
-					if (isitem(target))
-						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,target.loc)
-						user.visible_message("<span class='alert'>The [target] melts in [user]'s clutch</span>", "<span class='alert'>The [target] melts in your clutch!</span>")
-						qdel(target)
-						I.desc = "Looks like this was \an [target], melted by someone who was too much."
-						for(var/mob/M in AIviewers(5, target))
-							boutput(M, "<span class='alert'>\the [target] melts.</span>")
-						qdel(target)
-						return
+		if (isitem(target))
+			var/obj/item/I = target
+			if(I.anchored)
+				return 0
+			var/obj/decal/cleanable/molten_item/I2 = make_cleanable(/obj/decal/cleanable/molten_item,I.loc)
+			user.visible_message("<span class='alert'>The [I] melts in [user]'s clutch</span>", "<span class='alert'>The [I] melts in your clutch!</span>")
+			qdel(target)
+			I2.desc = "Looks like this was \an [I], melted by someone who was too much."
+			for(var/mob/M in AIviewers(5, target))
+				boutput(M, "<span class='alert'>\the [I] melts.</span>")
+			qdel(I)
+			return
 
 
 
 
 
-				if (1)
-					return
 
 		..()
 		return
@@ -646,11 +644,10 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing("combat", user, target, "melts %target% with hot hands at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, rand(9,10) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 3, 1, 0, 0)
 		user.attack_effects(target, affecting)
 
 		msgs.base_attack_message = "<b><span class='alert'>[user] melts [target] with their clutch!</span></b>"
