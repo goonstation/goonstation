@@ -2724,22 +2724,6 @@
 	if (waddle_walking)
 		makeWaddle(src)
 
-/mob/proc/on_centcom()
-	var mob_loc = src.loc
-	if (isobj(src.loc))
-		var/obj/O = src.loc
-		mob_loc = O.loc
-
-	var/turf/location = get_turf(mob_loc)
-	if (!location)
-		return 0
-
-	var/area/check_area = location.loc
-	if (istype(check_area, map_settings.escape_centcom))
-		return 1
-
-	return 0
-
 /mob/proc/is_hulk()
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
 		return 1
