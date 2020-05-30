@@ -333,7 +333,7 @@
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>
 				<div>
-					<div class='l'>Shit Person</div>
+					<div class='l'>Administrator</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "possessmob")]'>[M == usr ? "Release" : "Possess"] mob</a> &bull;
 						<a href='[playeropt_link(M, "viewvars")]'>Edit Variables</a> &bull;
@@ -360,7 +360,7 @@
 			"}
 
 	var/windowHeight = "450"
-	if (src.level == LEVEL_SHITGUY)
+	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
 	else if (src.level == LEVEL_CODER)
 		windowHeight = "600"

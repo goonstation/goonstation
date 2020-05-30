@@ -770,7 +770,7 @@
 			if(new_name)
 				//Shit guys can name a dude into the entire play of hamlet, if they want.
 				//But they  shouldn't.
-				if(!(usr.client.holder.level >= LEVEL_SHITGUY) && length(new_name) > FULLNAME_MAX)
+				if(!(usr.client.holder.level >= LEVEL_ADMIN) && length(new_name) > FULLNAME_MAX)
 					new_name = copytext(new_name, 1, FULLNAME_MAX)
 
 				src.real_name = new_name
@@ -780,7 +780,7 @@
 			if (isnull(new_text))
 				return
 			new_text = html_encode(new_text)
-			if (!(usr.client.holder.level >= LEVEL_SHITGUY) && length(new_text) > FLAVOR_CHAR_LIMIT)
+			if (!(usr.client.holder.level >= LEVEL_ADMIN) && length(new_text) > FLAVOR_CHAR_LIMIT)
 				alert("The entered flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
 				new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 			src.flavor_text = new_text
@@ -807,7 +807,7 @@
 			var/minage = 20
 			var/maxage = 99
 
-			if (usr.client.holder.level >= LEVEL_SHITGUY)
+			if (usr.client.holder.level >= LEVEL_ADMIN)
 				minage = -999
 				maxage = 999
 
@@ -861,7 +861,7 @@
 			src.update_wearid = !src.update_wearid
 
 		else if (href_list["mutantrace"])
-			if (usr.client.holder.level >= LEVEL_SHITGUY)
+			if (usr.client.holder.level >= LEVEL_ADMIN)
 				var/new_race = input(usr, "Please select mutant race", "Polymorph Menu") as null|anything in (childrentypesof(/datum/mutantrace) + "Remove")
 
 				if (ispath(new_race, /datum/mutantrace))
@@ -869,7 +869,7 @@
 				if (new_race == "Remove")
 					src.mutantrace = null
 			else
-				boutput(src, "You must be at least a Shit Person to polymorph mutantraces.")
+				boutput(src, "You must be at least a Administrator to polymorph mutantraces.")
 
 		else if(href_list["apply"])
 			src.copy_to_target()
@@ -944,7 +944,7 @@
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.s_tone]\"><table bgcolor=\"[src.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
 		dat += "Obese: <a href='byond://?src=\ref[src];fat=1'>[src.fat ? "YES" : "NO"]</a><br>"
 
-		if (usr.client.holder.level >= LEVEL_SHITGUY)
+		if (usr.client.holder.level >= LEVEL_ADMIN)
 			dat += "Mutant Race: <a href='byond://?src=\ref[src];mutantrace=1'>[src.mutantrace ? capitalize(src.mutantrace.name) : "None"]</a><br>"
 
 		dat += "Update ID/PDA/Manifest: <a href='byond://?src=\ref[src];updateid=1'>[src.update_wearid ? "YES" : "NO"]</a><br>"

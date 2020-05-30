@@ -424,6 +424,7 @@ todo: add more small animals!
 	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
 	var/gabe = 0 //sniff. bark bork. brork.
 	pull_w_class = 4
+
 	OnMove()
 		if(client && client.player && client.player.shamecubed)
 			loc = client.player.shamecubed
@@ -431,6 +432,7 @@ todo: add more small animals!
 
 		makeWaddle(src)
 		.=..()
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]

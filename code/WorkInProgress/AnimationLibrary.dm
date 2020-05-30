@@ -507,6 +507,19 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
+/proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = direct
+	flick("sprint_cloud_tiny",M.sprint_particle)
+	SPAWN_DBG(3)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
