@@ -1,5 +1,9 @@
 
 (t)sat may 30 20
+(u)Sovexe
+(p)894
+(e)🆕|feature
+(+)Changed escape checks to consider you as having escaped if you are anywhere on Centcom at round end.
 (u)UrsulaMajor
 (p)900
 (e)|
