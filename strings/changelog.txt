@@ -1,5 +1,9 @@
 
 (t)sat may 30 20
+(u)UrsulaMajor
+(p)900
+(e)|
+(+)You no longer slip on ice decals while crawling
 (u)Tarmunora
 (p)774
 (e)⚖|balance
