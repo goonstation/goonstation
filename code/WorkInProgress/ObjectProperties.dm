@@ -48,16 +48,16 @@ var/list/globalPropList = null
 				if(X.id == propId)
 					X.onChange(src, src.properties[X], ((propVal != null) ? propVal : X.defaultValue))
 					src.properties[X] = propVal
-					return
+					return X
 
 			var/datum/objectProperty/P = globalPropList[propId]
 
 			src.properties.Add(P)
 			src.properties[P] = ((propVal != null) ? propVal : P.defaultValue)
 			P.onAdd(src, propVal)
+			return P
 		else
 			throw EXCEPTION("Invalid property ID passed to setProperty ([propId])")
-		return
 
 	proc/getProperty(var/propId) //Gets property value.
 		.= null
@@ -75,9 +75,9 @@ var/list/globalPropList = null
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/X in src.properties)
 				if(X.id == propId)
+					. = X
 					X.onRemove(src, src.properties[X])
 					src.properties.Remove(X)
-		return null
 
 	proc/hasProperty(var/propId) //Checks if property is on object.
 		.= 0
