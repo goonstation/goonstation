@@ -4,19 +4,16 @@
  * To add a new keybind:
  *	Add it in the right keybind_style below.
  *	Then, you need to update action_names to allow the menu to translate into human-readable format.
- *	Depending on what you're adding, you'll need to update action_verbs as well.
+ *	Depending on what you're adding, you might need to update action_verbs as well.
  */
 
-///Global list holding all of the keybind style datums - Intitalized in World preload.
+///Global list holding all of the keybind style datums
 var/global/list/datum/keybind_style/keybind_styles = null
-
-///Global list holding keybind style datums that we needed to instantiate - lazy
-var/global/list/datum/keybind_style/instantiated_styles = null
 
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
 //base -> base_wasd -> human -> human_wasd for example
 //If you switch to a different mobtype, such as a robot, you would reset the keymap, and successive calls of build_keymap will apply_keybind
-//A more optimized solution would be to rebuild only what is needed, but what do you expect of me?
+//A more optimized solution would be to rebuild only what is needed, but you can code that.
 
 ///List on each client containing the styles we've applied so we don't double-apply.
 /client/var/list/applied_keybind_styles = list()
@@ -35,7 +32,6 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 	for (var/found in keybind_styles)
 		var/datum/keybind_style/found_style = found
 		if (initial(found_style.name) == style_name)
-			boutput("[found_style]")
 			return found_style
 	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
@@ -63,8 +59,8 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 
 
 
-
 // Keybinds are sub-sorted in order of most common, since then it'll be further up the global list of styles. Micro-optimizations whoo!
+// Currently: base -> arrow -> tg -> azerty
 
 //
 //	BASE MOB KEYBINDS
@@ -312,16 +308,16 @@ var/global/list/datum/keybind_style/instantiated_styles = null
 		"NORTHEAST" = "alt_fire" /*PGUP*/
 	)
 
-/datum/keybind_style/artillery
-	name = "art"
-	changed_keys = list(
-		"SPACE" = "fire",
-		"Q" = "cycle"
-	)
-
 /datum/keybind_style/exit
 	name = "just exit"
 	changed_keys = list(
 		"Q" = "exit",
 		"E" = "exit"
+	)
+
+/datum/keybind_style/artillery
+	name = "art"
+	changed_keys = list(
+		"SPACE" = "fire",
+		"Q" = "cycle"
 	)

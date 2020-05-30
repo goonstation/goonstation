@@ -7,10 +7,12 @@
 			for (var/key in data)
 				keys[parse_keybind(key)] = data[key]
 
+	///Merges two keymaps together. Will overwrite existing entries sharing the same key.
 	proc/merge(datum/keymap/init_keymap)
 		for (var/key in init_keymap.keys)
 			src.keys[key] = init_keymap.keys[key]
 
+	///Overwrites existing entries from given keymap, matching on the action and not the key. Performance sucks on this.
 	proc/overwrite_by_action(datum/keymap/writer)
 		if (!writer) return
 		for (var/key in writer.keys)
@@ -81,9 +83,10 @@
 
 		return uppertext("[modifier_string][bound_key]")
 
+	///Intermediate proc to check if an action is a bitflag or not before parsing it.
 	proc/parse_action(action)
 		if (isnum(action)) //for bitflag actions (KEY_BOLT)
-			return key_bitflag_to_stringdesc(action)
+			return key_bitflag_to_stringdesc(num2text(action))
 		else //must be a string
 			return key_string_to_desc(action)
 
@@ -96,9 +99,8 @@
 		return "ZeWaka/Keybinds: not a string in action_names you fucko"
 
 	///Converts from bitflag to a human-readable description
-	///Assuming we're not passed a combination, because fuck that
+	///Eample: "2" to "KEY_BACKWARD"
 	proc/key_bitflag_to_stringdesc(bitflag)
-		bitflag = num2text(bitflag)
 		for (var/key in key_names)
 			if (bitflag == key)
 				return key_names[key]
