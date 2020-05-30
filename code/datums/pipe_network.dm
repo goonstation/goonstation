@@ -113,10 +113,7 @@ datum/pipe_network
 		if (!air_transient)
 			air_transient = new()
 		air_transient.volume = 0
-		air_transient.oxygen = 0
-		air_transient.nitrogen = 0
-		air_transient.toxins = 0
-		air_transient.carbon_dioxide = 0
+		ZERO_BASE_GASES(air_transient)
 
 		air_transient.trace_gases = null
 
@@ -125,10 +122,8 @@ datum/pipe_network
 			total_thermal_energy += gas.thermal_energy()
 			total_heat_capacity += HEAT_CAPACITY(gas)
 
-			air_transient.oxygen += gas.oxygen
-			air_transient.nitrogen += gas.nitrogen
-			air_transient.toxins += gas.toxins
-			air_transient.carbon_dioxide += gas.carbon_dioxide
+			#define _RECONCILE_AIR(GAS, ...) air_transient.GAS += gas.GAS;
+			APPLY_TO_GASES(_RECONCILE_AIR)
 
 			if(gas.trace_gases && gas.trace_gases.len)
 				for(var/datum/gas/trace_gas in gas.trace_gases)
@@ -157,10 +152,8 @@ datum/pipe_network
 
 			//Update individual gas_mixtures by volume ratio
 			for(var/datum/gas_mixture/gas in gases)
-				gas.oxygen = air_transient.oxygen*gas.volume/air_transient.volume
-				gas.nitrogen = air_transient.nitrogen*gas.volume/air_transient.volume
-				gas.toxins = air_transient.toxins*gas.volume/air_transient.volume
-				gas.carbon_dioxide = air_transient.carbon_dioxide*gas.volume/air_transient.volume
+				#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.GAS = air_transient.GAS * gas.volume / air_transient.volume ;
+				APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
 
 				gas.temperature = air_transient.temperature
 
@@ -186,10 +179,8 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 
-	var/total_oxygen = 0
-	var/total_nitrogen = 0
-	var/total_toxins = 0
-	var/total_carbon_dioxide = 0
+	#define _EQUALIZE_GASES_TOTAL_DEF(GAS, ...) var/total_ ## GAS = 0;
+	APPLY_TO_GASES(_EQUALIZE_GASES_TOTAL_DEF)
 
 	var/list/total_trace_gases
 
@@ -198,10 +189,8 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		total_thermal_energy += gas.thermal_energy()
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
-		total_oxygen += gas.oxygen
-		total_nitrogen += gas.nitrogen
-		total_toxins += gas.toxins
-		total_carbon_dioxide += gas.carbon_dioxide
+		#define _EQUALIZE_GASES_ADD_TO_TOTAL(GAS, ...) total_ ## GAS += gas.GAS;
+		APPLY_TO_GASES(_EQUALIZE_GASES_ADD_TO_TOTAL)
 
 		if(gas.trace_gases && gas.trace_gases.len)
 			for(var/datum/gas/trace_gas in gas.trace_gases)
@@ -226,10 +215,8 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/gas in gases)
-			gas.oxygen = total_oxygen*gas.volume/total_volume
-			gas.nitrogen = total_nitrogen*gas.volume/total_volume
-			gas.toxins = total_toxins*gas.volume/total_volume
-			gas.carbon_dioxide = total_carbon_dioxide*gas.volume/total_volume
+			#define _EQUALIZE_GASES_UPDATE(GAS, ...) gas.GAS = total_ ## GAS * gas.volume / total_volume;
+			APPLY_TO_GASES(_EQUALIZE_GASES_UPDATE)
 
 			gas.temperature = temperature
 
