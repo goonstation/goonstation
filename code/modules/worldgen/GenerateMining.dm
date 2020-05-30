@@ -490,6 +490,13 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 16
 		prefabSizeY = 21
 
+	bee_sanctuary_space // Sov's Bee Sanctuary (Space Variant)
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_beesanctuary.dmm"
+		prefabSizeX = 41
+		prefabSizeY = 24
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

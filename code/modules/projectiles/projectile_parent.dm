@@ -50,7 +50,7 @@
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
-	var/list/hitlist //list of atoms collided with this tick
+	var/list/hitlist = list() //list of atoms collided with this tick
 
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 #if ASS_JAM
@@ -78,14 +78,13 @@
 	proc/launch()
 		if (proj_data)
 			proj_data.on_launch(src)
+		src.setup()
 		if (!disposed && !pooled && !qdeled)
 			SPAWN_DBG(-1)
 				if (!is_processing)
 					process()
 
 	proc/process()
-		if (!src.was_setup)
-			src.setup()
 		if(hitlist.len)
 			hitlist.len = 0
 		is_processing = 1
@@ -257,9 +256,10 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
-		hitlist = null
+		hitlist.len = 0
 		transform = null
 		internal_speed = null
+		orig_turf = null
 		pierces_left = 0
 		goes_through_walls = 0
 		goes_through_mobs = 0
@@ -309,9 +309,7 @@
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
 		goes_through_mobs = src.proj_data.goes_through_mobs
-		hitlist = list()
 		set_icon()
-		orig_turf = get_turf(src)
 
 		var/len = sqrt(src.xo * src.xo + src.yo * src.yo)
 
@@ -936,6 +934,7 @@ datum/projectile/snowball
 	P.name = DATA.name
 	P.setMaterial(DATA.material)
 	P.power = DATA.power
+	P.orig_turf = S
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted

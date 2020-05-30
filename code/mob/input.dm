@@ -54,7 +54,7 @@ mob
 		if (src.move_dir)
 			var/running = 0
 			var/mob/living/carbon/human/H = src
-			if ( (keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && (H.getStatusDuration("staggered") < 1 && !H.hasStatus("blocking")) )
+			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT)
 				running = 1
 			if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 				H.pushing = 0
@@ -115,7 +115,7 @@ mob
 							qdel(G)
 					for(var/grab in src.grabbed_by)
 						var/obj/item/grab/G = grab
-						if (get_dist(src, G.assailant) > 1)
+						if (istype(G) && get_dist(src, G.assailant) > 1)
 							if (G.state > 1)
 								delay += G.assailant.p_class
 							qdel(G)
@@ -173,10 +173,6 @@ mob
 							last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
 							deliver_move_trigger(m_intent)
 
-						if (running)
-							src.remove_stamina(STAMINA_COST_SPRINT)
-							if (src.pulling)
-								src.remove_stamina(STAMINA_COST_SPRINT-1)
 
 						src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 						src.animate_movement = SLIDE_STEPS
@@ -218,6 +214,11 @@ mob
 									delay += G.assailant.p_class
 
 						if (src.loc != old_loc)
+							if (running)
+								src.remove_stamina(STAMINA_COST_SPRINT)
+								if (src.pulling)
+									src.remove_stamina(STAMINA_COST_SPRINT-1)
+
 							var/list/pulling = list()
 							if (src.pulling)
 								if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
