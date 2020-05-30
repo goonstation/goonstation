@@ -93,11 +93,10 @@ var/list/globalPropList = null
 	var/tooltipImg = "" //Stored in browserassets\images\tooltips
 	var/defaultValue = 1 //Default value. Used to get an idea of what's "normal" for any given property.
 	var/goodDirection = 1 //Dumb name. Tells us which direction the number should grow in for it to be considered "good", 1=positive, -1 negative
-	var/assocMobPropType = null //MAKE SURE THIS IS CORRECT FOR THE PROP YOU ARE USING: sum, simple, max, or priority
-	var/assocMobProp = null
+	var/list/assocMobProps = null
 
 	proc/onAdd(var/obj/owner, var/value) //When property is added to an object
-		if(assocMobProp && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
+		if(assocMobProps && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
 			var/mob/M = null
 			if(istype(owner, /obj/item/grab/block))
 				M = owner:affecting
@@ -105,12 +104,13 @@ var/list/globalPropList = null
 				M = owner.loc
 
 			if(M && (owner in M.get_equipped_items()))
-				apply_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner, value)
+				for(var/prop in assocMobProps)
+					apply_mob_prop_by_type(assocMobProps[prop], M, prop, owner, value)
 				RegisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING, .proc/onRemove)
 		return
 
 	proc/onChange(var/obj/owner, var/oldValue, var/newValue) //When property value changes.
-		if(assocMobProp && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
+		if(assocMobProps && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
 			var/mob/M = null
 			if(istype(owner, /obj/item/grab/block))
 				M = owner:affecting
@@ -118,12 +118,13 @@ var/list/globalPropList = null
 				M = owner.loc
 
 			if(M && (owner in M.get_equipped_items()))
-				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)	
-				apply_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner, newValue)
+				for(var/prop in assocMobProps)
+					remove_mob_prop_by_type(assocMobProps[prop], M, prop, owner)	
+					apply_mob_prop_by_type(assocMobProps[prop], M, prop, owner, newValue)
 		return
 
 	proc/onRemove(var/obj/owner, var/value) //When property is removed from an object.
-		if(assocMobProp && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
+		if(assocMobProps && isitem(owner) && (istype(owner, /obj/item/grab/block) ||istype(owner.loc, /mob)))
 			var/mob/M = null
 			if(istype(owner, /obj/item/grab/block))
 				M = owner:affecting
@@ -131,7 +132,8 @@ var/list/globalPropList = null
 				M = owner.loc
 
 			if(M && (owner in M.get_equipped_items()))
-				remove_mob_prop_by_type(assocMobPropType, M, assocMobProp, owner)
+				for(var/prop in assocMobProps)
+					remove_mob_prop_by_type(assocMobProps[prop], M, prop, owner)	
 				UnregisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING)
 		return
 
@@ -244,6 +246,7 @@ var/list/globalPropList = null
 		desc = "Protects from harmful radiation." //Value is % protection.
 		tooltipImg = "radiation.png"
 		defaultValue = 10
+		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_RADPROT))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
 
@@ -253,6 +256,7 @@ var/list/globalPropList = null
 		desc = "Protects from low temperatures." //Value is % protection.
 		tooltipImg = "cold.png"
 		defaultValue = 10
+		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_COLDPROT))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
 
@@ -262,6 +266,7 @@ var/list/globalPropList = null
 		desc = "Protects from high temperatures." //Value is % protection.
 		tooltipImg = "heat.png"
 		defaultValue = 10
+		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_HEATPROT))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
 
@@ -280,8 +285,7 @@ var/list/globalPropList = null
 		desc = "Protects from explosions." //Value is % protection.
 		tooltipImg = "explosion.png"
 		defaultValue = 10
-		assocMobProp = GET_PROP_NAME(PROP_EXPLOPROT)
-		assocMobPropType = GET_PROP_TYPE(PROP_EXPLOPROT)
+		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_EXPLOPROT))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]"
 
@@ -300,13 +304,16 @@ var/list/globalPropList = null
 		desc = "Protects from melee damage." //Value is flat damage reduction.
 		tooltipImg = "melee.png"
 		defaultValue = 2
+		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_MELEEPROT_BODY))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "-[propVal] dmg"
 
 		head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
 			id = "meleeprot_head"
+			assocMobProps = list(GET_PROP_NAME_TYPE(PROP_MELEEPROT_HEAD))
 		all //ugly hack but I'm not sorry, this is used for barriers
 			id = "meleeprot_all"
+			assocMobProps = list(GET_PROP_NAME_TYPE(PROP_MELEEPROT_HEAD), GET_PROP_NAME_TYPE(PROP_MELEEPROT_BODY))
 
 	rangedprot
 		name = "Resistance (Ranged)"
@@ -314,9 +321,7 @@ var/list/globalPropList = null
 		desc = "Protects from ranged damage." //Value is divisor applied to bullet power on hit. For humans, the sum of all equipment is used. Base value is 1, so one item with 1 additional armor = 2, half the damage
 		tooltipImg = "bullet.png"
 		defaultValue = 0.15
-		assocMobProp = GET_PROP_NAME(PROP_RANGEDPROT)
-		assocMobPropType = GET_PROP_TYPE(PROP_RANGEDPROT)
-
+		assocMobProps = list(GET_PROP_NAME_TYPE(PROP_RANGEDPROT))
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal] prot."
 

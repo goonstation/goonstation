@@ -184,6 +184,8 @@ To remove:
 #define GET_PROP_REMOVE TUPLE_GET_3
 #define GET_PROP_TYPE TUPLE_GET_4
 
+#define GET_PROP_NAME_TYPE(prop) GET_PROP_NAME(prop)=GET_PROP_TYPE(prop) 
+
 #define APPLY_MOB_PROPERTY(target, property, etc...) GET_PROP_ADD(property)(target, GET_PROP_NAME(property), ##etc)
 
 #define REMOVE_MOB_PROPERTY(target, property, source) GET_PROP_REMOVE(property)(target, GET_PROP_NAME(property), source)
