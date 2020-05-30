@@ -160,10 +160,25 @@
 			if(prob(30))
 				slowed++
 
-	proc/damage_pipe()
+	mob_flip_inside(var/mob/user)
+		var/obj/disposalpipe/P = src.loc
+		if(!istype(P))
+			return
+		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
+		user.changeStatus("paralysis", 40)
+		user.changeStatus("weakened", 4 SECONDS)
+		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
+
+		animate_storage_thump(P)
+
+		user.show_text("<span class='alert'>[P] [pick("cracks","bends","shakes","groans")].</span>")
+		damage_pipe(5)
+		slowed++
+
+	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
 		if(istype(P))
-			P.health -= rand(1,3)
+			P.health -= rand(1,amount)
 			P.health = max(P.health,0)
 			P.healthcheck()
 
