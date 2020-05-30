@@ -629,8 +629,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(in_centcom(H.loc) && H.wear_id && H.wear_id:registered == H.real_name && H.wear_id:assignment != ("Technical Assistant" || "Staff Assistant" || "Medical Assistant")) return 1
-				else return 0
+				if(in_centcom(H.loc) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
 	clown
 		explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
 		medal_name = "honk HONK mother FU-"
@@ -706,7 +705,7 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && in_centcom(owner.current.loc)) //checking basic stuff - they escaped alive and have an ID
 				var/mob/living/carbon/human/H = owner.current
-				if(H.wear_id && H.wear_id:registered == H.real_name && H.wear_id:assignment != ("Technical Assistant" || "Staff Assistant" || "Medical Assistant")) return 1
+				if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
 				else return 0
 	spacesuit
 		explanation_text = "Get your grubby hands on a spacesuit."
@@ -731,7 +730,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && in_centcom(owner.current.loc)) //checking basic stuff - they escaped alive and have an ID
 				var/mob/living/carbon/human/H = owner.current
-				if(H.wear_id && H.wear_id:registered == H.real_name && H.wear_id:assignment != ("Technical Assistant" || "Staff Assistant" || "Medical Assistant")) return 1
+				if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
 				else return 0
 	healself
 		explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."

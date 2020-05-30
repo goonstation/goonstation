@@ -276,7 +276,6 @@
 	if (src.s_active && !(s_active.master in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
-	OnMove()
 
 /mob/disposing()
 	for(var/mob/m in src) //just in case...
