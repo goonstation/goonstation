@@ -91,7 +91,7 @@
 // gas calculation macros
 
 #define _ZERO_GAS(GAS, _, _, MIXTURE) MIXTURE.GAS = 0;
-#define ZERO_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
+#define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
 #define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
 	(carbon_dioxide*SPECIFIC_HEAT_CO2 + oxygen*SPECIFIC_HEAT_O2 + nitrogen*SPECIFIC_HEAT_N2 + toxins*SPECIFIC_HEAT_PLASMA)
