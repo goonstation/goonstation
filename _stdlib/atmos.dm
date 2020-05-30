@@ -75,12 +75,18 @@
 
 #define FLOWFRAC 0.99				// fraction of gas transfered per process
 
-// gas properties
+// gases
 
 #define SPECIFIC_HEAT_PLASMA		200
 #define SPECIFIC_HEAT_O2		20
 #define SPECIFIC_HEAT_N2		20
 #define SPECIFIC_HEAT_CO2		30
+
+#define APPLY_TO_GASES(MACRO) \
+	MACRO(oxygen, SPECIFIC_HEAT_O2) \
+	MACRO(nitrogen, SPECIFIC_HEAT_N2) \
+	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2) \
+	MACRO(toxins, SPECIFIC_HEAT_PLASMA)
 
 // gas calculation macros
 

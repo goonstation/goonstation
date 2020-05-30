@@ -20,15 +20,12 @@ What are the archived variables for?
 /datum/gas/farts //add a visual to this
 	specific_heat = 69
 
+
 /datum/gas_mixture
-	var/oxygen = 0
-	var/tmp/oxygen_archived
-	var/carbon_dioxide = 0
-	var/tmp/carbon_dioxide_archived
-	var/nitrogen = 0
-	var/tmp/nitrogen_archived
-	var/toxins = 0
-	var/tmp/toxins_archived
+	#define _DEFINE_GASES(GAS, _) \
+		var/GAS = 0; \
+		var/tmp/GAS ## _archived;
+	APPLY_TO_GASES(_DEFINE_GASES)
 
 	var/temperature = 0
 	var/tmp/temperature_archived
