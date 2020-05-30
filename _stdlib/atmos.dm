@@ -82,13 +82,16 @@
 #define SPECIFIC_HEAT_N2		20
 #define SPECIFIC_HEAT_CO2		30
 
-#define APPLY_TO_GASES(MACRO) \
-	MACRO(oxygen, SPECIFIC_HEAT_O2, "O2") \
-	MACRO(nitrogen, SPECIFIC_HEAT_N2, "N2") \
-	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2") \
-	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma")
+#define APPLY_TO_GASES(MACRO, ARGS...) \
+	MACRO(oxygen, SPECIFIC_HEAT_O2, "O2", ARGS) \
+	MACRO(nitrogen, SPECIFIC_HEAT_N2, "N2", ARGS) \
+	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
+	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS)
 
 // gas calculation macros
+
+#define _ZERO_GAS(GAS, MIXTURE) MIXTURE.GAS = 0
+#define ZERO_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
 #define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
 	(carbon_dioxide*SPECIFIC_HEAT_CO2 + oxygen*SPECIFIC_HEAT_O2 + nitrogen*SPECIFIC_HEAT_N2 + toxins*SPECIFIC_HEAT_PLASMA)

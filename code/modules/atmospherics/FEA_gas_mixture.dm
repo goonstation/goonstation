@@ -102,23 +102,15 @@ What are the archived variables for?
 // For specific events
 /datum/gas_mixture/proc/zero()
 	trace_gases = null
-	carbon_dioxide = 0
-	toxins = 0
+	ZERO_GASES(src)
 	if (map_currently_underwater)
 		oxygen = MOLES_O2STANDARD * 0.5
 		nitrogen = MOLES_N2STANDARD * 0.5
 		temperature = OCEAN_TEMP
-	else
-		oxygen = 0
-		nitrogen = 0
 
 /datum/gas_mixture/proc/vacuum() //yknow, for when you want "zero" to actually mean "zero".
 	trace_gases = null
-	carbon_dioxide = 0
-	toxins = 0
-	temperature = 0
-	oxygen = 0
-	nitrogen = 0
+	ZERO_GASES(src)
 
 
 /datum/gas_mixture/proc/check_tile_graphic()
