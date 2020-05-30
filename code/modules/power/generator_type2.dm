@@ -52,8 +52,8 @@
 			hot_air = air2
 			cold_air = air1
 
-		var/hot_air_heat_capacity = hot_air.heat_capacity()
-		var/cold_air_heat_capacity = cold_air.heat_capacity()
+		var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
+		var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
 
 		var/delta_temperature = hot_air.temperature - cold_air.temperature
 

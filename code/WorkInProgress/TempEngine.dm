@@ -209,8 +209,8 @@
 		lastgen = 0
 
 		if(cold_air && hot_air)
-			var/cold_air_heat_capacity = cold_air.heat_capacity()
-			var/hot_air_heat_capacity = hot_air.heat_capacity()
+			var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
+			var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
 
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
@@ -492,7 +492,7 @@
 		return
 
 	proc/heat()
-		var/air_heat_capacity = air_contents.heat_capacity()
+		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 		var/old_temperature = air_contents.temperature
 

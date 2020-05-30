@@ -324,7 +324,7 @@
 		if(ishuman(occupant))
 			if(isdead(occupant))
 				return
-			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + HEAT_CAPACITY(air_contents))
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 			occupant.changeStatus("burning",-100)
 			var/mob/living/carbon/human/H = 0
@@ -349,7 +349,7 @@
 	proc/heat_gas_contents()
 		if(air_contents.total_moles() < 1)
 			return
-		var/air_heat_capacity = air_contents.heat_capacity()
+		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 		if(combined_heat_capacity > 0)
 			var/combined_energy = T20C*current_heat_capacity + air_heat_capacity*air_contents.temperature

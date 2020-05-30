@@ -64,26 +64,6 @@ What are the archived variables for?
 	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
 	..()
 
-// Gas equation procs
-/datum/gas_mixture/proc/heat_capacity()
-	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins)
-
-	if(trace_gases && trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
-			heat_capacity += trace_gas.moles*trace_gas.specific_heat
-
-
-	return heat_capacity
-
-/datum/gas_mixture/proc/heat_capacity_archived()
-	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived,carbon_dioxide_archived,nitrogen_archived,toxins_archived)
-
-	if(trace_gases && trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
-			heat_capacity_archived += trace_gas.moles_archived*trace_gas.specific_heat
-
-	return heat_capacity_archived
-
 /datum/gas_mixture/proc/total_moles()
 	. = oxygen + carbon_dioxide + nitrogen + toxins
 
@@ -95,7 +75,7 @@ What are the archived variables for?
 	return (total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume)
 
 /datum/gas_mixture/proc/thermal_energy()
-	return temperature*heat_capacity()
+	return temperature*HEAT_CAPACITY(src)
 
 // Mutator procs
 // For specific events
@@ -143,7 +123,7 @@ What are the archived variables for?
 
 					trace_gas.moles -= reaction_rate*0.05
 
-					temperature += (reaction_rate*20000)/heat_capacity()
+					temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
 
 					reacting = 1
 
@@ -156,7 +136,7 @@ What are the archived variables for?
 
 					trace_fart.moles -= reaction_rate*0.05
 
-					temperature += (reaction_rate*10000)/heat_capacity()
+					temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
 
 					reacting = 1
 
@@ -169,7 +149,7 @@ What are the archived variables for?
 
 /datum/gas_mixture/proc/fire()
 	var/energy_released = 0
-	var/old_heat_capacity = heat_capacity()
+	var/old_heat_capacity = HEAT_CAPACITY(src)
 
 	if(trace_gases && trace_gases.len)
 		var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
@@ -219,7 +199,7 @@ What are the archived variables for?
 				fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
 
 	if(energy_released > 0)
-		var/new_heat_capacity = heat_capacity()
+		var/new_heat_capacity = HEAT_CAPACITY(src)
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
@@ -274,8 +254,8 @@ What are the archived variables for?
 		return 0
 
 	if(abs(temperature-giver.temperature)>MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()*group_multiplier
-		var/giver_heat_capacity = giver.heat_capacity()*giver.group_multiplier
+		var/self_heat_capacity = HEAT_CAPACITY(src)*group_multiplier
+		var/giver_heat_capacity = HEAT_CAPACITY(giver)*giver.group_multiplier
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
 			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
@@ -557,8 +537,8 @@ What are the archived variables for?
 			else
 				heat_capacity_sharer_to_self -= toxins_heat_capacity
 
-		old_self_heat_capacity = heat_capacity()*group_multiplier
-		old_sharer_heat_capacity = sharer.heat_capacity()*sharer.group_multiplier
+		old_self_heat_capacity = HEAT_CAPACITY(src)*group_multiplier
+		old_sharer_heat_capacity = HEAT_CAPACITY(sharer)*sharer.group_multiplier
 
 	oxygen -= delta_oxygen/group_multiplier
 	sharer.oxygen += delta_oxygen/sharer.group_multiplier
@@ -688,7 +668,7 @@ What are the archived variables for?
 			heat_transferred -= toxins_heat_capacity*model.temperature
 			heat_capacity_transferred -= toxins_heat_capacity
 
-		old_self_heat_capacity = heat_capacity()*group_multiplier
+		old_self_heat_capacity = HEAT_CAPACITY(src)*group_multiplier
 
 
 	oxygen -= delta_oxygen
@@ -732,8 +712,8 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_both_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
-	var/self_heat_capacity = heat_capacity_archived()
-	var/sharer_heat_capacity = sharer.heat_capacity_archived()
+	var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
+	var/sharer_heat_capacity = HEAT_CAPACITY_ARCHIVED(sharer)
 
 	var/self_temperature_delta = 0
 	var/sharer_temperature_delta = 0
@@ -764,8 +744,8 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_me_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
-	var/self_heat_capacity = heat_capacity_archived()
-	var/sharer_heat_capacity = sharer.heat_capacity_archived()
+	var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
+	var/sharer_heat_capacity = HEAT_CAPACITY_ARCHIVED(sharer)
 
 	var/self_temperature_delta = 0
 	var/sharer_temperature_delta = 0
@@ -796,7 +776,7 @@ What are the archived variables for?
 	var/sharer_temperature_delta = 0
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity_archived()
+		var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
 
 		if((sharer.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \
@@ -822,7 +802,7 @@ What are the archived variables for?
 	var/self_temperature_delta = 0
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity_archived()
+		var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
 
 		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \
@@ -842,8 +822,8 @@ What are the archived variables for?
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity_archived()
-		var/sharer_heat_capacity = sharer.heat_capacity_archived()
+		var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
+		var/sharer_heat_capacity = HEAT_CAPACITY_ARCHIVED(sharer)
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \
@@ -855,7 +835,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
 	var/delta_temperature = (temperature - model.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()//_archived()
+		var/self_heat_capacity = HEAT_CAPACITY(src)//_archived()
 
 		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \
@@ -869,7 +849,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()
+		var/self_heat_capacity = HEAT_CAPACITY(src)
 
 		if((sharer.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \

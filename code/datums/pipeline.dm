@@ -205,7 +205,7 @@ datum/pipeline
 			network.update = 1
 
 	proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-		var/total_heat_capacity = air.heat_capacity()
+		var/total_heat_capacity = HEAT_CAPACITY(air)
 		var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 
 		if(istype(target, /turf/simulated))
@@ -228,10 +228,10 @@ datum/pipeline
 
 				if(modeled_location.parent && modeled_location.parent.group_processing)
 					delta_temperature = (air.temperature - modeled_location.parent.air.temperature)
-					sharer_heat_capacity = modeled_location.parent.air.heat_capacity()
+					sharer_heat_capacity = HEAT_CAPACITY(modeled_location.parent.air)
 				else
 					delta_temperature = (air.temperature - modeled_location.air.temperature)
-					sharer_heat_capacity = modeled_location.air.heat_capacity()
+					sharer_heat_capacity = HEAT_CAPACITY(modeled_location.air)
 
 				var/self_temperature_delta = 0
 				var/sharer_temperature_delta = 0

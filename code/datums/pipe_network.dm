@@ -23,7 +23,7 @@ datum/pipe_network
 		gases = null
 		if (normal_members)
 			for(var/obj/machinery/atmospherics/machine in normal_members)
-				machine.network_disposing(src)				
+				machine.network_disposing(src)
 			normal_members.len = 0
 		normal_members = 0
 		if (line_members)
@@ -35,13 +35,13 @@ datum/pipe_network
 			pool(air_transient)
 		air_transient = null
 		..()
-		
+
 	proc/member_disposing(datum/pipeline/line_member)
 		if (gases)
 			gases -= line_member.air
 		if (line_members)
 			line_members -= line_member
-			
+
 	proc/air_disposing_hook()
 		for(var/datum/gas_mixture/a in args)
 			gases -= a
@@ -123,7 +123,7 @@ datum/pipe_network
 		for(var/datum/gas_mixture/gas in gases)
 			air_transient.volume += gas.volume
 			total_thermal_energy += gas.thermal_energy()
-			total_heat_capacity += gas.heat_capacity()
+			total_heat_capacity += HEAT_CAPACITY(gas)
 
 			air_transient.oxygen += gas.oxygen
 			air_transient.nitrogen += gas.nitrogen
@@ -196,7 +196,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 	for(var/datum/gas_mixture/gas in gases)
 		total_volume += gas.volume
 		total_thermal_energy += gas.thermal_energy()
-		total_heat_capacity += gas.heat_capacity()
+		total_heat_capacity += HEAT_CAPACITY(gas)
 
 		total_oxygen += gas.oxygen
 		total_nitrogen += gas.nitrogen

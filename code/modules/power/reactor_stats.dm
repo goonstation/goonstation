@@ -514,7 +514,7 @@
 				ret["pressure"] = G.return_pressure()
 				ret["temp"] = G.temperature
 				ret["burnt"] = G.fuel_burnt
-				ret["heat_capacity"] = G.heat_capacity()
+				ret["heat_capacity"] = HEAT_CAPACITY(G)
 				ret["thermal_energy"] = G.thermal_energy()
 				ret["moles"] = G.total_moles()
 
@@ -539,7 +539,7 @@
 					ret["pressure"] = G.return_pressure()
 					ret["temp"] = G.temperature_archived
 					ret["burnt"] = G.fuel_burnt
-					ret["heat_capacity"] = G.heat_capacity_archived()
+					ret["heat_capacity"] = HEAT_CAPACITY_ARCHIVED(G)
 					ret["thermal_energy"] = G.thermal_energy()
 					ret["moles"] = G.total_moles()
 

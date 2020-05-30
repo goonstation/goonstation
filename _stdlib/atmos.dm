@@ -96,13 +96,34 @@
 #define APPLY_TO_ARCHIVED_GASES(MACRO, ARGS...) \
 	_APPLY_TO_GASES(_ARCHIVED_VAR, MACRO, ARGS)
 
-// gas calculation macros
+////////////////////////////
+// gas calculation macros //
+////////////////////////////
 
 #define _ZERO_GAS(GAS, _, _, MIXTURE) MIXTURE.GAS = 0;
 #define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CO2 + oxygen*SPECIFIC_HEAT_O2 + nitrogen*SPECIFIC_HEAT_N2 + toxins*SPECIFIC_HEAT_PLASMA)
+// heat capacity
+
+#define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) MIXTURE.GAS * SPECIFIC_HEAT +
+#define BASE_GASES_HEAT_CAPACITY(MIXTURE) (APPLY_TO_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
+#define BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE) (APPLY_TO_ARCHIVED_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
+
+/datum/gas_mixture/proc/heat_capacity_full()
+	. = BASE_GASES_HEAT_CAPACITY(src)
+	for(var/x in trace_gases)
+		var/datum/gas/trace_gas = x
+		. += trace_gas.moles * trace_gas.specific_heat
+
+#define HEAT_CAPACITY(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
+
+/datum/gas_mixture/proc/heat_capacity_archived_full()
+	. = BASE_GASES_HEAT_CAPACITY(src)
+	for(var/x in trace_gases)
+		var/datum/gas/trace_gas = x
+		. += trace_gas.moles_archived * trace_gas.specific_heat
+
+#define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
 
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))

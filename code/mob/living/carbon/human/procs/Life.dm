@@ -956,7 +956,7 @@
 	proc/handle_environment(datum/gas_mixture/environment) //TODO : REALTIME BODY TEMP CHANGES (Mbc is too lazy to look at this mess right now)
 		if (!environment)
 			return
-		var/environment_heat_capacity = environment.heat_capacity()
+		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
 		if (istype(loc, /turf/space))
 			var/turf/space/S = loc
