@@ -630,6 +630,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
 				if(in_centcom(H.loc) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
+				return 0
 	clown
 		explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
 		medal_name = "honk HONK mother FU-"
