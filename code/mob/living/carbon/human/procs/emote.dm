@@ -1684,11 +1684,20 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
+				var/obj/item/I = src.wear_id
+				if (istype(I, /obj/item/device/pda2))
+					var/obj/item/device/pda2/P = I
+					if(P.ID_card)
+						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
 					src.show_text("You can't do that without arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+					var/obj/item/card/id/dabbing_license/dab_id = null
+					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
+						dab_id = I
+						dab_id.dab_count++
 					karma_update(4, "SIN", src)
-					if(locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
+					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
 						//if(src:wear_id && src:wear_id:registered)
@@ -1719,6 +1728,8 @@
 									get_dabbed_on = 1
 									if(prob(5))
 										M.emote("cry") //You should be ashamed
+									if(dab_id)
+										dab_id.dabbed_on_count++
 
 						if(get_dabbed_on == 0)
 							if (src.mind && src.mind.assigned_role == "Clown")
@@ -1733,11 +1744,17 @@
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()
+								if(dab_id)
+									dab_id.arm_count++
 							if(H.limbs.r_arm)
 								src.limbs.r_arm.sever()
+								if(dab_id)
+									dab_id.arm_count++
 							H.emote("scream")
 					if(!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate) && (!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/biggest)) || (!src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
+						if(dab_id)
+							dab_id.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
 				else
