@@ -242,7 +242,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		dabbing_license
 			name = "Dabbing License"
-			cost = 0
+			cost = 4200
 			path = /obj/item/card/id/dabbing_license
 
 		battlepass
