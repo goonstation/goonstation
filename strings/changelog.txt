@@ -1,5 +1,10 @@
 
 (t)sat may 30 20
+(u)mbc
+(p)899
+(e)⚖🐛🎨|balance, bug, sprites
+(+)Fixed some bugs where diagonal step effects would trigger more often than intended.
+(+)Combat stagger breaks a sustained run.
 (u)UrsulaMajor
 (p)898
 (e)|
