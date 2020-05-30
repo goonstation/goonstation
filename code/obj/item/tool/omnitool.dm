@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
+	var/prefix = "omnitool"
 
 	custom_suicide = 1
 
@@ -43,7 +44,7 @@
 			if ("prying")
 				src.omni_mode = "prying"
 				// based on /obj/item/crowbar
-				set_icon_state("omnitool-prying")
+				set_icon_state("[prefix]-prying")
 				src.tool_flags = TOOL_PRYING
 				src.force = 5.0
 				src.throwforce = 7.0
@@ -58,7 +59,7 @@
 			if ("pulsing")
 				src.omni_mode = "pulsing"
 				// based on /obj/item/device/multitool
-				set_icon_state("omnitool-pulsing")
+				set_icon_state("[prefix]-pulsing")
 				src.tool_flags = TOOL_PULSING
 				src.force = 5.0
 				src.throwforce = 5.0
@@ -73,7 +74,7 @@
 			if ("screwing")
 				src.omni_mode = "screwing"
 				// based on /obj/item/screwdriver
-				set_icon_state("omnitool-screwing")
+				set_icon_state("[prefix]-screwing")
 				src.tool_flags = TOOL_SCREWING
 				src.force = 5.0
 				src.throwforce = 5.0
@@ -88,7 +89,7 @@
 			if ("snipping")
 				src.omni_mode = "snipping"
 				// based on /obj/item/wirecutters
-				set_icon_state("omnitool-snipping")
+				set_icon_state("[prefix]-snipping")
 				src.tool_flags = TOOL_SNIPPING
 				src.force = 6.0
 				src.throwforce = 1.0
@@ -103,7 +104,7 @@
 			if ("wrenching")
 				src.omni_mode = "wrenching"
 				// based on /obj/item/wrench
-				set_icon_state("omnitool-wrenching")
+				set_icon_state("[prefix]-wrenching")
 				src.tool_flags = TOOL_WRENCHING
 				src.force = 5.0
 				src.throwforce = 7.0
@@ -117,3 +118,6 @@
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		if (holder)
 			holder.update_inhands()
+
+/obj/item/tool/omnitool/syndicate
+	prefix = "syndicate-omnitool"
