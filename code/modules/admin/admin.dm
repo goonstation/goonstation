@@ -2754,7 +2754,7 @@ var/global/noir = 0
 							else
 								return
 						else
-							alert("You need to be a shit person to use this command")
+							alert("You need to be atleast an Administrator to use this command")
 
 					else
 				if (usr) logTheThing("admin", usr, null, "used secret [href_list["secretsfun"]]")
