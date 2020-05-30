@@ -1433,6 +1433,7 @@
 
 
 	if(istype(C, /obj/item/sheet))
+		if (!(C?.material.material_flags & (MATERIAL_METAL | MATERIAL_CRYSTAL))) return
 		if (!C:amount_check(2,usr)) return
 
 		var/msg = "a girder"

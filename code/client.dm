@@ -426,6 +426,9 @@
 				volumes = json_decode(decoded)
 				volumes.len = cur
 
+		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
+
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
@@ -1122,7 +1125,7 @@ var/global/curr_day = null
 		H.zone_sel = new(H)
 		H.attach_hud(H.zone_sel)
 		H.stamina_bar = new(H)
-		H.hud.add_object(H.stamina_bar, HUD_LAYER+1, "EAST-1, NORTH")
+		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
 

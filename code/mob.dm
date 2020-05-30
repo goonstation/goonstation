@@ -6,7 +6,7 @@
 
 	flags = FPRINT | FLUID_SUBMERGE
 	event_handler_flags = USE_CANPASS
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND | LONG_GLIDE
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
 
@@ -215,6 +215,7 @@
 	var/dir_locked = FALSE
 
 	var/list/cooldowns = null
+	var/list/mob_properties
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -231,12 +232,14 @@
 	render_special = new
 	traitHolder = new(src)
 	cooldowns = new
-	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
+	if (!src.bioHolder)
+		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
+	mob_properties = list()
 
 /mob/proc/is_spacefaring()
 	return 0
@@ -273,7 +276,6 @@
 	if (src.s_active && !(s_active.master in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
-	OnMove()
 
 /mob/disposing()
 	for(var/mob/m in src) //just in case...
@@ -422,7 +424,7 @@
 
 	world.update_status()
 
-	src.sight |= SEE_SELF
+	src.sight |= SEE_SELF | SEE_BLACKNESS
 
 	..()
 
@@ -1028,6 +1030,7 @@
 	icon_rebuild_flag &= ~BODY
 
 /mob/proc/UpdateDamage()
+	updatehealth()
 	return
 
 /mob/proc/set_damage_icon_dirty()
@@ -1172,21 +1175,31 @@
 	if (get_dist(src, target) > 0)
 		if(!dir_locked)
 			dir = get_dir(src, target)
+			if(dir & (dir-1))
+				if (dir & EAST)
+					dir = EAST
+				else if (dir & WEST)
+					dir = WEST
+			src.update_directional_lights()
 
 /mob/proc/hotkey(name)
 	switch (name)
 		if ("look_n")
 			if(!dir_locked)
 				src.dir = NORTH
+				src.update_directional_lights()
 		if ("look_s")
 			if(!dir_locked)
 				src.dir = SOUTH
+				src.update_directional_lights()
 		if ("look_e")
 			if(!dir_locked)
 				src.dir = EAST
+				src.update_directional_lights()
 		if ("look_w")
 			if(!dir_locked)
 				src.dir = WEST
+				src.update_directional_lights()
 		if ("admin_interact")
 			src.admin_interact_verb()
 		if ("stop_pull")
@@ -1512,7 +1525,7 @@
 	src.set_eye(null)
 	src.remove_dialogs()
 	if (!isliving(src))
-		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (air_group || (height==0)) return 1
@@ -2012,7 +2025,7 @@
 		playsound(floorcluwne.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 60, 2)
 		src.set_loc(the_turf)
 		src.layer=0
-		src.plane = -100
+		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		SPAWN_DBG(duration+5)
 			src.death(1)
@@ -2349,7 +2362,6 @@
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)
-	src.updatehealth()
 
 /mob/proc/infected(var/datum/pathogen/P)
 	return
@@ -2377,11 +2389,13 @@
 /mob/proc/take_toxin_damage(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1
+	health_update_queue |= src
 	return 0
 
 /mob/proc/take_oxygen_deprivation(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1
+	health_update_queue |= src
 	return 0
 
 /mob/proc/get_eye_damage(var/tempblind = 0)
@@ -2655,7 +2669,7 @@
 		if (!newname)
 			return
 		else
-			newname = strip_html(newname, 32, 1)
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
@@ -2855,7 +2869,7 @@
 			src.unequip_all()
 		src.set_loc(the_turf)
 		src.layer = 0
-		src.plane = -100
+		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		src.emote("scream") // AAAAAAAAAAAA
 		SPAWN_DBG(duration+5)
@@ -2942,12 +2956,12 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(obj/A as obj in view(1))
 	set name = "Pick Up / Interact"
 	set category = "Local"
 	A.interact(src)
 
-/mob/verb/pickup_verb()
+/mob/living/verb/pickup_verb()
 	set name = "Pick Up"
 	set hidden = 1
 

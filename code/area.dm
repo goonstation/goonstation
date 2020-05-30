@@ -379,7 +379,7 @@
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0
-	filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
+	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
 	name = "Caves"
@@ -1119,6 +1119,13 @@
 	name = "Crashed Transport"
 	icon_state = "purple"
 
+/area/water_treatment
+	name = "Water Treatment Facility"
+	icon_state = "purple"
+
+/area/station/bee_sanctuary
+	name = "Bee Sanctuary"
+	icon_state = "purple"
 
 //////////////////////////// zewaka - vspace areas
 

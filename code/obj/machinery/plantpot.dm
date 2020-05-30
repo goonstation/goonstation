@@ -62,13 +62,13 @@
 	// get kind of resource intensive past a certain point.
 	name = "hydroponics tray"
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife."
-	icon = 'icons/obj/hydroponics/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "tray"
 	anchored = 0
 	density = 1
 	mats = 2
 	flags = NOSPLASH
-	processing_tier = PROCESSING_HALF
+	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New
@@ -112,8 +112,8 @@
 		R.add_reagent("water", 200)
 		// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 		// to have too much water, which stunts plant growth speed.
-		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi', "wat-[src.water_level]")
-		src.plant_sprite = image('icons/obj/hydroponics/hydroponics.dmi', "")
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
+		src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
 		update_icon()
 
 		SPAWN_DBG(0.5 SECONDS)
@@ -317,9 +317,11 @@
 		// This is entirely for updating the icon. Check how far the plant has grown and update
 		// if it's gone a level beyond what the tracking says it is.
 
-		if(src.growth >= growing.harvtime - DNA.harvtime && !growing.isgrass)
-			current_growth_level = 3
+		if(src.growth >= growing.harvtime - DNA.harvtime)
+			current_growth_level = 4
 		else if(src.growth >= growing.growtime - DNA.growtime)
+			current_growth_level = 3
+		else if(src.growth >= (growing.growtime - DNA.growtime) / 2)
 			current_growth_level = 2
 		else
 			current_growth_level = 1
@@ -734,9 +736,9 @@
 
 	proc/update_water_icon()
 		var/datum/color/average
-		src.water_sprite = image('icons/obj/hydroponics/hydroponics.dmi',"wat-[src.total_volume]")
+		src.water_sprite = image('icons/obj/hydroponics/machines_hydroponics.dmi',"wat-[src.total_volume]")
 		src.water_sprite.layer = 3
-		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		if(src.reagents.total_volume)
 			average = src.reagents.get_average_color()
 			src.water_sprite.color = average.to_rgba()
@@ -745,7 +747,7 @@
 		UpdateOverlays(src.water_meter, "water_meter")
 
 	proc/update_icon() //plant icon stuffs
-		src.water_meter = image('icons/obj/hydroponics/hydroponics.dmi',"ind-wat-[src.water_level]")
+		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
 			UpdateOverlays(null, "harvest_display")
@@ -758,14 +760,14 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
 
-		var/iconname = 'icons/obj/hydroponics/hydroponics.dmi'
-		if(growing.special_dmi)
-			iconname = growing.special_dmi
+		var/iconname = 'icons/obj/hydroponics/plants_weed.dmi'
+		if(growing.plant_icon)
+			iconname = growing.plant_icon
 		else if(MUT && MUT.iconmod)
-			if(MUT.special_dmi)
-				iconname = MUT.special_dmi
+			if(MUT.plant_icon)
+				iconname = MUT.plant_icon
 			else
-				iconname = 'icons/obj/hydroponics/hydro_mutants.dmi'
+				iconname = growing.plant_icon
 
 		if(src.dead)
 			UpdateOverlays(hydro_controls.pot_death_display, "plantdeath")
@@ -790,8 +792,8 @@
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
-		else if(growing.special_icon)
-			planticon = "[growing.special_icon]-G[src.grow_level]"
+		else if(growing.override_icon_state)
+			planticon = "[growing.override_icon_state]-G[src.grow_level]"
 		else
 			planticon = "[growing.name]-G[src.grow_level]"
 
@@ -816,7 +818,7 @@
 				else if(MUT.name_prefix || MUT.name_suffix)
 					src.name = "\improper [MUT.name_prefix][growing.name][MUT.name_suffix] plant"
 			else
-				src.name = "\improper [growing.name] plant"
+				src.name = "\improper [growing.name] plant" //TODO: add optional suffix eg. "tree"
 		if(src.dead)
 			src.name = "dead " + src.name
 
@@ -956,7 +958,7 @@
 		getamount = max(getamount, 0)
 
 		if(getamount < 1)
-			boutput(user, "<span class='alert'>You weren't able to harvest anything worth salvaging.</span>")
+			boutput(user, "<span class='alert'>You aren't able to harvest anything worth salvaging.</span>")
 			// We just don't bother if the output is below one.
 		else if(!getitem)
 			boutput(user, "<span class='alert'>You can't seem to find anything that looks harvestable.</span>")
@@ -1187,10 +1189,14 @@
 					seedcount++
 				getamount--
 
+			var/list/harvest_string = list("You harvest [cropcount] item")
+			if (cropcount > 1)
+				harvest_string += "s"
 			if(seedcount)
-				boutput(user, "<span class='notice'>You harvested [cropcount] items and [seedcount] seeds.</span>")
-			else
-				boutput(user, "<span class='notice'>You harvested [cropcount] items.</span>")
+				harvest_string += " and [seedcount] seed"
+				if (seedcount > 1)
+					harvest_string += "s"
+			boutput(user, "<span class='notice'>[harvest_string.Join()]</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
@@ -1204,7 +1210,7 @@
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
 					if(SA.contents.len >= SA.maxitems)
-						boutput(user, "<span class='alert'>Your satchel got filled up! You had to dump the rest on the floor.</span>")
+						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
@@ -1239,6 +1245,9 @@
 			// Vegetable-style plants always die after one harvest irregardless of harvests
 			// remaining, though they do get bonuses for having a good harvests gene.
 			HYPkillplant()
+
+		//do we have to run the next life tick manually? maybe
+		playsound(src.loc, "rustle", 50, 1, -5, 2)
 		update_icon()
 		update_name()
 
@@ -1499,6 +1508,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 		generation = F.generation
 
+	//would it not be better to put this information in the scanner itself?
 	var/message = {"
 		<table style='border-collapse: collapse; border: 1px solid black; margin: 0 0.25em; width: 100%;'>
 			<caption>Analysis of \the <b>[scanned.name]</b></caption>
@@ -1665,7 +1675,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 /obj/machinery/hydro_growlamp
 	name = "\improper UV Grow Lamp"
 	desc = "A special lamp that emits ultraviolet light to help plants grow quicker."
-	icon = 'icons/obj/hydroponics/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
 	anchored = 0

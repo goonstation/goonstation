@@ -326,7 +326,7 @@ obj/machinery/atmospherics/retrofilter
 		if (!src.emagged)
 			return 0
 		if (user)
-			user.show_message("You repair the [src.name]'s wiring!", "blue")
+			user.show_message("<span class='notice'>You repair the [src.name]'s wiring!</span>")
 		src.emagged = 1
 		src.update_overlays()
 		return 1

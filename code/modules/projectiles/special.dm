@@ -1,5 +1,6 @@
 // Not all that crazy shit
 
+ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special
 	name = "special"
 	icon = 'icons/obj/projectiles.dmi'
@@ -743,7 +744,7 @@
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	var/spread_angle = 30
+	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
@@ -818,7 +819,7 @@
 		if(ismob(hit)&&typetospawn)
 			hasspawned = new typetospawn(get_turf(hit))
 			return 1
-		
+
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
@@ -840,7 +841,7 @@
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
 	window_pass = 0
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
@@ -850,7 +851,7 @@
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
 	caliber = 2
-	icon_turf_hit = "secbot1-spaz"
+	icon_turf_hit = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot
 

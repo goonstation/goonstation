@@ -1,12 +1,14 @@
-#define PLANE_FLOOR -10
-#define PLANE_WALL -5
-#define PLANE_NOSHADOW_BELOW -1
-#define PLANE_DEFAULT 0
-#define PLANE_NOSHADOW_ABOVE 1
-#define PLANE_HIDDENGAME 2
-#define PLANE_LIGHTING 10
-#define PLANE_SELFILLUM 20
-#define PLANE_ABOVE_LIGHTING 22
+#define PLANE_UNDERFLOOR -120 // that's where floorcluwnes live
+#define PLANE_FLOOR -110
+#define PLANE_WALL -105
+#define PLANE_NOSHADOW_BELOW -101
+#define PLANE_DEFAULT -100
+#define PLANE_NOSHADOW_ABOVE -99
+#define PLANE_HIDDENGAME -98
+#define PLANE_LIGHTING -90
+#define PLANE_SELFILLUM -80
+#define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
+#define PLANE_OVERLAY_EFFECTS 22
 #define PLANE_FLOCKVISION 25
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40

@@ -590,8 +590,6 @@
 					mob.update_body()
 					mob.update_face()
 
-					mob.updatehealth()
-
 
 					mob.emote("scream")
 					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")

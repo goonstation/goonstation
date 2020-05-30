@@ -197,7 +197,6 @@
 		owner.bodytemperature = owner.base_body_temp
 		setalive(owner)
 
-		owner.updatehealth()
 
 		if (owner.health < -50)
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")

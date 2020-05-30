@@ -5,6 +5,7 @@
 	force = 4
 	throwforce = 6
 	var/material_name = "Ore" //text to display for this ore in manufacturers
+	var/initial_material_name = null // used to store what the ore is
 	var/metal = 0  // what grade of metal is it?
 	var/conductor = 0
 	var/dense = 0
@@ -21,6 +22,8 @@
 		src.pixel_x = rand(0 - wiggle, wiggle)
 		src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
+		if(src.material?.name)
+			initial_material_name = src.material.name
 
 	unpooled()
 		..()
@@ -30,6 +33,7 @@
 
 	pooled()
 		..()
+		name = initial(name)
 
 	proc/setup_material()
 		.= 0
@@ -150,6 +154,8 @@
 							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
+		else
+			..()
 
 /obj/item/raw_material/rock
 	name = "rock"
@@ -541,7 +547,7 @@
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
-	throwforce = 15.0
+	throwforce = 5.0
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
@@ -578,7 +584,6 @@
 					var/shard_damage = force
 					affecting.take_damage(shard_damage, 0)
 					H.UpdateDamageIcon()
-					H.updatehealth()
 		..()
 
 	custom_suicide = 1
@@ -588,7 +593,6 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -692,6 +696,7 @@
 /obj/item/material_piece/gold
 	name = "stamped bullion"
 	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	default_material = "gold"
 
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"

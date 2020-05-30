@@ -132,7 +132,6 @@
 		return 0
 	user.visible_message("<span class='alert'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
 	user.TakeDamage("chest", 150, 0)
-	user.updatehealth()
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
@@ -1149,7 +1148,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		return 0
 	user.visible_message("<span class='alert'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
 	user.TakeDamage("head", 250, 0)
-	user.updatehealth()
 	return 1
 
 

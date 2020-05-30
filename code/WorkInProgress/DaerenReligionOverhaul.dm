@@ -246,7 +246,6 @@
 		C.losebreath = 0
 		C.paralysis--
 		C.bleeding = 0
-		C.updatehealth()
 		if (C.blood_volume < 101)
 			C.blood_volume = 101 //this is to prevent people from instantly relapsing into shock/heart failure/braindeath at low blood
 

@@ -51,6 +51,7 @@ var/global
 	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
 	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
 	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
+	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
 
 	turf/buzztile = null
 
@@ -70,6 +71,7 @@ var/global
 	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
+	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()

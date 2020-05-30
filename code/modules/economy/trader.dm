@@ -1078,7 +1078,7 @@
 /obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
 		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
-		src.spawncrate(/obj/vehicle/clowncar)
+		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)
 		src.honk = 1
 	else
 		..()

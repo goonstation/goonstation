@@ -32,6 +32,7 @@
 				src.sever()
 			else if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
+		health_update_queue |= holder
 		return 1
 
 	heal_damage(brute, burn, tox)
@@ -40,6 +41,7 @@
 		src.brute_dam = max(0, src.brute_dam - brute)
 		src.burn_dam = max(0, src.burn_dam - burn)
 		src.tox_dam = max(0, src.tox_dam - tox)
+		health_update_queue |= holder
 		return 1
 
 	get_damage()

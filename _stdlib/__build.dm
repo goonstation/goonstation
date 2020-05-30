@@ -66,6 +66,11 @@ o+`        `-` ``..-:yooos-..----------..`
 // Probably hefty
 //#define QUEUE_STAT_DEBUG
 
+// Makes the code crash / log when an abstract type is instantiated.
+// see _stadlib/_types.dm for details
+// #define ABSTRACT_VIOLATION_CRASH
+// #define ABSTRACT_VIOLATION_WARN
+
 
 //////////// MAP OVERRIDES
 
@@ -88,6 +93,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
+//#define MAP_OVERRIDE_PAMGOC			// Pamgoc
 
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES

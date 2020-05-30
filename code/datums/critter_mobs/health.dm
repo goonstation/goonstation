@@ -30,7 +30,7 @@
 			value = max(minimum_value, min(value - amt, maximum_value))
 		else
 			value = min(value - amt, maximum_value)
-		holder.updatehealth()
+		health_update_queue |= holder
 
 	proc/HealDamage(var/amt)
 		TakeDamage(-amt)

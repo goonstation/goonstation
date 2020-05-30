@@ -291,7 +291,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				return
 		M.take_toxin_damage(3)
 		M.changeStatus("radiation", 100)
-		M.updatehealth()
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -788,7 +787,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))

@@ -95,9 +95,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (src.part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -313,9 +311,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -492,9 +488,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -561,8 +555,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
@@ -575,8 +569,8 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
@@ -680,9 +674,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -770,9 +762,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -841,9 +831,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null

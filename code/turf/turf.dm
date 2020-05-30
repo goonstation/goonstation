@@ -75,7 +75,7 @@ var/global/client/ff_debugger = null
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				opacity = (src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
 		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
 		return
@@ -182,7 +182,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = -11
+	plane = PLANE_FLOOR
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID
@@ -840,7 +840,7 @@ var/global/client/ff_debugger = null
 	layer = 60
 	name = "Space Station 13"
 	desc = "The title card for it, at least."
-	plane = 11
+	plane = PLANE_OVERLAY_EFFECTS
 	pixel_x = -96
 
 	New()
@@ -854,6 +854,9 @@ var/global/client/ff_debugger = null
 		icon_state = "title_manta"
 		name = "The NSS Manta"
 		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
+	#endif
+	#if defined(REVERSED_MAP)
+		transform = list(-1, 0, 0, 0, 1, 0)
 	#endif
 		lobby_titlecard = src
 

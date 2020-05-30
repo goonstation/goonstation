@@ -198,12 +198,14 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 <h1>Goon Station 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
 
 <ul class="links cf">
-    <li>Official Wiki<br><strong>https://wiki.ss13.co</strong><span></span></li>
-    <li>Official Forums<br><strong>https://forum.ss13.co</strong></li>
+    <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/">https://wiki.ss13.co</a></strong><span></span></li>
+    <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/">https://forum.ss13.co</a></strong></li>
 </ul>"}
 
 #if ASS_JAM
+	html += "<a id='ass_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#main_changelog\") });'>Jump to regular changelog</a>"
 	html += changelog_parse(file2text("strings/ass_changelog.txt"), "Ass Jam Changelog", " ass")
+	html += "<a id='main_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#ass_changelog\") });'>Jump to ass jam changelog</a>"
 #endif
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog")
 	html += {"
@@ -220,7 +222,6 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
     <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" name="license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a><br/>
 
     <em>
-    	Except where otherwise noted, Goon Station 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>
-    	Rights are currently extended to SomethingAwful Goons only.
+    	Except where otherwise noted, Goon Station 13 is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.
     </em>
 </p>"}

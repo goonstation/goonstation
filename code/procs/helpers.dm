@@ -530,6 +530,37 @@ proc/get_angle(atom/a, atom/b)
 			py+=sdy
 			. += locate(px,py,M.z)
 
+/proc/getstraightlinewalled(atom/M,vx,vy,include_origin = 1)//hacky fuck for l ighting
+	if (!M) return null
+	var/turf/T = null
+	var/px=M.x		//starting x
+	var/py=M.y
+	if (include_origin)
+		. = list(locate(px,py,M.z))
+	else
+		.= list()
+	if (vx)
+		var/step = vx > 0 ? 1 : -1
+		vx = abs(vx)
+		while(vx > 0)
+			px += step
+			vx -= 1
+			T = locate(px,py,M.z)
+			if (!T || T.opacity || T.opaque_atom_count > 0)
+				break
+			. += T
+	else if (vy)
+		var/step = vy > 0 ? 1 : -1
+		vy = abs(vy)
+		while(vy > 0)
+			py += step
+			vy -= 1
+			T = locate(px,py,M.z)
+			if (!T || T.opacity || T.opaque_atom_count > 0)
+				break
+			. += T
+
+
 /proc/IsGuestKey(key)
 	//Wire note: This seems like it would work just fine and is a whole bunch shorter
 	return copytext(key, 1, 7) == "Guest-"
@@ -2178,18 +2209,6 @@ var/regex/nameRegex = regex("\\xFF.","g")
 	return text
 
 /**
-  * Returns true if given string is just space characters
-  */
-/proc/is_blank_string(var/txt)
-	if (!istext(txt))
-		return 1 // if it's not a string I guess it's kinda blank??
-	for (var/i=1, i <= length(txt), i++)
-		if (copytext(txt, i, i+1) != " ")
-			return 0 // we say NAW GURL IT'S GOT OTHER STUFF TOO,
-
-	return 1 // otherwise YEAH GURL THAT SHIT IS HELLA BLANK
-
-/**
   * Returns true if given mob/client/mind is an admin
   */
 /proc/isadmin(person)
@@ -2345,14 +2364,16 @@ proc/angle_to_dir(angle)
 			.= SOUTH
 
 /**
-  * Transforms a supplied vector x & y to a direction
+  * Removes non-whitelisted reagents from the reagents of TA
   * user: the mob that adds a reagent to an atom that has a reagent whitelist
   * TA: Target Atom. The thing that the user is adding the reagent to
   */
 
-proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
+proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
 		return
+	if (!custom_message)
+		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
 
 	var/found = 0
 	for (var/reagent_id in TA.reagents.reagent_list)
@@ -2361,13 +2382,12 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			found = 1
 	if (found)
 		if (user)
-			user.show_text("[TA] identifies and removes a harmful substance.", "red") // haine: done -> //TODO: using usr in procs is evil shame on you
+			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
-			M.show_text("[TA] identifies and removes a harmful substance.", "red")
+			boutput(M, "[custom_message]")
 		else
-			TA.visible_message("<span class='alert'>[TA] identifies and removes a harmful substance.</span>")
-
+			TA.visible_message("[custom_message]")
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)
 	/*

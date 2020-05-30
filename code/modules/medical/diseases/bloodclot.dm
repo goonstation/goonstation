@@ -72,7 +72,6 @@
 					affected_mob.losebreath ++
 				if (prob(5))
 					affected_mob.take_oxygen_deprivation(rand(1,2))
-					affected_mob.updatehealth()
 				if (prob(5))
 					affected_mob.emote(pick("twitch", "groan", "gasp"))
 				if (prob(1))

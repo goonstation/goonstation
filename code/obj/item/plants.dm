@@ -6,7 +6,7 @@
 	var/crop_suffix = ""
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
@@ -85,7 +85,6 @@
 /obj/item/plant/herb/cannabis/
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
 	icon_state = "cannabisleaf"
 	brewable = 1
 	brew_result = list("THC", "CBD")
@@ -252,11 +251,25 @@
 	desc = "Chewy leaves often manufactured for use in radiation treatment medicine."
 	icon_state = "nureous"
 
+/obj/item/plant/herb/nureous/fuzzy
+	name = "nureous leaves"
+	crop_suffix = " leaves"
+	desc = "Chewy leaves often manufactured for use in radiation treatment medicine. They seem strangely hairy."
+	icon_state = "nureousfuzzy"
+
 /obj/item/plant/herb/asomna
 	name = "asomna bark"
 	crop_suffix	= " bark"
 	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties."
 	icon_state = "asomna"
+	brewable = 1
+	brew_result = "tea"
+
+/obj/item/plant/herb/asomna/robust
+	name = "asomna bark"
+	crop_suffix = " bark"
+	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties. This particular chunk looks extra spicy."
+	icon_state = "asomnarobust"
 	brewable = 1
 	brew_result = "tea"
 

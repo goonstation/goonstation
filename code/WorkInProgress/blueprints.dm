@@ -202,6 +202,12 @@
 					if(O.loc == pos)
 						qdel(O)
 						break
+				if(T.tiletype != null)
+					var/turf/newTile = get_turf(pos)
+					newTile.ReplaceWith(T.tiletype)
+					newTile.icon_state = T.state
+					newTile.dir = T.direction
+					newTile.inherit_area()
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
@@ -211,10 +217,6 @@
 					A.pixel_x = O.px
 					A.pixel_y = O.py
 
-				if(T.tiletype != null)
-					var/turf/newTile = new T.tiletype(pos)
-					newTile.icon_state = T.state
-					newTile.dir = T.direction
 
 			for(var/obj/J in src)
 				qdel(J)
@@ -454,7 +456,7 @@
 			roomList.Remove(target)
 		else
 			roomList.Add(target)
-			roomList[target] = image('icons/misc/old_or_unused.dmi',target,"tiletag", layer = EFFECTS_LAYER_BASE)
+			roomList[target] = image('icons/misc/old_or_unused.dmi',target,"tiletag", layer = HUD_LAYER)
 			updateOverlays()
 
 		return

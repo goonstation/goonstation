@@ -38,7 +38,7 @@
 		if (player.client && player.ready)
 			num_players++
 #if ASS_JAM
-	var/num_synds = max(1, min(round(num_players / 2), agents_possible))
+	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
 #else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
 #endif
@@ -110,9 +110,9 @@
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A)
+			target_locations[A.name] = list(A.type)
 		else
-			target_locations[A.name].Add(A)
+			target_locations[A.name].Add(A.type)
 #endif
 
 	target_location_name = pick(target_locations)

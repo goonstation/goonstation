@@ -208,14 +208,14 @@ var/image/blob_icon_cache
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
-
+		var/tolerance = temp_tolerance
 		if (material)
 			material.triggerTemp(src, temperature)
 
 		if (src.has_upgrade(/datum/blob_upgrade/fire_resist))
-			temp_tolerance *= 3
-		if(temp_difference > temp_tolerance)
-			temp_difference = abs(temp_difference - temp_tolerance)
+			tolerance *= 3
+		if(temp_difference > tolerance)
+			temp_difference = abs(temp_difference - tolerance)
 
 			src.take_damage(temp_difference / heat_divisor, 1, "burn")
 
