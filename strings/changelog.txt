@@ -1,5 +1,9 @@
 
 (t)fri may 29 20
+(u)UrsulaMajor
+(p)893
+(e)🎨|sprites
+(*)Added a concealable Syndicate Omnitool (with Knife mode!) to the syndicate buylist for 2TC
 (u)Kubius
 (p)890
 (e)🆕🗺|feature, mapping
