@@ -1,4 +1,6 @@
-
+(t)Sat may 30 20
+(u)Moonlol
+(*)Added a give legs button to the game panel. please dont input /obj alone.
 (t)fri may 22 20
 (u)pali
 (*)Added the <i>legs</i> component for when you want an object to have AI legs
