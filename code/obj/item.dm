@@ -45,6 +45,8 @@
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
+	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
+
 	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
 	var/over_clothes = 0 //draw over clothes when used as a limb
 	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
@@ -764,6 +766,9 @@
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
+	src.equipped_in_slot = slot
+	for(var/datum/objectProperty/equipment/prop in src.properties)
+		prop.onEquipped(src, user, src.properties[prop])
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -778,28 +783,13 @@
 		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 		equipment_proxy.space_movement += spacemove
 
-	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
-		return
-	if (src.hasProperty("meleeprot"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot"))
-	if (src.hasProperty("meleeprot_head"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_head"))
-	if (src.hasProperty("meleeprot_all"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot_all"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_all"))
-	if (src.hasProperty("rangedprot"))
-		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, src, src.getProperty("rangedprot"))
-	if (src.hasProperty("radprot"))
-		APPLY_MOB_PROPERTY(user, PROP_RADPROT, src, src.getProperty("radprot"))
-	if (src.hasProperty("heatprot"))
-		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src, src.getProperty("heatprot"))
-	if (src.hasProperty("coldprot"))
-		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src, src.getProperty("coldprot"))
-
 /obj/item/proc/unequipped(var/mob/user)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	for(var/datum/objectProperty/equipment/prop in src.properties)
+		prop.onUnequipped(src, user, src.properties[prop])
+	src.equipped_in_slot = null
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -813,24 +803,6 @@
 	if (spacemove)
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
-
-	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
-		return
-	if (src.hasProperty("meleeprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
-	if (src.hasProperty("meleeprot_head"))
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
-	if (src.hasProperty("meleeprot_all"))
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
-	if (src.hasProperty("rangedprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, src)
-	if (src.hasProperty("radprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, src)
-	if (src.hasProperty("heatprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, src)
-	if (src.hasProperty("coldprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, src)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
