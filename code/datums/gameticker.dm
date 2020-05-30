@@ -468,7 +468,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
-				if (in_centcom(player.loc))
+				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
 				player.unlock_medal("Survivor", 1)
 
@@ -608,20 +608,20 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			//check if escaped
 			//if we are dead - get the location of our corpse
-			var/player_body_escaped = in_centcom(player.loc)
+			var/player_body_escaped = in_centcom(player)
 			var/player_dead = isdead(player) || isVRghost(player) || isghostcritter(player)
 			if (istype(player,/mob/dead/observer))
 				player_dead = 1
 				var/mob/dead/observer/O = player
 				if (O.corpse)
-					player_body_escaped = in_centcom(O.corpse.loc)
+					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (istype(player,/mob/dead/target_observer))
 				player_dead = 1
 				var/mob/dead/target_observer/O = player
 				if (O.corpse)
-					player_body_escaped = in_centcom(O.corpse.loc)
+					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (isghostdrone(player))

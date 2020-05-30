@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/objective)
 	check_completion()
 		if(target && target.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-				if (in_centcom(target.current.loc))
+				if (in_centcom(target.current))
 					return 1
 				else
 					return 0
@@ -671,7 +671,7 @@ proc/create_fluff(var/datum/mind/target)
 		if(!owner.current || isdead(owner.current))
 			return 0
 
-		if(!in_centcom(src.owner.current.loc))
+		if(!in_centcom(src.owner.current))
 			return 0
 
 		if (!owner.is_changeling)
@@ -893,7 +893,7 @@ proc/create_fluff(var/datum/mind/target)
 	check_completion()
 		var/escapees = 0
 		for (var/mob/living/carbon/player in mobs)
-			if (in_centcom(player.loc))
+			if (in_centcom(player))
 				escapees++
 
 		return escapees <= max_escapees
@@ -908,7 +908,7 @@ proc/create_fluff(var/datum/mind/target)
 	check_completion()
 		if (failed)
 			return 0
-		if (in_centcom(owner.current.loc))
+		if (in_centcom(owner.current))
 			return 1
 		return 0
 
@@ -974,7 +974,7 @@ proc/create_fluff(var/datum/mind/target)
 		if(isghostcritter(owner.current))
 			return 0
 
-		return in_centcom(src.owner.current.loc)
+		return in_centcom(src.owner.current)
 
 /datum/objective/escape/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
@@ -997,7 +997,7 @@ proc/create_fluff(var/datum/mind/target)
 					return 0
 			else if (player.mind && (player.mind != owner))
 				if (!isdead(player) && !isghostcritter(player)) //they're not dead
-					if (in_centcom(player.loc))
+					if (in_centcom(player))
 						return 0
 
 		return 1
@@ -1031,7 +1031,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	check_completion()
 		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
-			if(!isdead(M) && in_centcom(M.loc))
+			if(!isdead(M) && in_centcom(M))
 				return 1
 		return 0
 
@@ -1061,7 +1061,7 @@ proc/create_fluff(var/datum/mind/target)
 		targetname = target.current.real_name
 
 	check_completion()
-		if(target && target.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current.loc))
+		if(target && target.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
 			return 1
 		return 0
 
@@ -1082,7 +1082,7 @@ proc/create_fluff(var/datum/mind/target)
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
 				if (!isdead(player)) //they're not dead
-					if (in_centcom(player.loc))
+					if (in_centcom(player))
 						return 0
 
 		return 1

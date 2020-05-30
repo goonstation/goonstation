@@ -42,7 +42,7 @@
 			continue
 
 		if (!isdead(monkey_player))
-			if (in_centcom(monkey_player.loc))
+			if (in_centcom(monkey_player))
 				monkeywin = 1
 				break
 
@@ -54,7 +54,7 @@
 			if (!isdead(human_player))
 				var/turf/location = get_turf(human_player.loc)
 				if (istype(human_player.loc, /turf))
-					if (in_centcom(human_player.loc))
+					if (in_centcom(human_player))
 						monkeywin = 0
 						break
 

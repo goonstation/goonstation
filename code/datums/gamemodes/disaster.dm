@@ -136,7 +136,7 @@
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
-				if (in_centcom(player.loc))
+				if (in_centcom(player))
 					survivors[player.real_name] = "shuttle"
 					player.unlock_medal("Icarus", 1)
 				else
