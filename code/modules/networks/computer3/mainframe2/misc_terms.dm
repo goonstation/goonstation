@@ -951,7 +951,7 @@
 			if(tank1)
 				var/datum/gas_mixture/environment = tank1.return_air()
 				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/total_moles = TOTAL_MOLES(environment)
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
@@ -980,7 +980,7 @@
 			if(tank2)
 				var/datum/gas_mixture/environment = tank2.return_air()
 				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/total_moles = TOTAL_MOLES(environment)
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
@@ -4749,7 +4749,7 @@
 
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
-				var/total_moles = max(air_sample.total_moles(), 1)
+				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
 				if (air_sample)
 					sensed[1] = round(air_sample.return_pressure(), 0.1)
 					sensed[2] = round(air_sample.temperature, 0.1)

@@ -328,7 +328,7 @@ Contains:
 
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -383,7 +383,7 @@ Contains:
 	proc/allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -474,7 +474,7 @@ Contains:
 		return
 
 	proc/release()
-		var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
 		loc.assume_air(removed)
 
 	proc/ignite()
@@ -641,7 +641,7 @@ Contains:
 	allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)

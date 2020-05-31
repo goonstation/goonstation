@@ -319,7 +319,7 @@
 		add_overlays()
 
 	proc/process_occupant()
-		if(air_contents.total_moles() < 10)
+		if(TOTAL_MOLES(air_contents) < 10)
 			return
 		if(ishuman(occupant))
 			if(isdead(occupant))
@@ -347,7 +347,7 @@
 			next_trans = 0
 
 	proc/heat_gas_contents()
-		if(air_contents.total_moles() < 1)
+		if(TOTAL_MOLES(air_contents) < 1)
 			return
 		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
@@ -356,10 +356,10 @@
 			air_contents.temperature = combined_energy/combined_heat_capacity
 
 	proc/expel_gas()
-		if(air_contents.total_moles() < 1)
+		if(TOTAL_MOLES(air_contents) < 1)
 			return
 		var/datum/gas_mixture/expel_gas
-		var/remove_amount = air_contents.total_moles()/100
+		var/remove_amount = TOTAL_MOLES(air_contents)/100
 		expel_gas = air_contents.remove(remove_amount)
 		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 		loc.assume_air(expel_gas)

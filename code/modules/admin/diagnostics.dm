@@ -350,9 +350,9 @@ proc/debug_color_of(var/thing)
 					img.app.desc = ""
 
 
-					var/breath_pressure = ((air.total_moles() * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
+					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
 					//Partial pressure of the O2 in our breath
-					var/O2_pp = (air.total_moles()) && (air.oxygen / air.total_moles()) * breath_pressure
+					var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen / TOTAL_MOLES(air)) * breath_pressure
 					var/O2_color
 					var/T_color
 					switch (O2_pp)
@@ -383,7 +383,7 @@ proc/debug_color_of(var/thing)
 
 					T_color = "#ffffff"
 
-					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(air.total_moles(), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
+					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
 					img.app.overlays = null
 
 					if (is_group)
@@ -502,10 +502,10 @@ proc/debug_color_of(var/thing)
 						pipe_image.color = debug_color_of(pipe.parent)
 					var/datum/gas_mixture/air = pipe.return_air()
 					if(show_numbers)
-						if(air.total_moles() > 0.01)
-							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(air.total_moles(), 0.1)]<br>[round(air.return_pressure(), 0.1)]</span>"
+						if(TOTAL_MOLES(air) > 0.01)
+							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(air.return_pressure(), 0.1)]</span>"
 							pipe_image.maptext_x = -3
-						else if(air.total_moles() > 0)
+						else if(TOTAL_MOLES(air) > 0)
 							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"
 							pipe_image.maptext_x = -3
 				img.app.overlays += pipe_image

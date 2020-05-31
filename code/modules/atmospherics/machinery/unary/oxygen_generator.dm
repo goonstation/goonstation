@@ -33,7 +33,7 @@ obj/machinery/atmospherics/unary/oxygen_generator
 		if(!on)
 			return 0
 
-		var/total_moles = air_contents.total_moles()
+		var/total_moles = TOTAL_MOLES(air_contents)
 
 		if(total_moles < oxygen_content)
 			var/current_heat_capacity = HEAT_CAPACITY(air_contents)

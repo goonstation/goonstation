@@ -516,7 +516,7 @@
 				ret["burnt"] = G.fuel_burnt
 				ret["heat_capacity"] = HEAT_CAPACITY(G)
 				ret["thermal_energy"] = G.thermal_energy()
-				ret["moles"] = G.total_moles()
+				ret["moles"] = TOTAL_MOLES(G)
 
 				if(G.trace_gases && G.trace_gases.len)
 					for(var/datum/gas/T in G.trace_gases)
@@ -541,7 +541,7 @@
 					ret["burnt"] = G.fuel_burnt
 					ret["heat_capacity"] = HEAT_CAPACITY_ARCHIVED(G)
 					ret["thermal_energy"] = G.thermal_energy()
-					ret["moles"] = G.total_moles()
+					ret["moles"] = TOTAL_MOLES(G)
 
 				if(G && G.trace_gases && G.trace_gases.len)
 					for(var/datum/gas/T in G.trace_gases)

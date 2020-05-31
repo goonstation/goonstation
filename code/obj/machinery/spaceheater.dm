@@ -217,7 +217,7 @@
 					else
 						heating = 0
 
-					var/transfer_moles = src.emagged ? 0.5 * env.total_moles() : 0.25 * env.total_moles()
+					var/transfer_moles = src.emagged ? 0.5 * TOTAL_MOLES(env) : 0.25 * TOTAL_MOLES(env)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -423,7 +423,7 @@
 					else
 						heating = 0
 
-					var/transfer_moles = 0.25 * env.total_moles()
+					var/transfer_moles = 0.25 * TOTAL_MOLES(env)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 

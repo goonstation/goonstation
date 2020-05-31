@@ -477,7 +477,7 @@ obj/indicator
 					return "error"
 				return "[round(GM.nitrogen/MOLES_CELLSTANDARD*10+0.5)]"
 			else
-				return "[round((GM.total_moles())/MOLES_CELLSTANDARD*10+0.5)]"
+				return "[round((TOTAL_MOLES(GM))/MOLES_CELLSTANDARD*10+0.5)]"
 
 
 	Click()

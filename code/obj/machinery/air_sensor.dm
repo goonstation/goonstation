@@ -44,7 +44,7 @@ obj/machinery/air_sensor
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
 			if(output&12)
-				var/total_moles = air_sample.total_moles()
+				var/total_moles = TOTAL_MOLES(air_sample)
 				if(total_moles == 0)
 					total_moles = 1
 				if(output&4)

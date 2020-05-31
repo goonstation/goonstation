@@ -93,7 +93,7 @@ Notes:
 		C.hotspots += src
 
 	proc/process()
-		var/datum/gas_mixture/env = src.spot.remove_air(src.spot.air.total_moles())
+		var/datum/gas_mixture/env = src.spot.remove_air(TOTAL_MOLES(src.spot.air))
 		if (env)
 			out(world, "Current temp: [env.temperature]")
 			env.temperature += src.heatAmount
@@ -106,7 +106,7 @@ Notes:
 			out(world, "Operating on [src.spot]")
 			var/datum/gas_mixture/env = src.spot.return_air()
 			if (env.temperature < src.tempTarget)
-				var/transfer_moles = env.total_moles()
+				var/transfer_moles = TOTAL_MOLES(env)
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 				out(world, "got [transfer_moles] moles at [removed.temperature]")
 

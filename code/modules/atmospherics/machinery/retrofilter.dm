@@ -151,7 +151,7 @@ obj/machinery/atmospherics/retrofilter
 				dat += "[gases[i]]: <a href='?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
 
 		var/pressure = air_in.return_pressure()
-		var/total_moles = air_in.total_moles()
+		var/total_moles = TOTAL_MOLES(air_in)
 
 		dat += "<hr>Gas Levels: <br>Gas Pressure: [round(pressure,0.1)] kPa<br><br>"
 

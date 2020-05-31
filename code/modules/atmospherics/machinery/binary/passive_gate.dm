@@ -43,7 +43,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			return 1
 
 		//Calculate necessary moles to transfer using PV = nRT
-		if((air1.total_moles() > 0) && (air1.temperature>0))
+		if((TOTAL_MOLES(air1) > 0) && (air1.temperature>0))
 			var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 			//Can not have a pressure delta that would cause output_pressure > input_pressure
 

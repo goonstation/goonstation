@@ -55,7 +55,7 @@
 
 		if(scrubbing)
 			if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases && environment.trace_gases.len))
-				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+				var/transfer_moles = min(1, volume_rate/environment.volume)*TOTAL_MOLES(environment)
 
 				//Take a gas sample
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -89,7 +89,7 @@
 					network.update = 1
 
 		else //Just siphoning all air
-			var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+			var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 

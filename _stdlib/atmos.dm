@@ -105,6 +105,19 @@
 #define _ZERO_GAS(GAS, _, _, MIXTURE) MIXTURE.GAS = 0;
 #define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
+// total moles
+
+#define _GAS_MOLES_ADD(GAS, _, _, MIXTURE) MIXTURE.GAS +
+#define BASE_GASES_TOTAL_MOLES(MIXTURE) (APPLY_TO_GASES(_GAS_MOLES_ADD, MIXTURE) 0)
+
+/datum/gas_mixture/proc/total_moles_full()
+	. = BASE_GASES_TOTAL_MOLES(src)
+	for(var/x in trace_gases)
+		var/datum/gas/trace_gas = x
+		. += trace_gas.moles
+
+#define TOTAL_MOLES(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.total_moles_full() : BASE_GASES_TOTAL_MOLES(MIXTURE))
+
 // heat capacity
 
 #define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) MIXTURE.GAS * SPECIFIC_HEAT +

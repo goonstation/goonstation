@@ -630,7 +630,7 @@ What are the archived variables for?
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
+		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(TOTAL_MOLES(sharer) - moved_moles)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 
 	else

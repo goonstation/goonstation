@@ -183,7 +183,7 @@
 		safe = -1
 	else
 		var/environment_pressure = environment.return_pressure()
-		var/total_moles = environment.total_moles()
+		var/total_moles = TOTAL_MOLES(environment)
 
 		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
 			output += "<FONT color = 'red'>"

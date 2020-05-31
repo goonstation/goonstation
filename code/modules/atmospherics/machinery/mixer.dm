@@ -158,7 +158,7 @@ obj/machinery/atmospherics/mixer
 				signal.data["pump_status"] = "Online"
 
 			//Report gas concentration of input1
-			var/i1total_moles = air_in1.total_moles()
+			var/i1total_moles = TOTAL_MOLES(air_in1)
 			if(i1total_moles > 0)
 				signal.data["input1o2"] = round(100*air_in1.oxygen/i1total_moles)
 				signal.data["input1co2"] = round(100*air_in1.carbon_dioxide/i1total_moles)
@@ -179,7 +179,7 @@ obj/machinery/atmospherics/mixer
 				signal.data["input1tg"] = 0
 
 			//Report gas concentration of input2
-			var/i2total_moles = air_in2.total_moles()
+			var/i2total_moles = TOTAL_MOLES(air_in2)
 			if(i2total_moles > 0)
 				signal.data["input2o2"] = round(100*air_in2.oxygen/i2total_moles)
 				signal.data["input2co2"] = round(100*air_in2.carbon_dioxide/i2total_moles)
@@ -204,7 +204,7 @@ obj/machinery/atmospherics/mixer
 			signal.data["i2trans"] = node2_concentration*100
 
 			//Report gas concentration of output
-			var/ototal_moles = air_out.total_moles()
+			var/ototal_moles = TOTAL_MOLES(air_out)
 			if(ototal_moles > 0)
 				signal.data["outputo2"] = round(100*air_out.oxygen/ototal_moles)
 				signal.data["outputco2"] = round(100*air_out.carbon_dioxide/ototal_moles)
@@ -253,8 +253,8 @@ obj/machinery/atmospherics/mixer
 		if(air_in2.temperature > 0)
 			transfer_moles2 = (node2_concentration*pressure_delta)*air_out.volume/(air_in2.temperature * R_IDEAL_GAS_EQUATION)
 
-		var/air_in1_moles = air_in1.total_moles()
-		var/air_in2_moles = air_in2.total_moles()
+		var/air_in1_moles = TOTAL_MOLES(air_in1)
+		var/air_in2_moles = TOTAL_MOLES(air_in2)
 
 		if((air_in1_moles < transfer_moles1) || (air_in2_moles < transfer_moles2))
 			if(transfer_moles1 != 0 && transfer_moles2 !=0)

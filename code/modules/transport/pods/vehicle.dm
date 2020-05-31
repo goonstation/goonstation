@@ -1239,7 +1239,7 @@
 	dat += "<B>Air Status:</B> "
 	if(src.atmostank && src.atmostank.air_contents)
 		var/pressure = atmostank.air_contents.return_pressure()
-		var/total_moles = atmostank.air_contents.total_moles()
+		var/total_moles = TOTAL_MOLES(atmostank.air_contents)
 
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
@@ -1262,7 +1262,7 @@
 	if(src.fueltank && src.fueltank.air_contents)
 
 		var/pressure = fueltank.air_contents.return_pressure()
-		var/total_moles = fueltank.air_contents.total_moles()
+		var/total_moles = TOTAL_MOLES(fueltank.air_contents)
 
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
