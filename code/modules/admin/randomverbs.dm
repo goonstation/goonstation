@@ -600,14 +600,10 @@
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			T.air.toxins = 0
-			T.air.toxins_archived = null
+			ZERO_BASE_GASES(T.air)
+			ZERO_ARCHIVED_BASE_GASES(T.air)
 			T.air.oxygen = MOLES_O2STANDARD
-			T.air.oxygen_archived = null
-			T.air.carbon_dioxide = 0
-			T.air.carbon_dioxide_archived = null
 			T.air.nitrogen = MOLES_N2STANDARD
-			T.air.nitrogen_archived = null
 			T.air.fuel_burnt = 0
 			if(T.air.trace_gases)
 				T.air.trace_gases = null
