@@ -479,8 +479,8 @@
 
 #undef DISARM_WITH_ITEM_TEXT
 
-/mob/proc/check_block() //am i blocking?
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis"))
+/mob/proc/check_block(ignoreStuns = 0) //am i blocking?
+	if (ignoreStuns || (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))

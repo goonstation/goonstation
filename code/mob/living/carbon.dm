@@ -515,7 +515,7 @@
 
 
 /mob/living/carbon/swap_hand()
-	var/obj/item/grab/block/B = src.check_block()
+	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
 	if(B) 
 		qdel(B)
 	src.hand = !src.hand
