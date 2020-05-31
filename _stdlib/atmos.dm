@@ -177,6 +177,9 @@ What can break when adding new gases:
 #define _MOLES_REPORT(GAS, _, NAME, MIXTURE) "[NAME]: [MIXTURE.GAS]<br>" +
 #define MOLES_REPORT(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT, MIXTURE) "")
 
+#define _MOLES_REPORT_PACKET(GAS, _, NAME, MIXTURE) "[NAME]=[MIXTURE.GAS]&" +
+#define MOLES_REPORT_PACKET(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT_PACKET, MIXTURE) "")
+
 // requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
 #define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" +
 #define _UNKNOWN_CONCETRATION_REPORT(MIXTURE) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")
