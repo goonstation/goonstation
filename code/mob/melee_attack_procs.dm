@@ -197,8 +197,7 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src)
-		G.assailant = src
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
 		src.put_in_hand(G, src.hand)
 		G.affecting = src
 		src.grabbed_by += G
@@ -225,8 +224,7 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I)
-		G.assailant = src
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
 		G.affecting = src
 		src.grabbed_by += G
 		G.loc = I
@@ -479,8 +477,8 @@
 
 #undef DISARM_WITH_ITEM_TEXT
 
-/mob/proc/check_block() //am i blocking?
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis"))
+/mob/proc/check_block(ignoreStuns = 0) //am i blocking?
+	if (ignoreStuns || (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
