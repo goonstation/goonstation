@@ -78,7 +78,7 @@
 // archiving
 
 // comment out to make atmos a bit less precise but less memory intensive and maybe a bit faster, may cause bugs
-#define ATMOS_ARCHIVING
+// #define ATMOS_ARCHIVING
 
 #ifdef ATMOS_ARCHIVING
 #define ARCHIVED(VAR) VAR##_archived
