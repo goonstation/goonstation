@@ -713,6 +713,9 @@
 		setProperty("I_disorient_resist", 15)
 
 	disposing()
+		for(var/datum/objectProperty/equipment/P in src.properties)
+			P.removeFromMob(src, src.assailant)
+			src.properties.Remove(P)
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
@@ -743,6 +746,15 @@
 			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
 		qdel(src)
 
+	setProperty(propId, propVal)
+		var/datum/objectProperty/equipment/P = ..()
+		if(istype(P))
+			P.updateMob(src, src.assailant, propVal)
+
+	delProperty(propId)
+		var/datum/objectProperty/equipment/P = ..()
+		if(istype(P))
+			P.removeFromMob(src, src.assailant)
 
 	proc/can_block(var/hit_type = null)
 		.= DEFAULT_BLOCK_PROTECTION_BONUS

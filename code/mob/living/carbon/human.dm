@@ -2479,6 +2479,9 @@
 		return 0
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
+	var/obj/item/grab/block/B = src.check_block()
+	if(B && hand != specify)
+		qdel(B)
 	if (specify >= 0)
 		src.hand = specify
 	else
