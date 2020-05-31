@@ -319,16 +319,7 @@
 
 		air.react()
 
-// :getin:
-#define SPACEFASTPRESSURE(air, to_var) do { \
-	var/_moles = air.oxygen + air.carbon_dioxide + air.nitrogen + air.toxins; \
-	if(length(air.trace_gases)) { \
-		for(var/datum/gas/trace_gas in air.trace_gases) { \
-			_moles += trace_gas.moles; \
-		} \
-	} \
-	to_var += _moles*R_IDEAL_GAS_EQUATION*air.temperature/air.volume; \
-} while (0)
+
 // If group processing is off, and the air group is bordered by a space tile,
 // execute a fast evacuation of the air in the group.
 // If the average pressure in the group is < 5kpa, the group will be zeroed
@@ -364,7 +355,7 @@
 			// Todo - retain nearest space tile border and apply force proportional to amount
 			// of air leaving through it
 			member_air.mimic(sample, clamp(length_space_border / (2 * max(1, minDist)), 0.1, 1))
-			SPACEFASTPRESSURE(member_air, totalPressure) // Build your own atmos disaster
+			ADD_MIXTURE_PRESSURE(member_air, totalPressure) // Build your own atmos disaster
 
 		LAGCHECK(LAG_REALTIME)
 

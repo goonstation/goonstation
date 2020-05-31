@@ -126,6 +126,16 @@
 
 #define MIXTURE_PRESSURE(MIXTURE) (TOTAL_MOLES(MIXTURE) * R_IDEAL_GAS_EQUATION * (MIXTURE).temperature / (MIXTURE).volume)
 
+#define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) do { \
+	var/_moles = BASE_GASES_TOTAL_MOLES(MIXTURE); \
+	if(length(MIXTURE.trace_gases)) { \
+		for(var/datum/gas/trace_gas in MIXTURE.trace_gases) { \
+			_moles += trace_gas.moles; \
+		} \
+	} \
+	VAR += _moles * R_IDEAL_GAS_EQUATION * MIXTURE.temperature / MIXTURE.volume; \
+} while (0)
+
 // heat capacity
 
 #define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) (MIXTURE).GAS * SPECIFIC_HEAT +
