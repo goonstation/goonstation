@@ -19,8 +19,6 @@ What are the archived variables for?
 	specific_heat = 30
 /datum/gas/rad_particles
 	specific_heat = 20
-/datum/gas/farts //add a visual to this
-	specific_heat = 69
 
 
 /datum/gas_mixture
@@ -130,14 +128,13 @@ What are the archived variables for?
 
 					reacting = 1
 
-				var/datum/gas/farts/trace_fart = locate(/datum/gas/farts/) in trace_gases
-				if(trace_fart)
-					var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, trace_fart.moles*0.05)
+				if(farts)
+					var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, farts*0.05)
 
 					carbon_dioxide -= reaction_rate
 					toxins += reaction_rate
 
-					trace_fart.moles -= reaction_rate*0.05
+					farts -= reaction_rate*0.05
 
 					temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
 

@@ -110,18 +110,21 @@ What can break when adding new gases:
 #define SPECIFIC_HEAT_O2		20
 #define SPECIFIC_HEAT_N2		20
 #define SPECIFIC_HEAT_CO2		30
+#define SPECIFIC_HEAT_FARTS 69
 
 #define _APPLY_TO_GASES(PREF, SUFF, MACRO, ARGS...) \
 	MACRO(PREF ## oxygen ## SUFF, SPECIFIC_HEAT_O2, "O2", ARGS) \
 	MACRO(PREF ## nitrogen ## SUFF, SPECIFIC_HEAT_N2, "N2", ARGS) \
 	MACRO(PREF ## carbon_dioxide ## SUFF, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
-	MACRO(PREF ## toxins ## SUFF, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS)
+	MACRO(PREF ## toxins ## SUFF, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS) \
+	MACRO(PREF ## farts ## SUFF, SPECIFIC_HEAT_FARTS, "Farts", ARGS) \
 
 #define APPLY_TO_GASES(MACRO, ARGS...) \
 	MACRO(oxygen, SPECIFIC_HEAT_O2, "O2", ARGS) \
 	MACRO(nitrogen, SPECIFIC_HEAT_N2, "N2", ARGS) \
 	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
-	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS)
+	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS) \
+	MACRO(farts, SPECIFIC_HEAT_FARTS, "Farts", ARGS)
 //	_APPLY_TO_GASES(,, MACRO, ARGS) // replace with this when the langserver gets fixed >:(
 // (the _APPLY_TO_GASES version compiles and works fine but the linter rejects it for now)
 

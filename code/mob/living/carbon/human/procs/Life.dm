@@ -911,19 +911,18 @@
 					if (prob(20))
 						emote(pick("giggle", "laugh"))
 
-			for (var/datum/gas/farts/FARD in breath.trace_gases) // FARDING AND SHIDDING TIME ~warc
-				var/FARD_pp = (FARD.moles/TOTAL_MOLES(breath))*breath_pressure
-				if (prob(15) && (FARD_pp > fart_smell_min))
-					boutput(src, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
-					if ((FARD_pp > fart_vomit_min) && prob(50))
-						src.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-						src.vomit()
-				if (FARD_pp > fart_choke_min)
-					take_oxygen_deprivation(6.9 * mult)
-					if (prob(20))
-						src.emote("cough")
-						if (prob(30))
-							boutput(src, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
+		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
+		if (prob(15) && (FARD_pp > fart_smell_min))
+			boutput(src, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+			if ((FARD_pp > fart_vomit_min) && prob(50))
+				src.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+				src.vomit()
+		if (FARD_pp > fart_choke_min)
+			take_oxygen_deprivation(6.9 * mult)
+			if (prob(20))
+				src.emote("cough")
+				if (prob(30))
+					boutput(src, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
 
 			//cyber lungs beat radiation. Is there anything they can't do?
