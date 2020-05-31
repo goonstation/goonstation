@@ -102,12 +102,12 @@
 // gas calculation macros //
 ////////////////////////////
 
-#define _ZERO_GAS(GAS, _, _, MIXTURE) MIXTURE.GAS = 0;
+#define _ZERO_GAS(GAS, _, _, MIXTURE) (MIXTURE).GAS = 0;
 #define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
 // total moles
 
-#define _GAS_MOLES_ADD(GAS, _, _, MIXTURE) MIXTURE.GAS +
+#define _GAS_MOLES_ADD(GAS, _, _, MIXTURE) (MIXTURE).GAS +
 #define BASE_GASES_TOTAL_MOLES(MIXTURE) (APPLY_TO_GASES(_GAS_MOLES_ADD, MIXTURE) 0)
 
 /datum/gas_mixture/proc/total_moles_full()
@@ -116,15 +116,15 @@
 		var/datum/gas/trace_gas = x
 		. += trace_gas.moles
 
-#define TOTAL_MOLES(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.total_moles_full() : BASE_GASES_TOTAL_MOLES(MIXTURE))
+#define TOTAL_MOLES(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).total_moles_full() : BASE_GASES_TOTAL_MOLES(MIXTURE))
 
 // pressure
 
-#define MIXTURE_PRESSURE(MIXTURE) (TOTAL_MOLES(MIXTURE) * R_IDEAL_GAS_EQUATION * MIXTURE.temperature / MIXTURE.volume)
+#define MIXTURE_PRESSURE(MIXTURE) (TOTAL_MOLES(MIXTURE) * R_IDEAL_GAS_EQUATION * (MIXTURE).temperature / (MIXTURE).volume)
 
 // heat capacity
 
-#define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) MIXTURE.GAS * SPECIFIC_HEAT +
+#define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) (MIXTURE).GAS * SPECIFIC_HEAT +
 #define BASE_GASES_HEAT_CAPACITY(MIXTURE) (APPLY_TO_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
 #define BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE) (APPLY_TO_ARCHIVED_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
 
@@ -134,7 +134,7 @@
 		var/datum/gas/trace_gas = x
 		. += trace_gas.moles * trace_gas.specific_heat
 
-#define HEAT_CAPACITY(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
+#define HEAT_CAPACITY(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
 
 /datum/gas_mixture/proc/heat_capacity_archived_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
@@ -142,7 +142,7 @@
 		var/datum/gas/trace_gas = x
 		. += trace_gas.moles_archived * trace_gas.specific_heat
 
-#define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
+#define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
 
 #define THERMAL_ENERGY(MIXTURE) ((MIXTURE).temperature * HEAT_CAPACITY(MIXTURE))
 
