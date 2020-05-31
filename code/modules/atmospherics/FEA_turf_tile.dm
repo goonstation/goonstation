@@ -112,7 +112,9 @@ turf
 			archived_cycle = 0
 			current_cycle = 0
 
-			temperature_archived //USED ONLY FOR SOLIDS
+#ifdef ATMOS_ARCHIVING
+			ARCHIVED(temperature) //USED ONLY FOR SOLIDS
+#endif
 			being_superconductive = 0
 			obj/overlay/tile_gas_effect/gas_icon_overlay
 			visuals_state
@@ -246,12 +248,14 @@ turf
 
 			else return ..()
 
+#ifdef ATMOS_ARCHIVING
 		archive()
 			if(air) //For open space like floors
 				air.archive()
 
-			temperature_archived = temperature
+			ARCHIVED(temperature) = temperature
 			archived_cycle = air_master.current_cycle
+#endif
 
 		share_air_with_tile(turf/simulated/T)
 			return air.share(T.air)
@@ -532,7 +536,7 @@ turf
 					return 0
 
 		proc/mimic_temperature_solid(turf/model, conduction_coefficient)
-			var/delta_temperature = (temperature_archived - model.temperature)
+			var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
 			if((src.heat_capacity > 0) && (model.heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
 				var/heat = conduction_coefficient*delta_temperature* \
@@ -540,7 +544,7 @@ turf
 				temperature -= heat/src.heat_capacity
 
 		proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
-			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+			var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 
 				var/heat = conduction_coefficient*delta_temperature* \

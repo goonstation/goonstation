@@ -8,7 +8,7 @@
 	flags = NOSPLASH
 	var/on = 0
 	var/datum/light/light
-	var/temperature_archived
+	var/ARCHIVED(temperature)
 	var/obj/overlay/O1 = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
@@ -75,11 +75,11 @@
 			next_trans++
 
 		if(air_contents)
-			temperature_archived = air_contents.temperature
+			ARCHIVED(temperature) = air_contents.temperature
 			heat_gas_contents()
 			expel_gas()
 
-		if(abs(temperature_archived-air_contents.temperature) > 1)
+		if(abs(ARCHIVED(temperature)-air_contents.temperature) > 1)
 			network.update = 1
 
 		src.updateUsrDialog()

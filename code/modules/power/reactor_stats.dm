@@ -502,10 +502,10 @@
 
 			meter_metrics["[p_tag]"][++meter_metrics["[p_tag]"].len] = m_metric
 
-		sample_air(var/datum/gas_mixture/G, var/no_archived)
+		sample_air(var/datum/gas_mixture/G, var/ARCHIVED(no))
 			var/list/ret = new/list()
 
-			if(no_archived)
+			if(ARCHIVED(no))
 				if(G.oxygen) ret["o2"] = G.oxygen
 				if(G.toxins) ret["toxins"] = G.toxins
 				if(G.carbon_dioxide) ret["co2"] = G.carbon_dioxide
@@ -530,14 +530,14 @@
 							ret["rad"] = T.moles
 
 			else
-				if(G && G.oxygen_archived) ret["o2"] = G.oxygen_archived
-				if(G && G.toxins_archived) ret["toxins"] = G.toxins_archived
-				if(G && G.carbon_dioxide_archived) ret["co2"] = G.carbon_dioxide_archived
-				if(G && G.nitrogen_archived) ret["n2"] = G.nitrogen_archived
+				if(G && G.ARCHIVED(oxygen)) ret["o2"] = G.ARCHIVED(oxygen)
+				if(G && G.ARCHIVED(toxins)) ret["toxins"] = G.ARCHIVED(toxins)
+				if(G && G.ARCHIVED(carbon_dioxide)) ret["co2"] = G.ARCHIVED(carbon_dioxide)
+				if(G && G.ARCHIVED(nitrogen)) ret["n2"] = G.ARCHIVED(nitrogen)
 
 				if (G) //sorry, this was still somehow causing runtimes????
 					ret["pressure"] = MIXTURE_PRESSURE(G)
-					ret["temp"] = G.temperature_archived
+					ret["temp"] = G.ARCHIVED(temperature)
 					ret["burnt"] = G.fuel_burnt
 					ret["heat_capacity"] = HEAT_CAPACITY_ARCHIVED(G)
 					ret["thermal_energy"] = THERMAL_ENERGY(G)
@@ -546,13 +546,13 @@
 				if(G && G.trace_gases && G.trace_gases.len)
 					for(var/datum/gas/T in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
-							ret["n2o"] = T.moles_archived
+							ret["n2o"] = T.ARCHIVED(moles)
 						else if(istype(T, /datum/gas/oxygen_agent_b))
-							ret["o2_b"] = T.moles_archived
+							ret["o2_b"] = T.ARCHIVED(moles)
 						else if(istype(T, /datum/gas/volatile_fuel))
-							ret["fuel"] = T.moles_archived
+							ret["fuel"] = T.ARCHIVED(moles)
 						else
-							ret["rad"] = T.moles_archived
+							ret["rad"] = T.ARCHIVED(moles)
 
 			return ret
 

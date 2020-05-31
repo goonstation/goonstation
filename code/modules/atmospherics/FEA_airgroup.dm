@@ -7,7 +7,7 @@
 	//cycle that oxygen value represents
 	var/tmp/current_cycle = 0
 
-	//cycle that oxygen_archived value represents
+	//cycle that ARCHIVED(oxygen) value represents
 	//The use of archived cycle saves processing power by permitting the archiving step of FET
 	//	to be rolled into the updating step
 	var/tmp/archived_cycle = 0
@@ -83,10 +83,12 @@
 	for(var/turf/simulated/member in members)
 		if (member.air) member.air.copy_from(air)
 
+#ifdef ATMOS_ARCHIVING
 /datum/air_group/proc/archive()
 	if (air)
 		air.archive()
 	archived_cycle = air_master.current_cycle
+#endif
 
 //If individually processing tiles, checks all member tiles to see if they are close enough
 //	that the group may resume group processing
@@ -138,10 +140,12 @@
 		self_group_borders = null
 		self_tile_borders = null
 
+#ifdef ATMOS_ARCHIVING
 		if(archived_cycle < air_master.current_cycle)
 			archive()
 				//Archive air data for use in calculations
 				//But only if another group didn't store it for us
+#endif
 
 		for(var/turf/simulated/border_tile in src.borders)
 			//var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in border_tile
@@ -190,9 +194,11 @@
 		var/border_index = 1
 		if(border_group)
 			for(var/datum/air_group/AG in border_group)
+#ifdef ATMOS_ARCHIVING
 				if(AG.archived_cycle < archived_cycle)
 					//archive other groups information if it has not been archived yet this cycle
 					AG.archive()
+#endif
 				if(AG.current_cycle < current_cycle)
 					//This if statement makes sure two groups only process their individual connections once!
 					//Without it, each connection would be processed a second time as the second group is evaluated

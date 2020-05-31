@@ -6,7 +6,9 @@ What are the archived variables for?
 
 /datum/gas
 	var/moles = 0
-	var/moles_archived = 0
+#ifdef ATMOS_ARCHIVING
+	var/ARCHIVED(moles) = 0
+#endif
 	var/specific_heat = 0
 
 /datum/gas/sleeping_agent
@@ -25,17 +27,22 @@ What are the archived variables for?
 	#define _DEFINE_GAS(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_DEFINE_GAS)
 	#undef _DEFINE_GAS
+
+#ifdef ATMOS_ARCHIVING
 	#define _DEFINE_ARCH_GAS(GAS, ...) var/tmp/GAS;
 	APPLY_TO_ARCHIVED_GASES(_DEFINE_ARCH_GAS)
 	#undef _DEFINE_ARCH_GAS
+#endif
 
 	var/temperature = 0
-	var/tmp/temperature_archived
+#ifdef ATMOS_ARCHIVING
+	var/tmp/ARCHIVED(temperature)
+#endif
 
 	var/volume = CELL_VOLUME
 	var/group_multiplier = 1
 	var/graphic
-	var/tmp/graphic_archived
+	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	var/list/datum/gas/trace_gases
 	var/tmp/fuel_burnt = 0
 
@@ -57,13 +64,17 @@ What are the archived variables for?
 	temperature = initial(temperature)
 	group_multiplier = initial(group_multiplier)
 	graphic = initial(graphic)
-	temperature_archived = initial(temperature_archived)
+#ifdef ATMOS_ARCHIVING
+	ARCHIVED(temperature) = initial(ARCHIVED(temperature))
+#endif
 	graphic_archived = initial(graphic_archived)
 	fuel_burnt = initial(fuel_burnt)
 	trace_gases = initial(trace_gases)
 	#define _UNPOOL_GAS(GAS, ...) GAS = initial(GAS);
 	APPLY_TO_GASES(_UNPOOL_GAS)
+#ifdef ATMOS_ARCHIVING
 	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
+#endif
 	#undef _UNPOOL_GAS
 	..()
 
@@ -95,8 +106,10 @@ What are the archived variables for?
 		var/datum/gas/rad_particles = locate(/datum/gas/rad_particles) in trace_gases
 		if(rad_particles && (rad_particles.moles > 1))
 			graphic += "n2o;"
-
-	return graphic != graphic_archived
+	. = graphic != graphic_archived
+#ifndef ATMOS_ARCHIVING
+	graphic_archived = graphic
+#endif
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
@@ -197,20 +210,18 @@ What are the archived variables for?
 
 //Update archived versions of variables
 //Returns: 1 in all cases
+#ifdef ATMOS_ARCHIVING
 /datum/gas_mixture/proc/archive()
-	#define _ARCHIVE_GAS(GAS, ...) GAS##_archived = GAS;
+	#define _ARCHIVE_GAS(GAS, ...) ARCHIVED(GAS) = GAS;
 	APPLY_TO_GASES(_ARCHIVE_GAS)
 	#undef _ARCHIVE_GAS
-
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
-			trace_gas.moles_archived = trace_gas.moles
-
-	temperature_archived = temperature
-
+			trace_gas.ARCHIVED(moles) = trace_gas.moles
+	ARCHIVED(temperature) = temperature
 	graphic_archived = graphic
-
 	return 1
+#endif
 
 //Similar to merge(...) but first checks to see if the amount of air assumed is small enough
 //	that group processing is still accurate for source (aborts if not)
@@ -394,7 +405,7 @@ What are the archived variables for?
 	APPLY_TO_ARCHIVED_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
 	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
 	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
@@ -408,10 +419,10 @@ What are the archived variables for?
 		if(!trace_gases || !trace_gases.len)
 			return 0
 		for(var/datum/gas/trace_gas in sharer.trace_gases)
-			if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND*4)
+			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				var/datum/gas/corresponding = locate(trace_gas.type) in trace_gases
 				if(corresponding)
-					if(trace_gas.moles_archived >= corresponding.moles_archived*MINIMUM_AIR_RATIO_TO_SUSPEND*4)
+					if(trace_gas.ARCHIVED(moles) >= corresponding.ARCHIVED(moles)*MINIMUM_AIR_RATIO_TO_SUSPEND*4)
 						return 0
 				else
 					return 0
@@ -420,7 +431,7 @@ What are the archived variables for?
 		if(!sharer.trace_gases || !sharer.trace_gases.len)
 			return 0
 		for(var/datum/gas/trace_gas in trace_gases)
-			if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND*4)
+			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				if(!locate(trace_gas.type) in sharer.trace_gases)
 					return 0
 
@@ -431,12 +442,12 @@ What are the archived variables for?
 
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
-			if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND*4)
+			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				var/datum/gas/corresponding
 				if(sharer.trace_gases && sharer.trace_gases.len)
 					corresponding = locate(trace_gas.type) in sharer.trace_gases
 				if(corresponding)
-					if(trace_gas.moles_archived >= corresponding.moles_archived*MINIMUM_AIR_RATIO_TO_SUSPEND*4)
+					if(trace_gas.ARCHIVED(moles) >= corresponding.ARCHIVED(moles)*MINIMUM_AIR_RATIO_TO_SUSPEND*4)
 						return -1
 				else
 					return -1
@@ -445,13 +456,13 @@ What are the archived variables for?
 
 //Returns: 0 if self-check failed or 1 if check passes
 /datum/gas_mixture/proc/check_turf(turf/model)
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (GAS##_archived - model.GAS)/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (ARCHIVED(GAS) - model.GAS)/5;
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
-	var/delta_temperature = (temperature_archived - model.temperature)
+	var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
 
-	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= GAS##_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
+	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= ARCHIVED(GAS)*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
 	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
 		return 0
 	#undef _ABOVE_SUSPEND_THRESHOLD
@@ -460,7 +471,7 @@ What are the archived variables for?
 
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
-			if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND*4)
+			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				return 0
 
 	return 1
@@ -470,11 +481,11 @@ What are the archived variables for?
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(GAS##_archived - sharer.GAS##_archived)/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
 	var/old_self_heat_capacity = 0
 	var/old_sharer_heat_capacity = 0
@@ -514,14 +525,14 @@ What are the archived variables for?
 			var/delta = 0
 
 			if(corresponding)
-				delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/5
+				delta = QUANTIZE(trace_gas.ARCHIVED(moles) - corresponding.ARCHIVED(moles))/5
 			else
 				corresponding = new trace_gas.type()
 				if(!sharer.trace_gases)
 					sharer.trace_gases = list()
 				sharer.trace_gases += corresponding
 
-				delta = trace_gas.moles_archived/5
+				delta = trace_gas.ARCHIVED(moles)/5
 
 			trace_gas.moles -= delta/group_multiplier
 			corresponding.moles += delta/sharer.group_multiplier
@@ -550,14 +561,14 @@ What are the archived variables for?
 					trace_gases = list()
 				trace_gases += corresponding
 
-				delta = trace_gas.moles_archived/5
+				delta = trace_gas.ARCHIVED(moles)/5
 
 				trace_gas.moles -= delta/sharer.group_multiplier
 				corresponding.moles += delta/group_multiplier
 
 				//Guaranteed transfer from sharer to self
 				var/individual_heat_capacity = trace_gas.specific_heat*delta
-				//heat_sharer_to_self += individual_heat_capacity*sharer.temperature_archived
+				//heat_sharer_to_self += individual_heat_capacity*sharer.ARCHIVED(temperature)
 				heat_capacity_sharer_to_self += individual_heat_capacity
 
 				moved_moles += -delta
@@ -567,17 +578,17 @@ What are the archived variables for?
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
 
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature_archived + heat_capacity_sharer_to_self*sharer.temperature_archived)/new_self_heat_capacity
+			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*ARCHIVED(temperature) + heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature))/new_self_heat_capacity
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
+			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature) + heat_capacity_self_to_sharer*ARCHIVED(temperature))/new_sharer_heat_capacity
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/delta_pressure = temperature_archived*(TOTAL_MOLES(src) + moved_moles) - sharer.temperature_archived*(TOTAL_MOLES(sharer) - moved_moles)
+		var/delta_pressure = ARCHIVED(temperature)*(TOTAL_MOLES(src) + moved_moles) - sharer.ARCHIVED(temperature)*(TOTAL_MOLES(sharer) - moved_moles)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 
 	else
@@ -586,11 +597,11 @@ What are the archived variables for?
 //Similar to share(...), except the model is not modified
 //Return: amount of gas exchanged
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier = 1)
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((GAS##_archived - model.GAS)/5)*border_multiplier/group_multiplier);
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((ARCHIVED(GAS) - model.GAS)/5)*border_multiplier/group_multiplier);
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
-	var/delta_temperature = (temperature_archived - model.temperature)
+	var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
 
 	var/heat_transferred = 0
 	var/old_self_heat_capacity = 0
@@ -620,14 +631,14 @@ What are the archived variables for?
 		for(var/datum/gas/trace_gas in trace_gases)
 			var/delta = 0
 
-			delta = QUANTIZE((trace_gas.moles_archived/5)*border_multiplier/group_multiplier)
+			delta = QUANTIZE((trace_gas.ARCHIVED(moles)/5)*border_multiplier/group_multiplier)
 
 			if (abs(delta) <= 0.0001) continue
 
 			trace_gas.moles -= delta
 
 			var/heat_cap_transferred = delta*trace_gas.specific_heat
-			heat_transferred += heat_cap_transferred*temperature_archived
+			heat_transferred += heat_cap_transferred*ARCHIVED(temperature)
 			heat_capacity_transferred += heat_cap_transferred
 			moved_moles += delta
 
@@ -635,20 +646,20 @@ What are the archived variables for?
 		var/new_self_heat_capacity = old_self_heat_capacity - heat_capacity_transferred
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			if(border_multiplier)
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
+				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*ARCHIVED(temperature))/new_self_heat_capacity
 			else
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
+				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*ARCHIVED(temperature))/new_self_heat_capacity
 
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE))
-		var/delta_pressure = temperature_archived*(TOTAL_MOLES(src) + moved_moles) - model.temperature*BASE_GASES_TOTAL_MOLES(model)
+		var/delta_pressure = ARCHIVED(temperature)*(TOTAL_MOLES(src) + moved_moles) - model.temperature*BASE_GASES_TOTAL_MOLES(model)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 	else
 		return 0
 
 /datum/gas_mixture/proc/check_both_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
 	var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
 	var/sharer_heat_capacity = HEAT_CAPACITY_ARCHIVED(sharer)
@@ -666,11 +677,11 @@ What are the archived variables for?
 		return 1
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
-		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
+		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
 		return 0
 
 	if((abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
-		&& (abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*sharer.temperature_archived))
+		&& (abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*sharer.ARCHIVED(temperature)))
 		return -1
 
 	temperature += self_temperature_delta
@@ -680,7 +691,7 @@ What are the archived variables for?
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
 	var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
 	var/sharer_heat_capacity = HEAT_CAPACITY_ARCHIVED(sharer)
@@ -698,7 +709,7 @@ What are the archived variables for?
 		return 1
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
-		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
+		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
 		return 0
 
 	temperature += self_temperature_delta
@@ -708,7 +719,7 @@ What are the archived variables for?
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
-	var/delta_temperature = (temperature_archived - sharer.temperature)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.temperature)
 
 	var/self_temperature_delta = 0
 	var/sharer_temperature_delta = 0
@@ -726,7 +737,7 @@ What are the archived variables for?
 		return 1
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
-		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
+		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
 		return 0
 
 	temperature += self_temperature_delta
@@ -736,7 +747,7 @@ What are the archived variables for?
 	//Logic integrated from: temperature_turf_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_mimic(turf/model, conduction_coefficient)
-	var/delta_temperature = (temperature_archived - model.temperature)
+	var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
 	var/self_temperature_delta = 0
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -749,7 +760,7 @@ What are the archived variables for?
 			self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
-		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
+		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
 		return 0
 
 	temperature += self_temperature_delta
@@ -758,7 +769,7 @@ What are the archived variables for?
 	//Logic integrated from: temperature_mimic(model, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = HEAT_CAPACITY_ARCHIVED(src)
 		var/sharer_heat_capacity = HEAT_CAPACITY_ARCHIVED(sharer)
@@ -773,7 +784,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
 	var/delta_temperature = (temperature - model.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = HEAT_CAPACITY(src)//_archived()
+		var/self_heat_capacity = HEAT_CAPACITY(src)//ARCHIVED()()
 
 		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \
@@ -785,7 +796,7 @@ What are the archived variables for?
 				temperature -= heat/(self_heat_capacity*group_multiplier)
 
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
-	var/delta_temperature = (temperature_archived - sharer.temperature)
+	var/delta_temperature = (ARCHIVED(temperature) - sharer.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = HEAT_CAPACITY(src)
 
@@ -814,7 +825,7 @@ What are the archived variables for?
 
 	if(sample.trace_gases && sample.trace_gases.len)
 		for(var/datum/gas/trace_gas in sample.trace_gases)
-			if(trace_gas.moles_archived > MINIMUM_AIR_TO_SUSPEND)
+			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND)
 				var/datum/gas/corresponding
 				if(trace_gases && trace_gases.len)
 					corresponding = locate(trace_gas.type) in trace_gases

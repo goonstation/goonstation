@@ -75,6 +75,17 @@
 
 #define FLOWFRAC 0.99				// fraction of gas transfered per process
 
+// archiving
+
+// comment out to make atmos a bit less precise but less memory intensive and maybe a bit faster, may cause bugs
+#define ATMOS_ARCHIVING
+
+#ifdef ATMOS_ARCHIVING
+#define ARCHIVED(VAR) VAR##_archived
+#else
+#define ARCHIVED(VAR) VAR
+#endif
+
 // non-trace gases
 
 /*
@@ -113,8 +124,13 @@ What can break when adding new gases:
 	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS)
 //	_APPLY_TO_GASES(,, MACRO, ARGS) // replace with this when the langserver gets fixed >:(
 
+#ifdef ATMOS_ARCHIVING
 #define APPLY_TO_ARCHIVED_GASES(MACRO, ARGS...) \
 	_APPLY_TO_GASES(, _archived, MACRO, ARGS)
+#else
+#define APPLY_TO_ARCHIVED_GASES(MACRO, ARGS...) \
+	APPLY_TO_GASES(MACRO, ARGS)
+#endif
 
 // This is used only in the gas mixer computer as of now. No need to define gas colour for new gases if you don't want to.
 proc/gas_text_color(gas_id)
@@ -185,7 +201,7 @@ proc/gas_text_color(gas_id)
 	. = BASE_GASES_HEAT_CAPACITY(src)
 	for(var/x in trace_gases)
 		var/datum/gas/trace_gas = x
-		. += trace_gas.moles_archived * trace_gas.specific_heat
+		. += trace_gas.ARCHIVED(moles) * trace_gas.specific_heat
 
 #define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
 

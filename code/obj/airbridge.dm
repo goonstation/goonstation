@@ -80,13 +80,15 @@ var/global/list/airbridge_controllers = list()
 				if(!T.air && T.density)
 					continue
 				ZERO_BASE_GASES(T.air)
-				ZERO_ARCHIVED_BASE_GASES(T.air)
+#ifdef ATMOS_ARCHIVING
+			ZERO_ARCHIVED_BASE_GASES(T.air)
+			T.air.ARCHIVED(temperature) = null
+#endif
 				T.air.oxygen = MOLES_O2STANDARD
 				T.air.nitrogen = MOLES_N2STANDARD
 				T.air.fuel_burnt = 0
 				T.air.trace_gases = null
 				T.air.temperature = T20C
-				T.air.temperature_archived = null
 				LAGCHECK(LAG_LOW)
 
 			working = 0
