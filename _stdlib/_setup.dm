@@ -40,9 +40,9 @@
 
 #define LEVEL_HOST 6
 #define LEVEL_CODER 5
-#define LEVEL_SHITGUY 4
+#define LEVEL_ADMIN 4
 #define LEVEL_PA 3
-#define LEVEL_ADMIN 2
+#define LEVEL_IA 2
 #define LEVEL_SA 1
 #define LEVEL_MOD 0
 #define LEVEL_BABBY -1
@@ -772,6 +772,8 @@ proc/default_frequency_color(freq)
 #define STAMINA_WINDED_SPEAK_MIN 0      //Can't speak below this point.
 #define STAMINA_SPRINT 64				//can only sprint above this number
 #define STAMINA_COST_SPRINT 7			//cost of moving in sprint
+#define SUSTAINED_RUN_GRACE 0.5 SECONDS	//grace period where sustained run can be sustained
+#define SUSTAINED_RUN_REQ 8				//how many tiles to start sustained run
 
 //This is a bad solution. Optimally this should scale.
 #define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
@@ -792,6 +794,8 @@ proc/default_frequency_color(freq)
 #define STAMINA_DEFAULT_FART_COST 0  //How much farting costs. I am not even kidding.
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+#define DIAG_MOVE_DELAY_MULT 1.4
 
 //reagent_container bit flags
 #define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly (e.g. beaker)

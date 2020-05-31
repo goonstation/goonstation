@@ -121,7 +121,7 @@
 			delay = delay_divisor / velocity
 
 		if (owner.dir & (owner.dir-1))
-			delay *= 1.4 //sqrt(2)
+			delay *= DIAG_MOVE_DELAY_MULT
 
 		if (delay)
 			velocity = min(velocity + accel * delay/delay_divisor, velocity_max)

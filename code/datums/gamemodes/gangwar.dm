@@ -172,12 +172,12 @@
 	if(leaderMind.gang.gang_name == "NICOLAS CAGE FAN CLUB")
 		leaderMind.gang.item2 = /obj/item/clothing/mask/niccage
 	else
-		var/temp_item2 = input(leaderMind.current, "Select jumpsuit slot item","Gang Headwear")in headwear_list
+		var/temp_item2 = input(leaderMind.current, "Select head slot item","Gang Headwear")in headwear_list
 		leaderMind.gang.item2 = headwear_list[temp_item2]
 
 	while(leaderMind.gang.item2 in item2_used)
 		boutput(leaderMind.current , "<h4><span class='alert'>That item has been claimed by another gang.</span></h4>")
-		var/temp_item2 = input(leaderMind.current, "Select jumpsuit slot item","Gang Headwear")in headwear_list
+		var/temp_item2 = input(leaderMind.current, "Select head slot item","Gang Headwear")in headwear_list
 		leaderMind.gang.item2 = headwear_list[temp_item2]
 
 	item2_used += leaderMind.gang.item2

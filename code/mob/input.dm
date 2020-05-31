@@ -62,7 +62,7 @@ mob
 			var/delay = max(src.movement_delay(get_step(src,src.move_dir), running), world.tick_lag) // don't divide by zero
 			var/move_dir = src.move_dir
 			if (move_dir & (move_dir-1))
-				delay *= 1.4 // actual sqrt(2) unsurprisingly resulted in rounding errors
+				delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 			if (src.client && src.client.flying)
 				var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 				if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
@@ -115,7 +115,7 @@ mob
 							qdel(G)
 					for(var/grab in src.grabbed_by)
 						var/obj/item/grab/G = grab
-						if (get_dist(src, G.assailant) > 1)
+						if (istype(G) && get_dist(src, G.assailant) > 1)
 							if (G.state > 1)
 								delay += G.assailant.p_class
 							qdel(G)
@@ -192,8 +192,9 @@ mob
 
 						if (do_step)
 							step(src, move_dir)
+							if (src.loc != old_loc)
+								OnMove()
 
-						OnMove()
 						src.glide_size = glide // but Move will auto-set glide_size, so we need to override it again
 
 						//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
