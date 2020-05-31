@@ -198,10 +198,9 @@ What are the archived variables for?
 //Update archived versions of variables
 //Returns: 1 in all cases
 /datum/gas_mixture/proc/archive()
-	oxygen_archived = oxygen
-	carbon_dioxide_archived = carbon_dioxide
-	nitrogen_archived =  nitrogen
-	toxins_archived = toxins
+	#define _ARCHIVE_GAS(GAS, ...) GAS##_archived = GAS;
+	APPLY_TO_GASES(_ARCHIVE_GAS)
+	#undef _ARCHIVE_GAS
 
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
@@ -219,11 +218,10 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_then_merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
-	if(((giver.oxygen > MINIMUM_AIR_TO_SUSPEND) && (giver.oxygen >= oxygen*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((giver.carbon_dioxide > MINIMUM_AIR_TO_SUSPEND) && (giver.carbon_dioxide >= carbon_dioxide*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((giver.nitrogen > MINIMUM_AIR_TO_SUSPEND) && (giver.nitrogen >= nitrogen*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((giver.toxins > MINIMUM_AIR_TO_SUSPEND) && (giver.toxins >= toxins*MINIMUM_AIR_RATIO_TO_SUSPEND)))
+	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((giver.GAS > MINIMUM_AIR_TO_SUSPEND) && (giver.GAS >= GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
+	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
 		return 0
+	#undef _ABOVE_SUSPEND_THRESHOLD
 	if(abs(giver.temperature - temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		return 0
 
@@ -251,15 +249,13 @@ What are the archived variables for?
 			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
 
 	if((group_multiplier>1)||(giver.group_multiplier>1))
-		oxygen += giver.oxygen*giver.group_multiplier/group_multiplier
-		carbon_dioxide += giver.carbon_dioxide*giver.group_multiplier/group_multiplier
-		nitrogen += giver.nitrogen*giver.group_multiplier/group_multiplier
-		toxins += giver.toxins*giver.group_multiplier/group_multiplier
+		#define _MERGE_GAS_GM(GAS, ...) GAS += giver.GAS*giver.group_multiplier/group_multiplier;
+		APPLY_TO_GASES(_MERGE_GAS_GM)
+		#undef _MERGE_GAS_GM
 	else
-		oxygen += giver.oxygen
-		carbon_dioxide += giver.carbon_dioxide
-		nitrogen += giver.nitrogen
-		toxins += giver.toxins
+		#define _MERGE_GAS(GAS, ...) GAS += giver.GAS;
+		APPLY_TO_GASES(_MERGE_GAS)
+		#undef _MERGE_GAS
 
 	if(giver.trace_gases && giver.trace_gases.len)
 		for(var/datum/gas/trace_gas in giver.trace_gases)
@@ -286,16 +282,11 @@ What are the archived variables for?
 
 	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
 
-
-	removed.oxygen = QUANTIZE((oxygen/sum)*amount)
-	removed.nitrogen = QUANTIZE((nitrogen/sum)*amount)
-	removed.carbon_dioxide = QUANTIZE((carbon_dioxide/sum)*amount)
-	removed.toxins = QUANTIZE((toxins/sum)*amount)
-
-	oxygen -= removed.oxygen/group_multiplier
-	nitrogen -= removed.nitrogen/group_multiplier
-	carbon_dioxide -= removed.carbon_dioxide/group_multiplier
-	toxins -= removed.toxins/group_multiplier
+	#define _REMOVE_GAS(GAS, ...) \
+		removed.GAS = QUANTIZE((GAS/sum)*amount); \
+		GAS -= removed.GAS/group_multiplier;
+	APPLY_TO_GASES(_REMOVE_GAS)
+	#undef _REMOVE_GAS
 
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
@@ -321,16 +312,12 @@ What are the archived variables for?
 
 	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
 
-	removed.oxygen = QUANTIZE(oxygen*ratio)
-	removed.nitrogen = QUANTIZE(nitrogen*ratio)
-	removed.carbon_dioxide = QUANTIZE(carbon_dioxide*ratio)
-	removed.toxins = QUANTIZE(toxins*ratio)
+	#define _REMOVE_GAS_RATIO(GAS, ...) \
+		removed.GAS = QUANTIZE(GAS*ratio); \
+		GAS -= removed.GAS/group_multiplier;
+	APPLY_TO_GASES(_REMOVE_GAS_RATIO)
+	#undef _REMOVE_GAS_RATIO
 
-	oxygen -= removed.oxygen/group_multiplier
-	nitrogen -= removed.nitrogen/group_multiplier
-	carbon_dioxide -= removed.carbon_dioxide/group_multiplier
-	toxins -= removed.toxins/group_multiplier
-/**/
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			var/datum/gas/corresponding = new trace_gas.type()
@@ -363,10 +350,9 @@ What are the archived variables for?
 	if (sample == null)
 		return
 
-	oxygen = sample.oxygen
-	carbon_dioxide = sample.carbon_dioxide
-	nitrogen = sample.nitrogen
-	toxins = sample.toxins
+	#define _COPY_GAS(GAS, ...) GAS = sample.GAS;
+	APPLY_TO_GASES(_COPY_GAS)
+	#undef _COPY_GAS
 
 	trace_gases = null
 	if(sample.trace_gases && sample.trace_gases.len > 0)
@@ -383,10 +369,9 @@ What are the archived variables for?
 
 //Subtracts right_side from air_mixture. Used to help turfs mingle
 /datum/gas_mixture/proc/subtract(datum/gas_mixture/right_side)
-	oxygen -= right_side.oxygen
-	carbon_dioxide -= right_side.carbon_dioxide
-	nitrogen -= right_side.nitrogen
-	toxins -= right_side.toxins
+	#define _SUBTRACT_GAS(GAS, ...) GAS -= right_side.GAS;
+	APPLY_TO_GASES(_SUBTRACT_GAS)
+	#undef _SUBTRACT_GAS
 
 	if(right_side.trace_gases && right_side.trace_gases.len > 0)
 		trace_gases = list()
@@ -405,18 +390,16 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_gas_mixture(datum/gas_mixture/sharer)
 	if (!sharer)
 		return 0
-	var/delta_oxygen = (oxygen_archived - sharer.oxygen_archived)/5
-	var/delta_carbon_dioxide = (carbon_dioxide_archived - sharer.carbon_dioxide_archived)/5
-	var/delta_nitrogen = (nitrogen_archived - sharer.nitrogen_archived)/5
-	var/delta_toxins = (toxins_archived - sharer.toxins_archived)/5
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (GAS - sharer.GAS)/5;
+	APPLY_TO_ARCHIVED_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
 
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
-	if(((abs(delta_oxygen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_oxygen) >= oxygen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_carbon_dioxide) >= carbon_dioxide_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_nitrogen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_nitrogen) >= nitrogen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_toxins) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_toxins) >= toxins_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)))
+	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
+	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
 		return 0
+	#undef _ABOVE_SUSPEND_THRESHOLD
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		return 0
@@ -441,11 +424,10 @@ What are the archived variables for?
 				if(!locate(trace_gas.type) in sharer.trace_gases)
 					return 0
 
-	if(((abs(delta_oxygen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_oxygen) >= sharer.oxygen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_carbon_dioxide) >= sharer.carbon_dioxide_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_nitrogen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_nitrogen) >= sharer.nitrogen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_toxins) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_toxins) >= sharer.toxins_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)))
+	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= sharer.GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
+	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
 		return -1
+	#undef _ABOVE_SUSPEND_THRESHOLD
 
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
@@ -463,18 +445,16 @@ What are the archived variables for?
 
 //Returns: 0 if self-check failed or 1 if check passes
 /datum/gas_mixture/proc/check_turf(turf/model)
-	var/delta_oxygen = (oxygen_archived - model.oxygen)/5
-	var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/5
-	var/delta_nitrogen = (nitrogen_archived - model.nitrogen)/5
-	var/delta_toxins = (toxins_archived - model.toxins)/5
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (GAS##_archived - model.GAS)/5;
+	APPLY_TO_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
 
 	var/delta_temperature = (temperature_archived - model.temperature)
 
-	if(((abs(delta_oxygen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_oxygen) >= oxygen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_carbon_dioxide) >= carbon_dioxide_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_nitrogen) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_nitrogen) >= nitrogen_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) \
-		|| ((abs(delta_toxins) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_toxins) >= toxins_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)))
+	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= GAS##_archived*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
+	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
 		return 0
+	#undef _ABOVE_SUSPEND_THRESHOLD
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		return 0
 
@@ -490,10 +470,9 @@ What are the archived variables for?
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
-	var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/5
-	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/5
-	var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/5
-	var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/5
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(GAS##_archived - sharer.GAS##_archived)/5;
+	APPLY_TO_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
 
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
@@ -504,45 +483,23 @@ What are the archived variables for?
 	var/heat_capacity_sharer_to_self = 0
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-
-		var/delta_air = delta_oxygen+delta_nitrogen
-		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*delta_nitrogen
-			if(delta_air > 0)
-				heat_capacity_self_to_sharer += air_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= air_heat_capacity
-
-		if(delta_carbon_dioxide)
-			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CO2*delta_carbon_dioxide
-			if(delta_carbon_dioxide > 0)
-				heat_capacity_self_to_sharer += carbon_dioxide_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= carbon_dioxide_heat_capacity
-
-		if(delta_toxins)
-			var/toxins_heat_capacity = SPECIFIC_HEAT_PLASMA*delta_toxins
-			if(delta_toxins > 0)
-				heat_capacity_self_to_sharer += toxins_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= toxins_heat_capacity
+		#define _SHARE_GAS_HEAT(GAS, SPECIFIC_HEAT, ...) \
+			if(delta_##GAS > 0) { heat_capacity_self_to_sharer += SPECIFIC_HEAT * delta_##GAS } \
+			else if(delta_##GAS < 0) { heat_capacity_sharer_to_self -= SPECIFIC_HEAT * delta_##GAS }
+		APPLY_TO_GASES(_SHARE_GAS_HEAT)
+		#undef _SHARE_GAS_HEAT
 
 		old_self_heat_capacity = HEAT_CAPACITY(src)*group_multiplier
 		old_sharer_heat_capacity = HEAT_CAPACITY(sharer)*sharer.group_multiplier
 
-	oxygen -= delta_oxygen/group_multiplier
-	sharer.oxygen += delta_oxygen/sharer.group_multiplier
+	var/moved_moles = 0
 
-	carbon_dioxide -= delta_carbon_dioxide/group_multiplier
-	sharer.carbon_dioxide += delta_carbon_dioxide/sharer.group_multiplier
-
-	nitrogen -= delta_nitrogen/group_multiplier
-	sharer.nitrogen += delta_nitrogen/sharer.group_multiplier
-
-	toxins -= delta_toxins/group_multiplier
-	sharer.toxins += delta_toxins/sharer.group_multiplier
-
-	var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
+	#define _SHARE_GAS(GAS, ...) \
+		GAS -= delta_##GAS / group_multiplier; \
+		sharer.GAS += delta_##GAS / sharer.group_multiplier; \
+		moved_moles += delta_##GAS;
+	APPLY_TO_GASES(_SHARE_GAS)
+	#undef _SHARE_GAS
 
 	var/list/trace_types_considered
 
@@ -629,10 +586,9 @@ What are the archived variables for?
 //Similar to share(...), except the model is not modified
 //Return: amount of gas exchanged
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier = 1)
-	var/delta_oxygen = QUANTIZE(((oxygen_archived - model.oxygen)/5)*border_multiplier/group_multiplier)
-	var/delta_carbon_dioxide = QUANTIZE(((carbon_dioxide_archived - model.carbon_dioxide)/5)*border_multiplier/group_multiplier)
-	var/delta_nitrogen = QUANTIZE(((nitrogen_archived - model.nitrogen)/5)*border_multiplier/group_multiplier)
-	var/delta_toxins = QUANTIZE(((toxins_archived - model.toxins)/5)*border_multiplier/group_multiplier)
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((GAS##_archived - model.GAS)/5)*border_multiplier/group_multiplier);
+	APPLY_TO_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
 
 	var/delta_temperature = (temperature_archived - model.temperature)
 
@@ -641,32 +597,24 @@ What are the archived variables for?
 	var/heat_capacity_transferred = 0
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-
-		var/delta_air = delta_oxygen+delta_nitrogen
-		if(delta_air)
-			var/air_heat_capacity = SPECIFIC_HEAT_O2*delta_oxygen + SPECIFIC_HEAT_N2*delta_nitrogen
-			heat_transferred -= air_heat_capacity*model.temperature
-			heat_capacity_transferred -= air_heat_capacity
-
-		if(delta_carbon_dioxide)
-			var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CO2*delta_carbon_dioxide
-			heat_transferred -= carbon_dioxide_heat_capacity*model.temperature
-			heat_capacity_transferred -= carbon_dioxide_heat_capacity
-
-		if(delta_toxins)
-			var/toxins_heat_capacity = SPECIFIC_HEAT_PLASMA*delta_toxins
-			heat_transferred -= toxins_heat_capacity*model.temperature
-			heat_capacity_transferred -= toxins_heat_capacity
+		#define _MIMIC_GAS_HEAT(GAS, SPECIFIC_HEAT, ...) \
+			if(delta_##GAS) { \
+				var/GAS##_heat_capacity = SPECIFIC_HEAT * delta_##GAS; \
+				heat_transferred -= GAS##_heat_capacity * model.temperature; \
+				heat_capacity_transferred -= GAS##_heat_capacity; \
+			}
+		APPLY_TO_GASES(_MIMIC_GAS_HEAT)
+		#undef _MIMIC_GAS_HEAT
 
 		old_self_heat_capacity = HEAT_CAPACITY(src)*group_multiplier
 
+	var/moved_moles = 0
 
-	oxygen -= delta_oxygen
-	carbon_dioxide -= delta_carbon_dioxide
-	nitrogen -= delta_nitrogen
-	toxins -= delta_toxins
-
-	var/moved_moles = (delta_oxygen + delta_carbon_dioxide + delta_nitrogen + delta_toxins)
+	#define _MIMIC_GAS(GAS, ...) \
+		GAS -= delta_##GAS; \
+		moved_moles += delta_##GAS;
+	APPLY_TO_GASES(_MIMIC_GAS)
+	#undef _MIMIC_GAS
 
 	if(trace_gases && trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
@@ -694,7 +642,7 @@ What are the archived variables for?
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE))
-		var/delta_pressure = temperature_archived*(TOTAL_MOLES(src) + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
+		var/delta_pressure = temperature_archived*(TOTAL_MOLES(src) + moved_moles) - model.temperature*BASE_GASES_TOTAL_MOLES(model)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 	else
 		return 0
@@ -852,18 +800,12 @@ What are the archived variables for?
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	if (!sample)
 		return 0
-	if((abs(oxygen-sample.oxygen) > MINIMUM_AIR_TO_SUSPEND) && \
-		((oxygen < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.oxygen) || (oxygen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.oxygen)))
-		return 0
-	if((abs(nitrogen-sample.nitrogen) > MINIMUM_AIR_TO_SUSPEND) && \
-		((nitrogen < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.nitrogen) || (nitrogen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.nitrogen)))
-		return 0
-	if((abs(carbon_dioxide-sample.carbon_dioxide) > MINIMUM_AIR_TO_SUSPEND) && \
-		((carbon_dioxide < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.carbon_dioxide) || (oxygen > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.carbon_dioxide)))
-		return 0
-	if((abs(toxins-sample.toxins) > MINIMUM_AIR_TO_SUSPEND) && \
-		((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
-		return 0
+	#define _COMPARE_GAS(GAS, ...) \
+		if((abs(GAS-sample.GAS) > MINIMUM_AIR_TO_SUSPEND) && \
+			((GAS < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.GAS) || (GAS > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.GAS))) \
+			{ return 0; }
+	APPLY_TO_GASES(_COMPARE_GAS)
+	#undef _COMPARE_GAS
 
 	if((TOTAL_MOLES(src)) > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
