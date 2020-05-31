@@ -1017,7 +1017,7 @@
 				qdel(src.internal)
 			else
 				stat("Internal Atmosphere Info:", src.internal.name)
-				stat("Tank Pressure:", src.internal.air_contents.return_pressure())
+				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
 
 /mob/living/carbon/human/hotkey(name)

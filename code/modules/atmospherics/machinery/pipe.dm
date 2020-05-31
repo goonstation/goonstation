@@ -278,7 +278,7 @@ obj/machinery/atmospherics/pipe
 
 			else if(ruptured)
 				var/datum/gas_mixture/gas = return_air()
-				var/pressure = min(100*ruptured,gas.return_pressure())
+				var/pressure = min(100*ruptured, MIXTURE_PRESSURE(gas))
 
 				if(pressure > 0)
 					var/datum/gas_mixture/environment = loc.return_air()
@@ -306,7 +306,7 @@ obj/machinery/atmospherics/pipe
 					parent.temperature_interact(loc, volume, src.thermal_conductivity)
 
 			var/datum/gas_mixture/gas = return_air()
-			var/pressure = gas.return_pressure()
+			var/pressure = MIXTURE_PRESSURE(gas)
 			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
 
 		check_pressure(pressure)
@@ -315,7 +315,7 @@ obj/machinery/atmospherics/pipe
 
 			var/datum/gas_mixture/environment = loc.return_air()
 
-			var/pressure_difference = pressure - environment.return_pressure()
+			var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
 			if(can_rupture && pressure_difference > fatigue_pressure)
 				var/rupture_prob = (pressure_difference - fatigue_pressure)/50000

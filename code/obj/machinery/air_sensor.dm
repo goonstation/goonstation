@@ -39,12 +39,12 @@ obj/machinery/air_sensor
 			var/datum/gas_mixture/air_sample = return_air()
 
 			if(output&1)
-				signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				signal.data["pressure"] = num2text(round(MIXTURE_PRESSURE(air_sample),0.1),)
 			if(output&2)
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
 			if(output&12)
-				var/total_moles = air_sample.total_moles()
+				var/total_moles = TOTAL_MOLES(air_sample)
 				if(total_moles == 0)
 					total_moles = 1
 				if(output&4)
