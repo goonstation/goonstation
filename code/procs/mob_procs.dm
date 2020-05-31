@@ -117,11 +117,11 @@
 	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
 	if (!walking_matters)
 		slip_delay = 10
-	var/movedelay = max(src.movement_delay(get_step(src,src.move_dir), running), world.time - src.next_move)
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = max(movement_delay_real, world.time - src.next_move)
 
 	if (movedelay < slip_delay)
-		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movedelay/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
-
+		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
 		var/throw_range = min(round(intensity),50)
 		if (intensity < 1 && intensity > 0 && throw_range <= 0)
 			throw_range = max(throw_range,1)
