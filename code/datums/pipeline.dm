@@ -67,6 +67,7 @@ datum/pipeline
 
 			#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.GAS = air.GAS * member.volume / air.volume;
 			APPLY_TO_GASES(_TEMPORARILY_STORE_GAS)
+			#undef _TEMPORARILY_STORE_GAS
 
 			member.air_temporary.temperature = air.temperature
 

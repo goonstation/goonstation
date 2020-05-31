@@ -10,6 +10,7 @@ obj
 
 			#define _MOVABLE_TILE_COPY_AIR(GAS, ...) air.GAS = GAS;
 			APPLY_TO_GASES(_MOVABLE_TILE_COPY_AIR)
+			#undef _MOVABLE_TILE_COPY_AIR
 
 			air.temperature = temperature
 

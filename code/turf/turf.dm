@@ -32,6 +32,7 @@ var/global/client/ff_debugger = null
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -432,6 +433,7 @@ var/global/client/ff_debugger = null
 	var/temp_old = null
 	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
 	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
+	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -442,6 +444,7 @@ var/global/client/ff_debugger = null
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
 			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
+			#undef _OLD_GAS_VAR_ASSIGN
 			temp_old = src.temperature
 
 
@@ -573,8 +576,10 @@ var/global/client/ff_debugger = null
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
 				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
+				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
 					N.air.temperature = temp_old
+			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
 			if (air_master)

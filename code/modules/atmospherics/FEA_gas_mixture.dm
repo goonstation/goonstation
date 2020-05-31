@@ -24,8 +24,10 @@ What are the archived variables for?
 /datum/gas_mixture
 	#define _DEFINE_GAS(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_DEFINE_GAS)
+	#undef _DEFINE_GAS
 	#define _DEFINE_ARCH_GAS(GAS, ...) var/tmp/GAS;
 	APPLY_TO_ARCHIVED_GASES(_DEFINE_ARCH_GAS)
+	#undef _DEFINE_ARCH_GAS
 
 	var/temperature = 0
 	var/tmp/temperature_archived
@@ -62,6 +64,7 @@ What are the archived variables for?
 	#define _UNPOOL_GAS(GAS, ...) GAS = initial(GAS);
 	APPLY_TO_GASES(_UNPOOL_GAS)
 	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
+	#undef _UNPOOL_GAS
 	..()
 
 // Mutator procs

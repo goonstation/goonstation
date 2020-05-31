@@ -15,6 +15,7 @@
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
 	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
+	#undef _DEF_SCRUBBER_VAR
 
 	var/volume_rate = 120
 //

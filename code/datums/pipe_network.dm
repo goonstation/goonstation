@@ -124,6 +124,7 @@ datum/pipe_network
 
 			#define _RECONCILE_AIR(GAS, ...) air_transient.GAS += gas.GAS;
 			APPLY_TO_GASES(_RECONCILE_AIR)
+			#undef _RECONCILE_AIR
 
 			if(gas.trace_gases && gas.trace_gases.len)
 				for(var/datum/gas/trace_gas in gas.trace_gases)
@@ -154,6 +155,7 @@ datum/pipe_network
 			for(var/datum/gas_mixture/gas in gases)
 				#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.GAS = air_transient.GAS * gas.volume / air_transient.volume ;
 				APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
+				#undef _RECONCILE_AIR_TRANSFER
 
 				gas.temperature = air_transient.temperature
 
@@ -181,6 +183,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 	#define _EQUALIZE_GASES_TOTAL_DEF(GAS, ...) var/total_ ## GAS = 0;
 	APPLY_TO_GASES(_EQUALIZE_GASES_TOTAL_DEF)
+	#define _EQUALIZE_GASES_TOTAL_DEF
 
 	var/list/total_trace_gases
 
@@ -191,6 +194,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 		#define _EQUALIZE_GASES_ADD_TO_TOTAL(GAS, ...) total_ ## GAS += gas.GAS;
 		APPLY_TO_GASES(_EQUALIZE_GASES_ADD_TO_TOTAL)
+		#undef _EQUALIZE_GASES_ADD_TO_TOTAL
 
 		if(gas.trace_gases && gas.trace_gases.len)
 			for(var/datum/gas/trace_gas in gas.trace_gases)
@@ -217,6 +221,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		for(var/datum/gas_mixture/gas in gases)
 			#define _EQUALIZE_GASES_UPDATE(GAS, ...) gas.GAS = total_ ## GAS * gas.volume / total_volume;
 			APPLY_TO_GASES(_EQUALIZE_GASES_UPDATE)
+			#undef _EQUALIZE_GASES_UPDATE
 
 			gas.temperature = temperature
 
