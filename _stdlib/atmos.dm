@@ -78,13 +78,15 @@
 // non-trace gases
 
 /*
-	Adding new base gases should now in theory be as easy as adding them to this macro.
-	Format:
-		MACRO(PREF ## gas_name ## SUFF, specific_heat_of_the_gas, human_readable_gas_name, ARGS) \
+Adding new base gases should now in theory be as easy as adding them to this macro.
+Format:
+	MACRO(PREF ## gas_name ## SUFF, specific_heat_of_the_gas, human_readable_gas_name, ARGS) \
+
+What can break when adding new gases:
 	By default air scrubbers *will* scrub the gas, look at scrubber.dm to change that.
 	Air alarms also require custom code to support new gases.
-	Atmos retrofilters and non-retro filters also aren't adapted to this system yet but nothing uses those.
-	Same for air sensors.
+	Atmos retrofilters and non-retro filters also aren't adapted to this system yet but nothing uses those. Same for air sensors.
+	TEG stats computer will ignore your new gas. Feel free to add it to reactor_stats.dm manually but good luck.
 */
 
 #define SPECIFIC_HEAT_PLASMA		200
