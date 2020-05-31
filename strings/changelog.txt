@@ -1,5 +1,9 @@
 
 (t)sat may 30 20
+(u)mbc
+(p)906
+(e)⚖|balance
+(*)Slipping protection no longer checks for "walk" intent and instead is based off actual speed
 (u)Sovexe
 (p)894
 (e)🆕|feature
