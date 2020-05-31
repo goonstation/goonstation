@@ -247,8 +247,10 @@
 
 				//if(istype(enemy_tile, /turf/simulated)) //trying the other one
 				if(enemy_tile.turf_flags & IS_TYPE_SIMULATED) //blahhh danger
+#ifdef ATMOS_ARCHIVING
 					if(enemy_tile:archived_cycle < archived_cycle) //archive tile information if not already done
 						enemy_tile:archive()
+#endif
 					if(enemy_tile:current_cycle < current_cycle)
 						if(air.check_gas_mixture(enemy_tile:air))
 							connection_difference = air.share(enemy_tile:air)

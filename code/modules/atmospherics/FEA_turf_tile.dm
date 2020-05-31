@@ -348,8 +348,8 @@ turf
 #ifdef ATMOS_ARCHIVING
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
-				current_cycle = air_master.current_cycle
 #endif
+				current_cycle = air_master.current_cycle
 
 				for(var/direction in cardinal)
 					if(air_check_directions&direction) //Grab all valid bordering tiles
