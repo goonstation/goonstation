@@ -753,7 +753,7 @@ proc/default_frequency_color(freq)
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
 #define RUN_SCALING_STAGGER 0.5
-#define WALK_DELAY_ADD 0.9
+#define WALK_DELAY_ADD 0.8
 
 //stamina config
 #define STAMINA_MAX 200        			//Default max stamina value
