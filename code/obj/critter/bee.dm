@@ -238,6 +238,15 @@
 		generic = 0
 		var/jittered = 0
 		honey_color = rgb(0, 255, 255)
+
+		New()
+			pets += src
+			..()
+
+		disposing()
+			pets -= src
+			..()
+
 #ifdef HALLOWEEN
 		var/masked = 1
 

@@ -85,6 +85,14 @@
 	report_arrests = 1
 	hat = "nt"
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
 	desc = "The mechanical guardian of the brig."
