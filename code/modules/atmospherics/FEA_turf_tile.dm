@@ -32,10 +32,9 @@ turf
 		//  we can't pool the object returned by return_air. Bad news, man.
 		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 
-		GM.oxygen = oxygen
-		GM.carbon_dioxide = carbon_dioxide
-		GM.nitrogen = nitrogen
-		GM.toxins = toxins
+		#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
+		APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
+		#undef _TRANSFER_GAS_TO_GM
 
 		GM.temperature = temperature
 
@@ -48,16 +47,11 @@ turf
 //			return movable_on_me.remove_air(amount)
 
 		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
-		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
-		//if(remove_water)
-		//	sum += water
+		var/sum = BASE_GASES_TOTAL_MOLES(src)
 		if(sum>0)
-			GM.oxygen = (oxygen/sum)*amount
-			GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-			GM.nitrogen = (nitrogen/sum)*amount
-			GM.toxins = (toxins/sum)*amount
-			//if(remove_water)
-			//	GM.water += (water/sum)*amount
+			#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GM / sum) * amount;
+			APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
+			#undef _TRANSFER_AMOUNT_TO_GM
 
 		GM.temperature = temperature
 
@@ -193,10 +187,9 @@ turf
 			if(!blocks_air)
 				air = unpool(/datum/gas_mixture)
 
-				air.oxygen = oxygen
-				air.carbon_dioxide = carbon_dioxide
-				air.nitrogen = nitrogen
-				air.toxins = toxins
+				#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
+				APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
+				#undef _TRANSFER_GAS_TO_AIR
 
 				air.temperature = temperature
 
