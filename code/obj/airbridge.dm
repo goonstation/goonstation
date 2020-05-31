@@ -81,8 +81,8 @@ var/global/list/airbridge_controllers = list()
 					continue
 				ZERO_BASE_GASES(T.air)
 #ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_BASE_GASES(T.air)
-			T.air.ARCHIVED(temperature) = null
+				ZERO_ARCHIVED_BASE_GASES(T.air)
+				T.air.ARCHIVED(temperature) = null
 #endif
 				T.air.oxygen = MOLES_O2STANDARD
 				T.air.nitrogen = MOLES_N2STANDARD
