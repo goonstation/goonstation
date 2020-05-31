@@ -110,6 +110,19 @@ What can break when adding new gases:
 #define APPLY_TO_ARCHIVED_GASES(MACRO, ARGS...) \
 	_APPLY_TO_GASES(, _archived, MACRO, ARGS)
 
+// This is used only in the gas mixer computer as of now. No need to define gas colour for new gases if you don't want to.
+proc/gas_text_color(gas_id)
+	switch(gas_id)
+		if("oxygen")
+			return "blue"
+		if("nitrogen")
+			return "gray"
+		if("carbon_dioxide")
+			return "orange"
+		if("toxins")
+			return "red"
+	return "black"
+
 ////////////////////////////
 // gas calculation macros //
 ////////////////////////////
