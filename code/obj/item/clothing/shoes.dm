@@ -513,7 +513,7 @@
 
 	get_desc(dist)
 		if (dist <= 1)
-			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [src.tank.air_contents.return_pressure()]." : "<span class='alert'>They have no tank attached!</span>"]"
+			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : "<span class='alert'>They have no tank attached!</span>"]"
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 

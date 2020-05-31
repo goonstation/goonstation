@@ -64,9 +64,6 @@ What are the archived variables for?
 	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
 	..()
 
-/datum/gas_mixture/proc/return_pressure()
-	return (TOTAL_MOLES(src)*R_IDEAL_GAS_EQUATION*temperature/volume)
-
 /datum/gas_mixture/proc/thermal_energy()
 	return temperature*HEAT_CAPACITY(src)
 

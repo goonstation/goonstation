@@ -34,8 +34,8 @@ obj/machinery/atmospherics/binary/passive_gate
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air2.return_pressure()
-		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
 		if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
 			//No need to pump gas if target is already reached or input pressure is too low

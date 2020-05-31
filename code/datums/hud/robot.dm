@@ -561,7 +561,7 @@
 				var/datum/gas_mixture/environment = T.return_air()
 				var/total = TOTAL_MOLES(environment)
 				if (total > 0) // prevent a division by zero
-					oxy.icon_state = "oxy[environment.oxygen/total*environment.return_pressure() < 17]"
+					oxy.icon_state = "oxy[environment.oxygen/total*MIXTURE_PRESSURE(environment) < 17]"
 				else
 					oxy.icon_state = "oxy1"
 				switch (environment.temperature)

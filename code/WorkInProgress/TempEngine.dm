@@ -14,8 +14,8 @@
 	density = 1
 
 	proc/return_transfer_air()
-		var/output_starting_pressure = air2.return_pressure()
-		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
 		//Calculate necessary moles to transfer using PV = nRT
 		var/pressure_delta = abs((input_starting_pressure - output_starting_pressure))/2
@@ -73,11 +73,11 @@
 
 		built += "<B>Hot loop</B><BR>"
 		built += "Temperature Inlet: [template("hotInletTemp", round(us.circ1.air1.temperature, 0.1))] K Outlet: [template("hotOutletTemp", round(us.circ1.air2.temperature, 0.1))] K<BR>"//[] round(
-		built += "Pressure Inlet: [template("hotInletPres", round(us.circ1.air1.return_pressure(), 0.1))] kPa Outlet: [template("hotOutletPres", round(us.circ1.air2.return_pressure(), 0.1))] kPa<BR>"//[]
+		built += "Pressure Inlet: [template("hotInletPres", round(MIXTURE_PRESSURE(us.circ1.air1), 0.1))] kPa Outlet: [template("hotOutletPres", round(MIXTURE_PRESSURE(us.circ1.air2), 0.1))] kPa<BR>"//[]
 
 		built += "<B>Cold loop</B><BR>"
 		built += "Temperature Inlet: [template("coldInletTemp", round(us.circ2.air1.temperature, 0.1))] K  Outlet: [template("coldOutletTemp", round(us.circ2.air2.temperature, 0.1))] K<BR>"
-		built += "Pressure Inlet: [template("coldInletPres", round(us.circ2.air1.return_pressure(), 0.1))] kPa  Outlet: [template("coldOutletPres", round(us.circ2.air2.return_pressure(), 0.1))] kPa<BR>"
+		built += "Pressure Inlet: [template("coldInletPres", round(MIXTURE_PRESSURE(us.circ2.air1), 0.1))] kPa  Outlet: [template("coldOutletPres", round(MIXTURE_PRESSURE(us.circ2.air2), 0.1))] kPa<BR>"
 		return built.Join("")
 	proc/UpdateTEG()
 		var/obj/machinery/power/generatorTemp/us = theAtom
@@ -86,12 +86,12 @@
 			"powah" = engineering_notation(us.lastgen),
 			"hotInletTemp" = round(us.circ1.air1.temperature, 0.1),
 			"hotOutletTemp" = round(us.circ1.air2.temperature, 0.1),
-			"hotInletPres" = round(us.circ1.air1.return_pressure(), 0.1),
-			"hotOutletPres" = round(us.circ1.air2.return_pressure(), 0.1),
+			"hotInletPres" = round(MIXTURE_PRESSURE(us.circ1.air1), 0.1),
+			"hotOutletPres" = round(MIXTURE_PRESSURE(us.circ1.air2), 0.1),
 			"coldInletTemp" = round(us.circ2.air1.temperature, 0.1),
 			"coldOutletTemp" = round(us.circ2.air2.temperature, 0.1),
-			"coldInletPres" = round(us.circ2.air1.return_pressure(), 0.1),
-			"coldOutletPres" = round(us.circ2.air2.return_pressure(), 0.1)
+			"coldInletPres" = round(MIXTURE_PRESSURE(us.circ2.air1), 0.1),
+			"coldOutletPres" = round(MIXTURE_PRESSURE(us.circ2.air2), 0.1)
 		))
 /obj/machinery/power/generatorTemp
 	name = "generator"

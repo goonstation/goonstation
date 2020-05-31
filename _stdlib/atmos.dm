@@ -118,6 +118,10 @@
 
 #define TOTAL_MOLES(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.total_moles_full() : BASE_GASES_TOTAL_MOLES(MIXTURE))
 
+// pressure
+
+#define MIXTURE_PRESSURE(MIXTURE) (TOTAL_MOLES(MIXTURE) * R_IDEAL_GAS_EQUATION * MIXTURE.temperature / MIXTURE.volume)
+
 // heat capacity
 
 #define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) MIXTURE.GAS * SPECIFIC_HEAT +

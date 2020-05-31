@@ -581,7 +581,7 @@
 		else
 			return "<span class='alert'>[A] does not contain any gas.</span>"
 
-	pressure = check_me.return_pressure()
+	pressure = MIXTURE_PRESSURE(check_me)
 	total_moles = TOTAL_MOLES(check_me)
 
 	//DEBUG_MESSAGE("[A] contains: [pressure] kPa, [total_moles] moles.")

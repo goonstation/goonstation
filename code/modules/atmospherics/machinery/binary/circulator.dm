@@ -16,8 +16,8 @@
 	density = 1
 
 	proc/return_transfer_air()
-		var/output_starting_pressure = air2.return_pressure()
-		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
 		//Calculate necessary moles to transfer using PV = nRT
 		if((TOTAL_MOLES(air1) > 0) && (air1.temperature>0))

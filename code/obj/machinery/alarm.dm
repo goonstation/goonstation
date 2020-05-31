@@ -65,7 +65,7 @@
 		safe = -1
 		return
 
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = MIXTURE_PRESSURE(environment)
 
 	if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
 		//Pressure sensor
@@ -182,7 +182,7 @@
 		output += "<FONT color = 'red'>ERROR: Unable to determine environmental status!</FONT><BR><BR>"
 		safe = -1
 	else
-		var/environment_pressure = environment.return_pressure()
+		var/environment_pressure = MIXTURE_PRESSURE(environment)
 		var/total_moles = TOTAL_MOLES(environment)
 
 		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))

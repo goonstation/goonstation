@@ -127,11 +127,11 @@
 	var/holding_text
 
 	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
+		holding_text = {"<BR><B>Tank Pressure</B>: [MIXTURE_PRESSURE(holding.air_contents)] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
 	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
+Pressure: [MIXTURE_PRESSURE(air_contents)] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
 <BR>

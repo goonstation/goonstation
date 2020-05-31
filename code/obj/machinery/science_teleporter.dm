@@ -134,7 +134,7 @@ var/ZSUBTRACT = 0
 						var/turf/simulated/T = target
 						if(T.active_hotspot)
 							burning = 1
-					boutput(usr, "<span class='success'>Atmosphere: Oxy:[GM.oxygen], Tox:[GM.toxins], Nit:[GM.nitrogen], Car:[GM.carbon_dioxide],  [GM.temperature] Kelvin, [GM.return_pressure()] kPa, [(burning)?("<span class='alert'>BURNING</span>"):(null)]")
+					boutput(usr, "<span class='success'>Atmosphere: Oxy:[GM.oxygen], Tox:[GM.toxins], Nit:[GM.nitrogen], Car:[GM.carbon_dioxide],  [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa, [(burning)?("<span class='alert'>BURNING</span>"):(null)]")
 				else
 					boutput(usr, "<span class='success'>No Atmosphere.</span>")
 			src.updateUsrDialog()

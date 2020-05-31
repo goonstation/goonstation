@@ -114,11 +114,11 @@
 
 	t += "<B>Cold loop</B><BR>"
 	t += "Temperature: [round(input1.air_contents.temperature, 0.1)] K<BR>"
-	t += "Pressure: [round(input1.air_contents.return_pressure(), 0.1)] kPa<BR>"
+	t += "Pressure: [round(MIXTURE_PRESSURE(input1.air_contents), 0.1)] kPa<BR>"
 
 	t += "<B>Hot loop</B><BR>"
 	t += "Temperature: [round(input2.air_contents.temperature, 0.1)] K<BR>"
-	t += "Pressure: [round(input2.air_contents.return_pressure(), 0.1)] kPa<BR>"
+	t += "Pressure: [round(MIXTURE_PRESSURE(input2.air_contents), 0.1)] kPa<BR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 

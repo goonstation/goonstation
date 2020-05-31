@@ -511,7 +511,7 @@
 				if(G.carbon_dioxide) ret["co2"] = G.carbon_dioxide
 				if(G.nitrogen) ret["n2"] = G.nitrogen
 
-				ret["pressure"] = G.return_pressure()
+				ret["pressure"] = MIXTURE_PRESSURE(G)
 				ret["temp"] = G.temperature
 				ret["burnt"] = G.fuel_burnt
 				ret["heat_capacity"] = HEAT_CAPACITY(G)
@@ -536,7 +536,7 @@
 				if(G && G.nitrogen_archived) ret["n2"] = G.nitrogen_archived
 
 				if (G) //sorry, this was still somehow causing runtimes????
-					ret["pressure"] = G.return_pressure()
+					ret["pressure"] = MIXTURE_PRESSURE(G)
 					ret["temp"] = G.temperature_archived
 					ret["burnt"] = G.fuel_burnt
 					ret["heat_capacity"] = HEAT_CAPACITY_ARCHIVED(G)
@@ -562,12 +562,12 @@
 			ret["output"] = teg.lastgen
 			ret["hot_temp_in"] = teg_hot.air1.temperature
 			ret["hot_temp_out"] = teg_hot.air2.temperature
-			ret["hot_pressure_in"] = teg_hot.air1.return_pressure()
-			ret["hot_pressure_out"] = teg_hot.air2.return_pressure()
+			ret["hot_pressure_in"] = MIXTURE_PRESSURE(teg_hot.air1)
+			ret["hot_pressure_out"] = MIXTURE_PRESSURE(teg_hot.air2)
 			ret["cold_temp_in"] = teg_cold.air1.temperature
 			ret["cold_temp_out"] = teg_cold.air2.temperature
-			ret["cold_pressure_in"] = teg_cold.air1.return_pressure()
-			ret["cold_pressure_out"] = teg_cold.air2.return_pressure()
+			ret["cold_pressure_in"] = MIXTURE_PRESSURE(teg_cold.air1)
+			ret["cold_pressure_out"] = MIXTURE_PRESSURE(teg_cold.air2)
 
 			return ret
 

@@ -169,7 +169,7 @@ obj/machinery/atmospherics/mixer
 					for(var/datum/gas/trace_gas in air_in1.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["input1tg"] = round(100*tgmoles/i1total_moles)
-				signal.data["input1kpa"] = round(air_in1.return_pressure(), 0.1)
+				signal.data["input1kpa"] = round(MIXTURE_PRESSURE(air_in1), 0.1)
 				signal.data["input1temp"] = round(air_in1.temperature - T0C)
 			else
 				signal.data["input1o2"] = 0
@@ -190,7 +190,7 @@ obj/machinery/atmospherics/mixer
 					for(var/datum/gas/trace_gas in air_in2.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["input2tg"] = round(100*tgmoles/i2total_moles)
-				signal.data["input2kpa"] = round(air_in2.return_pressure(), 0.1)
+				signal.data["input2kpa"] = round(MIXTURE_PRESSURE(air_in2), 0.1)
 				signal.data["input2temp"] = round(air_in2.temperature - T0C)
 			else
 				signal.data["input2o2"] = 0
@@ -215,7 +215,7 @@ obj/machinery/atmospherics/mixer
 					for(var/datum/gas/trace_gas in air_out.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["outputtg"] = round(100*tgmoles/ototal_moles)
-				signal.data["outputkpa"] = round(air_out.return_pressure(), 0.1)
+				signal.data["outputkpa"] = round(MIXTURE_PRESSURE(air_out), 0.1)
 				signal.data["outputtemp"] = round(air_out.temperature - T0C)
 			else
 				signal.data["outputo2"] = 0
@@ -235,7 +235,7 @@ obj/machinery/atmospherics/mixer
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air_out.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!

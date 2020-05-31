@@ -47,7 +47,7 @@ obj/machinery/atmospherics/binary/pump
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air2.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to pump gas if target is already reached!

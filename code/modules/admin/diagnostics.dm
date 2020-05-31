@@ -111,13 +111,13 @@ proc/debug_color_of(var/thing)
 		for(var/datum/air_group/g in air_master.air_groups)
 			if (g.group_processing)
 				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, member.air.return_pressure()), 10)/10 + 1
+					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
 					if (p > ghistogram.len)
 						ghistogram.len = p
 					ghistogram[p]++
 			else
 				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, member.air.return_pressure()), 10)/10 + 1
+					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
 					if (p > ughistogram.len)
 						ughistogram.len = p
 					ughistogram[p]++
@@ -146,7 +146,7 @@ proc/debug_color_of(var/thing)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] t:[GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] t:[GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
 			for(var/datum/gas/trace_gas in GM.trace_gases)
@@ -346,7 +346,7 @@ proc/debug_color_of(var/thing)
 					img.app.desc = "no air mix"
 				else
 
-					var/pressure = air.return_pressure()
+					var/pressure = MIXTURE_PRESSURE(air)
 					img.app.desc = ""
 
 
@@ -503,7 +503,7 @@ proc/debug_color_of(var/thing)
 					var/datum/gas_mixture/air = pipe.return_air()
 					if(show_numbers)
 						if(TOTAL_MOLES(air) > 0.01)
-							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(air.return_pressure(), 0.1)]</span>"
+							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
 						else if(TOTAL_MOLES(air) > 0)
 							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"

@@ -352,7 +352,7 @@ obj/machinery/atmospherics
 
 				if(parent)
 					boutput(usr, "[x],[y] is in a pipeline with [parent.members.len] members ([parent.edges.len] edges)! Volume: [parent.air.volume]")
-					boutput(usr, "Pressure: [parent.air.return_pressure()], Temperature: [parent.air.temperature]")
+					boutput(usr, "Pressure: [MIXTURE_PRESSURE(parent.air)], Temperature: [parent.air.temperature]")
 					boutput(usr, "[parent.air.oxygen], [parent.air.toxins], [parent.air.nitrogen], [parent.air.carbon_dioxide] .. [parent.alert_pressure]")
 mob
 	verb
@@ -407,7 +407,7 @@ turf/simulated
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
-			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
+			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
 			if(GM.trace_gases && GM.trace_gases.len)
 				for(var/datum/gas/trace_gas in GM.trace_gases)
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
