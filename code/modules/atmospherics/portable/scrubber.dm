@@ -82,7 +82,7 @@
 			removed.nitrogen = filtered_out.nitrogen
 			filtered_out.nitrogen = 0
 
-			if(removed.trace_gases && removed.trace_gases.len)
+			if(length(removed.trace_gases))
 				for(var/datum/gas/trace_gas in removed.trace_gases)
 //					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 					removed.trace_gases -= trace_gas

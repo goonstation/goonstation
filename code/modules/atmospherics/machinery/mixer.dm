@@ -168,7 +168,7 @@ obj/machinery/atmospherics/mixer
 			if(in1_total_moles > 0)
 				SET_SIGNAL_MIXTURE(in1)
 				var/tgmoles = 0
-				if(air_in1.trace_gases && air_in1.trace_gases.len)
+				if(length(air_in1.trace_gases))
 					for(var/datum/gas/trace_gas in air_in1.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["in1tg"] = round(100*tgmoles/in1_total_moles)
@@ -183,7 +183,7 @@ obj/machinery/atmospherics/mixer
 			if(in2_total_moles > 0)
 				SET_SIGNAL_MIXTURE(in2)
 				var/tgmoles = 0
-				if(air_in2.trace_gases && air_in2.trace_gases.len)
+				if(length(air_in2.trace_gases))
 					for(var/datum/gas/trace_gas in air_in2.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["in2tg"] = round(100*tgmoles/in2_total_moles)
@@ -202,7 +202,7 @@ obj/machinery/atmospherics/mixer
 			if(out_total_moles > 0)
 				SET_SIGNAL_MIXTURE(out)
 				var/tgmoles = 0
-				if(air_out.trace_gases && air_out.trace_gases.len)
+				if(length(air_out.trace_gases))
 					for(var/datum/gas/trace_gas in air_out.trace_gases)
 						tgmoles += trace_gas.moles
 				signal.data["outtg"] = round(100*tgmoles/out_total_moles)
