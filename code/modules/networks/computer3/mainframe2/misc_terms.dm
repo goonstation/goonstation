@@ -4715,8 +4715,7 @@
 			if ("info")
 				#define _FIELD_LABELS(_, _, NAME, ...) "[NAME]-%,"+
 				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,[APPLY_TO_GASES(_FIELD_LABELS) ""]Misc-%")
-				var/dummy_variable_to_avoid_a_dumb_byond_bug // https://secure.byond.com/forum/post/2072419
-				#undef _FIELD_LABELS
+				// undefined at the end of the file because of https://secure.byond.com/forum/post/2072419
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
@@ -4998,3 +4997,4 @@
 
 			lastSignal = anInput
 
+#undef _FIELD_LABELS
