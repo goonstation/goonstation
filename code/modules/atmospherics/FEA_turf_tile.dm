@@ -49,7 +49,7 @@ turf
 		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 		var/sum = BASE_GASES_TOTAL_MOLES(src)
 		if(sum>0)
-			#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GM / sum) * amount;
+			#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
 			APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
 			#undef _TRANSFER_AMOUNT_TO_GM
 
