@@ -83,7 +83,7 @@
 		MACRO(PREF ## gas_name ## SUFF, specific_heat_of_the_gas, human_readable_gas_name, ARGS) \
 	By default air scrubbers *will* scrub the gas, look at scrubber.dm to change that.
 	Air alarms also require custom code to support new gases.
-	Atmos retrofilters also aren't adapted to this system yet but nothing uses those.
+	Atmos retrofilters and non-retro filters also aren't adapted to this system yet but nothing uses those.
 	Same for air sensors.
 */
 
