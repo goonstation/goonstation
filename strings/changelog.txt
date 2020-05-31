@@ -1,5 +1,10 @@
 
 (t)sun may 31 20
+(u)tloy-x
+(p)834
+(e)🆕|feature
+(*)Added option in character setup for auto-capitalization of sent chat messages
+(+)Added "cancel" button to input box when using the radio hotkey
 (u)MarkNstein
 (p)895
 (e)🗺|mapping
