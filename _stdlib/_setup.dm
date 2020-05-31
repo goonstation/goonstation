@@ -40,9 +40,9 @@
 
 #define LEVEL_HOST 6
 #define LEVEL_CODER 5
-#define LEVEL_SHITGUY 4
+#define LEVEL_ADMIN 4
 #define LEVEL_PA 3
-#define LEVEL_ADMIN 2
+#define LEVEL_IA 2
 #define LEVEL_SA 1
 #define LEVEL_MOD 0
 #define LEVEL_BABBY -1
@@ -423,6 +423,7 @@
 #define THROW_NORMAL 1
 #define THROW_CHAIRFLIP 2
 #define THROW_GUNIMPACT 4
+#define THROW_SLIP 8
 
 //various sprint flags go here
 #define SPRINT_NORMAL 0
@@ -746,6 +747,14 @@ proc/default_frequency_color(freq)
 #define SEE_DARK_FULL 8
 #define SEE_DARK_HUMAN 3
 
+//speeds !!!
+#define BASE_SPEED 1.65
+#define BASE_SPEED_SUSTAINED 1.5
+#define RUN_SCALING 0.12
+#define RUN_SCALING_LYING 0.2
+#define RUN_SCALING_STAGGER 0.5
+#define WALK_DELAY_ADD 0.8
+
 //stamina config
 #define STAMINA_MAX 200        			//Default max stamina value
 #define STAMINA_REGEN 10   	   		 	//Default stamina regeneration rate.
@@ -794,6 +803,8 @@ proc/default_frequency_color(freq)
 #define STAMINA_DEFAULT_FART_COST 0  //How much farting costs. I am not even kidding.
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+#define DIAG_MOVE_DELAY_MULT 1.4
 
 //reagent_container bit flags
 #define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly (e.g. beaker)

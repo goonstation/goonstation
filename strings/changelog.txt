@@ -1,5 +1,43 @@
 
+(t)sat may 30 20
+(u)mbc
+(p)906
+(e)⚖|balance
+(*)Slipping protection no longer checks for "walk" intent and instead is based off actual speed
+(u)Sovexe
+(p)894
+(e)🆕|feature
+(+)Changed escape checks to consider you as having escaped if you are anywhere on Centcom at round end.
+(u)UrsulaMajor
+(p)900
+(e)|
+(+)You no longer slip on ice decals while crawling
+(u)Tarmunora
+(p)774
+(e)⚖|balance
+(+)Reduced the immediate cooling effect of cryostylane.
+(u)zjdtmkhzt
+(p)897
+(e)🆕🎨|feature, sprites
+(+)Added dabbing license to spacebux purchases. Start keeping track of your sick dabs today! (Sprite by UrsulaMajor)
+(u)mbc
+(p)899
+(e)⚖🐛🎨|balance, bug, sprites
+(+)Fixed some bugs where diagonal step effects would trigger more often than intended.
+(+)Combat stagger breaks a sustained run.
+(u)UrsulaMajor
+(p)898
+(e)|
+(*)Mash the movement keys or flip for a chance to bust out of disposal pipes
 (t)fri may 29 20
+(u)Flaborized
+(p)883
+(e)⚖|balance
+(+)Traitor barmen and scientists can now buy the syringe gun
+(u)UrsulaMajor
+(p)893
+(e)🎨|sprites
+(*)Added a concealable Syndicate Omnitool (with Knife mode!) to the syndicate buylist for 2TC
 (u)Kubius
 (p)890
 (e)🆕🗺|feature, mapping

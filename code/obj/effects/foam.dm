@@ -181,22 +181,15 @@
 
 	if (ishuman(AM))
 		var/mob/living/carbon/human/M = AM
-		if (!M.can_slip())
-			return
 
-		if (src.reagents) //Wire note: Fix for Cannot read null.reagent_list
-			for(var/reagent_id in src.reagents.reagent_list)
-				var/amount = M.reagents.get_reagent_amount(reagent_id)
-				if(amount < 25)
-					M.reagents.add_reagent(reagent_id, min(round(amount / 2),15))
+		if (M.slip())
+			if (src.reagents) //Wire note: Fix for Cannot read null.reagent_list
+				for(var/reagent_id in src.reagents.reagent_list)
+					var/amount = M.reagents.get_reagent_amount(reagent_id)
+					if(amount < 25)
+						M.reagents.add_reagent(reagent_id, min(round(amount / 2),15))
 
-		logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
-		reagents.reaction(M, TOUCH, 5)
+			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+			reagents.reaction(M, TOUCH, 5)
 
-		if(!istype(src.loc, /turf/space))
-			M.pulling = null
 			M.show_text("You slip on the foam!", "red")
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
-			M.force_laydown_standup()

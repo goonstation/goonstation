@@ -88,6 +88,7 @@
 			return 0
 		else if (src.amount == used)
 			qdel(src)
+			return 1
 		else
 			amount -= used
 			updateicon()
