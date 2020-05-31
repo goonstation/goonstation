@@ -146,7 +146,7 @@ proc/debug_color_of(var/thing)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] t:[GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
 			for(var/datum/gas/trace_gas in GM.trace_gases)
@@ -239,7 +239,7 @@ proc/debug_color_of(var/thing)
 					if(!group.gencolor)
 						group.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
 					img.app.color = group.gencolor
-					img.app.desc = "Group \ref[group]<br>O2=[group.air.oxygen]<br/>Nitrogen=[group.air.nitrogen]<br/>CO2=[group.air.carbon_dioxide]<br/>Plasma=[group.air.toxins]<br/>Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
+					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(group.air)]Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
 					if (group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 					/*
 					var/list/borders_space = list()
@@ -307,7 +307,7 @@ proc/debug_color_of(var/thing)
 						img.app.overlays += mark
 				else
 					img.app.color = "#ffffff"
-					img.app.desc = "No Atmos Group<br/>O2=[sim.oxygen]<br/>Nitrogen=[sim.nitrogen]<br/>CO2=[sim.carbon_dioxide]<br/>Plasma=[sim.toxins]<br/>Temperature=[sim.temperature]"
+					img.app.desc = "No Atmos Group<br/>[MOLES_REPORT(sim)]Temperature=[sim.temperature]"
 			else
 				img.app.desc = "-unsimulated-"
 				img.app.color = "#202020"

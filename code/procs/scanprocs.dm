@@ -589,36 +589,21 @@
 	var/data = ""
 
 	if (total_moles > 0)
-		var/o2_concentration = check_me.oxygen/total_moles
-		var/n2_concentration = check_me.nitrogen/total_moles
-		var/co2_concentration = check_me.carbon_dioxide/total_moles
-		var/plasma_concentration = check_me.toxins/total_moles
-		var/unknown_concentration = 1 - (o2_concentration + n2_concentration + co2_concentration + plasma_concentration)
-
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
-			Nitrogen: [round(n2_concentration * 100)]%<br>\
-			Oxygen: [round(o2_concentration * 100)]%<br>\
-			CO2: [round(co2_concentration * 100)]%<br>\
-			Plasma: [round(plasma_concentration * 100)]%<br>\
-			[unknown_concentration > 0.01 ? "Unknown: [round(unknown_concentration * 100)]%<br>" : ""]\
+			[CONCENTRATION_REPORT(check_me, "<br>")]\
 			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
 
 		else if (simple_output == 1) // For the log_atmos() proc.
 			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
-			, <b>Contents:</b> <i>[round(n2_concentration * 100)]% N2 / [round(o2_concentration * 100)]% O2 / [round(co2_concentration * 100)]% CO2 / [round(plasma_concentration * 100)]% PL</i>\
-			  [unknown_concentration > 0.01 ? "<i> / [round(unknown_concentration * 100)]% other</i>)" : ")"]"
+			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
 			data = "--------------------------------<br>\
 			<span class='notice'>Atmospheric analysis of <b>[A]</b></span><br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Nitrogen: [round(n2_concentration * 100)]%<br>\
-			Oxygen: [round(o2_concentration * 100)]%<br>\
-			CO2: [round(co2_concentration * 100)]%<br>\
-			Plasma: [round(plasma_concentration * 100)]%<br>\
-			[unknown_concentration > 0.01 ? "</span><span class='alert'>Unknown: [round(unknown_concentration * 100)]%</span><span class='notice'><br>" : ""]\
+			[CONCENTRATION_REPORT(check_me, "<br>")]\
 			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
 
 	else

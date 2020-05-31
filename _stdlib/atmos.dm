@@ -102,6 +102,9 @@
 // gas calculation macros //
 ////////////////////////////
 
+#define MINIMUM_HEAT_CAPACITY	0.0003
+#define QUANTIZE(variable)		(round(variable,0.0001))
+
 #define _ZERO_GAS(GAS, _, _, MIXTURE) (MIXTURE).GAS = 0;
 #define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 
@@ -146,5 +149,12 @@
 
 #define THERMAL_ENERGY(MIXTURE) ((MIXTURE).temperature * HEAT_CAPACITY(MIXTURE))
 
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
+// air stats
+
+#define _MOLES_REPORT(GAS, _, NAME, MIXTURE) "[NAME]: [MIXTURE.GAS]<br>" +
+#define MOLES_REPORT(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT, MIXTURE) "")
+
+// requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
+#define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" +
+#define _UNKNOWN_CONCETRATION_REPORT(MIXTURE) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")
+#define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) _UNKNOWN_CONCETRATION_REPORT(MIXTURE))
