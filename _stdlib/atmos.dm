@@ -177,7 +177,7 @@ What can break when adding new gases:
 #define _MOLES_REPORT(GAS, _, NAME, MIXTURE) "[NAME]: [MIXTURE.GAS]<br>" +
 #define MOLES_REPORT(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT, MIXTURE) "")
 
-#define _MOLES_REPORT_PACKET(GAS, _, NAME, MIXTURE) "[NAME]=[MIXTURE.GAS]&" +
+#define _MOLES_REPORT_PACKET(GAS, _, _, MIXTURE) "[#GAS]=[MIXTURE.GAS]&" +
 #define MOLES_REPORT_PACKET(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT_PACKET, MIXTURE) "")
 
 // requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
