@@ -162,7 +162,7 @@
 		if (isnull(src.original_DNA) || isnull(src.original_fprints) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = md5(src.original_holder.bioHolder.Uid)
+				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
 /obj/item/parts/human_parts/arm

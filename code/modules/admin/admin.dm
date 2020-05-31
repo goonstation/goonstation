@@ -3034,7 +3034,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[md5(H.bioHolder.Uid)]</td></tr>"
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.uid_hash]</td></tr>"
 								else if(!H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
 							LAGCHECK(LAG_LOW)

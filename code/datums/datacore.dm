@@ -44,7 +44,7 @@
 		G.fields["sex"] = "Male"
 
 	G.fields["age"] ="[H.bioHolder.age]"
-	G.fields["fingerprint"] = "[md5(H.bioHolder.Uid)]"
+	G.fields["fingerprint"] = "[H.bioHolder.uid_hash]"
 	G.fields["dna"] = H.bioHolder.Uid
 	G.fields["p_stat"] = "Active"
 	G.fields["m_stat"] = "Stable"
