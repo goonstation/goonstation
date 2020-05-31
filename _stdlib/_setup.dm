@@ -423,6 +423,7 @@
 #define THROW_NORMAL 1
 #define THROW_CHAIRFLIP 2
 #define THROW_GUNIMPACT 4
+#define THROW_SLIP 8
 
 //various sprint flags go here
 #define SPRINT_NORMAL 0
@@ -745,6 +746,14 @@ proc/default_frequency_color(freq)
 // see in dark levels
 #define SEE_DARK_FULL 8
 #define SEE_DARK_HUMAN 3
+
+//speeds !!!
+#define BASE_SPEED 1.65
+#define BASE_SPEED_SUSTAINED 1.5
+#define RUN_SCALING 0.12
+#define RUN_SCALING_LYING 0.2
+#define RUN_SCALING_STAGGER 0.5
+#define WALK_DELAY_ADD 0.9
 
 //stamina config
 #define STAMINA_MAX 200        			//Default max stamina value

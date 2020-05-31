@@ -738,6 +738,7 @@ var/global/list/soundCache = list(
  	"sound/misc/shuttle_recalled.ogg" = 'sound/misc/shuttle_recalled.ogg',\
  	"sound/misc/sleeper_agent_hello.ogg" = 'sound/misc/sleeper_agent_hello.ogg',\
  	"sound/misc/slip.ogg" = 'sound/misc/slip.ogg',\
+  	"sound/misc/slip_big.ogg" = 'sound/misc/slip_big.ogg',\
  	"sound/misc/splash_1.ogg" = 'sound/misc/splash_1.ogg',\
  	"sound/misc/splash_2.ogg" = 'sound/misc/splash_2.ogg',\
  	"sound/misc/splash_3.ogg" = 'sound/misc/splash_3.ogg',\

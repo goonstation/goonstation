@@ -793,7 +793,7 @@
 				canmove = 0
 				return
 
-		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
 			canmove = 0
 			return
 
