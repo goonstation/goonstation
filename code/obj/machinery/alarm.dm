@@ -251,6 +251,8 @@
 		else
 			output += ""
 
+		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
+
 		var/tgmoles = 0
 		if(environment.trace_gases && environment.trace_gases.len)
 			for(var/datum/gas/trace_gas in environment.trace_gases)

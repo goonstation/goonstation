@@ -77,6 +77,14 @@
 
 // non-trace gases
 
+/*
+	Adding new base gases should now in theory be as easy as adding them to this macro.
+	Format:
+		MACRO(PREF ## gas_name ## SUFF, specific_heat_of_the_gas, human_readable_gas_name, ARGS) \
+	By default air scrubbers *will* scrub the gas, look at scrubber.dm to change that.
+	Air alarms also require custom code to support new gases.
+*/
+
 #define SPECIFIC_HEAT_PLASMA		200
 #define SPECIFIC_HEAT_O2		20
 #define SPECIFIC_HEAT_N2		20

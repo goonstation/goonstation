@@ -70,11 +70,17 @@
 		// drsingh attempted fix for Cannot read null.temperature
 		if (filtered_out && removed)
 			filtered_out.temperature = removed.temperature
-			filtered_out.toxins = removed.toxins
-			removed.toxins = 0
+			#define _FILTER_OUT_GAS(GAS, ...) \
+				filtered_out.GAS = removed.GAS; \
+				removed.GAS = 0;
+			APPLY_TO_GASES(_FILTER_OUT_GAS)
+			#undef _FILTER_OUT_GAS
 
-			filtered_out.carbon_dioxide = removed.carbon_dioxide
-			removed.carbon_dioxide = 0
+			// revert for breathable
+			removed.oxygen = filtered_out.oxygen
+			filtered_out.oxygen = 0
+			removed.nitrogen = filtered_out.nitrogen
+			filtered_out.nitrogen = 0
 
 			if(removed.trace_gases && removed.trace_gases.len)
 				for(var/datum/gas/trace_gas in removed.trace_gases)
