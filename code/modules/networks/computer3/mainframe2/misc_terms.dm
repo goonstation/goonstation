@@ -955,20 +955,7 @@
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
-					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-
-					results.fields += "Nitrogen: [round(n2_level*100)]%"
-					results.fields += "Oxygen: [round(o2_level*100)]%"
-					results.fields += "Carbon Dioxide: [round(co2_level*100)]%"
-					results.fields += "FAAE-1 (\"Plasma\"): [round(plasma_level*100)]%"
-
-					if(unknown_level > 0.01)
-						results.fields += "Unknown: [round(unknown_level)]%"
-
+					LIST_CONCENTRATION_REPORT(environment, results.fields)
 					results.fields += "|n"
 
 				else
@@ -984,20 +971,7 @@
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
-					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-
-					results.fields += "Nitrogen: [round(n2_level*100)]%"
-					results.fields += "Oxygen: [round(o2_level*100)]%"
-					results.fields += "Carbon Dioxide: [round(co2_level*100)]%"
-					results.fields += "FAAE-1 (\"Plasma\"): [round(plasma_level*100)]%"
-
-					if(unknown_level > 0.01)
-						results.fields += "Unknown: [round(unknown_level)]%"
-
+					LIST_CONCENTRATION_REPORT(environment, results.fields)
 					results.fields += "|n"
 
 				else
