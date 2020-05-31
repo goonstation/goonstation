@@ -1,5 +1,23 @@
 
+(t)sun may 31 20
+(u)tloy-x
+(p)834
+(e)🆕|feature
+(*)Added option in character setup for auto-capitalization of sent chat messages
+(+)Added "cancel" button to input box when using the radio hotkey
+(u)MarkNstein
+(p)895
+(e)🗺|mapping
+(+)All TEG maps now have two TTVs in the engineering department.
 (t)sat may 30 20
+(u)mbc
+(p)908
+(e)|
+(*)Slips can also be avoided by manually slowing your movement (tap keys slower instead of holding)
+(u)mbc
+(p)906
+(e)⚖|balance
+(*)Slipping protection no longer checks for "walk" intent and instead is based off actual speed
 (u)Sovexe
 (p)894
 (e)🆕|feature

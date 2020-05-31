@@ -143,7 +143,7 @@ Filter types:
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air_out2.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out2)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!

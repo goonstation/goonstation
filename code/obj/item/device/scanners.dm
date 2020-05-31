@@ -545,7 +545,7 @@ that cannot be itched
 				if (M.gloves)
 					R.fields["fingerprint"] = "Unknown"
 				else
-					R.fields["fingerprint"] = md5(M.bioHolder.Uid)
+					R.fields["fingerprint"] = M.bioHolder.uid_hash
 				R.fields["p_stat"] = "Active"
 				R.fields["m_stat"] = "Stable"
 				src.active1 = R
@@ -563,7 +563,7 @@ that cannot be itched
 			if (M.gloves)
 				src.active1.fields["fingerprint"] = "Unknown"
 			else
-				src.active1.fields["fingerprint"] = md5(M.bioHolder.Uid)
+				src.active1.fields["fingerprint"] = M.bioHolder.uid_hash
 			src.active1.fields["p_stat"] = "Active"
 			src.active1.fields["m_stat"] = "Stable"
 			data_core.general += src.active1

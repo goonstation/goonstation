@@ -150,19 +150,11 @@
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (!M.can_slip())
-					return
-
-				M.pulling = null
-				boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				if (M.bioHolder.HasEffect("clumsy"))
-					M.changeStatus("stunned", 80)
-					M.changeStatus("weakened", 5 SECONDS)
-					JOB_XP(M, "Clown", 1)
-				else
-					M.changeStatus("weakened", 2 SECONDS)
-				M.force_laydown_standup()
+				if (M.slip())
+					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
+					if (M.bioHolder.HasEffect("clumsy"))
+						M.changeStatus("weakened", 5 SECONDS)
+						JOB_XP(M, "Clown", 1)
 
 	janitor
 		icon_state = "pda-j"

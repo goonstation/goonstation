@@ -199,10 +199,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
+	var/uid_hash
 
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
+		uid_hash = md5(Uid)
 		bioUids.Add(Uid)
 		bioUids[Uid] = owner
 		mobAppearance = new/datum/appearanceHolder()
@@ -434,6 +436,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			genetic_stability = toCopy.genetic_stability
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
+			uid_hash = md5(Uid)
 
 		if (copyPool)
 			src.RemoveAllPoolEffects()

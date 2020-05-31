@@ -45,8 +45,8 @@
 	lastgen = 0
 
 	if(cold_air && hot_air)
-		var/cold_air_heat_capacity = cold_air.heat_capacity()
-		var/hot_air_heat_capacity = hot_air.heat_capacity()
+		var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
+		var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
 
 		var/delta_temperature = hot_air.temperature - cold_air.temperature
 
@@ -108,11 +108,11 @@
 
 	t += "<B>Cold loop</B><BR>"
 	t += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-	t += "Pressure Inlet: [round(circ1.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
+	t += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1.air2), 0.1)] kPa<BR>"
 
 	t += "<B>Hot loop</B><BR>"
 	t += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-	t += "Pressure Inlet: [round(circ2.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
+	t += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2.air2), 0.1)] kPa<BR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 

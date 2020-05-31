@@ -26,6 +26,7 @@ var/datum/preMapLoad/preMapLoad = new
 
 #include "_stdlib\code\_macros.dm"
 #include "_stdlib\_types.dm"
+#include "_stdlib\atmos.dm"
 #include "_stdlib\color.dm"
 #include "_stdlib\component_defines.dm"
 #include "_stdlib\movement_modifiers.dm"
