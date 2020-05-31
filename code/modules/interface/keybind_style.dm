@@ -27,7 +27,9 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	PROTECTED_PROC(TRUE)
 
 	if (!keybind_styles)
-		keybind_styles = typesof(/datum/keybind_style)
+		keybind_styles = new
+		keybind_styles.Add(/datum/keybind_style) //So the base is at the top, and not the bottom.
+		keybind_styles.Add(childrentypesof(/datum/keybind_style))
 
 	for (var/found in keybind_styles)
 		var/datum/keybind_style/found_style = found

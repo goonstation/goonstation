@@ -172,6 +172,7 @@
  */
 /mob/proc/reset_keymap()
 	if (src.client)
+		src.client.applied_keybind_styles = list() //Reset currently applied styles
 		build_keybind_styles(src.client)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()

@@ -99,7 +99,7 @@
 		return "ZeWaka/Keybinds: not a string in action_names you fucko"
 
 	///Converts from bitflag to a human-readable description
-	///Eample: "2" to "KEY_BACKWARD"
+	///Example: "2" to "KEY_BACKWARD"
 	proc/key_bitflag_to_stringdesc(bitflag)
 		for (var/key in key_names)
 			if (bitflag == key)

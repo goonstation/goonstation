@@ -20,11 +20,13 @@ chui/window/keybind_menu
 
 	GetBody()
 
+		current_keymap = owner.keymap //Need to refresh this since it's not a proper pointer?
+
 		var/list/html = list()
 
 		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset,#reset_cloud{background: #f8d248}</style>"
 
-		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">This is a keybind menu for a shitty game engine. It's your fault if you type it in wrong.</span></i></b></td></tr></thead>"
+		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">This is a shitty keybind menu. Don't type it in wrong.</span></i></b></td></tr></thead>"
 
 		html += "<tbody><tr><td>Action</td><td>Corresponding Keybind</td></tr>"
 
@@ -34,7 +36,7 @@ chui/window/keybind_menu
 
 		html += "<tr><td>[theme.generateButton("confirm", "Confirm")]</td><td>[theme.generateButton("cancel", "Cancel")]</td></tr></tbody>"
 
-		html += "<tfoot><tr><td>[theme.generateButton("reset", "Reset All Keybinds")]</td><td>[theme.generateButton("reset_cloud", "Reset Cloud Data (Caution!)")]</td></tr></tfoot></table>"
+		html += "<tfoot><tr><td colspan=\"2\">[theme.generateButton("reset", "Reset All Keybinding Data (Caution!)")]</td></tr></tfoot></table>"
 
 		html += "<script language=\"JavaScript\">$(\".input\").on(\"change keyup paste\", function(){var elem=$(this); chui.bycall(\"changed_key\", {action:elem.attr(\"id\"), key:elem.val()})})</script>"
 
@@ -51,17 +53,16 @@ chui/window/keybind_menu
 						changed_keys_rev[changed_keys[i]] = i
 
 					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimal merge
-					owner.keymap.overwrite_by_action(keydat)
+					current_keymap.overwrite_by_action(keydat)
 					owner.cloud_put("custom_keybind_data", json_encode(changed_keys_rev))
 					boutput("<span class='notice'>Your custom keybinding data has been saved.</span>")
 			else if (id == "reset")
 				changed_keys = new/list()
-				who.mob.reset_keymap()
-				boutput("<span class='notice'>Your keymap has been reset. Please re-open the window.</span>")
-				Unsubscribe(who)
-			else if (id == "reset_cloud")
 				owner.cloud_put("custom_keybind_data", null)
-				boutput("<span class='notice'>Your saved cloud keybinding data has been deleted.</span>")
+				who.keymap = null //To prevent merge() from not overwriting old keybinds
+				who.mob.reset_keymap() //Does successive calls to rebuild the keymap
+				boutput(who, "<span class='notice'>Your keybinding data has been reset. Please re-open the window.</span>")
+				Unsubscribe(who)
 			else if (id == "cancel")
 				Unsubscribe(who)
 			last_interact_time = TIME
@@ -81,5 +82,5 @@ chui/window/keybind_menu
 	set desc = "Open up a window to change your keybinds"
 
 	if(!src.keybind_menu)
-		src.keybind_menu = new
+		src.keybind_menu = new(src)
 	src.keybind_menu.Subscribe(src)
