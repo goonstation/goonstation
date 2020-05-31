@@ -82,6 +82,12 @@ Adding new base gases should now in theory be as easy as adding them to this mac
 Format:
 	MACRO(PREF ## gas_name ## SUFF, specific_heat_of_the_gas, human_readable_gas_name, ARGS) \
 
+If you want to do a thing for all base gases do something like:
+#define _DO_THE_THING(GAS, SPECIFIC_HEAT, GAS_NAME, ...) air.GAS = rand(100);
+APPLY_TO_GASES(_DO_THE_THING)
+#undef _DO_THE_THING
+It's basically kind of a for loop but for base gases.
+
 What can break when adding new gases:
 	By default air scrubbers *will* scrub the gas, look at scrubber.dm to change that.
 	Air alarms also require custom code to support new gases.
