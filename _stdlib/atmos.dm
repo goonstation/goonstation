@@ -84,6 +84,7 @@
 	By default air scrubbers *will* scrub the gas, look at scrubber.dm to change that.
 	Air alarms also require custom code to support new gases.
 	Atmos retrofilters also aren't adapted to this system yet but nothing uses those.
+	Same for air sensors.
 */
 
 #define SPECIFIC_HEAT_PLASMA		200
