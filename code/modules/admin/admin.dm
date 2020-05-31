@@ -2743,8 +2743,8 @@ var/global/noir = 0
 								for(var/atom/movable/A in world) //Build the god forsaken list
 									if(istype(A, text2path(pathname)))
 										A.AddComponent(/datum/component/legs)
-								logTheThing("admin", usr, null, "used give legs secret")
-								logTheThing("diary", usr, null, "used give legs secret", "admin")
+								logTheThing("admin", usr, null, "used mass give legs secret")
+								logTheThing("diary", usr, null, "used mass give legs secret", "admin")
 							else
 								return
 						else
