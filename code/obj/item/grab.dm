@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc)
+	New(atom/loc, mob/assailant = null)
 		..()
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
@@ -33,6 +33,7 @@
 			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
+		src.assailant = assailant
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -752,9 +753,10 @@
 			P.updateMob(src, src.assailant, propVal)
 
 	delProperty(propId)
+		var/propVal = getProperty(propId)
 		var/datum/objectProperty/equipment/P = ..()
 		if(istype(P))
-			P.removeFromMob(src, src.assailant, P.propVal)
+			P.removeFromMob(src, src.assailant, propVal)
 
 	proc/can_block(var/hit_type = null)
 		.= DEFAULT_BLOCK_PROTECTION_BONUS
