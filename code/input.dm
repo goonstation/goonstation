@@ -188,7 +188,7 @@ var/list/dirty_keystates = list()
 			src.keydown("CTRL")
 		if(parameters["alt"])
 			src.keydown("ALT")
-		if(parameters["shift"])
+		if(parameters["shift"] && !(src.mob.mob_flags & IGNORE_SHIFT_CLICK_MODIFIER))
 			src.keydown("SHIFT")
 
 		if(src.buildmode)

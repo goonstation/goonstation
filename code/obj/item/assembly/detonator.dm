@@ -254,7 +254,8 @@
 		return
 
 	src.attachedTo.anchored = 0
-	src.remove_simple_light("canister")
+	src.attachedTo.remove_simple_light("canister")
+
 	if (src.defused)
 		src.attachedTo.visible_message("<b><span class='alert'>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</span></b>")
 		return

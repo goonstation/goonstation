@@ -25,7 +25,6 @@
 				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
-					affected_mob.updatehealth()
 
 		if(3)
 			if(prob(1))
@@ -40,4 +39,3 @@
 				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
-					affected_mob.updatehealth()

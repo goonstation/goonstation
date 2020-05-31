@@ -109,7 +109,7 @@
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
+				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)
@@ -184,7 +184,7 @@
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
+				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)
@@ -229,7 +229,7 @@
 
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		return
 
 	if (isnull(variable))
@@ -378,7 +378,7 @@
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
+				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)
@@ -485,7 +485,7 @@
 		return
 
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		boutput(usr, "<span class='alert'>You lack access to modify the [variable]!</span>")
 		return
 
@@ -638,7 +638,7 @@
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
+				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)

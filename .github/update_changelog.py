@@ -25,6 +25,7 @@ labels_to_emoji = {
 	'bug-minor': '🐛',
 	'bug-trivial': '🐛',
 	'enhancement': '🆕',
+	'feature': '🆕',
 	'removal': '⛔',
 	'sprites': '🎨',
 	'mapping': '🗺',

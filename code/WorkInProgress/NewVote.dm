@@ -253,7 +253,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		..()
 
 	end_vote()
-		vote_manager.active_vote = null
+		. = ..()
 		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
 		if(get_winner() != "Yes" || get_winner_num() < round(clients.len * 0.5))
 			boutput(world, "<span class='alert'><BIG><B>Minimum mode votes not reached (~50% of players), game mode not changed.</B></BIG></span>")
@@ -273,7 +273,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	vote_length = 1200 //2 Minutes
 
 	end_vote()
-		vote_manager.active_vote = null
+		. = ..()
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
 			if(get_winner_num() < round(clients.len * 0.5))

@@ -3,7 +3,7 @@
 /obj/machinery/bot/goosebot
 	name = "THE GOOSE"
 	desc = "How did this manage to pass Nanotrasen's safety regulations?"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "goosebot"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -85,7 +85,7 @@
 		E.desc = "A goose's egg, apparently."
 		E.throw_at(target, 16, 3)
 
-		icon_state = "goosebot-spaz"
+		icon_state = "goosebot-wild"
 		src.visible_message("<span class='combat'><b>[src] fires an egg at [target.name]!</b></span>")
 		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)

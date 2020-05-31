@@ -424,6 +424,24 @@ var/list/key_names = list(
 						"E" = "exit",
 						"Q" = "exit"
 					))
+			if ("just exit")
+				return new /datum/keymap(list(
+						"E" = "exit",
+						"Q" = "exit"
+					))
+			if ("cube")
+				if (src.preferences.use_azerty)
+					return new /datum/keymap(list(
+							"ALT" = KEY_EXAMINE,
+						))
+				else if (src.tg_controls)
+					return new /datum/keymap(list(
+							"SHIFT" = KEY_EXAMINE,
+						))
+				else
+					return new /datum/keymap(list(
+							"ALT" = KEY_EXAMINE,
+						))
 	else
 		switch (name)
 			if ("general")
@@ -613,6 +631,15 @@ var/list/key_names = list(
 						"SOUTHEAST" = "attackself",
 						"NORTHWEST" = "unequip"
 					))
+			if ("cube")
+				if(src.tg_controls)
+					return new /datum/keymap(list(
+							"SHIFT" = KEY_EXAMINE,
+						))
+				else
+					return new /datum/keymap(list(
+							"ALT" = KEY_EXAMINE,
+						))
 			if ("pod")
 				return new /datum/keymap(list(
 						"SPACE" = "fire",

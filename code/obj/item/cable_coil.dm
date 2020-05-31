@@ -58,7 +58,6 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -89,6 +88,7 @@
 			return 0
 		else if (src.amount == used)
 			qdel(src)
+			return 1
 		else
 			amount -= used
 			updateicon()

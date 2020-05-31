@@ -32,8 +32,6 @@
 		stats["Shift Time:"] = 0
 		stats["Shuttle:"] = 0
 
-		src.update()
-
 	proc/update()
 		last_update = world.time
 

@@ -11,6 +11,7 @@ datum
 			fluid_b = 255
 			transparency = 128
 			volatility = 3
+			minimum_reaction_temperature = -INFINITY
 
 			// These figures are for original nitro explosions, new calculation is strictly linear <-- false by zewaka
 			// power = SQRT(10V)
@@ -136,7 +137,6 @@ datum
 						else
 							H.TakeDamage("chest", 0, 2, 0, DAMAGE_BURN)
 						H.emote("scream")
-						H.updatehealth()
 						if (cauterised)
 							boutput(H, "<span class='notice'>The silver nitrate burns like hell as it cauterises some of your wounds.</span>")
 						else
@@ -150,6 +150,7 @@ datum
 			fluid_r = 128
 			fluid_g = 128
 			fluid_b = 128
+			minimum_reaction_temperature = -INFINITY
 
 			proc/pop(var/turf/T, var/amount=5)
 				playsound(T, 'sound/weapons/Gunshot.ogg', rand(1, min(amount*10, 50)), 1)
@@ -321,7 +322,6 @@ datum
 					random_brute_damage(M, 1 * mult)
 					if (prob(10))
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
-				M.updatehealth()
 				..()
 				return
 
@@ -543,7 +543,6 @@ datum
 						M.take_oxygen_deprivation(-INFINITY)
 						M.take_toxin_damage(rand(0,15))
 						M.TakeDamage("chest", rand(0,15), rand(0,15), 0, DAMAGE_CRUSH)
-						M.updatehealth()
 						setalive(M)
 					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
 						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
@@ -582,7 +581,6 @@ datum
 				if (prob(10))
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-					M.updatehealth()
 
 				..()
 				return
@@ -617,9 +615,6 @@ datum
 			transparency = 200
 			value = 3 // 1 1 1
 			viscosity = 0.14
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				return
 
 			reaction_turf(var/turf/target, var/volume)
 				src = null
@@ -978,6 +973,9 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.delStatus("burning")
+					if(!M.is_cold_resistant() || ischangeling(M))
+						M.bodytemperature=max(M.bodytemperature-volume_passed*2, 0)
+						volume_passed *= 0.75 //1 quarter of the chilling is done immidiately on touch reactions
 				if ((world.time > M.last_cubed + 5 SECONDS) && M.bioHolder)
 					if ((!M.is_cold_resistant() || ischangeling(M)) && isturf(M.loc) )
 						if (silent && volume_passed < 1)
@@ -985,7 +983,6 @@ datum
 								cube_mob(M,volume_passed)
 						else
 							cube_mob(M,volume_passed)
-				M.bodytemperature = 0
 
 				src = null
 
@@ -1116,10 +1113,11 @@ datum
 			hygiene_value = -1.5
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.13
+			minimum_reaction_temperature = T0C + 200
 			var/min_req_fluid = 0.25 //at least 1/4 of the fluid needs to be oil for it to ignite
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > T0C + 200 && !src.reacting && (holder && !holder.has_reagent("chlorine"))) // need this to be higher to make propylene possible
+				if (!src.reacting && (holder && !holder.has_reagent("chlorine"))) // need this to be higher to make propylene possible
 					src.reacting = 1
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
@@ -1183,30 +1181,32 @@ datum
 			value = 6 // 4c + 1c + 1c
 			viscosity = 0.13
 			var/counter = 1
+			var/fakedeathed = 0
 
 			pooled()
 				..()
 				counter = 1
+				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				switch(counter++)
+				switch(counter += (1 * mult))
 					if (1 to 5)
 						M.change_eye_blurry(10, 10)
-					if (6 to 10)
+					if (6 to 11)
 						M.drowsyness  = max(M.drowsyness, 10)
-					if (11)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
-						M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
-						M.setStatus("resting", INFINITE_STATUS)
-						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					if (12 to 60) // Capped at ~2 minutes, that is 60 cycles + 10 paralysis (normally wears off at one per cycle).
 						M.changeStatus("paralysis", 30 * mult)
 					if (61 to INFINITY)
 						M.change_eye_blurry(10, 10)
+				if (counter >= 11 && !fakedeathed)
+					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
+					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
+					M.setStatus("resting", INFINITE_STATUS)
+					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
 
-				M.updatehealth()
 				..()
 
 		capulettium_plus
@@ -1220,20 +1220,23 @@ datum
 			value = 28 // 6c + 9c + 13c
 			viscosity = 0.17
 			var/counter = 1
+			var/fakedeathed = 0
 
 			pooled()
 				..()
 				counter = 1
+				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if (counter == 10)
+				if (counter += (1*mult) >= 10 && !fakedeathed)
 					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					fakedeathed = 1
 
-				M.updatehealth()
+
 				..()
 /*
 		montaguone
@@ -1268,7 +1271,6 @@ datum
 									M.lying = 1
 									M.emote("deathgasp")
 					data++
-					M.updatehealth()
 				..()
 */
 		life
@@ -1379,14 +1381,12 @@ datum
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
-					M.updatehealth()
 				else if (our_amt < 10)
 					if (prob(8))
 						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-					M.updatehealth()
 
 				else if (prob(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
@@ -1421,14 +1421,12 @@ datum
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
-					M.updatehealth()
 				else if (our_amt < 20)
 					if (prob(8))
 						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span class='alert'>You hoot all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-					M.updatehealth()
 				else if (prob(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 150 * mult))
@@ -1884,7 +1882,6 @@ datum
 						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
-				M.updatehealth()
 				..()
 				return
 
@@ -1897,7 +1894,6 @@ datum
 					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
-					M.updatehealth()
 				else
 					if(method == INGEST)
 						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
@@ -1939,7 +1935,6 @@ datum
 						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
 						M.take_toxin_damage(4 * mult)
 				M.UpdateDamageIcon()
-				M.updatehealth()
 				..()
 				return
 
@@ -1952,7 +1947,6 @@ datum
 					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
 					M.HealDamage("All", 5, 0)
 					M.UpdateDamageIcon()
-					M.updatehealth()
 				else
 					if(method == INGEST)
 						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
@@ -2714,6 +2708,7 @@ datum
 			transparency = 230
 			overdose = 20
 			viscosity = 0.3
+			minimum_reaction_temperature = T0C+100
 			var/multiplier = 1
 			var/grenade_handled = 0
 			pooled()
@@ -2737,17 +2732,17 @@ datum
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				. = ..()
-				if (reacting) return
-				if (exposed_temperature > T0C + 100)
-					reacting = 1
-					var/count = 0
-					for (var/mob/living/L in oview(5, holder.my_atom))
-						count++
-					for (var/mob/living/L in oview(5, holder.my_atom))
-						arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+				if (reacting)
+					return
 
-					holder.del_reagent(id)
+				reacting = 1
+				var/count = 0
+				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
+					count++
+				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
+					arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+
+				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)
 
@@ -2873,7 +2868,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -3071,19 +3065,19 @@ datum
 			id = "bloodc"
 			value = 3
 			hygiene_value = -4
+			minimum_reaction_temperature = T0C + 50
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > T0C + 50)
-					if (holder.my_atom)
-						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
-							boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
-					else
-						var/list/covered = holder.covered_turf()
-						for(var/turf/t in covered)
-							for (var/mob/O in AIviewers(t, null))
-								boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
-					holder.del_reagent(id)
-				return
+				if (holder.my_atom)
+					for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
+						boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
+				else
+					var/list/covered = holder.covered_turf()
+					for(var/turf/t in covered)
+						for (var/mob/O in AIviewers(t, null))
+							boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
+				holder.del_reagent(id)
+
 
 		vomit
 			name = "vomit"
@@ -3423,6 +3417,7 @@ datum
 			transparency = 225
 			reagent_state = LIQUID
 			depletion_rate = 1
+			minimum_reaction_temperature = -INFINITY
 
 
 
@@ -3475,7 +3470,6 @@ datum
 
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				..()
 				//TODO: if cold temperature, take up all the reagents in the holder into contents, calculate distribution amount based on volume
 				if( exposed_temperature < (T0C - 50) && !hardened)
 					// -50C, solidify polymer
@@ -3720,7 +3714,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(0.16 * mult)
-				M.updatehealth()
 				..()
 				return
 

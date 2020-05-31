@@ -519,7 +519,7 @@ obj/decal/fakeobjects/teleport_pad
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
-		if (!M.can_slip(0) || M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
+		if (!M.can_slip(0) || M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.hasStatus("resting"))
 			return
 
 		M.pulling = null

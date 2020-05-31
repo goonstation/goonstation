@@ -67,7 +67,6 @@
 		var/mob/living/carbon/human/H = M
 
 		if (blood_system)
-			H.ensure_bp_list()
 			var/bp_col
 			switch (H.blood_pressure["total"])
 				if (-INFINITY to 374) // very low (90/60)

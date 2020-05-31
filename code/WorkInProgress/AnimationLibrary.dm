@@ -148,17 +148,26 @@
 	src.attack_particle.filters = filter (type="blur", size=0.2)
 	src.attack_particle.filters += filter (type="drop_shadow", x=1, y=-1, size=0.7)
 
+	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
 /obj/particle/attack
 
 	disposing() //kinda slow but whatever, block that gc ok
 		for (var/mob/M in mobs)
 			if (M.attack_particle == src)
-				M.attack_particle = 0
+				M.attack_particle = null
+			if (M.sprint_particle == src)
+				M.sprint_particle = null
 		..()
 
+	sprint
+		icon = 'icons/mob/mob.dmi'
+		icon_state = "sprint_cloud"
+		layer = MOB_LAYER_BASE - 0.1
+		appearance_flags = TILE_BOUND
 
-/mob/var/obj/particle/attack/attack_particle = 0
+/mob/var/obj/particle/attack/attack_particle
+/mob/var/obj/particle/attack/sprint/sprint_particle
 
 ///obj/attackby(var/obj/item/I as obj, mob/user as mob)
 //	attack_particle(user,src)
@@ -471,6 +480,46 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.vis_contents.Remove(M.attack_particle)
 		M.attack_particle.layer = EFFECTS_LAYER_BASE
 
+
+/proc/sprint_particle(var/mob/M, var/turf/T = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = null
+	flick("sprint_cloud",M.sprint_particle)
+	SPAWN_DBG(6)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
+/proc/sprint_particle_small(var/mob/M, var/turf/T = null, var/direct = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = direct
+	flick("sprint_cloud_small",M.sprint_particle)
+	SPAWN_DBG(4)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
+/proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = direct
+	flick("sprint_cloud_tiny",M.sprint_particle)
+	SPAWN_DBG(3)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
@@ -574,7 +623,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		sleep(0.2 SECONDS)
 
 		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus("weakened") && !A.hasStatus("paralysis"))
+		if (!A.hasStatus(list("weakened", "paralysis")))
 			A.transform = start
 		A.pixel_x = old_x
 		A.pixel_y = old_y

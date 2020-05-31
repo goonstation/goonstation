@@ -110,9 +110,9 @@
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A)
+			target_locations[A.name] = list(A.type)
 		else
-			target_locations[A.name].Add(A)
+			target_locations[A.name].Add(A.type)
 #endif
 
 	target_location_name = pick(target_locations)

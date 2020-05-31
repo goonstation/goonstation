@@ -1,7 +1,7 @@
 /obj/machinery/bot/chefbot
 	name = "Dramatic Chef"
 	desc = "(icon, name, concept, and any kind of consistency or sense is currently pending)"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot-idle"
 	layer = 5.0 //TODO LAYER
 	density = 0

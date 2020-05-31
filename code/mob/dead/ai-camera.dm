@@ -113,7 +113,7 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
-		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.getStatusDuration("weakened") && !src.mainframe.getStatusDuration("paralysis") && !src.mainframe.getStatusDuration("stunned"))
+		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 				var/obj/O = target
 				O.receive_silicon_hotkey(src)

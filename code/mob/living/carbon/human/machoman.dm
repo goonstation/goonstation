@@ -949,7 +949,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
 					src.take_toxin_damage(-INFINITY)
 					src.UpdateDamageIcon()
-					src.updatehealth()
 					if (H)
 						H.pixel_x = 0
 						H.pixel_y = 0
@@ -1014,7 +1013,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_heal
 					random_brute_damage(src, 25)
 					src.UpdateDamageIcon()
-					src.updatehealth()
 					SPAWN_DBG(0)
 						if (H)
 							H.pixel_x = 0
@@ -1399,7 +1397,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						continue
 					affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
 				H.UpdateDamageIcon()
-				target.updatehealth()
 				H.bodytemperature = H.base_body_temp
 		else
 			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src]!</span>")

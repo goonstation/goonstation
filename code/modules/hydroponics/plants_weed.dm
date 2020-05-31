@@ -1,7 +1,11 @@
-/datum/plant/fungus
-	name = "Fungus"
+ABSTRACT_TYPE(/datum/plant/weed)
+/datum/plant/weed
+	plant_icon = 'icons/obj/hydroponics/plants_weed.dmi'
 	growthmode = "weed"
 	category = "Miscellaneous"
+
+/datum/plant/weed/fungus
+	name = "Fungus"
 	seedcolor = "#224400"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom
 	nothirst = 1
@@ -17,10 +21,8 @@
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
 
-/datum/plant/lasher
+/datum/plant/weed/lasher
 	name = "Lasher"
-	growthmode = "weed"
-	category = "Miscellaneous"
 	seedcolor = "#00FFFF"
 	cropsize = 3
 	nothirst = 1
@@ -77,11 +79,9 @@
 			return 1
 		else return 0
 
-/datum/plant/creeper
+/datum/plant/weed/creeper
 	name = "Creeper"
 	unique_seed = /obj/item/seed/creeper
-	growthmode = "weed"
-	category = "Miscellaneous"
 	seedcolor = "#CC00FF"
 	nothirst = 1
 	starthealth = 30
@@ -103,7 +103,7 @@
 		if (POT.growth > (P.growtime + DNA.growtime) && POT.health > P.starthealth / 2 && prob(33))
 			for (var/obj/machinery/plantpot/C in range(1,POT))
 				var/datum/plant/growing = C.current
-				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/creeper)) C.health -= 10
+				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper)) C.health -= 10
 				else if (C.dead) C.HYPdestroyplant()
 				else if (!C.current)
 					var/obj/item/seed/creeper/WS = new(src)
@@ -112,10 +112,8 @@
 					qdel(WS)
 					break
 
-/datum/plant/radweed
+/datum/plant/weed/radweed
 	name = "Radweed"
-	growthmode = "weed"
-	category = "Miscellaneous"
 	seedcolor = "#55CC55"
 	nothirst = 1
 	starthealth = 40
@@ -137,7 +135,7 @@
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( POT.loc )
-			B.icon = 'icons/obj/hydroponics/hydromisc.dmi'
+			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1
@@ -162,14 +160,12 @@
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))
 				var/datum/plant/growing = C.current
 				if (POT.health <= P.starthealth / 2) break
-				if (istype(growing,/datum/plant/radweed)) continue
+				if (istype(growing,/datum/plant/weed/radweed)) continue
 				if (growing) C.HYPmutateplant(radrange * 2)
 				if (growing) C.HYPdamageplant("radiation",rand(0,radrange * 2))
 
-/datum/plant/slurrypod
+/datum/plant/weed/slurrypod
 	name = "Slurrypod"
-	growthmode = "weed"
-	category = "Miscellaneous"
 	seedcolor = "#004400"
 	crop = /obj/item/reagent_containers/food/snacks/plant/slurryfruit
 	nothirst = 1

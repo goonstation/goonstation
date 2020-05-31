@@ -20,7 +20,7 @@
 	var/wire_powered = 0
 	var/allow_stunned_dragndrop = 0
 	var/processing_bucket = 1
-	var/processing_tier = PROCESSING_FULL
+	var/processing_tier = PROCESSING_EIGHTH
 	var/current_processing_tier
 	var/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 
@@ -34,7 +34,7 @@
 		machine_registry[initial(machine_registry_idx)] += src
 
 	var/static/machines_counter = 0
-	src.processing_bucket = machines_counter++ & 15 // this is just modulo 16 but faster due to power-of-two memes
+	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
 	if (current_state > GAME_STATE_WORLD_INIT)
 		SPAWN_DBG(5 DECI SECONDS)

@@ -23,8 +23,8 @@
 
 		New()
 			..()
-			light1 = new /datum/light/point
-			light1.set_brightness(1)
+			light1 = new /datum/light/line
+			light1.set_brightness(5)
 			light1.set_color(col_r, col_g, col_b)
 
 		// defined to have a single light point
@@ -46,19 +46,20 @@
 		var/datum/light/light4
 
 		// Turns on four lights because I can't figure out how to do two lights out front facing the direction the pod is heading
+		// TODO : fix this, it's 2x the load than we need out of this
 		New()
 			..()
-			var/brightness = 0.85
-			light1 = new /datum/light/point
+			var/brightness = 2
+			light1 = new /datum/light/line
 			light1.set_brightness(brightness)
 			light1.set_color(col_r, col_g, col_b)
-			light2 = new /datum/light/point
+			light2 = new /datum/light/line
 			light2.set_brightness(brightness)
 			light2.set_color(col_r, col_g, col_b)
-			light3 = new /datum/light/point
+			light3 = new /datum/light/line
 			light3.set_brightness(brightness)
 			light3.set_color(col_r, col_g, col_b)
-			light4 = new /datum/light/point
+			light4 = new /datum/light/line
 			light4.set_brightness(brightness)
 			light4.set_color(col_r, col_g, col_b)
 
@@ -95,8 +96,8 @@
 
 	New()
 		..()
-		light1 = new /datum/light/point
-		light1.set_brightness(1)
+		light1 = new /datum/light/line
+		light1.set_brightness(5)
 
 	activate()
 		..()

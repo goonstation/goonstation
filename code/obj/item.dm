@@ -675,7 +675,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && W:on) || W.burning)
+		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
@@ -778,6 +778,23 @@
 		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 		equipment_proxy.space_movement += spacemove
 
+	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
+		return
+	if (src.hasProperty("meleeprot"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot"))
+	if (src.hasProperty("meleeprot_head"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_head"))
+	if (src.hasProperty("meleeprot_all"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot_all"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_all"))
+	if (src.hasProperty("rangedprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, src, src.getProperty("rangedprot"))
+	if (src.hasProperty("radprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RADPROT, src, src.getProperty("radprot"))
+	if (src.hasProperty("heatprot"))
+		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src, src.getProperty("heatprot"))
+	if (src.hasProperty("coldprot"))
+		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src, src.getProperty("coldprot"))
 
 /obj/item/proc/unequipped(var/mob/user)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
@@ -796,6 +813,24 @@
 	if (spacemove)
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
+
+	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
+		return
+	if (src.hasProperty("meleeprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
+	if (src.hasProperty("meleeprot_head"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
+	if (src.hasProperty("meleeprot_all"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
+	if (src.hasProperty("rangedprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, src)
+	if (src.hasProperty("radprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, src)
+	if (src.hasProperty("heatprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, src)
+	if (src.hasProperty("coldprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, src)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
@@ -942,6 +977,8 @@
 
 	if (src.loc == user)
 		var/in_pocket = 0
+		if(issilicon(user)) //if it's a borg's shit, stop here
+			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
@@ -1166,7 +1203,6 @@
 
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.ensure_bp_list()
 		if (H.blood_pressure["total"] > 585)
 			msgs.visible_message_self("<span class='alert'><I>[user] gasps and wheezes from the exertion!</I></span>")
 			user.losebreath += rand(1,2)
@@ -1271,6 +1307,9 @@
 
 	var/turf/T = loc
 	if (!istype(T))
+		if(src.temp_flags & IS_LIMB_ITEM)
+			if(istype(src.loc, /obj/item/parts/human_parts/arm/right/item)||istype(src.loc, /obj/item/parts/human_parts/arm/left/item))
+				src.loc:remove(0)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.u_equip(src)
@@ -1336,6 +1375,8 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
 /obj/item/proc/dropped(mob/user)
+	if (user)
+		src.dir = user.dir
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
