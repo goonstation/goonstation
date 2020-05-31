@@ -77,9 +77,8 @@ chui/window/keybind_menu
 		changed_keys[action] = uppertext(key) //keys are always uppertext
 
 /client/verb/modify_keybinds()
-	set name = "Modify Keybinds"
-	set category = "Commands"
-	set desc = "Open up a window to change your keybinds"
+	set hidden = 1
+	set name = "modify-keybinds"
 
 	if(!src.keybind_menu)
 		src.keybind_menu = new(src)
