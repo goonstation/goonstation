@@ -144,5 +144,7 @@
 
 #define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length(MIXTURE.trace_gases) ? MIXTURE.heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
 
+#define THERMAL_ENERGY(MIXTURE) (temperature * HEAT_CAPACITY(MIXTURE))
+
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))

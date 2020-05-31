@@ -119,7 +119,7 @@ datum/pipe_network
 
 		for(var/datum/gas_mixture/gas in gases)
 			air_transient.volume += gas.volume
-			total_thermal_energy += gas.thermal_energy()
+			total_thermal_energy += THERMAL_ENERGY(gas)
 			total_heat_capacity += HEAT_CAPACITY(gas)
 
 			#define _RECONCILE_AIR(GAS, ...) air_transient.GAS += gas.GAS;
@@ -186,7 +186,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 	for(var/datum/gas_mixture/gas in gases)
 		total_volume += gas.volume
-		total_thermal_energy += gas.thermal_energy()
+		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
 		#define _EQUALIZE_GASES_ADD_TO_TOTAL(GAS, ...) total_ ## GAS += gas.GAS;

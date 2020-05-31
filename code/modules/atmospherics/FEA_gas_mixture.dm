@@ -64,9 +64,6 @@ What are the archived variables for?
 	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
 	..()
 
-/datum/gas_mixture/proc/thermal_energy()
-	return temperature*HEAT_CAPACITY(src)
-
 // Mutator procs
 // For specific events
 /datum/gas_mixture/proc/zero()
