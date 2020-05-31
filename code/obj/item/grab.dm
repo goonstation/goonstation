@@ -715,7 +715,7 @@
 	disposing()
 		for(var/datum/objectProperty/equipment/P in src.properties)
 			P.removeFromMob(src, src.assailant)
-			src.properties.Remove(P)
+
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
@@ -754,7 +754,7 @@
 	delProperty(propId)
 		var/datum/objectProperty/equipment/P = ..()
 		if(istype(P))
-			P.removeFromMob(src, src.assailant)
+			P.removeFromMob(src, src.assailant, P.propVal)
 
 	proc/can_block(var/hit_type = null)
 		.= DEFAULT_BLOCK_PROTECTION_BONUS
