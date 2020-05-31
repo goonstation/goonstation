@@ -2736,21 +2736,15 @@ var/global/noir = 0
 
 					if("give-legs")
 						if(src.level >= LEVEL_ADMIN)
-							var/list/atoms_to_leg = list()
 							var/pathname = input("Path of the things you want to leg like (/obj/item/paper_bin)","path:", null) as null|text
 							if(!pathname)
 								return
 							if (alert("Do you really wanna give things legs?", "LEG LEG", "Sure thing!", "Not really.") == "Sure thing!")
 								for(var/atom/movable/A in world) //Build the god forsaken list
 									if(istype(A, text2path(pathname)))
-										atoms_to_leg += A
-								if(atoms_to_leg.len >= 1)
-									logTheThing("admin", usr, null, "used give legs secret")
-									logTheThing("diary", usr, null, "used give legs secret", "admin")
-									for(var/atom/movable/A in atoms_to_leg)
-										if(!A)
-											continue
 										A.AddComponent(/datum/component/legs)
+								logTheThing("admin", usr, null, "used give legs secret")
+								logTheThing("diary", usr, null, "used give legs secret", "admin")
 							else
 								return
 						else
