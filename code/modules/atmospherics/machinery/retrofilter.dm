@@ -1,5 +1,7 @@
 //Ye olde filter of yore (Pre-dev adjustable filter)
 
+//TODO: Make this more modular and use APPLY_TO_GASES
+
 //TODO: Hacking.
 obj/machinery/atmospherics/retrofilter
 	icon = 'icons/obj/atmospherics/retro_filter.dmi'
