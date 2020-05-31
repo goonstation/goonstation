@@ -64,15 +64,8 @@ What are the archived variables for?
 	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
 	..()
 
-/datum/gas_mixture/proc/total_moles()
-	. = oxygen + carbon_dioxide + nitrogen + toxins
-
-	if(trace_gases && trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
-			. += trace_gas.moles
-
 /datum/gas_mixture/proc/return_pressure()
-	return (total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume)
+	return (TOTAL_MOLES(src)*R_IDEAL_GAS_EQUATION*temperature/volume)
 
 /datum/gas_mixture/proc/thermal_energy()
 	return temperature*HEAT_CAPACITY(src)
@@ -289,7 +282,7 @@ What are the archived variables for?
 //Proportionally removes amount of gas from the gas_mixture
 //Returns: gas_mixture with the gases removed
 /datum/gas_mixture/proc/remove(amount)
-	var/sum = total_moles()
+	var/sum = TOTAL_MOLES(src)
 	amount = min(amount,sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
@@ -360,7 +353,7 @@ What are the archived variables for?
 //Returns: gas_mixture with the gases removed or null
 /datum/gas_mixture/proc/check_then_remove(amount)
 	//Since it is all proportional, the check may be done on the gas as a whole
-	var/sum = total_moles()
+	var/sum = TOTAL_MOLES(src)
 	amount = min(amount,sum) //Can not take more air than tile has!
 
 	if((amount > MINIMUM_AIR_RATIO_TO_SUSPEND) && (amount > sum*MINIMUM_AIR_RATIO_TO_SUSPEND))
@@ -630,7 +623,7 @@ What are the archived variables for?
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(TOTAL_MOLES(sharer) - moved_moles)
+		var/delta_pressure = temperature_archived*(TOTAL_MOLES(src) + moved_moles) - sharer.temperature_archived*(TOTAL_MOLES(sharer) - moved_moles)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 
 	else
@@ -704,7 +697,7 @@ What are the archived variables for?
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
 	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE))
-		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
+		var/delta_pressure = temperature_archived*(TOTAL_MOLES(src) + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 	else
 		return 0
@@ -875,7 +868,7 @@ What are the archived variables for?
 		((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
 		return 0
 
-	if((total_moles()) > MINIMUM_AIR_TO_SUSPEND)
+	if((TOTAL_MOLES(src)) > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
 			return 0
