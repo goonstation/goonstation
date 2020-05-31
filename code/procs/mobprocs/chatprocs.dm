@@ -8,29 +8,6 @@
 	set name = "say"
 	//&& !src.client.holder
 
-	if (client.preferences.auto_capitalization)
-
-		if (copytext(message, 1, 2) == ";") //Checks if message is prefixed with General Frequency
-			message = copytext(message, 2) //Chops off prefix
-			var/i = 1
-			while (copytext(message, i, i+1) == " ") //Reads for whitespace in front of message
-				i++
-			message = ";" + capitalize(copytext(message, i)) //Gets rid of whitespace, capitalizes the message, and reattaches prefix
-
-		else if (copytext(message, 1, 2) == ":") //Basically the same, except its looking for two character prefixes
-			var/msg_prefix = copytext(message, 1, 3) //Stores message prefix
-			message = copytext(message, 3) //Chops off prefix
-			var/i = 1
-			while (copytext(message, i, i+1) == " ")
-				i++
-			message = msg_prefix + capitalize(copytext(message, i)) //Gets rid of whitespace, capitalizes the message, and reattaches prefix
-
-		else //If its just a regular message
-			var/i = 1
-			while (copytext(message, i, i+1) == " ") //Same whitespace search as before
-				i++
-			message = capitalize(copytext(message, i)) //Gets rid of whitespace, and capitalizes the message.
-
 	if (!message)
 		return
 	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
