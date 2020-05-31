@@ -2193,11 +2193,11 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			if(prob(50))
 				flavor = pick("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
 				phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-				tastesbad = 0
+				tastesbad = 1
 			else
 				flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
 				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
-				tastesbad = 1
+				tastesbad = 0
 
 	heal(var/mob/M)
 		if (tastesbad)
