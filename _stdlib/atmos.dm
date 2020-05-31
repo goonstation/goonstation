@@ -123,6 +123,7 @@ What can break when adding new gases:
 	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
 	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS)
 //	_APPLY_TO_GASES(,, MACRO, ARGS) // replace with this when the langserver gets fixed >:(
+// (the _APPLY_TO_GASES version compiles and works fine but the linter rejects it for now)
 
 #ifdef ATMOS_ARCHIVING
 #define APPLY_TO_ARCHIVED_GASES(MACRO, ARGS...) \
