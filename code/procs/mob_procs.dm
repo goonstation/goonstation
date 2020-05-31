@@ -114,10 +114,10 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
 	if (!walking_matters)
 		slip_delay = 10
-	var/movedelay = src.movement_delay(get_step(src,src.move_dir), running)
+	var/movedelay = max(src.movement_delay(get_step(src,src.move_dir), running), world.time - src.next_move)
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movedelay/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
@@ -136,7 +136,7 @@
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, intensity)
 		SPAWN_DBG(0)
-			src.throw_at(T, intensity, 3, list("stun"=clamp(1 SECONDS * intensity, 1 SECOND, 10 SECONDS)), src.loc, throw_type = THROW_SLIP)
+			src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
 /mob/living/carbon/human/slip(walking_matters = 1, running = 0)
