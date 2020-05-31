@@ -156,5 +156,6 @@
 		src.force_laydown_standup()
 
 	if (params["stun"])
-		src.changeStatus("weakened", params["stun"])
-		src.force_laydown_standup()
+		if (src.getStatusDuration("weakened") < params["stun"])
+			src.setStatus("weakened", params["stun"])
+			src.force_laydown_standup()
