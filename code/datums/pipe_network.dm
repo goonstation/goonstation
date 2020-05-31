@@ -183,7 +183,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 	#define _EQUALIZE_GASES_TOTAL_DEF(GAS, ...) var/total_ ## GAS = 0;
 	APPLY_TO_GASES(_EQUALIZE_GASES_TOTAL_DEF)
-	#define _EQUALIZE_GASES_TOTAL_DEF
+	#undef _EQUALIZE_GASES_TOTAL_DEF
 
 	var/list/total_trace_gases
 
