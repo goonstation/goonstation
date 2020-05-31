@@ -345,9 +345,11 @@ turf
 		process_cell()
 			var/list/turf/simulated/possible_fire_spreads
 			if(processing && air)
+#ifdef ATMOS_ARCHIVING
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
 				current_cycle = air_master.current_cycle
+#endif
 
 				for(var/direction in cardinal)
 					if(air_check_directions&direction) //Grab all valid bordering tiles
@@ -356,8 +358,10 @@ turf
 
 						//if(istype(enemy_tile))
 						if (enemy_tile.turf_flags & IS_TYPE_SIMULATED)
+#ifdef ATMOS_ARCHIVING
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
+#endif
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
 								if(enemy_tile.parent.current_cycle < current_cycle)
 									if(enemy_tile.parent.air.check_gas_mixture(air))
