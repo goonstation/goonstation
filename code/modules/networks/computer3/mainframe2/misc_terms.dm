@@ -4725,8 +4725,8 @@
 	active = 1
 
 	var/setup_tag = null
-			//Pressure, Temperature, O2, N2, CO2, Plasma, Misc
-	var/list/sensed = list(null, null, null, null, null, null, null)
+			//Pressure, Temperature, gases, trace gases sum
+	var/list/sensed = null
 
 	New()
 		..()
@@ -4739,7 +4739,10 @@
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,Oxygen-%,Nitrogen-%,CO2-%,FAAE_1-%,Misc-%")
+				#define _FIELD_LABELS(_, _, NAME, ...) "[NAME]-%,"+
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,[APPLY_TO_GASES(_FIELD_LABELS) ""]Misc-%")
+				var/dummy_variable_to_avoid_a_dumb_byond_bug // https://secure.byond.com/forum/post/2072419
+				#undef _FIELD_LABELS
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
@@ -4750,27 +4753,26 @@
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
 				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
+				sensed.Cut()
 				if (air_sample)
-					sensed[1] = round(MIXTURE_PRESSURE(air_sample), 0.1)
-					sensed[2] = round(air_sample.temperature, 0.1)
-					sensed[3] = round(100*air_sample.oxygen/total_moles, 0.1)
-					sensed[4] = round(100*air_sample.nitrogen/total_moles, 0.1)
-					sensed[5] = round(100*air_sample.carbon_dioxide/total_moles, 0.1)
-					sensed[6] = round(100*air_sample.toxins/total_moles, 0.1)
+					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
+					sensed.Add(round(air_sample.temperature, 0.1))
+					#define _SET_SENSED_GAS(GAS, ...) sensed.Add(round(100*air_sample.GAS/total_moles, 0.1));
+					APPLY_TO_GASES(_SET_SENSED_GAS)
+					#undef _SET_SENSED_GAS
 
 					var/tgmoles = 0
 					if(air_sample.trace_gases && air_sample.trace_gases.len)
 						for(var/datum/gas/trace_gas in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
-					sensed[7] = round(100*tgmoles/total_moles, 0.1)
+					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
-					for (var/i = 1, i <= sensed.len, i++)
-						sensed[i] = "???"
+					sensed = list("???")
 
 				message_host("command=ack")
 
 			if ("read")
-				if (!sensed || sensed.len < 7)
+				if (!sensed)
 					message_host("command=nack")
 					return
 				for (var/i=1,i<=sensed.len,i++)
@@ -4778,7 +4780,7 @@
 						message_host("command=nack")
 						return
 
-				message_host("command=read&data=[sensed[1]],[sensed[2]],[sensed[3]],[sensed[4]],[sensed[5]],[sensed[6]],[sensed[7]]")
+				message_host("command=read&data=[sensed.Join(",")]")
 				message_host("command=ack")
 		return
 

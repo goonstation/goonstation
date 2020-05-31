@@ -967,6 +967,7 @@
 				if (istype(success))
 					#define _TELESCI_ATMOS_SCAN(GAS, _, NAME, ...) "[NAME]: [success[#GAS]], " +
 					message_user("Scan Results:|nAtmosphere: [APPLY_TO_GASES(_TELESCI_ATMOS_SCAN) " "][success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
+					var/dummy_variable_to_avoid_a_dumb_byond_bug // https://secure.byond.com/forum/post/2072419
 					#undef _TELESCI_ATMOS_SCAN
 
 				else if (istext(success))
