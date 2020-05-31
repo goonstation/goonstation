@@ -129,18 +129,13 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			return
 		if (iscarbon(AM))
 			var/mob/M =	AM
-			if (!M.can_slip())
-				return
 			if (prob(src.slippery))
-				M.pulling = null
-				M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
-				"<span class='alert'>You slip on [src]!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				M.changeStatus("stunned", 3 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-				M.force_laydown_standup()
-				if (src.slipped_in_blood)
-					M.add_blood(src)
+				if (M.slip())
+					M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
+					"<span class='alert'>You slip on [src]!</span>")
+
+					if (src.slipped_in_blood)
+						M.add_blood(src)
 
 	attackby(obj/item/W, mob/user)
 		if (src.can_sample && W.is_open_container() && W.reagents)

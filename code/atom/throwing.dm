@@ -32,7 +32,7 @@
 /atom/proc/throw_begin(atom/target)
 	return
 
-/atom/proc/throw_end() //throw ends (callback regardless of whether we impacted something)
+/atom/proc/throw_end(list/params) //throw ends (callback regardless of whether we impacted something)
 	return
 
 /atom/movable/proc/throw_impact(atom/hit_atom, list/params)
@@ -208,7 +208,7 @@
 		reagents.physical_shock(14)
 	src.throwing = throw_type
 
-	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
 		if (ismob(src))
 			var/mob/M = src
 			M.force_laydown_standup()
@@ -222,7 +222,7 @@
 	if(!istype(src)) return
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin == 1)
+	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
@@ -346,14 +346,17 @@
 			T = src.loc
 
 	//done throwing, either because it hit something or it finished moving
-	src.throw_end()
+	src.throw_end(params)
+	if (!(throwing & THROW_SLIP))
+		animate(src, transform = transform_original)
+
 	if (!hitAThing) // Bump proc requires throwing flag to be set, so if we hit a thing, leave it on and let Bump turn it off
 		src.throwing = 0
 	else // if we hit something don't use the pixel x/y from the click params
 		params = null
 
 	src.throw_unlimited = 0
-	animate(src, transform = transform_original)
+
 
 	//Wire note: Small fix stemming from pie science. Throw a pie at yourself! Whoa!
 	//if (target == usr)

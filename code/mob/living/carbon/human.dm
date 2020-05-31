@@ -171,7 +171,6 @@
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
 	var/sustained_moves = 0
-	var/last_move_dir = null
 
 /mob/living/carbon/human/New()
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
@@ -816,12 +815,6 @@
 
 	return
 
-#define BASE_SPEED 1.65
-#define BASE_SPEED_SUSTAINED 1.5
-#define RUN_SCALING 0.12
-#define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.5
-
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
 	var/base_speed = BASE_SPEED
 	if (sustained_moves >= SUSTAINED_RUN_REQ)
@@ -862,7 +855,7 @@
 			maximum_slowdown = modifier.maximum_slowdown
 
 	if (m_intent == "walk")
-		. += 0.8
+		. += WALK_DELAY_ADD
 
 	if (src.nodamage)
 		return .
@@ -979,11 +972,6 @@
 				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
-
-#undef BASE_SPEED
-#undef RUN_SCALING
-#undef RUN_SCALING_LYING
-#undef RUN_SCALING_STAGGER
 
 /mob/living/carbon/human/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
@@ -3500,11 +3488,8 @@
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
 
 			sustained_moves = 0
-
 	else
 		sustained_moves = 0
-
-	last_move_dir = move_dir
 
 	//STEP SOUND HANDLING
 	if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
@@ -3585,6 +3570,7 @@
 			O.onMove(src)
 
 
+	..()
 #undef can_step_sfx
 
 /mob/living/carbon/human/Move(var/turf/NewLoc, direct)

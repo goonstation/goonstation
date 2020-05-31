@@ -398,18 +398,9 @@
 							src.inertia_dir = 0
 							T.wet = 0
 							return
-						if (src.can_slip())
-							src.pulling = null
-							src.throwing = 1
-							SPAWN_DBG(0) // this stops the entire server from crashing when SOMEONE (read: wonk) space lubes the entire station
-								step(src, src.dir)
-								src.throwing = 0
+						if (src.slip())
 							boutput(src, "<span class='notice'>You slipped on the wet floor!</span>")
-							playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
-							src.changeStatus("stunned", 2 SECONDS)
-							src.changeStatus("weakened", 2 SECONDS)
 							src.unlock_medal("I just cleaned that!", 1)
-							src.force_laydown_standup()
 						else
 							src.inertia_dir = 0
 							return
