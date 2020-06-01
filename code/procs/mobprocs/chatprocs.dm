@@ -68,13 +68,11 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-			if (client.preferences.auto_capitalization)
-				var/i = 1
-				while (copytext(text, i, i+1) == " ")
-					i++
-				text = capitalize(copytext(text, i))
-			src.say_verb(token + " " + text)
 
+			if(src?.client?.preferences.auto_capitalization)
+				text = capitalize(text)
+
+			src.say_verb(token + " " + text)
 
 	else if (src.ears && istype(src.ears, /obj/item/device/radio))
 		var/obj/item/device/radio/R = src.ears
@@ -165,6 +163,9 @@
 
 	else if (!ishuman(src))
 		name = src.name
+
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
 
 #ifdef DATALOGGER
 	game_stats.ScanText(message)
