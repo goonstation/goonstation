@@ -2867,7 +2867,7 @@ area/station/security/visitation
 
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
-
+	icon_state = "red"
 
 /////////////////////////////// OLD AREAS THAT ARE NOT USED BUT ARE IN HERE
 
