@@ -1,4 +1,4 @@
-c/* MOB PROPERTIES */
+/* MOB PROPERTIES */
 
 /*
 
