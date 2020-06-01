@@ -96,14 +96,12 @@
 		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
 		attached = 0
 
-	dispose()
+	disposing()
 		if (attached)
 			if (!dont_make_an_overlay && active)
 				attached.ClearSpecificOverlays(overlay_key)
 			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
-
-	attack()
-		return
+		..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
@@ -229,7 +227,7 @@
 		src.remove_from_attached()
 		..()
 
-	dispose()
+	disposing()
 		src.remove_from_attached()
 		..()
 
@@ -432,7 +430,7 @@
 			src.camera.c_tag = src.camera_tag
 		..()
 
-	dispose()
+	disposing()
 		if ((active) && (attached != null))
 			attached.open_to_sound = 0
 		if (src.camera)

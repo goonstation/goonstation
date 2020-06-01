@@ -205,13 +205,6 @@
 		. = ..()
 		hud.update_pulling()
 
-	dispose()
-		..()
-		if (src in ghost_drones)
-			ghost_drones -= src
-		if (src in available_ghostdrones)
-			available_ghostdrones -= src
-
 	disposing()
 		if (src in ghost_drones)
 			ghost_drones -= src

@@ -146,7 +146,7 @@
 		for(var/A in src.vis_locs)
 			if(isliving(A))
 				var/mob/living/L = A
-				if(L.chat_text = src)
+				if(L.chat_text == src)
 					L.chat_text = null
 			A:vis_contents -= src
 		..()

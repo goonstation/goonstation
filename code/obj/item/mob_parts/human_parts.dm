@@ -425,7 +425,7 @@
 		remove_from_mob(0)
 		..()
 
-	dispose()
+	disposing()
 		remove_from_mob(1)
 		..()
 
@@ -551,7 +551,7 @@
 		remove_from_mob(0)
 		..()
 
-	dispose()
+	disposing()
 		remove_from_mob(1)
 		..()
 

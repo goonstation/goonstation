@@ -182,7 +182,7 @@
 				return
 		return
 
-	dispose()
+	disposing()
 		var/turf/OL = get_turf(src)
 		if (src.desk_drawer && src.desk_drawer.contents.len)
 			for (var/atom/movable/A in src.desk_drawer)

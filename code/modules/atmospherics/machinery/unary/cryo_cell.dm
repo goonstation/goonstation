@@ -50,7 +50,7 @@
 				node = target
 				break
 
-	dispose()
+	disposing()
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 		..()

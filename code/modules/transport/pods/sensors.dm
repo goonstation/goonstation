@@ -24,7 +24,7 @@
 	var/trackable_range = 0
 
 
-	dispose()
+	disposing()
 		stop_tracking_me()
 		..()
 
