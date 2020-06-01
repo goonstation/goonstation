@@ -375,7 +375,8 @@ datum
 				groups_to_rebuild.len = 0
 
 			process_groups()
-				for(var/datum/air_group/AG in air_groups)
+				for(var/x in air_groups)
+					var/datum/air_group/AG = x
 					AG.process_group(parent_controller)
 					LAGCHECK(LAG_HIGH)
 
