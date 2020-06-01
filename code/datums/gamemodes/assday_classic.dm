@@ -213,7 +213,7 @@
 	for(var/client/C)
 		var/mob/living/player = C.mob
 		if (!istype(player)) continue
-			mobs += player
+		mobs += player
 	return mobs
 
 /datum/game_mode/assday/proc/pick_human_name_except(excluded_name)
