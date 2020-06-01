@@ -57,6 +57,26 @@ datum/pathogeneffects
 							I.show_message(infect_message)
 						logTheThing("pathology", M, I, "infects %target% with [origin.name] due to symptom [name].")
 
+	// creates an infective cloud
+	// this should give people better feedback about how be infected and how to avoid it
+	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin)
+		var/turf/T = get_turf(M)
+		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
+		Q.volume = 20
+		Q.pathogens += origin.pathogen_uid
+		Q.pathogens[origin.pathogen_uid] = origin
+		T.fluid_react_single(Q, 20, airborne = 1)
+
+	// creates an infective puddle
+	// this should give people better feedback about how be infected and how to avoid it
+	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin)
+		var/turf/T = get_turf(M)
+		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
+		Q.volume = 20
+		Q.pathogens += origin.pathogen_uid
+		Q.pathogens[origin.pathogen_uid] = origin
+		T.fluid_react_single(Q, 20, airborne = 0)
+
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
 	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
@@ -241,27 +261,27 @@ datum/pathogeneffects/malevolent/coughing
 			if (1)
 				if (prob(3))
 					M.show_message("<span class='alert'>You cough.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 			if (2)
 				if (prob(5))
 					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 			if (3)
 				if (prob(7))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 			if (4)
 				if (prob(10))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
 					M.TakeDamage("chest", 1, 0)
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 			if (5)
 				if (prob(10))
 					M.visible_message("<span class='alert'>[M] coughs very violently!</span>", "<span class='alert'>You cough very violently!</span>", "<span class='alert'>You hear someone cough very violently!</span>")
 					M.TakeDamage("chest", 2, 0)
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -333,25 +353,25 @@ datum/pathogeneffects/malevolent/sneezing
 			if (1)
 				if (prob(10))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 			if (2)
 				if (prob(12))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 			if (3)
 				if (prob(15))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 			if (4)
 				if (prob(20))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 			if (5)
 				if (prob(20))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -538,31 +558,31 @@ datum/pathogeneffects/malevolent/sweating
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You feel a bit warm.</span>")
 				if (prob(25))
-					infect(M, origin)
+					infect_puddle(M, origin)
 
 			if (2)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You feel rather warm.</span>")
 				if (prob(50))
-					infect(M, origin)
+					infect_puddle(M, origin)
 
 			if (3)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You're sweating heavily.</span>")
 				if (prob(75))
-					infect(M, origin)
+					infect_puddle(M, origin)
 
 			if (4)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
 				if (prob(85))
-					infect(M, origin)
+					infect_puddle(M, origin)
 
 			if (5)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
 				if (prob(95))
-					infect(M, origin)
+					infect_puddle(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -1039,11 +1059,11 @@ datum/pathogeneffects/malevolent/fluent
 		switch (origin.stage)
 			if (1 to 3)
 				if (prob(origin.stage * 2))
-					infect(M, origin)
+					infect_cloud(M, origin)
 
 			if (4 to 5)
 				if (prob(origin.stage * 5))
-					infect(M, origin)
+					infect_cloud(M, origin)
 		return message
 
 	may_react_to()
@@ -1781,7 +1801,7 @@ datum/pathogeneffects/malevolent/farts
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin)
 		M.emote("fart")
-		infect(M, origin)
+		infect_cloud(M, origin)
 
 	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
