@@ -324,6 +324,10 @@
 	if (src.targeting_ability)
 		src.targeting_ability = null
 
+	if(src.item_abilities)
+		src.item_abilities:len = 0
+		src.item_abilities = null
+
 	if (zone_sel)
 		if (zone_sel.master == src)
 			zone_sel.master = null
