@@ -332,6 +332,8 @@
 	zone_sel = null
 
 	mobs.Remove(src)
+	if (ai)
+		qdel(ai)
 	mind = null
 	ckey = null
 	client = null
