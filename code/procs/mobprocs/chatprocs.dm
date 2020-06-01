@@ -68,6 +68,7 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
+
 			if(src?.client?.preferences.auto_capitalization)
 				text = capitalize(text)
 
