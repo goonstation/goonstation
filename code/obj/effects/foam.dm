@@ -10,7 +10,7 @@
 	density = 0
 	layer = OBJ_LAYER + 0.9
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED
+	event_handler_flags = USE_HASENTERED | USE_CANPASS
 	var/foamcolor
 	var/amount = 3
 	var/expand = 1
@@ -195,3 +195,8 @@
 			reagents.reaction(M, TOUCH, 5)
 
 			M.show_text("You slip on the foam!", "red")
+
+/obj/effects/foam/CanPass(atom/movable/mover, turf/target)
+	if (src.metal && !mover)
+		return 0 // completely opaque to air
+	return 1
