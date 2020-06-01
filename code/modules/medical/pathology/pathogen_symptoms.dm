@@ -11,6 +11,7 @@ datum/pathogeneffects
 
 	var/rarity = RARITY_ABSTRACT
 	var/infect_message = null
+	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
 	var/beneficial = 0
 
@@ -62,6 +63,8 @@ datum/pathogeneffects
 	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
 	// OVERRIDE: Generally, you do not need to override this.
 	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
+		if (infect_attempt_message)
+			target.show_message(infect_attempt_message)
 		var/permeability = get_permeability_score(target)
 		if (permeability < src.permeability_score)
 			return 0
@@ -528,6 +531,7 @@ datum/pathogeneffects/malevolent/sweating
 	permeability_score = 25
 	spread = SPREAD_HANDS | SPREAD_BODY
 	infection_coefficient = 1.5
+	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		switch (origin.stage)
 			if (1)
