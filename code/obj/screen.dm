@@ -72,7 +72,7 @@
 		if(C.stamina < 0)
 			//icon_state = "stamina_bar_neg"
 			var/scaling = C.stamina / STAMINA_NEG_CAP
-			src.transform =  matrix(1, scaling, MATRIX_SCALE)
+			src.transform = matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
 			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
 			animate(src, time = 1, color = rgb(255, 0, 0),  easing = LINEAR_EASING, loop = -1)
@@ -82,7 +82,7 @@
 			var/x = max(0, C.stamina)
 			var/scaling = x / C.stamina_max
 			//var/red = ((1 - scaling) * 255)
-			src.transform =  matrix(1, scaling, MATRIX_SCALE)
+			src.transform = matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
 			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
 			animate(src, time = 5, color = rgb(255, 255, 1),  easing = LINEAR_EASING)
