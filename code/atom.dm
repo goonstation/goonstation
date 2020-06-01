@@ -218,7 +218,10 @@
 		fingerprintshidden = null
 		tag = null
 
-		src.statusEffects = null
+		if(length(src.statusEffects))
+			for(var/datum/statusEffect/effect in src.statusEffects)
+				src.delStatus(effect)
+			src.statusEffects = null
 		..()
 	///Chemistry.
 
