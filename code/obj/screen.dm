@@ -49,7 +49,6 @@
 	var/last_val = -123123
 	var/tooltipTheme = "stamina"
 	layer = HUD_LAYER-1
-	var/static/matrix/matrix
 
 	New(var/mob/living/carbon/C)
 		..()
@@ -60,7 +59,6 @@
 				var/icon/hud_style = hud_style_selection[get_hud_style(C)]
 				if (isicon(hud_style))
 					src.icon = hud_style
-		matrix = matrix(1, 1, MATRIX_SCALE)
 
 	proc/getDesc(var/mob/living/carbon/C)
 		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + C.get_stam_mod_regen())]"
@@ -74,7 +72,7 @@
 		if(C.stamina < 0)
 			//icon_state = "stamina_bar_neg"
 			var/scaling = C.stamina / STAMINA_NEG_CAP
-			src.transform = matrix.Scale(1,scaling)
+			src.transform =  matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
 			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
 			animate(src, time = 1, color = rgb(255, 0, 0),  easing = LINEAR_EASING, loop = -1)
@@ -84,7 +82,7 @@
 			var/x = max(0, C.stamina)
 			var/scaling = x / C.stamina_max
 			//var/red = ((1 - scaling) * 255)
-			src.transform = matrix.Scale(1,scaling)
+			src.transform =  matrix(1, scaling, MATRIX_SCALE)
 			var/offy = nround((21 - (21 * scaling)) / 2)
 			src.screen_loc =  "EAST-1:0, NORTH:-[offy]"
 			animate(src, time = 5, color = rgb(255, 255, 1),  easing = LINEAR_EASING)
