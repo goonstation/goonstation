@@ -1104,6 +1104,17 @@
 
 	if(!C || !user)
 		return 0
+	if (istype(C, /obj/item/tile))
+		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		C:build(src)
+		C:amount--
+		if(C.material) src.setMaterial(C.material)
+		if (C:amount < 1)
+			user.u_equip(C)
+			qdel(C)
+			return
+		return
+
 	if(prob(75 - metal * 25))
 		ReplaceWithSpace()
 		boutput(user, "You easily smash through the foamed metal floor.")

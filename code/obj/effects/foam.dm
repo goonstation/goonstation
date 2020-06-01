@@ -67,7 +67,9 @@
 	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
 
 	update_icon()
-
+	if(metal)
+		if(istype(loc, /turf/space))
+			loc:ReplaceWithMetalFoam(metal)
 	SPAWN_DBG(3 + metal*3)
 		process()
 	SPAWN_DBG(12 SECONDS)
