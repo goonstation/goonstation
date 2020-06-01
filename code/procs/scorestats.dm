@@ -222,38 +222,13 @@ var/datum/score_tracker/score_tracker
 
 		pets_escaped = list()
 
-		//This is shit, I know, but what else can I do? Take solace in the fact that this only ever runs once.
-		var/list/escape_contents = get_area_all_atoms(map_settings.escape_centcom)
-		for (var/obj/critter/C in escape_contents)
-			//Dr. Acula
-			if (istype(C, /obj/critter/bat/doctor))
-				var/obj/critter/bat/doctor/P = C
-				if (P.alive)
-					pets_escaped += P
-					acula_blood = P.blood_volume
+		for (var/obj/critter/P in pets)
+			if (in_centcom(P) && P.alive)
+				pets_escaped += P
+				if (istype(P, /obj/critter/bat/doctor))
+					acula_blood = P:blood_volume //this only gets populated if Dr. Acula escapes
 
-			//Sylvester
-			else if (istype(C, /obj/critter/turtle/sylvester))
-				if (C.alive)
-					pets_escaped += C
-
-			//Jones
-			else if (istype(C, /obj/critter/cat/jones))
-				if (C.alive)
-					pets_escaped += C
-
-			//George
-			else if (istype(C, /obj/critter/dog/george))
-				if (C.alive)
-					pets_escaped += C
-
-			//Heisenbee
-			else if (istype(C, /obj/critter/domestic_bee/heisenbee))
-				if (C.alive)
-					pets_escaped += C
-			//Don't really need to check for the mob variants. But maybe if we switch eventually??
-
-		if (locate(/obj/machinery/bot/secbot/beepsky) in world)
+		if (length(by_type[/obj/machinery/bot/secbot/beepsky]))
 			beepsky_alive = 1
 
 		return
@@ -269,7 +244,6 @@ var/datum/score_tracker/score_tracker
 			if (istype(I, /obj/item/card/id))
 				var/obj/item/card/id/ID = I
 				. += ID.amount
-		boutput(world, .)
 
 	proc/escapee_facts()
 		. = ""

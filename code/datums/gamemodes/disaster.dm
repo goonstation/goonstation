@@ -132,13 +132,11 @@
 
 /datum/game_mode/disaster/declare_completion()
 	var/list/survivors = list()
-	var/area/escape_zone = locate(map_settings.escape_centcom)
 
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
-				var/turf/location = get_turf(player.loc)
-				if (location in escape_zone)
+				if (in_centcom(player))
 					survivors[player.real_name] = "shuttle"
 					player.unlock_medal("Icarus", 1)
 				else

@@ -130,7 +130,7 @@
 			delay = 10 / velocity_magnitude
 
 		if (velocity_dir & (velocity_dir-1))
-			delay *= 1.4
+			delay *= DIAG_MOVE_DELAY_MULT
 
 		delay = min(delay,min_delay)
 

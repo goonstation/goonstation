@@ -145,6 +145,7 @@
 		if (src.health <= 0)
 			src.CritterDeath()
 
+
 //The HoS's pet turtle. He can wear the beret!
 /obj/critter/turtle/sylvester
 	name = "Sylvester"
@@ -153,7 +154,13 @@
 	health = 100
 	generic = 0
 
+	New()
+		pets += src
+		..()
 
+	disposing()
+		pets -= src
+		..()
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
 

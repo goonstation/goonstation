@@ -537,13 +537,13 @@
 
 	switch(light_status)
 		if(LIGHT_OK)
-			. += "[desc] It is turned [on? "on" : "off"]."
+			. += "It is turned [on? "on" : "off"]."
 		if(LIGHT_EMPTY)
-			. += "[desc] The [fitting] has been removed."
+			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
-			. += "[desc] The [fitting] is burnt out."
+			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
-			. += "[desc] The [fitting] has been smashed."
+			. += "The [fitting] has been smashed."
 
 
 

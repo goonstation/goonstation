@@ -54,9 +54,10 @@ var/global/list/objects_using_dialogs
 			.= O
 
 /obj/proc/updateUsrDialog()
-	if (clients_operating?.len)
-		for(var/client/C in clients_operating)
-			if (C.mob)
+	if (length(clients_operating))
+		for(var/x in clients_operating)
+			var/client/C = x
+			if (C?.mob)
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)
 				else
@@ -69,9 +70,10 @@ var/global/list/objects_using_dialogs
 						src.remove_dialog(C.mob)
 
 /obj/proc/updateDialog()
-	if (clients_operating?.len)
-		for(var/client/C in clients_operating)
-			if (C.mob)
+	if (length(clients_operating))
+		for(var/x in clients_operating)
+			var/client/C = x
+			if (C?.mob)
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)
 				else
@@ -128,7 +130,7 @@ var/global/list/objects_using_dialogs
 	if (!showing_inv)
 		showing_inv = list(user.client)
 	else
-		showing_inv += user.client
+		showing_inv |= user.client
 
 /mob/living/carbon/human/remove_dialog(mob/user)
 	if (!user.client) return

@@ -324,12 +324,13 @@ toxic - poisons
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
-	dissipation_delay = 3//2
-	dissipation_rate = 15
+	dissipation_delay = 2//2
+	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72 // roughly
 	icon_turf_hit = "bhole"
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
 	casing = /obj/item/casing/shotgun_red
 
@@ -346,10 +347,18 @@ toxic - poisons
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
+
+			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
+				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
 			..()
 
 	weak
-		power = 30
+		power = 50 //can have a little throwing, as a treat
 
 
 /datum/projectile/bullet/airzooka

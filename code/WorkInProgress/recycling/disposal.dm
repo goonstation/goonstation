@@ -22,6 +22,8 @@
 	var/has_fat_guy = 0	// true if contains a fat person
 	var/last_sound = 0
 
+	var/slowed = 0 // when you move, slows you down
+
 	var/mail_tag = null //Switching junctions with the same tag will pass it out the secondary instead of primary
 
 	unpooled()
@@ -93,17 +95,21 @@
 
 				break
 			sleep(0.1 SECONDS)		// was 1
-			if (!loc)
-				return
-			var/obj/disposalpipe/curr = loc
-			last = curr
-			curr = curr.transfer(src)
-			if(!curr)
-				last.expel(src, loc, dir)
+			if(slowed > 0)
+				slowed--
+				slowed = max(slowed,0)
+				sleep(1 SECONDS)
+			else
+				if (!loc)
+					return
+				var/obj/disposalpipe/curr = loc
+				last = curr
+				curr = curr.transfer(src)
+				if(!curr)
+					last.expel(src, loc, dir)
 
-			//
-			if(!(count--))
-				active = 0
+				if(!(count--))
+					active = 0
 		return
 
 	// find the turf which should contain the next pipe
@@ -150,6 +156,31 @@
 		if(last_sound + 6 < world.time)
 			playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 0, 0)
 			last_sound = world.time
+			damage_pipe()
+			if(prob(30))
+				slowed++
+
+	mob_flip_inside(var/mob/user)
+		var/obj/disposalpipe/P = src.loc
+		if(!istype(P))
+			return
+		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
+		user.changeStatus("paralysis", 40)
+		user.changeStatus("weakened", 4 SECONDS)
+		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
+
+		animate_storage_thump(P)
+
+		user.show_text("<span class='alert'>[P] [pick("cracks","bends","shakes","groans")].</span>")
+		damage_pipe(5)
+		slowed++
+
+	proc/damage_pipe(var/amount = 3)
+		var/obj/disposalpipe/P = src.loc
+		if(istype(P))
+			P.health -= rand(1,amount)
+			P.health = max(P.health,0)
+			P.healthcheck()
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)

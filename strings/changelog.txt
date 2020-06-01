@@ -1,4 +1,129 @@
 
+(t)sun may 31 20
+(u)Sovexe
+(p)921
+(e)🆕|feature
+(+)Remy, Morty, Monkey, Piggy, and Blair can now escape with you to centcom. Can you save all of the pets?
+(u)tloy-x
+(p)834
+(e)🆕|feature
+(*)Added option in character setup for auto-capitalization of sent chat messages
+(+)Added "cancel" button to input box when using the radio hotkey
+(u)MarkNstein
+(p)895
+(e)🗺|mapping
+(+)All TEG maps now have two TTVs in the engineering department.
+(t)sat may 30 20
+(u)mbc
+(p)908
+(e)|
+(*)Slips can also be avoided by manually slowing your movement (tap keys slower instead of holding)
+(u)mbc
+(p)906
+(e)⚖|balance
+(*)Slipping protection no longer checks for "walk" intent and instead is based off actual speed
+(u)Sovexe
+(p)894
+(e)🆕|feature
+(+)Changed escape checks to consider you as having escaped if you are anywhere on Centcom at round end.
+(u)UrsulaMajor
+(p)900
+(e)|
+(+)You no longer slip on ice decals while crawling
+(u)Tarmunora
+(p)774
+(e)⚖|balance
+(+)Reduced the immediate cooling effect of cryostylane.
+(u)zjdtmkhzt
+(p)897
+(e)🆕🎨|feature, sprites
+(+)Added dabbing license to spacebux purchases. Start keeping track of your sick dabs today! (Sprite by UrsulaMajor)
+(u)mbc
+(p)899
+(e)⚖🐛🎨|balance, bug, sprites
+(+)Fixed some bugs where diagonal step effects would trigger more often than intended.
+(+)Combat stagger breaks a sustained run.
+(u)UrsulaMajor
+(p)898
+(e)|
+(*)Mash the movement keys or flip for a chance to bust out of disposal pipes
+(t)fri may 29 20
+(u)Flaborized
+(p)883
+(e)⚖|balance
+(+)Traitor barmen and scientists can now buy the syringe gun
+(u)UrsulaMajor
+(p)893
+(e)🎨|sprites
+(*)Added a concealable Syndicate Omnitool (with Knife mode!) to the syndicate buylist for 2TC
+(u)Kubius
+(p)890
+(e)🆕🗺|feature, mapping
+(+)Small batch of Kondaru changes, including a space cooling loop in Toxins.
+(u)mbc
+(p)889
+(e)|
+(*)The HoS can now walk in/out of the armory without using the auth computer.
+(t)thu may 28 20
+(u)mbc
+(p)879
+(e)🎨|sprites
+(*)Smoothly cornering your turns (diagonally) will no longer cancel 'run sustain' boost.
+(u)mbc
+(p)878
+(e)🎨|sprites
+(*)Added "sustained run" mechanic -  if you run in a straight line for a bit you will get a speed boost as long as you do not stop moving or change direction. This change is meant to address traveling around the station, make it smoother. It has a small visual indication (small puff) when this happens. Sprites/exact number values subject to change as usual.
+(u)Dabir
+(p)877
+(e)|
+(+)Fixed a bug where when you moved after activating a hand tele but before picking your teleporter, the hand tele's portal would incorrectly appear on the spot it was first activated.
+(u)mbc
+(p)874
+(e)|
+(*)Fixed a bug where the hand-to-hand melee attack cost was being added to the cost of all item attacks. This meant every item cost 20 more stamina to swing than was intended
+(u)mbc
+(p)873
+(e)|
+(*)You can use a (less powerful) sprint while stagger (combat status effect) or blocking is active now.
+(t)wed may 27 20
+(u)MarkNstein
+(p)862
+(e)⚖🗺|balance, mapping
+(+)Moved Cog1 AI chamber APC to be beside the AI, like Kondaru.
+(u)Primebie1
+(p)846
+(e)🐛|bug
+(+)Fixed drug score checks at the end of Gang War rounds.
+(u)mbc
+(*)Not exactly my fix, I just helped to report the issue. LummoxJR fixed the screen freeze bug - update  your BYOND version to the latest beta!
+(u)Tarmunora
+(p)870
+(e)⚖🐛|balance, bug
+(+)Doubled passive bleedout rate (fixes longstanding bug where passive bleedout was half intended rate)
+(u)mbc
+(p)869
+(e)🎨|sprites
+(*)New sprint hud icons
+(*)While blocking, beginning a sprint will instantly cancel the block (instead of doing nothing)
+(u)mbc
+(p)831
+(e)⚖|balance
+(*)Temporarily disabled antag weighting.
+(u)Sovexe
+(p)855
+(e)🆕🗺|feature, mapping
+(+)Added a Bee Sanctuary Z5 space variant.
+(u)Tarmunora
+(p)776
+(e)⚖|balance
+(*)Changed Spes-12 to blow off limbs and cause massive organ damage.
+(+)Replaced buckshot in armory with weaker variant.
+(t)tue may 26 20
+(u)mbc
+(p)854
+(e)⚖🎨|balance, sprites
+(*)Movement rebalance : Sprints are more effective at countering slows. Slows reduced across the board. Sprints activate instantaneously on button press instead of waiting for next step. Lower base movespeed. Sprint consumes a bit less stamina. And other small adjustments/fixes.
+(*)Note that the rebalance is subject to change after testing!!
 (t)mon may 25 20
 (u)Tarmunora
 (p)827
