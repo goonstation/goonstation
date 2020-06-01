@@ -276,10 +276,7 @@
 */
 
 	if(player_capa)
-		var/howmany = 0
-		for(var/client/C)
-			howmany ++
-		if(howmany >= player_cap)
+		if(clients.len >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 				del(src)
