@@ -62,20 +62,30 @@ datum/pathogeneffects
 	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin)
 		var/turf/T = get_turf(M)
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		Q.volume = 20
+		var/datum/reagents/R = new /datum/reagents(5)
+		Q.volume = 5
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		T.fluid_react_single(Q, 20, airborne = 1)
+		R.reagent_list += "pathogen"
+		R.reagent_list["pathogen"] = Q
+		Q.holder = R
+		R.update_total()
+		T.fluid_react(R, 5, airborne = 1)
 
 	// creates an infective puddle
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin)
 		var/turf/T = get_turf(M)
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		Q.volume = 20
+		var/datum/reagents/R = new /datum/reagents(5)
+		Q.volume = 5
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		T.fluid_react_single(Q, 20, airborne = 0)
+		R.reagent_list += "pathogen"
+		R.reagent_list["pathogen"] = Q
+		Q.holder = R
+		R.update_total()
+		T.fluid_react(R, 5, airborne = 0)
 
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
