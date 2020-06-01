@@ -463,10 +463,10 @@ datum
 			id = "pathogen"
 			description = "A liquid sample of one (or multiple) pathogens."
 			reagent_state = LIQUID
-			fluid_r = 200
-			fluid_b = 0
-			fluid_g = 0
-			transparency = 255
+			fluid_r = 50
+			fluid_b = 50
+			fluid_g = 180
+			transparency = 200
 
 			reaction_turf(var/turf/T, var/volume)
 				return
