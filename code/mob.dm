@@ -357,6 +357,8 @@
 	resistances = null
 	ailments = null
 	cooldowns = null
+	lastattacked = null
+	lastattacker = null
 	..()
 
 /mob/Login()
