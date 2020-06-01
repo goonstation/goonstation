@@ -72,8 +72,7 @@
 				src.get_fed(10)
 
 	disposing()
-		if(!
-		particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.RemoveSystem(/datum/particleSystem/bhole_warning)
 		..()
 
