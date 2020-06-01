@@ -38,7 +38,7 @@
 		if (!istype(player)) continue
 
 		if (player.ready)
-			M.close_spawn_windows()
+			player.close_spawn_windows()
 
 	var/datum/job/special/station_builder/C = new /datum/job/special/station_builder()
 	C.limit = -1

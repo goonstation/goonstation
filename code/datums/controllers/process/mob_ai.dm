@@ -18,7 +18,7 @@ datum/controller/process/mob_ai
 
 				if ((ticks % 3) == 0)
 					M.handle_stamina_updates()
-					if (M.client || length(M.observers)) continue
+					if (!M.client) continue
 
 					if (M.abilityHolder && !M.abilityHolder.composite_owner)
 						if (world.time >= M.abilityHolder.next_update) //after a failure to update (no abbilities!!) wait 10 seconds instead of checking again next process

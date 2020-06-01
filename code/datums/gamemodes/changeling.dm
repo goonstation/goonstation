@@ -139,7 +139,7 @@
 
 /datum/game_mode/changeling/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-		for(var/client/C)
+	for(var/client/C)
 		var/mob/living/carbon/player = C.mob
 		if (!istype(player)) continue
 

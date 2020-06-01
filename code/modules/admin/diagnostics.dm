@@ -41,7 +41,7 @@ proc/debug_color_of(var/thing)
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
-		var/mobs = mobs.len
+		var/mobs = global.mobs.len
 
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>

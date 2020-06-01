@@ -34,7 +34,7 @@ var/global/noir = 0
 	var/rendered
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
-			var/dbg_html = M.client.debug_variable("", d, 0)
+			var/dbg_html = C.debug_variable("", d, 0)
 			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 

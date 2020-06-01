@@ -118,7 +118,7 @@
 
 		for (var/client/C)
 			if (!C.mob) continue
-			var.mob/M = C.mob
+			var/mob/M = C.mob
 
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye

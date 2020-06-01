@@ -22,8 +22,8 @@
 		if (owner)
 			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
 				owner.mob_flags &= ~LIGHTWEIGHT_AI_MOB
-				mobs.add(owner)
-			ai_mobs.remove(owner)
+				mobs.Add(owner)
+			ai_mobs.Remove(owner)
 			owner = null
 
 	proc/tick()

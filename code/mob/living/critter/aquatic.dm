@@ -17,7 +17,6 @@
 	butcherable = 1
 
 	is_npc = 1
-	var/datum/aiHolder/aquatic/ai = null
 
 	var/health_brute = 10
 	var/health_brute_vuln = 1

@@ -227,11 +227,11 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 
 
 
-	for (var/client/C)
-		if (!C.mob) continue
-		if(istype(C.mob, /mob/new_player))
+	for (var/client/CC)
+		if (!CC.mob) continue
+		if(istype(CC.mob, /mob/new_player))
 			continue
-		var/mob/M = C.mob
+		var/mob/M = CC.mob
 
 		if ((ismartian(M)) || M.client.holder && !M.client.player_mode)
 			var/thisR = rendered

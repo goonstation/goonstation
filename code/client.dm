@@ -806,6 +806,8 @@ var/global/curr_day = null
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/client/C)
+				if (!C.mob) continue
+				var/mob/K = C.mob
 				if(C.holder && C.key != usr.key)
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
@@ -840,7 +842,7 @@ var/global/curr_day = null
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
-						if (K.client.player_mode && !K.client.player_mode_mhelp)
+						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
 							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -886,7 +888,7 @@ var/global/curr_day = null
 				ircbot.export("mentorpm", ircmsg)
 
 				for (var/client/C)
-					if (C.can_see_mentor_pms() && C.key != usr.key && (M && K.key != M.key))
+					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue

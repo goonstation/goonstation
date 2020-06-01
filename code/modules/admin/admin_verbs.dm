@@ -630,7 +630,7 @@ var/list/special_pa_observing_verbs = list(
 		if(C.holder)
 			if(C.holder.state == 1)
 				boutput(src, "[C.key] is playing - [C.holder.state]")
-			else if(M.client.holder.state == 2)
+			else if(C.holder.state == 2)
 				boutput(src, "[C.key] is observing - [C.holder.state]")
 			else
 				boutput(src, "[C.key] is undefined - [C.holder.state]")
