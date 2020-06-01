@@ -194,9 +194,9 @@ var/datum/score_tracker/score_tracker
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
 		for (var/client/C)
-			var/mob/E = C.mob
-			if (E && C.preferences.view_score)
-				E.scorestats()
+			var/mob/M = C.mob
+			if (M && C.preferences.view_score)
+				M.scorestats()
 
 		return
 
