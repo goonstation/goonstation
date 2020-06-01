@@ -734,6 +734,7 @@ proc/debug_color_of(var/thing)
 			for(var/img in infoOverlayImages)
 				img = infoOverlayImages[img]//shhh
 				screen -= img
+				images -= img
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
