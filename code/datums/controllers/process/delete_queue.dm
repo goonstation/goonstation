@@ -48,9 +48,13 @@ datum/controller/process/delete_queue
 			if (log_hard_deletions == 1)
 				if (D.type == /obj/overlay)
 					var/obj/overlay/O = D
-					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state]")
+					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state], icon [D.icon]")
 				else
-					logTheThing("debug", text="HardDel of [D.type]")
+				if (D.type == /image)
+					var/image/O = I
+					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+				else
+					logTheThing("debug", text="HardDel of [D.type] -- [D.name]")
 
 			delcount++
 			D.qdeled = 0
