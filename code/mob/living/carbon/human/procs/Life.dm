@@ -1921,6 +1921,7 @@
 	proc/handle_regular_sight_updates()
 
 ////Mutrace and normal sight
+		src.sight |= SEE_BLACKNESS
 		if (!isdead(src))
 			src.sight &= ~SEE_TURFS
 			src.sight &= ~SEE_MOBS
@@ -1971,11 +1972,14 @@
 			if (ship.sensors)
 				if (ship.sensors.active)
 					src.sight |= ship.sensors.sight
+					src.sight &= ~ship.sensors.antisight
 					src.see_in_dark = ship.sensors.see_in_dark
 					if (client && client.adventure_view)
 						src.see_invisible = 21
 					else
 						src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 					return
 
 		if (src.traitHolder && src.traitHolder.hasTrait("infravision"))
@@ -2031,6 +2035,7 @@
 			var/obj/item/clothing/glasses/meson/M = src.glasses
 			if (M.on)
 				src.sight |= SEE_TURFS
+				src.sight &= ~SEE_BLACKNESS
 				if (see_in_dark < initial(see_in_dark) + 1)
 					see_in_dark++
 				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
@@ -2046,6 +2051,7 @@
 					if (meson_eye.on) eye_on = 1
 				if (eye_on)
 					src.sight |= SEE_TURFS
+					src.sight &= ~SEE_BLACKNESS
 					if (see_in_dark < initial(see_in_dark) + 1)
 						see_in_dark++
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))

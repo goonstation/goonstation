@@ -2496,11 +2496,14 @@
 				if (ship.sensors)
 					if (ship.sensors.active)
 						src.sight |= ship.sensors.sight
+						src.sight &= ~ship.sensors.antisight
 						src.see_in_dark = ship.sensors.see_in_dark
 						if (client && client.adventure_view)
 							src.see_invisible = 21
 						else
 							src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 
 			else
 				//var/sight_therm = 0 //todo fix this
