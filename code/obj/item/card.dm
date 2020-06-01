@@ -101,8 +101,8 @@ GAUNTLET CARDS
 	START_TRACKING
 
 /obj/item/card/id/disposing()
-	. = ..()
 	STOP_TRACKING
+	. = ..()
 
 /obj/item/card/id/command
 	icon_state = "id_com"
