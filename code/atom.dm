@@ -217,6 +217,8 @@
 
 		fingerprintshidden = null
 		tag = null
+
+		src.statusEffects = null
 		..()
 	///Chemistry.
 
