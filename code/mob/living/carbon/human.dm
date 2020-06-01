@@ -491,6 +491,10 @@
 		thishud.remove_object(stamina_bar)
 	hud.remove_object(stamina_bar)
 
+	for(var/obj/item/implant/imp in src.implant)
+		imp.disposing()
+	src.implant = null
+
 	//huds -= stamina_bar
 	//hud -= stamina_bar
 	stamina_bar = null
