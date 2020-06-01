@@ -8,8 +8,6 @@
 	set name = "say"
 	//&& !src.client.holder
 
-	if (client.preferences.auto_capitalization)
-
 	if (!message)
 		return
 	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
