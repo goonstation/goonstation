@@ -68,7 +68,8 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-			text = capitalize(text)
+			if(src?.client?.preferences.auto_capitalization)
+						text = capitalize(text)
 			src.say_verb(token + " " + text)
 
 	else if (src.ears && istype(src.ears, /obj/item/device/radio))
