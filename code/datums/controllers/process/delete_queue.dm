@@ -52,8 +52,11 @@ datum/controller/process/delete_queue
 				else if (D.type == /image)
 					var/image/I = D
 					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+				else if(istype(D, /atom))
+					var/atom/A = D
+					logTheThing("debug", text="HardDel of [D.type] -- [A.name]")
 				else
-					logTheThing("debug", text="HardDel of [D.type] -- [D.name]")
+					logTheThing("debug", text="HardDel of [D.type]")
 
 			delcount++
 			D.qdeled = 0
