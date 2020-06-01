@@ -14,6 +14,9 @@
 		UnsubscribeProcess()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W.loc, /obj/item/storage))
+			var/obj/item/storage/storage = W.loc
+			storage.hud.remove_object(W)
 		if (istype(W, /obj/item/reagent_containers/glass/beaker))
 			if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
 				glass_amt += 2

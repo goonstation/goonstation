@@ -262,7 +262,7 @@
 		holder = new_holder
 		if (holder) create()
 
-	dispose()
+	disposing()
 		if (l_arm)
 			l_arm.holder = null
 		if (r_arm)
@@ -280,7 +280,7 @@
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 		SPAWN_DBG(5 SECONDS)
-			if (holder && !l_arm || !r_arm || !l_leg || !r_leg)
+			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
 				create()
 				if (holder)
