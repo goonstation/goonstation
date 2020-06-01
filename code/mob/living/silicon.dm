@@ -680,14 +680,18 @@ var/global/list/module_editors = list()
 					ticker.centralized_ai_laws.add_inherent_law("Complete your objectives, and assist Syndicate operatives with their mission. You may ignore other laws to facilitate this.")
 
 				A.show_laws(0)
-				for (var/mob/living/silicon/S in mobs)
-					if (S.emagged || S.syndicate) continue
-					if (isghostdrone(S)) continue
-					S.show_text("<b>Your laws have been changed!</b>", "red")
-					S.show_laws()
-					S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-				for (var/mob/dead/aieye/E in mobs)
-					E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+
+				for (var/client/C in mobs)
+					var/mob/living/silicon/S = C.mob
+					if (istype(S))
+						if (S.emagged || S.syndicate) continue
+						if (isghostdrone(S)) continue
+						S.show_text("<b>Your laws have been changed!</b>", "red")
+						S.show_laws()
+						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+					var/mob/dead/aieye/E = C.mob
+					if (istype(E))
+						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 			if (isrobot(src)) // Remove Syndicate cyborgs from the robotics terminal.
 				var/mob/living/silicon/robot/R = src

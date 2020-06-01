@@ -382,7 +382,8 @@
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
 	if (config.log_access)
-		for (var/mob/M in mobs)
+		for (var/client/C)
+			var/mob/M = C.mob
 			if ((!M) || M == src || M.client == null)
 				continue
 			else if (M && M.client && M.client.address == src.client.address)

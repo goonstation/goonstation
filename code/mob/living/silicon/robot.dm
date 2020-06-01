@@ -278,8 +278,10 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
-		for(var/mob/M in mobs)
-			if ((M.client && !( M.stat )))
+
+		for (var/client/C)
+			if (!C.mob) continue
+			if (!( C.mob.stat ))
 				cancel = 1
 				break
 		if (!( cancel ))

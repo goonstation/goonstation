@@ -38,8 +38,8 @@ var/datum/event_controller/random_events
 	proc/event_cycle()
 		event_cycle_count++
 		var/num_players = 0
-		for(var/mob/players in mobs)
-			if(players.client) num_players++
+		for(var/client/C)
+			num_players++
 
 		if (events_enabled && (num_players >= minimum_population))
 			do_random_event(events)

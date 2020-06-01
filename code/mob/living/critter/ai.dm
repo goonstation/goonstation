@@ -7,8 +7,27 @@
 
 	var/enabled = 1
 
+	var/exclude_from_mobs_list = 0
+
+	New(var/mob/M)
+		..()
+		owner = M
+		if (exclude_from_mobs_list)
+			mobs.Remove(M)
+			M.mob_flags |= LIGHTWEIGHT_AI_MOB
+		ai_mobs.Add(M)
+
+	disposing()
+		..()
+		if (owner)
+			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
+				owner.mob_flags &= ~LIGHTWEIGHT_AI_MOB
+				mobs.add(owner)
+			ai_mobs.remove(owner)
+			owner = null
+
 	proc/tick()
-		if(!enabled) 
+		if(!enabled)
 			walk(owner, 0)
 			return
 		if (!current_task)
@@ -53,7 +72,7 @@
 
 		reset()
 
-	proc/on_tick()	
+	proc/on_tick()
 
 	proc/next_task()
 		return null
@@ -71,7 +90,7 @@
 		on_tick()
 
 	proc/reset()
-		on_reset()		
+		on_reset()
 
 // an AI task that evaluates all tasks within its list of transition tasks
 // immediately transitions to task with highest evaluation score after first tick
@@ -168,7 +187,7 @@
 		if(!action_instance)
 			// create and start the action
 			if(!action_params) // a list of length 0 is perfectly acceptable (no params), but a null list means this wasn't set up
-				set_action_params(collect_action_params())				
+				set_action_params(collect_action_params())
 			action_instance = actions.start(new action_path(arglist(action_params)), holder.owner)
 
 	reset()

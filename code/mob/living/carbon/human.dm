@@ -708,16 +708,18 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-	for (var/mob/M in mobs)
-		if (M.client && !M.stat)
+	for (var/client/C)
+		if (!C.mob) continue
+		if (!C.mob.stat)
 			cancel = 1
 			break
 
 	if (!cancel && !abandon_allowed)
 		SPAWN_DBG (50)
 			cancel = 0
-			for (var/mob/M in mobs)
-				if (M.client && !M.stat)
+			for (var/client/C)
+				if (!C.mob) continue
+				if (!C.mob.stat)
 					cancel = 1
 					break
 
@@ -1608,7 +1610,7 @@
 	update_clothing()
 
 	if (ai_active)
-		ai_active = 0
+		ai_set_active(0)
 	if (src.organHolder && src.organHolder.brain && src.mind)
 		src.organHolder.brain.setOwner(src.mind)
 
@@ -1622,7 +1624,7 @@
 /mob/living/carbon/human/Logout()
 	..()
 	if (!ai_active && is_npc)
-		ai_active = 1
+		ai_set_active(1)
 	return
 
 /mob/living/carbon/human/get_heard_name()

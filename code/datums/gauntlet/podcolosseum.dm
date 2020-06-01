@@ -115,14 +115,18 @@
 			boutput(M, rendered)
 		for (var/mob/M in colosseum)
 			boutput(M, rendered)
-		for (var/mob/M in mobs)//world)
-			LAGCHECK(LAG_LOW)
+
+		for (var/client/C)
+			if (!C.mob) continue
+			var.mob/M = C.mob
+
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye
 				if (N.is_near_colosseum())
 					boutput(M, rendered)
 			else if (istype(M.eye, /obj/observable/colosseum))
 				boutput(M, rendered)
+			LAGCHECK(LAG_LOW)
 
 	proc/beginStaging()
 		if (state != 0)
