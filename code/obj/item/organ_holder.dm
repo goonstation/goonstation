@@ -62,7 +62,6 @@
 			skull.donor = null
 		if (brain)
 			brain.donor = null
-			brain.owner = null
 		if (left_eye)
 			left_eye.donor = null
 		if (right_eye)
