@@ -87,6 +87,9 @@ var/const/effectTypeFood = 4
 			src.OnRemove()
 		holder = null
 		owner = null
+		if(dnaBlocks)
+			qdel(dnaBlocks)
+		dnaBlocks = null
 		..()
 
 	proc/OnAdd()     //Called when the effect is added.
@@ -140,6 +143,12 @@ var/const/effectTypeFood = 4
 	New(var/holder)
 		owner = holder
 		return ..()
+
+	disposing()
+		owner = null
+		blockList = null
+		blockListCurr = null
+		..()
 
 	proc/sequenceCorrect()
 		if(blockList.len != blockListCurr.len)
