@@ -265,12 +265,16 @@
 	disposing()
 		if (l_arm)
 			l_arm.holder = null
+			l_arm?.bones?.donor = null
 		if (r_arm)
 			r_arm.holder = null
+			r_arm?.bones?.donor = null
 		if (l_leg)
 			l_leg.holder = null
+			l_leg?.bones?.donor = null
 		if (r_leg)
 			r_leg.holder = null
+			r_leg?.bones?.donor = null
 		holder = null
 		..()
 
@@ -498,6 +502,18 @@
 	for(var/obj/item/implant/imp in src.implant)
 		imp.disposing()
 	src.implant = null
+
+	for(var/image/im in health_mon_icons)
+		if(im.loc == src)
+			im.loc = null
+			im.dispose()
+			health_mon_icons -= im
+
+	for(var/image/im in arrestIconsAll)
+		if(im.loc == src)
+			im.loc = null
+			im.dispose()
+			health_mon_icons -= im
 
 	src.wear_suit = null
 	src.w_uniform = null
