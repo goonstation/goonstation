@@ -30,6 +30,11 @@
 			if (src.loc != user)
 				light.attach(src)
 
+	disposing()
+		if(light)
+			qdel(light)
+		..()
+
 /obj/item/device/light/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
