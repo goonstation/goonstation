@@ -402,6 +402,19 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/nukie_meson_toggle
+	name = "Toggle Helmet Scanner"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/J = the_item
+		J.attack_self(the_mob)
+		if(J.on) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
 	icon_state = "jet2on"
