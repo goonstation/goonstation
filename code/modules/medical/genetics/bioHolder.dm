@@ -220,9 +220,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	disposing()
-		src.RemoveAllEffects()
-		src.RemoveAllPoolEffects()
-
 		for(var/D in effects)
 			var/datum/bioEffect/BE = effects[D]
 			BE.disposing()
