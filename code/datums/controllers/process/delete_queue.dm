@@ -11,14 +11,14 @@ datum/controller/process/delete_queue
 #ifdef DELETE_QUEUE_DEBUG
 	var/tmp/datum/dynamicQueue/delete_queue = 0
 #endif
-	var/log_hard_deletions = 0
+	var/log_hard_deletions = 0 // 1 = log them, 2 =  attempt to find references (requires LOG_HARD_DELETE_REFERENCES)
 
 	setup()
 		name = "DeleteQueue"
 		schedule_interval = 5
 		tick_allowance = 25
 #ifdef LOG_HARD_DELETE_REFERENCES
-		log_hard_deletions = 1
+		log_hard_deletions = 2
 #endif
 
 	doWork()
@@ -48,7 +48,7 @@ datum/controller/process/delete_queue
 				gccount++
 				continue
 
-			if (log_hard_deletions == 1)
+			if (log_hard_deletions)
 				if (D.type == /image)
 					var/image/I = D
 					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
@@ -57,10 +57,11 @@ datum/controller/process/delete_queue
 					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing("debug", text="HardDel of [D.type]")
-#ifdef LOG_HARD_DELETE_REFERENCES
-				for(var/x in find_all_references_to(D))
-					logTheThing("debug", text=x)
-#endif
+				if (log_hard_deletions >= 2)
+	#ifdef LOG_HARD_DELETE_REFERENCES
+					for(var/x in find_all_references_to(D))
+						logTheThing("debug", text=x)
+	#endif
 
 			delcount++
 			D.qdeled = 0
@@ -170,7 +171,8 @@ proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result
 			key_name = "[x] \ref[x] [x:type]"
 			if(istype(x, /atom/movable))
 				key_name += " [x:loc]"
-			key_name += " [x:icon] [x:icon_state]"
+			if(istype(x, /atom) || istype(x, /image))
+				key_name += " [x:icon] [x:icon_state]"
 			x = x:vars
 		if(x == "vars")
 			i += 1
