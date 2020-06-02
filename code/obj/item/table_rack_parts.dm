@@ -85,7 +85,7 @@ RACK PARTS
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
-	dispose()
+	disposing()
 		if (src.contained_storage && src.contained_storage.contents.len)
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)

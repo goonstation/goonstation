@@ -17,6 +17,9 @@ datum/controller/process/delete_queue
 		name = "DeleteQueue"
 		schedule_interval = 5
 		tick_allowance = 25
+#ifdef LOG_HARD_DELETE_REFERENCES
+		log_hard_deletions = 1
+#endif
 
 	doWork()
 		/*
@@ -48,9 +51,19 @@ datum/controller/process/delete_queue
 			if (log_hard_deletions == 1)
 				if (D.type == /obj/overlay)
 					var/obj/overlay/O = D
-					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state]")
+					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state], icon [O.icon]")
+				else if (D.type == /image)
+					var/image/I = D
+					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+				else if(istype(D, /atom))
+					var/atom/A = D
+					logTheThing("debug", text="HardDel of [D.type] -- [A.name]")
 				else
 					logTheThing("debug", text="HardDel of [D.type]")
+#ifdef LOG_HARD_DELETE_REFERENCES
+				for(var/x in find_all_references_to(D))
+					logTheThing("debug", text=x)
+#endif
 
 			delcount++
 			D.qdeled = 0
@@ -139,3 +152,61 @@ datum/controller/process/delete_queue
 		#endif
 		boutput(usr, "<b>Current Queue Length:</b> [delete_queue.count()]")
 		boutput(usr, "<b>Total Items Deleted:</b> [delcount] (Explictly) [gccount] (Gracefully GC'd)")
+
+
+// diagnostics
+
+#ifdef LOG_HARD_DELETE_REFERENCES
+/datum/var/ref_tracker_visited = 0
+/client/var/ref_tracker_visited = 0
+var/global/ref_tracker_generation = 0
+
+proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result, var/list/stack=null)
+	var/i = 0
+	var/top_level = isnull(stack)
+	if(isnull(stack))
+		stack = list()
+	for(var/x in L)
+		i += 1
+		var/key_name = i
+		if(top_level && !istext(x))
+			key_name = "[x] \ref[x] [x:type]"
+			if(istype(x, /atom/movable))
+				key_name += " [x:loc]"
+			x = x:vars
+		if(x == "vars")
+			i += 1
+			continue
+		if(x && x == target)
+			result += jointext(stack + key_name, " - ")
+		if(istype(x, /list))
+			ref_visit_list(x, next, target, result, stack + key_name)
+		else if(istype(x, /client) || istype(x, /datum))
+			if(x:ref_tracker_visited != ref_tracker_generation)
+				x:ref_tracker_visited = ref_tracker_generation
+				next.Add(x)
+		var/y = null
+		try
+			y = L[x]
+		catch
+		if(y)
+			if(y && y == target)
+				result += jointext(stack + "[x]", " - ")
+			if(istype(y, /list))
+				ref_visit_list(x, next, target, result, stack + "[x]")
+			else if(istype(y, /client) || istype(y, /datum))
+				if(y:ref_tracker_visited != ref_tracker_generation)
+					y:ref_tracker_visited = ref_tracker_generation
+					next.Add(y)
+
+proc/find_all_references_to(var/datum/D)
+	var/list/current = null
+	var/list/next = world.contents + global.vars
+	. = list()
+	ref_tracker_generation++
+	while(length(next))
+		current = next
+		next = list()
+		ref_visit_list(current, next, D, .)
+
+#endif

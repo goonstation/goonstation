@@ -1057,19 +1057,17 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			user.lastattacked = src
 
 			if(health == max_health)
 				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
 				return
 
-			var/obj/item/weldingtool/welder = W
-			if(welder.welding)
-				if(welder.try_weld(user, 4))
-					repair_damage(20)
-					user.visible_message("<span class='notice'>[user] repairs the [src] with [welder]!</span>")
-					return
+			if(W:try_weld(user, 4))
+				repair_damage(20)
+				user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
+				return
 
 		if (health <= 0)
 			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
@@ -1339,34 +1337,30 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 				haspaint = 1
 			else if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
 				hasheadset = 1
-		if(hasitem1 && hasitem2 && hasheadset)
-			if(!haspaint)
-				new /obj/item/spray_paint(user.loc)
-		else
-			if(!hasitem1)
-				var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
-				if (user.w_uniform)
-					user.drop_from_slot(user.w_uniform)
-				user.force_equip(C, user.w_uniform)
+		if(!hasitem1)
+			var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
+			// if (user.w_uniform)
+			// 	user.drop_from_slot(user.w_uniform)
+			user.equip_if_possible(C, user.slot_w_uniform)
 
-			if(!hasitem2)
-				var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
-				if (istype(C, /obj/item/clothing/head))
-					user.drop_from_slot(user.head)
-					user.force_equip(C, user.head)
-				else if (istype(C, /obj/item/clothing/mask))
-					user.drop_from_slot(user.wear_mask)
-					user.force_equip(C, user.wear_mask)
+		if(!hasitem2)
+			var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
+			if (istype(C, /obj/item/clothing/head))
+				user.drop_from_slot(user.head)
+				user.equip_if_possible(C, user.slot_head)
+			else if (istype(C, /obj/item/clothing/mask))
+				user.drop_from_slot(user.wear_mask)
+				user.equip_if_possible(C, user.slot_wear_mask)
 
-			if(!hasheadset)
-				var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
-				headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
-				if (user.ears)
-					user.drop_from_slot(user.ears)
-				user.force_equip(headset, user.ears)
+		if(!hasheadset)
+			var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
+			headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
+			if (user.ears)
+				user.drop_from_slot(user.ears)
+			user.equip_if_possible(headset, user.slot_ears)
 
-			if(!haspaint)
-				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+		if(!haspaint)
+			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == "gang_leader")
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)

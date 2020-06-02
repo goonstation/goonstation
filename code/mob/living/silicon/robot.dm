@@ -1029,9 +1029,8 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.try_weld(user, 1))
+		if (isweldingtool(W))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				var/repaired = HealDamage("All", 120, 0)
 				if(repaired || health < max_health)
@@ -2496,11 +2495,14 @@
 				if (ship.sensors)
 					if (ship.sensors.active)
 						src.sight |= ship.sensors.sight
+						src.sight &= ~ship.sensors.antisight
 						src.see_in_dark = ship.sensors.see_in_dark
 						if (client && client.adventure_view)
 							src.see_invisible = 21
 						else
 							src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 
 			else
 				//var/sight_therm = 0 //todo fix this

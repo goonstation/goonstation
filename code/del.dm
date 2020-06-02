@@ -134,6 +134,7 @@ proc/qdel(var/datum/O)
 
 // don't override this one, just call it instead of delete to get rid of something cheaply
 /datum/proc/dispose()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!disposed)
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()

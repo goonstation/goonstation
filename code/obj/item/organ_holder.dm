@@ -55,7 +55,7 @@
 		if (src.donor)
 			src.create_organs()
 
-	dispose()
+	disposing()
 		if (head)
 			head.donor = null
 		if (skull)

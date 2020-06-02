@@ -145,8 +145,7 @@
 					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
-			if (istype(P, /obj/item/weldingtool))
-				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
 				if (do_after(user, 20))
 					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )

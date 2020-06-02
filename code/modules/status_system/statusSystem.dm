@@ -349,6 +349,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	disposing()
 		if (owner)
 			owner.statusEffects -= src
+		src.owner = null
 		..()
 
 	maxhealth
@@ -773,7 +774,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned"))) 
+			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -891,6 +892,12 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		maxDuration = 5 SECONDS
 		movement_modifier = /datum/movement_modifier/staggered_or_blocking
+
+		onAdd(var/optional=null)
+			.=..()
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
 
 	blocking
 		id = "blocking"

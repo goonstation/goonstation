@@ -119,6 +119,7 @@
 		F["use_azerty"] << src.use_azerty
 		F["preferred_map"] << src.preferred_map
 		F["flying_chat_hidden"] << src.flying_chat_hidden
+		F["auto_capitalization"] << src.auto_capitalization
 
 		if (returnSavefile)
 			return F
@@ -268,6 +269,7 @@
 		F["use_azerty"] >> src.use_azerty
 		F["preferred_map"] >> src.preferred_map
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
+		F["auto_capitalization"] >> src.auto_capitalization
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))

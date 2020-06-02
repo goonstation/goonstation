@@ -217,6 +217,8 @@
 	var/list/cooldowns = null
 	var/list/mob_properties
 
+	var/last_move_dir = null
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -276,7 +278,6 @@
 	if (src.s_active && !(s_active.master in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
-	OnMove()
 
 /mob/disposing()
 	for(var/mob/m in src) //just in case...
@@ -323,6 +324,10 @@
 	if (src.targeting_ability)
 		src.targeting_ability = null
 
+	if(src.item_abilities)
+		src.item_abilities:len = 0
+		src.item_abilities = null
+
 	if (zone_sel)
 		if (zone_sel.master == src)
 			zone_sel.master = null
@@ -352,6 +357,8 @@
 	resistances = null
 	ailments = null
 	cooldowns = null
+	lastattacked = null
+	lastattacker = null
 	..()
 
 /mob/Login()
@@ -2724,6 +2731,8 @@
 
 	if (waddle_walking)
 		makeWaddle(src)
+
+	last_move_dir = move_dir
 
 /mob/proc/on_centcom()
 	var mob_loc = src.loc
