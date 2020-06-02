@@ -33,7 +33,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		mantaBubbles.Add(src)
 		return ..()
 
-	Del()
+	disposing()
 		mantaBubbles.Remove(src)
 		return ..()
 
@@ -206,7 +206,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	Del()
+	disposing()
 		mantaPropellers.Remove(src)
 		return ..()
 
@@ -443,7 +443,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		. = ..()
 		update_icon()
 
-	Del()
+	disposing()
 		mantaJunctionbox.Remove(src)
 		return ..()
 
@@ -833,7 +833,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			qdel(src)
 		..()
 
-	Del()
+	disposing()
 		mantaPlants.Remove(src)
 		return ..()
 
@@ -936,7 +936,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	Del()
+	disposing()
 		mantaTiles.Remove(src)
 		return ..()
 

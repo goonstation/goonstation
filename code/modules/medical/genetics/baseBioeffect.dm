@@ -105,11 +105,6 @@ var/const/effectTypeFood = 4
 				L.UpdateOverlays(null, id)
 		return
 
-	Del()
-		if(!removed)
-			src.OnRemove()
-		..()
-
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
 

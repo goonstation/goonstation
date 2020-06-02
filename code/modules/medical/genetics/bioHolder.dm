@@ -241,10 +241,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		..()
 
-	Del()
-		src.RemoveAllEffects()
-		..()
-
 	proc/ActivatePoolEffect(var/datum/bioEffect/E, var/overrideDNA = 0, var/grant_research = 1)
 		if(!E || !effectPool[E.id] || (!E.dnaBlocks.sequenceCorrect() && !overrideDNA) || HasEffect(E.id))
 			return 0
