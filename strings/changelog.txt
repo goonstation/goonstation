@@ -1,6 +1,11 @@
 
 (t)tue jun 02 20
 (u)UrsulaMajor
+(p)935
+(e)|
+(+)Nukie Engineer Class Crate now has welding-safe helmet w/ built in mesons
+(+)Nukie Medic Class Crate now has ProDocs built into their helmet
+(u)UrsulaMajor
 (p)934
 (e)🗺|mapping
 (+)Added a Syndicate Omnitool to the Cairngorm
