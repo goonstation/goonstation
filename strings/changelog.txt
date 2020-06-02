@@ -1,4 +1,9 @@
 
+(t)tue jun 02 20
+(u)UrsulaMajor
+(p)933
+(e)🎨|sprites
+(*)Syndicate Omnitool traitor item now has a weldingtool mode
 (t)mon jun 01 20
 (u)UrsulaMajor
 (p)932
