@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding

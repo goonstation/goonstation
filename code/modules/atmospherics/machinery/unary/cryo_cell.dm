@@ -412,22 +412,6 @@
 		build_icon()
 		return
 
-
-
-
-
-/mob/living/carbon/human/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves))
-		return 1
-	else
-		return 0
-
-/mob/proc/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || src.back || src.wear_mask)
-		return 1
-	else
-		return 0
-
 /datum/data/function/proc/reset()
 	return
 
