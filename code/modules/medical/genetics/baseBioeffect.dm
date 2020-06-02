@@ -85,6 +85,7 @@ var/const/effectTypeFood = 4
 	disposing()
 		if(!removed)
 			src.OnRemove()
+		holder = null
 		owner = null
 		..()
 
