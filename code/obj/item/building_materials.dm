@@ -677,7 +677,6 @@ MATERIAL
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
 
-			W:eyecheck(user)
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
 			update_icon()
 			if(src.amount < 1)	qdel(src)

@@ -226,9 +226,8 @@
 					src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
-		if (W:try_weld(user,0,-1,0,0))
+		if (W:try_weld(user,0,-1,0,1))
 			src.ArtifactStimulus("heat", 800)
-			playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
 			src.visible_message("<span class='alert'>[user.name] burns the artifact with [W]!</span>")
 			return 0
 

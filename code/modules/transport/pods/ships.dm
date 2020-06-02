@@ -498,7 +498,6 @@
 				if (!do_after(user, 30))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				W:eyecheck(user)
 				boutput(user, "You weld the joints of the frame together.")
 				stage = 3
 			else
@@ -675,7 +674,6 @@
 				if (!do_after(user, 30))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				W:eyecheck(user)
 				boutput(user, "You weld the seams of the outer skin to make it air-tight.")
 				stage = 9
 			else
@@ -1616,7 +1614,7 @@
 
 		if(8)
 			if (isweldingtool(W))
-				if(!W:try_weld(user, 1, burn_eyes = 1))
+				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
 				if (!do_after(user, 30))

@@ -353,11 +353,10 @@ obj/machinery/atmospherics/pipe
 					boutput(user, "<span class='alert'>That isn't damaged!</span>")
 					return
 
-				if(!W:try_weld(user, 1, noisy=0))
+				if(!W:try_weld(user, 1, noisy=2))
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-				playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
 
 				if (do_after(user, 20))
 					ruptured --
