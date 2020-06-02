@@ -2040,6 +2040,15 @@
 					see_in_dark++
 				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
 
+		else if (istype(src.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer) && (T && !isrestrictedz(T.z)))
+			var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/E = src.head
+			if (E.on)
+				src.sight |= SEE_TURFS
+				src.sight &= ~SEE_BLACKNESS
+				if (see_in_dark < initial(see_in_dark) + 1)
+					see_in_dark++
+				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
+
 		else if (src.eye_istype(/obj/item/organ/eye/cyber/meson) && (T && !isrestrictedz(T.z)))
 			if (!istype(src.glasses, /obj/item/clothing/glasses/meson))
 				var/eye_on
@@ -2111,6 +2120,14 @@
 				G.assigned = src.client
 				if (!(G in processing_items))
 					processing_items.Add(G)
+				//G.updateIcons()
+
+		if (istype(src.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
+			var/obj/item/clothing/head/helmet/space/syndicate/specialist/medic/M = src.head
+			if (src.client && !(M.assigned || M.assigned == src.client))
+				M.assigned = src.client
+				if (!(M in processing_items))
+					processing_items.Add(M)
 				//G.updateIcons()
 
 		else if (src.organHolder && istype(src.organHolder.left_eye, /obj/item/organ/eye/cyber/prodoc))
