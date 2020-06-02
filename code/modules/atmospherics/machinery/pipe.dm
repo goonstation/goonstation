@@ -260,7 +260,7 @@ obj/machinery/atmospherics/pipe
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
-			if(!parent?.air || TOTAL_MOLES(parent.air) < 0.00001 || !loc)
+			if(!parent?.air || TOTAL_MOLES(parent.air) < ATMOS_EPSILON || !loc)
 				return
 
 			if(!node1)
