@@ -57,8 +57,8 @@ datum/controller/process/delete_queue
 					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing("debug", text="HardDel of [D.type]")
-				if (log_hard_deletions >= 2)
 	#ifdef LOG_HARD_DELETE_REFERENCES
+				if (log_hard_deletions >= 2)
 					for(var/x in find_all_references_to(D))
 						logTheThing("debug", text=x)
 	#endif
