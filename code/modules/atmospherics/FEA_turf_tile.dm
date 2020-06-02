@@ -97,6 +97,7 @@ turf
 turf
 	simulated
 
+		var/dist_to_space = null
 		var/current_graphic = null
 
 		var/tmp
