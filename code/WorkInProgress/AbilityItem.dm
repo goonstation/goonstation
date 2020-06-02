@@ -709,6 +709,7 @@
 			for (var/obj/ability_button/A in ability_buttons)
 				qdel(A)
 			ability_buttons.len = 0
+		src.the_mob = null
 
 	proc/clear_mob()
 		if (islist(src.ability_buttons))
@@ -732,7 +733,7 @@
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
-		the_mob.item_abilities.Remove(ability_buttons)
+		the_mob.item_abilities?.Remove(ability_buttons)
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()
 /*
