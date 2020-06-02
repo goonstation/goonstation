@@ -1,5 +1,9 @@
 
 (t)tue jun 02 20
+(u)zjdtmkhzt
+(p)464
+(e)🆕|feature
+(+)Added a new mutation-based pathology symptom that can be used for benevolent or nefarious purposes.
 (u)UrsulaMajor
 (p)935
 (e)|
