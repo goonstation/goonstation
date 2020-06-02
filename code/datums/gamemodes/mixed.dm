@@ -25,8 +25,12 @@
 
 /datum/game_mode/mixed/pre_setup()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	if (num_players < werewolf_players_req || !has_werewolves)
 		traitor_types -= "werewolf"
@@ -308,9 +312,12 @@
 /datum/game_mode/mixed/proc/get_possible_enemies(type,number)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			switch(type)
 				if("wizard")
 					if(player.client.preferences.be_wizard) candidates += player.mind
@@ -337,9 +344,12 @@
 		else
 			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
 
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 				if ((number > 1) && (candidates.len >= number))
 					break
@@ -393,15 +403,20 @@
 
 /datum/game_mode/mixed/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			mobs += player
+
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+		mobs += player
 	return mobs
 
 /datum/game_mode/mixed/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.real_name != excluded_name)
 			names += player.real_name
 	if(!names.len)
 		return null

@@ -226,11 +226,14 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
 
 
-	for (var/mob/M in mobs)
-		if(istype(M, /mob/new_player))
-			continue
 
-		if (M.client && ((ismartian(M)) || M.client.holder && !M.client.player_mode))
+	for (var/client/CC)
+		if (!CC.mob) continue
+		if(istype(CC.mob, /mob/new_player))
+			continue
+		var/mob/M = CC.mob
+
+		if ((ismartian(M)) || M.client.holder && !M.client.player_mode)
 			var/thisR = rendered
 			if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"

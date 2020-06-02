@@ -41,9 +41,7 @@ proc/debug_color_of(var/thing)
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
-		var/mobs = 0
-		for(var/mob/M in mobs)
-			mobs++
+		var/mobs = global.mobs.len
 
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
@@ -160,6 +158,7 @@ proc/debug_color_of(var/thing)
 		if (disable_next_click)
 			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
 			return
+
 		for(var/mob/M in mobs)
 			if(!M.client)
 				continue
