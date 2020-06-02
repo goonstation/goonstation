@@ -502,7 +502,7 @@ proc/debug_color_of(var/thing)
 						pipe_image.color = debug_color_of(pipe.parent)
 					var/datum/gas_mixture/air = pipe.return_air()
 					if(show_numbers)
-						if(TOTAL_MOLES(air) > 0.01)
+						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
 							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
 						else if(TOTAL_MOLES(air) > 0)
