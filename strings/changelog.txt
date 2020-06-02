@@ -1,4 +1,9 @@
 
+(t)mon jun 01 20
+(u)UrsulaMajor
+(p)932
+(e)|
+(*)Refactored how welding tools work. Please report any bugs with the bug report button at the top right of the status pane.
 (t)sun may 31 20
 (u)Chickenish
 (p)863
