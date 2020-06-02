@@ -374,15 +374,14 @@ datum/pathogeneffects/benevolent/sunglass
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		switch(origin.stage)
-			if (2 to 4)
-				if (ishuman(M))
-					if (!(M:glasses) || (!(istype(M:glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (!(H.glasses) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
+				switch(origin.stage)
+					if (2 to 4)
 						if (prob(15))
 							glasses(M)
-			if (5)
-				if (ishuman(M))
-					if (!(M:glasses) || (!(istype(M:glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
+					if (5)
 						if (prob(25))
 							glasses(M)
 
