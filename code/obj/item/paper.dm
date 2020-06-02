@@ -1029,7 +1029,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		W.set_loc(src)
 	else
 		if (isweldingtool(W))
-			if ((T:welding && T:weldfuel > 0))
+			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
 				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
 				SPAWN_DBG( 0 )
 					src.burn(1800000.0)

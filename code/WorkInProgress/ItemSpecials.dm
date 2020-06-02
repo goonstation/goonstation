@@ -1143,7 +1143,7 @@
 							flame_succ = 1
 						else
 							flame_succ = 0
-					if (isweldingtool(master) && master:welding)
+					if (isweldingtool(master) && master:try_weld(user,0,-1,0,0))
 						if (master.reagents.get_reagent_amount("fuel"))
 							master.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1

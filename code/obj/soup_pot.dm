@@ -76,7 +76,7 @@
 
 		if (!src.on && src.pot)
 
-			if (isweldingtool(W) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				return
 

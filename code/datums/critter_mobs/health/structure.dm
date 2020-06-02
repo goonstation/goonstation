@@ -4,7 +4,7 @@
 
 	on_attack(var/obj/item/I, var/mob/M)
 		if (isweldingtool(I))
-			if (I:welding)
+			if (I:try_weld(M,0))
 				if (damaged())
 					holder.visible_message("<span class='notice'>[M] repairs some dents on [holder]!</span>")
 					HealDamage(5)

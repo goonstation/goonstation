@@ -1439,14 +1439,13 @@
 				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
 
 		if(2)
-			if (isweldingtool(W) && W:welding)
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
 				if (!do_after(user, 30))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				W:eyecheck(user)
 				boutput(user, "You weld the joints of the frame together.")
 				stage = 3
 			else

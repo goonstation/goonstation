@@ -976,7 +976,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			desc = "Shoots a high power laser when active."
 			return
 
-	if(isweldingtool(W) && W:welding)
+	if(isweldingtool(W))
 
 		var/turf/T = user.loc
 
@@ -1459,7 +1459,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(isweldingtool(W) && W:welding)
+	if(isweldingtool(W))
 		if(timing)
 			boutput(user, "Stop the countdown first.")
 			return
@@ -1470,7 +1470,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 1)
-			W:eyecheck(user)
 			boutput(user, "You start to weld the bomb to the floor.")
 			sleep(5 SECONDS)
 

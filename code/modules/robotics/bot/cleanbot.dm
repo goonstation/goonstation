@@ -191,8 +191,6 @@
 
 	attackby(obj/item/W, mob/user as mob)
 		if (isweldingtool(W))
-			if (!W:welding)
-				return
 			if (src.health < initial(src.health))
 				if(W:try_weld(user, 1))
 					src.health = initial(src.health)

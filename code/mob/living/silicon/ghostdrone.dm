@@ -512,7 +512,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
-				if (W:welding)
+				if (W:try_weld(user,0,-1,0,0))
 					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
 					damage_heat(W.force)
 				else

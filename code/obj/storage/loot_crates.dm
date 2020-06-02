@@ -371,7 +371,7 @@
 			if (istype(trap))
 				trap.read_device(user)
 		else if (isweldingtool(W))
-			if (W:welding)
+			if (W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'>The crate seems to be resistant to welding.</span>")
 				return
 			else

@@ -514,7 +514,7 @@
 	return
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
-	if (isweldingtool(W) && W:welding)
+	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
 			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
 			return

@@ -1064,11 +1064,10 @@
 				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
 				return
 
-			if(W:welding)
-				if(W:try_weld(user, 4))
-					repair_damage(20)
-					user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
-					return
+			if(W:try_weld(user, 4))
+				repair_damage(20)
+				user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
+				return
 
 		if (health <= 0)
 			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
