@@ -97,7 +97,7 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		user.lastattacked = src
-		if (health < maxhealth && istype(W, /obj/item/weldingtool) && W:welding)
+		if (health < maxhealth && isweldingtool(W) && W:welding)
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30

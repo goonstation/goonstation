@@ -146,9 +146,8 @@
 					boutput(user, "<span class='notice'>You removed the support lines.</span>")
 					return
 
-		else if (istype(W, /obj/item/weldingtool) && W:welding)
-			var/obj/item/weldingtool/Weld = W
-			Weld.eyecheck(user)
+		else if (isweldingtool(W) && W:welding)
+			W:eyecheck(user)
 			var/turf/T = user.loc
 			if (!(istype(T, /turf)))
 				return

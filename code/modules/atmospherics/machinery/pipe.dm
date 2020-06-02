@@ -347,7 +347,7 @@ obj/machinery/atmospherics/pipe
 
 
 		attackby(var/obj/item/W as obj, var/mob/user as mob)
-			if(istype(W, /obj/item/weldingtool) && W:welding)
+			if(isweldingtool(W) && W:welding)
 
 				if(!ruptured)
 					boutput(user, "<span class='alert'>That isn't damaged!</span>")

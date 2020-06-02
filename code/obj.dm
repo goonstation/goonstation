@@ -366,7 +366,7 @@
 				qdel(C)
 			qdel(src)
 			return
-		if (istype(C, /obj/item/weldingtool) && C:welding)
+		if (isweldingtool(C) && C:welding)
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			C:eyecheck(user)
 			new /obj/item/rods/steel(src.loc)
@@ -400,11 +400,10 @@
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.welding)
+		if (isweldingtool(W))
+			if(W:welding)
 				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
-				WELD.eyecheck(user)
+				W:eyecheck(user)
 				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
 				R.amount = src.strength
 				qdel(src)

@@ -559,7 +559,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(isweldingtool(W))
 
 		var/turf/T = user.loc
 
@@ -976,7 +976,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			desc = "Shoots a high power laser when active."
 			return
 
-	if(istype(W, /obj/item/weldingtool) && W:welding)
+	if(isweldingtool(W) && W:welding)
 
 		var/turf/T = user.loc
 
@@ -1459,7 +1459,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(istype(W, /obj/item/weldingtool) && W:welding)
+	if(isweldingtool(W) && W:welding)
 		if(timing)
 			boutput(user, "Stop the countdown first.")
 			return

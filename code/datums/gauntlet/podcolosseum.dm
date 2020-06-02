@@ -1470,12 +1470,11 @@ proc/get_colosseum_message(var/name, var/message)
 			qdel(src)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
+		if (isweldingtool(W))
 			if (health >= max_health)
 				boutput(user, "<span class='alert'>That putt is already at full health!</span>")
 				return
-			if (T.try_weld(user, 1))
+			if (W:try_weld(user, 1))
 				visible_message("<span class='notice'><b>[user]</b> repairs some dents on [src]!</span>")
 				message_pilot("<b>[user]</b> repairs some dents on [src]!")
 				repair_by(10)

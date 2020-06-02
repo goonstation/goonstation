@@ -225,13 +225,12 @@
 				else if (!ACT.activator && A.activated)
 					src.ArtifactDeactivated()
 
-	if (istype(W,/obj/item/weldingtool))
-		var/obj/item/weldingtool/WELD = W
-		if (WELD.welding)
-			WELD.eyecheck(user)
+	if (isweldingtool(W))
+		if (W:welding)
+			W:eyecheck(user)
 			src.ArtifactStimulus("heat", 800)
 			playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
-			src.visible_message("<span class='alert'>[user.name] burns the artifact with [WELD]!</span>")
+			src.visible_message("<span class='alert'>[user.name] burns the artifact with [W]!</span>")
 			return 0
 
 	if (istype(W,/obj/item/device/light/zippo))

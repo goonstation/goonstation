@@ -1057,18 +1057,17 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			user.lastattacked = src
 
 			if(health == max_health)
 				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
 				return
 
-			var/obj/item/weldingtool/welder = W
-			if(welder.welding)
-				if(welder.try_weld(user, 4))
+			if(W:welding)
+				if(W:try_weld(user, 4))
 					repair_damage(20)
-					user.visible_message("<span class='notice'>[user] repairs the [src] with [welder]!</span>")
+					user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
 					return
 
 		if (health <= 0)

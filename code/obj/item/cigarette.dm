@@ -139,7 +139,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.on == 0)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:welding)
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				return
 			else if (istype(W, /obj/item/sword) && W:active)

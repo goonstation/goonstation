@@ -1144,7 +1144,7 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(W)
 				qdel(src)
 		#endif
-		if(istype(W, /obj/item/weldingtool) && state == 1)
+		if(isweldingtool(W) && W:welding && state == 1)
 			if(!W:try_weld(user, 1))
 				return
 			W:eyecheck(user)

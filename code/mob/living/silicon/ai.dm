@@ -281,10 +281,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.dismantle_stage = 2
 		else ..()
 
-	else if (istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WELD = W
+	else if (isweldingtool(W))
 		if(src.bruteloss)
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				src.HealDamage(null, 15, 0)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")

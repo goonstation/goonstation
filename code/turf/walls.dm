@@ -319,7 +319,7 @@
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/weldingtool))
+	else if (isweldingtool(W))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -405,7 +405,7 @@
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/weldingtool) && W:welding)
+	else if (isweldingtool(W) && W:welding)
 		W:eyecheck(user)
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))

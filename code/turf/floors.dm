@@ -1075,7 +1075,7 @@
 		color = O.color
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			visible_message("<b>[user] hits [src] with [W]!</b>")
 			if (prob(25))
 				ReplaceWithSpace()
@@ -1217,7 +1217,7 @@
 		var/obj/item/pen/P = C
 		P.write_on_turf(src, user, params)
 		return
-	else if (isweldingtool(C) || iswrenchingtool(C))
+	else if ((isweldingtool(C) && C:welding) || iswrenchingtool(C))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		playsound(src, "sound/items/Ratchet.ogg", 80, 1)
 		if(do_after(user, 30))

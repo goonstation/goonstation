@@ -70,12 +70,11 @@
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		if (istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-			if(W.welding)
-				if(!W.try_weld(user, 2))
+		if (isweldingtool(I))
+			if(I:welding)
+				if(!I:try_weld(user, 2))
 					return
-				W.eyecheck(user)
+				I:eyecheck(user)
 
 				if (!src.welded)
 					src.welded = 1

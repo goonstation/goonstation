@@ -491,7 +491,7 @@
 				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
 
 		if(2)
-			if (istype(W, /obj/item/weldingtool))
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
@@ -668,7 +668,7 @@
 				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
 
 		if(8)
-			if (istype(W, /obj/item/weldingtool))
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
@@ -1439,7 +1439,7 @@
 				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
 
 		if(2)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:welding)
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
@@ -1616,7 +1616,7 @@
 				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
 
 		if(8)
-			if (istype(W, /obj/item/weldingtool))
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1, burn_eyes = 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
