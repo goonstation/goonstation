@@ -387,7 +387,7 @@ datum
 			process_groups()
 				for(var/x in air_groups)
 					var/datum/air_group/AG = x
-					AG.process_group(parent_controller)
+					AG?.process_group(parent_controller)
 					LAGCHECK(LAG_HIGH)
 
 			process_singletons()
