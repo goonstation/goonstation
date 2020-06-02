@@ -619,7 +619,7 @@ What are the archived variables for?
 	var/moved_moles = 0
 
 	#define _MIMIC_GAS(GAS, ...) \
-		GAS -= delta_##GAS; \
+		GAS = QUANTIZE(GAS - delta_##GAS); \
 		moved_moles += delta_##GAS;
 	APPLY_TO_GASES(_MIMIC_GAS)
 	#undef _MIMIC_GAS
@@ -632,7 +632,7 @@ What are the archived variables for?
 
 			if (abs(delta) <= ATMOS_EPSILON) continue
 
-			trace_gas.moles -= delta
+			trace_gas.moles = QUANTIZE(trace_gas.moles - delta)
 
 			var/heat_cap_transferred = delta*trace_gas.specific_heat
 			heat_transferred += heat_cap_transferred*ARCHIVED(temperature)
