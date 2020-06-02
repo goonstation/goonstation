@@ -180,7 +180,6 @@
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You unweld the turret from the floor.")
-					W:eyecheck(user)
 					src.anchored = 0
 
 

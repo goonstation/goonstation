@@ -368,7 +368,6 @@
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
-			C:eyecheck(user)
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
 		if (istype(C, /obj/item/rods))

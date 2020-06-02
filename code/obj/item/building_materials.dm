@@ -812,7 +812,6 @@ MATERIAL
 			if(!W:try_weld(user, 1))
 				return
 
-			W:eyecheck(user)
 			if(!src.anchored) user.visible_message("<span class='alert'><B>[user.name] welds the [src.name] to the floor.</B></span>")
 			else user.visible_message("<span class='alert'><B>[user.name] cuts the [src.name] free from the floor.</B></span>")
 			src.anchored = !(src.anchored)

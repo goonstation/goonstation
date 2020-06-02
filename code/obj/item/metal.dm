@@ -79,7 +79,6 @@ MATERIAL
 			M.amount = weldinput
 			src.amount -= weldinput * 2
 
-			W:eyecheck(user)
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
 			if(src.amount < 1)	qdel(src)
 			return
