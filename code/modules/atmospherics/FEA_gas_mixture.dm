@@ -630,7 +630,7 @@ What are the archived variables for?
 
 			delta = QUANTIZE((trace_gas.ARCHIVED(moles)/5)*border_multiplier/group_multiplier)
 
-			if (abs(delta) <= 0.0001) continue
+			if (abs(delta) <= ATMOS_EPSILON) continue
 
 			trace_gas.moles -= delta
 
