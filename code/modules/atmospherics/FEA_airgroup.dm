@@ -347,7 +347,7 @@
 	. = 0
 	sample = air_master.space_sample
 
-	if (!(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+	if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 		sample = air_master.update_space_sample()
 
 	if (!sample)
