@@ -1830,20 +1830,20 @@
 			if (upgrade.charges > 0)
 				upgrade.charges--
 			if (upgrade.charges == 0)
-				boutput(src, "[upgrade] activated. It has been used up.")
+				boutput(src, "[upgrade] has been activated. It has been used up.")
 				src.upgrades.Remove(upgrade)
 				qdel(upgrade)
 			else
 				if (upgrade.charges < 0)
-					boutput(src, "[upgrade] activated.")
+					boutput(src, "[upgrade] has been activated.")
 				else
-					boutput(src, "[upgrade] activated. [upgrade.charges] uses left.")
+					boutput(src, "[upgrade] has been activated. [upgrade.charges] uses left.")
 		else
 			if (upgrade.activated)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] [upgrade.activated ? "activated" : "deactivated"].")
+				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 
 	proc/set_module(var/obj/item/robot_module/RM)
