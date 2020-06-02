@@ -88,7 +88,7 @@ var/const/effectTypeFood = 4
 		holder = null
 		owner = null
 		if(dnaBlocks)
-			qdel(dnaBlocks)
+			dnaBlocks.dispose()
 		dnaBlocks = null
 		..()
 
