@@ -49,15 +49,12 @@ datum/controller/process/delete_queue
 				continue
 
 			if (log_hard_deletions == 1)
-				if (D.type == /obj/overlay)
-					var/obj/overlay/O = D
-					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state], icon [O.icon]")
-				else if (D.type == /image)
+				if (D.type == /image)
 					var/image/I = D
 					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
 				else if(istype(D, /atom))
 					var/atom/A = D
-					logTheThing("debug", text="HardDel of [D.type] -- [A.name]")
+					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing("debug", text="HardDel of [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES
@@ -173,6 +170,7 @@ proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result
 			key_name = "[x] \ref[x] [x:type]"
 			if(istype(x, /atom/movable))
 				key_name += " [x:loc]"
+			key_name += " [x:icon] [x:icon_state]"
 			x = x:vars
 		if(x == "vars")
 			i += 1
