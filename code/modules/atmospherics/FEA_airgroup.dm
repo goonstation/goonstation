@@ -291,7 +291,7 @@
 						abort_group = 1
 				else // faster check for actual space (modified check_turf)
 					var/moles = TOTAL_MOLES(air)
-					if(moles > MINIMUM_AIR_TO_SUSPEND)
+					if(moles <= MINIMUM_AIR_TO_SUSPEND)
 						var/turf/space/sample = air_master.space_sample
 						if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 							sample = air_master.update_space_sample()
