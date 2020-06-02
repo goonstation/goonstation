@@ -258,11 +258,10 @@ obj/machinery/atmospherics/pipe
 			update_icon()
 
 		process()
-			if (!loc)
-				return
-
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
+			if(!parent?.air || TOTAL_MOLES(parent.air) < 0.00001 || !loc)
+				return
 
 			if(!node1)
 				parent.mingle_with_turf(loc, volume)
