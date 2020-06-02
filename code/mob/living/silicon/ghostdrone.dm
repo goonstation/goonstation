@@ -510,15 +510,14 @@
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
-				if (WELD.welding)
+				if (W:try_weld(user,0,-1,0,0))
 					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
-					damage_heat(WELD.force)
+					damage_heat(W.force)
 				else
 					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
-					damage_blunt(WELD.force)
+					damage_blunt(W.force)
 			else
 				if (src.health >= src.max_health)
 					boutput(user, "<span class='alert'>It isn't damaged!</span>")
@@ -526,9 +525,9 @@
 				if (get_fraction_of_percentage_and_whole(src.health,src.max_health) < 33)
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
-				if(WELD.try_weld(user, 1))
+				if(W:try_weld(user, 1))
 					src.health = max(1,min(src.health + 5,src.max_health))
-					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 				else

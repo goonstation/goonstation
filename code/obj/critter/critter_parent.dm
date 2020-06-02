@@ -1084,7 +1084,7 @@
 
 			src.critter_name = t
 
-		else if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
+		else if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
 			user.visible_message("<span class='alert'><b>[user]</b> warms [src] with [W].</span>",\
 			"<span class='alert'>You warm [src] with [W].</span>")
 			src.warm_count -= 2
