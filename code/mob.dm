@@ -293,9 +293,6 @@
 	traitHolder = null
 
 	if (bioHolder)
-		if (bioHolder.mobAppearance)
-			bioHolder.mobAppearance.owner = null
-			bioHolder.mobAppearance = null
 		bioHolder.disposing()
 		bioHolder.owner = null
 		bioHolder = null
