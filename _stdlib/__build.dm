@@ -75,6 +75,7 @@ o+`        `-` ``..-:yooos-..----------..`
 // It gets reported to the debug log. This process takes about 4 minutes per hard deletion
 // (during that time the server will be frozen).
 // #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 //////////// MAP OVERRIDES
 

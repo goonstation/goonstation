@@ -11,15 +11,19 @@ datum/controller/process/delete_queue
 #ifdef DELETE_QUEUE_DEBUG
 	var/tmp/datum/dynamicQueue/delete_queue = 0
 #endif
+
+#ifdef LOG_HARD_DELETE_REFERENCES
+	var/log_hard_deletions = 2
+#elif defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
+	var/log_hard_deletions = 2
+#else
 	var/log_hard_deletions = 0 // 1 = log them, 2 =  attempt to find references (requires LOG_HARD_DELETE_REFERENCES)
+#endif
 
 	setup()
 		name = "DeleteQueue"
 		schedule_interval = 5
 		tick_allowance = 25
-#ifdef LOG_HARD_DELETE_REFERENCES
-		log_hard_deletions = 2
-#endif
 
 	doWork()
 		/*
@@ -57,11 +61,18 @@ datum/controller/process/delete_queue
 					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing("debug", text="HardDel of [D.type]")
-	#ifdef LOG_HARD_DELETE_REFERENCES
+#ifdef LOG_HARD_DELETE_REFERENCES
 				if (log_hard_deletions >= 2)
 					for(var/x in find_all_references_to(D))
 						logTheThing("debug", text=x)
-	#endif
+#endif
+#ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+				if (log_hard_deletions >= 2)
+					var/list/result = list()
+					ref_visit_list_2(all_references, D, result)
+					for(var/x in result)
+						logTheThing("debug", text=x)
+#endif
 
 			delcount++
 			D.qdeled = 0
@@ -166,7 +177,7 @@ proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result
 		stack = list()
 	for(var/x in L)
 		i += 1
-		var/key_name = i
+		var/key_name = "[i]"
 		if(top_level && !istext(x))
 			key_name = "[x] \ref[x] [x:type]"
 			if(istype(x, /atom/movable))
@@ -175,7 +186,6 @@ proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result
 				key_name += " [x:icon] [x:icon_state]"
 			x = x:vars
 		if(x == "vars")
-			i += 1
 			continue
 		if(x && x == target)
 			result += jointext(stack + key_name, " - ")
@@ -208,5 +218,61 @@ proc/find_all_references_to(var/datum/D)
 		current = next
 		next = list()
 		ref_visit_list(current, next, D, .)
+#endif
 
+#ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+var/global/list/all_references
+/datum/New()
+	if(!all_references) all_references = list("GLOB")
+	all_references["\ref[src]"] = 1
+	..()
+
+/datum/Del()
+	all_references.Remove("\ref[src]")
+	..()
+
+/client/New()
+	if(!all_references) all_references = list("GLOB")
+	all_references["\ref[src]"] = 1
+	..()
+
+/client/Del()
+	all_references.Remove("\ref[src]")
+	..()
+
+proc/ref_visit_list_2(var/list/L, var/datum/target, var/list/result, var/list/stack=null)
+	var/i = 0
+	var/top_level = isnull(stack)
+	if(isnull(stack))
+		stack = list()
+	for(var/x in L)
+		i += 1
+		var/key_name = "[i]"
+		if(top_level && x == "GLOB")
+			x = global.vars
+		else if(top_level)
+			x = locate(x)
+			if(!x)
+				continue
+			key_name = "[x] \ref[x] [x:type]"
+			if(istype(x, /atom/movable))
+				key_name += " [x:loc]"
+			if(istype(x, /atom) || istype(x, /image))
+				key_name += " [x:icon] [x:icon_state]"
+			x = x:vars
+		if(x == "vars")
+			continue
+		if(x && x == target)
+			result += jointext(stack + key_name, " - ")
+		if(istype(x, /list))
+			ref_visit_list_2(x, target, result, stack + key_name)
+		var/y = null
+		try
+			y = L[x]
+		catch
+		if(y)
+			if(y && y == target)
+				result += jointext(stack + "[x]", " - ")
+			if(istype(y, /list))
+				ref_visit_list_2(x, target, result, stack + "[x]")
 #endif
