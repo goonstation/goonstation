@@ -4,7 +4,7 @@
 	var/for_sale
 
 /obj/machinery/ore_cloud_storage_container
-	name = "Rockbox&trade; Ore Cloud Storage Container"
+	name = "Rockbox™ Ore Cloud Storage Container"
 	desc = "This thing stores ore in \"the cloud\" for the station to use. Best not to think about it too hard."
 	icon = 'icons/obj/mining_cloud_storage.dmi'
 	icon_state = "ore_storage_unit"
@@ -244,15 +244,15 @@
 
 		if (status & BROKEN || status & NOPOWER)
 			var/dat = "The screen is blank."
-			user << browse(dat, "window=mining_dropbox;size=400x500")
+			user.Browse(dat, "window=mining_dropbox;size=400x500")
 			onclose(user, "mining_dropbox")
 			return
 
 		var/list/dat = list({"<B>[src.name]</B>
 			<br><HR>
-			<B>Rockbox&trade; Ore Cloud Storage Service Settings:</B>
+			<B>Rockbox™ Ore Cloud Storage Service Settings:</B>
 			<br><small>
-			<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
+			<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
 			<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>
 			<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>
 			</small><HR>"})
@@ -268,7 +268,7 @@
 		else
 			dat += "No ores currently loaded.<br>"
 
-		user << browse(dat.Join(), "window=mining_dropbox;size=500x500")
+		user.Browse(dat.Join(), "window=mining_dropbox;size=500x500")
 		onclose(user, "mining_dropbox")
 
 
