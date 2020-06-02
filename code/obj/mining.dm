@@ -469,15 +469,14 @@
 			boutput(user, "<span class='alert'>It's way too dangerous to do that while it's active!</span>")
 			return
 
-		if (istype(W,/obj/item/weldingtool/))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if (src.health < 50)
 				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.damage(-10)
 				src.malfunctioning = 0
-				user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+				user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 				if (src.health >= 100)
 					boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 

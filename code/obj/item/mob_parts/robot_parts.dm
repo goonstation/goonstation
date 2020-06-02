@@ -52,9 +52,8 @@
 		return standImage
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(!WELD.try_weld(user, 1))
+		if(isweldingtool(W))
+			if(!W:try_weld(user, 1))
 				return
 			if (src.ropart_get_damage_percentage(1) > 0)
 				src.ropart_mend_damage(20,0)
@@ -319,7 +318,7 @@
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
 				return
-		else if (istype(W, /obj/item/weldingtool))
+		else if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -349,7 +348,7 @@
 	weight = 0.4
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -496,7 +495,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		//gonna hack this in with appearanceString
-		if ((appearanceString == "sturdy" || appearanceString == "heavy") && istype(W, /obj/item/weldingtool))
+		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")

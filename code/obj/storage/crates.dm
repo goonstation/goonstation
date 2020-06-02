@@ -371,7 +371,7 @@
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
 
 	engineer
 		name = "Class Crate - Combat Engineer"
@@ -383,8 +383,9 @@
 		/obj/item/storage/pouch/shotgun,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
+		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 
 	pyro
 		name = "Class Crate - Firebrand"

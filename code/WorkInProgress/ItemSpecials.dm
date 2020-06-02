@@ -1136,17 +1136,16 @@
 
 				var/flame_succ = 0
 				if (master)
-					if(istype(master,/obj/item/device/light/zippo))
+					if(istype(master,/obj/item/device/light/zippo) && master:on)
 						var/obj/item/device/light/zippo/Z = master
 						if (Z.reagents.get_reagent_amount("fuel"))
 							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
-					if (istype(master,/obj/item/weldingtool))
-						var/obj/item/weldingtool/WT = master
-						if (WT.reagents.get_reagent_amount("fuel"))
-							WT.reagents.remove_reagent("fuel", 1)
+					if (isweldingtool(master) && master:try_weld(user,0,-1,0,0))
+						if (master.reagents.get_reagent_amount("fuel"))
+							master.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
