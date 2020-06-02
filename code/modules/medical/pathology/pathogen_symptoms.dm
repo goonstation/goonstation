@@ -126,6 +126,11 @@ datum/pathogeneffects
 	proc/ondeath(var/mob/M as mob, var/datum/pathogen/origin)
 		return
 
+	// oncured(mob, datum/pathogen) : void
+	// OVERRIDE: Overriding this is situational.
+	proc/oncured(var/mob/M as mob, var/datum/pathogen/origin)
+		return
+
 
 	// End of events: please do not add any event definitions outside this block.
 	// ====
