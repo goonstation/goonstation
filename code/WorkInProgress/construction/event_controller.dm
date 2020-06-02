@@ -149,7 +149,7 @@
 		player_modifier = 1
 
 		for (var/client/C)
-			if (C.mob && C.mob.stat < 2)
+			if (C.mob && !isdead(C.mob))
 				player_modifier += player_scaling
 
 	proc/calculate_time_modifier()
