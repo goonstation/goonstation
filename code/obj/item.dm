@@ -1277,6 +1277,10 @@
 	disposing_abilities()
 	setItemSpecial(null)
 
+	if(istype(src.loc, /obj/item/storage))
+		var/obj/item/storage/storage = src.loc
+		storage.hud.remove_item(src)
+
 	var/turf/T = loc
 	if (!istype(T))
 		if(src.temp_flags & IS_LIMB_ITEM)
