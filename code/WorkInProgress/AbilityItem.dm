@@ -705,8 +705,9 @@
 
 	proc/disposing_abilities()
 		if (!isnull(ability_buttons))
+			src.hide_buttons()
 			for (var/obj/ability_button/A in ability_buttons)
-				A.the_item = null
+				qdel(A)
 			ability_buttons.len = 0
 
 	proc/clear_mob()
@@ -810,8 +811,10 @@
 
 	disposing() //probably best to do this?
 		if (src.the_item)
+			if(length(src.the_item.ability_buttons))
+				src.the_item.ability_buttons -= src
 			src.the_item = null
-		if (src.the_mob)
+		if (src.the_mob) // TODO: remove from mob properly
 			src.the_mob = null
 		..()
 
