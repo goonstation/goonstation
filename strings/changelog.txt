@@ -1,5 +1,9 @@
 
 (t)wed jun 03 20
+(u)Tarmunora
+(p)929
+(e)🆕|feature
+(+)Made metal foam a little better to use for sealing breaches
 (u)Erinexx
 (p)818
 (e)🆕🗺|feature, mapping
