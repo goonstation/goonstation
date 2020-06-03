@@ -1,9 +1,4 @@
 
-(t)wed june 3 20
-(u)HydroFloric
-(e)🎨|sprites
-(*)The Intelligence Formation Chip has a new sprite (and name). 
-(t)sun may 31 20
 (u)Chickenish
 (p)863
 (e)⚖🐛🆕|balance, bug, feature
