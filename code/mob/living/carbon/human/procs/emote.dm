@@ -7,7 +7,7 @@
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act))
+		if (P.onemote(act, voluntary))
 			return
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
