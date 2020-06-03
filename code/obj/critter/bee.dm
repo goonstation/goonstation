@@ -714,7 +714,7 @@
 
 	ascbee
 		name = "ASCBee"
-		desc = "This bee looks rather... old school"
+		desc = "This bee looks rather... old school."
 		icon_body = "ascbee"
 		icon_state = "ascbee-wings"
 		sleeping_icon_state = "ascbee-sleep"
