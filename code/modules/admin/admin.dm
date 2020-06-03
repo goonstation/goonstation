@@ -2741,7 +2741,7 @@ var/global/noir = 0
 								return
 							if (alert("Do you really wanna give things legs?", "LEG LEG", "Sure thing!", "Not really.") == "Sure thing!")
 								for(var/atom/movable/A in world) //Build the god forsaken list
-									if(istype(A, text2path(pathname)))
+									if(istype(A, text2path(pathname)) && !istype(A, /obj/overlay))
 										A.AddComponent(/datum/component/legs)
 								logTheThing("admin", usr, null, "used mass give legs secret")
 								logTheThing("diary", usr, null, "used mass give legs secret", "admin")
