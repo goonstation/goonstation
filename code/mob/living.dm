@@ -680,6 +680,8 @@
 	if (!message)
 		return
 
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
 
 	if (src.voice_type && world.time > last_voice_sound + 8)
 		var/VT = voice_type

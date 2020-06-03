@@ -7,7 +7,7 @@
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act))
+		if (P.onemote(act, voluntary))
 			return
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -230,6 +230,14 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
+				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(1))
+					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
+					var/obj/item/device/light/glowstick/G = new glowsticktype
+					G.set_loc(src.loc)
+					G.turnon()
+					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
+					G.throw_at(target,5,1)
+					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
 			if ("salute","bow","hug","wave", "blowkiss")
 				// visible targeted emotes
@@ -1793,24 +1801,19 @@
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
-	var/datum/gas/farts/trace_gas = new
 	if(oxyplasmafart == 1)
 		gas.toxins += 1
 	if(oxyplasmafart == 2)
 		gas.oxygen += 1
 	gas.vacuum()
-	gas.trace_gases = list()
-	gas.trace_gases += trace_gas
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		trace_gas.moles = 6.9
+		gas.farts = 6.9
+	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
+		gas.farts = 2.69
+	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
+		gas.farts = 1.69
 	else
-		if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-			trace_gas.moles = 2.69
-		else
-			if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-				trace_gas.moles = 1.69
-			else
-				trace_gas.moles = 0.69
+		gas.farts = 0.69
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

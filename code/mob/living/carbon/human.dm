@@ -1017,7 +1017,7 @@
 				qdel(src.internal)
 			else
 				stat("Internal Atmosphere Info:", src.internal.name)
-				stat("Tank Pressure:", src.internal.air_contents.return_pressure())
+				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
 
 /mob/living/carbon/human/hotkey(name)
@@ -2467,6 +2467,9 @@
 		return 0
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
+	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+	if(B && hand != specify)
+		qdel(B)
 	if (specify >= 0)
 		src.hand = specify
 	else

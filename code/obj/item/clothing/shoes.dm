@@ -492,7 +492,7 @@
 	proc/allow_thrust(num, mob/user as mob) // blatantly c/p from jetpacks
 		if (!src.on || !istype(src.tank))
 			return 0
-		if (!isnum(num) || num < 0.01 || src.tank.air_contents.total_moles() < num)
+		if (!isnum(num) || num < 0.01 || TOTAL_MOLES(src.tank.air_contents) < num)
 			return 0
 
 		var/datum/gas_mixture/G = src.tank.air_contents.remove(num)
@@ -513,7 +513,7 @@
 
 	get_desc(dist)
 		if (dist <= 1)
-			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [src.tank.air_contents.return_pressure()]." : "<span class='alert'>They have no tank attached!</span>"]"
+			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : "<span class='alert'>They have no tank attached!</span>"]"
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 

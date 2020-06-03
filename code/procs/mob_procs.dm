@@ -114,14 +114,14 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
 	if (!walking_matters)
 		slip_delay = 10
-	var/movedelay = src.movement_delay(get_step(src,src.move_dir), running)
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = max(movement_delay_real, world.time - src.next_move)
 
 	if (movedelay < slip_delay)
-		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movedelay/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
-
+		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
 		var/throw_range = min(round(intensity),50)
 		if (intensity < 1 && intensity > 0 && throw_range <= 0)
 			throw_range = max(throw_range,1)
@@ -134,9 +134,9 @@
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
 		src.pulling = null
 
-		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, intensity)
+		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
 		SPAWN_DBG(0)
-			src.throw_at(T, intensity, 3, list("stun"=clamp(1 SECONDS * intensity, 1 SECOND, 10 SECONDS)), src.loc, throw_type = THROW_SLIP)
+			src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
 /mob/living/carbon/human/slip(walking_matters = 1, running = 0)

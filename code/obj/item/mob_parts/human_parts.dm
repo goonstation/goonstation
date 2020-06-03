@@ -162,7 +162,7 @@
 		if (isnull(src.original_DNA) || isnull(src.original_fprints) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = md5(src.original_holder.bioHolder.Uid)
+				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
 /obj/item/parts/human_parts/arm
@@ -606,6 +606,44 @@
 		current_decomp_stage_s = decomp_stage
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
+
+#if ASS_JAM
+/obj/item/parts/human_parts/arm/left/hot
+	name = "left hot arm"
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	decomp_affected = 0
+	streak_descriptor = "bloody"
+	override_attack_hand = 1
+	limb_type = /datum/limb/hot
+	handlistPart = "hand_left"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+
+
+/obj/item/parts/human_parts/arm/right/hot
+	name = "right hot arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	streak_descriptor = "bloody"
+	override_attack_hand = 1
+	limb_type = /datum/limb/hot
+	handlistPart = "hand_right"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+#endif
 
 /obj/item/parts/human_parts/arm/left/bear
 	name = "left bear arm"

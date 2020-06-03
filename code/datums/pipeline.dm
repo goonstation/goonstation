@@ -46,7 +46,7 @@ datum/pipeline
 			return
 
 		//Check to see if pressure is within acceptable limits
-		var/pressure = air.return_pressure()
+		var/pressure = MIXTURE_PRESSURE(air)
 		if(pressure > alert_pressure)
 			for(var/obj/machinery/atmospherics/pipe/member in members)
 				if(!member.check_pressure(pressure))
@@ -65,14 +65,13 @@ datum/pipeline
 				member.air_temporary.trace_gases = null
 			member.air_temporary.volume = member.volume
 
-			member.air_temporary.oxygen = air.oxygen*member.volume/air.volume
-			member.air_temporary.nitrogen = air.nitrogen*member.volume/air.volume
-			member.air_temporary.toxins = air.toxins*member.volume/air.volume
-			member.air_temporary.carbon_dioxide = air.carbon_dioxide*member.volume/air.volume
+			#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.GAS = air.GAS * member.volume / air.volume;
+			APPLY_TO_GASES(_TEMPORARILY_STORE_GAS)
+			#undef _TEMPORARILY_STORE_GAS
 
 			member.air_temporary.temperature = air.temperature
 
-			if(air.trace_gases && air.trace_gases.len)
+			if(length(air.trace_gases))
 				for(var/datum/gas/trace_gas in air.trace_gases)
 					var/datum/gas/corresponding = new trace_gas.type()
 					if(!member.air_temporary.trace_gases)
@@ -205,7 +204,7 @@ datum/pipeline
 			network.update = 1
 
 	proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-		var/total_heat_capacity = air.heat_capacity()
+		var/total_heat_capacity = HEAT_CAPACITY(air)
 		var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 
 		if(istype(target, /turf/simulated))
@@ -228,10 +227,10 @@ datum/pipeline
 
 				if(modeled_location.parent && modeled_location.parent.group_processing)
 					delta_temperature = (air.temperature - modeled_location.parent.air.temperature)
-					sharer_heat_capacity = modeled_location.parent.air.heat_capacity()
+					sharer_heat_capacity = HEAT_CAPACITY(modeled_location.parent.air)
 				else
 					delta_temperature = (air.temperature - modeled_location.air.temperature)
-					sharer_heat_capacity = modeled_location.air.heat_capacity()
+					sharer_heat_capacity = HEAT_CAPACITY(modeled_location.air)
 
 				var/self_temperature_delta = 0
 				var/sharer_temperature_delta = 0

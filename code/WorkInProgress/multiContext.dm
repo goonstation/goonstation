@@ -379,6 +379,7 @@ var/list/globalContextActions = null
 		//trans = trans.Reset()
 		transform = trans
 
+		background = null
 		var/possible_bg = action.buildBackgroundIcon(target,user)
 		if (possible_bg)
 			background = possible_bg

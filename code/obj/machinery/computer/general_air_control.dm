@@ -1,3 +1,6 @@
+#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[#ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[#ID + #GAS]]% [NAME]</FONT>  " }
+#define GET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_GET_SIGNAL_GAS, ID)
+
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
@@ -634,33 +637,19 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			if(data)
 				mixer_part += "<B>Input 1 Composition</B>: <BR>"
-				if(data["input1o2"])
-					mixer_part += "<FONT color='blue'>[data["input1o2"]]% O2</FONT>  "
-				if(data["input1p"])
-					mixer_part += "<FONT color='red'>[data["input1p"]]% PL</FONT>  "
-				if(data["input1co2"])
-					mixer_part += "<FONT color='orange'>[data["input1co2"]]% CO2</FONT>  "
-				if(data["input1n2"])
-					mixer_part += "<FONT color='gray'>[data["input1n2"]]% N2</FONT>  "
-				if(data["input1tg"])
-					mixer_part += "<FONT color='black'>[data["input1tg"]]% OTHER</FONT>   "
-				if (data["input1kpa"] && data["input1temp"])
-					mixer_part += "<br>Pressure: [data["input1kpa"]] kPa / Temperature: [data["input1temp"]] &deg;C"
+				GET_SIGNAL_MIXTURE(in1)
+				if(data["in1tg"])
+					mixer_part += "<FONT color='black'>[data["in1tg"]]% OTHER</FONT>   "
+				if (data["in1kpa"] && data["in1temp"])
+					mixer_part += "<br>Pressure: [data["in1kpa"]] kPa / Temperature: [data["in1temp"]] &deg;C"
 				mixer_part += "<BR>"
 
 				mixer_part += "<B>Input 2 Composition</B>: <BR>"
-				if(data["input2o2"])
-					mixer_part += "<FONT color='blue'>[data["input2o2"]]% O2</FONT>  "
-				if(data["input2p"])
-					mixer_part += "<FONT color='red'>[data["input2p"]]% PL</FONT>  "
-				if(data["input2co2"])
-					mixer_part += "<FONT color='orange'>[data["input2co2"]]% CO2</FONT>  "
-				if(data["input2n2"])
-					mixer_part += "<FONT color='gray'>[data["input2n2"]]% N2</FONT>  "
-				if(data["input2tg"])
-					mixer_part += "<FONT color='black'>[data["input2tg"]]% OTHER</FONT>   "
-				if (data["input2kpa"] && data["input2temp"])
-					mixer_part += "<br>Pressure: [data["input2kpa"]] kPa / Temperature: [data["input2temp"]] &deg;C"
+				GET_SIGNAL_MIXTURE(in2)
+				if(data["in2tg"])
+					mixer_part += "<FONT color='black'>[data["in2tg"]]% OTHER</FONT>   "
+				if (data["in2kpa"] && data["in2temp"])
+					mixer_part += "<br>Pressure: [data["in2kpa"]] kPa / Temperature: [data["in2temp"]] &deg;C"
 
 				mixer_part += "<hr>"
 
@@ -669,18 +658,11 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				mixer_part += "<B>Gas Input Ratio</b>: <A href='?src=\ref[src];ratio=5'><<</A> <A href='?src=\ref[src];ratio=1'><</A> [data["i1trans"]]% /  [data["i2trans"]]% <A href='?src=\ref[src];ratio=-1'>></A> <A href='?src=\ref[src];ratio=-5'>>></A>"
 
 				mixer_part += "<HR><B>Resulting Composition</B>: <BR>"
-				if(data["outputo2"])
-					mixer_part += "<FONT color='blue'>[data["outputo2"]]% O2</FONT>  "
-				if(data["outputp"])
-					mixer_part += "<FONT color='red'>[data["outputp"]]% PL</FONT>  "
-				if(data["outputco2"])
-					mixer_part += "<FONT color='orange'>[data["outputco2"]]% CO2</FONT>  "
-				if(data["outputn2"])
-					mixer_part += "<FONT color='gray'>[data["outputn2"]]% N2</FONT>  "
-				if(data["outputtg"])
-					mixer_part += "<FONT color='black'>[data["outputtg"]]% OTHER</FONT>   "
-				if (data["outputkpa"] && data["outputtemp"])
-					mixer_part += "<br>Pressure: [data["outputkpa"]] kPa / Temperature: [data["outputtemp"]] &deg;C"
+				GET_SIGNAL_MIXTURE(out)
+				if(data["outtg"])
+					mixer_part += "<FONT color='black'>[data["outtg"]]% OTHER</FONT>   "
+				if (data["outkpa"] && data["outtemp"])
+					mixer_part += "<br>Pressure: [data["outkpa"]] kPa / Temperature: [data["outtemp"]] &deg;C"
 				mixer_part += "<BR>"
 
 				mixer_data += mixer_part
@@ -783,3 +765,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	initialize()
 		set_frequency(frequency)
 #undef MAX_PRESSURE
+
+#undef _GET_SIGNAL_GAS
+#undef GET_SIGNAL_MIXTURE

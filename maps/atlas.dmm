@@ -1100,7 +1100,7 @@
 "wv" = (/obj/machinery/atmospherics/pipe/simple/insulated/cold{dir = 4},/turf/simulated/wall/auto/reinforced/supernorn,/area/station/engine/core)
 "ww" = (/obj/machinery/atmospherics/pipe/simple/insulated/cold{dir = 9},/turf/simulated/wall/auto/reinforced/supernorn,/area/station/engine/core)
 "wx" = (/obj/rack,/obj/item/clothing/suit/space/engineer,/obj/item/clothing/head/helmet/space/engineer,/obj/item/clothing/mask/breath,/turf/simulated/floor/caution/north,/area/station/engine/core)
-"wy" = (/obj/table/auto,/obj/machinery/door_control{id = "engine_room"; name = "Observation Shutters"; pixel_x = -24; pixel_y = -8},/obj/machinery/light{dir = 8},/obj/item/clothing/gloves/yellow,/obj/item/storage/firstaid/fire,/obj/item/extinguisher,/turf/simulated/floor/orangeblack,/area/station/engine/engineering)
+"wy" = (/obj/table/auto,/obj/machinery/door_control{id = "engine_room"; name = "Observation Shutters"; pixel_x = -24; pixel_y = -8},/obj/machinery/light{dir = 8},/obj/item/clothing/gloves/yellow,/obj/item/storage/firstaid/fire,/obj/item/extinguisher,/obj/item/device/transfer_valve{pixel_y = 14; pixel_x = 5},/obj/item/device/transfer_valve{pixel_y = 18; pixel_x = -8},/turf/simulated/floor/orangeblack,/area/station/engine/engineering)
 "wz" = (/obj/grille/steel,/obj/window/auto/reinforced,/obj/machinery/shuttle/engine/heater{dir = 8; icon_state = "alt_heater-L"},/turf/simulated/floor/plating/airless,/area/station/maintenance/SEmaint)
 "wA" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/random,/area/station/maintenance/SEmaint)
 "wB" = (/obj/machinery/atmospherics/pipe/manifold{dir = 1; level = 2},/turf/simulated/floor/engine,/area/station/engine/core)

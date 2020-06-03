@@ -7,6 +7,7 @@
 /mob/verb/say_verb(message as text)
 	set name = "say"
 	//&& !src.client.holder
+
 	if (!message)
 		return
 	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
@@ -65,8 +66,13 @@
 		var/token = channels[choice]
 		if (!token)
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
-		var/text = input("", "Speaking over [choice] ([token])")
+		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
+			if (client.preferences.auto_capitalization)
+				var/i = 1
+				while (copytext(text, i, i+1) == " ")
+					i++
+				text = capitalize(copytext(text, i))
 			src.say_verb(token + " " + text)
 
 
@@ -100,7 +106,12 @@
 		else
 			token = ":" + R.secure_frequencies[choice_index - 1]
 
-		var/text = input("", "Speaking to [choice] frequency")
+		var/text = input("", "Speaking to [choice] frequency") as null|text
+		if (client.preferences.auto_capitalization)
+			var/i = 1
+			while (copytext(text, i, i+1) == " ")
+				i++
+			text = capitalize(copytext(text, i))
 		src.say_verb(token + " " + text)
 	else
 		boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
@@ -693,6 +704,16 @@
 /mob/proc/show_viewers(message)
 	for(var/mob/M in AIviewers())
 		M.see(message)
+
+/mob/verb/toggle_auto_capitalization()
+	set desc = "Toggles auto capitalization of chat messages"
+	set name = "Toggle Auto Capitalization"
+
+	if (!usr.client)
+		return
+
+	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
+	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
 
 /mob/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"

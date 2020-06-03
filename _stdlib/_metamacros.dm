@@ -30,3 +30,7 @@ Example:
 #define TUPLE_GET_6(x) x(_GETTER_6)
 #define TUPLE_GET_7(x) x(_GETTER_7)
 #define TUPLE_GET_8(x) x(_GETTER_8)
+
+
+#define IDENTITY(x) x
+#define NOTHING(x)

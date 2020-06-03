@@ -1,11 +1,11 @@
 language: generic
+os: linux
 dist: xenial
-sudo: false
 
 git:
   submodules: false
 
-matrix:
+jobs:
   include:
     - name: "Run Linters"
       addons:

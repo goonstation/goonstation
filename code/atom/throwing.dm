@@ -346,9 +346,10 @@
 			T = src.loc
 
 	//done throwing, either because it hit something or it finished moving
-	src.throw_end(params)
 	if (!(throwing & THROW_SLIP))
 		animate(src, transform = transform_original)
+
+	src.throw_end(params)
 
 	if (!hitAThing) // Bump proc requires throwing flag to be set, so if we hit a thing, leave it on and let Bump turn it off
 		src.throwing = 0
