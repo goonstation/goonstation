@@ -69,7 +69,7 @@
 	return
 
 /obj/item/device/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/projectile))
+	if (istype(AM, /obj/projectile) || AM.invisibility > 0)
 		return
 	if (AM.move_speed < 12)
 		src.sense()
