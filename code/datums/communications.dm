@@ -79,14 +79,12 @@ proc/get_free_signal()
 datum/radio_frequency
 	var/frequency
 	var/list/obj/devices = list()
-	var/list/obj/all_signals_devices = list() // devices that need to receive all signals
 
 	//MBC : check_for_jammer proc was being called thousands of times per second. Do its initial check in a define instead, because proc call overhead. Then call check_for_jammer_bare
 	#define can_check_jammer (!prob(signal_loss) && radio_controller.active_jammers.len)
 
 	disposing()
 		devices = null
-		all_signals_devices = null
 		..()
 
 	proc
@@ -107,38 +105,14 @@ datum/radio_frequency
 
 			signal.channels_passed += "[src.frequency];"
 
-			all_signals_devices = devices // TMP
+			for(var/obj/device in devices)
+				if(device != source)
 
-			var/broadcast = 1
-			var/obj/target = null
-			if("address_1" in signal.data)
-				broadcast = 0
-				target = locate(signal.data["address_1"])
-			if(target == source)
-				target = null
-
-			for(var/obj/device in all_signals_devices)
-				if(device == source || device == target) continue
-				if (can_check_jammer)
-					if (check_for_jammer_bare(device))
-						continue
-				if(range)
-					var/turf/end_point = get_turf(device)
-					if(end_point)
-						if(start_point.z != end_point.z) continue
-						if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
-
-							device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-				else
-					device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-				LAGCHECK(LAG_REALTIME)
-
-			if(target)
-				do
-					var/obj/device = target
+					//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
 					if (can_check_jammer)
 						if (check_for_jammer_bare(device))
 							continue
+
 					if(range)
 						var/turf/end_point = get_turf(device)
 						if(end_point)
@@ -148,7 +122,8 @@ datum/radio_frequency
 								device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 					else
 						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-				while(0)
+
+				LAGCHECK(LAG_REALTIME)
 
 			if (!reusable_signals || reusable_signals.len > 10)
 				signal.dispose()
