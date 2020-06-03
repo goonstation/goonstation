@@ -121,6 +121,37 @@
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
+	disposing()
+		if(organHolder)
+			organHolder.dispose()
+			organHolder = null
+
+		if(hud)
+			hud.dispose()
+			hud = null
+
+		for(var/datum/handHolder/hh in hands)
+			hh.dispose()
+		hands.len = 0
+		hands = null
+
+		for(var/datum/equipmentHolder/eh in equipment)
+			eh.dispose()
+		equipment.len = 0
+		equipment = null
+
+		for(var/obj/item/I in implants)
+			I.dispose()
+		implants.len = 0
+		implants = null
+
+		for(var/damage_type in healthlist)
+			var/datum/healthHolder/hh = healthlist[damage_type]
+			hh.dispose()
+		healthlist.len = 0
+		healthlist = null
+		..()
+
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
 		// etc..

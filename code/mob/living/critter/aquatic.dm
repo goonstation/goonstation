@@ -30,6 +30,12 @@
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
+/mob/living/critter/aquatic/disposing()
+	if(ai)
+		ai.dispose()
+	ai = null
+	..()
+
 /mob/living/critter/aquatic/setup_healths()
 	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
 	add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)

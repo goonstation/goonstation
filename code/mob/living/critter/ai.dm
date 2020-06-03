@@ -7,8 +7,25 @@
 
 	var/enabled = 1
 
+	disposing()
+		owner = null
+		target = null
+		if(current_task)
+			current_task.dispose()
+		current_task = null
+		if(default_task)
+			default_task.dispose()
+		default_task = null
+		if(task_cache)
+			for(var/key in task_cache)
+				var/datum/aiTask/task = task_cache[key]
+				task.dispose()
+			task_cache.len = 0
+			task_cache = null
+		..()
+
 	proc/tick()
-		if(!enabled) 
+		if(!enabled)
 			walk(owner, 0)
 			return
 		if (!current_task)
@@ -53,7 +70,11 @@
 
 		reset()
 
-	proc/on_tick()	
+	disposing()
+		holder = null
+		..()
+
+	proc/on_tick()
 
 	proc/next_task()
 		return null
@@ -71,7 +92,7 @@
 		on_tick()
 
 	proc/reset()
-		on_reset()		
+		on_reset()
 
 // an AI task that evaluates all tasks within its list of transition tasks
 // immediately transitions to task with highest evaluation score after first tick
@@ -168,7 +189,7 @@
 		if(!action_instance)
 			// create and start the action
 			if(!action_params) // a list of length 0 is perfectly acceptable (no params), but a null list means this wasn't set up
-				set_action_params(collect_action_params())				
+				set_action_params(collect_action_params())
 			action_instance = actions.start(new action_path(arglist(action_params)), holder.owner)
 
 	reset()

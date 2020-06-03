@@ -19,6 +19,18 @@
 		src.setDisarmSpecial (/datum/item_special/disarm)
 		src.setHarmSpecial (/datum/item_special/harm)
 
+	disposing()
+		if(holder?.limb_data == src)
+			holder.limb_data = null
+		holder = null
+		if(disarm_special)
+			disarm_special.dispose()
+			disarm_special = null
+		if(harm_special)
+			harm_special.dispose()
+			harm_special = null
+		..()
+
 	// !!CAUTION!! it is allowed to delete the target here
 	// Mob is also passed as a convenience/redundancy.
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
