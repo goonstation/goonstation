@@ -230,7 +230,7 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
-				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(3))
+				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(1))
 					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
