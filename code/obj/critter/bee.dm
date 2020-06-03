@@ -718,7 +718,7 @@
 		icon_body = "ascbee"
 		icon_state = "ascbee-wings"
 		sleeping_icon_state = "ascbee-sleep"
-		angertext = "beeps agressively at"
+		angertext = "beeps aggressively at"
 		honey_color = rgb(0, 255, 0)
 
 		attack_hand(mob/user as mob)
