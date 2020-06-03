@@ -75,3 +75,16 @@
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
+
+// mechcomp signals
+/// Passing a message to a mechcomp device for handling
+#define COMSIG_MECHCOMP_MSG "mechcomp_transmit_message"
+/// Remove [the caller] from the list of transmitting devices
+#define COMSIG_MECHCOMP_RM_INCOMING "mechcomp_remove_incoming"
+/// Remove [the caller] from the list of receiving devices
+#define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"
+/// Remove all connected devices
+#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_outgoing"      //MarkNstein needs attention
+/// Remove [the caller] from the list of receiving devices
+#define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"
+COMSIG_MECHCOMP_RM_ALL_CONNECTIONS

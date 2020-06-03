@@ -1279,7 +1279,7 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		mechanics.filtered = 1
+		//mechanics.filtered = 1								//MarkNstein Needs Clean-up
 		mechanics.addInput("dispatch", "dispatch")
 		configs.Add("Toggle Exact Match")
 		src.append_default_configs(2)
