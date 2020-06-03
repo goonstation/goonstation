@@ -1302,7 +1302,7 @@
 	category = "Component"
 
 /datum/manufacture/latejoin_brain
-	name = "Spontaneous Intelligence Formation Chip"
+	name = "Spontaneous Intelligence Formation Core"
 	item_paths = list("MET-1","CON-1","ALL")
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(6,5,3)
