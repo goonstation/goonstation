@@ -626,14 +626,14 @@ var/list/special_pa_observing_verbs = list(
 
 /client/proc/get_admin_state()
 	set category = "Special Verbs"
-	for(var/mob/M in mobs)
-		if(M.client && M.client.holder)
-			if(M.client.holder.state == 1)
-				boutput(src, "[M.key] is playing - [M.client.holder.state]")
-			else if(M.client.holder.state == 2)
-				boutput(src, "[M.key] is observing - [M.client.holder.state]")
+	for(var/client/C)
+		if(C.holder)
+			if(C.holder.state == 1)
+				boutput(src, "[C.key] is playing - [C.holder.state]")
+			else if(C.holder.state == 2)
+				boutput(src, "[C.key] is observing - [C.holder.state]")
 			else
-				boutput(src, "[M.key] is undefined - [M.client.holder.state]")
+				boutput(src, "[C.key] is undefined - [C.holder.state]")
 
 //admin client procs ported over from mob.dm
 

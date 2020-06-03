@@ -328,6 +328,7 @@
 #define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
 #define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
 #define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
+#define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess

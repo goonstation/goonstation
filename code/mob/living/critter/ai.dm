@@ -7,8 +7,25 @@
 
 	var/enabled = 1
 
+	var/exclude_from_mobs_list = 0
+
+	New(var/mob/M)
+		..()
+		owner = M
+		if (exclude_from_mobs_list)
+			mobs.Remove(M)
+			M.mob_flags |= LIGHTWEIGHT_AI_MOB
+		ai_mobs.Add(M)
+
 	disposing()
-		owner = null
+		..()
+		if (owner)
+			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
+				owner.mob_flags &= ~LIGHTWEIGHT_AI_MOB
+				mobs.Add(owner)
+			ai_mobs.Remove(owner)
+			owner = null
+
 		target = null
 		if(current_task)
 			current_task.dispose()

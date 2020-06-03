@@ -492,6 +492,13 @@
 			T.fluid_react_single("miasma", 10, airborne = 1)
 
 	proc/handle_decomposition()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+
+		if (T.temp_flags & HAS_KUDZU)
+			src.infect_kudzu()
+
 		var/suspend_rot = 0
 		if (src.decomp_stage >= 4)
 			suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
@@ -499,10 +506,7 @@
 				icky_icky_miasma(get_turf(src))
 			return
 
-		if (!isdead(src) || src.mutantrace)
-			return
-		var/turf/T = get_turf(src)
-		if (!T)
+		if (src.mutantrace)
 			return
 		suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
 		var/env_temp = 0

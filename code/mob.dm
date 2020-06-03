@@ -219,6 +219,8 @@
 
 	var/last_move_dir = null
 
+	var/datum/aiHolder/ai = null
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -331,6 +333,8 @@
 	zone_sel = null
 
 	mobs.Remove(src)
+	if (ai)
+		qdel(ai)
 	mind = null
 	ckey = null
 	client = null
@@ -385,7 +389,8 @@
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
 	if (config.log_access)
-		for (var/mob/M in mobs)
+		for (var/client/C)
+			var/mob/M = C.mob
 			if ((!M) || M == src || M.client == null)
 				continue
 			else if (M && M.client && M.client.address == src.client.address)

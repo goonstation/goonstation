@@ -26,23 +26,23 @@ var/global/noir = 0
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_coders_vardbg(var/text, var/datum/d)
 	var/rendered
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER)
-			var/dbg_html = M.client.debug_variable("", d, 0)
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
+			var/dbg_html = C.debug_variable("", d, 0)
 			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_MOD && M.client.holder.attacktoggle && !M.client.player_mode)
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_MOD && C.holder.attacktoggle && !C.player_mode)
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
 	var/level = 0
