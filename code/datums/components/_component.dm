@@ -355,6 +355,7 @@
   * * datum/component/c_type The typepath of the component you want to get a reference to
   */
 /datum/proc/GetComponent(datum/component/c_type)
+	RETURN_TYPE(/datum/component)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
