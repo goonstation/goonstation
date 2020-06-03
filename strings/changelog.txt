@@ -1,5 +1,13 @@
 
 (t)wed jun 03 20
+(u)MarkNstein
+(p)872
+(e)🗺🎨|mapping, sprites
+(+)New Z5 asteroid field prefab: Sequestered Cloner. Contains lore, a puzzle, and loots!
+(u)Tarmunora
+(p)929
+(e)🆕|feature
+(+)Made metal foam a little better to use for sealing breaches
 (u)Erinexx
 (p)818
 (e)🆕🗺|feature, mapping
