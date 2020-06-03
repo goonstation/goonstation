@@ -1102,7 +1102,12 @@
 	Bumped(var/atom/A) //This is a bit hacky, sorry. Better than duplicating all the code.
 		if(isliving(A))
 			var/mob/living/L = A
-			L.click(src, list(), null, null)
+			var/mob/living/carbon/human/H
+			if(ishuman(L))
+				H = L
+			var/obj/item/held = L.equipped()
+			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
+				L.click(src, list(), null, null)
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
