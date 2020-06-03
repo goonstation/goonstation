@@ -91,10 +91,10 @@
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
 
 /obj/item/organ/brain/latejoin
-	name = "Intelligence Formation Chip"
+	name = "spontaneous intelligence creation core"
 	icon_state = "late_brain"
 	item_state = "late_brain"
-	desc = "A mess of wires and sillicon that can spontaniously create artifical intelligence."
+	desc = "A highly advanced cyborg part with RGB lights and a odd design. It employs very confusing and processor-heavy quantum loopholes to Spontaneously create intelligence. It has a formation rate of somewhere between a second and a decade."
 	created_decal = /obj/decal/cleanable/oil
 	var/activated = 0
 
