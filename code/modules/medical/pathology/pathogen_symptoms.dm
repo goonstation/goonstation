@@ -116,9 +116,9 @@ datum/pathogeneffects
 	proc/onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
 		return message
 
-	// onemote(mob, string, datum/pathogen) : string
+	// onemote(mob, string, number, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
-	proc/onemote(var/mob/target, act, var/datum/pathogen/P)
+	proc/onemote(var/mob/M as mob, act, voluntary, var/datum/pathogen/P)
 		return 1
 
 	// ondeath(mob, datum/pathogen) : void
