@@ -998,7 +998,7 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) ))
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
 				boutput(user, "You cannot build on or repair this turf!")
 				return
 			else
