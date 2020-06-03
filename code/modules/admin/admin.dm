@@ -2750,6 +2750,18 @@ var/global/noir = 0
 						else
 							alert("You need to be atleast an Administrator to use this command")
 
+					if("remove-legs")
+						if(src.level >= LEVEL_ADMIN)
+							if (alert("Do you really wanna remove legs?", "LEG LEG", "Sure thing!", "Not really.") == "Sure thing!")
+								for(var/atom/movable/A in world) //Build the god forsaken list
+									A.GetComponent(/datum/component/legs)?.RemoveComponent()
+
+								logTheThing("admin", usr, null, "used mass remove legs secret")
+								logTheThing("diary", usr, null, "used mass remove legs secret", "admin")
+							else
+								return
+						else
+							alert("You need to be atleast an Administrator to use this command")
 					else
 				if (usr) logTheThing("admin", usr, null, "used secret [href_list["secretsfun"]]")
 				logTheThing("diary", usr, null, "used secret [href_list["secretsfun"]]", "admin")
@@ -3708,6 +3720,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=the_great_switcharoo'>The Great Switcharoo</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=give-legs'>Mass give things legs</A><BR>
+				<A href='?src=\ref[src];action=secretsfun;type=remove-legs'>Mass remove legs</A><BR>
 		"}
 
 	if (src.level >= LEVEL_ADMIN || (src.level == LEVEL_SA && usr.client.holder.state == 2))
