@@ -1077,7 +1077,7 @@
 /obj/submachine/chem_extractor/proc/doExtract(var/obj/item/I)
 	// Welp -- we don't want anyone extracting these. They'll probably
 	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/everyflavor))
+	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
 		src.extract_to.reagents.add_reagent("sugar", 50)
 		return
 

@@ -1,4 +1,41 @@
 
+(t)wed jun 03 20
+(u)Erinexx
+(p)818
+(e)🆕🗺|feature, mapping
+(*)Added jellybean plants that grow jellybeans
+(u)zjdtmkhzt
+(p)920
+(e)🆕|feature
+(+)Only mining tools will now be automatically used when bumping into asteroid tiles. (This prevents things like emptying ore holders on accident.)
+(+)Borgs can now also automatically use their mining tools without having to click.
+(u)HydroFloric
+(e)🎨|sprites
+(*)The Intelligence Formation Chip has a new sprite (and name). 
+(t)tue jun 02 20
+(u)zjdtmkhzt
+(p)464
+(e)🆕|feature
+(+)Added a new mutation-based pathology symptom that can be used for benevolent or nefarious purposes.
+(u)UrsulaMajor
+(p)935
+(e)|
+(+)Nukie Engineer Class Crate now has welding-safe helmet w/ built in mesons
+(+)Nukie Medic Class Crate now has ProDocs built into their helmet
+(u)UrsulaMajor
+(p)934
+(e)🗺|mapping
+(+)Added a Syndicate Omnitool to the Cairngorm
+(u)UrsulaMajor
+(p)933
+(e)🎨|sprites
+(*)Syndicate Omnitool traitor item now has a weldingtool mode
+(t)mon jun 01 20
+(u)UrsulaMajor
+(p)932
+(e)|
+(*)Refactored how welding tools work. Please report any bugs with the bug report button at the top right of the status pane.
+(t)sun may 31 20
 (u)Chickenish
 (p)863
 (e)⚖🐛🆕|balance, bug, feature
