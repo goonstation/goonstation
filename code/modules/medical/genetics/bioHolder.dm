@@ -223,11 +223,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/D in effects)
 			var/datum/bioEffect/BE = effects[D]
 			qdel(BE)
-			BE.owner = null
+			BE?.owner = null
 		for(var/D in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
 			qdel(BE)
-			BE.owner = null
+			BE?.owner = null
 		src.owner = null
 
 		effects.len = 0
