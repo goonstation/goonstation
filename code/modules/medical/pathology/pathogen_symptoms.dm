@@ -1805,7 +1805,7 @@ datum/pathogeneffects/malevolent/farts/smoke
 
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		if (M.reagents.total_volume)
-			smoke_reaction(M.reagents, 4, get_turf(M))
+			smoke_reaction(M.reagents, origin.stage, get_turf(M))
 			..()			// only trigger if we actually have chems, else no infection or cooldown
 
 	may_react_to()
