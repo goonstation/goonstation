@@ -1,4 +1,10 @@
 
+(t)wed jun 03 20
+(u)zjdtmkhzt
+(p)920
+(e)🆕|feature
+(+)Only mining tools will now be automatically used when bumping into asteroid tiles. (This prevents things like emptying ore holders on accident.)
+(+)Borgs can now also automatically use their mining tools without having to click.
 (t)tue jun 02 20
 (u)zjdtmkhzt
 (p)464
