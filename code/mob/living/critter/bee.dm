@@ -992,4 +992,20 @@
 /mob/living/critter/small_animal/bee/beestation //A special bee that should allow non-admins to play as a bee.
 	non_admin_bee_allowed = 1
 
+/mob/living/critter/small_animal/bee/ascbee
+	name = "ASCBee"
+	desc = "This bee looks rather... old school."
+	icon_body = "ascbee"
+	icon_state = "ascbee-wings"
+	icon_state_sleep = "ascbee-sleep"
+	honey_color = rgb(0, 255, 0)
+
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (prob(15))
+			for (var/mob/O in hearers(src, null))
+				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
+		return
+
 #undef ADMIN_BEES_ONLY
