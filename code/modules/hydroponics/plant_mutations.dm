@@ -56,21 +56,12 @@
 
 // Tomato Mutations
 
-/datum/plantmutation/tomato/explosive
+/datum/plantmutation/tomato/incendiary
 	name = "Seething Tomato"
 	name_prefix = "Seething "
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	iconmod = "TomatoExplosive"
-
-	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
-		. = ..()
-		if (.)
-			return .
-		if (prob(5) || (user.client && user.client.hellbanned && prob(50)))
-			boutput(user, "<span class='alert'>A tomato explodes as you pick it off the plant!</span>")
-			explosion_new(POT, get_turf(user), 10, 1)
-			return 399
-		return 0
+	assoc_reagents = list("fuel")
 
 /datum/plantmutation/tomato/killer
 	name = "Suspicious Tomato"
