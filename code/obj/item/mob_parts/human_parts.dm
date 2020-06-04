@@ -73,7 +73,8 @@
 		..()
 		holder = new_holder
 		original_holder = new_holder
-		src.bones = new /datum/bone(src)
+		if(!src.bones)
+			src.bones = new /datum/bone(src)
 		src.bones.donor = new_holder
 		src.bones.parent_organ = "[src.name]"
 		src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
@@ -89,7 +90,8 @@
 
 
 	disposing()
-		if(src.bones) src.bones.donor = null
+		if(src.bones)
+			src.bones.dispose()
 		src.bones = null
 		original_holder = null
 		holder = null
@@ -425,7 +427,7 @@
 		remove_from_mob(0)
 		..()
 
-	dispose()
+	disposing()
 		remove_from_mob(1)
 		..()
 
@@ -551,7 +553,7 @@
 		remove_from_mob(0)
 		..()
 
-	dispose()
+	disposing()
 		remove_from_mob(1)
 		..()
 

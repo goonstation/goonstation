@@ -55,20 +55,21 @@
 		if (src.donor)
 			src.create_organs()
 
-	dispose()
+	disposing()
 		if (head)
 			head.donor = null
+			chest?.bones?.donor = null
 		if (skull)
 			skull.donor = null
 		if (brain)
 			brain.donor = null
-			brain.owner = null
 		if (left_eye)
 			left_eye.donor = null
 		if (right_eye)
 			right_eye.donor = null
 		if (chest)
 			chest.donor = null
+			chest?.bones?.donor = null
 		if (heart)
 			heart.donor = null
 		if (left_lung)

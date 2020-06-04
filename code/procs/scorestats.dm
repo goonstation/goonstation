@@ -193,10 +193,10 @@ var/datum/score_tracker/score_tracker
 		boutput(world, "<b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
-		for(var/mob/E in mobs)
-			if(E.client)
-				if (E.client.preferences.view_score)
-					E.scorestats()
+		for (var/client/C)
+			var/mob/M = C.mob
+			if (M && C.preferences.view_score)
+				M.scorestats()
 
 		return
 

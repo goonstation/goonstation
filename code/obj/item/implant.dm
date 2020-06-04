@@ -44,6 +44,12 @@ THROWING DARTS
 		activate()
 		return
 
+	disposing()
+		owner = null
+		former_implantee = null
+		. = ..()
+
+
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
 		deactivate()

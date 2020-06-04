@@ -492,6 +492,13 @@
 			T.fluid_react_single("miasma", 10, airborne = 1)
 
 	proc/handle_decomposition()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+
+		if (T.temp_flags & HAS_KUDZU)
+			src.infect_kudzu()
+
 		var/suspend_rot = 0
 		if (src.decomp_stage >= 4)
 			suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
@@ -499,10 +506,7 @@
 				icky_icky_miasma(get_turf(src))
 			return
 
-		if (!isdead(src) || src.mutantrace)
-			return
-		var/turf/T = get_turf(src)
-		if (!T)
+		if (src.mutantrace)
 			return
 		suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
 		var/env_temp = 0
@@ -1921,6 +1925,7 @@
 	proc/handle_regular_sight_updates()
 
 ////Mutrace and normal sight
+		src.sight |= SEE_BLACKNESS
 		if (!isdead(src))
 			src.sight &= ~SEE_TURFS
 			src.sight &= ~SEE_MOBS
@@ -1971,11 +1976,14 @@
 			if (ship.sensors)
 				if (ship.sensors.active)
 					src.sight |= ship.sensors.sight
+					src.sight &= ~ship.sensors.antisight
 					src.see_in_dark = ship.sensors.see_in_dark
 					if (client && client.adventure_view)
 						src.see_invisible = 21
 					else
 						src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 					return
 
 		if (src.traitHolder && src.traitHolder.hasTrait("infravision"))
@@ -2031,6 +2039,16 @@
 			var/obj/item/clothing/glasses/meson/M = src.glasses
 			if (M.on)
 				src.sight |= SEE_TURFS
+				src.sight &= ~SEE_BLACKNESS
+				if (see_in_dark < initial(see_in_dark) + 1)
+					see_in_dark++
+				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
+
+		else if (istype(src.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer) && (T && !isrestrictedz(T.z)))
+			var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/E = src.head
+			if (E.on)
+				src.sight |= SEE_TURFS
+				src.sight &= ~SEE_BLACKNESS
 				if (see_in_dark < initial(see_in_dark) + 1)
 					see_in_dark++
 				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
@@ -2046,6 +2064,7 @@
 					if (meson_eye.on) eye_on = 1
 				if (eye_on)
 					src.sight |= SEE_TURFS
+					src.sight &= ~SEE_BLACKNESS
 					if (see_in_dark < initial(see_in_dark) + 1)
 						see_in_dark++
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
@@ -2105,6 +2124,14 @@
 				G.assigned = src.client
 				if (!(G in processing_items))
 					processing_items.Add(G)
+				//G.updateIcons()
+
+		if (istype(src.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
+			var/obj/item/clothing/head/helmet/space/syndicate/specialist/medic/M = src.head
+			if (src.client && !(M.assigned || M.assigned == src.client))
+				M.assigned = src.client
+				if (!(M in processing_items))
+					processing_items.Add(M)
 				//G.updateIcons()
 
 		else if (src.organHolder && istype(src.organHolder.left_eye, /obj/item/organ/eye/cyber/prodoc))
