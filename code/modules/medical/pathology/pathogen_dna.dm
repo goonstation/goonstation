@@ -266,7 +266,7 @@ datum/pathogendna
 		if (!(parts[1] in pathogen_controller.UID_to_suppressant))
 			//log_game("[this.seqsplice] collapses: non-existent suppressant.")
 			qdel(this) // Bad DNA: Invalid suppressant.
-			return 0
+			return 2
 		else
 			if (this)
 				var/supp = pathogen_controller.UID_to_suppressant[parts[1]]
@@ -276,7 +276,7 @@ datum/pathogendna
 		if (parts[2] != "|")
 			//log_game("[this.seqsplice] collapses: no separator after suppressant.")
 			qdel(this)
-			return 0 // Bad DNA: no separator after suppressant.
+			return 3 // Bad DNA: no separator after suppressant.
 		var/pos = 2
 		if (parts[3] == "|")
 			pos = 4 // No carriers.
@@ -286,7 +286,7 @@ datum/pathogendna
 				if (!(parts[pos] in pathogen_controller.UID_to_carrier))
 					//log_game("[this.seqsplice] collapses: non-existent carrier.")
 					qdel(this) // Bad DNA: Invalid carrier
-					return 0
+					return 4
 				else
 					if (this)
 						this.reference.carriers += pathogen_controller.UID_to_carrier[parts[pos]]
@@ -296,7 +296,7 @@ datum/pathogendna
 			if (pos == parts.len)
 				//log_game("[this.seqsplice] collapses: no separator after carriers.")
 				qdel(this) // Bad DNA: No ending separator after carriers.
-				return 0
+				return 5
 			pos++
 
 		// Assemble the list of symptoms.
@@ -309,7 +309,7 @@ datum/pathogendna
 					if (!(symptom in pathogen_controller.UID_to_symptom))
 						//log_game("[this.seqsplice] collapses: non-existent symptom [symptom].")
 						qdel(this) // Bad DNA: DNA contains invalid symptom
-						return 0
+						return 6
 					else
 						if (this)
 							var/sym = pathogen_controller.UID_to_symptom[symptom]
@@ -320,7 +320,7 @@ datum/pathogendna
 				else
 					//log_game("[this.seqsplice] collapses: two adjacent symptom separators.")
 					qdel(this) // Bad DNA: DNA contains two adjacent separators
-					return 0
+					return 7
 			else
 				symptom += parts[pos]
 			pos++
@@ -328,7 +328,7 @@ datum/pathogendna
 			if (!(symptom in pathogen_controller.UID_to_symptom))
 				//log_game("[this.seqsplice] collapses: non-existent symptom [symptom].")
 				qdel(this) // Bad DNA: DNA contains invalid symptom
-				return 0
+				return 6
 			else
 				if (this)
 					var/sym = pathogen_controller.UID_to_symptom[symptom]
