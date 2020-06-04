@@ -37,11 +37,7 @@ var/datum/event_controller/random_events
 
 	proc/event_cycle()
 		event_cycle_count++
-		var/num_players = 0
-		for(var/mob/players in mobs)
-			if(players.client) num_players++
-
-		if (events_enabled && (num_players >= minimum_population))
+		if (events_enabled && (clients.len >= minimum_population))
 			do_random_event(events)
 		else
 			message_admins("<span class='notice'>A random event would have happened now, but they are disabled!</span>")

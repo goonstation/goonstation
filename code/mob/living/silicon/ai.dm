@@ -281,10 +281,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.dismantle_stage = 2
 		else ..()
 
-	else if (istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WELD = W
+	else if (isweldingtool(W))
 		if(src.bruteloss)
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				src.HealDamage(null, 15, 0)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
@@ -740,8 +739,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-	for(var/mob/M in mobs)
-		if ((M.client && !( M.stat )))
+
+	for (var/client/C)
+		if (!C.mob) continue
+		if (!( C.mob.stat ))
 			cancel = 1
 			break
 	if (!( cancel ))

@@ -16,7 +16,7 @@
 	lg = 0.7
 	lb = 0.74
 
-	Del()
+	disposing()
 		..()
 		window = null
 

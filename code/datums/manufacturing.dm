@@ -1301,16 +1301,6 @@
 	create = 1
 	category = "Component"
 
-/datum/manufacture/latejoin_brain
-	name = "Spontaneous Intelligence Formation Core"
-	item_paths = list("MET-1","CON-1","ALL")
-	item_names = list("Metal","Conductive Material","Any Material")
-	item_amounts = list(6,5,3)
-	item_outputs = list(/obj/item/organ/brain/latejoin)
-	time = 35
-	create = 1
-	category = "Component"
-
 /datum/manufacture/shell_cell
 	name = "AI Shell Power Cell"
 	item_paths = list("MET-1","CON-1","ALL")
@@ -1573,6 +1563,17 @@
 	time = 20
 	create = 1
 	category = "Resource"
+
+
+/datum/manufacture/latejoin
+	name = "Intelligence Formation Chip"
+	item_paths = list("MET-1","CON-1","ALL")
+	item_names = list("Metal","Conductive Material","Any Material")
+	item_amounts = list(6,5,3)
+	item_outputs = list(/obj/item/organ/brain/latejoin)
+	time = 35
+	create = 1
+	category = "Component"
 
 /datum/manufacture/thrusters
 	name = "Alastor Pattern Thrusters "

@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
@@ -677,7 +676,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
@@ -1276,6 +1275,11 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+
+	if(istype(src.loc, /obj/item/storage))
+		var/obj/item/storage/storage = src.loc
+		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
 	if (!istype(T))

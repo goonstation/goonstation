@@ -228,7 +228,7 @@
 					O.show_message(message, m_type)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			pop()
 		else
 			..()

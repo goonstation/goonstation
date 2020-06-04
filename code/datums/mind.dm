@@ -207,6 +207,7 @@ datum/mind
 	disposing()
 		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
 		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
+		src.brain?.owner = null
 		..()
 
 

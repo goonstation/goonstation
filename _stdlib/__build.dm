@@ -71,6 +71,11 @@ o+`        `-` ``..-:yooos-..----------..`
 // #define ABSTRACT_VIOLATION_CRASH
 // #define ABSTRACT_VIOLATION_WARN
 
+// Makes the delete queue go through every single datum in the game when a hard del happens
+// It gets reported to the debug log. This process takes about 4 minutes per hard deletion
+// (during that time the server will be frozen).
+// #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 //////////// MAP OVERRIDES
 

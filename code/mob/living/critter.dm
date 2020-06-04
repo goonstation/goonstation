@@ -72,6 +72,8 @@
 
 	var/yeet_chance = 1 //yeet
 
+	var/last_life_process = 0
+
 	New()
 //		if (ispath(default_task))
 //			default_task = new default_task
@@ -120,6 +122,37 @@
 		SPAWN_DBG(0.5 SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
+
+	disposing()
+		if(organHolder)
+			organHolder.dispose()
+			organHolder = null
+
+		if(hud)
+			hud.dispose()
+			hud = null
+
+		for(var/datum/handHolder/hh in hands)
+			hh.dispose()
+		hands.len = 0
+		hands = null
+
+		for(var/datum/equipmentHolder/eh in equipment)
+			eh.dispose()
+		equipment.len = 0
+		equipment = null
+
+		for(var/obj/item/I in implants)
+			I.dispose()
+		implants.len = 0
+		implants = null
+
+		for(var/damage_type in healthlist)
+			var/datum/healthHolder/hh = healthlist[damage_type]
+			hh.dispose()
+		healthlist.len = 0
+		healthlist = null
+		..()
 
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
@@ -658,22 +691,13 @@
 		if (..(parent))
 			return 1
 
-		if (getStatusDuration("burning"))
-			if (isturf(src.loc))
-				var/turf/location = src.loc
-				location.hotspot_expose(T0C + 400, 400)
-			var/damage = 1
-			if (getStatusDuration("burning") > 400)
-				damage = 3
-			else if (getStatusDuration("burning") > 200)
-				damage = 2
-			TakeDamage("All", 0, damage)
-			update_burning(-2)
+		var/life_time_multiplier = clamp(TIME - last_life_process, 20, 90) / 20
+		src.last_life_process = TIME
 
 		if (isdead(src))
 			return 0
 
-		src.handle_digestion()
+		src.handle_digestion(life_time_multiplier)
 
 		if (src.get_eye_blurry())
 			src.change_eye_blurry(-1)
@@ -698,7 +722,7 @@
 
 		if (sleeping)
 			sleeping = max(0, sleeping - 1)
-			setStatus("paralysis", 2 SECONDS)
+			setStatus("paralysis", 4 SECONDS * life_time_multiplier)
 			if (!sleeping)
 				src.on_wake()
 
@@ -721,14 +745,14 @@
 			change_misstep_chance(-1)
 
 		if (reagents && metabolizes)
-			reagents.metabolize(src)
+			reagents.metabolize(src, multiplier = life_time_multiplier)
 
 		for (var/T in healthlist)
 			var/datum/healthHolder/HH = healthlist[T]
 			HH.Life()
 
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process()
+			G.process(life_time_multiplier)
 
 		if (stat)
 			return 0

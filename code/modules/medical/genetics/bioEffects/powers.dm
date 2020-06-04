@@ -25,6 +25,7 @@
 		if (ability)
 			ability.disposing()
 			ability.owner = null
+		src.ability = null
 		..()
 
 	OnAdd()

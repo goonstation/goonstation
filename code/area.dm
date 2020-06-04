@@ -3139,7 +3139,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in mobs)
+		for (var/mob/living/silicon/aiPlayer in AIs)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
