@@ -241,7 +241,7 @@
 
 	heal(var/mob/M)
 		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
-			..()
+		..()
 		#else
 		boutput(M, "<span class='alert'>Oof, how old was that?.</span>")
 		if(prob(66))
