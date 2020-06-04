@@ -595,6 +595,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Init() complete")
+	TgsInitializationComplete()
 	//sleep_offline = 1
 
 
