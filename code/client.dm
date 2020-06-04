@@ -276,11 +276,7 @@
 */
 
 	if(player_capa)
-		var/howmany = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				howmany ++
-		if(howmany >= player_cap)
+		if(clients.len >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 				del(src)
@@ -806,12 +802,14 @@ var/global/curr_day = null
 			ircbot.export("pm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in mobs)
-				if(K && K.client && K.client.holder && K.key != usr.key)
-					if (K.client.player_mode && !K.client.player_mode_ahelp)
+			for (var/client/C)
+				if (!C.mob) continue
+				var/mob/K = C.mob
+				if(C.holder && C.key != usr.key)
+					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -838,15 +836,15 @@ var/global/curr_day = null
 			ircbot.export("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in mobs)
-				if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key)
-					if (K.client.holder)
-						if (K.client.player_mode && !K.client.player_mode_mhelp)
+			for (var/client/C)
+				if (C.can_see_mentor_pms() && C.key != usr.key)
+					if (C.holder)
+						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 
 		if ("mentor_msg")
 			if (M)
@@ -886,15 +884,15 @@ var/global/curr_day = null
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
-				for (var/mob/K in mobs)
-					if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key && (M && K.key != M.key))
-						if (K.client.holder)
-							if (K.client.player_mode && !K.client.player_mode_mhelp)
+				for (var/client/C)
+					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
+						if (C.holder)
+							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 		if ("mach_close")
 			var/window = href_list["window"]

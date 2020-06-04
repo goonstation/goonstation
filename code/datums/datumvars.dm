@@ -96,7 +96,7 @@
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
 
 	var/title = ""
-	var/body = ""
+	var/list/body = new
 
 	if (istype(D, /atom))
 		var/atom/A = D
@@ -145,7 +145,7 @@
 
 	body += "</tbody></table>"
 
-	var/html = {"
+	var/list/html = list({"
 <html>
 <head>
 	<title>[title]</title>
@@ -157,7 +157,7 @@
 	<strong>[title]</strong>
 	<hr>
 	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
-"}
+"})
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
@@ -199,12 +199,12 @@
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R45'>45&deg; &gt;</a> &middot;
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R90'>90&deg; &gt;</a>
 		<hr>
-		[body]
+		[body.Join()]
 	</body>
 </html>
 "}
 
-	usr << browse(html, "window=variables\ref[D];size=600x400")
+	usr << browse(html.Join(), "window=variables\ref[D];size=600x400")
 
 	return
 

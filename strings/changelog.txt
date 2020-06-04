@@ -23,7 +23,7 @@
 (+)Borgs can now also automatically use their mining tools without having to click.
 (u)HydroFloric
 (e)🎨|sprites
-(*)The Intelligence Formation Chip has a new sprite (and name). 
+(*)The Intelligence Formation Chip has a new sprite (and name).
 (t)tue jun 02 20
 (u)zjdtmkhzt
 (p)464

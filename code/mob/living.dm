@@ -130,8 +130,11 @@
 	if (src.key) statlog_death(src,gibbed)
 	if (src.client && (ticker.round_elapsed_ticks >= 12000))
 		var/num_players = 0
-		for(var/mob/players in mobs)
-			if (players.client && !isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players)) num_players++
+		for(var/client/C)
+			if (!C.mob) continue
+			var/mob/players = C.mob
+			if (!isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players))
+				num_players++
 			LAGCHECK(LAG_HIGH)
 
 		if (num_players <= 5 && master_mode != "battle_royale")
@@ -768,15 +771,17 @@
 		rendered += "<span class='message'>[message]</span>"
 		rendered += "</span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
 
-			if (M.client && (isblob(M) || (M.client.holder && M.client.deadchat && !M.client.player_mode)))
+			if ((isblob(C.mob) || (C.holder && C.deadchat && !C.player_mode)))
 				var/thisR = rendered
-				if ((M.mob_flags & MOB_HEARS_ALL || M.client.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
-				M.show_message(thisR, 2)
+				if ((C.mob.mob_flags & MOB_HEARS_ALL || C.holder) && src.mind)
+					thisR = "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>"
+				C.mob.show_message(thisR, 2)
 
 		return
 

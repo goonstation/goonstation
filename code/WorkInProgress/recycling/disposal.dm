@@ -439,16 +439,14 @@
 		if (T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 
-		if (istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-
-			if (W.try_weld(user, 3, noisy = 2))
+		if (isweldingtool(I))
+			if (I:try_weld(user, 3, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
-				var/atom/wloc = W.loc
+				var/atom/wloc = I.loc
 				boutput(user, "You begin slicing [src].")
 				sleep(0.1 SECONDS)
-				if (user.loc == uloc && wloc == W.loc)
+				if (user.loc == uloc && wloc == I.loc)
 					welded(user)
 				else
 					boutput(user, "You must stay still while welding the pipe.")

@@ -35,7 +35,8 @@
         // it'd be nice to let admins know what's been said
         var/adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[holder.owner.mind]'>[holder.owner.real_name]</span> telepathies <span class='name' data-ctx='\ref[T.mind]'>[T.real_name]</span>:<span class='message'>\"[message]\"</span></span>"
 
-        for (var/mob/M in mobs)
+        for (var/client/C)
+          var/mob/M = C.mob
           if(istype(M, /mob/new_player))
             continue
 

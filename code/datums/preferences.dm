@@ -608,7 +608,7 @@ datum/preferences
 	</tr>
 	<tr>
 		<th>
-			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon&trade;.">?</span>
+			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon™.">?</span>
 		</th>
 		<td colspan="2">
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]

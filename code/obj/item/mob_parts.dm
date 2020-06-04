@@ -75,6 +75,7 @@
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
+			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null

@@ -278,8 +278,10 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
-		for(var/mob/M in mobs)
-			if ((M.client && !( M.stat )))
+
+		for (var/client/C)
+			if (!C.mob) continue
+			if (!( C.mob.stat ))
 				cancel = 1
 				break
 		if (!( cancel ))
@@ -973,6 +975,9 @@
 						return
 			src.now_pushing = 0
 			//..()
+			if(AM)
+				AM.last_bumped = world.timeofday
+				AM.Bumped(src)
 			if (!istype(AM, /atom/movable))
 				return
 			if (!src.now_pushing)
@@ -981,9 +986,6 @@
 					var/t = get_dir(src, AM)
 					step(AM, t)
 				src.now_pushing = null
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
 			return
 		return
 
@@ -1029,9 +1031,8 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.try_weld(user, 1))
+		if (isweldingtool(W))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				var/repaired = HealDamage("All", 120, 0)
 				if(repaired || health < max_health)
@@ -1830,20 +1831,20 @@
 			if (upgrade.charges > 0)
 				upgrade.charges--
 			if (upgrade.charges == 0)
-				boutput(src, "[upgrade] activated. It has been used up.")
+				boutput(src, "[upgrade] has been activated. It has been used up.")
 				src.upgrades.Remove(upgrade)
 				qdel(upgrade)
 			else
 				if (upgrade.charges < 0)
-					boutput(src, "[upgrade] activated.")
+					boutput(src, "[upgrade] has been activated.")
 				else
-					boutput(src, "[upgrade] activated. [upgrade.charges] uses left.")
+					boutput(src, "[upgrade] has been activated. [upgrade.charges] uses left.")
 		else
 			if (upgrade.activated)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] [upgrade.activated ? "activated" : "deactivated"].")
+				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 
 	proc/set_module(var/obj/item/robot_module/RM)
@@ -2496,11 +2497,14 @@
 				if (ship.sensors)
 					if (ship.sensors.active)
 						src.sight |= ship.sensors.sight
+						src.sight &= ~ship.sensors.antisight
 						src.see_in_dark = ship.sensors.see_in_dark
 						if (client && client.adventure_view)
 							src.see_invisible = 21
 						else
 							src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 
 			else
 				//var/sight_therm = 0 //todo fix this

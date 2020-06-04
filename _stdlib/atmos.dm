@@ -153,8 +153,9 @@ proc/gas_text_color(gas_id)
 // gas calculation macros //
 ////////////////////////////
 
+#define ATMOS_EPSILON 0.0001
 #define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
+#define QUANTIZE(variable)		(round(variable, ATMOS_EPSILON))
 
 #define _ZERO_GAS(GAS, _, _, MIXTURE) (MIXTURE).GAS = 0;
 #define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)

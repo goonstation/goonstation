@@ -163,8 +163,11 @@ mob/new_player
 		if(current_state <= GAME_STATE_PREGAME)
 			statpanel("Lobby")
 			if(client.statpanel=="Lobby" && ticker)
-				for(var/mob/new_player/player in mobs)
-					if (player.client && player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
+				for (var/client/C)
+					var/mob/new_player/player = C.mob
+					if (!istype(player)) continue
+
+					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
 							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
 						else // are we not an admin?

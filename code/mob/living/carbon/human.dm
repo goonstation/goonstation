@@ -262,15 +262,19 @@
 		holder = new_holder
 		if (holder) create()
 
-	dispose()
+	disposing()
 		if (l_arm)
 			l_arm.holder = null
+			l_arm?.bones?.donor = null
 		if (r_arm)
 			r_arm.holder = null
+			r_arm?.bones?.donor = null
 		if (l_leg)
 			l_leg.holder = null
+			l_leg?.bones?.donor = null
 		if (r_leg)
 			r_leg.holder = null
+			r_leg?.bones?.donor = null
 		holder = null
 		..()
 
@@ -280,7 +284,7 @@
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 		SPAWN_DBG(5 SECONDS)
-			if (holder && !l_arm || !r_arm || !l_leg || !r_leg)
+			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
 				create()
 				if (holder)
@@ -429,6 +433,7 @@
 					if (src.l_arm)
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
+				src.holder.organs["l_arm"] = src.l_arm
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
@@ -444,6 +449,7 @@
 					if (src.r_arm)
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
+				src.holder.organs["r_arm"] = src.r_arm
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
@@ -454,6 +460,7 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg))
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
+					src.holder.organs["l_leg"] = src.l_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
@@ -464,6 +471,7 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg))
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
+					src.holder.organs["r_leg"] = src.r_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
@@ -491,9 +499,49 @@
 		thishud.remove_object(stamina_bar)
 	hud.remove_object(stamina_bar)
 
+	for(var/obj/item/implant/imp in src.implant)
+		imp.disposing()
+	src.implant = null
+
+	for(var/image/im in health_mon_icons)
+		if(im.loc == src)
+			im.loc = null
+			im.dispose()
+			health_mon_icons -= im
+
+	for(var/image/im in arrestIconsAll)
+		if(im.loc == src)
+			im.loc = null
+			im.dispose()
+			health_mon_icons -= im
+
+	src.wear_suit = null
+	src.w_uniform = null
+	src.gloves = null
+	src.glasses = null
+	src.head = null
+	src.ears = null
+	src.shoes = null
+	src.belt = null
+	src.internal = null
+	src.internals = null
+	src.wear_mask = null
+	src.wear_id = null
+	src.r_store = null
+	src.l_store = null
+	src.back = null
+	src.handcuffs = null
+	src.r_hand = null
+	src.l_hand = null
+
+	src.chest_item = null
+
 	//huds -= stamina_bar
 	//hud -= stamina_bar
 	stamina_bar = null
+
+	src.organs.len = 0
+	src.organs = null
 
 	if (mutantrace)
 		mutantrace.dispose()
@@ -708,16 +756,18 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-	for (var/mob/M in mobs)
-		if (M.client && !M.stat)
+	for (var/client/C)
+		if (!C.mob) continue
+		if (!C.mob.stat)
 			cancel = 1
 			break
 
 	if (!cancel && !abandon_allowed)
 		SPAWN_DBG (50)
 			cancel = 0
-			for (var/mob/M in mobs)
-				if (M.client && !M.stat)
+			for (var/client/C)
+				if (!C.mob) continue
+				if (!C.mob.stat)
 					cancel = 1
 					break
 
@@ -1608,7 +1658,7 @@
 	update_clothing()
 
 	if (ai_active)
-		ai_active = 0
+		ai_set_active(0)
 	if (src.organHolder && src.organHolder.brain && src.mind)
 		src.organHolder.brain.setOwner(src.mind)
 
@@ -1622,7 +1672,7 @@
 /mob/living/carbon/human/Logout()
 	..()
 	if (!ai_active && is_npc)
-		ai_active = 1
+		ai_set_active(1)
 	return
 
 /mob/living/carbon/human/get_heard_name()
