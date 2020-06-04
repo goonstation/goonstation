@@ -1,5 +1,9 @@
 
 (t)wed jun 03 20
+(u)UrsulaMajor
+(p)952
+(e)⚖🐛|balance, bug
+(*)Nukie Snipers now get a pair of traitor thermals. Enjoy!
 (u)zjdtmkhzt
 (p)942
 (e)⚖🆕|balance, feature
