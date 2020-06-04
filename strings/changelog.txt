@@ -1,4 +1,10 @@
 
+(t)thu jun 04 20
+(u)TrustworthyFella
+(p)823
+(e)⚖|balance
+(*)Made seething tomatoes into incendiaries rather than explosives. They now do a sizable chunk of burn damage on impact, and a fireflash. Potency affects the burn damage done, and how long you're on fire. The burn damage is affected by the targets clothing(heat resistance).
+(+)Seething tomatoes now contain welding fuel
 (t)wed jun 03 20
 (u)zjdtmkhzt
 (p)953
