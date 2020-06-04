@@ -188,8 +188,8 @@
 	ChatTargetedBroadcast(message, TRUE)
 	ChatTargetedBroadcast(message, FALSE)
 
-/datum/tgs_api/v3210/ChatTargetedBroadcast(message, admin_only)
-	ExportService("[admin_only ? SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE : SERVICE_REQUEST_IRC_BROADCAST] [message]")
+/datum/tgs_api/v3210/ChatTargetedBroadcast(message, admin_only_goon_sucks)
+	ExportService("[admin_only_goon_sucks ? SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE : SERVICE_REQUEST_IRC_BROADCAST] [message]")
 
 /datum/tgs_api/v3210/ChatPrivateMessage(message, datum/tgs_chat_user/user)
 	return TGS_UNIMPLEMENTED

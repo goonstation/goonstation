@@ -291,7 +291,7 @@
   * message - The string to send.
   * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
   */
-/world/proc/TgsTargetedChatBroadcast(message, admin_only = FALSE)
+/world/proc/TgsTargetedChatBroadcast(message, admin_only_goon_sucks = FALSE)
 	return
 
 /**

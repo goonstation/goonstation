@@ -140,10 +140,10 @@
 	if(api)
 		api.ChatBroadcast(message, channels)
 
-/world/TgsTargetedChatBroadcast(message, admin_only)
+/world/TgsTargetedChatBroadcast(message, admin_only_goon_sucks)
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
-		api.ChatTargetedBroadcast(message, admin_only)
+		api.ChatTargetedBroadcast(message, admin_only_goon_sucks)
 
 /world/TgsChatPrivateMessage(message, datum/tgs_chat_user/user)
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)

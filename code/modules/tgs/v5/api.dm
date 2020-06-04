@@ -308,11 +308,11 @@
 	else
 		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
-/datum/tgs_api/v5/ChatTargetedBroadcast(message, admin_only)
+/datum/tgs_api/v5/ChatTargetedBroadcast(message, admin_only_goon_sucks)
 	var/list/channels = list()
 	for(var/I in ChatChannelInfo())
 		var/datum/tgs_chat_channel/channel = I
-		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only) || (!channel.is_admin_channel && !admin_only)))
+		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only_goon_sucks) || (!channel.is_admin_channel && !admin_only_goon_sucks)))
 			channels += channel.id
 	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = channels)
 	if(intercepted_message_queue)
