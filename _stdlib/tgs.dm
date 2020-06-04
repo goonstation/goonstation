@@ -247,7 +247,7 @@
 	/// The help text displayed for this command
 	var/help_text = ""
 	/// If this command should be available to game administrators only
-	var/admin_only = FALSE
+	var/admin_only_goon_sucks = FALSE
 
 /**
   * Process command activation. Should return a string to respond to the issuer with.

@@ -12,7 +12,7 @@
 			var/datum/other = custom_commands[command_name]
 			TGS_ERROR_LOG("Custom commands [other.type] and [I] have the same name (\"[command_name]\"), only [other.type] will be available!")
 			continue
-		results += list(list("name" = command_name, "help_text" = stc.help_text, "admin_only" = stc.admin_only))
+		results += list(list("name" = command_name, "help_text" = stc.help_text, "admin_only" = stc.admin_only_goon_sucks))
 		custom_commands[command_name] = stc
 
 	var/commands_file = chat_commands_json_path
