@@ -91,7 +91,7 @@
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
 
 /obj/item/organ/brain/latejoin
-	name = "Intelligence Formation Chip"
+	name = "Spontaneous Intelligence Creation Core"
 	icon_state = "late_brain"
 	item_state = "late_brain"
 	desc = "A brain sized triangle constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
