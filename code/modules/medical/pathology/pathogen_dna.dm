@@ -335,6 +335,16 @@ datum/pathogendna
 					this.reference.effects += pathogen_controller.path_to_symptom[sym]
 				else
 					return 0 // Somehow, we lost the DNA.
+
+		var/effectSeqSum = 0
+		for (var/effect in this.reference.effects)
+			if(istype(effect, /datum/pathogeneffects))
+				var/datum/pathogeneffects/E = effect
+				effectSeqSum += E.rarity
+		if(effectSeqSum > this.reference.body_type.seqMax && this.reference.body_type.seqMax != -1)
+			return 8 // too many symptoms for microbody type
+
+
 		// DNA has been completely evaluated if we reach this point in execution and it is a valid pathogen DNA. Hooray!
 		// Build the available symptom list for the pathogen.
 		this.reference.dnasample = this
