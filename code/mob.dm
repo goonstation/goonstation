@@ -647,6 +647,7 @@
 						A.glide_size = src.glide_size
 						step(A, get_dir(A, old_loc))
 						A.glide_size = src.glide_size
+						A.OnMove()
 				////////////////////////////////////// end suck
 
 				if (isliving(AM))
@@ -2333,9 +2334,9 @@
 
 /mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
 
-	if (throw_count <= 410)
+	if (throw_traveled <= 410)
 		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+			random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 			if (!src.hasStatus("weakened"))
 				src.changeStatus("weakened", 2 SECONDS)
 				src.force_laydown_standup()
@@ -2343,8 +2344,6 @@
 		if (src.gib_flag) return
 		src.gib_flag = 1
 		src.gib()
-
-	src.throw_count = 0
 
 	return
 
@@ -2726,7 +2725,8 @@
 		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
 	return return_name
 
-/mob/proc/OnMove()
+/mobOnMove()
+	..()
 	if(client && client.player && client.player.shamecubed)
 		loc = client.player.shamecubed
 		return

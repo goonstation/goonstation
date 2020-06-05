@@ -590,6 +590,7 @@
 	else
 		last_turf = 0
 
+/atom/movable/proc/OnMove()
 	if(src.medium_lights)
 		update_medium_light_visibility()
 
