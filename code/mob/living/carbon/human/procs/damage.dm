@@ -317,7 +317,7 @@
 	reduction += rand(exploprot, exploprot * 5)
 	var/sevmod = round(exploprot/4)
 	severity += sevmod
-	var/b_loss = min(120, sqrt(power)*30)/(1+sevmod) - reduction
+	var/b_loss = min(120, power*15)/(1+sevmod) - reduction
 	var/f_loss = null
 
 	var/delib_chance = b_loss - 10

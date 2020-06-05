@@ -43,7 +43,7 @@ var/datum/explosion_controller/explosions
 		var/last_touched
 
 		for (var/turf/T in queued_turfs)
-			p = queued_turfs[T]
+			p = sqrt(queued_turfs[T])*2
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
@@ -62,7 +62,7 @@ var/datum/explosion_controller/explosions
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
 		for (var/turf/T in queued_turfs)
-			p = queued_turfs[T]
+			p = sqrt(queued_turfs[T])*2
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
 			if (p >= 6)
