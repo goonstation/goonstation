@@ -321,6 +321,7 @@
 
 	if (src.abilityHolder)
 		src.abilityHolder.dispose()
+		src.abilityHolder = null
 
 	if (src.targeting_ability)
 		src.targeting_ability = null
