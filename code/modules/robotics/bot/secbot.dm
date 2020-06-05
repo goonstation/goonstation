@@ -79,6 +79,8 @@
 			our_baton = null
 		target = null
 		radio_controller.remove_object(src, "1149")
+		radio_controller.remove_object(src, "[control_freq]")
+		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
