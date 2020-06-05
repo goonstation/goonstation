@@ -33,7 +33,7 @@ proc/qdel(var/datum/O)
 	if (istype(O))
 		// only queue deletions if the round is running, otherwise the queue isn't being processed
 		if (current_state >= GAME_STATE_PLAYING)
-			O.dispose()
+			O.dispose(qdel_instead=0)
 			if (istype(O, /atom/movable))
 				O:loc = null
 
@@ -134,8 +134,15 @@ proc/qdel(var/datum/O)
 		UnregisterSignal(target, signal_procs[target])
 
 // don't override this one, just call it instead of delete to get rid of something cheaply
-/datum/proc/dispose()
+#ifdef DISPOSE_IS_QDEL
+/datum/proc/dispose(qdel_instead=1)
+#else
+/datum/proc/dispose(qdel_instead=0)
+#endif
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(qdel_instead)
+		qdel(src)
+		return
 	if (!disposed)
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()

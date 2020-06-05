@@ -81,7 +81,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define REFERENCE_TRACKING
 //#define AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 
-
+// Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
+//#define DISPOSE_IS_QDEL
 
 //////////// MAP OVERRIDES
 
