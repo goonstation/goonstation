@@ -937,9 +937,9 @@
 					newIngredient = null
 					LAGCHECK(LAG_MED)
 
-					for (var/obj/O in new_nuggets)
-						O.set_loc(H)
-						LAGCHECK(LAG_MED)
+				for (var/obj/O in new_nuggets)
+					O.set_loc(H)
+					LAGCHECK(LAG_MED)
 
 			else
 				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
