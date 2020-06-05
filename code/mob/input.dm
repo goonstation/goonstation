@@ -240,6 +240,7 @@ mob
 								A.glide_size = glide
 								step(A, get_dir(A, old_loc))
 								A.glide_size = glide
+								A.OnMove(src)
 				else
 					if (src.loc) //ZeWaka: Fix for null.relaymove
 						delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay

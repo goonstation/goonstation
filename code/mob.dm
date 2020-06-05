@@ -221,6 +221,8 @@
 
 	var/datum/aiHolder/ai = null
 
+	var/last_pulled_time = 0
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -623,6 +625,8 @@
 				AM.glide_size = src.glide_size
 				step(AM, t)
 				step(src,t)
+				AM.OnMove(src)
+				src.OnMove(src)
 				AM.glide_size = src.glide_size
 
 				//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
@@ -647,6 +651,7 @@
 						A.glide_size = src.glide_size
 						step(A, get_dir(A, old_loc))
 						A.glide_size = src.glide_size
+						A.OnMove(src)
 				////////////////////////////////////// end suck
 
 				if (isliving(AM))
@@ -2333,9 +2338,9 @@
 
 /mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
 
-	if (throw_count <= 410)
+	if (throw_traveled <= 410)
 		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+			random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 			if (!src.hasStatus("weakened"))
 				src.changeStatus("weakened", 2 SECONDS)
 				src.force_laydown_standup()
@@ -2343,8 +2348,6 @@
 		if (src.gib_flag) return
 		src.gib_flag = 1
 		src.gib()
-
-	src.throw_count = 0
 
 	return
 
@@ -2726,7 +2729,8 @@
 		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
 	return return_name
 
-/mob/proc/OnMove()
+/mob/OnMove(source = null)
+	..()
 	if(client && client.player && client.player.shamecubed)
 		loc = client.player.shamecubed
 		return
@@ -2735,6 +2739,9 @@
 		makeWaddle(src)
 
 	last_move_dir = move_dir
+
+	if (source && source != src) //we were moved by something that wasnt us
+		last_pulled_time = world.time
 
 /mob/proc/on_centcom()
 	var mob_loc = src.loc
