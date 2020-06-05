@@ -490,7 +490,10 @@
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
-		src.u_equip(I)
+		if(I.equipped_in_slot != slot_w_uniform && I.equipped_in_slot != "i_clothing")
+			src.u_equip(I)
+	if(src.w_uniform) // last because pockets etc.
+		src.u_equip(src.w_uniform)
 
 	if (hud)
 		if (hud.master == src)
