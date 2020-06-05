@@ -897,6 +897,8 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/current_nugget
 				var/list/new_nuggets = list()
 				for (var/atom/movable/newIngredient in H)
+					if(istype(newIngredient, /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget))
+						continue
 					if (!current_nugget)
 						current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
 						new_nuggets += current_nugget
