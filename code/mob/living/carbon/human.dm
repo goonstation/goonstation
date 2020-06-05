@@ -509,17 +509,17 @@
 		imp.dispose()
 	src.implant = null
 
-	for(var/image/im in health_mon_icons)
-		if(im.loc == src)
-			im.loc = null
-			im.dispose()
-			health_mon_icons -= im
-
-	for(var/image/im in arrestIconsAll)
-		if(im.loc == src)
-			im.loc = null
-			im.dispose()
-			health_mon_icons -= im
+	for(var/client/C)
+		C.images -= list(health_mon, health_implant, arrestIcon)
+	if(health_mon)
+		health_mon.dispose()
+		health_mon_icons -= health_mon
+	if(health_implant)
+		health_implant.dispose()
+		health_mon_icons -= health_implant
+	if(arrestIcon)
+		arrestIcon.dispose()
+		arrestIconsAll -= arrestIcon
 
 	src.chest_item = null
 
