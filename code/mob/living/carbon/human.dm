@@ -3520,7 +3520,7 @@
 
 #define can_step_sfx(H)  (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 
-/mob/living/carbon/human/OnMove()
+/mob/living/carbon/human/OnMove(source = null)
 	var/turf/NewLoc = get_turf(src)
 	var/steps = 1
 	if (move_dir & (move_dir-1))
