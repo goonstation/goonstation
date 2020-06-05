@@ -327,11 +327,6 @@ var/global/list/landmarks = list()
 	return 1
 
 /obj/landmark/disposing()
-	..()
-	if (!deleted_on_start && islist(landmarks))
-		landmarks.Remove(src)
-
-/obj/landmark/disposing()
 	if (!deleted_on_start && islist(landmarks))
 		landmarks.Remove(src)
 	..()
