@@ -1,5 +1,9 @@
 
 (t)thu jun 04 20
+(u)mbc
+(p)955
+(e)|
+(*)Fixed bug where you couldn't push/pull someone else into a slip. Also fixed a bug where a stacked slip might gib you.
 (u)TrustworthyFella
 (p)823
 (e)⚖|balance
