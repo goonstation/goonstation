@@ -2737,14 +2737,33 @@ var/global/noir = 0
 					if("give-legs")
 						if(src.level >= LEVEL_ADMIN)
 							var/pathname = input("Path of the things you want to leg like (/obj/item/paper_bin)","path:", null) as null|text
+							var/batchamount = input("Number of objs per batch?", null) as null|num
+							var/waittime = input("Wait time between batches? in deciseconds", null) as null|num
+							var/batchno = 0
 							if(!pathname)
 								return
+							if(!batchamount)
+								batchamount = 1
+							if(!waittime)
+								waittime = 1
+							var/list/atoms_to_leg = list()
 							if (alert("Do you really wanna give things legs?", "LEG LEG", "Sure thing!", "Not really.") == "Sure thing!")
 								for(var/atom/movable/A in world) //Build the god forsaken list
 									if(istype(A, text2path(pathname)) && !istype(A, /obj/overlay))
-										A.AddComponent(/datum/component/legs)
+										atoms_to_leg += A
+										if(batchno >= batchamount)
+											batchno = 0
+											sleep(waittime)
+								batchno = 0
+								for(var/atom/movable/A in atoms_to_leg)
+									A.AddComponent(/datum/component/legs)
+									batchno++
+									if(batchno >= batchamount)
+										batchno = 0
+										sleep(waittime)
 								logTheThing("admin", usr, null, "used mass give legs secret")
 								logTheThing("diary", usr, null, "used mass give legs secret", "admin")
+								atoms_to_leg.len = 0 //null the list
 							else
 								return
 						else
