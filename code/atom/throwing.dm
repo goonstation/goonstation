@@ -346,7 +346,8 @@
 			T = src.loc
 
 	//done throwing, either because it hit something or it finished moving
-	if (!(throwing & THROW_SLIP))
+
+	if (throwing)
 		animate(src, transform = transform_original)
 
 	src.throw_end(params)
