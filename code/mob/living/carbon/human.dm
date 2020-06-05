@@ -506,7 +506,7 @@
 	hud.remove_object(stamina_bar)
 
 	for(var/obj/item/implant/imp in src.implant)
-		imp.disposing()
+		imp.dispose()
 	src.implant = null
 
 	for(var/image/im in health_mon_icons)
@@ -554,7 +554,7 @@
 	for (var/obj/item/parts/HP in src)
 		if (istype(HP,/obj/item/parts/human_parts))
 			if (HP.bones && HP.bones.donor == src)
-				HP.disposing()
+				HP.dispose()
 
 			var/obj/item/parts/human_parts/humanpart = HP
 			humanpart.original_holder = null

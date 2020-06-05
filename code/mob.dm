@@ -297,7 +297,7 @@
 	traitHolder = null
 
 	if (bioHolder)
-		bioHolder.disposing()
+		bioHolder.dispose()
 		bioHolder.owner = null
 		bioHolder = null
 
@@ -320,7 +320,7 @@
 
 
 	if (src.abilityHolder)
-		src.abilityHolder.disposing()
+		src.abilityHolder.dispose()
 
 	if (src.targeting_ability)
 		src.targeting_ability = null

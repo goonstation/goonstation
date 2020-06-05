@@ -118,7 +118,7 @@
 		donor = null
 
 		if (bones)
-			bones.disposing()
+			bones.dispose()
 
 		holder = null
 		..()

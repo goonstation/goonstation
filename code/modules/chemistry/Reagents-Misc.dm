@@ -629,7 +629,6 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
 					pool(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
@@ -1024,7 +1023,6 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
 					pool(hotspot)
 				return
 

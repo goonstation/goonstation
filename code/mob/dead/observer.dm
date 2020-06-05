@@ -29,7 +29,7 @@
 		src.abilityHolder:remove_all_abilities()
 		src.abilityHolder.owner = null
 	if (hud)
-		hud.disposing()
+		hud.dispose()
 
 	..()
 
