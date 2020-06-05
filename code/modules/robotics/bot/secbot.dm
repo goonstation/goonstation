@@ -71,6 +71,13 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	disposing()
+		if(mover)
+			mover.dispose()
+			mover = null
+		if(our_baton)
+			our_baton.dispose()
+			our_baton = null
+		target = null
 		radio_controller.remove_object(src, "1149")
 		..()
 
@@ -998,6 +1005,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if(istype(newmaster, /obj/machinery/bot/secbot))
 			src.master = newmaster
 		return
+
+	disposing()
+		if(master.mover == src)
+			master.mover = null
+		src.master = null
+		..()
 
 	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0)
 		if(!master || !isturf(master.loc))
