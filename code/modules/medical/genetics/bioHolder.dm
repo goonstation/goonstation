@@ -45,7 +45,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/u_color = "#FFFFFF"
 
 	var/mob/owner = null
-	var/mob/parentHolder = null
+	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
@@ -106,6 +106,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		flavor_text = toCopy.flavor_text
 		return src
+
+	disposing()
+		owner = null
+		if(src.parentHolder)
+			if(src.parentHolder.mobAppearance == src)
+				src.parentHolder.mobAppearance = null
+			src.parentHolder = null
+		..()
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
@@ -227,6 +235,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/datum/bioEffect/BE = effectPool[D]
 			qdel(BE)
 			BE?.owner = null
+
+		if(src.mobAppearance)
+			src.mobAppearance.dispose()
+			src.mobAppearance = null
+
 		src.owner = null
 
 		effects.len = 0
