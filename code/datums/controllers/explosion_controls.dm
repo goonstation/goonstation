@@ -43,7 +43,7 @@ var/datum/explosion_controller/explosions
 		var/last_touched
 
 		for (var/turf/T in queued_turfs)
-			p = queued_turfs[T]
+			p = sqrt(queued_turfs[T])*2
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
@@ -56,20 +56,20 @@ var/datum/explosion_controller/explosions
 					A.ex_act(2, last_touched, p)
 					if (istype(A, /obj/cable))
 						needrebuild = 1
-			else
+			else if (p >= 1)
 				for (var/atom/A as obj|mob in T)
 					A.ex_act(3, last_touched, p)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
 		for (var/turf/T in queued_turfs)
-			p = queued_turfs[T]
+			p = sqrt(queued_turfs[T])*2
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
 			if (p >= 6)
 				T.ex_act(1, last_touched)
 			else if (p >= 3)
 				T.ex_act(2, last_touched)
-			else
+			else if (p >= 1)
 				T.ex_act(3, last_touched)
 
 		queued_turfs.len = 0

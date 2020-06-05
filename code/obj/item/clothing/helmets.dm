@@ -468,6 +468,7 @@
 		..()
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
+		setProperty("exploprot", 2)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
