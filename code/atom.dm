@@ -590,9 +590,12 @@
 	else
 		last_turf = 0
 
-/atom/movable/proc/OnMove()
 	if(src.medium_lights)
 		update_medium_light_visibility()
+
+//called once per player-invoked move, regardless of diagonal etc
+//called via pulls and mob steps
+/atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
 	//set name = "Pull"

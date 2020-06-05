@@ -221,6 +221,8 @@
 
 	var/datum/aiHolder/ai = null
 
+	var/last_pulled_time = 0
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -623,6 +625,8 @@
 				AM.glide_size = src.glide_size
 				step(AM, t)
 				step(src,t)
+				AM.OnMove(src)
+				src.OnMove(src)
 				AM.glide_size = src.glide_size
 
 				//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
@@ -647,7 +651,7 @@
 						A.glide_size = src.glide_size
 						step(A, get_dir(A, old_loc))
 						A.glide_size = src.glide_size
-						A.OnMove()
+						A.OnMove(src)
 				////////////////////////////////////// end suck
 
 				if (isliving(AM))
@@ -2725,7 +2729,7 @@
 		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
 	return return_name
 
-/mobOnMove()
+/mob/OnMove(source = null)
 	..()
 	if(client && client.player && client.player.shamecubed)
 		loc = client.player.shamecubed
@@ -2735,6 +2739,9 @@
 		makeWaddle(src)
 
 	last_move_dir = move_dir
+
+	if (source && source != src) //we were moved by something that wasnt us
+		last_pulled_time = world.time
 
 /mob/proc/on_centcom()
 	var mob_loc = src.loc
