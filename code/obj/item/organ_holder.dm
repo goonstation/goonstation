@@ -56,6 +56,9 @@
 			src.create_organs()
 
 	disposing()
+		src.organ_list.len = 0
+		src.organ_list = null
+
 		if (head)
 			head.donor = null
 			chest?.bones?.donor = null
