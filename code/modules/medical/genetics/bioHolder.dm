@@ -205,8 +205,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		owner = owneri
 		Uid = CreateUid()
 		uid_hash = md5(Uid)
-		bioUids.Add(Uid)
-		bioUids[Uid] = owner
+		bioUids[Uid] = 1
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
