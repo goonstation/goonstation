@@ -489,6 +489,9 @@
 	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
 
 /mob/living/carbon/human/disposing()
+	for(var/obj/item/I in src)
+		src.u_equip(I)
+
 	if (hud)
 		if (hud.master == src)
 			hud.master = null
@@ -514,25 +517,6 @@
 			im.loc = null
 			im.dispose()
 			health_mon_icons -= im
-
-	src.wear_suit = null
-	src.w_uniform = null
-	src.gloves = null
-	src.glasses = null
-	src.head = null
-	src.ears = null
-	src.shoes = null
-	src.belt = null
-	src.internal = null
-	src.internals = null
-	src.wear_mask = null
-	src.wear_id = null
-	src.r_store = null
-	src.l_store = null
-	src.back = null
-	src.handcuffs = null
-	src.r_hand = null
-	src.l_hand = null
 
 	src.chest_item = null
 
