@@ -62,41 +62,59 @@
 		if (head)
 			head.donor = null
 			chest?.bones?.donor = null
+			head.holder = null
 		if (skull)
 			skull.donor = null
+			skull.holder = null
 		if (brain)
 			brain.donor = null
+			brain.holder = null
 		if (left_eye)
 			left_eye.donor = null
+			left_eye.holder = null
 		if (right_eye)
 			right_eye.donor = null
+			right_eye.holder = null
 		if (chest)
 			chest.donor = null
 			chest?.bones?.donor = null
+			chest.holder = null
 		if (heart)
 			heart.donor = null
+			heart.holder = null
 		if (left_lung)
 			left_lung.donor = null
+			left_lung.holder = null
 		if (right_lung)
 			right_lung.donor = null
+			right_lung.holder = null
 		if (butt)
 			butt.donor = null
+			butt.holder = null
 		if (left_kidney)
 			left_kidney.donor = null
+			left_kidney.holder = null
 		if (right_kidney)
 			right_kidney.donor = null
+			right_kidney.holder = null
 		if (liver)
 			liver.donor = null
+			liver.holder = null
 		if (stomach)
 			stomach.donor = null
+			stomach.holder = null
 		if (intestines)
 			intestines.donor = null
+			intestines.holder = null
 		if (spleen)
 			spleen.donor = null
+			spleen.holder = null
 		if (pancreas)
 			pancreas.donor = null
+			pancreas.holder = null
 		if (appendix)
 			appendix.donor = null
+			appendix.holder = null
 
 		head = null
 		skull = null
