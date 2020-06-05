@@ -584,6 +584,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(BE && (isnull(type) || BE.effectType == type))
 				RemoveEffect(BE.id)
 				BE.owner = null
+				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
 					BEP?.ability.owner = null
@@ -596,6 +597,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(BE && (isnull(type) || BE.effectType == type))
 				effectPool.Remove(D)
 				BE.owner = null
+				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
 					BEP?.ability.owner = null
