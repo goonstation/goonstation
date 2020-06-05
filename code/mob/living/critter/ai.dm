@@ -36,7 +36,7 @@
 		if(task_cache)
 			for(var/key in task_cache)
 				var/datum/aiTask/task = task_cache[key]
-				task.dispose()
+				task?.dispose()
 			task_cache.len = 0
 			task_cache = null
 		..()
