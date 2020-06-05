@@ -17,9 +17,10 @@
 	New()
 		..()
 
-		var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
-		if (species)
-			src.planttype = species
+		if(ispath(src.planttype))
+			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
+			if (species)
+				src.planttype = species
 
 		src.plantgenes = new /datum/plantgenes(src)
 
@@ -28,9 +29,10 @@
 
 	unpooled()
 		..()
-		var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
-		if (species)
-			src.planttype = species
+		if(ispath(src.planttype))
+			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
+			if (species)
+				src.planttype = species
 
 		src.plantgenes = new /datum/plantgenes(src)
 
