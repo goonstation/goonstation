@@ -65,7 +65,7 @@
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
 	usr << browse(html, "window=variables\ref[V];size=600x400")
 
-/client/proc/debug_variables(datum/D in world)
+/client/proc/debug_variables(atom/D) // actually any datum, not just atom but `datum/D in world` causes GC bugs
 	set category = "Debug"
 	set name = "View Variables"
 	set popup_menu = 1
