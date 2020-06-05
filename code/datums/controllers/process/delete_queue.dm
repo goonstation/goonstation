@@ -203,7 +203,7 @@ proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result
 			if(y && y == target)
 				result += jointext(stack + "[x]", " - ")
 			if(istype(y, /list))
-				ref_visit_list(x, next, target, result, stack + "[x]")
+				ref_visit_list(y, next, target, result, stack + "[x]")
 			else if(istype(y, /client) || istype(y, /datum))
 				if(y:ref_tracker_visited != ref_tracker_generation)
 					y:ref_tracker_visited = ref_tracker_generation
@@ -274,5 +274,5 @@ proc/ref_visit_list_2(var/list/L, var/datum/target, var/list/result, var/list/st
 			if(y && y == target)
 				result += jointext(stack + "[x]", " - ")
 			if(istype(y, /list))
-				ref_visit_list_2(x, target, result, stack + "[x]")
+				ref_visit_list_2(y, target, result, stack + "[x]")
 #endif
