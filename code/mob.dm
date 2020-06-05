@@ -335,6 +335,10 @@
 			zone_sel.master = null
 	zone_sel = null
 
+	if(src.contextLayout)
+		src.contextLayout.dispose()
+		src.contextLayout = null
+
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
