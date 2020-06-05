@@ -109,6 +109,8 @@
 					continue
 				if(holder.organ_list[thing] == src)
 					holder.organ_list[thing] = null
+				if(thing in holder.vars) // organ holders suck, refactor when they no longer suck
+					holder.vars[thing] = null
 
 
 		if (donor && donor.organs) //not all mobs have organs/organholders (fish)
