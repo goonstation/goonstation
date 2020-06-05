@@ -161,6 +161,8 @@
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
+
 	if (istype(D, /atom))
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
 		if (ismob(D) || isobj(D))
@@ -463,6 +465,14 @@
 			O.replace_with_explosive()
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
+		return
+	if (href_list["ViewReferences"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_CODER)
+			var/datum/D = locate(href_list["ViewReferences"])
+			usr.client.view_references(D, href_list["window_name"])
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
 		return
 	if (href_list["AddPathogen"])
 		usr_admin_only

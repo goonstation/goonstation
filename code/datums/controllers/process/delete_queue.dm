@@ -12,9 +12,7 @@ datum/controller/process/delete_queue
 	var/tmp/datum/dynamicQueue/delete_queue = 0
 #endif
 
-#ifdef LOG_HARD_DELETE_REFERENCES
-	var/log_hard_deletions = 2
-#elif defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
+#if defined(LOG_HARD_DELETE_REFERENCES) || defined(AUTO_REFERENCE_TRACKING_ON_HARD_DEL) || defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
 	var/log_hard_deletions = 2
 #else
 	var/log_hard_deletions = 0 // 1 = log them, 2 =  attempt to find references (requires LOG_HARD_DELETE_REFERENCES)
@@ -73,10 +71,18 @@ datum/controller/process/delete_queue
 					for(var/x in result)
 						logTheThing("debug", text=x)
 #endif
+#ifdef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
+				if (log_hard_deletions >= 2)
+					for(var/client/C)
+						if(C.holder && C.holder.level >= LEVEL_CODER)
+							C.view_references(D)
+#endif
 
 			delcount++
+#ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
 			del(D)
+#endif
 
 		//if (t_gccount != gccount || t_delcount != delcount)
 		//	boutput(world, "Delqueue update: buf [delqueue_pos]/[DELQUEUE_SIZE] ... [gccount - t_gccount] gc, [delcount - t_delcount] del")

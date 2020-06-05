@@ -194,6 +194,9 @@ var/f_color_selector_handler/F_Color_Selector
 /datum/preMapLoad
 	New()
 		enable_extools_debugger()
+#ifdef REFERENCE_TRACKING
+		enable_reference_tracking()
+#endif
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
