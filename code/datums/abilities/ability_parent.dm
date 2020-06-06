@@ -970,7 +970,10 @@
 
 	disposing()
 		for (var/datum/abilityHolder/H in holders)
+			H.dispose()
 			H.owner = null
+		holders.len = 0
+		holders = null
 		..()
 
 	proc/addHolder(holderType)

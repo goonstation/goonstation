@@ -175,6 +175,7 @@
 	initial_reagents = list("fartonium"=10)
 	food_effects = list("food_sweaty_big")
 	New()
+		..()
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","buttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
 
