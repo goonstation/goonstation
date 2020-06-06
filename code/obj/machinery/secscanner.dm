@@ -229,40 +229,48 @@
 					threatcount += perp.r_hand.contraband
 
 		if (istype(perp.wear_suit))
-			if(!has_contraband_permit)
+			if (!has_contraband_permit)
 				threatcount += perp.wear_suit.contraband
 
 		if (istype(perp.belt))
 			if (istype(perp.belt, /obj/item/gun/))
-				if(!has_carry_permit)
+				if (!has_carry_permit)
 					threatcount += perp.belt.contraband * 0.5
 			else
-				if(!has_contraband_permit)
+				if (!has_contraband_permit)
 					threatcount += perp.belt.contraband * 0.5
 				for( var/obj/item/item in perp.belt.contents )
-					if(istype(item, /obj/item/gun/) && !has_carry_permit)
-						threatcount += item.contraband * 0.5
-					else if(!has_contraband_permit)
-						threatcount += item.contraband * 0.5
+					if (istype(item, /obj/item/gun/))
+						if (!has_carry_permit)
+							threatcount += item.contraband * 0.5
+					else
+						if (!has_contraband_permit)
+							threatcount += item.contraband * 0.5
 
 		if (istype(perp.l_store))
-			if(istype(perp.l_store, /obj/item/gun/) && !has_carry_permit)
-				threatcount += perp.l_store.contraband * 0.5
-			else if(!has_contraband_permit)
-				threatcount += perp.l_store.contraband * 0.5
+			if (istype(perp.l_store, /obj/item/gun/))
+				if (!has_carry_permit)
+					threatcount += perp.l_store.contraband * 0.5
+			else
+				if (!has_contraband_permit)
+					threatcount += perp.l_store.contraband * 0.5
 
 		if (istype(perp.r_store))
-			if(istype(perp.r_store, /obj/item/gun/) && !has_carry_permit)
-				threatcount += perp.r_store.contraband * 0.5
-			else if(!has_contraband_permit)
-				threatcount += perp.r_store.contraband * 0.5
+			if (istype(perp.r_store, /obj/item/gun/))
+				if (!has_carry_permit)
+					threatcount += perp.r_store.contraband * 0.5
+			else
+				if (!has_contraband_permit)
+					threatcount += perp.r_store.contraband * 0.5
 
 		if (istype(perp.back))
 			for( var/obj/item/item in perp.back.contents )
-				if(istype(item, /obj/item/gun/) && !has_carry_permit)
-					threatcount += item.contraband * 0.5
-				else if(!has_contraband_permit)
-					threatcount += item.contraband * 0.5
+				if(istype(item, /obj/item/gun/))
+					if(!has_carry_permit)
+						threatcount += item.contraband * 0.5
+				else
+					if(!has_contraband_permit)
+						threatcount += item.contraband * 0.5
 
 		//Agent cards lower threatlevel
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
