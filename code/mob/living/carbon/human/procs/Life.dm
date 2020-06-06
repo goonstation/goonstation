@@ -333,11 +333,18 @@
 								if(!has_contraband_permit)
 									contrabandLevel += r_hand.contraband
 
-						if (!contrabandLevel && !has_contraband_permit)
-							if (belt)
-								contrabandLevel += belt.contraband
-							if (!contrabandLevel && wear_suit)
+						if (!contrabandLevel && belt)
+							if (istype(belt, /obj/item/gun/))
+								if(!has_carry_permit)
+									contrabandLevel += belt.contraband
+							else
+								if(!has_contraband_permit)
+									contrabandLevel += belt.contraband
+
+						if (!contrabandLevel && wear_suit)
+							if(!has_contraband_permit)
 								contrabandLevel += wear_suit.contraband
+
 					else
 						if (l_hand)
 							contrabandLevel += l_hand.contraband
