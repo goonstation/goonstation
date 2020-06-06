@@ -2377,3 +2377,17 @@ var/global/list/cargopads = list()
 
 	ex_act(severity)
 		return
+
+/turf/unsimulated/floor/ancient
+	name = "strange surface"
+	desc = "A strange jet black metal floor. There are odd lines carved into it."
+	icon_state = "ancient"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		return
+
+	ex_act(severity)
+		return

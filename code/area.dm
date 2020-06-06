@@ -694,7 +694,7 @@
 /area/someplace
 	name = "some place"
 	icon_state = "purple"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -707,7 +707,7 @@
 /area/someplacehot
 	name = "some place"
 	icon_state = "atmos"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
