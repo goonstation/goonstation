@@ -2174,13 +2174,12 @@
 						if(!has_contraband_permit)
 							. += perp.r_hand.contraband
 
-				if(ishuman(perp))
+				if(!has_contraband_permit)
 					if (istype(perp.belt))
 						. += perp.belt.contraband * 0.5
 
 					if (istype(perp.wear_suit))
-						if(!has_contraband_permit)
-							. += perp.wear_suit.contraband
+						. += perp.wear_suit.contraband
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
