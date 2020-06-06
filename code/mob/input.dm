@@ -182,7 +182,6 @@ mob
 						//else
 						src.pushing = 0
 
-
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 						for(var/grab in src.grabbed_by)
 							var/obj/item/grab/G = grab
@@ -206,6 +205,7 @@ mob
 
 							for(var/grab in src.grabbed_by)
 								var/obj/item/grab/G = grab
+								if (G.assailant == pushing || G.affecting == pushing) continue
 								if (G.state < GRAB_NECK) continue
 								if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 									return
@@ -228,11 +228,12 @@ mob
 								else
 									pulling += src.pulling
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-								if (G.affecting == src) continue
 								pulling += G.affecting
 
 							for (var/atom/movable/A in pulling)
 								if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+									continue
+								if (A == src || A == pushing)
 									continue
 								if (!isturf(A.loc) || A.anchored)
 									return // whoops

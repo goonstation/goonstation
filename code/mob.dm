@@ -508,12 +508,11 @@
 		return
 	src.now_pushing = 1
 
-	if (ismob(AM) && istype (AM, /mob/living/carbon/) && isliving(src))
-		src:viral_transmission(AM,"Contact",1)
-
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
+			src:viral_transmission(AM,"Contact",1)
+
 			if (tmob.bioHolder.HasEffect("fat"))
 				if (prob(40) && !src.bioHolder.HasEffect("fat"))
 					src.visible_message("<span class='alert'><B>[src] fails to push [tmob] out of the way.</B></span>")
@@ -615,63 +614,62 @@
 				return
 
 
+	..()
+
 	src.now_pushing = 0
-	SPAWN_DBG(0)
-		..()
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				src.pushing = AM
-				var/t = get_dir(src, AM)
-				var/old_loc = src.loc
-				AM.animate_movement = SYNC_STEPS
-				AM.glide_size = src.glide_size
-				step(AM, t)
-				step(src,t)
-				AM.OnMove(src)
-				src.OnMove(src)
-				AM.glide_size = src.glide_size
+	if (istype(AM, /atom/movable) && !AM.anchored)
+		src.pushing = AM
 
-				//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
-				// so yeah, i copy+pasted this from process_move.
-				if (src.pulling != AM && old_loc != src.loc) //causes infinite pull loop without these checks. lol
-					var/list/pulling = list()
-					if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
-						src.pulling = null
-						//hud.update_pulling() // FIXME
-					else
-						pulling += src.pulling
-					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-						if (G.affecting == src) continue
-						pulling += G.affecting
-					for (var/atom/movable/A in pulling)
-						if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
-							continue
-						if (!isturf(A.loc) || A.anchored)
-							src.now_pushing = null
-							continue // whoops
-						A.animate_movement = SYNC_STEPS
-						A.glide_size = src.glide_size
-						step(A, get_dir(A, old_loc))
-						A.glide_size = src.glide_size
-						A.OnMove(src)
-				////////////////////////////////////// end suck
+		src.now_pushing = 1
+		var/t = get_dir(src, AM)
+		var/old_loc = src.loc
+		AM.animate_movement = SYNC_STEPS
+		AM.glide_size = src.glide_size
+		step(AM, t)
 
-				if (isliving(AM))
-					var/mob/victim = AM
-					deliver_move_trigger("bump")
-					victim.deliver_move_trigger("bump")
-					if (victim.buckled && !victim.buckled.anchored)
-						step(victim.buckled, t)
-					if (istype(victim.loc, /turf/space))
-						logTheThing("combat", src, victim, "pushes %target% into space.")
-					else if (locate(/obj/hotspot) in victim.loc)
-						logTheThing("combat", src, victim, "pushes %target% into a fire.")
-			src.now_pushing = null
-		return
-	return
+		if (isliving(AM))
+			var/mob/victim = AM
+			deliver_move_trigger("bump")
+			victim.deliver_move_trigger("bump")
+			if (victim.buckled && !victim.buckled.anchored)
+				step(victim.buckled, t)
+			if (istype(victim.loc, /turf/space))
+				logTheThing("combat", src, victim, "pushes %target% into space.")
+			else if (locate(/obj/hotspot) in victim.loc)
+				logTheThing("combat", src, victim, "pushes %target% into a fire.")
+
+		step(src,t)
+		AM.OnMove(src)
+		src.OnMove(src)
+		AM.glide_size = src.glide_size
+
+		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
+		// so yeah, i copy+pasted this from process_move.
+		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
+			var/list/pulling = list()
+			if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+				src.pulling = null
+				//hud.update_pulling() // FIXME
+			else
+				pulling += src.pulling
+			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+				pulling += G.affecting
+			for (var/atom/movable/A in pulling)
+				if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+					continue
+				if (A == src || A == AM)
+					continue
+				if (!isturf(A.loc) || A.anchored)
+					src.now_pushing = null
+					continue // whoops
+				A.animate_movement = SYNC_STEPS
+				A.glide_size = src.glide_size
+				step(A, get_dir(A, old_loc))
+				A.glide_size = src.glide_size
+				A.OnMove(src)
+		////////////////////////////////////// end suck
+		src.now_pushing = null
+
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
