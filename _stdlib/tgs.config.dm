@@ -9,3 +9,4 @@
 #define TGS_WARNING_LOG(message) logTheThing("diary", null, null, "TGS Warning: [##message]", "debug")
 #define TGS_ERROR_LOG(message) logTheThing("diary", null, null, "TGS ERROR: [##message]", "debug")
 #define TGS_PROTECT_DATUM(Path) // No VV?
+#define TGS_CLIENT_COUNT length(clients)
