@@ -1644,7 +1644,7 @@ datum/computer/file/embedded_program/maintpanel
 	disposing()
 		if (device_entries)
 			for (var/datum/entry in device_entries)
-				entry.disposing()
+				entry.dispose()
 
 			device_entries = null
 

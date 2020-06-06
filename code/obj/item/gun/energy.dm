@@ -1207,7 +1207,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = md5(H.bioHolder.Uid)
+				owner_prints = H.bioHolder.uid_hash
 				src.name = "HoS [H.real_name]'s Lawbringer"
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
@@ -1225,7 +1225,7 @@
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (md5(H.bioHolder.Uid) != owner_prints))
+			if (owner_prints && (H.bioHolder.uid_hash != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1364,7 +1364,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (md5(user.bioHolder.Uid) == owner_prints))
+		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
 			return 1
 		return 0
 

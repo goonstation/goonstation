@@ -775,7 +775,7 @@ var/list/mechanics_telepads = new/list()
 				SPAWN_DBG(3 SECONDS) ready = 1
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
-				var/sendstr = (send_name ? user.real_name : md5(user.bioHolder.Uid))
+				var/sendstr = (send_name ? user.real_name : user.bioHolder.uid_hash)
 				var/datum/mechanicsMessage/msg = mechanics.newSignal(sendstr)
 				mechanics.fireOutgoing(msg)
 			else

@@ -38,7 +38,9 @@
 
 	disposing()
 		botcard = null
-		cam = null
+		if(cam)
+			cam.dispose()
+			cam = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)

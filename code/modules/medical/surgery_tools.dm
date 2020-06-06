@@ -1402,11 +1402,6 @@ keeping this here because I want to make something else with it eventually
 						if (stuff_added >= src.max_to_move)
 							break
 
- 	//this might not be necessary, I'm not sure. but it can't hurt
-	Del()
-		src.vis_contents = null
-		src.contents = null
-
 	Move(NewLoc,Dir)
 		. = ..()
 		if (.)

@@ -25,10 +25,9 @@
 
 	disposing()
 		if (button)
-			if (button.ability == src)
-				button.ability = null
-			if (button.upgrade == src)
-				button.upgrade = null
+			button.dispose()
+			button = null
+		owner = null
 		..()
 
 	proc
@@ -320,7 +319,7 @@
 
 		if (istype(T, /turf/space))
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
-			
+
 			if (B)
 				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
 				if (success)
@@ -1066,6 +1065,13 @@
 		B.name = src.name
 		B.desc = src.desc
 		src.button = B
+
+	disposing()
+		if(button)
+			button.dispose()
+			button = null
+		owner = null
+		..()
 
 	proc/check_requirements()
 		if (!istype(owner))

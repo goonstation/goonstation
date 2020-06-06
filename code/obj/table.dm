@@ -175,7 +175,7 @@
 				return
 		return
 
-	dispose()
+	disposing()
 		var/turf/OL = get_turf(src)
 		if (src.desk_drawer && src.desk_drawer.contents.len)
 			for (var/atom/movable/A in src.desk_drawer)
@@ -444,7 +444,7 @@
 		auto = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return

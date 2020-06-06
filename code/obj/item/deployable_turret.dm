@@ -169,7 +169,7 @@
 
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/weldingtool) && !(src.active))
+		if (isweldingtool(W) && !(src.active))
 			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
 				return
@@ -180,7 +180,6 @@
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You unweld the turret from the floor.")
-					W:eyecheck(user)
 					src.anchored = 0
 
 
@@ -194,7 +193,6 @@
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You weld the turret to the floor.")
-					W:eyecheck(user)
 					src.anchored = 1
 
 
@@ -202,7 +200,7 @@
 					user.show_message("You weld the turret to the floor.")
 					src.anchored = 1
 
-		else if (istype(W, /obj/item/weldingtool) && (src.active))
+		else if (isweldingtool(W) && (src.active))
 			var/turf/T = user.loc
 			if (src.health >= max_health)
 				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
@@ -215,7 +213,6 @@
 			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
-				W:eyecheck(user)
 				user.show_message("You repair some of the damage on the turret.")
 				src.health = min(src.max_health, (src.health + 10))
 				src.check_health()

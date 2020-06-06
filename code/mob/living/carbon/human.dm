@@ -171,7 +171,6 @@
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
 	var/sustained_moves = 0
-	var/last_move_dir = null
 
 /mob/living/carbon/human/New()
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
@@ -263,15 +262,19 @@
 		holder = new_holder
 		if (holder) create()
 
-	dispose()
+	disposing()
 		if (l_arm)
 			l_arm.holder = null
+			l_arm?.bones?.donor = null
 		if (r_arm)
 			r_arm.holder = null
+			r_arm?.bones?.donor = null
 		if (l_leg)
 			l_leg.holder = null
+			l_leg?.bones?.donor = null
 		if (r_leg)
 			r_leg.holder = null
+			r_leg?.bones?.donor = null
 		holder = null
 		..()
 
@@ -281,7 +284,7 @@
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 		SPAWN_DBG(5 SECONDS)
-			if (holder && !l_arm || !r_arm || !l_leg || !r_leg)
+			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
 				create()
 				if (holder)
@@ -430,6 +433,7 @@
 					if (src.l_arm)
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
+				src.holder.organs["l_arm"] = src.l_arm
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
@@ -445,6 +449,7 @@
 					if (src.r_arm)
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
+				src.holder.organs["r_arm"] = src.r_arm
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
@@ -455,6 +460,7 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg))
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
+					src.holder.organs["l_leg"] = src.l_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
@@ -465,6 +471,7 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg))
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
+					src.holder.organs["r_leg"] = src.r_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
@@ -482,6 +489,12 @@
 	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
 
 /mob/living/carbon/human/disposing()
+	for(var/obj/item/I in src)
+		if(I.equipped_in_slot != slot_w_uniform && I.equipped_in_slot != "i_clothing")
+			src.u_equip(I)
+	if(src.w_uniform) // last because pockets etc.
+		src.u_equip(src.w_uniform)
+
 	if (hud)
 		if (hud.master == src)
 			hud.master = null
@@ -492,9 +505,30 @@
 		thishud.remove_object(stamina_bar)
 	hud.remove_object(stamina_bar)
 
+	for(var/obj/item/implant/imp in src.implant)
+		imp.dispose()
+	src.implant = null
+
+	for(var/client/C)
+		C.images -= list(health_mon, health_implant, arrestIcon)
+	if(health_mon)
+		health_mon.dispose()
+		health_mon_icons -= health_mon
+	if(health_implant)
+		health_implant.dispose()
+		health_mon_icons -= health_implant
+	if(arrestIcon)
+		arrestIcon.dispose()
+		arrestIconsAll -= arrestIcon
+
+	src.chest_item = null
+
 	//huds -= stamina_bar
 	//hud -= stamina_bar
 	stamina_bar = null
+
+	src.organs.len = 0
+	src.organs = null
 
 	if (mutantrace)
 		mutantrace.dispose()
@@ -520,7 +554,7 @@
 	for (var/obj/item/parts/HP in src)
 		if (istype(HP,/obj/item/parts/human_parts))
 			if (HP.bones && HP.bones.donor == src)
-				HP.disposing()
+				HP.dispose()
 
 			var/obj/item/parts/human_parts/humanpart = HP
 			humanpart.original_holder = null
@@ -709,16 +743,18 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-	for (var/mob/M in mobs)
-		if (M.client && !M.stat)
+	for (var/client/C)
+		if (!C.mob) continue
+		if (!C.mob.stat)
 			cancel = 1
 			break
 
 	if (!cancel && !abandon_allowed)
 		SPAWN_DBG (50)
 			cancel = 0
-			for (var/mob/M in mobs)
-				if (M.client && !M.stat)
+			for (var/client/C)
+				if (!C.mob) continue
+				if (!C.mob.stat)
 					cancel = 1
 					break
 
@@ -816,12 +852,6 @@
 
 	return
 
-#define BASE_SPEED 1.65
-#define BASE_SPEED_SUSTAINED 1.5
-#define RUN_SCALING 0.12
-#define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.5
-
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
 	var/base_speed = BASE_SPEED
 	if (sustained_moves >= SUSTAINED_RUN_REQ)
@@ -862,7 +892,7 @@
 			maximum_slowdown = modifier.maximum_slowdown
 
 	if (m_intent == "walk")
-		. += 0.8
+		. += WALK_DELAY_ADD
 
 	if (src.nodamage)
 		return .
@@ -980,11 +1010,6 @@
 					sprint_particle(src, last)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
-#undef BASE_SPEED
-#undef RUN_SCALING
-#undef RUN_SCALING_LYING
-#undef RUN_SCALING_STAGGER
-
 /mob/living/carbon/human/pull_speed_modifier(var/atom/move_target = 0)
 	. = 1
 	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
@@ -1029,7 +1054,7 @@
 				qdel(src.internal)
 			else
 				stat("Internal Atmosphere Info:", src.internal.name)
-				stat("Tank Pressure:", src.internal.air_contents.return_pressure())
+				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
 
 /mob/living/carbon/human/hotkey(name)
@@ -1620,7 +1645,7 @@
 	update_clothing()
 
 	if (ai_active)
-		ai_active = 0
+		ai_set_active(0)
 	if (src.organHolder && src.organHolder.brain && src.mind)
 		src.organHolder.brain.setOwner(src.mind)
 
@@ -1634,7 +1659,7 @@
 /mob/living/carbon/human/Logout()
 	..()
 	if (!ai_active && is_npc)
-		ai_active = 1
+		ai_set_active(1)
 	return
 
 /mob/living/carbon/human/get_heard_name()
@@ -2479,6 +2504,9 @@
 		return 0
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
+	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+	if(B && hand != specify)
+		qdel(B)
 	if (specify >= 0)
 		src.hand = specify
 	else
@@ -2549,8 +2577,10 @@
 	else
 		src.limbs.mend()
 	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
-	for (var/obj/item/organ/O in src.organHolder.organ_list)
-		O.broken = 0
+	for (var/organ_slot in src.organHolder.organ_list)
+		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
+		if(istype(O))
+			O.broken = 0
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))
@@ -3479,7 +3509,7 @@
 
 #define can_step_sfx(H)  (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 
-/mob/living/carbon/human/OnMove()
+/mob/living/carbon/human/OnMove(source = null)
 	var/turf/NewLoc = get_turf(src)
 	var/steps = 1
 	if (move_dir & (move_dir-1))
@@ -3500,11 +3530,8 @@
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
 
 			sustained_moves = 0
-
 	else
 		sustained_moves = 0
-
-	last_move_dir = move_dir
 
 	//STEP SOUND HANDLING
 	if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
@@ -3585,6 +3612,7 @@
 			O.onMove(src)
 
 
+	..()
 #undef can_step_sfx
 
 /mob/living/carbon/human/Move(var/turf/NewLoc, direct)

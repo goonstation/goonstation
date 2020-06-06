@@ -623,13 +623,12 @@ datum
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (T.air)
-							var/datum/gas_mixture/lowertemp = T.remove_air( T.air.total_moles() )
+							var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
 							if (lowertemp)// ZeWaka: Fix for null.temperature
 								lowertemp.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
 					pool(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
@@ -1017,14 +1016,13 @@ datum
 				if (hotspot)
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
-						if (!T.air) return //ZeWaka: Fix for null.total_moles()
-						var/datum/gas_mixture/lowertemp = T.remove_air( T.air.total_moles() )
+						if (!T.air) return //ZeWaka: Fix for TOTAL_MOLES(null)
+						var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
 						if (lowertemp) //ZeWaka: Fix for null.temperature
 							lowertemp.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
 					pool(hotspot)
 				return
 
