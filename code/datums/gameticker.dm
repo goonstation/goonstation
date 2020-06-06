@@ -153,8 +153,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	Z_LOG_DEBUG("Game Start", "Animating client colors to black now")
 	var/list/animateclients = list()
-	for (var/mob/new_player/P in mobs)
-		if (P.ready && P.client)
+	for (var/client/C)
+		if (!istype(C.mob,/mob/new_player))
+			continue
+		var/mob/new_player/P = C.mob
+		if (P.ready)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -197,11 +200,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		//Cleanup some stuff
-		for(var/obj/landmark/start/S in landmarks)//world)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				S.dispose()
+		cleanup_landmarks()
 
 		event_wormhole_buildturflist()
 
@@ -780,3 +779,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			return
 //Anything else, like sandbox, return.
 */
+
+/datum/controller/gameticker/proc/cleanup_landmarks()
+	for(var/obj/landmark/start/S in landmarks)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if (S.name != "AI")
+			S.dispose()

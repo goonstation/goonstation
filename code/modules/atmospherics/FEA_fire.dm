@@ -32,7 +32,7 @@ turf
 			if(active_hotspot)
 
 				if(locate(/obj/fire_foam) in src)
-					active_hotspot.disposing() // have to call this now to force the lighting cleanup
+					active_hotspot.dispose() // have to call this now to force the lighting cleanup
 					pool(active_hotspot)
 					active_hotspot = null
 

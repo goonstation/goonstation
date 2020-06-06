@@ -98,7 +98,7 @@
 		else safe = 1
 
 	var/tgmoles = 0
-	if(environment.trace_gases && environment.trace_gases.len)
+	if(length(environment.trace_gases))
 		for(var/datum/gas/trace_gas in environment.trace_gases)
 			tgmoles += trace_gas.moles
 
@@ -254,7 +254,7 @@
 		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
 
 		var/tgmoles = 0
-		if(environment.trace_gases && environment.trace_gases.len)
+		if(length(environment.trace_gases))
 			for(var/datum/gas/trace_gas in environment.trace_gases)
 				tgmoles += trace_gas.moles
 

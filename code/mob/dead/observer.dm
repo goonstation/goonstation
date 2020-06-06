@@ -27,9 +27,11 @@
 	corpse = null
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		src.abilityHolder:remove_all_abilities()
-		src.abilityHolder.owner = null
+		src.abilityHolder.dispose()
+		src.abilityHolder = null
 	if (hud)
-		hud.disposing()
+		hud.dispose()
+		hud = null
 
 	..()
 

@@ -65,7 +65,7 @@
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
 	usr << browse(html, "window=variables\ref[V];size=600x400")
 
-/client/proc/debug_variables(datum/D in world)
+/client/proc/debug_variables(atom/D) // actually any datum, not just atom but `datum/D in world` causes GC bugs
 	set category = "Debug"
 	set name = "View Variables"
 	set popup_menu = 1
@@ -96,7 +96,7 @@
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
 
 	var/title = ""
-	var/body = ""
+	var/list/body = new
 
 	if (istype(D, /atom))
 		var/atom/A = D
@@ -145,7 +145,7 @@
 
 	body += "</tbody></table>"
 
-	var/html = {"
+	var/list/html = list({"
 <html>
 <head>
 	<title>[title]</title>
@@ -157,10 +157,12 @@
 	<strong>[title]</strong>
 	<hr>
 	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
-"}
+"})
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
+
 	if (istype(D, /atom))
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
 		if (ismob(D) || isobj(D))
@@ -199,12 +201,12 @@
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R45'>45&deg; &gt;</a> &middot;
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R90'>90&deg; &gt;</a>
 		<hr>
-		[body]
+		[body.Join()]
 	</body>
 </html>
 "}
 
-	usr << browse(html, "window=variables\ref[D];size=600x400")
+	usr << browse(html.Join(), "window=variables\ref[D];size=600x400")
 
 	return
 
@@ -463,6 +465,14 @@
 			O.replace_with_explosive()
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
+		return
+	if (href_list["ViewReferences"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_CODER)
+			var/datum/D = locate(href_list["ViewReferences"])
+			usr.client.view_references(D, href_list["window_name"])
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
 		return
 	if (href_list["AddPathogen"])
 		usr_admin_only

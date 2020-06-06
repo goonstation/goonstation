@@ -71,7 +71,16 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	disposing()
+		if(mover)
+			mover.dispose()
+			mover = null
+		if(our_baton)
+			our_baton.dispose()
+			our_baton = null
+		target = null
 		radio_controller.remove_object(src, "1149")
+		radio_controller.remove_object(src, "[control_freq]")
+		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -84,6 +93,14 @@
 	auto_patrol = 1
 	report_arrests = 1
 	hat = "nt"
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -991,6 +1008,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.master = newmaster
 		return
 
+	disposing()
+		if(master.mover == src)
+			master.mover = null
+		src.master = null
+		..()
+
 	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0)
 		if(!master || !isturf(master.loc))
 			src.master = null
@@ -1063,7 +1086,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 
 /obj/item/secbot_assembly/attackby(obj/item/W as obj, mob/user as mob)
-	if ((istype(W, /obj/item/weldingtool)) && (!src.build_step))
+	if ((isweldingtool(W)) && (!src.build_step))
 		if(W:try_weld(user, 1))
 			src.build_step++
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")

@@ -7,7 +7,7 @@
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act))
+		if (P.onemote(act, voluntary))
 			return
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -230,6 +230,14 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
+				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(1))
+					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
+					var/obj/item/device/light/glowstick/G = new glowsticktype
+					G.set_loc(src.loc)
+					G.turnon()
+					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
+					G.throw_at(target,5,1)
+					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
 			if ("salute","bow","hug","wave", "blowkiss")
 				// visible targeted emotes

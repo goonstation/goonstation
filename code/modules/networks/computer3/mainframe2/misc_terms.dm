@@ -4735,7 +4735,7 @@
 					#undef _SET_SENSED_GAS
 
 					var/tgmoles = 0
-					if(air_sample.trace_gases && air_sample.trace_gases.len)
+					if(length(air_sample.trace_gases))
 						for(var/datum/gas/trace_gas in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))

@@ -408,7 +408,7 @@ turf/simulated
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
 			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
-			if(GM.trace_gases && GM.trace_gases.len)
+			if(length(GM.trace_gases))
 				for(var/datum/gas/trace_gas in GM.trace_gases)
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 

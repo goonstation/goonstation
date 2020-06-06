@@ -901,6 +901,17 @@
 /turf/unsimulated/floor/vr/white
 	icon_state = "vrwhitehall"
 
+// simulated setpieces
+
+/turf/simulated/floor/setpieces
+	icon = 'icons/misc/worlds.dmi'
+	fullbright = 0
+
+	bloodfloor
+		name = "bloody floor"
+		desc = "Yuck."
+		icon_state = "bloodfloor_1"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/snow
@@ -958,6 +969,11 @@
 /////////////////////////////////////////
 
 /turf/simulated/floor/industrial
+	icon_state = "diamondtile"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/industrial
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1075,7 +1091,7 @@
 		color = O.color
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			visible_message("<b>[user] hits [src] with [W]!</b>")
 			if (prob(25))
 				ReplaceWithSpace()
@@ -1104,6 +1120,17 @@
 
 	if(!C || !user)
 		return 0
+	if (istype(C, /obj/item/tile))
+		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		C:build(src)
+		C:amount--
+		if(C.material) src.setMaterial(C.material)
+		if (C:amount < 1)
+			user.u_equip(C)
+			qdel(C)
+			return
+		return
+
 	if(prob(75 - metal * 25))
 		ReplaceWithSpace()
 		boutput(user, "You easily smash through the foamed metal floor.")
@@ -1217,9 +1244,10 @@
 		var/obj/item/pen/P = C
 		P.write_on_turf(src, user, params)
 		return
-	else if (isweldingtool(C) || iswrenchingtool(C))
+	else if ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
-		playsound(src, "sound/items/Ratchet.ogg", 80, 1)
+		if(iswrenchingtool(C))
+			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
 		if(do_after(user, 30))
 			var/obj/R1 = new /obj/item/rods(src)
 			var/obj/R2 = new /obj/item/rods(src)

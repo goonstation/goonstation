@@ -71,7 +71,7 @@ datum/pipeline
 
 			member.air_temporary.temperature = air.temperature
 
-			if(air.trace_gases && air.trace_gases.len)
+			if(length(air.trace_gases))
 				for(var/datum/gas/trace_gas in air.trace_gases)
 					var/datum/gas/corresponding = new trace_gas.type()
 					if(!member.air_temporary.trace_gases)

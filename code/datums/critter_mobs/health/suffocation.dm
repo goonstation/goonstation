@@ -100,7 +100,7 @@
 				else
 					TakeDamage(3 + toxin_damage)
 
-			if (breath.trace_gases && breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
+			if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 				for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
 					var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 					if (SA_pp > sa_para_min) // Enough to make us paralysed for a bit

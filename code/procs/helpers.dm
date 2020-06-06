@@ -2038,10 +2038,7 @@ var/global/list/allowed_restricted_z_areas
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	if(!allowed_restricted_z_areas)
-		for (var/A in typesof(/area/shuttle/escape))
-			allowed_restricted_z_areas |= A
-		for (var/A in typesof(/area/shuttle_transit_space))
-			allowed_restricted_z_areas |= A
+		allowed_restricted_z_areas = typesof(/area/shuttle/escape) + typesof(/area/shuttle_transit_space)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M

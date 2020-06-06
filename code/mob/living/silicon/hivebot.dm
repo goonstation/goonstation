@@ -514,7 +514,7 @@
 	return
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weldingtool) && W:welding)
+	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
 			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
 			return
@@ -1001,7 +1001,8 @@ Frequency:
 		..()
 		hud = new(src)
 		src.attach_hud(hud)
-		bioHolder = new/datum/bioHolder( src )
+		if(!bioHolder)
+			bioHolder = new/datum/bioHolder( src )
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)

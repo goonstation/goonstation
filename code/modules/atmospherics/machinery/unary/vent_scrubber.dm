@@ -74,7 +74,7 @@
 				APPLY_TO_GASES(_FILTER_OUT_GAS)
 				#undef _FILTER_OUT_GAS
 
-				if(removed.trace_gases && removed.trace_gases.len)
+				if(length(removed.trace_gases))
 					for(var/datum/gas/trace_gas in removed.trace_gases)
 						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 							removed.trace_gases -= trace_gas

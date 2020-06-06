@@ -19,6 +19,15 @@
 		..()
 		holder = M
 
+	disposing()
+		if(screenObj)
+			screenObj.dispose()
+			screenObj = null
+		item = null
+		holder = null
+		..()
+
+
 	proc/can_equip(var/obj/item/I)
 		for (var/T in type_filters)
 			if (istype(I, T))

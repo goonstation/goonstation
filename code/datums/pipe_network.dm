@@ -126,10 +126,10 @@ datum/pipe_network
 			APPLY_TO_GASES(_RECONCILE_AIR)
 			#undef _RECONCILE_AIR
 
-			if(gas.trace_gases && gas.trace_gases.len)
+			if(length(gas.trace_gases))
 				for(var/datum/gas/trace_gas in gas.trace_gases)
 					var/datum/gas/corresponding
-					if(air_transient.trace_gases && air_transient.trace_gases.len)
+					if(length(air_transient.trace_gases))
 						corresponding = locate(trace_gas.type) in air_transient.trace_gases
 					if(!corresponding)
 						corresponding = new trace_gas.type()
@@ -159,10 +159,10 @@ datum/pipe_network
 
 				gas.temperature = air_transient.temperature
 
-				if(air_transient.trace_gases && air_transient.trace_gases.len)
+				if(length(air_transient.trace_gases))
 					for(var/datum/gas/trace_gas in air_transient.trace_gases)
 						var/datum/gas/corresponding
-						if(gas.trace_gases && gas.trace_gases.len)
+						if(length(gas.trace_gases))
 							corresponding = locate(trace_gas.type) in gas.trace_gases
 						if(!corresponding)
 							corresponding = new trace_gas.type()
@@ -196,7 +196,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		APPLY_TO_GASES(_EQUALIZE_GASES_ADD_TO_TOTAL)
 		#undef _EQUALIZE_GASES_ADD_TO_TOTAL
 
-		if(gas.trace_gases && gas.trace_gases.len)
+		if(length(gas.trace_gases))
 			for(var/datum/gas/trace_gas in gas.trace_gases)
 				var/datum/gas/corresponding
 				if(total_trace_gases && total_trace_gases.len)
@@ -228,7 +228,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 			if(total_trace_gases && total_trace_gases.len)
 				for(var/datum/gas/trace_gas in total_trace_gases)
 					var/datum/gas/corresponding
-					if(gas.trace_gases && gas.trace_gases.len)
+					if(length(gas.trace_gases))
 						corresponding = locate(trace_gas.type) in gas.trace_gases
 					if(!corresponding)
 						corresponding = new trace_gas.type()

@@ -57,7 +57,7 @@ obj/machinery/air_sensor
 					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles)
 				if(output&64)
 					var/tgmoles = 0
-					if(air_sample.trace_gases && air_sample.trace_gases.len)
+					if(length(air_sample.trace_gases))
 						for(var/datum/gas/trace_gas in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					signal.data["other"] = round(100*tgmoles/total_moles)
