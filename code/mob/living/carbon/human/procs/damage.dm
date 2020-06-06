@@ -315,12 +315,11 @@
 
 	var/exploprot = GET_MOB_PROPERTY(src, PROP_EXPLOPROT)
 	reduction += rand(exploprot, exploprot * 5)
-	var/sevmod = round(exploprot/4)
-	severity += sevmod
-	var/b_loss = min(120, power*15)/(1+sevmod) - reduction
+	severity += round(exploprot/4)
+	var/b_loss = min(120, power*15)/(1+exploprot/8) - reduction
 	var/f_loss = null
 
-	var/delib_chance = b_loss - 10
+	var/delib_chance = b_loss - 30
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
@@ -345,7 +344,7 @@
 			while(delib_chance > 0)
 				if (prob(delib_chance))
 					src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
-				delib_chance -= 50 // let's not get too crazy
+				delib_chance -= 35 // let's not get too crazy
 
 		if (3.0) //15-45 damage, maybe 1 delimb
 			src.apply_sonic_stun(0, 0, 0, 0, 0, 15, 15, 2*b_loss)

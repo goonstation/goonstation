@@ -604,6 +604,7 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
+		setProperty("exploprot", 1)
 
 	syndicate
 		name = "Syndicate Command Helmet"
