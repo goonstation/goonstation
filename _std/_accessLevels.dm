@@ -41,48 +41,49 @@
 #define access_mail 36 // Unused.
 #define access_maxsec 37 // The HoS' armory.
 #define access_securitylockers 38
-#define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned.
-#define access_contrabandpermit 40 // Are allowed to handle contraband as far as guardbuddies and secbots are concerned.
-#define access_engineering 41 // General engineering area and substations.
-#define access_engineering_storage 42 // Main metal/tool storage things.
-#define access_engineering_eva 43 // Engineering space suits. Currently unused.
-#define access_engineering_power 44 // APCs and related supplies.
-#define access_engineering_engine 45 // Engine room.
-#define access_engineering_mechanic 46 // Electronics lab.
-#define access_engineering_atmos 47 // Engineering's supply of gas canisters.
-#define access_engineering_control 49 // Engine control room.
-#define access_engineering_chief 50 // CE's office.
+#define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned. Contraband permit defined at 75.
+#define access_engineering 40 // General engineering area and substations.
+#define access_engineering_storage 41 // Main metal/tool storage things.
+#define access_engineering_eva 42 // Engineering space suits. Currently unused.
+#define access_engineering_power 43 // APCs and related supplies.
+#define access_engineering_engine 44 // Engine room.
+#define access_engineering_mechanic 45 // Electronics lab.
+#define access_engineering_atmos 46 // Engineering's supply of gas canisters.
+#define access_engineering_control 48 // Engine control room.
+#define access_engineering_chief 49 // CE's office.
 
-#define access_mining_shuttle 48
-#define access_mining 51
-#define access_mining_outpost 52
+#define access_mining_shuttle 47
+#define access_mining 50
+#define access_mining_outpost 51
 
-#define access_syndicate_shuttle 53 // Also to the listening post.
-#define access_medical_director 54
-#define access_head_of_personnel 56
+#define access_syndicate_shuttle 52 // Also to the listening post.
+#define access_medical_director 53
+#define access_head_of_personnel 55
 
-#define access_special_club 55 //Shouldnt be used for general gameplay. Used for adminevents.
+#define access_special_club 54 //Shouldnt be used for general gameplay. Used for adminevents.
 
-#define access_ghostdrone 57 // drooooones
+#define access_ghostdrone 56 // drooooones
 
-#define access_centcom 58 // self-explanatory?  :v
+#define access_centcom 57 // self-explanatory?  :v
 
 // skipping a few here to reserve a block
 // for terra 8 and syndicate security clearances
-#define access_syndicate_4 61
-#define access_syndicate_8 62
-#define access_syndicate_16 63
-#define access_syndicate_32 64
-#define access_syndicate_64 65 // level needed for access to terra8 underside
-#define access_syndicate_128 66
-#define access_syndicate_256 67 // highest level documents in terra8
-#define access_syndicate_512 68 // allude to this but don't use it except for super special things
+#define access_syndicate_4 60
+#define access_syndicate_8 61
+#define access_syndicate_16 62
+#define access_syndicate_32 63
+#define access_syndicate_64 64 // level needed for access to terra8 underside
+#define access_syndicate_128 65
+#define access_syndicate_256 66 // highest level documents in terra8
+#define access_syndicate_512 67 // allude to this but don't use it except for super special things
 
 //Owlzone access
-#define access_owlerymaint 71
-#define access_owlerysec 72
-#define access_owlerycommand 73
+#define access_owlerymaint 70
+#define access_owlerysec 71
+#define access_owlerycommand 72
 
 //Polaris access
-#define access_polariscargo 74
-#define access_polarisimportant 75
+#define access_polariscargo 73
+#define access_polarisimportant 74
+
+#define access_contrabandpermit 75
