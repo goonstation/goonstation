@@ -27,7 +27,6 @@
 		if (ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			hit_twitch(H)
-			H.UpdateDamage()
 			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 				src.sever()
 			else if (bone_system && src.bones && brute && prob(brute * 2))
