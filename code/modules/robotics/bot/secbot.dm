@@ -906,11 +906,16 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					if(!has_contraband_permit)
 						threatcount += perp.r_hand.contraband
 
-			if(!has_contraband_permit)
-				if (istype(perp.belt))
-					threatcount += perp.belt.contraband * 0.5
+			if (istype(perp.belt))
+				if (istype(perp.belt, /obj/item/gun/))
+					if (!has_carry_permit)
+						threatcount += perp.belt.contraband * 0.5
+				else
+					if (!has_contraband_permit)
+						threatcount += perp.belt.contraband * 0.5
 
-				if (istype(perp.wear_suit))
+			if (istype(perp.wear_suit))
+				if (!has_contraband_permit)
 					threatcount += perp.wear_suit.contraband
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))

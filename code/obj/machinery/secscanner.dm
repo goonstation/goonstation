@@ -233,13 +233,17 @@
 				threatcount += perp.wear_suit.contraband
 
 		if (istype(perp.belt))
-			if(!has_contraband_permit)
-				threatcount += perp.belt.contraband * 0.5
-			for( var/obj/item/item in perp.belt.contents )
-				if(istype(item, /obj/item/gun/) && !has_carry_permit)
-					threatcount += item.contraband * 0.5
-				else if(!has_contraband_permit)
-					threatcount += item.contraband * 0.5
+			if (istype(perp.belt, /obj/item/gun/))
+				if(!has_carry_permit)
+					threatcount += perp.belt.contraband * 0.5
+			else
+				if(!has_contraband_permit)
+					threatcount += perp.belt.contraband * 0.5
+				for( var/obj/item/item in perp.belt.contents )
+					if(istype(item, /obj/item/gun/) && !has_carry_permit)
+						threatcount += item.contraband * 0.5
+					else if(!has_contraband_permit)
+						threatcount += item.contraband * 0.5
 
 		if (istype(perp.l_store))
 			if(istype(perp.l_store, /obj/item/gun/) && !has_carry_permit)

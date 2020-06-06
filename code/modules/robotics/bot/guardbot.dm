@@ -2174,11 +2174,16 @@
 						if(!has_contraband_permit)
 							. += perp.r_hand.contraband
 
-				if(!has_contraband_permit)
-					if (istype(perp.belt))
-						. += perp.belt.contraband * 0.5
+				if (istype(perp.belt))
+					if (istype(perp.belt, /obj/item/gun/))
+						if (!has_carry_permit)
+							. += perp.belt.contraband * 0.5
+					else
+						if (!has_contraband_permit)
+							. += perp.belt.contraband * 0.5
 
-					if (istype(perp.wear_suit))
+				if (istype(perp.wear_suit))
+					if (!has_contraband_permit)
 						. += perp.wear_suit.contraband
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
