@@ -302,11 +302,9 @@ datum/pathogeneffects/benevolent/brewery
 datum/pathogeneffects/benevolent/oxytocinproduction
 	name = "Oxytocin Production"
 	desc = "The pathogen produces Pure Love within the infected."
-	infect_type = INFECT_TOUCH
+	infect_type = INFECT_TOUCH // TODO: make also spread via hugs, will require reworking pure love and part of the emote call, so I'll do it in another patch
 	rarity = RARITY_COMMON
-	permeability_score = 15
 	spread = SPREAD_BODY | SPREAD_HANDS
-	infection_coefficient = 1.5
 	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
@@ -315,8 +313,6 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 		var/check_amount = M.reagents.get_reagent_amount("love")
 		if (!check_amount || check_amount < 5)
 			M.reagents.add_reagent("love", origin.stage / 3)
-		if (prob(origin.stage * 2.5))
-			infect(M, origin)
 
 	may_react_to()
 		return "The pathogen's cells appear to be... hugging each other?"
