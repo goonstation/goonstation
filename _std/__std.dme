@@ -23,6 +23,8 @@
 #include "pathfinding.dm"
 #include "projectiles.dm"
 #include "text.dm"
+#include "tgs.config.dm"
+#include "tgs.dm"
 #include "mob_properties.dm"
 #include "code\spaceman_dmm.dm"
 
