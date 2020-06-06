@@ -155,7 +155,7 @@
 	src.anchored = 0
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
-	src.visible_message("<span class='notice><b>[src]</b> begins to glow and hover.</span>")
+	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.a_intent = INTENT_HELP // default
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)

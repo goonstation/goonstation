@@ -32,23 +32,23 @@
 	switch (D.stage)
 		if (1)
 			if (prob(1) && prob(10))
-				boutput(H, "<span style=\"color:blue\">You feel better.</span>")
+				boutput(H, "<span class='notice'>You feel better.</span>")
 				H.cure_disease(D)
 				return
 			if (prob(8)) H.emote(pick("pale", "shudder"))
 			if (prob(5))
-				boutput(H, "<span style=\"color:red\">Your abdomen area hurts!</span>")
+				boutput(H, "<span class='alert'>Your abdomen area hurts!</span>")
 		if (2)
 			if (prob(1) && prob(10))
-				boutput(H, "<span style=\"color:blue\">You feel better.</span>")
+				boutput(H, "<span class='notice'>You feel better.</span>")
 				H.resistances += src.type
 				H.ailments -= src
 				return
 			if (prob(8)) H.emote(pick("pale", "groan"))
 			if (prob(5))
-				boutput(H, "<span style=\"color:red\">Your back aches terribly!</span>")
+				boutput(H, "<span class='alert'>Your back aches terribly!</span>")
 			if (prob(3))
-				boutput(H, "<span style=\"color:red\">You feel excruciating pain in your upper-right adbomen!</span>")
+				boutput(H, "<span class='alert'>You feel excruciating pain in your upper-right adbomen!</span>")
 				// H.organHolder.takeliver
 
 			if (prob(5)) H.emote(pick("faint", "collapse", "groan"))
@@ -57,4 +57,3 @@
 				H.emote(pick("twitch", "groan"))
 
 			H.take_toxin_damage(1)
-			H.updatehealth()

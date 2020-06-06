@@ -3,11 +3,15 @@
 
 // comment this line to disable or enable spawn debugging. it's pretty cheap and safe for the live servers though.
 // #define ENABLE_SPAWN_DEBUG
+// #define ENABLE_SPAWN_DEBUG_2
 
 // for this to work, use SPAWN_DBG() instead of spawn(). thank you for loving pupkin. -singh
 #ifdef ENABLE_SPAWN_DEBUG
 var/list/global_spawn_dbg = list()
 #define SPAWN_DBG(x) global_spawn_dbg["spawn at [__FILE__]:[__LINE__]"]++; spawn(x)
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+var/list/detailed_spawn_dbg = list()
+#define SPAWN_DBG(x) detailed_spawn_dbg += list(list("[__FILE__]:[__LINE__]", TIME, TIME + x)); spawn(x)
 #else
 #define SPAWN_DBG(x) spawn(x)
 #endif
@@ -83,8 +87,6 @@ var/list/global_spawn_dbg = list()
 
 #define isitem(x) istype(x, /obj/item)
 
-#define childrentypesof(x) (typesof(x) - x)
-
 #define istool(x,y) (isitem(x) && (x:tool_flags & (y)))
 #define iscuttingtool(x) (istool(x, TOOL_CUTTING))
 #define ispulsingtool(x) (istool(x, TOOL_PULSING))
@@ -106,9 +108,8 @@ var/list/global_spawn_dbg = list()
 
 #define DEBUG_MESSAGE(x) if (debug_messages) message_coders(x)
 #define DEBUG_MESSAGE_VARDBG(x,d) if (debug_messages) message_coders_vardbg(x,d)
-#define __red(x) text("<span style='color:red'>[]</span>", x)  //deprecated for some reason
-#define __blue(x) text("<span style='color:blue'>[]</span>", x) //deprecated for some reason
-#define __green(x) text("<span style='color:green'>[]</span>", x) //deprecated for some reason
+#define __red(x) text("<span class='alert'>[]</span>", x)  //deprecated for some reason
+#define __blue(x) text("<span class='notice'>[]</span>", x) //deprecated for some reason
 
 #define TimeOfHour world.timeofday % 36000
 //#endif
@@ -121,6 +122,7 @@ var/list/global_spawn_dbg = list()
 #define get_area(x) (isarea(x) ? x : get_step(x, 0)?.loc)
 #define issimulatedturf(x) istype(x, /turf/simulated)
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
+#define isrwall(x) (istype(x,/turf/simulated/wall/r_wall)||istype(x,/turf/simulated/wall/auto/reinforced)||istype(x,/turf/unsimulated/wall/auto/reinforced)||istype(x,/turf/simulated/wall/false_wall/reinforced))
 
 #define GET_MANHATTAN_DIST(A, B) ((!(A) || !(B)) ? 0 : abs((A).x - (B).x) + abs((A).y - (B).y))
 #define DIST_CHECK(A, B, range) (get_dist(A, B) <= (range) && get_step(A, 0).z == get_step(B, 0).z)
@@ -183,3 +185,9 @@ var/list/global_spawn_dbg = list()
 
 //used for pods
 #define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
+
+
+// num2hex, hex2num
+#define num2hex(X, len) num2text(X, len, 16)
+
+#define hex2num(X) text2num(X, 16)

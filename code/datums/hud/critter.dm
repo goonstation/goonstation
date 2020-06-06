@@ -130,7 +130,7 @@
 		else
 			switch(id)
 				if ("oxygen")
-					boutput(master, "<span style=\"color:red\">This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied.</span>")
+					boutput(master, "<span class='alert'>This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied.</span>")
 
 				if ("intent")
 					var/icon_x = text2num(params["icon-x"])
@@ -170,7 +170,7 @@
 				if ("resist")
 					master.resist()
 				if ("health")
-					boutput(master, "<span style='color:blue'>Your health: [master.health]/[master.max_health]</span>")
+					boutput(master, "<span class='notice'>Your health: [master.health]/[master.max_health]</span>")
 
 	proc/update_health()
 		if (!isdead(master))

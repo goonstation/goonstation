@@ -73,7 +73,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
-				M.updatehealth()
 				..()
 				return
 
@@ -117,7 +116,6 @@ datum
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
 				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
-				M.updatehealth()
 				..()
 				return
 
@@ -187,7 +185,7 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(prob(6))
-								H.visible_message("<span style=\"color:red\">[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
@@ -202,9 +200,6 @@ datum
 							M.take_toxin_damage(-1.5 * mult)
 						else
 							H.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
-
-
-						H.updatehealth()
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -270,7 +265,7 @@ datum
 				if(prob(5))
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
-							O.show_message(text("<span style=\"color:red\">[] vomits on the floor profusely!</span>", M), 1)
+							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
 						playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
 						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
 						M.nutrition -= rand(3,5)
@@ -390,6 +385,7 @@ datum
 			fluid_g = 40
 			fluid_b = 160
 			transparency = 222
+			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
 			pooled()
@@ -397,21 +393,19 @@ datum
 				reacted_to_temp = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(exposed_temperature >= T0C + 100 && !reacted_to_temp)
+				if(!reacted_to_temp)
 					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
 						holder.del_reagent(id)
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("epinephrine"))
 					holder.remove_reagent("epinephrine", 2 * mult)
 				M.take_toxin_damage(1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -534,14 +528,16 @@ datum
 				remove_buff = 0
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("r_sugar", 2)
 				..()
 
 			on_remove()
 				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
+					if(ismob(holder?.my_atom))
+						var/mob/M = holder.my_atom
+						M.remove_stam_mod_regen("r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -582,15 +578,13 @@ datum
 
 				else
 					if (!M.getStatusDuration("paralysis"))
-						boutput(M, "<span style=\"color:red\">You pass out from hyperglycemic shock!</span>")
+						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
 						M.changeStatus("weakened", ((4 * severity)*15) * mult)
 
 					if (prob(8))
 						M.take_toxin_damage(severity * mult)
-						M.updatehealth()
-
 				return
 
 		//WHY IS SWEET ***TEA*** A SUBTYPE OF SUGAR?!?!?!?!
@@ -725,6 +719,7 @@ datum
 			hygiene_value = 1.33
 			bladder_value = -0.2
 			taste = "bland"
+			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
@@ -821,22 +816,21 @@ datum
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
 							pz.brandlist -= M
-							boutput(M,"<span style=\"color:green\"><b>The feeling of an otherworldly presence passes...</b></span>")
+							boutput(M,"<span class='success'><b>The feeling of an otherworldly presence passes...</b></span>")
 						for(var/mob/zoldorf/Z in M)
 							Z.set_loc(Z.homebooth)
 					if (isvampire(M))
 						M.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
-							O.show_message(text("<span style=\"color:red\"><b>[] begins to crisp and burn!</b></span>", M), 1)
-						boutput(M, "<span style=\"color:red\">Holy Water! It burns!</span>")
+							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
+						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = volume * 1.25
 						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
-						M.updatehealth()
 						reacted = 1
 					else if (method == TOUCH)
-						boutput(M, "<span style=\"color:blue\">You feel somewhat purified... but mostly just wet.</span>")
+						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
 						M.take_brain_damage(-10)
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
@@ -909,17 +903,16 @@ datum
 			transparency = 200
 			thirst_value = 0.8909
 			bladder_value = -0.2
+			minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 			taste = "cold"
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(exposed_temperature > T0C)
-					var/prev_vol = volume
-					volume = 0
-					if(holder)
-						holder.add_reagent("water", prev_vol, null, T0C + 1)
-					if(holder)
-						holder.del_reagent(id)
-				return
+				var/prev_vol = volume
+				volume = 0
+				if(holder)
+					holder.add_reagent("water", prev_vol, null, T0C + 1)
+				if(holder)
+					holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
 				src = null

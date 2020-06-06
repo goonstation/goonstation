@@ -33,6 +33,7 @@
 		for(var/token in voxtokens)
 			var/list/sounds = voxsounds_flag_sorted[token]
 			sounds -= src
+		..()
 
 	proc/matches_id(var/t)
 		. = id == lowertext(t)
@@ -197,7 +198,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 	if(missingwords.len)
 		boutput(user, "<b>Input: </b>")
 		boutput(user, "[input]")
-		boutput(user, "<b><span style=\"color:red\">Missing VOX words: </span></b>")
+		boutput(user, "<b><span class='alert'>Missing VOX words: </span></b>")
 		for(var/word in missingwords)
 			boutput(user, "[word]")
 		var/play = alert("Words missing. Play anyway?","Vox Announcement","Yes","No")

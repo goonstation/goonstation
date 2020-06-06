@@ -127,3 +127,16 @@
 	..()
 	if(status & (NOPOWER|BROKEN))	return
 	use_power(500)
+
+/obj/machinery/crusher/New()
+	..()
+	var/turf/T = get_turf(src)
+	if (T.contents.len > 100) //if it has to check too much stuff, it might lag?
+		src.visible_message("<span style='color:red'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
+		qdel(src)
+		return
+	var/obj/machinery/crusher/C = locate(/obj/machinery/crusher) in T
+	if(C != src)
+		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
+		qdel(src)
+		return

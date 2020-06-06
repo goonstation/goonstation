@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/objective)
 /datum/objective
 	var/datum/mind/owner
 	var/explanation_text
@@ -877,7 +878,7 @@ proc/create_fluff(var/datum/mind/target)
 	onWeakened()
 		if (success)
 			success = 0
-			boutput(owner.current, "<span style=\"color:red\">You lose the astral essence of your target!</span>")
+			boutput(owner.current, "<span class='alert'>You lose the astral essence of your target!</span>")
 
 	check_completion()
 		return success
@@ -1093,6 +1094,7 @@ proc/create_fluff(var/datum/mind/target)
 // Conspirator objectives                              //
 /////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy
 	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independance. Annex as much of the station as possible."
 

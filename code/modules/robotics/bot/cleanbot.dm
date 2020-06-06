@@ -4,7 +4,7 @@
 /obj/item/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3.0
 	throwforce = 10.0
@@ -37,7 +37,7 @@
 /obj/machinery/bot/cleanbot
 	name = "cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = 5
 	density = 0
@@ -96,7 +96,7 @@
 				src.add_fingerprint(user)
 				user.show_text("You short out [src]'s waste disposal circuits.", "red")
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 
 			src.emagged = 1
 			src.toggle_power(1)
@@ -181,7 +181,7 @@
 		if (!issilicon(usr) && !in_range(src, usr)) return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["start"])
 			src.toggle_power(0)
@@ -197,7 +197,7 @@
 			if (src.health < initial(src.health))
 				if(WT.try_weld(user, 1))
 					src.health = initial(src.health)
-					src.visible_message("<span style=\"color:red\"><b>[user]</b> repairs the damage on [src].</span>")
+					src.visible_message("<span class='alert'><b>[user]</b> repairs the damage on [src].</span>")
 
 		else
 			..()
@@ -366,7 +366,7 @@
 
 		src.anchored = 1
 		src.icon_state = "[icon_state_base]-c"
-		src.visible_message("<span style=\"color:red\">[src] begins to clean the [T.name].</span>")
+		src.visible_message("<span class='alert'>[src] begins to clean the [T.name].</span>")
 		src.cleaning = 1
 		//DEBUG_MESSAGE("[src.emagged ? "(E) " : ""]Cleaning target. [src.target] [log_loc(src.target)]")
 
@@ -426,7 +426,7 @@
 
 		src.on = 0
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(3, 1, src)

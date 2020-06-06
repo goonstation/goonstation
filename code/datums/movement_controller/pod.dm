@@ -69,7 +69,7 @@
 			if (input_magnitude)
 				if (input_dir & (input_dir-1))
 					owner.dir = NORTH
-					owner.transform = turn(M,atan2(input_y,input_x))
+					owner.transform = turn(M,arctan(input_y,input_x))
 				else
 					owner.transform = null
 			last_dir = owner.dir
@@ -130,18 +130,18 @@
 			delay = 10 / velocity_magnitude
 
 		if (velocity_dir & (velocity_dir-1))
-			delay *= 1.4
+			delay *= DIAG_MOVE_DELAY_MULT
 
 		delay = min(delay,min_delay)
 
 		if (delay)
 			var/target_turf = get_step(owner, velocity_dir)
 
+			owner.glide_size = (32 / delay) * world.tick_lag
 			for(var/mob/M in owner) //hey maybe move this somewhere better later. idk man its all chill thou, its all cool, dont worry about it buddy
 				M.glide_size = owner.glide_size
 				M.animate_movement = SYNC_STEPS
 
-			owner.glide_size = (32 / delay) * world.tick_lag
 			step(owner, velocity_dir)
 			owner.glide_size = (32 / delay) * world.tick_lag
 

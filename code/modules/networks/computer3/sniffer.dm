@@ -44,7 +44,7 @@
 
 					else
 
-						boutput(user, "<span style=\"color:red\">The [src] couldn't be attached here!</span>")
+						boutput(user, "<span class='alert'>The [src] couldn't be attached here!</span>")
 						return
 
 				else
@@ -91,7 +91,7 @@
 				return
 
 			src.add_fingerprint(usr)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["filtid"])
 				var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text

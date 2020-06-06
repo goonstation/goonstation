@@ -234,8 +234,20 @@
 
 	New()
 		..()
+		#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 		wrap_pathogen(reagents, generate_flu_pathogen(), 7)
 		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
+		#endif
+
+	heal(var/mob/M)
+		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
+			..()
+		#else
+		boutput(M, "<span class='alert'>Oof, how old was that?.</span>")
+		if(prob(66))
+			M.reagents.add_reagent("salmonella",15)
+		..()
+		#endif
 
 /obj/item/reagent_containers/food/snacks/burger/plague
 	name = "burgle"
@@ -295,8 +307,8 @@
 		if(prob(20))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak(M.dir)
-			boutput(M, "<span style=\"color:red\">You drip some meat on the floor</span>")
-			M.visible_message("<span style=\"color:red\">[M] drips some meat on the floor!</span>")
+			boutput(M, "<span class='alert'>You drip some meat on the floor</span>")
+			M.visible_message("<span class='alert'>[M] drips some meat on the floor!</span>")
 			playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
 		else
@@ -315,17 +327,17 @@
 			var/effect = rand(1,4)
 			switch(effect)
 				if(1)
-					boutput(M, "<span style=\"color:red\">Ugh. Tasted all greasy and gristly.</span>")
+					boutput(M, "<span class='alert'>Ugh. Tasted all greasy and gristly.</span>")
 					M.nutrition += 20
 				if(2)
-					boutput(M, "<span style=\"color:red\">Good grief, that tasted awful!</span>")
+					boutput(M, "<span class='alert'>Good grief, that tasted awful!</span>")
 					M.take_toxin_damage(2)
 				if(3)
-					boutput(M, "<span style=\"color:red\">There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK</span>")
-					M.visible_message("<span style=\"color:red\">[M] suddenly and violently vomits!</span>")
+					boutput(M, "<span class='alert'>There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK</span>")
+					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
 					M.vomit(20)
 				if(4)
-					boutput(M, "<span style=\"color:red\">You bite down on a chunk of bone, hurting your teeth.</span>")
+					boutput(M, "<span class='alert'>You bite down on a chunk of bone, hurting your teeth.</span>")
 					random_brute_damage(M, 2)
 		..()
 
@@ -346,13 +358,13 @@
 
 	heal(var/mob/M)
 		if(prob(3) && ishuman(M))
-			boutput(M, "<span style=\"color:red\">You wackily and randomly turn into a lizard.</span>")
+			boutput(M, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
 			M.set_mutantrace(/datum/mutantrace/lizard)
 			M:update_face()
 			M:update_body()
 
 		if(prob(3))
-			boutput(M, "<span style=\"color:red\">You wackily and randomly turn into a monkey.</span>")
+			boutput(M, "<span class='alert'>You wackily and randomly turn into a monkey.</span>")
 			M:monkeyize()
 
 		..()

@@ -1,10 +1,14 @@
-#define PLANE_FLOOR -10
-#define PLANE_NOSHADOW_BELOW -1
-#define PLANE_DEFAULT 0
-#define PLANE_NOSHADOW_ABOVE 1
-#define PLANE_HIDDENGAME 2
-#define PLANE_LIGHTING 10
-#define PLANE_SELFILLUM 20
+#define PLANE_UNDERFLOOR -120 // that's where floorcluwnes live
+#define PLANE_FLOOR -110
+#define PLANE_WALL -105
+#define PLANE_NOSHADOW_BELOW -101
+#define PLANE_DEFAULT -100
+#define PLANE_NOSHADOW_ABOVE -99
+#define PLANE_HIDDENGAME -98
+#define PLANE_LIGHTING -90
+#define PLANE_SELFILLUM -80
+#define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
+#define PLANE_OVERLAY_EFFECTS 22
 #define PLANE_FLOCKVISION 25
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
@@ -33,7 +37,9 @@ client
 	var/list/plane_parents = list()
 
 	New()
+		Z_LOG_DEBUG("Cient/New", "[src.ckey] - Adding plane_parents")
 		plane_parents += new /obj/screen/plane_parent(PLANE_FLOOR, name = "floor_plane")
+		plane_parents += new /obj/screen/plane_parent(PLANE_WALL, name = "wall_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_DEFAULT, name = "game_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane")
@@ -52,12 +58,11 @@ client
 	proc/apply_depth_filter()
 		var/shadows_checked = winget( src, "menu.set_shadow", "is-checked" ) == "true"
 		for (var/obj/screen/plane_parent/P in plane_parents)
-			if (P.name == "game_plane")
+			if (P.name == "game_plane" || P.name == "wall_plane")
 				if (shadows_checked)
 					P.add_depth_shadow()
 				else
 					P.filters = null
-				break
 
 	proc/setup_special_screens()
 		for (var/atom in plane_parents)

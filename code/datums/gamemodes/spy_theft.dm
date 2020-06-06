@@ -251,7 +251,7 @@
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
 		if (M.special_role == "spy_thief")
-			boutput(M.current, "<span style=\"color:blue\"><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
+			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current << sound('sound/machines/twobeep.ogg')
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
@@ -609,18 +609,3 @@
 			B.delivery_area = pick(possible_areas)
 
 	return
-
-
-
-proc/get_accessible_spy_station_areas() //sorry
-	// All areas
-	var/list/L = list()
-	var/list/areas = childrentypesof(/area/station)
-	for(var/A in areas)
-		var/area/instance = locate(A)
-		for(var/turf/T in instance)
-			if(istype(T,/area/station/test_area))
-				continue
-			L[instance.name] = instance
-			break
-	return L

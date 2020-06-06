@@ -221,6 +221,7 @@ var/list/admin_verbs = list(
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
+		/client/proc/rspawn_panel,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -262,7 +263,6 @@ var/list/admin_verbs = list(
 		// LEVEL_SHITGUY, shit person
 		/datum/admins/proc/togglesoundwaiting,
 		/datum/admins/proc/pixelexplosion,
-		/client/proc/rspawn_panel,
 		/proc/mod_color,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
@@ -412,6 +412,8 @@ var/list/admin_verbs = list(
 #ifdef ENABLE_SPAWN_DEBUG
 		/client/proc/cmd_modify_spawn_dbg_list,
 		/client/proc/spawn_dbg,
+#elif defined(ENABLE_SPAWN_DEBUG_2)
+		/client/proc/spawn_dbg,
 #endif
 #ifdef INCLUDE_BUGGY_LUA_SHIT
 		/client/proc/RunLuaString,
@@ -471,7 +473,7 @@ var/list/special_pa_observing_verbs = list(
 	else
 		var/client/C = who[chosen]
 		C.screen += A
-		boutput(usr, "<span style=\"color:blue\">Successful.</span>")
+		boutput(usr, "<span class='notice'>Successful.</span>")
 		logTheThing("admin", usr, C.mob, "added [A] to %target%'s screen.")
 */
 /client/proc/update_admins(var/rank)
@@ -597,9 +599,9 @@ var/list/special_pa_observing_verbs = list(
 		if(src.mob.mind)
 			src.mob.mind.damned = 0
 		src.mob.ghostize()
-		boutput(src, "<span style=\"color:blue\">You are now observing</span>")
+		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
-		boutput(src, "<span style=\"color:blue\">You are already observing!</span>")
+		boutput(src, "<span class='notice'>You are already observing!</span>")
 
 /client/proc/admin_play()
 	set category = "Admin"
@@ -618,9 +620,9 @@ var/list/special_pa_observing_verbs = list(
 	blink(get_turf(src.mob))
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
-		boutput(src, "<span style=\"color:blue\">You are now playing</span>")
+		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
-		boutput(src, "<span style=\"color:blue\">You are already playing!</span>")
+		boutput(src, "<span class='notice'>You are already playing!</span>")
 
 /client/proc/get_admin_state()
 	set category = "Special Verbs"
@@ -791,9 +793,9 @@ var/list/special_pa_observing_verbs = list(
 		return
 	if(!M.client.warned)
 		M.Browse(rules, "window=rules;size=480x320")
-		boutput(M, "<span style=\"color:red\"><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
+		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
-		message_admins("<span style=\"color:blue\">[src.ckey] warned [M.ckey].</span>")
+		message_admins("<span class='notice'>[src.ckey] warned [M.ckey].</span>")
 	else
 		var/addData[] = new()
 		addData["ckey"] = M.ckey
@@ -848,7 +850,7 @@ var/list/fun_images = list()
 	logTheThing("diary", src, M, "forced %target% to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	M << csound("sound/misc/klaxon.ogg")
-	boutput(M, "<span style=\"color:red\"><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 	// M.Browse(rules, "window=rules;size=480x320")
 	M << browse(rules, "window=rules;size=480x320")
 
@@ -882,7 +884,7 @@ var/list/fun_images = list()
 			return
 
 	if (!cli.preferences)
-		boutput(src, "<span style=\"color:red\">No preferences found on target client.</span>")
+		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
 	var/mob/living/carbon/human/H = new(mymob.loc)
@@ -905,7 +907,7 @@ var/list/fun_images = list()
 	admin_only
 
 	if (!src.preferences)
-		boutput(src, "<span style=\"color:red\">No preferences found on your client.</span>")
+		boutput(src, "<span class='alert'>No preferences found on your client.</span>")
 
 	if (!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		if (alert(usr, "Are you sure you wanna respawn yourself where you are? If you're already in a living mob, it'll be deleted!", "Confirmation", "Yes", "No") == "No")
@@ -1100,7 +1102,7 @@ var/list/fun_images = list()
 	var/start_x = (viewport_width / 2) + 1
 	var/start_y = (viewport_height / 2) + 1
 
-	boutput(src, "<span style=\"color:blue\"><B>Begining mapping.</B></span>")
+	boutput(src, "<span class='notice'><B>Begining mapping.</B></span>")
 
 	//Map eeeeverything
 	if (allZ || safeAllZ)
@@ -1210,21 +1212,21 @@ var/list/fun_images = list()
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 	var/adminrendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
-	for (var/mob/M in mobs)
+	for (var/client/C in clients)
+		var/mob/M = C.mob
 		if(istype(M, /mob/new_player))
 			continue
 
 		var/is_in_hivemind = 0
 		if (istype(M,/mob/living/critter/changeling) || istype(M,/mob/dead/target_observer/hivemind_observer))
 			is_in_hivemind = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.is_changeling())
-				is_in_hivemind = 1
 
-		if (M.client && (is_in_hivemind || M.client.holder && !M.client.player_mode))
+		else if (ischangeling(M))
+			is_in_hivemind = 1
+
+		if (is_in_hivemind || C.holder && !C.player_mode)
 			var/thisR = rendered
-			if (M.client.holder && src.mob.mind)
+			if (C.holder && src.mob.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
@@ -1448,11 +1450,11 @@ var/list/fun_images = list()
 	admin_only
 
 	if (!src.mob)
-		out(src, "<span style='color: blue;'>You don't even exist!</span>")
+		out(src, "<span class='alert'>You don't even exist!</span>")
 		return
 
 	if (istype(src.mob, /mob/dead/observer) || istype(src.mob, /mob/dead/target_observer))
-		out(src, "<span style='color: blue;'>You're already dead, you can't be removed any more than that!</span>")
+		out(src, "<span class='alert'>You're already dead, you can't be removed any more than that!</span>")
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
@@ -1472,11 +1474,11 @@ var/list/fun_images = list()
 	admin_only
 
 	if (!M)
-		out(src, "<span style='color: blue;'>You need to select someone to remove!</span>")
+		out(src, "<span class='alert'>You need to select someone to remove!</span>")
 		return
 
 	if (istype(M, /mob/dead/observer) || istype(M, /mob/dead/target_observer))
-		out(src, "<span style='color: blue;'>That person is already dead, sorry.</span>")
+		out(src, "<span class='notice'>That person is already dead, sorry.</span>")
 		return
 
 	var/client/C
@@ -1532,7 +1534,7 @@ var/list/fun_images = list()
 
 	var/announce = alert("Map set to [map]. It will apply next round.\n\nAnnounce this to the unwashed masses?", "All done", "Ok", "Nah")
 	if (announce == "Ok")
-		boutput(world, "<span style=\"color:blue\"><b>The next round's map will be: [map]</b></span>")
+		boutput(world, "<span class='notice'><b>The next round's map will be: [map]</b></span>")
 
 /client/proc/cmd_start_map_vote()
 	set category = "Admin"
@@ -1760,9 +1762,9 @@ var/list/fun_images = list()
 			MB.implanted(H, 0)
 			implanted ++
 		SPAWN_DBG (30)
-			boutput(usr, "<span style='color:red;'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
+			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
-		boutput(usr, "<span style='color:red;'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
 
 
 /mob/verb/admin_interact_verb()

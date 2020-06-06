@@ -169,8 +169,6 @@
 	if (isdead(src) || !src.classic_move)
 		return
 
-	user.machine = src
-
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in cameras)
 		L.Add(C)
@@ -222,14 +220,13 @@
 		owner = null
 		tracking = null
 		global.tracking_list -= src
+		..()
 
 	proc/begin_track(mob/target as mob)
 		if(!owner || !target)
 			return
 
 		tracking = target
-		if(!owner.machine)
-			owner.machine = owner
 
 		if (!owner.deployed_to_eyecam)
 			if (!owner.deployed_to_eyecam)

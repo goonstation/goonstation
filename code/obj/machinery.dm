@@ -14,14 +14,13 @@
 	flags = FPRINT | FLUID_SUBMERGE
 
 	var/status = 0
-	var/mob/current_user = null //GC WOES (airlocks seem to capture current_user a lot and prevent mob gc)
 	var/power_usage = 0
 	var/power_channel = EQUIP
 	var/power_credit = 0
 	var/wire_powered = 0
 	var/allow_stunned_dragndrop = 0
 	var/processing_bucket = 1
-	var/processing_tier = PROCESSING_FULL
+	var/processing_tier = PROCESSING_EIGHTH
 	var/current_processing_tier
 	var/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 
@@ -35,13 +34,14 @@
 		machine_registry[initial(machine_registry_idx)] += src
 
 	var/static/machines_counter = 0
-	src.processing_bucket = machines_counter++ & 15 // this is just modulo 16 but faster due to power-of-two memes
+	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
 	if (current_state > GAME_STATE_WORLD_INIT)
 		SPAWN_DBG(5 DECI SECONDS)
 			src.power_change()
 			var/area/A = get_area(src)
-			A.machines += src
+			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/New()
+				A.machines += src
 
 /obj/machinery/initialize()
 	..()
@@ -53,7 +53,7 @@
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
-	current_user = null
+
 	var/area/A = get_area(src)
 	if(A) A.machines -= src
 	..()
@@ -122,10 +122,10 @@
 /obj/machinery/Topic(href, href_list)
 	..()
 	if(status & (NOPOWER|BROKEN))
-		//boutput(usr, "<span style='color:red'>That machine is not powered!</span>")
+		//boutput(usr, "<span class='alert'>That machine is not powered!</span>")
 		return 1
 	if(usr.restrained() || usr.lying || usr.stat)
-		//boutput(usr, "<span style='color:red'>You are unable to do that currently!</span>")
+		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
 		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
@@ -133,11 +133,11 @@
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
 				message_coders("[type]/Topic(): is in range of usr, but in_range failed - [name] at [showCoords(x, y, z) ]")
-			//boutput(usr, "<span style='color:red'>You must be near the machine to do this!</span>")
+			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
 		if ((!in_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
-			//boutput(usr, "<span style='color:red'>You must be near the machine to do this!</span>")
+			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)
 	return 0
@@ -154,7 +154,7 @@
 		return 1
 	if (user && ishuman(user))
 		if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-			boutput(user, "<span style=\"color:red\">You are too dazed to use [src] properly.</span>")
+			boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
 			return 1
 
 	if (user)

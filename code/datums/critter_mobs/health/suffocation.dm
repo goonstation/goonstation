@@ -17,7 +17,7 @@
 	var/fart_smell_min = 1
 	var/fart_vomit_min = 10
 	var/fart_choke_min = 15
-	
+
 
 	var/o2_damage = 0
 	var/co2_damage = 0
@@ -115,9 +115,9 @@
 				for (var/datum/gas/farts/FARD in breath.trace_gases)
 					var/FARD_pp = (FARD.moles/breath.total_moles())*breath_pressure
 					if (prob(10) && (FARD_pp > fart_smell_min))
-						boutput(holder, "<span style=\"color:red\">Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+						boutput(holder, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 						if ((FARD_pp > fart_vomit_min) && prob(50))
-							holder.visible_message("<span style=\"color:blue\">[holder] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+							holder.visible_message("<span class='notice'>[holder] vomits from the [pick("stink","stench","awful odor")]!!</span>")
 							holder.vomit()
 					if (FARD_pp > fart_choke_min)
 						TakeDamage(3 + o2_damage)
@@ -130,14 +130,14 @@
 
 			if (breath.temperature > heat_tolerance && !holder.is_heat_resistant())
 				if (prob(20))
-					boutput(holder, "<span style=\"color:red\">You feel a searing heat in the air!</span>")
+					boutput(holder, "<span class='alert'>You feel a searing heat in the air!</span>")
 				holder.TakeDamage("chest", 0, min((breath.temperature - heat_tolerance) / 3, 10) + 6)
 				// this part is shit and probably should be purged, but generalizing hud might be unwanted
 				var/mob/living/critter/C = holder
 				if (istype(C))
 					C.hud.set_breathing_fire(1)
 				if (prob(4))
-					boutput(holder, "<span style=\"color:red\">Your lungs hurt like hell! This can't be good!</span>")
+					boutput(holder, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
 			else
 				var/mob/living/critter/C = holder
 				if (istype(C))

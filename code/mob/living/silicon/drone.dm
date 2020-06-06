@@ -13,7 +13,7 @@
 				drone_list += D
 
 		if (drone_list.len < 1)
-			boutput(user, "<span style=\"color:red\">No usable drones detected.</span>")
+			boutput(user, "<span class='alert'>No usable drones detected.</span>")
 			return
 
 		var/mob/living/silicon/drone/which = input("Which drone do you want to control?","Drone Controls") as mob in drone_list
@@ -21,9 +21,9 @@
 			var/attempt = which.connect_to_drone(user)
 			switch(attempt)
 				if(1)
-					boutput(user, "<span style=\"color:red\">Connection error: Drone not found.</span>")
+					boutput(user, "<span class='alert'>Connection error: Drone not found.</span>")
 				if(2)
-					boutput(user, "<span style=\"color:red\">Connection error: Drone already in use.</span>")
+					boutput(user, "<span class='alert'>Connection error: Drone already in use.</span>")
 
 /mob/living/silicon/drone
 	name = "Drone"
@@ -97,9 +97,9 @@
 			. += "It is currently shut down and not being used."
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				. += "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	movement_delay()
 		var/tally = 0
@@ -115,41 +115,41 @@
 			var/obj/item/weldingtool/WELD = W
 			if (user.a_intent == INTENT_HARM)
 				if (WELD.welding)
-					user.visible_message("<span style=\"color:red\"><b>[user] burns [src] with [W]!</b></span>")
+					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
 					damage_heat(WELD.force)
 				else
-					user.visible_message("<span style=\"color:red\"><b>[user] beats [src] with [W]!</b></span>")
+					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
 					damage_blunt(WELD.force)
 			else
 				if (src.health >= src.health_max)
-					boutput(user, "<span style=\"color:red\">It isn't damaged!</span>")
+					boutput(user, "<span class='alert'>It isn't damaged!</span>")
 					return
 				if (get_fraction_of_percentage_and_whole(src.health,src.health_max) < 33)
-					boutput(user, "<span style=\"color:red\">You need to use wire to fix the cabling first.</span>")
+					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
 				if(WELD.try_weld(user, 1))
 					src.health = max(1,min(src.health + 10,src.health_max))
 					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
 					if (src.health == src.health_max)
-						boutput(user, "<span style=\"color:blue\"><b>[src] looks fully repaired!</b></span>")
+						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
 		else if (istype(W,/obj/item/cable_coil/))
 			if (src.health >= src.health_max)
-				boutput(user, "<span style=\"color:red\">It isn't damaged!</span>")
+				boutput(user, "<span class='alert'>It isn't damaged!</span>")
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.health_max) >= 33)
-				boutput(usr, "<span style=\"color:red\">The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.health = max(1,min(src.health + 10,src.health_max))
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 50)
-				boutput(user, "<span style=\"color:blue\">The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user] attacks [src] with [W]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] attacks [src] with [W]!</b></span>")
 			damage_blunt(W.force)
 
 	proc/take_damage(var/amount)
@@ -161,7 +161,7 @@
 		if (amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
-				src.visible_message("<span style=\"color:red\"><b>[src.name] is destroyed!</b></span>")
+				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				disconnect_user()
 				robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
@@ -223,7 +223,7 @@
 			if(ismob(AM))
 				var/mob/tmob = AM
 				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> can't get past [AM.name]'s fat ass!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> can't get past [AM.name]'s fat ass!</span>")
 					src.now_pushing = 0
 					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
 					return
@@ -294,7 +294,7 @@
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
 				playsound(src.loc, pick(glitchy_noise), 50, 1)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
 				animate_glitchy_freakout(src)
 				return
 
@@ -430,7 +430,7 @@
 						src.visible_message("<b>[user]</b> disconnects [src]'s welded joints.")
 						src.construct_stage = 1
 					else
-						boutput(user, "<span style=\"color:red\">[user.real_name], there's a time and a place for everything! But not now.</span>")
+						boutput(user, "<span class='alert'>[user.real_name], there's a time and a place for everything! But not now.</span>")
 
 		else if (iswrenchingtool(W))
 			switch(construct_stage)
@@ -463,7 +463,7 @@
 						part_plating.loc = D
 					qdel(src)
 				else
-					boutput(user, "<span style=\"color:red\">There's lots of good times to use a wrench, but this isn't one of them.</span>")
+					boutput(user, "<span class='alert'>There's lots of good times to use a wrench, but this isn't one of them.</span>")
 
 		else if(istype(W, /obj/item/cable_coil) && construct_stage == 2)
 			var/obj/item/cable_coil/C = W

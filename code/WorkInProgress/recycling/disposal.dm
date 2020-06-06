@@ -22,6 +22,8 @@
 	var/has_fat_guy = 0	// true if contains a fat person
 	var/last_sound = 0
 
+	var/slowed = 0 // when you move, slows you down
+
 	var/mail_tag = null //Switching junctions with the same tag will pass it out the secondary instead of primary
 
 	unpooled()
@@ -93,17 +95,21 @@
 
 				break
 			sleep(0.1 SECONDS)		// was 1
-			if (!loc)
-				return
-			var/obj/disposalpipe/curr = loc
-			last = curr
-			curr = curr.transfer(src)
-			if(!curr)
-				last.expel(src, loc, dir)
+			if(slowed > 0)
+				slowed--
+				slowed = max(slowed,0)
+				sleep(1 SECONDS)
+			else
+				if (!loc)
+					return
+				var/obj/disposalpipe/curr = loc
+				last = curr
+				curr = curr.transfer(src)
+				if(!curr)
+					last.expel(src, loc, dir)
 
-			//
-			if(!(count--))
-				active = 0
+				if(!(count--))
+					active = 0
 		return
 
 	// find the turf which should contain the next pipe
@@ -150,6 +156,31 @@
 		if(last_sound + 6 < world.time)
 			playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 0, 0)
 			last_sound = world.time
+			damage_pipe()
+			if(prob(30))
+				slowed++
+
+	mob_flip_inside(var/mob/user)
+		var/obj/disposalpipe/P = src.loc
+		if(!istype(P))
+			return
+		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
+		user.changeStatus("paralysis", 40)
+		user.changeStatus("weakened", 4 SECONDS)
+		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
+
+		animate_storage_thump(P)
+
+		user.show_text("<span class='alert'>[P] [pick("cracks","bends","shakes","groans")].</span>")
+		damage_pipe(5)
+		slowed++
+
+	proc/damage_pipe(var/amount = 3)
+		var/obj/disposalpipe/P = src.loc
+		if(istype(P))
+			P.health -= rand(1,amount)
+			P.health = max(P.health,0)
+			P.healthcheck()
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
@@ -836,6 +867,11 @@
 		dpdir = dir | turn(dir, 180)
 		update()
 
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		dpdir = dir | turn(dir, 180)
+		update()
+
 	transfer(var/obj/disposalholder/H)
 
 		if (H.contents.len)
@@ -1001,7 +1037,7 @@
 
 		qdel(src)*/
 
-		src.visible_message("<span style=\"color:red\">[src] emits a weird noise!</span>")
+		src.visible_message("<span class='alert'>[src] emits a weird noise!</span>")
 
 		src.nugget_mode = !src.nugget_mode
 		src.update()
@@ -1159,7 +1195,7 @@
 
 				/*SPAWN_DBG(rand(100,1000))
 					if(src)
-						src.visible_message("<span style=\"color:red\"><b>[src] collapses into a black hole! Holy fuck!</b></span>")
+						src.visible_message("<span class='alert'><b>[src] collapses into a black hole! Holy fuck!</b></span>")
 						world << sound("sound/effects/kaboom.ogg")
 						new /obj/bhole(get_turf(src.loc))*/
 
@@ -1176,11 +1212,11 @@
 		if (istype(src.loc,/obj/))
 			if (prob(33))
 				var/obj/container = src.loc
-				container.visible_message("<span style=\"color:red\"><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+				container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 				if (istype(container, /obj/storage) && prob(33))
 					var/obj/storage/C = container
 					if (C.can_flip_bust == 1)
-						boutput(src, "<span style=\"color:red\">[C] [pick("cracks","bends","shakes","groans")].</span>")
+						boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
 						C.bust_out()
 
 
@@ -1513,14 +1549,14 @@
 			return
 
 		if(istype(O, /obj/item/mechanics) && O.level == 2)
-			boutput(usr, "<span style=\"color:red\">[O] needs to be secured into place before it can be connected.</span>")
+			boutput(usr, "<span class='alert'>[O] needs to be secured into place before it can be connected.</span>")
 			return
 
 		if(usr.stat)
 			return
 
-		if(!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
-			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+		if (!usr.find_tool_in_hand(TOOL_PULSING))
+			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
 		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)

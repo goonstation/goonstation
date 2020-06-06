@@ -15,7 +15,6 @@ datum/pathogeneffects/benevolent/mending
 			return
 		//if (prob(origin.stage * 5))
 		M.HealDamage("All", origin.stage / 2, 0)
-		M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -35,7 +34,6 @@ datum/pathogeneffects/benevolent/healing
 			return
 		//if (prob(origin.stage * 5))
 		M.HealDamage("All", 0, origin.stage / 2)
-		M.updatehealth()
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -63,8 +61,7 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 				if(H.bleeding)
 					repair_bleeding_damage(M, 80, 2)
 			if (prob(50))
-				M.show_message("<span style=\"color:blue\">You feel your wounds closing by themselves.</span>")
-		M.updatehealth()
+				M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -158,9 +155,8 @@ datum/pathogeneffects/benevolent/cleansing
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
 			M.take_toxin_damage(-origin.stage / 2)
-			M.updatehealth()
 			if (prob(12))
-				M.show_message("<span style=\"color:blue\">You feel cleansed.</span>")
+				M.show_message("<span class='notice'>You feel cleansed.</span>")
 
 	react_to(var/R, var/zoom)
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
@@ -187,11 +183,10 @@ datum/pathogeneffects/benevolent/oxygenconversion
 			M.TakeDamage("chest", M:losebreath * 2, 0)
 			M:losebreath = 0
 			if (prob(25))
-				M.show_message("<span style=\"color:red\">You feel your body deteriorating as you breathe on.</span>")
+				M.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
 		if (M.get_oxygen_deprivation())
 			if (origin.stage != 0)
 				M.take_oxygen_deprivation(0 - (origin.stage / 2))
-			M.updatehealth()
 
 datum/pathogeneffects/benevolent/oxygenproduction
 	name = "Oxygen Production"
@@ -208,7 +203,6 @@ datum/pathogeneffects/benevolent/oxygenproduction
 			M:losebreath = 0
 		if (M.get_oxygen_deprivation())
 			M.take_oxygen_deprivation(0 - origin.stage)
-			M.updatehealth()
 
 datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
@@ -224,7 +218,7 @@ datum/pathogeneffects/benevolent/resurrection
 		if (origin.stage < 5)
 			return
 		if(prob(5))
-			M.show_message("<span style=\"color:red\">You feel a sudden craving for ... brains??</span>")
+			M.show_message("<span class='alert'>You feel a sudden craving for ... brains??</span>")
 
 	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -251,9 +245,8 @@ datum/pathogeneffects/benevolent/resurrection
 			M.changeStatus("paralysis", 150) 			// paralyze the person for a while, because coming back to life is hard work
 			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
 			M.stuttering = 15
-			M.updatehealth()
 			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-				M.ghost.show_text("<span style=\"color:red\"><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				M.ghost.mind.transfer_to(M)
 				qdel(M.ghost)
 			if (ishuman(M))
@@ -261,7 +254,7 @@ datum/pathogeneffects/benevolent/resurrection
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
 				H.remission(origin)			// set the pathogen into remission, so it will be gone soon. Unlikely for a person to revive twice like this!
 				H.immunity(origin)
-				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
+				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")

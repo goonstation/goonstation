@@ -47,7 +47,7 @@
 
 		if (src.mind && src.mind.special_role != "omnitraitor")
 			if(shitty)
-				boutput(src, "<span style=\"color:blue\">Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
+				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
 			SHOW_VAMPIRE_TIPS(src)
 
@@ -163,11 +163,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -187,7 +187,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Vampire"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	var/vamp_blood = 0
 	points = 0 // Replaces the old vamp_blood_remaining var.
 	var/vamp_blood_tracking = 1

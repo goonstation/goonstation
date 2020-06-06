@@ -16,7 +16,7 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 5)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 
 /obj/item/clothing/head/red
 	desc = "A knit cap in red."
@@ -76,7 +76,7 @@
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
 
@@ -95,7 +95,7 @@
 	icon_state = "ntbiohood"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/emerg
 	name = "Emergency Hood"
@@ -123,7 +123,7 @@
 		..()
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
 
@@ -206,7 +206,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span style=\"color:blue\">You heat \the [target.name]</span>")
+			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 
@@ -218,7 +218,7 @@
 	desc = "A symbol of the captain's rank, and the source of all his power."
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
@@ -227,7 +227,7 @@
 	item_state = "centcom"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 	red
 		icon_state = "centcom-red"
@@ -248,7 +248,7 @@
 	item_state = "det_hat"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
@@ -275,16 +275,16 @@
 		cigs = list()
 	examine()
 		. = ..()
-		. += "<span style=\"color:blue\">Current activation phrase is <b>\"[phrase]\"</b>.</span>"
+		. += "<span class='notice'>Current activation phrase is <b>\"[phrase]\"</b>.</span>"
 		for (var/name in items)
 			var/type = items[name]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				. += "<br><span style=\"color:blue\">[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
 			else
 				. += "<br>There is no [name]!"
 		if (cigs.len)
-			. += "<br><span style=\"color:blue\">It contains <b>[cigs.len]</b> cigarettes!</span>"
+			. += "<br><span class='notice'>It contains <b>[cigs.len]</b> cigarettes!</span>"
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
@@ -300,7 +300,7 @@
 				var/obj/item/I = locate(type) in contents
 				if(findtext(gadget, name) && I)
 					M.put_in_hand_or_drop(I)
-					M.visible_message("<span style=\"color:red\"><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
+					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
 					return
 
 			if(findtext(gadget, "cigarette"))
@@ -320,7 +320,7 @@
 					else
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
-					M.visible_message("<span style=\"color:red\"><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
@@ -356,7 +356,7 @@
 				success = 1
 
 		if(success)
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
 			return
 
 		return ..()
@@ -467,7 +467,7 @@
 	item_state = "plunger"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
@@ -477,7 +477,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen Beret"
@@ -578,7 +578,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/fancy/rank
 	name = "officer's hat"
@@ -586,7 +586,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/wizard
 	name = "blue wizard hat"
@@ -603,7 +603,7 @@
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
-			source.show_message(text("<span style=\"color:red\">\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
+			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
 			. = 0
 
 /obj/item/clothing/head/wizard/red
@@ -655,7 +655,7 @@
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
-			boutput(user, "<span style=\"color:blue\">You scribble on the hat until it's filled in.</span>")
+			boutput(user, "<span class='notice'>You scribble on the hat until it's filled in.</span>")
 			if (P.font_color)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
@@ -677,7 +677,7 @@
 	body_parts_covered = HEAD
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/DONOTSTEAL
 	desc = "Baby's first hat ALSO BY ME WRONGEND DON'T STEAL" // You are a fucking disgrace hat HOW DID YOU BREAK HELMET CODE AND MAKE THE RSC NOT WORK FUCK please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me
@@ -716,7 +716,7 @@
 			src.throw_source = null
 		else
 			if (user)
-				user.visible_message("<span style='color:blue'><b>[user]'s hat's blades retract.</b></span>")
+				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
 			src.hit_type = DAMAGE_BLUNT
 			src.hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
 			src.force = 1
@@ -774,7 +774,7 @@
 	item_state = "bigtex"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/beret
 	name = "beret"
@@ -824,7 +824,7 @@
 	icon_state = "laurels"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 	gold
 		name = "gold laurels"
@@ -859,7 +859,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
+		setProperty("meleeprot_head", 6)
 
 	New()
 		..()
@@ -885,7 +885,7 @@
 				light.attach(src)
 
 	equipped(var/mob/user, var/slot)
-		boutput(user, "<span style=\"color:blue\">You better start running! It's kill or be killed now, buddy!</span>")
+		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
 			SPAWN_DBG(1 SECOND)
@@ -915,7 +915,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:red\"><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
+				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
 				H.unequip_all()
@@ -948,7 +948,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:blue\"><b>[H] becomes one with the [src.name]!</b></span>")
+				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
@@ -1018,7 +1018,7 @@
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
+			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			W:amount--
 			return
@@ -1030,7 +1030,7 @@
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span style=\"color:red\">You shock yourself while fumbling around with [C]!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
 				return
 
@@ -1045,7 +1045,7 @@
 			src.item_state = text("[]-stun",src.item_state)
 			C.updateicon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span style=\"color:blue\">The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return
 
 		..()

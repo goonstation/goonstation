@@ -71,7 +71,7 @@
 					if(!user.client.qualifiedXpRewards.Find(C.requiredUnlock))
 						continue
 				else
-					boutput(user, "<span style=\"color:red\"><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
+					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
 					SPAWN_DBG(0) user.client.updateXpRewards()
 					skipUnlocks = 1
 					continue

@@ -14,7 +14,7 @@
 
 /datum/game_mode/wizard/announce()
 	boutput(world, "<B>The current game mode is - Wizard!</B>")
-	boutput(world, "<B>There is a <span style=\"color:red\">SPACE WIZARD</span> on the [station_or_ship()]. You can't let him achieve his objective!</B>")
+	boutput(world, "<B>There is a <span class='alert'>SPACE WIZARD</span> on the [station_or_ship()]. You can't let him achieve his objective!</B>")
 
 /datum/game_mode/wizard/pre_setup()
 
@@ -58,7 +58,7 @@
 		if(istype(wizard))
 			wizard.special_role = "wizard"
 			if(wizardstart.len == 0)
-				boutput(wizard.current, "<B><span style=\"color:red\">A starting location for you could not be found, please report this bug!</span></B>")
+				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
 				var/starting_loc = pick(wizardstart)
 				wizard.current.set_loc(starting_loc)
@@ -69,7 +69,7 @@
 			wizard.current.antagonist_overlay_refresh(1, 0)
 
 			equip_wizard(wizard.current)
-			boutput(wizard.current, "<B><span style=\"color:red\">You are a Wizard!</span></B>")
+			boutput(wizard.current, "<B><span class='alert'>You are a Wizard!</span></B>")
 			boutput(wizard.current, "<B>The Space Wizards Federation has sent you to perform a ritual on the [station_or_ship()]:</B>")
 
 			var/obj_count = 1

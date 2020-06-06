@@ -86,7 +86,7 @@
     if ("snap","clack","click","clak")
       if (src.emote_check(voluntary, 50))
         playsound(get_turf(src), "sound/items/Scissor.ogg", 80, 1)
-        return "<span style='color:red'><b>[src]</b> claks!</span>"
+        return "<span class='alert'><b>[src]</b> claks!</span>"
   return null
 
 /mob/living/critter/fermid/specific_emote_type(var/act)

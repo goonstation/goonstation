@@ -45,7 +45,7 @@
 
 	pulse(var/mob/user)
 		if(active)
-			boutput(usr, "<span style=\"color:red\">You can't change the power level or range while the generator is active.</span>")
+			boutput(usr, "<span class='alert'>You can't change the power level or range while the generator is active.</span>")
 			return
 		var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Set Range","Set Power Level")
 		if(input && (user in range(1,src)))
@@ -57,11 +57,11 @@
 					if(!the_level)
 						return
 					if(get_dist(usr,src) > 1)
-						boutput(usr, "<span style=\"color:red\">You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
+						boutput(usr, "<span class='alert'>You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
 						return
 					the_level = max(MIN_POWER_LEVEL,min(the_level,MAX_POWER_LEVEL))
 					src.power_level = the_level
-					boutput(usr, "<span style=\"color:blue\">You set the power level to [src.power_level].</span>")
+					boutput(usr, "<span class='notice'>You set the power level to [src.power_level].</span>")
 
 	//Code for placing the shields and adding them to the generator's shield list
 	proc/generate_shield()

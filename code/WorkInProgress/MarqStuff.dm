@@ -135,7 +135,7 @@
 			//	if (dd_hasprefix(I.name, N))
 			//		break
 			if (kname)
-				boutput(user, "<span style='color:blue'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
+				boutput(user, "<span class='notice'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				if (kname in unlocked)
 					unlocked -= kname
@@ -147,10 +147,10 @@
 					ol[kname] = IM
 					overlays += IM
 			else
-				boutput(user, "<span style='color:red'>You cannot find a matching keyhole for that key!</span>")
+				boutput(user, "<span class='alert'>You cannot find a matching keyhole for that key!</span>")
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/pie/lime))
 			if ("key lime pie" in expected)
-				boutput(user, "<span style='color:blue'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
+				boutput(user, "<span class='notice'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				if ("key lime pie" in unlocked)
 					unlocked -= "key lime pie"
@@ -162,7 +162,7 @@
 					ol["key lime pie"] = IM
 					overlays += IM
 			else
-				boutput(user, "<span style='color:red'>You cannot find a matching keyhole for that key!</span>")
+				boutput(user, "<span class='alert'>You cannot find a matching keyhole for that key!</span>")
 
 	Bumped(var/mob/M)
 		if (!istype(M))
@@ -175,7 +175,7 @@
 		if (unlocked.len == expected.len)
 			open()
 		else
-			boutput(user, "<span style='color:red'>The door won't budge!</span>")
+			boutput(user, "<span class='alert'>The door won't budge!</span>")
 
 	proc/open()
 		if (unlocked.len != expected.len)
@@ -257,7 +257,7 @@
 	onStart()
 		..()
 		playsound(get_turf(owner), 'sound/effects/bow_aim.ogg', 75, 1)
-		owner.visible_message("<span style='color:red'>[owner] pulls the string on [bow]!</span>", "<span style='color:blue'>You pull the string on [bow]!</span>")
+		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
 		if (bow)
@@ -265,7 +265,7 @@
 		..()
 
 	onEnd()
-		boutput(owner, "<span style='color:red'>You let go of the string.</span>")
+		boutput(owner, "<span class='alert'>You let go of the string.</span>")
 		if (bow)
 			bow.aim = null
 		..()
@@ -372,9 +372,9 @@
 	examine()
 		. = ..()
 		if (amount > 1)
-			. += "<span style='color:blue'>This is a stack of [amount] arrows."
+			. += "<span class='notice'>This is a stack of [amount] arrows."
 		if (reagents.total_volume)
-			. += "<span style='color:blue'>The tip of the arrow is coated with reagents.</span>"
+			. += "<span class='notice'>The tip of the arrow is coated with reagents.</span>"
 
 	clone(var/newloc = null)
 		var/obj/item/arrow/O = new(loc)
@@ -389,7 +389,7 @@
 			amount--
 			var/obj/item/arrow/O = clone(loc)
 			user.put_in_hand_or_drop(O, user.hand)
-			boutput(usr, "<span style='color:blue'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
+			boutput(usr, "<span class='notice'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
 		else
 			..()
 */
@@ -453,10 +453,10 @@
 			return
 		if (isliving(target))
 			if (prob(50))
-				user.visible_message("<span style='color:red'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
 				playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				return
-			user.visible_message("<span style='color:red'><b>[user] stabs [target] with [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] stabs [target] with [src]!</b></span>")
 			user.u_equip(src)
 			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			if (ishuman(target))
@@ -480,14 +480,14 @@
 			var/obj/item/I = target
 			if (istype(I) && I.is_open_container() == 1 && I.reagents)
 				if (reagents.total_volume == reagents.maximum_volume)
-					boutput(user, "<span style='color:red'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
+					boutput(user, "<span class='alert'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
 				else if (!I.reagents.total_volume)
-					boutput(user, "<span style='color:red'>[I] is empty.</span>")
+					boutput(user, "<span class='alert'>[I] is empty.</span>")
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
 					logTheThing("combat", user, null, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
-					boutput(user, "<span style='color:blue'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
+					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
 
 /obj/item/arrowhead
 	name = "arrowhead"
@@ -527,7 +527,7 @@
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
-			boutput(user, "<span style='color:red'>That cannot be placed in [src]!</span>")
+			boutput(user, "<span class='alert'>That cannot be placed in [src]!</span>")
 			return
 
 		if(I.amount > 1)
@@ -546,7 +546,7 @@
 	proc/getArrow(var/mob/user)
 		if (src in user)
 			if (contents.len)
-				boutput(user, "<span style='color:blue'>You take [contents[1]] from [src].</span>")
+				boutput(user, "<span class='notice'>You take [contents[1]] from [src].</span>")
 				return contents[1]
 			else return null
 
@@ -594,7 +594,7 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span style=\"color:red\">[usr] dumps the contents of [src] onto [T]!</span>")
+					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
 					for (var/obj/item/I in src)
 						I.set_loc(T)
 						I.layer = initial(I.layer)
@@ -657,7 +657,7 @@
 
 		if (loaded && user.is_in_hands(src))
 			user.put_in_hand_or_drop(loaded)
-			boutput(user, "<span style='color:blue'>You unload the arrow from the bow.</span>")
+			boutput(user, "<span class='notice'>You unload the arrow from the bow.</span>")
 			overlays.len = 0
 			loaded = null
 		else
@@ -697,7 +697,7 @@
 
 	process_ammo(var/mob/user)
 		if (!loaded)
-			boutput(user, "<span style='color:red'>Nothing is loaded in the bow!</span>")
+			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 0
 		overlays.len = 0
 		var/obj/item/implant/projectile/arrow/A = new
@@ -725,7 +725,7 @@
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if (!loaded)
-			boutput(user, "<span style='color:red'>Nothing is loaded in the bow!</span>")
+			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 1
 
 		if (!aim)
@@ -757,7 +757,7 @@
 		if (!istype(I))
 			return
 		if (loaded)
-			boutput(user, "<span style='color:red'>An arrow is already loaded onto the bow.</span>")
+			boutput(user, "<span class='alert'>An arrow is already loaded onto the bow.</span>")
 
 		if(I.amount > 1)
 			var/obj/item/arrow/C = I.clone(src)

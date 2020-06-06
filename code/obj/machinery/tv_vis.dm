@@ -106,6 +106,7 @@
 
 	disposing()
 		blank = null
+		..()
 
 	proc/activate()
 		get_picture()

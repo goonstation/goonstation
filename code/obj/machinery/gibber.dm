@@ -32,7 +32,7 @@
 	if (!src.user_can_suicide(user))
 		return 0
 	if (user.client)
-		user.visible_message("<span style='color:red'><b>[user] climbs into the gibber and switches it on.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] climbs into the gibber and switches it on.</b></span>")
 		user.set_loc(src)
 		src.occupant = user
 		src.startgibbing(user)
@@ -44,24 +44,24 @@
 
 /obj/machinery/gibber/attack_hand(mob/user as mob)
 	if(operating)
-		boutput(user, "<span style=\"color:red\">It's locked and running</span>")
+		boutput(user, "<span class='alert'>It's locked and running</span>")
 		return
 	else
 		src.startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/grab/G as obj, mob/user as mob)
 	if(src.occupant)
-		boutput(user, "<span style=\"color:red\">The gibber is full, empty it first!</span>")
+		boutput(user, "<span class='alert'>The gibber is full, empty it first!</span>")
 		return
 	if (!( istype(G, /obj/item/grab)) || !(ishuman(G.affecting)))
-		boutput(user, "<span style=\"color:red\">This item is not suitable for the gibber!</span>")
+		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
 
-	user.visible_message("<span style=\"color:red\">[user] starts to put [G.affecting] into the gibber!</span>")
+	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
 	sleep(3 SECONDS)
 	if(G && G.affecting)
-		user.visible_message("<span style=\"color:red\">[user] stuffs [G.affecting] into the gibber!</span>")
+		user.visible_message("<span class='alert'>[user] stuffs [G.affecting] into the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced %target% into a gibber at [log_loc(src)].")
 		message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
@@ -94,14 +94,14 @@
 		return
 	if(!src.occupant)
 		for(var/mob/M in hearers(src, null))
-			M.show_message("<span style=\"color:red\">You hear a loud metallic grinding sound.</span>", 1)
+			M.show_message("<span class='alert'>You hear a loud metallic grinding sound.</span>", 1)
 		return
 	else
 		var/bdna = null // For forensics (Convair880).
 		var/btype = null
 
 		for(var/mob/M in hearers(src, null))
-			M.show_message("<span style=\"color:red\">You hear a loud squelchy grinding sound.</span>", 1)
+			M.show_message("<span class='alert'>You hear a loud squelchy grinding sound.</span>", 1)
 		src.operating = 1
 		flick("grinder-on", src)
 

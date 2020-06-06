@@ -17,6 +17,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/food_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
+	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
@@ -111,6 +112,16 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					R.clothes["head"] = O
 					O.set_loc(R)
 					equip_success = 1
+				if(equip_success)
+					R.update_appearance()
+
+		if(isAI(M))
+			var/mob/living/silicon/ai/AI = M
+			if (ispath(path, /obj/item/clothing))
+				if(ispath(path,/obj/item/clothing/head))
+					AI.set_hat(new path(AI))
+					equip_success = 1
+
 
 
 		//The AI can't really wear items...
@@ -228,6 +239,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Sparkler Box"
 			cost = 1000
 			path = /obj/item/storage/sparkler_box
+
+		dabbing_license
+			name = "Dabbing License"
+			cost = 4200
+			path = /obj/item/card/id/dabbing_license
 
 		battlepass
 			name = "Battle Pass"
@@ -383,17 +399,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 							H.limbs.l_leg.delete()
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
-						boutput( H, "<span style='color:blue'><b>Your limbs magically disappear! Oh, no!</b></span>" )
+						boutput( H, "<span class='notice'><b>Your limbs magically disappear! Oh, no!</b></span>" )
 				return 1
 			return 0
 
 	corpse
 		name = "Corpse"
 		cost = 15000
+		carries_over = 0
 
 		Create(var/mob/living/M)
 			setdead(M)
-			boutput(M, "<span style='color:blue'><b>You magically keel over and die! Oh, no!</b></span>")
+			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
 	space_diner
@@ -423,7 +440,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate(get_turf(M))
+				S = new /obj/storage/crate/packing(get_turf(M))
 				M.set_loc(S)
 				shippingmarket.receive_crate(S)
 				return 1

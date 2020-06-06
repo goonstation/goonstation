@@ -15,10 +15,6 @@
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
 #endif
 
-#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-#warn Only using one z-level. This will fuck everything up. You're gonna have a bad time.
-#endif
-
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
 //   Start profiling immediately, save profiler data when world is rebooting (data/profile/xxxxxxxx-full.log)
@@ -86,6 +82,8 @@
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
 #define CLICK_GRACE_WINDOW 0//2.5
+
+#define COMBAT_BLOCK_DELAY (2)
 
 //Alignment around the turf. Any can be combined with center (top and bottom for horizontal centering, left and right for vertical).
 #define TOOLTIP_BOTTOM 0
@@ -168,7 +166,7 @@
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
-
+#define MOB_NAME_MAX_LENGTH 50
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
@@ -392,16 +390,16 @@
 //various mob_flags go here
 #define MOB_HEARS_ALL 1 	//For mobs who can hear everything (mainly observer ghossts)
 #define SPEECH_REVERSE 2 	//God Ecaps
-#define SPEECH_INTRUDER 4   //thing
-#define SPEECH_BLOB 8		//yes
-#define SEE_THRU_CAMERAS 16	//for ai eye
-#define IS_BONER 32			//for skeletals
-#define IS_RELIQUARY 64 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_SOLDIER 128 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_GUARDIAN 256 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_TECHNICIAN 512 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_CURATOR 1024 //for Azungar's reliquary stuff
-#define AT_GUNPOINT 2048 	//quick check for guns holding me at gunpoint
+#define SPEECH_BLOB 4		//yes
+#define SEE_THRU_CAMERAS 8	//for ai eye
+#define IS_BONER 16			//for skeletals
+#define IS_RELIQUARY 32 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_SOLDIER 64 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_GUARDIAN 128 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
+#define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
+#define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
+#define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -509,6 +507,46 @@
 // These are for the Syndicate headset randomizer proc.
 #define R_FREQ_BLACKLIST_HEADSET list(R_FREQ_DEFAULT, R_FREQ_COMMAND, R_FREQ_SECURITY, R_FREQ_ENGINEERING, R_FREQ_RESEARCH, R_FREQ_MEDICAL, R_FREQ_CIVILIAN, R_FREQ_SYNDICATE, R_FREQ_GANG, R_FREQ_MULTI)
 #define R_FREQ_BLACKLIST_INTERCOM list(R_FREQ_INTERCOM_COLOSSEUM, R_FREQ_INTERCOM_MEDICAL, R_FREQ_INTERCOM_SECURITY, R_FREQ_INTERCOM_BRIG, R_FREQ_INTERCOM_RESEARCH, R_FREQ_INTERCOM_ENGINEERING, R_FREQ_INTERCOM_CARGO, R_FREQ_INTERCOM_CATERING, R_FREQ_INTERCOM_AI, R_FREQ_INTERCOM_BRIDGE)
+
+
+proc/default_frequency_color(freq)
+	switch(freq)
+		if(R_FREQ_DEFAULT)
+			return RADIOC_STANDARD
+		if(R_FREQ_COMMAND)
+			return RADIOC_COMMAND
+		if(R_FREQ_SECURITY)
+			return RADIOC_SECURITY
+		if(R_FREQ_ENGINEERING)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_RESEARCH)
+			return RADIOC_RESEARCH
+		if(R_FREQ_MEDICAL)
+			return RADIOC_MEDICAL
+		if(R_FREQ_CIVILIAN)
+			return RADIOC_CIVILIAN
+		if(R_FREQ_SYNDICATE)
+			return RADIOC_SYNDICATE
+		if(R_FREQ_GANG)
+			return RADIOC_SYNDICATE
+		if(R_FREQ_INTERCOM_MEDICAL)
+			return RADIOC_MEDICAL
+		if(R_FREQ_INTERCOM_SECURITY)
+			return RADIOC_SECURITY
+		if(R_FREQ_INTERCOM_BRIG)
+			return "#FF5000"
+		if(R_FREQ_INTERCOM_RESEARCH)
+			return RADIOC_RESEARCH
+		if(R_FREQ_INTERCOM_ENGINEERING)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_INTERCOM_CARGO)
+			return RADIOC_ENGINEERING
+		if(R_FREQ_INTERCOM_CATERING)
+			return RADIOC_CIVILIAN
+		if(R_FREQ_INTERCOM_AI)
+			return RADIOC_COMMAND
+		if(R_FREQ_INTERCOM_BRIDGE)
+			return RADIOC_COMMAND
 
 //   HOLIDAYS
 // #define HALLOWEEN 1
@@ -732,8 +770,10 @@
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out
 #define STAMINA_WINDED_SPEAK_MIN 0      //Can't speak below this point.
-#define STAMINA_SPRINT 50				//can only sprint above this number
-#define STAMINA_COST_SPRINT 8			//cost of moving in sprint
+#define STAMINA_SPRINT 64				//can only sprint above this number
+#define STAMINA_COST_SPRINT 7			//cost of moving in sprint
+#define SUSTAINED_RUN_GRACE 0.5 SECONDS	//grace period where sustained run can be sustained
+#define SUSTAINED_RUN_REQ 8				//how many tiles to start sustained run
 
 //This is a bad solution. Optimally this should scale.
 #define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
@@ -754,6 +794,8 @@
 #define STAMINA_DEFAULT_FART_COST 0  //How much farting costs. I am not even kidding.
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+#define DIAG_MOVE_DELAY_MULT 1.4
 
 //reagent_container bit flags
 #define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly (e.g. beaker)
@@ -782,6 +824,8 @@
 #define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
 #define BLOCK_ROPE		BLOCK_BOOK
 
+#define DEFAULT_BLOCK_PROTECTION_BONUS 2 //blocking to match damage type correctly gives you a -2 bonus on protection (unless this item grants Even More protection, that overrides this)
+
 // Process Scheduler defines
 // Process status defines
 #define PROCESS_STATUS_IDLE 1
@@ -792,11 +836,12 @@
 #define PROCESS_STATUS_HUNG 6
 
 // Process time thresholds
-#define PROCESS_DEFAULT_HANG_WARNING_TIME 	3000 // 300 seconds
-#define PROCESS_DEFAULT_HANG_ALERT_TIME 	6000 // 600 seconds
-#define PROCESS_DEFAULT_HANG_RESTART_TIME 	9000 // 900 seconds
+#define PROCESS_DEFAULT_HANG_WARNING_TIME 	300 SECONDS
+#define PROCESS_DEFAULT_HANG_ALERT_TIME 	600 SECONDS
+#define PROCESS_DEFAULT_HANG_RESTART_TIME 	900 SECONDS
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		15	// 15% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		20	// 20% of one tick
+#define MAX_TICK_USAGE 95 // 95% of a tick
 
 /** Delete queue defines */
 #define MIN_DELETE_CHUNK_SIZE 1
@@ -916,7 +961,7 @@
 #define SHUTTLE_LOC_RETURNED 2
 
 //moved from guardbot.dm because i wanna use this list of buddy hats on some critters
-#define BUDDY_HATS list("detective","hoscap","hardhat0","hardhat1","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
+#define BUDDY_HATS list("detective","hoscap","hardhat","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
 
 #define EYEBLIND_L 1 // for calculating human eye funkery
 #define EYEBLIND_R 2
@@ -959,7 +1004,11 @@
 //JOB EXPERIENCE STUFF END
 
 //This is here because it's used literally everywhere in the codebase below this.
+#ifdef SPACEMAN_DMM
+#define LAGCHECK(x)
+#else
 #define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
+#endif
 
 //Define clientside tick lag seperately from world.tick_lag
 //'cause smoothness looks good.
@@ -1035,8 +1084,7 @@ var/ZLOG_START_TIME
 #endif
 
 #define CRITTER_REACTION_LIMIT 50
-#define fucking_critter_bullshit_fuckcrap_limiter(x) if (x > CRITTER_REACTION_LIMIT) return; else x += 1
-#define get_fucked_clarks if (istype(my_atom, "/obj/critter/domestic_bee")) return my_atom.visible_message("<span style=\"color:red\">[my_atom] burps.</span>"); if (istype(my_atom, "/obj/item/reagent_containers/food/snacks/ingredient/honey")) return
+#define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
 //Activates the viscontents warps
 #define NON_EUCLIDEAN 1
@@ -1121,6 +1169,8 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//PATHOLOGY REMOVAL
+//#define CREATE_PATHOGENS 1
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))

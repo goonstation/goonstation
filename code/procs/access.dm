@@ -153,6 +153,31 @@
 			return 1
 	return 0
 
+//put in access num, check if i have that
+/obj/proc/has_access(var/acc)
+	// no requirements
+	if (!src.req_access)
+		return 1
+	// something's very wrong
+	if (!istype(src.req_access, /list))
+		return 1
+	// no requirements (also clean up src.req_access)
+	if (src.req_access.len == 0)
+		src.req_access = null
+		return 1
+
+	for (var/req_access_group in src.req_access)
+		// access group is a list
+		if (islist(req_access_group))
+			var/list/req_access_group_list = req_access_group
+			if (acc in req_access_group_list)
+				return 1
+		// access group is a single number
+		else if (req_access_group == acc)
+			return 1
+
+	return 0
+
 /**
  * @param {mob} M Mob of which to check the implanted credentials
  * @return {bool} Whether mob has sufficient access via its implant
