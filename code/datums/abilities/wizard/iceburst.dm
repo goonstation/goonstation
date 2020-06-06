@@ -107,6 +107,7 @@
 				src.underlays += iced
 			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
 
+		if (iced) //apparently a blank ice cube spawns in adventure
 			iced.last_cubed = world.time
 
 		src.health *= (rand(10,20)/10)

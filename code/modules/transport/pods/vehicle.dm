@@ -893,7 +893,7 @@
 	ejectee.set_loc(location)
 
 	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.update_keymap()
+	ejectee.reset_keymap()
 	ejectee.recheck_keys()
 	if(src.pilot == ejectee)
 		src.pilot = null
@@ -963,7 +963,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.update_keymap()
+	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && !isghostcritter(boarder))
 		src.ion_trail.start()
