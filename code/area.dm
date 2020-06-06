@@ -110,7 +110,7 @@
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				#define AMBIENCE_ENTER_PROB 6
 
 				//Handle ambient sound
@@ -168,11 +168,11 @@
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				if (sound_loop)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M && (mobarea.sound_group != src.sound_group))
+						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
