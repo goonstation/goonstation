@@ -1,5 +1,10 @@
 
 (t)sat jun 06 20
+(u)ZeWaka
+(p)141
+(e)🆕|feature
+(*)Added a basic custom keybinding system to the game. 😸
+(*)Change your keybinds by going to the interface menu in the top left.
 (u)mbc
 (p)966
 (e)|
