@@ -1812,9 +1812,6 @@ proc/countJob(rank)
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	//if (!G.client || G.client && G.client.suicide) // Suicided? Tough luck.
-	//	return 0
-
 	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
 		return 0
 
