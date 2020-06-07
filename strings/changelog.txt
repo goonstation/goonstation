@@ -1,5 +1,9 @@
 
 (t)sun jun 07 20
+(u)Sovexe
+(p)978
+(e)|
+(+)Monkeys will now drop all equipped items when meat spiked
 (u)UrsulaMajor
 (p)969
 (e)⚖|balance
