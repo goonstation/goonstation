@@ -3528,6 +3528,12 @@
 			else if (move_dir == turn(last_move_dir,180))
 				sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+				if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
+					var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
+					if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
+					if(src_effect.update_charge(1))
+						playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
+
 
 			sustained_moves = 0
 	else
