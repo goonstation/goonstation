@@ -284,7 +284,7 @@ chui/window/security_cameras
 		var/mob/user = clint.mob
 		if (!islist(href_list))	//don't need to check for user. that is done in chui/Topic()
 			user.set_eye(null)
-			Unsubscribe(user)
+			Unsubscribe(clint)
 			return
 
 		else if (href_list["camera"])
