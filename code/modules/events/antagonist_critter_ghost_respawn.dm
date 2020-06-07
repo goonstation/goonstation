@@ -47,6 +47,9 @@
 			var/list/select = pick(pest_invasion_critter_types)
 			var/howmany = rand(1,min(3,candidates.len))
 			for (var/i in 0 to howmany)
+				if (!candidates || !candidates.len)
+					break
+
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
 					M.current.make_critter(pick(select), pestlandmark)
