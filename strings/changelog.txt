@@ -1,6 +1,10 @@
 
 (t)sun jun 07 20
 (u)UrsulaMajor
+(p)969
+(e)⚖|balance
+(*)Biomagnetic Fields now use charge to produce their effects. Charge builds up when you take tight turns.
+(u)UrsulaMajor
 (p)977
 (e)🐛|bug
 (+)Fixed bug where critters could attack really fast
