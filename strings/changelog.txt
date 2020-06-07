@@ -1,4 +1,9 @@
 
+(t)sun jun 07 20
+(u)MarkNstein
+(p)971
+(e)|
+(+)Command jobs now displayed as filled when late-joining during Rev-mode.
 (t)sat jun 06 20
 (u)ZeWaka
 (p)141
