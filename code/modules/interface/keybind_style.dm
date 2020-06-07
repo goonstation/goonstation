@@ -107,6 +107,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"CTRL+X" = "flex",
 	"CTRL+Y" = "yawn",
 	"CTRL+Z" = "snap",
+	"M" = "emote",
 	"I" = "look_n",
 	"K" = "look_s",
 	"J" = "look_w",
@@ -195,7 +196,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/human/azerty
 	name = "human_azerty"
 	changed_keys = list(
-		"A" = "drop"
+		"A" = "drop",
+		"Q" = KEY_LEFT
 	)
 
 //
@@ -241,7 +243,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/robot/azerty
 	name = "robot_azerty"
 	changed_keys = list(
-		"A" = "unequip"
+		"A" = "unequip",
+		"Q" = KEY_LEFT
 	)
 
 //
@@ -272,7 +275,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/drone/azerty
 	name = "drone_azerty"
 	changed_keys = list(
-		"A" = "unequip"
+		"A" = "unequip",
+		"Q" = KEY_LEFT
 	)
 
 //
