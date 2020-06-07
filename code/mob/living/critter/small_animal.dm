@@ -361,6 +361,11 @@ todo: add more small animals!
 			src.visible_message("[src] purrs!",\
 			"You purr!")
 
+/mob/living/critter/small_animal/cat/weak
+	add_abilities = list()
+	health_brute = 10
+	health_burn = 10
+
 /* -------------------- Jones -------------------- */
 
 /mob/living/critter/small_animal/cat/jones
@@ -436,7 +441,7 @@ todo: add more small animals!
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
@@ -494,6 +499,13 @@ todo: add more small animals!
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
+
+	pug
+		weak
+			add_abilities = list()
+			health_brute = 10
+			health_burn = 10
+
 /* -------------------- Reverse Pug -------------------- */
 // the people demanded it
 /mob/living/critter/small_animal/dog/reverse
@@ -545,6 +557,11 @@ todo: add more small animals!
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- George -------------------- */
 
@@ -638,6 +655,11 @@ todo: add more small animals!
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
 			src.real_name = src.name
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- Illegal -------------------- */
 
@@ -1344,6 +1366,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = 3
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+	base_move_delay = 1.6
+	base_walk_delay = 2.1
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -1355,6 +1380,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	setup_overlays()
 		return
+
+
+	weak
+		health_brute = 5
+		health_burn = 5
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
@@ -1475,6 +1505,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "mouth"
 		HH.can_hold_items = 0
 
+
+	weak
+		health_brute = 10
+		health_burn = 10
 
 /* ================================================ */
 /* -------------------- Possum -------------------- */
@@ -1660,6 +1694,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (prob(10))
 			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
+
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */
