@@ -49,7 +49,7 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			src.gib(1)
 		else
 			..()

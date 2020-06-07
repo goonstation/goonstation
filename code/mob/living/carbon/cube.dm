@@ -97,10 +97,9 @@
 		pop()
 		return
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("cube"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("cube")
 
 	proc/get_cube_idle()
 		return "cubes cubily"
@@ -228,7 +227,7 @@
 					O.show_message(message, m_type)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			pop()
 		else
 			..()

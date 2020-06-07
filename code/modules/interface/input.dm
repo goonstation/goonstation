@@ -1,112 +1,104 @@
 var/list/dirty_keystates = list()
-
-#define MODIFIER_SHIFT 1
-#define MODIFIER_ALT 2
-#define MODIFIER_CTRL 4
-//o no
-//defines in here
-//o noooo
+var/list/clients_move_scheduled = list()
 
 /client
-	var
-		key_state = 0
-		last_keys = 0
-		keys_dirty = 0
-		keys_modifier = 0
+	var/key_state = 0
+	var/last_keys = 0
+	var/keys_dirty = 0
+	var/keys_modifier = 0
 
-		keys_remove_next_process = 0
+	var/keys_remove_next_process = 0
 
-		datum/keymap/keymap
+	var/datum/keymap/keymap
 
-	verb
-		keydown(key as text)
-			set hidden = 1
-			set name = ".keydown"
-			set instant = 1
+	verb/keydown(key as text)
+		set hidden = 1
+		set name = ".keydown"
+		set instant = 1
 
-			key = uppertext(key)
-			//world << key
+		key = uppertext(key)
+		//world << key
 
-			if(key == "ALT")
-				keys_modifier |= MODIFIER_ALT
-				//return
-			else if(key == "SHIFT")
-				keys_modifier |= MODIFIER_SHIFT
-				//return
-			else if(key == "CTRL")
-				keys_modifier |= MODIFIER_CTRL
-				//return
+		if(key == "ALT")
+			keys_modifier |= MODIFIER_ALT
+			//return
+		else if(key == "SHIFT")
+			keys_modifier |= MODIFIER_SHIFT
+			//return
+		else if(key == "CTRL")
+			keys_modifier |= MODIFIER_CTRL
+			//return
 
-			if (!src.keymap)
+		if (!src.keymap)
+			return
+
+		var/mob/M = src.mob
+		var/numkey = text2num(key)
+		if(!isnull(numkey) && M.abilityHolder)
+			if (M.abilityHolder.actionKey(numkey))
 				return
 
-			var/mob/M = src.mob
-			var/numkey = text2num(key)
-			if(!isnull(numkey) && M.abilityHolder)
-				if (M.abilityHolder.actionKey(numkey))
-					return
+		var/action = src.keymap.check_keybind(key, keys_modifier)
 
-			var/action = src.keymap.check_keybind(key, keys_modifier)
+		if (isnull(action)) // not bound
+			return
 
-			if (isnull(action)) // not bound
-				return
+		if (istext(action)) // action
+			if(!do_action(action))
+				src.mob.hotkey(action)
 
-			if (istext(action)) // action
-				if(!do_action(action))
-					src.mob.hotkey(action)
+		else
+			src.key_state |= action
+			src.mob.hotkey(key)
+			if (!src.keys_dirty)
+				dirty_keystates += src
+				src.keys_dirty = world.time //1
 
+
+	verb/keyup(key as text)
+		set hidden = 1
+		set name = ".keyup"
+		set instant = 1
+		key = uppertext(key)
+		//mark my words
+		//this is all getting rewritten again
+		//just you wait
+		if(key == "ALT")
+			keys_modifier &= ~MODIFIER_ALT
+			//return
+		else if(key == "SHIFT")
+			keys_modifier &= ~MODIFIER_SHIFT
+			//return
+		else if(key == "CTRL")
+			keys_modifier &= ~MODIFIER_CTRL
+			//return
+
+		if (!src.keymap)
+			return
+
+		var/action = src.keymap.check_keybind(key, 0) //We don't care about keying up modifier commands.
+		if (isnull(action)) // not bound
+			return
+
+		if (!istext(action)) // key
+			if (src.keys_dirty == world.time)
+				src.keys_remove_next_process |= action
 			else
-				src.key_state |= action
-				src.mob.hotkey(key)
+				src.key_state &= ~action
 				if (!src.keys_dirty)
 					dirty_keystates += src
 					src.keys_dirty = world.time //1
 
-
-		keyup(key as text)
-			set hidden = 1
-			set name = ".keyup"
-			set instant = 1
-			key = uppertext(key)
-			//mark my words
-			//this is all getting rewritten again
-			//just you wait
-			if(key == "ALT")
-				keys_modifier &= ~MODIFIER_ALT
-				//return
-			else if(key == "SHIFT")
-				keys_modifier &= ~MODIFIER_SHIFT
-				//return
-			else if(key == "CTRL")
-				keys_modifier &= ~MODIFIER_CTRL
-				//return
-
-			if (!src.keymap)
-				return
-
-			var/action = src.keymap.check_keybind(key, 0) //We don't care about keying up modifier commands.
-			if (isnull(action)) // not bound
-				return
-
-			if (!istext(action)) // key
-				if (src.keys_dirty == world.time)
-					src.keys_remove_next_process |= action
-				else
-					src.key_state &= ~action
-					if (!src.keys_dirty)
-						dirty_keystates += src
-						src.keys_dirty = world.time //1
-
-		force_keyup(keys as text)
-			set hidden = 1
-			set name = ".force_keyup"
-			set instant = 1
-			//Maybe this can unfuck the macro situation? Perhaps. Hopefully!
-			keys = uppertext(keys)
-			var/list/keylist = splittext(keys, "+")
-			for(var/key in keylist)
-				src.keyup(key)
-			//keys_modifier = 0
+	verb/force_keyup(keys as text)
+		set hidden = 1
+		set name = ".force_keyup"
+		set instant = 1
+		//Maybe this can unfuck the macro situation? Perhaps. Hopefully!
+		keys = uppertext(keys)
+		var/list/keylist = splittext(keys, "+")
+		for(var/key in keylist)
+			src.keyup(key)
+		//keys_modifier = 0
 
 	//super heavy load apparently
 	//MouseMove(object,location,control,params)
@@ -212,6 +204,7 @@ var/list/dirty_keystates = list()
 			S.clicked(parameters)
 			return
 
+
 		if(src.keys_modifier) //Perhaps evaluating a heap of keymaps is not the best idea if we're only plain and simply clicking something
 			//But we will make "click" available as a bindable thing
 			var/action = src.keymap.check_keybind("CLICK", keys_modifier)
@@ -262,9 +255,6 @@ var/list/dirty_keystates = list()
 		//Checks if any of the input keys are pressed
 		return (src.key_state & keys)
 
-	proc/set_keymap(datum/keymap/map)
-		src.keymap = map
-
 		// oh god
 		/*
 		I have removed a heap of commented out shit.
@@ -291,101 +281,41 @@ var/list/dirty_keystates = list()
 			src.preferences.use_wasd = !wasd
 			//set_macro(src.preferences.use_wasd ? "macro_wasd" : "macro_arrow")
 			boutput(src, "<span class='notice'>WASD mode toggled [!wasd ? "on" : "off"]. Note that this setting will not save unless you manually do so in Character Preferences.</style>")
-			src.mob.update_keymap()
+			src.mob.reset_keymap()
 			return 1
 
 		return 0
 
 /mob
-	var
-		move_scheduled = 0
-		last_move_ticklag = MIN_TICKLAG //if ticklag changes big inc, can interrupt hold-press. we needa save this to counteract!
-	proc
-		keys_changed(keys, changed)
-			set waitfor = 0 // prevent shitty code from locking up the main input loop
+	var/move_scheduled_ticks = 0
 
-			// stub
+	proc/keys_changed(keys, changed)
+		set waitfor = 0
+		//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
+		// stub
 
-		process_move(keys)
-			// stub
+	proc/process_move(keys)
+		// stub
 
-		attempt_move()
-			src.internal_process_move(src.client ? src.client.key_state : 0)
+	proc/attempt_move()
+		if(src.internal_process_move(src.client ? src.client.key_state : 0) && src.client)
+			clients_move_scheduled |= src.client
 
-		recheck_keys()
-			if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+	proc/recheck_keys()
+		if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 
-		//mbc : so this is fucky : ticklag values of 0.42 and 0.21 just dont work here.
-		//i dont understand why. it *must* be a rounding error or math thing. i couldnt find it sorry bro
-		//ALSO last_move_ticklag, it compensates for the change in ticklag while we hold a key. It's also not consistent at all values, probably rounding errors again
-		//ticklag values that are multiples of 0.2 appear to work best  :)  so i've set the time dilation thing to move in 0.2inc notches.
-		internal_process_move(keys)
-			var/delay = src.process_move(keys)
-			if (isnull(delay))
-				return
+	// returns 1 if it schedules a move
+	proc/internal_process_move(keys)
+		var/delay = src.process_move(keys)
+		if (isnull(delay))
+			return
 
-			var/actual_delay = max(ceil(delay / world.tick_lag), 1) * world.tick_lag
-			var/next = world.time + actual_delay
-			var/lmt = max(last_move_ticklag - world.tick_lag, 0)
+		src.move_scheduled_ticks = max(ceil(delay / world.tick_lag) - 1, 1)
+		// why -1? good question, I have no idea but that's what makes it behave as the previous version used to
 
-			// Tolerance of 0.01 seconds due to byond float weirdness -Spy
-			if ((src.move_scheduled - world.time) <= 0.01 + lmt || src.move_scheduled + lmt > next)
-
-				src.move_scheduled = next
-				SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
-					src.internal_process_move(src.client ? src.client.key_state : 0)
-
-			last_move_ticklag = world.tick_lag
-
-/datum/keymap
-	var/list/keys = list()
-
-	New(data)
-		if (data)
-			for (var/key in data)
-				keys[parse_keybind(key)] = data[key]
-
-	proc/merge(datum/keymap/other)
-		for (var/key in other.keys)
-			src.keys[key] = other.keys[key]
-
-	proc/parse_keybind(keybind)
-		//Checks the input key and converts it to a usable format
-		//Wants input in the format "CTRL+F", as an example.
-		var/req_modifier = 0 //The modifier associated with this key
-		var/bound_key //The final key that should be bound
-		var/list/keys = splittext(keybind, "+")
-
-		if(keys.len > 1)
-			//We have multiple keys (modifiers + normal ones)
-			for(var/key in keys)
-				//If it's a modifier key, then change the required modifier
-				switch(key)
-					if("ALT")
-						req_modifier |= MODIFIER_ALT
-					if("SHIFT")
-						req_modifier |= MODIFIER_SHIFT
-					if("CTRL")
-						req_modifier |= MODIFIER_CTRL
-					else
-						//If it's not a modifier then use that as the target to bind
-						bound_key = key
-		else
-			//Only one key. Force it to be a command
-			bound_key = keybind
-
-		ASSERT(bound_key) //If we didn't get a bound key something hecked the heck up.
-
-		return uppertext("[req_modifier][bound_key]")
-
-	proc/check_keybind(pressed_key, modifier)
-		//If there is a modifier command on this key, then use that
-		var/command = keys[uppertext("[modifier][pressed_key]")]
-		//Otherwise fall back on the default behaviour
-		if(!command) command = keys[uppertext("0[pressed_key]")]
-		//DEBUG_MESSAGE("Check keybind for [usr]. Key: [pressed_key], modifier: [modifier]. Found command: [command ? command : "-none-"]")
-		return command
+		if (client) // should prevent stuck directions when reconnecting
+			return 1
 
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
@@ -412,19 +342,14 @@ var/list/dirty_keystates = list()
 
 /proc/start_input_loop()
 	SPAWN_DBG(0)
+		var/start_time
 		while (1)
+			start_time = TIME
 			process_keystates()
-			sleep(world.tick_lag)
 
-/client/Move()
-	// you'll be missed
-	// -- absolutely noone
+			for(var/client/C in clients_move_scheduled)
+				if(C?.mob && C.mob.move_scheduled_ticks-- <= 0 && /*decrease the countdown, check if we reached 0*/ \
+							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
+					clients_move_scheduled -= C
 
-	// fuck you.
-
-/datum/bind_set
-	var
-		name = ""
-
-		keys = 0
-		actions = list()
+			sleep(world.tick_lag - (TIME - start_time))

@@ -518,7 +518,7 @@ var/global/list/atomTooltips = new()
 
 
 //Hides click-toggle tooltips on player movement
-/mob/OnMove()
+/mob/OnMove(source = null)
 	..()
 
 	if (usr && src.client && src.client.tooltipHolder)

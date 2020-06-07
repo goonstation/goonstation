@@ -266,7 +266,7 @@
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+							items += /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 							item_amounts += 5
 						if(2)
 							items += /obj/item/clothing/ears/earmuffs/yeti
@@ -370,9 +370,8 @@
 				lock.read_device(user)
 			if (istype(trap))
 				trap.read_device(user)
-		else if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if (WELD.welding)
+		else if (isweldingtool(W))
+			if (W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'>The crate seems to be resistant to welding.</span>")
 				return
 			else

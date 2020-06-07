@@ -808,6 +808,16 @@ datum
 					dispersal = R.dispersal
 			return dispersal
 
+		proc/get_smoke_spread_mod()
+			if (!total_volume)
+				return 0
+			var/smoke_spread_mod = 9999
+			for (var/id in reagent_list)
+				var/datum/reagent/R = reagent_list[id]
+				if (R.smoke_spread_mod < smoke_spread_mod)
+					smoke_spread_mod = R.smoke_spread_mod
+			return smoke_spread_mod
+
 
 		// redirect my_atom.on_reagent_change() through this function
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
@@ -1050,11 +1060,8 @@ datum
 			if (classic)
 				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
 			else
-#if ASS_JAM
-				smoke_reaction(src, 0, location = my_atom ? get_turf(my_atom) : 0)
-#else
-				smoke_reaction(src, 5, location = my_atom ? get_turf(my_atom) : 0)
-#endif
+				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 

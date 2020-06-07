@@ -246,10 +246,10 @@
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
-				for(var/mob/H in mobs)
-					if (istype(H, /mob/new_player)) continue
-					if (H.client)
-						H.set_loc(get_turf(usr))
+				for (var/client/C)
+					if (!C.mob) continue
+					if (istype(C.mob, /mob/new_player)) continue
+					C.mob.set_loc(get_turf(usr))
 
 				logTheThing("admin", usr, null, "teleported all clients to themselves ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
 				logTheThing("diary", usr, null, "teleported all clients to themselves ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])", "admin")

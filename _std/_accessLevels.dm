@@ -85,9 +85,3 @@
 //Polaris access
 #define access_polariscargo 73
 #define access_polarisimportant 74
-
-//Reliquary access, reserving a couple - Azungar
-#define access_reliquarybasic 75
-#define access_reliquary2 76
-#define access_reliquary3 77
-#define access_reliquary4 78
