@@ -3,7 +3,7 @@
  * This needs to be this way, otherwise DM freaks out about .dm inclusions not inside //BEGIN_INCLUDE
  */
 
-#include "..\_stdlib\__build.dm"
+#include "__build.dm"
 #include "_metamacros.dm"
 #include "_accessLevels.dm"
 #include "_mapDefines.dm"
