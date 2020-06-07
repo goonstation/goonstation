@@ -1164,7 +1164,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
-	if (!isalive(src)) //can't resist when dead or unconcious
+	if (!isalive(src)) //can't resist when dead or unconscious
 		return
 
 	if (src.last_resist > world.time)

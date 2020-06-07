@@ -2811,7 +2811,7 @@
 /mob/living/carbon/human/resist()
 	..() // For resisting burning and grabs see living.dm
 	// Added this here (Convair880).
-	if (!isalive(src)) //can't resist when dead or unconcious
+	if (!isalive(src)) //can't resist when dead or unconscious
 		return
 
 	if (!src.restrained() && (src.shoes && src.shoes.chained))
