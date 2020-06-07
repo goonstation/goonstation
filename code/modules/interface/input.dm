@@ -342,7 +342,9 @@ var/list/clients_move_scheduled = list()
 
 /proc/start_input_loop()
 	SPAWN_DBG(0)
+		var/start_time
 		while (1)
+			start_time = TIME
 			process_keystates()
 
 			for(var/client/C in clients_move_scheduled)
@@ -350,4 +352,4 @@ var/list/clients_move_scheduled = list()
 							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
 					clients_move_scheduled -= C
 
-			sleep(world.tick_lag)
+			sleep(world.tick_lag - (TIME - start_time))
