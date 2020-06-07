@@ -1,5 +1,9 @@
 
 (t)sun jun 07 20
+(u)UrsulaMajor
+(p)977
+(e)🐛|bug
+(+)Fixed bug where critters could attack really fast
 (u)Tarmunroa
 (p)692
 (e)⚖🔄|balance, rework
