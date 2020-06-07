@@ -997,11 +997,13 @@
 
 		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
+			var/mob/M = C.mob
 
-			if (M.client && (M in hearers(src) || M.client.holder))
+			if ((M in hearers(src) || M.client.holder))
 				var/thisR = rendered
 				if (isghostdrone(M) || M.client.holder)
 					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)
@@ -1021,19 +1023,20 @@
 
 		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
+			var/mob/M = C.mob
 
-			if (M.client)
-				var/thisR = rendered
-				if (isghostdrone(M) || M.client.holder)
-					if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-					M.show_message(thisR, 2)
-				else if (M in hearers(src))
-					thisR = nohear
-					M.show_message(thisR, 2)
+			var/thisR = rendered
+			if (isghostdrone(M) || M.client.holder)
+				if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
+					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				M.show_message(thisR, 2)
+			else if (M in hearers(src))
+				thisR = nohear
+				M.show_message(thisR, 2)
 
 	say(message = "")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -1255,11 +1258,17 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("drone"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("drone")
 
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("drone_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("drone_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("drone_tg")
 
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0

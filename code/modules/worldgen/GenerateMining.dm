@@ -497,6 +497,13 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 41
 		prefabSizeY = 24
 
+	bee_sanctuary_space // MarkNstein's Sequestered Cloner
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_sequestered_cloner.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 15
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

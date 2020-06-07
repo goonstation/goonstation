@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
@@ -1276,6 +1275,11 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+
+	if(istype(src.loc, /obj/item/storage))
+		var/obj/item/storage/storage = src.loc
+		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
 	if (!istype(T))

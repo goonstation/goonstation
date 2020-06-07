@@ -114,7 +114,7 @@
 			boutput(M, rendered)
 		for (var/mob/M in gauntlet)
 			boutput(M, rendered)
-		for (var/mob/M in mobs)//world)
+		for (var/mob/M in mobs)
 			LAGCHECK(LAG_LOW)
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye

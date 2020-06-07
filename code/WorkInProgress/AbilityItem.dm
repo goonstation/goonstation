@@ -705,9 +705,11 @@
 
 	proc/disposing_abilities()
 		if (!isnull(ability_buttons))
+			src.hide_buttons()
 			for (var/obj/ability_button/A in ability_buttons)
-				A.the_item = null
+				qdel(A)
 			ability_buttons.len = 0
+		src.the_mob = null
 
 	proc/clear_mob()
 		if (islist(src.ability_buttons))
@@ -731,7 +733,7 @@
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
-		the_mob.item_abilities.Remove(ability_buttons)
+		the_mob.item_abilities?.Remove(ability_buttons)
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()
 /*
@@ -810,8 +812,10 @@
 
 	disposing() //probably best to do this?
 		if (src.the_item)
+			if(length(src.the_item.ability_buttons))
+				src.the_item.ability_buttons -= src
 			src.the_item = null
-		if (src.the_mob)
+		if (src.the_mob) // TODO: remove from mob properly
 			src.the_mob = null
 		..()
 

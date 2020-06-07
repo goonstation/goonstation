@@ -1001,7 +1001,8 @@ Frequency:
 		..()
 		hud = new(src)
 		src.attach_hud(hud)
-		bioHolder = new/datum/bioHolder( src )
+		if(!bioHolder)
+			bioHolder = new/datum/bioHolder( src )
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)
@@ -1039,10 +1040,17 @@ Frequency:
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
 
 	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		src.overlays = null

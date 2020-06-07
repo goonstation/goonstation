@@ -14,11 +14,12 @@
 
 	New()
 		..()
-		light = new light_type
-		light.set_brightness(src.brightness)
-		light.set_color(col_r, col_g, col_b)
-		light.set_height(src.height)
-		light.attach(src)
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(src.brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(src.height)
+			light.attach(src)
 
 	pickup(mob/user)
 		..()
@@ -29,6 +30,11 @@
 		SPAWN_DBG(0)
 			if (src.loc != user)
 				light.attach(src)
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 /obj/item/device/light/flashlight
 	name = "flashlight"

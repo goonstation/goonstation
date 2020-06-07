@@ -22,11 +22,11 @@
 // And for all:
 // RARITY_ABSTRACT: Used strictly for categorization. ABSTRACT symptoms will never appear.
 //                  ie. if lingual is a symptom category with multiple subsymptoms (for easy mutex), it should be abstract.
-#define RARITY_VERY_COMMON 10
-#define RARITY_COMMON 5
+#define RARITY_VERY_COMMON 1
+#define RARITY_COMMON 2
 #define RARITY_UNCOMMON 3
-#define RARITY_RARE 2
-#define RARITY_VERY_RARE 1
+#define RARITY_RARE 4
+#define RARITY_VERY_RARE 5
 #define RARITY_ABSTRACT 0
 
 datum/pathogen_cdc
@@ -1423,10 +1423,10 @@ datum/pathogen
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
-	proc/onemote(act)
-		suppressant.onemote(infected, act, src)
+	proc/onemote(act, voluntary)
+		suppressant.onemote(infected, act, voluntary, src)
 		for (var/effect in src.effects)
-			. *= effect:onemote(infected, act, src)
+			. *= effect:onemote(infected, act, voluntary, src)
 
 	// Act when dying. Returns nothing.
 	proc/ondeath()

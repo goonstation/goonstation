@@ -492,6 +492,13 @@
 			T.fluid_react_single("miasma", 10, airborne = 1)
 
 	proc/handle_decomposition()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+
+		if (T.temp_flags & HAS_KUDZU)
+			src.infect_kudzu()
+
 		var/suspend_rot = 0
 		if (src.decomp_stage >= 4)
 			suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
@@ -499,10 +506,7 @@
 				icky_icky_miasma(get_turf(src))
 			return
 
-		if (!isdead(src) || src.mutantrace)
-			return
-		var/turf/T = get_turf(src)
-		if (!T)
+		if (src.mutantrace)
 			return
 		suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
 		var/env_temp = 0
@@ -1996,12 +2000,14 @@
 
 		else if (istype(src.glasses, /obj/item/clothing/glasses/thermal/traitor))
 			src.sight |= SEE_MOBS //traitor item can see through walls
+			src.sight &= ~SEE_BLACKNESS
 			if (see_in_dark < SEE_DARK_FULL)
 				src.see_in_dark = SEE_DARK_FULL
 			if (see_invisible < 2)
 				src.see_invisible = 2
 			if (see_infrared < 1)
 				src.see_infrared = 1
+			render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		else if ((istype(src.glasses, /obj/item/clothing/glasses/thermal) || src.eye_istype(/obj/item/organ/eye/cyber/thermal)))	//  && (T && !isrestrictedz(T.z))
 			// This kinda fucks up the ability to hide things in infra writing in adv zones
@@ -2022,12 +2028,14 @@
 				src.see_in_dark = SEE_DARK_FULL
 			if (see_invisible < 2)
 				src.see_invisible = 2
+			render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		else if (istype(src.glasses, /obj/item/clothing/glasses/regular/ecto) || eye_istype(/obj/item/organ/eye/cyber/ecto))
 			if (see_in_dark != 1)
 				see_in_dark = 1
 			if (see_invisible < 15)
 				src.see_invisible = 15
+
 		else if (istype(src.glasses, /obj/item/clothing/glasses/nightvision) || eye_istype(/obj/item/organ/eye/cyber/nightvision) || src.bioHolder && src.bioHolder.HasEffect("nightvision"))
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 

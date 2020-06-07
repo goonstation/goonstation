@@ -576,7 +576,7 @@
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity, 2)
+					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
 			else if(isturf(target) && power > 20)
 				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
@@ -644,7 +644,7 @@
 
 	disposing()
 		if (movement_controller)
-			movement_controller.disposing()
+			movement_controller.dispose()
 
 		myhud.detach_all_clients()
 		myhud.master = null
@@ -893,7 +893,7 @@
 	ejectee.set_loc(location)
 
 	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.update_keymap()
+	ejectee.reset_keymap()
 	ejectee.recheck_keys()
 	if(src.pilot == ejectee)
 		src.pilot = null
@@ -963,7 +963,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.update_keymap()
+	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && !isghostcritter(boarder))
 		src.ion_trail.start()
@@ -1669,7 +1669,7 @@
 				playsound(src, "sound/machines/rev_engine.ogg", 40, 1)
 
 	get_move_velocity_magnitude()
-		.= movement_controller:velocity
+		.= movement_controller:velocity_magnitude
 
 	Install(obj/item/shipcomponent/S as obj)
 		if(S.system == "Locomotion")

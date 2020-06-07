@@ -1102,7 +1102,12 @@
 	Bumped(var/atom/A) //This is a bit hacky, sorry. Better than duplicating all the code.
 		if(isliving(A))
 			var/mob/living/L = A
-			L.click(src, list(), null, null)
+			var/mob/living/carbon/human/H
+			if(ishuman(L))
+				H = L
+			var/obj/item/held = L.equipped()
+			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
+				L.click(src, list(), null, null)
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2360,6 +2365,20 @@ var/global/list/cargopads = list()
 		else return
 
 /turf/simulated/floor/ancient
+	name = "strange surface"
+	desc = "A strange jet black metal floor. There are odd lines carved into it."
+	icon_state = "ancient"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		return
+
+	ex_act(severity)
+		return
+
+/turf/unsimulated/floor/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"

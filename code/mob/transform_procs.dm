@@ -195,6 +195,8 @@
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(W)
 		original.CopyOther(src.bioHolder)
+		if(W.bioHolder)
+			qdel(W.bioHolder)
 		W.bioHolder = original
 
 	var/mob/selfmob = src
