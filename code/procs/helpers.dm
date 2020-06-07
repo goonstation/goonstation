@@ -1809,7 +1809,7 @@ proc/countJob(rank)
 			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
 				the_ghost = TO.my_ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
 	//if (!G.client || G.client && G.client.suicide) // Suicided? Tough luck.
