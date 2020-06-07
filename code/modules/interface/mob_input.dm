@@ -165,7 +165,8 @@
 
 	var/fetched_keylist = C.cloud_get("custom_keybind_data")
 	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
-		C.keymap.overwrite_by_action(fetched_keylist)
+		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
+		C.keymap.overwrite_by_action(new_map)
 
 /** reset_keymap: Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.
  *  Called on: Login, Vehicle change, WASD/TG/AZERTY toggle, Keybind menu Reset

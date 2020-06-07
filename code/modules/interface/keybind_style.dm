@@ -131,8 +131,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/tg
 	name = "base_tg"
 	changed_keys = list(
-		"DELETE" = "stop_pull",
-		"C" = "resist"
+		"DELETE" = "stop_pull"
 	)
 
 /datum/keybind_style/azerty
@@ -193,7 +192,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"E" = "equip",
 	"X" = "swaphand",
 	"Z" = "attackself",
-	"Q" = "drop"
+	"Q" = "drop",
+	"C" = "resist"
 	)
 
 /datum/keybind_style/human/azerty
