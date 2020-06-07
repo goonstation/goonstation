@@ -133,7 +133,6 @@
 		if (!isnull(src.on_chair) && selection == src.on_chair)
 			src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
 			src.TakeDamage("head", 200, 0)
-			src.updatehealth()
 			SPAWN_DBG(50 SECONDS)
 				if (src && !isdead(src))
 					src.suiciding = 0
@@ -151,7 +150,6 @@
 			//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 			src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [he_or_she(src)]'s trying to commit suicide.</b></span>")
 			src.take_oxygen_deprivation(175)
-			src.updatehealth()
 			SPAWN_DBG(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
 				if (src && !isdead(src))
 					src.suiciding = 0

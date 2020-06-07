@@ -389,7 +389,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	else
 		dat += text("</B><BR>")
 	if (src.part4)
-		dat += text("<br>Air Tank Pressure: [src.part4.air_contents.return_pressure()] (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)<BR>")
+		dat += text("<br>Air Tank Pressure: [MIXTURE_PRESSURE(src.part4.air_contents)] (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)<BR>")
 	else
 		dat += text("<br>No Air Tank Attached!<BR>")
 	if(src.part5)
@@ -477,7 +477,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		//Too little pressure to spray
 		var/datum/gas_mixture/environment = currentturf.return_air()
 		if(!part4 ||!part4.air_contents || !environment) break
-		if(environment.return_pressure() > part4.air_contents.return_pressure())
+		if(MIXTURE_PRESSURE(environment) > MIXTURE_PRESSURE(part4.air_contents))
 			if(!previousturf && length(turflist)>1)
 				break
 			reagentperturf = reagentlefttotransfer
@@ -511,8 +511,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		reagentperturf += increment
 		if(lit)
 			//currentturf.hotspot_expose(spray_temperature,2)
-			currentturf.reagents.set_reagent_temp(spray_temperature)
-			currentturf.reagents.temperature_react()
+			currentturf.reagents.set_reagent_temp(spray_temperature, TRUE)
 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
 
 		var/logString = log_reagents(part5)

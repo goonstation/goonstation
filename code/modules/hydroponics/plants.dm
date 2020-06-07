@@ -8,6 +8,7 @@
 // obj/machinery/plantpot.dm: The plantpot file, where most of the Stuff happens.
 // obj/submachine/seed.dm: The splicer and reagent extractor are in here.
 
+ABSTRACT_TYPE(/datum/plant)
 /datum/plant/
 	// Standard variables for plants are added here.
 	var/name = "plant species name" // Name of the plant species
@@ -15,8 +16,8 @@
 	var/growthmode = "normal" // what "family" is this plant part of? used for various things
 	var/nothirst = 0          // For weeds - won't die or halt growth from drought
 	var/simplegrowth = 0      // For boring decorative plants that don't do anything
-	var/special_icon = null   // If you need the icon to be different to the name
-	var/special_dmi = null    // If you need a new DMI for whatever reason. why not!
+	var/plant_icon = null    // If you need a new DMI for whatever reason. why not!
+	var/override_icon_state = null   // If you need the icon to be different to the name
 	var/crop = null // What crop does this plant produce?
 	var/force_seed_on_harvest = 0 // an override so plants like synthmeat can give seeds
 	var/starthealth = 0 // What health does this plant start at?

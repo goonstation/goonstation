@@ -936,7 +936,6 @@
 				return
 
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-			user.updatehealth()
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(user, 100)
@@ -1431,7 +1430,7 @@ var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',
 'sound/machines/glitch3.ogg',
 'sound/misc/automaton_tickhum.ogg',
 'sound/misc/automaton_ratchet.ogg',
-'sound/misc/automaton_spaz.ogg',
+'sound/misc/automaton_scratch.ogg',
 'sound/musical_instruments/Gong_Rumbling.ogg',
 'sound/ambience/industrial/Precursor_Drone2.ogg',
 'sound/ambience/industrial/Precursor_Choir.ogg',

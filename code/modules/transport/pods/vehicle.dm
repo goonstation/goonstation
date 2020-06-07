@@ -65,7 +65,7 @@
 
 	remove_air(amount as num)
 		if(atmostank && atmostank.air_contents)
-			if(life_support && life_support.active && atmostank.air_contents.return_pressure() < 1000)
+			if(life_support && life_support.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
 				life_support.power_used = 5 * passengers + 15
 				atmostank.air_contents.oxygen += amount / 5
 				atmostank.air_contents.nitrogen += 4 * amount / 5
@@ -97,7 +97,7 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		user.lastattacked = src
-		if (health < maxhealth && istype(W, /obj/item/weldingtool) && W:welding)
+		if (health < maxhealth && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
@@ -178,7 +178,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
@@ -644,7 +644,7 @@
 
 	disposing()
 		if (movement_controller)
-			movement_controller.disposing()
+			movement_controller.dispose()
 
 		myhud.detach_all_clients()
 		myhud.master = null
@@ -1238,8 +1238,8 @@
 	dat += "<B>Current Power Usage:</B> [src.powercurrent]/[src.powercapacity]<BR>"
 	dat += "<B>Air Status:</B> "
 	if(src.atmostank && src.atmostank.air_contents)
-		var/pressure = atmostank.air_contents.return_pressure()
-		var/total_moles = atmostank.air_contents.total_moles()
+		var/pressure = MIXTURE_PRESSURE(atmostank.air_contents)
+		var/total_moles = TOTAL_MOLES(atmostank.air_contents)
 
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
@@ -1261,8 +1261,8 @@
 	dat += "<B>Fuel Status:</B> "
 	if(src.fueltank && src.fueltank.air_contents)
 
-		var/pressure = fueltank.air_contents.return_pressure()
-		var/total_moles = fueltank.air_contents.total_moles()
+		var/pressure = MIXTURE_PRESSURE(fueltank.air_contents)
+		var/total_moles = TOTAL_MOLES(fueltank.air_contents)
 
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 

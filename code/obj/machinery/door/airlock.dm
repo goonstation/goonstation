@@ -100,6 +100,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/HTML = null
 	var/has_panel = 1
 
+	var/no_access = 0
+
 	autoclose = 1
 	power_usage = 50
 	operation_time = 6
@@ -115,6 +117,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+
+/obj/machinery/door/airlock/check_access(obj/item/I)
+	if (no_access) //nope :)
+		return 0
+	.= ..()
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -901,7 +909,6 @@ About the new airlock wires panel:
 		return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
@@ -1450,9 +1457,8 @@ About the new airlock wires panel:
 		..()
 		return
 
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1, burn_eyes = 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 		if (!src.welded)
 			src.welded = 1
@@ -1793,6 +1799,7 @@ obj/machinery/door/airlock
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	initialize()
+		..()
 		if(frequency)
 			set_frequency(frequency)
 

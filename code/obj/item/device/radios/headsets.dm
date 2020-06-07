@@ -74,6 +74,26 @@
 		)
 	bicon_override = "ai"
 
+/obj/item/device/radio/headset/command/nt
+	name = "NT Headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_colors = list(
+		"h" = RADIOC_COMMAND,
+		"g" = RADIOC_SECURITY,
+		"e" = RADIOC_ENGINEERING,
+		"r" = RADIOC_RESEARCH,
+		"m" = RADIOC_MEDICAL,
+		"c" = RADIOC_CIVILIAN,
+		)
+	bicon_override = "nt"
+
 /obj/item/device/radio/headset/command/captain
 	name = "Captain's Headset"
 	icon_state = "captain headset"

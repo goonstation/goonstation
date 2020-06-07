@@ -163,8 +163,11 @@ mob/new_player
 		if(current_state <= GAME_STATE_PREGAME)
 			statpanel("Lobby")
 			if(client.statpanel=="Lobby" && ticker)
-				for(var/mob/new_player/player in mobs)
-					if (player.client && player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
+				for (var/client/C)
+					var/mob/new_player/player = C.mob
+					if (!istype(player)) continue
+
+					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
 							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
 						else // are we not an admin?
@@ -294,10 +297,10 @@ mob/new_player
 		return 0
 
 
-	proc/AttemptLateSpawn(var/datum/job/JOB)
+	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (JOB && IsJobAvailable(JOB))
+		if (JOB && (force || IsJobAvailable(JOB)))
 			var/mob/character = create_character(JOB, JOB.allow_traitors)
 			if (isnull(character))
 				return
@@ -318,7 +321,7 @@ mob/new_player
 					starting_loc = pick(rp_latejoin)
 
 				if (istype(starting_loc))
-					starting_loc.add_person_to_queue(character)
+					starting_loc.add_person_to_queue(character, JOB)
 				else
 					starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
 					character.set_loc(starting_loc)
@@ -616,7 +619,6 @@ a.latejoin-card:hover {
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-			antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)

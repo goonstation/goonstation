@@ -126,7 +126,8 @@
 
 			dat += "<A href='?src=\ref[src];op=temp;val=-10'>--</A> <A href='?src=\ref[src];op=temp;val=-5'>-</A>"
 
-			dat += " <A href='?src=\ref[src];op=set_temp'> [set_temperature]&deg;C </A>"
+			dat += " <A href='?src=\ref[src];op=set_temp'>[set_temperature]&deg;C</A> "
+
 			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A> <A href='?src=\ref[src];op=temp;val=10'>++</A><BR>"
 
 			src.add_dialog(user)
@@ -166,7 +167,7 @@
 					var/max = src.emagged ? 400 : 90
 					var/min = src.emagged ? -120 : 90
 
-					set_temperature = clamp(set_temperature + value, -min, max)
+					set_temperature = clamp(value, -min, max)
 
 				if("temp")
 					var/value = text2num(href_list["val"])
@@ -216,7 +217,7 @@
 					else
 						heating = 0
 
-					var/transfer_moles = src.emagged ? 0.5 * env.total_moles() : 0.25 * env.total_moles()
+					var/transfer_moles = src.emagged ? 0.5 * TOTAL_MOLES(env) : 0.25 * TOTAL_MOLES(env)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -224,7 +225,7 @@
 
 					if(removed)
 
-						var/heat_capacity = removed.heat_capacity()
+						var/heat_capacity = HEAT_CAPACITY(removed)
 						//boutput(world, "heating ([heat_capacity])")
 						var/current_power = 0
 						if(heating)
@@ -422,7 +423,7 @@
 					else
 						heating = 0
 
-					var/transfer_moles = 0.25 * env.total_moles()
+					var/transfer_moles = 0.25 * TOTAL_MOLES(env)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -430,7 +431,7 @@
 
 					if(removed)
 
-						var/heat_capacity = removed.heat_capacity()
+						var/heat_capacity = HEAT_CAPACITY(removed)
 						//boutput(world, "heating ([heat_capacity])")
 						if(heating)
 							removed.temperature = (removed.temperature*heat_capacity + heating_power)/heat_capacity

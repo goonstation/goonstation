@@ -99,11 +99,13 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
+			var/obj/item/cable_coil/coil = W
+			if(!coil.use(1))
+				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			src.setSpecialOverride(/datum/item_special/spark, 0)
 			src.material_prints += ", electrically charged"
-			W:amount--
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
@@ -453,7 +455,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
 		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
-		if(slot != SLOT_GLOVES) return 0 
+		if(slot != SLOT_GLOVES) return 0
 
 		var/netnum = 0
 		if(src.overridespecial)

@@ -179,6 +179,7 @@
 							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 2)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
+							health_update_queue |= M
 							W.lower_cooldowns(0.10)
 							boutput(M, __blue("You finish chewing on [HH], but what a feast it was!"))
 						else
@@ -213,6 +214,7 @@
 							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 1)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
+							health_update_queue |= M
 							W.lower_cooldowns(0.10)
 							boutput(M, __blue("Your feast was interrupted, but it satisfied your hunger for the time being."))
 						else

@@ -290,11 +290,9 @@
 			var/turf/T = get_turf(src.loc)
 			if(T)
 				explosion_new(src, T, 32)
-			user.updatehealth()
 			return 1
 
 	user.visible_message("<span class='alert'><b>[user] spikes [src]. It bounces back up and hits [him_or_her(user)] square in the forehead!</b></span>")
 	user.TakeDamage("head", 150, 0)
 	playsound(src.loc, "sound/items/bball_bounce.ogg", 50, 1)
-	user.updatehealth()
 	return 1

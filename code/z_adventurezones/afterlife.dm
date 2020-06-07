@@ -87,6 +87,7 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "afterlife_hell"
 	requires_power = 0
 	teleport_blocked = 1
+	ambient_light = "#222222"
 
 /area/afterlife/arenaspawn
 	name = "THE ARENA SPAWN"

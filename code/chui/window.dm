@@ -320,7 +320,7 @@ chui/window
 		src << browse( null, "window=[window]" )//Might not be a standard chui window but we'll play along.
 		if(src && src.mob)
 			//boutput(world, "[src] was [src.mob.machine], setting to null")
-			if (win && win.theAtom && isobj(win.theAtom))
+			if (istype(win) && win.theAtom && isobj(win.theAtom))
 				win.theAtom:remove_dialog(src.mob)
 			else
 				src.mob.remove_dialogs()

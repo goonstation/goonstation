@@ -457,8 +457,8 @@
 	containername = "Emergency Equipment"
 
 /datum/supply_packs/alcohol
-	name = "Alcohol Crate"
-	desc = "x9 Assorted Liquor"
+	name = "Alcohol Resupply Crate"
+	desc = "A collection of nine assorted liquors in case of stationwide alcohol deficiency"
 	category = "Civilian Department"
 	contains = list(/obj/item/storage/box/beer,
 					/obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -473,6 +473,19 @@
 	cost = 400
 	containertype = /obj/storage/crate
 	containername = "Alcohol Crate"
+
+/datum/supply_packs/cocktailparty
+	name = "Cocktail Party Supplies"
+	desc = "All the equipment you need to be the next up and coming amateur mixologist."
+	category = "Civilian Department"
+	contains = list(/obj/item/reagent_containers/food/drinks/cocktailshaker,
+					/obj/item/storage/box/cocktail_umbrellas = 2,
+					/obj/item/storage/box/cocktail_doodads = 2,
+					/obj/item/storage/box/fruit_wedges = 1,
+					/obj/item/shaker/salt = 1)
+	cost = 100
+	containertype = /obj/storage/crate
+	containername = "Cocktail Party Supplies"
 
 /datum/supply_packs/robot
 	name = "Robotics Crate"

@@ -60,7 +60,6 @@
 		if(6)
 			boutput(affected_mob, "<span class='alert'>Your skin feels as if it's about to burst off...</span>")
 			affected_mob.take_toxin_damage(10)
-			affected_mob.updatehealth()
 			if(prob(35)) //So everyone can feel like robot Seth Brundle
 
 				var/bdna = null // For forensics (Convair880).

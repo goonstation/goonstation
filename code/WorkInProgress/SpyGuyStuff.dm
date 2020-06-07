@@ -31,7 +31,7 @@ Fibre wire
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
-			B.icon = icon('icons/obj/aibots.dmi', "skullbot-ominous")
+			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"
 			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
 			B.set_loc(get_turf(user))
@@ -51,8 +51,11 @@ Fibre wire
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
-			for(var/mob/dead/observer/O in mobs)
-				if(O && O.client && O.mind && !O.mind.dnr)
+
+			for (var/client/C)
+				var/mob/dead/observer/O = C.mob
+				if (!istype(C)) continue
+				if(O.mind && !O.mind.dnr)
 					possible_targets.Add(O)
 
 

@@ -7,6 +7,7 @@
 	flags = FPRINT
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	p_class = 1.2
 
 /obj/mopbucket/New()
@@ -19,18 +20,13 @@
 	. = ..()
 	STOP_TRACKING
 
-/obj/mopbucket/get_desc(dist)
-	if (dist > 1)
+/obj/mopbucket/get_desc(dist, mob/user)
+	if (dist > 2)
 		return
 	if (!reagents)
 		return
-	. = "<br><span class='notice'>It contains:</span>"
-	if(reagents.reagent_list.len)
-		for(var/current_id in reagents.reagent_list)
-			var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-			. += "<br><span class='notice'>[current_reagent.volume] units of [current_reagent.name]</span>"
-	else
-		. += "<br><span class='notice'>Nothing. The answer is nothing.</span>"
+	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
+	return
 
 /obj/mopbucket/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/mop))

@@ -536,8 +536,8 @@
 					P.sprite = dominantspecies.sprite
 				else
 					P.sprite = dominantspecies.name
-				P.special_icon = dominantspecies.special_icon
-				P.special_dmi = dominantspecies.special_dmi
+				P.override_icon_state = dominantspecies.override_icon_state
+				P.plant_icon = dominantspecies.plant_icon
 				P.crop = dominantspecies.crop
 				P.force_seed_on_harvest = dominantspecies.force_seed_on_harvest
 				P.harvestable = dominantspecies.harvestable
@@ -1077,7 +1077,7 @@
 /obj/submachine/chem_extractor/proc/doExtract(var/obj/item/I)
 	// Welp -- we don't want anyone extracting these. They'll probably
 	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/everyflavor))
+	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
 		src.extract_to.reagents.add_reagent("sugar", 50)
 		return
 

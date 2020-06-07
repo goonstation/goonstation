@@ -394,8 +394,8 @@
 	item_state = "tasers"
 	force = 8.0
 	two_handed = 1
-	click_delay = 15
 	can_dual_wield = 0
+	shoot_delay = 6
 
 	New()
 		cell = new/obj/item/ammo/power_cell/high_power
@@ -410,6 +410,12 @@
 			set_icon_state("tasers[ratio]")
 			return
 
+	attack_self()
+		..()
+		if(istype(current_projectile, /datum/projectile/energy_bolt))
+			shoot_delay = 4
+		else
+			shoot_delay = 6
 
 
 ////////////////////////////////////VUVUV
@@ -431,6 +437,32 @@
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "vuvuzela[ratio]"
+
+//////////////////////////////////////Crabgun
+/obj/item/gun/energy/crabgun
+	name = "a strange crab"
+	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
+	icon = 'icons/obj/crabgun.dmi'
+	icon_state = "crabgun"
+	item_state = "crabgun-world"
+	inhand_image_icon = 'icons/obj/crabgun.dmi'
+	w_class = 4.0
+	force = 12.0
+	throw_speed = 8
+	throw_range = 12
+	rechargeable = 0
+	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
+	current_projectile = new/datum/projectile/claw
+	projectiles = null
+	is_syndicate = 1
+	custom_cell_max_capacity = 15000 //endless crab
+
+	New()
+		current_projectile = new/datum/projectile/claw
+		projectiles = list(current_projectile)
+		..()
+
+
 
 //////////////////////////////////////Disruptor
 /obj/item/gun/energy/disruptor
@@ -905,6 +937,7 @@
 	update_icon()
 		return
 
+
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
 	name = "Shrink ray"
@@ -1174,7 +1207,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = md5(H.bioHolder.Uid)
+				owner_prints = H.bioHolder.uid_hash
 				src.name = "HoS [H.real_name]'s Lawbringer"
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
@@ -1192,7 +1225,7 @@
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (md5(H.bioHolder.Uid) != owner_prints))
+			if (owner_prints && (H.bioHolder.uid_hash != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1331,7 +1364,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (md5(user.bioHolder.Uid) == owner_prints))
+		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
 			return 1
 		return 0
 

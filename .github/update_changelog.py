@@ -25,6 +25,7 @@ labels_to_emoji = {
 	'bug-minor': '🐛',
 	'bug-trivial': '🐛',
 	'enhancement': '🆕',
+	'feature': '🆕',
 	'removal': '⛔',
 	'sprites': '🎨',
 	'mapping': '🗺',
@@ -127,7 +128,8 @@ def main():
 		print("No changelog provided.")
 		return
 
-	status = update_changelog(repo, os.environ["CHANGELOG_PATH"], date_string, pr_data, "Changelog for #{}".format(pr.number))
+	changelog_path = os.environ["ASS_CHANGELOG_PATH"] if any(label.name == 'ass-jam' for label in pr.labels) else os.environ["CHANGELOG_PATH"]
+	status = update_changelog(repo, changelog_path, date_string, pr_data, "Changelog for #{}".format(pr.number))
 
 	if not status:
 		sys.exit(1) # scream at people

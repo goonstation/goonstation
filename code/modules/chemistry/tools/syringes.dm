@@ -178,7 +178,7 @@
 						for (var/mob/O in AIviewers(world.view, user))
 							O.show_message(text("<span class='alert'>[] injects [] with the syringe!</span>", user, target), 1)
 
-					src.reagents.reaction(target, INGEST)
+					src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 
 				if (istype(target,/obj/item/reagent_containers/patch))
 					var/obj/item/reagent_containers/patch/P = target

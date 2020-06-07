@@ -30,11 +30,9 @@ var/global/client/ff_debugger = null
 		ff_debugger = usr.client
 
 		//Properties for open tiles (/floor)
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-	//var/water = 0
+	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
+	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -75,7 +73,7 @@ var/global/client/ff_debugger = null
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				opacity = (src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
 		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
 		return
@@ -182,7 +180,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = -11
+	plane = PLANE_FLOOR
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID
@@ -432,11 +430,10 @@ var/global/client/ff_debugger = null
 	var/datum/air_group/oldparent = null //Ditto.
 
 	//For unsimulated static air tiles such as ice moon surface.
-	var/oxyold = null
-	var/co2old = null
-	var/nitold = null
-	var/toxold = null
-	var/tempold = null
+	var/temp_old = null
+	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
+	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
+	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -445,11 +442,10 @@ var/global/client/ff_debugger = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
-			oxyold = src.oxygen
-			co2old = src.carbon_dioxide
-			nitold = src.nitrogen
-			toxold = src.toxins
-			tempold = src.temperature
+			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
+			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
+			#undef _OLD_GAS_VAR_ASSIGN
+			temp_old = src.temperature
 
 
 	if (istype(src, /turf/simulated/floor))
@@ -576,13 +572,14 @@ var/global/client/ff_debugger = null
 			else if(istype(N.air)) //Unsimulated tile (likely space) - > Simulated tile  // fix runtime: Cannot execute null.zero()
 				N.air.zero()
 
-			if (N.air && (oxyold || co2old || nitold || toxold)) //Unsimulated tile w/ static atmos -> simulated floor handling
-				N.air.oxygen += oxyold
-				N.air.carbon_dioxide += co2old
-				N.air.nitrogen += nitold
-				N.air.toxins += toxold
+			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
+			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
+				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
+				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
-					N.air.temperature = tempold
+					N.air.temperature = temp_old
+			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
@@ -787,6 +784,11 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
+/turf/unsimulated/grimycarpet
+	name = "grimy carpet"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grimy"
+
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -840,7 +842,7 @@ var/global/client/ff_debugger = null
 	layer = 60
 	name = "Space Station 13"
 	desc = "The title card for it, at least."
-	plane = 11
+	plane = PLANE_OVERLAY_EFFECTS
 	pixel_x = -96
 
 	New()
@@ -854,6 +856,9 @@ var/global/client/ff_debugger = null
 		icon_state = "title_manta"
 		name = "The NSS Manta"
 		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
+	#endif
+	#if defined(REVERSED_MAP)
+		transform = list(-1, 0, 0, 0, 1, 0)
 	#endif
 		lobby_titlecard = src
 
@@ -1044,6 +1049,15 @@ var/global/client/ff_debugger = null
 /turf/unsimulated/floor/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		dir = pick(NORTH,SOUTH)
+
+/turf/unsimulated/pool/no_animate
+	name = "pool floor"
+	icon = 'icons/obj/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
 	New()

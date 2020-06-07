@@ -45,6 +45,7 @@ datum/preferences
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
+	var/auto_capitalization = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	//var/use_tg = 0 //Are they animals and want to use TG's keybinds? // mbc moved to dropdowns
@@ -607,7 +608,7 @@ datum/preferences
 	</tr>
 	<tr>
 		<th>
-			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon&trade;.">?</span>
+			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon™.">?</span>
 		</th>
 		<td colspan="2">
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
@@ -621,7 +622,8 @@ datum/preferences
 			[((user && ismob(user)) && user.client && user.client.is_mentor()) ? "<a href=\"[pref_link]toggle_mentorhelp=1\" class=\"toggle\">[crap_checkbox(src.see_mentor_pms)] Display Mentorhelps</a><span class=\"info-thing\" title=\"[pick("how to forgot swedish?", "how i collect urine", "why do i exploded", "I'm just punching myself with food.", "no im a wizard and i ate a bean and it said 'Oh yeah! This tastes like Pina colada' and I was erased.")]\">?</span><br>" : ""]
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
-			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads </a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span>
+			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
 		</td>
 	</tr>
 	<tr>
@@ -883,6 +885,7 @@ datum/preferences
 </style>
 
 <div style="float: right;">
+	<a href="byond://?src=\ref[src];preferences=1;closejobswindow=1">Back to Setup</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;jobswindow=1">Refresh</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;resetalljobs=1"><b>Reset All Jobs</b></a>
 </div>
@@ -1445,6 +1448,9 @@ datum/preferences
 		if (link_tags["flying_chat_hidden"])
 			src.flying_chat_hidden = !(src.flying_chat_hidden)
 
+		if (link_tags["auto_capitalization"])
+			src.auto_capitalization = !(src.auto_capitalization)
+
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
 			src.admin_music_volume = max(0,min(src.admin_music_volume,100))
@@ -1605,8 +1611,8 @@ datum/preferences
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
-					if( length( newname ) < 3 || length( newname ) > 32 )
-						alert( user, "The name must be between 3 and 32 letters!" )
+					if( length( newname ) < 3 || length( newname ) > MOB_NAME_MAX_LENGTH )
+						alert( user, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!" )
 					else
 						var/ret = src.cloudsave_save( user.client, newname )
 						if( istext( ret ) )
@@ -1662,6 +1668,7 @@ datum/preferences
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			auto_capitalization = 0
 			listen_ooc = 1
 			view_changelog = 1
 			view_score = 1

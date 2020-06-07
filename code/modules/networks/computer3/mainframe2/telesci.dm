@@ -391,7 +391,7 @@ proc/is_teleportation_allowed(var/turf/T)
 									var/turf/simulated/T = scanTurf
 									if(T.active_hotspot)
 										burning = 1
-								message_host("command=scan_reply&o2=[GM.oxygen]&tox=[GM.toxins]&n2=[GM.nitrogen]&co2=[GM.carbon_dioxide]&temp=[GM.temperature]&pressure=[GM.return_pressure()][(burning)?("&burning=1"):(null)]")
+								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else
 								message_host("command=scan_reply&cause=noatmos")
 
@@ -865,6 +865,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
@@ -874,6 +875,10 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
 					src.link.master = src
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	receive_signal(datum/signal/signal)
 		if(status & (NOPOWER|BROKEN) || !src.link)

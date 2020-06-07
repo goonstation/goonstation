@@ -1092,7 +1092,6 @@ PIPE BOMBS + CONSTRUCTION
 				var/damage = 30 / (get_dist(M, src) + 1)
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
-				M.updatehealth()
 
 			SPAWN_DBG (100)
 				if (src)
@@ -1145,10 +1144,9 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(W)
 				qdel(src)
 		#endif
-		if(istype(W, /obj/item/weldingtool) && state == 1)
+		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
-			W:eyecheck(user)
 			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
 			src.state = 2
 			icon_state = "Pipe_Hollow"

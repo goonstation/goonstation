@@ -17,7 +17,6 @@
 	butcherable = 1
 
 	is_npc = 1
-	var/datum/aiHolder/aquatic/ai = null
 
 	var/health_brute = 10
 	var/health_brute_vuln = 1
@@ -29,6 +28,12 @@
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
+
+/mob/living/critter/aquatic/disposing()
+	if(ai)
+		ai.dispose()
+	ai = null
+	..()
 
 /mob/living/critter/aquatic/setup_healths()
 	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -53,7 +58,6 @@
 			if(Bu && !is_heat_resistant())
 				Bu.TakeDamage(water_need * out_of_water_debuff)
 			hit_twitch(src)
-			updatehealth()
 	else if(src.max_health > src.health && prob(10 * src.in_water_buff))
 		var/datum/healthHolder/Br = get_health_holder("brute")
 		if (Br && Br.maximum_value > Br.value)
@@ -61,7 +65,6 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
-		updatehealth()
 
 /mob/living/critter/aquatic/Move(NewLoc, direct)
 	. = ..()
@@ -150,18 +153,14 @@
 
 /mob/living/critter/aquatic/fish/New()
 	..()
+	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
-
-	src.ai = new /datum/aiHolder/aquatic/fish()
-	src.ai.owner = src
-	mobs.Remove(src)
 
 	/*SPAWN_DBG(0)
 		if(src.client)
 			src.is_npc = 0
 		else // i mean, i can't imagine many scenarios where a player controlled fish also needs AI that doesn't even run
-			src.ai = new /datum/aiHolder/aquatic/fish()
-			src.ai.owner = src
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
 			mobs.Remove(src)*/
 
 /mob/living/critter/aquatic/fish/Move(NewLoc, direct)
@@ -385,8 +384,7 @@
 		if(src.client)
 			src.is_npc = 0
 		else
-			src.ai = new /datum/aiHolder/aquatic/king_crab()
-			src.ai.owner = src
+			src.ai = new /datum/aiHolder/aquatic/king_crab(src)
 
 /mob/living/critter/aquatic/king_crab/Move(NewLoc, direct)
 	. = ..()

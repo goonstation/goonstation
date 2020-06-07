@@ -491,14 +491,13 @@
 				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
 
 		if(2)
-			if (istype(W, /obj/item/weldingtool))
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
 				if (!do_after(user, 30))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				W:eyecheck(user)
 				boutput(user, "You weld the joints of the frame together.")
 				stage = 3
 			else
@@ -668,14 +667,13 @@
 				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
 
 		if(8)
-			if (istype(W, /obj/item/weldingtool))
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
 				if (!do_after(user, 30))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				W:eyecheck(user)
 				boutput(user, "You weld the seams of the outer skin to make it air-tight.")
 				stage = 9
 			else
@@ -1439,14 +1437,13 @@
 				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
 
 		if(2)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W))
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
 				if (!do_after(user, 30))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				W:eyecheck(user)
 				boutput(user, "You weld the joints of the frame together.")
 				stage = 3
 			else
@@ -1616,8 +1613,8 @@
 				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
 
 		if(8)
-			if (istype(W, /obj/item/weldingtool))
-				if(!W:try_weld(user, 1, burn_eyes = 1))
+			if (isweldingtool(W))
+				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
 				if (!do_after(user, 30))

@@ -43,7 +43,7 @@ Contains:
 		if(rider && rider_visible && W.force)
 			W.attack(rider, user)
 			user.lastattacked = src
-			if (attacks_fast_eject || rider.getStatusDuration("weakened") || rider.getStatusDuration("stunned") || rider.getStatusDuration("paralysis"))
+			if (attacks_fast_eject || rider.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_rider()
 			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
 		return
@@ -1441,7 +1441,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.set_loc(src.loc)
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
 		return
 
 	var/msg
@@ -2013,9 +2013,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/New()
 	..()
-	actual_light = new /datum/light/point
+	actual_light = new /datum/light/line
 	actual_light.set_color(0.5, 0.5, 0.1)
-	actual_light.set_brightness(0.8)
+	actual_light.set_brightness(3)
 	actual_light.attach(src)
 
 /obj/vehicle/forklift/examine()

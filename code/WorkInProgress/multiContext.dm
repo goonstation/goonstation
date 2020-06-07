@@ -309,8 +309,8 @@ var/list/globalContextActions = null
 			contextButtons.Remove(C)
 			if(C.overlays)
 				C.overlays = list()
-			if(C.underlays)
-				C.underlays = list()
+			/*if(C.underlays)
+				C.underlays = list()*/
 
 			pool(C)
 		return
@@ -379,6 +379,7 @@ var/list/globalContextActions = null
 		//trans = trans.Reset()
 		transform = trans
 
+		background = null
 		var/possible_bg = action.buildBackgroundIcon(target,user)
 		if (possible_bg)
 			background = possible_bg

@@ -64,6 +64,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	pregame_timeleft = 150 // raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
+	#if ASS_JAM
+	vote_manager.active_vote = new/datum/vote_new/mode("assday")
+	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	#endif
 
 	// let's try doing this here, yoloooo
 	if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
@@ -99,11 +103,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
-
-	#if ASS_JAM //who the hell knows if this works, i can't be arsed to check.
-	if(prob(10))
-		src.mode = "assday"
-	#endif
 
 	if(hide_mode)
 		#ifdef RP_MODE
@@ -154,8 +153,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	Z_LOG_DEBUG("Game Start", "Animating client colors to black now")
 	var/list/animateclients = list()
-	for (var/mob/new_player/P in mobs)
-		if (P.ready && P.client)
+	for (var/client/C)
+		if (!istype(C.mob,/mob/new_player))
+			continue
+		var/mob/new_player/P = C.mob
+		if (P.ready)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -198,11 +200,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		//Cleanup some stuff
-		for(var/obj/landmark/start/S in landmarks)//world)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				S.dispose()
+		cleanup_landmarks()
 
 		event_wormhole_buildturflist()
 
@@ -469,9 +467,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
-				var/turf/location = get_turf(player.loc)
-				var/area/escape_zone = locate(map_settings.escape_centcom)
-				if (location in escape_zone)
+				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
 				player.unlock_medal("Survivor", 1)
 
@@ -533,6 +529,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		final_score = 0
 	else
 		final_score = 100
+
+	boutput(world, score_tracker.escapee_facts())
+
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	for (var/mob/living/silicon/ai/aiPlayer in AIs)
@@ -608,20 +607,20 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			//check if escaped
 			//if we are dead - get the location of our corpse
-			var/player_body_escaped = player.on_centcom()
+			var/player_body_escaped = in_centcom(player)
 			var/player_dead = isdead(player) || isVRghost(player) || isghostcritter(player)
 			if (istype(player,/mob/dead/observer))
 				player_dead = 1
 				var/mob/dead/observer/O = player
 				if (O.corpse)
-					player_body_escaped = O.corpse.on_centcom()
+					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (istype(player,/mob/dead/target_observer))
 				player_dead = 1
 				var/mob/dead/target_observer/O = player
 				if (O.corpse)
-					player_body_escaped = O.corpse.on_centcom()
+					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (isghostdrone(player))
@@ -780,3 +779,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			return
 //Anything else, like sandbox, return.
 */
+
+/datum/controller/gameticker/proc/cleanup_landmarks()
+	for(var/obj/landmark/start/S in landmarks)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if (S.name != "AI")
+			S.dispose()

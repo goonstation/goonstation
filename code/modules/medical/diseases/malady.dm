@@ -288,7 +288,6 @@
 					affected_mob.losebreath ++
 				if (prob(5))
 					affected_mob.take_oxygen_deprivation(rand(1,2))
-					affected_mob.updatehealth()
 				if (prob(5))
 					affected_mob.emote(pick("twitch", "groan", "gasp"))
 				if (prob(1))
@@ -377,7 +376,6 @@
 			affected_mob.cure_disease(D)
 			return
 
-		H.ensure_bp_list()
 		var/cureprob = 0
 		if (H.blood_pressure["total"] < 666) // very high bp
 			cureprob += 5
@@ -410,7 +408,6 @@
 				affected_mob.losebreath = max(affected_mob.losebreath, 1)
 			if (prob(2))
 				affected_mob.take_oxygen_deprivation(1)
-				affected_mob.updatehealth()
 			if (prob(2))
 				affected_mob.emote("gasp")
 
@@ -503,7 +500,6 @@
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 		if (3)
 			affected_mob.take_oxygen_deprivation(1)
-			affected_mob.updatehealth()
 			if (prob(8))
 				affected_mob.emote(pick("twitch", "gasp"))
 			if (prob(1)) // down from 5
@@ -583,4 +579,3 @@
 		H.changeStatus("weakened", 6 SECONDS)
 		H.losebreath+=20
 		H.take_oxygen_deprivation(20)
-		H.updatehealth()

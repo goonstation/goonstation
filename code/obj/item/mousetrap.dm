@@ -259,7 +259,6 @@
 			if (affecting)
 				affecting.take_damage(1, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 
 		else if (iscritter(target))
 			var/mob/living/critter/C = target

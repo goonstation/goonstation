@@ -24,7 +24,6 @@
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
 
-	var/speedy = 0 		//for industrial booties, to avoid type checks on shoe
 	var/magnetic = 0    //for magboots, to avoid type checks on shoe
 
 	setupProperties()
@@ -185,7 +184,20 @@
 	kick_bonus = 2
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
-	magnetic = 1
+	abilities = list(/obj/ability_button/magboot_toggle)
+
+	proc/activate()
+		src.magnetic = 1
+		src.setProperty("movespeed", 0.5)
+		src.setProperty("disorient_resist", 10)
+		step_sound = "step_lattice"
+		playsound(src.loc, "sound/items/miningtool_on.ogg", 30, 1)
+	proc/deactivate()
+		src.magnetic = 0
+		src.delProperty("movespeed")
+		src.delProperty("disorient_resist")
+		step_sound = "step_plating"
+		playsound(src.loc, "sound/items/miningtool_off.ogg", 30, 1)
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -221,7 +233,14 @@
 	module_research = list("efficiency" = 5, "engineering" = 5, "mining" = 10)
 	laces = LACES_NONE
 	kick_bonus = 2
-	speedy = 1
+
+/obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
+	. = ..()
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
+
+/obj/item/clothing/shoes/industrial/unequipped(mob/user)
+	. = ..()
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
@@ -473,7 +492,7 @@
 	proc/allow_thrust(num, mob/user as mob) // blatantly c/p from jetpacks
 		if (!src.on || !istype(src.tank))
 			return 0
-		if (!isnum(num) || num < 0.01 || src.tank.air_contents.total_moles() < num)
+		if (!isnum(num) || num < 0.01 || TOTAL_MOLES(src.tank.air_contents) < num)
 			return 0
 
 		var/datum/gas_mixture/G = src.tank.air_contents.remove(num)
@@ -485,7 +504,6 @@
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
@@ -495,7 +513,7 @@
 
 	get_desc(dist)
 		if (dist <= 1)
-			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [src.tank.air_contents.return_pressure()]." : "<span class='alert'>They have no tank attached!</span>"]"
+			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : "<span class='alert'>They have no tank attached!</span>"]"
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 

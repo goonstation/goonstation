@@ -1,6 +1,4 @@
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1
-
 #if defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
 
@@ -33,6 +31,9 @@
 
 #elif defined(MAP_OVERRIDE_SAMEDI)
 #include "samedi.dm"
+
+#elif defined(MAP_OVERRIDE_PAMGOC)
+#include "pamgoc.dm"
 
 #elif defined(MAP_OVERRIDE_OSHAN)
 #include "oshan.dm"

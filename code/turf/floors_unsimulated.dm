@@ -787,6 +787,52 @@
 	name = "Vspace"
 	icon_state = "flashyblue"
 
+///////////
+
+/turf/unsimulated/floor/airless/plating
+	name = "plating"
+	icon_state = "plating"
+	intact = 0
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/airless/plating/scorched
+	icon_state = "panelscorched"
+
+/turf/unsimulated/floor/airless/plating/damaged1
+	icon_state = "platingdmg1"
+
+/turf/unsimulated/floor/airless/plating/damaged2
+	icon_state = "platingdmg2"
+
+/turf/unsimulated/floor/airless/plating/damaged3
+	icon_state = "platingdmg3"
+
+//////////////
+
+/turf/unsimulated/floor/airless/grime
+	icon_state = "floorgrime"
+
+/////////////
+
+/turf/unsimulated/floor/airless/white
+	icon_state = "white"
+
+/turf/unsimulated/floor/airless/white/side
+	icon_state = "whitehall"
+
+/turf/unsimulated/floor/airless/white/corner
+	icon_state = "whitecorner"
+
+/turf/unsimulated/floor/airless/white/checker
+	icon_state = "whitecheck"
+
+/turf/unsimulated/floor/airless/white/checker2
+	icon_state = "whitecheck2"
+
+/turf/unsimulated/floor/airless/white/grime
+	icon_state = "floorgrime-w"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/snow
