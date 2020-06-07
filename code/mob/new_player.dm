@@ -413,7 +413,7 @@ mob/new_player
 				c = limit
 
 			// if there's still an open space, show a final join link
-			if (limit == -1 || (limit > maxslots && c < J.limit))
+			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
 
 			// show slots up to the limit
@@ -423,7 +423,7 @@ mob/new_player
 
 			return {"
 				<tr><td class='latejoin-link'>
-					[(J.limit == -1 || c < J.limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
 					</td>
 					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 				</tr>
