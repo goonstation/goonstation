@@ -6,6 +6,7 @@ var/list/action_names = list(
 	"togglethrow" = "Throw (Toggle)",
 	"swaphand" = "Swap Hand",
 	"equip" = "Equip",
+	"resist" = "Resist",
 
 	"fart" = "Fart",
 	"flip" = "Flip",
