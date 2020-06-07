@@ -11,7 +11,7 @@
 var/global/list/datum/keybind_style/keybind_styles = null
 
 //The data you get from get_keybind... will be merged with existing keybind datum on the client in layers
-//base -> base_wasd -> human -> human_wasd for example
+//base -> base_wasd -> human -> human_arrow for example
 //If you switch to a different mobtype, such as a robot, you would reset the keymap, and successive calls of build_keymap will apply_keybind
 //A more optimized solution would be to rebuild only what is needed, but you can code that.
 
