@@ -83,6 +83,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"ALT+L" = "looc",
 	"ALT+T" = "dsay",
 	"CTRL+T" = "asay",
+	"Z" = "resist",
 	"F" = "fart",
 	"R" = "flip",
 	"CTRL+A" = "salute",
@@ -130,7 +131,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/tg
 	name = "base_tg"
 	changed_keys = list(
-		"DELETE" = "stop_pull"
+		"DELETE" = "stop_pull",
+		"C" = "resist"
 	)
 
 /datum/keybind_style/azerty
@@ -139,7 +141,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Z" = KEY_FORWARD,
 		"S" = KEY_BACKWARD,
 		"Q" = KEY_LEFT,
-		"D" = KEY_RIGHT
+		"D" = KEY_RIGHT,
+		"W" = "resist"
 	)
 
 //
