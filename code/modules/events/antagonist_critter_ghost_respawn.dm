@@ -34,7 +34,7 @@
 					EV.Add(S.loc)
 				LAGCHECK(LAG_HIGH)
 
-			for(var/obj/landmark/S in clownstart + monkeystart + blobstart + kudzustart)
+			for(var/atom/A in clownstart + monkeystart + blobstart + kudzustart)
 				EV.Add(S.loc)
 				LAGCHECK(LAG_HIGH)
 

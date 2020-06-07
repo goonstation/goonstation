@@ -156,7 +156,7 @@ var/datum/event_controller/random_events
 		else
 			dat += "Next random event at [round(next_major_event / 600)] minutes into the round.<br>"
 			dat += "Next minor event at [round(next_minor_event / 600)] minutes into the round.<br>"
-			dat += "Next minor event at [round(next_spawn_event / 600)] minutes into the round.<br>"
+			dat += "Next spawn event at [round(next_spawn_event / 600)] minutes into the round.<br>"
 
 		dat += "<b><a href='byond://?src=\ref[src];EnableEvents=1'>Random Events Enabled:</a></b> [events_enabled ? "Yes" : "No"]<br>"
 		dat += "<b><a href='byond://?src=\ref[src];EnableMEvents=1'>Minor Events Enabled:</a></b> [minor_events_enabled ? "Yes" : "No"]<br>"
