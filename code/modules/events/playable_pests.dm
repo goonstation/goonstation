@@ -3,7 +3,7 @@
 
 	required_elapsed_round_time = 5 MINUTES
 
-	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
+	var/ghost_confirmation_delay = 1 MINUTES // time to acknowledge or deny respawn offer.
 	var/list/pest_invasion_critter_types = list(\
 	list(/mob/living/critter/small_animal/fly/weak, /mob/living/critter/small_animal/mosquito/weak,),\
 	list(/mob/living/critter/small_animal/cat/weak,),\
