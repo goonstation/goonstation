@@ -33,10 +33,6 @@
 	return 1
 
 /datum/game_mode/flock/post_setup()
-	var/flockmind_spawn = pick(blobstart)
-
-	for (var/datum/mind/flockmind in flockminds)
-		flockmind.current.set_loc(flockmind_spawn)
 	//TODO
 	return 1
 
@@ -44,7 +40,7 @@
 	//TODO
 	..()
 
-/datum/game_mode/nuclear/declare_completion()
+/datum/game_mode/flock/declare_completion()
 	//TODO
 	..()
 
