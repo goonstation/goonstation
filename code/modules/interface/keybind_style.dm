@@ -75,6 +75,10 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"A" = KEY_LEFT,
 	"S" = KEY_BACKWARD,
 	"D" = KEY_RIGHT,
+	"NORTH" = KEY_FORWARD,
+	"SOUTH" = KEY_BACKWARD,
+	"WEST" = KEY_LEFT,
+	"EAST" = KEY_RIGHT,
 	"B" = KEY_POINT,
 	"T" = "say",
 	"Y" = "say_radio",
@@ -117,15 +121,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"RETURN" = "mainfocus",
 	"`" = "admin_interact",
 	"~" = "admin_interact"
-	)
-
-/datum/keybind_style/arrow
-	name = "base_arrow"
-	changed_keys = list(
-		"NORTH" = KEY_FORWARD,
-		"SOUTH" = KEY_BACKWARD,
-		"WEST" = KEY_LEFT,
-		"EAST" = KEY_RIGHT,
 	)
 
 /datum/keybind_style/tg

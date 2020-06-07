@@ -143,9 +143,6 @@
 
 	C.apply_keybind("base")
 
-	if (!C.preferences.use_wasd)
-		C.apply_keybind("base_arrow")
-
 	if (C.preferences.use_azerty)
 		C.apply_keybind("base_azerty")
 	if (C.tg_controls)
