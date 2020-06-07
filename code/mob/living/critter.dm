@@ -1189,10 +1189,12 @@
 			severity++
 		switch(severity)
 			if (1)
-				gib()
+				SPAWN_DBG(0)
+					gib()
 			if (2)
 				if (health < max_health * 0.35 && prob(50))
-					gib()
+					SPAWN_DBG(0)
+						gib()
 				else
 					TakeDamage("All", rand(10, 30), rand(10, 30))
 			if (3)

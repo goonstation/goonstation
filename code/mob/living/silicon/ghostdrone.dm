@@ -1160,15 +1160,18 @@
 		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
-				src.gib(1)
+				SPAWN_DBG(0)
+					src.gib(1)
 
 			if (2.0)
-				src.TakeDamage(null, round(src.health / 2, 1.0))
-				src.changeStatus("stunned", 10 SECONDS)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 2, 1.0))
+					src.changeStatus("stunned", 10 SECONDS)
 
 			if (3.0)
-				src.TakeDamage(null, round(src.health / 3, 1.0))
-				src.changeStatus("stunned", 50)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 3, 1.0))
+					src.changeStatus("stunned", 50)
 
 	blob_act(var/power)
 		if (src.nodamage) return

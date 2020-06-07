@@ -294,7 +294,8 @@
 		if (src.bioHolder && src.bioHolder.Uid && src.bioHolder.bloodType) //ZeWaka: Fix for null.bioHolder
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
-		gibs(src.loc, virus, null, bdna, btype)
+		SPAWN_DBG(0)
+			gibs(src.loc, virus, null, bdna, btype)
 
 		qdel(src)
 		return

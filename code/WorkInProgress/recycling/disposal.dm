@@ -341,7 +341,6 @@
 				SPAWN_DBG(1 DECI SECOND)
 					if(AM)
 						AM.throw_at(target, 5, 1)
-				LAGCHECK(LAG_REALTIME)
 
 			H.vent_gas(T)	// all gas vent to turf
 			pool(H)
@@ -1847,7 +1846,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, src.throw_range, 1)
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1928,7 +1926,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 
