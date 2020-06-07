@@ -431,7 +431,7 @@ datum
 			fluid_b = 121
 			transparency = 180
 			disease = /datum/ailment/disease/avian_flu
-		
+
 		disease/mewtini
 			name = "Mewtini"
 			id = "mewtini"
@@ -444,7 +444,7 @@ datum
 			taste = "hairy"
 			thirst_value = -0.5
 			disease = /datum/ailment/disease/going_catty
-	
+
 		disease/cocktail_sheltestgrog
 			name = "sheltestgrog"
 			id = "sheltestgrog"
@@ -472,7 +472,17 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				return // for now
+				// sure just fucking splash around in the stuff
+				// this is mainly so puddles from the sweating symptom can infect
+				for (var/uid in src.pathogens)
+					var/datum/pathogen/P = src.pathogens[uid]
+					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
+					if(istype(M, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = M
+						if(prob(1-H.get_disease_protection()))
+							H.show_message("Ew, some of that disgusting green stuff touched you!")
+							H.infected(P)
+				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				return

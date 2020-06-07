@@ -2181,18 +2181,12 @@ datum/pathogeneffects/malevolent/snaps/jazz
 			switch(origin.stage)
 				if (1 to 2)
 					snap(M, origin)
-				if (3)
-					snap(M, origin)
-					if (prob(50))
-						snap(M, origin)
-				if (4 to 5)
-					snap(M, origin)
-					snap(M, origin)
-					if (prob((origin.stage - 3)*3))
-						snap(M, origin)
+				if (3 to 5)
+					if (prob((origin.stage - 3)*3)) // jazz first so we can jam right away
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							jazz(H)
+						snap(M, origin)
 
 	may_react_to()
 		return "The pathogen seems like it might respond to strong sonic impulses."
