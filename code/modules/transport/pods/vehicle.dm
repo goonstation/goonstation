@@ -576,7 +576,7 @@
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity, 2)
+					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
 			else if(isturf(target) && power > 20)
 				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
@@ -1669,7 +1669,7 @@
 				playsound(src, "sound/machines/rev_engine.ogg", 40, 1)
 
 	get_move_velocity_magnitude()
-		.= movement_controller:velocity
+		.= movement_controller:velocity_magnitude
 
 	Install(obj/item/shipcomponent/S as obj)
 		if(S.system == "Locomotion")
