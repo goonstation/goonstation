@@ -1,3 +1,4 @@
+name: label-merge-conflicts
 on:
   push:
     branches:
