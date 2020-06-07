@@ -84,6 +84,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"Y" = "say_radio",
 	"ALT+W" = "whisper",
 	"ALT+C" = "ooc",
+	"O" = "ooc",
 	"ALT+L" = "looc",
 	"ALT+T" = "dsay",
 	"CTRL+T" = "asay",
