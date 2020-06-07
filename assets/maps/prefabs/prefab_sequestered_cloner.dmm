@@ -84,7 +84,7 @@
 "NM" = (/obj/machinery/vending/coffee,/turf/simulated/floor/plating,/area)
 "NY" = (/obj/machinery/door_control{id = "seq_cloner_containment"; name = "cloner containment toggle"; pixel_x = 8; pixel_y = -23},/obj/blind_switch/area/south{pixel_y = -22},/obj/decal/cleanable/blood/tracks{dir = 4},/turf/simulated/floor/purple/side{dir = 6},/area)
 "Ob" = (/obj/machinery/door_control{id = "seq_release"; pixel_x = 24; pixel_y = 9},/obj/storage/secure/closet/fridge{locked = 0},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = 9; pixel_y = -6},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = 9; pixel_y = -1},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = 9; pixel_y = 4},/obj/item/plant/herb/cannabis/white/spawnable{pixel_y = 9; pixel_x = 9},/obj/item/plant/herb/cannabis/white/spawnable{pixel_y = -6},/obj/item/plant/herb/cannabis/white/spawnable{pixel_y = -1},/obj/item/plant/herb/cannabis/white/spawnable{pixel_y = 4},/obj/item/plant/herb/cannabis/white/spawnable{pixel_y = 9},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = -9; pixel_y = -6},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = -9; pixel_y = -1},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = -9; pixel_y = 4},/obj/item/plant/herb/cannabis/white/spawnable{pixel_x = -9; pixel_y = 9},/turf/simulated/floor/yellow/side{dir = 6},/area)
-"OE" = (/obj/cable{icon_state = "5-6"},/obj/cable{icon_state = "5-10"},/obj/item_dispenser/idcarddispenser,/turf/simulated/floor/damaged2,/area)
+"OE" = (/obj/cable{icon_state = "5-6"},/obj/cable{icon_state = "5-10"},/turf/simulated/floor/damaged2,/area)
 "OY" = (/obj/cable{icon_state = "5-6"},/turf/simulated/floor/yellow/side{dir = 8},/area)
 "Pt" = (/obj/machinery/atmospherics/pipe/simple/insulated{dir = 9},/obj/item/rods/steel{pixel_x = -6; pixel_y = -6},/obj/cable{icon_state = "5-10"},/turf/simulated/floor/plating,/area)
 "PD" = (/obj/machinery/atmospherics/unary/furnace_connector{dir = 1},/obj/machinery/power/furnace/thermo,/turf/simulated/floor/plating,/area)
@@ -107,7 +107,6 @@
 "WK" = (/obj/machinery/power/data_terminal,/obj/cable{icon_state = "0-2"},/obj/cable{icon_state = "0-8"},/obj/machinery/networked/mainframe/seq_cloner{pixel_x = 5; pixel_y = -2; tag = "Seq_Cloner"},/obj/submachine/slot_machine{pixel_x = -7; pixel_y = -3},/turf/simulated/floor/yellow,/area)
 "WS" = (/obj/machinery/atmospherics/pipe/manifold,/turf/simulated/floor/plating,/area)
 "WX" = (/turf/simulated/floor/yellow/side{dir = 4},/area)
-"Xn" = (/obj/landmark/start/latejoin,/turf/simulated/floor,/area)
 "XK" = (/obj/cable{icon_state = "2-9"},/obj/item/rods/steel{pixel_y = -7; pixel_x = -8},/turf/simulated/floor/plating,/area)
 "XO" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{dir = 1},/turf/simulated/floor/plating,/area)
 "XS" = (/obj/stool/chair/yellow{dir = 1},/obj/item/disk/data/floppy/read_only{desc = "A discarded disk. A serial number was lazily written on, now faded."; name = "discarded floppy"; pixel_y = 9; pixel_x = -3},/turf/simulated/floor,/area)
@@ -121,7 +120,7 @@ hBhBhBhBhBhwEEdohBhBhBhBhBhBhBhBhBhBhBhB
 hBhBhBhBtIbmBvbmtIhBhBhBhBhBhBhBhBhBhBhB
 hBtItItItImmFELrtItItItItItItIhBhBhBhBhB
 tItItIWKtIbmBvbmtItvCwpMqkZStItItItItIhB
-tIVtrWzrtIKmJoXntIRzLfXSSKulGctWQyqatIhB
+tIVtrWzrtIKmJoKmtIRzLfXSSKulGctWQyqatIhB
 tIGwKmgeHQOErLoOBJymdHhtvgmYNYSXLhxQtIhB
 tIGwpRObLSKmjkKOtIGgBkNMnSVKnStIMetItItI
 tIOYWXtItItItItItItItItItItItItIerzfoUtI
