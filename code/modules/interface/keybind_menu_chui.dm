@@ -26,7 +26,7 @@ chui/window/keybind_menu
 
 		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset,#reset_cloud{background: #f8d248}</style>"
 
-		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">You can only rebind keys you have access to when opening the window.</span></i></b></td></tr></thead>"
+		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">You can only rebind keys you have access to when opening the window. Ex: You can only change human hotkeys if you are currently human.</span></i></b></td></tr></thead>"
 
 		html += "<tbody><tr><td>Action</td><td>Corresponding Keybind</td></tr>"
 
