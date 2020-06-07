@@ -2528,11 +2528,13 @@
 					//	sight_therm = 1
 
 				if (sight_meson)
+					src.sight &= ~SEE_BLACKNESS
 					src.sight |= SEE_TURFS
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 					vision.set_scan(1)
 					client.color = "#c2ffc2"
 				else
+					src.sight |= SEE_BLACKNESS
 					src.sight &= ~SEE_TURFS
 					client.color = null
 					vision.set_scan(0)
