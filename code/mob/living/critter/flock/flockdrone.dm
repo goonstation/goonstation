@@ -39,8 +39,7 @@
 	..()
 
 	// ai setup
-	src.ai = new /datum/aiHolder/flock/drone()
-	src.ai.owner = src
+	src.ai = new /datum/aiHolder/flock/drone(src)
 
 	SPAWN_DBG(3 SECONDS) // aaaaaaa
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')

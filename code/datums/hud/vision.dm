@@ -59,6 +59,8 @@
 				add_screen(color_mod)
 
 		animate_color_mod(color, duration)
+			if(color_mod.color == color)
+				return
 			animate(color_mod, color = color, time = duration)
 			SPAWN_DBG(duration + 1)
 				if (color == "#000000")
@@ -74,6 +76,8 @@
 			dither.alpha = alpha
 
 		animate_dither_alpha(alpha, duration)
+			if(dither.alpha == alpha)
+				return
 			animate(dither, alpha = alpha, time = duration)
 			SPAWN_DBG(duration + 1)
 				if (alpha > 0)

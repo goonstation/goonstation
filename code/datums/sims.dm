@@ -44,7 +44,7 @@
 
 			simsController.register_motive(src)
 
-	dispose()
+	disposing()
 		if (hud)
 			qdel(hud)
 			hud = null
@@ -701,10 +701,6 @@ var/global/datum/simsControl/simsController = new()
 		simsController.simsHolders -= src
 
 	disposing()
-		cleanup()
-		..()
-
-	dispose()
 		cleanup()
 		..()
 

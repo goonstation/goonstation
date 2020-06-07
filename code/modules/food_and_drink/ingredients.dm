@@ -120,6 +120,7 @@
 	icon_state = "nugget0"
 	amount = 2
 	initial_volume = 15
+	doants = 0 // imagine 1000 nuggets on one tile all checking the other 999 nuggets if they aren't a table, yeah
 
 	New()
 		..()

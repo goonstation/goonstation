@@ -126,6 +126,11 @@ datum/pathogeneffects
 	proc/ondeath(var/mob/M as mob, var/datum/pathogen/origin)
 		return
 
+	// oncured(mob, datum/pathogen) : void
+	// OVERRIDE: Overriding this is situational.
+	proc/oncured(var/mob/M as mob, var/datum/pathogen/origin)
+		return
+
 
 	// End of events: please do not add any event definitions outside this block.
 	// ====
@@ -1360,54 +1365,6 @@ datum/pathogeneffects/malevolent/capacitor/unlimited
 	react_to(var/R, var/zoom)
 		if (R == "voltagen")
 			return "The pathogen appears to have the ability to infinitely absorb the voltagen."
-
-datum/pathogeneffects/malevolent/sunglass
-	name = "Sunglass Glands"
-	desc = "The infected grew sunglass glands."
-	infect_type = INFECT_NONE
-	rarity = RARITY_UNCOMMON
-
-	proc/glasses(var/mob/living/carbon/human/M as mob)
-		M.show_message("<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")]</span>")
-		var/obj/item/clothing/glasses/G = M.glasses
-		if (G)
-			M.u_equip(G)
-			if (M.client)
-				M.client.screen -= G
-			G.loc = M.loc
-			G.dropped(M)
-			G.layer = initial(G.layer)
-		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
-		N.loc = M
-		N.layer = M.layer
-		N.master = M
-		M.glasses = N
-		M.update_clothing()
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		switch(origin.stage)
-			if (2 to 4)
-				if (ishuman(M))
-					if (!(M:glasses) || !(istype(M:glasses, /obj/item/clothing/glasses/sunglasses)))
-						if (prob(15))
-							glasses(M)
-			if (5)
-				if (ishuman(M))
-					if (!(M:glasses) || !(istype(M:glasses, /obj/item/clothing/glasses/sunglasses)))
-						if (prob(25))
-							glasses(M)
-
-	may_react_to()
-		return "The pathogen appears to be sensitive to sudden flashes of light."
-
-	react_to(var/R, var/zoom)
-		if (R == "flashpowder")
-			if (zoom)
-				return "The individual microbodies appear to be wearing sunglasses."
-			else
-				return "The pathogen appears to have developed a resistance to the flash powder."
 
 datum/pathogeneffects/malevolent/liverdamage
 	name = "Hepatomegaly"
