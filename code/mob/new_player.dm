@@ -267,8 +267,6 @@ mob/new_player
 			return 0
 		if (!JOB || !istype(JOB,/datum/job/) || JOB.limit == 0)
 			return 0
-		if((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && istype(JOB,/datum/job/command/))
-			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
 		if (JOB.requires_whitelist)
@@ -409,6 +407,10 @@ mob/new_player
 			var/maxslots = 5
 			var/list/slots = list()
 			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
+
+			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution)) 
+				c = limit
 
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < J.limit))
