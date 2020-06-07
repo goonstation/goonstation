@@ -721,6 +721,24 @@
 		icon_state = "sonicbee-wings"
 		sleeping_icon_state = "sonicbee-sleep"
 
+	ascbee
+		name = "ASCBee"
+		desc = "This bee looks rather... old school."
+		icon_body = "ascbee"
+		icon_state = "ascbee-wings"
+		sleeping_icon_state = "ascbee-sleep"
+		angertext = "beeps aggressively at"
+		honey_color = rgb(0, 255, 0)
+
+		attack_hand(mob/user as mob)
+			if(src.alive && user.a_intent=="help")
+				src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				if(prob(15))
+					for(var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'><b>[src]</b> beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].</span>",2)
+				return
+			else
+				..()
 /* -------------------- END -------------------- */
 
 /* -------------------- BASE BEE STUFF -------------------- */

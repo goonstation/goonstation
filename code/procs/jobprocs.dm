@@ -53,8 +53,10 @@
 
 	var/list/unassigned = list()
 
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready && !player.mind.assigned_role)
+	for (var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
 	if (unassigned.len == 0)

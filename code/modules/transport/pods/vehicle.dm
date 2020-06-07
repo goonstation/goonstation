@@ -97,7 +97,7 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		user.lastattacked = src
-		if (health < maxhealth && istype(W, /obj/item/weldingtool) && W:welding)
+		if (health < maxhealth && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
@@ -644,7 +644,7 @@
 
 	disposing()
 		if (movement_controller)
-			movement_controller.disposing()
+			movement_controller.dispose()
 
 		myhud.detach_all_clients()
 		myhud.master = null
@@ -893,7 +893,7 @@
 	ejectee.set_loc(location)
 
 	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.update_keymap()
+	ejectee.reset_keymap()
 	ejectee.recheck_keys()
 	if(src.pilot == ejectee)
 		src.pilot = null
@@ -963,7 +963,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.update_keymap()
+	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && !isghostcritter(boarder))
 		src.ion_trail.start()

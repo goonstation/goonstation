@@ -776,18 +776,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
-	spread_projectile_type = /datum/projectile/laser/wasp
+	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
 
-
-	proc/throw_egg(var/turf/T)
-		if (T)
-			var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = new(T)
-			W.throw_impact(T)
 
 	on_launch(var/obj/projectile/P)
 		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
@@ -812,19 +807,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/typetospawn = null
 	var/hasspawned = null
 
-	on_launch(obj/projectile/O)
-		hasspawned = null
-
 	on_hit(atom/hit, direction, projectile)
-		if(ismob(hit)&&typetospawn)
-			hasspawned = new typetospawn(get_turf(hit))
-			return 1
+		if(ismob(hit) && typetospawn)
+			hasspawned = 1
+			. = new typetospawn(get_turf(hit))
+		return 
 
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
-			hasspawned = new typetospawn(get_turf(O))
-			return 1
+			. = new typetospawn(get_turf(O))
+		hasspawned = null
+		return 
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
@@ -837,6 +831,39 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = null
 	icon_turf_hit = null
 	typetospawn = /obj/item/gun/kinetic/derringer
+
+
+/datum/projectile/special/spawner/wasp //shoot wasps
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon_state = "critter_egg"
+	name = "space wasp egg"
+	brightness = 0
+	sname = "space wasp egg"
+	shot_sound = null
+	shot_number = 1
+	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	hit_ground_chance = 0
+	damage_type = D_KINETIC
+	power = 15
+	dissipation_delay = 30
+	dissipation_rate = 1
+	ks_ratio = 1.0
+	cost = 10
+	window_pass = 0
+	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+
+	on_hit(atom/hit, direction, projectile)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
+		if(istype(W))
+			W.throw_impact(get_turf(hit))
+
+	on_end(obj/projectile/O)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
+		if(istype(W))
+			W.throw_impact(get_turf(O))
+		
+
+
 
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
@@ -856,15 +883,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	typetospawn = /obj/machinery/bot/secbot
 
 	on_hit(atom/hit)
-		if(..())
+		var/obj/machinery/bot/secbot/beepsky = ..()
+		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
 			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
-			var/obj/machinery/bot/secbot/beepsky = hasspawned
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy
 
 	on_end(obj/projectile/O)
-		if(..())
-			var/obj/machinery/bot/secbot/beepsky = hasspawned
+		var/obj/machinery/bot/secbot/beepsky = ..()
+		if(istype(beepsky))
 			beepsky.emagged = 1

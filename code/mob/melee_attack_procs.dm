@@ -953,6 +953,7 @@
 								target.force_laydown_standup()
 							if (src.disarm_RNG_result == "attack_self_with_item_shoved")
 								step_away(target, owner, 1)
+								target.OnMove(owner)
 
 					if ("shoved_down")
 						target.deliver_move_trigger("pushdown")
@@ -964,6 +965,7 @@
 						target.force_laydown_standup()
 					if ("shoved")
 						step_away(target, owner, 1)
+						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
 

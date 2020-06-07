@@ -236,6 +236,78 @@
 			c_flags = SPACEWEAR | COVERSEYES
 			see_face = 0.0
 			protective_temperature = 1300
+			abilities = list(/obj/ability_button/nukie_meson_toggle)
+			var/on = 0
+
+			attack_self(mob/user)
+				src.toggle(user)
+
+			proc/toggle(var/mob/toggler)
+				src.on = !src.on
+				playsound(get_turf(src), "sound/items/mesonactivate.ogg", 30, 1)
+				if (ishuman(toggler))
+					var/mob/living/carbon/human/H = toggler
+					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
+						if (src.on)
+							H.vision.set_scan(1)
+						else
+							H.vision.set_scan(0)
+
+			equipped(var/mob/living/user, var/slot)
+				if(!isliving(user))
+					return
+				if (slot == "head" && on)
+					user.vision.set_scan(1)
+
+			unequipped(var/mob/living/user)
+				if(!isliving(user))
+					return
+				user.vision.set_scan(0)
+
+		medic
+			name = "specialist health monitor"
+			icon_state = "syndie_specialist"
+			item_state = "syndie_specialist"
+			var/client/assigned = null
+
+			process()
+				if (assigned)
+					assigned.images.Remove(health_mon_icons)
+					src.addIcons()
+
+					if (loc != assigned.mob)
+						assigned.images.Remove(health_mon_icons)
+						assigned = null
+
+					//sleep(2 SECONDS)
+				else
+					processing_items.Remove(src)
+
+			proc/addIcons()
+				if (assigned)
+					for (var/image/I in health_mon_icons)
+						if (!I || !I.loc || !src)
+							continue
+						if (I.loc.invisibility && I.loc != src.loc)
+							continue
+						else
+							assigned.images.Add(I)
+
+			equipped(var/mob/user, var/slot)
+				if (slot == "head")
+					assigned = user.client
+					SPAWN_DBG(-1)
+						//updateIcons()
+						if (!(src in processing_items))
+							processing_items.Add(src)
+				return
+
+			unequipped(var/mob/user)
+				if (assigned)
+					assigned.images.Remove(health_mon_icons)
+					assigned = null
+					processing_items.Remove(src)
+				return
 
 		sniper
 			name = "specialist combat cover"

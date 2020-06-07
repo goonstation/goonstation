@@ -41,9 +41,7 @@ proc/debug_color_of(var/thing)
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
-		var/mobs = 0
-		for(var/mob/M in mobs)
-			mobs++
+		var/mobs = global.mobs.len
 
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
@@ -160,6 +158,7 @@ proc/debug_color_of(var/thing)
 		if (disable_next_click)
 			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
 			return
+
 		for(var/mob/M in mobs)
 			if(!M.client)
 				continue
@@ -502,7 +501,7 @@ proc/debug_color_of(var/thing)
 						pipe_image.color = debug_color_of(pipe.parent)
 					var/datum/gas_mixture/air = pipe.return_air()
 					if(show_numbers)
-						if(TOTAL_MOLES(air) > 0.01)
+						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
 							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
 						else if(TOTAL_MOLES(air) > 0)
@@ -734,6 +733,7 @@ proc/debug_color_of(var/thing)
 			for(var/img in infoOverlayImages)
 				img = infoOverlayImages[img]//shhh
 				screen -= img
+				images -= img
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
