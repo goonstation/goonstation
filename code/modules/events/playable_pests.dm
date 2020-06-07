@@ -36,13 +36,14 @@
 					EV.Add(S.loc)
 				LAGCHECK(LAG_HIGH)
 
-			for(var/atom/A in clownstart + monkeystart + blobstart + kudzustart)
-				EV.Add(A)
-				LAGCHECK(LAG_HIGH)
+
+			EV += (clownstart + monkeystart + blobstart + kudzustart)
 
 			if(!EV.len)
-				message_admins("Pests event couldn't find a pest landmark!")
-				return
+				EV += latejoin
+				if (!EV.len)
+					message_admins("Pests event couldn't find a pest landmark!")
+					return
 
 			var/atom/pestlandmark = pick(EV)
 
