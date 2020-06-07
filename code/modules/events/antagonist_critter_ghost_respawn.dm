@@ -35,7 +35,7 @@
 				LAGCHECK(LAG_HIGH)
 
 			for(var/atom/A in clownstart + monkeystart + blobstart + kudzustart)
-				EV.Add(S.loc)
+				EV.Add(A)
 				LAGCHECK(LAG_HIGH)
 
 			if(!EV.len)
