@@ -2809,9 +2809,12 @@
 //MBC : oh god there's like 6 different code paths for the 'rip apart handcuffs' ability
 //																						pls standardize later
 /mob/living/carbon/human/resist()
-	..() // For resisting burning and grabs see living.dm
+	. = ..() // For resisting burning and grabs see living.dm
 	// Added this here (Convair880).
-	if (!src.stat && !src.restrained() && (src.shoes && src.shoes.chained))
+	if (!isalive(src)) //can't resist when dead or unconcious
+		return
+
+	if (!src.restrained() && (src.shoes && src.shoes.chained))
 		var/obj/item/clothing/shoes/SH = src.shoes
 		if (ischangeling(src))
 			src.u_equip(SH)
