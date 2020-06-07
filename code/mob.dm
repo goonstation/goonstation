@@ -529,9 +529,11 @@
 				var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 				if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 
-				if(src_effect.active != 0 && tmob_effect.active != 0)
+				if(src_effect.active != 0 && tmob_effect.active != 0 && src_effect.charge > 0 && tmob_effect.charge > 0)
 					src_effect.deactivate(10)
+					src_effect.update_charge(-1)
 					tmob_effect.deactivate(10)
+					tmob_effect.update_charge(-1)
 					// like repels - bimp them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
@@ -561,9 +563,12 @@
 				var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 				if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 
-				if(src_effect.active != 0 && tmob_effect.active != 0)
+				if(src_effect.active != 0 && tmob_effect.active != 0 && src_effect.charge > 0 && tmob_effect.charge > 0)
+					var/throw_charge = (src_effect.charge + tmob_effect.charge)*2
 					src_effect.deactivate(10)
+					src_effect.update_charge(-src_effect.charge)
 					tmob_effect.deactivate(10)
+					tmob_effect.update_charge(-tmob_effect.charge)
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
@@ -585,6 +590,10 @@
 					playsound(source, 'sound/effects/suck.ogg', 100, 1)
 					for(var/atom/movable/M in view(5, source))
 						if(M.anchored || M == source) continue
+						if(throw_charge > 0)
+							throw_charge--
+						else
+							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
 					sleep(5 SECONDS)
