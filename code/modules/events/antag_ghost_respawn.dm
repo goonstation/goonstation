@@ -294,6 +294,7 @@
 					C.make_changeling()
 					role = "changeling"
 					objective_path = /datum/objective_set/changeling
+					C.remove_ability_holder(/datum/abilityHolder/changeling/)
 				else
 					failed = 1
 
