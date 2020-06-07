@@ -324,6 +324,8 @@
 	icon_state = "cowboy"
 	color = "#FF0000"
 	step_sound = "explosion"
+	contraband = 10
+	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"
