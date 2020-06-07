@@ -193,6 +193,12 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"C" = "resist"
 	)
 
+/datum/keybind_style/human/tg/azerty
+	name = "human_tg_azerty"
+	changed_keys = list(
+	"W" = "attackself"
+	)
+
 /datum/keybind_style/human/azerty
 	name = "human_azerty"
 	changed_keys = list(
@@ -238,6 +244,12 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"SPACE" = KEY_EXAMINE,
 		"X" = "swaphand",
 		"Z" = "attackself",
+	)
+
+/datum/keybind_style/robot/tg/azerty
+	name = "robot_tg_azerty"
+	changed_keys = list(
+		"W" = "attackself"
 	)
 
 /datum/keybind_style/robot/azerty

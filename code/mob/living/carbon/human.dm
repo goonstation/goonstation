@@ -1132,6 +1132,8 @@
 		C.apply_keybind("human_azerty")
 	if (C.tg_controls)
 		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
 
 /mob/living/carbon/human/proc/toggle_throw_mode()
 	if (src.in_throw_mode)

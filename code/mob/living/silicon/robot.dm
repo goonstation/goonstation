@@ -1704,6 +1704,8 @@
 			C.apply_keybind("robot_azerty")
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
+			if (C.preferences.use_azerty)
+				C.apply_keybind("robot_tg_azerty")
 
 	say_understands(var/other)
 		if (isAI(other)) return 1
