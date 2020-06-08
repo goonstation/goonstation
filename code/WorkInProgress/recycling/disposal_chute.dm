@@ -266,7 +266,7 @@
 		if (!air_contents)
 			initair()
 
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
+		var/per = 100* MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
 
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
@@ -414,7 +414,7 @@
 
 		src.updateDialog()
 
-		if(flush && air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
+		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
 			SPAWN_DBG(0) //Quit holding up the process you fucker
 				flush()
 
@@ -435,7 +435,7 @@
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
 			air_contents = unpool(/datum/gas_mixture)
-		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - air_contents.return_pressure()
+		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - MIXTURE_PRESSURE(air_contents)
 
 		if(env.temperature > 0)
 			var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
@@ -446,7 +446,7 @@
 
 
 		// if full enough, switch to ready mode
-		if(air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)
+		if(MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)
 			mode = 2
 			power_usage = 100
 			update()

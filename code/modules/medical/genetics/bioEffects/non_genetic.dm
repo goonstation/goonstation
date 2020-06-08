@@ -189,7 +189,31 @@
 /datum/bioEffect/hidden/magnetic
 	name = "magnetic charge parent"
 	desc = "This shouldn't be used."
+	effectType = effectTypeDisability
+	isBad = 1
+	can_copy = 0
+	curable_by_mutadone = 0
+	occur_in_genepools = 0
 	var/active = 1
+
+	var/max_charge = 10
+	var/charge = 5
+
+	proc/update_charge(var/amount)
+		var/init_charge = src.charge
+		src.charge += amount
+		src.charge = clamp(src.charge,0,src.max_charge)
+		if(src.charge != init_charge)
+			src.update_overlay()
+			return 1
+		return 0
+
+	proc/update_overlay()
+		if(src.overlay_image)
+			if(isliving(owner))
+				src.overlay_image.alpha = charge/max_charge*255
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
 
 	proc/deactivate(var/time)
 		active = 0
@@ -201,11 +225,6 @@
 	desc = "This person is charged with a strong positive magnetic field."
 	id = "magnets_pos"
 	msgGain = "You notice odd red static sparking on your skin."
-	effectType = effectTypeDisability
-	isBad = 1
-	can_copy = 0
-	curable_by_mutadone = 0
-	occur_in_genepools = 0
 
 	OnAdd()
 		if (ishuman(owner))
@@ -219,10 +238,6 @@
 	id = "magnets_neg"
 	msgGain = "You notice odd blue static sparking on your skin."
 	effectType = effectTypeDisability
-	isBad = 1
-	can_copy = 0
-	curable_by_mutadone = 0
-	occur_in_genepools = 0
 
 	OnAdd()
 		if (ishuman(owner))

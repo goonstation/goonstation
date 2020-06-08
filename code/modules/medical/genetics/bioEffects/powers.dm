@@ -23,8 +23,9 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.disposing()
+			ability.dispose()
 			ability.owner = null
+		src.ability = null
 		..()
 
 	OnAdd()

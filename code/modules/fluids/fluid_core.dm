@@ -711,40 +711,34 @@ var/mutable_appearance/fluid_ma
 
 	if (entered_group && (src.loc != oldloc))
 		if (F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity)
-			if (src.can_slip())
-				var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
-				if (master_block_slippy == 0)
-					var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
-					var/checks = 10
-					for (var/thing in oldloc)
-						if (istype(thing,/obj/machinery/door))
-							slippery = 0
-						checks--
-						if (checks <= 0) break
-					if (prob(slippery))
-						src.pulling = null
-						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
-						"<span class='alert'>You slip on [F]!</span>")
-						src.changeStatus("stunned", 2 SECONDS)
-						src.changeStatus("weakened", 2 SECONDS)
-						src.force_laydown_standup()
-						playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				//space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
-				else if (master_block_slippy == -1) //spacelube
-					src.pulling = null
-					src.throwing = 1
-					SPAWN_DBG(0)
-						step(src, src.dir)
-						for (var/i = 4, i>0, i--)
-							if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
-								src.throwing = 0
-								break
-
-					random_brute_damage(src, 4)
+			var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
+			if (master_block_slippy == 0)
+				var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
+				var/checks = 10
+				for (var/thing in oldloc)
+					if (istype(thing,/obj/machinery/door))
+						slippery = 0
+					checks--
+					if (checks <= 0) break
+				if (prob(slippery) && src.slip())
 					src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
 					"<span class='alert'>You slip on [F]!</span>")
-					src.changeStatus("weakened", 7 SECONDS)
-					playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			//space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
+			else if (master_block_slippy == -1) //spacelube
+				src.pulling = null
+				src.throwing = 1
+				SPAWN_DBG(0)
+					step(src, src.dir)
+					for (var/i = 4, i>0, i--)
+						if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
+							src.throwing = 0
+							break
+
+				random_brute_damage(src, 4)
+				src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+				"<span class='alert'>You slip on [F]!</span>")
+				src.changeStatus("weakened", 7 SECONDS)
+				playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
 
 
 

@@ -28,6 +28,7 @@
 		health_oxy
 		bleeding
 		stamina
+		stamina_back
 		bodytemp
 		oxygen
 		fire
@@ -240,6 +241,7 @@
 			bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 			stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
+			stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
 			if (master.stamina_bar)
 				stamina.desc = master.stamina_bar.getDesc(master)
 
@@ -271,7 +273,7 @@
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
-		
+
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
 
@@ -294,7 +296,7 @@
 				if (I)
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; master.put_in_hand(C) } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -337,7 +339,7 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; master.put_in_hand(C) } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -934,6 +936,7 @@
 			if (health) health.icon = new_file
 			if (bleeding) bleeding.icon = new_file
 			if (stamina) stamina.icon = new_file
+			if (stamina_back) stamina_back.icon = new_file
 			if (bodytemp) bodytemp.icon = new_file
 			if (oxygen) oxygen.icon = new_file
 			if (fire) fire.icon = new_file
@@ -951,6 +954,10 @@
 
 			if (master.stamina_bar)
 				master.stamina_bar.icon = new_file
+
+	proc/set_sprint(var/on)
+		if(stamina)
+			stamina.icon_state = on ? "stamina_sprint" : "stamina"
 
 /mob/living/carbon/human
 	updateStatusUi()

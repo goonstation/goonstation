@@ -112,7 +112,7 @@
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
-
+	var/waitforit = 0 //prevent smoke from being inhaled during the creation process
 	var/draining = 0
 	var/queued_drains = 0 // how many tiles to drain on next update?
 	var/turf/last_drain = 0 // tile from which we should try to drain from
@@ -588,7 +588,7 @@
 		.= list() //return created fluids
 		var/created = 0
 		var/obj/fluid/F
-
+		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
 		for (var/i = 1, i <= members.len, i++)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
@@ -630,6 +630,7 @@
 
 			if (created >= fluids_to_create)
 				break
+			src.waitforit = 0
 
 	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return

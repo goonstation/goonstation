@@ -30,7 +30,7 @@
 			video_screen = new(src.loc, owner = src)
 			video_screen.fov = fov
 
-	Del()
+	disposing()
 		// if (current_camera)
 		// 	current_camera.connected_monitor = null
 		current_camera = null

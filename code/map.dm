@@ -27,6 +27,7 @@ var/global/list/mapNames = list(
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
 	"Kondaru" = 		list("id" = "KONDARU", "settings" = "kondaru", 				"playerPickable" = 1),
 	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
+	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
 	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1),
@@ -498,6 +499,46 @@ var/global/list/mapNames = list(
 		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
 		"the Maru primary zone" = list(/area/station/engine/engineering),
 		"the Hammer primary zone" = list(/area/station/security/main))
+
+/datum/map_settings/icarus
+	name = "ICARUS"
+	display_name = "Icarus"
+	style = "ship"
+	goonhub_map = "https://i.imgur.com/SiI3RC9.png"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+	arrivals_type = MAP_SPAWN_CRYO
+	dir_fore = NORTH
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+
+	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_transit = /area/shuttle/escape/transit/destiny
+	escape_station = /area/shuttle/escape/station/destiny
+	escape_dir = NORTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the gymnasium" = list(/area/station/crew_quarters/fitness),
+		"the vessel's power core" = list(/area/station/engine/engineering),
+		"the monkey dome" = list(/area/station/medical/dome),
+		"the jazz lounge" = list(/area/station/crew_quarters/jazz),
+		"the quartermasters front office" = list(/area/station/quartermaster/office))
 
 /datum/map_settings/density // I just copied cog2 for now, ok????
 	name = "density"

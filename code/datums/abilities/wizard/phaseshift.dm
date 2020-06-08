@@ -258,7 +258,7 @@
 	relaymove(var/mob/user, direction, delay)//all relaymove should accept delay
 		delay = max(delay,1)			//0.75 sprint 1.25 run
 		if (direction & (direction-1))
-			delay *= 1.4
+			delay *= DIAG_MOVE_DELAY_MULT
 
 		var/glide = ((32 / delay) * world.tick_lag)
 		src.glide_size = glide

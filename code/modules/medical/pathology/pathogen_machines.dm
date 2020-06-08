@@ -920,7 +920,8 @@
 				var/success = 0
 
 				L.implode(src.manip.cache_target)
-				if (L.reevaluate())
+				var/result = L.reevaluate()
+				if (result == 1)
 					var/list/seqs = L.get_sequences()
 					for (var/s in seqs)
 						if (s in db.known_sequences)
@@ -956,7 +957,24 @@
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
 					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
-					boutput(usr, "<span class='alert'>The DNA sequence is assembled by the manipulator, but it collapses!</span>")
+					// how about some more feedback for what went wrong? :)
+					var/reason = ""
+					switch(result)
+						if(2)
+							reason = ", because the suppressant code was invalid"
+						if(3)
+							reason = ", because there was no separator after the suppressant code"
+						if(4)
+							reason = ", because the carrier code was invalid"
+						if(5)
+							reason = ", because there was no separator after the carrier code"
+						if(6)
+							reason = ", due to an invalid symptom code"
+						if(7)
+							reason = ", because there was no symptom code between two separators"
+						if(8)
+							reason = ", because the microbody could not sustain the amount of symptoms"
+					boutput(usr, "<span class='alert'>The DNA sequence is assembled by the manipulator, but it collapses[reason]!</span>")
 					src.manip.loaded = null
 					new /obj/item/reagent_containers/glass/vial(get_turf(src.manip)) //Quit eating vials you fuck -Spy
 
@@ -1367,7 +1385,10 @@
 			else
 				output_text += "None<br><br>"
 			output_text += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br>"
-			output_text += "<a href='?src=\ref[src];buymats=1'>Synthesize a new pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=virus'>Synthesize a new virus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=parasite'>Synthesize a new parasite pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=bacterium'>Synthesize a new bacterium pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=fungus'>Synthesize a new fungus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
 			output_text += "<br>"
 			output_text += "<b>Inserted vials:</b><br>"
 			for (var/i = 1, i <= 5, i++)
@@ -1551,7 +1572,15 @@
 							icon_state = "synth1"
 							for (var/mob/C in viewers(src))
 								C.show_message("The [src.name] shuts down and ejects a new pathogen sample.", 3)
-							new/obj/item/reagent_containers/glass/vial/prepared(src.loc)
+							switch(href_list["microbody"])
+								if("virus")
+									new /obj/item/reagent_containers/glass/vial/prepared/virus(src.loc)
+								if("parasite")
+									new /obj/item/reagent_containers/glass/vial/prepared/parasite(src.loc)
+								if("bacterium")
+									new /obj/item/reagent_containers/glass/vial/prepared/bacterium(src.loc)
+								if("fungus")
+									new /obj/item/reagent_containers/glass/vial/prepared/fungus(src.loc)
 				#else
 				boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
 				#endif

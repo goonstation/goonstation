@@ -150,7 +150,12 @@
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
-/mob/throw_end()
+/mob/throw_end(list/params)
 	if (src.throwing & THROW_CHAIRFLIP)
 		src.changeStatus("weakened", 1.7 SECONDS)
 		src.force_laydown_standup()
+
+	if (length(params) && params["stun"])
+		if (src.getStatusDuration("weakened") < params["stun"])
+			src.setStatus("weakened", params["stun"])
+			src.force_laydown_standup()

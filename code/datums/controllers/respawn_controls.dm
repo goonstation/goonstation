@@ -81,7 +81,7 @@ var/datum/respawn_controls/respawn_controller
 		var/datum/respawnee/R = respawnees[ckey]
 		respawnees.Remove(ckey)
 		if(R)
-			R.disposing()
+			R.dispose()
 			R = null
 
 	proc/doRespawn(var/ckey)

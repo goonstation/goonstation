@@ -1689,7 +1689,7 @@ proc/countJob(rank)
 
 // Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 // Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list())
+/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0)
 	var/list/candidates = list()
 
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
@@ -1718,8 +1718,8 @@ proc/countJob(rank)
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
-			if (M.current)
-				if (dead_player_list_helper(M.current) != 1)
+			if (M.current && M.current.client)
+				if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 					continue
 
 				SPAWN_DBG (0) // Don't lock up the entire proc.
@@ -1730,7 +1730,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1746,7 +1746,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1770,7 +1770,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O)
@@ -1809,11 +1809,9 @@ proc/countJob(rank)
 			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
 				the_ghost = TO.my_ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	if (!G.client || G.client && G.client.suicide) // Suicided? Tough luck.
-		return 0
 	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
 		return 0
 
@@ -2034,15 +2032,11 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
+var/global/list/allowed_restricted_z_areas
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
-	var/list/allowed = list()
-	for (var/areas in typesof(/area/shuttle/escape))
-		if (!allowed.Find(areas))
-			allowed.Add(areas)
-	for (var/areas2 in typesof(/area/shuttle_transit_space))
-		if (!allowed.Find(areas2))
-			allowed.Add(areas2)
+	if(!allowed_restricted_z_areas)
+		allowed_restricted_z_areas = typesof(/area/shuttle/escape) + typesof(/area/shuttle_transit_space)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2055,7 +2049,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 	else if (T && isturf(T))
 		A = get_area(T)
 
-	if (A && istype(A) && (A.type in allowed))
+	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
 		return 1
 	return 0
 
@@ -2455,3 +2449,12 @@ proc/time_to_text(var/time)
 	else if(time || !length(.))
 		. += "[round(time / (1 SECOND), 0.1)] seconds"
 	. = jointext(., " ")
+
+// this is dumb and bad but it makes the bicon not expand the line vertically and also centers it
+// also it assumes 32px height by default
+proc/inline_bicon(the_thing, height=32)
+	return {"<span style="display:inline-block;vertical-align:middle;height:0px;">
+	<div style="position:relative;top:-[height / 2]px">
+	[bicon(the_thing)]
+	</div>
+	</span>"}

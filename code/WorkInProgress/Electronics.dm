@@ -722,7 +722,7 @@
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 
-		if (!O.allowed(user) || O.is_syndicate)
+		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
@@ -744,7 +744,7 @@
 /obj/disposing()
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
-			C.disposing()
+			C.dispose()
 	..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)

@@ -170,8 +170,15 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar) src.stamina_bar.update_value(src)
+	if(src.stamina_bar)
+		src.stamina_bar.update_value(src)
 	return
+
+/mob/living/carbon/human/remove_stamina(var/x)
+	..()
+	if (x >= 30 && src.hud && src.hud.stamina_back)
+		flick("stamina_back", src.hud.stamina_back)
+
 
 //Sets stamina
 /mob/proc/set_stamina(var/x)
@@ -391,18 +398,9 @@
 							src.inertia_dir = 0
 							T.wet = 0
 							return
-						if (src.can_slip())
-							src.pulling = null
-							src.throwing = 1
-							SPAWN_DBG(0) // this stops the entire server from crashing when SOMEONE (read: wonk) space lubes the entire station
-								step(src, src.dir)
-								src.throwing = 0
+						if (src.slip())
 							boutput(src, "<span class='notice'>You slipped on the wet floor!</span>")
-							playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
-							src.changeStatus("stunned", 2 SECONDS)
-							src.changeStatus("weakened", 2 SECONDS)
 							src.unlock_medal("I just cleaned that!", 1)
-							src.force_laydown_standup()
 						else
 							src.inertia_dir = 0
 							return
@@ -508,6 +506,9 @@
 
 
 /mob/living/carbon/swap_hand()
+	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+	if(B) 
+		qdel(B)
 	src.hand = !src.hand
 
 /mob/living/carbon/lastgasp()

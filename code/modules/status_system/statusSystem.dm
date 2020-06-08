@@ -349,6 +349,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	disposing()
 		if (owner)
 			owner.statusEffects -= src
+		src.owner = null
 		..()
 
 	maxhealth
@@ -364,12 +365,14 @@ var/list/statusGroupLimits = list("Food"=4)
 				var/mob/M = owner
 				change = optional
 				M.max_health += change
+				health_update_queue |= M
 			return
 
 		onRemove()
 			if(ismob(owner))
 				var/mob/M = owner
 				M.max_health -= change
+				health_update_queue |= M
 			return
 
 		onUpdate(var/timedPassed)
@@ -385,6 +388,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				M.max_health -= change
 				change = optional
 				M.max_health += change
+				health_update_queue |= M
 			return
 
 		getTooltip()
@@ -770,7 +774,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned"))) 
+			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -855,7 +859,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		paralysis
 			id = "paralysis"
 			name = "Unconscious"
-			desc = "You are unconcious.<br>Unable to take any actions, blinded."
+			desc = "You are unconscious.<br>Unable to take any actions, blinded."
 			icon_state = "paralysis"
 			unique = 1
 			maxDuration = 30 SECONDS
@@ -888,6 +892,12 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		maxDuration = 5 SECONDS
 		movement_modifier = /datum/movement_modifier/staggered_or_blocking
+
+		onAdd(var/optional=null)
+			.=..()
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
 
 	blocking
 		id = "blocking"
@@ -1166,6 +1176,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			else
 				owner.delStatus("ganger")
 			H.max_health += max_health
+			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
 			H.add_stam_mod_regen("ganger_regen", regen_stam)
 			if (ismob(owner))
@@ -1175,6 +1186,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 		onRemove()
 			H.max_health -= max_health
+			health_update_queue |= H
 			H.remove_stam_mod_max("ganger_max")
 			H.remove_stam_mod_regen("ganger_regen")
 			gang = null
@@ -1305,11 +1317,13 @@ var/list/statusGroupLimits = list("Food"=4)
 			else
 				owner.delStatus("mutiny")
 			H.max_health += max_health
+			health_update_queue |= H
 			H.add_stam_mod_max("mutiny_max", max_stam)
 			H.add_stam_mod_regen("mutiny_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
+			health_update_queue |= H
 			H.remove_stam_mod_max("mutiny_max")
 			H.remove_stam_mod_regen("mutiny_regen")
 
@@ -1335,11 +1349,13 @@ var/list/statusGroupLimits = list("Food"=4)
 			else
 				owner.delStatus("revspirit")
 			H.max_health += max_health
+			health_update_queue |= H
 			H.add_stam_mod_max("revspirit_max", max_stam)
 			H.add_stam_mod_regen("revspirit_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
+			health_update_queue |= H
 			H.remove_stam_mod_max("revspirit_max")
 			H.remove_stam_mod_regen("revspirit_regen")
 
