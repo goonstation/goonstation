@@ -1,5 +1,9 @@
 
 (t)sun jun 07 20
+(u)UrsulaMajor
+(p)984
+(e)⚖🐛|balance, bug
+(+)You can now deconstruct everything a mechanic constructs (again)
 (u)mbc
 (p)981
 (e)⚖🆕🔄|balance, feature, rework
