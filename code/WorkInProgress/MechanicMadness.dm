@@ -1691,16 +1691,19 @@ var/list/mechanics_telepads = new/list()
 	proc/additem(var/datum/mechanicsMessage/input)
 		if(!input) return
 
-		if(!allowDuplicates && signals.Find(input.signal))
+		if(allowDuplicates)
+			signals.Add(input.signal)
+			signals[input.signal] = 1
 			if(announce)
+				componentSay("Added: [input.signal]")
+
+		else
+			if(!signals[input.signal])
+				signals[input.signal] = 1
+				if(announce)
+					componentSay("Added: [input.signal]")
+			else if(announce)
 				componentSay("Duplicate entry - rejected: [input.signal]")
-			return
-
-		signals.Add(input.signal)
-		if(announce)
-			componentSay("Added : [input.signal]")
-
-		return
 
 	proc/sendRand(var/datum/mechanicsMessage/input)
 		if(!input) return
