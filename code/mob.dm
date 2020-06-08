@@ -2690,7 +2690,7 @@
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
 		SPAWN_DBG(4 SECONDS)
-			newbody.anchored = 0
+			reset_anchored(newbody)
 	return
 
 /mob/proc/damn()

@@ -80,7 +80,7 @@
 			C.buckled_guy = 0
 		M.pixel_y = 0
 		M.buckled = null
-		M.anchored = 0
+		reset_anchored(M)
 
 		M.targeting_ability = null
 		M.update_cursor()
