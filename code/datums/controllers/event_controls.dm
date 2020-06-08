@@ -108,7 +108,7 @@ var/datum/event_controller/random_events
 					if (M.mind?.dnr)
 						dead_dnr++
 
-			if ((alive < (clients.len - dead_dnr) * 50))
+			if ((alive <= (clients.len - dead_dnr) * 0.75))
 				do_random_event(player_spawn_events, source = "force_spawn")
 			else if (antags <= 0)
 				do_random_event(antag_spawn_events, source = "force_spawn")
