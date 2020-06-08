@@ -1,4 +1,4 @@
-/// `targget` to use for signals that are global and not tied to a single datum
+/// `target` to use for signals that are global and not tied to a single datum
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
 
 /// Used to trigger signals and call procs registered for that signal
