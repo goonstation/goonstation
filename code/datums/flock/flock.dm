@@ -483,7 +483,7 @@
 		T.RL_AddLumR = RL_AddLumR
 		T.RL_AddLumG = RL_AddLumG
 		T.RL_AddLumB = RL_AddLumB
-		T.RL_UpdateLight()
+		if (RL_Started) RL_UPDATE_LIGHT(T)
 
 	return T
 
