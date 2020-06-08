@@ -200,25 +200,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		//Cleanup some stuff
-		for(var/obj/landmark/start/S in landmarks)//world)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				S.dispose()
+		cleanup_landmarks()
 
 		event_wormhole_buildturflist()
 
 		mode.post_post_setup()
-
-		if (istype(random_events,/datum/event_controller/))
-			SPAWN_DBG(random_events.minor_events_begin)
-				message_admins("<span class='notice'>Minor Event cycle has been started.</span>")
-				random_events.minor_event_cycle()
-			SPAWN_DBG(random_events.events_begin)
-				message_admins("<span class='notice'>Random Event cycle has been started.</span>")
-				random_events.event_cycle()
-			random_events.next_event = random_events.events_begin
-			random_events.next_minor_event = random_events.minor_events_begin
 
 		for(var/obj/landmark/artifact/A in landmarks)
 			LAGCHECK(LAG_LOW)
@@ -783,3 +769,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			return
 //Anything else, like sandbox, return.
 */
+
+/datum/controller/gameticker/proc/cleanup_landmarks()
+	for(var/obj/landmark/start/S in landmarks)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if (S.name != "AI")
+			S.dispose()

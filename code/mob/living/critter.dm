@@ -1260,10 +1260,19 @@
 		else
 			return ..()
 
-/mob/living/critter/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
-	return keymap
+/mob/living/critter/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("human")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
 
 /mob/living/critter/proc/tokenized_message(var/message, var/target, var/mcolor)
 	if (!message || !length(message))

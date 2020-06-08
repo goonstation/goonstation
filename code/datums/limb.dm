@@ -58,6 +58,7 @@
 
 	proc/help(mob/living/carbon/human/target, var/mob/living/user)
 		user.do_help(target)
+		user.lastattacked = target
 
 	proc/disarm(mob/living/carbon/human/target, var/mob/living/user)
 		if (special_next)
@@ -65,11 +66,13 @@
 			special_next = 0
 		else
 			user.disarm(target)
+		user.lastattacked = target
 
 	proc/grab(mob/living/carbon/human/target, var/mob/living/user)
 		if (issilicon(target))
 			return
 		user.grab_other(target)
+		user.lastattacked = target
 
 	//calls attack specials if we got em
 	//Ok look i know this isn't a true pixelaction() but it fits into the itemspecial call so i'm doin it
@@ -373,6 +376,7 @@
 			user.HealDamage("All", 2, 0)
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
+		user.lastattacked = target
 
 /datum/limb/mouth/small // for cats/mice/etc
 	sound_attack = "sound/impact_sounds/Flesh_Tear_1.ogg"
@@ -429,6 +433,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Nope. Not going to work. You're more likely to kill them.</span>")
+		user.lastattacked = target
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing("combat", user, target, "mauls %target% with bear limbs (disarm intent) at [log_loc(user)].")
@@ -453,6 +458,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("weakened", 2 SECONDS)
+		user.lastattacked = target
 
 /datum/limb/dualsaw
 
@@ -473,6 +479,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Not going to work. You're more likely to kill them.</span>")
+		user.lastattacked = target
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing("combat", user, target, "slashes %target% with dual saw (disarm intent) at [log_loc(user)].")
@@ -514,6 +521,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("weakened",20)
+		user.lastattacked = target
 
 /datum/limb/wendigo
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -590,6 +598,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(35 * quality))
 			target.changeStatus("weakened", (4 * quality)*10)
+		user.lastattacked = target
 
 #if ASS_JAM
 /datum/limb/hot //because
@@ -616,11 +625,6 @@
 				boutput(M, "<span class='alert'>\the [I] melts.</span>")
 			qdel(I)
 			return
-
-
-
-
-
 
 		..()
 		return
@@ -666,6 +670,7 @@
 		msgs.played_sound = "sound/impact_sounds/burn_sizzle.ogg"
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
 
 
 #endif
@@ -1027,7 +1032,7 @@
 		if (ismob(target))
 			user.melee_attack_normal(target, 5) // Slightly more powerful punches. This is bonus damage, not a multiplier.
 			return
-
+		user.lastattacked = target
 		..()
 		return
 
@@ -1140,6 +1145,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
 
 
 //hey maybe later standardize this into flags per obj so we dont search this huge list every click ok??
@@ -1247,6 +1253,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	grab(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1256,6 +1263,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)

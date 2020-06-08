@@ -404,6 +404,7 @@
 		/obj/item/storage/pouch/sniper,
 		///obj/item/device/chameleon,
 		/obj/item/storage/grenade_pouch/smoke,
+		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
 
