@@ -245,7 +245,7 @@
 				var/mob/living/R2 = M3.humanize()
 				if (R2 && istype(R2))
 					M3 = R2
-					R2.make_wrestler()
+					R2.make_wrestler(1)
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
@@ -258,7 +258,7 @@
 				var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
 				if (C && istype(C))
 					M3 = C
-					C.make_wrestler()
+					C.make_wrestler(1)
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
