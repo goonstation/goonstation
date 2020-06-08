@@ -4,7 +4,7 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
-/// `targget` to use for signals that are global and not tied to a single datum.
+/// `target` to use for signals that are global and not tied to a single datum.
 /// Note that this does NOT work with SEND_SIGNAL because of preprocessor weirdness.
 /// Use SEND_GLOBAL_SIGNAL instead.
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
