@@ -1,5 +1,9 @@
 
 (t)mon jun 08 20
+(u)Tarmunora
+(p)1006
+(e)🐛|bug
+(+)Fixed issue where you could unanchor a shambler and throw them
 (u)pali
 (p)986
 (e)🆕|feature
