@@ -291,6 +291,7 @@
 	mats = 2
 
 	equipped(var/mob/user, var/slot)
+		..()
 		user.visible_message("<b>[user]</b> starts hopping around!","You start hopping around.")
 		src.moonloop(user)
 		return
