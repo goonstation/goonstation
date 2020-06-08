@@ -113,16 +113,14 @@ var/datum/event_controller/random_events
 
 			for(var/client/C)
 				var/mob/M = C.mob
-				if (!isdead(M))
-					if (isliving(M))
-						alive++
-				else
-					if (M.mind?.dnr)
-						dead_dnr++
+				if (!isdead(M) && isliving(M))
+					alive++
+				else if (M.mind?.dnr)
+					dead_dnr++
 
-			if ((alive <= (clients.len - dead_dnr) * 0.8))
+			if (alive <= (clients.len - dead_dnr) * 0.75)
 				do_random_event(player_spawn_events, source = "force_spawn")
-			else if (dead_antags >= antags * 0.75)
+			else if (dead_antags >= round(antags * 0.75))
 				do_random_event(antag_spawn_events, source = "force_spawn")
 			else
 				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!</span>")
