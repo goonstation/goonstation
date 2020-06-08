@@ -318,6 +318,15 @@
 	name = "Cowboy boots"
 	icon_state = "cowboy"
 
+/obj/item/clothing/shoes/cowboy/boom
+	name = "Boom Boots"
+	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
+	icon_state = "cowboy"
+	color = "#FF0000"
+	step_sound = "explosion"
+	contraband = 10
+	is_syndicate = 1
+
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"
 	desc = "A pair of striking red boots. Though they look clean, the soles are absolutely coated in a really fine, white powder."
