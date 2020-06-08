@@ -2449,3 +2449,12 @@ proc/time_to_text(var/time)
 	else if(time || !length(.))
 		. += "[round(time / (1 SECOND), 0.1)] seconds"
 	. = jointext(., " ")
+
+// this is dumb and bad but it makes the bicon not expand the line vertically and also centers it
+// also it assumes 32px height by default
+proc/inline_bicon(the_thing, height=32)
+	return {"<span style="display:inline-block;vertical-align:middle;height:0px;">
+	<div style="position:relative;top:-[height / 2]px">
+	[bicon(the_thing)]
+	</div>
+	</span>"}
