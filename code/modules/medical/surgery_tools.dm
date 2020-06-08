@@ -1389,6 +1389,8 @@ keeping this here because I want to make something else with it eventually
 
 	New()
 		..()
+		if (!islist(src.attached_objs))
+			src.attached_objs = list()
 		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
 			SPAWN_DBG(0)
 				var/stuff_added = 0
@@ -1396,8 +1398,7 @@ keeping this here because I want to make something else with it eventually
 					if (I.anchored || I.layer < src.layer)
 						continue
 					else
-						src.contents += I
-						src.vis_contents += I
+						attach(I)
 						stuff_added++
 						if (stuff_added >= src.max_to_move)
 							break
@@ -1410,11 +1411,11 @@ keeping this here because I want to make something else with it eventually
 
 			//if we're over the max amount a table can fit, have a chance to drop an item. Chance increases with items on tray
 			if (prob((src.contents.len-max_to_move)*1.1))
-				var/obj/item/falling = pick(src.contents)
+				var/obj/item/falling = pick(src.attached_objs)
+				detach(falling)
 				// src.visible_message("[falling] falls off of [src]!")
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
-				src.vis_contents -= falling
 
 				SPAWN_DBG(1 DECI SECOND)
 					if(falling)
@@ -1427,8 +1428,7 @@ keeping this here because I want to make something else with it eventually
 			return
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
-			src.vis_contents += W
-			W.set_loc(src)
+			src.attach(W)
 			return
 		else
 			return ..()
@@ -1437,18 +1437,32 @@ keeping this here because I want to make something else with it eventually
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
-			src.vis_contents += AM
-			AM.set_loc(src)
+			AM.set_loc(get_turf(src))
+			attach(AM)
 
+	disposing()
+		for (var/obj/item/I in src.attached_objs)
+			detach(I)
+		..()
 
 	proc/deconstruct()
 		var/obj/item/furniture_parts/surgery_tray/P = new /obj/item/furniture_parts/surgery_tray(src.loc)
 		if (P && src.material)
 			P.setMaterial(src.material)
-		for (var/obj/i in src.contents)
-			i.set_loc(src.loc)
 		qdel(src)
 		return
+
+	proc/attach(obj/item/I as obj)
+		src.attached_objs.Add(I) // attach the item to the table
+		RegisterSignal(I, COMSIG_ITEM_PICKUP, .proc/detach) // register for pickup
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/detach) // register for being pulled off the table
+		RegisterSignal(I, COMSIG_PARENT_PRE_DISPOSING, .proc/detach) //register for item deletion while attached to table
+
+	proc/detach(obj/item/I as obj, mob/user as mob) //remove from the attached items list and deregister signals
+		src.attached_objs.Remove(I)
+		UnregisterSignal(I, COMSIG_ITEM_PICKUP)
+		UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(I, COMSIG_PARENT_PRE_DISPOSING)
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
