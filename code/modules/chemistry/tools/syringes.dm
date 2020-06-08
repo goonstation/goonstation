@@ -285,5 +285,10 @@
 	desc = "Contains calomel, which be used to purge impurities, but is highly toxic itself."
 	initial_reagents = "calomel"
 
+/obj/item/reagent_containers/syringe/synaptizine
+	name = "syringe (synaptizine)"
+	desc = "Contains synaptizine, a mild stimulant to increase alertness."
+	initial_reagents = "synaptizine"
+
 #undef S_DRAW
 #undef S_INJECT
