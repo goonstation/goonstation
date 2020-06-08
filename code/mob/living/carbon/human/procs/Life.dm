@@ -492,6 +492,13 @@
 			T.fluid_react_single("miasma", 10, airborne = 1)
 
 	proc/handle_decomposition()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+
+		if (T.temp_flags & HAS_KUDZU)
+			src.infect_kudzu()
+
 		var/suspend_rot = 0
 		if (src.decomp_stage >= 4)
 			suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
@@ -499,10 +506,7 @@
 				icky_icky_miasma(get_turf(src))
 			return
 
-		if (!isdead(src) || src.mutantrace)
-			return
-		var/turf/T = get_turf(src)
-		if (!T)
+		if (src.mutantrace)
 			return
 		suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
 		var/env_temp = 0
@@ -736,7 +740,7 @@
 						var/obj/location_as_object = loc
 						breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 					else if (isturf(loc))
-						var/breath_moles = (environment.total_moles()*BREATH_PERCENTAGE)
+						var/breath_moles = (TOTAL_MOLES(environment)*BREATH_PERCENTAGE)
 
 						breath = loc.remove_air(breath_moles)
 
@@ -793,7 +797,7 @@
 				canmove = 0
 				return
 
-		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
 			canmove = 0
 			return
 
@@ -806,7 +810,7 @@
 			return
 		// Looks like we're in space
 		// or with recent atmos changes, in a room that's had a hole in it for any amount of time, so now we check src.loc
-		if (underwater || !breath || (breath.total_moles() == 0))
+		if (underwater || !breath || (TOTAL_MOLES(breath) == 0))
 			if (istype(src.loc, /turf/space))
 				take_oxygen_deprivation(6 * mult)
 			else
@@ -836,17 +840,17 @@
 		var/SA_para_min = 1
 		var/SA_sleep_min = 5
 		var/oxygen_used = 0
-		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 		var/fart_smell_min = 0.69 // don't ask ~warc
 		var/fart_vomit_min = 6.9
 		var/fart_choke_min = 16.9
 
 		//Partial pressure of the O2 in our breath
-		var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
+		var/O2_pp = (breath.oxygen/TOTAL_MOLES(breath))*breath_pressure
 		// Same, but for the toxins
-		var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+		var/Toxins_pp = (breath.toxins/TOTAL_MOLES(breath))*breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+		var/CO2_pp = (breath.carbon_dioxide/TOTAL_MOLES(breath))*breath_pressure
 
 
 		//change safe gas levels for cyberlungs
@@ -869,7 +873,7 @@
 				take_oxygen_deprivation(3 * mult)
 			hud.update_oxy_indicator(1)
 		else 									// We're in safe limits
-			//if (breath.oxygen/breath.total_moles() >= 0.95) //high oxygen concentration. lets slightly heal oxy damage because it feels right
+			//if (breath.oxygen/TOTAL_MOLES(breath) >= 0.95) //high oxygen concentration. lets slightly heal oxy damage because it feels right
 			//	take_oxygen_deprivation(-6 * mult)
 
 			take_oxygen_deprivation(-6 * mult)
@@ -900,9 +904,9 @@
 		else
 			hud.update_tox_indicator(0)
 
-		if (breath.trace_gases && breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
+		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-				var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					src.changeStatus("paralysis", 5 SECONDS)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -911,19 +915,18 @@
 					if (prob(20))
 						emote(pick("giggle", "laugh"))
 
-			for (var/datum/gas/farts/FARD in breath.trace_gases) // FARDING AND SHIDDING TIME ~warc
-				var/FARD_pp = (FARD.moles/breath.total_moles())*breath_pressure
-				if (prob(15) && (FARD_pp > fart_smell_min))
-					boutput(src, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
-					if ((FARD_pp > fart_vomit_min) && prob(50))
-						src.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-						src.vomit()
-				if (FARD_pp > fart_choke_min)
-					take_oxygen_deprivation(6.9 * mult)
-					if (prob(20))
-						src.emote("cough")
-						if (prob(30))
-							boutput(src, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
+		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
+		if (prob(15) && (FARD_pp > fart_smell_min))
+			boutput(src, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+			if ((FARD_pp > fart_vomit_min) && prob(50))
+				src.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+				src.vomit()
+		if (FARD_pp > fart_choke_min)
+			take_oxygen_deprivation(6.9 * mult)
+			if (prob(20))
+				src.emote("cough")
+				if (prob(30))
+					boutput(src, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
 
 			//cyber lungs beat radiation. Is there anything they can't do?
@@ -933,12 +936,20 @@
 
 		if (breath.temperature > min(organHolder.left_lung ? organHolder.left_lung.temp_tolerance : INFINITY, organHolder.right_lung ? organHolder.right_lung.temp_tolerance : INFINITY) && !src.is_heat_resistant()) // Hot air hurts :(
 			//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
-			var/burn_damage = min((breath.temperature - (T0C+66)) / 3,10) + 6
-			TakeDamage("chest", 0, burn_damage, 0, DAMAGE_BURN)
-			if (prob(20))
-				boutput(src, "<span class='alert'>You feel a searing heat in your lungs!</span>")
-				if (src.organHolder)
-					src.organHolder.damage_organs(0, max(burn_damage, 3), 0, list("left_lung", "right_lung"), 80)
+			var/lung_burn_left = min(max(breath.temperature - organHolder.left_lung?.temp_tolerance, 0) / 3, 10)
+			var/lung_burn_right = min(max(breath.temperature - organHolder.right_lung?.temp_tolerance, 0) / 3, 10)
+			if (breath.temperature > (organHolder.left_lung ? organHolder.left_lung.temp_tolerance : INFINITY))
+				TakeDamage("chest", 0, (lung_burn_left / 2) + 3, 0, DAMAGE_BURN)
+				if(prob(20))
+					boutput(src, "<span class='alert'>This air is searing hot!</span>")
+					if (prob(80))
+						src.organHolder.damage_organ(0, lung_burn_left + 6, 0, "left_lung")
+			if (breath.temperature > (organHolder.right_lung ? organHolder.right_lung.temp_tolerance : INFINITY))
+				TakeDamage("chest", 0, (lung_burn_right / 2) + 3, 0, DAMAGE_BURN)
+				if(prob(20))
+					boutput(src, "<span class='alert'>This air is searing hot!</span>")
+					if (prob(80))
+						src.organHolder.damage_organ(0, lung_burn_right + 6, 0, "right_lung")
 
 			hud.update_fire_indicator(1)
 			if (prob(4))
@@ -956,7 +967,7 @@
 	proc/handle_environment(datum/gas_mixture/environment) //TODO : REALTIME BODY TEMP CHANGES (Mbc is too lazy to look at this mess right now)
 		if (!environment)
 			return
-		var/environment_heat_capacity = environment.heat_capacity()
+		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
 		if (istype(loc, /turf/space))
 			var/turf/space/S = loc
@@ -1914,6 +1925,7 @@
 	proc/handle_regular_sight_updates()
 
 ////Mutrace and normal sight
+		src.sight |= SEE_BLACKNESS
 		if (!isdead(src))
 			src.sight &= ~SEE_TURFS
 			src.sight &= ~SEE_MOBS
@@ -1964,11 +1976,14 @@
 			if (ship.sensors)
 				if (ship.sensors.active)
 					src.sight |= ship.sensors.sight
+					src.sight &= ~ship.sensors.antisight
 					src.see_in_dark = ship.sensors.see_in_dark
 					if (client && client.adventure_view)
 						src.see_invisible = 21
 					else
 						src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 					return
 
 		if (src.traitHolder && src.traitHolder.hasTrait("infravision"))
@@ -1985,12 +2000,14 @@
 
 		else if (istype(src.glasses, /obj/item/clothing/glasses/thermal/traitor))
 			src.sight |= SEE_MOBS //traitor item can see through walls
+			src.sight &= ~SEE_BLACKNESS
 			if (see_in_dark < SEE_DARK_FULL)
 				src.see_in_dark = SEE_DARK_FULL
 			if (see_invisible < 2)
 				src.see_invisible = 2
 			if (see_infrared < 1)
 				src.see_infrared = 1
+			render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		else if ((istype(src.glasses, /obj/item/clothing/glasses/thermal) || src.eye_istype(/obj/item/organ/eye/cyber/thermal)))	//  && (T && !isrestrictedz(T.z))
 			// This kinda fucks up the ability to hide things in infra writing in adv zones
@@ -2011,12 +2028,14 @@
 				src.see_in_dark = SEE_DARK_FULL
 			if (see_invisible < 2)
 				src.see_invisible = 2
+			render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		else if (istype(src.glasses, /obj/item/clothing/glasses/regular/ecto) || eye_istype(/obj/item/organ/eye/cyber/ecto))
 			if (see_in_dark != 1)
 				see_in_dark = 1
 			if (see_invisible < 15)
 				src.see_invisible = 15
+
 		else if (istype(src.glasses, /obj/item/clothing/glasses/nightvision) || eye_istype(/obj/item/organ/eye/cyber/nightvision) || src.bioHolder && src.bioHolder.HasEffect("nightvision"))
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
@@ -2024,6 +2043,16 @@
 			var/obj/item/clothing/glasses/meson/M = src.glasses
 			if (M.on)
 				src.sight |= SEE_TURFS
+				src.sight &= ~SEE_BLACKNESS
+				if (see_in_dark < initial(see_in_dark) + 1)
+					see_in_dark++
+				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
+
+		else if (istype(src.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer) && (T && !isrestrictedz(T.z)))
+			var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/E = src.head
+			if (E.on)
+				src.sight |= SEE_TURFS
+				src.sight &= ~SEE_BLACKNESS
 				if (see_in_dark < initial(see_in_dark) + 1)
 					see_in_dark++
 				render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
@@ -2039,6 +2068,7 @@
 					if (meson_eye.on) eye_on = 1
 				if (eye_on)
 					src.sight |= SEE_TURFS
+					src.sight &= ~SEE_BLACKNESS
 					if (see_in_dark < initial(see_in_dark) + 1)
 						see_in_dark++
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (client && client.widescreen))
@@ -2098,6 +2128,14 @@
 				G.assigned = src.client
 				if (!(G in processing_items))
 					processing_items.Add(G)
+				//G.updateIcons()
+
+		if (istype(src.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
+			var/obj/item/clothing/head/helmet/space/syndicate/specialist/medic/M = src.head
+			if (src.client && !(M.assigned || M.assigned == src.client))
+				M.assigned = src.client
+				if (!(M in processing_items))
+					processing_items.Add(M)
 				//G.updateIcons()
 
 		else if (src.organHolder && istype(src.organHolder.left_eye, /obj/item/organ/eye/cyber/prodoc))

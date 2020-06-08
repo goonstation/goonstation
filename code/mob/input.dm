@@ -62,7 +62,7 @@ mob
 			var/delay = max(src.movement_delay(get_step(src,src.move_dir), running), world.tick_lag) // don't divide by zero
 			var/move_dir = src.move_dir
 			if (move_dir & (move_dir-1))
-				delay *= 1.4 // actual sqrt(2) unsurprisingly resulted in rounding errors
+				delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 			if (src.client && src.client.flying)
 				var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 				if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
@@ -182,7 +182,6 @@ mob
 						//else
 						src.pushing = 0
 
-
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 						for(var/grab in src.grabbed_by)
 							var/obj/item/grab/G = grab
@@ -192,8 +191,9 @@ mob
 
 						if (do_step)
 							step(src, move_dir)
+							if (src.loc != old_loc)
+								OnMove()
 
-						OnMove()
 						src.glide_size = glide // but Move will auto-set glide_size, so we need to override it again
 
 						//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
@@ -205,6 +205,7 @@ mob
 
 							for(var/grab in src.grabbed_by)
 								var/obj/item/grab/G = grab
+								if (G.assailant == pushing || G.affecting == pushing) continue
 								if (G.state < GRAB_NECK) continue
 								if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 									return
@@ -227,11 +228,12 @@ mob
 								else
 									pulling += src.pulling
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-								if (G.affecting == src) continue
 								pulling += G.affecting
 
 							for (var/atom/movable/A in pulling)
 								if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+									continue
+								if (A == src || A == pushing)
 									continue
 								if (!isturf(A.loc) || A.anchored)
 									return // whoops
@@ -239,6 +241,7 @@ mob
 								A.glide_size = glide
 								step(A, get_dir(A, old_loc))
 								A.glide_size = glide
+								A.OnMove(src)
 				else
 					if (src.loc) //ZeWaka: Fix for null.relaymove
 						delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay

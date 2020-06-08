@@ -623,13 +623,12 @@ datum
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (T.air)
-							var/datum/gas_mixture/lowertemp = T.remove_air( T.air.total_moles() )
+							var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
 							if (lowertemp)// ZeWaka: Fix for null.temperature
 								lowertemp.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
 					pool(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
@@ -973,6 +972,9 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.delStatus("burning")
+					if(!M.is_cold_resistant() || ischangeling(M))
+						M.bodytemperature=max(M.bodytemperature-volume_passed*2, 0)
+						volume_passed *= 0.75 //1 quarter of the chilling is done immidiately on touch reactions
 				if ((world.time > M.last_cubed + 5 SECONDS) && M.bioHolder)
 					if ((!M.is_cold_resistant() || ischangeling(M)) && isturf(M.loc) )
 						if (silent && volume_passed < 1)
@@ -980,7 +982,6 @@ datum
 								cube_mob(M,volume_passed)
 						else
 							cube_mob(M,volume_passed)
-				M.bodytemperature = 0
 
 				src = null
 
@@ -1015,14 +1016,13 @@ datum
 				if (hotspot)
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
-						if (!T.air) return //ZeWaka: Fix for null.total_moles()
-						var/datum/gas_mixture/lowertemp = T.remove_air( T.air.total_moles() )
+						if (!T.air) return //ZeWaka: Fix for TOTAL_MOLES(null)
+						var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
 						if (lowertemp) //ZeWaka: Fix for null.temperature
 							lowertemp.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					hotspot.disposing() // have to call this now to force the lighting cleanup
 					pool(hotspot)
 				return
 
@@ -3679,6 +3679,7 @@ datum
 			data = null
 			blocks_sight_gas = 1
 			hygiene_value = -1
+			smoke_spread_mod = 15
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
@@ -3706,6 +3707,7 @@ datum
 			fluid_g = 25
 			transparency = 95
 			hygiene_value = -0.5
+			smoke_spread_mod = 15
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom

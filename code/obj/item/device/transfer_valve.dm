@@ -254,7 +254,7 @@
 
 				if(!B || !T) return
 
-				var/power = min(T.air_contents.return_pressure() / TANK_RUPTURE_PRESSURE, 2)
+				var/power = min(MIXTURE_PRESSURE(T.air_contents) / TANK_RUPTURE_PRESSURE, 2)
 				DEBUG_MESSAGE("Power: [power]")
 
 				if(power < 0.30) //Really weak
@@ -403,12 +403,12 @@
 		var/tpressure = 0
 		if(tank_one && tank_one.air_contents)
 			tankslost--
-			var/t1pressure = tank_one.air_contents.return_pressure()
+			var/t1pressure = MIXTURE_PRESSURE(tank_one.air_contents)
 			tpressure += round(t1pressure,0.1)
 
 		if(tank_two && tank_two.air_contents)
 			tankslost--
-			var/t2pressure = tank_two.air_contents.return_pressure()
+			var/t2pressure = MIXTURE_PRESSURE(tank_two.air_contents)
 			tpressure += round(t2pressure,0.1)
 
 		log_message += " Pressure:[tpressure] kPa"

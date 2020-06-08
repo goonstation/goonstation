@@ -489,7 +489,11 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.sprint_particle.loc = M.loc
 
 	M.sprint_particle.dir = null
-	flick("sprint_cloud",M.sprint_particle)
+	if (M.sprint_particle.icon_state == "sprint_cloud")
+		flick("sprint_cloud",M.sprint_particle)
+	M.sprint_particle.icon_state = "sprint_cloud"
+
+
 	SPAWN_DBG(6)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
@@ -502,8 +506,27 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.sprint_particle.loc = M.loc
 
 	M.sprint_particle.dir = direct
-	flick("sprint_cloud_small",M.sprint_particle)
+	if (M.sprint_particle.icon_state == "sprint_cloud_small")
+		flick("sprint_cloud_small",M.sprint_particle)
+	M.sprint_particle.icon_state = "sprint_cloud_small"
+
 	SPAWN_DBG(4)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
+/proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = direct
+	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
+		flick("sprint_cloud_tiny",M.sprint_particle)
+	M.sprint_particle.icon_state = "sprint_cloud_tiny"
+
+	SPAWN_DBG(3)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 

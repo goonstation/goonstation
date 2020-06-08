@@ -7,7 +7,7 @@
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act))
+		if (P.onemote(act, voluntary))
 			return
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -230,6 +230,14 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
+				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(1))
+					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
+					var/obj/item/device/light/glowstick/G = new glowsticktype
+					G.set_loc(src.loc)
+					G.turnon()
+					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
+					G.throw_at(target,5,1)
+					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
 			if ("salute","bow","hug","wave", "blowkiss")
 				// visible targeted emotes
@@ -805,6 +813,18 @@
 					else message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 				else message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
 				m_type = 1
+
+				for(var/atom in src.get_equipped_items())
+					var/obj/item/C = atom
+					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
+						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
+						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						drop_item()
+						O.set_loc(src)
+						equip_if_possible(O, drophand)
+						src.visible_message("<span class='alert'><B>[src] pulls a set of tools out of \the [C]!</B></span>")
+						playsound(src.loc, "rustle", 60, 1)
+						break
 
 			if ("facepalm")
 				if (!src.restrained()) message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
@@ -1672,11 +1692,20 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
+				var/obj/item/I = src.wear_id
+				if (istype(I, /obj/item/device/pda2))
+					var/obj/item/device/pda2/P = I
+					if(P.ID_card)
+						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
 					src.show_text("You can't do that without arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+					var/obj/item/card/id/dabbing_license/dab_id = null
+					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
+						dab_id = I
+						dab_id.dab_count++
 					karma_update(4, "SIN", src)
-					if(locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
+					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
 						//if(src:wear_id && src:wear_id:registered)
@@ -1707,6 +1736,8 @@
 									get_dabbed_on = 1
 									if(prob(5))
 										M.emote("cry") //You should be ashamed
+									if(dab_id)
+										dab_id.dabbed_on_count++
 
 						if(get_dabbed_on == 0)
 							if (src.mind && src.mind.assigned_role == "Clown")
@@ -1721,11 +1752,17 @@
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()
+								if(dab_id)
+									dab_id.arm_count++
 							if(H.limbs.r_arm)
 								src.limbs.r_arm.sever()
+								if(dab_id)
+									dab_id.arm_count++
 							H.emote("scream")
 					if(!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate) && (!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/biggest)) || (!src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
+						if(dab_id)
+							dab_id.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
 				else
@@ -1764,24 +1801,19 @@
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
-	var/datum/gas/farts/trace_gas = new
 	if(oxyplasmafart == 1)
 		gas.toxins += 1
 	if(oxyplasmafart == 2)
 		gas.oxygen += 1
 	gas.vacuum()
-	gas.trace_gases = list()
-	gas.trace_gases += trace_gas
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		trace_gas.moles = 6.9
+		gas.farts = 6.9
+	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
+		gas.farts = 2.69
+	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
+		gas.farts = 1.69
 	else
-		if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-			trace_gas.moles = 2.69
-		else
-			if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-				trace_gas.moles = 1.69
-			else
-				trace_gas.moles = 0.69
+		gas.farts = 0.69
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

@@ -19,6 +19,18 @@
 		src.setDisarmSpecial (/datum/item_special/disarm)
 		src.setHarmSpecial (/datum/item_special/harm)
 
+	disposing()
+		if(holder?.limb_data == src)
+			holder.limb_data = null
+		holder = null
+		if(disarm_special)
+			disarm_special.dispose()
+			disarm_special = null
+		if(harm_special)
+			harm_special.dispose()
+			harm_special = null
+		..()
+
 	// !!CAUTION!! it is allowed to delete the target here
 	// Mob is also passed as a convenience/redundancy.
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
@@ -46,6 +58,7 @@
 
 	proc/help(mob/living/carbon/human/target, var/mob/living/user)
 		user.do_help(target)
+		user.lastattacked = target
 
 	proc/disarm(mob/living/carbon/human/target, var/mob/living/user)
 		if (special_next)
@@ -53,11 +66,13 @@
 			special_next = 0
 		else
 			user.disarm(target)
+		user.lastattacked = target
 
 	proc/grab(mob/living/carbon/human/target, var/mob/living/user)
 		if (issilicon(target))
 			return
 		user.grab_other(target)
+		user.lastattacked = target
 
 	//calls attack specials if we got em
 	//Ok look i know this isn't a true pixelaction() but it fits into the itemspecial call so i'm doin it
@@ -361,6 +376,7 @@
 			user.HealDamage("All", 2, 0)
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
+		user.lastattacked = target
 
 /datum/limb/mouth/small // for cats/mice/etc
 	sound_attack = "sound/impact_sounds/Flesh_Tear_1.ogg"
@@ -417,6 +433,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Nope. Not going to work. You're more likely to kill them.</span>")
+		user.lastattacked = target
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing("combat", user, target, "mauls %target% with bear limbs (disarm intent) at [log_loc(user)].")
@@ -441,6 +458,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("weakened", 2 SECONDS)
+		user.lastattacked = target
 
 /datum/limb/dualsaw
 
@@ -461,6 +479,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Not going to work. You're more likely to kill them.</span>")
+		user.lastattacked = target
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing("combat", user, target, "slashes %target% with dual saw (disarm intent) at [log_loc(user)].")
@@ -502,6 +521,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("weakened",20)
+		user.lastattacked = target
 
 /datum/limb/wendigo
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -578,7 +598,82 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(35 * quality))
 			target.changeStatus("weakened", (4 * quality)*10)
+		user.lastattacked = target
 
+#if ASS_JAM
+/datum/limb/hot //because
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (!holder)
+			return
+		if(check_target_immunity( target ))
+			return
+
+
+		if (!istype(user))
+			target.attack_hand(user, params, location, control)
+			return
+
+		if (isitem(target))
+			var/obj/item/I = target
+			if(I.anchored)
+				return 0
+			var/obj/decal/cleanable/molten_item/I2 = make_cleanable(/obj/decal/cleanable/molten_item,I.loc)
+			user.visible_message("<span class='alert'>The [I] melts in [user]'s clutch</span>", "<span class='alert'>The [I] melts in your clutch!</span>")
+			qdel(target)
+			I2.desc = "Looks like this was \an [I], melted by someone who was too much."
+			for(var/mob/M in AIviewers(5, target))
+				boutput(M, "<span class='alert'>\the [I] melts.</span>")
+			qdel(I)
+			return
+
+		..()
+		return
+
+	proc/accident(mob/target, mob/living/user)
+		if(check_target_immunity( target ))
+			return 0
+		if (prob(15))
+			logTheThing("combat", user, target, "accidentally harms %target% with hot hands at [log_loc(user)].")
+			user.visible_message("<span class='alert'><b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally melt [target] while trying to [user.a_intent] them!</b></span>")
+			harm(target, user, 1)
+			return 1
+		return 0
+
+	help(mob/target, var/mob/living/user)
+		if (accident(target, user))
+			return
+		else
+			..()
+
+	disarm(mob/target, var/mob/living/user)
+		if (accident(target, user))
+			return
+		else
+			..()
+
+	grab(mob/target, var/mob/living/user)
+		if (accident(target, user))
+			return
+		else
+			..()
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if(check_target_immunity( target ))
+			return 0
+		if (no_logs != 1)
+			logTheThing("combat", user, target, "melts %target% with hot hands at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 3, 1, 0, 0)
+		user.attack_effects(target, affecting)
+
+		msgs.base_attack_message = "<b><span class='alert'>[user] melts [target] with their clutch!</span></b>"
+		msgs.played_sound = "sound/impact_sounds/burn_sizzle.ogg"
+		msgs.damage_type = DAMAGE_BURN
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+
+
+#endif
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
@@ -937,7 +1032,7 @@
 		if (ismob(target))
 			user.melee_attack_normal(target, 5) // Slightly more powerful punches. This is bonus damage, not a multiplier.
 			return
-
+		user.lastattacked = target
 		..()
 		return
 
@@ -1050,6 +1145,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
 
 
 //hey maybe later standardize this into flags per obj so we dont search this huge list every click ok??
@@ -1157,6 +1253,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	grab(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1166,6 +1263,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)

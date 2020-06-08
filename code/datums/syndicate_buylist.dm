@@ -218,6 +218,13 @@ proc/build_syndi_buylist_cache()
 	desc = "This kit contains innocuous stickers that you can use to broadcast audio and observe a video feed wirelessly."
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/generic/omnitool
+	name = "Syndicate Omnitool"
+	item = /obj/item/tool/omnitool/syndicate
+	cost = 2
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
+	blockedmode = list(/datum/game_mode/revolution)
+
 /datum/syndicate_buylist/generic/bighat
 	name = "Syndicate Hat"
 	item = /obj/item/clothing/head/bighat/syndicate
@@ -461,6 +468,15 @@ This is basically useless for anyone but miners.
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy)
 
+/datum/syndicate_buylist/traitor/boomboots
+	name = "Boom Boots"
+	item = /obj/item/clothing/shoes/cowboy/boom
+	cost = 12
+	vr_allowed = 0
+	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
+	job = list("Clown")
+	blockedmode = list(/datum/game_mode/spy)
+
 /datum/syndicate_buylist/traitor/clown_mask
 	name = "Clown Mask"
 	item = /obj/item/clothing/mask/gas/syndie_clown
@@ -618,7 +634,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/reagent/syringe
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
-	job = list("Medical Doctor","Medical Director", "Research Director")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Barman")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/powergloves

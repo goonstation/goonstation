@@ -2527,6 +2527,7 @@ datum
 						gathered += M.max_health - round(M.max_health / 2)
 						//M.max_health = round(M.max_health / 2)
 						M.setStatus("maxhealth-", null, -round(M.max_health / 2))
+						health_update_queue |= M
 						if(hascall(M,"add_stam_mod_max"))
 							M:add_stam_mod_max("anima_drain", -25)
 					if(gathered >= 80)

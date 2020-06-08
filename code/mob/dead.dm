@@ -50,6 +50,9 @@
 		boutput(src, "You are currently muted and may not speak.")
 		return
 
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
+
 	. = src.say_dead(message)
 
 	for (var/mob/M in hearers(null, null))

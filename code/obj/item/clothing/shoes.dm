@@ -291,6 +291,7 @@
 	mats = 2
 
 	equipped(var/mob/user, var/slot)
+		..()
 		user.visible_message("<b>[user]</b> starts hopping around!","You start hopping around.")
 		src.moonloop(user)
 		return
@@ -317,6 +318,15 @@
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"
 	icon_state = "cowboy"
+
+/obj/item/clothing/shoes/cowboy/boom
+	name = "Boom Boots"
+	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
+	icon_state = "cowboy"
+	color = "#FF0000"
+	step_sound = "explosion"
+	contraband = 10
+	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"
@@ -492,7 +502,7 @@
 	proc/allow_thrust(num, mob/user as mob) // blatantly c/p from jetpacks
 		if (!src.on || !istype(src.tank))
 			return 0
-		if (!isnum(num) || num < 0.01 || src.tank.air_contents.total_moles() < num)
+		if (!isnum(num) || num < 0.01 || TOTAL_MOLES(src.tank.air_contents) < num)
 			return 0
 
 		var/datum/gas_mixture/G = src.tank.air_contents.remove(num)
@@ -513,7 +523,7 @@
 
 	get_desc(dist)
 		if (dist <= 1)
-			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [src.tank.air_contents.return_pressure()]." : "<span class='alert'>They have no tank attached!</span>"]"
+			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : "<span class='alert'>They have no tank attached!</span>"]"
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 

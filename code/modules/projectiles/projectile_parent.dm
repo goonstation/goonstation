@@ -51,7 +51,7 @@
 	var/goes_through_mobs = 0
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 	var/list/hitlist = list() //list of atoms collided with this tick
-
+	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 #if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
@@ -268,6 +268,7 @@
 		collide_with_other_projectiles = 0
 		is_processing = 0
 		facing_dir = 1
+		reflectcount = 0
 		..()
 
 	//just in fuck in case
@@ -966,19 +967,24 @@ datum/projectile/snowball
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 
-/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
+	if(P.reflectcount >= max_reflects)
+		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q
 
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
 	if (!P.incidence || !(P.incidence in cardinal))
 		return null
+	if(P.reflectcount >= max_reflects)
+		return
 
 	var/rx = 0
 	var/ry = 0
@@ -997,6 +1003,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
+	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"

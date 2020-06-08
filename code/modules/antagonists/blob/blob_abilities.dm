@@ -25,10 +25,9 @@
 
 	disposing()
 		if (button)
-			if (button.ability == src)
-				button.ability = null
-			if (button.upgrade == src)
-				button.upgrade = null
+			button.dispose()
+			button = null
+		owner = null
 		..()
 
 	proc
@@ -231,9 +230,6 @@
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
-		owner.remove_ability(/datum/blob_ability/set_color)
-		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.add_ability(/datum/blob_ability/spread)
 		owner.add_ability(/datum/blob_ability/attack)
 		owner.add_ability(/datum/blob_ability/consume)
@@ -253,6 +249,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
+
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
+		owner.remove_ability(/datum/blob_ability/set_color)
+		owner.remove_ability(/datum/blob_ability/tutorial)
 
 
 /datum/blob_ability/set_color
@@ -320,7 +320,7 @@
 
 		if (istype(T, /turf/space))
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
-			
+
 			if (B)
 				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
 				if (success)
@@ -1066,6 +1066,13 @@
 		B.name = src.name
 		B.desc = src.desc
 		src.button = B
+
+	disposing()
+		if(button)
+			button.dispose()
+			button = null
+		owner = null
+		..()
 
 	proc/check_requirements()
 		if (!istype(owner))

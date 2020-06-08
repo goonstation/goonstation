@@ -1,4 +1,206 @@
 
+(t)mon jun 08 20
+(u)pali
+(p)986
+(e)🆕|feature
+(*)Heisenbee gets better hats the more rounds she's alive. Killing Heisenbee resets this but drops the hat!
+(u)Tarmunora
+(p)995
+(e)🐛|bug
+(+)Fixes moveslow on nukie LMG and sniper - now slows in-hand, but not on back
+(u)Sovexe
+(p)982
+(e)🐛|bug
+(+)Credits "sold" via QM crate are now refunded as profit instead of lost.
+(u)Tarmunora
+(p)957
+(e)⚖|balance
+(*)Tweaked explosion power scaling over range, and changed how the human body responds to being caught in explosions.
+(+)Added small amount of explosion resistance to sturdy-limbs foodEffect
+(t)sun jun 07 20
+(u)Tarmunora
+(p)947
+(e)🆕|feature
+(+)Taught critters how to dual-wield
+(u)UrsulaMajor
+(p)979
+(e)|
+(*)New Clown Traitor Item by Dr. Floorpills: Boom Boots. They make a boom sound with every step.
+(u)UrsulaMajor
+(p)984
+(e)⚖🐛|balance, bug
+(+)You can now deconstruct everything a mechanic constructs (again)
+(u)mbc
+(p)981
+(e)⚖🆕🔄|balance, feature, rework
+(*)Certain kinds of random events will be preferred when many players are dead or all the antagonists are dead.
+(*)Added two new random events : one that spawns dead players as random ghost critter pests (different from normal ghost critters) and another that spawns 1-3 dead players as an antagonistic critter
+(u)Sovexe
+(p)978
+(e)|
+(+)Monkeys will now drop all equipped items when meat spiked
+(u)UrsulaMajor
+(p)969
+(e)⚖|balance
+(*)Biomagnetic Fields now use charge to produce their effects. Charge builds up when you take tight turns.
+(u)UrsulaMajor
+(p)977
+(e)🐛|bug
+(+)Fixed bug where critters could attack really fast
+(u)Tarmunroa
+(p)692
+(e)⚖🔄|balance, rework
+(+)Globally enabled experimental smoke spread
+(u)MarkNstein
+(p)971
+(e)|
+(+)Command jobs now displayed as filled when late-joining during Rev-mode.
+(t)sat jun 06 20
+(u)ZeWaka
+(p)141
+(e)🆕|feature
+(*)Added a basic custom keybinding system to the game. 😸
+(*)Change your keybinds by going to the interface menu in the top left.
+(u)mbc
+(p)966
+(e)|
+(+)Fixed a few pushing related bugs relating to grabbing and stamina consumption while sprinting.
+(t)thu jun 04 20
+(u)mbc
+(p)955
+(e)|
+(*)Fixed bug where you couldn't push/pull someone else into a slip. Also fixed a bug where a stacked slip might gib you.
+(u)TrustworthyFella
+(p)823
+(e)⚖|balance
+(*)Made seething tomatoes into incendiaries rather than explosives. They now do a sizable chunk of burn damage on impact, and a fireflash. Potency affects the burn damage done, and how long you're on fire. The burn damage is affected by the targets clothing(heat resistance).
+(+)Seething tomatoes now contain welding fuel
+(t)wed jun 03 20
+(u)zjdtmkhzt
+(p)953
+(e)⚖🆕|balance, feature
+(+)Rebalanced microbody types and added a cap for amount of symptoms a pathogen can have. Pathology is still disabled.
+(u)UrsulaMajor
+(p)952
+(e)⚖🐛|balance, bug
+(*)Nukie Snipers now get a pair of traitor thermals. Enjoy!
+(u)zjdtmkhzt
+(p)942
+(e)⚖🆕|balance, feature
+(+)Fart pathogen symptoms can now be actively triggered by farting (with a cooldown). Pathology is still disabled!
+(u)MarkNstein
+(p)872
+(e)🗺🎨|mapping, sprites
+(+)New Z5 asteroid field prefab: Sequestered Cloner. Contains lore, a puzzle, and loots!
+(u)Tarmunora
+(p)929
+(e)🆕|feature
+(+)Made metal foam a little better to use for sealing breaches
+(u)Erinexx
+(p)818
+(e)🆕🗺|feature, mapping
+(*)Added jellybean plants that grow jellybeans
+(u)zjdtmkhzt
+(p)920
+(e)🆕|feature
+(+)Only mining tools will now be automatically used when bumping into asteroid tiles. (This prevents things like emptying ore holders on accident.)
+(+)Borgs can now also automatically use their mining tools without having to click.
+(u)HydroFloric
+(e)🎨|sprites
+(*)The Intelligence Formation Chip has a new sprite (and name).
+(t)tue jun 02 20
+(u)zjdtmkhzt
+(p)464
+(e)🆕|feature
+(+)Added a new mutation-based pathology symptom that can be used for benevolent or nefarious purposes.
+(u)UrsulaMajor
+(p)935
+(e)|
+(+)Nukie Engineer Class Crate now has welding-safe helmet w/ built in mesons
+(+)Nukie Medic Class Crate now has ProDocs built into their helmet
+(u)UrsulaMajor
+(p)934
+(e)🗺|mapping
+(+)Added a Syndicate Omnitool to the Cairngorm
+(u)UrsulaMajor
+(p)933
+(e)🎨|sprites
+(*)Syndicate Omnitool traitor item now has a weldingtool mode
+(t)mon jun 01 20
+(u)UrsulaMajor
+(p)932
+(e)|
+(*)Refactored how welding tools work. Please report any bugs with the bug report button at the top right of the status pane.
+(t)sun may 31 20
+(u)Chickenish
+(p)863
+(e)⚖🐛🆕|balance, bug, feature
+(+)Cyberlungs now have improved resistance to hot air, reducing damage even past the temperature threshold.
+(+)Singular lungs now have more intuitive interactions with hot air.
+(u)Sovexe
+(p)921
+(e)🆕|feature
+(+)Remy, Morty, Monkey, Piggy, and Blair can now escape with you to centcom. Can you save all of the pets?
+(u)tloy-x
+(p)834
+(e)🆕|feature
+(*)Added option in character setup for auto-capitalization of sent chat messages
+(+)Added "cancel" button to input box when using the radio hotkey
+(u)MarkNstein
+(p)895
+(e)🗺|mapping
+(+)All TEG maps now have two TTVs in the engineering department.
+(t)sat may 30 20
+(u)mbc
+(p)908
+(e)|
+(*)Slips can also be avoided by manually slowing your movement (tap keys slower instead of holding)
+(u)mbc
+(p)906
+(e)⚖|balance
+(*)Slipping protection no longer checks for "walk" intent and instead is based off actual speed
+(u)Sovexe
+(p)894
+(e)🆕|feature
+(+)Changed escape checks to consider you as having escaped if you are anywhere on Centcom at round end.
+(u)UrsulaMajor
+(p)900
+(e)|
+(+)You no longer slip on ice decals while crawling
+(u)Tarmunora
+(p)774
+(e)⚖|balance
+(+)Reduced the immediate cooling effect of cryostylane.
+(u)zjdtmkhzt
+(p)897
+(e)🆕🎨|feature, sprites
+(+)Added dabbing license to spacebux purchases. Start keeping track of your sick dabs today! (Sprite by UrsulaMajor)
+(u)mbc
+(p)899
+(e)⚖🐛🎨|balance, bug, sprites
+(+)Fixed some bugs where diagonal step effects would trigger more often than intended.
+(+)Combat stagger breaks a sustained run.
+(u)UrsulaMajor
+(p)898
+(e)|
+(*)Mash the movement keys or flip for a chance to bust out of disposal pipes
+(t)fri may 29 20
+(u)Flaborized
+(p)883
+(e)⚖|balance
+(+)Traitor barmen and scientists can now buy the syringe gun
+(u)UrsulaMajor
+(p)893
+(e)🎨|sprites
+(*)Added a concealable Syndicate Omnitool (with Knife mode!) to the syndicate buylist for 2TC
+(u)Kubius
+(p)890
+(e)🆕🗺|feature, mapping
+(+)Small batch of Kondaru changes, including a space cooling loop in Toxins.
+(u)mbc
+(p)889
+(e)|
+(*)The HoS can now walk in/out of the armory without using the auth computer.
 (t)thu may 28 20
 (u)mbc
 (p)879
