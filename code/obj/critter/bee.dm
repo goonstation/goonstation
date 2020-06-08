@@ -302,7 +302,7 @@
 				if(5 to INFINITY)
 					hat.setMaterial(getMaterial("starstone"))
 					var/matrix/trans = new
-					trans.Scale((ubertier - 4) / 5) // mmm, large hat
+					trans.Scale((ubertier - 4) / 3) // mmm, large hat
 					hat.transform = trans
 			hat.name = "[src]'s [hat.name]"
 			src.original_hat_ref = ref(hat)
