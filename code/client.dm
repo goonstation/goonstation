@@ -334,6 +334,7 @@
 		updateXpRewards()
 
 	SPAWN_DBG(3 SECONDS)
+		var/is_newbie = 0
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 		if (!preferences)
@@ -345,9 +346,11 @@
 			if(!preferences.savefile_load(src))
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
+				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
+				is_newbie = 1
 
 			else if(!src.holder)
 				preferences.sanitize_name()
@@ -355,7 +358,7 @@
 			if (noir)
 				animate_fade_grayscale(src, 50)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-			if (!changes && preferences.view_changelog)
+			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
 					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
