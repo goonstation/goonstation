@@ -275,9 +275,15 @@
 
 		//TODO : move this code somewhere else that updates from an event trigger instead of constantly
 		var/arrestState = ""
-		var/visibleName = name
-		if (wear_id)
-			visibleName = wear_id.registered_owner()
+
+		var/see_face = 1
+		if (istype(src.wear_mask) && !src.wear_mask.see_face)
+			see_face = 0
+		else if (istype(src.head) && !src.head.see_face)
+			see_face = 0
+		else if (istype(src.wear_suit) && !src.wear_suit.see_face)
+			see_face = 0
+		var/visibleName = see_face ? src.real_name : src.name
 
 		for (var/security_record in data_core.security)
 			var/datum/data/record/R = security_record
