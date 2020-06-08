@@ -393,6 +393,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
@@ -597,6 +598,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Init() complete")
+	TgsInitializationComplete()
 	//sleep_offline = 1
 
 
@@ -640,6 +642,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	lagcheck_enabled = 0
 	processScheduler.stop()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
@@ -689,6 +692,10 @@ var/f_color_selector_handler/F_Color_Selector
 			ehjax.send(C, "browseroutput", "roundrestart")
 
 		world.Reboot()
+
+/world/Reboot()
+	TgsReboot()
+	return ..()
 
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
@@ -765,6 +772,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/Topic(T, addr, master, key)
+	TGS_TOPIC	// logging for these is done in TGS
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 

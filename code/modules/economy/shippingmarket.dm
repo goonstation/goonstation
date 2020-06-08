@@ -155,6 +155,9 @@
 							qdel(O)
 						duckets += add
 						break
+					else if (istype(O, /obj/item/spacecash))
+						duckets += O:amount
+						pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in sell_crate.contents)
 				for (var/datum/commodity/C in commodities_list)
@@ -169,6 +172,9 @@
 							qdel(O)
 						duckets += add
 						break
+					else if (istype(O, /obj/item/spacecash))
+						duckets += O:amount
+						pool(O)
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
