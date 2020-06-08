@@ -245,7 +245,7 @@
 			///obj/item/clothing/head/butt,
 			/obj/item/clothing/head/paper_hat,
 			/obj/item/clothing/head/plunger,
-			/obj/item/clothing/head/helmet/bucket,
+			/obj/item/clothing/head/helmet/bucket/hat,
 			/obj/item/clothing/head/cakehat,
 			/obj/item/clothing/head/chefhat,
 			/obj/item/clothing/head/mailcap,
