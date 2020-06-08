@@ -280,12 +280,13 @@
 			return
 		else
 			var/mob/living/carbon/human/T = target
-			if (istype(T) && T.do_block(src, null, show_msg = 0))
-				src.visible_message("<span class='alert'><B>[T] blocks [src]'s attempt to grab [him_or_her(T)]!</span>")
+			if (target.do_block(src, null, show_msg = 0))
+				src.visible_message("<span class='alert'><B>[target] blocks [src]'s attempt to grab [him_or_her(target)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 
+			var/mob/living/carbon/human/T = target
+			if (istype(T))
 				T.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-				T.stamina_stun()
 				return
 
 	if (istype(H))
@@ -478,7 +479,7 @@
 #undef DISARM_WITH_ITEM_TEXT
 
 /mob/proc/check_block(ignoreStuns = 0) //am i blocking?
-	if (ignoreStuns || (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis")))
+	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
@@ -501,7 +502,6 @@
 
 				playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 				remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-				stamina_stun()
 				fuckup_attack_particle(attacker)
 				return 1
 			block_spark(src)
@@ -524,9 +524,6 @@
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 		fuckup_attack_particle(attacker)
 		return 1
-	if (stamina <= STAMINA_DEFAULT_BLOCK_COST)
-		return 0
-
 	return ..()
 
 /mob/living/carbon/human/proc/get_passive_block(var/obj/item/W)
