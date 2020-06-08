@@ -1020,6 +1020,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 				new /obj/item/power_stones/Owl(src.loc)
+		else
+			. = ..()
 
 
 /* -------------------- Large Owl -------------------- */

@@ -188,9 +188,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for (var/client/C in animateclients)
 		if (C)
 			Z_LOG_DEBUG("Game Start/A", "Animating client [C]")
+			var/target_color = "#FFFFFF"
+			if(C.color != "#000000")
+				target_color = C.color
 			animate(C, color = "#000000", time = 0, flags = ANIMATION_END_NOW)
 			animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
-			animate(color = "#FFFFFF", time = 10, easing = QUAD_EASING | EASE_IN)
+			animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
 
 
 	current_state = GAME_STATE_PLAYING
