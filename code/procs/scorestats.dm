@@ -258,6 +258,23 @@ var/datum/score_tracker/score_tracker
 
 		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
+
+		var/found_hb = 0
+		for(var/obj/critter/domestic_bee/heisenbee/HB in pets)
+			var/obj/item/hat = locate(HB.original_hat_ref)
+			if(hat && HB.alive)
+				. += "Heisenbee hat: [hat] [bicon(hat)] (tier [HB.tier])"
+			else if(HB.alive)
+				. += "Heisenbee hat: No hat yet."
+			else
+				. += "Heisenbee hat: Heisenbee was killed! Hat tier reset to 0."
+			found_hb = 1
+		if(!found_hb)
+			var/tier = world.load_intra_round_value("heisenbee_tier")
+			if(tier)
+				. += "Heisenbee hat: Heisenbee missing but hat is safe at tier [tier]."
+			else
+				. += "Heisenbee hat: Heisenbee missing and has no hat."
 		return .
 
 
