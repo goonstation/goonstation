@@ -238,14 +238,99 @@
 		generic = 0
 		var/jittered = 0
 		honey_color = rgb(0, 255, 255)
+		var/tier = 0
+		var/original_tier = 0
+		var/original_hat_ref = ""
+		var/static/hat_tier_list = list(
+			///obj/item/clothing/head/butt,
+			/obj/item/clothing/head/paper_hat,
+			/obj/item/clothing/head/plunger,
+			/obj/item/clothing/head/helmet/bucket/hat,
+			/obj/item/clothing/head/cakehat,
+			/obj/item/clothing/head/chefhat,
+			/obj/item/clothing/head/mailcap,
+			/obj/item/clothing/head/helmet/hardhat,
+			/obj/item/clothing/head/det_hat,
+			/obj/item/clothing/head/mj_hat,
+			/obj/item/clothing/head/that,
+			/obj/item/clothing/head/NTberet,
+			/obj/item/clothing/head/helmet/HoS,
+			/obj/item/clothing/head/hosberet,
+			/obj/item/clothing/head/caphat,
+			/obj/item/clothing/head/fancy/captain,
+			/obj/item/clothing/head/apprentice,
+			/obj/item/clothing/head/wizard,
+			/obj/item/clothing/head/wizard/red,
+			/obj/item/clothing/head/helmet/viking,
+			/obj/item/clothing/head/void_crown
+		)
 
 		New()
+			src.tier = world.load_intra_round_value("heisenbee_tier")
+			src.original_tier = src.tier
+			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
+			heisentier_hat()
 			pets += src
 			..()
 
 		disposing()
+			UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
 			pets -= src
 			..()
+
+		proc/save_upgraded_tier()
+			if(src.alive)
+				world.save_intra_round_value("heisenbee_tier", src.tier + 1)
+
+		proc/heisentier_hat()
+			if(src.tier <= 0)
+				return
+			var/hat_type = src.hat_tier_list[(src.tier - 1) % length(src.hat_tier_list) + 1]
+			var/obj/item/clothing/head/hat = new hat_type(src)
+			var/ubertier = round((src.tier - 1) / length(src.hat_tier_list))
+			switch(ubertier)
+				if(0)
+					; // regular hat
+				if(1)
+					hat.setMaterial(getMaterial("gold"))
+				if(2)
+					hat.setMaterial(getMaterial("miracle"))
+				if(3)
+					hat.setMaterial(getMaterial("telecrystal"))
+				if(4)
+					hat.setMaterial(getMaterial("negativematter"))
+				if(5 to INFINITY)
+					hat.setMaterial(getMaterial("starstone"))
+					var/matrix/trans = new
+					trans.Scale((ubertier - 4) / 3) // mmm, large hat
+					hat.transform = trans
+			hat.name = "[src]'s [hat.name]"
+			src.original_hat_ref = ref(hat)
+			src.hat_that_bee(hat)
+			src.update_icon()
+
+		CritterDeath()
+			if(!src.alive)
+				return
+			world.save_intra_round_value("heisenbee_tier", 0)
+			if(src.hat)
+				src.hat.set_loc(src.loc)
+				src.hat = null
+				src.update_icon()
+			src.tier = 0 // No free hat with SR...
+			. = ..()
+
+		attackby(obj/item/W, mob/living/user)
+			if(!src.hat && ref(W) == src.original_hat_ref) // ...unless you return the hat!
+				if(src.alive)
+					boutput(user, "<span class='emote'>[src] bubmles happily at the sight of [W]!</span>")
+				src.tier = src.original_tier
+			. = ..()
+
+		get_desc(dist)
+			. = ..()
+			if(src.hat)
+				. += "Huh, is that \a [src.hat] on [src]? How did it even get there?"
 
 #ifdef HALLOWEEN
 		var/masked = 1

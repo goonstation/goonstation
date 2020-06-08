@@ -3681,6 +3681,7 @@ datum
 			data = null
 			blocks_sight_gas = 1
 			hygiene_value = -1
+			smoke_spread_mod = 15
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
@@ -3708,6 +3709,7 @@ datum
 			fluid_g = 25
 			transparency = 95
 			hygiene_value = -0.5
+			smoke_spread_mod = 15
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom

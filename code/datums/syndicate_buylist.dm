@@ -468,6 +468,15 @@ This is basically useless for anyone but miners.
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy)
 
+/datum/syndicate_buylist/traitor/boomboots
+	name = "Boom Boots"
+	item = /obj/item/clothing/shoes/cowboy/boom
+	cost = 12
+	vr_allowed = 0
+	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
+	job = list("Clown")
+	blockedmode = list(/datum/game_mode/spy)
+
 /datum/syndicate_buylist/traitor/clown_mask
 	name = "Clown Mask"
 	item = /obj/item/clothing/mask/gas/syndie_clown

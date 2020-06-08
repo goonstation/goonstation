@@ -1693,10 +1693,19 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
+			if (C.preferences.use_azerty)
+				C.apply_keybind("robot_tg_azerty")
 
 	say_understands(var/other)
 		if (isAI(other)) return 1
@@ -2519,11 +2528,13 @@
 					//	sight_therm = 1
 
 				if (sight_meson)
+					src.sight &= ~SEE_BLACKNESS
 					src.sight |= SEE_TURFS
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 					vision.set_scan(1)
 					client.color = "#c2ffc2"
 				else
+					src.sight |= SEE_BLACKNESS
 					src.sight &= ~SEE_TURFS
 					client.color = null
 					vision.set_scan(0)

@@ -606,7 +606,6 @@
 					H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
 					H.TakeDamage("chest", 0, 30)
 					H.changeStatus("stunned", 150)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 				else
 					var/index = text2num(href_list["cut"])
@@ -671,7 +670,6 @@
 					H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 					H.TakeDamage("chest", 0, 30)
 					H.changeStatus("stunned", 150)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 				else
 					var/index = text2num(href_list["pulse"])

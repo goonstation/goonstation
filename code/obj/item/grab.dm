@@ -697,7 +697,7 @@
 
 
 /obj/item/grab/block
-	c_flags = EQUIPPED_WHILE_HELD_ACTIVE
+	c_flags = EQUIPPED_WHILE_HELD
 	item_grab_overlay_state = "grab_block_small"
 	icon_state = "grab_block"
 	name = "block"
