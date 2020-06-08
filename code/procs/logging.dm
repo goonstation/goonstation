@@ -195,7 +195,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 
 /proc/log_health(var/mob/M)
 	var/log_health = ""
-	if (ishuman(M) || iscritter(M))
+	if (ishuman(M) || ismobcritter(M))
 		log_health += "[M.get_brain_damage()], [M.get_oxygen_deprivation()], [M.get_toxin_damage()], [M.get_burn_damage()], [M.get_brute_damage()]"
 	else if (issilicon(M))
 		log_health += "[M.get_burn_damage()], [M.get_brute_damage()]"

@@ -1089,7 +1089,7 @@
 					"You try to give [src] to [M], but [M] has no fingers to put [src] on!")
 					return
 
-				else if (iscritter(M))
+				else if (ismobcritter(M))
 					var/mob/living/critter/C = M
 					if (C.hand_count > 0) // we got hands!  hands that things can be put onto!  er, into, I guess.
 						if (C.put_in_hand(src))

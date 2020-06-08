@@ -161,7 +161,7 @@
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 
-				if (iscarbon(target) || iscritter(target))
+				if (iscarbon(target) || ismobcritter(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
 							O.show_message(text("<span class='alert'><B>[] is trying to inject []!</B></span>", user, target), 1)

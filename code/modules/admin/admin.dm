@@ -1578,7 +1578,7 @@ var/global/noir = 0
 				return
 
 			//they're nothing so turn them into a traitor!
-			if(ishuman(M) || isAI(M) || isrobot(M) || iscritter(M))
+			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
 				var/traitorize = "Cancel"
 				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
 				if(traitorize == "Cancel")
@@ -1586,7 +1586,7 @@ var/global/noir = 0
 				if(traitorize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
-					else if (iscritter(M))
+					else if (ismobcritter(M))
 						// The only role that works for all critters at this point is hard-mode traitor, really. The majority of existing
 						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
 						// That said, certain roles are mostly compatible and thus selectable.
@@ -3900,7 +3900,7 @@ var/global/noir = 0
 			M.mind.objectives += escape_objective
 	else
 		var/list/eligible_objectives = list()
-		if (ishuman(M) || iscritter(M))
+		if (ishuman(M) || ismobcritter(M))
 			eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/)
 		else if (issilicon(M))
 			eligible_objectives = list(/datum/objective/regular,/datum/objective/regular/assassinate,
@@ -3966,7 +3966,7 @@ var/global/noir = 0
 		R.syndicate = 1
 		R.syndicate_possible = 1
 		R.handle_robot_antagonist_status("admin", 0, usr)
-	else if (ishuman(M) || iscritter(M))
+	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if("traitor")
 				M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")

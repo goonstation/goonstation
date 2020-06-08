@@ -208,7 +208,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
 					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
-		else if(iscritter(user))
+		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
 			var/list/obj/item/gun/guns = list()
 			for(var/datum/handHolder/H in M.hands)

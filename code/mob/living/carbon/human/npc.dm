@@ -380,7 +380,7 @@
 					//	src.a_intent = INTENT_HELP
 					if(ishuman(ai_target))
 						src.r_hand:attack(ai_target, src)
-					else if(iscritter(ai_target))
+					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
 							C.attackby(src.r_hand, src)
