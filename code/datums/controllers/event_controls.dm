@@ -98,6 +98,18 @@ var/datum/event_controller/random_events
 			var/alive = 0
 			var/dead_dnr = 0
 			var/antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+			var/dead_antags = 0
+
+			for (var/datum/mind/antag in ticker.mode.traitors)
+				var/mob/M = antag.current
+				if (!M) continue
+				if (!M.client || isdead(M))
+					dead_antags++
+			for (var/datum/mind/antag in ticker.mode.Agimmicks)
+				var/mob/M = antag.current
+				if (!M) continue
+				if (!M.client || isdead(M))
+					dead_antags++
 
 			for(var/client/C)
 				var/mob/M = C.mob
@@ -108,9 +120,9 @@ var/datum/event_controller/random_events
 					if (M.mind?.dnr)
 						dead_dnr++
 
-			if ((alive <= (clients.len - dead_dnr) * 0.75))
+			if ((alive <= (clients.len - dead_dnr) * 0.8))
 				do_random_event(player_spawn_events, source = "force_spawn")
-			else if (antags <= 0)
+			else if (dead_antags >= antags * 0.75)
 				do_random_event(antag_spawn_events, source = "force_spawn")
 			else
 				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!</span>")
@@ -158,7 +170,7 @@ var/datum/event_controller/random_events
 			dat += "<b>Minor Events begin at: <a href='byond://?src=\ref[src];MEventBegin=1'>[round(minor_events_begin / 600)] minutes</a><br>"
 			dat += "<b>Spawn Events begin at: <a href='byond://?src=\ref[src];MEventBegin=1'>[round(spawn_events_begin / 600)] minutes</a><br>"
 		else
-			dat += "Next random event at [round(next_major_event / 600)] minutes into the round.<br>"
+			dat += "Next major random event at [round(next_major_event / 600)] minutes into the round.<br>"
 			dat += "Next minor event at [round(next_minor_event / 600)] minutes into the round.<br>"
 			dat += "Next spawn event at [round(next_spawn_event / 600)] minutes into the round.<br>"
 
