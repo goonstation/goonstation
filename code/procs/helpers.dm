@@ -1718,7 +1718,7 @@ proc/countJob(rank)
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
-			if (M.current)
+			if (M.current && M.current.client)
 				if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 					continue
 
