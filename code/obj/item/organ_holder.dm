@@ -495,7 +495,7 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head.brain = null
+				src.head?.brain = null
 				return myBrain
 
 			if ("left_eye")
