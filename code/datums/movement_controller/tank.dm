@@ -1,28 +1,27 @@
 /datum/movement_controller/tank
-	var
-		obj/machinery/vehicle/owner
-		velocity_dir = SOUTH
-		velocity = 0
+	var/obj/machinery/vehicle/owner
+	var/velocity_dir = SOUTH
+	var/velocity = 0
 
-		input_x = 0
-		input_y = 0
+	var/input_x = 0
+	var/input_y = 0
 
-		next_move = 0
-		next_rot = 0
+	var/next_move = 0
+	var/next_rot = 0
 
-		can_turn_while_parked = 1
-		reverse_gear = 0
+	var/can_turn_while_parked = 1
+	var/reverse_gear = 0
 
-		accel_pow = 2
-		turn_delay = 3
-		brake_pow = 2
+	var/accel_pow = 2
+	var/turn_delay = 3
+	var/brake_pow = 2
 
-		velocity_max = 7
-		delay_divisor = 18 //this is what decides our base speed
+	var/velocity_max = 7
+	var/delay_divisor = 18 //this is what decides our base speed
 
-		//flags read in vehicle/Move()
-		squeal_sfx = 0
-		accel_sfx = 0
+	//flags read in vehicle/Move()
+	var/squeal_sfx = 0
+	var/accel_sfx = 0
 
 	treads
 		can_turn_while_parked = 1
@@ -158,5 +157,6 @@
 			if ("fire")
 				owner.fire_main_weapon() // just, fuck it.
 
-	modify_keymap(datum/keymap/keymap, client/C)
-		keymap.merge(C.get_keymap("pod"))
+	modify_keymap(client/C)
+		..()
+		C.apply_keybind("pod")

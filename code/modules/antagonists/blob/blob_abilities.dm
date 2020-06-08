@@ -230,9 +230,6 @@
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
-		owner.remove_ability(/datum/blob_ability/set_color)
-		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.add_ability(/datum/blob_ability/spread)
 		owner.add_ability(/datum/blob_ability/attack)
 		owner.add_ability(/datum/blob_ability/consume)
@@ -252,6 +249,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
+
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
+		owner.remove_ability(/datum/blob_ability/set_color)
+		owner.remove_ability(/datum/blob_ability/tutorial)
 
 
 /datum/blob_ability/set_color
