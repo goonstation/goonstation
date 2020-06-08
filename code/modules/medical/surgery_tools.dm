@@ -1361,7 +1361,6 @@ CONTAINS:
 	icon_state = "tray"
 	density = 1
 	anchored = 0
-	var/list/stuff_to_move = null
 	var/max_to_move = 10
 	p_class = 1.5
 
@@ -1389,6 +1388,7 @@ keeping this here because I want to make something else with it eventually
 
 	New()
 		..()
+		src.layer -= 0.01
 		if (!islist(src.attached_objs))
 			src.attached_objs = list()
 		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
@@ -1454,6 +1454,7 @@ keeping this here because I want to make something else with it eventually
 
 	proc/attach(obj/item/I as obj)
 		src.attached_objs.Add(I) // attach the item to the table
+		I.glide_size = 0 // required for smooth movement with the tray
 		RegisterSignal(I, COMSIG_ITEM_PICKUP, .proc/detach) // register for pickup
 		RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/detach) // register for being pulled off the table
 		RegisterSignal(I, COMSIG_PARENT_PRE_DISPOSING, .proc/detach) //register for item deletion while attached to table
