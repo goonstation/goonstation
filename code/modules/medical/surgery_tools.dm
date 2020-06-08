@@ -1455,15 +1455,12 @@ keeping this here because I want to make something else with it eventually
 	proc/attach(obj/item/I as obj)
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
-		RegisterSignal(I, COMSIG_ITEM_PICKUP, .proc/detach) // register for pickup
-		RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/detach) // register for being pulled off the table
-		RegisterSignal(I, COMSIG_PARENT_PRE_DISPOSING, .proc/detach) //register for item deletion while attached to table
+		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
+		RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
-		UnregisterSignal(I, COMSIG_ITEM_PICKUP)
-		UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(I, COMSIG_PARENT_PRE_DISPOSING)
+		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
