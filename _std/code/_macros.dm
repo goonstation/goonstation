@@ -196,7 +196,7 @@ var/list/detailed_spawn_dbg = list()
 #define reset_anchored(M) do{\
 if(istype(M, /mob/living/carbon/human)){\
 	var/mob/living/carbon/human/HumToDeanchor = M;\
-	if((HumToDeanchor.shoes && HumToDeanchor.shoes.magnetic) || (HumToDeanchor.mutantrace && HumToDeanchor.mutantrace.anchor_to_floor)){\
+	if(HumToDeanchor.shoes?.magnetic || HumToDeanchor.mutantrace?.anchor_to_floor){\
 		HumToDeanchor.anchored = 1;}\
 	else{\
 		HumToDeanchor.anchored = 0}}\
