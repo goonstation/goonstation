@@ -275,8 +275,10 @@ var/datum/score_tracker/score_tracker
 					. += "\[DESTROYED!\]"
 				else
 					. += "No hat yet."
-			else
+			else if(HB.original_tier)
 				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
+			else
+				. += "No hat yet. \[🐝 MURDERED!\]"
 			found_hb = 1
 			break
 		if(!found_hb)
