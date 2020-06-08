@@ -521,7 +521,7 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			var/remove_buff = 0
-			stun_resist = 5
+			stun_resist = 6
 
 			pooled()
 				..()
