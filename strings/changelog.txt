@@ -1,6 +1,10 @@
 
 (t)sun jun 07 20
 (u)UrsulaMajor
+(p)979
+(e)|
+(*)New Clown Traitor Item by Dr. Floorpills: Boom Boots. They make a boom sound with every step.
+(u)UrsulaMajor
 (p)984
 (e)⚖🐛|balance, bug
 (+)You can now deconstruct everything a mechanic constructs (again)
