@@ -87,7 +87,7 @@ var/datum/event_controller/random_events
 
 	proc/spawn_event(var/type = "player")
 		var/do_event = 1
-		if (events_enabled)
+		if (!events_enabled)
 			message_admins("<span class='notice'>A spawn event would have happened now, but they are disabled!</span>")
 			do_event = 0
 		if (clients.len < minimum_population)
