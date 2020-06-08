@@ -249,8 +249,9 @@
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
+					var/antag_type = src.antagonist_type
 					SPAWN_DBG (0)
-						R2.choose_name(3, src.antagonist_type, R2.real_name + " the " + src.antagonist_type)
+						R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
 				else
 					failed = 1
 
@@ -262,8 +263,9 @@
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
+					var/antag_type = src.antagonist_type
 					SPAWN_DBG (0)
-						C.choose_name(3, src.antagonist_type, C.real_name + " the " + src.antagonist_type)
+						C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
 				else
 					failed = 1
 
