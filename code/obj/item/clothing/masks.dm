@@ -261,7 +261,7 @@
 	equipped(var/mob/user, var/slot)
 		. = ..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "mask")
+		if(istype(H) && slot == SLOT_WEAR_MASM)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0

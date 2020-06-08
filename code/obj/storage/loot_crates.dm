@@ -662,6 +662,7 @@
 		two.overlays += two.gemstone
 
 	equipped(var/mob/user, var/slot)
+		..()
 		if (!user)
 			return
 		if (src.twin && ishuman(src.twin.loc))
@@ -673,6 +674,7 @@
 				boutput(psy, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
 
 	unequipped(var/mob/user)
+		..()
 		if (!user)
 			return
 		if (src.twin && ishuman(src.twin.loc))

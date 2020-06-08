@@ -413,9 +413,11 @@
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
 
 	equipped(var/mob/user)
+		..()
 		user.make_wrestler(0, 1, 0)
 
 	unequipped(var/mob/user)
+		..()
 		user.make_wrestler(0, 1, 1)
 
 // I dunno where else to put these vOv
