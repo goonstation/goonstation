@@ -205,7 +205,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					H.take_brain_damage(60)
 					H.changeStatus("stunned", 80)
 					H.changeStatus("weakened", 5 SECONDS)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
@@ -232,7 +231,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					affecting.take_damage(500, 0)
 					H.changeStatus("stunned", 80)
 					H.changeStatus("weakened", 5 SECONDS)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
