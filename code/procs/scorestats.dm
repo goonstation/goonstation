@@ -271,10 +271,10 @@ var/datum/score_tracker/score_tracker
 				else
 					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
 			else if(HB.alive)
-				if(HB.original_tier == 0)
-					. += "No hat yet."
-				else
+				if(HB.original_tier)
 					. += "\[DESTROYED!\]"
+				else
+					. += "No hat yet."
 			else
 				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
 			found_hb = 1
