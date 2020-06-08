@@ -215,8 +215,6 @@
 			for(var/turf/T in path_reverse)
 				var/dir = path[T]
 				var/opdir = turn(dir, 180)
-				if(prob(30))
-					harmless_smoke_puff(T)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
 					animate_turf_slidein(curr, src.original_turf, opdir, slide_delay)
