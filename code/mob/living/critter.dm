@@ -662,6 +662,8 @@
 		if (clothing)
 			update_clothing()
 
+		I.dropped(src)
+
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
 			return 0
