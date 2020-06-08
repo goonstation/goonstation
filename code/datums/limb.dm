@@ -1253,6 +1253,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	grab(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1262,6 +1263,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
