@@ -113,6 +113,7 @@ var/datum/event_controller/random_events
 
 			for(var/client/C)
 				var/mob/M = C.mob
+				if(!M) continue
 				if (!isdead(M) && isliving(M))
 					alive++
 				else if (M.mind?.dnr)
