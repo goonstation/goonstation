@@ -342,6 +342,7 @@
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
+		ai = null
 	mind = null
 	ckey = null
 	client = null

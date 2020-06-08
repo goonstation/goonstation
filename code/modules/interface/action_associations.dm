@@ -42,6 +42,7 @@ var/list/action_names = list(
 	"whisper" = "Whisper",
 	"ooc" = "OOC",
 	"looc" = "LOOC",
+	"emote" = "Custom Emote",
 
 	"screenshot" = "Screenshot",
 	"autoscreenshot" = "Auto Screenshot",
