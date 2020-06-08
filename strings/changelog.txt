@@ -1,5 +1,9 @@
 
 (t)sun jun 07 20
+(u)Tarmunora
+(p)947
+(e)🆕|feature
+(+)Taught critters how to dual-wield
 (u)UrsulaMajor
 (p)979
 (e)|
