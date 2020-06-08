@@ -473,7 +473,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/clothing/shoes/cowboy/boom
 	cost = 12
 	vr_allowed = 0
-	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Comes with an extra set of clown clothes."
+	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy)
 
