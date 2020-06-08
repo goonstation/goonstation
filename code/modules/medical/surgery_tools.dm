@@ -1458,7 +1458,7 @@ keeping this here because I want to make something else with it eventually
 		RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/detach) // register for being pulled off the table
 		RegisterSignal(I, COMSIG_PARENT_PRE_DISPOSING, .proc/detach) //register for item deletion while attached to table
 
-	proc/detach(obj/item/I as obj, mob/user as mob) //remove from the attached items list and deregister signals
+	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, COMSIG_ITEM_PICKUP)
 		UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
