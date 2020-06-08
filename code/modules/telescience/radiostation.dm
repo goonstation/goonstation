@@ -595,8 +595,6 @@
 	name = "compact tape - 'Descuento Danito's Burritos'"
 	audio = "sound/radio_station/danitos_burritos.ogg"
 	name_of_thing = "Descuento Danito's Burritos"
-	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
-	The music is Requiem for a Fish by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"

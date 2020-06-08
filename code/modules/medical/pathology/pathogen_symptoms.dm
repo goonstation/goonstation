@@ -116,19 +116,14 @@ datum/pathogeneffects
 	proc/onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
 		return message
 
-	// onemote(mob, string, number, datum/pathogen) : string
+	// onemote(mob, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
-	proc/onemote(var/mob/M as mob, act, voluntary, var/datum/pathogen/P)
+	proc/onemote(var/mob/target, act, var/datum/pathogen/P)
 		return 1
 
 	// ondeath(mob, datum/pathogen) : void
 	// OVERRIDE: Overriding this is situational.
 	proc/ondeath(var/mob/M as mob, var/datum/pathogen/origin)
-		return
-
-	// oncured(mob, datum/pathogen) : void
-	// OVERRIDE: Overriding this is situational.
-	proc/oncured(var/mob/M as mob, var/datum/pathogen/origin)
 		return
 
 
@@ -1366,6 +1361,54 @@ datum/pathogeneffects/malevolent/capacitor/unlimited
 		if (R == "voltagen")
 			return "The pathogen appears to have the ability to infinitely absorb the voltagen."
 
+datum/pathogeneffects/malevolent/sunglass
+	name = "Sunglass Glands"
+	desc = "The infected grew sunglass glands."
+	infect_type = INFECT_NONE
+	rarity = RARITY_UNCOMMON
+
+	proc/glasses(var/mob/living/carbon/human/M as mob)
+		M.show_message("<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")]</span>")
+		var/obj/item/clothing/glasses/G = M.glasses
+		if (G)
+			M.u_equip(G)
+			if (M.client)
+				M.client.screen -= G
+			G.loc = M.loc
+			G.dropped(M)
+			G.layer = initial(G.layer)
+		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
+		N.loc = M
+		N.layer = M.layer
+		N.master = M
+		M.glasses = N
+		M.update_clothing()
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		switch(origin.stage)
+			if (2 to 4)
+				if (ishuman(M))
+					if (!(M:glasses) || !(istype(M:glasses, /obj/item/clothing/glasses/sunglasses)))
+						if (prob(15))
+							glasses(M)
+			if (5)
+				if (ishuman(M))
+					if (!(M:glasses) || !(istype(M:glasses, /obj/item/clothing/glasses/sunglasses)))
+						if (prob(25))
+							glasses(M)
+
+	may_react_to()
+		return "The pathogen appears to be sensitive to sudden flashes of light."
+
+	react_to(var/R, var/zoom)
+		if (R == "flashpowder")
+			if (zoom)
+				return "The individual microbodies appear to be wearing sunglasses."
+			else
+				return "The pathogen appears to have developed a resistance to the flash powder."
+
 datum/pathogeneffects/malevolent/liverdamage
 	name = "Hepatomegaly"
 	desc = "The infected has an inflamed liver."
@@ -1731,25 +1774,16 @@ datum/pathogeneffects/malevolent/farts
 	infect_type = INFECT_AREA
 	spread = SPREAD_AIR
 	rarity = RARITY_VERY_COMMON
-	var/cooldown = 0 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
 
-	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+	proc/fart(var/mob/M, var/datum/pathogen/origin)
+		M.emote("fart")
 		infect(M, origin)
-		if(voluntary)
-			origin.symptom_data[name] = TIME
-
-	onemote(mob/M as mob, act, voluntary, datum/pathogen/P)
-		// involuntary farts are free, but the others use the cooldown
-		if(voluntary && TIME-P.symptom_data[name] < cooldown)
-			return
-		if(act == "fart")
-			fart(M, P, voluntary)
 
 	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
 		if (prob(origin.stage * 3))
-			M.emote("fart")
+			fart(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to produce a large volume of gas."
@@ -1758,12 +1792,17 @@ datum/pathogeneffects/malevolent/farts/smoke
 	name = "Smoke Farts"
 	desc = "The infected individual occasionally farts reagent smoke."
 	rarity = RARITY_RARE
-	cooldown = 600
 
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
-		if (M.reagents.total_volume)
-			smoke_reaction(M.reagents, origin.stage, get_turf(M))
-			..()			// only trigger if we actually have chems, else no infection or cooldown
+	fart(var/mob/M, var/datum/pathogen/origin)
+		..()
+		if (M.reagents.total_volume || prob(10))
+			smoke_reaction(M.reagents, 4, get_turf(M))
+
+	disease_act(var/mob/M, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (prob(origin.stage * 3))
+			fart(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to produce a large volume of gas."
@@ -1778,14 +1817,13 @@ datum/pathogeneffects/malevolent/farts/plasma
 	name = "Plasma Farts"
 	desc = "The infected individual occasionally farts. Plasma."
 	rarity = RARITY_UNCOMMON
-	cooldown = 600
 
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+	fart(var/mob/M, var/datum/pathogen/origin)
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 		gas.zero()
-		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
+		gas.toxins = origin.stage * 3
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 		if (T)
@@ -1797,7 +1835,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 		..()
 		if (origin.stage > 2 && prob(origin.stage * 3))
 			M.take_toxin_damage(1)
-			M.take_oxygen_deprivation(4)
+			M.take_oxygen_deprivation(2)
 
 	react_to(var/R, var/zoom)
 		if (R == "infernite" || R == "phlogiston")
@@ -1807,14 +1845,13 @@ datum/pathogeneffects/malevolent/farts/co2
 	name = "CO2 Farts"
 	desc = "The infected individual occasionally farts. Carbon dioxide."
 	rarity = RARITY_RARE
-	cooldown = 600
 
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+	fart(var/mob/M, var/datum/pathogen/origin)
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 		gas.zero()
-		gas.carbon_dioxide = origin.stage * (voluntary ? 1.4 : 7) // only a fifth for voluntary farts
+		gas.carbon_dioxide = origin.stage * 7
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 		if (T)
@@ -1838,20 +1875,30 @@ datum/pathogeneffects/malevolent/farts/o2
 	desc = "The infected individual occasionally farts. Pure oxygen."
 	rarity = RARITY_COMMON
 	beneficial = 1
-	cooldown = 0
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
 
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+	fart(var/mob/M, var/datum/pathogen/origin)
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 		gas.zero()
-		gas.oxygen = origin.stage * (voluntary ? 20 : 2) // ten times as much for voluntary farts
+		gas.oxygen = origin.stage * 20
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 		if (T)
 			T.assume_air(gas)
+
+		if (!origin.symptomatic)
+			return
+		..()
+
+	disease_act(var/mob/M, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (prob(origin.stage * 10))
+			// GO AND ASS IST WITH REPRESSURIZING
+			fart(M, origin)
 
 	react_to(var/R, var/zoom)
 		if (R == "infernite" || R == "phlogiston")

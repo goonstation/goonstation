@@ -67,10 +67,8 @@
 	disposing()
 		if (src in processing_items)
 			processing_items.Remove(src)
-		if(cell)
-			cell.dispose()
-			cell = null
 		..()
+		return
 
 	examine()
 		. = ..()
@@ -195,8 +193,7 @@
 					src.cell.charge(src.cost_normal * amount)
 
 		src.update_icon()
-		if(istype(user)) // user can be a Securitron sometims, scream
-			user.update_inhands()
+		user.update_inhands()
 		return
 
 	proc/charge(var/amt)

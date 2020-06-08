@@ -11,11 +11,10 @@ datum/controller/process/healthupdates
 	doWork()
 		var/c
 		for(var/mob/M in global.health_update_queue)
-			if(M && !M.disposed)
-				M.UpdateDamage()
-				if (!(c++ % 20))
-					scheck()
-
+			M.UpdateDamage()
+			if (!(c++ % 20))
+				scheck()
+	
 	onFinish()
 		global.health_update_queue.len = 0
 

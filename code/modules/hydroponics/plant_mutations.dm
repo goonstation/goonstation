@@ -56,12 +56,21 @@
 
 // Tomato Mutations
 
-/datum/plantmutation/tomato/incendiary
+/datum/plantmutation/tomato/explosive
 	name = "Seething Tomato"
 	name_prefix = "Seething "
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
+	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
 	iconmod = "TomatoExplosive"
-	assoc_reagents = list("fuel")
+
+	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
+		. = ..()
+		if (.)
+			return .
+		if (prob(5) || (user.client && user.client.hellbanned && prob(50)))
+			boutput(user, "<span class='alert'>A tomato explodes as you pick it off the plant!</span>")
+			explosion_new(POT, get_turf(user), 10, 1)
+			return 399
+		return 0
 
 /datum/plantmutation/tomato/killer
 	name = "Suspicious Tomato"
@@ -123,16 +132,6 @@
 	ENrange = list(40,null)
 	chance = 10
 
-// Pear Mutations
-
-#if ASS_JAM
-/datum/plantmutation/pear/sickly
-	name = "Sickly Pear"
-	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
-	assoc_reagents = list("too much")
-
-#endif
-
 // Melon Mutations
 
 /datum/plantmutation/melon/george
@@ -182,16 +181,6 @@
 				sleep(0.1 SECONDS)
 			POT.pixel_x = 0
 			POT.pixel_y = 0
-
-
-// Bean Mutations
-
-/datum/plantmutation/beans/jelly // hehehe
-	name = "Jelly Bean"
-	name_prefix = "jelly"
-	iconmod = "BeanJelly"
-	assoc_reagents = list("VHFCS")
-	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
 
 // Chili Mutations
 

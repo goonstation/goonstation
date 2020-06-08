@@ -113,7 +113,7 @@
 		power_icon = ""
 		handle_overlay()
 		return ..()
-	disposing()
+	Del()
 		if(prev_user)
 			prev_user.images -= cableimgs
 			prev_user = null

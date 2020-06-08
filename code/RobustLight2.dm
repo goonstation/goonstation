@@ -879,8 +879,6 @@ atom
 				// Detach the light from its holder so that it gets cleaned up right if
 				// needed.
 				attached.detach()
-			src.RL_Attached:len = 0
-			src.RL_Attached = null
 		if (opacity)
 			RL_SetOpacity(0)
 

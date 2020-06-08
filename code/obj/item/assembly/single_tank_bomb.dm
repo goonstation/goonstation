@@ -95,7 +95,7 @@
 		//SN src = null
 		qdel(src)
 		return
-	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
+	if (!( istype(W, /obj/item/weldingtool) ))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -224,7 +224,7 @@
 		//SN src = null
 		qdel(src)
 		return
-	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
+	if (!( istype(W, /obj/item/weldingtool) ))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -309,7 +309,7 @@
 		//SN src = null
 		qdel(src)
 		return
-	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
+	if (!( istype(W, /obj/item/weldingtool) ))
 		return
 	if (!( src.status ))
 		src.status = 1

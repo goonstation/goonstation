@@ -36,10 +36,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	N.key = "[world.timeofday]"
 	if(!N)
 		return // abandon ship alart alart
-	for(var/client/C)
-		if (!istype(C,/mob/dead/observer))
-			continue
-		var/mob/dead/observer/O = C.mob
+	for(var/mob/dead/observer/O in mobs)
 		if(O && N.is_authorised(O))
 			// check if this is blacklisted for the round
 			if(O.ckey && (O.ckey in notifications_blacklist))
@@ -58,7 +55,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 		blacklist = list()
 		notifications_blacklist[M.ckey] = blacklist
 	blacklist |= "[N.type]"
-
+	
 
 // invoked by ghost notifications process, which exists, shut up
 /datum/ghost_notification_controller/proc/process()
@@ -71,7 +68,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	else
 		time_elapsed = (current_time - last_time) / 10
 	last_time = current_time
-
+	
 	// track what notifications we can discard
 	var/list/expired_notifications = list()
 	for(var/notification_key in src.active_notifications)
@@ -109,7 +106,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	var/key = ""
 	var/category = "dial 911-CODR"
 	var/datum/dispatcher
-	var/datum/subject // what atom this notification is about or for
+	var/datum/subject // what atom this notification is about or for	
 	var/list/notified = list()
 	var/chui/window/ghost_notification/window
 
@@ -120,7 +117,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 		src.window = new(src)
 		for(var/mob/M in toNotify)
 			if(M)
-				src.notify(M)
+				src.notify(M)			
 	else
 		// we have no one to notify, delete
 		src.invalid = 1
@@ -221,7 +218,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	if(!..())
 		return 0
 	return dead_player_list_helper(query) // might as well use convair's dead player selection criteria for consistency
-	// SEEING AS I DIDN'T REALISE THE DEAD PLAYER LIST STUFF ALREADY EXISTED, RENDERING THIS WHOLE SYSTEM ENTIRELY POINTLESS
+	// SEEING AS I DIDN'T REALISE THE DEAD PLAYER LIST STUFF ALREADY EXISTED, RENDERING THIS WHOLE SYSTEM ENTIRELY POINTLESS	
 
 /datum/ghost_notification/respawn/respond(var/mob/M)
 	if(..())
@@ -261,13 +258,13 @@ var/datum/ghost_notification_controller/ghost_notifier
 		ret += "[theme.generateButton("ignore", "Ignore all [src.associated.category] notices for the round")]"
 		return ret
 
-	OnClick( var/client/who, var/id )
+	OnClick( var/client/who, var/id )		
 		switch(id)
 			// close is ignored, all it does is close the window
 			if("respond")
 				src.associated.respond(who.mob)
 			if("ignore")
-				src.associated.ignore(who.mob)
+				src.associated.ignore(who.mob)		
 		Unsubscribe(who)
 
 /////////////////////////////////////////////
@@ -285,7 +282,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	GetBody()
 		if(!src.associated)
 			return "The ghost notification controller is dead or something. RIP. The process should handle restarting it."
-
+		
 		// stolen from chemicals.dm
 		var/script = {"
 		<script type='text/javascript'>
@@ -310,7 +307,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 		ret += "</tbody></table>"
 		return ret
 
-	OnClick( var/client/who, var/id )
+	OnClick( var/client/who, var/id )				
 		if(copytext(id, 1, 11) == "invalidate")
 			var/key = copytext(id, 12)
 			CallJSFunction("removeNotification", list(key))

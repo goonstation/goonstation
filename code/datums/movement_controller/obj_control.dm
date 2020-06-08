@@ -61,9 +61,9 @@
 			if("exit")
 				user.use_movement_controller = null
 				user.set_loc(get_turf(src.master))
-				user.reset_keymap()
+				user.update_keymap()
 				user.client.eye = user
 
-	modify_keymap(client/C)
+	modify_keymap(datum/keymap/keymap, client/C)
 		..()
-		C.apply_keybind("just exit")
+		keymap.merge(C.get_keymap("just exit"))

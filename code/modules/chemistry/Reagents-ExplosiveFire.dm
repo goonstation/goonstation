@@ -87,11 +87,10 @@ datum
 			fluid_g = 100
 			transparency = 150
 			viscosity = 0.8
-			minimum_reaction_temperature = T0C + 100
 			var/temp_reacted = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(!temp_reacted)
+				if(exposed_temperature > T0C + 100 && !temp_reacted)
 					temp_reacted = 1
 					var/radius = min(max(0,volume*0.15),8)
 					var/list/covered = holder.covered_turf()

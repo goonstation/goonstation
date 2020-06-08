@@ -165,9 +165,9 @@
 		if (tool)
 			tool.master = null
 		if (task)
-			task.dispose()
+			task.disposing()
 		if (model_task)
-			model_task.dispose()
+			model_task.disposing()
 		radio_controller.remove_object(src, "[control_freq]")
 		radio_controller.remove_object(src, "[beacon_freq]")
 		..()

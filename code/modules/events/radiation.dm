@@ -52,8 +52,8 @@
 		return
 
 	disposing()
-		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
-			particleMaster.RemoveSystem(/datum/particleSystem/rads_warning)
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
+			particleMaster.RemoveSystem(new /datum/particleSystem/rads_warning(src))
 		..()
 
 	proc/irradiate_turf(var/turf/T)

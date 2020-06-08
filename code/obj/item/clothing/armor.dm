@@ -392,7 +392,6 @@
 		setProperty("rangedprot", 2)
 		setProperty("disorient_resist", 10)
 		setProperty("movespeed", 0.6)
-		setProperty("exploprot", 6)
 
 /obj/item/clothing/suit/armor/hoscape
 	name = "head of securitys cape"

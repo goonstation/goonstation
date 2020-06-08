@@ -266,7 +266,7 @@
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
+							items += /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
 							item_amounts += 5
 						if(2)
 							items += /obj/item/clothing/ears/earmuffs/yeti
@@ -370,8 +370,9 @@
 				lock.read_device(user)
 			if (istype(trap))
 				trap.read_device(user)
-		else if (isweldingtool(W))
-			if (W:try_weld(user,0,-1,0,0))
+		else if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WELD = W
+			if (WELD.welding)
 				boutput(user, "<span class='alert'>The crate seems to be resistant to welding.</span>")
 				return
 			else
@@ -662,7 +663,6 @@
 		two.overlays += two.gemstone
 
 	equipped(var/mob/user, var/slot)
-		..()
 		if (!user)
 			return
 		if (src.twin && ishuman(src.twin.loc))
@@ -674,7 +674,6 @@
 				boutput(psy, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
 
 	unequipped(var/mob/user)
-		..()
 		if (!user)
 			return
 		if (src.twin && ishuman(src.twin.loc))

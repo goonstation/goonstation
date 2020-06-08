@@ -194,9 +194,6 @@ var/f_color_selector_handler/F_Color_Selector
 /datum/preMapLoad
 	New()
 		enable_extools_debugger()
-#ifdef REFERENCE_TRACKING
-		enable_reference_tracking()
-#endif
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
@@ -393,7 +390,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
-	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
@@ -598,7 +594,6 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Init() complete")
-	TgsInitializationComplete()
 	//sleep_offline = 1
 
 
@@ -642,19 +637,18 @@ var/f_color_selector_handler/F_Color_Selector
 
 	lagcheck_enabled = 0
 	processScheduler.stop()
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
 
 	SPAWN_DBG(world.tick_lag)
-		for (var/client/C)
-			if (C.mob)
+		for (var/mob/M in mobs)
+			if (M.client)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
+					M << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
 				else
-					C.mob << sound('sound/misc/NewRound.ogg')
+					M << sound('sound/misc/NewRound.ogg')
 
 #ifdef DATALOGGER
 	SPAWN_DBG(world.tick_lag*2)
@@ -693,10 +687,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 		world.Reboot()
 
-/world/Reboot()
-	TgsReboot()
-	return ..()
-
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
@@ -732,8 +722,9 @@ var/f_color_selector_handler/F_Color_Selector
 	//	features += "AI"
 
 	var/n = 0
-	for (var/client/C)
-		n++
+	for (var/mob/M in mobs)
+		if (M.client)
+			n++
 
 	if (n > 1)
 		features += "~[n] players"
@@ -772,28 +763,28 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/Topic(T, addr, master, key)
-	TGS_TOPIC	// logging for these is done in TGS
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1
-		for (var/client/C)
+		for (var/client/C in clients)
 			x++
 		return x
 
 	else if(T == "players")
 		var/n = 0
-		for(var/client/C)
-			n++
+		for(var/mob/M in mobs)
+			if(M.client)
+				n++
 		return n
 
 	else if (T == "admins")
 		var/list/s = list()
 		var/n = 0
-		for(var/client/C)
-			if(C.holder)
-				s["admin[n]"] = (C.stealth ? "~" : "") + C.key
+		for(var/mob/M in mobs)
+			if(M && M.client && M.client.holder)
+				s["admin[n]"] = (M.client.stealth ? "~" : "") + M.client.key
 				n++
 		s["admins"] = n
 		return list2params(s)
@@ -801,9 +792,9 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "mentors")
 		var/list/s = list()
 		var/n = 0
-		for(var/client/C)
-			if(!C.holder && C.is_mentor())
-				s["mentor[n]"] = C.key
+		for(var/mob/M in mobs)
+			if(M && M.client && !M.client.holder && M.client.is_mentor())
+				s["mentor[n]"] = M.client.key
 				n++
 		s["mentors"] = n
 		return list2params(s)
@@ -832,9 +823,10 @@ var/f_color_selector_handler/F_Color_Selector
 		else elapsed = "welp"
 		s["elapsed"] = elapsed
 		var/n = 0
-		for(var/client/C)
-			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
-			n++
+		for(var/mob/M in mobs)
+			if(M.client)
+				s["player[n]"] = "[(M.client.stealth || M.client.alt_key) ? M.client.fakekey : M.client.key]"
+				n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
 		return list2params(s)
@@ -1206,9 +1198,9 @@ var/f_color_selector_handler/F_Color_Selector
 				logTheThing("diary", null, null, "[server_name] PM: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
-				for (var/client/C)
-					if (C.holder)
-						boutput(C.mob, rendered)
+				for (var/mob/M in mobs)
+					if (M.client && M.client.holder)
+						boutput(M, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick
@@ -1244,12 +1236,12 @@ var/f_color_selector_handler/F_Color_Selector
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 					logTheThing("admin_help", null, M, "Discord: [nick] PM'd %target%: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] PM'd %target%: [msg]", "ahelp")
-					for (var/client/C)
-						if (C.holder && C.key != M.key)
-							if (C.player_mode && !C.player_mode_ahelp)
+					for (var/mob/K in mobs)
+						if (K && K.client && K.client.holder && K.key != M.key)
+							if (K.client.player_mode && !K.client.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
+								boutput(K, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1272,15 +1264,15 @@ var/f_color_selector_handler/F_Color_Selector
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]", "admin")
-					for (var/client/C)
-						if (C.can_see_mentor_pms() && C.key != M.key)
-							if(C.holder)
-								if (C.player_mode && !C.player_mode_mhelp)
+					for (var/mob/K in mobs)
+						if (K && K.client && K.client.can_see_mentor_pms() && K.key != M.key)
+							if(K.client.holder)
+								if (K.client.player_mode && !K.client.player_mode_mhelp)
 									continue
 								else
-									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(K, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(K, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1419,9 +1411,9 @@ var/f_color_selector_handler/F_Color_Selector
 				msg += "It is running [mode]<br>"
 				msg += "<a href='[address]'>Click here to join it</a><br>"
 				msg += "---------------------</div><br>"
-				for (var/client/C)
-					if (isdead(C.mob))
-						boutput(C.mob, msg)
+				for (var/mob/M in mobs)
+					if (isdead(M))
+						boutput(M, msg)
 
 				return 1
 

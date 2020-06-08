@@ -3,6 +3,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
+	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
@@ -43,8 +44,6 @@
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-
-	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
 
 	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
 	var/over_clothes = 0 //draw over clothes when used as a limb
@@ -676,7 +675,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
+		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
@@ -762,15 +761,9 @@
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
-	SHOULD_CALL_PARENT(1)
-	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && slot != SLOT_L_HAND && slot != SLOT_R_HAND)
-		return
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
-	src.equipped_in_slot = slot
-	for(var/datum/objectProperty/equipment/prop in src.properties)
-		prop.onEquipped(src, user, src.properties[prop])
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -785,16 +778,28 @@
 		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 		equipment_proxy.space_movement += spacemove
 
-/obj/item/proc/unequipped(var/mob/user)
-	SHOULD_CALL_PARENT(1)
-	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && src.equipped_in_slot != SLOT_L_HAND && src.equipped_in_slot != SLOT_R_HAND)
+	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
 		return
+	if (src.hasProperty("meleeprot"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot"))
+	if (src.hasProperty("meleeprot_head"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_head"))
+	if (src.hasProperty("meleeprot_all"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot_all"))
+		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_all"))
+	if (src.hasProperty("rangedprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, src, src.getProperty("rangedprot"))
+	if (src.hasProperty("radprot"))
+		APPLY_MOB_PROPERTY(user, PROP_RADPROT, src, src.getProperty("radprot"))
+	if (src.hasProperty("heatprot"))
+		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src, src.getProperty("heatprot"))
+	if (src.hasProperty("coldprot"))
+		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src, src.getProperty("coldprot"))
+
+/obj/item/proc/unequipped(var/mob/user)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
-	for(var/datum/objectProperty/equipment/prop in src.properties)
-		prop.onUnequipped(src, user, src.properties[prop])
-	src.equipped_in_slot = null
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -808,6 +813,24 @@
 	if (spacemove)
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
+
+	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
+		return
+	if (src.hasProperty("meleeprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
+	if (src.hasProperty("meleeprot_head"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
+	if (src.hasProperty("meleeprot_all"))
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
+		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
+	if (src.hasProperty("rangedprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, src)
+	if (src.hasProperty("radprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, src)
+	if (src.hasProperty("heatprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, src)
+	if (src.hasProperty("coldprot"))
+		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, src)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
@@ -1282,16 +1305,8 @@
 	disposing_abilities()
 	setItemSpecial(null)
 
-	if(istype(src.loc, /obj/item/storage))
-		var/obj/item/storage/storage = src.loc
-		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
-		storage.hud?.remove_item(src)
-
 	var/turf/T = loc
 	if (!istype(T))
-		if(src.temp_flags & IS_LIMB_ITEM)
-			if(istype(src.loc, /obj/item/parts/human_parts/arm/right/item)||istype(src.loc, /obj/item/parts/human_parts/arm/left/item))
-				src.loc:remove(0)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.u_equip(src)

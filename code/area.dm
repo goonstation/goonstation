@@ -24,7 +24,6 @@
 	var/skip_sims = 0
 	var/sims_score = 100
 	var/virtual = 0
-	var/is_centcom = 0 // for escape checks
 	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
@@ -110,7 +109,7 @@
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
-			if (M?.client)
+			if (M.client)
 				#define AMBIENCE_ENTER_PROB 6
 
 				//Handle ambient sound
@@ -168,11 +167,11 @@
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
-			if (M?.client)
+			if (M.client)
 				if (sound_loop)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
+						if (M && (mobarea.sound_group != src.sound_group))
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
@@ -502,7 +501,6 @@
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 	sound_group = "centcom"
-	is_centcom = 1
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -569,13 +567,10 @@
 	teleport_blocked = 1
 
 /area/shuttle/merchant_shuttle/left_centcom
-	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/right_centcom
-	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_centcom
-	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_station
 
@@ -694,7 +689,7 @@
 /area/someplace
 	name = "some place"
 	icon_state = "purple"
-	filler_turf = "/turf/unsimulated/floor/void"
+	filler_turf = "/turf/simulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -707,7 +702,7 @@
 /area/someplacehot
 	name = "some place"
 	icon_state = "atmos"
-	filler_turf = "/turf/unsimulated/floor/void"
+	filler_turf = "/turf/simulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -3139,7 +3134,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in AIs)
+		for (var/mob/living/silicon/aiPlayer in mobs)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else

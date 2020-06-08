@@ -28,7 +28,6 @@
 				. += "It's [get_fullness(current_stuff / max_stuff * 100)]."
 
 	equipped(var/mob/user)
-		..()
 		if (src.contents.len)
 			for (var/i=src.contents.len, i>0, i--)
 				if (prob(66))

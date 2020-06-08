@@ -40,7 +40,7 @@
 		return
 	body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""] - Refresh button doesn't work."
+	var/title = "[S][src.holder.level >= LEVEL_SHITGUY ? " (\ref[V])" : ""] - Refresh button doesn't work."
 
 	//stole this from view_variables below
 	var/html = {"
@@ -65,7 +65,7 @@
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
 	usr << browse(html, "window=variables\ref[V];size=600x400")
 
-/client/proc/debug_variables(atom/D) // actually any datum, not just atom but `datum/D in world` causes GC bugs
+/client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
 	set popup_menu = 1
@@ -96,11 +96,11 @@
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
 
 	var/title = ""
-	var/list/body = new
+	var/body = ""
 
 	if (istype(D, /atom))
 		var/atom/A = D
-		title = "[A.name][src.holder.level >= LEVEL_ADMIN ? " (\ref[A])" : ""] = [A.type]"
+		title = "[A.name][src.holder.level >= LEVEL_SHITGUY ? " (\ref[A])" : ""] = [A.type]"
 
 		#ifdef VARSICON
 		if (A.icon)
@@ -109,7 +109,7 @@
 	if(D == "GLOB")
 		title = "Global Variables"
 	else
-		title = "[D][src.holder.level >= LEVEL_ADMIN ? " (\ref[D])" : ""] = [D.type]"
+		title = "[D][src.holder.level >= LEVEL_SHITGUY ? " (\ref[D])" : ""] = [D.type]"
 
 	body += {"
 
@@ -145,7 +145,7 @@
 
 	body += "</tbody></table>"
 
-	var/list/html = list({"
+	var/html = {"
 <html>
 <head>
 	<title>[title]</title>
@@ -157,12 +157,10 @@
 	<strong>[title]</strong>
 	<hr>
 	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
-"})
+"}
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
-
 	if (istype(D, /atom))
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
 		if (ismob(D) || isobj(D))
@@ -201,12 +199,12 @@
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R45'>45&deg; &gt;</a> &middot;
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R90'>90&deg; &gt;</a>
 		<hr>
-		[body.Join()]
+		[body]
 	</body>
 </html>
 "}
 
-	usr << browse(html.Join(), "window=variables\ref[D];size=600x400")
+	usr << browse(html, "window=variables\ref[D];size=600x400")
 
 	return
 
@@ -329,11 +327,11 @@
 		var/dname = null
 		if ("name" in D.vars)
 			dname = " (" + html_encode( "[D.vars["name"]]" ) + ")"
-		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[D.type][src.holder.level >= LEVEL_ADMIN ? " <em>\ref[value]</em>" : ""])"
+		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[D.type][src.holder.level >= LEVEL_SHITGUY ? " <em>\ref[value]</em>" : ""])"
 
 	else if (isclient(value))
 		var/client/C = value
-		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[C] ([C.type][src.holder.level >= LEVEL_ADMIN ? " <em class='value'>\ref[value]</em>" : ""])"
+		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[C] ([C.type][src.holder.level >= LEVEL_SHITGUY ? " <em class='value'>\ref[value]</em>" : ""])"
 
 	else if (islist(value))
 		var/list/L = value
@@ -466,14 +464,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
-	if (href_list["ViewReferences"])
-		usr_admin_only
-		if(holder && src.holder.level >= LEVEL_CODER)
-			var/datum/D = locate(href_list["ViewReferences"])
-			usr.client.view_references(D, href_list["window_name"])
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
-		return
 	if (href_list["AddPathogen"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -594,7 +584,7 @@
 		return
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
 		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
 		return
 
@@ -684,7 +674,7 @@
 		original_name = "Global Variable"
 	else
 		if (!istype(D, /atom))
-			original_name = "[src.holder.level >= LEVEL_ADMIN ? "\ref[D] " : ""]([D])"
+			original_name = "[src.holder.level >= LEVEL_SHITGUY ? "\ref[D] " : ""]([D])"
 		else
 			original_name = D:name
 
@@ -702,7 +692,7 @@
 				else
 					D.vars[variable] = null
 		if("ref")
-			if (!(src.holder.rank in list("Host", "Coder", "Administrator")))
+			if (!(src.holder.rank in list("Host", "Coder", "Shit Person")))
 				boutput( src, "<span class='alert'>This can super break shit so you can't use this. Sorry.</span> ")
 				return
 			var/theref = input("What ref?") as null|text
@@ -926,7 +916,7 @@
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
+				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)

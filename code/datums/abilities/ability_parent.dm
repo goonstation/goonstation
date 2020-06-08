@@ -508,16 +508,6 @@
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
 
-	disposing()
-		qdel(point_overlay)
-		point_overlay = null
-		qdel(cooldown_overlay)
-		cooldown_overlay = null
-		cd_tens = null
-		cd_secs = null
-		..()
-
-
 	updateIcon()
 		var/mob/M = get_controlling_mob()
 		if (!istype(M) || !M.client)
@@ -780,7 +770,6 @@
 				src.holder.hud.remove_object(object)
 			object.owner = null
 			qdel(object)
-			src.object = null
 		..()
 
 	proc
@@ -970,10 +959,7 @@
 
 	disposing()
 		for (var/datum/abilityHolder/H in holders)
-			H.dispose()
 			H.owner = null
-		holders.len = 0
-		holders = null
 		..()
 
 	proc/addHolder(holderType)

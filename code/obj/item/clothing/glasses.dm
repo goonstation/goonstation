@@ -85,14 +85,12 @@
 					H.vision.set_scan(0)
 
 	equipped(var/mob/living/user, var/slot)
-		..()
 		if(!isliving(user))
 			return
-		if (slot == SLOT_GLASSES && on)
+		if (slot == "eyes" && on)
 			user.vision.set_scan(1)
 
 	unequipped(var/mob/living/user)
-		..()
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
@@ -140,7 +138,7 @@
 
 /obj/item/clothing/glasses/sunglasses/equipped(var/mob/user, var/slot)
 	var/mob/living/carbon/human/H = user
-	if(istype(H) && slot == SLOT_GLASSES)
+	if(istype(H) && slot == "eyes")
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
@@ -200,8 +198,7 @@
 					assigned.images.Add(I)
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
+		if (slot == "eyes")
 			assigned = user.client
 			SPAWN_DBG(-1)
 				if (!(src in processing_items))
@@ -209,7 +206,6 @@
 		return
 
 	unequipped(var/mob/user)
-		..()
 		if (assigned)
 			assigned.images.Remove(arrestIconsAll)
 			assigned = null
@@ -268,15 +264,13 @@
 		setProperty("disorient_resist_eye", 15)
 
 	equipped(var/mob/living/user, var/slot)
-		..()
 		if(!isliving(user))
 			return
-		if (slot == SLOT_GLASSES)
+		if (slot == "eyes")
 			user.vision.set_scan(1)
 		return
 
 	unequipped(var/mob/living/user)
-		..()
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
@@ -298,7 +292,7 @@
 
 	equipped(var/mob/user, var/slot)
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
+		if(istype(H) && slot == "eyes")
 			equipper = user//todo: this is prooobably redundant
 		return ..()
 
@@ -362,16 +356,14 @@
 		..()
 
 	equipped(var/mob/user, var/slot)
-		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device)
+		if(istype(H) && slot == "eyes" && !H.network_device)
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)
 		return
 
 	unequipped(var/mob/user)
-		..()
 		if(ishuman(user) && user:network_device == src)
 			//user.verbs -= /mob/proc/jack_in
 			user:network_device = null
@@ -384,7 +376,6 @@
 	item_state = "sunglasses"
 
 	unequipped(var/mob/user)
-		..()
 		if(istype(user, /mob/living/carbon/human/virtual) && user:body)
 			//Station_VNet.Leave_Vspace(user)
 			user.death()
@@ -438,8 +429,7 @@
 					assigned.images.Add(I)
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
+		if (slot == "eyes")
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
@@ -448,7 +438,6 @@
 		return
 
 	unequipped(var/mob/user)
-		..()
 		if (assigned)
 			assigned.images.Remove(health_mon_icons)
 			assigned = null
@@ -535,8 +524,7 @@
 					assigned.images.Add(I)
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
+		if (slot == "eyes")
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
@@ -545,7 +533,6 @@
 		return
 
 	unequipped(var/mob/user)
-		..()
 		if (assigned)
 			assigned.images.Remove(mob_static_icons)
 			assigned = null
@@ -558,13 +545,11 @@
 	icon_state = "noir"
 	mats = 4
 	equipped(var/mob/user, var/slot)
-		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
+		if(istype(H) && slot == "eyes")
 			if(H.client)
 				animate_fade_grayscale(H.client, 5)
 	unequipped(var/mob/user, var/slot)
-		..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			if (H.client)

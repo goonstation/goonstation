@@ -444,6 +444,14 @@
 
 
 //mender
+
+var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
+"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
+"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
+"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
+"menthol", "cold_medicine", "antihistamine", "ipecac",\
+"booster_enzyme", "anti_fart", "goodnanites")
+
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."
@@ -466,8 +474,8 @@
 
 	New()
 		..()
-		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
-			src.whitelist = chem_whitelist
+		if (!tampered && islist(mender_chem_whitelist) && mender_chem_whitelist.len)
+			src.whitelist = mender_chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270

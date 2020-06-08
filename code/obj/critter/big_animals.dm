@@ -490,14 +490,6 @@ obj/critter/bear/care
 	health = 30
 	generic = 0
 
-	New()
-		pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
-
 	drink_blood(var/atom/target)
 		..()
 		JOB_XP(target, "Medical Doctor", 1)

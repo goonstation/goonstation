@@ -37,7 +37,7 @@
 
 	if(on)
 		if(direction_out)
-			var/pressure_delta = target_pressure - MIXTURE_PRESSURE(environment)
+			var/pressure_delta = target_pressure - environment.return_pressure()
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
@@ -52,7 +52,7 @@
 				else
 					loc.assume_air(removed)
 		else
-			var/pressure_delta = target_pressure - MIXTURE_PRESSURE(air_contents)
+			var/pressure_delta = target_pressure - air_contents.return_pressure()
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
@@ -100,11 +100,11 @@
 	var/holding_text
 
 	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [MIXTURE_PRESSURE(holding.air_contents)] KPa<BR>
+		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
 	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [MIXTURE_PRESSURE(air_contents)] KPa<BR>
+Pressure: [air_contents.return_pressure()] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
 <BR>

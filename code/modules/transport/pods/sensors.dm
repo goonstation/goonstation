@@ -11,9 +11,6 @@
 	var/seekrange = 30
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
-	var/antisight = 0
-	var/centerlight = null
-	var/centerlight_color = "#ffffff"
 	var/see_invisible = 2
 	var/scanning = 0
 	var/atom/tracking_target = null
@@ -27,7 +24,7 @@
 	var/trackable_range = 0
 
 
-	disposing()
+	dispose()
 		stop_tracking_me()
 		..()
 
@@ -404,9 +401,6 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 	name = "Conclave A-1984 Sensor System"
 	desc = "Advanced geological meson scanners for ships."
 	sight = SEE_TURFS
-	antisight = SEE_BLACKNESS
-	centerlight = "thermal"
-	centerlight_color = "#9bdb9b"
 	power_used = 35
 	icon_state = "sensor-y"
 

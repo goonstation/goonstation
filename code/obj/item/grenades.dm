@@ -1144,9 +1144,10 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(W)
 				qdel(src)
 		#endif
-		if(isweldingtool(W) && state == 1)
+		if(istype(W, /obj/item/weldingtool) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
+			W:eyecheck(user)
 			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
 			src.state = 2
 			icon_state = "Pipe_Hollow"

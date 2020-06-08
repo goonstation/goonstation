@@ -652,7 +652,8 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (isweldingtool(W))
+		if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WELD = W
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
 				return
@@ -662,7 +663,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
 				return
-			if(!W:try_weld(user, 1))
+			if(!WELD.try_weld(user, 1))
 				return
 
 			var/weldinput = 1
@@ -677,6 +678,7 @@ MATERIAL
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
 
+			WELD.eyecheck(user)
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
 			update_icon()
 			if(src.amount < 1)	qdel(src)
@@ -804,14 +806,16 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (isweldingtool(W))
+		if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WELD = W
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
 				return
 
-			if(!W:try_weld(user, 1))
+			if(!WELD.try_weld(user, 1))
 				return
 
+			WELD.eyecheck(user)
 			if(!src.anchored) user.visible_message("<span class='alert'><B>[user.name] welds the [src.name] to the floor.</B></span>")
 			else user.visible_message("<span class='alert'><B>[user.name] cuts the [src.name] free from the floor.</B></span>")
 			src.anchored = !(src.anchored)
@@ -998,7 +1002,7 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
+			if (!( istype(S, /turf/space) ))
 				boutput(user, "You cannot build on or repair this turf!")
 				return
 			else

@@ -24,8 +24,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/inj_amount = -1
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if(slot == SLOT_BELT)
+		if(slot == "belt")
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1
@@ -44,7 +43,6 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return
 
 	unequipped(mob/user as mob)
-		..()
 		owner = null
 		active = 0
 		return
@@ -172,8 +170,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/inj_amount = -1
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if(slot == SLOT_WEAR_MASM)
+		if(slot == "mask")
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1
@@ -192,7 +189,6 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return
 
 	unequipped(mob/user as mob)
-		..()
 		owner = null
 		active = 0
 		return

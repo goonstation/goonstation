@@ -72,8 +72,8 @@
 				src.get_fed(10)
 
 	disposing()
-		if(particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
-			particleMaster.RemoveSystem(/datum/particleSystem/bhole_warning)
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
+			particleMaster.RemoveSystem(new /datum/particleSystem/bhole_warning(src))
 		..()
 
 	proc/get_fed(var/feed_amount)

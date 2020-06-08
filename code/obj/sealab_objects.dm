@@ -58,6 +58,9 @@
 			qdel(src)
 		..()
 
+	Del()
+		return ..()
+
 
 //mbc : added dumb layer code to keep perspective intact *most of the time*
 /obj/sea_plant/CanPass(atom/A, turf/T)

@@ -56,7 +56,7 @@
 
 		//atmos
 
-		var/transfer_moles = min(1, volume_rate/environment.volume)*TOTAL_MOLES(environment)
+		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -70,19 +70,13 @@
 		// drsingh attempted fix for Cannot read null.temperature
 		if (filtered_out && removed)
 			filtered_out.temperature = removed.temperature
-			#define _FILTER_OUT_GAS(GAS, ...) \
-				filtered_out.GAS = removed.GAS; \
-				removed.GAS = 0;
-			APPLY_TO_GASES(_FILTER_OUT_GAS)
-			#undef _FILTER_OUT_GAS
+			filtered_out.toxins = removed.toxins
+			removed.toxins = 0
 
-			// revert for breathable
-			removed.oxygen = filtered_out.oxygen
-			filtered_out.oxygen = 0
-			removed.nitrogen = filtered_out.nitrogen
-			filtered_out.nitrogen = 0
+			filtered_out.carbon_dioxide = removed.carbon_dioxide
+			removed.carbon_dioxide = 0
 
-			if(length(removed.trace_gases))
+			if(removed.trace_gases && removed.trace_gases.len)
 				for(var/datum/gas/trace_gas in removed.trace_gases)
 //					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 					removed.trace_gases -= trace_gas
@@ -133,11 +127,11 @@
 	var/holding_text
 
 	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [MIXTURE_PRESSURE(holding.air_contents)] KPa<BR>
+		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
 	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [MIXTURE_PRESSURE(air_contents)] KPa<BR>
+Pressure: [air_contents.return_pressure()] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
 <BR>

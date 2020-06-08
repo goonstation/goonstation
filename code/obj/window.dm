@@ -46,15 +46,10 @@
 			src.health_max = src.health_max * src.health_multiplier
 			src.health = src.health_max
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
-
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
-				initialize()
-
-	initialize()
-		src.set_layer_from_settings()
-		update_nearby_tiles(need_rebuild=1)
-		..()
+		SPAWN_DBG(0)
+			src.set_layer_from_settings()
+			update_nearby_tiles(need_rebuild=1)
+		return
 
 	proc/set_layer_from_settings()
 		if (!map_settings)

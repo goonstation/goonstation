@@ -559,18 +559,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(isweldingtool(W))
+	if(istype(W, /obj/item/weldingtool))
 
 		var/turf/T = user.loc
 
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
+
 		if(state == 1)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to weld the field generator to the floor.")
 			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
 				state = 3
+				W:eyecheck(user)
 				boutput(user, "You weld the field generator to the floor.")
 				src.get_link() //Set up a link, now that we're secure!
 			else if((isrobot(user) && (user.loc == T)))
@@ -580,8 +582,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to cut the field generator free from the floor.")
 			sleep(2 SECONDS)
 
@@ -590,6 +590,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				if(src.link) //Clear active link.
 					src.link.master = null
 					src.link = null
+				W:eyecheck(user)
 				boutput(user, "You cut the field generator free from the floor.")
 			else if((isrobot(user) && (user.loc == T)))
 				state = 1
@@ -975,13 +976,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			desc = "Shoots a high power laser when active."
 			return
 
-	if(isweldingtool(W))
+	if(istype(W, /obj/item/weldingtool) && W:welding)
 
 		var/turf/T = user.loc
 
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
+
 		if(state == 1)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
+			W:eyecheck(user)
 			boutput(user, "You start to weld the emitter to the floor.")
 			sleep(2 SECONDS)
 
@@ -997,8 +1000,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to cut the emitter free from the floor.")
 			sleep(2 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -1458,17 +1459,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(isweldingtool(W))
+	if(istype(W, /obj/item/weldingtool) && W:welding)
 		if(timing)
 			boutput(user, "Stop the countdown first.")
 			return
 
 		var/turf/T = user.loc
 
+		if(!W:try_weld(user, 1, noisy = 2))
+			return
 
 		if(state == 1)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
+			W:eyecheck(user)
 			boutput(user, "You start to weld the bomb to the floor.")
 			sleep(5 SECONDS)
 
@@ -1485,8 +1487,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to cut the bomb free from the floor.")
 			sleep(5 SECONDS)
 

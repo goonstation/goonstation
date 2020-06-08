@@ -190,9 +190,12 @@
 		return
 
 	attackby(obj/item/W, mob/user as mob)
-		if (isweldingtool(W))
+		if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WT = W
+			if (!WT.welding)
+				return
 			if (src.health < initial(src.health))
-				if(W:try_weld(user, 1))
+				if(WT.try_weld(user, 1))
 					src.health = initial(src.health)
 					src.visible_message("<span class='alert'><b>[user]</b> repairs the damage on [src].</span>")
 

@@ -281,11 +281,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.dismantle_stage = 2
 		else ..()
 
-	else if (isweldingtool(W))
+	else if (istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WELD = W
 		if(src.bruteloss)
-			if(W:try_weld(user, 1))
+			if(WELD.try_weld(user, 1))
 				src.add_fingerprint(user)
-				src.HealDamage(null, 15, 0)
+				src.bruteloss = max(0,src.bruteloss - 15)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
 		else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 
@@ -295,7 +296,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if(src.fireloss)
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			coil.use(1)
-			src.HealDamage(null, 0, 15)
+			src.fireloss = max(0,src.fireloss - 15)
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
@@ -404,17 +405,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			//	return
 	. = ..()
 
-/mob/living/silicon/ai/build_keybind_styles(client/C)
-	..()
-	C.apply_keybind("robot")
-
-	if (!C.preferences.use_wasd)
-		C.apply_keybind("robot_arrow")
-
-	if (C.preferences.use_azerty)
-		C.apply_keybind("robot_azerty")
-	if (C.tg_controls)
-		C.apply_keybind("robot_tg")
+/mob/living/silicon/ai/build_keymap(client/C)
+	var/datum/keymap/keymap = ..()
+	keymap.merge(client.get_keymap("robot"))
+	return keymap
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user)
 	if (src.mind && src.mind.special_role)
@@ -746,10 +740,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-
-	for (var/client/C)
-		if (!C.mob) continue
-		if (!( C.mob.stat ))
+	for(var/mob/M in mobs)
+		if ((M.client && !( M.stat )))
 			cancel = 1
 			break
 	if (!( cancel ))

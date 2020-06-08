@@ -87,10 +87,8 @@
 					continue
 				target = locate(Q.x + tx, Q.y + ty, Q.z)
 
-			if(istype(I.loc, /mob))
-				var/mob/M = I.loc
-				M.u_equip(I)
 			I.set_loc(location)
+			I.layer = initial(I.layer)
 			SPAWN_DBG(0)
 				I.throw_at(target, 12, 3)
 

@@ -149,7 +149,7 @@
 
 	proc/reload_contexts()//IM ASORRY
 		for(var/datum/contextAction/C in src.contextActions)
-			C.dispose()
+			C.disposing()
 		src.contextActions = list()
 
 		for (var/datum/geneboothproduct/P in offered_genes)
@@ -206,7 +206,7 @@
 					selected_product.uses -= 1
 					if (selected_product.uses <= 0 || !selected_product.BE)
 						notify_empty(selected_product)
-						selected_product.dispose()
+						selected_product.disposing()
 						offered_genes -= selected_product
 						reload_contexts()
 

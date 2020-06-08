@@ -333,17 +333,6 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
-	onAdd(optional)
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, 1)
-	
-	onRemove()
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_EXPLOPROT, src)
 
 /datum/statusEffect/disease_resist
 	id = "food_disease_resist"

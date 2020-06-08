@@ -143,12 +143,6 @@
 		for(var/image/chat_maptext/I in src.lines)
 			pool(I)
 		src.lines = null
-		for(var/A in src.vis_locs)
-			if(isliving(A))
-				var/mob/living/L = A
-				if(L.chat_text == src)
-					L.chat_text = null
-			A:vis_contents -= src
 		..()
 
 /image/chat_maptext

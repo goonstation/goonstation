@@ -45,8 +45,8 @@
 /obj/joeq/spooky
 	name = "Memorial Plaque"
 
-	get_desc(dist, mob/user)
-		. += "Here lies [user.real_name]. Loved by all. R.I.P."
+	examine(mob/user)
+		boutput(usr, "Here lies [user.real_name]. Loved by all. R.I.P.")
 
 /*
  *	Spooky TOMBSTONE.  It is a tombstone.

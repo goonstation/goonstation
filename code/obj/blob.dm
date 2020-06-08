@@ -156,7 +156,6 @@ var/image/blob_icon_cache
 		..()
 		healthbar.onDelete()
 		qdel(healthbar)
-		healthbar = null
 		update_surrounding_blob_icons(T)
 		in_disposing = 0
 

@@ -37,10 +37,10 @@
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature < (heat_target+T0C))
-				var/transfer_moles = 0.25 * TOTAL_MOLES(env)
+				var/transfer_moles = 0.25 * env.total_moles()
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 				if(removed)
-					var/heat_capacity = HEAT_CAPACITY(removed)
+					var/heat_capacity = removed.heat_capacity()
 					if(heat_capacity)
 						removed.temperature = (removed.temperature*heat_capacity + heat_amount)/heat_capacity
 				env.merge(removed)

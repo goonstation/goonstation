@@ -17,10 +17,9 @@
 	New()
 		..()
 
-		if(ispath(src.planttype))
-			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
-			if (species)
-				src.planttype = species
+		var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
+		if (species)
+			src.planttype = species
 
 		src.plantgenes = new /datum/plantgenes(src)
 
@@ -29,10 +28,9 @@
 
 	unpooled()
 		..()
-		if(ispath(src.planttype))
-			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
-			if (species)
-				src.planttype = species
+		var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
+		if (species)
+			src.planttype = species
 
 		src.plantgenes = new /datum/plantgenes(src)
 
@@ -106,29 +104,41 @@
 			src.reagents.trans_to(splat,5) //could be deleted immediately
 		pool(src)
 
-/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
+/obj/item/reagent_containers/food/snacks/plant/tomato/explosive
 	name = "tomato"
 	crop_prefix = "seething "
 	desc = "You say tomato, I toolbox you."
+	var/lit = 0
+	proc/ignite()
+		if(src.lit) return
+		src.lit = 1
+		src.visible_message("<span class='alert'>[src] catches fire!</span>")
+		icon_state = "tomato-fire"
+		SPAWN_DBG(rand(30,60))
+			src.visible_message("<span class='alert'>[src] explodes violently!</span>")
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			var/turf/T = get_turf(src) // we might have moved during the sleep, so figure out where we are
+			if (T && !src.pooled)
+				explode(T)
 
 	throw_impact(var/atom/A)
+		if(src.lit) return //cant be high
 		var/turf/T = get_turf(A)
-		var/mob/living/carbon/human/H = A
-		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
 		if(!T || src.pooled) return
-		fireflash(T,1,1)
-		if(istype(H))
-			H.TakeDamage("chest",0,clamp(DNA.potency/2,10,50) + max(DNA.potency/5-20, 0)*(1-H.get_heat_protection()/100),0)//burn damage is half of the potency, soft capped at 50, with a minimum of 10, any extra potency is divided by 5 and added on. The resulting number is then reduced by heat resistance, and applied to the target.
-			H.update_burning(DNA.potency * 0.2)
-			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
-		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
-		if(istype(splat) && src.reagents)
-			src.reagents.trans_to(splat,5) //could be deleted immediately
-		pool(src)
+		explode(T)
+		src.visible_message("<span class='alert'>[src] splats onto the floor explosively!</span>")
 		//..()
+
+	proc/explode(var/turf/T)
+		T.hotspot_expose(700,125)
+		new/obj/effects/explosion/fiery(T)
+		explosion(src, T, -1, -1, 0, 1)
+		pool (src)
+
+	ex_act()
+		..()
+		ignite() //Griff
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
 	name = "tomacco"
@@ -711,24 +721,7 @@
 	brewable = 1
 	brew_result = "cider" // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
-#if ASS_JAM
-/obj/item/reagent_containers/food/snacks/plant/pear/sickly
-	name = "sickly pear"
-	desc = "You'd definitely become terribly ill if you ate this."
-	icon_state = "pear"
-	//planttype = ///datum/plant/pear
-	amount = 1
-	heal_amt = 2
-	brewable = 1
-	plant_reagent = "too much"
-	brew_result = list("cider","rotting") //bad
-	food_color = "#3FB929"
-	initial_volume = 30
 
-	make_reagents()
-		..()
-		reagents.add_reagent("too much",25)
-#endif
 /obj/item/reagent_containers/food/snacks/plant/peach/
 	name = "peach"
 	desc = "Feelin' peachy now, but after you eat it it's the pits."

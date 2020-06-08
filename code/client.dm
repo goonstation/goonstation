@@ -76,8 +76,6 @@
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
-	var/chui/window/keybind_menu/keybind_menu = null
-
 	var/delete_state = DELETE_STOP
 
 	var/list/cloudsaves
@@ -278,7 +276,11 @@
 */
 
 	if(player_capa)
-		if(clients.len >= player_cap)
+		var/howmany = 0
+		for(var/mob/M in mobs)
+			if(M.client)
+				howmany ++
+		if(howmany >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 				del(src)
@@ -804,14 +806,12 @@ var/global/curr_day = null
 			ircbot.export("pm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/client/C)
-				if (!C.mob) continue
-				var/mob/K = C.mob
-				if(C.holder && C.key != usr.key)
-					if (C.player_mode && !C.player_mode_ahelp)
+			for (var/mob/K in mobs)
+				if(K && K.client && K.client.holder && K.key != usr.key)
+					if (K.client.player_mode && !K.client.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -838,15 +838,15 @@ var/global/curr_day = null
 			ircbot.export("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/client/C)
-				if (C.can_see_mentor_pms() && C.key != usr.key)
-					if (C.holder)
-						if (C.player_mode && !C.player_mode_mhelp)
+			for (var/mob/K in mobs)
+				if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key)
+					if (K.client.holder)
+						if (K.client.player_mode && !K.client.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 
 		if ("mentor_msg")
 			if (M)
@@ -886,15 +886,15 @@ var/global/curr_day = null
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
-				for (var/client/C)
-					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
-						if (C.holder)
-							if (C.player_mode && !C.player_mode_mhelp)
+				for (var/mob/K in mobs)
+					if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key && (M && K.key != M.key))
+						if (K.client.holder)
+							if (K.client.player_mode && !K.client.player_mode_mhelp)
 								continue
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 		if ("mach_close")
 			var/window = href_list["window"]
@@ -951,7 +951,7 @@ var/global/curr_day = null
 	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
 		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
 //Returns some cloud data on the client
-/client/proc/cloud_get( var/key )
+/client/proc/cloud_get( var/key, var/value )
 	return clouddata ? clouddata[key] : null
 //Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
@@ -1090,7 +1090,7 @@ var/global/curr_day = null
 	tg_controls = tg
 	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
 
-	src.mob.reset_keymap()
+	src.mob.update_keymap()
 
 /client/verb/set_tg_controls()
 	set hidden = 1
@@ -1125,7 +1125,7 @@ var/global/curr_day = null
 		H.zone_sel = new(H)
 		H.attach_hud(H.zone_sel)
 		H.stamina_bar = new(H)
-		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
+		H.hud.add_object(H.stamina_bar, HUD_LAYER+1, "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
 

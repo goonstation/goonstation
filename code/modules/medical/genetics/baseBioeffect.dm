@@ -85,11 +85,7 @@ var/const/effectTypeFood = 4
 	disposing()
 		if(!removed)
 			src.OnRemove()
-		holder = null
 		owner = null
-		if(dnaBlocks)
-			dnaBlocks.dispose()
-		dnaBlocks = null
 		..()
 
 	proc/OnAdd()     //Called when the effect is added.
@@ -107,6 +103,11 @@ var/const/effectTypeFood = 4
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
 		return
+
+	Del()
+		if(!removed)
+			src.OnRemove()
+		..()
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
@@ -143,12 +144,6 @@ var/const/effectTypeFood = 4
 	New(var/holder)
 		owner = holder
 		return ..()
-
-	disposing()
-		owner = null
-		blockList = null
-		blockListCurr = null
-		..()
 
 	proc/sequenceCorrect()
 		if(blockList.len != blockListCurr.len)

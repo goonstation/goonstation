@@ -217,11 +217,6 @@
 
 		fingerprintshidden = null
 		tag = null
-
-		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect in src.statusEffects)
-				src.delStatus(effect)
-			src.statusEffects = null
 		..()
 	///Chemistry.
 
@@ -592,10 +587,6 @@
 
 	if(src.medium_lights)
 		update_medium_light_visibility()
-
-//called once per player-invoked move, regardless of diagonal etc
-//called via pulls and mob steps
-/atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
 	//set name = "Pull"

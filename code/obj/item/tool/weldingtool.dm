@@ -272,6 +272,7 @@
 
 		if(!src.try_weld(user, 5))
 			return
+		eyecheck(user)
 
 		H.TakeDamage("chest",0,20)
 		if (prob(50)) H.emote("scream")
@@ -305,6 +306,7 @@
 
 		if(!src.try_weld(user, 5))
 			return
+		eyecheck(user)
 
 		H.TakeDamage("chest",0,20)
 		if (prob(50)) H.emote("scream")

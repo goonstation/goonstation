@@ -197,7 +197,8 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src)
+		G.assailant = src
 		src.put_in_hand(G, src.hand)
 		G.affecting = src
 		src.grabbed_by += G
@@ -224,7 +225,8 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I)
+		G.assailant = src
 		G.affecting = src
 		src.grabbed_by += G
 		G.loc = I
@@ -477,8 +479,8 @@
 
 #undef DISARM_WITH_ITEM_TEXT
 
-/mob/proc/check_block(ignoreStuns = 0) //am i blocking?
-	if (ignoreStuns || (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis")))
+/mob/proc/check_block() //am i blocking?
+	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis"))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
@@ -717,9 +719,6 @@
 
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
-		if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
-			msgs.stamina_self -= STAMINA_HTH_COST
-
 	var/attack_resistance = target.check_attack_resistance()
 	if (attack_resistance)
 		damage = 0
@@ -953,7 +952,6 @@
 								target.force_laydown_standup()
 							if (src.disarm_RNG_result == "attack_self_with_item_shoved")
 								step_away(target, owner, 1)
-								target.OnMove(owner)
 
 					if ("shoved_down")
 						target.deliver_move_trigger("pushdown")
@@ -965,9 +963,12 @@
 						target.force_laydown_standup()
 					if ("shoved")
 						step_away(target, owner, 1)
-						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
+
+		else
+			if (owner.traitHolder && !owner.traitHolder.hasTrait("glasscannon"))
+				owner.process_stamina(STAMINA_HTH_COST)
 
 #ifdef DATALOGGER
 			game_stats.Increment("violence")

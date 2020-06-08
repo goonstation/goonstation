@@ -13,7 +13,9 @@
 /mob/living/critter/flock/bit/New(var/datum/flock/F=null)
 	..(F)
 
-	src.ai = new /datum/aiHolder/flock/bit(src)
+	// ai setup
+	src.ai = new /datum/aiHolder/flock/bit()
+	src.ai.owner = src
 
 	SPAWN_DBG(1 SECOND) // aaaaaaa
 		animate_bumble(src)

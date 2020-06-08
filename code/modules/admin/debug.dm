@@ -858,11 +858,11 @@ body
 		if ("Coder")
 			src.holder.level = LEVEL_CODER
 		if ("Shit Guy")
-			src.holder.level = LEVEL_ADMIN
+			src.holder.level = LEVEL_SHITGUY
 		if ("Primary Admin")
 			src.holder.level = LEVEL_PA
 		if ("Admin")
-			src.holder.level = LEVEL_IA
+			src.holder.level = LEVEL_ADMIN
 		if ("Secondary Admin")
 			src.holder.level = LEVEL_SA
 		if ("Mod")

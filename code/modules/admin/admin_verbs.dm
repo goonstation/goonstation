@@ -167,7 +167,7 @@ var/list/admin_verbs = list(
 		),
 
 	4 = list(
-		// LEVEL_IA, admin
+		// LEVEL_ADMIN, admin
 		/*
 		/client/proc/noclip,
 		/client/proc/cmd_admin_mute,
@@ -260,7 +260,7 @@ var/list/admin_verbs = list(
 
 
 	6 = list(
-		// LEVEL_ADMIN, Administrator
+		// LEVEL_SHITGUY, shit person
 		/datum/admins/proc/togglesoundwaiting,
 		/datum/admins/proc/pixelexplosion,
 		/proc/mod_color,
@@ -504,12 +504,12 @@ var/list/special_pa_observing_verbs = list(
 			src.holder.level = LEVEL_HOST
 		if ("Coder")
 			src.holder.level = LEVEL_CODER
-		if ("Administrator")
-			src.holder.level = LEVEL_ADMIN
+		if ("Shit Person")
+			src.holder.level = LEVEL_SHITGUY
 		if ("Primary Administrator")
 			src.holder.level = LEVEL_PA
-		if ("Intermediate Administrator")
-			src.holder.level = LEVEL_IA
+		if ("Administrator")
+			src.holder.level = LEVEL_ADMIN
 		if ("Secondary Administrator")
 			src.holder.level = LEVEL_SA
 		if ("Moderator")
@@ -543,10 +543,10 @@ var/list/special_pa_observing_verbs = list(
 			if ( src.holder.level > LEVEL_MOD)
 				src.deadchat = 1
 				src.verbs += special_admin_observing_verbs
-			if ( src.holder.level > LEVEL_IA )
+			if ( src.holder.level > LEVEL_ADMIN )
 				src.verbs += special_pa_observing_verbs
 		else
-			if ( src.holder.level > LEVEL_IA)
+			if ( src.holder.level > LEVEL_ADMIN)
 				src.deadchat = 1
 				src.verbs += special_admin_observing_verbs
 			if( src.holder.level > LEVEL_PA ) //SHIT GUY PLUS
@@ -626,14 +626,14 @@ var/list/special_pa_observing_verbs = list(
 
 /client/proc/get_admin_state()
 	set category = "Special Verbs"
-	for(var/client/C)
-		if(C.holder)
-			if(C.holder.state == 1)
-				boutput(src, "[C.key] is playing - [C.holder.state]")
-			else if(C.holder.state == 2)
-				boutput(src, "[C.key] is observing - [C.holder.state]")
+	for(var/mob/M in mobs)
+		if(M.client && M.client.holder)
+			if(M.client.holder.state == 1)
+				boutput(src, "[M.key] is playing - [M.client.holder.state]")
+			else if(M.client.holder.state == 2)
+				boutput(src, "[M.key] is observing - [M.client.holder.state]")
 			else
-				boutput(src, "[C.key] is undefined - [C.holder.state]")
+				boutput(src, "[M.key] is undefined - [M.client.holder.state]")
 
 //admin client procs ported over from mob.dm
 
@@ -1167,7 +1167,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level >= LEVEL_SHITGUY)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "BLOBSAY: [msg]")
 	logTheThing("diary", src, null, "BLOBSAY: [msg]", "admin")
@@ -1199,7 +1199,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level >= LEVEL_SHITGUY)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "HIVESAY: [msg]")
 	logTheThing("diary", src, null, "HIVESAY: [msg]", "admin")
@@ -1238,7 +1238,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level >= LEVEL_SHITGUY)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "DRONESAY: [msg]")
 	logTheThing("diary", src, null, "DRONESAY: [msg]", "admin")
@@ -1271,7 +1271,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level >= LEVEL_SHITGUY)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "MARSAY: [msg]")
 	logTheThing("diary", src, null, "MARSAY: [msg]", "admin")
@@ -1288,7 +1288,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level >= LEVEL_SHITGUY)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "FLOCKSAY: [msg]")
 	logTheThing("diary", src, null, "FLOCKSAY: [msg]", "admin")

@@ -278,10 +278,8 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
-
-		for (var/client/C)
-			if (!C.mob) continue
-			if (!( C.mob.stat ))
+		for(var/mob/M in mobs)
+			if ((M.client && !( M.stat )))
 				cancel = 1
 				break
 		if (!( cancel ))
@@ -975,9 +973,6 @@
 						return
 			src.now_pushing = 0
 			//..()
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
 			if (!istype(AM, /atom/movable))
 				return
 			if (!src.now_pushing)
@@ -986,6 +981,9 @@
 					var/t = get_dir(src, AM)
 					step(AM, t)
 				src.now_pushing = null
+			if(AM)
+				AM.last_bumped = world.timeofday
+				AM.Bumped(src)
 			return
 		return
 
@@ -1031,8 +1029,9 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (isweldingtool(W))
-			if(W:try_weld(user, 1))
+		if (istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WELD = W
+			if(WELD.try_weld(user, 1))
 				src.add_fingerprint(user)
 				var/repaired = HealDamage("All", 120, 0)
 				if(repaired || health < max_health)
@@ -1693,19 +1692,10 @@
 			else
 				return ..()
 
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("robot")
-
-		if (!C.preferences.use_wasd)
-			C.apply_keybind("robot_arrow")
-
-		if (C.preferences.use_azerty)
-			C.apply_keybind("robot_azerty")
-		if (C.tg_controls)
-			C.apply_keybind("robot_tg")
-			if (C.preferences.use_azerty)
-				C.apply_keybind("robot_tg_azerty")
+	build_keymap(client/C)
+		var/datum/keymap/keymap = ..()
+		keymap.merge(client.get_keymap("robot"))
+		return keymap
 
 	say_understands(var/other)
 		if (isAI(other)) return 1
@@ -1840,20 +1830,20 @@
 			if (upgrade.charges > 0)
 				upgrade.charges--
 			if (upgrade.charges == 0)
-				boutput(src, "[upgrade] has been activated. It has been used up.")
+				boutput(src, "[upgrade] activated. It has been used up.")
 				src.upgrades.Remove(upgrade)
 				qdel(upgrade)
 			else
 				if (upgrade.charges < 0)
-					boutput(src, "[upgrade] has been activated.")
+					boutput(src, "[upgrade] activated.")
 				else
-					boutput(src, "[upgrade] has been activated. [upgrade.charges] uses left.")
+					boutput(src, "[upgrade] activated. [upgrade.charges] uses left.")
 		else
 			if (upgrade.activated)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
+				boutput(src, "[upgrade] [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 
 	proc/set_module(var/obj/item/robot_module/RM)
@@ -2506,14 +2496,11 @@
 				if (ship.sensors)
 					if (ship.sensors.active)
 						src.sight |= ship.sensors.sight
-						src.sight &= ~ship.sensors.antisight
 						src.see_in_dark = ship.sensors.see_in_dark
 						if (client && client.adventure_view)
 							src.see_invisible = 21
 						else
 							src.see_invisible = ship.sensors.see_invisible
-					if(ship.sensors.centerlight)
-						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 
 			else
 				//var/sight_therm = 0 //todo fix this
@@ -2528,13 +2515,11 @@
 					//	sight_therm = 1
 
 				if (sight_meson)
-					src.sight &= ~SEE_BLACKNESS
 					src.sight |= SEE_TURFS
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 					vision.set_scan(1)
 					client.color = "#c2ffc2"
 				else
-					src.sight |= SEE_BLACKNESS
 					src.sight &= ~SEE_TURFS
 					client.color = null
 					vision.set_scan(0)

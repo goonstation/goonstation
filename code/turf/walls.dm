@@ -319,7 +319,7 @@
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (isweldingtool(W))
+	else if (istype(W, /obj/item/weldingtool))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -405,15 +405,15 @@
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (isweldingtool(W))
+	else if (istype(W, /obj/item/weldingtool) && W:welding)
+		W:eyecheck(user)
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
 
 		if (src.d_state == 2)
-			if(!W:try_weld(user,1,-1,1,1))
-				return
 			boutput(user, "<span class='notice'>Slicing metal cover.</span>")
+			playsound(src, "sound/items/Welder.ogg", 100, 1)
 			sleep(6 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
@@ -423,9 +423,8 @@
 				boutput(user, "<span class='notice'>You removed the metal cover.</span>")
 
 		else if (src.d_state == 5)
-			if(!W:try_weld(user,1,-1,1,1))
-				return
 			boutput(user, "<span class='notice'>Removing support rods.</span>")
+			playsound(src, "sound/items/Welder.ogg", 100, 1)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6

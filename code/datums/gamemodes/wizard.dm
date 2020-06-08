@@ -19,12 +19,8 @@
 /datum/game_mode/wizard/pre_setup()
 
 	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if(player.ready)
-			num_players++
+	for(var/mob/new_player/player in mobs)
+		if(player.client && player.ready) num_players++
 
 	var/num_wizards = max(1, min(round(num_players / 12), wizards_possible))
 
@@ -105,23 +101,17 @@
 
 	var/list/candidates = list()
 
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
+	for(var/mob/new_player/player in mobs)
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_wizard)
 				candidates += player.mind
 
 	if(candidates.len < minimum_wizards)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_wizard set to yes. We need [minimum_wizards], so including players who don't want to be wizards in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
+		for(var/mob/new_player/player in mobs)
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if ((minimum_wizards > 1) && (candidates.len >= minimum_wizards))
@@ -165,19 +155,15 @@
 
 /datum/game_mode/wizard/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/client/C)
-		var/mob/living/player = C.mob
-		if (!istype(player)) continue
-		mobs += player
+	for(var/mob/living/player in mobs)
+		if (player.client)
+			mobs += player
 	return mobs
 
 /datum/game_mode/wizard/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/client/C)
-		var/mob/living/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.real_name != excluded_name)
+	for(var/mob/living/player in mobs)
+		if (player.client && (player.real_name != excluded_name))
 			names += player.real_name
 	if(!names.len)
 		return null

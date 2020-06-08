@@ -1457,8 +1457,9 @@ About the new airlock wires panel:
 		..()
 		return
 
-	if ((isweldingtool(C) && !( src.operating ) && src.density))
-		if(!C:try_weld(user, 1, burn_eyes = 1))
+	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
+		var/obj/item/weldingtool/W = C
+		if(!W.try_weld(user, 1, burn_eyes = 1))
 			return
 		if (!src.welded)
 			src.welded = 1
