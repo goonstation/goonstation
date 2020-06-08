@@ -193,4 +193,4 @@ var/list/detailed_spawn_dbg = list()
 
 #define hex2num(X) text2num(X, 16)
 
-#define reset_anchored(M) do{if(istype(M, /mob/living/carbon/human)){var/mob/living/carbon/human/H = M;if((H.shoes && H.shoes.magnetic) || (H.mutantrace && H.mutantrace.anchor_to_floor)){H.anchored = 1;}else{H.anchored = 0}}else{M.anchored = 0;}}while(FALSE)
+#define reset_anchored(M) do{if(istype(M, /mob/living/carbon/human)){var/mob/living/carbon/human/HumToDeanchor = M;if((HumToDeanchor.shoes && HumToDeanchor.shoes.magnetic) || (HumToDeanchor.mutantrace && HumToDeanchor.mutantrace.anchor_to_floor)){HumToDeanchor.anchored = 1;}else{HumToDeanchor.anchored = 0}}else{M.anchored = 0;}}while(FALSE)
