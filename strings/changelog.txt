@@ -1,5 +1,9 @@
 
 (t)mon jun 08 20
+(u)pali
+(p)986
+(e)🆕|feature
+(*)Heisenbee gets better hats the more rounds she's alive. Killing Heisenbee resets this but drops the hat!
 (u)Tarmunora
 (p)995
 (e)🐛|bug
