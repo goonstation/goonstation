@@ -1,4 +1,10 @@
 
+(t)mon jun 08 20
+(u)Tarmunora
+(p)957
+(e)⚖|balance
+(*)Tweaked explosion power scaling over range, and changed how the human body responds to being caught in explosions.
+(+)Added small amount of explosion resistance to sturdy-limbs foodEffect
 (t)sun jun 07 20
 (u)Tarmunora
 (p)947
