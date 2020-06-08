@@ -55,8 +55,42 @@ var/datum/event_controller/random_events
 		next_minor_event = ticker.round_elapsed_ticks + event_timer
 		SPAWN_DBG(event_timer)
 			minor_event_cycle()
+		minor_event_timer = rand(time_between_minor_events_lower,time_between_minor_events_upper)
+		next_minor_event = TIME + minor_event_timer
 
-	proc/do_random_event(var/list/event_bank)
+	proc/spawn_event(var/type = "player")
+		var/do_event = 1
+		if (events_enabled)
+			message_admins("<span class='notice'>A spawn event would have happened now, but they are disabled!</span>")
+			do_event = 0
+		if (clients.len < minimum_population)
+			message_admins("<span class='notice'>A spawn event would have happened now, but there is not enough players!</span>")
+			do_event = 0
+
+		if (do_event)
+			var/alive = 0
+			var/dead_dnr = 0
+			var/antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+
+			for(var/client/C)
+				var/mob/M = C.mob
+				if (!isdead(M))
+					if (isliving(M))
+						alive++
+				else
+					if (M.mind?.dnr)
+						dead_dnr++
+
+			if ((alive < (clients.len - dead_dnr) * 50))
+				do_random_event(player_spawn_events, source = "force_spawn")
+			else if (antags <= 0)
+				do_random_event(antag_spawn_events, source = "force_spawn")
+			else
+				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!</span>")
+
+		next_spawn_event = TIME + time_between_spawn_events
+
+	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
 			return
