@@ -476,7 +476,6 @@
 			animate_flock_convert_complete(FL)
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
-		if (RL_Started) RL_UPDATE_LIGHT(T)
 		T.RL_LumR = RL_LumR
 		T.RL_LumG = RL_LumG
 		T.RL_LumB = RL_LumB
