@@ -859,7 +859,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		paralysis
 			id = "paralysis"
 			name = "Unconscious"
-			desc = "You are unconcious.<br>Unable to take any actions, blinded."
+			desc = "You are unconscious.<br>Unable to take any actions, blinded."
 			icon_state = "paralysis"
 			unique = 1
 			maxDuration = 30 SECONDS

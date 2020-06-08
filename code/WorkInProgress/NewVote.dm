@@ -85,7 +85,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 					boutput(C, "<span class='alert'>You may not start this type of vote because you recently died.</span>")
 					return
 				if(C.mob.stat && !C.holder)
-					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconcious.</span>")
+					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconscious.</span>")
 					return
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/restart()
