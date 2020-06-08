@@ -202,6 +202,14 @@
 	name = "Morty"
 	generic = 0
 
+	New()
+		pets += src
+		..()
+
+	disposing()
+		pets -= src
+		..()
+
 var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
 "Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
 "Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",

@@ -3,13 +3,12 @@
  * This needs to be this way, otherwise DM freaks out about .dm inclusions not inside //BEGIN_INCLUDE
  */
 
-#include "__build.dm"
+#include "..\_stdlib\__build.dm"
 #include "_metamacros.dm"
 #include "_accessLevels.dm"
 #include "_mapDefines.dm"
 #include "_setup.dm"
 #include "code\_macros.dm"
-#include "defines\_input.dm"
 #include "_types.dm"
 #include "atmos.dm"
 #include "color.dm"
@@ -24,12 +23,11 @@
 #include "pathfinding.dm"
 #include "projectiles.dm"
 #include "text.dm"
-#include "tgs.config.dm"
-#include "tgs.dm"
 #include "mob_properties.dm"
 #include "code\spaceman_dmm.dm"
 
 #include "code\_antag_popups.dm"
+#include "code\_controls.dm"
 #include "code\_dmm_suite.dm"
 #include "code\_fluid_defines.dm"
 #include "code\_layer.dm"

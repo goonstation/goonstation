@@ -339,7 +339,7 @@
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 
-	get_desc()
+	examine()
 		..()
 		. += "It is set to [src.active ? "on" : "off"]."
 

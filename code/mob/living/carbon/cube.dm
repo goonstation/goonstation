@@ -97,9 +97,10 @@
 		pop()
 		return
 
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("cube")
+	build_keymap(client/C)
+		var/datum/keymap/keymap = ..()
+		keymap.merge(client.get_keymap("cube"))
+		return keymap
 
 	proc/get_cube_idle()
 		return "cubes cubily"

@@ -668,7 +668,6 @@
 		return
 
 	equipped(var/mob/user, var/slot)
-		..()
 		using = user
 		updateOverlays()
 		return

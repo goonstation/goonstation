@@ -213,7 +213,6 @@
 		return
 #else
 	equipped(var/mob/user, var/slot)
-		..()
 		user.visible_message("<span class='notice'>[user] puts on the goggles, but nothing particularly special happens!</span>")
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
@@ -232,9 +231,8 @@
 		..()
 
 	equipped(var/mob/user, var/slot)
-		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
+		if(istype(H) && slot == "eyes")
 			SPAWN_DBG(1 SECOND)
 				exit_urs_dungeon(user)
 		return

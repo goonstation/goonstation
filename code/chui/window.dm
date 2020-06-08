@@ -256,9 +256,9 @@ chui/window
 		callJSFunction( "chui._finishReceive", list( "id" = id )*/
 
 	//Override this instead of Topic()
-	proc/OnTopic( client/clint, href, href_list[] )
-
+	proc/OnTopic( href, href_list[] )
 	//Called when a theme button is clicked. Includes which client did the deed and any other assorted gubbins
+
 	proc/OnClick(var/client/who, var/id, var/href_list )
 
 
@@ -295,9 +295,9 @@ chui/window
 					connecting -= C
 					subscribers |= C
 			else
-				OnTopic( usr.client, href, href_list ) //umm
+				OnTopic( usr.client, href, href_list )
 		else
-			OnTopic( usr.client, href, href_list )
+			OnTopic( href, href_list )
 
 
 //Called when the close button is clicked on both

@@ -291,7 +291,6 @@
 	mats = 2
 
 	equipped(var/mob/user, var/slot)
-		..()
 		user.visible_message("<b>[user]</b> starts hopping around!","You start hopping around.")
 		src.moonloop(user)
 		return
@@ -318,15 +317,6 @@
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"
 	icon_state = "cowboy"
-
-/obj/item/clothing/shoes/cowboy/boom
-	name = "Boom Boots"
-	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
-	icon_state = "cowboy"
-	color = "#FF0000"
-	step_sound = "explosion"
-	contraband = 10
-	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"

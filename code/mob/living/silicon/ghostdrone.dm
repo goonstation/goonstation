@@ -1261,17 +1261,11 @@
 			else
 				return ..()
 
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("drone")
+	build_keymap(client/C)
+		var/datum/keymap/keymap = ..()
+		keymap.merge(client.get_keymap("drone"))
+		return keymap
 
-		if (!C.preferences.use_wasd)
-			C.apply_keybind("drone_arrow")
-
-		if (C.preferences.use_azerty)
-			C.apply_keybind("drone_azerty")
-		if (C.tg_controls)
-			C.apply_keybind("drone_tg")
 
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0

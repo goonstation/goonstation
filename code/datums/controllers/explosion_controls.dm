@@ -10,7 +10,7 @@ var/datum/explosion_controller/explosions
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1)
 		var/atom/A = epicenter
 		if(istype(A))
-			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
+			var/severity = power >= 6 ? 1 : power >= 3 ? 2 : 3
 			var/fprint = null
 			if(istype(source))
 				fprint = source.fingerprintslast
@@ -43,14 +43,13 @@ var/datum/explosion_controller/explosions
 
 		for (var/y in queued_turfs)
 			var/turf/T = y
-			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
 				for (var/mob/M in T)
 					M.ex_act(1, last_touched, p)
-			else if (p > 3)
+			else if (p >= 3)
 				for (var/mob/M in T)
 					M.ex_act(2, last_touched, p)
 			else
@@ -71,7 +70,7 @@ var/datum/explosion_controller/explosions
 					O.ex_act(1, last_touched, p)
 					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
-			else if (p > 3)
+			else if (p >= 3)
 				for (var/obj/O in T)
 					if(istype(O, /obj/overlay))
 						continue
@@ -96,7 +95,7 @@ var/datum/explosion_controller/explosions
 			//boutput(world, "P2 [p]")
 			if (p >= 6)
 				T.ex_act(1, last_touched)
-			else if (p > 3)
+			else if (p >= 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)

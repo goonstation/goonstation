@@ -323,7 +323,7 @@
 
 
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
-		src.keybind_prefs_updated(user)
+		src.wasd_updated(user)
 
 		//MBC tg controls popup cause idk where else to put it
 		if (!version || version < 8)

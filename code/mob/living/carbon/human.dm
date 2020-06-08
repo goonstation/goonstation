@@ -490,7 +490,7 @@
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
-		if(I.equipped_in_slot != slot_w_uniform)
+		if(I.equipped_in_slot != slot_w_uniform && I.equipped_in_slot != "i_clothing")
 			src.u_equip(I)
 	if(src.w_uniform) // last because pockets etc.
 		src.u_equip(src.w_uniform)
@@ -1121,19 +1121,14 @@
 		else
 			return ..()
 
-/mob/living/carbon/human/build_keybind_styles(client/C)
-	..()
-	C.apply_keybind("human")
+///mob/living/carbon/human/click(atom/target, params)
 
-	if (!C.preferences.use_wasd)
-		C.apply_keybind("human_arrow")
+///mob/living/carbon/human/Stat()
 
-	if (C.preferences.use_azerty)
-		C.apply_keybind("human_azerty")
-	if (C.tg_controls)
-		C.apply_keybind("human_tg")
-		if (C.preferences.use_azerty)
-			C.apply_keybind("human_tg_azerty")
+/mob/living/carbon/human/build_keymap(client/C)
+	var/datum/keymap/keymap = ..()
+	keymap.merge(client.get_keymap("human"))
+	return keymap
 
 /mob/living/carbon/human/proc/toggle_throw_mode()
 	if (src.in_throw_mode)
@@ -2271,14 +2266,14 @@
 			if (!src.back)
 				src.back = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["back"])
-				I.equipped(src, slot_back)
+				I.equipped(src, "back")
 				equipped = 1
 				clothing_dirty |= C_BACK
 		if (slot_wear_mask)
 			if (!src.wear_mask && src.organHolder && src.organHolder.head)
 				src.wear_mask = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["mask"])
-				I.equipped(src, slot_wear_mask)
+				I.equipped(src, "mask")
 				equipped = 1
 				clothing_dirty |= C_MASK
 		if (slot_l_hand)
@@ -2291,42 +2286,42 @@
 			if (!src.belt)
 				src.belt = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["belt"])
-				I.equipped(src, slot_belt)
+				I.equipped(src, "belt")
 				equipped = 1
 				clothing_dirty |= C_BELT
 		if (slot_wear_id)
 			if (!src.wear_id)
 				src.wear_id = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["id"])
-				I.equipped(src, slot_wear_id)
+				I.equipped(src, "id")
 				equipped = 1
 				clothing_dirty |= C_ID
 		if (slot_ears)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["ears"])
-				I.equipped(src, slot_ears)
+				I.equipped(src, "ears")
 				equipped = 1
 				clothing_dirty |= C_EARS
 		if (slot_glasses)
 			if (!src.glasses && src.organHolder && src.organHolder.head)
 				src.glasses = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["glasses"])
-				I.equipped(src, slot_glasses)
+				I.equipped(src, "eyes")
 				equipped = 1
 				clothing_dirty |= C_GLASSES
 		if (slot_gloves)
 			if (!src.gloves)
 				src.gloves = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["gloves"])
-				I.equipped(src, slot_gloves)
+				I.equipped(src, "gloves")
 				equipped = 1
 				clothing_dirty |= C_GLOVES
 		if (slot_head)
 			if (!src.head && src.organHolder && src.organHolder.head)
 				src.head = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["head"])
-				I.equipped(src, slot_head)
+				I.equipped(src, "head")
 				equipped = 1
 				src.update_hair_layer()
 				clothing_dirty |= C_HEAD
@@ -2334,14 +2329,14 @@
 			if (!src.shoes)
 				src.shoes = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["shoes"])
-				I.equipped(src, slot_shoes)
+				I.equipped(src, "shoes")
 				equipped = 1
 				clothing_dirty |= C_SHOES
 		if (slot_wear_suit)
 			if (!src.wear_suit)
 				src.wear_suit = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["suit"])
-				I.equipped(src, slot_wear_suit)
+				I.equipped(src, "o_clothing")
 				equipped = 1
 				src.update_hair_layer()
 				clothing_dirty |= C_SUIT
@@ -2349,7 +2344,7 @@
 			if (!src.w_uniform)
 				src.w_uniform = I
 				hud.add_other_object(I, hud.layouts[hud.layout_style]["under"])
-				I.equipped(src, slot_w_uniform)
+				I.equipped(src, "i_clothing")
 				equipped = 1
 				clothing_dirty |= C_UNIFORM
 		if (slot_l_store)
@@ -2811,10 +2806,7 @@
 /mob/living/carbon/human/resist()
 	..() // For resisting burning and grabs see living.dm
 	// Added this here (Convair880).
-	if (!isalive(src)) //can't resist when dead or unconscious
-		return
-
-	if (!src.restrained() && (src.shoes && src.shoes.chained))
+	if (!src.stat && !src.restrained() && (src.shoes && src.shoes.chained))
 		var/obj/item/clothing/shoes/SH = src.shoes
 		if (ischangeling(src))
 			src.u_equip(SH)
@@ -3536,12 +3528,6 @@
 			else if (move_dir == turn(last_move_dir,180))
 				sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
-				if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
-					var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
-					if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
-					if(src_effect.update_charge(1))
-						playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
-
 
 			sustained_moves = 0
 	else
