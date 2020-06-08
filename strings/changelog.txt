@@ -1,5 +1,9 @@
 
 (t)mon jun 08 20
+(u)Tarmunora
+(p)995
+(e)🐛|bug
+(+)Fixes moveslow on nukie LMG and sniper - now slows in-hand, but not on back
 (u)Sovexe
 (p)982
 (e)🐛|bug
