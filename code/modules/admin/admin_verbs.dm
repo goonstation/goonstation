@@ -26,6 +26,7 @@ var/list/admin_verbs = list(
 		/client/proc/hivesay,
 		/client/proc/marsay,
 		/client/proc/flocksay,
+		/client/proc/silisay,
 		/client/proc/toggle_hearing_all_looc,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
@@ -1204,6 +1205,36 @@ var/list/fun_images = list()
 		if (is_in_hivemind || C.holder && !C.player_mode)
 			var/thisR = rendered
 			if (C.holder && src.mob.mind)
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+			M.show_message(thisR, 2)
+
+/client/proc/silisay(msg as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "silisay"
+	admin_only
+	if (!src.mob || src.player_mode)
+		return
+
+	if (src.holder.level < LEVEL_ADMIN)
+		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
+	logTheThing("admin", src, null, "SILISAY: [msg]")
+	logTheThing("diary", src, null, "SILISAY: [msg]", "admin")
+
+	if (!msg)
+		return
+	var/show_other_key = 0
+	if (src.stealth || src.alt_key)
+		show_other_key = 1
+
+	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span></i>"
+	var/adminrendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span></i>"
+
+	for (var/mob/M in mobs)
+		if (istype(M, /mob/new_player))
+			continue
+		if (M.client && (M.robot_talk_understand || M.client.holder && !M.client.player_mode))
+			var/thisR = rendered
+			if (M.client.holder && src.mob.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
