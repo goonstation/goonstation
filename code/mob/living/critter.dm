@@ -699,7 +699,7 @@
 		if (isdead(src))
 			return 0
 
-		src.handle_digestion(life_time_multiplier)
+		src.handle_digestion(life_time_multiplier) //keep. humans have organs
 
 		if (src.get_eye_blurry())
 			src.change_eye_blurry(-1)

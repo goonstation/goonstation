@@ -1,4 +1,113 @@
 
+/datum/lifeprocess
+	var/mob/owner
+	var/last_process = 0
+
+	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
+	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+
+//have some sort of 'type lock' that prevents adding to wrong types i gues
+
+	New()
+		..()
+		last_process = TIME
+
+	proc/process()
+		last_process = TIME
+
+	proc/get_multiplier()
+		.= clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
+
+/datum/lifeprocess/breath
+	process()
+
+/datum/lifeprocess/chems
+	process()
+		//proc/handle_chemicals_in_body()
+		if (owner.nodamage)
+			return
+
+		if (owner.reagents)
+			var/reagent_time_multiplier = get_multiplier()
+
+			owner.reagents.temperature_reagents(src.bodytemperature, 100, 35/reagent_time_multiplier, 15*reagent_time_multiplier)
+
+			if (owner.blood_system && pwner.reagents.get_reagent("blood"))
+				var/blood2absorb = min(owner.blood_absorption_rate, owner.reagents.get_reagent_amount("blood")) * reagent_time_multiplier
+				owner.reagents.remove_reagent("blood", blood2absorb)
+				owner.blood_volume += blood2absorb
+			if (owner.metabolizes)
+				owner.reagents.metabolize(src, multiplier = reagent_time_multiplier)
+
+		if (owner.nutrition > owner.blood_volume)
+			owner.nutrition = owner.blood_volume
+		if (owner.nutrition < 0)
+			owner.contract_disease(/datum/ailment/malady/hypoglycemia, null, null, 1)
+
+		..()
+		//health_update_queue |= src //#843 uncomment this if things go funky maybe
+
+
+/datum/lifeprocess/mutations
+	process()
+		//proc/handle_mutations_and_radiation()
+		if (owner.bioHolder) owner.bioHolder.OnLife()
+
+/datum/lifeprocess/bomberman
+	process()
+		SPAWN_DBG(1 SECOND)
+			new /obj/bomberman(get_turf(owner))
+
+/datum/lifeprocess/fire
+	process()
+		var/duration = owner.getStatusDuration("burning")
+		if (duration)
+			if (duration > 200)
+				for(var/atom in owner.contents)
+					var/atom/A = atom
+					if (A.event_handler_flags & HANDLE_STICKER)
+						if (A:active)
+							owner.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
+							qdel(A)
+
+			if (isturf(owner.loc))
+				var/turf/location = owner.loc
+				location.hotspot_expose(T0C + 300, 400)
+
+			for (var/atom/A in owner.contents)
+				if (A.material)
+					A.material.triggerTemp(A, T0C + 900)
+
+			if(owner.traitHolder && owner.traitHolder.hasTrait("burning"))
+				if(prob(50))
+					owner.update_burning(1)
+
+
+/datum/lifeprocess/viruses
+	process()
+		//proc/handle_virus_updates()
+		//might need human
+		if (owner.ailments && owner.ailments.len)
+			for (var/mob/living/carbon/M in oviewers(4, owner))
+				if (prob(40))
+					owner.viral_transmission(M,"Airborne",0)
+				if (prob(20))
+					owner.viral_transmission(M,"Sight", 0)
+
+			if (!isdead(owner))
+				for (var/datum/ailment_data/am in owner.ailments)
+					am.stage_act()
+
+		if (prob(40))
+			for (var/obj/decal/cleanable/blood/B in view(2, owner))
+				for (var/datum/ailment_data/disease/virus in B.diseases)
+					if (virus.spread == "Airborne")
+						owner.contract_disease(null,null,virus,0)
+
+
+/mob/living
+	var/list/lifeprocesses = list()
+
 /mob/living/carbon/human
 	var/life_context = "begin"
 	var/arrest_count = 0 //check arrest on interval i guess
@@ -7,7 +116,7 @@
 	var/last_stam_change = 0
 	var/last_reagent_process = 0
 	var/last_mutantrace_process = 0
-	var/last_breath_process = 0
+	//var/last_breath_process = 0
 	var/last_blood_process = 0
 	var/metabolizes = 1
 	//not really useful yet?,but it coudl come in handy if one part is espcially slow or  we would want to do some lagchecking which is why i am making these separate
@@ -108,13 +217,10 @@
 			if(x.client)
 				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )
 
-/mob/living/carbon/human/Life(datum/controller/process/mobs/parent)
+/mob/living/Life(datum/controller/process/mobs/parent)
 	set invisibility = 0
 	if (..())
 		return 1
-
-	if (farty_party)
-		src.emote("fart")
 
 	if (src.transforming)
 		return
@@ -124,6 +230,10 @@
 	update_item_abilities()
 
 	update_objectives()
+
+	for (var/datum/lifeprocess/L in lifeprocesses)
+		L.process()
+
 
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
@@ -147,31 +257,6 @@
 
 			if(src.no_gravity)
 				animate_levitate(src, -1, 10, 1)
-
-			//Chemicals in the body
-			handle_chemicals_in_body()
-
-			//Mutations and radiation
-			handle_mutations_and_radiation()
-
-			//Attaching a limb that didn't originally belong to you can do stuff
-			if(prob(2) && src.limbs)
-				if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
-					var/obj/item/parts/human_parts/arm/A = src.limbs.l_arm
-					if(A.original_holder && src != A.original_holder)
-						A.foreign_limb_effect()
-				if(src.limbs.r_arm && istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/))
-					var/obj/item/parts/human_parts/arm/B = src.limbs.r_arm
-					if(B.original_holder && src != B.original_holder)
-						B.foreign_limb_effect()
-				if(src.limbs.l_leg && istype(src.limbs.l_leg, /obj/item/parts/human_parts/leg/))
-					var/obj/item/parts/human_parts/leg/C = src.limbs.l_leg
-					if(C.original_holder && src != C.original_holder)
-						C.foreign_limb_effect()
-				if(src.limbs.r_leg && istype(src.limbs.r_leg, /obj/item/parts/human_parts/leg/))
-					var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
-					if(D.original_holder && src != D.original_holder)
-						D.foreign_limb_effect()
 
 			//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 			if (manualbreathing)
@@ -211,11 +296,6 @@
 		//to find it.
 		src.blinded = null
 
-		if (src.mutantrace)
-			var/mutant_time_passed = max(tick_spacing, world.timeofday - last_mutantrace_process)
-			src.mutantrace.onLife(mult = (mutant_time_passed / tick_spacing))
-		last_mutantrace_process = world.timeofday
-
 		//Disease Check
 		handle_virus_updates()
 
@@ -228,8 +308,44 @@
 		//Disabilities
 		handle_disabilities(mult = (life_time_passed / tick_spacing))
 
-	handle_burning()
-	// handle_digestion((life_time_passed / tick_spacing))
+
+
+/mob/living/carbon/human/Life(datum/controller/process/mobs/parent)
+	if (..())
+		return 1
+
+	if (farty_party)
+		src.emote("fart")
+
+	if (loc)
+		//Attaching a limb that didn't originally belong to you can do stuff
+		if(prob(2) && src.limbs)
+			if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
+				var/obj/item/parts/human_parts/arm/A = src.limbs.l_arm
+				if(A.original_holder && src != A.original_holder)
+					A.foreign_limb_effect()
+			if(src.limbs.r_arm && istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/))
+				var/obj/item/parts/human_parts/arm/B = src.limbs.r_arm
+				if(B.original_holder && src != B.original_holder)
+					B.foreign_limb_effect()
+			if(src.limbs.l_leg && istype(src.limbs.l_leg, /obj/item/parts/human_parts/leg/))
+				var/obj/item/parts/human_parts/leg/C = src.limbs.l_leg
+				if(C.original_holder && src != C.original_holder)
+					C.foreign_limb_effect()
+			if(src.limbs.r_leg && istype(src.limbs.r_leg, /obj/item/parts/human_parts/leg/))
+				var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
+				if(D.original_holder && src != D.original_holder)
+					D.foreign_limb_effect()
+
+		if (src.mutantrace)
+			var/mutant_time_passed = max(tick_spacing, world.timeofday - last_mutantrace_process)
+			src.mutantrace.onLife(mult = (mutant_time_passed / tick_spacing))
+		last_mutantrace_process = world.timeofday
+
+
+
+	/////////////////////////////////////////
+
 	handle_skinstuff((life_time_passed / tick_spacing))
 	//Status updates, death etc.
 	clamp_values()
@@ -449,13 +565,11 @@
 	last_life_tick = world.timeofday
 
 
-/mob/living/carbon/human
+/mob/living/
 	proc/clamp_values()
 		sleeping = clamp(sleeping, 0, 20)
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
-//		bleeding = max(min(bleeding, 10),0)
-//		blood_volume = max(blood_volume, 0)
 
 	proc/handle_burning()
 		if (src.getStatusDuration("burning"))
@@ -480,6 +594,7 @@
 				if(prob(50))
 					src.update_burning(1)
 
+/mob/living/carbon/human
 
 	proc/icky_icky_miasma(var/turf/T)
 		var/max_produce_miasma = decomp_stage * 20
@@ -638,13 +753,6 @@
 		for (var/uid in src.pathogens)
 			var/datum/pathogen/P = src.pathogens[uid]
 			P.disease_act()
-
-	proc/handle_mutations_and_radiation()
-		if (bioHolder) bioHolder.OnLife()
-
-		if (src.bomberman == 1)
-			SPAWN_DBG(1 SECOND)
-				new /obj/bomberman(get_turf(src))
 
 	proc/breathe(datum/gas_mixture/environment)
 		if (!loc)
@@ -1263,33 +1371,6 @@
 			if (ARMS)
 				TakeDamage("l_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
 				TakeDamage("r_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
-
-	proc/handle_chemicals_in_body()
-		if (src.nodamage)
-			return
-
-		if (reagents)
-
-			var/reagent_time_multiplier = clamp(world.timeofday - last_reagent_process, tick_spacing, cap_tick_spacing) / tick_spacing
-
-			reagents.temperature_reagents(src.bodytemperature, 100, 35/reagent_time_multiplier, 15*reagent_time_multiplier)
-
-			if (blood_system && reagents.get_reagent("blood"))
-				var/blood2absorb = min(src.blood_absorption_rate, src.reagents.get_reagent_amount("blood")) * reagent_time_multiplier
-				reagents.remove_reagent("blood", blood2absorb)
-				src.blood_volume += blood2absorb
-			if (metabolizes)
-				reagents.metabolize(src, multiplier = reagent_time_multiplier)
-
-		src.last_reagent_process = world.timeofday
-
-
-		if (src.nutrition > src.blood_volume)
-			src.nutrition = src.blood_volume
-		if (src.nutrition < 0)
-			src.contract_disease(/datum/ailment/malady/hypoglycemia, null, null, 1)
-
-		//health_update_queue |= src //#843 uncomment this if things go funky maybe
 
 	proc/handle_blood_pressure(var/mult = 1)
 		if (!blood_system)
@@ -2212,24 +2293,6 @@
 	proc/handle_random_events()
 		if (prob(1) && prob(2))
 			emote("sneeze")
-
-	proc/handle_virus_updates()
-		if (src.ailments && src.ailments.len)
-			for (var/mob/living/carbon/M in oviewers(4, src))
-				if (prob(40))
-					src.viral_transmission(M,"Airborne",0)
-				if (prob(20))
-					src.viral_transmission(M,"Sight", 0)
-
-			if (!isdead(src))
-				for (var/datum/ailment_data/am in src.ailments)
-					am.stage_act()
-
-		if (prob(40))
-			for (var/obj/decal/cleanable/blood/B in view(2, src))
-				for (var/datum/ailment_data/disease/virus in B.diseases)
-					if (virus.spread == "Airborne")
-						src.contract_disease(null,null,virus,0)
 
 	proc/check_if_buckled()
 		if (src.buckled)
