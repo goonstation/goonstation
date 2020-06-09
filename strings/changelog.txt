@@ -1,5 +1,9 @@
 
 (t)tue jun 09 20
+(u)mbc
+(p)1029
+(e)|
+(+)Fixed regression where pushing a dense item you were pulling would break the pull.
 (u)Sovexe
 (p)1013
 (e)🆕🔄|feature, rework
