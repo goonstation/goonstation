@@ -467,7 +467,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			return "You are [howMuch]irradiated.<br>Taking [damage_tox] toxin damage every [tickSpacing/10] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
-			if(issilicon(A)) return 0
+			if(issilicon(A) || isobserver(A) || isintangible(A)) return 0
 			return 1
 
 		onAdd(var/optional=null)
@@ -581,6 +581,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/10] sec and [damage_brute] brute damage every [tickSpacing/10] sec."
 
 		preCheck(var/atom/A)
+			if(isobserver(A) || isintangible(A)) return 0
 			return 1
 
 		onAdd(var/optional=null)
