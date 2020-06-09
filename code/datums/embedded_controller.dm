@@ -404,7 +404,7 @@ obj/machinery/embedded_controller
 
 	attack_hand(mob/user)
 		user.Browse(return_text(), "window=computer")
-		src.add_dialog(user)
+		user.machine = src
 		onclose(user, "computer")
 
 	disposing()
@@ -435,7 +435,7 @@ obj/machinery/embedded_controller
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		src.add_dialog(usr)
+		usr.machine = src
 
 	process()
 		if(program)
@@ -659,7 +659,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		src.add_dialog(usr)
+		usr.machine = src
 
 	process()
 		if(status & NOPOWER)
@@ -679,7 +679,7 @@ obj/machinery/embedded_controller/radio/department_controller
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(user, "<span style=\"color:red\">Access denied.</span>")
 		else
 			..()
 
@@ -692,7 +692,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		if (src.status & NOPOWER)
 			return
 
-		src.add_dialog(user)
+		user.machine = src
 
 		var/state_options = null
 

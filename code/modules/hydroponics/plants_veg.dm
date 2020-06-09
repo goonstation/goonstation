@@ -1,10 +1,6 @@
-ABSTRACT_TYPE(/datum/plant/veg)
-/datum/plant/veg
-	plant_icon = 'icons/obj/hydroponics/plants_veg.dmi'
-	category = "Vegetable"
-
-/datum/plant/veg/lettuce
+/datum/plant/lettuce
 	name = "Lettuce"
+	category = "Vegetable"
 	seedcolor = "#006622"
 	crop = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	starthealth = 30
@@ -17,8 +13,9 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	genome = 12
 	commuts = list(/datum/plant_gene_strain/reagent_adder,/datum/plant_gene_strain/damage_res/bad)
 
-/datum/plant/veg/cucumber
+/datum/plant/cucumber
 	name = "Cucumber"
+	category = "Vegetable"
 	seedcolor = "#005622"
 	crop = /obj/item/reagent_containers/food/snacks/plant/cucumber
 	starthealth = 25
@@ -31,8 +28,9 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	genome = 19
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
-/datum/plant/veg/carrot
+/datum/plant/carrot
 	name = "Carrot"
+	category = "Vegetable"
 	seedcolor = "#774400"
 	crop = /obj/item/reagent_containers/food/snacks/plant/carrot
 	starthealth = 20
@@ -46,8 +44,9 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	nectarlevel = 10
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/mutations/bad)
 
-/datum/plant/veg/potato
+/datum/plant/potato
 	name = "Potato"
+	category = "Vegetable"
 	seedcolor = "#555500"
 	crop = /obj/item/reagent_containers/food/snacks/plant/potato
 	starthealth = 40
@@ -61,8 +60,9 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	nectarlevel = 6
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
-/datum/plant/veg/onion
+/datum/plant/onion
 	name = "Onion"
+	category = "Vegetable"
 	seedcolor = "#DDFFDD"
 	crop = /obj/item/reagent_containers/food/snacks/plant/onion
 	starthealth = 20
@@ -74,8 +74,9 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	genome = 13
 	commuts = list(/datum/plant_gene_strain/splicing,/datum/plant_gene_strain/reagent_adder/toxic)
 
-/datum/plant/veg/garlic
+/datum/plant/garlic
 	name = "Garlic"
+	category = "Vegetable"
 	seedcolor = "#BBDDBB"
 	crop = /obj/item/reagent_containers/food/snacks/plant/garlic
 	starthealth = 20

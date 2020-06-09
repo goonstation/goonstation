@@ -76,7 +76,7 @@ Please wait until completion...</TT><BR>
 	if (..())
 		return
 
-	src.add_dialog(usr)
+	usr.machine = src
 	src.add_fingerprint(usr)
 
 	if (href_list["make"])

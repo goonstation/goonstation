@@ -61,7 +61,7 @@ THAT STUPID GAME KIT
 	src.data = jointext(dat, "")
 
 /obj/item/game_kit/attack_hand(mob/user as mob)
-	src.add_dialog(user)
+	user.machine = src
 
 	if (!( src.data ))
 		update()
@@ -135,4 +135,6 @@ THAT STUPID GAME KIT
 										src.board_stat = text("[][][]", copytext(src.board_stat, 1, place), src.selected, copytext(src.board_stat, place + 2, 129))
 		src.add_fingerprint(usr)
 		update()
-		src.updateDialog()
+		for(var/mob/M in viewers(1, src))
+			if ((M.client && M.machine == src))
+				src.attack_hand(M)

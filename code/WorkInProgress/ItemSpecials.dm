@@ -49,7 +49,7 @@
 	if(params["icon-y"])
 		dy += (text2num(params["icon-y"]) - 16)
 
-	var/angle = arctan(dy,dx)
+	var/angle = atan2(dy,dx)
 	//boutput(world, "[dx] : [dy] ::: makes for [angle]")
 
 	//oh no ! i'm bad!!!!!!!!!!!
@@ -271,7 +271,7 @@
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
 		if(restrainDuration)
-			person.restrain_time = TIME + restrainDuration
+			person.restrain_time = world.timeofday + restrainDuration
 
 	rush
 		cooldown = 100
@@ -906,7 +906,6 @@
 
 		var/secondhit_delay = 1
 		var/stamina_damage = 50
-		var/mult = 1
 
 
 		pixelaction(atom/target, params, mob/user, reach)
@@ -941,26 +940,14 @@
 						for(var/atom/movable/A in spark.loc)
 							if(A in attacked) continue
 							if(isTarget(A))
-								on_hit(A, mult)
+								on_hit(A)
 								attacked += A
 								hit = 1
 								break
 
 				if(master && istype(master, /obj/item/baton))
 					master:process_charges(-1, user)
-				if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
-					var/obj/item/clothing/gloves/G = master
-					G.uses = max(0, G.uses - 1)
-					if (G.uses < 1)
-						G.icon_state = "yellow"
-						G.item_state = "ygloves"
-						user.update_clothing() // Was missing (Convair880).
 
-					if (G.uses <= 0)
-						user.show_text("The gloves are no longer electrically charged.", "red")
-						G.overridespecial = 0
-					else
-						user.show_text("The gloves have [G.uses]/[G.max_uses] charges left!", "red")
 				afterUse(user)
 				//if (!hit)
 				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
@@ -1136,16 +1123,17 @@
 
 				var/flame_succ = 0
 				if (master)
-					if(istype(master,/obj/item/device/light/zippo) && master:on)
+					if(istype(master,/obj/item/device/light/zippo))
 						var/obj/item/device/light/zippo/Z = master
 						if (Z.reagents.get_reagent_amount("fuel"))
 							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
-					if (isweldingtool(master) && master:try_weld(user,0,-1,0,0))
-						if (master.reagents.get_reagent_amount("fuel"))
-							master.reagents.remove_reagent("fuel", 1)
+					if (istype(master,/obj/item/weldingtool))
+						var/obj/item/weldingtool/WT = master
+						if (WT.reagents.get_reagent_amount("fuel"))
+							WT.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
@@ -1370,9 +1358,6 @@
 			return
 
 		proc/on_hit(var/mob/hit)
-			if (ishuman(hit))
-				var/mob/living/carbon/human/H = hit
-				H.do_disorient(src.stamina_damage, stunned = 10)
 			return
 
 	katana_dash/reverse
@@ -1489,7 +1474,7 @@
 						var/obj/item/tile = F.pry_tile(master, user, params)
 						if (tile)
 							hit = 1
-							user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
+							user.visible_message("<span style='color:red'><b>[user] flings a tile from [turf] into the air!</b></span>")
 							logTheThing("combat", user, "fling throws a floor tile ([F]) from [turf].")
 
 							user.lastattacked = user //apply combat click delay
@@ -1688,7 +1673,7 @@
 				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 				P.die()
 
-				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
+				src.visible_message("<span style=\"color:red\">[src] reflected [Q.name]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

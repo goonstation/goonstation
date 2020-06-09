@@ -18,7 +18,7 @@
 	attackby(obj/item/R as obj, mob/user as mob)
 		if (istype(R, /obj/item/device/radio_upgrade))
 			if (haswiretap)
-				boutput(user, "<span class='alert'>This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
+				boutput(user, "<span style=\"color:red\">This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
 				return
 			src.haswiretap = 1
 			src.secure_frequencies = list(
@@ -37,7 +37,7 @@
 				"m" = RADIOC_MEDICAL,
 				"c" = RADIOC_CIVILIAN,
 				)
-			boutput(user, "<span class='notice'>Wiretap Radio Upgrade successfully installed in the [src].</span>")
+			boutput(user, "<span style=\"color:blue\">Wiretap Radio Upgrade successfully installed in the [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 			set_secure_frequencies(src)
 			qdel(R)
@@ -73,26 +73,6 @@
 		"c" = RADIOC_CIVILIAN,
 		)
 	bicon_override = "ai"
-
-/obj/item/device/radio/headset/command/nt
-	name = "NT Headset"
-	secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
-		"e" = R_FREQ_ENGINEERING,
-		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
-		"c" = R_FREQ_CIVILIAN,
-		)
-	secure_colors = list(
-		"h" = RADIOC_COMMAND,
-		"g" = RADIOC_SECURITY,
-		"e" = RADIOC_ENGINEERING,
-		"r" = RADIOC_RESEARCH,
-		"m" = RADIOC_MEDICAL,
-		"c" = RADIOC_CIVILIAN,
-		)
-	bicon_override = "nt"
 
 /obj/item/device/radio/headset/command/captain
 	name = "Captain's Headset"
@@ -297,7 +277,7 @@
 	secure_colors = list(RADIOC_OTHER)
 
 /obj/item/device/radio/headset/multifreq/attack_self(mob/user as mob)
-	src.add_dialog(user)
+	user.machine = src
 	var/t1
 	if (src.b_stat)
 		t1 = {"
@@ -333,7 +313,7 @@ Secure Frequency:
 	if (usr.stat)
 		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
-		src.add_dialog(usr)
+		usr.machine = src
 		if (href_list["sfreq"])
 			var/new_frequency = sanitize_frequency(text2num("[secure_frequencies["h"]]") + text2num(href_list["sfreq"]))
 			set_secure_frequency("h", new_frequency)

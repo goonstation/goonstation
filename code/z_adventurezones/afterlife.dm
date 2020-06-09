@@ -14,11 +14,6 @@ Hell area (send people here if they die in a shameful way)
 	requires_power = 0
 	teleport_blocked = 1
 
-/area/afterlife/bar/sanctuary
-	name = "The Afterlife Lounge"
-	icon_state = "afterlife_lounge"
-	sanctuary = 1
-
 /area/afterlife/heaven
 	name = "Heaven"
 	sanctuary = 1
@@ -62,7 +57,6 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "afterlife_bar_spawn"
 	requires_power = 0
 	teleport_blocked = 1
-	sanctuary = 1
 
 /area/afterlife/hell
 	name = "Hell"
@@ -87,7 +81,6 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "afterlife_hell"
 	requires_power = 0
 	teleport_blocked = 1
-	ambient_light = "#222222"
 
 /area/afterlife/arenaspawn
 	name = "THE ARENA SPAWN"

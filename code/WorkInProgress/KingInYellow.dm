@@ -90,19 +90,21 @@
 
 	var/list/readers = new/list()
 	var/atom/curr_phantom = null
-	var/processing = 0
 
 	New()
+		work()
 		BLOCK_BOOK
 		return
 
-	process()
-		..()
+	proc/work()
 		if(readers.len)
 			var/mob/living/L = pick(readers)
 			var/turf/oovTile = get_oov_tile(L)
 			if(oovTile != null && curr_phantom == null)
 				curr_phantom = new/obj/kingyellow_phantom(oovTile, L)
+
+		SPAWN_DBG(3 SECONDS) work()
+		return
 
 	examine(mob/user)
 		. = list()
@@ -122,12 +124,10 @@
 				. += "The second act seems incomplete but ... It is horrifying."
 
 				for(var/mob/M in readers)
-					boutput(M, "<span class='alert'>You feel the irresistible urge to read the \"The King In Yellow\" again.</span>")
+					boutput(M, "<span style=\"color:red\">You feel the irresistible urge to read the \"The King In Yellow\" again.</span>")
 					readers -= M
 
 				readers += reader
-				if(!processing)
-					processing_items.Add(src)
 			return
 		else
 			. += "This ancient data storage medium appears to contain data used for entertainment purposes."
@@ -150,7 +150,7 @@
 
 	proc/farty_doom(var/mob/living/victim)
 		if(istype(victim) && victim.loc == src.loc)
-			victim.visible_message("<span class='alert'>[victim] farts on [src].<br><b>A mysterious force sucks [victim] into the Book!!</b></span>")
+			victim.visible_message("<span style='color:red'>[victim] farts on [src].<br><b>A mysterious force sucks [victim] into the Book!!</b></span>")
 			victim.emote("scream")
 			victim.implode()
 			return 1

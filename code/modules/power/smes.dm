@@ -166,7 +166,10 @@
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		updateicon()
 
-	src.updateDialog()
+	for(var/mob/M in viewers(1, src))
+		if ((M.client && M.machine == src))
+			src.interacted(M)
+	AutoUpdateAI(src)
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
@@ -228,11 +231,11 @@
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!isAI(user) && !issilicon(user))
-			src.remove_dialog(user)
+			user.machine = null
 			user.Browse(null, "window=smes")
 			return
 
-	src.add_dialog(user)
+	user.machine = src
 
 	// @todo fix this later
 	var/t = {"
@@ -307,10 +310,10 @@
 	if (usr.stat || usr.restrained() )
 		return
 
-	if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr) || issilicon(usr)))
+	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr) || issilicon(usr)))
 		if (href_list["close"])
 			usr.Browse(null, "window=smes")
-			src.remove_dialog(usr)
+			usr.machine = null
 			return
 
 		else if ( href_list["cmode"] )
@@ -353,7 +356,7 @@
 
 	else
 		usr.Browse(null, "window=smes")
-		src.remove_dialog(usr)
+		usr.machine = null
 
 	return
 

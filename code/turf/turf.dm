@@ -30,9 +30,11 @@ var/global/client/ff_debugger = null
 		ff_debugger = usr.client
 
 		//Properties for open tiles (/floor)
-	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
-	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
+	var/oxygen = 0
+	var/carbon_dioxide = 0
+	var/nitrogen = 0
+	var/toxins = 0
+	//var/water = 0
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -73,7 +75,7 @@ var/global/client/ff_debugger = null
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				opacity = (src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
 		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
 		return
@@ -180,7 +182,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = PLANE_FLOOR
+	plane = -11
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID
@@ -430,10 +432,11 @@ var/global/client/ff_debugger = null
 	var/datum/air_group/oldparent = null //Ditto.
 
 	//For unsimulated static air tiles such as ice moon surface.
-	var/temp_old = null
-	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
-	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
-	#undef _OLD_GAS_VAR_DEF
+	var/oxyold = null
+	var/co2old = null
+	var/nitold = null
+	var/toxold = null
+	var/tempold = null
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -442,10 +445,11 @@ var/global/client/ff_debugger = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
-			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
-			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
-			#undef _OLD_GAS_VAR_ASSIGN
-			temp_old = src.temperature
+			oxyold = src.oxygen
+			co2old = src.carbon_dioxide
+			nitold = src.nitrogen
+			toxold = src.toxins
+			tempold = src.temperature
 
 
 	if (istype(src, /turf/simulated/floor))
@@ -572,14 +576,13 @@ var/global/client/ff_debugger = null
 			else if(istype(N.air)) //Unsimulated tile (likely space) - > Simulated tile  // fix runtime: Cannot execute null.zero()
 				N.air.zero()
 
-			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
-			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
-				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
-				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				#undef _OLD_GAS_VAR_RESTORE
+			if (N.air && (oxyold || co2old || nitold || toxold)) //Unsimulated tile w/ static atmos -> simulated floor handling
+				N.air.oxygen += oxyold
+				N.air.carbon_dioxide += co2old
+				N.air.nitrogen += nitold
+				N.air.toxins += toxold
 				if (!N.air.temperature)
-					N.air.temperature = temp_old
-			#undef _OLD_GAS_VAR_NOT_NULL
+					N.air.temperature = tempold
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
@@ -784,11 +787,6 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
-/turf/unsimulated/grimycarpet
-	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "grimy"
-
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -807,7 +805,6 @@ var/global/client/ff_debugger = null
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
-	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"
@@ -817,7 +814,6 @@ var/global/client/ff_debugger = null
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
-	plane = PLANE_WALL
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
@@ -842,7 +838,7 @@ var/global/client/ff_debugger = null
 	layer = 60
 	name = "Space Station 13"
 	desc = "The title card for it, at least."
-	plane = PLANE_OVERLAY_EFFECTS
+	plane = 11
 	pixel_x = -96
 
 	New()
@@ -856,9 +852,6 @@ var/global/client/ff_debugger = null
 		icon_state = "title_manta"
 		name = "The NSS Manta"
 		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
-	#endif
-	#if defined(REVERSED_MAP)
-		transform = list(-1, 0, 0, 0, 1, 0)
 	#endif
 		lobby_titlecard = src
 
@@ -938,10 +931,10 @@ var/global/client/ff_debugger = null
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(usr, "<span class='alert'>You can't build here.</span>")
+		boutput(usr, "<span style=\"color:red\">You can't build here.</span>")
 		return
 	if (istype(C, /obj/item/rods))
-		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
+		boutput(user, "<span style=\"color:blue\">Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
 		if(C.material) src.setMaterial(C.material)
@@ -1055,15 +1048,6 @@ var/global/client/ff_debugger = null
 		..()
 		dir = pick(NORTH,SOUTH)
 
-/turf/unsimulated/pool/no_animate
-	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		dir = pick(NORTH,SOUTH)
-
 /turf/simulated/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -1100,7 +1084,7 @@ var/global/client/ff_debugger = null
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
-				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
+				boutput(user, "<span style=\"color:red\">That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
 				return
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")

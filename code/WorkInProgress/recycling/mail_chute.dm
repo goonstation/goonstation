@@ -45,7 +45,7 @@
 	interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
-			src.remove_dialog(user)
+			user.machine = null
 			return
 
 		var/dat = "<head><title>Mail Transport Unit</title></head><body><TT><B>Mail Transport Unit: [src.mail_tag ? (capitalize(src.mail_tag)) : "GENERIC"]</B><HR>"
@@ -67,12 +67,12 @@
 		else
 			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
 
-		var/per = 100* MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
+		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
 
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
 
-		src.add_dialog(user)
+		user.machine = src
 		user.Browse(dat, "window=mailchute;size=360x270")
 		onclose(user, "mailchute")
 
@@ -86,10 +86,10 @@
 			return
 
 		if (in_range(src, usr) && istype(src.loc, /turf))
-			src.add_dialog(usr)
+			usr.machine = src
 
 			if(href_list["close"])
-				src.remove_dialog(usr)
+				usr.machine = null
 				usr.Browse(null, "window=mailchute")
 				return
 
@@ -127,7 +127,7 @@
 				eject()
 		else
 			usr.Browse(null, "window=mailchute")
-			src.remove_dialog(usr)
+			usr.machine = null
 			return
 		return
 

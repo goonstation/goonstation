@@ -163,10 +163,10 @@
 			if(master.active_program == src)
 				master.active_program = null
 			return 1
-		src.master.add_dialog(usr)
+		usr.machine = src.master
 
 		if (href_list["close"])
-			src.master.remove_dialog(usr)
+			usr.machine = null
 			usr.Browse(null, "window=pda2_\ref[src]")
 			return 0
 		if (href_list["quit"])

@@ -66,7 +66,7 @@ datum/mind
 	var/damned = 0 // If 1, they go to hell when are die
 
 	// Capture when they die. Used in the round-end credits
-	//var/icon/death_icon = null
+	var/icon/death_icon = null
 
 	New(mob/M)
 		..()
@@ -207,7 +207,6 @@ datum/mind
 	disposing()
 		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
 		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
-		src.brain?.owner = null
 		..()
 
 

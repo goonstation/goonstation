@@ -86,7 +86,7 @@
 // Uniform
 	if (src.w_uniform)
 		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
+			boutput(src, "<span style=\"color:red\">You burst out of the [src.w_uniform.name]!</span>")
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
 			if (c)
@@ -351,7 +351,7 @@
 
 	if (src.wear_suit)
 		if (src.bioHolder && src.bioHolder.HasEffect("fat") && !(src.wear_suit.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span class='alert'>You burst out of the [src.wear_suit.name]!</span>")
+			boutput(src, "<span style=\"color:red\">You burst out of the [src.wear_suit.name]!</span>")
 			var/obj/item/clothing/c = src.wear_suit
 			src.u_equip(c)
 			if (c)
@@ -655,16 +655,12 @@
 			UpdateOverlays(I.implant_overlay, "implant--\ref[I]")
 			implant_images += I
 
-	if (world.time - src.last_show_inv <= 30 SECONDS)
-		for (var/client/C in src.showing_inv)
-			if (C && C.mob)
-				if (get_dist(src,C.mob) <= 1)
-					src.show_inv(C.mob)
-				else
-					src.remove_dialog(C.mob)
-			else
-				src.showing_inv -= C
-
+	if (world.time - src.last_show_inv <= 600) //icky mbc workaround doing viewers()... only try to update our inventory for nearby viewers if we were interacted with in the last 60sec
+		for (var/mob/M in viewers(1, src))
+			if ((M.client && M.machine == src))
+				SPAWN_DBG (0)
+					src.show_inv(M)
+					return
 
 	src.last_b_state = src.stat
 
@@ -1203,7 +1199,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.maptext_y = 32
 	src.maptext_width = 64
 	src.maptext_x = -16
-	health_update_queue |= src
+	src.UpdateDamage()
 #endif
 
 	if (src.bioHolder)
@@ -1214,8 +1210,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()
-	var/prev = health
 	..()
+	var/prev = health
 	src.updatehealth()
 	if (!isdead(src))
 		var/h_color = "#999999"
@@ -1234,8 +1230,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.maptext = ""
 #else
 /mob/living/carbon/human/tdummy/UpdateDamage()
-	var/prev = health
 	..()
+	var/prev = health
 	src.updatehealth()
 	if (!isdead(src))
 		var/h_color = "#999999"
@@ -1252,6 +1248,12 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
 	else
 		src.maptext = ""
+
+/mob/living/carbon/human/tdummy/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+	src.UpdateDamage()
+	
 #endif
 
 /mob/living/carbon/human/UpdateDamageIcon()

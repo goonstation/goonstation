@@ -30,7 +30,7 @@
 			video_screen = new(src.loc, owner = src)
 			video_screen.fov = fov
 
-	disposing()
+	Del()
 		// if (current_camera)
 		// 	current_camera.connected_monitor = null
 		current_camera = null
@@ -106,7 +106,6 @@
 
 	disposing()
 		blank = null
-		..()
 
 	proc/activate()
 		get_picture()

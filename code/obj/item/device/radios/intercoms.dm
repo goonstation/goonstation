@@ -2,34 +2,11 @@
 	name = "Station Intercom (Radio)"
 	icon_state = "intercom"
 	anchored = 1.0
-	plane = PLANE_NOSHADOW_ABOVE
 	mats = 0
 	device_color = RADIOC_INTERCOM
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
-
-/obj/item/device/radio/intercom/New()
-	. = ..()
-	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
-		var/image/screen_image = image(src.icon, "intercom-screen")
-		screen_image.color = src.device_color
-		if(src.device_color == RADIOC_INTERCOM) // unboringify the colour if default
-			var/new_color = default_frequency_color(src.frequency)
-			if(new_color)
-				screen_image.color = new_color
-		screen_image.alpha = 180
-		src.UpdateOverlays(screen_image, "screen")
-		if(src.pixel_x == 0 && src.pixel_y == 0)
-			switch(src.dir)
-				if(NORTH)
-					pixel_y = -21
-				if(SOUTH)
-					pixel_y = 24
-				if(EAST)
-					pixel_x = -21
-				if(WEST)
-					pixel_x = 21
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
@@ -69,6 +46,7 @@
 	frequency = R_FREQ_INTERCOM_MEDICAL
 	broadcasting = 0
 	device_color = "#0050FF"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -78,6 +56,7 @@
 	frequency = R_FREQ_INTERCOM_SECURITY
 	broadcasting = 0
 	device_color = "#FF2000"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -87,6 +66,7 @@
 	frequency = R_FREQ_INTERCOM_BRIG
 	broadcasting = 0
 	device_color = "#FF5000"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -95,7 +75,8 @@
 	name = "Research Intercom"
 	frequency = R_FREQ_INTERCOM_RESEARCH
 	broadcasting = 0
-	device_color = "#153E9E"
+	device_color = "#FF2000"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -105,6 +86,7 @@
 	frequency = R_FREQ_INTERCOM_ENGINEERING
 	broadcasting = 0
 	device_color = "#BBBB00"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -114,6 +96,7 @@
 	frequency = R_FREQ_INTERCOM_CARGO
 	broadcasting = 0
 	device_color = "#9A8B0D"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -122,7 +105,8 @@
 	name = "Catering Intercom"
 	frequency = R_FREQ_INTERCOM_CATERING
 	broadcasting = 0
-	device_color = "#C16082"
+	device_color = "#FF2000"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -132,6 +116,7 @@
 	frequency = R_FREQ_INTERCOM_AI
 	broadcasting = 1
 	device_color = "#333399"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -141,6 +126,7 @@
 	frequency = R_FREQ_INTERCOM_BRIDGE
 	broadcasting = 1
 	device_color = "#339933"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -153,6 +139,7 @@
 	frequency = R_FREQ_INTERCOM_OWLERY
 	broadcasting = 0
 	device_color = "#3344AA"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -162,6 +149,7 @@
 	frequency = R_FREQ_INTERCOM_SYNDCOMMAND
 	broadcasting = 1
 	device_color = "#BB3333"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)
@@ -172,6 +160,7 @@
 	frequency = R_FREQ_INTERCOM_WIZARD
 	broadcasting = 1
 	device_color = "#3333AA"
+	pixel_y = 24
 
 	initialize()
 		set_frequency(frequency)

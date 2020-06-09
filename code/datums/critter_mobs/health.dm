@@ -23,10 +23,6 @@
 		holder = M
 		value = maximum_value
 
-	disposing()
-		holder = null
-		..()
-
 	proc/TakeDamage(var/amt, var/bypass_multiplier = 0)
 		if (!bypass_multiplier)
 			amt *= damage_multiplier
@@ -34,7 +30,7 @@
 			value = max(minimum_value, min(value - amt, maximum_value))
 		else
 			value = min(value - amt, maximum_value)
-		health_update_queue |= holder
+		holder.updatehealth()
 
 	proc/HealDamage(var/amt)
 		TakeDamage(-amt)

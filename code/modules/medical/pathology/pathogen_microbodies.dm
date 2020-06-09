@@ -71,13 +71,11 @@ datum/microbody
 	// The amount of nutrition of each type required per unit of pathogen to continue cultivation.
 	var/amount = 0.07
 
-	// The amount of sequences worth of symptoms the microbody can support. -1 is unlimited
-	var/seqMax = -1
-
 	disposing()
-		SHOULD_CALL_PARENT(FALSE) //Looks like these should never be deleted.
 		CRASH("ALERT MICROBODY IS BEING DELETED")
 
+	disposing()
+		CRASH("ALERT MICROBODY IS BEING DISPOSED")
 
 datum/microbody/virus
 	name = "Virus"
@@ -91,8 +89,6 @@ datum/microbody/virus
 	stages = 5
 
 	activity = list(1, 5, 20, 30, 40)
-
-	seqMax = 12
 
 	// Grows in eggs.
 	growth_medium = "egg"
@@ -113,11 +109,9 @@ datum/microbody/bacteria
 	maliciousness_multiplier = 1
 	mutation_speed_multiplier = 1
 
-	activity = list(30, 30, 30, 30, 30)
+	activity = list(7, 15, 25, 30, 35)
 
 	stages = 3
-
-	seqMax = 25
 
 	growth_medium = "bacterialmedium"
 
@@ -137,9 +131,9 @@ datum/microbody/fungi
 	maliciousness_multiplier = 2
 	mutation_speed_multiplier = 1
 
-	stages = 1
+	stages = 4
 
-	activity = list(10, 10, 10, 10, 10)
+	activity = list(7, 8, 10, 14, 25)
 
 	growth_medium = "fungalmedium"
 
@@ -160,9 +154,7 @@ datum/microbody/parasite
 
 	stages = 5
 
-	activity = list(50, 40, 30, 20, 10)
-
-	seqMax = 18
+	activity = list(30, 20, 10, 8, 8)
 
 	growth_medium = "parasiticmedium"
 

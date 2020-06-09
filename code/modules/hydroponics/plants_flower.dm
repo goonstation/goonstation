@@ -1,12 +1,9 @@
 
 //flowers n stuff
-ABSTRACT_TYPE(/datum/plant/flower)
-/datum/plant/flower
-	plant_icon = 'icons/obj/hydroponics/plants_flower.dmi'
-	category = "Flower" //????
 
-/datum/plant/flower/rose
+/datum/plant/rose
 	name = "Rose"
+	category = "Flower" //????
 	seedcolor = "#AA2222"
 	crop = /obj/item/plant/flower/rose
 	starthealth = 20

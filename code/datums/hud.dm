@@ -56,7 +56,6 @@
 			remove_client(C)
 
 		src.clear_master()
-		..()
 
 	proc/clear_master() //only some have masters. i use this for clean gc. itzs messy, im sorry
 		.= 0

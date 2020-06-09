@@ -386,11 +386,10 @@
 // Added security resupply crate (Convair880).
 /datum/supply_packs/security_resupply
 	name = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
-	desc = "x1 Security Belt, 1x Armoured Vest, 1x Helmet, x1 Taser, x1 Stun Baton, x1 Security-Issue Grenade Box, x1 Handcuff Kit"
+	desc = "x1 Port-a-Brig and remote, x1 Taser, x1 Stun Baton, x1 Security-Issue Grenade Box, x1 Handcuff Kit"
 	category = "Security Department"
-	contains = list(/obj/item/storage/belt/security,
-					/obj/item/clothing/suit/armor/vest,
-					/obj/item/clothing/head/helmet/hardhat/security,
+	contains = list(/obj/machinery/port_a_brig,
+					/obj/item/remote/porter/port_a_brig,
 					/obj/item/gun/energy/taser_gun,
 					/obj/item/baton,
 					/obj/item/storage/box/QM_grenadekit_security,
@@ -398,17 +397,6 @@
 	cost = 5000
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
-	access = access_security
-
-/datum/supply_packs/security_brig_resupply
-	name = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
-	desc = "x1 Port-a-Brig and Remote"
-	category = "Security Department"
-	contains = list(/obj/machinery/port_a_brig,
-					/obj/item/remote/porter/port_a_brig)
-	cost = 1000
-	containertype = /obj/storage/secure/crate/weapon
-	containername = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
 	access = access_security
 
 /datum/supply_packs/security_upgrade //Azungar's upgrade pack for security.
@@ -457,8 +445,8 @@
 	containername = "Emergency Equipment"
 
 /datum/supply_packs/alcohol
-	name = "Alcohol Resupply Crate"
-	desc = "A collection of nine assorted liquors in case of stationwide alcohol deficiency"
+	name = "Alcohol Crate"
+	desc = "x9 Assorted Liquor"
 	category = "Civilian Department"
 	contains = list(/obj/item/storage/box/beer,
 					/obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -473,19 +461,6 @@
 	cost = 400
 	containertype = /obj/storage/crate
 	containername = "Alcohol Crate"
-
-/datum/supply_packs/cocktailparty
-	name = "Cocktail Party Supplies"
-	desc = "All the equipment you need to be the next up and coming amateur mixologist."
-	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/food/drinks/cocktailshaker,
-					/obj/item/storage/box/cocktail_umbrellas = 2,
-					/obj/item/storage/box/cocktail_doodads = 2,
-					/obj/item/storage/box/fruit_wedges = 1,
-					/obj/item/shaker/salt = 1)
-	cost = 100
-	containertype = /obj/storage/crate
-	containername = "Cocktail Party Supplies"
 
 /datum/supply_packs/robot
 	name = "Robotics Crate"
@@ -936,7 +911,6 @@
 	category = "Civilian Department"
 	contains = list(/obj/item/chem_grenade/cleaner = 4,
 					/obj/item/spraybottle/cleaner = 2,
-					/obj/item/reagent_containers/glass/bottle/cleaner = 2,
 					/obj/item/storage/box/trash_bags,
 					/obj/item/storage/box/biohazard_bags)
 	cost = 500
@@ -1480,10 +1454,10 @@
 	category = "Medical Department"
 	contains = list(/obj/item/staple_gun,
 					/obj/item/scalpel,
-					/obj/item/circular_saw,
-					/obj/item/circuitboard/robot_module_rewriter)
+					/obj/item/circular_saw)
 	frames = list(/obj/machinery/manufacturer/robotics,
 					/obj/machinery/optable,
+					/obj/submachine/robomoduler,
 					/obj/machinery/recharge_station)
 	cost = 20000
 	containertype = /obj/storage/crate

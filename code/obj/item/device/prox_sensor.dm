@@ -56,20 +56,31 @@
 			src.time = 0
 			src.timing = 0
 			src.update_icon()
-
-
 		if (!src.master)
-			src.updateDialog()
+			if (ismob(src.loc))
+				attack_self(src.loc)
+			else
+				for(var/mob/M in viewers(1, src))
+					if (isintangible(M) || isdead(M))
+						continue
+					if (M.client && (M.machine == src.master || M.machine == src))
+						src.attack_self(M)
 		else
-			src.master.updateDialog()
-
+			if (ismob(src.master.loc))
+				src.attack_self(src.master.loc)
+			else
+				for(var/mob/M in viewers(1, src.master))
+					if (isintangible(M) || isdead(M))
+						continue
+					if (M.client && (M.machine == src.master || M.machine == src))
+						src.attack_self(M)
 	else
 		processing_items.Remove(src)
 		return
 	return
 
 /obj/item/device/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/projectile) || AM.invisibility > 2)
+	if (istype(AM, /obj/projectile))
 		return
 	if (AM.move_speed < 12)
 		src.sense()
@@ -98,7 +109,7 @@
 	if (user.stat || user.restrained() || user.lying)
 		return
 	if ((src in user) || (src.master && (src.master in user)) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
-		src.add_dialog(user)
+		user.machine = src
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
 		var/dat = text("<TT><B>Proximity Sensor</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
@@ -108,7 +119,7 @@
 		onclose(user, "prox")
 	else
 		user.Browse(null, "window=prox")
-		src.remove_dialog(user)
+		user.machine = null
 		return
 
 /obj/item/device/prox_sensor/Topic(href, href_list)
@@ -116,7 +127,7 @@
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	if ((src in usr) || (src.master && (src.master in usr)) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
+		usr.machine = src
 		if (href_list["arm"])
 			src.armed = !src.armed
 			src.update_icon()
@@ -160,14 +171,23 @@
 
 		if (href_list["close"])
 			usr.Browse(null, "window=prox")
-			src.remove_dialog(usr)
+			usr.machine = null
 			return
 
 		if (!src.master)
-			src.updateSelfDialog()
+			if (ismob(src.loc))
+				attack_self(src.loc)
+			else
+				for(var/mob/M in viewers(1, src))
+					if (M.client && (M.machine == src.master || M.machine == src))
+						src.attack_self(M)
 		else
-			src.master.updateSelfDialog()
-
+			if (ismob(src.master.loc))
+				src.attack_self(src.master.loc)
+			else
+				for(var/mob/M in viewers(1, src.master))
+					if (M.client && (M.machine == src.master || M.machine == src))
+						src.attack_self(M)
 	else
 		usr.Browse(null, "window=prox")
 		return

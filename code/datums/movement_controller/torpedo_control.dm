@@ -34,6 +34,6 @@
 			if("exit")
 				master.exit()
 
-	modify_keymap(client/C)
+	modify_keymap(datum/keymap/keymap, client/C)
 		..()
-		C.apply_keybind("torpedo")
+		keymap.merge(C.get_keymap("torpedo"))

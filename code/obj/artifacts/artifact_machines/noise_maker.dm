@@ -19,14 +19,11 @@
 	var/harmful = 0
 	var/evil = 0
 	var/sound_pitch = 1
-	var/volume = 100
-	var/extrarange = 0
 	var/times_to_play = 1
 	var/list/sounds = list('sound/machines/fortune_greeting_broken.ogg','sound/machines/engine_highpower.ogg','sound/machines/engine_grump1.ogg','sound/machines/engine_alert1.ogg',
 	'sound/machines/engine_alert2.ogg','sound/machines/engine_alert3.ogg','sound/machines/lavamoon_alarm1.ogg','sound/machines/lavamoon_plantalarm.ogg','sound/machines/pod_alarm.ogg',
 	'sound/machines/printer_dotmatrix.ogg','sound/machines/printer_thermal.ogg','sound/machines/romhack1.ogg','sound/machines/satcrash.ogg','sound/machines/siren_generalquarters.ogg',
-	'sound/machines/signal.ogg','sound/machines/ufo_move.ogg','sound/machines/modem.ogg','sound/effects/creaking_metal1.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/industrial/Precursor_Choir.ogg',
-	'sound/voice/animal/cat.ogg')
+	'sound/machines/signal.ogg','sound/machines/ufo_move.ogg','sound/machines/modem.ogg','sound/effects/creaking_metal1.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/industrial/Precursor_Choir.ogg')
 
 	New(var/loc, var/forceartitype)
 		..()
@@ -34,19 +31,7 @@
 		src.spamsound = pick(sounds)
 		src.sound_pitch = rand(2,20)
 		src.sound_pitch /= 10
-		if(prob(10))
-			src.sound_pitch /= 10
-		src.volume = pick(prob(10);10, prob(20);30, prob(40);80, prob(20); 100, prob(10);200)
-		src.extrarange = (200 - volume)/2 + rand(-20, 20)
-		if(prob(40))
-			src.extrarange = -10
-		if(prob(30))
-			src.sound_pitch *= -1
-		src.times_to_play = 1
-		if(prob(50))
-			src.times_to_play = rand(2, 3)
-			if(prob(5))
-				src.times_to_play = 10
+		src.times_to_play = rand(1,3)
 		var/harmprob = 5
 		if (src.artitype == "eldritch")
 			harmprob += 20
@@ -62,18 +47,18 @@
 		var/turf/T = get_turf(O)
 		if (evil)
 			for(var/X in src.sounds)
-				playsound(T, X, src.volume, 1, src.extrarange, src.sound_pitch)
+				playsound(T, X, 200, 1, 0, sound_pitch)
 		else
 			while (loops > 0)
 				loops--
-				playsound(T, src.spamsound, src.volume, 1, src.extrarange, src.sound_pitch)
+				playsound(T, src.spamsound, 200, 1, 0, sound_pitch)
 
 		if (src.harmful)
 			for (var/mob/living/M in hearers(world.view, O))
 				if (issilicon(M) || isintangible(M))
 					continue
 				if (!M.ears_protected_from_sound())
-					boutput(M, "<span class='alert'>The loud, horrible noises painfully batter your eardrums!</span>")
+					boutput(M, "<span style=\"color:red\">The loud, horrible noises painfully batter your eardrums!</span>")
 				else
 					continue
 

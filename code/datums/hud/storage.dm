@@ -15,7 +15,6 @@
 		src.master = null
 		src.boxes.dispose()
 		src.close.dispose()
-		src.obj_locs.len = 0
 		src.obj_locs = null
 		..()
 

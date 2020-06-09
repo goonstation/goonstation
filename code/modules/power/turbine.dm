@@ -67,7 +67,7 @@
 		return
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
-	var/transfer_moles = TOTAL_MOLES(environment)/10
+	var/transfer_moles = environment.total_moles()/10
 	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
@@ -123,14 +123,14 @@
 	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) *TURBGENQ
 
 	add_avail(lastgen)
-	var/newrpm = ((compressor.gas_contained.temperature) * TOTAL_MOLES(compressor.gas_contained))/4
+	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
 	newrpm = max(0, newrpm)
 
 	if(!compressor.starter || newrpm > 1000)
 		compressor.rpmtarget = newrpm
 
-	if(TOTAL_MOLES(compressor.gas_contained)>0)
-		var/oamount = min(TOTAL_MOLES(compressor.gas_contained), (compressor.rpm+100)/35000*compressor.capacity)
+	if(compressor.gas_contained.total_moles()>0)
+		var/oamount = min(compressor.gas_contained.total_moles(), (compressor.rpm+100)/35000*compressor.capacity)
 		var/datum/gas_mixture/removed = compressor.gas_contained.remove(oamount)
 		outturf.assume_air(removed)
 
@@ -138,7 +138,10 @@
 		overlays += image('icons/obj/atmospherics/pipes.dmi', "turb-o", FLY_LAYER)
 
 
-	src.updateDialog()
+	for(var/mob/M in viewers(1, src))
+		if ((M.client && M.machine == src))
+			src.interacted(M)
+	AutoUpdateAI(src)
 
 
 /obj/machinery/power/turbine/attack_ai(mob/user)
@@ -160,11 +163,11 @@
 /obj/machinery/power/turbine/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
-		src.remove_dialog(user)
+		user.machine = null
 		user.Browse(null, "window=turbine")
 		return
 
-	src.add_dialog(user)
+	user.machine = src
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
@@ -189,10 +192,10 @@
 	if (usr.stat || usr.restrained() )
 		return
 
-	if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
 		if( href_list["close"] )
 			usr.Browse(null, "window=turbine")
-			src.remove_dialog(usr)
+			usr.machine = null
 			return
 
 		else if( href_list["str"] )
@@ -200,12 +203,12 @@
 
 		SPAWN_DBG(0)
 			for(var/mob/M in viewers(1, src))
-				if (M.using_dialog_of(src))
+				if ((M.client && M.machine == src))
 					src.interacted(M)
 
 	else
 		usr.Browse(null, "window=turbine")
-		src.remove_dialog(usr)
+		usr.machine = null
 
 	return
 
@@ -234,7 +237,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -249,7 +252,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/turbine_control/M = new /obj/item/circuitboard/turbine_control( A )
@@ -266,7 +269,7 @@
 	return
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	src.add_dialog(user)
+	user.machine = src
 	var/dat
 	if(src.compressor)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
@@ -293,7 +296,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
+		usr.machine = src
 
 		if( href_list["view"] )
 			usr.client.eye = src.compressor
@@ -311,7 +314,7 @@
 						door_status = 0
 		else if( href_list["close"] )
 			usr.Browse(null, "window=computer")
-			src.remove_dialog(usr)
+			usr.machine = null
 			return
 
 		src.add_fingerprint(usr)

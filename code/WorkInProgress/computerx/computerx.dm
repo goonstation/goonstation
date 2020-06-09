@@ -93,7 +93,7 @@ var/compx_gridx_max = 5
 		if(..())
 			return
 
-		src.add_dialog(user)
+		user.machine = src
 		src.current_user = user
 
 		var/wincheck = winexists(user, "compx_\ref[src]")
@@ -157,7 +157,7 @@ var/compx_gridx_max = 5
 		if(..())
 			return
 
-		src.add_dialog(usr)
+		usr.machine = src
 
 		if((href_list["conin"]) && src.host_program)
 			src.host_program.input_text(href_list["conin"])

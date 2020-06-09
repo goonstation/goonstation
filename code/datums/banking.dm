@@ -108,14 +108,13 @@
 	proc/timeleft()
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
-		// TODO move this into process or something, currently it gets checked in mob/Stat
+		SPAWN_DBG(0)
+			src.checkLotteryTime()
+
 		if(timeleft <= 0)
 			payday()
 			src.time_until_payday = ticker.round_elapsed_ticks + time_between_paydays
 			return 0
-		if(lottery_active && src.time_until_lotto <= ticker.round_elapsed_ticks)
-			lotteryDay()
-			src.time_until_lotto = ticker.round_elapsed_ticks + time_between_lotto
 
 		return timeleft
 
@@ -168,8 +167,7 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/x in by_type[/obj/item/lotteryTicket])
-			var/obj/item/lotteryTicket/T = x
+		for(var/obj/item/lotteryTicket/T in world)
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -222,7 +220,7 @@
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))
-			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
+			boutput(user, "<span style=\"color:blue\">You swipe your ID card in the ATM.</span>")
 			src.scan = I
 			// so check this out what if we made it so you could just enter the pin when you swipe it. #wow #woah
 			var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
@@ -230,13 +228,13 @@
 				if(TryToFindRecord())
 					src.state = STATE_LOGGEDIN
 				else
-					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
+					boutput(usr, "<span style=\"color:red\">Cannot find a bank record for this card.</span>")
 			else
-				boutput(usr, "<span class='alert'>Incorrect pin number.</span>")
+				boutput(usr, "<span style=\"color:red\">Incorrect pin number.</span>")
 
 		if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
-				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
+				boutput(user, "<span style=\"color:blue\">You insert the cash into the ATM.</span>")
 
 				if(istype(I, /obj/item/spacecash/buttcoin))
 					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -245,12 +243,12 @@
 
 				I.amount = 0
 				pool(I)
-			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
+			else boutput(user, "<span style=\"color:red\">You need to log in before depositing cash!</span>")
 		if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
-				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
+				boutput(user, "<span style=\"color:blue\">You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
-					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
+					boutput(user, "<span style=\"color:blue\">Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
 					src.accessed_record.fields["current_money"] += I:winner
 
 					if(wagesystem.lotteryJackpot > I:winner)
@@ -260,9 +258,9 @@
 
 
 				else
-					boutput(user, "<span class='alert'>This ticket isn't a winner. Better luck next time!</span>")
+					boutput(user, "<span style=\"color:red\">This ticket isn't a winner. Better luck next time!</span>")
 				qdel(I)
-			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
+			else boutput(user, "<span style=\"color:red\">You need to log in before inserting a ticket!</span>")
 		else
 			src.attack_hand(user)
 		return
@@ -274,7 +272,7 @@
 		if(..())
 			return
 
-		src.add_dialog(user)
+		user.machine = src
 		var/dat = "<span style=\"inline-flex\">"
 
 		switch(src.state)
@@ -331,7 +329,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		src.add_dialog(usr)
+		usr.machine = src
 
 		if (href_list["type"])
 			if (href_list["type"] == "E")
@@ -363,28 +361,28 @@
 
 			if("withdraw")
 				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+					boutput(usr, "<span style=\"color:red\">Your account cannot currently be liquidated due to active borrows.</span>")
 					return
 				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
 				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					boutput(usr, "<span style=\"color:red\">Invalid amount!</span>")
 					return
 				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient funds in account.</span>")
 				else
 					src.scan.money += amount
 					src.accessed_record.fields["current_money"] -= amount
 
 			if("withdrawcash")
 				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+					boutput(usr, "<span style=\"color:red\">Your account cannot currently be liquidated due to active borrows.</span>")
 					return
 				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as num)
 				if( amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					boutput(usr, "<span style=\"color:red\">Invalid amount!</span>")
 					return
 				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient funds in account.</span>")
 				else
 					src.accessed_record.fields["current_money"] -= amount
 					new /obj/item/spacecash(src.loc, amount )
@@ -392,19 +390,19 @@
 			if("deposit")
 				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
 				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					boutput(usr, "<span style=\"color:red\">Invalid amount!</span>")
 					return
 				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient funds on card.</span>")
 				else
 					src.scan.money -= amount
 					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
-				boutput(usr, "<span class='alert'>Buy button clicked</span>")
+				boutput(usr, "<span style=\"color:red\">Buy button clicked</span>")
 
 			if("claim")
-				boutput(usr, "<span class='alert'>Claim button clicked</span>")
+				boutput(usr, "<span style=\"color:red\">Claim button clicked</span>")
 
 		src.updateUsrDialog()
 
@@ -480,7 +478,7 @@
 		if (!( data_core.bank.Find(src.active1) ))
 			src.active1 = null
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
-			src.add_dialog(usr)
+			usr.machine = src
 			if (href_list["temp"])
 				src.temp = null
 			if (href_list["scan"])
@@ -537,11 +535,11 @@
 					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
 					if (t1 < 0)
 						t1 = 0
-						boutput(usr, "<span class='alert'>You cannot set a negative wage.</span>")
+						boutput(usr, "<span style=\"color:red\">You cannot set a negative wage.</span>")
 					if (!t1) t1 = 0
 					if (t1 > 10000)
 						t1 = 10000
-						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
+						boutput(usr, "<span style=\"color:red\">Maximum wage is $10,000.</span>")
 					R.fields["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/data/record/R = locate(href_list["Fmoney"])
@@ -551,22 +549,22 @@
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
 					if (t2 == "Withdraw")
 						if (R.fields["name"] in FrozenAccounts)
-							boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
+							boutput(usr, "<span style=\"color:red\">This account cannot currently be liquidated due to active borrows.</span>")
 							return
 						avail = R.fields["current_money"]
 						if (t1 > avail) t1 = avail
 						if (t1 < 1) return
 						R.fields["current_money"] -= t1
 						wagesystem.station_budget += t1
-						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R.fields["name"]]'s account.</span>")
+						boutput(usr, "<span style=\"color:blue\">$[t1] added to station budget from [R.fields["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
 						if (t1 > avail) t1 = avail
 						if (t1 < 1) return
 						R.fields["current_money"] += t1
 						wagesystem.station_budget -= t1
-						boutput(usr, "<span class='notice'>$[t1] added to [R.fields["name"]]'s account from station budget.</span>")
-					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
+						boutput(usr, "<span style=\"color:blue\">$[t1] added to [R.fields["name"]]'s account from station budget.</span>")
+					else boutput(usr, "<span style=\"color:red\">Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
@@ -577,14 +575,14 @@
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 					if (!transfrom)
-						boutput(usr, "<span class='alert'>Error selecting budget to transfer from.</span>")
+						boutput(usr, "<span style=\"color:red\">Error selecting budget to transfer from.</span>")
 						return
 					var/transto = input("Transfer to which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 					if (!transto)
-						boutput(usr, "<span class='alert'>Error selecting budget to transfer to.</span>")
+						boutput(usr, "<span style=\"color:red\">Error selecting budget to transfer to.</span>")
 						return
 					if (transfrom == transto)
-						boutput(usr, "<span class='alert'>You can't transfer a budget into itself.</span>")
+						boutput(usr, "<span style=\"color:red\">You can't transfer a budget into itself.</span>")
 						return
 					var/amount = input(usr, "How much would you like to transfer?", "Budget Transfer", 0) as null|num
 					if (!amount) amount = 0
@@ -628,7 +626,6 @@
 	var/obj/item/card/id/scan = null
 	var/health = 70
 	var/broken = 0
-	var/afterlife = 0
 
 	var/state = STATE_LOGGEDOFF
 	var/const
@@ -637,30 +634,28 @@
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if(broken)
-			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
+			boutput(user, "<span style=\"color:red\">With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
+			return
 		if(istype(I, /obj/item/card/id))
-			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
+			boutput(user, "<span style=\"color:blue\">You swipe your ID card in the ATM.</span>")
 			src.scan = I
 			return
 		if(istype(I, /obj/item/spacecash/))
-			if (afterlife)
-				boutput(user, "<span class='alert'>On closer inspection, this ATM doesn't seem to have a deposit slot for credits!</span>")
-				return
 			if (src.accessed_record)
-				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
+				boutput(user, "<span style=\"color:blue\">You insert the cash into the ATM.</span>")
 				src.accessed_record.fields["current_money"] += I.amount
 				I.amount = 0
 				pool(I)
-			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
+			else boutput(user, "<span style=\"color:red\">You need to log in before depositing cash!</span>")
 			return
 		if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
-				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
+				boutput(user, "<span style=\"color:blue\">You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
-					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
+					boutput(user, "<span style=\"color:blue\">Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
 					src.accessed_record.fields["current_money"] += I:winner
 
 					if(wagesystem.lotteryJackpot > I:winner)
@@ -668,9 +663,9 @@
 					else
 						wagesystem.lotteryJackpot = 0
 				else
-					boutput(user, "<span class='alert'>This ticket isn't a winner. Better luck next time!</span>")
+					boutput(user, "<span style=\"color:red\">This ticket isn't a winner. Better luck next time!</span>")
 				qdel(I)
-			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
+			else boutput(user, "<span style=\"color:red\">You need to log in before inserting a ticket!</span>")
 			return
 		if(istype(I, /obj/item/spacebux))
 			var/obj/item/spacebux/SB = I
@@ -679,7 +674,7 @@
 			SB.spent = 1
 			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
 			user.client.add_to_bank(SB.amount)
-			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
+			boutput(user, "<span style=\"color:red\">You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
 		var/damage = I.force
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
@@ -687,10 +682,10 @@
 			attack_particle(user,src)
 			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
 			src.take_damage(damage, user)
-			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
+			user.visible_message("<span style='color:red'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
 			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
-			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
+			user.visible_message("<span style='color:red'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 
 	attack_ai(var/mob/user as mob)
@@ -698,22 +693,19 @@
 
 	attack_hand(var/mob/user as mob)
 		if(broken)
-			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
+			boutput(user, "<span style=\"color:red\">With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
 		if(..())
 			return
 
-		src.add_dialog(user)
+		user.machine = src
 		var/dat = "<span style=\"inline-flex\">"
 
 		switch(src.state)
 			if(STATE_LOGGEDOFF)
 				if (src.scan)
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Logout</A> \]"
-					if(afterlife)
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
-					else
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
+					dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
 
 				else dat += "Please swipe your card to begin."
 
@@ -731,8 +723,7 @@
 						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						if(!afterlife)
-							dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
+						dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
 
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -771,7 +762,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		src.add_dialog(usr)
+		usr.machine = src
 
 		switch(href_list["operation"])
 
@@ -781,15 +772,9 @@
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
 					else
-						boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
+						boutput(usr, "<span style=\"color:red\">Cannot find a bank record for this card.</span>")
 				else
-					boutput(usr, "<span class='alert'>Incorrect pin number.</span>")
-
-			if("login")
-				if(TryToFindRecord())
-					src.state = STATE_LOGGEDIN
-				else
-					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
+					boutput(usr, "<span style=\"color:red\">Incorrect pin number.</span>")
 
 			if("logout")
 				src.state = STATE_LOGGEDOFF
@@ -798,28 +783,28 @@
 
 			if("withdraw")
 				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
+					boutput(usr, "<span style='color:red'>This account is frozen!</span>")
 					return
 				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
 				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					boutput(usr, "<span style=\"color:red\">Invalid amount!</span>")
 					return
 				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient funds in account.</span>")
 				else
 					src.scan.money += amount
 					src.accessed_record.fields["current_money"] -= amount
 
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
+					boutput(usr, "<span style='color:red'>This account is frozen!</span>")
 					return
 				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as num)
 				if( amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					boutput(usr, "<span style=\"color:red\">Invalid amount!</span>")
 					return
 				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient funds in account.</span>")
 				else
 					src.accessed_record.fields["current_money"] -= amount
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
@@ -829,10 +814,10 @@
 			if("deposit")
 				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
 				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					boutput(usr, "<span style=\"color:red\">Invalid amount!</span>")
 					return
 				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient funds on card.</span>")
 				else
 					src.scan.money -= amount
 					src.accessed_record.fields["current_money"] += amount
@@ -840,51 +825,51 @@
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)
 					src.accessed_record.fields["current_money"] -= 100
-					boutput(usr, "<span class='alert'>Ticket being dispensed. Good luck!</span>")
+					boutput(usr, "<span style=\"color:red\">Ticket being dispensed. Good luck!</span>")
 
 					new /obj/item/lotteryTicket(src.loc)
 					wagesystem.start_lottery()
 
 				else
-					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient Funds</span>")
 
 			if("view_spacebux_balance")
-				boutput(usr, "<span class='notice'>You have [usr.client.persistent_bank] spacebux.</span>")
+				boutput(usr, "<span style=\"color:blue\">You have [usr.client.persistent_bank] spacebux.</span>")
 
 			if("transfer_spacebux")
 				if(!usr.client)
-					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
+					boutput(usr, "<span style=\"color:red\">Banking system offline. Welp.</span>")
 				var/amount = input("How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer") as num|null
 				if(!amount)
 					return
 				if(amount <= 0)
-					boutput(usr, "<span class='alert'>No.</span>")
+					boutput(usr, "<span style=\"color:red\">No.</span>")
 					src.updateUsrDialog()
 					return
 				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
-						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+						boutput(usr, "<span style=\"color:red\">Insufficient Funds</span>")
 						return
 					C.add_to_bank(amount)
-					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
+					boutput(C, "<span style=\"color:blue\"><B>[usr.name] sent you [amount] spacebux!</B></span>")
 					usr.client.add_to_bank(-amount)
-					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
+					boutput(usr, "<span style=\"color:blue\"><B>Transaction successful!</B></span>")
 					logTheThing("diary",usr,null,"sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
-				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
+				boutput(usr, "<span style=\"color:red\"><B>No online player with that ckey found!</B></span>")
 
 			if("withdraw_spacebux")
 				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)
 				amount = clamp(amount, 0, 1000000)
 				if(amount <= 0)
-					boutput(usr, "<span class='alert'>No.</span>")
+					boutput(usr, "<span style=\"color:red\">No.</span>")
 					src.updateUsrDialog()
 					return
 
 				if(!usr.client.bank_can_afford(amount))
-					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+					boutput(usr, "<span style=\"color:red\">Insufficient Funds</span>")
 				else
 					logTheThing("diary",usr,null,"withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
@@ -899,7 +884,7 @@
 		src.health -= damage_amount
 		if (src.health <= 0)
 			src.broken = 1
-			src.visible_message("<span class='alert'><b>The [src.name] breaks apart and spews out cash!</b></span>")
+			src.visible_message("<span style=\"color:red\"><b>The [src.name] breaks apart and spews out cash!</b></span>")
 			src.icon_state = "[src.icon_state]_broken"
 			var/obj/item/C = pick(/obj/item/spacecash/hundred, /obj/item/spacecash/fifty, /obj/item/spacecash/ten)
 			C = new C(get_turf(src))
@@ -914,13 +899,6 @@
 	atm_alt
 		icon_state = "atm_alt"
 		layer = EFFECTS_LAYER_UNDER_1
-
-/obj/submachine/ATM/afterlife
-	afterlife = 1
-
-	take_damage(var/damage_amount = 5, var/mob/user as mob)
-		return
-
 
 /obj/item/lotteryTicket
 	name = "Lottery Ticket"
@@ -940,7 +918,6 @@
 
 	// Give a random set of numbers
 	New()
-		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound
 
@@ -953,10 +930,6 @@
 			dat += "[numbers[i]] "
 
 		desc = "The numbers on this ticket are: [dat]. This is for round [lotteryRound]."
-
-	disposing()
-		. = ..()
-		STOP_TRACKING
 
 proc/FindBankAccountByName(var/nametosearch)
 	if (!nametosearch) return

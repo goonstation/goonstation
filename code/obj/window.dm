@@ -46,15 +46,10 @@
 			src.health_max = src.health_max * src.health_multiplier
 			src.health = src.health_max
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
-
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
-				initialize()
-
-	initialize()
-		src.set_layer_from_settings()
-		update_nearby_tiles(need_rebuild=1)
-		..()
+		SPAWN_DBG(0)
+			src.set_layer_from_settings()
+			update_nearby_tiles(need_rebuild=1)
+		return
 
 	proc/set_layer_from_settings()
 		if (!map_settings)
@@ -312,7 +307,7 @@
 
 	hitby(AM as mob|obj)
 		..()
-		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
+		src.visible_message("<span style=\"color:red\"><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, src.hitsound , 100, 1)
 		if (ismob(AM))
 			damage_blunt(15)
@@ -332,17 +327,17 @@
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
-				user.visible_message("<span class='alert'><b>[user]</b> punches the window.</span>")
+				user.visible_message("<span style=\"color:red\"><b>[user]</b> punches the window.</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
 				src.damage_blunt(10)
 				return
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> beats [src] uselessly!</span>")
+				src.visible_message("<span style=\"color:red\"><b>[user]</b> beats [src] uselessly!</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
 				return
 		else
 			if (ishuman(usr))
-				src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+				src.visible_message("<span style=\"color:red\"><b>[usr]</b> knocks on [src].</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
 				SPAWN_DBG(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
@@ -362,7 +357,7 @@
 				if (deconstruct_time)
 					user.show_text("You begin to [state == 1 ? "fasten the window to" : "unfasten the window from"] the frame...", "red")
 					if (!do_after(user, deconstruct_time))
-						boutput(user, "<span class='alert'>You were interrupted.</span>")
+						boutput(user, "<span style=\"color:red\">You were interrupted.</span>")
 						return
 				state = 3 - state
 				user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
@@ -371,7 +366,7 @@
 				if (deconstruct_time)
 					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
 					if (!do_after(user, deconstruct_time))
-						boutput(user, "<span class='alert'>You were interrupted.</span>")
+						boutput(user, "<span style=\"color:red\">You were interrupted.</span>")
 						return
 				src.anchored = !(src.anchored)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
@@ -381,7 +376,7 @@
 				if (deconstruct_time)
 					user.show_text("You begin to [src.anchored ? "unfasten the window from" : "fasten the window to"] the floor...", "red")
 					if (!do_after(user, deconstruct_time))
-						boutput(user, "<span class='alert'>You were interrupted.</span>")
+						boutput(user, "<span style=\"color:red\">You were interrupted.</span>")
 						return
 				src.anchored = !(src.anchored)
 				user.show_text("You have [src.anchored ? "fastened the window to" : "unfastened the window from"] the floor.", "blue")
@@ -408,7 +403,7 @@
 			if (deconstruct_time)
 				user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
 				if (!do_after(user, deconstruct_time))
-					boutput(user, "<span class='alert'>You were interrupted.</span>")
+					boutput(user, "<span style=\"color:red\">You were interrupted.</span>")
 					return
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
@@ -416,11 +411,11 @@
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
 			var/turf/T = get_turf(user)
-			boutput(user, "<span class='notice'>Now disassembling the window</span>")
+			boutput(user, "<span style=\"color:blue\">Now disassembling the window</span>")
 			sleep(4 SECONDS) // this should be a progressbar but other contruction / deconstruction things don't have them
 			// so I'll just leave it as sleep and hope someone else replaces all of these with progressbars
 			if(get_turf(user) == T)
-				boutput(user, "<span class='notice'>You dissasembled the window!</span>")
+				boutput(user, "<span style=\"color:blue\">You dissasembled the window!</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
 				if (src.material)
 					A.setMaterial(src.material)
@@ -436,7 +431,7 @@
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (ishuman(G.affecting) && get_dist(G.affecting, src) <= 1)
-				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
+				src.visible_message("<span style=\"color:red\"><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
 				logTheThing("combat", user, G.affecting, "slams %target%'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
 				G.affecting:TakeDamage("head", 0, 5)
@@ -721,7 +716,7 @@
 			return ..()
 
 	attack_hand()
-		src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+		src.visible_message("<span style=\"color:red\"><b>[usr]</b> knocks on [src].</span>")
 		playsound(src.loc, src.hitsound, 100, 1)
 		sleep(0.3 SECONDS)
 		playsound(src.loc, src.hitsound, 100, 1)
@@ -752,8 +747,6 @@
 		initialPos = loc
 
 	disposing()
-		SHOULD_CALL_PARENT(0) //These are ACTUALLY indestructible.
-
 		SPAWN_DBG(0)
 			loc = initialPos
 			qdeled = 0// L   U    L
