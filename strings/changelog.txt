@@ -1,5 +1,9 @@
 
 (t)tue jun 09 20
+(u)Sovexe
+(p)1013
+(e)🆕🔄|feature, rework
+(+)Items on surgical trays now appear in the right-click context menu. Additionally items won't appear under the tray, and will now glide smoothly with the tray.
 (u)glassofmilk
 (p)656
 (e)🆕|feature
