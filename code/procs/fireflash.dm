@@ -185,7 +185,7 @@
 				if (capped)
 					chance = min(chance, T:default_melt_cap)
 				if (prob(chance) || bypass_RNG) // The bypass is for thermite (Convair880).
-					//T.visible_message("<span style=\"color:red\">[T] melts!</span>")
+					//T.visible_message("<span class='alert'>[T] melts!</span>")
 					T.burn_down()
 		LAGCHECK(LAG_REALTIME)
 

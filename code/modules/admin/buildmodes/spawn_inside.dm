@@ -14,7 +14,7 @@ Right Mouse Button                     = Delete an object from contents<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span style=\"color:red\">No object path!</span>")
+			boutput(usr, "<span class='alert'>No object path!</span>")
 			return
 		var/atom/movable/M = object
 		if(istype(M) && objpath)

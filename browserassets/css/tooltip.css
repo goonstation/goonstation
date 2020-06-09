@@ -176,3 +176,9 @@ p {
 	background: url({{resource("images/tooltips/newhud-br.gif")}});
 }
 .newhud .content {padding: 6px 10px; border-color: #0a131a; background: #0a131a url({{resource("images/tooltips/newhud-lines.gif")}});}
+
+/* for item description colors */
+.success {color: green;}
+.hint {color: #0000ff;}
+.notice {color: #0000ff;}
+.alert {color: #ff0000;}

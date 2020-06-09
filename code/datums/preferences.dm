@@ -46,9 +46,9 @@ datum/preferences
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
+	var/auto_capitalization = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
-	//var/use_tg = 0 //Are they animals and want to use TG's keybinds? // mbc moved to dropdowns
 	var/spessman_direction = SOUTH
 
 	var/job_favorite = null
@@ -608,7 +608,7 @@ datum/preferences
 	</tr>
 	<tr>
 		<th>
-			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon&trade;.">?</span>
+			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon™.">?</span>
 		</th>
 		<td colspan="2">
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
@@ -622,7 +622,8 @@ datum/preferences
 			[((user && ismob(user)) && user.client && user.client.is_mentor()) ? "<a href=\"[pref_link]toggle_mentorhelp=1\" class=\"toggle\">[crap_checkbox(src.see_mentor_pms)] Display Mentorhelps</a><span class=\"info-thing\" title=\"[pick("how to forgot swedish?", "how i collect urine", "why do i exploded", "I'm just punching myself with food.", "no im a wizard and i ate a bean and it said 'Oh yeah! This tastes like Pina colada' and I was erased.")]\">?</span><br>" : ""]
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
-			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads </a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span>
+			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
 		</td>
 	</tr>
 	<tr>
@@ -799,10 +800,10 @@ datum/preferences
 	proc/SetChoices(mob/user)
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span style=\"color:red\"><b>Your Job Preferences were null, and have been reset.</b></span>")
+			boutput(user, "<span class='alert'><b>Your Job Preferences were null, and have been reset.</b></span>")
 		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !src.jobs_unwanted.len)
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span style=\"color:red\"><b>Your Job Preferences were empty, and have been reset.</b></span>")
+			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
 
 
 		var/list/HTML = list()
@@ -884,6 +885,7 @@ datum/preferences
 </style>
 
 <div style="float: right;">
+	<a href="byond://?src=\ref[src];preferences=1;closejobswindow=1">Back to Setup</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;jobswindow=1">Refresh</a> &bull;
 	<a href="byond://?src=\ref[src];preferences=1;resetalljobs=1"><b>Reset All Jobs</b></a>
 </div>
@@ -899,7 +901,7 @@ datum/preferences
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span style=\"color:red\"><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
+				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
 			else
@@ -951,7 +953,7 @@ datum/preferences
 					continue
 
 				if (cat == "unwanted" && JD.cant_allocate_unwanted)
-					boutput(user, "<span style=\"color:red\"><b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count.</span>")
+					boutput(user, "<span class='alert'><b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count.</span>")
 					src.jobs_unwanted -= JD.name
 					src.jobs_low_priority += JD.name
 
@@ -1011,7 +1013,7 @@ datum/preferences
 		if (src.antispam)
 			return
 		if (!find_job_in_controller_by_string(job,1))
-			boutput(user, "<span style=\"color:red\"><b>The game could not find that job in the internal list of jobs.</b></span>")
+			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
 				if (1) src.job_favorite = null
 				if (2) src.jobs_med_priority -= job
@@ -1019,7 +1021,7 @@ datum/preferences
 				if (4) src.jobs_unwanted -= job
 			return
 		if (job=="AI" && (!config.allow_ai))
-			boutput(user, "<span style=\"color:red\"><b>Selecting the AI is not currently allowed.</b></span>")
+			boutput(user, "<span class='alert'><b>Selecting the AI is not currently allowed.</b></span>")
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1029,7 +1031,7 @@ datum/preferences
 			return
 
 		if (jobban_isbanned(user, job))
-			boutput(user, "<span style=\"color:red\"><b>You are banned from this job and may not select it.</b></span>")
+			boutput(user, "<span class='alert'><b>You are banned from this job and may not select it.</b></span>")
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1062,7 +1064,7 @@ datum/preferences
 				if (4) picker = "Unwanted"
 		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
-			boutput(user, "<span style=\"color:red\"><b>[job] cannot be set to Unwanted.</b></span>")
+			boutput(user, "<span class='alert'><b>[job] cannot be set to Unwanted.</b></span>")
 			src.antispam = 0
 			return
 
@@ -1448,6 +1450,9 @@ datum/preferences
 		if (link_tags["flying_chat_hidden"])
 			src.flying_chat_hidden = !(src.flying_chat_hidden)
 
+		if (link_tags["auto_capitalization"])
+			src.auto_capitalization = !(src.auto_capitalization)
+
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
 			src.admin_music_volume = max(0,min(src.admin_music_volume,100))
@@ -1461,10 +1466,11 @@ datum/preferences
 
 		if (link_tags["use_wasd"])
 			src.use_wasd = !src.use_wasd
-			src.wasd_updated(user.client)
+			src.keybind_prefs_updated(user.client)
 
 		if (link_tags["use_azerty"])
 			src.use_azerty = !src.use_azerty
+			src.keybind_prefs_updated(user.client)
 
 		if (link_tags["preferred_map"])
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
@@ -1604,46 +1610,46 @@ datum/preferences
 			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
-					boutput( user, "<span style=\"color:red\">Failed to save savefile: [ret]</span>" )
+					boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile saved!</span>" )
+					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
-					if( length( newname ) < 3 || length( newname ) > 32 )
-						alert( user, "The name must be between 3 and 32 letters!" )
+					if( length( newname ) < 3 || length( newname ) > MOB_NAME_MAX_LENGTH )
+						alert( user, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!" )
 					else
 						var/ret = src.cloudsave_save( user.client, newname )
 						if( istext( ret ) )
-							boutput( user, "<span style=\"color:red\">Failed to save savefile: [ret]</span>" )
+							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
-							boutput( user, "<span style=\"color:blue\">Savefile saved!</span>" )
+							boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
-					boutput( user, "<span style=\"color:red\">Failed to delete savefile: [ret]</span>" )
+					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile deleted!</span>" )
+					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
 			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
 				var/ret = src.cloudsave_load( user.client, link_tags["cloudload"] )
 				if( istext( ret ) )
-					boutput( user, "<span style=\"color:red\">Failed to load savefile: [ret]</span>" )
+					boutput( user, "<span class='alert'>Failed to load savefile: [ret]</span>" )
 				else
-					boutput( user, "<span style=\"color:blue\">Savefile loaded!</span>" )
+					boutput( user, "<span class='notice'>Savefile loaded!</span>" )
 
 			else if (link_tags["save"])
 				src.savefile_save(user, (isnum(text2num(link_tags["save"])) ? text2num(link_tags["save"]) : 1))
-				boutput(user, "<span style=\"color:blue\"><b>Character saved to Slot [text2num(link_tags["save"])].</b></span>")
+				boutput(user, "<span class='notice'><b>Character saved to Slot [text2num(link_tags["save"])].</b></span>")
 			else if (link_tags["load"])
 				if (!src.savefile_load(user.client, (isnum(text2num(link_tags["load"])) ? text2num(link_tags["load"]) : 1)))
 					alert(user, "You do not have a savefile.")
 				else if (!user.client.holder)
 					sanitize_name()
-					boutput(user, "<span style=\"color:blue\"><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
+					boutput(user, "<span class='notice'><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
 				else
-					boutput(user, "<span style=\"color:blue\"><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
+					boutput(user, "<span class='notice'><b>Character loaded from Slot [text2num(link_tags["load"])].</b></span>")
 
 
 		if (link_tags["reset_all"])
@@ -1669,6 +1675,7 @@ datum/preferences
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			auto_capitalization = 0
 			listen_ooc = 1
 			view_changelog = 1
 			view_score = 1
@@ -1778,7 +1785,7 @@ datum/preferences
 		if (AH.s_tone == null || AH.s_tone == "#FFFFFF" || AH.s_tone == "#ffffff")
 			AH.s_tone = "#FEFEFE"
 
-	proc/wasd_updated(var/client/C)
+	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))
 			var/mob/M = C
 			if (ismob(M) && M.client)
@@ -1790,6 +1797,7 @@ datum/preferences
 			winset( C, "menu.wasd_controls", "is-checked=true" )
 		else
 			winset( C, "menu.wasd_controls", "is-checked=false" )
+		C.mob.reset_keymap()
 
 /* ---------------------- RANDOMIZER PROC STUFF */
 
@@ -1826,11 +1834,11 @@ datum/preferences
 	if (copytext(hcolor, 1, 2) == "#")
 		adj = 1
 	//DEBUG_MESSAGE("HAIR initial: [hcolor]")
-	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25))
+	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25), 2)
 	//DEBUG_MESSAGE("HAIR R: [hR_adj]")
-	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5))
+	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5), 2)
 	//DEBUG_MESSAGE("HAIR G: [hG_adj]")
-	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10))
+	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("HAIR B: [hB_adj]")
 	var/return_color = "#" + hR_adj + hG_adj + hB_adj
 	//DEBUG_MESSAGE("HAIR final: [return_color]")
@@ -1843,11 +1851,11 @@ datum/preferences
 	if (copytext(ecolor, 1, 2) == "#")
 		adj = 1
 	//DEBUG_MESSAGE("EYE initial: [ecolor]")
-	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10))
+	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE R: [eR_adj]")
-	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10))
+	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE G: [eG_adj]")
-	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10))
+	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
 	//DEBUG_MESSAGE("EYE B: [eB_adj]")
 	var/return_color = "#" + eR_adj + eG_adj + eB_adj
 	//DEBUG_MESSAGE("EYE final: [return_color]")

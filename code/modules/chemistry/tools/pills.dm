@@ -47,7 +47,7 @@
 
 		if (iscarbon(user) || iscritter(user))
 			user.visible_message("[user] swallows [src].",\
-			"<span style='color:blue'>You swallow [src].</span>")
+			"<span class='notice'>You swallow [src].</span>")
 			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
@@ -64,15 +64,15 @@
 
 		if (iscarbon(M) || iscritter(M))
 			if (M == user)
-				//boutput(M, "<span style='color:blue'>You swallow [src].</span>")
+				//boutput(M, "<span class='notice'>You swallow [src].</span>")
 				user.visible_message("[user] swallows [src].",\
-				"<span style='color:blue'>You swallow [src].</span>")
+				"<span class='notice'>You swallow [src].</span>")
 			else if(check_target_immunity(M))
-				user.show_message( "<span style='color:red'>You try to force [M] to swallow [src], but fail!</span>")
+				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but fail!</span>")
 				return
 			else
-				user.visible_message("<span style='color:red'>[user] attempts to force [M] to swallow [src].</span>",\
-				"<span style='color:red'>You attempt to force [M] to swallow [src].</span>")
+				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
+				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
 				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to %target% at [log_loc(user)].")
 
 				if (!do_mob(user, M))
@@ -82,8 +82,8 @@
 				if (!src.reagents || !src.reagents.total_volume)
 					user.show_text("[src] doesn't contain any reagents.", "red")
 					return
-				user.visible_message("<span style='color:red'>[user] forces [M] to swallow [src].</span>",\
-				"<span style='color:red'>You force [M] to swallow [src].</span>")
+				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
+				"<span class='alert'>You force [M] to swallow [src].</span>")
 
 			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes %target% swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
@@ -108,17 +108,17 @@
 			return ..()
 		if (target.is_open_container() && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
-				boutput(user, "<span style='color:red'>[src] doesn't contain any reagents.</span>")
+				boutput(user, "<span class='alert'>[src] doesn't contain any reagents.</span>")
 				return
 			if (target.reagents.is_full())
-				boutput(user, "<span style='color:red'>[target] is full!</span>")
+				boutput(user, "<span class='alert'>[target] is full!</span>")
 				return
 
 			if (istype(target, /obj/item/pen/sleepypen))
-				boutput(user, "<span style='color:blue'>You cram the pill into the [target.name]. Elegant.</span>")
+				boutput(user, "<span class='notice'>You cram the pill into the [target.name]. Elegant.</span>")
 			else
-				user.visible_message("<span style='color:red'>[user] puts something in [target].</span>",\
-				"<span style=\"color:green\">You dissolve [src] in [target].</span>")
+				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
+				"<span class='success'>You dissolve [src] in [target].</span>")
 
 			logTheThing("combat", user, null, "dissolves a pill [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)

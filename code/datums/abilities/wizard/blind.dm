@@ -22,12 +22,12 @@
 		s.start()
 
 		if (target.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span style=\"color:red\">[target] has divine protection from magic.</span>")
-			target.visible_message("<span style=\"color:red\">The spell fails to work on [target]!</span>")
+			boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
+			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
 			return
 
 		if (iswizard(target))
-			target.visible_message("<span style=\"color:red\">The spell fails to work on [target]!</span>")
+			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
 			return
 
 		var/obj/overlay/B = new /obj/overlay(target.loc)
@@ -41,8 +41,8 @@
 		SPAWN_DBG(0.5 SECONDS)
 			qdel(B)
 			target.canmove = 1
-		boutput(target, "<span style=\"color:blue\">Your eyes cry out in pain!</span>")
-		target.visible_message("<span style=\"color:red\">Sparks fly out of [target]'s eyes!</span>")
+		boutput(target, "<span class='notice'>Your eyes cry out in pain!</span>")
+		target.visible_message("<span class='alert'>Sparks fly out of [target]'s eyes!</span>")
 
 		//Wire: People wearing cure-blindness glasses should get a LITTLE protection from the blind spell
 		var/blindProtected = 0
@@ -62,7 +62,7 @@
 			target.take_eye_damage(blindProtected ? 5 : 10, 1)
 			target.change_eye_blurry(blindProtected ? 10 : 20)
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Your spell doesn't last as long without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
 			target.changeStatus("weakened", 1 SECOND)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")

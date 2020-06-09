@@ -11,7 +11,7 @@
 		else if(projectile.mob_shooter)
 			if(prob(50))
 				explosion(projectile, T, -1, -1, 1, 1)
-			boutput(projectile.mob_shooter, "<span style='color:blue'>Your spell is weakened without a staff to channel it.</span>")
+			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
 		fireflash(T, 1, 1)
 
 /datum/targetable/spell/fireball

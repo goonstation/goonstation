@@ -86,7 +86,7 @@ var/list/clothingbooth_items = list()
 					money -= text2num(cb_item.cost)
 					usr.put_in_hand_or_drop(new itempath(src))
 				else
-					boutput(usr, "<span style=\"color:red\">The clothing machine rattles and roars with anger! You must offer more tribute to the goblin tailor!</span>")
+					boutput(usr, "<span class='alert'>The clothing machine rattles and roars with anger! You must offer more tribute to the goblin tailor!</span>")
 					var/wiggle = 6
 					while(wiggle > 0)
 						wiggle--
@@ -114,7 +114,7 @@ var/list/clothingbooth_items = list()
 	if(istype(weapon, /obj/item/spacecash))
 		src.money += weapon.amount
 		weapon.amount = 0
-		user.visible_message("<span style=\"color:blue\">[user.name] inserts credits into the- Wait, was that a hand?</span>","<span style=\"color:blue\">A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
+		user.visible_message("<span class='notice'>[user.name] inserts credits into the- Wait, was that a hand?</span>","<span class='notice'>A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
 		user.u_equip(weapon)
 		weapon.dropped()
 		qdel(weapon)
@@ -125,7 +125,7 @@ var/list/clothingbooth_items = list()
 				var/mob/GM = G.affecting
 				if ((istype(src, /obj/machinery/clothingbooth)) && (src.open == 1))
 					GM.set_loc(src)
-					user.visible_message("<span style=\"color:red\"><b>[user] stuffs [GM.name] into [src]!</b></span>","<span style=\"color:red\"><b>You stuff [GM.name] into [src]!</b></span>")
+					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
 					src.set_open(0)
 					qdel(G)
 					logTheThing("combat", user, GM, "places %target% into [src] at [log_loc(src)].")
@@ -153,29 +153,29 @@ var/list/clothingbooth_items = list()
 		src.set_open(0)
 		sleep(0.5 SECONDS)
 		user.set_loc(src)
-		boutput(user, "<span style=\"color:green\"><br>Welcome to the clothing booth! Click an item to veiw its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
+		boutput(user, "<span class='success'><br>Welcome to the clothing booth! Click an item to veiw its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
 		uisetup(user)
 	else
 		if(src.yeeting == 0)
 			src.yeeting = 1
-			user.visible_message("<span style=\"color:red\">Uh oh...It looks like [user.name] is thinking about charging into the clothing booth...</span>","<span style=\"color:red\">You are working up the nerve to pull the occupant out...</span>")
+			user.visible_message("<span class='alert'>Uh oh...It looks like [user.name] is thinking about charging into the clothing booth...</span>","<span class='alert'>You are working up the nerve to pull the occupant out...</span>")
 			SPAWN_DBG(40)
 				if((user in range(1, src)) && (locate(/mob) in src))
 					if (prob(45))
-						user.visible_message("<span style=\"color:green\">phew...[user.name] decided not to enter the booth.</span>","<span style=\"color:green\">Maybe not...they could be changing...</span>")
+						user.visible_message("<span class='success'>phew...[user.name] decided not to enter the booth.</span>","<span class='success'>Maybe not...they could be changing...</span>")
 					else
 						if((user in range(1, src)) && (locate(/mob) in src))
-							user.visible_message("<span style=\"color:red\"><b>OH GOD, [uppertext(user.name)] IS GOING IN! THEY'RE INSANE!</b></span>","<span style=\"color:red\">You're going in...</span>")
+							user.visible_message("<span class='alert'><b>OH GOD, [uppertext(user.name)] IS GOING IN! THEY'RE INSANE!</b></span>","<span class='alert'>You're going in...</span>")
 							src.set_open(1)
 							if((user in range(1, src)) && (locate(/mob) in src))
 								for(var/mob/M in src.contents)
 									M.set_loc(src.loc)
 									M.changeStatus("weakened", 2 SECONDS)
 									M.changeStatus("stunned", 2 SECONDS)
-									src.visible_message("<span style=\"color:red\"><b>[uppertext(user.name)] EMERGES FROM THE BOOTH DRAGGING [uppertext(M.name)] BY THE LEGS!</b></span>")
+									src.visible_message("<span class='alert'><b>[uppertext(user.name)] EMERGES FROM THE BOOTH DRAGGING [uppertext(M.name)] BY THE LEGS!</b></span>")
 				else
-					user.visible_message("<span style=\"color:green\">It looks like [user.name] decided against entering the booth.</span>","<span style=\"color:red\">You are too far away from the booth or the occupant has escaped.</span>")
+					user.visible_message("<span class='success'>It looks like [user.name] decided against entering the booth.</span>","<span class='alert'>You are too far away from the booth or the occupant has escaped.</span>")
 			src.yeeting = 0
 
 		else
-			boutput(user, "<span style=\"color:red\">Someone is already working up the nerve to pull the ouccupant out.</span>")
+			boutput(user, "<span class='alert'>Someone is already working up the nerve to pull the ouccupant out.</span>")

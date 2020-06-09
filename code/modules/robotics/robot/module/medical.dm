@@ -4,7 +4,7 @@
 	icon_state = "medical"
 	mod_hudicon = "medical"
 	included_cosmetic = /datum/robot_cosmetic/medical
-	included_items = /datum/robot/module_item_creator/recursive/module/medical
+	included_tools = /datum/robot/module_tool_creator/recursive/module/medical
 	radio_type = /obj/item/device/radio/headset/medical
 
 /datum/robot_cosmetic/medical

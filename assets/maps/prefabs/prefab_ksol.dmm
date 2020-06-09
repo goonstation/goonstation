@@ -124,7 +124,7 @@
 "ct" = (/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/floor/airless/engine,/area/noGenerate)
 "cu" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/raw_material/shard/glass,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
 "cv" = (/obj/lattice,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cw" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/old_grenade/gravaton,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+"cw" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/old_grenade/graviton,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
 "cx" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It's just sideways but apparently that's enough to stop it dead in its tracks."; icon = 'icons/obj/vending.dmi'; icon_state = "grife-fallen"; name = "broken vending machine"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 10},/area/noGenerate)
 "cy" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 6},/area/noGenerate)
 "cz" = (/obj/grille/steel,/obj/window/reinforced/west,/turf/simulated/floor/airless/plating,/area/noGenerate)

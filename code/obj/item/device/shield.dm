@@ -14,11 +14,11 @@
 /obj/item/device/shield/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		boutput(user, "<span style=\"color:blue\">The shield is now active.</span>")
+		boutput(user, "<span class='notice'>The shield is now active.</span>")
 		src.icon_state = "shield1"
 		user.update_inhands()
 	else
-		boutput(user, "<span style=\"color:blue\">The shield is now inactive.</span>")
+		boutput(user, "<span class='notice'>The shield is now inactive.</span>")
 		src.icon_state = "shield0"
 		user.update_inhands()
 	src.add_fingerprint(user)

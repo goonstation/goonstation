@@ -17,7 +17,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<b><span style='color:red'>[src] wails!</span></b>"
+					return "<b><span class='alert'>[src] wails!</span></b>"
 		return null
 
 	specific_emote_type(var/act)

@@ -135,6 +135,14 @@
 	health = 33
 	aggressive = 0
 
+	New()
+		pets += src
+		..()
+
+	disposing()
+		pets -= src
+		..()
+
 /obj/critter/opossum
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
@@ -155,9 +163,17 @@
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 1
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 	on_revive()
 		..()
-		src.visible_message("<span style=\"color:blue\"><b>[src]</b> stops playing dead and gets back up!</span>")
+		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
 		src.alive = 1
 		src.set_density(1)
 		src.health = initial(src.health)
@@ -380,6 +396,14 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	generic = 0
 	var/swiped = 0
 
+	New()
+		pets += src
+		..()
+
+	disposing()
+		pets -= src
+		..()
+
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.alive || cattype == "-emagged")
 			return 0
@@ -458,10 +482,13 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 
 	New()
 		. = ..()
+		if (!isrestrictedz(src.loc.z)) //I don't want the other centcom dogs thanks
+			pets += src
 		START_TRACKING
 
 	disposing()
 		. = ..()
+		pets -= src
 		STOP_TRACKING
 /*
 	seek_target()
@@ -511,7 +538,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			if(prob(30))
 				src.icon_state = "[src.doggy]-lying"
 				for(var/mob/O in hearers(src, null))
-					O.show_message("<span style=\"color:blue\"><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
+					O.show_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
 				SPAWN_DBG(3 SECONDS)
 				src.icon_state = "[src.doggy]"
 			return
@@ -529,7 +556,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:blue\"><b>[src]</b> wags his tail and gets back up!</span>")
+				O.show_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
 			src.alive = 1
 			set_density(1)
 			src.health = 100
@@ -674,7 +701,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN_DBG(1 SECOND)
-				boutput(M, "<span style=\"color:red\"><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
+				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)
@@ -686,12 +713,12 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))//Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
-			boutput(M, "<span style=\"color:red\"><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN_DBG(1 MINUTE)
-				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -1069,7 +1096,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if (prob(src.chatter_chance) && !src.muted)
 				src.chatter()
 			if (prob(5) && !src.muted)
-				src.visible_message("<span style='color:blue'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
+				src.visible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
 			if (prob(15))
 				flick("[src.species]-flaploop", src)
 			//if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)
@@ -1176,7 +1203,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			else
 				src.visible_message("<b>[user]</b> [pick("gives [src] a scritch", "pets [src]", "cuddles [src]", "snuggles [src]")]!")
 				if (prob(15))
-					src.visible_message("<span style='color:blue'><b>[src]</b> chirps happily!</span>")
+					src.visible_message("<span class='notice'><b>[src]</b> chirps happily!</span>")
 				return
 		else
 			..()
@@ -1320,7 +1347,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<span class='combat'>[src] is distracted by [src.being_offered_treasure] and ignores [user]!</span>")
 				return
 			else
-				src.visible_message("<span style='color:blue'><b>[user]</b> offers [W] to [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> offers [W] to [src]!</span>")
 				var/turf/T = get_turf(src) // we'll path back here to grab it if we have to
 				src.wanderer = 0
 				src.being_offered_treasure = "[user]'s [W]"
@@ -1341,7 +1368,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 									src.treasure_loc = null
 									src.impatience = 0
 								walk_to(src, 0)
-								src.visible_message("<span style='color:blue'>\The [src] takes [W] from [user]!</span>")
+								src.visible_message("<span class='notice'>\The [src] takes [W] from [user]!</span>")
 		else
 			return ..()
 
@@ -1349,10 +1376,10 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (!src.alive || src.sleeping)
 			return
 		if (prob(20))
-			src.visible_message("<span style='color:blue'>\The [src] responds with a dance of its own!</span>")
+			src.visible_message("<span class='notice'>\The [src] responds with a dance of its own!</span>")
 			src.dance()
 		else
-			src.visible_message("<span style='color:blue'>\The [src] flaps and bobs [pick("to the beat", "in tune", "approvingly", "happily")].</span>")
+			src.visible_message("<span class='notice'>\The [src] flaps and bobs [pick("to the beat", "in tune", "approvingly", "happily")].</span>")
 			flick("[src.species]-flaploop", src)
 		if (prob(3))
 			src.create_feather()
@@ -1877,7 +1904,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				animate_spin(src, pick("L","R"), 1, 0)
 
 			if (prob(10))
-				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","spazzes out","wiggles","wobbles","dooks")]!")
+				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles","dooks")]!")
 
 			src.freakout--
 			if (!src.freakout)
@@ -1941,6 +1968,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	generic = 0 // no let's not have "vile Piggy" or "busted Piggy" tia
 	lock_color = 1
 
+	New()
+		if (!isrestrictedz(src.loc.z)) //don't want the centcom ferrets
+			pets += src
+		..()
+
+	disposing()
+		pets -= src
+		..()
+
 //Wire: Another special ferret based on my OTHER now dead IRL ferret. Has similar paradox naming.
 /obj/critter/meatslinky/monkey
 	name = "Monkey"
@@ -1948,6 +1984,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	health = 50
 	generic = 0
 	lock_color = 1
+
+	New()
+		if (!isrestrictedz(src.loc.z)) //don't want the centcom ferrets
+			pets += src
+		..()
+
+	disposing()
+		pets -= src
+		..()
 
 /obj/critter/raccoon
 	name = "space raccoon"
@@ -2028,7 +2073,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (istype(W, /obj/item/shaker))
 			var/obj/item/shaker/S = W
 			if (S.stuff == "salt" && S.shakes < 15)
-				src.visible_message("<span style='color:red'>[src] shrivels up!</span>")
+				src.visible_message("<span class='alert'>[src] shrivels up!</span>")
 				src.CritterDeath()
 				S.shakes ++
 				return

@@ -40,7 +40,7 @@
 		var/mob/living/L = target
 
 		//playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		//M.visible_message("<span style=\"color:blue\">[M] shakes [L], trying to wake them up!</span>")
+		//M.visible_message("<span class='notice'>[M] shakes [L], trying to wake them up!</span>")
 		M.shake_awake(target)
 		L.add_fingerprint(M) // Why not leave some forensic evidence?
 		if (!(L.bioHolder && L.traitHolder.hasTrait("training_chaplain")))

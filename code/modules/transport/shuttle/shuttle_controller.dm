@@ -231,7 +231,7 @@ datum/shuttle_controller
 								if( !O.anchored )
 									var/atom/target = get_edge_target_turf(O, pick(alldirs))
 									if( O.buckled_guy )
-										boutput( O.buckled_guy, "<span style='color:red'>The [O] shoots off due to being unsecured!</span>" )
+										boutput( O.buckled_guy, "<span class='alert'>The [O] shoots off due to being unsecured!</span>" )
 										O.unbuckle()
 									if( target )
 										SPAWN_DBG(0)

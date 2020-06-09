@@ -10,14 +10,16 @@
 	var/brightness = 1
 	var/height = 1
 	var/datum/light/light
+	var/light_type = /datum/light/point
 
 	New()
 		..()
-		light = new /datum/light/point
-		light.set_brightness(src.brightness)
-		light.set_color(col_r, col_g, col_b)
-		light.set_height(src.height)
-		light.attach(src)
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(src.brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(src.height)
+			light.attach(src)
 
 	pickup(mob/user)
 		..()
@@ -28,6 +30,11 @@
 		SPAWN_DBG(0)
 			if (src.loc != user)
 				light.attach(src)
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 /obj/item/device/light/flashlight
 	name = "flashlight"
@@ -47,6 +54,8 @@
 	col_g = 0.8
 	col_b = 0.7
 	module_research = list("science" = 1, "devices" = 1)
+	light_type = /datum/light/line
+	brightness = 4.6
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -86,7 +95,7 @@
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
 							logTheThing("combat", user, target, "flashes %target% with an emagged flashlight.")
-				user.visible_message("<span style=\"color:red\">The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span style=\"color:red\">The bulb in your hand explodes with a blinding flash!</span>")
+				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light.disable()
 				icon_state = "flightbroken"
@@ -129,11 +138,11 @@
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> heats [src] with [W].</span>")
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
+			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
 			if (src.heated >= 3 || prob(5 + (heated * 20)))
-				user.visible_message("<span style=\"color:red\">[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
+				user.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
 				if (user.reagents)
 					user.reagents.add_reagent("radium", 8, null, T0C + heated * 200)
 				burst()
@@ -144,7 +153,7 @@
 			if(iscarbon(src.loc))
 				if (src.loc.reagents)
 					src.loc.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			src.visible_message("<span style=\"color:red\">[src] bursts open, spraying hot liquid on [src.loc]!</span>")
+			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
 	throw_impact(atom/A)
@@ -153,17 +162,17 @@
 			if(iscarbon(A))
 				if (A.reagents)
 					A.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			A.visible_message("<span style=\"color:red\">[src] bursts open, spraying hot liquid on [A]!</span>")
+			A.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [A]!</span>")
 			burst()
 
 	attack_self(mob/user as mob)
 		if (!on)
-			boutput(user, "<span style=\"color:blue\">You crack [src].</span>")
+			boutput(user, "<span class='notice'>You crack [src].</span>")
 			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
 				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 				if (user.reagents)
 					if (heated > 0)
@@ -172,7 +181,7 @@
 						user.reagents.add_reagent("radium", 10)
 				burst()
 			else
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
 
 /obj/item/device/light/glowstick/white
 	base_state = "glowstick-white"
@@ -249,7 +258,7 @@
 /obj/item/device/light/candle
 	name = "candle"
 	desc = "It's a big candle."
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle-off"
 	density = 0
 	anchored = 0
@@ -269,23 +278,23 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!src.on)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span style=\"color:red\">Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span style=\"color:red\">With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span style=\"color:red\"><b>[user] lights [src] with [W].</span>")
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 
 			else if (W.burning)
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 		else
 			return ..()
 

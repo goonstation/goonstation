@@ -49,7 +49,7 @@ datum/controller/process/lighting
 					L.set_height(L.height_des, queued_run = 1)
 
 				if (L.dirty_flags & D_MOVE)
-					L.move(L.x_des,L.y_des,L.z_des, queued_run = 1)
+					L.move(L.x_des,L.y_des,L.z_des,L.dir_des, queued_run = 1)
 
 
 				if (L.dirty_flags & D_ENABLE)

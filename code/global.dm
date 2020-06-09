@@ -51,6 +51,7 @@ var/global
 	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
 	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
 	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
+	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
 
 	turf/buzztile = null
 
@@ -65,11 +66,13 @@ var/global
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
+	list/ai_mobs = list()
 	list/AIs = list() //sorry, quicker loop through when we searching for AIs
 	list/doors = list()
 	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
+	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
@@ -81,6 +84,7 @@ var/global
 
 	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
+	list/pets = list() //station pets
 	list/ghost_drones = list()
 	list/muted_keys = list()
 
@@ -660,7 +664,7 @@ var/global
 	list/reagents_cache = list()
 
 	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/gravaton","/mob/living/carbon/human/krampus")
+	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/graviton","/mob/living/carbon/human/krampus")
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
@@ -746,12 +750,6 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
-var/global/mentorhelp_text_color = "#CC0066"
-/proc/set_mentorhelp_color(var/new_color as color)
-	if (!new_color)
-		new_color = input(usr, "Select Mentorhelp color", "Selection", mentorhelp_text_color) as null|color
-	if (new_color)
-		mentorhelp_text_color = new_color
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

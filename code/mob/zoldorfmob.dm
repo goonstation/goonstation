@@ -149,7 +149,7 @@
 		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > 0))
 			if(src.emoting)
 				return
-			src.visible_message("<span style=\"color:blue\"><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
+			src.visible_message("<span class='notice'><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
 			if (prob(50))
 				animate_spin(src, "R", 1, 0)
 			else
@@ -272,7 +272,7 @@
 				src.emoting = 1
 				soulcache = src.icon
 				if(!src.invisibility)
-					src.visible_message("<span style=\"color:red\"><b>The ectoplasm falls off! Oh no!</b></span>")
+					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
 					src.invisibility = 10
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
@@ -310,11 +310,11 @@
 			if(src.homebooth)
 				src.set_loc(homebooth)
 			else
-				src.visible_message("<span style=\"color:red\"><b>Poof!</b></span>")
+				src.visible_message("<span class='alert'><b>Poof!</b></span>")
 				src.gib(1)
 				return
 		var/obj/machinery/playerzoldorf/pz = src.loc
-		src.visible_message("<span style=\"color:red\"><b>Poof!</b></span>")
+		src.visible_message("<span class='alert'><b>Poof!</b></span>")
 		src.free()
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")

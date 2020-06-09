@@ -38,7 +38,7 @@
 		if (iscluwne(user))
 			fail_chance = 100
 		if (prob(fail_chance))
-			user.visible_message("<span style=\"color:red\"><b>[user.name]</b> accidentally cuts [himself_or_herself(user)] while fooling around with [src] and drops them!</span>")
+			user.visible_message("<span class='alert'><b>[user.name]</b> accidentally cuts [himself_or_herself(user)] while fooling around with [src] and drops them!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
 			user.TakeDamage(user.zone_sel.selecting, 3, 0)
 			take_bleeding_damage(user, user, 3, DAMAGE_CUT)

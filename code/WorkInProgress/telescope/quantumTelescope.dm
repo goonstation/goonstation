@@ -36,11 +36,11 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		boot_if_away()
 
 		if(using && using != user)
-			boutput(user, "<span style=\"color:red\">Somebody is already using that machine.</span>")
+			boutput(user, "<span class='alert'>Somebody is already using that machine.</span>")
 			return
 
 		using = user
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		//Other resources are loaded in the files like <link rel="stylesheet" type="text/css" href="{{resource("css/telescope.css")}}">
