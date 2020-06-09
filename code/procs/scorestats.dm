@@ -245,8 +245,52 @@ var/datum/score_tracker/score_tracker
 				var/obj/item/card/id/ID = I
 				. += ID.amount
 
+	proc/heisenhat_stats()
+		. = list()
+		. += "<B>Heisenbee's hat:</B> "
+		var/found_hb = 0
+		var/tier = world.load_intra_round_value("heisenbee_tier")
+		for(var/obj/critter/domestic_bee/heisenbee/HB in pets)
+			var/obj/item/hat = locate(HB.original_hat_ref)
+			if(hat)
+				if(hat.loc != HB)
+					var/atom/movable/L = hat.loc
+					while(istype(L) && !istype(L, /mob))
+						L = L.loc
+					. += "[hat][inline_bicon(getFlatIcon(hat, no_anim=TRUE))](tier [HB.original_tier])"
+					if(istype(L, /mob))
+						. += " \[STOLEN BY [L]\]"
+					else
+						. += " \[STOLEN!\]"
+					if(HB.hat)
+						var/dead = HB.alive ? "" : "(dead) "
+						. += "<BR>Also someone put [HB.hat] on [dead][HB][inline_bicon(getFlatIcon(HB, no_anim=TRUE))]but that doesn't count."
+				else if(!HB.alive)
+					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
+					. += " \[🐝 MURDERED!\]"
+				else
+					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
+			else if(HB.alive)
+				if(HB.original_tier)
+					. += "\[DESTROYED!\]"
+				else
+					. += "No hat yet."
+			else if(HB.original_tier)
+				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
+			else
+				. += "No hat yet. \[🐝 MURDERED!\]"
+			found_hb = 1
+			break
+		if(!found_hb)
+			if(tier)
+				. += "Heisenbee is missing but the hat is safe at tier [tier]."
+			else
+				. += "Heisenbee is missing and has no hat."
+		. += "<BR>"
+		return jointext(., "")
+
 	proc/escapee_facts()
-		. = ""
+		. = list()
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
 		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
@@ -258,7 +302,8 @@ var/datum/score_tracker/score_tracker
 
 		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
-		return .
+
+		return jointext(., "")
 
 
 /mob/proc/scorestats()
@@ -269,7 +314,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
-			score_tracker.score_text += " <b>nice<b>"
+			score_tracker.score_text += " <b>nice</b>"
 		score_tracker.score_text += "<BR>"
 		score_tracker.score_text += "<B><U>GRADE: [score_tracker.grade]</U></B><BR>"
 		score_tracker.score_text += "<BR>"
@@ -300,6 +345,7 @@ var/datum/score_tracker/score_tracker
 		*/
 		score_tracker.score_text += "<B><U>STATISTICS</U></B><BR>"
 		score_tracker.score_text += score_tracker.escapee_facts()
+		score_tracker.score_text += score_tracker.heisenhat_stats()
 
 		score_tracker.score_text += "<HR>"
 

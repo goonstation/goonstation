@@ -254,12 +254,14 @@
 							H.vision.set_scan(0)
 
 			equipped(var/mob/living/user, var/slot)
+				..()
 				if(!isliving(user))
 					return
-				if (slot == "head" && on)
+				if (slot == SLOT_HEAD && on)
 					user.vision.set_scan(1)
 
 			unequipped(var/mob/living/user)
+				..()
 				if(!isliving(user))
 					return
 				user.vision.set_scan(0)
@@ -294,7 +296,8 @@
 							assigned.images.Add(I)
 
 			equipped(var/mob/user, var/slot)
-				if (slot == "head")
+				..()
+				if (slot == SLOT_HEAD)
 					assigned = user.client
 					SPAWN_DBG(-1)
 						//updateIcons()
@@ -303,6 +306,7 @@
 				return
 
 			unequipped(var/mob/user)
+				..()
 				if (assigned)
 					assigned.images.Remove(health_mon_icons)
 					assigned = null
@@ -540,6 +544,7 @@
 		..()
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
+		setProperty("exploprot", 2)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -618,6 +623,7 @@
 			weeoo_in_progress = 0
 
 	unequipped(var/mob/user)
+		..()
 		if (src.weeoo_in_progress)
 			src.weeoo_in_progress = 0
 
@@ -675,6 +681,7 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
+		setProperty("exploprot", 1)
 
 	syndicate
 		name = "Syndicate Command Helmet"

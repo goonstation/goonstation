@@ -323,6 +323,7 @@ Obsidian Crown
 	var/max_damage = 0
 
 	equipped(var/mob/user, var/slot)
+		..()
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)

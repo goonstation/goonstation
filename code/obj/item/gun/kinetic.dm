@@ -934,6 +934,7 @@
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 
 	spread_angle = 8
 	can_dual_wield = 0
@@ -966,6 +967,7 @@
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
+	object_flags = NO_ARM_ATTACH
 
 	New()
 		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
@@ -1126,7 +1128,7 @@
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
-
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	slowdown = 7
 	slowdown_time = 5
 

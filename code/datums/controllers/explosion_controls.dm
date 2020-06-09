@@ -10,7 +10,7 @@ var/datum/explosion_controller/explosions
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1)
 		var/atom/A = epicenter
 		if(istype(A))
-			var/severity = power >= 6 ? 1 : power >= 3 ? 2 : 3
+			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
 			var/fprint = null
 			if(istype(source))
 				fprint = source.fingerprintslast
@@ -43,6 +43,7 @@ var/datum/explosion_controller/explosions
 		var/last_touched
 
 		for (var/turf/T in queued_turfs)
+			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
@@ -51,7 +52,7 @@ var/datum/explosion_controller/explosions
 					A.ex_act(1, last_touched, p)
 					if (istype(A, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
-			else if (p >= 3)
+			else if (p > 3)
 				for (var/atom/A as obj|mob in T)
 					A.ex_act(2, last_touched, p)
 					if (istype(A, /obj/cable))
@@ -62,12 +63,12 @@ var/datum/explosion_controller/explosions
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
 		for (var/turf/T in queued_turfs)
-			p = queued_turfs[T]
+			p=queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
 			if (p >= 6)
 				T.ex_act(1, last_touched)
-			else if (p >= 3)
+			else if (p > 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)

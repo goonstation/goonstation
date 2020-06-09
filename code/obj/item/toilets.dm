@@ -107,7 +107,7 @@ var/list/all_toilets = null
 			else
 				user.visible_message("<span class='notice'>[M] zips up.</span>", "<span class='notice'>You zip up.</span>")
 //			boutput(world, "[M] is no longer buckled to [src]")
-			M.anchored = 0
+			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
 	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))

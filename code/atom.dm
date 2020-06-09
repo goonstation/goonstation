@@ -1041,7 +1041,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
 	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())

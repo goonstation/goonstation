@@ -85,7 +85,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 					boutput(C, "<span class='alert'>You may not start this type of vote because you recently died.</span>")
 					return
 				if(C.mob.stat && !C.holder)
-					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconcious.</span>")
+					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconscious.</span>")
 					return
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/restart()
@@ -255,7 +255,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	end_vote()
 		. = ..()
 		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
-		if(get_winner() != "Yes" || get_winner_num() < round(clients.len * 0.5))
+		if(get_winner() != "Yes" || get_winner_num() < round(total_clients() * 0.5))
 			boutput(world, "<span class='alert'><BIG><B>Minimum mode votes not reached (~50% of players), game mode not changed.</B></BIG></span>")
 		else if(current_state == GAME_STATE_PREGAME)
 			boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
@@ -276,7 +276,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		. = ..()
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.5))
+			if(get_winner_num() < round(total_clients() * 0.5))
 				boutput(world, "<span class='success'><BIG><B>Minimum restart votes not reached (~50% of players).</B></BIG></span>")
 				qdel(src)
 				return
@@ -309,7 +309,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		vote_manager.active_vote = null
 		boutput(world, "<span class='success'><BIG><B>Vote ban result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.7))
+			if(get_winner_num() < round(total_clients() * 0.7))
 				boutput(world, "<span class='success'><BIG><B>Minimum ban votes not reached (~70% of players) - Player not banned.</B></BIG></span>")
 				qdel(src)
 				return
@@ -348,7 +348,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		vote_manager.active_vote = null
 		boutput(world, "<span class='success'>Vote mute result: [get_winner()]</span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.5))
+			if(get_winner_num() < round(total_clients() * 0.5))
 				boutput(world, "<span class='success'><BIG><B>Minimum mute votes not reached (~50% of players) - Player not muted.</B></BIG></span>")
 				qdel(src)
 				return

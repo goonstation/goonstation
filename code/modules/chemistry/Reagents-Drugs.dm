@@ -455,7 +455,7 @@ datum
 			var/remove_buff = 0
 			value = 3
 			thirst_value = -0.07
-			stun_resist = 5
+			stun_resist = 8
 
 			pooled()
 				..()

@@ -67,7 +67,7 @@ datum
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_morphine", -5)
+					remove_buff = M.add_stam_mod_regen("r_morphine", -3)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				return
 
@@ -423,16 +423,16 @@ datum
 		medical/synaptizine // COGWERKS CHEM REVISION PROJECT. remove this, make epinephrine (epinephrine) do the same thing
 			name = "synaptizine"
 			id = "synaptizine"
-			description = "Synaptizine is used to treat neuroleptic shock. Can be used to help remove disabling symptoms such as paralysis."
+			description = "Synaptizine a mild medical stimulant. Can be used to reduce drowsyness and resist disabling symptoms such as paralysis."
 			reagent_state = LIQUID
-			fluid_r = 255
+			fluid_r = 200
 			fluid_g = 0
 			fluid_b = 255
 			transparency = 175
 			overdose = 40
 			var/remove_buff = 0
 			value = 7
-			stun_resist = 27
+			stun_resist = 31
 
 			on_add()
 				if(ismob(holder?.my_atom))

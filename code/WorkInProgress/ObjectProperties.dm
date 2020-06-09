@@ -215,15 +215,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
 
-	exploprot
-		name = "Resistance (Explosion)"
-		id = "exploprot"
-		desc = "Protects from explosions." //Value is % protection.
-		tooltipImg = "explosion.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]"
-
 	conductivity
 		name = "Conductivity"
 		id = "conductivity"
@@ -495,3 +486,19 @@ to say if there's demand for that.
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, owner)
+
+/datum/objectProperty/equipment/exploprot
+	name = "Resistance (Explosion)"
+	id = "exploprot"
+	desc = "Protects from explosions." //Value is % protection.
+	tooltipImg = "explosion.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_EXPLOPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, owner)

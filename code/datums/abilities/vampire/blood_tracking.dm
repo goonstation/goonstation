@@ -22,7 +22,7 @@
 		if (!M)
 			return 1
 
-		if (iscritter(M) && !istype(H))
+		if (ismobcritter(M) && !istype(H))
 			boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 			return 1
 

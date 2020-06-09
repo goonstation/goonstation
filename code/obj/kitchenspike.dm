@@ -24,6 +24,7 @@
 		if (G.affecting.client)
 			newmob = new/mob/dead/observer(G.affecting)
 			G.affecting:client:mob = newmob
+		G.affecting.unequip_all()
 		qdel(G.affecting)
 		qdel(G)
 

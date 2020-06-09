@@ -368,23 +368,20 @@ var/obj/item/dummy/click_dummy = new
 	if(src.l_hand)
 		if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD)
 			. += src.l_hand
-		else if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1)
-			. += src.l_hand
+
 
 		if (src.l_hand.c_flags & HAS_GRAB_EQUIP)
 			for(var/obj/item/grab/G in src.l_hand)
-				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1))
+				if (G.c_flags & EQUIPPED_WHILE_HELD)
 					. += G
 
 	if(src.r_hand)
 		if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD)
 			. += src.r_hand
-		else if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0)
-			. += src.r_hand
 
 		if (src.r_hand.c_flags & HAS_GRAB_EQUIP)
 			for(var/obj/item/grab/G in src.r_hand)
-				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0))
+				if (G.c_flags & EQUIPPED_WHILE_HELD)
 					. += G
 
 

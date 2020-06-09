@@ -188,9 +188,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for (var/client/C in animateclients)
 		if (C)
 			Z_LOG_DEBUG("Game Start/A", "Animating client [C]")
+			var/target_color = "#FFFFFF"
+			if(C.color != "#000000")
+				target_color = C.color
 			animate(C, color = "#000000", time = 0, flags = ANIMATION_END_NOW)
 			animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
-			animate(color = "#FFFFFF", time = 10, easing = QUAD_EASING | EASE_IN)
+			animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
 
 
 	current_state = GAME_STATE_PLAYING
@@ -205,16 +208,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		event_wormhole_buildturflist()
 
 		mode.post_post_setup()
-
-		if (istype(random_events,/datum/event_controller/))
-			SPAWN_DBG(random_events.minor_events_begin)
-				message_admins("<span class='notice'>Minor Event cycle has been started.</span>")
-				random_events.minor_event_cycle()
-			SPAWN_DBG(random_events.events_begin)
-				message_admins("<span class='notice'>Random Event cycle has been started.</span>")
-				random_events.event_cycle()
-			random_events.next_event = random_events.events_begin
-			random_events.next_minor_event = random_events.minor_events_begin
 
 		for(var/obj/landmark/artifact/A in landmarks)
 			LAGCHECK(LAG_LOW)
@@ -275,7 +268,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	processScheduler.start()
 
-	if (clients.len >= OVERLOAD_PLAYERCOUNT)
+	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 
 

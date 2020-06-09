@@ -239,23 +239,23 @@
 #define ARMS			8
 
 // other clothing-specific bitflags, applied via the c_flags var
-#define SPACEWEAR 1				// combined HEADSPACE and SUITSPACE into this because seriously??
-#define MASKINTERNALS 2			// mask allows internals
-#define COVERSEYES 4			// combined COVERSEYES, COVERSEYES and COVERSEYES into this
-#define COVERSMOUTH 8			// combined COVERSMOUTH and COVERSMOUTH into this.
-#define ONESIZEFITSALL 16		// can be worn by fatties (or children? ugh)
-#define NOSLIP 32				// for galoshes/magic sandals/etc that prevent slipping on things
-#define SLEEVELESS 64			// ain't got no sleeeeeves
-#define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
-#define IS_JETPACK 256
-#define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
-#define BLOCK_TOOLTIP 4096				//whether or not we should show extra tooltip info about blocking with this item
-#define BLOCK_CUT 8192					//block an extra point of cut damage when used to block
-#define BLOCK_STAB 16384				//block an extra point of stab damage when used to block
-#define BLOCK_BURN 32768				//block an extra point of burn damage when used to block
-#define BLOCK_BLUNT 65536				//block an extra point of blunt damage when used to block
+#define SPACEWEAR					1		// combined HEADSPACE and SUITSPACE into this because seriously??
+#define MASKINTERNALS				2		// mask allows internals
+#define COVERSEYES					4		// combined COVERSEYES, COVERSEYES and COVERSEYES into this
+#define COVERSMOUTH					8		// combined COVERSMOUTH and COVERSMOUTH into this.
+#define ONESIZEFITSALL				16		// can be worn by fatties (or children? ugh)
+#define NOSLIP						32		// for galoshes/magic sandals/etc that prevent slipping on things
+#define SLEEVELESS					64		// ain't got no sleeeeeves
+#define BLOCKSMOKE					128		//block smoke inhalations (gas mask)
+#define IS_JETPACK					256
+#define EQUIPPED_WHILE_HELD			512		//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define NOT_EQUIPPED_WHEN_WORN		1024	//return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
+#define HAS_GRAB_EQUIP				2048 	//if we currently have a grab (or by extention, a block) attached to us
+#define BLOCK_TOOLTIP				4096	//whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_CUT					8192	//block an extra point of cut damage when used to block
+#define BLOCK_STAB					16384	//block an extra point of stab damage when used to block
+#define BLOCK_BURN					32768	//block an extra point of burn damage when used to block
+#define BLOCK_BLUNT					65536	//block an extra point of blunt damage when used to block
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -712,7 +712,7 @@ proc/default_frequency_color(freq)
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
 #define STAMINA_BLOCK_CHANCE 40 		//Chance to block an attack in disarm mode. Settings this to 0 effectively disables the blocking system.
 #define STAMINA_GRAB_BLOCK_CHANCE 85    //Chance to block grabs.
-#define STAMINA_DEFAULT_BLOCK_COST 7    //Cost of blocking an attack.
+#define STAMINA_DEFAULT_BLOCK_COST 5    //Cost of blocking an attack.
 #define STAMINA_LOW_COST_KICK 1 	    //Does kicking people on the ground cost less stamina ? (Right now it doesnt cost less but rather refunds some because kicking people on the ground is very relaxing OKAY)
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out

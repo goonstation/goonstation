@@ -949,7 +949,7 @@ Contains:
 	if(!M)
 		..()
 		return
-	if (iscritter(M))
+	if (ismobcritter(M))
 		var/mob/living/critter/C = M
 		if (isghostcritter(C))
 			..()

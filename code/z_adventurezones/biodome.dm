@@ -625,6 +625,7 @@ SYNDICATE DRONE FACTORY AREAS
 // spookycoders are welcome to contribute to this thing
 
 /obj/item/clothing/suit/armor/ancient/equipped(var/mob/user, var/slot)
+	..()
 	boutput(user, "<span class='notice'>The armor plates creak oddly as you put on [src].</span>")
 	playsound(src.loc, 'sound/machines/ArtifactEld2.ogg', 30, 1)
 	user.reagents.add_reagent("itching", 10)
