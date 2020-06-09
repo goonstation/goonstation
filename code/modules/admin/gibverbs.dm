@@ -261,7 +261,7 @@
 
 /client/proc/cmd_admin_gib_self()
 	set name = "gibself"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	var/turf/T = get_turf(src.mob)
 	if(T)
