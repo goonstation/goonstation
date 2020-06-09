@@ -2114,7 +2114,7 @@ datum
 			thirst_value = 0.055
 			bladder_value = 0.04
 			energy_value = 1
-			stun_resist = 8
+			stun_resist = 25
 
 			pooled()
 				..()
