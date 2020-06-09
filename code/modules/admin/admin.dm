@@ -190,6 +190,15 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
 				src.show_pref_window(usr)
+		if ("toggle_category")
+			var/cat = href_list["cat"]
+			if(cat in src.hidden_categories)
+				src.owner?.show_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories -= cat
+			else
+				src.owner?.hide_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories |= cat
+			src.show_pref_window(usr)
 		if ("toggle_spawn_in_loc")
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc

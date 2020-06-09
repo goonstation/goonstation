@@ -317,57 +317,10 @@ var/global/IP_alerts = 1
 	admin_only
 	if(!src.holder.animtoggle)
 		src.holder.animtoggle = 1
-		boutput(src, "Atom Verbs Toggled Off")
-
-		src.verbs -= /client/proc/cmd_atom_emergency_stop
-
-		src.verbs -= /client/proc/cmd_emag_all
-		src.verbs -= /client/proc/cmd_emag_type
-		src.verbs -= /client/proc/cmd_emag_target
-
-		src.verbs -= /client/proc/cmd_transmute_type
-
-		src.verbs -= /client/proc/cmd_scale_all
-		src.verbs -= /client/proc/cmd_scale_type
-		src.verbs -= /client/proc/cmd_scale_target
-
-		src.verbs -= /client/proc/cmd_rotate_all
-		src.verbs -= /client/proc/cmd_rotate_type
-		src.verbs -= /client/proc/cmd_rotate_target
-
-		src.verbs -= /client/proc/cmd_spin_all
-		src.verbs -= /client/proc/cmd_spin_type
-		src.verbs -= /client/proc/cmd_spin_target
-
-		src.verbs -= /client/proc/cmd_get_type
-
+		boutput(src, "Atom Verbs Toggled Off but not really, use Change Admin Preferences instead")
 	else
 		src.holder.animtoggle = 0
-		boutput(src, "Atom Verbs Toggled On")
-
-		if (src.holder.level >= LEVEL_ADMIN)
-			src.verbs += /client/proc/cmd_emag_all
-			src.verbs += /client/proc/cmd_scale_all
-			src.verbs += /client/proc/cmd_rotate_all
-			src.verbs += /client/proc/cmd_spin_all
-
-		src.verbs += /client/proc/cmd_atom_emergency_stop
-
-		src.verbs += /client/proc/cmd_emag_type
-		src.verbs += /client/proc/cmd_emag_target
-
-		src.verbs += /client/proc/cmd_transmute_type
-
-		src.verbs += /client/proc/cmd_scale_type
-		src.verbs += /client/proc/cmd_scale_target
-
-		src.verbs += /client/proc/cmd_rotate_type
-		src.verbs += /client/proc/cmd_rotate_target
-
-		src.verbs += /client/proc/cmd_spin_type
-		src.verbs += /client/proc/cmd_spin_target
-
-		src.verbs += /client/proc/cmd_get_type
+		boutput(src, "Atom Verbs Toggled On but not really, use Change Admin Preferences instead")
 
 /client/proc/toggle_view_range()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
