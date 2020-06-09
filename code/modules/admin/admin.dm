@@ -151,6 +151,7 @@ var/global/noir = 0
 		if ("load_admin_prefs")
 			if (src.level >= LEVEL_MOD)
 				src.load_admin_prefs()
+			src.show_pref_window(usr)
 		if ("save_admin_prefs")
 			if (src.level >= LEVEL_MOD)
 				src.save_admin_prefs()
