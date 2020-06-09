@@ -8,5 +8,6 @@
 #define ADMIN_CAT_ATOM "Atom Verbs"
 #define ADMIN_CAT_SERVER_TOGGLES "Server Toggles"
 #define ADMIN_CAT_FUN "Fun"
+#define ADMIN_CAT_UNUSED "You Should Never See This"
 
 #define SET_ADMIN_CAT(CAT) set category = ADMIN_CAT_PREFIX + CAT
