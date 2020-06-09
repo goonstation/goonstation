@@ -347,7 +347,7 @@ var/global/list/playersSeen = list()
 
 //Admin verb to add bans
 /client/proc/cmd_admin_addban ()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Add Ban"
 	set popup_menu = 0
 
