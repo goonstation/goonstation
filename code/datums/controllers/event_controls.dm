@@ -121,8 +121,12 @@ var/datum/event_controller/random_events
 
 			if (alive <= (clients.len - dead_dnr) * 0.75)
 				do_random_event(player_spawn_events, source = "force_spawn")
+				message_admins("<span class='notice'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(clients.len - dead_dnr)]</span>")
+
 			else if (dead_antags >= round(antags * 0.75))
 				do_random_event(antag_spawn_events, source = "force_spawn")
+				message_admins("<span class='notice'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
+
 			else
 				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!<br> ALIVE : [alive], TOTAL COUNTED : [(clients.len - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
 
