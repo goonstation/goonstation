@@ -1429,7 +1429,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
 
 /client/proc/admin_changes()
-	set category = "Admin"
+	set category = "Commands"
 	set name = "Admin Changelog"
 	set desc = "Show or hide the admin changelog"
 	admin_only
