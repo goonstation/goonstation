@@ -25,5 +25,5 @@
 
 	//A bad version of the robutsec... For now.
 	on_life()
-		if (src.health < FAIL_DAMAGE && prob(10))
+		if (src.get_damage() < FAIL_DAMAGE && prob(10))
 			donor.reagents.add_reagent(pick("saline", "salbutamol", "salicylic_acid", "charcoal"), 4)
