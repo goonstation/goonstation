@@ -533,24 +533,6 @@ var/global/debug_messages = 0
 
 	src.delete_state = DELETE_CHECK
 
-// fuck this
-// fuck
-// GO AWAY
-/client/proc/cmd_explosion(var/turf/T in world)
-	set name = "Create Explosion"
-	set popup_menu = 0
-
-	var/esize = input("Enter POWER of Explosion\nPlease use decimals for greater accuracy!)","Explosion Power",null) as num|null
-	if (!esize)
-		return
-	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
-
-	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
-	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
-	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
-
-	explosion_new(null, T, esize, bris)
-	return
 /*
 /client/proc/cmd_ultimategrife()
 	set category = "Debug"
