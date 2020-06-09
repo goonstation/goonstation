@@ -225,7 +225,7 @@
 
 		if(!both_legs)
 			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
-				return
+				return ..()
 
 			if(attachee.limbs.vars[src.slot])
 				boutput(attacher, "<span class='alert'>[attachee.name] already has one of those!</span>")
@@ -234,7 +234,7 @@
 			attachee.limbs.vars[src.slot] = src
 		else
 			if (!(attacher.zone_sel.selecting in list("l_leg","r_leg")))
-				return
+				return ..()
 			else if(attachee.limbs.vars["l_leg"] || attachee.limbs.vars["r_leg"])
 				boutput(attacher, "<span class='alert'>[attachee.name] still has one leg!</span>")
 				return
