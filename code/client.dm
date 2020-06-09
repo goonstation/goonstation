@@ -215,7 +215,7 @@
 	//src.chui = new /datum/chui(src)
 
 	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn)
+	if (!cdn && !(!address || (world.address == src.address)))
 		var/list/chuiResources = list(
 			"browserassets/js/jquery.min.js",
 			"browserassets/js/jquery.nanoscroller.min.js",
