@@ -14,7 +14,6 @@ var/list/admin_verbs = list(
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/game_panel,
-		new/client/proc/game_panel(null, "Secrets", "bring back secrets 2016"),
 		/client/proc/player_panel,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
