@@ -239,6 +239,8 @@
 			if(cat_hidden)
 				src.owner?.hide_verb_category(ADMIN_CAT_PREFIX + cat)
 				src.hidden_categories |= cat
+			else
+				src.owner?.show_verb_category(ADMIN_CAT_PREFIX + cat)
 
 		if (usr)
 			boutput(usr, "<span class='notice'>Admin preferences loaded.</span>")
