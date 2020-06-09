@@ -99,7 +99,7 @@ var/list/xp_archive = list()
 
 		if(actual >= 0)
 			SPAWN_DBG(0)
-				add_xp(key, field_name, actual)
+				//add_xp(key, field_name, actual)
 				add_xp_throttle_entry(key, actual)
 				archive_xp(key, field_name, actual)
 	return
