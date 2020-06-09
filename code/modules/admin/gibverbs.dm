@@ -260,7 +260,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.un_damn()
 
 /client/proc/cmd_admin_gib_self()
-	set name = "gibself"
+	set name = "Gibself"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	var/turf/T = get_turf(src.mob)
