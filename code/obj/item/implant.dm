@@ -78,7 +78,7 @@ THROWING DARTS
 				crit_triggered = 0
 			if(death_triggered && isalive(H))
 				death_triggered = 0
-		else if (iscritter(src.owner))
+		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = owner
 			if (C.health < 0 && !crit_triggered && online)
 				on_crit()
@@ -266,7 +266,7 @@ THROWING DARTS
 				var/turf/T = get_turf(H)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
-		else if (iscritter(src.owner))
+		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = src.owner
 			if (locate(/obj/item/implant/tracking) in C.implants)
 				var/turf/T = get_turf(C)
@@ -549,7 +549,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				if (ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.implant -= src
-				else if (iscritter(owner))
+				else if (ismobcritter(owner))
 					var/mob/living/critter/C = owner
 					C.implants -= src
 
@@ -947,7 +947,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src.imp)
-		else if (iscritter(M))
+		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants.Add(src.imp)
 
@@ -958,7 +958,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		src.update()
 
 	attack(mob/M as mob, mob/user as mob)
-		if (!ishuman(M) && !iscritter(M))
+		if (!ishuman(M) && !ismobcritter(M))
 			return ..()
 
 		if (src.imp && !src.imp.can_implant(M, user))
@@ -1572,7 +1572,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 				H.implant.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(H))
-		else if (iscritter(hit))
+		else if (ismobcritter(hit))
 			var/mob/living/critter/C = hit
 			if (C.can_implant && my_implant.can_implant(C, implant_master))
 				my_implant.set_loc(C)

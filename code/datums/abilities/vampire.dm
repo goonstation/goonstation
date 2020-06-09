@@ -4,7 +4,7 @@
 /////////////////////////////////////////////////// Setup //////////////////////////////////////////
 
 /mob/proc/make_vampire(var/shitty = 0)
-	if (ishuman(src) || iscritter(src))
+	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
 			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
 			if (A && istype(A))
@@ -25,7 +25,7 @@
 			SPAWN_DBG (25) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
-		else if (iscritter(src)) // For testing. Just give them all abilities that are compatible.
+		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
 			var/mob/living/critter/C = src
 
 			if (isnull(C.abilityHolder)) // They do have a critter AH by default...or should.
@@ -500,7 +500,7 @@
 		if (!M)
 			return 0
 
-		if (!(iscarbon(M) || iscritter(M)))
+		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 

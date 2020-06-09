@@ -1160,17 +1160,19 @@
 
 				if (flame_succ)
 					turf.hotspot_expose(T0C + 400, 400)
-					for(var/mob/A in turf)
-						if(isTarget(A))
-							if (iscritter(A))
-								var/obj/critter/crit = A
-								crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
-
-							if (A.getStatusDuration("burning"))
-								A.changeStatus("burning", tiny_time)
+					for(var/A in turf)
+						if(!isTarget(A))
+							continue
+						if(ismob(A))
+							var/mob/M = A
+							if (M.getStatusDuration("burning"))
+								M.changeStatus("burning", tiny_time)
 							else
-								A.changeStatus("burning", flame_succ ? time : tiny_time)
-							break
+								M.changeStatus("burning", flame_succ ? time : tiny_time)
+						else if(iscritter(A))
+							var/obj/critter/crit = A
+							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
+						break
 
 					playsound(get_turf(master), 'sound/effects/flame.ogg', 50, 0)
 				else

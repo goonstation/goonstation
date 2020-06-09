@@ -284,7 +284,7 @@
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
 	if (!src.edible && !(src.material && src.material.edible))
 		return 0
-	if (!iscarbon(M) && !iscritter(M))
+	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 
 	if (M == user)
@@ -891,7 +891,7 @@
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
-	if (isdead(M) || (!iscarbon(M) && !iscritter(M)))
+	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
 	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
@@ -1010,7 +1010,7 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if ((src.edible && (ishuman(M) || iscritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
+	if ((src.edible && (ishuman(M) || ismobcritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
