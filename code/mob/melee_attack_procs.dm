@@ -283,10 +283,10 @@
 				src.visible_message("<span class='alert'><B>[target] blocks [src]'s attempt to grab [him_or_her(target)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 
-			var/mob/living/carbon/human/T = target
-			if (istype(T))
-				T.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-				return
+				var/mob/living/carbon/human/T = target
+				if (istype(T))
+					T.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
+					return
 
 	if (istype(H))
 		for (var/uid in H.pathogens)
