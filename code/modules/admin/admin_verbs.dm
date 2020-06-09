@@ -575,7 +575,7 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.level = 0
 
 /client/proc/admin_observe()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Observe"
 	if(!src.holder)
 		alert("You are not an admin")
@@ -598,7 +598,7 @@ var/list/special_pa_observing_verbs = list(
 		boutput(src, "<span class='notice'>You are already observing!</span>")
 
 /client/proc/admin_play()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Play"
 	if(!src.holder)
 		alert("You are not an admin")
