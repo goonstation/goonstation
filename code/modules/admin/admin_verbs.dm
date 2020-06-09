@@ -661,7 +661,7 @@ var/list/special_pa_observing_verbs = list(
 
 /client/proc/game_panel()
 	set name = "Game Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	if (src.holder)
 		src.holder.Game()
 	return
