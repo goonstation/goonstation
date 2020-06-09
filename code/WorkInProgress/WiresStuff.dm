@@ -123,7 +123,7 @@ var/global/deathConfettiActive = 0
 
 /client/proc/toggle_death_confetti()
 	set popup_menu = 0
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
 	admin_only

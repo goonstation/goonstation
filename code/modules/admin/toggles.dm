@@ -11,7 +11,7 @@ var/list/popup_verbs_to_toggle = list(\
 )
 
 /client/proc/toggle_popup_verbs()
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Popup Verbs"
 	set desc = "Toggle verbs that appear on right-click"
 	admin_only
@@ -81,7 +81,7 @@ var/list/server_toggles_tab_verbs = list(\
 )
 
 /client/proc/toggle_server_toggles_tab()
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Server Toggles Tab"
 	set desc = "Toggle all the crap in the Toggles (Server) tab so it should go away/show up.  in thoery."
 	admin_only
@@ -113,7 +113,7 @@ var/list/server_toggles_tab_verbs = list(\
 	return
 
 /client/proc/toggle_extra_verbs()//Going to put some things in here that we dont need to see every single second when trying to play though atm only the add_r is in it
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Extra Verbs"
 	admin_only
 	if (!src.holder.extratoggle)
@@ -158,7 +158,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
 
 /client/proc/toggle_hearing_all_looc()
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing All LOOC"
 	set desc = "Toggles the ability to hear all LOOC messages regardless of where you are"
 	admin_only
@@ -167,7 +167,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
 
 /client/proc/toggle_attack_messages()
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Attack Alerts"
 	set desc = "Toggles the after-join attack messages"
 	admin_only
@@ -176,7 +176,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing Prayers"
 	set desc = "Toggles if you can hear prayers or not"
 	admin_only
@@ -185,7 +185,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
 
 /client/proc/toggle_buildmode_view()
-	set category = "Toggles"
+	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Buildmode View"
 	set desc = "Toggles if buildmode changes your view"
 	admin_only
@@ -194,7 +194,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!</span>")
 
 /client/proc/toggle_spawn_in_loc()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Spawn in Loc"
 	set desc = "Toggles if buildmode changes your view"
 	admin_only
@@ -204,7 +204,7 @@ var/global/IP_alerts = 1
 
 /client/proc/cmd_admin_playermode()
 	set name = "Toggle Player mode"
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Disables most admin messages."
 
 	admin_only
@@ -273,7 +273,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] has set player mode to [(player_mode ? "On" : "Off")]")
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Toggle Mob Godmode"
 	set popup_menu = 0
 	admin_only
@@ -288,7 +288,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
 
 /client/proc/cmd_admin_godmode_self()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Your Godmode"
 	set popup_menu = 0
 	admin_only
@@ -305,14 +305,14 @@ var/global/IP_alerts = 1
 /client/var/flying = 0
 /client/proc/noclip()
 	set name = "Toggle Your Noclip"
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Fly through walls"
 
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
 
 /client/proc/toggle_atom_verbs() // I hate calling them "atom verbs" but wtf else should they be called, fuck
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"
 	admin_only
 	if(!src.holder.animtoggle)
@@ -370,7 +370,7 @@ var/global/IP_alerts = 1
 		src.verbs += /client/proc/cmd_get_type
 
 /client/proc/toggle_view_range()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle View Range"
 	set desc = "switches between 1x and custom views"
 
@@ -559,7 +559,7 @@ var/global/IP_alerts = 1
 	world.update_status()
 
 /client/proc/toggle_pray()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc="Toggle Your Pray"
 	set name="Toggle Local Pray"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -572,7 +572,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled its Pray to [pray_l].")
 
 /client/proc/toggle_flourish()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc="Toggles Your Flourish Mode"
 	set name="Toggle Flourish Mode"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -692,7 +692,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"], Dead OOC  [dooc_allowed ? "on" : "off"], Global Player Cap  [player_capa ? "on" : "off"], Entering [enter_allowed ? "on" : "off"],Playing as the AI [config.allow_ai ? "on" : "off"], Sound Preference override [soundpref_override ? "on" : "off"], Abandoning [abandon_allowed ? "on" : "off"], Admin Jumping [config.allow_admin_jump ? "on" : "off"], Admin sound playing [config.allow_admin_sounds ? "on" : "off"], Admin Spawning [config.allow_admin_spawning ? "on" : "off"], Admin Reviving [config.allow_admin_rev ? "on" : "off"], Deadchat [deadchat_allowed ? "on" : "off"], Farting [farting_allowed ? "on" : "off"], Blood system [blood_system ? "on" : "off"], Suicide [suicide_allowed ? "on" : "off"], Monkey/Human communication [monkeysspeakhuman ? "on" : "off"], Late Traitors [late_traitors ? "on" : "off"], and Sound Queuing [sound_waiting ? "on" : "off"]   ")
 
 /client/proc/togglepersonaldeadchat()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Toggle whether you can see deadchat or not"
 	set name = "Toggle Your Deadchat"
 	NOT_IF_TOGGLES_ARE_OFF

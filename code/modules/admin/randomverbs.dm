@@ -2067,7 +2067,7 @@ var/global/night_mode_enabled = 0
 			APC.updateicon()
 
 /client/proc/admin_set_ai_vox()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle AI VOX"
 	set desc = "Grant or revoke AI access to VOX"
 	admin_only
@@ -2411,7 +2411,7 @@ var/global/night_mode_enabled = 0
 /client/proc/admin_toggle_lighting() //shameless copied from the ghost one
 	set name = "Toggle Lighting"
 	set desc = "Turns the scary darkness off"
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	admin_only
 
 	if (!src.holder)
