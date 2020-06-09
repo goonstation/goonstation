@@ -712,7 +712,7 @@ proc/default_frequency_color(freq)
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
 #define STAMINA_BLOCK_CHANCE 40 		//Chance to block an attack in disarm mode. Settings this to 0 effectively disables the blocking system.
 #define STAMINA_GRAB_BLOCK_CHANCE 85    //Chance to block grabs.
-#define STAMINA_DEFAULT_BLOCK_COST 7    //Cost of blocking an attack.
+#define STAMINA_DEFAULT_BLOCK_COST 5    //Cost of blocking an attack.
 #define STAMINA_LOW_COST_KICK 1 	    //Does kicking people on the ground cost less stamina ? (Right now it doesnt cost less but rather refunds some because kicking people on the ground is very relaxing OKAY)
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out

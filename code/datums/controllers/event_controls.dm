@@ -124,7 +124,7 @@ var/datum/event_controller/random_events
 			else if (dead_antags >= round(antags * 0.75))
 				do_random_event(antag_spawn_events, source = "force_spawn")
 			else
-				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!</span>")
+				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!<br> ALIVE : [alive], TOTAL COUNTED : [(clients.len - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
 
 		next_spawn_event = TIME + time_between_spawn_events
 
