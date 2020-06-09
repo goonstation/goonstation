@@ -682,7 +682,7 @@
 /client/proc/cmd_admin_view_playernotes(target as text)
 	set name = "View Player Notes"
 	set desc = "View the notes for a current player's key."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	admin_only
 
 	src.holder.viewPlayerNotes(ckey(target))
