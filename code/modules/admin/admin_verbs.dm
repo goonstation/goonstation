@@ -308,7 +308,6 @@ var/list/admin_verbs = list(
 		/client/proc/flip_view,
 		/client/proc/show_image_to_all,
 		/client/proc/sharkban,
-		/client/proc/cmd_explosion,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/admin_smoke,
 		///client/proc/admin_foam,
