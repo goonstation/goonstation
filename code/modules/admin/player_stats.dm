@@ -9,7 +9,7 @@
 
 /client/proc/cmd_admin_show_player_stats()
 	set name = "Show Player Stats"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	admin_only
 
 	var/ckey = input(usr, "Please enter a ckey", "Player Details", "") as text
@@ -18,7 +18,7 @@
 
 /client/proc/cmd_admin_show_player_ips()
 	set name = "Show Player IPs"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	admin_only
 
 	var/ckey = input(usr, "Please enter a ckey", "Player Details", "") as text
@@ -27,7 +27,7 @@
 
 /client/proc/cmd_admin_show_player_compids()
 	set name = "Show Player Computer IDs"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	admin_only
 
 	var/ckey = input(usr, "Please enter a ckey", "Player Details", "") as text

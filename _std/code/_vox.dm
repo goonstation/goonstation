@@ -63,7 +63,7 @@
 var/global/datum/voxdbg/VoxDebug = new
 
 /client/proc/cmd_debug_vox()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug VOX"
 	set desc = "Fuck me."
 
@@ -75,7 +75,7 @@ var/global/datum/voxdbg/VoxDebug = new
 
 // VOX procs
 /client/proc/cmd_admin_intercom_help()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Help"
 	set desc = "WOOP WOOP ASS DAY"
 
@@ -132,7 +132,7 @@ proc/vox_help(var/mob/user)
 	usr.Browse(voxhelp_cache, "window=voxhelp;size=300x600")
 
 /client/proc/cmd_admin_intercom_announce()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Announcement"
 	set desc = "ABOUT THAT BEER I OWED YA, GORDON"
 	if(!isadmin(src))
@@ -152,7 +152,7 @@ proc/vox_help(var/mob/user)
 		message_admins("[key_name(src)] has created an intercom announcement: [output]")
 
 /client/proc/cmd_admin_intercom_announce_freq()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Announcement (Pitch Shifted)"
 	set desc = "ABOUT that BEER I owed YA, NODROG"
 	if(!isadmin(src))

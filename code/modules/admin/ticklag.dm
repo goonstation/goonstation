@@ -1,5 +1,5 @@
 /client/proc/ticklag(number as null|num)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Ticklag"
 	set desc = "Ticklag"
 	set hidden = 1

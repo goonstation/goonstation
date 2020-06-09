@@ -309,7 +309,7 @@
 	src.verbs += /client/proc/cmd_claim_rs_verbs
 
 /client/proc/cmd_claim_rs_verbs()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Expand Research Debug"
 	set desc = "Gives verbs specific to debugging Research."
 

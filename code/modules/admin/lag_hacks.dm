@@ -3,7 +3,7 @@
 client/proc/show_admin_lag_hacks()
 	set name = "Lag Reduction"
 	set desc = "A few janky commands that can smooth the game during an Emergency."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only
 	src.holder.show_laghacks(src.mob)
 

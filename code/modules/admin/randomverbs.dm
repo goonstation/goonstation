@@ -1,18 +1,18 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	if(config.update_check_enabled)
 		world.installUpdate()
 	world.Reboot()
 
 /verb/rebuild_flow_networks()
 	set name = "Rebuild Flow Networks"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	make_fluid_networks()
 
 /verb/print_flow_networks()
 	set name = "Print Flow Networks"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	DEBUG_MESSAGE("Dumping flow network refs")
 	for(var/datum/flow_network/network in all_fluid_networks)
 		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
@@ -23,7 +23,7 @@
 		DFS_LOUD(network.nodes[1])
 
 /client/proc/cmd_admin_drop_everything(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Drop Everything"
 	admin_only
@@ -35,7 +35,7 @@
 	message_admins("[key_name(usr)] made [key_name(M)] drop everything!")
 
 /client/proc/cmd_admin_prison_unprison(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Prison"
 	admin_only
@@ -84,7 +84,7 @@
 	return
 
 /client/proc/cmd_admin_subtle_message(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Subtle Message"
 	set popup_menu = 0
 
@@ -110,7 +110,7 @@
 	message_admins("<span class='notice'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Plain Message"
 	set popup_menu = 0
 
@@ -135,7 +135,7 @@
 	message_admins("<span class='notice'><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
 
 /client/proc/cmd_admin_plain_message_all()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Plain Message to All"
 
 	if (!src.holder)
@@ -157,7 +157,7 @@
 	message_admins("<span class='notice'>[key_name(src.mob)] showed a plain message to all</span>")
 
 /client/proc/cmd_admin_pm(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Admin PM"
 	set popup_menu = 0
 
@@ -169,7 +169,7 @@
 
 
 /client/proc/cmd_admin_alert(mob/M as mob in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Admin Alert"
 	set popup_menu = 0
 	admin_only
@@ -238,7 +238,7 @@
 */
 
 /client/proc/cmd_admin_mute(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Mute Permanently"
 	admin_only
@@ -261,7 +261,7 @@
 	boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
 
 /client/proc/cmd_admin_mute_temp(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Mute Temporarily"
 	admin_only
@@ -284,7 +284,7 @@
 	boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
 
 /client/proc/cmd_admin_add_freeform_ai_law()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Add Law"
 
 	admin_only
@@ -319,7 +319,7 @@
 
 //badcode from Somepotato, pls no nerf its very bad AAA
 /client/proc/cmd_admin_bulk_law_change()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Bulk Law Change"
 	admin_only
 	var/list/built = list()
@@ -363,7 +363,7 @@
 		ticker.centralized_ai_laws.show_laws(E)
 
 /client/proc/cmd_admin_show_ai_laws()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Show Laws"
 	boutput(usr, "The centralized AI laws are:")
 	if (ticker.centralized_ai_laws == null)
@@ -389,7 +389,7 @@
 	return
 
 /client/proc/cmd_admin_reset_ai()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Law Reset"
 	admin_only
 
@@ -409,7 +409,7 @@
 		message_admins("Admin [key_name(usr)] reset the centralized AI laws.")
 
 /client/proc/cmd_admin_rejuvenate(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Heal"
 	set popup_menu = 0
 	admin_only
@@ -428,7 +428,7 @@
 		alert("Admin revive disabled")
 
 /client/proc/cmd_admin_rejuvenate_all()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Heal All"
 
 	admin_only
@@ -450,7 +450,7 @@
 		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!</span>")
 
 /client/proc/cmd_admin_create_centcom_report()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Command Report"
 	admin_only
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
@@ -480,7 +480,7 @@
 		message_admins("[key_name(src)] has created a command report")
 
 /client/proc/cmd_admin_create_advanced_centcom_report()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Adv. Command Report"
 	admin_only
 
@@ -497,7 +497,7 @@
 		message_admins("[key_name(src)] has created an advanced command report")
 
 /client/proc/cmd_admin_advanced_centcom_report_help()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Adv. Command Report - Help"
 	admin_only
 
@@ -553,13 +553,8 @@
 		qdel(O)
 		O=null
 
-/client/proc/update_world()
-	// If I see anyone granting powers to specific keys like the code that was here,
-	// I will both remove their SVN access and permanently ban them from my servers.
-	return
-
 /client/proc/cmd_admin_check_contents(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Check Contents"
 	set popup_menu = 0
 
@@ -568,7 +563,7 @@
 	return
 
 /client/proc/cmd_admin_check_vehicle()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Check Vehicle Occupant"
 	set popup_menu = 0
 
@@ -592,7 +587,7 @@
 		boutput(usr, "[M.real_name] ([M.key]) [info]")
 
 /client/proc/cmd_admin_remove_plasma()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Stabilize Atmos."
 	set desc = "Resets the air contents of every turf in view to normal."
 	admin_only
@@ -614,7 +609,7 @@
 			LAGCHECK(LAG_LOW)
 
 /client/proc/flip_view()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Flip View"
 	set desc = "Rotates a client's viewport"
 
@@ -642,7 +637,7 @@
 	message_admins("<span class='notice'>[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
 
 /client/proc/cmd_admin_clownify(mob/living/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Clownify"
 	set popup_menu = 0
 	if (!src.holder)
@@ -688,7 +683,7 @@
 	src.holder.viewPlayerNotes(ckey(target))
 
 /client/proc/cmd_admin_polymorph(mob/M as mob in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Polymorph Player"
 	set desc = "Futz with a human mob's DNA."
 	set popup_menu = 0
@@ -1156,7 +1151,7 @@
 		return
 
 /client/proc/cmd_admin_remove_label_from()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Remove Label From"
 	set popup_menu = 0
 
@@ -1169,7 +1164,7 @@
 	return
 
 /client/proc/cmd_admin_aview()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Aview"
 	set popup_menu = 0
 	admin_only
@@ -1194,7 +1189,7 @@
 
 
 /client/proc/cmd_admin_advview()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Adventure View"
 	set popup_menu = 0
 	set desc = "When toggled on, you will be able to see all 'hidden' adventure elements regardless of your current mob."
@@ -1224,7 +1219,7 @@
 
 /proc/possessmob(mob/M as mob in world)
 	set name = "Possess Mob"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	M.oldmob = usr
 	M.oldmind = M.mind
@@ -1236,7 +1231,7 @@
 
 /proc/releasemob(mob/M as mob in world)
 	set name = "Release Mob"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	if(M.oldmob)
 		M.oldmob.mind = usr.mind
@@ -1250,7 +1245,7 @@
 
 /client/proc/cmd_whois(target as text)
 	set name = "Whois"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set desc = "Lookup a player by string (can search: mob names, byond keys and job titles)"
 	set popup_menu = 0
 	admin_only
@@ -1276,7 +1271,7 @@
 	set background = 1
 	set name = "Debug Rewards"
 	set desc = "For testing rewards on local servers."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set popup_menu = 0
 	admin_only
 
@@ -1313,7 +1308,7 @@
 			S.rewardActivate(usr)
 
 /client/proc/cmd_admin_check_health(var/atom/target as null|mob in world)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Check Health"
 	set desc = "Checks the health of someone."
@@ -1327,7 +1322,7 @@
 	return
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Check Reagents"
 	set desc = "Checks the reagents of something."
@@ -1466,7 +1461,7 @@
 /client/proc/popt_key(var/client/ckey in clients)
 	set name = "Popt Key"
 	set desc = "Open the player options panel for a key."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	admin_only
 
@@ -1475,7 +1470,7 @@
 /client/proc/POK(var/client/ckey in clients)
 	set name = "POK"
 	set desc = "Open the player options panel for a key."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	admin_only
 
@@ -1495,7 +1490,7 @@
 /client/proc/POM(var/mob/M in mobs)
 	set name = "POM"
 	set desc = "Open the player options panel for a selected mob."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	admin_only
 
@@ -1524,7 +1519,7 @@
 	boutput(usr, "<span class='success'>Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
 
 /client/proc/addreagents(var/atom/A in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Add Reagent"
 	set popup_menu = 0
 
@@ -1567,7 +1562,7 @@
 	return
 
 /client/proc/cmd_cat_county()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Cat County"
 	set desc = "We can't stop here!"
 	admin_only
@@ -1589,7 +1584,7 @@
 		sleep(rand(10,20))
 
 /client/proc/revive_all_bees()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Bees"
 	admin_only
 
@@ -1619,7 +1614,7 @@
 	message_admins("[key_name(src)] revived [revived] bee[revived == 1 ? "" : "s"]!")
 
 /client/proc/revive_all_cats()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Cats"
 	admin_only
 
@@ -1638,7 +1633,7 @@
 	message_admins("[key_name(src)] revived [revived] cat[revived == 1 ? "" : "s"]!")
 
 /client/proc/revive_all_parrots()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Parrots"
 	admin_only
 
@@ -1667,7 +1662,7 @@
 
 /client/proc/cmd_transfer_client(var/mob/M)
 	set name = "Transfer Client To"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set desc = "Transfer a client to the selected mob."
 	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 	admin_only
@@ -1694,7 +1689,7 @@
 
 /client/proc/cmd_swap_minds(var/mob/M)
 	set name = "Swap Bodies With"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Swaps yours and the other person's bodies around."
 	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 
@@ -1871,7 +1866,7 @@
 
 /client/proc/admin_smoke(var/turf/T in world)
 	set name = "Create smoke"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	admin_only
 
@@ -1913,7 +1908,7 @@
 
 /client/proc/admin_fluid(var/turf/T in world)
 	set name = "Create Fluid"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Attempt a fluid reaction on a turf."
 	set popup_menu = 0
 	admin_only
@@ -2002,7 +1997,7 @@
 
 
 /client/proc/admin_follow_mobject(var/atom/target as mob|obj in world)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Follow Thing"
 	set desc = "It's like observing, but without that part where you see everything as the person you're observing. Move to cancel if an observer, or use any jump command to leave if alive."
@@ -2013,7 +2008,7 @@
 	logTheThing("diary", usr, target, "began following [target].", "admin")
 
 /client/proc/admin_pick_random_player()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Pick Random Player"
 	set desc = "Picks a random logged-in player and brings up their player panel."
 	admin_only
@@ -2050,7 +2045,7 @@
 
 var/global/night_mode_enabled = 0
 /client/proc/admin_toggle_nightmode()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Night Mode"
 	set desc = "Switch the station into night mode so the crew can rest and relax off-work."
 	admin_only
@@ -2224,7 +2219,7 @@ var/global/night_mode_enabled = 0
 /client/proc/display_bomb_monitor()
 	set name = "Display Bomb Monitor"
 	set desc = "Get a list of every canister- and tank-transfer bomb on station."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only
 	if(!bomb_monitor) bomb_monitor = new
 	bomb_monitor.display_ui(src.mob, 1)
@@ -2261,7 +2256,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_admin_fake_medal(var/msg as null|text)
 	set name = "Fake Medal"
 	set desc = "Creates a false medal message and shows it to someone, or everyone."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 
 	admin_only
@@ -2292,7 +2287,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_unshame_cube(var/mob/M as mob in world)
 	set name = "Unshamecube"
 	set desc = "Mostly removes the shamecube someone is under"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 
 	admin_only
@@ -2326,7 +2321,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_shame_cube(var/mob/M as mob in world)
 	set name = "Shamecube"
 	set desc = "Places the player in a windowed cube at your location"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 
 	admin_only
@@ -2372,7 +2367,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_makeshittyweapon()
 	set name = "Make Shitty Weapon"
 	set desc = "make some stupid junk, laugh"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	if (src.holder.level >= LEVEL_PA)
@@ -2385,7 +2380,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_admin_unhandcuff(var/mob/M as mob in world)
 	set name = "unhandcuff player"
 	set desc = "take someone's handcuffs off!"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	admin_only
 
@@ -2429,7 +2424,7 @@ var/global/night_mode_enabled = 0
 /client/proc/getturftelesci(var/turf/T in world)
 	set name = "Get Telesci Coords"
 	set desc = "Get the weird messed up co-ordinates that telesci wants for this turf"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
 	admin_only
@@ -2475,7 +2470,7 @@ var/global/night_mode_enabled = 0
 /client/proc/give_mass_medals(var/medal as null|text)
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
 	admin_only
@@ -2502,7 +2497,7 @@ var/global/night_mode_enabled = 0
 /client/proc/copy_medals(var/old_key as null|text, var/new_key as null|text)
 	set name = "Copy Medals"
 	set desc = "Copy medals from one account to another."
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
 	admin_only

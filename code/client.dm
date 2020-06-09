@@ -394,9 +394,6 @@
 			load_antag_tokens()
 			load_persistent_bank()
 
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
-
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
 

@@ -23,6 +23,7 @@ var/global/haine_blood_debug = 0
 /client/proc/haine_blood_debug()
 	set desc = "Toggle blood debug messages."
 	set name = "Haine Blood Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set hidden = 1
 	haine_blood_debug = !( haine_blood_debug )
 	logTheThing("admin", usr, null, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].")

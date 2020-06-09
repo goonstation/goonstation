@@ -1,5 +1,5 @@
 /client/proc/sharkban(mob/sharktarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Shark Ban"
 	set popup_menu = 0
 	var/startx = 1
@@ -34,7 +34,7 @@
 
 
 /client/proc/sharkgib(mob/sharktarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Shark Gib"
 	set popup_menu = 0
 	var/startx = 1

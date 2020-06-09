@@ -11,7 +11,7 @@ var/list/popup_verbs_to_toggle = list(\
 )
 
 /client/proc/toggle_popup_verbs()
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Popup Verbs"
 	set desc = "Toggle verbs that appear on right-click"
 	admin_only
@@ -81,7 +81,7 @@ var/list/server_toggles_tab_verbs = list(\
 )
 
 /client/proc/toggle_server_toggles_tab()
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Server Toggles Tab"
 	set desc = "Toggle all the crap in the Toggles (Server) tab so it should go away/show up.  in thoery."
 	admin_only
@@ -113,7 +113,7 @@ var/list/server_toggles_tab_verbs = list(\
 	return
 
 /client/proc/toggle_extra_verbs()//Going to put some things in here that we dont need to see every single second when trying to play though atm only the add_r is in it
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Extra Verbs"
 	admin_only
 	if (!src.holder.extratoggle)
@@ -147,7 +147,7 @@ var/list/server_toggles_tab_verbs = list(\
 var/global/IP_alerts = 1
 
 /client/proc/toggle_ip_alerts()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle IP Alerts"
 	set desc = "Toggles the same-IP alerts"
 	admin_only
@@ -158,7 +158,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
 
 /client/proc/toggle_hearing_all_looc()
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing All LOOC"
 	set desc = "Toggles the ability to hear all LOOC messages regardless of where you are"
 	admin_only
@@ -167,7 +167,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
 
 /client/proc/toggle_attack_messages()
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Attack Alerts"
 	set desc = "Toggles the after-join attack messages"
 	admin_only
@@ -176,7 +176,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing Prayers"
 	set desc = "Toggles if you can hear prayers or not"
 	admin_only
@@ -185,7 +185,7 @@ var/global/IP_alerts = 1
 	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
 
 /client/proc/toggle_buildmode_view()
-	veloSET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Buildmode View"
 	set desc = "Toggles if buildmode changes your view"
 	admin_only
@@ -385,7 +385,7 @@ var/global/IP_alerts = 1
 		//src.view = world.view
 
 /client/proc/toggle_toggles()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Toggles"
 	set desc = "Toggles toggles ON/OFF"
 	if(!(src.holder.rank in list("Host", "Coder")))
@@ -397,7 +397,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Toggles [toggles_enabled ? "on" : "off"].")
 
 /client/proc/toggle_force_mixed_wraith()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Toggle Force Wraith"
 	set desc = "If turned on, a wraith will always appear in mixed or traitor, regardless of player count or probabilities."
 	debug_mixed_forced_wraith = !debug_mixed_forced_wraith
@@ -406,7 +406,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled force mixed wraith [debug_mixed_forced_wraith ? "on" : "off"]")
 
 /client/proc/toggle_force_mixed_blob()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Toggle Force Blob"
 	set desc = "If turned on, a blob will always appear in mixed, regardless of player count or probabilities."
 	debug_mixed_forced_blob = !debug_mixed_forced_blob
@@ -415,7 +415,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
 
 /client/proc/toggle_jobban_announcements()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Jobban Alerts"
 	set desc = "Toggles the announcement of job bans ON/OFF"
 	if (!(src.holder.rank in list("Host", "Coder", "Administrator")))
@@ -428,7 +428,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Jobban Alerts [announce_jobbans ? "on" : "off"].")
 
 /client/proc/toggle_banlogin_announcements()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Banlog Alerts"
 	set desc = "Toggles the announcement of failed logins ON/OFF"
 	admin_only
@@ -439,7 +439,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Banned User Alerts to [announce_banlogin ? "on" : "off"].")
 
 /client/proc/toggle_literal_disarm()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Literal Disarm"
 	set desc = "Toggles literal disarm intent ON/OFF"
 	if(!(src.holder.rank in list("Host", "Coder")))
@@ -450,7 +450,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled literal disarming [literal_disarm ? "on" : "off"].")
 
 /datum/admins/proc/toggleooc()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle dis bitch"
 	set name="Toggle OOC"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -461,7 +461,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled OOC.")
 
 /datum/admins/proc/togglelooc()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle dis bitch"
 	set name="Toggle LOOC"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -472,7 +472,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled LOOC.")
 
 /datum/admins/proc/toggleoocdead()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -482,7 +482,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Dead OOC.")
 
 /datum/admins/proc/toggletraitorscaling()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle traitor scaling"
 	set name="Toggle Traitor Scaling"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -492,7 +492,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].")
 
 /datum/admins/proc/pcap()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle player cap"
 	set name = "Toggle Player Cap"
 	player_capa = !( player_capa )
@@ -505,7 +505,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled the global player cap [player_cap ? "on" : "off"]")
 
 /datum/admins/proc/toggleenter()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="People can't enter"
 	set name="Toggle Entering"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -520,7 +520,7 @@ var/global/IP_alerts = 1
 	world.update_status()
 
 /datum/admins/proc/toggleAI()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="People can't be AI"
 	set name="Toggle AI"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -544,7 +544,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Sound Preference Override [soundpref_override ? "on" : "off"]")
 
 /datum/admins/proc/toggle_respawns()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Enable or disable the ability for all players to respawn"
 	set name="Toggle Respawn"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -583,7 +583,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled its Flourish Mode to [flourish].")
 
 /datum/admins/proc/adsound()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle admin sound playing"
 	set name="Toggle Sound Playing"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -591,7 +591,7 @@ var/global/IP_alerts = 1
 	message_admins("<span class='notice'>Toggled admin sound playing to [config.allow_admin_sounds].</span>")
 
 /datum/admins/proc/adspawn()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle admin spawning"
 	set name="Toggle Spawn"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -599,7 +599,7 @@ var/global/IP_alerts = 1
 	message_admins("<span class='notice'>Toggled admin item spawning to [config.allow_admin_spawning].</span>")
 
 /datum/admins/proc/adrev()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle admin revives"
 	set name="Toggle Revive"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -607,7 +607,7 @@ var/global/IP_alerts = 1
 	message_admins("<span class='notice'>Toggled reviving to [config.allow_admin_rev].</span>")
 
 /datum/admins/proc/toggledeadchat()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle Deadchat on or off."
 	set name = "Toggle Deadchat"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -621,7 +621,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Deadchat [deadchat_allowed ? "on" : "off"]")
 
 /datum/admins/proc/togglefarting()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle Farting on or off."
 	set name = "Toggle Farting"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -635,7 +635,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Farting [farting_allowed ? "on" : "off"]")
 
 /datum/admins/proc/toggle_blood_system()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle the blood system on or off."
 	set name = "Toggle Blood System"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -646,7 +646,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled the blood system [blood_system ? "on" : "off"]")
 
 /datum/admins/proc/toggle_bone_system()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle the bone system on or off."
 	set name = "Toggle Bone System"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -657,7 +657,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled the bone system [bone_system ? "on" : "off"]")
 
 /datum/admins/proc/togglesuicide()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Allow/Disallow people to commit suicide."
 	set name = "Toggle Suicide"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -667,7 +667,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Suicides [suicide_allowed ? "on" : "off"]")
 
 /datum/admins/proc/togglethetoggles()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle All Toggles"
 	set name = "Toggle All Toggles"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -704,7 +704,7 @@ var/global/IP_alerts = 1
 		boutput(usr, "<span class='notice'>Now viewing deadchat.</span>")
 
 /datum/admins/proc/toggleaprilfools()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle manual breathing and/or blinking."
 	set name = "Toggle Manual Breathing/Blinking"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -732,7 +732,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].")
 
 /datum/admins/proc/togglespeechpopups()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Makes mob chat show up in-game as floating text."
 	set name = "Toggle Global Flying Chat"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -742,7 +742,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled speech popups [speechpopups ? "on" : "off"]")
 
 /datum/admins/proc/togglemonkeyspeakhuman()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle monkeys being able to speak human."
 	set name = "Toggle Monkeys Speaking Human"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -756,7 +756,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"]")
 
 /datum/admins/proc/toggleautoending()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle the round automatically ending in invasive round types."
 	set name = "Toggle Automatic Round End"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -766,7 +766,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled Automatic Round End [no_automatic_ending ? "off" : "on"]")
 
 /datum/admins/proc/togglelatetraitors()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle late joiners spawning as antagonists if all starting antagonists are dead."
 	set name = "Toggle Late Antagonists"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -776,7 +776,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled late antagonists [late_traitors ? "on" : "off"]")
 
 /datum/admins/proc/togglesoundwaiting()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle admin-played sounds waiting for previous sounds to finish before playing."
 	set name = "Toggle Admin Sound Queue"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -786,7 +786,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled admin sound queue [sound_waiting ? "on" : "off"]")
 
 /datum/admins/proc/adjump()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Toggle admin jumping"
 	set name="Toggle Jump"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -794,7 +794,7 @@ var/global/IP_alerts = 1
 	message_admins("<span class='notice'>Toggled admin jumping to [config.allow_admin_jump].</span>")
 
 /datum/admins/proc/togglesimsmode()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc="Enable sims mode for this round."
 	set name = "Toggle Sims Mode"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -816,7 +816,7 @@ var/global/IP_alerts = 1
 				H.sims = null
 
 /datum/admins/proc/toggle_pull_slowing()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle whether pulling items should slow people down or not."
 	set name = "Toggle Pull Slowing"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -848,7 +848,7 @@ var/global/IP_alerts = 1
 /client/proc/toggle_next_click()
 	set name = "Toggle next_click"
 	set desc = "Removes most click delay. Don't know what this is? Probably shouldn't touch it."
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	admin_only
 
 	disable_next_click = !(disable_next_click)
@@ -858,7 +858,7 @@ var/global/IP_alerts = 1
 
 /client/proc/narrator_mode()
 	set name = "Toggle Narrator Mode"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle narrator mode on or off."
 	admin_only
 
@@ -870,7 +870,7 @@ var/global/IP_alerts = 1
 
 /client/proc/toggle_station_name_changing()
 	set name = "Toggle Station Name Changing"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle station name changing on or off."
 	admin_only
 
@@ -882,7 +882,7 @@ var/global/IP_alerts = 1
 
 /client/proc/toggle_map_voting()
 	set name = "Toggle Map Voting"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle whether map votes are allowed"
 	set popup_menu = 0
 
@@ -900,7 +900,7 @@ var/global/IP_alerts = 1
 
 /client/proc/waddle_walking()
 	set name = "Toggle Waddle Walking"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle waddle walking on or off."
 	admin_only
 
@@ -911,7 +911,7 @@ var/global/IP_alerts = 1
 	message_admins("[key_name(usr)] toggled waddle walking [waddle_walking ? "on" : "off"]")
 
 /client/proc/toggle_respawn_arena()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Respawn Arena"
 	set desc = "Lets ghosts go to the respawn arena to compete for a new life"
 

@@ -249,7 +249,7 @@
 			boutput(usr, "<span class='notice'>Admin preferences saved.</span>")
 
 /client/proc/change_admin_prefs()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
 	admin_only
 

@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /client/proc/togglebuildmode()
 	set name = "Build Mode"
 	set desc = "Toggle build Mode on/off."
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 
 	if(!src.buildmode)
 		src.buildmode = new /datum/buildmode_holder(src)

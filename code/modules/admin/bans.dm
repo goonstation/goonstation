@@ -625,7 +625,7 @@ var/global/list/playersSeen = list()
 
 /client/proc/openBanPanel()
 	set name = "Ban Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder && !src.holder.tempmin)
 		src.holder.banPanel()
 	else

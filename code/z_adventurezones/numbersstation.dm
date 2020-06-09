@@ -3,7 +3,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 /client/proc/toggle_numbers_station_messages()
 	set name = "Toggle Numbers Station Alerts"
 	set desc = "I DON'T CARE WHEN SPACE NUMBERS STATION LINCOLNSHIRE IS BROADCASTING SO SHUT UP ABOUT IT"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	admin_only
 
 	shut_up_about_the_fucking_numbers_station = !(shut_up_about_the_fucking_numbers_station)

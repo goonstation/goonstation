@@ -64,7 +64,7 @@
 
 
 /client/proc/debugResourceCache()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Resource Cache"
 	set hidden = 1
 	admin_only

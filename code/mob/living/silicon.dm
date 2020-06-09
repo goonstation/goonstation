@@ -444,7 +444,7 @@ var/global/list/module_editors = list()
 /client/proc/edit_module(var/mob/living/silicon/robot/M as mob in list_robots())
 	set name = "Edit Module"
 	set desc = "Module editor! Woo!"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	admin_only
 

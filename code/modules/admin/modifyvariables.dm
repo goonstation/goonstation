@@ -1,12 +1,5 @@
-/client/proc/cmd_modify_object_variables(obj/O as obj|mob|turf|area in world)
-	set category = "Debug"
-	set name = "Edit Variables"
-	set desc="(target) Edit a target item's variables"
-	set popup_menu = 0 // goddamn we have view variables already we don't need this in the damned right click menu FUCK'S SAKE
-	src.modify_variables(O)
-
 /client/proc/cmd_modify_ticker_variables()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Ticker Variables"
 
 	if (ticker == null)
@@ -15,7 +8,7 @@
 		src.debug_variables(ticker)
 
 /client/proc/cmd_modify_controller_variables()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Main Loop Variables"
 
 	if (processScheduler == null)
@@ -24,7 +17,7 @@
 		src.debug_variables(processScheduler)
 
 /client/proc/cmd_modify_respawn_variables()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Respawn Controller Variables"
 
 	if(!respawn_controller)
@@ -34,7 +27,7 @@
 
 #ifdef ENABLE_SPAWN_DEBUG
 /client/proc/cmd_modify_spawn_dbg_list()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Spawn Debug List"
 	set desc = "Directly varedit the spawn debug list, edit its length to 0 to wipe it"
 
