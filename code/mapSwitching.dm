@@ -54,10 +54,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 			if (mapNames[map]["playerPickable"])
 				if (mapNames[map]["MinPlayersAllowed"])
-					if (clients.len < mapNames[map]["MinPlayersAllowed"])
+					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
 				if (mapNames[map]["MaxPlayersAllowed"])
-					if (clients.len > mapNames[map]["MaxPlayersAllowed"])
+					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
 
 				src.playerPickable[map] += mapNames[map]

@@ -268,7 +268,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	processScheduler.start()
 
-	if (clients.len >= OVERLOAD_PLAYERCOUNT)
+	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 
 
