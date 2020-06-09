@@ -473,7 +473,7 @@
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
-		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
+		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium", "synaptizine", "plasma", "morphine","oculine","CBD")
 		src.name = "[reagent_id_to_name(src.flavor)]-laced cigarette"
 		..()
 
