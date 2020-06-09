@@ -502,7 +502,7 @@
 		var/suspend_rot = 0
 		if (src.decomp_stage >= 4)
 			suspend_rot = (istype(loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(loc, /obj/morgue) || (src.reagents && src.reagents.has_reagent("formaldehyde")))
-			if (!suspend_rot && isturf(src.loc))
+			if (!(suspend_rot || istype(src.loc, /obj/item/body_bag) || (istype(src.loc, /obj/storage) && src.loc:welded)))
 				icky_icky_miasma(get_turf(src))
 			return
 
@@ -519,7 +519,7 @@
 			var/datum/gas_mixture/environment = T.return_air()
 			env_temp = environment.temperature
 			src.next_decomp_time -= min(30, max(round((env_temp - T20C)/10), -60))
-			if(isturf(src.loc))
+			if(!(istype(src.loc, /obj/item/body_bag) || (istype(src.loc, /obj/storage) && src.loc:welded)))
 				icky_icky_miasma(T)
 
 		if (world.time > src.next_decomp_time) // advances every 4-10 game minutes
