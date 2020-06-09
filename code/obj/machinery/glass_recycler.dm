@@ -14,12 +14,15 @@
 		UnsubscribeProcess()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W.loc, /obj/item/storage))
+			var/obj/item/storage/storage = W.loc
+			storage.hud.remove_object(W)
 		if (istype(W, /obj/item/reagent_containers/glass/beaker))
 			if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
 				glass_amt += 2
 			else
 				glass_amt += 1
-			user.visible_message("<span style='color:blue'>[user] inserts [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 			qdel(W)
 			return 1
@@ -28,17 +31,17 @@
 				glass_amt += 2
 			else
 				glass_amt += 1
-			user.visible_message("<span style='color:blue'>[user] inserts [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 			qdel(W)
 			return 1
-		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/plate) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 				var/obj/item/reagent_containers/food/drinks/bottle/B = W
 				if (!B.broken) glass_amt += 1
 			else
 				glass_amt += 1
-			user.visible_message("<span style='color:blue'>[user] inserts [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 
 			if (istype(W, /obj/item/raw_material))
@@ -46,13 +49,20 @@
 			else
 				qdel(W)
 			return 1
+		else if (istype(W, /obj/item/plate))
+			glass_amt += 2
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.u_equip(W)
+			qdel(W)
+			return 1
+
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
 				if (!.(I, user))
 					break
 		else
-			boutput(user, "<span style='color:red'>[src] only accepts glass shards or glassware!</span>")
+			boutput(user, "<span class='alert'>[src] only accepts glass shards or glassware!</span>")
 			return
 
 	attack_hand(mob/user as mob)
@@ -83,7 +93,7 @@
 		if(..())
 			return
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["type"])
 				create(lowertext(href_list["type"]))
@@ -102,7 +112,7 @@
 */
 	proc/create(var/object)
 		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker") && src.glass_amt < 2))
-			src.visible_message("<span style='color:red'>[src] doesn't have enough glass to make that!</span>")
+			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
 			return
 
 		var/obj/item/G
@@ -125,7 +135,7 @@
 				src.glass_amt -= 1
 			if("plate")
 				G = new /obj/item/plate(get_turf(src))
-				src.glass_amt -= 1
+				src.glass_amt -= 2
 			if("bowl")
 				G = new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
 				src.glass_amt -= 1
@@ -157,7 +167,7 @@
 				return
 
 		if(G)
-			src.visible_message("<span style='color:blue'>[src] manufactures \a [G]!</span>")
+			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
@@ -179,7 +189,7 @@
 
 	create(var/object)
 		if(src.glass_amt < 1 || ((object == "pitcher" || object == "largebeaker") && src.glass_amt < 2))
-			src.visible_message("<span style='color:red'>[src] doesn't have enough glass to make that!</span>")
+			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
 			return
 
 		var/obj/item/G
@@ -204,5 +214,5 @@
 				return
 
 		if(G)
-			src.visible_message("<span style='color:blue'>[src] manufactures \a [G]!</span>")
+			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return

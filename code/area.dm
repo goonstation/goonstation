@@ -24,6 +24,7 @@
 	var/skip_sims = 0
 	var/sims_score = 100
 	var/virtual = 0
+	var/is_centcom = 0 // for escape checks
 	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
@@ -109,7 +110,7 @@
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				#define AMBIENCE_ENTER_PROB 6
 
 				//Handle ambient sound
@@ -143,7 +144,6 @@
 					if (enteringM.ckey && enteringM.client)
 						if( !CanEnter( enteringM ) )
 
-							//boutput( enteringM, "<span style='color:red'>You cannot enter this area.</span>" )
 							var/target = get_turf(oldloc)
 							if( !target && blocked_waypoint )
 								target = get_turf(locate(blocked_waypoint) in world)
@@ -168,11 +168,11 @@
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				if (sound_loop)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M && (mobarea.sound_group != src.sound_group))
+						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
@@ -188,7 +188,7 @@
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
 						if( blocked && !exitingM.client.holder )
 							blockedTimers[ exitingM.client.key ] = world.time + 300
-							boutput( exitingM, "<b style='color:red'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
+							boutput( exitingM, "<b class='alert'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
 
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
@@ -380,7 +380,7 @@
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0
-	filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
+	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
 	name = "Caves"
@@ -502,6 +502,7 @@
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 	sound_group = "centcom"
+	is_centcom = 1
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -568,10 +569,13 @@
 	teleport_blocked = 1
 
 /area/shuttle/merchant_shuttle/left_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/right_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_station
 
@@ -690,7 +694,7 @@
 /area/someplace
 	name = "some place"
 	icon_state = "purple"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -703,7 +707,7 @@
 /area/someplacehot
 	name = "some place"
 	icon_state = "atmos"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -1120,6 +1124,13 @@
 	name = "Crashed Transport"
 	icon_state = "purple"
 
+/area/water_treatment
+	name = "Water Treatment Facility"
+	icon_state = "purple"
+
+/area/station/bee_sanctuary
+	name = "Bee Sanctuary"
+	icon_state = "purple"
 
 //////////////////////////// zewaka - vspace areas
 
@@ -2568,7 +2579,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span style='color:red'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
 			return 0
 		return 1
 
@@ -3128,7 +3139,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in mobs)
+		for (var/mob/living/silicon/aiPlayer in AIs)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
@@ -4609,7 +4620,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span style='color:red'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
 			return 0
 		return 1
 

@@ -71,15 +71,15 @@
 Yes yes stolen from APC code I know!
 To-do: Add overlays here */
 
-/obj/machinery/ai_bot/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/ai_bot/attackby(obj/item/W, mob/user)
 
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (isweldingtool(W))
 		if(!W:try_weld(user, 2))
 			return
 		src.health += 30
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[user] has mended the robot!</span>"), 1)
+			O.show_message(text("<span class='alert'>[user] has mended the robot!</span>"), 1)
 		src.update()
 
 	else if (ispryingtool(W))
@@ -93,7 +93,7 @@ To-do: Add overlays here */
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if (istype(W, /obj/item/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			boutput(user, "There is a power cell already installed.")
 		else
@@ -114,7 +114,7 @@ To-do: Add overlays here */
 			boutput(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			updateicon()
 
-	else if (istype(W, /obj/item/weapon/card/id))			// trying to unlock the interface with an ID card
+	else if (istype(W, /obj/item/card/id))			// trying to unlock the interface with an ID card
 		if(emagged)
 			boutput(user, "The interface is broken")
 		else if(opened)
@@ -127,9 +127,9 @@ To-do: Add overlays here */
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				updateicon()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)		// trying to unlock with an emag card
+	else if (istype(W, /obj/item/card/emag) && !emagged)		// trying to unlock with an emag card
 		if(opened)
 			boutput(user, "You must close the cover to swipe an ID card.")
 		else if(wiresexposed)
@@ -148,7 +148,7 @@ To-do: Add overlays here */
 	else
 		src.health -= W.force
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[src] has been attacked by [user] with the [W]!</span>"), 5)
+			O.show_message(text("<span class='alert'>[src] has been attacked by [user] with the [W]!</span>"), 5)
 		src.update()
 
 	return

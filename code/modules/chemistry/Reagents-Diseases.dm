@@ -399,6 +399,19 @@ datum
 			fluid_b = 177
 			transparency = 0
 			disease = /datum/ailment/malady/heartfailure
+		#if ASS_JAM
+		disease/toomuch // High Fever
+			name = "too much" //your'e
+			id = "too much"
+			description = "bad pear, that"
+			reagent_state = LIQUID
+			fluid_r = 100
+			fluid_g = 255
+			fluid_b = 100
+			transparency = 255
+			disease = /datum/ailment/disease/high_fever
+
+		#endif
 
 		disease/heartworms // please do not give a recipe, just a thing for testing heart-related things atm
 			name = "space heartworms"
@@ -431,7 +444,7 @@ datum
 			fluid_b = 121
 			transparency = 180
 			disease = /datum/ailment/disease/avian_flu
-		
+
 		disease/mewtini
 			name = "Mewtini"
 			id = "mewtini"
@@ -444,7 +457,7 @@ datum
 			taste = "hairy"
 			thirst_value = -0.5
 			disease = /datum/ailment/disease/going_catty
-	
+
 		disease/cocktail_sheltestgrog
 			name = "sheltestgrog"
 			id = "sheltestgrog"

@@ -166,9 +166,9 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					boutput(C, "<span style=\"color:red\">[src.personalized_stink]</span>")
+					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
-					boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"

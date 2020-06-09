@@ -31,7 +31,7 @@
 				SPAWN_DBG(1 DECI SECOND)
 					qdel(src)//This might need to be changed to have them drop it first
 			else
-				boutput(user, "<span style=\"color:red\">You are unable to place the pipe there.</span>")
+				boutput(user, "<span class='alert'>You are unable to place the pipe there.</span>")
 		else
 			..()//Add ID swipe
 

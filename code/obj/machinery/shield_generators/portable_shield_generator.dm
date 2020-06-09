@@ -147,7 +147,7 @@
 			src.build_icon()
 			if(src.battery_level == 1)
 				playsound(src.loc, src.sound_battwarning, 50, 1)
-				src.visible_message("<span style=\"color:red\">The <b>[src.name] emits a low battery alarm!</b></span>")
+				src.visible_message("<span class='alert'>The <b>[src.name] emits a low battery alarm!</b></span>")
 
 		if(PCEL.charge < 0)
 			src.visible_message("The <b>[src.name]</b> runs out of power and shuts down.")
@@ -159,7 +159,7 @@
 		if(!the_range)
 			return
 		if(get_dist(user,src) > 1)
-			boutput(user, "<span style=\"color:red\">You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
+			boutput(user, "<span class='alert'>You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
 			return
 		the_range = max(src.min_range,min(the_range,src.max_range))
 		src.range = the_range
@@ -169,7 +169,7 @@
 			shield_off()
 			sleep(0.5 SECONDS)
 			shield_on()
-		boutput(user, "<span style=\"color:blue\">[outcome_text]</span>")
+		boutput(user, "<span class='notice'>[outcome_text]</span>")
 
 	proc/pulse(var/mob/user)
 		set_range(user)

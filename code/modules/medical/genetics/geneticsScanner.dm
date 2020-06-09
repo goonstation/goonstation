@@ -55,7 +55,7 @@ var/list/genescanner_addresses = list()
 	mob_flip_inside(mob/user)
 		..(user)
 		if (prob(33))
-			user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 			src.togglelock(1)
 
 
@@ -93,19 +93,19 @@ var/list/genescanner_addresses = list()
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
 		if(iscritter(target))
-			boutput(M, "<span style=\"color:red\"><B>The scanner doesn't support this body type.</B></span>")
+			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
 			return 0
 		if(!iscarbon(target) )
-			boutput(M, "<span style=\"color:red\"><B>The scanner supports only carbon based lifeforms.</B></span>")
+			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
 		if (src.locked)
-			boutput(M, "<span style=\"color:red\"><B>You need to unlock the scanner first.</B></span>")
+			boutput(M, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 			return 0
 
 		.= 1
@@ -152,7 +152,7 @@ var/list/genescanner_addresses = list()
 		if (!isalive(user))
 			return
 		if (src.locked)
-			boutput(user, "<span style=\"color:red\"><b>The scanner door is locked!</b></span>")
+			boutput(user, "<span class='alert'><b>The scanner door is locked!</b></span>")
 			return
 
 		src.go_out()
@@ -162,19 +162,19 @@ var/list/genescanner_addresses = list()
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 		if (!isliving(user))
-			boutput(user, "<span style=\"color:red\">You're dead! Quit that!</span>")
+			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
 			return
 
 		if (src.occupant)
-			boutput(user, "<span style=\"color:red\"><B>The scanner is already occupied!</B></span>")
+			boutput(user, "<span class='alert'><B>The scanner is already occupied!</B></span>")
 			return
 
 		if (src.locked)
-			boutput(usr, "<span style=\"color:red\"><B>You need to unlock the scanner first.</B></span>")
+			boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 			return
 
 		if(!iscarbon(G.affecting))
-			boutput(user, "<span style=\"color:blue\"><B>The scanner supports only carbon based lifeforms.</B></span>")
+			boutput(user, "<span class='notice'><B>The scanner supports only carbon based lifeforms.</B></span>")
 			return
 
 		var/mob/living/L = user
@@ -199,7 +199,7 @@ var/list/genescanner_addresses = list()
 		if (!isalive(usr))
 			return
 		if (usr == src.occupant)
-			boutput(usr, "<span style=\"color:red\"><b>You can't reach the scanner lock from the inside.</b></span>")
+			boutput(usr, "<span class='alert'><b>You can't reach the scanner lock from the inside.</b></span>")
 			return
 		src.togglelock()
 		return
@@ -210,12 +210,12 @@ var/list/genescanner_addresses = list()
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You hear the scanner's lock slide out of place.</span>")
+				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock slide out of place.</span>")
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You hear the scanner's lock click into place.</span>")
+				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock click into place.</span>")
 
 		// Added (Convair880).
 		if (src.occupant)

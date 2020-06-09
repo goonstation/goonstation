@@ -19,7 +19,7 @@
 	boutput(F, null)
 	F.ImportText("/", file2text(target))
 	if (!F)
-		boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+		boutput(usr, "<span class='alert'>Import failed.</span>")
 	else
 		var/datum/sandbox/S = new()
 		var/obj/critter/custom/template = new()
@@ -167,13 +167,10 @@
 				random_burn_damage(src.target, damage)
 			if ("toxin")
 				M.take_toxin_damage(damage)
-				M.updatehealth()
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
-				M.updatehealth()
 			if ("radiation")
 				M.changeStatus("radiation", damage*10, 3)
-				M.updatehealth()
 
 	CritterAttack(mob/N)
 		if (!melee)
@@ -348,14 +345,14 @@
 
 	proc/blank(var/mob/M)
 		if (!M.client)
-			boutput(M, "<span style=\"color:red\">Hello.</span>")
+			boutput(M, "<span class='alert'>Hello.</span>")
 			return 0
 		// look I think it's okay if you maybe let non-admins access this sometimes
 		/*if (!M.client.holder)
-			boutput(M, "<span style=\"color:red\">What are you doing here?</span>")
+			boutput(M, "<span class='alert'>What are you doing here?</span>")
 			return 0
 		if (M.client.holder.level < LEVEL_PA)
-			boutput(M, "<span style=\"color:red\">You must be at least PA to use this.</span>")
+			boutput(M, "<span class='alert'>You must be at least PA to use this.</span>")
 			return 0*/
 		var/key = M.ckey
 		if (!(key in critterCreators))
@@ -1546,7 +1543,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 					stattype = null
 					template = temp
 				else
-					boutput(usr, "<span style=\"color:red\">Loading failed.</span>")
+					boutput(usr, "<span class='alert'>Loading failed.</span>")
 			if ("spawn_text")
 				spawn_text = configurer.getText("spawn text", spawn_text)
 		configurer.sound_router(list("abilconf" = which), "abilconf", "spawn_sound", src, "spawn_sound")
@@ -1919,7 +1916,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			F << null
 			F.ImportText("/", file2text(target))
 			if (!F)
-				boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+				boutput(usr, "<span class='alert'>Import failed.</span>")
 			else
 				var/datum/sandbox/S = new()
 				template = new()
@@ -1932,15 +1929,15 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			if (!(template.name in critter_creator_controller.activeCritterTypes))
 				critter_creator_controller.activeCritterTypes += template.name
 			critter_creator_controller.activeCritterTypes[template.name] = template.clone()
-			boutput(usr, "<span style=\"color:blue\">Critter current state saved as [template.name]</span>")
+			boutput(usr, "<span class='notice'>Critter current state saved as [template.name]</span>")
 		else if (href_list["roundload"])
 			if (critter_creator_controller.activeCritterTypes.len)
 				var/cname = input("Which critter?", "Which critter?", null) in critter_creator_controller.activeCritterTypes
 				var/obj/critter/custom/CR = critter_creator_controller.activeCritterTypes[cname]
 				template = CR.clone()
-				boutput(usr, "<span style=\"color:blue\">Loaded [template.name].</span>")
+				boutput(usr, "<span class='notice'>Loaded [template.name].</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">Nothing saved yet.</span>")
+				boutput(usr, "<span class='alert'>Nothing saved yet.</span>")
 
 		sound_router(href_list, "sounds", "anger_sound", template, "anger_sound")
 		sound_router(href_list, "sounds", "chase_sound", template, "chase_sound")

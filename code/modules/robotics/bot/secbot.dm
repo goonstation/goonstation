@@ -5,7 +5,7 @@
 	icon = 'icons/misc/halloween.dmi'
 #else
 	desc = "A little security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 #endif
 	icon_state = "secbot0"
 	layer = 5.0 //TODO LAYER
@@ -33,7 +33,7 @@
 	var/report_arrests = 0 //If true, report arrests over PDA messages.
 
 	var/botcard_access = "Head of Security" //Job access for doors.
-	var/hat = null //Add an overlay from aibots.dmi with this state.  hats.
+	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
 	var/loot_baton_type = /obj/item/baton
 	var/stun_type = "stun"
@@ -62,6 +62,7 @@
 	var/current_movepath = 0
 	var/datum/secbot_mover/mover = null
 	var/arrest_move_delay = 2.5
+	var/emag_stages = 2 //number of times we can emag this thing
 
 	var/blockcount = 0		//number of times retried a blocked path
 	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
@@ -70,7 +71,16 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	disposing()
+		if(mover)
+			mover.dispose()
+			mover = null
+		if(our_baton)
+			our_baton.dispose()
+			our_baton = null
+		target = null
 		radio_controller.remove_object(src, "1149")
+		radio_controller.remove_object(src, "[control_freq]")
+		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -83,6 +93,14 @@
 	auto_patrol = 1
 	report_arrests = 1
 	hat = "nt"
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -129,7 +147,7 @@
 /obj/item/secbot_assembly
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	var/build_step = 0
@@ -144,6 +162,9 @@
 		src.icon_state = "secbot[src.on]"
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
+		#if ASS_JAM
+		src.emag_stages = 3
+		#endif
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
@@ -155,7 +176,7 @@
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
 			if(src.hat)
-				src.overlays += image('icons/obj/aibots.dmi', "hat-[src.hat]")
+				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 
 	attack_hand(mob/user as mob, params)
 		var/dat
@@ -185,7 +206,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || src.allowed(usr)))
 			src.on = !src.on
@@ -198,7 +219,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.anchored = 0
 			src.mode = SECBOT_IDLE
 			walk_to(src,0)
-			src.icon_state = "secbot[src.on][(src.on && src.emagged == 2) ? "-spaz" : null]"
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			src.updateUsrDialog()
 
 		switch(href_list["operation"])
@@ -221,34 +242,41 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	attack_ai(mob/user as mob)
 		if (src.on && src.emagged)
-			boutput(user, "<span style=\"color:red\">[src] refuses your authority!</span>")
+			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
 			return
 		src.on = !src.on
 		src.target = null
 		src.oldtarget_name = null
 		mode = SECBOT_IDLE
 		src.anchored = 0
-		src.icon_state = "secbot[src.on][(src.on && src.emagged == 2) ? "-spaz" : null]"
+		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		walk_to(src,0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (src.emagged < 2)
+		if (src.emagged < emag_stages)
 			if (emagged)
 				if (user)
-					boutput(user, "<span style=\"color:red\">You short out [src]'s system clock inhibition circuis.</span>")
+					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuis.</span>")
 				src.overlays.len = 0
 			else if (user)
-				boutput(user, "<span style=\"color:red\">You short out [src]'s target assessment circuits.</span>")
+				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
 			SPAWN_DBG(0)
 				for(var/mob/O in hearers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+					O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 
 			src.anchored = 0
 			src.emagged++
 			src.on = 1
-			src.icon_state = "secbot[src.on][(src.on && src.emagged == 2) ? "-spaz" : null]"
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			mode = SECBOT_IDLE
 			src.target = null
+
+			#if ASS_JAM
+			if(src.emagged >= 3)
+				src.stun_type = "harm_classic"
+				arrest_move_delay = 1.5
+				playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 99, 1, 0.1, 0.7)
+			#endif
 
 			if(user)
 				src.oldtarget_name = user.name
@@ -274,7 +302,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		..()
 		if(!src.emagged && prob(75))
 			src.emagged = 1
-			src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			src.on = 1
 		else
 			src.explode()
@@ -289,12 +317,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 
 		else if (isscrewingtool(W))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span style=\"color:red\">[user] repairs [src]!</span>", "<span style=\"color:red\">You repair [src].</span>")
+				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
 		else
 			switch(W.hit_type)
 				if (DAMAGE_BURN)
@@ -364,10 +392,10 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.icon_state = "secbot-c[src.emagged == 2 ? "-spaz" : null]"
+						src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 						var/mob/living/carbon/M = src.target
 						var/maxstuns = 4
-						var/stuncount = (src.emagged == 2) ? rand(5,10) : 1
+						var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
 
 						while (stuncount > 0 && src.target)
 							// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
@@ -387,7 +415,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 								sleep(0.3 SECONDS)
 
 						SPAWN_DBG(0.2 SECONDS)
-							src.icon_state = "secbot[src.on][(src.on && src.emagged == 2) ? "-spaz" : null]"
+							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 						if (src.target.getStatusDuration("weakened"))
 							mode = SECBOT_PREP_ARREST
 							src.anchored = 1
@@ -408,7 +436,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 								src.mover.master = null
 								src.mover = null
 							src.moving = 0
-							navigate_to(src.target,(src.emagged == 2) ? (arrest_move_delay/2) : arrest_move_delay)
+							navigate_to(src.target,(src.emagged >= 2) ? (arrest_move_delay/2) : arrest_move_delay)
 							return
 					/*
 						var/turf/olddist = get_dist(src, src.target)
@@ -438,7 +466,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if (!src.target.hasStatus("handcuffed") && !src.arrest_type)
 					playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 					mode = SECBOT_ARREST
-					src.visible_message("<span style=\"color:red\"><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
 
 					SPAWN_DBG(6 SECONDS)
 						if (get_dist(src, src.target) <= 1)
@@ -455,7 +483,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							if (!isturf(src.target.loc))
 								uncuffable = 1
 
-							if(iscarbon(src.target) && !uncuffable)
+							if(ishuman(src.target) && !uncuffable)
 								src.target.handcuffs = new /obj/item/handcuffs(src.target)
 								src.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
@@ -914,7 +942,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		return
 
 	speak(var/message)
-		if (src.emagged == 2)
+		if (src.emagged >= 2)
 			message = capitalize(ckeyEx(message))
 			..(message)
 
@@ -944,12 +972,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 		var/turf/Tsec = get_turf(src)
 
 		var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)
 		Sa.build_step = 1
-		Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+		Sa.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 		Sa.created_name = src.name
 		Sa.beacon_freq = src.beacon_freq
 		Sa.hat = src.hat
@@ -979,6 +1007,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if(istype(newmaster, /obj/machinery/bot/secbot))
 			src.master = newmaster
 		return
+
+	disposing()
+		if(master.mover == src)
+			master.mover = null
+		src.master = null
+		..()
 
 	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0)
 		if(!master || !isturf(master.loc))
@@ -1052,16 +1086,16 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 
 /obj/item/secbot_assembly/attackby(obj/item/W as obj, mob/user as mob)
-	if ((istype(W, /obj/item/weldingtool)) && (!src.build_step))
+	if ((isweldingtool(W)) && (!src.build_step))
 		if(W:try_weld(user, 1))
 			src.build_step++
-			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 			boutput(user, "You weld a hole in [src]!")
 
 	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.build_step == 1))
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
-		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
+		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
 
@@ -1069,7 +1103,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.build_step++
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
-		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
+		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
 		qdel(W)
 
 	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 3))

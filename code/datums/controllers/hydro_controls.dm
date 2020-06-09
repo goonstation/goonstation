@@ -21,9 +21,9 @@ var/global/list/hydro_controller_queue = list(
 
 
 	proc/set_up()
-		pot_death_display = image('icons/obj/hydroponics/hydroponics.dmi', "led-dead")
-		pot_health_display = image('icons/obj/hydroponics/hydroponics.dmi', "led-health")
-		pot_harvest_display = image('icons/obj/hydroponics/hydroponics.dmi', "led-harv")
+		pot_death_display = image('icons/obj/hydroponics/machines_hydroponics.dmi', "led-dead")
+		pot_health_display = image('icons/obj/hydroponics/machines_hydroponics.dmi', "led-health")
+		pot_harvest_display = image('icons/obj/hydroponics/machines_hydroponics.dmi', "led-harv")
 
 		for (var/B in typesof(/datum/plantmutation))
 			if (B == /datum/plantmutation)
@@ -37,9 +37,7 @@ var/global/list/hydro_controller_queue = list(
 
 		// You need to do plants after the others or they won't set up properly due to mutations and strains
 		// not having been set up yet
-		for (var/A in typesof(/datum/plant))
-			if (A == /datum/plant)
-				continue
+		for (var/A in concrete_typesof(/datum/plant))
 			src.plant_species += new A(src)
 
 		SPAWN_DBG(0)
@@ -102,7 +100,7 @@ var/global/list/hydro_controller_queue = list(
 					break
 
 			thing.HY_set_strain(strain)
-			hydro_controller_queue["strain"] -= key						
+			hydro_controller_queue["strain"] -= key
 
 
 /proc/HY_get_species_from_path(var/species_path, var/obj/item/thing)
@@ -128,7 +126,7 @@ var/global/list/hydro_controller_queue = list(
 	if (!hydro_controls)
 		if (thing)
 			hydro_controller_queue["mutation"]["[length(hydro_controller_queue["mutation"])]"] = list("path" = mutation_path, "thing" = thing)
-		else	
+		else
 			logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find mutation before controller setup")
 		return null
 	if (!mutation_path)
@@ -147,7 +145,7 @@ var/global/list/hydro_controller_queue = list(
 	if (!hydro_controls)
 		if (thing)
 			hydro_controller_queue["strain"]["[length(hydro_controller_queue["strain"])]"] = list("path" = strain_path, "thing" = thing)
-		else	
+		else
 			logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find strain before controller setup")
 		return null
 	if (!strain_path)

@@ -64,12 +64,12 @@
 	if (..(parent))
 		return 1
 	if (src.flock && src.flock.units && src.flock.units.len <= 0)
-		boutput(src, "<span class='text-red'>There are no more drones left in the flock to compute your consciousness!</span>")
+		boutput(src, "<span class='alert'>There are no more drones left in the flock to compute your consciousness!</span>")
 		src.death() // get rekt
 
 /mob/living/intangible/flock/trace/death(gibbed)
 	if(src.client)
-		boutput(src, "<span class='text-red'>You cease to exist abruptly.</span>")
+		boutput(src, "<span class='alert'>You cease to exist abruptly.</span>")
 	if(src.flock)
 		src.flock.removeTrace(src)
 	src.invisibility = 0

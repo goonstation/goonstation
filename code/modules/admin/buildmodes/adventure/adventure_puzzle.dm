@@ -16,16 +16,16 @@
 
 	click_raw(var/atom/object, location, control, list/params)
 		if (!wizard)
-			boutput(usr, "<span style=\"color:red\">No active wizard! Right click the adventure button to begin.</span>")
+			boutput(usr, "<span class='alert'>No active wizard! Right click the adventure button to begin.</span>")
 			return
 		if (params.Find("ctrl") && params.Find("shift") && params.Find("right"))
 			if (!params.Find("alt"))
 				if (istype(object, /obj/adventurepuzzle))
-					boutput(usr, "<span style=\"color:blue\">Decreased layer by 0.1.</span>")
+					boutput(usr, "<span class='notice'>Decreased layer by 0.1.</span>")
 					var/obj/O = object
 					O.layer -= 0.1
 			else
-				boutput(usr, "<span style=\"color:blue\">Reset the layers of every adventure object on that turf.</span>")
+				boutput(usr, "<span class='notice'>Reset the layers of every adventure object on that turf.</span>")
 				for (var/obj/adventurepuzzle/O in get_turf(src))
 					O.layer = initial(O.layer)
 			return
@@ -35,10 +35,10 @@
 		if (wizard.finished)
 			qdel(wizard)
 			wizard = null
-			boutput(usr, "<span style=\"color:blue\">The wizard is finished.</span>")
+			boutput(usr, "<span class='notice'>The wizard is finished.</span>")
 
 	selected()
-		boutput(usr, {"<span style=\"color:blue\">Right click the button to select the type of adventure wizard.<br>
+		boutput(usr, {"<span class='notice'>Right click the button to select the type of adventure wizard.<br>
 While in wizard mode, you can use the following additional hotkeys:<br>
 CTRL + SHIFT + RMB on adventure element object: Decrease layer by 0.1.<br>
 CTRL + ALT + SHIFT + RMB on anything: Reset all adventure element layers on that turf.<br>

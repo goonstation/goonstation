@@ -38,7 +38,7 @@
 		if(istype( what, /obj/machinery/bathtub ))
 			var/obj/machinery/bathtub/B = what
 			B.wheels = src
-			boutput( user, "<span style='color:blue'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
+			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
 

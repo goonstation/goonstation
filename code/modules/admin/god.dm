@@ -21,7 +21,7 @@ var/can_pray = 0
 
 			boutput(world, "<h2 class='alert'><font color='red'>KNEEL, MORTALS! '[god_name]' LIVES!</font></h2>")
 			world << sound('sound/effects/thunder.ogg', volume = 80)
-			boutput(world, "<span style=\"color:blue\">You may now pray in the Chapel.</span>")
+			boutput(world, "<span class='notice'>You may now pray in the Chapel.</span>")
 			boutput(usr, "You have become a god.")
 
 			can_pray = 1
@@ -43,7 +43,7 @@ var/can_pray = 0
 		if(!length(god_list))
 			boutput(world, "<h2 class='alert'><font color='red'>YOU MORTALS HAVE A GOD NO MORE</font></h2>")
 			world << sound('sound/effects/thunder.ogg', volume = 80)
-			boutput(world, "<span style=\"color:blue\">You cannot pray anymore</span>")
+			boutput(world, "<span class='notice'>You cannot pray anymore</span>")
 
 			can_pray = 0
 
@@ -81,4 +81,4 @@ var/can_pray = 0
 	boutput(usr, "You pray to [god_name]!")
 
 	for(var/god in god_list)
-		boutput(god, "<span style=\"color:blue\"><B>PRAYER [usr.name]/[usr.key]</B>: [message]</span>")
+		boutput(god, "<span class='notice'><B>PRAYER [usr.name]/[usr.key]</B>: [message]</span>")
