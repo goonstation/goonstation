@@ -278,7 +278,7 @@
 */
 
 	if(player_capa)
-		if(clients.len >= player_cap)
+		if(total_clients() >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 				del(src)

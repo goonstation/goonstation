@@ -2458,3 +2458,15 @@ proc/inline_bicon(the_thing, height=32)
 	[bicon(the_thing)]
 	</div>
 	</span>"}
+
+
+//fucking clients.len doesnt work, filled with null values
+proc/total_clients()
+	.= 0
+	for (var/C in clients)
+		if (C)
+			.++
+
+
+
+
