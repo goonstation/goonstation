@@ -741,7 +741,10 @@
 	insert_observer(creatures[eye_name])
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
-	var/mob/dead/target_observer/newobs = unpool(/mob/dead/target_observer)
+	insert_observer_type(target, /mob/dead/target_observer)
+
+mob/dead/observer/proc/insert_observer_type(var/atom/target, var/type)
+	var/mob/dead/target_observer/newobs = unpool(type)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name
@@ -762,3 +765,6 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
 		if (OS)
 			newobs.set_loc(OS)
+
+mob/dead/observer/proc/insert_control_observer(var/atom/target)
+	insert_observer_type(target, /mob/dead/target_observer/controller)

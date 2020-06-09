@@ -9,6 +9,7 @@ var/list/observers = list()
 	var/atom/target
 	var/mob/corpse = null
 	var/mob/dead/observer/my_ghost = null
+	var/movement_stops_observing = 1
 
 	New()
 		..()
@@ -82,10 +83,12 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		if (istype(src,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
-			return
+		if (movement_stops_observing && !isturf(src.loc))
+			if (istype(src,/mob/dead/target_observer))
+				var/mob/dead/target_observer/O = src
+				O.stop_observing()
+				return
+
 		. = ..()
 
 	apply_camera(client/C)
@@ -180,3 +183,27 @@ var/list/observers = list()
 			pool(src)
 
 
+/mob/dead/target_observer/controller
+	movement_stops_observing = 0
+	var/datum/component/controlled_by_mob/controlcomponent = 0
+	set_observe_target(target)
+		..()
+		controlcomponent = src.target.AddComponent(/datum/component/controlled_by_mob,src)
+
+	pooled()
+		..()
+		if (controlcomponent)
+			controlcomponent.RemoveComponent()
+		controlcomponent = null
+
+	disposing()
+		..()
+		if (controlcomponent)
+			controlcomponent.RemoveComponent()
+		controlcomponent = null
+
+
+	stop_observing()
+		set hidden = 1
+	//ghostize()
+	//	boot()
