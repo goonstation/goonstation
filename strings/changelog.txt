@@ -1,5 +1,9 @@
 
 (t)mon jun 08 20
+(u)mbc
+(p)1009
+(e)|
+(*)Add Synaptizine to medical vendors + buffed the stun resist effect on synaptizine a bit
 (u)Tarmunora
 (p)1006
 (e)🐛|bug
