@@ -335,7 +335,6 @@
 		..()
 		var/mob/living/critter/flock/F = owner
 		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(10)))
-			world.log << "SCREM"
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
