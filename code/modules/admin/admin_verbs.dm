@@ -1682,7 +1682,7 @@ var/list/fun_images = list()
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts(var/atom/movable/target)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Alert All Ghosts"
 	set desc = "Send a notice to ghosts that something weird is happening at a person"
 	set popup_menu = 0
