@@ -121,7 +121,7 @@ var/datum/event_controller/random_events
 
 			if (alive <= (clients.len - dead_dnr) * 0.75)
 				do_random_event(player_spawn_events, source = "force_spawn")
-					message_admins("<span class='notice'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(clients.len - dead_dnr)]</span>")
+				message_admins("<span class='notice'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(clients.len - dead_dnr)]</span>")
 
 			else if (dead_antags >= round(antags * 0.75))
 				do_random_event(antag_spawn_events, source = "force_spawn")
