@@ -4285,7 +4285,7 @@ var/global/noir = 0
 	//If the overlay dissapears you lose the cloaking too, so just retype cloak-self and it should work again
 	//If you don't lay down or force yourself to update clothing via fire or whatever it should be good enough to use for the purpose of spying on shitlords I guess.
 	set name = "Cloak self"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Make yourself invisible!"
 
 	if (!iscarbon(usr))
