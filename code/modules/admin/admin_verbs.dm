@@ -159,6 +159,18 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_adminundamn,
 		/client/proc/cmd_admin_admindamn,
 		/client/proc/toggle_respawn_arena,
+
+		/client/proc/cmd_emag_all,
+		/client/proc/cmd_scale_all,
+		/client/proc/cmd_rotate_all,
+		/client/proc/cmd_spin_all,
+		/client/proc/cmd_atom_emergency_stop,
+		/client/proc/cmd_emag_type,
+		/client/proc/cmd_transmute_type,
+		/client/proc/cmd_scale_type,
+		/client/proc/cmd_rotate_type,
+		/client/proc/cmd_spin_type,
+		/client/proc/cmd_get_type
 		),
 
 	4 = list(

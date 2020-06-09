@@ -179,7 +179,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_emag_target(var/atom/target as mob|obj|turf in world)
-	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Emag Target"
 	set desc = "Emag this thing. Not the other thing like this thing. THIS thing."
@@ -311,7 +311,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_scale_target(var/atom/target as mob|obj|turf in world)
-	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Scale Target"
 	set desc = "Scales a target."
@@ -441,7 +441,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_rotate_target(var/atom/target as mob|obj|turf in world)
-	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Rotate Target"
 	set desc = "Rotates a target."
@@ -591,7 +591,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_spin_target(var/atom/target as mob|obj|turf in world)
-	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Spin Target"
 	set desc = "Spins a target."
