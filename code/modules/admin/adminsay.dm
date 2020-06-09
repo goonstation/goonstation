@@ -1,5 +1,5 @@
 /client/proc/cmd_admin_say(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "asay"
 	set hidden = 1
 
