@@ -36,7 +36,7 @@
 
 	attack_hand(mob/user)
 		if(..()) return
-		src.add_dialog(user)
+		user.machine = src
 		var/dat = {"
 			<body>
 				<h1>Announcement Computer</h1>
@@ -61,7 +61,7 @@
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)
-			boutput(user, "<span class='notice'>You insert [W].</span>")
+			boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
 			return
 		..()
 

@@ -24,8 +24,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/inj_amount = -1
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if(slot == SLOT_BELT)
+		if(slot == "belt")
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1
@@ -44,13 +43,12 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return
 
 	unequipped(mob/user as mob)
-		..()
 		owner = null
 		active = 0
 		return
 
 	attack_self(mob/user as mob)
-		src.add_dialog(user)
+		user.machine = src
 		var/dat = ""
 		dat += container ? "Container: <A href='?src=\ref[src];remove_cont=1'>[container.name]</A> - [container.reagents.total_volume] / [container.reagents.maximum_volume] Units<BR><BR>" : "Please attach a beaker<BR><BR>"
 		dat += condition ? "[condition.name] - [condition.desc] <A href='?src=\ref[src];remove_cond=1'>(Remove)</A><BR><BR>" : "<A href='?src=\ref[src];sel_cond=1'>(Select Condition)</A><BR><BR>"
@@ -64,7 +62,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
+				boutput(user, "<span style=\"color:red\">There is already a container attached to the belt.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -130,7 +128,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 				SPAWN_DBG(min_time*10) can_trigger = 1
 
 				playsound(get_turf(src),"sound/items/injectorbelt_active.ogg", 33, 0, -5)
-				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
+				boutput(owner, "<span style=\"color:blue\">Your Injector belt activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
 				SPAWN_DBG(1.5 SECONDS)
@@ -172,8 +170,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/inj_amount = -1
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if(slot == SLOT_WEAR_MASM)
+		if(slot == "mask")
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1
@@ -192,13 +189,12 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return
 
 	unequipped(mob/user as mob)
-		..()
 		owner = null
 		active = 0
 		return
 
 	attack_self(mob/user as mob)
-		src.add_dialog(user)
+		user.machine = src
 		var/dat = ""
 		dat += container ? "Container: <A href='?src=\ref[src];remove_cont=1'>[container.name]</A> - [container.reagents.total_volume] / [container.reagents.maximum_volume] Units<BR><BR>" : "Please attach a beaker<BR><BR>"
 		dat += condition ? "[condition.name] - [condition.desc] <A href='?src=\ref[src];remove_cond=1'>(Remove)</A><BR><BR>" : "<A href='?src=\ref[src];sel_cond=1'>(Select Condition)</A><BR><BR>"
@@ -212,7 +208,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				boutput(user, "<span style=\"color:red\">There is already a container attached to the mask.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -286,7 +282,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 					SPAWN_DBG(0.5 SECONDS)
 						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
 
-				boutput(owner, "<span class='notice'>Your [src] activates.</span>")
+				boutput(owner, "<span style=\"color:blue\">Your [src] activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
 				SPAWN_DBG(1.5 SECONDS)

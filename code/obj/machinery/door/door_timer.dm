@@ -158,13 +158,13 @@
 
 /obj/machinery/door_timer/examine()
 	. = list("A remote control switch for a door.")
-
+	
 	if(src.timing)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		. += "<span class='alert'>Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b></span>"
+		. += "<span style=\"color:red\">Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b></span>"
 	else
-		. += "<span class='alert'>There is no time set.</span>"
+		. += "<span style=\"color:red\">There is no time set.</span>"
 
 /obj/machinery/door_timer/process()
 	..()
@@ -239,7 +239,7 @@
 				if (B.locked)
 					B.locked = 0
 					B.update_icon()
-					B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
+					B.visible_message("<span style=\"color:blue\">[B.name] unlocks automatically.</span>")
 			LAGCHECK(LAG_HIGH)
 
 	src.updateUsrDialog()
@@ -254,7 +254,7 @@
 		return
 
 	var/dat = "<HTML><BODY><TT><B>[src.name] door controls</B>"
-	src.add_dialog(user)
+	user.machine = src
 	var/d2 = "<A href='?src=\ref[src];time=1'>Initiate Time</A><br>"
 	if (src.timing)
 		d2 = "<A href='?src=\ref[src];time=0'>Stop Timed</A><br>"
@@ -276,7 +276,7 @@
 	if (..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
+		usr.machine = src
 		if (href_list["time"])
 			if (src.allowed(usr))
 				if (src.timing == 0)

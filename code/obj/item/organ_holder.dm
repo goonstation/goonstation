@@ -55,66 +55,44 @@
 		if (src.donor)
 			src.create_organs()
 
-	disposing()
-		src.organ_list.len = 0
-		src.organ_list = null
-
+	dispose()
 		if (head)
 			head.donor = null
-			chest?.bones?.donor = null
-			head.holder = null
 		if (skull)
 			skull.donor = null
-			skull.holder = null
 		if (brain)
 			brain.donor = null
-			brain.holder = null
+			brain.owner = null
 		if (left_eye)
 			left_eye.donor = null
-			left_eye.holder = null
 		if (right_eye)
 			right_eye.donor = null
-			right_eye.holder = null
 		if (chest)
 			chest.donor = null
-			chest?.bones?.donor = null
-			chest.holder = null
 		if (heart)
 			heart.donor = null
-			heart.holder = null
 		if (left_lung)
 			left_lung.donor = null
-			left_lung.holder = null
 		if (right_lung)
 			right_lung.donor = null
-			right_lung.holder = null
 		if (butt)
 			butt.donor = null
-			butt.holder = null
 		if (left_kidney)
 			left_kidney.donor = null
-			left_kidney.holder = null
 		if (right_kidney)
 			right_kidney.donor = null
-			right_kidney.holder = null
 		if (liver)
 			liver.donor = null
-			liver.holder = null
 		if (stomach)
 			stomach.donor = null
-			stomach.holder = null
 		if (intestines)
 			intestines.donor = null
-			intestines.holder = null
 		if (spleen)
 			spleen.donor = null
-			spleen.holder = null
 		if (pancreas)
 			pancreas.donor = null
-			pancreas.holder = null
 		if (appendix)
 			appendix.donor = null
-			appendix.holder = null
 
 		head = null
 		skull = null
@@ -224,17 +202,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
+		if (left_kidney && (left_kidney.broken || left_kidney.get_damage() < left_kidney.MAX_DAMAGE))
 			count++
-		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
+		if (right_kidney && (right_kidney.broken || right_kidney.get_damage() < right_kidney.MAX_DAMAGE))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
+		if (left_lung && (left_lung.broken || left_lung.get_damage() < left_lung.MAX_DAMAGE))
 			count++
-		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
+		if (right_lung && (right_lung.broken || right_lung.get_damage() < right_lung.MAX_DAMAGE))
 			count++
 		return count
 
@@ -464,7 +442,6 @@
 				mySkull.holder = null
 				src.skull = null
 				src.organ_list["skull"] = null
-				src.head.skull = null
 				return mySkull
 
 			if ("brain")
@@ -495,7 +472,6 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head?.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -507,7 +483,6 @@
 				myLeftEye.holder = null
 				src.left_eye = null
 				src.organ_list["left_eye"] = null
-				src.head.left_eye = null
 				return myLeftEye
 
 			if ("right_eye")
@@ -519,7 +494,6 @@
 				myRightEye.holder = null
 				src.right_eye = null
 				src.organ_list["right_eye"] = null
-				src.head.right_eye = null
 				return myRightEye
 
 			if ("chest")
@@ -711,19 +685,32 @@
 				if (newHead.skull)
 					if (src.skull) // how
 						src.drop_organ("skull") // I mean really, how
-					src.receive_organ(newHead.skull, "skull", newHead.skull.op_stage)
+					src.skull = newHead.skull
+					newHead.skull.set_loc(src.donor)
+					newHead.skull.holder = src
+					newHead.skull = null
 				if (newHead.brain)
 					if (src.brain) // ???
 						src.drop_organ("brain") // god idfk
-					src.receive_organ(newHead.brain, "brain", newHead.brain.op_stage)
+					src.brain = newHead.brain
+					newHead.brain.set_loc(src.donor)
+					newHead.brain.holder = src
+					newHead.brain = null
 				if (newHead.right_eye)
 					if (src.right_eye)
 						src.drop_organ("right_eye")
-					src.receive_organ(newHead.right_eye, "right_eye", newHead.right_eye.op_stage)
+					src.right_eye = newHead.right_eye
+					newHead.right_eye.set_loc(src.donor)
+					newHead.right_eye.holder = src
+					newHead.right_eye = null
 				if (newHead.left_eye)
 					if (src.left_eye)
 						src.drop_organ("left_eye")
-					src.receive_organ(newHead.left_eye, "left_eye", newHead.left_eye.op_stage)
+					src.left_eye = newHead.left_eye
+					newHead.left_eye.set_loc(src.donor)
+					newHead.left_eye.holder = src
+					newHead.left_eye = null
+
 				if (ishuman(src.donor))
 					var/mob/living/carbon/human/H = src.donor
 					if (newHead.glasses)
@@ -767,12 +754,9 @@
 						qdel(src.skull)
 					else
 						return 0
-				if (!src.head)
-					return 0
 				var/obj/item/skull/newSkull = I
 				newSkull.op_stage = op_stage
 				src.skull = newSkull
-				src.head.skull = newSkull
 				newSkull.set_loc(src.donor)
 				newSkull.holder = src
 				organ_list["skull"] = newSkull
@@ -784,8 +768,6 @@
 						qdel(src.brain)
 					else
 						return 0
-				if (!src.skull)
-					return 0
 				var/obj/item/organ/brain/newBrain = I
 				if (src.donor.client)
 					src.donor.client.mob = new /mob/dead/observer(src)
@@ -793,7 +775,6 @@
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
-				src.head.brain = newBrain
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
 				organ_list["brain"] = newBrain
@@ -805,12 +786,9 @@
 						qdel(src.left_eye)
 					else
 						return 0
-				if (!src.head)
-					return 0
 				var/obj/item/organ/eye/newLeftEye = I
 				newLeftEye.op_stage = op_stage
 				src.left_eye = newLeftEye
-				src.head.left_eye = newLeftEye
 				newLeftEye.body_side = L_ORGAN
 				newLeftEye.set_loc(src.donor)
 				newLeftEye.holder = src
@@ -823,12 +801,9 @@
 						qdel(src.right_eye)
 					else
 						return 0
-				if (!src.head)
-					return 0
 				var/obj/item/organ/eye/newRightEye = I
 				newRightEye.op_stage = op_stage
 				src.right_eye = newRightEye
-				src.head.right_eye = newRightEye
 				newRightEye.body_side = R_ORGAN
 				newRightEye.set_loc(src.donor)
 				newRightEye.holder = src
@@ -1057,7 +1032,7 @@
 					return 0
 
 			//moved out of for loop and just continue past "butt". I think this is slightly more efficient.
-			var/obj/item/clothing/head/butt/cyberbutt/B = organ_list["butt"]
+			var/obj/machinery/bot/buttbot/cyber/B = organ_list["butt"]
 			//if it's not robotic we're done, return 0
 			if (istype(B))
 				return 1
@@ -1301,13 +1276,13 @@
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, "<span style='color:red'>You can't use that ability right now.</span>")
 			return 0
 		else if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
+			boutput(holder.owner, "<span style='color:red'>You can't use that ability while you're incapacitated.</span>")
 			return 0
 		else if (disabled)
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, "<span style='color:red'>You can't use that ability right now.</span>")
 			return 0
 		return 1
 

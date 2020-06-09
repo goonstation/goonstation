@@ -167,8 +167,7 @@ var/global/list/atomTooltips = new()
 
 		//Some stuff relies on currently-viewed-machine being set
 		if (src.owner.mob)
-			if (isobj(thing))
-				thing:add_dialog(src.owner.mob)
+			src.owner.mob.machine = thing
 
 		if (clickTip.visible)
 			//Clicktip is currently showing, just update it
@@ -424,8 +423,11 @@ var/global/list/atomTooltips = new()
 
 	proc/detachMachine()
 		if (src.owner && src.owner.mob)
-			if (src.A && isobj(src.A))
-				src.A:remove_dialog(src.owner.mob)
+			if (src.owner.mob.machine && istype(src.owner.mob.machine, /obj/machinery))
+				src.owner.mob.machine.current_user = null
+
+			src.owner.mob.machine = null
+
 
 	proc/closeHandler()
 		if (!src.hasCloseHandler) return 0
@@ -518,7 +520,7 @@ var/global/list/atomTooltips = new()
 
 
 //Hides click-toggle tooltips on player movement
-/mob/OnMove(source = null)
+/mob/OnMove()
 	..()
 
 	if (usr && src.client && src.client.tooltipHolder)

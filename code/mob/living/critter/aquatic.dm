@@ -17,6 +17,7 @@
 	butcherable = 1
 
 	is_npc = 1
+	var/datum/aiHolder/aquatic/ai = null
 
 	var/health_brute = 10
 	var/health_brute_vuln = 1
@@ -28,12 +29,6 @@
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
-
-/mob/living/critter/aquatic/disposing()
-	if(ai)
-		ai.dispose()
-	ai = null
-	..()
 
 /mob/living/critter/aquatic/setup_healths()
 	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -58,6 +53,7 @@
 			if(Bu && !is_heat_resistant())
 				Bu.TakeDamage(water_need * out_of_water_debuff)
 			hit_twitch(src)
+			updatehealth()
 	else if(src.max_health > src.health && prob(10 * src.in_water_buff))
 		var/datum/healthHolder/Br = get_health_holder("brute")
 		if (Br && Br.maximum_value > Br.value)
@@ -65,6 +61,7 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
+		updatehealth()
 
 /mob/living/critter/aquatic/Move(NewLoc, direct)
 	. = ..()
@@ -153,14 +150,18 @@
 
 /mob/living/critter/aquatic/fish/New()
 	..()
-	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
+
+	src.ai = new /datum/aiHolder/aquatic/fish()
+	src.ai.owner = src
+	mobs.Remove(src)
 
 	/*SPAWN_DBG(0)
 		if(src.client)
 			src.is_npc = 0
 		else // i mean, i can't imagine many scenarios where a player controlled fish also needs AI that doesn't even run
-			src.ai = new /datum/aiHolder/aquatic/fish(src)
+			src.ai = new /datum/aiHolder/aquatic/fish()
+			src.ai.owner = src
 			mobs.Remove(src)*/
 
 /mob/living/critter/aquatic/fish/Move(NewLoc, direct)
@@ -384,7 +385,8 @@
 		if(src.client)
 			src.is_npc = 0
 		else
-			src.ai = new /datum/aiHolder/aquatic/king_crab(src)
+			src.ai = new /datum/aiHolder/aquatic/king_crab()
+			src.ai.owner = src
 
 /mob/living/critter/aquatic/king_crab/Move(NewLoc, direct)
 	. = ..()
@@ -415,7 +417,7 @@
 		else if(istype(AM, /obj/foamedmetal))
 			AM.dispose()
 		playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-		src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+		src.visible_message("<span style=\"color:red\"><B>[src]</B> smashes into \the [AM]!</span>")
 
 /mob/living/critter/aquatic/king_crab/harmed_by(var/mob/living/M)
 	..()
@@ -429,7 +431,7 @@
 				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7)
 				for (var/mob/living/M in oview(src, 7))
 					M.apply_sonic_stun(0, 5, 3, 12, 40, rand(0,3))
-				return "<span class='alert'><b>[src]</b> lets out an eerie wail.</span>"
+				return "<span style='color:red'><b>[src]</b> lets out an eerie wail.</span>"
 		if ("dance")
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
@@ -443,13 +445,13 @@
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
-				return "<span class='alert'><b>[src]</b> does a sinister dance.</span>"
+				return "<span style='color:red'><b>[src]</b> does a sinister dance.</span>"
 		if ("snap")
 			if (src.emote_check(voluntary, 300))
 				src.changeStatus("paralysis", -300)
 				src.changeStatus("stunned", -300)
 				src.changeStatus("weakened", -300)
-				return "<span class='alert'><b>[src]</b> clacks menacingly.</span>"
+				return "<span style='color:red'><b>[src]</b> clacks menacingly.</span>"
 		if ("flex")
 			if (src.emote_check(voluntary, 300))
 				src.health_brute_vuln = 0.1
@@ -458,7 +460,7 @@
 					if (src)
 						src.health_brute_vuln = 0.5
 						src.health_burn_vuln = 3
-				return "<span class='alert'><b>[src]'s</b> chitin gleams.</span>"
+				return "<span style='color:red'><b>[src]'s</b> chitin gleams.</span>"
 	return null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,18 +489,18 @@
 			if (0)
 				if (isitem(target))
 					if (prob(33))
-						boutput(user, "<span class='alert'>[target] slips through your pincers!</span>")
+						boutput(user, "<span style=\"color:red\">[target] slips through your pincers!</span>")
 						return
 					return ..()
 				if (istype(target,/obj/sea_plant))
-					user.visible_message("<span class='alert'><b>[user] smashes [target] into sea foam!</b></span>", "<span class='alert'><b>You smash [target] into sea foam!</b></span>")
+					user.visible_message("<span style='color:red'><b>[user] smashes [target] into sea foam!</b></span>", "<span style=\"color:red\"><b>You smash [target] into sea foam!</b></span>")
 					animate_melt_pixel(target)
 					qdel(target)
 				if (istype(target,/obj/machinery/power/apc))
 					var/obj/machinery/power/apc/APC = target
 					for (var/i=1,i<=4,i++)
 						APC.cut(i)
-					user.visible_message("<span class='alert'><b>[user]'s pincers slither inside [target] and slash the wires!</b></span>", "<span class='alert'><b>Your pincers slither inside [target] and slash the wires!</b></span>")
+					user.visible_message("<span style='color:red'><b>[user]'s pincers slither inside [target] and slash the wires!</b></span>", "<span style=\"color:red\"><b>Your pincers slither inside [target] and slash the wires!</b></span>")
 					return
 				if (istype(target,/obj/cable))
 					var/obj/cable/C = target
@@ -515,7 +517,7 @@
 		return 0
 	if (prob(15))
 		logTheThing("combat", user, target, "accidentally slashes %target% with pincers at [log_loc(user)].")
-		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
+		user.visible_message("<span style='color:red'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span style=\"color:red\"><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
 	return 0
@@ -542,7 +544,7 @@
 	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
-	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
+	msgs.base_attack_message = "<b><span style='color:red'>[user] [action] [target] with their [src.holder]!</span></b>"
 	msgs.played_sound = "sound/impact_sounds/Glub_1.ogg"
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)

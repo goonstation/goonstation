@@ -6,7 +6,7 @@
 /obj/machinery/bot/cambot
 	name = "Cambot"
 	desc = "A little camera robot! Smile!"
-	icon = 'icons/obj/bots/aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cambot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -52,7 +52,7 @@
 			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		SPAWN_DBG(0)
-			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+			src.visible_message("<span style='color:red'><B>[src] buzzes oddly!</B></span>")
 			playsound(get_turf(src), "sound/weapons/flash.ogg", 50, 1)
 			flick("cambot-spark", src)
 		src.emagged = 1
@@ -104,7 +104,7 @@
 		return
 
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span style='color:red'><B>[src] blows apart!</B></span>", 1)
 
 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 	s.set_up(3, 1, src)
@@ -293,7 +293,7 @@
 
 	src.anchored = 1
 	src.icon_state = "cambot-c"
-	src.visible_message("<span class='alert'>[src] aims at [target].</span>")
+	src.visible_message("<span style='color:red'>[src] aims at [target].</span>")
 	src.photographing = 1
 	src.flash_blink(3, 1)
 
@@ -332,7 +332,7 @@
 /obj/item/camera_arm_assembly
 	name = "camera/robot arm assembly"
 	desc = "A camera with a robot arm grafted to it."
-	icon = 'icons/obj/bots/aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "camera_arm"
 	w_class = 3.0
 	flags = TABLEPASS

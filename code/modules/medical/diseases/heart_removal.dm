@@ -24,3 +24,4 @@
 		H.changeStatus("weakened", 5 SECONDS)
 		H.losebreath+=20
 		H.take_oxygen_deprivation(20)
+		H.updatehealth()

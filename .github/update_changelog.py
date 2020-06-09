@@ -3,8 +3,6 @@
 # REPO: ${{ github.repository }}
 # GITHUB_SHA - pushed commit (assigned automatically)
 # CHANGELOG_PATH: strings/changelog.txt
-# GIT_NAME: Username of the GitHub account to be used as the commiter
-# GIT_EMAIL: Email associated with the above username
 
 import os
 import datetime
@@ -14,7 +12,8 @@ import time
 import pytz
 import random
 import traceback
-from github import Github, InputGitAuthor
+from collections import OrderedDict
+from github import Github
 
 labels_to_emoji = {
 	'ass-jam': '🍑',
@@ -25,12 +24,13 @@ labels_to_emoji = {
 	'bug-minor': '🐛',
 	'bug-trivial': '🐛',
 	'enhancement': '🆕',
-	'feature': '🆕',
 	'removal': '⛔',
 	'sprites': '🎨',
 	'mapping': '🗺',
 	'rework': '🔄'
 }
+
+local_tz = pytz.timezone('US/Eastern')
 
 def parse_pr_changelog(pr):
 	entries = []
@@ -86,13 +86,8 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
 		changelog_text = '\n'.join(changelog_data)
 		print("Adding changelog:")
 		print('\n'.join([date_string] + lines))
-
-		# Thanks Crossedfall for this bit.
-		git_email = os.getenv("GIT_EMAIL")
-		git_name = os.getenv("GIT_NAME")
-
 		try:
-			repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch, committer=InputGitAuthor(git_name, git_email))
+			repo.update_file(contents.path, message, changelog_text, contents.sha, branch=branch)
 		except:
 			completed = 0
 			traceback.print_exc()
@@ -103,9 +98,6 @@ def update_changelog(repo, file_path, date_string, lines, message, tries=5, bran
 	return completed
 
 def utc_to_local(utc_dt):
-
-	local_tz = pytz.timezone('US/Eastern')
-
 	local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
 	return local_tz.normalize(local_dt)
 
@@ -119,7 +111,7 @@ def main():
 		print("Not a PR.")
 		return
 	pr = pulls[0]
-
+	
 	pr_data = parse_pr_changelog(pr)
 	pr_mergetime_local = utc_to_local(pr.merged_at)
 
@@ -128,8 +120,7 @@ def main():
 		print("No changelog provided.")
 		return
 
-	changelog_path = os.environ["ASS_CHANGELOG_PATH"] if any(label.name == 'ass-jam' for label in pr.labels) else os.environ["CHANGELOG_PATH"]
-	status = update_changelog(repo, changelog_path, date_string, pr_data, "Changelog for #{}".format(pr.number))
+	status = update_changelog(repo, os.environ["CHANGELOG_PATH"], date_string, pr_data, "Changelog for #{}".format(pr.number))
 
 	if not status:
 		sys.exit(1) # scream at people

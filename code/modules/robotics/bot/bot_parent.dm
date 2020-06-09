@@ -1,7 +1,7 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
 /obj/machinery/bot
-	icon = 'icons/obj/bots/aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	object_flags = CAN_REPROGRAM_ACCESS
@@ -38,9 +38,7 @@
 
 	disposing()
 		botcard = null
-		if(cam)
-			cam.dispose()
-			cam = null
+		cam = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -97,6 +95,6 @@
 	. = ..()
 	if (src.health < 20)
 		if (src.health > 15)
-			. += "<span class='alert'>[src]'s parts look loose.</span>"
+			. += "<span style='color:red'>[src]'s parts look loose.</span>"
 		else
-			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
+			. += "<span style='color:red'><B>[src]'s parts look very loose!</B></span>"

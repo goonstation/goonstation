@@ -95,7 +95,9 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = get_turf(src)
+		var/turf/T = src.loc
+		if (ismob(T))
+			T = T.loc
 		if (src.part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -180,9 +182,9 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span class='notice'>The timer is now secured!</span>", 1)
+			user.show_message("<span style=\"color:blue\">The timer is now secured!</span>", 1)
 		else
-			user.show_message("<span class='notice'>The timer is now unsecured!</span>", 1)
+			user.show_message("<span style=\"color:blue\">The timer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 		return
@@ -224,8 +226,8 @@ Contains:
 		src.part3.attack_hand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
-		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span style=\"color:blue\">You remove the timer/igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
 
 
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
@@ -311,7 +313,9 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = get_turf(src)
+		var/turf/T = src.loc
+		if (ismob(T))
+			T = T.loc
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -402,9 +406,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span class='notice'>The proximity sensor is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span class='notice'>The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.add_fingerprint(user)
 
@@ -443,8 +447,8 @@ Contains:
 		src.part3.attack_hand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
-		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span style=\"color:blue\">You remove the Proximity/Igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
 
 /////////////////////////////////////// Remote signaller/igniter //////////////////////////////////////
 
@@ -488,7 +492,9 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = get_turf(src)
+		var/turf/T = src.loc
+		if (ismob(T))
+			T = T.loc
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -555,8 +561,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
@@ -569,8 +575,8 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
@@ -578,9 +584,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span class='notice'>The radio is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span style=\"color:blue\">The radio is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span class='notice'>The radio is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span style=\"color:blue\">The radio is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
@@ -620,8 +626,8 @@ Contains:
 		src.part3.attack_hand(usr)
 		src.part3 = null
 		src.c_state()
-		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span style=\"color:blue\">You remove the radio/igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
 
 /obj/item/assembly/rad_ignite/c_state()
 	if(!src.part3 && !src.part5)
@@ -674,7 +680,9 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = get_turf(src)
+		var/turf/T = src.loc
+		if (ismob(T))
+			T = T.loc
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -688,9 +696,9 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span class='notice'>The analyzer is now secured!</span>", 1)
+			user.show_message("<span style=\"color:blue\">The analyzer is now secured!</span>", 1)
 		else
-			user.show_message("<span class='notice'>The analyzer is now unsecured!</span>", 1)
+			user.show_message("<span style=\"color:blue\">The analyzer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 	return
@@ -762,7 +770,9 @@ obj/item/assembly/radio_horn/receive_signal()
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = get_turf(src)
+		var/turf/T = src.loc
+		if (ismob(T))
+			T = T.loc
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -776,9 +786,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span class='notice'>The signaler is now secured!</span>", 1)
+		user.show_message("<span style=\"color:blue\">The signaler is now secured!</span>", 1)
 	else
-		user.show_message("<span class='notice'>The signaler is now unsecured!</span>", 1)
+		user.show_message("<span style=\"color:blue\">The signaler is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -831,7 +841,9 @@ obj/item/assembly/radio_horn/receive_signal()
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = get_turf(src)
+		var/turf/T = src.loc
+		if (ismob(T))
+			T = T.loc
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -845,9 +857,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span class='notice'>The proximity sensor is now secured!</span>", 1)
+		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured!</span>", 1)
 	else
-		user.show_message("<span class='notice'>The proximity sensor is now unsecured!</span>", 1)
+		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return

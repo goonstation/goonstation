@@ -24,6 +24,7 @@
 		else if (istype(W, /obj/item/shard)) qdel(src)
 		else if (istype(W, /obj/item/sword)) qdel(src)
 		else if (istype(W, /obj/item/saw)) qdel(src)
+		else if (istype(W, /obj/item/weldingtool)) qdel(src)
 		..()
 
 	proc/Life()

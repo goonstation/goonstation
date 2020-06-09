@@ -49,6 +49,7 @@
 	if(!src.enabled)
 		src.light_target = I
 		return
-	src.update(0)
-	src.light_target = I
-	src.update(1)
+	if (I.loc != user)
+		src.update(0)
+		src.light_target = I
+		src.update(1)

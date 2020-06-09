@@ -90,11 +90,11 @@
 			if (istype(T))
 				var_value = T
 			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
+				boutput(usr, "<span style=\"color:red\">Invalid coordinates!</span>")
 				return
 
 		if ("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
+			boutput(usr, "<span style=\"color:blue\">Click the mob, object or turf to use as a reference.</span>")
 			var/mob/M = usr
 			if (istype(M))
 				var/datum/targetable/listrefpicker/R = new()
@@ -105,11 +105,11 @@
 			return
 
 		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
+			boutput(usr, "<span style=\"color:blue\">Type part of the path of type of thing to instantiate.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
+				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)
@@ -166,11 +166,11 @@
 			if (istype(T))
 				var_value = T
 			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
+				boutput(usr, "<span style=\"color:red\">Invalid coordinates!</span>")
 				return
 
 		if ("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
+			boutput(usr, "<span style=\"color:blue\">Click the mob, object or turf to use as a reference.</span>")
 			var/mob/M = usr
 			if (istype(M))
 				var/datum/targetable/addtolistrefpicker/R = new()
@@ -180,11 +180,11 @@
 			return
 
 		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
+			boutput(usr, "<span style=\"color:blue\">Type part of the path of type of thing to instantiate.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
+				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)
@@ -229,7 +229,7 @@
 
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
 		return
 
 	if (isnull(variable))
@@ -336,7 +336,7 @@
 				variable) as num
 
 		if("type")
-			boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
+			boutput(usr, "<span style=\"color:blue\">Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/match = get_one_match(typename, /datum)
@@ -359,11 +359,11 @@
 			if (istype(T))
 				L[variable_index] = T
 			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
+				boutput(usr, "<span style=\"color:red\">Invalid coordinates!</span>")
 				return
 
 		if("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
+			boutput(usr, "<span style=\"color:blue\">Click the mob, object or turf to use as a reference.</span>")
 			var/mob/M = usr
 			if (istype(M))
 				var/datum/targetable/listrefpicker/R = new()
@@ -374,11 +374,11 @@
 				return
 
 		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
+			boutput(usr, "<span style=\"color:blue\">Type part of the path of type of thing to instantiate.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
+				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)
@@ -407,7 +407,7 @@
 			return 1
 
 	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Added [selected] to [target]</span>")
+		boutput(usr, "<span style=\"color:blue\">Added [selected] to [target]</span>")
 		target += selected
 
 /datum/targetable/listrefpicker
@@ -422,7 +422,7 @@
 			return 1
 
 	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Set [target]\[[varname]\] to [selected]</span>")
+		boutput(usr, "<span style=\"color:blue\">Set [target]\[[varname]\] to [selected]</span>")
 		target[varname] = selected
 
 /datum/targetable/refpicker
@@ -437,7 +437,7 @@
 			return 1
 
 	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected]</span>")
+		boutput(usr, "<span style=\"color:blue\">Set [target]/var/[varname] to [selected]</span>")
 		if(target == "GLOB")
 			global.vars[varname] = selected
 		else
@@ -448,7 +448,7 @@
 
 	global
 		handleCast(var/atom/selected)
-			boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
+			boutput(usr, "<span style=\"color:blue\">Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
 			for (var/datum/V in world)
 				LAGCHECK(LAG_LOW)
 				if (istype(V, target.type))
@@ -478,15 +478,15 @@
 	//Let's prevent people from promoting themselves, yes?
 	var/list/locked_type = list(/datum/admins) //Short list
 	if(!(src.holder.rank in list("Host", "Coder")) && (O.type in locked_type) )
-		boutput(usr, "<span class='alert'>You're not allowed to edit [O.type] for security reasons!</span>")
+		boutput(usr, "<span style=\"color:red\">You're not allowed to edit [O.type] for security reasons!</span>")
 		logTheThing("admin", usr, null, "tried to varedit [O.type] but was denied!")
 		logTheThing("diary", usr, null, "tried to varedit [O.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [O.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
 
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
-		boutput(usr, "<span class='alert'>You lack access to modify the [variable]!</span>")
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
+		boutput(usr, "<span style=\"color:red\">You lack access to modify the [variable]!</span>")
 		return
 
 	if (isnull(var_value))
@@ -619,11 +619,11 @@
 			if (istype(T))
 				O.vars[variable] = T
 			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
+				boutput(usr, "<span style=\"color:red\">Invalid coordinates!</span>")
 				return
 
 		if("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
+			boutput(usr, "<span style=\"color:blue\">Click the mob, object or turf to use as a reference.</span>")
 			var/mob/M = usr
 			if (istype(M))
 				var/datum/targetable/refpicker/R = new()
@@ -634,11 +634,11 @@
 				return
 
 		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
+			boutput(usr, "<span style=\"color:blue\">Type part of the path of type of thing to instantiate.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
 				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
+				if (src.holder.rank in list("Host", "Coder", "Shit Person"))
 					basetype = /datum
 				var/match = get_one_match(typename, basetype)
 				if (match)

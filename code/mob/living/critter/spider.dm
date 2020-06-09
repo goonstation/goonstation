@@ -7,9 +7,9 @@
 	density = 1
 	hand_count = 8 // spiders!!!
 	add_abilities = list(/datum/targetable/critter/spider_bite,
-						/datum/targetable/critter/spider_flail,
+						/datum/targetable/critter/spider_spaz,
 						/datum/targetable/critter/spider_drain)
-	var/flailing = 0
+	var/spazzing = 0
 	var/feeding = 0
 	var/venom1 = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	var/venom2 = "spiders"
@@ -74,8 +74,8 @@
 			return 1
 		if (prob(33))
 			playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1)
-			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
-			"<span class='notice'>You coo!</span>")
+			src.visible_message("<span style='color:blue'><b>[src]</b> coos!</span>",\
+			"<span style='color:blue'>You coo!</span>")
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -122,8 +122,8 @@
 		if (!src.babyspider || !ispath(src.adultpath))
 			return 0
 		src.unequip_all()
-		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
-		"<span class='notice'><b>You grow up!</b></span>")
+		src.visible_message("<span style='color:red'><b>[src] grows up!</b></span>",\
+		"<span style='color:blue'><b>You grow up!</b></span>")
 		SPAWN_DBG(0)
 			src.make_critter(src.adultpath)
 

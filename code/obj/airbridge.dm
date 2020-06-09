@@ -79,16 +79,18 @@ var/global/list/airbridge_controllers = list()
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
-				ZERO_BASE_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-				ZERO_ARCHIVED_BASE_GASES(T.air)
-				T.air.ARCHIVED(temperature) = null
-#endif
+				T.air.toxins = 0
+				T.air.toxins_archived = null
 				T.air.oxygen = MOLES_O2STANDARD
+				T.air.oxygen_archived = null
+				T.air.carbon_dioxide = 0
+				T.air.carbon_dioxide_archived = null
 				T.air.nitrogen = MOLES_N2STANDARD
+				T.air.nitrogen_archived = null
 				T.air.fuel_burnt = 0
 				T.air.trace_gases = null
 				T.air.temperature = T20C
+				T.air.temperature_archived = null
 				LAGCHECK(LAG_LOW)
 
 			working = 0
@@ -295,13 +297,6 @@ var/global/list/airbridgeComputers = list()
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
 
-	initialize()
-		..()
-		update_status()
-		if (starts_established && links.len)
-			SPAWN_DBG(1 SECOND)
-				do_initial_extend()
-
 	disposing()
 		airbridgeComputers -= src
 		..()
@@ -428,24 +423,24 @@ var/global/list/airbridgeComputers = list()
 		if (href_list["create"])
 			if (src.emergency && emergency_shuttle)
 				if (emergency_shuttle.location != SHUTTLE_LOC_STATION)
-					boutput(usr, "<span class='alert'>The airbridge cannot be deployed while the shuttle is not in position.</span>")
+					boutput(usr, "<span style=\"color:red\">The airbridge cannot be deployed while the shuttle is not in position.</span>")
 					return
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, "<span style=\"color:red\">Access denied.</span>")
 				return
 			if (src.establish_bridge())
 				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, "<span style=\"color:red\">Access denied.</span>")
 				return
 			if (src.remove_bridge())
 				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, "<span style=\"color:red\">Access denied.</span>")
 				return
 			if (src.pressurize())
 				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
@@ -495,7 +490,7 @@ var/global/list/airbridgeComputers = list()
 
 	attack_hand(mob/user as mob)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(usr, "<span class='notice'>[C.toggle_bridge()]</span>")
+			boutput(usr, "<span style=\"color:blue\">[C.toggle_bridge()]</span>")
 			break
 		return
 

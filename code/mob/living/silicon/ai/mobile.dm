@@ -97,8 +97,9 @@
 			//src:cameraFollow = null
 			src.tracker.cease_track()
 			src:current = null
+			src:machine = null
 
-		health_update_queue |= src
+		src.updatehealth()
 
 
 		if (src.health < 0)
@@ -254,7 +255,7 @@
 
 	return_mainframe()
 		if(!isAI(src.mainframe) || !src.mind)
-			boutput(src, "<span class='alert'>--Host System Error</span>")
+			boutput(src, "<span style=\"color:red\">--Host System Error</span>")
 			return 1
 
 		src.mind.transfer_to(src.mainframe)

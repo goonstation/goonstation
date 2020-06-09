@@ -43,7 +43,7 @@
 	clock
 		name = "9mm rounds pouch"
 		icon_state = "ammopouch-double"
-		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 5)
+		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 3)
 
 
 	powercell_medium

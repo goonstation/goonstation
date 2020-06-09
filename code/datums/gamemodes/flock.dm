@@ -16,9 +16,9 @@
 	var/list/possible_flockminds = list()
 
 	// TODO: Use this for scaling players
-//	var/num_players = 0 //commented since seemingly unused?
-//	for (var/mob/new_player/player in mobs)
-//		if(player.client && player.ready) num_players++
+	var/num_players = 0
+	for (var/mob/new_player/player in mobs)
+		if(player.client && player.ready) num_players++
 
 	// TODO: Handle token players
 

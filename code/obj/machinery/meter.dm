@@ -35,7 +35,7 @@
 		icon_state = "meterX"
 		return 0
 
-	var/env_pressure = MIXTURE_PRESSURE(environment)
+	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
 		icon_state = "meter0"
 	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
@@ -77,7 +77,7 @@
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			. += text("The pressure gauge reads [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
+			. += text("The pressure gauge reads [] kPa", round(environment.return_pressure(), 0.1))
 		else
 			. += "The sensor error light is blinking."
 	else
@@ -94,13 +94,13 @@
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)
-				t = text("<B>Pressure:</B> [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
+				t = text("<B>Pressure:</B> [] kPa", round(environment.return_pressure(), 0.1))
 			else
-				t = "<span class='alert'><B>Results: Sensor Error!</B></span>"
+				t = "<span style=\"color:red\"><B>Results: Sensor Error!</B></span>"
 		else
-			t = "<span class='alert'><B>Results: Connection Error!</B></span>"
+			t = "<span style=\"color:red\"><B>Results: Connection Error!</B></span>"
 	else
-		boutput(usr, "<span class='notice'><B>You are too far away.</B></span>")
+		boutput(usr, "<span style=\"color:blue\"><B>You are too far away.</B></span>")
 
 	boutput(usr, t)
 	return

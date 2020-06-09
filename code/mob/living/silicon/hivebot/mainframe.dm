@@ -23,7 +23,7 @@
 	if (isdead(src))
 		return
 	else
-		health_update_queue |= src
+		src.updatehealth()
 
 		if (src.health <= 0)
 			death()

@@ -7,23 +7,22 @@
 	item_state = "electronic"
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | CONDUCT
-	// TODO: refactor name to /var/list/tools
 	var/list/modules = list()
 	var/mod_hudicon = "unknown"
 	var/cosmetic_mods = null
-	var/include_common_tools = TRUE
-	var/included_tools = null
+	var/includes_common_items = 1
+	var/included_items = null
 	var/included_cosmetic = null
 	var/radio_type = null
 	var/obj/item/device/radio/radio = null
 
 /obj/item/robot_module/New()
-	// add contents
-	if (src.include_common_tools)
-		src.add_contents(/datum/robot/module_tool_creator/recursive/module/common)
-	src.add_contents(src.included_tools)
+	// add item contents
+	if (src.includes_common_items)
+		src.add_contents(/datum/robot/module_item_creator/recursive/module/common)
+	src.add_contents(src.included_items)
 	// no need to keep the definition past initializing
-	src.included_tools = null
+	src.included_items = null
 
 	// add cosmetics
 	if (ispath(src.included_cosmetic, /datum/robot_cosmetic))
@@ -32,32 +31,32 @@
 	if (src.radio_type != null)
 		src.radio = new src.radio_type(src)
 
-// handle various ways of adding tools to the module
+// handle various ways of adding items to the module
 /obj/item/robot_module/proc/add_contents(adding_contents)
 	if (isnull(adding_contents))
 		return
 	if (istype(adding_contents, /obj/item))
-		// handle adding single instance of tool
+		// handle adding single instance of item
 		var/obj/item/I = adding_contents
 		I.cant_drop = 1
 		I.set_loc(src)
 		src.modules += I
 		return I
 	if (ispath(adding_contents, /obj/item))
-		// handle adding tool by path (instantiate)
+		// handle adding item by path (instantiate)
 		var/obj/item/I = new adding_contents(src)
 		// recurse here to avoid duplication; could optimize this call out
 		return src.add_contents(I)
-	if (istype(adding_contents, /datum/robot/module_tool_creator))
+	if (istype(adding_contents, /datum/robot/module_item_creator))
 		// handle adding by definition
-		var/datum/robot/module_tool_creator/MTC = adding_contents
-		var/I = MTC.apply_to_module(src)
+		var/datum/robot/module_item_creator/MIC = adding_contents
+		var/I = MIC.apply_to_module(src)
 		return I
-	if (ispath(adding_contents, /datum/robot/module_tool_creator))
+	if (ispath(adding_contents, /datum/robot/module_item_creator))
 		// handle adding by definition path (instantiate)
-		var/datum/robot/module_tool_creator/MTC = new adding_contents
+		var/datum/robot/module_item_creator/MIC = new adding_contents
 		// recurse here to avoid duplication; could optimize this call out
-		return src.add_contents(MTC)
+		return src.add_contents(MIC)
 	if (islist(adding_contents))
 		// handle adding a batch at once
 		var/list/L = adding_contents
@@ -65,6 +64,6 @@
 		for (var/member in L)
 			var/resolved_member = src.add_contents(member)
 			if (!isnull(resolved_member))
-				// N.B. this will flatten lists, which is desired behavior here
+				// note this will flatten lists, which is desired behavior here
 				added += resolved_member
 		return added

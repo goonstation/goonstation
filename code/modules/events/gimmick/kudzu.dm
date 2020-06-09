@@ -1,16 +1,16 @@
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/hydromisc.dmi'
 	icon_state = "seeds"
 
 	attack(mob/M, mob/user)
 		if(ishuman( M ))
 			if( user == M )
-				boutput( user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>" )
+				boutput( user, "You feed yourself the [src]. <span style='color:red'>Oh god!</span>" )
 				logTheThing( "combat", user, null, "fed themself a [src]." )
 			else
-				boutput( user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>" )
+				boutput( user, "You feed [M] the [src]. <span style='color:red'>Oh god!</span>" )
 				logTheThing( "combat", user, M, "fed %target% a [src]." )
 			animate( M, color = "#0F0", time = 300 )//TODO: See below.
 			qdel( src )
@@ -140,10 +140,6 @@
 			qdel(src)
 			return 1
 		..()
-		//Add kudzu flag to new turf.
-		var/turf/T2 = get_turf(newloc)
-		if (T2)
-			T2.temp_flags |= HAS_KUDZU
 
 	Move()
 		var/turf/T = get_turf(src)
@@ -322,7 +318,7 @@
 /obj/spacevine/alien/flower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
-	icon = 'icons/obj/decals/misc.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "alienflower"
 
 	New()
@@ -365,7 +361,7 @@
 					icon_state = "bulb-closed"
 
 				sleep(bulb_complete)
-
+				
 				if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
@@ -386,7 +382,7 @@
 	disposing()
 		destroyed = 1
 		if (natural_opening)
-			src.visible_message("<span class='alert'>[src] puffs and it opens wide revealing what's inside!</span>")
+			src.visible_message("<span style=\"color:red\">[src] puffs and it opens wide revealing what's inside!</span>")
 		else
 			for (var/mob/M in contents)
 				M.take_toxin_damage(60)
@@ -406,7 +402,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iscuttingtool(W))
-			src.visible_message("<span class='alert'>[user] cuts [src] to bits!</span>")
+			src.visible_message("<span style=\"color:red\">[user] cuts [src] to bits!</span>")
 			qdel(src)
 		..()
 	//destroy if attacked by wirecutters or something

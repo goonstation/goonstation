@@ -245,16 +245,16 @@ AI MODULES
 		sender.unlock_medal("Format Complete", 1)
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
-		for (var/mob/living/silicon/S in mobs)
+		for (var/mob/living/silicon/S in mobs)//world)
 			LAGCHECK(LAG_LOW)
 			if (isAI(S) && isdead(S))
 				setalive(S)
 				if (S.ghost && S.ghost.mind)
-					S.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
+					S.ghost.show_text("<span style=\"color:red\"><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
 					S.ghost.mind.transfer_to(S)
 					qdel(S.ghost)
 					do_admin_logging(" revived the AI", sender)
-			S.show_message("<span class='notice'>Your laws have been reset by [sender].</span>")
+			S.show_message("Your laws have been reset by [sender].", "blue")
 		do_admin_logging("reset the centralized AI law set", sender)
 
 /******************** Rename ********************/
@@ -265,9 +265,6 @@ AI MODULES
 	lawTarget = "404 Name Not Found"
 
 	get_law_text()
-		if (is_blank_string(lawTarget)) //no blank names allowed
-			lawTarget = pick(ai_names)
-			return lawTarget
 		return lawTarget
 
 	get_desc()
@@ -378,7 +375,7 @@ AI MODULES
 		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws
 		if (!LAWS)
 			// YOU BETRAYED THE LAW!!!!!!
-			boutput(user, "<span class='alert'>Unable to detect AI unit's Law software. It may be corrupt.</span>")
+			boutput(user, "<span style=\"color:red\">Unable to detect AI unit's Law software. It may be corrupt.</span>")
 			return
 
 		var/lawOut = list("<b>The AI's current laws are:</b>")
@@ -407,7 +404,7 @@ AI MODULES
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
 				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+					boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -421,7 +418,7 @@ AI MODULES
 					A.anchored = 1
 					qdel(src)
 				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+					boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
 					if(src.material) A.setMaterial(src.material)
 					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)
@@ -435,7 +432,7 @@ AI MODULES
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for (var/mob/living/silicon/ai/M in AIs)
 				M.moustache_mode = 1
-				user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
+				user.visible_message("<span style=\"color:red\"><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 				M.update_appearance()
 		else
 			return ..()

@@ -43,11 +43,11 @@
 		return 0
 
 // -----------------
-// Spider flail skill
+// Spider spaz skill
 // -----------------
-/datum/targetable/critter/spider_flail
-	name = "Flail"
-	desc = "Flail at a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
+/datum/targetable/critter/spider_spaz
+	name = "Spaz"
+	desc = "Spaz out on a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
@@ -69,12 +69,12 @@
 					target = M
 					break
 			if (!ismob(target))
-				boutput(holder.owner, __red("Nothing to flail at there."))
+				boutput(holder.owner, __red("Nothing to spaz at there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to flail at."))
+			boutput(holder.owner, __red("That is too far away to spaz at."))
 			return 1
 		var/mob/MT = target
 		var/mob/living/critter/spider/S = holder.owner
@@ -86,13 +86,14 @@
 			MT.emote("scream")
 		disabled = 1
 		SPAWN_DBG(0)
-			var/flail = rand(10, 15)
+			var/spaz = rand(10, 15)
 			holder.owner.canmove = 0
-			while (flail > 0 && MT && !MT.disposed)
+			while (spaz > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 2 SECONDS)
 				MT.canmove = 0
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
+				holder.owner.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				if (istype(S))
@@ -111,7 +112,7 @@
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)
-				flail--
+				spaz--
 			if (MT)
 				MT.canmove = 1
 			doCooldown()
@@ -167,6 +168,7 @@
 			while (drain > 0 && H && H.stat && !H.disposed)
 				if (H.loc && holder.owner.loc != H.loc)
 					break
+				holder.owner.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				holder.owner.HealDamage("All", 1, 1)
@@ -302,9 +304,9 @@
 			MT.emote("scream")
 		disabled = 1
 		SPAWN_DBG(0)
-			var/flail = 8
+			var/spaz = 8
 			holder.owner.canmove = 0
-			while (flail > 0 && MT && !MT.disposed)
+			while (spaz > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 2 SECONDS)
 				MT.canmove = 0
 				if (MT.loc)
@@ -325,7 +327,7 @@
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)
-				flail--
+				spaz--
 			if (MT)
 				MT.canmove = 1
 			doCooldown()

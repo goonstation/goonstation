@@ -20,7 +20,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		src.add_dialog(user)
+		user.machine = src
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -41,7 +41,7 @@
 			return
 
 		if (usr.loc == ship)
-			src.add_dialog(usr)
+			usr.machine = src
 
 			if (href_list["gunner"])
 				MakeGunner(usr)
@@ -49,7 +49,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in ship)
-				if (M.using_dialog_of(src))
+				if ((M.client && M.machine == src))
 					src.opencomputer(M)
 		else
 			usr.Browse(null, "window=ship_main_weapon")
@@ -222,7 +222,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		src.add_dialog(user)
+		user.machine = src
 
 		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
 		if(src.active)
@@ -245,7 +245,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			src.add_dialog(usr)
+			usr.machine = src
 
 		if (href_list["heat"])
 			current_projectile = ufo
@@ -294,7 +294,7 @@
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='alert'>[ship] spews out a metalic foam!</span>")
+						boutput(M, "<span style=\"color:red\">[ship] spews out a metalic foam!</span>")
 					var/list/bandaidfix = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
@@ -310,7 +310,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		src.add_dialog(user)
+		user.machine = src
 
 		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
 		if(src.active)
@@ -333,7 +333,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			src.add_dialog(usr)
+			usr.machine = src
 
 		if (href_list["foam"])
 			mode = 0

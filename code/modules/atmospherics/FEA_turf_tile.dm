@@ -32,9 +32,10 @@ turf
 		//  we can't pool the object returned by return_air. Bad news, man.
 		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 
-		#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
-		APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
-		#undef _TRANSFER_GAS_TO_GM
+		GM.oxygen = oxygen
+		GM.carbon_dioxide = carbon_dioxide
+		GM.nitrogen = nitrogen
+		GM.toxins = toxins
 
 		GM.temperature = temperature
 
@@ -47,11 +48,16 @@ turf
 //			return movable_on_me.remove_air(amount)
 
 		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
-		var/sum = BASE_GASES_TOTAL_MOLES(src)
+		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
+		//if(remove_water)
+		//	sum += water
 		if(sum>0)
-			#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
-			APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
-			#undef _TRANSFER_AMOUNT_TO_GM
+			GM.oxygen = (oxygen/sum)*amount
+			GM.carbon_dioxide = (carbon_dioxide/sum)*amount
+			GM.nitrogen = (nitrogen/sum)*amount
+			GM.toxins = (toxins/sum)*amount
+			//if(remove_water)
+			//	GM.water += (water/sum)*amount
 
 		GM.temperature = temperature
 
@@ -97,7 +103,6 @@ turf
 turf
 	simulated
 
-		var/dist_to_space = null
 		var/current_graphic = null
 
 		var/tmp
@@ -113,9 +118,7 @@ turf
 			archived_cycle = 0
 			current_cycle = 0
 
-#ifdef ATMOS_ARCHIVING
-			ARCHIVED(temperature) //USED ONLY FOR SOLIDS
-#endif
+			temperature_archived //USED ONLY FOR SOLIDS
 			being_superconductive = 0
 			obj/overlay/tile_gas_effect/gas_icon_overlay
 			visuals_state
@@ -190,9 +193,10 @@ turf
 			if(!blocks_air)
 				air = unpool(/datum/gas_mixture)
 
-				#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
-				APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
-				#undef _TRANSFER_GAS_TO_AIR
+				air.oxygen = oxygen
+				air.carbon_dioxide = carbon_dioxide
+				air.nitrogen = nitrogen
+				air.toxins = toxins
 
 				air.temperature = temperature
 
@@ -218,7 +222,7 @@ turf
 				else
 					air_master.active_singletons.Remove(src)
 			if(active_hotspot)
-				active_hotspot.dispose() // have to call this now to force the lighting cleanup
+				active_hotspot.disposing() // have to call this now to force the lighting cleanup
 				if (active_hotspot)
 					pool(active_hotspot)
 					active_hotspot = null
@@ -249,14 +253,12 @@ turf
 
 			else return ..()
 
-#ifdef ATMOS_ARCHIVING
 		archive()
 			if(air) //For open space like floors
 				air.archive()
 
-			ARCHIVED(temperature) = temperature
+			temperature_archived = temperature
 			archived_cycle = air_master.current_cycle
-#endif
 
 		share_air_with_tile(turf/simulated/T)
 			return air.share(T.air)
@@ -346,10 +348,8 @@ turf
 		process_cell()
 			var/list/turf/simulated/possible_fire_spreads
 			if(processing && air)
-#ifdef ATMOS_ARCHIVING
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
-#endif
 				current_cycle = air_master.current_cycle
 
 				for(var/direction in cardinal)
@@ -359,10 +359,8 @@ turf
 
 						//if(istype(enemy_tile))
 						if (enemy_tile.turf_flags & IS_TYPE_SIMULATED)
-#ifdef ATMOS_ARCHIVING
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
-#endif
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
 								if(enemy_tile.parent.current_cycle < current_cycle)
 									if(enemy_tile.parent.air.check_gas_mixture(air))
@@ -541,7 +539,7 @@ turf
 					return 0
 
 		proc/mimic_temperature_solid(turf/model, conduction_coefficient)
-			var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
+			var/delta_temperature = (temperature_archived - model.temperature)
 			if((src.heat_capacity > 0) && (model.heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
 				var/heat = conduction_coefficient*delta_temperature* \
@@ -549,7 +547,7 @@ turf
 				temperature -= heat/src.heat_capacity
 
 		proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
-			var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
+			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 
 				var/heat = conduction_coefficient*delta_temperature* \
@@ -566,7 +564,7 @@ turf
 			if(air)
 				if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 					return 0
-				if(HEAT_CAPACITY(air) < MOLES_CELLSTANDARD*0.1*0.05)
+				if(air.heat_capacity() < MOLES_CELLSTANDARD*0.1*0.05)
 					return 0
 			else
 				if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))

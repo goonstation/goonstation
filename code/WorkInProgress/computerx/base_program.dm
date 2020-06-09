@@ -63,7 +63,7 @@
 		if(!(holder in src.master.contents) && !(holder.loc in src.master.contents))
 			return 1
 
-		src.add_dialog(usr).master
+		usr.machine = src.master
 
 		return 0
 

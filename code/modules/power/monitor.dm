@@ -28,11 +28,11 @@
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
-			src.remove_dialog(user)
+			user.machine = null
 			user.Browse(null, "window=[window_tag]")
 			return
 
-	src.add_dialog(user)
+	user.machine = src
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	if(!powernet)
@@ -74,7 +74,7 @@
 	..()
 	if( href_list["close"] )
 		usr.Browse(null, "window=[window_tag]")
-		src.remove_dialog(usr)
+		usr.machine = null
 		return
 
 /obj/machinery/power/monitor/process()
@@ -144,12 +144,12 @@
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
-			src.remove_dialog(user)
+			user.machine = null
 			user.Browse(null, "window=[window_tag]")
 			return
 
 
-	src.add_dialog(user)
+	user.machine = src
 	var/t = "<TT><B>Engine and SMES Monitoring</B><HR>"
 
 

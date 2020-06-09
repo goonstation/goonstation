@@ -6,7 +6,6 @@
 	var/enabled = 1
 	anchored = 1
 	layer = OBJ_LAYER
-	plane = PLANE_NOSHADOW_BELOW
 	invisibility = 2
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
@@ -337,7 +336,6 @@
 	icon_state = "ai3"
 	anchored = 1
 	density = 0
-	plane = PLANE_NOSHADOW_BELOW
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
@@ -356,14 +354,14 @@
 			locked = !locked
 			boutput(user, "You [ locked ? "lock" : "unlock"] the panel.")
 			if (locked)
-				if (user.using_dialog_of(src))
-					src.remove_dialog(user)
+				if (user.machine==src)
+					user.machine = null
 					user.Browse(null, "window=turretid")
 			else
-				if (user.using_dialog_of(src))
+				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, "<span style=\"color:red\">Access denied.</span>")
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -375,11 +373,11 @@
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user) && !isAI(user) && !isAIeye(user))
 			boutput(user, text("Too far away."))
-			src.remove_dialog(user)
+			user.machine = null
 			user.Browse(null, "window=turretid")
 			return
 
-	src.add_dialog(user)
+	user.machine = src
 	var/loc = src.loc
 	if (istype(loc, /turf))
 		loc = loc:loc

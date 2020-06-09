@@ -67,13 +67,13 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 					if (user.stat || get_dist(user, src) > 2)
 						return
 
-					if (!user.find_tool_in_hand(TOOL_PULSING))
-						boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
+					if (!(ishuman(usr) && usr.find_tool_in_hand(TOOL_PULSING)))
+						boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
 						return
 
 					. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
 					if (length(.)%2 || !is_hex(.))
-						boutput(user, "<span class='alert'>Invalid ROM values.  Great job, knucklehead!!</span>")
+						boutput(user, "<span style=\"color:red\">Invalid ROM values.  Great job, knucklehead!!</span>")
 
 					ROM = .
 				if ("Toggle Active")
@@ -117,11 +117,11 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 				sleep(0.1 SECONDS)
 
 	attack_hand(mob/user as mob)
-		if (src.level != 1)
-			return ..(user)
 		if (!istype(src.loc, /turf/)) return
+		if (!src.level)
+			return ..()
 
-		if (user.using_dialog_of(src))
+		if (user.machine == src)
 			user << output("[src.running]&[RR ? 1 : 0]&[IEN]&[OEN]", "mcu14500b.browser:update_indicators")
 			user << output("[ioPins]", "mcu14500b.browser:update_mem_lights")
 			return
@@ -135,7 +135,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 		if (!user || user.stat ||(iscarbon(user) && get_dist(user, src) > 1))
 			return
 
-		src.add_dialog(user)
+		user.machine = src
 
 		. = {"<html><head><title>Industrial Control Unit</title></head><body>
 		<center><table border='1'><tr><td id='active_indicator'><font color=white style='background-color:[running ? "#33FF00" : "#F80000"]'>[running ? "&nbsp;ACTIVE&nbsp;" : "INACTIVE"]</font></td></tr></table><br>

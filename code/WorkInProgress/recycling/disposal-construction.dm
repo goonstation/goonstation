@@ -155,18 +155,19 @@
 				boutput(user, "You attach the pipe to the underfloor.")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
 
-		else if(isweldingtool(I))
-			if(I:try_weld(user, 2, noisy = 2))
+		else if(istype(I, /obj/item/weldingtool))
+			var/obj/item/weldingtool/W = I
+			if(W.try_weld(user, 2, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
-				var/atom/wloc = I.loc
+				var/atom/wloc = W.loc
 				var/turf/ploc = loc
 				boutput(user, "You begin welding [src] in place.")
 				sleep(0.1 SECONDS)
-				if(user.loc == uloc && wloc == I.loc)
+				if(user.loc == uloc && wloc == W.loc)
 					// REALLY? YOU DON'T FUCKING CARE ABOUT THE LOCATION OF THE PIPE? GET FUCKED <CODER>
 					if (ploc != loc)
-						boutput(user, "<span class='alert'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
+						boutput(user, "<span style='color:red'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
 						ploc = loc
 						SPAWN_DBG(0)
 							robogibs(ploc)

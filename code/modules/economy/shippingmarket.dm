@@ -155,9 +155,6 @@
 							qdel(O)
 						duckets += add
 						break
-					else if (istype(O, /obj/item/spacecash))
-						duckets += O:amount
-						pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in sell_crate.contents)
 				for (var/datum/commodity/C in commodities_list)
@@ -172,9 +169,6 @@
 							qdel(O)
 						duckets += add
 						break
-					else if (istype(O, /obj/item/spacecash))
-						duckets += O:amount
-						pool(O)
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
@@ -315,7 +309,7 @@
 			wagesystem.research_budget += amount
 			if (wagesystem.research_budget < 0) wagesystem.research_budget = 0
 		else
-			boutput(usr, "<span class='alert'>Whatever you did, it didn't work.</span>")
+			boutput(usr, "<span style=\"color:red\">Whatever you did, it didn't work.</span>")
 			return
 
 #undef SUPPLY_OPEN_TIME

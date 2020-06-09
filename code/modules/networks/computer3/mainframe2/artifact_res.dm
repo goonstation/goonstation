@@ -1334,7 +1334,7 @@
 </html>
 "}
 
-		src.add_dialog(user)
+		user.machine = src
 		user.Browse(dat, "window=art_computer;size=580x360;can_resize=0")
 		onclose(user, "art_computer")
 		return
@@ -1357,7 +1357,7 @@
 		if(..())
 			return
 
-		src.add_dialog(usr)
+		usr.machine = src
 
 		if (href_list["button"])
 			. = round(text2num(href_list["button"]))
@@ -1409,7 +1409,7 @@
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			DEBUG_OUT("[M]")
-			if (M.using_dialog_of(src))
+			if ((M.client && M.machine == src))
 				DEBUG_OUT("[M]!!!")
 				if (forceUpdate || entryUpdateFlags)
 					DEBUG_OUT("[M] ! !  !")
@@ -1420,7 +1420,7 @@
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.using_dialog_of(src))
+				if (usr.client && usr.machine==src)
 					if (forceUpdate || entryUpdateFlags)
 						src.dynamicUpdate(usr, forceUpdate|entryUpdateFlags)
 						entryUpdateFlags = REASON_NONE

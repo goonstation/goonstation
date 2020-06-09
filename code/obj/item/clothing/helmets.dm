@@ -12,7 +12,7 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
-		setProperty("meleeprot_head", 4)
+		setProperty("meleeprot", 4)
 
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
@@ -41,9 +41,9 @@
 
 			if(material.hasProperty("density"))
 				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", prot)
+				setProperty("meleeprot", prot)
 			else
-				setProperty("meleeprot_head", 2)
+				setProperty("meleeprot", 2)
 
 	setupProperties()
 		..()
@@ -71,8 +71,8 @@
 
 	New()
 		..()
-		light = new /datum/light/line
-		light.set_brightness(4.5)
+		light = new /datum/light/point
+		light.set_brightness(1)
 		light.set_height(1.8)
 		light.set_color(0.9, 0.9, 1)
 		light.attach(src)
@@ -236,82 +236,6 @@
 			c_flags = SPACEWEAR | COVERSEYES
 			see_face = 0.0
 			protective_temperature = 1300
-			abilities = list(/obj/ability_button/nukie_meson_toggle)
-			var/on = 0
-
-			attack_self(mob/user)
-				src.toggle(user)
-
-			proc/toggle(var/mob/toggler)
-				src.on = !src.on
-				playsound(get_turf(src), "sound/items/mesonactivate.ogg", 30, 1)
-				if (ishuman(toggler))
-					var/mob/living/carbon/human/H = toggler
-					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
-						if (src.on)
-							H.vision.set_scan(1)
-						else
-							H.vision.set_scan(0)
-
-			equipped(var/mob/living/user, var/slot)
-				..()
-				if(!isliving(user))
-					return
-				if (slot == SLOT_HEAD && on)
-					user.vision.set_scan(1)
-
-			unequipped(var/mob/living/user)
-				..()
-				if(!isliving(user))
-					return
-				user.vision.set_scan(0)
-
-		medic
-			name = "specialist health monitor"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
-			var/client/assigned = null
-
-			process()
-				if (assigned)
-					assigned.images.Remove(health_mon_icons)
-					src.addIcons()
-
-					if (loc != assigned.mob)
-						assigned.images.Remove(health_mon_icons)
-						assigned = null
-
-					//sleep(2 SECONDS)
-				else
-					processing_items.Remove(src)
-
-			proc/addIcons()
-				if (assigned)
-					for (var/image/I in health_mon_icons)
-						if (!I || !I.loc || !src)
-							continue
-						if (I.loc.invisibility && I.loc != src.loc)
-							continue
-						else
-							assigned.images.Add(I)
-
-			equipped(var/mob/user, var/slot)
-				..()
-				if (slot == SLOT_HEAD)
-					assigned = user.client
-					SPAWN_DBG(-1)
-						//updateIcons()
-						if (!(src in processing_items))
-							processing_items.Add(src)
-				return
-
-			unequipped(var/mob/user)
-				..()
-				if (assigned)
-					assigned.images.Remove(health_mon_icons)
-					assigned = null
-					processing_items.Remove(src)
-				return
 
 		sniper
 			name = "specialist combat cover"
@@ -341,7 +265,7 @@
 	item_state = "swat_hel"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot", 7)
 
 /obj/item/clothing/head/helmet/turd
 	name = "T.U.R.D.S. helmet"
@@ -350,7 +274,7 @@
 	item_state = "turdhelm"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot", 7)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
@@ -359,7 +283,7 @@
 	item_state = "tdhelm"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot", 7)
 
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
@@ -373,12 +297,12 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 5)
+		setProperty("meleeprot", 5)
 
 	New()
 		..()
-		light = new /datum/light/line
-		light.set_brightness(4.5)
+		light = new /datum/light/point
+		light.set_brightness(1)
 		light.set_height(1.8)
 		light.set_color(1, 1, 0.9)
 		light.attach(src)
@@ -421,7 +345,7 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
-		setProperty("meleeprot_head", 5)
+		setProperty("meleeprot", 5)
 
 	flashlight_toggle(var/mob/user, var/force_on = 0)
 		on = !on
@@ -459,7 +383,7 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
-		setProperty("meleeprot_head", 8)
+		setProperty("meleeprot", 8)
 
 	attack_self(mob/user as mob)
 		return
@@ -500,7 +424,7 @@
 	item_state = "jetson"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 3)
+		setProperty("meleeprot", 3)
 
 /obj/item/clothing/head/helmet/welding
 	name = "welding helmet"
@@ -520,15 +444,15 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 2)
+		setProperty("meleeprot", 2)
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_down()
-		setProperty("meleeprot_head", 2)
+		setProperty("meleeprot", 2)
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_up()
-		setProperty("meleeprot_head", 4)
+		setProperty("meleeprot", 4)
 		setProperty("disorient_resist_eye", 0)
 
 
@@ -542,9 +466,8 @@
 	c_flags = COVERSEYES
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 9)
+		setProperty("meleeprot", 9)
 		setProperty("disorient_resist_eye", 25)
-		setProperty("exploprot", 2)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -557,7 +480,7 @@
 	desc = "Actually, you got this hat from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot", 7)
 
 /obj/item/clothing/head/helmet/HoS/attack_self(mob/user as mob)
 	if(user.r_hand == src || user.l_hand == src)
@@ -566,13 +489,13 @@
 			src.name = "HoS Beret"
 			src.icon_state = "hosberet"
 			src.item_state = "hosberet"
-			boutput(usr, "<span class='notice'>You fold the hat into a beret.</span>")
+			boutput(usr, "<span style=\"color:blue\">You fold the hat into a beret.</span>")
 		else
 			src.folds = 0
 			src.name = "HoS Hat"
 			src.icon_state = "hoscap"
 			src.item_state = "hoscap"
-			boutput(usr, "<span class='notice'>You unfold the beret back into a hat.</span>")
+			boutput(usr, "<span style=\"color:blue\">You unfold the beret back into a hat.</span>")
 		return
 
 /obj/item/clothing/head/helmet/siren
@@ -589,7 +512,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 5)
+		setProperty("meleeprot", 5)
 
 	New()
 		..()
@@ -623,7 +546,6 @@
 			weeoo_in_progress = 0
 
 	unequipped(var/mob/user)
-		..()
 		if (src.weeoo_in_progress)
 			src.weeoo_in_progress = 0
 
@@ -647,7 +569,7 @@
 	color_b = 0.8
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 10)
+		setProperty("meleeprot", 10)
 		setProperty("disorient_resist_eye", 50)
 		setProperty("disorient_resist_ear", 30)
 
@@ -660,7 +582,7 @@
 	see_face = 0.0
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 8)
+		setProperty("meleeprot", 8)
 		setProperty("disorient_resist_eye", 15)
 
 /obj/item/clothing/head/helmet/space/industrial
@@ -681,7 +603,6 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
-		setProperty("exploprot", 1)
 
 	syndicate
 		name = "Syndicate Command Helmet"
@@ -690,7 +611,7 @@
 		item_state = "indusred"
 		setupProperties()
 			..()
-			setProperty("meleeprot_head", 7)
+			setProperty("meleeprot", 7)
 
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
@@ -702,7 +623,7 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 25)
-		setProperty("meleeprot_head", 2)
+		setProperty("meleeprot", 2)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("disorient_resist_ear", 10)
 
@@ -715,7 +636,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 2)
+		setProperty("meleeprot", 2)
 
 	red
 		name = "red bucket helmet"
@@ -728,7 +649,7 @@
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		step_rand(src)
-		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
+		user.visible_message("<span style=\"color:red\"><b>[user] kicks the bucket!</b></span>")
 		user.death(0)
 
 
@@ -743,7 +664,7 @@
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
 
 	attack_self(mob/user as mob)
-		boutput(usr, "<span class='notice'>You turn the bucket right side up.</span>")
+		boutput(usr, "<span style=\"color:blue\">You turn the bucket right side up.</span>")
 		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
@@ -754,7 +675,7 @@
 	suicide(var/mob/user as mob)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
-		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
+		user.visible_message("<span style=\"color:red\"><b>[user] kicks the bucket!</b></span>")
 		user.death(0)
 
 	red
@@ -771,7 +692,7 @@
 	icon_state = "gr_helmet"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot", 7)
 
 /*/obj/item/clothing/head/helmet/escape
 	name = "escape helmet"

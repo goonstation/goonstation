@@ -38,7 +38,7 @@ var/list/globalContextActions = null
 			screenX += offsetX
 			screenY += offsetY
 
-			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
+			for(var/obj/screen/contextButton/C in buttons)
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 				var/mob/living/carbon/human/H = usr
@@ -47,12 +47,6 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
-				if (isrobot(usr))
-					var/mob/living/silicon/robot/robot = usr
-					robot.hud.add_screen(C)
-				if (ishivebot(usr))
-					var/mob/living/silicon/hivebot/hivebot = usr
-					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -97,12 +91,6 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
-				if (isrobot(usr))
-					var/mob/living/silicon/robot/robot = usr
-					robot.hud.add_screen(C)
-				if (ishivebot(usr))
-					var/mob/living/silicon/hivebot/hivebot = usr
-					hivebot.hud.add_screen(C)
 
 				var/offX = round(dist*cos(anglePer*count)) + additionalX
 				var/offY = round(dist*sin(anglePer*count))	+ additionalY
@@ -131,12 +119,6 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
-				if (isrobot(usr))
-					var/mob/living/silicon/robot/robot = usr
-					robot.hud.add_screen(C)
-				if (ishivebot(usr))
-					var/mob/living/silicon/hivebot/hivebot = usr
-					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -168,12 +150,6 @@ var/list/globalContextActions = null
 				if(istype(R)) R.hud.add_screen(C)
 				var/mob/wraith/W = usr
 				if(istype(W)) W.hud.add_screen(C)
-				if (isrobot(usr))
-					var/mob/living/silicon/robot/robot = usr
-					robot.hud.add_screen(C)
-				if (ishivebot(usr))
-					var/mob/living/silicon/hivebot/hivebot = usr
-					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -229,12 +205,6 @@ var/list/globalContextActions = null
 				if(istype(W)) W.hud.add_screen(C)
 				var/mob/dead/observer/GO = usr
 				if(istype(GO)) GO.hud.add_screen(C)
-				if (isrobot(usr))
-					var/mob/living/silicon/robot/robot = usr
-					robot.hud.add_screen(C)
-				if (ishivebot(usr))
-					var/mob/living/silicon/hivebot/hivebot = usr
-					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -290,7 +260,7 @@ var/list/globalContextActions = null
 		return
 
 	proc/closeContextActions()
-		for(var/obj/screen/contextButton/C in contextButtons)//todo : stop typechecking per context
+		for(var/obj/screen/contextButton/C in contextButtons)
 			var/mob/living/carbon/human/H = src
 			if(istype(H)) H.hud.remove_screen(C)
 			var/mob/living/critter/R = src
@@ -299,18 +269,11 @@ var/list/globalContextActions = null
 			if(istype(W)) W.hud.remove_screen(C)
 			var/mob/dead/observer/GO = usr
 			if(istype(GO)) GO.hud.remove_screen(C)
-			if (isrobot(src))
-				var/mob/living/silicon/robot/robot = src
-				robot.hud.remove_screen(C)
-			if (ishivebot(src))
-				var/mob/living/silicon/hivebot/hivebot = src
-				hivebot.hud.remove_screen(C)
-
 			contextButtons.Remove(C)
 			if(C.overlays)
 				C.overlays = list()
-			/*if(C.underlays)
-				C.underlays = list()*/
+			if(C.underlays)
+				C.underlays = list()
 
 			pool(C)
 		return
@@ -379,7 +342,6 @@ var/list/globalContextActions = null
 		//trans = trans.Reset()
 		transform = trans
 
-		background = null
 		var/possible_bg = action.buildBackgroundIcon(target,user)
 		if (possible_bg)
 			background = possible_bg

@@ -49,7 +49,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		src.add_dialog(user)
+		user.machine = src
 
 		var/dat = {"<html><head><title>Access Log Reader</title><style>
 .conn-box {
@@ -150,7 +150,7 @@
 		if (!(usr in range(1)))
 			return
 
-		src.add_dialog(usr)
+		usr.machine = src
 		src.add_fingerprint(usr)
 
 		if (href_list["reset"])
@@ -375,7 +375,7 @@
 
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 				for (var/mob/M in range(1))
-					if (M.using_dialog_of(src))
+					if (M.machine == src)
 						attack_hand(M)
 				return
 

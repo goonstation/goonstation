@@ -91,24 +91,6 @@
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
-/mob/living/carbon/human/npc/syndicate_weak
-	ai_aggressive = 1
-	New()
-		..()
-		SPAWN_DBG(0)
-			src.real_name = "Junior Syndicate Agent"
-			JobEquipSpawned("Junior Syndicate Operative")
-
-/mob/living/carbon/human/npc/syndicate_weak/no_ammo
-	ai_aggressive = 1
-	New()
-		..()
-		SPAWN_DBG(0)
-			src.real_name = "Junior Syndicate Agent"
-			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
-
-//reverse blade samurai
-
 // npc ai procs
 
 //NOTE TO SELF: BYONDS TIMING FUNCTIONS ARE INACCURATE AS FUCK
@@ -116,17 +98,11 @@
 
 //0 = Pasive, 1 = Getting angry, 2 = Attacking , 3 = Helping, 4 = Idle , 5 = Fleeing(??)
 
-/mob/living/carbon/human/proc/ai_set_active(active)
-	if (ai_active != active)
-		ai_active = active
 
-		if (ai_active)
-			ai_mobs.Add(src)
-		else
-			ai_mobs.Remove(src)
+
 
 /mob/living/carbon/human/proc/ai_init()
-	ai_set_active(1)
+	ai_active = 1
 	ai_laststep = 0
 	ai_state = AI_PASSIVE
 	ai_target = null
@@ -135,7 +111,7 @@
 	ai_attacked = 0
 
 /mob/living/carbon/human/proc/ai_stop()
-	ai_set_active(0)
+	ai_active = 0
 	ai_laststep = 0
 	ai_state = AI_PASSIVE
 	ai_target = null
@@ -152,7 +128,7 @@
 	if(hud) hud.update_resting()
 
 	if (isdead(src))
-		ai_set_active(0)
+		ai_active = 0
 		ai_target = null
 		walk_towards(src, null)
 		return
@@ -186,11 +162,11 @@
 		ai_state = AI_PASSIVE
 		if(src.canmove && !ai_busy)
 			ai_busy = 1
-			src.visible_message("<span class='alert'><B>[src] attempts to remove the handcuffs!</B></span>")
+			src.visible_message("<span style=\"color:red\"><B>[src] attempts to remove the handcuffs!</B></span>")
 			SPAWN_DBG(2 MINUTES)
 				ai_busy = 0
 				if(src.hasStatus("handcuffed") && !ai_incapacitated())
-					src.visible_message("<span class='alert'><B>[src] manages to remove the handcuffs!</B></span>")
+					src.visible_message("<span style=\"color:red\"><B>[src] manages to remove the handcuffs!</B></span>")
 					src.handcuffs.drop_handcuffs(src)
 	ai_move()
 
@@ -328,7 +304,7 @@
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
+						src.visible_message("<span style=\"color:red\"><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
 						carbon_target.u_equip(mask)
 						if (mask)
 							mask:set_loc(carbon_target:loc)
@@ -336,7 +312,7 @@
 							mask:layer = initial(mask:layer)
 					else if (carbon_target:wear_suit && prob(5) && !src.r_hand)
 						var/suit = carbon_target:wear_suit
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
+						src.visible_message("<span style=\"color:red\"><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
 						carbon_target.u_equip(suit)
 						if (suit)
 							suit:set_loc(carbon_target:loc)
@@ -361,7 +337,7 @@
 					var/obj/item/temp = src.r_hand
 					temp.set_loc(src.loc)
 					src.u_equip(temp)
-					src.visible_message("<span class='alert'>[src] throws [temp].</span>")
+					src.visible_message("<span style=\"color:red\">[src] throws [temp].</span>")
 					temp.throw_at(carbon_target, 7, 1)
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
@@ -395,7 +371,7 @@
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
 					ai_pounced = world.timeofday
-					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
+					src.visible_message("<span style=\"color:red\">[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN_DBG(0)
 						step_towards(src,ai_target)
@@ -552,7 +528,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus(list("stunned", "paralysis", "weakened")) || !sight_check(1)) return 1
+	if(stat || hasStatus("stunned") || getStatusDuration("paralysis") || !sight_check(1) || getStatusDuration("weakened")) return 1
 	else return 0
 
 /mob/living/carbon/human/proc/ai_validpath()

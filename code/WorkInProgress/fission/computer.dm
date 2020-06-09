@@ -32,7 +32,7 @@
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
-		src.add_dialog(user)
+		user.machine = src
 
 		var/dat = "<head><title>Fission Console</title></head><body>"
 
@@ -106,7 +106,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		src.add_dialog(usr)
+		usr.machine = src
 
 		if(href_list["reactor"])
 			var/obj/machinery/fission/reactor/R = locate(href_list["reactor"]) in theEngine.reactors
