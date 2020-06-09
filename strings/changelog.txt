@@ -1,4 +1,9 @@
 
+(t)tue jun 09 20
+(u)glassofmilk
+(p)656
+(e)🆕|feature
+(+)Added Toggle Allow Duplicate Entries setting to the Selection Component.
 (t)mon jun 08 20
 (u)mbc
 (p)1015
