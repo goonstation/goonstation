@@ -145,8 +145,6 @@
 				path[current] = direction
 
 			var/turf/curr
-			var/null_matrix = matrix() * 0
-			var/ident_matrix = matrix()
 			var/j = 1
 			var/light_index = 1
 			for(var/turf/T in path)
@@ -160,7 +158,7 @@
 						light = new floor_light_type(T)
 						my_lights += light
 					light.set_loc(T)
-					light.transform = null_matrix
+					light.alpha = 0
 					light_index++
 				j++
 
@@ -182,7 +180,12 @@
 					animate_turf_slideout_cleanup(curr)
 
 			for(var/obj/light in my_lights)
-				animate(light, transform=ident_matrix, time=1 SECOND, easing=ELASTIC_EASING)
+				animate_open_from_floor(light, time=1 SECOND, self_contained=0)
+				light.alpha = 255
+			sleep(1 SECOND)
+			for(var/obj/light in my_lights)
+				light.filters = null
+
 
 			working = 0
 			updateComps()
@@ -207,9 +210,12 @@
 		SPAWN_DBG(2 SECONDS)
 			var/list/path_reverse = reverse_list(path)
 
-			var/null_matrix = matrix() * 0
 			for(var/obj/light in src.my_lights)
-				animate(light, transform=null_matrix, time=1 SECOND, easing=ELASTIC_EASING)
+				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
+			sleep(1 SECOND)
+			for(var/obj/light in my_lights)
+				light.filters = null
+				light.alpha = 0
 
 			var/turf/curr
 			for(var/turf/T in path_reverse)

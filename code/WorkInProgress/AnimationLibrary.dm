@@ -1247,3 +1247,23 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		T.overlays += /image/fullbright
 		T.RL_Init()
 
+/proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)
+	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=16)
+	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=-16) // has to be a different dmi because byond
+	animate(A.filters[A.filters.len], x=0, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.filters[A.filters.len - 1], x=0, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	if(self_contained) // assume we're starting from being invisible
+		A.alpha = 255
+	if(self_contained)
+		SPAWN_DBG(time)
+			A.filters.len -= 2
+
+/proc/animate_close_into_floor(atom/A, time=1 SECOND, self_contained=1)
+	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=0)
+	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=0) // has to be a different dmi because byond
+	animate(A.filters[A.filters.len], x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.filters[A.filters.len - 1], x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	if(self_contained)
+		SPAWN_DBG(time)
+			A.filters.len -= 2
+			A.alpha = 0
