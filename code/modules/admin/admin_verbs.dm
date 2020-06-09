@@ -1144,7 +1144,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "BLOBSAY: [msg]")
 	logTheThing("diary", src, null, "BLOBSAY: [msg]", "admin")
@@ -1176,7 +1176,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "HIVESAY: [msg]")
 	logTheThing("diary", src, null, "HIVESAY: [msg]", "admin")
@@ -1215,7 +1215,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "DRONESAY: [msg]")
 	logTheThing("diary", src, null, "DRONESAY: [msg]", "admin")
@@ -1248,7 +1248,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "MARSAY: [msg]")
 	logTheThing("diary", src, null, "MARSAY: [msg]", "admin")
@@ -1265,7 +1265,7 @@ var/list/fun_images = list()
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_ADMIN)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "FLOCKSAY: [msg]")
 	logTheThing("diary", src, null, "FLOCKSAY: [msg]", "admin")
