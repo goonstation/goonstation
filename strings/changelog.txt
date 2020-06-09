@@ -1,4 +1,21 @@
 
+(t)tue jun 09 20
+(u)Tarmunora
+(p)1008
+(e)⚖|balance
+(+)Added nukie grenade launcher to the pool of items ineligible for arm surgery
+(u)mbc
+(p)1029
+(e)|
+(+)Fixed regression where pushing a dense item you were pulling would break the pull.
+(u)Sovexe
+(p)1013
+(e)🆕🔄|feature, rework
+(+)Items on surgical trays now appear in the right-click context menu. Additionally items won't appear under the tray, and will now glide smoothly with the tray.
+(u)glassofmilk
+(p)656
+(e)🆕|feature
+(+)Added Toggle Allow Duplicate Entries setting to the Selection Component.
 (t)mon jun 08 20
 (u)mbc
 (p)1015
