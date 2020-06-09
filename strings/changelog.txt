@@ -1,5 +1,9 @@
 
 (t)tue jun 09 20
+(u)Tarmunora
+(p)1008
+(e)⚖|balance
+(+)Added nukie grenade launcher to the pool of items ineligible for arm surgery
 (u)mbc
 (p)1029
 (e)|
