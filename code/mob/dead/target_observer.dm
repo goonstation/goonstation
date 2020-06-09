@@ -138,7 +138,7 @@ var/list/observers = list()
 	verb
 		stop_observing()
 			set name = "Stop Observing"
-			set category = "Special Verbs"
+			set category = "Commands"
 
 			if (!my_ghost)
 				my_ghost = new(src.corpse)

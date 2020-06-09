@@ -1213,7 +1213,7 @@
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	new /mob/living/object(O, usr)
 
@@ -2103,7 +2103,7 @@ var/global/night_mode_enabled = 0
 
 /client/proc/modify_organs(var/mob/living/carbon/human/H as mob in list_humans())
 	set name = "Modify Organs"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	admin_only
 
@@ -2226,7 +2226,7 @@ var/global/night_mode_enabled = 0
 
 /client/proc/generate_poster(var/target as null|area|turf|obj|mob in world)
 	set name = "Create Poster"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
 	admin_only
