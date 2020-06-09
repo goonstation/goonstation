@@ -400,7 +400,8 @@ var/list/admin_verbs = list(
 
 	8 = list(
 		// LEVEL_HOST, host
-		/client/proc/cmd_claim_rs_verbs
+		/client/proc/cmd_claim_rs_verbs,
+		/datum/admins/proc/toggle_soundpref_override
 		),
 	)
 
@@ -1468,7 +1469,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] removed [key_name(C ? C : M)] from existence!")
 
 /client/proc/cmd_change_map()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Switch Map"
 	set desc = "Switch the map for the next round"
 	set popup_menu = 0
@@ -1513,7 +1514,7 @@ var/list/fun_images = list()
 		boutput(world, "<span class='notice'><b>The next round's map will be: [map]</b></span>")
 
 /client/proc/cmd_start_map_vote()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Start Map Vote"
 	set desc = "Start a player vote for the next map"
 	set popup_menu = 0
@@ -1544,7 +1545,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(usr ? usr : src)] triggered a player map vote (duration: [duration])")
 
 /client/proc/cmd_end_map_vote()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "End Map Vote"
 	set desc = "End a player vote for the next map"
 	set popup_menu = 0
@@ -1569,7 +1570,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(usr ? usr : src)] ended the player map vote")
 
 /client/proc/cmd_cancel_map_vote()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Cancel Map Vote"
 	set desc = "Cancel a player map vote without doing anything"
 	set popup_menu = 0

@@ -202,7 +202,7 @@ var/global/debug_messages = 0
 /client/proc/call_proc_atom(atom/target as null|area|obj|mob|turf in world)
 	set name = "Call Proc"
 	set desc = "Calls a proc associated with the targeted atom"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	admin_only
 	if (!target)
 		return
@@ -460,7 +460,7 @@ var/global/debug_messages = 0
 
 /* Just use the set traitor dialog thing
 /client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Make Changeling"
 	set popup_menu = 0
 	if(!ticker)
@@ -521,14 +521,14 @@ var/global/debug_messages = 0
 
 // cancels your del_all in process, if one is running
 /client/proc/cmd_debug_del_all_cancel()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All Cancel"
 
 	src.delete_state = DELETE_STOP
 
 // makes del_all print how much is currently deleted
 /client/proc/cmd_debug_del_all_check()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All Progress"
 
 	src.delete_state = DELETE_CHECK
@@ -553,7 +553,7 @@ var/global/debug_messages = 0
 	return
 /*
 /client/proc/cmd_ultimategrife()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "ULTIMATE GRIFE"
 
 	switch(alert("Holy shit are you sure?! (also the server will lag for a few seconds)",,"Yes","No"))
@@ -598,7 +598,7 @@ var/global/debug_messages = 0
 	H.update_clothing()
 
 /client/proc/view_save_data(var/mob/mob in world)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "View Save Data"
 	set desc = "Displays the save data for any mob with an associated client."
 
@@ -659,7 +659,7 @@ body
 		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
 
 /client/proc/scenario()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
@@ -696,7 +696,7 @@ body
 					gibs(T)
 /*
 /client/proc/icon_print_test()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Icon printing test"
 	set desc = "Tests printing all the objects around you with or without icons to test 507"
 
@@ -906,7 +906,7 @@ proc/display_camera_paths()
 /*
 /client/proc/remove_camera_paths_verb()
 	set name = "Hide camera connections"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	remove_camera_paths()
 */
@@ -939,7 +939,7 @@ proc/display_camera_paths()
 /client/proc/show_runtime_window()
 	set name = "Show Runtime Window"
 	set desc = "Shows the runtime window for yourself"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	winshow(src, "runtimes", 1)
 */
@@ -1263,7 +1263,7 @@ var/datum/flock/testflock
 		usr.Browse(text, "window=spawndbg;size=800x600")
 #elif defined(ENABLE_SPAWN_DEBUG_2)
 /client/proc/spawn_dbg()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Spawn"
 	set desc = "Displays all the spawns that've happened so far or dies trying"
 	if(src.holder)

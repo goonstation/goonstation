@@ -303,9 +303,9 @@
 		alert("Admin jumping disabled")
 
 /client/proc/cmd_admin_get_mobject(var/atom/target as mob|obj in world)
-	set category = "Admin"
-	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+	set name = "Get Thing"
 	set desc = "Gets either a mob or an object, bringing it right to you! Wow!"
 	admin_only
 

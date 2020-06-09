@@ -534,7 +534,7 @@ var/global/IP_alerts = 1
 	world.update_status()
 
 /datum/admins/proc/toggle_soundpref_override()
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Force people to hear admin-played sounds even if they have them disabled."
 	set name = "Toggle SoundPref Override"
 	NOT_IF_TOGGLES_ARE_OFF
@@ -830,7 +830,7 @@ var/global/IP_alerts = 1
 /*
 /client/proc/togglewidescreen()
 	set name = "Toggle Widescreen Station"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "SS13, future edition. Toggle widescreen for all clients."
 	admin_only
 	NOT_IF_TOGGLES_ARE_OFF

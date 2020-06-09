@@ -536,7 +536,7 @@
 	usr.Browse(T, "window=adv_com_help;size=700x500")
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Delete"
 	set popup_menu = 0
 
@@ -1827,7 +1827,7 @@
 /*
 /client/proc/admin_foam(var/atom/A as turf|obj|mob, var/amount as num)
 	set name = "Create Foam"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Creates a foam reaction."
 	set popup_menu = 1
 	admin_only
@@ -1848,7 +1848,7 @@
 
 //client/proc/admin_smoke(var/atom/A as turf|obj|mob, var/size as num)
 //	set name = "Create Smoke"
-//	set category = null
+//	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 //	set desc = "Creates a smoke reaction."
 //	set popup_menu = 1
 //	admin_only
@@ -1947,7 +1947,7 @@
 /*
 /client/proc/admin_airborne_fluid(var/turf/T in world)
 	set name = "Create Airborne Fluid"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Attempt an airborne fluid reaction on a turf."
 	set popup_menu = 1
 	admin_only
@@ -2238,7 +2238,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_boot(mob/M as mob in world)
 	set name = "Boot"
 	set desc = "Boot a player off the server"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
 	admin_only
@@ -2444,7 +2444,7 @@ var/global/night_mode_enabled = 0
 /client/proc/clear_medals(var/target_key as null|text)
 	set name = "Clear Medals"
 	set desc = "Clear medals of an account."
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
 	admin_only
@@ -2530,7 +2530,7 @@ var/global/night_mode_enabled = 0
 /client/proc/cmd_admin_disable()
 	set name = "Disable Admin Powers"
 	set desc = "Disables all admin features for yourself until returned or you log in again."
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
 	admin_only

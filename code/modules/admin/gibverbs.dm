@@ -279,7 +279,7 @@
 	src.mob.gib()
 
 /client/proc/cmd_admin_tysonban(mob/tysontarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Tyson Ban"
 	set popup_menu = 0
 	var/startx = 1

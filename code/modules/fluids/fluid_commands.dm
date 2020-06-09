@@ -58,7 +58,7 @@ client/proc/special_fullbright()
 client/proc/replace_space()
 	set name = "Replace All Space Tiles With Ocean"
 	set desc = "uh oh."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	admin_only
 
 	var/list/L = list()
