@@ -209,8 +209,7 @@ var/datum/score_tracker/score_tracker
 		richest_total = 0
 		//search mobs in centcom
 		for (var/mob/M in mobs)
-			var/area/A = get_area(M)
-			if (istype(A, /area/shuttle/escape/centcom))// || istype(A, /area/centcom))
+			if(in_centcom(M))
 				if (!most_damaged_escapee)
 					most_damaged_escapee = M
 				else if (M.get_damage() < most_damaged_escapee.get_damage())
