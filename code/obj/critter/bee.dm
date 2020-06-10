@@ -238,6 +238,7 @@
 		generic = 0
 		var/jittered = 0
 		honey_color = rgb(0, 255, 255)
+		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
 		var/original_hat_ref = ""

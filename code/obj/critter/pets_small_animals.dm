@@ -387,6 +387,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	health = 30
 	randomize_cat = 0
 	generic = 0
+	is_pet = 2
 	var/swiped = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -555,6 +556,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	name = "Blair"
 	icon_state = "pug"
 	doggy = "pug"
+	is_pet = 2
 
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 

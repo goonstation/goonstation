@@ -153,6 +153,7 @@
 	icon_state = "turtle"		//I kinda wanna make sylvester stand out a bit amongs other turtles, even without the hat.
 	health = 100
 	generic = 0
+	is_pet = 2
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
 
