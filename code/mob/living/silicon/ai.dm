@@ -386,6 +386,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.set_hat(W, user)
 		user.visible_message( "<span class='notice'>[user] places the [W] on the [src]!</span>" )
 		src.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
+		if(istype(W, /obj/item/clothing/head/butt))
+			var/obj/item/clothing/head/butt/butt = W
+			if(butt.donor == user)
+				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
 
 	else ..()
