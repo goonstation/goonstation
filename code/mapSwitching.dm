@@ -526,4 +526,4 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		. = ..()
 		Click()
 
-var/global/mapVoteLinkStat = new /obj/mapVoteLink
+var/global/obj/mapVoteLink/mapVoteLinkStat = new /obj/mapVoteLink
