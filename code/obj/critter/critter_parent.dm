@@ -81,7 +81,7 @@
 	var/generic = 1 // if yes, critter can be randomized a bit
 	var/max_quality = 100
 	var/min_quality = -100
-	var/is_pet = null // if null gets determined based on capitalization
+	var/is_pet = null // if null gets determined based on capitalization, 0 = not pet, 1 = pet, 2 = command pet
 
 	var/can_revive = 1 // resurrectable with strange reagent
 
