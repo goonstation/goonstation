@@ -231,8 +231,9 @@
 		..()
 		if (istype(src, /obj/critter/zombie/h7)) return //special death
 		gibs(src.loc) //cmon let's let them really make a mess
-		qdel (src)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		qdel (src)
+
 
 /obj/critter/zombie/scientist
 	name = "Shambling Scientist"
