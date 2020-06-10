@@ -456,6 +456,15 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] round_end_data")
 	round_end_data(1) //Export round end packet (normal completion)
 
+	var/pets_rescued = 0
+	for(var/pet in pets)
+		if(iscritter(pet))
+			var/obj/critter/P = pet
+			if(P.alive && in_centcom(P)) pets_rescued++
+		else if(ismobcritter(pet))
+			var/mob/living/critter/P = pet
+			if(isalive(P) && in_centcom(P)) pets_rescued++
+
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
 	for(var/mob/living/player in mobs)
 		if (player.client)
@@ -463,6 +472,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
 				player.unlock_medal("Survivor", 1)
+				if (pets_rescued >= 6)
+					player.unlock_medal("Noah's Shuttle", 1)
 
 				if (player.check_contents_for(/obj/item/gnomechompski))
 					player.unlock_medal("Guardin' gnome", 1)
