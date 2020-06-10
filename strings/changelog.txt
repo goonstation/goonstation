@@ -1,4 +1,9 @@
 
+(t)wed jun 10 20
+(u)Tarmunora
+(p)1007
+(e)🔄|rework
+(+)Changed cryotubes to give a constant drip of reagents. Total transfer rate unaffected
 (t)tue jun 09 20
 (u)Tarmunora
 (p)1008
