@@ -303,10 +303,12 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 	blend_mode = BLEND_ADD
 	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
 	var/ray_density = 3
+	var/shift_x = 0
+	var/shift_y = 0
 
 	New()
 		..()
-		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color)
+		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y)
 		var/f = src.filters[length(src.filters)]
 		animate(f, offset=f:offset + 100, time=600, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
@@ -319,7 +321,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 
 	New()
 		. = ..()
-		light = new/obj/effect/ray_light_source{color="#ffcc77"}(src)
+		light = new/obj/effect/ray_light_source{color="#ffcc77"; shift_y=6; shift_x=2}(src)
 		src.vis_contents += light
 
 	set_loc(newloc)
