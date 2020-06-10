@@ -115,7 +115,7 @@
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Find your way around with ease!"
 	if(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 10 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 0))].")
@@ -124,7 +124,7 @@
 		DoGPS(src:wear_id)
 /mob/living/silicon/verb/GPS()
 	set name = "GPS"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Find your way around with ease!"
 	if(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 10 SECONDS)) // using ..... is very wacked
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 0))].")

@@ -26,6 +26,7 @@
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
 	var/lastbuildtype = 0
@@ -393,9 +394,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()

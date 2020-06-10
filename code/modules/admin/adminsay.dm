@@ -1,5 +1,5 @@
 /client/proc/cmd_admin_say(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "asay"
 	set hidden = 1
 
@@ -27,7 +27,7 @@
 	ircbot.export("asay", ircmsg)
 
 /client/proc/cmd_admin_forceallsay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "forceallsay"
 	set hidden = 1
 	admin_only
@@ -53,7 +53,7 @@
 	message_admins("<span class='notice'>[key_name(usr)] forced everyone to say: [msg]</span>")
 
 /client/proc/cmd_admin_murraysay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "murraysay"
 	set hidden = 1
 
@@ -81,7 +81,7 @@
 
 // more copies than a kinkos
 /client/proc/cmd_admin_hssay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "hssay"
 	set hidden = 1
 
@@ -115,7 +115,7 @@
 
 // can you guess what this is a copy of?  I bet you can't
 /client/proc/cmd_admin_bradsay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set  name = "bradsay"
 	set hidden = 1
 

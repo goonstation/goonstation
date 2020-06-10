@@ -2110,7 +2110,7 @@ td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
 
 /client/proc/critter_creator_debug()
 	set name = "Critter Creator (WIP)"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)

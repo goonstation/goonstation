@@ -120,7 +120,7 @@
 
 /mob/dead/target_observer/hivemind_observer/verb/exit_hivemind()
 	set name = "Exit Hivemind"
-	set category = "Special Verbs"
+	set category = "Commands"
 	usr = src
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
