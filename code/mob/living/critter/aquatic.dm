@@ -38,6 +38,7 @@
 		src.is_pet = 0
 	if(src.is_pet)
 		pets += src
+	src.update_water_status(loc)
 	..()
 
 /mob/living/critter/aquatic/disposing()
@@ -79,14 +80,23 @@
 		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
 
+/mob/living/critter/aquatic/set_loc(newloc)
+	. = ..()
+	src.update_water_status()
+
 /mob/living/critter/aquatic/Move(NewLoc, direct)
 	. = ..()
-	if(istype(src.loc, /turf/space/fluid)) // question: is this logic viable? too messy?
+	src.update_water_status()
+
+/mob/living/critter/aquatic/update_water_status(loc = null)
+	if(isnull(loc))
+		loc = src.loc
+	if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
 		if(src.water_need)
 			src.water_need = 0
 			src.out_of_water_to_in_water = 1
-	else if(isturf(src.loc))
-		var/turf/T = src.loc
+	else if(isturf(loc))
+		var/turf/T = loc
 		if (T.active_liquid)
 			if(T.active_liquid.last_depth_level > 3)
 				if(src.water_need)
