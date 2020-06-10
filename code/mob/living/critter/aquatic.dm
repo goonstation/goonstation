@@ -88,7 +88,7 @@
 	. = ..()
 	src.update_water_status()
 
-/mob/living/critter/aquatic/update_water_status(loc = null)
+/mob/living/critter/aquatic/proc/update_water_status(loc = null)
 	if(isnull(loc))
 		loc = src.loc
 	if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
