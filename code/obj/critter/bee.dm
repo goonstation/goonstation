@@ -270,12 +270,10 @@
 			src.original_tier = src.tier
 			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 			heisentier_hat()
-			pets += src
 			..()
 
 		disposing()
 			UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
-			pets -= src
 			..()
 
 		proc/save_upgraded_tier()

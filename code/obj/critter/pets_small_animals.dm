@@ -134,14 +134,7 @@
 	icon_state = "remy"
 	health = 33
 	aggressive = 0
-
-	New()
-		pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
+	generic = 0
 
 /obj/critter/opossum
 	name = "space opossum"
@@ -396,14 +389,6 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	generic = 0
 	var/swiped = 0
 
-	New()
-		pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
-
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.alive || cattype == "-emagged")
 			return 0
@@ -482,13 +467,10 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 
 	New()
 		. = ..()
-		if (!isrestrictedz(src.loc.z)) //I don't want the other centcom dogs thanks
-			pets += src
 		START_TRACKING
 
 	disposing()
 		. = ..()
-		pets -= src
 		STOP_TRACKING
 /*
 	seek_target()
@@ -1782,7 +1764,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		return F
 
 /obj/critter/boogiebot
-	name = "Boogiebot"
+	name = "boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	icon_state = "boogie"
 	density = 1
@@ -1968,15 +1950,6 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	generic = 0 // no let's not have "vile Piggy" or "busted Piggy" tia
 	lock_color = 1
 
-	New()
-		if (!isrestrictedz(src.loc.z)) //don't want the centcom ferrets
-			pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
-
 //Wire: Another special ferret based on my OTHER now dead IRL ferret. Has similar paradox naming.
 /obj/critter/meatslinky/monkey
 	name = "Monkey"
@@ -1984,15 +1957,6 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	health = 50
 	generic = 0
 	lock_color = 1
-
-	New()
-		if (!isrestrictedz(src.loc.z)) //don't want the centcom ferrets
-			pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
 
 /obj/critter/raccoon
 	name = "space raccoon"

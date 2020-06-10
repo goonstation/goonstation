@@ -15,6 +15,7 @@
 	brutevuln = 0.5
 	butcherable = 1
 	chase_text = "slams into"
+	is_pet = 0
 
 	var/punch_damage_max = 9
 	var/punch_damage_min = 3

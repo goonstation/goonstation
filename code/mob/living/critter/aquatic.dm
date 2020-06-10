@@ -29,10 +29,23 @@
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
+	var/is_pet = null // null for automatic detection
+
+/mob/living/critter/aquatic/New(loc)
+	if(isnull(src.is_pet))
+		src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+		src.is_pet = 0
+	if(src.is_pet)
+		pets += src
+	..()
+
 /mob/living/critter/aquatic/disposing()
 	if(ai)
 		ai.dispose()
 	ai = null
+	if(src.is_pet)
+		pets -= src
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
