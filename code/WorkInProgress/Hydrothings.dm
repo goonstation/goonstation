@@ -1011,6 +1011,7 @@ obj/critter/madnessowl/switchblade
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "owlmutant"
 	dead_state = "owlmutant-dead"
+	death_text = "%src% <b>collapses, releasing a final hoot and regurgitating a Hootonium Core. What? </b>"
 	health = 666
 	flying = 1
 	firevuln = 1
@@ -1031,14 +1032,9 @@ obj/critter/madnessowl/switchblade
 
 	CritterDeath()
 		if (src.alive)
+			..()
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 65, 1)
-			src.visible_message("<b> [src] collapses, releasing a final hoot and regurgitating a Hootonium Core. What? <b/>")
-			src.alive = 0
-			walk_to(src,0)
-			anchored = 0
-			set_density(0)
 			layer = initial(layer)
-			icon = "owlmutant-dead"
 			new /obj/item/plutonium_core/hootonium_core (src.loc)
 
 	seek_target()

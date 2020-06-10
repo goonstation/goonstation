@@ -1141,9 +1141,8 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.")
+		..()
+		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.") //this has two death messages? Uh sure...
 
 		SPAWN_DBG(0)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)

@@ -60,6 +60,7 @@
 	var/attacker = null // used for defensive tracking
 	var/angertext = "charges at" // comes between critter name and target name
 	var/pet_text = "pets"
+	var/post_pet_text = null
 	var/death_text = "%src% dies!"
 	var/atk_text = "bites"
 	var/chase_text = "leaps on"
@@ -406,7 +407,8 @@
 				on_grump()
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]!</span>", 1)
+			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
+			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
 			on_pet()
 
 	proc/patrol_step()
@@ -937,7 +939,13 @@
 		return 1
 
 	proc/CritterDeath()
+		SHOULD_CALL_PARENT(TRUE)
 		if (!src.alive) return
+
+		#ifdef COMSIG_OBJ_CRITTER_DEATH
+		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
+		#endif
+
 		if (!dead_state)
 			src.icon_state = "[initial(src.icon_state)]-dead"
 		else
@@ -945,7 +953,7 @@
 		src.alive = 0
 		src.anchored = 0
 		src.set_density(0)
-		walk_to(src,0)
+		walk_to(src,0) //halt walking
 		report_death()
 		src.tokenized_message(death_text)
 
