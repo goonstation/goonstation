@@ -99,11 +99,26 @@ var/list/xp_archive = list()
 
 		if(actual >= 0)
 			SPAWN_DBG(0)
-				//add_xp(key, field_name, actual)
+				add_xp(key, field_name, actual)
 				add_xp_throttle_entry(key, actual)
 				archive_xp(key, field_name, actual)
 	return
+//Wrapper for awarding exp without actually adding it to the byond medals database
+/proc/award_xp_local(var/key = null, var/field_name="debug", var/amount = 0, var/ignore_caps=0)
+	if(!key) return null
+	var/actual = round(amount * XP_GLOBAL_MOD)
 
+	if(is_eligible_xp(key, amount) || (amount >= XP_THROTTLE_AMT) || ignore_caps)
+		if(xp_earned[key] && !ignore_caps)
+			if(xp_earned[key] + (amount * XP_GLOBAL_MOD) > XP_ROUND_CAP)
+				actual = (XP_ROUND_CAP - xp_earned[key])
+
+		if(actual >= 0)
+			SPAWN_DBG(0)
+				add_xp_throttle_entry(key, actual)
+				archive_xp(key, field_name, actual)
+	return
+//wrapper for set_xp
 /proc/add_xp(var/key = null, var/field_name="debug", var/amount = 0)
 	if(!key) return null
 
@@ -140,6 +155,7 @@ var/list/xp_archive = list()
 		return round(LEVEL_FOR_XP(xp))
 	return null
 
+//Actually sets the xp on byond scores
 /proc/set_xp(var/key = null, var/field_name="debug", var/field_value="0")
 	if(!key) return null
 	if (IsGuestKey(key))
