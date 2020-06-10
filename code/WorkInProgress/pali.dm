@@ -292,3 +292,52 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 	animate(src, transform = matrix() * 0, time = 1 SECOND, easing = SINE_EASING)
 	sleep(1 SECOND)
 	qdel(src)
+
+
+// ray filter experiments
+
+/obj/effect/ray_light_source
+	mouse_opacity = 0
+	plane = PLANE_LIGHTING
+	layer = LIGHTING_LAYER_BASE
+	blend_mode = BLEND_ADD
+	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+	var/ray_density = 3
+
+	New()
+		..()
+		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color)
+		var/f = src.filters[length(src.filters)]
+		animate(f, offset=f:offset + 100, time=600, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+
+/obj/item/strange_candle
+	name = "strange candle"
+	desc = "It's a strange candle."
+	icon = 'icons/obj/items/alchemy.dmi'
+	icon_state = "candle"
+	var/obj/effect/ray_light_source/light
+
+	New()
+		. = ..()
+		light = new/obj/effect/ray_light_source{color="#ffcc77"}(src)
+		src.vis_contents += light
+
+	set_loc(newloc)
+		var/oldloc = src.loc
+		. = ..()
+		if(istype(src.loc, /turf) && !istype(oldloc, /turf))
+			var/turf/T = oldloc
+			T.vis_contents -= light
+			src.vis_contents += light
+		else if(istype(src.loc, /mob))
+			var/mob/M = src.loc
+			M.vis_contents += light
+			src.vis_contents -= light
+
+	disposing()
+		if(istype(src.loc, /mob))
+			var/mob/M = src.loc
+			M.vis_contents -= light
+		src.vis_contents -= light
+		light.dispose()
+		..()
