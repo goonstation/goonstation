@@ -783,6 +783,7 @@ obj/item/gnomechompski/elf
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
