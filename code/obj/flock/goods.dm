@@ -84,5 +84,21 @@
 		return null // give the standard description
 
 ////////////
-// FLOCKPOD
+// FLOCKCACHE
 ////////////
+/obj/item/flockcache //compressed resource cube
+	name = "weird cube"
+	desc = "A weird looking cube. Seems to be raw material"
+	icon_state = "cube"
+	icon = 'icons/misc/featherzone.dmi'
+	var/resources = 10
+
+/obj/item/flockcache/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Resource Cache"
+		special_desc += "<br><span class='bold'>Resources:</span> [resources]"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null

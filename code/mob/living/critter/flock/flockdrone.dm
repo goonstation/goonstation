@@ -328,8 +328,12 @@
 			src.resources += src.absorb_completion
 			if(istype(I, /obj/item/organ/heart/flock))
 				var/obj/item/organ/heart/flock/F = I
-				boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 				src.resources += F.resources
+				boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
+			else if(istype(I, /obj/item/flockcache))
+				var/obj/item/flockcache/C = I
+				src.resources += C.resources
+				boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]). </span>")
 			if(istype(I, /obj/item/raw_material))
 				pool(I) //gotta pool stuff bruh
 			else

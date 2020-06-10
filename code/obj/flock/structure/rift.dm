@@ -31,7 +31,7 @@
 //		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
 		var/j = pick(3, 4) + 1
 		for(var/i=1, i<j, i++)
-			var/obj/item/organ/heart/flock/x = new(src.contents) // temporary should use resource cubes
+			var/obj/item/flockcache/x = new(src.contents)
 			x.resources = rand(40, 50)
 			eject += x
 		for(var/i=1, i<5, i++)
