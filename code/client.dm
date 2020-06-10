@@ -288,7 +288,7 @@
 			src.verbs += /client/proc/toggle_mentorhelps
 		ignore_player_cap = 1
 
-	if(ignore_player_cap && player_capa)
+	if(!ignore_player_cap && player_capa)
 		if(total_clients() >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
