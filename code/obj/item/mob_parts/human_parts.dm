@@ -160,7 +160,7 @@
 		return 1
 
 	remove(var/show_message = 1)
-		if (isnull(src.original_DNA) || isnull(src.original_fprints) && ismob(src.original_holder))
+		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
