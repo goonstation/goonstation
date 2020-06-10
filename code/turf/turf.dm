@@ -180,7 +180,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = PLANE_FLOOR
+	plane = PLANE_SPACE
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID
