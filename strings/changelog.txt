@@ -1,5 +1,9 @@
 
 (t)wed jun 10 20
+(u)pali
+(p)1035
+(e)🆕🗺|feature, mapping
+(*)Added Noah's Shuttle medal for rescuing 6 station pets on the shuttle.
 (u)Tarmunora
 (p)1007
 (e)🔄|rework
