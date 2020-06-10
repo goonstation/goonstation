@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/buildmode)
 /datum/buildmode
 	var/list/extra_buttons = list()
 	New(var/datum/buildmode_holder/H)
@@ -63,7 +64,7 @@
 		button_mode = new(null, src)
 		button_quit = new(null, src)
 
-		for (var/T in childrentypesof(/datum/buildmode))
+		for (var/T in concrete_typesof(/datum/buildmode))
 			var/datum/buildmode/M = new T(src)
 			if ((!owner.holder && M.admin_level > LEVEL_BABBY) || M.admin_level > owner.holder.level)
 				DEBUG_MESSAGE("[key_name(owner)] is too low rank to have buildmode [M.name] ([M.type]) and the buildmode is being disposed (min level is [level_to_rank(M.admin_level)] and [owner.ckey] is [owner.holder ? level_to_rank(owner.holder.level) : "not an admin"])")

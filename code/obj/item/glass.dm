@@ -260,9 +260,8 @@ SHARDS
 
 /obj/item/shard/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if (!( istype(W, /obj/item/weldingtool) && W:welding ))
+	if (!(isweldingtool(W) && try_weld(user,0,-1,1,0)))
 		return
-	W:eyecheck(user)
 	var/atom/A = new /obj/item/sheet/glass( user.loc )
 	if(src.material) A.setMaterial(src.material)
 	//SN src = null
@@ -283,7 +282,6 @@ SHARDS
 				H.weakened = max(3, H.weakened)
 				affecting.take_damage(5, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 	..()
 
 // CRYSTAL
@@ -313,9 +311,8 @@ SHARDS
 			else
 		return
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (!( istype(W, /obj/item/weldingtool) && W:welding ))
+		if (!(isweldingtool(W) && W:try_weld(user,0,-1,1,0)))
 			return
-		W:eyecheck(user)
 		var/atom/A = new /obj/item/sheet/glass/crystal( user.loc )
 		if(src.material) A.setMaterial(src.material)
 		qdel(src)
@@ -331,4 +328,3 @@ SHARDS
 				H.weakened = max(3, H.weakened)
 				affecting.take_damage(10, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()

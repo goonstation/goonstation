@@ -71,8 +71,6 @@
 	var/caneat = 1
 	var/candrink = 1
 
-	var/emote_lock = 0
-
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
@@ -126,14 +124,20 @@
 	if (src.static_image)
 		mob_static_icons.Remove(src.static_image)
 		src.static_image = null
+
+	if(src.ai_active)
+		ai_mobs.Remove(src)
 	..()
 
 /mob/living/death(gibbed)
 	if (src.key) statlog_death(src,gibbed)
 	if (src.client && (ticker.round_elapsed_ticks >= 12000))
 		var/num_players = 0
-		for(var/mob/players in mobs)
-			if (players.client && !isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players)) num_players++
+		for(var/client/C)
+			if (!C.mob) continue
+			var/mob/players = C.mob
+			if (!isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players))
+				num_players++
 			LAGCHECK(LAG_HIGH)
 
 		if (num_players <= 5 && master_mode != "battle_royale")
@@ -252,7 +256,7 @@
 			W.afterattack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/W = src.equipped()
 		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
 			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -268,14 +272,14 @@
 	return
 */
 /mob/living/onMouseDown(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
 	return
 
 /mob/living/onMouseUp(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)
@@ -348,7 +352,7 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
-	if (!src.stat && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		if (target != src && ishuman(src))
 			var/mob/living/carbon/human/S = src
 			if (S.sims)
@@ -670,7 +674,7 @@
 							message = copytext(message, 3)
 
 				else
-					if (ishuman(src) || iscritter(src) || isrobot(src)) // this is shit
+					if (ishuman(src) || ismobcritter(src) || isrobot(src)) // this is shit
 						message_mode = "secure headset"
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
@@ -682,6 +686,8 @@
 	if (!message)
 		return
 
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
 
 	if (src.voice_type && world.time > last_voice_sound + 8)
 		var/VT = voice_type
@@ -768,15 +774,17 @@
 		rendered += "<span class='message'>[message]</span>"
 		rendered += "</span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
 
-			if (M.client && (isblob(M) || (M.client.holder && M.client.deadchat && !M.client.player_mode)))
+			if ((isblob(C.mob) || (C.holder && C.deadchat && !C.player_mode)))
 				var/thisR = rendered
-				if ((M.mob_flags & MOB_HEARS_ALL || M.client.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
-				M.show_message(thisR, 2)
+				if ((C.mob.mob_flags & MOB_HEARS_ALL || C.holder) && src.mind)
+					thisR = "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>"
+				C.mob.show_message(thisR, 2)
 
 		return
 
@@ -823,7 +831,7 @@
 
 			switch (message_mode)
 				if ("internal 1")
-					if (R1 && !(A.stat || A.getStatusDuration("stunned")|| A.getStatusDuration("weakened"))) // Mainframe may be stunned when the shell isn't.
+					if (R1 && !(A.stat || A.hasStatus(list("stunned", "weakened")))) // Mainframe may be stunned when the shell isn't.
 						R1.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
@@ -831,7 +839,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("internal 2")
-					if (R2 && !(A.stat || A.getStatusDuration("stunned") || A.getStatusDuration("weakened")))
+					if (R2 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
 						R2.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1
@@ -839,7 +847,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("monitor")
-					if (R3 && !(A.stat || A.getStatusDuration("stunned") || A.getStatusDuration("weakened")))
+					if (R3 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
 						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1
@@ -1107,9 +1115,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else if (src.r_hand)
 			thing = src.r_hand
 
-	//no passing blocks around >:L
-	if (istype(thing,/obj/item/grab/block))
+	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
+	if(istype(thing,/obj/item/grab))
 		return
+
 	if (thing.c_flags & HAS_GRAB_EQUIP)
 		return
 
@@ -1155,6 +1164,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
+	if (!isalive(src)) //can't resist when dead or unconscious
+		return
+
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
@@ -1171,7 +1183,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		T.active_liquid.HasEntered(src, T)
 		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
-	if (!src.stat && !src.restrained())
+	if (!src.restrained())
 		var/struggled_grab = 0
 		if (src.canmove)
 			for (var/obj/item/grab/G in src.grabbed_by)

@@ -403,22 +403,21 @@
 				return
 
 		if (src.open)
-			if (!src.is_short && istype(W, /obj/item/weldingtool))
+			if (!src.is_short && isweldingtool(W))
 				return
 
 			else if (iswrenchingtool(W))
 				return
 
-		else if (!src.open && istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/welder = W
-			if(!welder.try_weld(user, 1, burn_eyes = 1))
+		else if (!src.open && isweldingtool(W))
+			if(!W:try_weld(user, 1, burn_eyes = 1))
 				return
 			if (!src.welded)
-				src.weld(1, welder, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [welder].</span>")
+				src.weld(1, W, user)
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, welder, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [welder].</span>")
+				src.weld(0, W, user)
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
 		if (src.secure)

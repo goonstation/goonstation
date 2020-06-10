@@ -73,7 +73,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
-				M.updatehealth()
 				..()
 				return
 
@@ -117,7 +116,6 @@ datum
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
 				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
-				M.updatehealth()
 				..()
 				return
 
@@ -202,9 +200,6 @@ datum
 							M.take_toxin_damage(-1.5 * mult)
 						else
 							H.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
-
-
-						H.updatehealth()
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -390,6 +385,7 @@ datum
 			fluid_g = 40
 			fluid_b = 160
 			transparency = 222
+			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
 			pooled()
@@ -397,21 +393,19 @@ datum
 				reacted_to_temp = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(exposed_temperature >= T0C + 100 && !reacted_to_temp)
+				if(!reacted_to_temp)
 					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
 						holder.del_reagent(id)
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("epinephrine"))
 					holder.remove_reagent("epinephrine", 2 * mult)
 				M.take_toxin_damage(1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -527,7 +521,7 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			var/remove_buff = 0
-			stun_resist = 5
+			stun_resist = 6
 
 			pooled()
 				..()
@@ -591,8 +585,6 @@ datum
 
 					if (prob(8))
 						M.take_toxin_damage(severity * mult)
-						M.updatehealth()
-
 				return
 
 		//WHY IS SWEET ***TEA*** A SUBTYPE OF SUGAR?!?!?!?!
@@ -727,6 +719,7 @@ datum
 			hygiene_value = 1.33
 			bladder_value = -0.2
 			taste = "bland"
+			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
@@ -835,7 +828,6 @@ datum
 						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
-						M.updatehealth()
 						reacted = 1
 					else if (method == TOUCH)
 						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
@@ -911,17 +903,16 @@ datum
 			transparency = 200
 			thirst_value = 0.8909
 			bladder_value = -0.2
+			minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 			taste = "cold"
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(exposed_temperature > T0C)
-					var/prev_vol = volume
-					volume = 0
-					if(holder)
-						holder.add_reagent("water", prev_vol, null, T0C + 1)
-					if(holder)
-						holder.del_reagent(id)
-				return
+				var/prev_vol = volume
+				volume = 0
+				if(holder)
+					holder.add_reagent("water", prev_vol, null, T0C + 1)
+				if(holder)
+					holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
 				src = null

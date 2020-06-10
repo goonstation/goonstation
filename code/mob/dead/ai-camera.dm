@@ -66,10 +66,17 @@
 	isAIControlled()
 		return 1
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
 
 	Move(NewLoc, direct)//Ewww!
 		last_loc = src.loc
@@ -113,7 +120,7 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
-		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.getStatusDuration("weakened") && !src.mainframe.getStatusDuration("paralysis") && !src.mainframe.getStatusDuration("stunned"))
+		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 				var/obj/O = target
 				O.receive_silicon_hotkey(src)

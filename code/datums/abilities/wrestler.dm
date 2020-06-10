@@ -4,8 +4,8 @@
 //////////////////////////////////////////// Setup //////////////////////////////////////////////////
 
 /mob/proc/make_wrestler(var/make_inherent = 0, var/belt_check = 0, var/remove_powers = 0)
-	if (ishuman(src) || iscritter(src))
-		if (iscritter(src))
+	if (ishuman(src) || ismobcritter(src))
+		if (ismobcritter(src))
 			var/mob/living/critter/C = src
 
 			if (remove_powers == 1)
@@ -169,7 +169,7 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
+				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
 					return 0
 				else
 					return 1
@@ -199,7 +199,7 @@
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
-		if (!(ishuman(M) || iscritter(M))) // Not all critters have arms to grab people with, but whatever.
+		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 

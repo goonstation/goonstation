@@ -384,7 +384,7 @@
 /obj/death_button/clean_gunsim
 	name = "button that will clean the murderbox"
 	desc = "push this to clean the murderbox and probably not get killed. takes a minute."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
 	var/area/sim/gunsim/gunsim
@@ -451,8 +451,8 @@
 		alpha = 128
 		user.visible_message("Creatin dummy for you, you dummy")
 
-		var/mob/living/carbon/human/tdummy/T = new(get_turf(src))
-		T.x = src.x + 1 // move it to the right
+		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		//T.x = src.x + 1 // move it to the right
 
 
 		SPAWN_DBG(10 SECONDS)

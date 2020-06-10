@@ -71,7 +71,7 @@
 	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
-	var/sound_automaton_spaz = 'sound/misc/automaton_spaz.ogg'
+	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
 	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
@@ -278,8 +278,10 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
-		for(var/mob/M in mobs)
-			if ((M.client && !( M.stat )))
+
+		for (var/client/C)
+			if (!C.mob) continue
+			if (!( C.mob.stat ))
 				cancel = 1
 				break
 		if (!( cancel ))
@@ -477,7 +479,7 @@
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise."
 						else
-							playsound(src.loc, src.sound_automaton_spaz, 50, 1)
+							playsound(src.loc, src.sound_automaton_scratch, 50, 1)
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
@@ -650,9 +652,12 @@
 				src.internal_pda.owner = "[src]"
 				return
 			else
-				newname = strip_html(newname, 32, 1)
+				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
 					src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+					continue
+				else if (is_blank_string(newname))
+					src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 					continue
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
@@ -817,6 +822,10 @@
 			if(D_TOXIC)
 				dmgmult = 0
 
+		if(P.proj_data.ks_ratio == 0)
+			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
+
 		log_shot(P,src)
 		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
 		var/damage = (P.power / 3) * dmgmult
@@ -966,6 +975,9 @@
 						return
 			src.now_pushing = 0
 			//..()
+			if(AM)
+				AM.last_bumped = world.timeofday
+				AM.Bumped(src)
 			if (!istype(AM, /atom/movable))
 				return
 			if (!src.now_pushing)
@@ -974,9 +986,6 @@
 					var/t = get_dir(src, AM)
 					step(AM, t)
 				src.now_pushing = null
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
 			return
 		return
 
@@ -1022,14 +1031,12 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.try_weld(user, 1))
+		if (isweldingtool(W))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				var/repaired = HealDamage("All", 120, 0)
 				if(repaired || health < max_health)
 					src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s body.</span>")
-					src.updatehealth()
 				else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 				src.update_appearance()
 
@@ -1040,7 +1047,6 @@
 			if(repaired || health < max_health)
 				coil.use(1)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-				src.updatehealth()
 			else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 			src.update_appearance()
 
@@ -1687,10 +1693,19 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
+			if (C.preferences.use_azerty)
+				C.apply_keybind("robot_tg_azerty")
 
 	say_understands(var/other)
 		if (isAI(other)) return 1
@@ -1825,20 +1840,20 @@
 			if (upgrade.charges > 0)
 				upgrade.charges--
 			if (upgrade.charges == 0)
-				boutput(src, "[upgrade] activated. It has been used up.")
+				boutput(src, "[upgrade] has been activated. It has been used up.")
 				src.upgrades.Remove(upgrade)
 				qdel(upgrade)
 			else
 				if (upgrade.charges < 0)
-					boutput(src, "[upgrade] activated.")
+					boutput(src, "[upgrade] has been activated.")
 				else
-					boutput(src, "[upgrade] activated. [upgrade.charges] uses left.")
+					boutput(src, "[upgrade] has been activated. [upgrade.charges] uses left.")
 		else
 			if (upgrade.activated)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] [upgrade.activated ? "activated" : "deactivated"].")
+				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 
 	proc/set_module(var/obj/item/robot_module/RM)
@@ -2036,13 +2051,11 @@
 			opened = 1
 			src.visible_message("<span class='alert'>[src]'s panel blows open!</span>")
 			src.TakeDamage("All", 30, 0)
-			src.updatehealth()
 			return 1
 		brainexposed = 1
 		//emagged = 1
 		src.visible_message("<span class='alert'>[src]'s head compartment blows open!</span>")
 		src.TakeDamage("All", 30, 0)
-		src.updatehealth()
 		return 1
 
 	verb/cmd_show_laws()
@@ -2493,11 +2506,14 @@
 				if (ship.sensors)
 					if (ship.sensors.active)
 						src.sight |= ship.sensors.sight
+						src.sight &= ~ship.sensors.antisight
 						src.see_in_dark = ship.sensors.see_in_dark
 						if (client && client.adventure_view)
 							src.see_invisible = 21
 						else
 							src.see_invisible = ship.sensors.see_invisible
+					if(ship.sensors.centerlight)
+						render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
 
 			else
 				//var/sight_therm = 0 //todo fix this
@@ -2512,11 +2528,13 @@
 					//	sight_therm = 1
 
 				if (sight_meson)
+					src.sight &= ~SEE_BLACKNESS
 					src.sight |= SEE_TURFS
 					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 					vision.set_scan(1)
 					client.color = "#c2ffc2"
 				else
+					src.sight |= SEE_BLACKNESS
 					src.sight &= ~SEE_TURFS
 					client.color = null
 					vision.set_scan(0)
@@ -2889,6 +2907,7 @@
 				return 0
 			if (target_part.ropart_take_damage(brute, burn) == 1)
 				src.compborg_lose_limb(target_part)
+		health_update_queue |= src
 		return 1
 
 	HealDamage(zone, brute, burn)
@@ -2936,6 +2955,7 @@
 			if (!target_part)
 				return 0
 			target_part.ropart_mend_damage(brute, burn)
+		health_update_queue |= src
 		return 1
 
 	get_brute_damage()
@@ -3303,7 +3323,7 @@
 /mob/living/silicon/robot/buddy
 	name = "Robot"
 	real_name = "Robot"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy1"
 	health = 1000
 	custom = 1

@@ -105,7 +105,7 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
 			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
@@ -116,7 +116,7 @@
 
 	throw_impact(mob/M as mob)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || iscritter(M)))
+		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
@@ -135,7 +135,7 @@
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -444,14 +444,6 @@
 
 
 //mender
-
-var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
-"menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites")
-
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."
@@ -474,8 +466,8 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 	New()
 		..()
-		if (!tampered && islist(mender_chem_whitelist) && mender_chem_whitelist.len)
-			src.whitelist = mender_chem_whitelist
+		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
+			src.whitelist = chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
@@ -493,7 +485,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 			. = ..()
 
 	proc/can_operate_on(atom/A)
-		.= (iscarbon(A) || iscritter(A))
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
 		src.overlays = null

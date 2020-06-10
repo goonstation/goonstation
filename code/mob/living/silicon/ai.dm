@@ -127,11 +127,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/TakeDamage(zone, brute, burn)
 	bruteloss += brute
 	fireloss += burn
+	health_update_queue |= src
 	notify_attacked()
 
 /mob/living/silicon/ai/HealDamage(zone, brute, burn)
 	bruteloss = max(0, bruteloss - brute)
 	fireloss = max(0, fireloss - burn)
+	health_update_queue |= src
 
 /mob/living/silicon/ai/get_brute_damage()
 	return bruteloss
@@ -279,12 +281,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.dismantle_stage = 2
 		else ..()
 
-	else if (istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WELD = W
+	else if (isweldingtool(W))
 		if(src.bruteloss)
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
-				src.bruteloss = max(0,src.bruteloss - 15)
+				src.HealDamage(null, 15, 0)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
 		else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 
@@ -294,7 +295,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if(src.fireloss)
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			coil.use(1)
-			src.fireloss = max(0,src.fireloss - 15)
+			src.HealDamage(null, 0, 15)
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
@@ -403,10 +404,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			//	return
 	. = ..()
 
-/mob/living/silicon/ai/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("robot"))
-	return keymap
+/mob/living/silicon/ai/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("robot")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("robot_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("robot_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user)
 	if (src.mind && src.mind.special_role)
@@ -529,7 +537,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/blob_act(var/power)
 	if (!isdead(src))
 		src.bruteloss += power
-		src.updatehealth()
+		health_update_queue |= src
 		src.update_appearance()
 		return 1
 	return 0
@@ -559,7 +567,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				b_loss += rand(30,60)
 	src.bruteloss = b_loss
 	src.fireloss = f_loss
-	src.updatehealth()
+	health_update_queue |= src
 	src.update_appearance()
 
 /mob/living/silicon/ai/emp_act()
@@ -618,7 +626,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.bruteloss += 30
 		if ((O.icon_state == "flaming"))
 			src.fireloss += 40
-		src.updatehealth()
+		health_update_queue |= src
 	return
 
 /mob/living/silicon/ai/show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
@@ -738,8 +746,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-	for(var/mob/M in mobs)
-		if ((M.client && !( M.stat )))
+
+	for (var/client/C)
+		if (!C.mob) continue
+		if (!( C.mob.stat ))
 			cancel = 1
 			break
 	if (!( cancel ))
@@ -1081,7 +1091,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (..(parent))
 		return 1
 
-	src.updatehealth()
 	if (isalive(src))
 		if (src.health < 0)
 			death()
@@ -2156,9 +2165,12 @@ proc/get_mobs_trackable_by_AI()
 			src.name = src.real_name
 			return
 		else
-			newname = strip_html(newname, 32, 1)
-			if (!length(newname) || copytext(newname,1,2) == " ")
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			if (!length(newname))
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+				continue
+			else if (is_blank_string(newname))
+				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")

@@ -143,14 +143,20 @@
 		for(var/image/chat_maptext/I in src.lines)
 			pool(I)
 		src.lines = null
+		for(var/A in src.vis_locs)
+			if(isliving(A))
+				var/mob/living/L = A
+				if(L.chat_text == src)
+					L.chat_text = null
+			A:vis_contents -= src
 		..()
 
 /image/chat_maptext
 	var/bumped = 0
 	var/list/client/visible_to = list()
 	bumped = 0
-	layer = 0
-	plane = PLANE_HUD - 1
+	layer = HUD_LAYER_UNDER_1
+	plane = PLANE_HUD
 	maptext_x = -64
 	maptext_y = 28
 	maptext_width = 160
@@ -239,7 +245,6 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 			pool(text)
 	return text
 
-
 /obj/maptext_spawner
 	var/loc_maptext = ""
 	var/loc_maptext_width = 32
@@ -254,50 +259,36 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		loc.maptext_y = loc_maptext_y
 		qdel(src)
 
-/obj/thing_that_spams_chat
-	name = "chat spammer"
-	icon = 'icons/obj/junk.dmi'
-	icon_state = "gnome"
-	var/slep = 0
-	var/n_spams = 200
 
-	attack_hand(mob/user)
-		. = ..()
-		var/start = TIME
-		boutput(user, "START TIMER")
-		for(var/i=1; i <= n_spams; i++)
-			boutput(user, "spam")
-		boutput(user, "STOP TIMER")
-		if(slep)
-			sleep(0)
-		boutput(user, "time: [TIME - start]")
+// I'm archiving a slightly improved version of the hell portal which is now gone
 
-	attackby(obj/item/I, mob/user)
-		. = ..()
-		if(istype(I, /obj/item/spacecash))
-			var/start = TIME
-			boutput(user, "a")
-			boutput(user, "DO LAG")
-			boutput(user, "b")
-			if(slep)
-				sleep(0)
-			boutput(user, "time: [TIME - start]")
-			return
-		if(istype(I, /obj/item/device/pda2))
-			var/start = TIME
-			boutput(user, "a")
-			boutput(user, "ALERT")
-			boutput(user, "b")
-			if(slep)
-				sleep(0)
-			boutput(user, "time: [TIME - start]")
-			return
+/obj/hellportal
+	name = "hell portal"
+	desc = "This looks bad."
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "whole-massive"
+	pixel_x = -16
+	pixel_y = -16
+	var/number_left = 5
+	var/critter_type = /obj/critter/zombie
 
-		var/start = TIME
-		boutput(user, "START TIMER")
-		for(var/i=1; i <= n_spams; i++)
-			boutput(user, "spam [rand(100)]")
-		boutput(user, "STOP TIMER")
-		if(slep)
-			sleep(0)
-		boutput(user, "time: [TIME - start]")
+/obj/hellportal/New()
+	src.transform = matrix() * 0
+	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
+	SPAWN_DBG(1 SECOND)
+		new /obj/effects/void_break(src.loc)
+		sleep(0.5 SECONDS)
+		critter_spam()
+
+/obj/hellportal/proc/critter_spam()
+	for(var/I = 1 to src.number_left)
+		var/atom/zomb = new src.critter_type(src.loc)
+		zomb.alpha = 0
+		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
+		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		sleep(2.5 SECONDS)
+		if(zomb.loc == src.loc)
+			step(zomb, pick(alldirs))
+	animate(src, transform = matrix() * 0, time = 1 SECOND, easing = SINE_EASING)
+	sleep(1 SECOND)
+	qdel(src)

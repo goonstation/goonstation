@@ -105,7 +105,6 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -321,7 +320,7 @@
 			user.take_brain_damage(120)
 		user.u_equip(src)
 		src.set_loc(user) // SHOULD be redundant but you never know.
-		user.updatehealth()
+		health_update_queue |= user
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -439,7 +438,6 @@
 		SPAWN_DBG(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
-		user.updatehealth()
 		src.set_loc(user) //yes i did this dont ask why i cant literally think of anything better to do
 		SPAWN_DBG(10 SECONDS)
 			if (user)
@@ -498,7 +496,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
-	item_state = "flight"
+	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
@@ -602,7 +600,6 @@
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -772,7 +769,7 @@
 	Topic(var/href, var/href_list)
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis") || usr.hasStatus("stunned") || usr.hasStatus("weakened") || usr.hasStatus("resting"))
+		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
 			return
 		..()
 

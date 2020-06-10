@@ -35,7 +35,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		if (src.release_pressure < 5*ONE_ATMOSPHERE || src.air_contents.return_pressure() < 5*ONE_ATMOSPHERE)
+		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
 			return 0
 		user.visible_message("<span class='alert'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
 		user.gib()
@@ -107,7 +107,7 @@
 			UpdateOverlays(atmos_dmi, "holding")
 		else
 			UpdateOverlays(null, "holding")
-		var/tank_pressure = air_contents.return_pressure()
+		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
 
 		if (tank_pressure < 10)
 			atmos_dmi.icon_state = "can-o0"
@@ -172,10 +172,10 @@
 	if (!environment)
 		return
 
-	var/env_pressure = environment.return_pressure()
+	var/env_pressure = MIXTURE_PRESSURE(environment)
 
 	if(valve_open)
-		var/pressure_delta = min(release_pressure - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
+		var/pressure_delta = min(release_pressure - env_pressure, (MIXTURE_PRESSURE(air_contents) - env_pressure)/2)
 		//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 		var/transfer_moles = 0
@@ -190,7 +190,7 @@
 			else
 				loc.assume_air(removed)
 
-	overpressure = air_contents.return_pressure() / maximum_pressure
+	overpressure = MIXTURE_PRESSURE(air_contents) / maximum_pressure
 
 	switch(overpressure) // should the canister blow the hell up?
 
@@ -396,8 +396,8 @@
 	if(holding)
 		holding_text = {"
 		<hr><b>Inserted</b>: [holding] <a href='?src=\ref[src];remove_tank=1'>(Remove)</a>
-		<br>Pressure: [holding.air_contents.return_pressure()] kPa
-		<br>[fancy_pressure_bar(holding.air_contents.return_pressure(), 10 * ONE_ATMOSPHERE)]
+		<br>Pressure: [MIXTURE_PRESSURE(holding.air_contents)] kPa
+		<br>[fancy_pressure_bar(MIXTURE_PRESSURE(holding.air_contents), 10 * ONE_ATMOSPHERE)]
 		"}
 
 	if (src.has_valve)
@@ -519,8 +519,8 @@
 	var/output_text = {"<div id="canister">
 							<div class="header">
 								<b>[name]</b> [connected_port ? "<em>(Connected to port)</em>" : ""]
-								<br>Pressure: [air_contents.return_pressure()] kPa
-								<br>[fancy_pressure_bar(air_contents.return_pressure(), maximum_pressure)]
+								<br>Pressure: [MIXTURE_PRESSURE(air_contents)] kPa
+								<br>[fancy_pressure_bar(MIXTURE_PRESSURE(air_contents), maximum_pressure)]
 								<br>[valve_text]
 								[holding_text]
 							</div>
@@ -606,7 +606,6 @@
 					H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
 					H.TakeDamage("chest", 0, 30)
 					H.changeStatus("stunned", 150)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 				else
 					var/index = text2num(href_list["cut"])
@@ -671,7 +670,6 @@
 					H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 					H.TakeDamage("chest", 0, 30)
 					H.changeStatus("stunned", 150)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 				else
 					var/index = text2num(href_list["pulse"])

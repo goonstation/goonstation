@@ -797,7 +797,7 @@ var/list/genetics_computers = list()
 			boutput(usr, "<b>SCANNER:</b> Reclamation failed.")
 		else
 			var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
-			if (waste == E.reclaim_mats)
+			if (waste >= E.reclaim_mats)
 				boutput(usr, "<b>SCANNER ALERT:</b> Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.")
 				return
 			else

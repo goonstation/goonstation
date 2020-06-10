@@ -222,7 +222,6 @@
 				. += "<br><span class='alert'><B>[src.name] is bleeding very badly!</B></span>"
 */
 	if (!isvampire(src)) // Added a check for vampires (Convair880).
-		src.ensure_bp_list()
 		switch (src.blood_pressure["total"])
 			if (-INFINITY to 0) // welp
 				. += "<br><span class='alert'><B>[src.name] is pale as a ghost!</B></span>"
@@ -313,6 +312,9 @@
 			update_medical_record(src)
 		else if (H.organ_istype("left_eye", /obj/item/organ/eye/cyber/prodoc) && H.organ_istype("right_eye", /obj/item/organ/eye/cyber/prodoc)) // two prodoc eyes = scan upgrade because that's cool
 			. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
+			update_medical_record(src)
+		else if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
+			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
 			update_medical_record(src)
 
 	return jointext(., "")

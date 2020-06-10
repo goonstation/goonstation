@@ -80,8 +80,8 @@ Contains:
 
 		var/message = {"
 		<b>[src]</b>
-		<br><b>Tank Pressure:</b> [air_contents.return_pressure()] kPa
-		<br>[fancy_pressure_bar(air_contents.return_pressure(), 10 * ONE_ATMOSPHERE)]
+		<br><b>Tank Pressure:</b> [MIXTURE_PRESSURE(air_contents)] kPa
+		<br>[fancy_pressure_bar(MIXTURE_PRESSURE(air_contents), 10 * ONE_ATMOSPHERE)]
 		<hr>
 		<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
 		<br><b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> <A href='?src=\ref[src];setpressure=1'>[distribute_pressure]</A> <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A>
@@ -159,7 +159,7 @@ Contains:
 		if(!air_contents)
 			return null
 
-		var/tank_pressure = air_contents.return_pressure()
+		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
 		//if(tank_pressure < distribute_pressure)
 		//	distribute_pressure = max(tank_pressure,17)
 
@@ -180,7 +180,7 @@ Contains:
 		if(!air_contents)
 			return 0
 
-		var/pressure = air_contents.return_pressure()
+		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			//boutput(world, "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>")
 			//Give the gas a chance to build up more pressure through reacting
@@ -188,7 +188,7 @@ Contains:
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
-			pressure = air_contents.return_pressure()
+			pressure = MIXTURE_PRESSURE(air_contents)
 
 			var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
@@ -328,7 +328,7 @@ Contains:
 
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -340,7 +340,6 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
@@ -384,7 +383,7 @@ Contains:
 	proc/allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -396,7 +395,6 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
@@ -476,7 +474,7 @@ Contains:
 		return
 
 	proc/release()
-		var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
 		loc.assume_air(removed)
 
 	proc/ignite()
@@ -643,7 +641,7 @@ Contains:
 	allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -655,7 +653,6 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)

@@ -35,12 +35,14 @@
 /mob/living/silicon/hivebot/TakeDamage(zone, brute, burn)
 	bruteloss += brute
 	fireloss += burn
+	health_update_queue |= src
 
 /mob/living/silicon/hivebot/HealDamage(zone, brute, burn)
 	bruteloss -= brute
 	fireloss -= burn
 	bruteloss = max(0, bruteloss)
 	fireloss = max(0, fireloss)
+	health_update_queue |= src
 
 /mob/living/silicon/hivebot/get_brute_damage()
 	return bruteloss
@@ -419,7 +421,7 @@
 /mob/living/silicon/hivebot/blob_act(var/power)
 	if (!isdead(src))
 		src.bruteloss += power
-		src.updatehealth()
+		health_update_queue |= src
 		return 1
 	return 0
 
@@ -467,7 +469,7 @@
 				b_loss += 30
 	src.bruteloss = b_loss
 	src.fireloss = f_loss
-	src.updatehealth()
+	health_update_queue |= src
 
 /mob/living/silicon/hivebot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
@@ -477,7 +479,7 @@
 		src.bruteloss += 30
 		if ((O.icon_state == "flaming"))
 			src.fireloss += 40
-		src.updatehealth()
+		health_update_queue |= src
 	return
 
 /mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj, yes)
@@ -512,7 +514,7 @@
 	return
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weldingtool) && W:welding)
+	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
 			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
 			return
@@ -525,7 +527,7 @@
 			src.visible_message("<span class='alert'><b>[user] fully repairs the dents on [src]!</b></span>")
 		else
 			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src].</span>")
-		src.updatehealth()
+		health_update_queue |= src
 
 	// Added ability to repair burn-damaged AI shells (Convair880).
 	else if (istype(W, /obj/item/cable_coil))
@@ -541,7 +543,7 @@
 			src.visible_message("<span class='alert'><b>[user.name]</b> fully repairs the damage to [src.name]'s wiring.</span>")
 		else
 			boutput(user, "<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-		src.updatehealth()
+		health_update_queue |= src
 
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
@@ -999,7 +1001,8 @@ Frequency:
 		..()
 		hud = new(src)
 		src.attach_hud(hud)
-		bioHolder = new/datum/bioHolder( src )
+		if(!bioHolder)
+			bioHolder = new/datum/bioHolder( src )
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)
@@ -1037,10 +1040,17 @@ Frequency:
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
 
 	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		src.overlays = null

@@ -19,7 +19,7 @@
 		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
 			var/turf/simulated/sim_T = T
 			if (sim_T.air)
-				attenuate *= sim_T.air.return_pressure() / ONE_ATMOSPHERE
+				attenuate *= MIXTURE_PRESSURE(sim_T.air) / ONE_ATMOSPHERE
 				attenuate = min(1, max(0, attenuate))
 
 	return attenuate

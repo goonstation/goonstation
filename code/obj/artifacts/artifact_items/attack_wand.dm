@@ -125,7 +125,6 @@
 					R.maximum_volume = 15
 
 				R.add_reagent("sonicpowder_nofluff", 15, null, T0C + 200)
-				R.temperature_react()
 
 				if (R.total_volume)
 					R.clear_reagents()

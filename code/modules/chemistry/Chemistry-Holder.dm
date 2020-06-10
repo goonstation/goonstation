@@ -108,20 +108,22 @@ datum
 		proc/temperature_react() //Calls the temperature reaction procs without changing the temp.
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
-				if(current_reagent)
+				if(current_reagent && src.total_temperature >= current_reagent.minimum_reaction_temperature)
 					current_reagent.reaction_temperature(src.total_temperature, 100)
 
 		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
 			                                                      //Do not manually change the reagent unless you know what youre doing.
 			last_temp = total_temperature
 			var/difference = abs(total_temperature - exposed_temperature)
+			if (!difference)
+				return
 			var/change = min(max((difference / divisor), 1), change_cap)
 			if(exposed_temperature > total_temperature)
 				total_temperature += change
 			else if (exposed_temperature < total_temperature)
 				total_temperature -= change
 
-			total_temperature = max(min(total_temperature, temperature_cap), temperature_min) //Cap for the moment.
+			total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
 			temperature_react()
 
 			handle_reactions()
@@ -806,6 +808,16 @@ datum
 					dispersal = R.dispersal
 			return dispersal
 
+		proc/get_smoke_spread_mod()
+			if (!total_volume)
+				return 0
+			var/smoke_spread_mod = 9999
+			for (var/id in reagent_list)
+				var/datum/reagent/R = reagent_list[id]
+				if (R.smoke_spread_mod < smoke_spread_mod)
+					smoke_spread_mod = R.smoke_spread_mod
+			return smoke_spread_mod
+
 
 		// redirect my_atom.on_reagent_change() through this function
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
@@ -1048,11 +1060,8 @@ datum
 			if (classic)
 				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
 			else
-#if ASS_JAM
-				smoke_reaction(src, 0, location = my_atom ? get_turf(my_atom) : 0)
-#else
-				smoke_reaction(src, 5, location = my_atom ? get_turf(my_atom) : 0)
-#endif
+				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 

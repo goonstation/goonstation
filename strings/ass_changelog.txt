@@ -1,5 +1,24 @@
 
+(t)mon jun 08 20
+(u)Kubius
+(p)938
+(e)🍑🗺|ass-jam, mapping
+(*)New assjam map: Icarus! Vaguely triangular, singularity-driven, nominally a cruise liner.
+(t)wed may 20 20
+(u)Mithsaxel
+(p)713
+(e)🍑🆕🎨|ass-jam, enhancement, sprites
+(*)Adds Crabgun, a traitor weapon which can turn people into crabs.
 (t)wed may 13 20
+(u)pali
+(*)The ass arena is now a bit brighter
+(*)Dropping the ass relic now stops the respawn
+(*)Joining the arena now has a 2 minute cooldown (since you last <i>joined</i>)
+(*)The relic slows you down a bit
+(u)TrustworthyFella
+(p)685
+(e)🍑⚖|ass-jam, balance
+(+)Changed nukie to crew ratio on ass jam from 1:2 to 1:3
 (u)pali
 (p)680
 (e)🍑|ass-jam

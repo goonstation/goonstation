@@ -6,7 +6,7 @@
 
 	flags = FPRINT | FLUID_SUBMERGE
 	event_handler_flags = USE_CANPASS
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND | LONG_GLIDE
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
 
@@ -215,6 +215,13 @@
 	var/dir_locked = FALSE
 
 	var/list/cooldowns = null
+	var/list/mob_properties
+
+	var/last_move_dir = null
+
+	var/datum/aiHolder/ai = null
+
+	var/last_pulled_time = 0
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -231,12 +238,14 @@
 	render_special = new
 	traitHolder = new(src)
 	cooldowns = new
-	if (!src.bioHolder) src.bioHolder = new /datum/bioHolder ( src )
+	if (!src.bioHolder)
+		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
+	mob_properties = list()
 
 /mob/proc/is_spacefaring()
 	return 0
@@ -273,7 +282,6 @@
 	if (src.s_active && !(s_active.master in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
-	OnMove()
 
 /mob/disposing()
 	for(var/mob/m in src) //just in case...
@@ -289,10 +297,7 @@
 	traitHolder = null
 
 	if (bioHolder)
-		if (bioHolder.mobAppearance)
-			bioHolder.mobAppearance.owner = null
-			bioHolder.mobAppearance = null
-		bioHolder.disposing()
+		bioHolder.dispose()
 		bioHolder.owner = null
 		bioHolder = null
 
@@ -315,17 +320,29 @@
 
 
 	if (src.abilityHolder)
-		src.abilityHolder.disposing()
+		src.abilityHolder.dispose()
+		src.abilityHolder = null
 
 	if (src.targeting_ability)
 		src.targeting_ability = null
+
+	if(src.item_abilities)
+		src.item_abilities:len = 0
+		src.item_abilities = null
 
 	if (zone_sel)
 		if (zone_sel.master == src)
 			zone_sel.master = null
 	zone_sel = null
 
+	if(src.contextLayout)
+		src.contextLayout.dispose()
+		src.contextLayout = null
+
 	mobs.Remove(src)
+	if (ai)
+		qdel(ai)
+		ai = null
 	mind = null
 	ckey = null
 	client = null
@@ -349,6 +366,8 @@
 	resistances = null
 	ailments = null
 	cooldowns = null
+	lastattacked = null
+	lastattacker = null
 	..()
 
 /mob/Login()
@@ -370,7 +389,7 @@
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	src.update_keymap()
+	src.reset_keymap()
 
 	src.client.mouse_pointer_icon = src.cursor
 
@@ -378,7 +397,8 @@
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
 	if (config.log_access)
-		for (var/mob/M in mobs)
+		for (var/client/C)
+			var/mob/M = C.mob
 			if ((!M) || M == src || M.client == null)
 				continue
 			else if (M && M.client && M.client.address == src.client.address)
@@ -422,7 +442,7 @@
 
 	world.update_status()
 
-	src.sight |= SEE_SELF
+	src.sight |= SEE_SELF | SEE_BLACKNESS
 
 	..()
 
@@ -489,12 +509,11 @@
 		return
 	src.now_pushing = 1
 
-	if (ismob(AM) && istype (AM, /mob/living/carbon/) && isliving(src))
-		src:viral_transmission(AM,"Contact",1)
-
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
+			src:viral_transmission(AM,"Contact",1)
+
 			if (tmob.bioHolder.HasEffect("fat"))
 				if (prob(40) && !src.bioHolder.HasEffect("fat"))
 					src.visible_message("<span class='alert'><B>[src] fails to push [tmob] out of the way.</B></span>")
@@ -511,9 +530,11 @@
 				var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 				if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 
-				if(src_effect.active != 0 && tmob_effect.active != 0)
+				if(src_effect.active != 0 && tmob_effect.active != 0 && src_effect.charge > 0 && tmob_effect.charge > 0)
 					src_effect.deactivate(10)
+					src_effect.update_charge(-1)
 					tmob_effect.deactivate(10)
+					tmob_effect.update_charge(-1)
 					// like repels - bimp them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
@@ -543,9 +564,12 @@
 				var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 				if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 
-				if(src_effect.active != 0 && tmob_effect.active != 0)
+				if(src_effect.active != 0 && tmob_effect.active != 0 && src_effect.charge > 0 && tmob_effect.charge > 0)
+					var/throw_charge = (src_effect.charge + tmob_effect.charge)*2
 					src_effect.deactivate(10)
+					src_effect.update_charge(-src_effect.charge)
 					tmob_effect.deactivate(10)
+					tmob_effect.update_charge(-tmob_effect.charge)
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
@@ -567,6 +591,10 @@
 					playsound(source, 'sound/effects/suck.ogg', 100, 1)
 					for(var/atom/movable/M in view(5, source))
 						if(M.anchored || M == source) continue
+						if(throw_charge > 0)
+							throw_charge--
+						else
+							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
 					sleep(5 SECONDS)
@@ -578,7 +606,7 @@
 					return
 
 		if (!issilicon(AM))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled) // mutual brohugs all around!
+			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
 
@@ -596,60 +624,62 @@
 				return
 
 
+	..()
+
 	src.now_pushing = 0
-	SPAWN_DBG(0)
-		..()
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				src.pushing = AM
-				var/t = get_dir(src, AM)
-				var/old_loc = src.loc
-				AM.animate_movement = SYNC_STEPS
-				AM.glide_size = src.glide_size
-				step(AM, t)
-				step(src,t)
-				AM.glide_size = src.glide_size
+	if (istype(AM, /atom/movable) && !AM.anchored)
+		src.pushing = AM
 
-				//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
-				// so yeah, i copy+pasted this from process_move.
-				if (src.pulling != AM && old_loc != src.loc) //causes infinite pull loop without these checks. lol
-					var/list/pulling = list()
-					if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
-						src.pulling = null
-						//hud.update_pulling() // FIXME
-					else
-						pulling += src.pulling
-					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-						if (G.affecting == src) continue
-						pulling += G.affecting
-					for (var/atom/movable/A in pulling)
-						if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
-							continue
-						if (!isturf(A.loc) || A.anchored)
-							src.now_pushing = null
-							continue // whoops
-						A.animate_movement = SYNC_STEPS
-						A.glide_size = src.glide_size
-						step(A, get_dir(A, old_loc))
-						A.glide_size = src.glide_size
-				////////////////////////////////////// end suck
+		src.now_pushing = 1
+		var/t = get_dir(src, AM)
+		var/old_loc = src.loc
+		AM.animate_movement = SYNC_STEPS
+		AM.glide_size = src.glide_size
+		step(AM, t)
 
-				if (isliving(AM))
-					var/mob/victim = AM
-					deliver_move_trigger("bump")
-					victim.deliver_move_trigger("bump")
-					if (victim.buckled && !victim.buckled.anchored)
-						step(victim.buckled, t)
-					if (istype(victim.loc, /turf/space))
-						logTheThing("combat", src, victim, "pushes %target% into space.")
-					else if (locate(/obj/hotspot) in victim.loc)
-						logTheThing("combat", src, victim, "pushes %target% into a fire.")
-			src.now_pushing = null
-		return
-	return
+		if (isliving(AM))
+			var/mob/victim = AM
+			deliver_move_trigger("bump")
+			victim.deliver_move_trigger("bump")
+			if (victim.buckled && !victim.buckled.anchored)
+				step(victim.buckled, t)
+			if (istype(victim.loc, /turf/space))
+				logTheThing("combat", src, victim, "pushes %target% into space.")
+			else if (locate(/obj/hotspot) in victim.loc)
+				logTheThing("combat", src, victim, "pushes %target% into a fire.")
+
+		step(src,t)
+		AM.OnMove(src)
+		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
+		AM.glide_size = src.glide_size
+
+		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
+		// so yeah, i copy+pasted this from process_move.
+		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
+			var/list/pulling = list()
+			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
+				src.pulling = null
+				//hud.update_pulling() // FIXME
+			else
+				pulling += src.pulling
+			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+				pulling += G.affecting
+			for (var/atom/movable/A in pulling)
+				if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+					continue
+				if (A == src || A == AM)
+					continue
+				if (!isturf(A.loc) || A.anchored)
+					src.now_pushing = null
+					continue // whoops
+				A.animate_movement = SYNC_STEPS
+				A.glide_size = src.glide_size
+				step(A, get_dir(A, old_loc))
+				A.glide_size = src.glide_size
+				A.OnMove(src)
+		////////////////////////////////////// end suck
+		src.now_pushing = null
+
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
@@ -1028,6 +1058,7 @@
 	icon_rebuild_flag &= ~BODY
 
 /mob/proc/UpdateDamage()
+	updatehealth()
 	return
 
 /mob/proc/set_damage_icon_dirty()
@@ -1072,143 +1103,7 @@
 	if (src.hasStatus("handcuffed"))
 		return 1
 
-/mob/proc/key_down(var/key)
-/mob/proc/key_up(var/key)
-
-/mob/proc/click(atom/target, params)
-	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
-
-	if (src.targeting_ability)
-		if (istype(src.targeting_ability, /datum/targetable))
-			var/datum/targetable/S = src.targeting_ability
-			src.targeting_ability = null
-			update_cursor()
-
-			if (!S.target_anything && !ismob(target))
-				src.show_text("You have to target a person.", "red")
-				if(S.sticky)
-					src.targeting_ability = S
-					update_cursor()
-				return 100
-			if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
-				if(S.sticky)
-					src.targeting_ability = S
-					update_cursor()
-				return 100
-			if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
-				if(S.sticky)
-					src.targeting_ability = S
-					update_cursor()
-				return 100
-			if (S.check_range && (get_dist(src, target) > S.max_range))
-				src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
-				if(S.sticky)
-					src.targeting_ability = S
-					update_cursor()
-				return 100
-			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
-				src.show_text("It would have no effect on this target.", "red")
-				if(S.sticky)
-					src.targeting_ability = S
-					update_cursor()
-				return 100
-			if (!S.castcheck(src))
-				if(S.sticky)
-					src.targeting_ability = S
-					update_cursor()
-				return 100
-			actions.interrupt(src, INTERRUPT_ACTION)
-			SPAWN_DBG(0)
-				S.handleCast(target)
-				if(S)
-					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
-						if(src)
-							src.targeting_ability = S
-							src.update_cursor()
-			return 100
-
-		else if (istype(src.targeting_ability, /obj/ability_button))
-			var/obj/ability_button/B = src.targeting_ability
-
-			if (!B.target_anything && !ismob(target) && !istype(target, B))
-				src.show_text("You have to target a person.", "red")
-				src.targeting_ability = null
-				src.update_cursor()
-				return 100
-			if (!isturf(target.loc) && !isturf(target) && !istype(target, B))
-				src.targeting_ability = null
-				src.update_cursor()
-				return 100
-			if (!B.ability_allowed())
-				src.targeting_ability = null
-				src.update_cursor()
-				return 100
-			if (istype(target, B))
-				return 100
-			actions.interrupt(src, INTERRUPT_ACTION)
-			SPAWN_DBG(0)
-				B.execute_ability(target)
-				src.targeting_ability = null
-				src.update_cursor()
-			return 100
-
-	if (abilityHolder)
-		if (abilityHolder.topBarRendered)
-			if (abilityHolder.click(target, params))
-				return 100
-
-	//Pull cancel 'hotkey'
-	if (src.pulling && get_dist(src,target) > 1)
-		if (!islist(params))
-			params = params2list(params)
-		if(params["ctrl"])
-			if (src.pulling)
-				unpull_particle(src,pulling)
-			src.pulling = null
-
-	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
-	//if (istype(target, /obj/screen/ability))
-	//	target:clicked(params)
-	if (get_dist(src, target) > 0)
-		if(!dir_locked)
-			dir = get_dir(src, target)
-
-/mob/proc/hotkey(name)
-	switch (name)
-		if ("look_n")
-			if(!dir_locked)
-				src.dir = NORTH
-		if ("look_s")
-			if(!dir_locked)
-				src.dir = SOUTH
-		if ("look_e")
-			if(!dir_locked)
-				src.dir = EAST
-		if ("look_w")
-			if(!dir_locked)
-				src.dir = WEST
-		if ("admin_interact")
-			src.admin_interact_verb()
-		if ("stop_pull")
-			if (src.pulling)
-				unpull_particle(src,pulling)
-			src.pulling = null
-
-/mob/proc/build_keymap(client/C)
-	var/datum/keymap/keymap = new
-	keymap.merge(client.get_keymap("general"))
-	return keymap
-
-/mob/proc/update_keymap()
-	if (src.client)
-		var/datum/keymap/keymap = src.build_keymap(src.client)
-		if (src.use_movement_controller)
-			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-			if (controller)
-				controller.modify_keymap(keymap, src.client)
-		src.client.set_keymap(keymap)
-
-/mob/proc/drop_from_slot(var/obj/item/item, var/turf/T)
+/mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
 		return
 	if (!(item in src.contents))
@@ -1229,7 +1124,7 @@
 	T.Entered(item)
 	return
 
-/mob/proc/drop_item(var/obj/item/W)
+/mob/proc/drop_item(obj/item/W)
 	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
@@ -1275,7 +1170,7 @@
 		var/turf/T = get_edge_target_turf(src, pick(alldirs))
 		W.throw_at(T,rand(0,5),1)
 
-/mob/proc/drop_item_throw_dir(var/dir)
+/mob/proc/drop_item_throw_dir(dir)
 	var/obj/item/W = src.equipped()
 	if (src.drop_item())
 		var/turf/T = get_edge_target_turf(src, dir)
@@ -1512,7 +1407,7 @@
 	src.set_eye(null)
 	src.remove_dialogs()
 	if (!isliving(src))
-		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (air_group || (height==0)) return 1
@@ -2012,7 +1907,7 @@
 		playsound(floorcluwne.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 60, 2)
 		src.set_loc(the_turf)
 		src.layer=0
-		src.plane = -100
+		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		SPAWN_DBG(duration+5)
 			src.death(1)
@@ -2310,9 +2205,9 @@
 
 /mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
 
-	if (throw_count <= 410)
+	if (throw_traveled <= 410)
 		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+			random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 			if (!src.hasStatus("weakened"))
 				src.changeStatus("weakened", 2 SECONDS)
 				src.force_laydown_standup()
@@ -2320,8 +2215,6 @@
 		if (src.gib_flag) return
 		src.gib_flag = 1
 		src.gib()
-
-	src.throw_count = 0
 
 	return
 
@@ -2349,7 +2242,6 @@
 	src.bodytemperature = src.base_body_temp
 	if (src.stat > 1)
 		setalive(src)
-	src.updatehealth()
 
 /mob/proc/infected(var/datum/pathogen/P)
 	return
@@ -2377,11 +2269,13 @@
 /mob/proc/take_toxin_damage(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1
+	health_update_queue |= src
 	return 0
 
 /mob/proc/take_oxygen_deprivation(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1
+	health_update_queue |= src
 	return 0
 
 /mob/proc/get_eye_damage(var/tempblind = 0)
@@ -2655,7 +2549,7 @@
 		if (!newname)
 			return
 		else
-			newname = strip_html(newname, 32, 1)
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
@@ -2702,13 +2596,19 @@
 		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
 	return return_name
 
-/mob/proc/OnMove()
+/mob/OnMove(source = null)
+	..()
 	if(client && client.player && client.player.shamecubed)
 		loc = client.player.shamecubed
 		return
 
 	if (waddle_walking)
 		makeWaddle(src)
+
+	last_move_dir = move_dir
+
+	if (source && source != src) //we were moved by something that wasnt us
+		last_pulled_time = world.time
 
 /mob/proc/on_centcom()
 	var mob_loc = src.loc
@@ -2800,7 +2700,7 @@
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
 		SPAWN_DBG(4 SECONDS)
-			newbody.anchored = 0
+			reset_anchored(newbody)
 	return
 
 /mob/proc/damn()
@@ -2855,7 +2755,7 @@
 			src.unequip_all()
 		src.set_loc(the_turf)
 		src.layer = 0
-		src.plane = -100
+		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		src.emote("scream") // AAAAAAAAAAAA
 		SPAWN_DBG(duration+5)
@@ -2942,12 +2842,12 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(obj/A as obj in view(1))
 	set name = "Pick Up / Interact"
 	set category = "Local"
 	A.interact(src)
 
-/mob/verb/pickup_verb()
+/mob/living/verb/pickup_verb()
 	set name = "Pick Up"
 	set hidden = 1
 

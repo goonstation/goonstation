@@ -132,7 +132,6 @@
 		return 0
 	user.visible_message("<span class='alert'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
 	user.TakeDamage("chest", 150, 0)
-	user.updatehealth()
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
@@ -1029,9 +1028,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 		user.drop_item()
 		W.set_loc(src)
 	else
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
-			if ((T.welding && T.weldfuel > 0))
+		if (isweldingtool(W))
+			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
 				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
 				SPAWN_DBG( 0 )
 					src.burn(1800000.0)
@@ -1149,7 +1147,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		return 0
 	user.visible_message("<span class='alert'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
 	user.TakeDamage("head", 250, 0)
-	user.updatehealth()
 	return 1
 
 

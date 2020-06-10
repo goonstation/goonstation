@@ -113,7 +113,7 @@
 		power_icon = ""
 		handle_overlay()
 		return ..()
-	Del()
+	disposing()
 		if(prev_user)
 			prev_user.images -= cableimgs
 			prev_user = null
@@ -206,7 +206,6 @@
 					boutput(target, "<span class='alert'>The [src] is dangerously low on power. Your energy pattern is destabilizing.</span>")
 				if(power < 20)
 					random_brute_damage(target, 4)
-					target.updatehealth()
 				if(power <= 0)
 					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
 					var/mob/old_trg = target

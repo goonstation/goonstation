@@ -54,10 +54,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 			if (mapNames[map]["playerPickable"])
 				if (mapNames[map]["MinPlayersAllowed"])
-					if (clients.len < mapNames[map]["MinPlayersAllowed"])
+					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
 				if (mapNames[map]["MaxPlayersAllowed"])
-					if (clients.len > mapNames[map]["MaxPlayersAllowed"])
+					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
 
 				src.playerPickable[map] += mapNames[map]
@@ -500,6 +500,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			var/obj/item/I = M.equipped()
 			if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("space_fungus"))
 				chosenMap = "Mushroom"
+			if(istype(I, /obj/item/reagent_containers) && (I:reagents:has_reagent("reversium") || I:reagents:has_reagent("fliptonium")))
+				chosenMap = "1 pamgoC"
+			if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("ldmatter"))
+				chosenMap = "Density"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
 

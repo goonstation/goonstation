@@ -13,7 +13,7 @@
 		color_mod = create_screen("", "", 'icons/effects/white.dmi', "", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_2)
 		color_mod.mouse_opacity = 0
 		color_mod.blend_mode = BLEND_MULTIPLY
-		color_mod.plane = PLANE_ABOVE_LIGHTING
+		color_mod.plane = PLANE_OVERLAY_EFFECTS
 
 		dither = create_screen("", "", 'icons/mob/hud_common.dmi', "dither_2", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_3)
 		dither.mouse_opacity = 0
@@ -59,6 +59,8 @@
 				add_screen(color_mod)
 
 		animate_color_mod(color, duration)
+			if(color_mod.color == color)
+				return
 			animate(color_mod, color = color, time = duration)
 			SPAWN_DBG(duration + 1)
 				if (color == "#000000")
@@ -74,6 +76,8 @@
 			dither.alpha = alpha
 
 		animate_dither_alpha(alpha, duration)
+			if(dither.alpha == alpha)
+				return
 			animate(dither, alpha = alpha, time = duration)
 			SPAWN_DBG(duration + 1)
 				if (alpha > 0)

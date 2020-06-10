@@ -123,16 +123,14 @@ todo: add more small animals!
 		eye_color = "#FFFFF"
 
 	setup_overlays()
-		if (src.bioHolder)
-			fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
-
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -363,6 +361,11 @@ todo: add more small animals!
 			src.visible_message("[src] purrs!",\
 			"You purr!")
 
+/mob/living/critter/small_animal/cat/weak
+	add_abilities = list()
+	health_brute = 10
+	health_burn = 10
+
 /* -------------------- Jones -------------------- */
 
 /mob/living/critter/small_animal/cat/jones
@@ -426,6 +429,7 @@ todo: add more small animals!
 	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
 	var/gabe = 0 //sniff. bark bork. brork.
 	pull_w_class = 4
+
 	OnMove()
 		if(client && client.player && client.player.shamecubed)
 			loc = client.player.shamecubed
@@ -433,10 +437,11 @@ todo: add more small animals!
 
 		makeWaddle(src)
 		.=..()
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
@@ -494,6 +499,13 @@ todo: add more small animals!
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
+
+	pug
+		weak
+			add_abilities = list()
+			health_brute = 10
+			health_burn = 10
+
 /* -------------------- Reverse Pug -------------------- */
 // the people demanded it
 /mob/living/critter/small_animal/dog/reverse
@@ -545,6 +557,11 @@ todo: add more small animals!
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- George -------------------- */
 
@@ -638,6 +655,11 @@ todo: add more small animals!
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
 			src.real_name = src.name
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- Illegal -------------------- */
 
@@ -998,6 +1020,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 				new /obj/item/power_stones/Owl(src.loc)
+		else
+			. = ..()
 
 
 /* -------------------- Large Owl -------------------- */
@@ -1245,16 +1269,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 
 	setup_overlays()
-		if (src.bioHolder)
-			fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
+		fur_color = src.client?.preferences.AH.customization_first_color
+		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "roach_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -1345,6 +1368,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = 3
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+	base_move_delay = 1.6
+	base_walk_delay = 2.1
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -1356,6 +1382,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	setup_overlays()
 		return
+
+
+	weak
+		health_brute = 5
+		health_burn = 5
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
@@ -1422,7 +1453,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				animate_spin(src, pick("L","R"))
 
 			if (prob(10))
-				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","spazzes out","wiggles","wobbles")]!")
+				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles")]!")
 
 			if (src.freakout-- < 1)
 				src.visible_message("[src] calms down.")
@@ -1476,6 +1507,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "mouth"
 		HH.can_hold_items = 0
 
+
+	weak
+		health_brute = 10
+		health_burn = 10
 
 /* ================================================ */
 /* -------------------- Possum -------------------- */
@@ -1661,6 +1696,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (prob(10))
 			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
+
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */
@@ -2427,17 +2463,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_overlays()
 		if(!src.colorkey_overlays)
 			return
-		if (src.bioHolder)
-			// purple only
-			// fur_color = src.bioHolder.mobAppearance.customization_first_color
-			eye_color = src.bioHolder.mobAppearance.e_color
+		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
 		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay.color = eye_color
+		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
@@ -2535,3 +2568,35 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
+
+/mob/living/critter/small_animal/crab
+	name = "crab"
+	real_name = "crab"
+	desc = "Snip snap"
+	icon_state = "crab_party"
+	hand_count = 2
+	speechverb_say = "snips"
+	speechverb_exclaim = "snaps"
+	butcherable = 1
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently snips", "rubs with a soft claw", "cuddles")
+
+	New()
+		..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "left claw"
+		HH.limb_name = "claw"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "beak"
+		HH.name = "right claw"
+		HH.limb_name = "claw"

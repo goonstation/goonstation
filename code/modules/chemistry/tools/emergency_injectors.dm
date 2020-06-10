@@ -8,7 +8,7 @@
 	desc = "A small syringe-like thing that automatically injects its contents into someone."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "dnainjector"
+	item_state = "emerg_inj-orange"
 	icon_state = "emerg_inj-orange"
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
@@ -35,9 +35,10 @@
 			src.underlays += src.fluid_image
 		else
 			icon_state = "emerg_inj-[label]0"
+		item_state = "emerg_inj-[label]"
 
 	attack(mob/M as mob, mob/user as mob)
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
 				return
@@ -57,7 +58,7 @@
 			return
 
 	attack_self(mob/user)
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
 				return

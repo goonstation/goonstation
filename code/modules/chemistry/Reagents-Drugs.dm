@@ -124,7 +124,6 @@ datum
 					M.changeStatus("radiation", 30, 2)
 					M.take_toxin_damage(5)
 					M.take_brain_damage(10)
-					M.updatehealth()
 				else
 					boutput(M, "<span class='notice'>You feel a bit more salty than usual.</span>")
 				return
@@ -143,7 +142,6 @@ datum
 						M.emote("twitch_s")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.updatehealth()
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
@@ -155,7 +153,6 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> eyes dilate!</span>")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.updatehealth()
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
@@ -164,7 +161,6 @@ datum
 						M.make_jittery(50)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.updatehealth()
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 90))
 						M.emote("gasp")
 						M.reagents.add_reagent("salts1", 5 * mult)
@@ -202,7 +198,6 @@ datum
 					if(prob(10))
 						M.emote(pick("twitch","drool","moan"))
 						M.take_toxin_damage(1 * mult)
-						M.updatehealth()
 					..()
 					return
 
@@ -239,7 +234,6 @@ datum
 					if(prob(4))
 						boutput(M, "<span class='alert'><b>You feel kinda awful!</b></span>")
 						M.take_toxin_damage(1 * mult)
-						M.updatehealth()
 						M.make_jittery(30)
 						M.emote(pick("groan", "moan"))
 					..()
@@ -258,7 +252,6 @@ datum
 						M.bodytemperature += rand(5,30) * mult
 						M.take_brain_damage(1 * mult)
 						M.take_toxin_damage(1 * mult)
-						M.updatehealth()
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30))
 					else if (effect <= 7)
 						M.make_jittery(30)
@@ -268,14 +261,12 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>")
 						M.bodytemperature += rand(20,100) * mult
 						M.take_toxin_damage(5 * mult)
-						M.updatehealth()
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> starts tweaking the hell out!</span>")
 						M.make_jittery(100)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(8 * mult)
-						M.updatehealth()
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 40))
 						M.change_misstep_chance(25 * mult)
 						M.emote("scream")
@@ -361,13 +352,12 @@ datum
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.2
 			thirst_value = -0.03
+			minimum_reaction_temperature = T0C+400
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/myvol = volume
-				if(exposed_temperature > T0C + 400) //Turns into a neurotoxin.
-					volume = 0
-					holder.add_reagent("neurotoxin", myvol, null)
-				return
+				holder.del_reagent(id)
+				holder.add_reagent("neurotoxin", myvol, null)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -441,7 +431,6 @@ datum
 							M.drowsyness = 10
 					if(prob(25))
 						M.HealDamage("All", 2 * mult, 0)
-						M.updatehealth()
 					..()
 					return
 
@@ -466,7 +455,7 @@ datum
 			var/remove_buff = 0
 			value = 3
 			thirst_value = -0.07
-			stun_resist = 5
+			stun_resist = 8
 
 			pooled()
 				..()
@@ -492,7 +481,6 @@ datum
 
 					if(src.volume > src.overdose)
 						M.take_toxin_damage(1 * mult)
-						M.updatehealth()
 					..()
 
 			//cogwerks - improved nicotine poisoning?
@@ -509,10 +497,8 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> is all sweaty!</span>")
 						M.bodytemperature += rand(15,30) * mult
 						M.take_toxin_damage(3 * mult)
-						M.updatehealth()
 					else if (effect <= 7)
 						M.take_toxin_damage(4 * mult)
-						M.updatehealth()
 						M.emote("twitch_v")
 						M.make_jittery(10)
 				else if (severity == 2)
@@ -521,14 +507,12 @@ datum
 						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
 						M.take_oxygen_deprivation(15 * mult)
 						M.take_toxin_damage(3 * mult)
-						M.updatehealth()
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 * mult))
 					else if (effect <= 4)
 						boutput(M, "<span class='alert'><b>You feel terrible!</b></span>")
 						M.emote("drool")
 						M.make_jittery(10)
 						M.take_toxin_damage(5 * mult)
-						M.updatehealth()
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 * mult))
 						M.change_misstep_chance(33 * mult)
 					else if (effect <= 7)
@@ -539,7 +523,6 @@ datum
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
 						M.take_oxygen_deprivation(20 * mult)
-						M.updatehealth()
 
 		drug/nicotine/nicotine2
 			name = "nicotwaine"
@@ -578,7 +561,6 @@ datum
 					boutput(M, "<span class='alert'><b>You can feel your heartbeat in your throat!</b></span>")
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(2)
-					M.updatehealth()
 				if(prob(5))
 					M.delStatus("paralysis")
 					M.delStatus("stunned")
@@ -590,10 +572,8 @@ datum
 					boutput(M, "<span class='alert'><b>Your heart's beating really really fast!</b></span>")
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(4)
-					M.updatehealth()
 				if(src.volume > src.overdose)
 					M.take_toxin_damage(2)
-					M.updatehealth()
 				..(M)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -614,10 +594,8 @@ datum
 						boutput(M, "<span class='alert'><b>You feel hot! Is it hot in here?!</b></span>")
 						M.bodytemperature += rand(30,60)
 						M.take_toxin_damage(4)
-						M.updatehealth()
 					else if (effect <= 7)
 						M.take_toxin_damage(5)
-						M.updatehealth()
 						M.emote("twitch_v")
 						M.emote("twitch_v")
 						M.make_jittery(20)
@@ -628,7 +606,6 @@ datum
 						boutput(M, "<span class='alert'><b>You really can't breathe!</b></span>")
 						M.take_oxygen_deprivation(15)
 						M.take_toxin_damage(4)
-						M.updatehealth()
 						M.changeStatus("stunned", 10 * mult)
 					else if (effect <= 4)
 						boutput(M, "<span class='alert'><b>You feel really terrible!</b></span>")
@@ -636,7 +613,6 @@ datum
 						M.emote("drool")
 						M.make_jittery(20)
 						M.take_toxin_damage(5)
-						M.updatehealth()
 						M.changeStatus("weakened", 10 * mult)
 						M.change_misstep_chance(66)
 					else if (effect <= 7)
@@ -646,8 +622,7 @@ datum
 						M.changeStatus("weakened", 50 * mult)
 						M.make_jittery(60)
 						M.take_toxin_damage(5)
-						M.take_oxygen_deprivation(20)
-						M.updatehealth()*/
+						M.take_oxygen_deprivation(20)*/
 
 		drug/psilocybin
 			name = "psilocybin"
@@ -729,7 +704,6 @@ datum
 						M.take_toxin_damage(1 * mult)
 						M.take_brain_damage(1 * mult)
 						M.bodytemperature -= 20 * mult
-						M.updatehealth()
 					if(prob(2))
 						boutput(M, "<span class='alert'><b>Your skin feels all rough and dry.</b></span>")
 						random_brute_damage(M, 2 * mult)
@@ -751,14 +725,12 @@ datum
 						random_brute_damage(M, 5 * mult)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.updatehealth()
 						M.emote("cry")
 				else if (severity == 2)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> sways and falls over!</span>")
 						M.take_toxin_damage(3 * mult)
 						M.take_brain_damage(3 * mult)
-						M.updatehealth()
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 90 * mult))
 						M.emote("faint")
 					else if (effect <= 4)
@@ -802,9 +774,9 @@ datum
 									fake_attackEx(M, 'icons/misc/critter.dmi', "cat-ghost", "ghost cat")
 									M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
 							if(2)
-								var/spazcats = rand(1,3)
-								for(var/i = 0, i < spazcats, i++)
-									fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-spaz", "wild cat")
+								var/wildcats = rand(1,3)
+								for(var/i = 0, i < wildcats, i++)
+									fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-wild", "wild cat")
 									M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
 					if(prob(20))
 						M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)

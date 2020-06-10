@@ -32,6 +32,9 @@
 #elif defined(MAP_OVERRIDE_SAMEDI)
 #include "samedi.dm"
 
+#elif defined(MAP_OVERRIDE_PAMGOC)
+#include "pamgoc.dm"
+
 #elif defined(MAP_OVERRIDE_OSHAN)
 #include "oshan.dm"
 
@@ -49,6 +52,9 @@
 
 #elif defined(MAP_OVERRIDE_FLEET)
 #include "fleet.dm"
+
+#elif defined(MAP_OVERRIDE_ICARUS)
+#include "icarus.dm"
 
 #elif defined(MAP_OVERRIDE_DENSITY)
 #include "density.dm"

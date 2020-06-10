@@ -161,7 +161,7 @@
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 
-				if (iscarbon(target) || iscritter(target))
+				if (iscarbon(target) || ismobcritter(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
 							O.show_message(text("<span class='alert'><B>[] is trying to inject []!</B></span>", user, target), 1)
@@ -178,7 +178,7 @@
 						for (var/mob/O in AIviewers(world.view, user))
 							O.show_message(text("<span class='alert'>[] injects [] with the syringe!</span>", user, target), 1)
 
-					src.reagents.reaction(target, INGEST)
+					src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 
 				if (istype(target,/obj/item/reagent_containers/patch))
 					var/obj/item/reagent_containers/patch/P = target
@@ -284,6 +284,11 @@
 	name = "syringe (calomel)"
 	desc = "Contains calomel, which be used to purge impurities, but is highly toxic itself."
 	initial_reagents = "calomel"
+
+/obj/item/reagent_containers/syringe/synaptizine
+	name = "syringe (synaptizine)"
+	desc = "Contains synaptizine, a mild stimulant to increase alertness."
+	initial_reagents = "synaptizine"
 
 #undef S_DRAW
 #undef S_INJECT

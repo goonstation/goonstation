@@ -129,18 +129,13 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			return
 		if (iscarbon(AM))
 			var/mob/M =	AM
-			if (!M.can_slip())
-				return
 			if (prob(src.slippery))
-				M.pulling = null
-				M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
-				"<span class='alert'>You slip on [src]!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				M.changeStatus("stunned", 3 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-				M.force_laydown_standup()
-				if (src.slipped_in_blood)
-					M.add_blood(src)
+				if (M.slip())
+					M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
+					"<span class='alert'>You slip on [src]!</span>")
+
+					if (src.slipped_in_blood)
+						M.add_blood(src)
 
 	attackby(obj/item/W, mob/user)
 		if (src.can_sample && W.is_open_container() && W.reagents)
@@ -293,7 +288,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if (!src.pooled)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
-					if (O && (!src.pooled) && prob(max(src.reagents.total_volume*5, 10)))
+					if (O && (!src.pooled) && prob(max(src?.reagents.total_volume*5, 10)))
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
@@ -375,7 +370,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			M.set_clothing_icon_dirty()
 
 	disposing()
-		var/obj/decal/bloodtrace/B = locate() in src
+		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if (!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			diseases = list()
 			B = new /obj/decal/bloodtrace(src.loc)
@@ -445,7 +440,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	disposing()
 		diseases = list()
-		var/obj/decal/bloodtrace/B = locate() in src
+		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if(!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA
@@ -1457,14 +1452,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dry_time = 1200
 	var/datum/light/light
 
-	New()
-		..()
+	unpooled()
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_height(0.5)
 		light.set_color(0.2, 1, 0.2)
 		light.attach(src)
 		light.enable()
+		..()
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 	setup()
 		..()
