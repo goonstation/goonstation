@@ -42,9 +42,10 @@ datum/pathogeneffects
 			if (I != M && ((isturf(I.loc) && isturf(M.loc) && can_line_airborne(get_turf(M), I, 5)) || I.loc == M.loc))
 				if(istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = I
-					if(prob(1-H.get_disease_protection()))
-						H.show_message("Pretty catchy tune...")
-						H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
+					if(prob(100-H.get_disease_protection()))
+						SPAWN_DBG(rand(0.5,2) SECONDS)
+							H.show_message("Pretty catchy tune...")
+							H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
 
 	// creates an infective cloud
 	// this should give people better feedback about how be infected and how to avoid it
@@ -74,7 +75,7 @@ datum/pathogeneffects
 		R.reagent_list["pathogen"] = Q
 		Q.holder = R
 		R.update_total()
-		T.fluid_react(R, amount, airborne = 0)
+		R.trans_to(T, amount)
 
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
@@ -86,7 +87,7 @@ datum/pathogeneffects
 			target.show_message(infect_attempt_message)
 			if(istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
-				if(prob(1-H.get_disease_protection()))
+				if(prob(100-H.get_disease_protection()))
 					if (target.infected(origin))
 						if (infect_message)
 							target.show_message(infect_message)
@@ -509,31 +510,31 @@ datum/pathogeneffects/malevolent/sweating
 			if (1)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You feel a bit warm.</span>")
-				if (prob(25))
+				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (2)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You feel rather warm.</span>")
-				if (prob(50))
+				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (3)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You're sweating heavily.</span>")
-				if (prob(75))
+				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (4)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
-				if (prob(85))
+				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (5)
 				if (prob(5) && origin.symptomatic)
 					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
-				if (prob(95))
+				if (prob(40))
 					src.infect_puddle(M, origin)
 
 	may_react_to()
@@ -1699,10 +1700,11 @@ datum/pathogeneffects/malevolent/farts
 	spread = SPREAD_AIR
 	rarity = RARITY_VERY_COMMON
 	var/cooldown = 0 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
-
+	var/doInfect = 1 // smoke farts were just too good
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
-		infect_cloud(M, origin)
+		if(doInfect)
+			infect_cloud(M, origin)
 		if(voluntary)
 			origin.symptom_data[name] = TIME
 
@@ -1727,6 +1729,7 @@ datum/pathogeneffects/malevolent/farts/smoke
 	desc = "The infected individual occasionally farts reagent smoke."
 	rarity = RARITY_RARE
 	cooldown = 600
+	doInfect = 0 // the whole point is to not instantly infect a huge area, that's what got us into this mess >.>
 
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		if (M.reagents.total_volume)
@@ -1806,7 +1809,7 @@ datum/pathogeneffects/malevolent/farts/o2
 	desc = "The infected individual occasionally farts. Pure oxygen."
 	rarity = RARITY_COMMON
 	beneficial = 1
-	cooldown = 0
+	cooldown = 50
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
 
@@ -2110,7 +2113,7 @@ datum/pathogeneffects/malevolent/snaps/jazz
 				H.u_equip(H.head)
 			H.equip_if_possible(F, H.slot_head)
 
-		if (H.find_in_hand(/obj/item/instrument/saxophone) == null)
+		if (!H.find_type_in_hand(/obj/item/instrument/saxophone))
 			var/obj/item/instrument/saxophone/D = new /obj/item/instrument/saxophone(H)
 			if(!(H.put_in_hand(D) == 1))
 				var/drophand = (H.hand == 0 ? H.slot_r_hand : H.slot_l_hand) //basically works like a derringer
@@ -2123,8 +2126,8 @@ datum/pathogeneffects/malevolent/snaps/jazz
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (H.find_in_hand(/obj/item/instrument/saxophone)) //bonus saxophone playing capability that doesn't count toward sax cooldown
-				var/obj/item/instrument/saxophone/sax = H.find_in_hand(/obj/item/instrument/saxophone)
+			if (H.find_type_in_hand(/obj/item/instrument/saxophone)) //bonus saxophone playing capability that doesn't count toward sax cooldown
+				var/obj/item/instrument/saxophone/sax = H.find_type_in_hand(/obj/item/instrument/saxophone)
 				var/list/aud = sax.sounds_instrument
 				playsound(get_turf(H), pick(aud), 50, 1)
 
@@ -2136,11 +2139,11 @@ datum/pathogeneffects/malevolent/snaps/jazz
 				if (1 to 2)
 					snap(M, origin)
 				if (3 to 5)
-					if (prob((origin.stage - 3)*3)) // jazz first so we can jam right away
+					if (prob(origin.stage*3)) // jazz first so we can jam right away
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							jazz(H)
-						snap(M, origin)
+					snap(M, origin)
 
 	may_react_to()
 		return "The pathogen seems like it might respond to strong sonic impulses."
@@ -2188,6 +2191,7 @@ datum/pathogeneffects/malevolent/snaps/wild
 			// no fuck this we are not snapping 25 times, it kills people's byond and eardrums
 			// TODO: make cool echo snap sound?
 			M.emote("snap")
+			playsound(M.loc, 'sound/effects/fingersnap_echo.ogg', 150, 1, 2000)
 			src.infect_snap(M, origin, 9)
 
 	disease_act(var/mob/M, var/datum/pathogen/origin)

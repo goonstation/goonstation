@@ -492,9 +492,9 @@ datum
 					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
-						if(prob(1-H.get_disease_protection()))
-							H.show_message("Ew, some of that disgusting green stuff touched you!")
-							H.infected(P)
+						if(prob(100-H.get_disease_protection()))
+							if(H.infected(P))
+								H.show_message("Ew, some of that disgusting green stuff touched you!")
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
