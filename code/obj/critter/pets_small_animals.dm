@@ -236,6 +236,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	event_handler_flags = USE_HASENTERED | USE_PROXIMITY | USE_FLUID_ENTER
 
 	New()
+		if(src.name == "jons the catte")
+			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
 			src.name = pick(cat_names)
