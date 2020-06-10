@@ -218,6 +218,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	firevuln = 0.15
 	angertext = "bares jagged fangs at"
 	generic = 0
+	is_pet = 0
 
 
 	floor

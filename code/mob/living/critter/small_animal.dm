@@ -63,6 +63,22 @@ todo: add more small animals!
 	var/fur_color = 0
 	var/eye_color = 0
 
+	var/is_pet = null // null = autodetect
+
+	New(loc)
+		if(isnull(src.is_pet))
+			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+			src.is_pet = 0
+		if(src.is_pet)
+			pets += src
+		..()
+
+	disposing()
+		if(src.is_pet)
+			pets -= src
+		..()
+
 	setup_healths()
 		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)

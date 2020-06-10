@@ -238,6 +238,7 @@
 		generic = 0
 		var/jittered = 0
 		honey_color = rgb(0, 255, 255)
+		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
 		var/original_hat_ref = ""
@@ -270,12 +271,10 @@
 			src.original_tier = src.tier
 			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 			heisentier_hat()
-			pets += src
 			..()
 
 		disposing()
 			UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
-			pets -= src
 			..()
 
 		proc/save_upgraded_tier()

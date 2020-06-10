@@ -5207,7 +5207,7 @@
 "bWg" = (/turf/simulated/floor/bot,/area/station/security/main)
 "bWh" = (/obj/storage/secure/closet/brig/automatic/solitary2,/turf/simulated/floor/grime,/area/station/security/main)
 "bWi" = (/obj/grille/steel,/obj/window/auto/reinforced,/turf/simulated/floor/plating,/area/station/security/main)
-"bWj" = (/obj/fluid_spawner{amount = 1800},/turf/simulated/floor/sand,/area)
+"bWj" = (/obj/fluid_spawner{amount = 2000},/turf/simulated/floor/sand,/area)
 "bWk" = (/obj/machinery/teleport/portal_ring,/turf/simulated/floor/delivery,/area/station/teleporter)
 "bWl" = (/obj/machinery/teleport/portal_generator,/turf/simulated/floor/bot,/area/station/teleporter)
 "bWm" = (/obj/machinery/computer/teleporter{dir = 4},/turf/simulated/floor/bot,/area/station/teleporter)

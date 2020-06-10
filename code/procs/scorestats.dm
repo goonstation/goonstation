@@ -29,6 +29,7 @@ var/datum/score_tracker/score_tracker
 	var/beepsky_alive = null
 	var/clown_beatings = null
 	var/list/pets_escaped = null
+	var/list/command_pets_escaped = null
 
 
 	proc/calculate_score()
@@ -208,8 +209,7 @@ var/datum/score_tracker/score_tracker
 		richest_total = 0
 		//search mobs in centcom
 		for (var/mob/M in mobs)
-			var/area/A = get_area(M)
-			if (istype(A, /area/shuttle/escape/centcom))// || istype(A, /area/centcom))
+			if(in_centcom(M))
 				if (!most_damaged_escapee)
 					most_damaged_escapee = M
 				else if (M.get_damage() < most_damaged_escapee.get_damage())
@@ -220,13 +220,26 @@ var/datum/score_tracker/score_tracker
 					richest_total = cash_total
 					richest_escapee = M
 
+		command_pets_escaped = list()
 		pets_escaped = list()
 
-		for (var/obj/critter/P in pets)
-			if (in_centcom(P) && P.alive)
-				pets_escaped += P
-				if (istype(P, /obj/critter/bat/doctor))
-					acula_blood = P:blood_volume //this only gets populated if Dr. Acula escapes
+		for (var/pet in pets)
+			if(iscritter(pet))
+				var/obj/critter/P = pet
+				if (in_centcom(P) && P.alive)
+					if(P.is_pet == 2)
+						command_pets_escaped += P
+					else if(P.is_pet)
+						pets_escaped += P
+					if (istype(P, /obj/critter/bat/doctor))
+						acula_blood = P:blood_volume //this only gets populated if Dr. Acula escapes
+			else if(ismobcritter(pet))
+				var/mob/living/critter/P = pet
+				if (in_centcom(pet) && isalive(P))
+					if(pet:is_pet == 2)
+						command_pets_escaped += pet
+					else if(pet:is_pet)
+						pets_escaped += pet
 
 		if (length(by_type[/obj/machinery/bot/secbot/beepsky]))
 			beepsky_alive = 1
@@ -294,11 +307,16 @@ var/datum/score_tracker/score_tracker
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
 		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
-		if (islist(pets_escaped) && pets_escaped.len)		//The reason I don't just use the pets_escaped list is because that list will send the info to goonhub, and I don't wanna send the bicons too.
+		if (length(command_pets_escaped))
+			var/list/who_escaped = list()
+			for (var/atom/A in command_pets_escaped)
+				who_escaped += "[A.name] [bicon(A)]"
+			. += "<B>Command Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+		if (length(pets_escaped))
 			var/list/who_escaped = list()
 			for (var/atom/A in pets_escaped)
 				who_escaped += "[A.name] [bicon(A)]"
-			. += "<B>Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+			. += "<B>Other Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
 
 		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"

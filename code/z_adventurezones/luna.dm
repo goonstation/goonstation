@@ -1073,6 +1073,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 0
 	var/typeName = "Generic"
