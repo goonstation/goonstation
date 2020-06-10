@@ -1123,7 +1123,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	sleeping_icon_state = "drone_service_bot_off"
 	flying = 0
 	generic = 0
-	death_text = "%src% stops moving."
+	death_text = "%src% blows apart! But not in a way at all like surveillance equipment. More like a washing machine or something."
 
 	var/static/list/non_spy_weapons = list("something that isn't a high gain microphone", "an object distinct from a tape recorder", "object that is, in all likelihood, not a spy camera")
 
@@ -1142,7 +1142,6 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.") //this has two death messages? Uh sure...
 
 		SPAWN_DBG(0)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
