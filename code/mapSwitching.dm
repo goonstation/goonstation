@@ -248,7 +248,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//announce vote
 		var/msg = "<br><span class='bold notice'>"
-		msg += "A vote for next round's map has started! Click the 'Map Vote' button in your status window, or use the 'Map-Vote' verb."
+		msg += "A vote for next round's map has started! Click here: [mapVoteLinkStat.chat_link()] or on the 'Map Vote' button in your status window."
+
 		if (duration)
 			msg += " It will end in [duration / 10] seconds."
 		msg += "</span><br><br>"
@@ -515,23 +516,14 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			else
 				mapSwitcher.showMapVote(C)
 
-
-	/*attackby(obj/item/I as obj, mob/user as mob)
-		var/client/C = user.client
-		if (!C || !mapSwitcher.playersVoting)
-			return ..()
-		var/map = null
-		if (istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("space_fungus") ) //the joke is too good
-			map = mapNames["Mushroom"]
-		else if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
-			map = mapNames["Donut 2"]
-		if (!map) return ..()
-		else
-			mapSwitcher.passiveVotes.Remove(C.ckey)
-			mapSwitcher.playerVotes[C.ckey] = map
-			boutput(user, "Map vote successful???")*/
-
 	examine()
 		return list()
+
+	proc/chat_link()
+		return "<a href='?src=\ref[src]'>[src]</a>"
+
+	Topic(href, href_list)
+		. = ..()
+		Click()
 
 var/global/mapVoteLinkStat = new /obj/mapVoteLink
