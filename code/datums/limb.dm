@@ -55,6 +55,7 @@
 			special_next = 0
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
+		user.lastattacked = target
 
 	proc/help(mob/living/carbon/human/target, var/mob/living/user)
 		user.do_help(target)
