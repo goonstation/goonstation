@@ -175,6 +175,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	var/vote_name = ""
 	var/vote_length = 1200 //2 Minutes
 	var/vote_started = 0
+	var/vote_abstain_weight = 0.2 //how much each non-participant counts for in votes that have a "No" result
 	var/data = null
 	var/vote_flags = 0
 	var/curr_win = ""
@@ -224,7 +225,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 					adjAbstain = options[A]
 					for(var/client/C in clients)
 						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
-							adjAbstain = adjAbstain + 0.25
+							adjAbstain = adjAbstain + vote_abstain_weight
 					if(adjAbstain > winner_num)
 						winner_num = adjAbstain
 						winner = A
@@ -245,7 +246,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 					adjAbstain = options[A]
 					for(var/client/C in clients)
 						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
-							adjAbstain = adjAbstain + 0.25
+							adjAbstain = adjAbstain + vote_abstain_weight
 					if(adjAbstain > winner_num)
 						winner_num = adjAbstain
 				else
@@ -290,6 +291,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	details = "Restart the server?"
 	vote_name = "Vote restart"
 	vote_length = 1200 //2 Minutes
+	vote_abstain_weight = 0.5
 
 	end_vote()
 		. = ..()
