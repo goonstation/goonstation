@@ -552,7 +552,15 @@
 
 	var/atom/plane = client.get_plane(PLANE_LIGHTING)
 	if (plane)
-		plane.alpha = plane.alpha ? 0 : 255
+		switch(plane.alpha)
+			if(255)
+				render_special.set_centerlight_icon("")
+				plane.alpha = 254 // I'm sorry
+			if(254)
+				plane.alpha = 0
+			if(0)
+				plane.alpha = 255
+				render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	else
 		boutput( usr, "Well, I want to, but you don't have any lights to fix!" )
 

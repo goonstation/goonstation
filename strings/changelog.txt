@@ -1,5 +1,7 @@
 
 (t)thu jun 11 20
+(u)pali
+(*)Ghosts' Toggle Lighting now has a thrid state which removes the pseudo-night vision.
 (u)Gerhazo
 (p)968
 (e)⚖🔄|balance, rework
