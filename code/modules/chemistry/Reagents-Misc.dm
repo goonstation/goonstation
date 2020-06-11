@@ -121,10 +121,10 @@ datum
 				src = null
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
+				if (!isliving(M))
 					return
 				if (method == TOUCH)
-					var/mob/living/carbon/human/H = M
+					var/mob/living/H = M
 					var/cauterised
 					if (volume_passed >= 10)
 						// reduce bleeding
@@ -1066,7 +1066,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				T.clean_forensic()
 
-			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				..()
 				M.clean_forensic()
 
@@ -1536,10 +1536,9 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
-				if (ishuman(M))
-					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-					M.emote("scream")
-					random_brute_damage(M, 4)
+				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
+				M.emote("scream")
+				random_brute_damage(M, 4)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1721,7 +1720,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
 				if (method == INGEST)
-					if (ishuman(M))
+					if (isliving(M))
 						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
 				return
 
@@ -1824,11 +1823,11 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
+				if(!isliving(M))
 					return
 
 				if(method == INGEST)
-					var/mob/living/carbon/human/H = M
+					var/mob/living/H = M
 					if (H.bioHolder && H.bioHolder.HasEffect("bee"))
 						boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					else
@@ -2401,7 +2400,7 @@ datum
 				..()
 				effect_length = 0
 
-			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1) // humans only! invisible critters would be awful...
+			on_mob_life(var/mob/living/M, var/mult = 1) // humans only! invisible critters would be awful...
 				if(!M)
 					holder.remove_reagent("transparium")
 					return
@@ -2410,7 +2409,7 @@ datum
 					effect_length+= 1 * mult
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					boutput(M, "<span class='alert'>You feel yourself fading away.</span>")
 					M.alpha = 0
@@ -2421,7 +2420,7 @@ datum
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
 
-			do_overdose(var/severity, var/mob/living/carbon/human/M, var/mult = 1)
+			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if(effect <= 4)
@@ -2461,7 +2460,7 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					boutput(M, "<span class='alert'>You feel yourself fading.</span>")
 					M.alpha = rand(80,200)
@@ -3301,9 +3300,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
-				if(!ishuman(M))
-					return
-
 				M.bioHolder.AddEffect("reversed_speech", timeleft = 180)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3651,7 +3647,7 @@ datum
 				if (!M)
 					M = holder.my_atom
 				var/our_amt = holder.get_reagent_amount(src.id)
-				if(ishuman(M) && prob(3))
+				if(prob(3) && ishuman(M))
 					M.say("Hm!")
 				if(M && our_amt > 20)
 					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))

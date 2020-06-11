@@ -431,11 +431,11 @@
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
-		else if (ishuman(target))
+		else if (isliving(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
 				patches -= P
-				var/mob/living/carbon/human/H = target
+				var/mob/living/H = target
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
