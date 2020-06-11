@@ -1759,7 +1759,7 @@
 			var/obj/item/reagent_containers/glass/vial/V = O
 			if(V.reagents.total_volume)
 				boutput(user, "The [V] already has reagents inside it!")
-			else if(src.reagents.total_volume <= 2)
+			else if(src.target.reagents.total_volume <= 2)
 				boutput(user, "The [src] does not have enough pathogen to dispense a sample.")
 			else
 				boutput(user, "The [src] dispenses some pathogen into the [V].")
