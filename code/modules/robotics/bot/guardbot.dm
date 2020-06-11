@@ -2187,6 +2187,14 @@
 					if (!has_contraband_permit)
 						. += perp.wear_suit.contraband
 
+				if (istype(perp.back))
+					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+						if (!has_carry_permit)
+							. += perp.back.contraband * 0.5
+					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+						if (!has_contraband_permit)
+							. += perp.back.contraband * 0.5
+
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
 //						return 5 //Zombies are bad news!

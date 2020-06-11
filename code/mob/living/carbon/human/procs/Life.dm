@@ -351,6 +351,14 @@
 							if(!has_contraband_permit)
 								contrabandLevel += wear_suit.contraband
 
+						if (!contrabandLevel && back)
+							if (istype(back, /obj/item/gun/))
+								if (!has_carry_permit)
+									contrabandLevel += back.contraband
+							else
+								if (!has_contraband_permit)
+									contrabandLevel += back.contraband
+
 					else
 						if (l_hand)
 							contrabandLevel += l_hand.contraband
@@ -360,6 +368,8 @@
 							contrabandLevel += belt.contraband
 						if (!contrabandLevel && wear_suit)
 							contrabandLevel += wear_suit.contraband
+						if (!contrabandLevel && back)
+							contrabandLevel += back.contraband
 
 					if (contrabandLevel > 0)
 						arrestState = "Contraband"

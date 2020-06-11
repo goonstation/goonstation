@@ -264,13 +264,20 @@
 					threatcount += perp.r_store.contraband * 0.5
 
 		if (istype(perp.back))
-			for( var/obj/item/item in perp.back.contents )
-				if(istype(item, /obj/item/gun/))
-					if(!has_carry_permit)
-						threatcount += item.contraband * 0.5
-				else
-					if(!has_contraband_permit)
-						threatcount += item.contraband * 0.5
+			if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+				if (!has_carry_permit)
+					threatcount += perp.back.contraband * 0.5
+			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+				if (!has_contraband_permit)
+					threatcount += perp.back.contraband * 0.5
+			if (istype(perp.back, /obj/item/storage/))
+				for( var/obj/item/item in perp.back.contents )
+					if (istype(item, /obj/item/gun/))
+						if (!has_carry_permit)
+							threatcount += item.contraband * 0.5
+					else
+						if (!has_contraband_permit)
+							threatcount += item.contraband * 0.5
 
 		//Agent cards lower threatlevel
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))

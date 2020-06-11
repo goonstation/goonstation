@@ -918,6 +918,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if (!has_contraband_permit)
 					threatcount += perp.wear_suit.contraband
 
+			if (istype(perp.back))
+				if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+					if (!has_carry_permit)
+						threatcount += perp.back.contraband * 0.5
+				else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+					if (!has_contraband_permit)
+						threatcount += perp.back.contraband * 0.5
+
+
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
