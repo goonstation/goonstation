@@ -361,6 +361,9 @@
 			if (!src.mind.special_role)
 				src.handle_robot_antagonist_status()
 
+		if (src.health < 0)
+			death()
+
 	process_killswitch()
 	process_locks()
 	process_oil()

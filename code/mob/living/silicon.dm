@@ -20,6 +20,8 @@
 
 	var/obj/item/cell/cell = null
 
+	can_bleed = 0
+	blood_id = "fuel"
 	use_stamina = 0
 	can_lie = 0
 
