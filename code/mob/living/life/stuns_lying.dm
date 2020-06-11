@@ -11,6 +11,10 @@
 
 		var/must_lie = statusList["resting"] || (!cant_lie && human_owner && human_owner.limbs && !human_owner.limbs.l_leg && !human_owner.limbs.r_leg) //hasn't got a leg to stand on... haaa
 
+		if (!owner.can_lie)
+			cant_lie = 1
+			must_lie = 0
+
 		var/changeling_fakedeath = 0
 		var/datum/abilityHolder/changeling/C = owner.get_ability_holder(/datum/abilityHolder/changeling)
 		if (C && C.in_fakedeath)

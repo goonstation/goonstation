@@ -124,7 +124,7 @@
 
 	var/last_sleep = 0 //used for sleep_bubble
 
-
+	can_lie = 1
 
 /mob/living/New()
 	..()
